@@ -47,8 +47,6 @@ public:
     ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
     void test(void);
 
     void measuring_started(void);

@@ -142,22 +142,6 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::load(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
-
-    mw->load_html();
-}
-//--------------------------------------------------------------------------------
-void MainBox::save(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
-
-    mw->save_html();
-}
-//--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     emit info(tr("test"));

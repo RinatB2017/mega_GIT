@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GUI_MainWindow</class>
+ <widget class="QMainWindow" name="GUI_MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>256</width>
+    <height>280</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>256</width>
+    <height>280</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>256</width>
+    <height>280</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Famique [Qt &amp; SDL][NTSC]</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>256</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_Load_ROM"/>
+    <addaction name="action_Exit"/>
+   </widget>
+   <widget class="QMenu" name="menuEmulation">
+    <property name="title">
+     <string>Emulation</string>
+    </property>
+    <widget class="QMenu" name="menuReset_CPU">
+     <property name="title">
+      <string>Reset CPU</string>
+     </property>
+     <addaction name="actionSoft_reset"/>
+     <addaction name="actionHard_reset"/>
+    </widget>
+    <addaction name="action_Start_CPU"/>
+    <addaction name="action_Halt_CPU"/>
+    <addaction name="actionConfigure"/>
+    <addaction name="menuReset_CPU"/>
+   </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionCPU"/>
+    <addaction name="actionPPU"/>
+    <addaction name="separator"/>
+    <addaction name="actionReset_wrappers"/>
+    <addaction name="actionDump_stac"/>
+   </widget>
+   <widget class="QMenu" name="menuVideo">
+    <property name="title">
+     <string>Video</string>
+    </property>
+    <widget class="QMenu" name="menuFrame_limiter_frameskip">
+     <property name="title">
+      <string>Frame limiter/frameskip</string>
+     </property>
+     <addaction name="actionTurn_on"/>
+    </widget>
+    <addaction name="actionGo_fullscreen"/>
+    <addaction name="separator"/>
+    <addaction name="menuFrame_limiter_frameskip"/>
+   </widget>
+   <widget class="QMenu" name="menuSound">
+    <property name="title">
+     <string>Sound</string>
+    </property>
+    <addaction name="actionEnableSound"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menuEmulation"/>
+   <addaction name="menuVideo"/>
+   <addaction name="menuSound"/>
+   <addaction name="menuDebug"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>256</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>256</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="baseSize">
+    <size>
+     <width>256</width>
+     <height>18</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <action name="action_Load_ROM">
+   <property name="text">
+    <string>&amp;Load ROM</string>
+   </property>
+  </action>
+  <action name="action_Exit">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="action_Start_CPU">
+   <property name="text">
+    <string>&amp;Start Emulation</string>
+   </property>
+  </action>
+  <action name="action_Halt_CPU">
+   <property name="text">
+    <string>&amp;Halt Emulation</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>--</string>
+   </property>
+  </action>
+  <action name="actionView_PPU">
+   <property name="text">
+    <string>View PPU</string>
+   </property>
+  </action>
+  <action name="actionAuto">
+   <property name="text">
+    <string>Auto</string>
+   </property>
+  </action>
+  <action name="actionCPU">
+   <property name="text">
+    <string>CPU</string>
+   </property>
+  </action>
+  <action name="actionPPU">
+   <property name="text">
+    <string>PPU</string>
+   </property>
+  </action>
+  <action name="actionReset_wrappers">
+   <property name="text">
+    <string>Reset wrappers</string>
+   </property>
+  </action>
+  <action name="actionGo_fullscreen">
+   <property name="text">
+    <string>Go fullscreen</string>
+   </property>
+  </action>
+  <action name="actionEnableSound">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable</string>
+   </property>
+  </action>
+  <action name="actionTurn_on">
+   <property name="text">
+    <string>Activate</string>
+   </property>
+  </action>
+  <action name="actionSoft_reset">
+   <property name="text">
+    <string>Soft reset</string>
+   </property>
+  </action>
+  <action name="actionHard_reset">
+   <property name="text">
+    <string>Hard reset</string>
+   </property>
+  </action>
+  <action name="actionConfigure">
+   <property name="text">
+    <string>Configure</string>
+   </property>
+  </action>
+  <action name="actionBlah">
+   <property name="text">
+    <string>blah</string>
+   </property>
+  </action>
+  <action name="actionDump_stac">
+   <property name="text">
+    <string>Dump stack</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>updateWindowTitle()</slot>
+ </slots>
+</ui>

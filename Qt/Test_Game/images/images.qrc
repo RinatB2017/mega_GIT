@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>computer.ico</file>
+        <file>10.11-astronomiya.jpg</file>
+        <file>Tux.png</file>
+    </qresource>
+</RCC>

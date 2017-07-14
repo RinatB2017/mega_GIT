@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/report">
+        <file>report.xml</file>
+    </qresource>
+</RCC>

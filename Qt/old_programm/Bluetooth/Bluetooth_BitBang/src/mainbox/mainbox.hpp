@@ -1,0 +1,116 @@
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2012                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
+//--------------------------------------------------------------------------------
+#include <stdint.h>
+//--------------------------------------------------------------------------------
+#include <QWidget>
+//--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class MainBox;
+}
+//---------------------------------------------------------------
+#pragma pack (push, 1)
+//---------------------------------------------------------------
+typedef struct
+{
+  uint8_t address;
+  uint8_t cmd;
+  uint8_t count_data;
+}
+RGB_HEADER;
+//---------------------------------------------------------------
+union CMD_0x01_QUESTION
+{
+  struct {
+    RGB_HEADER header;
+    struct {
+        uint8_t led_index;
+        uint8_t led_state;
+    } data;
+    uint8_t crc8;
+  }
+  body;
+  uint8_t buf[sizeof(body)];
+};
+
+union CMD_0x01_ANSWER
+{
+  struct {
+    RGB_HEADER header;
+    struct {
+        uint8_t result;
+    } data;
+    uint8_t crc8;
+  }
+  body;
+  uint8_t buf[sizeof(body)];
+};
+//--------------------------------------------------------------------------------
+class MySplashScreen;
+class SerialBox;
+class QToolButton;
+class QToolBar;
+//--------------------------------------------------------------------------------
+class MainBox : public MyWidget
+{
+    Q_OBJECT
+
+public:
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    ~MainBox();
+
+signals:
+    void send(QByteArray);
+
+private slots:
+    void test(void);
+    void read_data(QByteArray ba);
+
+private:
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
+    SerialBox *serialBox = 0;
+
+    QByteArray clean_data;
+
+    void init(void);
+
+    QToolButton *add_button(QToolBar *tool_bar,
+                            QToolButton *tool_button,
+                            QIcon icon,
+                            const QString &text,
+                            const QString &tool_tip);
+
+    void createTestBar(void);
+    void read_modbus(void);
+    void send_answer_data(void);
+
+protected:
+    void changeEvent(QEvent *event);
+
+};
+//--------------------------------------------------------------------------------
+#endif // MAINBOX_HPP

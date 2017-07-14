@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/grapher">
+        <file>advancedsettings.png</file>
+        <file>edit-clear.png</file>
+        <file>fileopen.png</file>
+        <file>filesave.png</file>
+    </qresource>
+</RCC>

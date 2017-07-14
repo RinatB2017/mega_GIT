@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/sprites/medium">
+        <file>rock20000.png</file>
+        <file>rock20001.png</file>
+        <file>rock20002.png</file>
+        <file>rock20003.png</file>
+        <file>rock20004.png</file>
+        <file>rock20005.png</file>
+        <file>rock20006.png</file>
+        <file>rock20007.png</file>
+        <file>rock20008.png</file>
+        <file>rock20009.png</file>
+        <file>rock20010.png</file>
+        <file>rock20011.png</file>
+        <file>rock20012.png</file>
+        <file>rock20013.png</file>
+        <file>rock20014.png</file>
+        <file>rock20015.png</file>
+        <file>rock20016.png</file>
+        <file>rock20017.png</file>
+        <file>rock20018.png</file>
+        <file>rock20019.png</file>
+        <file>rock20020.png</file>
+        <file>rock20021.png</file>
+        <file>rock20022.png</file>
+        <file>rock20023.png</file>
+        <file>rock20024.png</file>
+        <file>rock20025.png</file>
+        <file>rock20026.png</file>
+        <file>rock20027.png</file>
+        <file>rock20028.png</file>
+        <file>rock20029.png</file>
+        <file>rock20030.png</file>
+        <file>rock20031.png</file>
+    </qresource>
+</RCC>

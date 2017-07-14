@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HandControl</class>
+ <widget class="QDialog" name="HandControl">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>630</width>
+    <height>53</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Мультиметр</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cb_multimeter_cmd"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cb_multimeter_limit_U"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cb_multimeter_limit_I"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cb_multimeter_limit_R"/>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="sb_multimeter_freq"/>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="cb_auto">
+          <property name="text">
+           <string>auto</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_multimeter_run_cmd">
+          <property name="text">
+           <string>выполнить</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

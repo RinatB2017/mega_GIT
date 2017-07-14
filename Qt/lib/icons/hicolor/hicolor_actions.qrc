@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/hicolor/actions">
+        <file>actions/borderimages.png</file>
+        <file>actions/colorimages.png</file>
+        <file>actions/convertimages.png</file>
+        <file>actions/debianscreenshots.png</file>
+        <file>actions/dlna.png</file>
+        <file>actions/document-share.png</file>
+        <file>actions/effectimages.png</file>
+        <file>actions/facebook.png</file>
+        <file>actions/filterimages.png</file>
+        <file>actions/flash.png</file>
+        <file>actions/flickr.png</file>
+        <file>actions/flip-horizontal.png</file>
+        <file>actions/gallery.png</file>
+        <file>actions/grayscaleconvert.png</file>
+        <file>actions/hq.png</file>
+        <file>actions/imageshack.png</file>
+        <file>actions/imgur.png</file>
+        <file>actions/ogl.png</file>
+        <file>actions/picasa.png</file>
+        <file>actions/piwigo.png</file>
+        <file>actions/presence_away.png</file>
+        <file>actions/presence_offline.png</file>
+        <file>actions/presence_online.png</file>
+        <file>actions/presence_unknown.png</file>
+        <file>actions/rajce.png</file>
+        <file>actions/recompressimages.png</file>
+        <file>actions/renameimages.png</file>
+        <file>actions/resizeimages.png</file>
+        <file>actions/shwup.png</file>
+        <file>actions/smugmug.png</file>
+        <file>actions/timeadjust.png</file>
+        <file>actions/zooomr.png</file>
+    </qresource>
+</RCC>

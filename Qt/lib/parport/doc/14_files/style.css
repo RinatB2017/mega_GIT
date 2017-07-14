@@ -1,0 +1,704 @@
+body {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+background-color: inherit;
+color: inherit;
+margin-top: 0;
+margin-right: 0;
+margin-bottom: 0;
+margin-left: 0;
+padding-top: 0;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 0;
+}
+
+form {
+margin: 0;
+}
+
+td.tune span {
+border-bottom: 1px dashed black;
+}
+
+.story-content {
+margin-right:2px;
+margin-left:2px;
+}
+
+.story-content img {
+background-color: #ffffff;
+border: 1px solid #a9a9a9;
+display: block;
+margin: 7px 7px 7px 7px;
+padding: 4px;
+position: relative;
+}
+
+.z9 {
+font-size: 9px;
+}
+
+.z10 {
+font-size: 10px;
+}
+
+.z11 {
+font-size: 11px;
+}
+
+.z13 {
+font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+}
+
+.z14 {
+font-family: Arial, Helvetica, sans-serif; font-size: 14px;
+}
+
+.z15 {
+font-size: 15px;
+}
+
+.z16 {
+font-family: Arial, Helvetica, sans-serif; font-size: 16px;
+}
+
+.z18 {
+font-size: 18px;
+}
+
+.z20 {
+font-size: 20px;
+}
+
+A:link {
+font-family: Arial, Helvetica, sans-serif;
+color: #666666;
+background-color: inherit;
+text-decoration: underline;
+}
+
+A:visited {
+font-family: Arial, Helvetica, sans-serif;
+color: #666666;
+background-color: inherit;
+text-decoration: underline;
+}
+
+A:hover {
+font-family: Arial, Helvetica, sans-serif;
+color: #000000;
+background-color: inherit;
+text-decoration: none;
+}
+
+A:active {
+font-family: Arial, Helvetica, sans-serif;
+color: #666666;
+background-color: inherit;
+text-decoration: underline;
+}
+
+A.stocks {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+font-weight: bold;
+color: #0000ff;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.stockmenu {
+background-color: #000000;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+color: #ffffff;
+text-align: center;
+}
+
+.stockmenu A {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: bold;
+color: #ffffff;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.exms {
+cursor: pointer;
+border-bottom: 1px dashed black;
+}
+
+.hexms {
+cursor: pointer;
+color: #CCCCCC;
+}
+
+h1 {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+font-weight: bold;
+background-color: #000000;
+color: #ffffff;
+display: inline;
+}
+
+h2 {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+font-weight: bold;
+background-color: inherit;
+color: #000000;
+display: inline;
+}
+
+h3 {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-weight: bold;
+background-color: inherit;
+color: #000000;
+display: inline;
+}
+
+h4 {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+background-color: inherit;
+color: #000000;
+display: inline;
+}
+
+.thead-line {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 16px;
+font-style: normal;
+font-weight: bold;
+color: #ffcc00;
+text-align: center;
+vertical-align: middle;
+border-color: black;
+background-color: #203040;
+border-style: solid;
+}
+
+.hbox {
+background-color: #ffcc00;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 10px;
+font-weight: normal;
+color: #333333;
+}
+
+.hbox A:link {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 10px;
+font-weight: normal;
+color: #000000;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.hbox A:visited {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 10px;
+font-weight: normal;
+color: #000000;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.hbox A:hover {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 10px;
+font-weight: normal;
+color: #999999;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.hbox A:active {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 10px;
+font-weight: normal;
+color: #000000;
+background-color: inherit;
+text-decoration: none;
+}
+
+.nbox {
+background-color: #000000;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+line-height: 1.38;
+font-weight: normal;
+color: #ffffff;
+}
+
+.nbox th {
+background-color: #ffffff;
+font-size: 13px;
+font-weight: bold;
+color: #000000;
+text-align: left;
+}
+
+.nbox A:link {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-weight: normal;
+color: #cccccc;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.nbox A:visited {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-weight: normal;
+color: #cccccc;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.nbox A:hover {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-weight: normal;
+color: #ffffff;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.nbox A:active {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-weight: normal;
+color: #cccccc;
+background-color: inherit;
+display: block;
+text-decoration: none;
+}
+
+.logobox {
+background-color : #000000;
+color: #ffffff;
+}
+
+.logobox img {
+border: 1px solid #999999;
+}
+
+.logobox A:hover img{
+border: 1px solid #cccccc;
+}
+
+.lbox {
+background-color: #000000;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #ffffff;
+border-right: 0;
+border-top: 0;
+padding-left: 0;
+padding-bottom: 15px;
+border-left: 1px solid black;
+}
+
+.lbox A:link {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #cccccc;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.lbox A:visited {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #cccccc;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.lbox A:hover {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #ffffff;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.lbox A:active {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #cccccc;
+background-color: inherit;
+display: block;
+text-decoration: none;
+}
+
+.head-line {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+font-weight: bold;
+color: #ffffff;
+border: 1px solid #999999;
+background-color: #000000;
+text-align: center;
+}
+
+.title-line {
+border: 1px solid #999999;
+text-align: center;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+font-weight: bold;
+color: #ffffff;
+background-color: #000000;
+}
+
+.mainmenu td {border-right: 0;
+border-top: 0;
+padding-left: 4px;
+border-left: 0;
+border-bottom: 0;
+white-space: nowrap;
+vertical-align: text-bottom;
+}
+
+td.mainwin {
+border-right: 2px solid black;
+border-top: 0;
+padding-left: 2px;
+padding-right: 2px;
+border-left: 1px solid black;
+border-bottom: 0;
+vertical-align: top;
+}
+
+.lastforums {
+height: 160px;
+border-color: #000000;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 10px;
+font-weight: normal;
+}
+
+.lastforums td {
+border-right: 0;
+border-top: 0;
+border-left: 1px solid #999999;
+border-bottom: 1px solid #999999;
+text-align: center;
+}
+
+.lastforums A:link {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+text-decoration: none;
+}
+
+.lastforums A:visited {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+text-decoration: none;
+}
+
+.lastforums A:hover {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #000000;
+background-color: inherit;
+text-decoration: none;
+}
+
+.lastforums A:active {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+text-decoration: none;
+}
+
+.lastforums th {
+border-right: 0;
+border-top: 0;
+border-left: 0;
+border-bottom: 1px solid #999999;
+white-space: nowrap;
+}
+
+.main_news {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+}
+
+.main_news td {
+padding-left: 2px;
+padding-right: 2px;
+padding-top: 2px;
+padding-bottom: 2px;
+vertical-align: top;
+}
+
+.main_news A:link {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+text-decoration: none;
+}
+
+.main_news A:visited {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+text-decoration: none;
+}
+
+.main_news A:hover {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+color: #000000;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.main_news A:active {
+font-family : Arial, Helvetica, sans-serif;
+font-size : 12px;
+font-weight : normal;
+color : #666666;
+background-color : inherit;
+text-decoration : none;
+}
+
+.main_news div {
+font-size : 10px;
+margin:0;
+background-color:#e0e0e0;
+color : #000000;
+white-space : nowrap;
+padding : 1px;
+display : inline;
+}
+
+.dayfoto {
+height: 160px;
+border-color: #000000;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 10px;
+font-weight: normal;
+}
+
+.dayfoto td {
+border-right: 0;
+border-top: 0;
+border-left: 0;
+border-bottom: 0;
+text-align: center;
+}
+
+.dayfoto th {
+border-right: 0;
+border-top: 0;
+border-left: 0;
+border-bottom: 1px solid #999999;
+}
+
+.headdatasheets {
+vertical-align: top;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 11px;
+}
+
+.headdatasheets input {
+margin: 0;
+padding: 0;
+margin-left: 1px;
+height: 13px;
+}
+
+.headdatasheets_checkbox {
+margin:1px;
+padding:1px;
+height:13px;
+width:13px;
+vertical-align: bottom;
+margin-left: 0;
+}
+
+
+.yellowform td {
+height: 20px;
+color: inherit;
+background-color: #ffcc00;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+}
+
+.yellowformdocs td {
+height: 20px;
+color: inherit;
+background-color: #ffcc00;
+text-align: center;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+}
+
+.stocklist {
+font-family: Tahoma, Helvetica, sans-serif;
+border-color: #000000;
+}
+
+.stocklist th {
+background-color: #000000;
+color: #ffffff;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+white-space: nowrap;
+text-align: center;
+}
+
+.stocklist td {
+background-color: #f0f0f0;
+color: inherit;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+text-align: center;
+}
+
+.search_datasheets {
+font-family: Tahoma, Helvetica, sans-serif;
+border-color: #000000;
+}
+
+.search_datasheets th {
+background-color: #cccccc;
+color: inherit;
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+white-space: nowrap;
+}
+
+.yellowformdocs A:link {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+color: #000000;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.yellowformdocs A:visited {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+color: #000000;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.yellowformdocs A:hover {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+color: #666666;
+background-color: inherit;
+text-decoration: none;
+}
+
+.yellowformdocs A:active {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+color: #000000;
+background-color: inherit;
+text-decoration: underline;
+}
+
+.blistlinks td {
+border-right: 1px solid #999999;
+border-top: 1px solid #999999;
+border-left: 1px solid #999999;
+border-bottom: 1px solid #999999;
+}
+
+.wlistlinks td {
+border-right: 1px solid #999999;
+border-top: 1px solid #999999;
+border-left: 1px solid #999999;
+border-bottom: 1px solid #999999;
+}
+
+.wlistlinks A:link {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.wlistlinks A:visited {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}
+
+.wlistlinks A:hover {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+color: #000000;
+background-color: inherit;
+display: block;
+text-decoration: none;
+}
+
+.wlistlinks A:active {
+font-family: Tahoma, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: normal;
+color: #666666;
+background-color: inherit;
+display: block;
+text-decoration: underline;
+}

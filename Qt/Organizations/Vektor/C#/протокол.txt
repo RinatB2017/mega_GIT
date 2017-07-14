@@ -1,0 +1,46 @@
+//------------------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------------------
+USBD_HID0_GetReport
+0x2a // общие настройки
+        buf[1] == 0x20 // Uptime
+        buf[1] == 0x80 // BoardRevision
+        buf[1] == 0x81 // SerialNumber
+0x8a // AD9106, General Registers Read
+        buf[1]          // rep_num_done
+0x8b // AD9106, SRAM Read
+        buf[1]          // rep_num_done
+0x8c // AD9106, Update, Config Read
+        //---
+        
+0x8f // AD9106, Register Read
+        buf[1] == 1
+        
+0x9a // ADT7519
+        buf[1] == 0x10 // temp
+        buf[1] == 0x20 // adc
+//------------------------------------------------------------------------------------------
+USBD_HID0_SetReport
+0x20 // общие настройки
+        //---
+0x80 // AD9106, Registers Write
+        buf[1]          // rep_num_done
+0x81 // AD9106, SRAM Write
+        buf[1]          // rep_num_done
+0x82 // AD9106, Update, Config Write
+        rep_buffer[1] == 0x20 // Play pattern from SRAM
+        rep_buffer[1] == 0x30 // усиление
+        rep_buffer[1] == 0x31 // период паттерна
+        rep_buffer[1] == 0x32 // фазовый сдвиг
+        rep_buffer[1] == 0x33 // цифровой сдвиг
+        rep_buffer[1] == 0x34 // 
+        rep_buffer[1] == 0x80 // Manual Reset AD9106
+        rep_buffer[1] == 0x90 // Update Settings
+        rep_buffer[1] == 0x92 // Stop All
+0x85 // AD9106, Register Write
+        rep_buffer[1] == 0x01
+0x90 // ADT7519 Write
+        rep_buffer[1] == 0x30 // dac
+        rep_buffer[1] == 0x80 // reset
+
+//------------------------------------------------------------------------------------------

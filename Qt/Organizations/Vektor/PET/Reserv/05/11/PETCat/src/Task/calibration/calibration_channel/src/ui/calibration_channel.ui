@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Calibration_channel</class>
+ <widget class="QWidget" name="Calibration_channel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>1360</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout_9">
+        <property name="leftMargin">
+         <number>8</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>8</number>
+        </property>
+        <property name="bottomMargin">
+         <number>8</number>
+        </property>
+        <item row="27" column="2">
+         <widget class="QSpinBox" name="sb_pm_bias_get_offset"/>
+        </item>
+        <item row="35" column="1">
+         <widget class="QLabel" name="label_34">
+          <property name="text">
+           <string>Температура модуля сопряжения, смещение измерения</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
+         <widget class="QSpinBox" name="sb_in_offset_set_gain"/>
+        </item>
+        <item row="36" column="1">
+         <widget class="QLabel" name="label_35">
+          <property name="text">
+           <string>Температура модуля сопряжения, наклон измерения</string>
+          </property>
+         </widget>
+        </item>
+        <item row="21" column="2">
+         <widget class="QSpinBox" name="sb_adc_ref_get_offset"/>
+        </item>
+        <item row="22" column="1">
+         <widget class="QLabel" name="label_27">
+          <property name="text">
+           <string>Опорное напряжение АЦП, наклон измерения (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="28" column="2">
+         <widget class="QSpinBox" name="sb_pm_bias_get_gain"/>
+        </item>
+        <item row="31" column="1">
+         <widget class="QLabel" name="label_32">
+          <property name="text">
+           <string>Температура платы считывания, смещение измерения</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="2">
+         <widget class="QSpinBox" name="sb_in_threshold_set_gain"/>
+        </item>
+        <item row="24" column="0" colspan="3">
+         <widget class="QLabel" name="label_41">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Напряжение смещения ФЭУ</string>
+          </property>
+         </widget>
+        </item>
+        <item row="26" column="1">
+         <widget class="QLabel" name="label_29">
+          <property name="text">
+           <string>Напряжение смещения ФЭУ, наклон установки (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <widget class="QLabel" name="label_37">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Поправка метки времени</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="2">
+         <widget class="QSpinBox" name="sb_in_threshold_set_offset"/>
+        </item>
+        <item row="4" column="2">
+         <widget class="QSpinBox" name="sb_ts_offset"/>
+        </item>
+        <item row="19" column="2">
+         <widget class="QSpinBox" name="sb_adc_ref_set_offset"/>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Смещение сигнала ФЭУ, смещение установки (мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="20" column="1">
+         <widget class="QLabel" name="label_25">
+          <property name="text">
+           <string>Опорное напряжение АЦП, наклон установки (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="22" column="2">
+         <widget class="QSpinBox" name="sb_adc_ref_get_gain"/>
+        </item>
+        <item row="7" column="2">
+         <widget class="QSpinBox" name="sb_in_offset_set_offset"/>
+        </item>
+        <item row="19" column="1">
+         <widget class="QLabel" name="label_24">
+          <property name="text">
+           <string>Опорное напряжение АЦП, смещение установки (мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="2">
+         <widget class="QSpinBox" name="sb_in_offset_get_offset"/>
+        </item>
+        <item row="18" column="0" colspan="3">
+         <widget class="QLabel" name="label_40">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Опорное напряжение АЦП</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="2">
+         <widget class="QSpinBox" name="sb_in_threshold_get_offset"/>
+        </item>
+        <item row="37" column="3">
+         <widget class="QPushButton" name="btn_ifmodule_temp">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="2">
+         <widget class="QSpinBox" name="sb_in_thresholdga_get_gain"/>
+        </item>
+        <item row="32" column="1">
+         <widget class="QLabel" name="label_33">
+          <property name="text">
+           <string>Температура платы считывания, наклон измерения</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="3">
+         <widget class="QPushButton" name="btn_offset">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="3">
+         <widget class="QPushButton" name="btn_threshold">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="1">
+         <widget class="QLabel" name="label_14">
+          <property name="text">
+           <string>Порог дискриминации, смещение установки (мВ</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="2">
+         <widget class="QSpinBox" name="sb_in_offset_get_gain"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QWidget" name="widget_2" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Смещение сигнала ФЭУ, наклон измерения (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="1">
+         <widget class="QLabel" name="label_23">
+          <property name="text">
+           <string>Порог дискриминации, наклон измерения (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Поправка метки времени (пс)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="20" column="2">
+         <widget class="QSpinBox" name="sb_adc_ref_set_gain"/>
+        </item>
+        <item row="15" column="1">
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string>Порог дискриминации, смещение измерения (мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QLabel" name="label_36">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Координатные сигналы</string>
+          </property>
+         </widget>
+        </item>
+        <item row="25" column="2">
+         <widget class="QSpinBox" name="sb_pm_bias_set_offset"/>
+        </item>
+        <item row="30" column="0" colspan="3">
+         <widget class="QLabel" name="label_42">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Температура платы считывания</string>
+          </property>
+         </widget>
+        </item>
+        <item row="25" column="1">
+         <widget class="QLabel" name="label_28">
+          <property name="text">
+           <string>Напряжение смещения ФЭУ, смещение установки (мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="34" column="0" colspan="3">
+         <widget class="QLabel" name="label_43">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Температура модуля сопряжения</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Смещение сигнала ФЭУ, наклон установки (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0" colspan="3">
+         <widget class="QLabel" name="label_39">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Порог дискриминации</string>
+          </property>
+         </widget>
+        </item>
+        <item row="21" column="1">
+         <widget class="QLabel" name="label_26">
+          <property name="text">
+           <string>Опорное напряжение АЦП, наклон установки (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="26" column="2">
+         <widget class="QSpinBox" name="sb_pm_bias_set_gain"/>
+        </item>
+        <item row="23" column="3">
+         <widget class="QPushButton" name="btn_adc_ref">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="27" column="1">
+         <widget class="QLabel" name="label_30">
+          <property name="text">
+           <string>Напряжение смещения ФЭУ, смещение измерения (мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="3">
+         <widget class="QPushButton" name="btn_ts_offset">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="28" column="1">
+         <widget class="QLabel" name="label_31">
+          <property name="text">
+           <string>Напряжение смещения ФЭУ, наклон измерения (1/мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>Смещение сигнала ФЭУ, смещение измерения (мВ)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="29" column="3">
+         <widget class="QPushButton" name="btn_pm_bias">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="3">
+         <widget class="QLabel" name="label_38">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Смещение сигнала ФЭУ</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="4" column="2">
+             <widget class="QSpinBox" name="sb_B_yn"/>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>B</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Y-</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>X-</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="sb_K_xn"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_12">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>X+</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>K</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QSpinBox" name="sb_B_xn"/>
+            </item>
+            <item row="4" column="1">
+             <widget class="QSpinBox" name="sb_K_yn"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Y+</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QSpinBox" name="sb_B_xp"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QSpinBox" name="sb_K_yp"/>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="sb_K_xp"/>
+            </item>
+            <item row="3" column="2">
+             <widget class="QSpinBox" name="sb_B_yp"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="14" column="1">
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>Порог дискриминации, смещение установки (мВ</string>
+          </property>
+         </widget>
+        </item>
+        <item row="33" column="3">
+         <widget class="QPushButton" name="btn_readout_temp">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="btn_coord">
+          <property name="text">
+           <string>Калибровать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="31" column="2">
+         <widget class="QDoubleSpinBox" name="dsb_readout_temp_get_offset"/>
+        </item>
+        <item row="32" column="2">
+         <widget class="QDoubleSpinBox" name="dsb_readout_temp_get_gain"/>
+        </item>
+        <item row="35" column="2">
+         <widget class="QDoubleSpinBox" name="dsb_ifmodule_temp_get_offset"/>
+        </item>
+        <item row="36" column="2">
+         <widget class="QDoubleSpinBox" name="dsb_ifmodule_temp_get_gain"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>sb_K_xp</tabstop>
+  <tabstop>sb_B_xp</tabstop>
+  <tabstop>sb_K_xn</tabstop>
+  <tabstop>sb_B_xn</tabstop>
+  <tabstop>sb_K_yp</tabstop>
+  <tabstop>sb_B_yp</tabstop>
+  <tabstop>sb_K_yn</tabstop>
+  <tabstop>sb_B_yn</tabstop>
+  <tabstop>btn_coord</tabstop>
+  <tabstop>sb_ts_offset</tabstop>
+  <tabstop>btn_ts_offset</tabstop>
+  <tabstop>sb_in_offset_set_offset</tabstop>
+  <tabstop>sb_in_offset_set_gain</tabstop>
+  <tabstop>sb_in_offset_get_offset</tabstop>
+  <tabstop>sb_in_offset_get_gain</tabstop>
+  <tabstop>btn_offset</tabstop>
+  <tabstop>sb_in_threshold_set_offset</tabstop>
+  <tabstop>sb_in_threshold_set_gain</tabstop>
+  <tabstop>sb_in_threshold_get_offset</tabstop>
+  <tabstop>sb_in_thresholdga_get_gain</tabstop>
+  <tabstop>btn_threshold</tabstop>
+  <tabstop>sb_adc_ref_set_offset</tabstop>
+  <tabstop>sb_adc_ref_set_gain</tabstop>
+  <tabstop>sb_adc_ref_get_offset</tabstop>
+  <tabstop>sb_adc_ref_get_gain</tabstop>
+  <tabstop>btn_adc_ref</tabstop>
+  <tabstop>sb_pm_bias_set_offset</tabstop>
+  <tabstop>sb_pm_bias_set_gain</tabstop>
+  <tabstop>sb_pm_bias_get_offset</tabstop>
+  <tabstop>sb_pm_bias_get_gain</tabstop>
+  <tabstop>btn_pm_bias</tabstop>
+  <tabstop>dsb_readout_temp_get_offset</tabstop>
+  <tabstop>dsb_readout_temp_get_gain</tabstop>
+  <tabstop>btn_readout_temp</tabstop>
+  <tabstop>dsb_ifmodule_temp_get_offset</tabstop>
+  <tabstop>dsb_ifmodule_temp_get_gain</tabstop>
+  <tabstop>btn_ifmodule_temp</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

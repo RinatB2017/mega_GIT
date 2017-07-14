@@ -1,0 +1,941 @@
+<!--?xml version="1.0"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="verify-v1" content="6x3f9C0kp23CqhzWmfcRgPGcRZ8zS8WyDaS6a0JlNUk="> 
+<title>A tutorial on Parallel port Interfacing</title>
+<meta name="author" content="Logix4u">
+<meta name="description" content="Parallel port interfacing tutorial">
+<meta name="keywords" content="parallel ,port ,interfacing ,windows , NT ,2000 , lpt , driver , inp , outp , inpout , VB , visual basic , vc++ , visual c++ , dll , xp">
+<!-- base href="http://logix4u.net/" -->
+	<link rel="shortcut icon" href="http://logix4u.net/images/favicon.ico">
+	 
+<link href="A_tutorial_on_Parallel_port_Interfacing_files/template_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0">
+
+<!-- google_ad_section_start(weight=ignore) -->
+
+<a name="top" id="top"></a>
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+    <tbody><tr>
+      <td background="A_tutorial_on_Parallel_port_Interfacing_files/shad_left.gif" valign="top">
+      <img src="A_tutorial_on_Parallel_port_Interfacing_files/shad_top_left.gif" border="0" height="17" width="11"></td>
+      <td valign="top" width="100%">
+      <table bgcolor="#000000" border="0" cellspacing="1" width="100%">
+        <tbody><tr>
+          <td width="100%">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody><tr>
+                <td class="pathway" align="left" valign="center"><img src="A_tutorial_on_Parallel_port_Interfacing_files/arrow.png" hspace="5"><span class="pathway"><a href="http://logix4u.net/" class="pathway">Home</a> <img src="A_tutorial_on_Parallel_port_Interfacing_files/arrow.png" alt="arrow"> <a href="http://logix4u.net/Legacy_Ports/Parallel_Port.html" class="pathway">Parallel Port</a> <img src="A_tutorial_on_Parallel_port_Interfacing_files/arrow.png" alt="arrow">   A tutorial on Parallel port Interfacing </span></td>
+                <td class="pathway" align="right" valign="center">Wednesday, July 06 2011&nbsp;&nbsp;</td>
+              </tr>
+            </tbody></table>
+          </td>
+        </tr>
+        <tr height="50">           
+        <td width="100%">
+            
+            <table bgcolor="#666699" border="0" cellpadding="0" cellspacing="0" height="50" width="100%">
+              <tbody><tr>        
+                  <!-- Print website name -->    
+	              <td td="" bgcolor="#666699"> 
+	              	<font color="white" size="5">
+	              		www.logix4u.net	              	</font>
+	              </td>
+ 
+	              <!-- header Modules -->
+	                            
+              </tr>
+            </tbody></table>
+
+
+        </td>
+
+        </tr>
+        <tr>
+          <td background="A_tutorial_on_Parallel_port_Interfacing_files/but_bar_back.gif" bgcolor="#AFC6DB" width="100%">
+                    </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF" width="100%">
+          <table style="border-collapse: collapse;" id="AutoNumber1" border="0" cellpadding="4" cellspacing="0" width="100%">
+            <tbody><tr>
+              <!-- LEFT Modules -->
+                                <td bgcolor="#F0F0F0" valign="top" width="150">
+                    <div class="modules">
+                    		<table class="moduletable" cellpadding="0" cellspacing="0">
+					<tbody><tr>
+				<th valign="top">
+					Contents				</th>
+			</tr>
+					<tr>
+			<td>
+				<table xwvk="" border="0" cellpadding="0" cellspacing="1" width="100%"><tbody><tr><td align="left">
+<link rel="StyleSheet" href="A_tutorial_on_Parallel_port_Interfacing_files/dtree.css" type="text/css">
+<script type="text/javascript" src="A_tutorial_on_Parallel_port_Interfacing_files/dtree.js"></script>
+<script type="text/javascript">
+d33_1 = new dTree('d33_1',"http://logix4u.net");
+d33_1.config.useSelection=true;
+d33_1.config.useLines=true;
+d33_1.config.useIcons=true;
+d33_1.config.useStatusText=false;
+d33_1.config.closeSameLevel=false;
+d33_1.add(0,-1,"Home","http://logix4u.net/","","")
+d33_1.add(40,0,
+		    "DSP","http://logix4u.net/DSP/","","")
+d33_1.add(42,0,
+		    "Parallel Port","http://logix4u.net/Legacy_Ports/Parallel_Port.html","","")
+d33_1.add(51,0,
+		    "Storage","http://logix4u.net/Storage_Systems/Introduction_to_storage_systems.html","","")
+d33_1.add(53,0,
+		    "Python","http://logix4u.net/Python/","","")
+d33_1.add(37,0,
+		    "Forum","http://logix4u.net/Forum/","","")
+d33_1.add(39,0,
+		    "Sitemap","http://logix4u.net/component/option,com_joomap/Itemid,39/","","")
+d33_1.add(43,0,
+		    "Links","http://logix4u.net/component/option,com_linx/Itemid,43/","","")
+d33_1.add(38,0,
+		    "Contact Us","http://logix4u.net/Contact_Us/","","")
+document.write(d33_1);
+d33_1.closeAll();
+d33_1.openTo(42,true);
+</script>
+</td></tr></tbody></table>
+			</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+					<tbody><tr>
+				<th valign="top">
+					Bookmark				</th>
+			</tr>
+					<tr>
+			<td>
+				<!-- AddThis Bookmark Button BEGIN --><br>
+<script type="text/javascript">
+addthis_url    = location.href;   
+addthis_title  = document.title;  
+addthis_pub    = 'raygonbt';     </script>
+<script type="text/javascript" src="A_tutorial_on_Parallel_port_Interfacing_files/addthis_widget.asc">
+</script><!-- AddThis Bookmark Button END --><br><br>
+			</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+					<tbody><tr>
+				<th valign="top">
+					Login				</th>
+			</tr>
+					<tr>
+			<td>
+				<form action="http://logix4u.net/index.php?option=com_comprofiler&amp;task=login" method="post" id="mod_loginform" style="margin:0px;">
+
+<table class="mod_login" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td><span id="mod_login_usernametext"><label for="mod_login_username">Username</label></span><br>
+<input name="username" id="mod_login_username" class="inputbox" size="10" type="text"><br>
+<span id="mod_login_passwordtext"><label for="mod_login_password">Password</label></span><br><input name="passwd" id="mod_login_password" class="inputbox" size="10" type="password"><br>
+<input name="op2" value="login" type="hidden">
+<input name="lang" value="english" type="hidden">
+<input name="force_session" value="1" type="hidden">
+<input name="return" value="http://logix4u.net/Legacy_Ports/Parallel_Port/A_tutorial_on_Parallel_port_Interfacing.html" type="hidden">
+<input name="message" value="0" type="hidden">
+<input name="jfbbf7d0ecda6f8a5c81a46af06034be0" value="1" type="hidden">
+<input name="remember" id="mod_login_remember" class="inputbox" value="yes" checked="checked" type="checkbox"> <span id="mod_login_remembermetext"><label for="mod_login_remember">Remember me</label></span><br>
+<input name="Submit" class="button" value="Login" type="submit"></td></tr>
+<tr><td><a href="http://logix4u.net/index.php?option=com_comprofiler&amp;task=lostPassword" class="mod_login">Lost Password?</a></td></tr>
+<tr><td>No account yet? <a href="http://logix4u.net/index.php?option=com_comprofiler&amp;task=registers" class="mod_login">Register</a></td></tr>
+</tbody></table></form>			</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+					<tbody><tr>
+				<th valign="top">
+					Donate				</th>
+			</tr>
+					<tr>
+			<td>
+				<table border="0" height="10" width="100%">
+<tbody><tr align="left" height="1">
+<td height="1">
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input name="cmd" value="_s-xclick" type="hidden">
+<input src="A_tutorial_on_Parallel_port_Interfacing_files/x-click-but21.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" border="0" type="image">
+<img alt="" src="A_tutorial_on_Parallel_port_Interfacing_files/pixel.gif" border="0" height="1" width="1">
+<input name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+" type="hidden">
+</form>
+
+
+</td>
+</tr>
+</tbody></table>			</td>
+		</tr>
+		</tbody></table>
+		 			<table class="moduletable" cellpadding="0" cellspacing="0">
+					<tbody><tr>
+				<th valign="top">
+					Partners				</th>
+			</tr>
+					<tr>
+			<td>
+				<a href="http://www.winasm.net/" target="_self" title="WinAsm Studio, The Assembler IDE - Free Downloads, Source Code"><span style="font-size: 10pt"><b>WinAsm Studio</b></span></a> 
+			</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+					<tbody><tr>
+				<th valign="top">
+					Related Items				</th>
+			</tr>
+					<tr>
+			<td>
+								<ul>
+											<li>
+							<a href="http://logix4u.net/Programming/vc++/A_Tutorial_on_creating_DLLs_with_VC++.html">
+								A Tutorial on creating DLLs with VC++</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/Legacy_Ports/Parallel_Port/How_Inpout32.dll_works_.html">
+								How Inpout32.dll works ?</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/Legacy_Ports/Parallel_Port/Inpout32.dll_for_Windows_98/2000/NT/XP.html">
+								Inpout32.dll for Windows 98/2000/NT/XP</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/DSP/Tutorials/DSP_tutorial.html">
+								DSP tutorial</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/DSP/Digital_Filters/Digital_filters.html">
+								Digital filters</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/DSP/Discrete_Fourier_Transform/Visual_Basic_sample_program_for_Discrete_Fourier_Transform.html">
+								Visual Basic sample program for Discrete Fourier Transform</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/DSP/Fast_Fourier_Transform/Visual_Basic_program_for_Fast_Fourier_Transform.html">
+								Fast Fourier Transform Source code in Visual Basic - FFT</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/DSP/Digital_Filters/Moving_Average_Filter.html">
+								Moving Average Filter</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/DSP/Digital_Filters/Windowed_sinc_filter.html">
+								Windowed sinc filter</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/Legacy_Ports/Parallel_Port/Inpoutx64.dll_for_WIN_XP_64_bit.html">
+								Inpoutx64.dll for WIN XP 64 bit</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/Storage_Systems/Introduction_to_storage_systems/storageintro1.html">
+								Introduction to Storage Systems Part1</a>
+						</li>
+												<li>
+							<a href="http://logix4u.net/Python/Tutorials/How_to_create_Windows_executable_exe_from_Python_script.html">
+								How to create Windows executable (.exe) from Python script</a>
+						</li>
+										</ul>
+							</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+					<tbody><tr>
+				<th valign="top">
+					Latest posts				</th>
+			</tr>
+					<tr>
+			<td>
+				<ul>
+<li><span title="Inpout32.dll Discussion &gt; How to read status registry?"><a href="http://logix4u.net/Inpout32.dll_Discussion/How_to_read_status_registry.html#135">How to read status registry?</a><br><small>tomi127 05-07-11 12:53</small></span></li>
+<li><span title="Inpout32.dll Discussion &gt; inpout32.dll Excel VBA"><a href="http://logix4u.net/Inpout32.dll_Discussion/inpout32.dll_Excel_VBA.html#134">inpout32.dll Excel VBA</a><br><small>flskalka 04-07-11 21:31</small></span></li>
+<li><span title="Parallel Port Interfacing Discussion &gt; Re:parallel port addresses"><a href="http://logix4u.net/Parallel_Port_Interfacing_Discussion/Reparallel_port_addresses.html#133">Re:parallel port addresses</a><br><small>SVRobots 23-06-11 19:01</small></span></li>
+<li><span title="Parallel Port Interfacing Discussion &gt; Control Stepper motor with parallel port"><a href="http://logix4u.net/Parallel_Port_Interfacing_Discussion/Control_Stepper_motor_with_parallel_port.html#132">Control Stepper motor with parallel port</a><br><small>saathis 11-05-11 10:30</small></span></li>
+<li><span title="Parallel Port Interfacing Discussion &gt; LEDs display ?"><a href="http://logix4u.net/Parallel_Port_Interfacing_Discussion/LEDs_display_.html#131">LEDs display ?</a><br><small>umair 03-05-11 15:33</small></span></li>
+<li><span title="Inpout32.dll Discussion &gt; Am I getting a memory leak?"><a href="http://logix4u.net/Inpout32.dll_Discussion/Am_I_getting_a_memory_leak.html#130">Am I getting a memory leak?</a><br><small>senrdev 28-04-11 13:25</small></span></li>
+<li><span title="Parallel Port Interfacing Discussion &gt; How to program parallel according to speech"><a href="http://logix4u.net/Parallel_Port_Interfacing_Discussion/How_to_program_parallel_according_to_speech.html#129">How to program parallel according to speech</a><br><small>saathis 26-04-11 17:23</small></span></li>
+<li><span title="Parallel Port Interfacing Discussion &gt; about Inpoutx64.dll"><a href="http://logix4u.net/Parallel_Port_Interfacing_Discussion/about_Inpoutx64.dll.html#128">about Inpoutx64.dll</a><br><small>nattachait 25-04-11 09:45</small></span></li>
+<li><span title="Inpout32.dll Discussion &gt; Using Inpout32.dll with WinBinder"><a href="http://logix4u.net/Inpout32.dll_Discussion/Using_Inpout32.dll_with_WinBinder.html#127">Using Inpout32.dll with WinBinder</a><br><small>Grange_Bruyere 11-04-11 17:15</small></span></li>
+<li><span title="Parallel Port Interfacing Discussion &gt; Re:Controlling Toy Car's Remote control with parallel"><a href="http://logix4u.net/Parallel_Port_Interfacing_Discussion/ReControlling_Toy_Car_s_Remote_control_with_parallel.html#126">Re:Controlling Toy Car's Remote control...</a><br><small>kailawills 02-03-11 08:18</small></span></li>
+</ul>
+<br><a href="http://logix4u.net/index.php?option=com_fireboard&amp;Itemid=37&amp;func=latest&amp;do=show&amp;sel=168">More...</a>			</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+				<tbody><tr>
+			<td>
+							</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+				<tbody><tr>
+			<td>
+				
+<!-- Joomla-Visites -->
+<a href="http://www.joomla-visites.net/" title="Joomla-Visites | Web statistics tool for Joomla!" onclick="window.open(this.href);return(false);"><script type="text/javascript">
+<!--
+var a_vars = Array();
+var pagename='';
+
+var joomlaVisitesSite = 1;
+var joomlaVisitesURL = "http://logix4u.net/components/com_joomla-visites/joomla-visites.php";
+var joomlaVisitesUser = 0;//-->
+</script>
+<script language="javascript" src="A_tutorial_on_Parallel_port_Interfacing_files/joomla-visites.js" type="text/javascript"></script>
+<noscript><p>Joomla-Visites | Web statistics tool for Joomla!
+<img src="A_tutorial_on_Parallel_port_Interfacing_files/joomla-visites.htm" alt="Statistics" style="border: 0pt none;">
+</p></noscript></a>
+<!-- /Joomla-Visites --> 			</td>
+		</tr>
+		</tbody></table>
+		                    </div>
+                  </td>
+                                <td valign="top">
+              <!-- Top Modules -->
+              
+              <!-- google_ad_section_end -->
+<script type="text/javascript"><!--
+google_ad_client = "pub-6974310080265953";
+/* 728x90, created 12/29/09 */
+google_ad_slot = "1562509571";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="A_tutorial_on_Parallel_port_Interfacing_files/show_ads.js">
+</script>
+              <!-- google_ad_section_start -->
+              
+               				<table class="contentpaneopen">
+			<tbody><tr>
+							<td class="contentheading" width="100%">
+							</td>
+						<td class="buttonheading" align="right" width="100%">
+				<a href="http://logix4u.net/index2.php?option=com_content&amp;do_pdf=1&amp;id=15" target="_blank" onclick="window.open('http://logix4u.net/index2.php?option=com_content&amp;do_pdf=1&amp;id=15','win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no'); return false;" title="PDF">
+					<img src="A_tutorial_on_Parallel_port_Interfacing_files/pdf_button.png" alt="PDF" name="PDF" align="middle" border="0"></a>
+			</td>
+							<td class="buttonheading" align="right" width="100%">
+					<a href="http://logix4u.net/index2.php?option=com_content&amp;task=view&amp;id=15&amp;pop=1&amp;page=0&amp;Itemid=42" target="_blank" onclick="window.open('http://logix4u.net/index2.php?option=com_content&amp;task=view&amp;id=15&amp;pop=1&amp;page=0&amp;Itemid=42','win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no'); return false;" title="Print">
+						<img src="A_tutorial_on_Parallel_port_Interfacing_files/printButton.png" alt="Print" name="Print" align="middle" border="0"></a>
+				</td>
+							<td class="buttonheading" align="right" width="100%">
+				<a href="http://logix4u.net/index2.php?option=com_content&amp;task=emailform&amp;id=15&amp;itemid=42" target="_blank" onclick="window.open('http://logix4u.net/index2.php?option=com_content&amp;task=emailform&amp;id=15&amp;itemid=42','win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=400,height=250,directories=no,location=no'); return false;" title="E-mail">
+					<img src="A_tutorial_on_Parallel_port_Interfacing_files/emailButton.png" alt="E-mail" name="E-mail" align="middle" border="0"></a>
+			</td>
+						</tr>
+			</tbody></table>
+			
+		<table class="contentpaneopen">
+				<tbody><tr>
+			<td colspan="2" valign="top">
+				<div class="author_profile"><a href="http://logix4u.net/index.php?option=com_comprofiler&amp;task=userProfile&amp;user=62" align="left"><img src="A_tutorial_on_Parallel_port_Interfacing_files/airplane.gif" class="authorimg" border="0"><div class="authorimg_caption"></div></a></div><p align="left">
+<b><u>Introduction</u></b>
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Parallel 
+port is a simple and inexpensive tool for building computer controlled 
+devices and projects. The simplicity and ease of programming makes 
+parallel port popular in electronics hobbyist world. The parallel port 
+is often used in Computer controlled robots, Atmel/PIC programmers, home
+ automation, ...etc... Here a simple tutorial on parallel port 
+interfacing and programming with some examples.
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Everybody 
+knows what is parallel port, where it can be found, and for what it is 
+being used. the primary use of parallel port is to connect printers to 
+computer and is specifically designed for this purpose. Thus it is often
+ called as printer Port or Centronics port (this name came from a 
+popular printer manufacturing company 'Centronics' who devised some 
+standards for parallel port). You can see the parallel port connector in
+ the rear panel of your PC. It is a 25 pin female (DB25) connector (to 
+which printer is connected). On almost all the PCs only one parallel 
+port is present, but you can add more by buying and inserting ISA/PCI 
+parallel port cards. 
+</p>
+<p>
+<br>
+<b><u>Parallel port modes<br>
+</u></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The <a href="http://www.fapo.com/ieee1284.htm" target="_blank">IEEE 1284 Standard</a> which has been published in 1994 defines five modes of data transfer for parallel port. They are,
+</p>
+<p>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1) Compatibility Mode <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2) Nibble Mode<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3) Byte Mode<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4) EPP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5) ECP</b>
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 
+programs, circuits and other information found in this tutorial are 
+compatible to almost all types of parallel ports and can be used without
+ any problems (Not tested, just because of confidence ! ). More 
+information on parallel port operating modes can be found <a href="http://www.fapo.com/ieee1284.htm" target="_blank">here</a>. 
+</p>
+<p>
+<b><u>Hardware</u></b><br>
+The pin outs of DB25 connector is shown in the picture below
+</p>
+<div style="text-align: center">
+<img src="A_tutorial_on_Parallel_port_Interfacing_files/parallel.gif" alt="Parallel Port" border="1" height="197" width="364">
+</div>
+<p>
+The lines in DB25 connector are divided in to three groups, they are
+</p>
+<p>
+&nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp; 1) Data lines (data bus)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2) Control lines<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3) Status lines</b>
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As the name
+ refers , data is transferred over data lines , Control lines are used 
+to control the peripheral and of course , the peripheral returns status 
+signals back computer through Status lines. These lines are connected to
+ Data, Control And Status registers internally . The details of parallel
+ port signal lines are given below
+</p>
+<table align="center" border="1" cellspacing="1" height="30" width="50">
+	<tbody>
+		<tr>
+			<td><b>Pin No (DB25)</b></td>
+			<td><b>Signal name</b></td>
+			<td><b>Direction</b></td>
+			<td><b>Register - bit</b></td>
+			<td><b>Inverted</b></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>nStrobe</td>
+			<td>Out</td>
+			<td>Control-0</td>
+			<td>Yes</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Data0</td>
+			<td>In/Out</td>
+			<td>Data-0</td>
+			<td>No</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Data1 </td>
+			<td>In/Out </td>
+			<td>Data-1 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>Data2 </td>
+			<td>In/Out </td>
+			<td>Data-2 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>Data3 </td>
+			<td>In/Out </td>
+			<td>Data-3 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td>Data4 </td>
+			<td>In/Out </td>
+			<td>Data-4 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>Data5 </td>
+			<td>In/Out </td>
+			<td>Data-5 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>Data6 </td>
+			<td>In/Out </td>
+			<td>Data-6 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td>Data7 </td>
+			<td>In/Out </td>
+			<td>Data-7 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td>nAck </td>
+			<td>In </td>
+			<td>Status-6 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>11</td>
+			<td>Busy </td>
+			<td>In </td>
+			<td>Status-7 </td>
+			<td>Yes </td>
+		</tr>
+		<tr>
+			<td>12</td>
+			<td>Paper-Out </td>
+			<td>In </td>
+			<td>Status-5 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>13</td>
+			<td>Select </td>
+			<td>In </td>
+			<td>Status-4 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>14</td>
+			<td>Linefeed </td>
+			<td>Out </td>
+			<td>Control-1 </td>
+			<td>Yes </td>
+		</tr>
+		<tr>
+			<td>15</td>
+			<td>nError </td>
+			<td>In </td>
+			<td>Status-3 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>16</td>
+			<td>nInitialize </td>
+			<td>Out </td>
+			<td>Control-2 </td>
+			<td>No </td>
+		</tr>
+		<tr>
+			<td>17</td>
+			<td>nSelect-Printer </td>
+			<td>Out </td>
+			<td>Control-3 </td>
+			<td>Yes </td>
+		</tr>
+		<tr>
+			<td>18-25</td>
+			<td>Ground </td>
+			<td>- </td>
+			<td>- </td>
+			<td>- </td>
+		</tr>
+	</tbody>
+</table>
+<p>
+<b><u>Parallel port registers<br>
+</u></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As 
+you know, the Data, Control and status lines are connected to there 
+corresponding registers inside the computer. So by manipulating these 
+registers in program , one can easily read or write to parallel port 
+with programming languages like 'C' and BASIC.
+</p>
+<p>
+The registers found in standard parallel port are ,
+</p>
+<p>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1) data register<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2) Status register<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3) Control register</b>
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As there 
+names specifies, Data register is connected to Data lines, Control 
+register is connected to control lines and Status register is connected 
+to Status lines. (Here the word connection does not mean that there is 
+some physical connection between data/control/status lines. The 
+registers are virtually connected to the corresponding lines.). So what 
+ever you write to these registers , will appear in corresponding lines 
+as voltages, Of course, you can measure it with a multimeter. And What 
+ever you give to Parallel port as voltages can be read from these 
+registers(with some restrictions). For example , if we write '1' to Data
+ register , the line Data0 will be driven to +5v. Just like this ,we can
+ programmatically turn on and off any of the data lines and Control 
+lines. 
+</p>
+<p>
+<b><u>Where these registers are ?<br>
+</u></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In 
+an IBM PC, these registers are IO mapped and will have unique address. 
+We have to find these addresses to work with parallel port. For a 
+typical PC , the base address of LPT1 is 0x378 and of LPT2 is 0x278. The
+ data register resides at this base address , status register at 
+baseaddress + 1 and the control register is at baseaddress + 2. So once 
+we have the base address , we can calculate the address of each 
+registers in this manner. The table below shows the register addresses 
+of LPT1 and LPT2. <a href="http://logix4u.net/Legacy_Ports/Parallel_Port/How_to_read_Parallel_Serial_Port_address_from_BIOS.html" target="_blank">Click here for tutorial on how to find base address of 
+Parallel/Serial ports with sample source code.</a>
+</p>
+<p>
+&nbsp;
+</p>
+<table align="center" border="1" bordercolor="#b0b0b0">
+	<tbody>
+		<tr>
+			<td>Register</td>
+			<td>LPT1</td>
+			<td>LPT2</td>
+		</tr>
+		<tr>
+			<td>data registar(baseaddress + 0)</td>
+			<td>0x378</td>
+			<td>0x278</td>
+		</tr>
+		<tr>
+			<td>status register (baseaddress + 1)</td>
+			<td>0x379</td>
+			<td>0x279</td>
+		</tr>
+		<tr>
+			<td>control register (baseaddress + 2)</td>
+			<td>0x37a</td>
+			<td>0x27a</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<b><u>Programming Concepts</u></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Almost all 
+programming languages allow programmers to access parallel port using 
+some library functions. For example , Borland C is providing "Inportb" 
+and "Outportb" functions to read or write IO mapped peripherals. But the
+ examples provided here in this tutorial is written VC++ and can be 
+easily ported to other compilers like Borland C and Turbo C. Visual 
+Basic does not have any functions or support to access parallel port 
+directly, but it is possible to add such capabilities to your VB 
+application by writing a dll in VC++ and calling its exported functions 
+from VB. VC++ provides two functions to access IO mapped peripherals, 
+'_inp' for reading and '_outp' for writing. These functions are declared
+ in "conio.h".
+</p>
+<p>
+<b><u>Hardware for testing sample programs</u></b> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 
+schematic diagram of the test circuit is shown below. It is recommended 
+to build this circuit before testing the sample programs
+</p>
+<p>
+<a href="http://logix4u.net/images/stories/legacy_ports/parallel_port/tutorial/paralleltest.gif" target="_blank">
+</a></p><div style="text-align: center"><a href="http://logix4u.net/images/stories/legacy_ports/parallel_port/tutorial/paralleltest.gif" target="_blank">
+<img src="A_tutorial_on_Parallel_port_Interfacing_files/paralleltest.gif" alt="Test hardware" border="1" height="224" width="400">
+</a></div><a href="http://logix4u.net/images/stories/legacy_ports/parallel_port/tutorial/paralleltest.gif" target="_blank">
+</a>
+<p></p>
+<p>
+<b><u>Sample program in VC++</u></b>
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Writing a 
+parallel port interfacing program in VC++ is very easy. Here is the 
+steps to write your first parallel port interfacing application in VC++.
+ 
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Start VC++ 
+IDE , Select 'New' from File menu.Then select &#8220;Win32 Console 
+Application&#8221; from &#8220;Projects&#8221; tab(picture-3). enter project name as 
+&#8220;partest1&#8221; , then click OK button. 
+</p>
+<div style="text-align: center">
+<img src="A_tutorial_on_Parallel_port_Interfacing_files/partest1_pic1.gif" alt="Picture3" border="1" height="331" width="400">
+</div>
+<p>
+Picture-3 
+</p>
+<p>
+Now you can see a dialog box with caption &#8220;Win32 Console Application - step 1 of 1&#8221; (picture-4).
+</p>
+<div style="text-align: center">
+<img src="A_tutorial_on_Parallel_port_Interfacing_files/partest1_pic2.gif" alt="Picture 4" border="1" height="263" width="400">
+</div>
+<p>
+Picture-4 
+</p>
+<p>
+Select &#8220;a simple Application&#8221; and click Finish. Now open example1.cpp 
+from &#8220;fileview&#8221; and replace the existing code with the code given below.
+</p>
+<br>
+<table style="width: 408px; height: 451px;" align="left" border="1">
+	<tbody>
+		<tr>
+			<td>
+			<p>
+			#include "stdafx.h"<br>
+			#include "conio.h"<br>
+			#include "stdio.h"<br>
+			#include "string.h"<br>
+			#include "stdlib.h"
+			</p>
+			<p>
+			int main(int argc, char* argv[])<br>
+			{<br>
+			&nbsp;short data;
+			</p>
+			<p>
+			&nbsp;if(argc&lt;2)<br>
+			&nbsp;{<br>
+			&nbsp;&nbsp;printf("Usage\n\n");<br>
+			&nbsp;&nbsp;printf("partest1.exe ,,\n\n\n");<br>
+			&nbsp;&nbsp;return 0;<br>
+			&nbsp;}<br>
+			&nbsp;<br>
+			&nbsp;if(!strcmp(argv[1],"read"))<br>
+			&nbsp;{<br>
+			&nbsp;&nbsp;data = _inp(atoi(argv[2])); <br>
+			&nbsp;&nbsp;printf("Data read from parallel port is&nbsp; ");<br>
+			&nbsp;&nbsp;printf("%d\n\n\n\n",data);<br>
+			&nbsp;}<br>
+			&nbsp;<br>
+			&nbsp;if(!strcmp(argv[1],"write"))<br>
+			&nbsp;{<br>
+			&nbsp;&nbsp;_outp(atoi(argv[2]),atoi(argv[3])); <br>
+			&nbsp;&nbsp;printf("Data written to parallel port is&nbsp; ");<br>
+			&nbsp;&nbsp;printf("%s\n\n\n\n\n",argv[3]);<br>
+			&nbsp;}<br>
+			&nbsp;return 0;<br>
+			}&nbsp; 
+			</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p align="left">
+Build the project and copy partest1.exe to "c:\". 
+</p>
+<p>
+<b><u>How to Test The Program ?</u></b>
+</p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connect The
+ assembled hardware shown above to your PC's parallel port. Open DOS 
+command window Move to "C:\" and type "partest1 write 888 255" and press
+ enter. If everything is correct , LED1 to LED8 in the hardware will 
+glow. You may be doubtful about the command line parameters passed to 
+the program. Here 888(0x378) is the address of the parallel port data 
+register and 255 is the data to be written to parallel port data 
+register. if you enter "partest1 read 888" to command line , the program
+ will read parallel port data register and display it. This will blindly
+ read the contents of parallel port data register , but not the data 
+present on data lines. To read the data from the data lines , we will 
+have to enable the bidirectional data transfer first. To enable 
+Bidirectional data transfer just set the "Bidirectional" bit (bit 5) in 
+control register. This is done by writing 32 to control register. The 
+command "partest1 write 890 32" will do this. After entering this 
+command you can read the status of switches in the hardware using the 
+command "partest1 read 888" 
+</p>
+<p>
+NOTE: This sample program will not work on Windows NT/2000 or XP if you 
+run the program on these machines , it will show an error. use new <a href="http://logix4u.net/Legacy_Ports/Parallel_Port/Inpout32.dll_for_Windows_98/2000/NT/XP.html">Inpout32.dll</a> on NT/2000/XP machines
+</p>
+			</td>
+		</tr>
+				</tbody></table>
+
+		<span class="article_seperator">&nbsp;</span>
+
+					<table style="margin-top: 25px;" align="center">
+			<tbody><tr>
+									<th class="pagenav_prev">
+						<a href="http://logix4u.net/Legacy_Ports/Parallel_Port/Inpout32.dll_for_Windows_98/2000/NT/XP.html">
+							&lt; Prev</a>
+					</th>
+										<td width="50">&nbsp;
+
+					</td>
+										<th class="pagenav_next">
+						<a href="http://logix4u.net/Legacy_Ports/Parallel_Port/How_Inpout32.dll_works_.html">
+							Next &gt;</a>
+					</th>
+								</tr>
+			</tbody></table>
+						<div class="back_button">
+				<a href="javascript:history.go(-1)">
+					[ Back ]</a>
+			</div>
+			
+              <!-- google_ad_section_end -->
+              <!-- google_ad_section_start(weight=ignore) -->
+
+              </td>
+              <!-- RIGHT Modules -->
+                                <td align="center" bgcolor="#F0F0F0" valign="top" width="150">
+                    <div class="modules">
+                    		<table class="moduletable" cellpadding="0" cellspacing="0">
+				<tbody><tr>
+			<td>
+				<script type="text/javascript"><!--
+google_ad_client = "pub-6974310080265953";
+/* 160x600, created 10/11/08 */
+google_ad_slot = "0117958626";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="A_tutorial_on_Parallel_port_Interfacing_files/show_ads.js">
+</script>			</td>
+		</tr>
+		</tbody></table>
+				<table class="moduletable" cellpadding="0" cellspacing="0">
+				<tbody><tr>
+			<td>
+				<!-- Joomla-Visites -->
+<a href="http://www.joomla-visites.net/" title="Free web analytics, website statistics" onclick="window.open(this.href);return(false);"><script type="text/javascript">
+<!--
+var a_vars = Array();
+var pagename='';
+
+var joomlaVisitesSite = 1;
+var joomlaVisitesURL = "http://logix4u.net/components/com_joomla-visites/joomla-visites.php";
+var joomlaVisitesUser = 0;
+//-->
+</script>
+<script language="javascript" src="A_tutorial_on_Parallel_port_Interfacing_files/joomla-visites.js" type="text/javascript"></script>
+<noscript><p>Free web analytics, website statistics
+<img src="A_tutorial_on_Parallel_port_Interfacing_files/joomla-visites_002.htm" alt="Statistics" style="border: 0pt none;">
+</p></noscript></a>
+<!-- /Joomla-Visites --> 			</td>
+		</tr>
+		</tbody></table>
+		                    </div>
+                  </td>
+                  
+            </tr>
+          </tbody></table>
+          </td>
+        </tr>
+      </tbody></table>
+      </td>
+      <td background="A_tutorial_on_Parallel_port_Interfacing_files/shad_right.gif" valign="top">
+      <img src="A_tutorial_on_Parallel_port_Interfacing_files/shad_top_right.gif" border="0" height="17" width="11"></td>
+    </tr>
+    <tr>
+      <td><img src="A_tutorial_on_Parallel_port_Interfacing_files/shad_bottom_left.gif" border="0" height="19" width="11"></td>
+      <td background="A_tutorial_on_Parallel_port_Interfacing_files/shad_bottom.gif" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody><tr>
+          <td>
+          <img src="A_tutorial_on_Parallel_port_Interfacing_files/shad_bottom_inner_left.gif" border="0" height="19" width="19"></td>
+          <td align="left"><a href="#top"><img src="A_tutorial_on_Parallel_port_Interfacing_files/top_of_page.gif" alt="Top of Page" border="0" vspace="5"></a></td>
+          <td align="right" width="100%"><img src="A_tutorial_on_Parallel_port_Interfacing_files/poweredbyLong.htm" alt="" border="0" height="8" vspace="5" width="169"></td>
+          <td>
+          <img src="A_tutorial_on_Parallel_port_Interfacing_files/shad_bottom_inner_right.gif" border="0" height="19" width="19"></td>
+        </tr>
+      </tbody></table>
+      </td>
+      <td>
+      <img src="A_tutorial_on_Parallel_port_Interfacing_files/shad_bottom_right.gif" border="0" height="19" width="11"></td>
+    </tr>
+  </tbody></table>
+  <table align="center" border="0" cellpadding="3" cellspacing="0" width="780">
+   <tbody><tr>
+        <td>
+                           
+        </td>
+   </tr>
+    <tr>
+      <td align="center">
+        &nbsp;
+              </td>
+
+    </tr>
+  </tbody></table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write("\<script src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'>\<\/script>" );
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-489208-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+<!-- google_ad_section_end -->
+
+<script type="text/javascript" src="A_tutorial_on_Parallel_port_Interfacing_files/snap_shots.htm"></script>
+
+
+</body></html>

@@ -1,0 +1,89 @@
+//Prepare a Modbus mapping with 30 holding registers
+//(plus no output coil, one input coil and two input registers)
+//This will also automatically set the value of each register to 0
+modbus_mapping_t *mapping = modbus_mapping_new(0, 1, 30, 2);
+if (!mapping) {
+    fprintf(stderr, "Failed to allocate the mapping: %s\n", modbus_strerror(errno));
+    exit(1);
+}
+
+
+//Example: set register 12 to integer value 623
+mapping->tab_registers[12] = 623;
+
+
+modbus_t *ctx = modbus_new_rtu("/dev/ttyS0", 9600, 'N', 8, 1);
+if (!ctx) {
+    fprintf(stderr, "Failed to create the context: %s\n", modbus_strerror(errno));
+    exit(1);
+}
+
+//Set the Modbus address of this slave (to 3)
+modbus_set_slave(ctx, 3);
+
+
+if (modbus_connect(ctx) == -1) {
+    fprintf(stderr, "Unable to connect: %s\n", modbus_strerror(errno));
+    modbus_free(ctx);
+    exit(1);
+}
+
+
+uint8_t req[MODBUS_RTU_MAX_ADU_LENGTH];// request buffer
+int len;// length of the request/response
+
+while(1) {
+    len = modbus_receive(ctx, req);
+    if (len == -1) break;
+
+    len = modbus_reply(ctx, req, len, mapping);
+    if (len == -1) break;
+}
+printf("Exit the loop: %s\n", modbus_strerror(errno));
+
+modbus_mapping_free(mapping);
+modbus_close(ctx);
+modbus_free(ctx);
+//-------------------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+//    QByteArray debug_ba;
+//    debug_ba.clear();
+//    debug_ba.append((char *)&o_data, o_data_len);
+//    emit debug(debug_ba.toHex());
+#endif
+
+#include <windows.h>
+
+#define VER_FILEVERSION             1,0,0,0
+#define VER_FILEVERSION_STR         "1.0.0.0\0"
+#define VER_PRODUCTVERSION          1,0,0
+#define VER_PRODUCTVERSION_STR      "1.0.0\0"
+#define VER_FILEDESCRIPTION_STR     "HelloWorld"
+#define VER_INTERNALNAME_STR        "Sensor"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright (C) 2015, MyCompany"
+#define VER_ORIGINALFILENAME_STR    "HelloWorld.exe"
+#define VER_PRODUCTNAME_STR         "Hello World"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "FileDescription",    VER_FILEDESCRIPTION_STR
+            VALUE "FileVersion",        VER_FILEVERSION_STR
+            VALUE "InternalName",       VER_INTERNALNAME_STR
+            VALUE "LegalCopyright",     VER_LEGALCOPYRIGHT_STR
+            VALUE "OriginalFilename",   VER_ORIGINALFILENAME_STR
+            VALUE "ProductName",        VER_PRODUCTNAME_STR
+            VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="navi_full.log">data/navi_full.log</file>
+    </qresource>
+</RCC>

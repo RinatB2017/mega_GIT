@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+     <file>images/new.png</file>
+     <file>images/auto.png</file>
+     <file>images/go.png</file>
+</qresource>
+</RCC>

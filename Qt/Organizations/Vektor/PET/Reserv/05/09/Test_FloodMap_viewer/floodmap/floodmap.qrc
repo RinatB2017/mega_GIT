@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/floodmap">
+        <file>color/test_floodmap_128.png</file>
+        <file>color/test_floodmap_256.png</file>
+        <file>color/test_floodmap_512.png</file>
+        <file>color/test_floodmap_1024.png</file>
+        <file>mono/test_floodmap_128.png</file>
+        <file>mono/test_floodmap_256.png</file>
+        <file>mono/test_floodmap_512.png</file>
+        <file>mono/test_floodmap_1024.png</file>
+    </qresource>
+</RCC>

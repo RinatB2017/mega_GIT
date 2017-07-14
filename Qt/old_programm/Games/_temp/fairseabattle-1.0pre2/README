@@ -1,0 +1,53 @@
+FairSeaBattle 1.0 pre1
+----------------------
+
+The FairSeaBattle -- sink the computer's fleet.
+
+    Remember that this versions _is_not_ RELEASE yet.
+    It is PRE-RELEASE versions. In an effort to
+    provide quality software at release time I will
+    PRE-RELEASE one for bug checking. Please submit
+    bugs by sending an e-mail to me: a.michurin@gmail.com
+    Thanks a lot!
+
+You can get FairSeaBattle here: http://fairseabattle.googlecode.com/
+
+Licensing
+---------
+
+FairSeaBattle is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+FairSeaBattle is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with FairSeaBattle.  If not, see <http://www.gnu.org/licenses/>.
+
+Building
+--------
+
+Before building, you will need to have the Qt4 library installed
+on your system (http://www.trolltech.com/).
+
+Build:
+$ qmake # or qmake-qt4
+$ make  # or mingw32-make or nmake or other
+
+Test it:
+$ ./fairseabattle
+
+Install:
+$ sudo cp ./fairseabattle /usr/local/bin/fairseabattle
+or
+$ sudo make install
+or
+$ sudo make INSTALL_ROOT=/opt/bin install
+
+Enjoy!
+Alexey Michurin
+a.michurin@gmail.com

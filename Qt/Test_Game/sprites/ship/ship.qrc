@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/sprites/ship">
+        <file>ship4000.png</file>
+        <file>ship4001.png</file>
+        <file>ship4002.png</file>
+        <file>ship4003.png</file>
+        <file>ship4004.png</file>
+        <file>ship4005.png</file>
+        <file>ship4006.png</file>
+        <file>ship4007.png</file>
+        <file>ship4008.png</file>
+        <file>ship4009.png</file>
+        <file>ship4010.png</file>
+        <file>ship4011.png</file>
+        <file>ship4012.png</file>
+        <file>ship4013.png</file>
+        <file>ship4014.png</file>
+        <file>ship4015.png</file>
+        <file>ship4016.png</file>
+        <file>ship4017.png</file>
+        <file>ship4018.png</file>
+        <file>ship4019.png</file>
+        <file>ship4020.png</file>
+        <file>ship4021.png</file>
+        <file>ship4022.png</file>
+        <file>ship4023.png</file>
+        <file>ship4024.png</file>
+        <file>ship4025.png</file>
+        <file>ship4026.png</file>
+        <file>ship4027.png</file>
+        <file>ship4028.png</file>
+        <file>ship4029.png</file>
+        <file>ship4030.png</file>
+        <file>ship4031.png</file>
+    </qresource>
+</RCC>

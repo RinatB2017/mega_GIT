@@ -1,0 +1,51 @@
+//value_v = (float) 2.5f * ((float) value_data / (float) 8388608.0f - (float) 1.0f);
+
+enum {
+    CMD_TEST		= 0,
+    CMD_INIT		= 1,
+
+    CMD_GET_DATA	= 2,
+    CMD_GET_DIRTY_DATA	= 3,
+
+    GMD_GET_GAIN		= 4,
+
+    CMD_SET_GAIN_010	= 5,
+    CMD_SET_GAIN_1		= 6,
+    CMD_SET_GAIN_5		= 7,
+    CMD_SET_GAIN_8		= 8,
+    CMD_SET_GAIN_16		= 9,
+    CMD_SET_GAIN_32		= 10,
+    CMD_SET_GAIN_40		= 11,
+    CMD_SET_GAIN_64		= 12,
+    CMD_SET_GAIN_80		= 13,
+    CMD_SET_GAIN_128	= 14,
+    CMD_SET_GAIN_160	= 15,
+    CMD_SET_GAIN_320	= 16,
+    CMD_SET_GAIN_640	= 17,
+
+    CMD_CALIBRATION_NULL	= 18,
+
+    CMD_CALIBRATION_MAX_010	= 19,
+    CMD_CALIBRATION_MAX_1	= 20,
+    CMD_CALIBRATION_MAX_5	= 21,
+    CMD_CALIBRATION_MAX_8	= 22,
+    CMD_CALIBRATION_MAX_16	= 23,
+    CMD_CALIBRATION_MAX_32	= 24,
+    CMD_CALIBRATION_MAX_40	= 25,
+    CMD_CALIBRATION_MAX_64	= 26,
+    CMD_CALIBRATION_MAX_80	= 27,
+    CMD_CALIBRATION_MAX_128	= 28,
+    CMD_CALIBRATION_MAX_160	= 29,
+    CMD_CALIBRATION_MAX_320	= 30,
+    CMD_CALIBRATION_MAX_640	= 31
+};
+
+запрос - 1 из вышеперечисленных команд
+
+ответ - 6 байт
+1 - команда
+2 - либо 
+    CMD_OK      42
+    CMD_FAIL    13
+
+3,4,5,6 - int

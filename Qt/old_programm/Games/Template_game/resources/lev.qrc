@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="1.png">lev/1.png</file>
+        <file alias="2.png">lev/2.png</file>
+        <file alias="3.png">lev/3.png</file>
+        <file alias="4.png">lev/4.png</file>
+        <file alias="5.png">lev/5.png</file>
+        <file alias="6.png">lev/6.png</file>
+        <file alias="7.png">lev/7.png</file>
+        <file alias="8.png">lev/8.png</file>
+        <file alias="9.png">lev/9.png</file>
+        <file alias="10.png">lev/10.png</file>
+        <file alias="11.png">lev/11.png</file>
+        <file alias="12.png">lev/12.png</file>
+        <file alias="13.png">lev/13.png</file>
+        <file alias="14.png">lev/14.png</file>
+        <file alias="15.png">lev/15.png</file>
+        <file alias="16.png">lev/16.png</file>
+        <file alias="17.png">lev/17.png</file>
+        <file alias="18.png">lev/18.png</file>
+        <file alias="19.png">lev/19.png</file>
+        <file alias="20.png">lev/20.png</file>
+        <file alias="21.png">lev/21.png</file>
+        <file alias="22.png">lev/22.png</file>
+        <file alias="23.png">lev/23.png</file>
+        <file alias="24.png">lev/24.png</file>
+        <file alias="25.png">lev/25.png</file>
+        <file alias="26.png">lev/26.png</file>
+        <file alias="27.png">lev/27.png</file>
+        <file alias="28.png">lev/28.png</file>
+        <file alias="29.png">lev/29.png</file>
+        <file alias="30.png">lev/30.png</file>
+        <file alias="31.png">lev/31.png</file>
+    </qresource>
+</RCC>

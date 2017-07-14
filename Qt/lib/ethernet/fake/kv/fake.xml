@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Fakes>
+  <data>
+    <in>0C01</in>
+    <out>010000</out>
+  </data>
+  <data>
+    <in>0E01</in>
+    <out>010000</out>
+  </data>
+  <data>
+    <in>0F01</in>
+    <out>010000</out>
+  </data>
+  <data>
+    <in>1301</in>
+    <out>010000</out>
+  </data>
+  <data>
+    <in>1401</in>
+    <out>010000</out>
+  </data>
+  <data>
+    <in>1201</in>
+    <out>010000</out>
+  </data>
+  <data>
+    <in>1202</in>
+    <out>010000</out>
+  </data>
+</Fakes>

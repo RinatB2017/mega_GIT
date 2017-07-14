@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/SBGlass">
+        <file>1627.gif</file>
+    </qresource>
+</RCC>

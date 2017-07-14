@@ -1,0 +1,1 @@
+#include "serialbus/qserialbusglobal.h"

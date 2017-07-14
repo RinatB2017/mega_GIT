@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>B588</class>
+ <widget class="QFrame" name="B588">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>595</width>
+    <height>722</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <widget class="QFrame" name="frame_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QFrame" name="frame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <family>Liberation Sans</family>
+             <pointsize>20</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Б5-88</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="title">
+         <string>Поиск устройств</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="btn_find_devices">
+           <property name="text">
+            <string>Поиск Б5-88 и В7-64</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cb_ignore_error">
+           <property name="text">
+            <string>ignore error</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_address">
+           <property name="text">
+            <string>Адрес:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="sb_address"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>Калибровка напряжения</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="2" column="3">
+            <widget class="QLabel" name="label_check_U">
+             <property name="pixmap">
+              <pixmap resource="../../../../pictures/pictures.qrc">:/pictures/button_cancel.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QProgressBar" name="pb_check_3_channel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_check_3_channel">
+             <property name="pixmap">
+              <pixmap resource="../../../../pictures/pictures.qrc">:/pictures/button_cancel.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QProgressBar" name="pb_check_U">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QToolButton" name="btn_stop_calibration_ADC_U">
+             <property name="text">
+              <string>stop</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../pictures/pictures.qrc">
+               <normaloff>:/pictures/process-stop.png</normaloff>:/pictures/process-stop.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QProgressBar" name="pb_calibration_ADC_U">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="btn_check_3_channel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Проверка третьего канала</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="btn_check_U">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Проверка контрольных точек</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QToolButton" name="btn_stop_check_U">
+             <property name="text">
+              <string>stop</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../pictures/pictures.qrc">
+               <normaloff>:/pictures/process-stop.png</normaloff>:/pictures/process-stop.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_calibration_ADC_U">
+             <property name="pixmap">
+              <pixmap resource="../../../../pictures/pictures.qrc">:/pictures/button_cancel.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_calibration_ADC_U">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Запуск калибровки АЦП</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="btn_calibration_DAC_U">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Запуск калибровки ЦАП</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QToolButton" name="btn_stop_calibration_DAC_U">
+             <property name="text">
+              <string>stop</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../pictures/pictures.qrc">
+               <normaloff>:/pictures/process-stop.png</normaloff>:/pictures/process-stop.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="label_calibration_DAC_U">
+             <property name="pixmap">
+              <pixmap resource="../../../../pictures/pictures.qrc">:/pictures/button_cancel.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QProgressBar" name="pb_calibration_DAC_U">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>Калибровка тока</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="5" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="label_shunt">
+               <property name="text">
+                <string>Шунт</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="sb_shunt"/>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item row="9" column="2">
+            <widget class="QToolButton" name="btn_stop_check_I">
+             <property name="text">
+              <string>stop</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../pictures/pictures.qrc">
+               <normaloff>:/pictures/process-stop.png</normaloff>:/pictures/process-stop.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="3">
+            <widget class="QProgressBar" name="pb_check_I">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QPushButton" name="btn_calibration_ADC_I">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Запуск калибровки АЦП</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="4">
+            <widget class="QLabel" name="label_calibration_ADC_I">
+             <property name="pixmap">
+              <pixmap resource="../../../../pictures/pictures.qrc">:/pictures/button_cancel.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3">
+            <widget class="QProgressBar" name="pb_calibration_ADC_I">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="4">
+            <widget class="QLabel" name="label_check_I">
+             <property name="pixmap">
+              <pixmap resource="../../../../pictures/pictures.qrc">:/pictures/button_cancel.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QToolButton" name="btn_stop_calibration_ADC_I">
+             <property name="text">
+              <string>stop</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../pictures/pictures.qrc">
+               <normaloff>:/pictures/process-stop.png</normaloff>:/pictures/process-stop.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QPushButton" name="btn_check_I">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Проверка контрольных точек тока</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QPushButton" name="btn_calibration_DAC_I">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Запуск калибровки ЦАП</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="2">
+            <widget class="QToolButton" name="btn_stop_calibration_DAC_I">
+             <property name="text">
+              <string>stop</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../pictures/pictures.qrc">
+               <normaloff>:/pictures/process-stop.png</normaloff>:/pictures/process-stop.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="4">
+            <widget class="QLabel" name="label_calibration_DAC_I">
+             <property name="pixmap">
+              <pixmap resource="../../../../pictures/pictures.qrc">:/pictures/button_cancel.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="3">
+            <widget class="QProgressBar" name="pb_calibration_DAC_I">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_3">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QTableView" name="table_U"/>
+      </item>
+      <item>
+       <widget class="QTableView" name="table_I"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="property_layout"/>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../pictures/pictures.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -1,0 +1,28 @@
+#**********************************************************************************
+#**                   Author: Bikbao Rinat Zinorovich                            **
+#**********************************************************************************
+
+include (common/common.pri)
+include (qwwfilechooser/qwwfilechooser.pri)
+include (qwwlongspinbox/qwwlongspinbox.pri)
+include (qwwtextspinbox/qwwtextspinbox.pri)
+include (qwwbreadcrumb/qwwbreadcrumb.pri)
+include (qwwhuesatpicker/qwwhuesatpicker.pri)
+include (qwwnavigationbar/qwwnavigationbar.pri)
+include (qwwtipwidget/qwwtipwidget.pri)
+include (qwwbuttonlineedit/qwwbuttonlineedit.pri)
+include (qwwhuesatradialpicker/qwwhuesatradialpicker.pri)
+include (qwwnumpad/qwwnumpad.pri)
+include (qwwtwocolorindicator/qwwtwocolorindicator.pri)
+include (qwwclearlineedit/qwwclearlineedit.pri)
+include (qwwled/qwwled.pri)
+include (qwwresetlineedit/qwwresetlineedit.pri)
+include (qwwcolorbutton/qwwcolorbutton.pri)
+include (qwwlistnavigator/qwwlistnavigator.pri)
+include (qwwrichtextbutton/qwwrichtextbutton.pri)
+include (qwwcolorcombobox/qwwcolorcombobox.pri)
+include (qwwlistwidget/qwwlistwidget.pri)
+include (qwwrichtextedit/qwwrichtextedit.pri)
+include (qwwconfigwidget/qwwconfigwidget.pri)
+include (qwwloginbox/qwwloginbox.pri)
+include (qwwtaskpanel/qwwtaskpanel.pri)

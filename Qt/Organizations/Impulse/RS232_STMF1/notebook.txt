@@ -1,0 +1,1 @@
+value_v = (float) 2.5f * ((float) value_data / (float) 8388608.0f - (float) 1.0f);

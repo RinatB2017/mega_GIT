@@ -1,0 +1,14 @@
+1449767582.24
+10-Dec-2015 20:13:02 (+0000) INFO: --------------------------------------------------------
+10-Dec-2015 20:13:02 (+0000) INFO: Software version: SVN rev. 1111
+10-Dec-2015 20:13:02 (+0000) INFO: args: ()
+10-Dec-2015 20:13:02 (+0000) INFO: kwargs: {'callbacks': [('*', <bound method Sniffer.passOnNotification of <Sniffer(Thread-2, initial)>>)]}
+10-Dec-2015 20:13:02 (+0000) INFO: board ID (random): 172
+10-Dec-2015 20:13:02 (+0000) INFO: Error on port /dev/ttyACM0. file: Packet.py, line 245: Port is already open.
+10-Dec-2015 20:13:03 (+0000) INFO: board ID (random): 45
+10-Dec-2015 20:13:03 (+0000) INFO: starting scan
+10-Dec-2015 20:13:03 (+0000) INFO: Sent key value to sniffer: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+10-Dec-2015 20:13:08 (+0000) INFO: starting scan
+10-Dec-2015 20:13:08 (+0000) INFO: Sent key value to sniffer: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+10-Dec-2015 20:13:13 (+0000) INFO: starting scan
+10-Dec-2015 20:13:13 (+0000) INFO: Sent key value to sniffer: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

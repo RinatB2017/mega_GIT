@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>red/0.png</file>
+        <file>red/1.png</file>
+        <file>red/2.png</file>
+        <file>red/3.png</file>
+        <file>red/4.png</file>
+        <file>red/5.png</file>
+        <file>red/6.png</file>
+        <file>red/7.png</file>
+        <file>red/8.png</file>
+        <file>red/9.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>black/0.png</file>
+        <file>black/1.png</file>
+        <file>black/2.png</file>
+        <file>black/3.png</file>
+        <file>black/4.png</file>
+        <file>black/5.png</file>
+        <file>black/6.png</file>
+        <file>black/7.png</file>
+        <file>black/8.png</file>
+        <file>black/9.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>white/0.png</file>
+        <file>white/1.png</file>
+        <file>white/2.png</file>
+        <file>white/3.png</file>
+        <file>white/4.png</file>
+        <file>white/5.png</file>
+        <file>white/6.png</file>
+        <file>white/7.png</file>
+        <file>white/8.png</file>
+        <file>white/9.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,6 @@
+Archive member included because of file (symbol)
+
+/usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc.a(_udivsi3.o)
+                              CMakeFiles/e6-27_adc.elf.dir/opt/STM32F0xx_StdPeriph_Lib_V1.1.0/Project/STM32F0xx_StdPeriph_Templates/system_stm32f0xx.c.o (__aeabi_uidiv)
+/usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc.a(_dvmd_lnx.o)
+                              /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc.a(_udivsi3.o) (__aeabi_idiv0)

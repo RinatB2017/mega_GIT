@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>256</width>
+    <height>240</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>famique</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>256</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_Load_binary"/>
+    <addaction name="action_ROM_inpsector"/>
+   </widget>
+   <widget class="QMenu" name="menu_Emulation">
+    <property name="title">
+     <string>&amp;Emulation</string>
+    </property>
+    <addaction name="action_Run"/>
+    <addaction name="action_Halt"/>
+    <addaction name="action_Settings"/>
+    <addaction name="actionReset_CPU"/>
+    <addaction name="actionGo_fullscreen"/>
+   </widget>
+   <widget class="QMenu" name="menu_Debug">
+    <property name="title">
+     <string>&amp;Debug</string>
+    </property>
+    <addaction name="action_CPU"/>
+    <addaction name="action_PPU"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Emulation"/>
+   <addaction name="menu_Debug"/>
+  </widget>
+  <action name="action_Run">
+   <property name="text">
+    <string>&amp;Run</string>
+   </property>
+  </action>
+  <action name="action_Halt">
+   <property name="text">
+    <string>&amp;Halt</string>
+   </property>
+  </action>
+  <action name="action_Settings">
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+  </action>
+  <action name="action_CPU">
+   <property name="text">
+    <string>&amp;CPU</string>
+   </property>
+  </action>
+  <action name="action_PPU">
+   <property name="text">
+    <string>&amp;PPU</string>
+   </property>
+  </action>
+  <action name="action_Load_binary">
+   <property name="text">
+    <string>&amp;Load ROM</string>
+   </property>
+  </action>
+  <action name="action_ROM_inpsector">
+   <property name="text">
+    <string>&amp;ROM inpsector</string>
+   </property>
+  </action>
+  <action name="actionReset_CPU">
+   <property name="text">
+    <string>Reset CPU</string>
+   </property>
+  </action>
+  <action name="actionGo_fullscreen">
+   <property name="text">
+    <string>Go fullscreen</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

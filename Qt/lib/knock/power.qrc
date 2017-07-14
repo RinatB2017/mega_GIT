@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/power">
+	<file>image/0/on.png</file>
+        <file>image/0/off.png</file>
+	<file>image/1/on.png</file>
+        <file>image/1/off.png</file>
+	<file>image/2/on.png</file>
+        <file>image/2/off.png</file>
+	<file>image/3/on.png</file>
+        <file>image/3/off.png</file>
+	<file>image/4/on.png</file>
+        <file>image/4/off.png</file>
+	<file>image/5/on.png</file>
+        <file>image/5/off.png</file>
+	<file>image/6/on.png</file>
+        <file>image/6/off.png</file>
+	<file>image/7/on.png</file>
+        <file>image/7/off.png</file>
+	<file>image/8/on.png</file>
+        <file>image/8/off.png</file>
+	<file>image/9/on.png</file>
+        <file>image/9/off.png</file>
+	<file>image/10/on.png</file>
+        <file>image/10/off.png</file>
+	<file>image/11/on.png</file>
+        <file>image/11/off.png</file>
+	<file>image/12/on.png</file>
+        <file>image/12/off.png</file>
+	<file>image/13/on.png</file>
+        <file>image/13/off.png</file>
+	<file>image/14/on.png</file>
+        <file>image/14/off.png</file>
+	<file>image/15/on.png</file>
+        <file>image/15/off.png</file>
+	<file>image/16/on.png</file>
+        <file>image/16/off.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>connect_demo.js</file>
+        <file>connect_func_demo.js</file>
+        <file>upper_demo.js</file>
+    </qresource>
+</RCC>

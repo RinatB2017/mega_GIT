@@ -1,0 +1,80 @@
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2012                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
+//--------------------------------------------------------------------------------
+#include <QWidget>
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class MainBox;
+}
+//--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+class MySplashScreen;
+class SerialBox;
+class QToolButton;
+class QToolBar;
+class QHexEdit;
+//--------------------------------------------------------------------------------
+class MainBox : public MyWidget
+{
+    Q_OBJECT
+
+public:
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    ~MainBox();
+
+signals:
+    void send(QByteArray);
+
+private slots:
+    void test(void);
+    void read_data(QByteArray ba);
+    void analize(char data);
+    void draw(QByteArray ba);
+
+private:
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
+    SerialBox *serialBox = 0;
+
+    QByteArray data_rs232;
+
+    QHexEdit *he = 0;
+
+    void init(void);
+
+    QToolButton *add_button(QToolBar *tool_bar,
+                            QToolButton *tool_button,
+                            QIcon icon,
+                            const QString &text,
+                            const QString &tool_tip);
+
+    void createTestBar(void);
+
+protected:
+    void changeEvent(QEvent *event);
+
+};
+//--------------------------------------------------------------------------------
+#endif // MAINBOX_HPP

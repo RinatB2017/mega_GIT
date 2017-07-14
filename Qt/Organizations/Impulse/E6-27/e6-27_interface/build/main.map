@@ -1,0 +1,870 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+RCC_Clocks          0x14              CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+SDIO_DataInitStructure
+                    0x18              CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+font                0x4               CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+SrcBuffer           0x4               CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+buttons             0x1b8             CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+SDIO_InitStructure  0x18              CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+SDIO_CmdInitStructure
+                    0x14              CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+HSEStartUpStatus    0x4               CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+printf_buf          0x100             CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+DestBuffer          0x4               CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+counter_1ms         0x4               CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000008000000 0x0000000000080000 xr
+RAM              0x0000000020000000 0x0000000000010000 xrw
+MEMORY_B1        0x0000000060000000 0x0000000000000000 xr
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen-hw.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/printf.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Project/STM32F10x_StdPeriph_Template/system_stm32f10x.c.o
+LOAD CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c.o
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc.a
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc_s.so
+START GROUP
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc_s.so.1
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc.a
+END GROUP
+LOAD /usr/arm-none-linux-gnueabi/usr/lib/libc.so
+START GROUP
+LOAD /usr/arm-none-linux-gnueabi/lib/libc.so.6
+LOAD /usr/arm-none-linux-gnueabi/usr/lib/libc_nonshared.a
+LOAD /usr/arm-none-linux-gnueabi/lib/ld-linux.so.3
+END GROUP
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc.a
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc_s.so
+START GROUP
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc_s.so.1
+LOAD /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc.a
+END GROUP
+                0x0000000020010000                _estack = 0x20010000
+                0x0000000000000000                _Min_Heap_Size = 0x0
+                0x0000000000000200                _Min_Stack_Size = 0x200
+
+.isr_vector     0x0000000008000000      0x1e4
+                0x0000000008000000                . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x0000000008000000      0x1e4 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+                0x0000000008000000                g_pfnVectors
+                0x00000000080001e4                . = ALIGN (0x4)
+
+.interp         0x00000000080001e4       0x13
+ .interp        0x00000000080001e4       0x13 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.gnu.version_d  0x00000000080001f8        0x0
+ .gnu.version_d
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.gnu.version    0x00000000080001f8        0x0
+ .gnu.version   0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.gnu.version_r  0x00000000080001f8        0x0
+ .gnu.version_r
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.dynsym         0x00000000080001f8     0x1a70
+ .dynsym        0x00000000080001f8     0x1a70 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.dynstr         0x0000000008001c68     0x1bc8
+ .dynstr        0x0000000008001c68     0x1bc8 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.hash           0x0000000008003830      0xac0
+ .hash          0x0000000008003830      0xac0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.gnu.hash       0x00000000080042f0      0xcc4
+ .gnu.hash      0x00000000080042f0      0xcc4 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.eh_frame_hdr   0x0000000008004fb4        0x0
+ .eh_frame_hdr  0x0000000000000000        0x0 /usr/lib/gcc/arm-none-linux-gnueabi/4.8.2/libgcc_s.so.1
+
+.text           0x0000000008004fb4    0x5089c
+                0x0000000008004fb4                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000008004fb4     0x3970 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+                0x0000000008004fb4                SD_Init
+                0x0000000008005058                SD_PowerON
+                0x0000000008005368                SD_PowerOFF
+                0x0000000008005384                SD_InitializeCards
+                0x00000000080055bc                SD_GetCardInfo
+                0x0000000008005bf8                SD_EnableWideBusOperation
+                0x0000000008005d30                SD_SetDeviceMode
+                0x0000000008005d70                SD_SelectDeselect
+                0x0000000008005dd8                SD_ReadBlock
+                0x00000000080061b0                SD_ReadMultiBlocks
+                0x0000000008006684                SD_WriteBlock
+                0x0000000008006c38                SD_WriteMultiBlocks
+                0x00000000080072f8                SD_GetTransferState
+                0x0000000008007320                SD_StopTransfer
+                0x0000000008007388                SD_Erase
+                0x0000000008007594                SD_SendStatus
+                0x000000000800762c                SD_SendSDStatus
+                0x0000000008007918                SD_ProcessIRQSrc
+ .text          0x0000000008008924      0x35c CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen-hw.c.o
+                0x0000000008008944                tshw_init
+                0x0000000008008b1c                tshw_get_raw
+                0x0000000008008c24                tshw_prepare_wait
+                0x0000000008008c40                tshw_poll
+ .text          0x0000000008008c80      0x348 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen.c.o
+                0x0000000008008db4                ts_init
+                0x0000000008008dc4                ts_get_sample
+                0x0000000008008e04                ts_calibrate
+                0x0000000008008ef4                ts_poll
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+ .text          0x0000000008008fc8        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+ .text          0x0000000008008fc8      0x230 CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+                0x0000000008008fc8                I2C_Configuration
+                0x0000000008009074                I2C_ByteWrite
+                0x0000000008009148                I2C_ByteRead
+ .text          0x00000000080091f8      0x55c CMakeFiles/e6-27_interface.elf.dir/src/printf.c.o
+                0x00000000080091f8                PutChar
+                0x0000000008009218                PutUnsignedInt
+                0x00000000080092c0                PutHexa
+                0x0000000008009394                PutString
+                0x00000000080093d0                PutSignedInt
+                0x00000000080094dc                vsnprintf
+                0x0000000008009730                vsprintf
+ .text          0x0000000008009754     0x12e0 CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+                0x0000000008009988                LCDBUS_WriteReg
+                0x00000000080099e4                LCD_FillMem
+                0x0000000008009a3c                LCD_DrawPicture
+                0x0000000008009b4c                LCD_Clear
+                0x0000000008009b6c                LCD_WriteRAM
+                0x0000000008009b8c                LCD_SetCursor
+                0x0000000008009bd4                LCD_SetPixel
+                0x0000000008009bf8                LCD_DrawLine_norm
+                0x0000000008009cac                my_abs
+                0x0000000008009cd0                LCD_ConSetColor
+                0x0000000008009d00                LCD_ConSetPos
+                0x0000000008009d2c                LCD_DrawRect
+                0x0000000008009d74                LCD_DrawLine
+                0x0000000008009ea8                LCD_DrawChar
+                0x0000000008009f80                LCD_Printf
+                0x000000000800a0c0                LCD_SetTestPattern
+                0x000000000800a1f0                LCD_Init
+                0x000000000800a428                LCD_SetColorBigChar
+                0x000000000800a458                LCD_GetParam
+                0x000000000800a4c0                LCD_DrawBigChar
+                0x000000000800a5c0                LCD_BigPrintXY
+                0x000000000800a5f0                LCD_SetCurrentBigFont
+                0x000000000800a610                LCD_BigPrintf
+                0x000000000800a6b0                LCD_DrawGrid
+                0x000000000800a710                LCDSetBounds
+                0x000000000800a760                draw_rectangle_color
+                0x000000000800a7a0                draw_chessboard
+                0x000000000800a83c                draw_picture
+                0x000000000800a918                lcd_test
+ .text          0x000000000800aa34      0xab0 CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+                0x000000000800aad8                Delay
+                0x000000000800ab0c                SysTick_Handler
+                0x000000000800ab30                blink
+                0x000000000800ab9c                check_press_button
+                0x000000000800abe8                my_memcpy
+                0x000000000800ac24                my_strlen
+                0x000000000800ac54                init_menu_item
+                0x000000000800ade4                draw_menu_items
+                0x000000000800af64                RCC_Configuration
+                0x000000000800aff4                reverse
+                0x000000000800b04c                itoa
+                0x000000000800b0e0                test
+                0x000000000800b348                i2c
+                0x000000000800b3c4                main_loop
+                0x000000000800b478                main
+ .text          0x000000000800b4e4      0xa14 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c.o
+                0x000000000800b4e4                ADC_DeInit
+                0x000000000800b55c                ADC_Init
+                0x000000000800b600                ADC_StructInit
+                0x000000000800b638                ADC_Cmd
+                0x000000000800b66c                ADC_DMACmd
+                0x000000000800b6a0                ADC_ITConfig
+                0x000000000800b6e4                ADC_ResetCalibration
+                0x000000000800b704                ADC_GetResetCalibrationStatus
+                0x000000000800b734                ADC_StartCalibration
+                0x000000000800b754                ADC_GetCalibrationStatus
+                0x000000000800b784                ADC_SoftwareStartConvCmd
+                0x000000000800b7b8                ADC_GetSoftwareStartConvStatus
+                0x000000000800b7e8                ADC_DiscModeChannelCountConfig
+                0x000000000800b82c                ADC_DiscModeCmd
+                0x000000000800b860                ADC_RegularChannelConfig
+                0x000000000800b9e8                ADC_ExternalTrigConvCmd
+                0x000000000800ba1c                ADC_GetConversionValue
+                0x000000000800ba38                ADC_GetDualModeConversionValue
+                0x000000000800ba50                ADC_AutoInjectedConvCmd
+                0x000000000800ba84                ADC_InjectedDiscModeCmd
+                0x000000000800bab8                ADC_ExternalTrigInjectedConvConfig
+                0x000000000800baec                ADC_ExternalTrigInjectedConvCmd
+                0x000000000800bb20                ADC_SoftwareStartInjectedConvCmd
+                0x000000000800bb54                ADC_GetSoftwareStartInjectedConvCmdStatus
+                0x000000000800bb84                ADC_InjectedChannelConfig
+                0x000000000800bc98                ADC_InjectedSequencerLengthConfig
+                0x000000000800bcdc                ADC_SetInjectedOffset
+                0x000000000800bd0c                ADC_GetInjectedConversionValue
+                0x000000000800bd3c                ADC_AnalogWatchdogCmd
+                0x000000000800bd74                ADC_AnalogWatchdogThresholdsConfig
+                0x000000000800bd9c                ADC_AnalogWatchdogSingleChannelConfig
+                0x000000000800bdd4                ADC_TempSensorVrefintCmd
+                0x000000000800be20                ADC_GetFlagStatus
+                0x000000000800be54                ADC_ClearFlag
+                0x000000000800be74                ADC_GetITStatus
+                0x000000000800becc                ADC_ClearITPendingBit
+ .text          0x000000000800bef8      0x474 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c.o
+                0x000000000800bef8                DMA_DeInit
+                0x000000000800c0e4                DMA_Init
+                0x000000000800c160                DMA_StructInit
+                0x000000000800c1b4                DMA_Cmd
+                0x000000000800c1ec                DMA_ITConfig
+                0x000000000800c224                DMA_SetCurrDataCounter
+                0x000000000800c240                DMA_GetCurrDataCounter
+                0x000000000800c25c                DMA_GetFlagStatus
+                0x000000000800c2b0                DMA_ClearFlag
+                0x000000000800c2e4                DMA_GetITStatus
+                0x000000000800c338                DMA_ClearITPendingBit
+ .text          0x000000000800c36c      0xb90 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c.o
+                0x000000000800c36c                FLASH_SetLatency
+                0x000000000800c3ac                FLASH_HalfCycleAccessCmd
+                0x000000000800c3f0                FLASH_PrefetchBufferCmd
+                0x000000000800c434                FLASH_Unlock
+                0x000000000800c464                FLASH_UnlockBank1
+                0x000000000800c494                FLASH_Lock
+                0x000000000800c4b8                FLASH_LockBank1
+                0x000000000800c4dc                FLASH_ErasePage
+                0x000000000800c564                FLASH_EraseAllPages
+                0x000000000800c5dc                FLASH_EraseAllBank1Pages
+                0x000000000800c654                FLASH_EraseOptionBytes
+                0x000000000800c778                FLASH_ProgramWord
+                0x000000000800c824                FLASH_ProgramHalfWord
+                0x000000000800c890                FLASH_ProgramOptionByteData
+                0x000000000800c928                FLASH_EnableWriteProtection
+                0x000000000800ca6c                FLASH_ReadOutProtection
+                0x000000000800cb98                FLASH_UserOptionByteConfig
+                0x000000000800cc4c                FLASH_GetUserOptionByte
+                0x000000000800cc68                FLASH_GetWriteProtectionOptionByte
+                0x000000000800cc80                FLASH_GetReadOutProtectionStatus
+                0x000000000800ccb4                FLASH_GetPrefetchBufferStatus
+                0x000000000800cce8                FLASH_ITConfig
+                0x000000000800cd38                FLASH_GetFlagStatus
+                0x000000000800cd94                FLASH_ClearFlag
+                0x000000000800cdb4                FLASH_GetStatus
+                0x000000000800ce18                FLASH_GetBank1Status
+                0x000000000800ce7c                FLASH_WaitForLastOperation
+                0x000000000800cebc                FLASH_WaitForLastBank1Operation
+ .text          0x000000000800cefc      0xa14 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c.o
+                0x000000000800cefc                FSMC_NORSRAMDeInit
+                0x000000000800cf54                FSMC_NANDDeInit
+                0x000000000800cfc8                FSMC_PCCARDDeInit
+                0x000000000800d00c                FSMC_NORSRAMInit
+                0x000000000800d148                FSMC_NANDInit
+                0x000000000800d224                FSMC_PCCARDInit
+                0x000000000800d2dc                FSMC_NORSRAMStructInit
+                0x000000000800d3b0                FSMC_NANDStructInit
+                0x000000000800d42c                FSMC_PCCARDStructInit
+                0x000000000800d4b0                FSMC_NORSRAMCmd
+                0x000000000800d504                FSMC_NANDCmd
+                0x000000000800d58c                FSMC_PCCARDCmd
+                0x000000000800d5d4                FSMC_NANDECCCmd
+                0x000000000800d65c                FSMC_GetECC
+                0x000000000800d694                FSMC_ITConfig
+                0x000000000800d754                FSMC_GetFlagStatus
+                0x000000000800d7b8                FSMC_ClearFlag
+                0x000000000800d820                FSMC_GetITStatus
+                0x000000000800d8a0                FSMC_ClearITPendingBit
+ .text          0x000000000800d910      0x610 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c.o
+                0x000000000800d910                GPIO_DeInit
+                0x000000000800da00                GPIO_AFIODeInit
+                0x000000000800da18                GPIO_Init
+                0x000000000800db90                GPIO_StructInit
+                0x000000000800dbb8                GPIO_ReadInputDataBit
+                0x000000000800dbec                GPIO_ReadInputData
+                0x000000000800dc08                GPIO_ReadOutputDataBit
+                0x000000000800dc3c                GPIO_ReadOutputData
+                0x000000000800dc58                GPIO_SetBits
+                0x000000000800dc74                GPIO_ResetBits
+                0x000000000800dc90                GPIO_WriteBit
+                0x000000000800dcbc                GPIO_Write
+                0x000000000800dcd8                GPIO_PinLockConfig
+                0x000000000800dd1c                GPIO_EventOutputConfig
+                0x000000000800dd68                GPIO_EventOutputCmd
+                0x000000000800dd84                GPIO_PinRemapConfig
+                0x000000000800de78                GPIO_EXTILineConfig
+                0x000000000800df04                GPIO_ETH_MediaInterfaceConfig
+ .text          0x000000000800df20      0x92c CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c.o
+                0x000000000800df20                I2C_DeInit
+                0x000000000800df68                I2C_Init
+                0x000000000800e0f4                I2C_StructInit
+                0x000000000800e130                I2C_Cmd
+                0x000000000800e16c                I2C_DMACmd
+                0x000000000800e1a8                I2C_DMALastTransferCmd
+                0x000000000800e1e4                I2C_GenerateSTART
+                0x000000000800e220                I2C_GenerateSTOP
+                0x000000000800e25c                I2C_AcknowledgeConfig
+                0x000000000800e298                I2C_OwnAddress2Config
+                0x000000000800e2d8                I2C_DualAddressCmd
+                0x000000000800e314                I2C_GeneralCallCmd
+                0x000000000800e350                I2C_ITConfig
+                0x000000000800e394                I2C_SendData
+                0x000000000800e3b4                I2C_ReceiveData
+                0x000000000800e3d0                I2C_Send7bitAddress
+                0x000000000800e40c                I2C_ReadRegister
+                0x000000000800e43c                I2C_SoftwareResetCmd
+                0x000000000800e47c                I2C_NACKPositionConfig
+                0x000000000800e4bc                I2C_SMBusAlertConfig
+                0x000000000800e4fc                I2C_TransmitPEC
+                0x000000000800e538                I2C_PECPositionConfig
+                0x000000000800e578                I2C_CalculatePEC
+                0x000000000800e5b4                I2C_GetPEC
+                0x000000000800e5d4                I2C_ARPCmd
+                0x000000000800e610                I2C_StretchClockCmd
+                0x000000000800e64c                I2C_FastModeDutyCycleConfig
+                0x000000000800e68c                I2C_CheckEvent
+                0x000000000800e6ec                I2C_GetLastEvent
+                0x000000000800e730                I2C_GetFlagStatus
+                0x000000000800e798                I2C_ClearFlag
+                0x000000000800e7c4                I2C_GetITStatus
+                0x000000000800e820                I2C_ClearITPendingBit
+ .text          0x000000000800e84c      0x970 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c.o
+                0x000000000800e84c                RCC_DeInit
+                0x000000000800e8e8                RCC_HSEConfig
+                0x000000000800e970                RCC_WaitForHSEStartUp
+                0x000000000800e9c0                RCC_AdjustHSICalibrationValue
+                0x000000000800ea04                RCC_HSICmd
+                0x000000000800ea20                RCC_PLLConfig
+                0x000000000800ea64                RCC_PLLCmd
+                0x000000000800ea80                RCC_SYSCLKConfig
+                0x000000000800eac0                RCC_GetSYSCLKSource
+                0x000000000800eae0                RCC_HCLKConfig
+                0x000000000800eb20                RCC_PCLK1Config
+                0x000000000800eb60                RCC_PCLK2Config
+                0x000000000800eba0                RCC_ITConfig
+                0x000000000800ebfc                RCC_USBCLKConfig
+                0x000000000800ec18                RCC_ADCCLKConfig
+                0x000000000800ec58                RCC_LSEConfig
+                0x000000000800ecac                RCC_LSICmd
+                0x000000000800eccc                RCC_RTCCLKConfig
+                0x000000000800ecf8                RCC_RTCCLKCmd
+                0x000000000800ed18                RCC_GetClocksFreq
+                0x000000000800eed4                RCC_AHBPeriphClockCmd
+                0x000000000800ef24                RCC_APB2PeriphClockCmd
+                0x000000000800ef74                RCC_APB1PeriphClockCmd
+                0x000000000800efc4                RCC_APB2PeriphResetCmd
+                0x000000000800f014                RCC_APB1PeriphResetCmd
+                0x000000000800f064                RCC_BackupResetCmd
+                0x000000000800f084                RCC_ClockSecuritySystemCmd
+                0x000000000800f0a0                RCC_MCOConfig
+                0x000000000800f0c0                RCC_GetFlagStatus
+                0x000000000800f140                RCC_ClearFlag
+                0x000000000800f164                RCC_GetITStatus
+                0x000000000800f19c                RCC_ClearITPendingBit
+ .text          0x000000000800f1bc      0x5b4 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c.o
+                0x000000000800f1bc                SDIO_DeInit
+                0x000000000800f23c                SDIO_Init
+                0x000000000800f2a0                SDIO_StructInit
+                0x000000000800f2d8                SDIO_ClockCmd
+                0x000000000800f2f4                SDIO_SetPowerState
+                0x000000000800f338                SDIO_GetPowerState
+                0x000000000800f354                SDIO_ITConfig
+                0x000000000800f3a4                SDIO_DMACmd
+                0x000000000800f3c4                SDIO_SendCommand
+                0x000000000800f428                SDIO_CmdStructInit
+                0x000000000800f458                SDIO_GetCommandResponse
+                0x000000000800f474                SDIO_GetResponse
+                0x000000000800f4a0                SDIO_DataConfig
+                0x000000000800f510                SDIO_DataStructInit
+                0x000000000800f548                SDIO_GetDataCounter
+                0x000000000800f560                SDIO_ReadData
+                0x000000000800f57c                SDIO_WriteData
+                0x000000000800f59c                SDIO_GetFIFOCount
+                0x000000000800f5b4                SDIO_StartSDIOReadWait
+                0x000000000800f5d4                SDIO_StopSDIOReadWait
+                0x000000000800f5f4                SDIO_SetSDIOReadWaitMode
+                0x000000000800f614                SDIO_SetSDIOOperation
+                0x000000000800f634                SDIO_SendSDIOSuspendCmd
+                0x000000000800f654                SDIO_CommandCompletionCmd
+                0x000000000800f674                SDIO_CEATAITCmd
+                0x000000000800f6a0                SDIO_SendCEATACmd
+                0x000000000800f6c0                SDIO_GetFlagStatus
+                0x000000000800f6f8                SDIO_ClearFlag
+                0x000000000800f718                SDIO_GetITStatus
+                0x000000000800f750                SDIO_ClearITPendingBit
+ .text          0x000000000800f770       0x14 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+ .text          0x000000000800f784      0x390 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Project/STM32F10x_StdPeriph_Template/system_stm32f10x.c.o
+                0x000000000800f784                SystemInit
+                0x000000000800f82c                SystemCoreClockUpdate
+ .text          0x000000000800fb14      0x280 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c.o
+                0x000000000800fb14                __get_PSP
+                0x000000000800fb24                __set_PSP
+                0x000000000800fb2c                __get_MSP
+                0x000000000800fb3c                __set_MSP
+                0x000000000800fb44                __get_BASEPRI
+                0x000000000800fb64                __set_BASEPRI
+                0x000000000800fb7c                __get_PRIMASK
+                0x000000000800fb9c                __set_PRIMASK
+                0x000000000800fbb4                __get_FAULTMASK
+                0x000000000800fbd4                __set_FAULTMASK
+                0x000000000800fbec                __get_CONTROL
+                0x000000000800fc0c                __set_CONTROL
+                0x000000000800fc24                __REV
+                0x000000000800fc44                __REV16
+                0x000000000800fc68                __REVSH
+                0x000000000800fc8c                __RBIT
+                0x000000000800fcb0                __LDREXB
+                0x000000000800fcd4                __LDREXH
+                0x000000000800fcf8                __LDREXW
+                0x000000000800fd1c                __STREXB
+                0x000000000800fd44                __STREXH
+                0x000000000800fd6c                __STREXW
+ *(.text*)
+ .text.Reset_Handler
+                0x000000000800fd94       0x4c CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+                0x000000000800fd94                Reset_Handler
+ .text.Default_Handler
+                0x000000000800fde0        0x4 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+                0x000000000800fde0                DMA2_Channel2_IRQHandler
+                0x000000000800fde0                Default_Handler
+                0x000000000800fde0                DMA1_Channel4_IRQHandler
+                0x000000000800fde0                EXTI1_IRQHandler
+                0x000000000800fde0                TIM5_IRQHandler
+                0x000000000800fde0                TAMPER_IRQHandler
+                0x000000000800fde0                HardFault_Handler
+                0x000000000800fde0                BusFault_Handler
+                0x000000000800fde0                EXTI4_IRQHandler
+                0x000000000800fde0                DMA2_Channel4_5_IRQHandler
+                0x000000000800fde0                ADC1_2_IRQHandler
+                0x000000000800fde0                USB_LP_CAN1_RX0_IRQHandler
+                0x000000000800fde0                TIM1_BRK_IRQHandler
+                0x000000000800fde0                PendSV_Handler
+                0x000000000800fde0                MemManage_Handler
+                0x000000000800fde0                ADC3_IRQHandler
+                0x000000000800fde0                UART4_IRQHandler
+                0x000000000800fde0                TIM8_BRK_IRQHandler
+                0x000000000800fde0                USART1_IRQHandler
+                0x000000000800fde0                TIM8_UP_IRQHandler
+                0x000000000800fde0                EXTI9_5_IRQHandler
+                0x000000000800fde0                FLASH_IRQHandler
+                0x000000000800fde0                UsageFault_Handler
+                0x000000000800fde0                RTC_IRQHandler
+                0x000000000800fde0                I2C2_EV_IRQHandler
+                0x000000000800fde0                DMA1_Channel1_IRQHandler
+                0x000000000800fde0                RCC_IRQHandler
+                0x000000000800fde0                UART5_IRQHandler
+                0x000000000800fde0                DMA1_Channel3_IRQHandler
+                0x000000000800fde0                I2C2_ER_IRQHandler
+                0x000000000800fde0                SPI2_IRQHandler
+                0x000000000800fde0                SVC_Handler
+                0x000000000800fde0                USART3_IRQHandler
+                0x000000000800fde0                FSMC_IRQHandler
+                0x000000000800fde0                SPI1_IRQHandler
+                0x000000000800fde0                EXTI15_10_IRQHandler
+                0x000000000800fde0                EXTI3_IRQHandler
+                0x000000000800fde0                I2C1_EV_IRQHandler
+                0x000000000800fde0                DMA1_Channel5_IRQHandler
+                0x000000000800fde0                EXTI0_IRQHandler
+                0x000000000800fde0                TIM4_IRQHandler
+                0x000000000800fde0                TIM1_UP_IRQHandler
+                0x000000000800fde0                NMI_Handler
+                0x000000000800fde0                DMA1_Channel6_IRQHandler
+                0x000000000800fde0                SPI3_IRQHandler
+                0x000000000800fde0                TIM2_IRQHandler
+                0x000000000800fde0                TIM7_IRQHandler
+                0x000000000800fde0                DMA1_Channel7_IRQHandler
+                0x000000000800fde0                RTCAlarm_IRQHandler
+                0x000000000800fde0                CAN1_SCE_IRQHandler
+                0x000000000800fde0                I2C1_ER_IRQHandler
+                0x000000000800fde0                TIM3_IRQHandler
+                0x000000000800fde0                CAN1_RX1_IRQHandler
+                0x000000000800fde0                DMA2_Channel1_IRQHandler
+                0x000000000800fde0                TIM8_CC_IRQHandler
+                0x000000000800fde0                SDIO_IRQHandler
+                0x000000000800fde0                USART2_IRQHandler
+                0x000000000800fde0                TIM6_IRQHandler
+                0x000000000800fde0                PVD_IRQHandler
+                0x000000000800fde0                TIM1_CC_IRQHandler
+                0x000000000800fde0                WWDG_IRQHandler
+                0x000000000800fde0                DebugMon_Handler
+                0x000000000800fde0                USBWakeUp_IRQHandler
+                0x000000000800fde0                EXTI2_IRQHandler
+                0x000000000800fde0                TIM8_TRG_COM_IRQHandler
+                0x000000000800fde0                DMA1_Channel2_IRQHandler
+                0x000000000800fde0                DMA2_Channel3_IRQHandler
+                0x000000000800fde0                USB_HP_CAN1_TX_IRQHandler
+                0x000000000800fde0                TIM1_TRG_COM_IRQHandler
+ *(.rodata)
+ .rodata        0x000000000800fde4     0xa438 CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+                0x000000000801a214                Big_Font
+ .rodata        0x000000000801a21c    0x13bd8 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+                0x000000000802ddec                Digits_72
+ .rodata        0x000000000802ddf4     0x9e44 CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+                0x0000000008037c30                lDigits_48
+ .rodata        0x0000000008037c38     0x9c84 CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+                0x00000000080418b4                iDigits_48
+ .rodata        0x00000000080418bc     0x9ee4 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+                0x000000000804b798                Digits_48
+ .rodata        0x000000000804b7a0     0x58c0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+                0x0000000008051058                Digits_36
+ .rodata        0x0000000008051060     0x2708 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+                0x0000000008053760                Digits_24
+ .rodata        0x0000000008053768      0xe98 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+                0x00000000080545f8                Digits_14
+ .rodata        0x0000000008054600       0x30 CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+ .rodata        0x0000000008054630     0x11d0 CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+                0x0000000008054630                ASCII_Table
+ .rodata        0x0000000008055800       0x50 CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+ *(.rodata*)
+ *(.glue_7)
+ .glue_7        0x0000000000000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x0000000000000000        0x0 linker stubs
+ *(.init)
+ *(.fini)
+                0x0000000008055850                . = ALIGN (0x4)
+                0x0000000008055850                _etext = .
+
+.vfp11_veneer   0x0000000008055850        0x0
+ .vfp11_veneer  0x0000000000000000        0x0 linker stubs
+
+.v4_bx          0x0000000008055850        0x0
+ .v4_bx         0x0000000000000000        0x0 linker stubs
+
+.iplt           0x0000000008055850        0x0
+ .iplt          0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.plt            0x0000000008055850        0x0
+ .plt           0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.rel.dyn        0x0000000008055850        0x0
+ .rel.iplt      0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+ .rel.got       0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+ .rel.plt       0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+ .rel.bss       0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+
+.ARM            0x0000000008055850        0x0
+                0x0000000008055850                __exidx_start = .
+ *(.ARM.exidx*)
+                0x0000000008055850                __exidx_end = .
+
+.ARM.attributes
+                0x0000000008055850       0x33
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x0000000008055850       0x33 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+ .ARM.attributes
+                0x0000000008055883       0x33 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen-hw.c.o
+ .ARM.attributes
+                0x00000000080558b6       0x33 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen.c.o
+ .ARM.attributes
+                0x00000000080558e9       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+ .ARM.attributes
+                0x000000000805591c       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+ .ARM.attributes
+                0x000000000805594f       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+ .ARM.attributes
+                0x0000000008055982       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+ .ARM.attributes
+                0x00000000080559b5       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+ .ARM.attributes
+                0x00000000080559e8       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+ .ARM.attributes
+                0x0000000008055a1b       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+ .ARM.attributes
+                0x0000000008055a4e       0x33 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+ .ARM.attributes
+                0x0000000008055a81       0x33 CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+ .ARM.attributes
+                0x0000000008055ab4       0x33 CMakeFiles/e6-27_interface.elf.dir/src/printf.c.o
+ .ARM.attributes
+                0x0000000008055ae7       0x33 CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+ .ARM.attributes
+                0x0000000008055b1a       0x33 CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+ .ARM.attributes
+                0x0000000008055b4d       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c.o
+ .ARM.attributes
+                0x0000000008055b80       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c.o
+ .ARM.attributes
+                0x0000000008055bb3       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c.o
+ .ARM.attributes
+                0x0000000008055be6       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c.o
+ .ARM.attributes
+                0x0000000008055c19       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c.o
+ .ARM.attributes
+                0x0000000008055c4c       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c.o
+ .ARM.attributes
+                0x0000000008055c7f       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c.o
+ .ARM.attributes
+                0x0000000008055cb2       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c.o
+ .ARM.attributes
+                0x0000000008055ce5       0x21 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+ .ARM.attributes
+                0x0000000008055d06       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Project/STM32F10x_StdPeriph_Template/system_stm32f10x.c.o
+ .ARM.attributes
+                0x0000000008055d39       0x33 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c.o
+
+.preinit_array  0x0000000008055850        0x0
+                0x0000000008055850                PROVIDE (__preinit_array_start, .)
+ *(.preinit_array*)
+                0x0000000008055850                PROVIDE (__preinit_array_end, .)
+
+.init_array     0x0000000008055850        0x0
+                0x0000000008055850                PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*))
+ *(.init_array*)
+                0x0000000008055850                PROVIDE (__init_array_end, .)
+
+.fini_array     0x0000000008055850        0x0
+                0x0000000008055850                PROVIDE (__fini_array_start, .)
+ *(.fini_array*)
+ *(SORT(.fini_array.*))
+                0x0000000008055850                PROVIDE (__fini_array_end, .)
+                0x0000000008055850                _sidata = .
+
+.data           0x0000000020000000       0x54 load address 0x0000000008055d6c
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _sdata = .
+ *(.data)
+ .data          0x0000000020000000        0x8 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+                0x0000000020000004                TransferError
+ .data          0x0000000020000008        0x0 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen-hw.c.o
+ .data          0x0000000020000008       0x20 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/printf.c.o
+ .data          0x0000000020000028        0x0 CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+ .data          0x0000000020000028        0x1 CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+                0x0000000020000028                redraw_TEST
+ .data          0x0000000020000029        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c.o
+ .data          0x0000000020000029        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c.o
+ .data          0x0000000020000029        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c.o
+ .data          0x0000000020000029        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c.o
+ .data          0x0000000020000029        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c.o
+ .data          0x0000000020000029        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c.o
+ *fill*         0x0000000020000029        0x3 
+ .data          0x000000002000002c       0x14 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c.o
+ .data          0x0000000020000040        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c.o
+ .data          0x0000000020000040        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+ .data          0x0000000020000040       0x14 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Project/STM32F10x_StdPeriph_Template/system_stm32f10x.c.o
+                0x0000000020000040                SystemCoreClock
+                0x0000000020000044                AHBPrescTable
+ .data          0x0000000020000054        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c.o
+ *(.data*)
+                0x0000000020000054                . = ALIGN (0x4)
+                0x0000000020000054                _edata = .
+
+.igot.plt       0x0000000020000054        0x0 load address 0x0000000008055dc0
+ .igot.plt      0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.dynamic        0x0000000020000054       0x70 load address 0x0000000008055dc0
+ .dynamic       0x0000000020000054       0x70 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+                0x0000000020000054                _DYNAMIC
+
+.got            0x00000000200000c4        0x0 load address 0x0000000008055e30
+ .got           0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+.got.plt        0x00000000200000c4        0xc load address 0x0000000008055e30
+ .got.plt       0x00000000200000c4        0xc CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+                0x00000000200000c4                _GLOBAL_OFFSET_TABLE_
+                0x00000000200000d0                . = ALIGN (0x4)
+
+.bss            0x00000000200000d0      0x388 load address 0x0000000008055e3c
+                0x00000000200000d0                _sbss = .
+                0x00000000200000d0                __bss_start__ = _sbss
+ *(.bss)
+ .bss           0x00000000200000d0       0x38 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+                0x00000000200000d0                TransferEnd
+                0x00000000200000d4                NumberOfBytes
+ .bss           0x0000000020000108        0x0 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen-hw.c.o
+ .bss           0x0000000020000108       0x10 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+ .bss           0x0000000020000118        0x0 CMakeFiles/e6-27_interface.elf.dir/src/printf.c.o
+ .bss           0x0000000020000118       0x18 CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+ .bss           0x0000000020000130        0x4 CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+                0x0000000020000130                index
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Project/STM32F10x_StdPeriph_Template/system_stm32f10x.c.o
+ .bss           0x0000000020000134        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c.o
+ *(.bss*)
+ *(COMMON)
+ COMMON         0x0000000020000134       0x4c CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+                0x0000000020000134                SDIO_DataInitStructure
+                0x000000002000014c                SrcBuffer
+                0x0000000020000150                SDIO_InitStructure
+                0x0000000020000168                SDIO_CmdInitStructure
+                0x000000002000017c                DestBuffer
+ COMMON         0x0000000020000180      0x104 CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+                0x0000000020000180                font
+                0x0000000020000184                printf_buf
+ COMMON         0x0000000020000284      0x1d4 CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+                0x0000000020000284                RCC_Clocks
+                0x0000000020000298                buttons
+                0x0000000020000450                HSEStartUpStatus
+                0x0000000020000454                counter_1ms
+                0x0000000020000458                . = ALIGN (0x4)
+                0x0000000020000458                _ebss = .
+                0x0000000020000458                __bss_end__ = _ebss
+                0x0000000020000458                PROVIDE (end, _ebss)
+                0x0000000020000458                PROVIDE (_end, _ebss)
+
+.dynbss         0x0000000020000458        0x0 load address 0x00000000080561c4
+ .dynbss        0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+
+._user_heap_stack
+                0x0000000020000458      0x200 load address 0x00000000080561c4
+                0x0000000020000458                . = ALIGN (0x4)
+                0x0000000020000458                . = (. + _Min_Heap_Size)
+                0x0000000020000658                . = (. + _Min_Stack_Size)
+ *fill*         0x0000000020000458      0x200 
+                0x0000000020000658                . = ALIGN (0x4)
+
+.memory_b1_text
+ *(.mb1text)
+ *(.mb1text*)
+ *(.mb1rodata)
+ *(.mb1rodata*)
+
+/DISCARD/
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+OUTPUT(e6-27_interface.elf elf32-littlearm)
+
+.comment        0x0000000000000000       0x2a
+ .comment       0x0000000000000000       0x2a CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+                                         0x2b (size before relaxing)
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen-hw.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/printf.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Project/STM32F10x_StdPeriph_Template/system_stm32f10x.c.o
+ .comment       0x0000000000000000       0x2b CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c.o
+
+.note.GNU-stack
+                0x0000000000000000        0x0
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/sdcard/sdcard.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen-hw.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/touchscreen/touchscreen.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/big_font.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_72.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/ldigits_48.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/idigits_48.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_48.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_36.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_24.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/font/digits_14.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/i2c/i2c.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/printf.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/lcd/lcd.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/src/main.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Project/STM32F10x_StdPeriph_Template/system_stm32f10x.c.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 CMakeFiles/e6-27_interface.elf.dir/opt/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c.o

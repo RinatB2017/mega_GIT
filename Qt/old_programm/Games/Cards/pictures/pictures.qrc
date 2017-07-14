@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/cards">
+        <file>Ancient_Egyptians.svgz</file>
+    </qresource>
+</RCC>

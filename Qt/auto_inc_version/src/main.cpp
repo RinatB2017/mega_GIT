@@ -1,0 +1,122 @@
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2012                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+#include <iostream>
+#include <cstdlib>
+//--------------------------------------------------------------------------------
+#include <QTemporaryFile>
+#include <QTextStream>
+#include <QString>
+#include <QFile>
+//--------------------------------------------------------------------------------
+using namespace std;
+//--------------------------------------------------------------------------------
+int major = 0;
+int minor = 0;
+int patch = 0;
+int build = 0;
+//--------------------------------------------------------------------------------
+int readFile(const QString &filename)
+{
+    QString str;
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+        cout << "file " << filename.data()->toAscii() << " not open" << endl;
+#else
+        cout << "file " << filename.data()->toLatin1() << " not open" << endl;
+#endif
+        return -1;
+    }
+    QTextStream in(&file);
+    while(!in.atEnd())
+    {
+        in >> str;
+        if(str == "VER_MAJOR")
+        {
+            in >> major;
+        }
+        if(str == "VER_MINOR")
+        {
+            in >> minor;
+        }
+        if(str == "VER_PATCH")
+        {
+            in >> patch;
+        }
+        if(str == "VER_BUILD")
+        {
+            in >> build;
+        }
+    }
+    build++;
+    return 0;
+}
+//--------------------------------------------------------------------------------
+int writeFile(const QString &filename)
+{
+    QTemporaryFile tempFile;
+    if (tempFile.open())
+    {
+        QTextStream out(&tempFile);
+        out << "#ifndef VERSION_HPP\n";
+        out << "#define VERSION_HPP\n";
+        out << "//-----\n";
+        out << "#define VER_MAJOR " << major << "\n";
+        out << "#define VER_MINOR " << minor << "\n";
+        out << "#define VER_PATCH " << patch << "\n";
+        out << "#define VER_BUILD " << build << "\n";
+        out << "#define VER_STR \"" << major << "." << minor << "." << patch << "." << build << "\"\n";
+        out << "//-----\n";
+        out << "#endif // VERSION_HPP\n";
+
+        const QString tempFileName = tempFile.fileName();
+        tempFile.close();
+
+        QFile::remove(filename);
+        QFile::copy(tempFileName, filename);
+    }
+    else
+    {
+        cout << "Error creating temporary file!" << endl;
+        return -1;
+    }
+    return 0;
+}
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{ 
+    int res;
+
+    if (argc != 2)
+    {
+        cout << "Usage: auto_inc_version filename" << endl;
+        return -1;
+    }
+
+    res = readFile(argv[1]);
+    if(res < 0) return res;
+    res = writeFile(argv[1]);
+    if(res < 0) return res;
+
+    return 0;
+} 
+//--------------------------------------------------------------------------------

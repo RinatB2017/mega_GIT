@@ -1,0 +1,152 @@
+#define _CRT_SECURE_NO_WARNINGS
+#pragma once
+#ifndef PPU_H
+
+#define PPU_H
+
+//#include <SDL/sdl.h>
+#include "famicom.h"
+
+
+
+#define NMI_AT_SCANLINE 242
+
+typedef struct ___PPUCommand
+{
+	byte adress;
+	byte operand;
+	
+}PPU_COMMAND;
+
+
+class PPU
+{
+public:
+	PPU();
+	~PPU();
+
+	
+	void VBlank();
+	void Update();
+	byte memory[0x4000];
+	byte OAM[257];
+
+	//PPU_COMMAND *bus;
+	int ppu_counter;
+	void AddCommand(PPU_COMMAND *command);
+
+	bool NMI_occured;
+	bool NMI_at_VBLANK;
+	bool VBL_occured;
+
+	void doframe();
+
+	
+	
+	void write_ppu(word adress, byte val);
+	byte read_ppu(word adress);
+	void do_scanline();
+	
+	
+	word nametable_adress;
+	byte nametable_increment;
+
+
+	bool toggle_2006;
+	bool toggle_2005;
+
+	word ppu_adress;
+	word ppu_adress_prev;
+
+        byte ppu_bus;
+
+
+	
+	
+
+
+	bool end_of_frame();
+
+        SDL_Surface *bitmap;
+
+        bool draw;
+
+
+	
+
+
+	byte reg_2000;
+	byte reg_2001;
+	byte reg_2002;
+	byte reg_2003; //offset in sprite ram
+	byte reg_2003_dma_counter;
+	byte reg_2004;
+	byte reg_2005;
+
+
+	byte reg_2007_last_byte_read;
+	bool reg_2007_first_read;
+
+
+
+
+	byte scroll_x; //PPU scroll "register"
+	byte scroll_y; //PPU scroll "register"
+
+	long ppu_ticks;
+
+
+        unsigned long ppu_draw_buffer[0xf000];
+
+	
+	int sprite_overflow;
+
+	
+	bool inVBlank(){ return GET_BIT(reg_2002, 7);}
+	bool NMIinVBlank(){ return GET_BIT(reg_2000, 7);}
+
+	int num_scanline;
+bool	isSpriteOnScanline(int,int);
+
+	bool vertical_mirroring;
+	bool horizontal_mirroring;
+
+
+
+void draw_background_on_scanline(int nScanline);
+void draw_sprites_on_scanline(int nScanline, int magic);
+
+
+void sprite_zero_check();
+bool sprite_zero;
+byte sprite_zero_buffer[256];
+
+
+
+	void register_SDL(SDL_Surface *bmp) {  bitmap = bmp; }
+	
+
+        void draw_background_2_0(int nScanline);
+        void draw_sprites_new(int nScanline, bool front);
+	
+
+
+	void DEBUG_DRAW_OAM();
+	void DEBUG_GET_TILE(int tile, bool tilebank, byte tilecol);
+void	draw_tile(SDL_Surface *sdl, byte *tile, int x, int y);
+byte DEBUG_TILE_DATA[64];
+void DEBUG_BLIT_TO_SDL();
+void DEBUG_CLEAR_BUFFER();
+byte *NES_PALETTE;
+
+
+
+int DEBUG_X;
+int DEBUG_Y;
+
+
+	
+	
+};
+
+#endif

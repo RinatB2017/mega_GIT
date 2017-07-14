@@ -1,0 +1,8 @@
+QPushButton#PowerBtn {
+	image: url(:/power_knock/image/red/off.png);
+	border-style: inset;
+}
+QPushButton#PowerBtn:checked {
+	image: url(:/power_knock/image/red/on.png);
+	border-style: inset;
+}

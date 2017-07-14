@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="FloodmapPalette.cs">
+    <Files>
+      <File FileName="FloodmapViewer.cs" Line="95" Column="99" />
+      <File FileName="FloodmapPalette.cs" Line="1" Column="1" />
+      <File FileName="Floodmap.cs" Line="1" Column="1" />
+      <File FileName="EnergySpectrum.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PET_event_flag</class>
+ <widget class="QDialog" name="PET_event_flag">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>582</width>
+    <height>326</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Маска флагов событий</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>8</number>
+     </property>
+     <property name="topMargin">
+      <number>8</number>
+     </property>
+     <property name="rightMargin">
+      <number>8</number>
+     </property>
+     <property name="bottomMargin">
+      <number>8</number>
+     </property>
+     <item row="7" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_ADC_UNDERFLOW">
+       <property name="text">
+        <string>Признак опустошения (потери значимости) данных АЦП</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_GATE_OVERLAY">
+       <property name="text">
+        <string>Признак наложения событий</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_FAULT">
+       <property name="text">
+        <string>Признак сбоя работы устройства</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_QDC_OVERFLOW">
+       <property name="text">
+        <string>Признак переполнения (потери значимости) кординатных сигналов</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_QDC_UNDERFLOW">
+       <property name="text">
+        <string>Признак опустошения (потери значимости) кординатных сигналов</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_ADC_OVERFLOW">
+       <property name="text">
+        <string>Признак переполнения (потери значимости) данных АЦП</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_TS_INVALID">
+       <property name="text">
+        <string>Признак не корректности метки времени присвоенной событию</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QWidget" name="widget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>10</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_SYNC">
+       <property name="text">
+        <string>Признак кардиосинхронизации</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Исключать события, имеющие признаки:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cb_PET_EVENT_FLAG_FAULT</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_TS_INVALID</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_GATE_OVERLAY</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_QDC_OVERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_QDC_UNDERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_ADC_OVERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_ADC_UNDERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_SYNC</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>PET_event_flag</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>PET_event_flag</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

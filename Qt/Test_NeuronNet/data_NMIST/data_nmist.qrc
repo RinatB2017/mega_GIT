@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/data_NMIST">
+        <file>train-labels-idx1-ubyte</file>
+        <file>train-images-idx3-ubyte</file>
+        <file>t10k-labels-idx1-ubyte</file>
+        <file>t10k-images-idx3-ubyte</file>
+    </qresource>
+</RCC>

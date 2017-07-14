@@ -1,0 +1,37 @@
+#ifndef BREAKPOINT_DIALOG_H
+#define BREAKPOINT_DIALOG_H
+
+#include <QWidget>
+#include <Emulator.h>
+
+namespace Ui {
+    class breakpoint_dialog;
+}
+
+class breakpoint_dialog : public QWidget {
+    Q_OBJECT
+public:
+    breakpoint_dialog(QWidget *parent = 0);
+    ~breakpoint_dialog();
+
+
+    BREAKPOINT SetBreakPoint();
+    void SetEmuPtr(Emulator *e) { emu = e; }
+    void clearshit();
+
+protected:
+    void changeEvent(QEvent *e);
+
+private:
+    Ui::breakpoint_dialog *ui;
+    Emulator *emu;
+private slots:
+    void on_OK_Button_clicked();
+    void on_radioOpcode_clicked();
+
+
+
+
+};
+
+#endif // BREAKPOINT_DIALOG_H

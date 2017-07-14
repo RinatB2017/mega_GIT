@@ -1,0 +1,46 @@
+#############################################################################
+пустая FM24C64 предположительно соодержит 0 (проверено 31.07.15)
+#############################################################################
+#pragma pack (push, 1)
+
+typedef struct
+{
+    uint32_t a;
+    uint8_t b;
+    uint8_t c;
+} C;
+
+typedef struct
+{
+    uint8_t a;
+    C s_C;
+    uint8_t b;
+    uint8_t c;
+} B;
+
+typedef struct
+{
+    uint16_t a;
+    B buf[100];
+    uint8_t c;
+} A;
+
+void MainBox::test_0(void)
+{
+    int x = offsetof(A, A::buf[5].b);
+    //int x = offsetof(A, A::a);
+    //int x = offsetof(A, A::s_B.s_C.c);
+    emit info(QString("x %1").arg(x));
+}
+#############################################################################
+Б5-88 функция 0x61: Чтение значений для корректировки АЦП напряжения смещение нуля коэффициент K
+Value_Zero_ADC_U 8388763
+K_ADC_U -7751331
+Value_DAC_MIN 1023
+Value_DAC_MAX 58256
+
+Б5-88 функция 0x62: Чтение значений для корректировки АЦП тока смещение нуля, коэффициент K
+Value_Zero_ADC_I 8362450
+K_ADC_I 6824373
+Value_DAC_MIN 100
+Value_DAC_MAX 28014

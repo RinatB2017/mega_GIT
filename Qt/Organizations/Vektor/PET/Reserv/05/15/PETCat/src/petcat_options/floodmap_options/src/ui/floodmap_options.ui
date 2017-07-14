@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Floodmap_options</class>
+ <widget class="QWidget" name="Floodmap_options">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>506</width>
+    <height>439</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Энергия</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <item row="0" column="2">
+         <widget class="QSpinBox" name="sb_min_energy"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="cb_enable_filter_min_energy">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_5">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Min</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Max</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QSpinBox" name="sb_max_energy"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="cb_enable_filter_max_energy"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Исключать события, имеющие признаки:</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <property name="leftMargin">
+         <number>8</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>8</number>
+        </property>
+        <property name="bottomMargin">
+         <number>8</number>
+        </property>
+        <item row="7" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_SYNC">
+          <property name="text">
+           <string>Признак кардиосинхронизации</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_QDC_OVERFLOW">
+          <property name="text">
+           <string>Признак переполнения (потери значимости) кординатных сигналов</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_TS_INVALID">
+          <property name="text">
+           <string>Признак не корректности метки времени присвоенной событию</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_GATE_OVERLAY">
+          <property name="text">
+           <string>Признак наложения событий</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_FAULT">
+          <property name="text">
+           <string>Признак сбоя работы устройства</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QWidget" name="widget" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>10</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_QDC_UNDERFLOW">
+          <property name="text">
+           <string>Признак опустошения (потери значимости) кординатных сигналов</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_ADC_UNDERFLOW">
+          <property name="text">
+           <string>Признак опустошения (потери значимости) данных АЦП</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QCheckBox" name="cb_PET_EVENT_FLAG_ADC_OVERFLOW">
+          <property name="text">
+           <string>Признак переполнения (потери значимости) данных АЦП</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>253</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_accept">
+     <property name="text">
+      <string>Сохранить</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cb_enable_filter_min_energy</tabstop>
+  <tabstop>sb_min_energy</tabstop>
+  <tabstop>cb_enable_filter_max_energy</tabstop>
+  <tabstop>sb_max_energy</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_FAULT</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_TS_INVALID</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_GATE_OVERLAY</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_QDC_OVERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_QDC_UNDERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_ADC_OVERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_ADC_UNDERFLOW</tabstop>
+  <tabstop>cb_PET_EVENT_FLAG_SYNC</tabstop>
+  <tabstop>btn_accept</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

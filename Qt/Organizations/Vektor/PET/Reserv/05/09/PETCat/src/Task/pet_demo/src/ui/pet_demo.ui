@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PET_demo</class>
+ <widget class="QWidget" name="PET_demo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>773</width>
+    <height>370</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QGroupBox" name="groupBox_5">
+        <property name="title">
+         <string>Сервер</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="1" column="3">
+            <widget class="QComboBox" name="cb_ethernet"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Порт команд</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="le_name_server"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Имя</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QSpinBox" name="sb_cmd_port"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Интерфейс:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Порт событий</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QSpinBox" name="sb_event_port"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="btn_connect">
+             <property name="text">
+              <string>Соединиться</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_disconnect">
+             <property name="text">
+              <string>Разорвать соединение</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="gen_sinus_layout"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_2">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QFrame" name="frame_3">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="6" column="2">
+            <widget class="QSpinBox" name="sb_addr_brg_sim"/>
+           </item>
+           <item row="5" column="2">
+            <widget class="QSpinBox" name="sb_addr_td">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QComboBox" name="cb_sim_vid"/>
+           </item>
+           <item row="3" column="3">
+            <widget class="QSpinBox" name="sb_brg_cnt"/>
+           </item>
+           <item row="4" column="2">
+            <widget class="QSpinBox" name="sb_addr_sim">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="le_td_pid"/>
+           </item>
+           <item row="2" column="4">
+            <widget class="QPushButton" name="btn_add_device_bos">
+             <property name="text">
+              <string>Добавить</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="4">
+            <widget class="QPushButton" name="btn_add_device_td">
+             <property name="text">
+              <string>Добавить</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QComboBox" name="cb_bos_vid"/>
+           </item>
+           <item row="4" column="4">
+            <widget class="QPushButton" name="btn_add_device_sim">
+             <property name="text">
+              <string>Добавить</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Производитель</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="le_sim_pid"/>
+           </item>
+           <item row="3" column="4">
+            <widget class="QPushButton" name="btn_add_device_brg">
+             <property name="text">
+              <string>Добавить</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QSpinBox" name="sb_addr_bos">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QComboBox" name="cb_brg_vid"/>
+           </item>
+           <item row="6" column="0">
+            <widget class="QComboBox" name="cb_brg_sim_vid"/>
+           </item>
+           <item row="5" column="0">
+            <widget class="QComboBox" name="cb_td_vid"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Адрес</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="le_brg_pid"/>
+           </item>
+           <item row="6" column="3">
+            <widget class="QSpinBox" name="sb_brg_sim_cnt"/>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Тип</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="le_brg_sim_pid"/>
+           </item>
+           <item row="3" column="2">
+            <widget class="QSpinBox" name="sb_addr_brg"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="le_bos_pid"/>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Кол-во</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="4">
+            <widget class="QPushButton" name="btn_add_device_brg_sim">
+             <property name="text">
+              <string>Добавить</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTreeWidget" name="tw_devices">
+        <column>
+         <property name="text">
+          <string notr="true">1</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_clean">
+          <property name="text">
+           <string>Очистить</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="database_layout"/>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>le_name_server</tabstop>
+  <tabstop>cb_ethernet</tabstop>
+  <tabstop>sb_cmd_port</tabstop>
+  <tabstop>sb_event_port</tabstop>
+  <tabstop>btn_connect</tabstop>
+  <tabstop>btn_disconnect</tabstop>
+  <tabstop>cb_bos_vid</tabstop>
+  <tabstop>le_bos_pid</tabstop>
+  <tabstop>sb_addr_bos</tabstop>
+  <tabstop>btn_add_device_bos</tabstop>
+  <tabstop>cb_brg_vid</tabstop>
+  <tabstop>le_brg_pid</tabstop>
+  <tabstop>sb_addr_brg</tabstop>
+  <tabstop>sb_brg_cnt</tabstop>
+  <tabstop>btn_add_device_brg</tabstop>
+  <tabstop>cb_sim_vid</tabstop>
+  <tabstop>le_sim_pid</tabstop>
+  <tabstop>sb_addr_sim</tabstop>
+  <tabstop>btn_add_device_sim</tabstop>
+  <tabstop>cb_td_vid</tabstop>
+  <tabstop>le_td_pid</tabstop>
+  <tabstop>sb_addr_td</tabstop>
+  <tabstop>btn_add_device_td</tabstop>
+  <tabstop>cb_brg_sim_vid</tabstop>
+  <tabstop>le_brg_sim_pid</tabstop>
+  <tabstop>sb_addr_brg_sim</tabstop>
+  <tabstop>sb_brg_sim_cnt</tabstop>
+  <tabstop>btn_add_device_brg_sim</tabstop>
+  <tabstop>tw_devices</tabstop>
+  <tabstop>btn_clean</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

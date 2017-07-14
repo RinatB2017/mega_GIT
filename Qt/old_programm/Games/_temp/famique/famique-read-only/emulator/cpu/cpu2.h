@@ -1,0 +1,237 @@
+/*
+
+A fresh attempt to make a better lookup-based CPU emulator for 6502 */
+
+
+
+#include "famicom.h"
+#include "ppu/ppu.h"
+#include "ppu/ppu2.h"
+#include "ppu/ppu3.h"
+#include "ppu/ppu_base.h"
+#include "memory.h"
+#include "nescart.h"
+#include "tracer.h"
+
+
+
+#pragma once
+#ifndef _CPU_2_
+#define _CPU_2_
+
+
+#ifndef CHECK_PAGECROSS
+#define CHECK_PAGECROSS(addr, operand) ((((addr << 2)+operand ) > 0xFF)? 1:0)
+#endif
+
+#define SETZ
+#define SETB
+
+#define SETC
+#define SETN
+#define SETZ
+#define SETD
+
+#define CLRZ
+#define CLRB
+#define CLRC
+#define CLRN
+#define CLRZ
+#define CLRD
+
+
+
+typedef union
+{
+    struct
+    {
+
+
+        /*
+           byte N:1;//negative flag
+           byte V:1;//overflow flag
+
+           byte unused:1;
+
+           byte B:1; //BRK flag
+
+           byte D:1; //decimal flag
+
+           byte I:1; //interrupt flag
+
+           byte Z:1; //zero flag
+
+           byte C:1;//carry
+*/
+
+
+        //old setup
+        byte C:1;//carry
+        byte Z:1; //zero flag
+        byte I:1; //interrupt flag
+        byte D:1; //decimal flag
+
+        byte B:1; //BRK flag
+        byte unused:1;
+
+        byte V:1;//overflow flag
+        byte N:1;//negative flag
+
+
+
+
+
+
+    }members;
+
+    byte SR;
+
+}CPU_FLAGS;
+
+typedef struct _CPU_SNAPSHOT
+{
+    word pc;
+    byte a;
+    byte x;
+    byte y;
+    byte SP;
+    CPU_FLAGS fl;
+    byte next_opcode;
+    byte current_opcode;
+}CPU_SNAPSHOT;
+
+
+
+class M6502
+{
+public:
+    M6502(NESCart *cart);
+    ~M6502();
+
+    void Init();
+    void Reset();
+    bool isRunning(){ return running;}
+    void NextOpCode();
+
+
+    void EnabledDebugMode(){debug = true;}
+    void DisableDebugMode(){debug = false;}
+    void Exec() { running = true;}
+    void Halt() { running = false;}
+
+    typedef void (M6502::*getFuncPtr)();
+
+    getFuncPtr GetOpCode(byte op) { return M6502::m6502_mnemonics[op];}
+
+    void SetUpTables();
+
+    int LenNextInstruction();
+    int NumCycles(){ return cycles;}
+    void ResetCycleCount() { cycles = 0; }
+
+    PPU ppu;
+    PPU_base *ppu_2;
+    void NMI();
+
+    void CallOpCode(byte opcode) { (this->*m6502_mnemonics[opcode])(); }
+    CPU_SNAPSHOT GetCPUState();
+    disassembler *dis;
+
+
+
+    void PrintDebug(const char *str, ...);
+
+
+    long cycles;
+    byte extra_cycles;
+    MemoryManager *memory;
+
+#ifdef M6502_EXTRA_CYCLES
+    int GetCycleCount() {return (m6502_cyclecount[opcode] + extra_cycles);}
+#else
+    int GetCycleCount() { return m6502_cyclecount[opcode]; }
+#endif
+
+
+    bool CPU_crash;
+#include "definitions.h"
+    CPU_SNAPSHOT previous_state;
+
+
+    void PrintAllRegs();
+private:
+
+
+    word PC;
+
+    bool branch;
+
+    byte A,X,Y,SP;
+    CPU_FLAGS flags;
+
+    int increment;
+
+    byte opcode;
+
+    word adress;
+    byte value;
+
+    bool operand_accumulator;
+    void PUSH(byte reg);
+    byte POP();
+
+    bool running;
+    bool debug;
+
+    void check_extra_cycles(word address, byte opcode);
+    void check_extra_cycles_abs_x(word address, byte opcode);
+    void check_extra_cycles_abs_y(word address, byte opcode);
+    void check_extra_cycles_ind_y(word address, byte opcode);
+    void check_extra_cycles_branching(word address, signed short branch_offset);
+
+
+
+
+
+
+
+
+    void inline UNIMPLEMENTED_OPCODE();
+    void inline UNIMPLEMENTED_ADRESSING_MODE();
+
+    void (M6502::*m6502_mnemonics[256])(void); //function pointers used for opcode lookup
+    void (M6502::*m6502_adressing[256])(void); //function pointers used for opcode adressing
+    byte m6502_cyclecount[256];
+
+    //used in the tracer
+    char mnemonics_txt[256][4];
+
+
+
+    char *trace_output;
+    long trace_buf_pos;
+    void end_tracing();
+    void start_tracing();
+    void trace_all();
+
+    void *M6502_CallBackPtr;
+
+
+    void pretrace();
+    void trace_current_instruction(int inc);
+    CPU_SNAPSHOT pre_trace_snapshot;
+
+
+    FILE *tr;
+
+
+
+};
+
+
+
+
+#endif
+
+
+/* Opcode lookup tables, adressing mode lookup table and increment lookup-table */

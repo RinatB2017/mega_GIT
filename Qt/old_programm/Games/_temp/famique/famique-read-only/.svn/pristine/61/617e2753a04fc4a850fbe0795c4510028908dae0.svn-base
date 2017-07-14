@@ -1,0 +1,53 @@
+#ifndef SDLWIDGET_H
+#define SDLWIDGET_H
+/*
+** Copyright (C) 1992-2000 Trolltech AS.  All rights reserved.
+**
+** This file is part of an example program for Qt.  This example
+** program may be used, distributed and modified without limitation.
+*/
+#include <Qt>
+#include <QWidget>
+#include "Emulator.h"
+#include "ppu/palette.h"
+
+struct SDL_Surface;
+
+class QSDLScreenWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    QSDLScreenWidget(QWidget *parent=0, Qt::WFlags flags=0) ;
+
+
+    void UpdateSDL() { paintEvent(NULL); }
+    void SetEmulatorPtr(Emulator *ptr)
+    {
+        emu = ptr;
+
+    }
+
+    SDL_Surface *getSDLSurface() { return screen;}
+    void SetPalette() { SetSDLPalette(screen); }
+
+    void GoFullScreen();
+    void GoWindowed();
+protected:
+    void resizeEvent(QResizeEvent *);
+   // void paintEvent(QPaintEvent *);
+
+private:
+
+    unsigned char x, y;
+    bool flip;
+    Emulator *emu;
+    SDL_Surface
+        *screen;
+    Uint32 delta;
+    Uint32 timer_granularity;
+private slots:
+    void onReDraw();
+
+};
+
+#endif // SDLWIDGET_H

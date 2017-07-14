@@ -1,0 +1,4 @@
+in  зима	- winter
+in  весна	- spring
+in  лето	- summer
+in  осень	- autumn

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>     
+<gui name="checkmate" 
+     version="0.1"
+     xmlns="http://www.kde.org/standards/kxmlgui/1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.kde.org/standards/kxmlgui/1.0
+                         http://www.kde.org/standards/kxmlgui/1.0/kxmlgui.xsd">
+<MenuBar>
+  <Menu name="game"><text>&amp;Game</text>
+    <Action name="advanceGame" />
+  </Menu>
+  <Menu name="player"><text>&amp;Player</text>
+    <ActionList name="colorGroup" />
+  </Menu>
+  <Menu name=""><text>&amp;View</text>
+    <Action name="movesTable" />
+    <Action name="console" />
+  </Menu>
+</MenuBar>
+<ToolBar name="mainToolBar"><text>Main Toolbar</text>
+  <Action name="game_new" />
+  <Action name="move_undo" />
+  <Action name="game_pause" />
+  <Action name="game_restart" />
+  <Action name="game_load" />
+  <Action name="game_save" />
+</ToolBar>
+</gui>

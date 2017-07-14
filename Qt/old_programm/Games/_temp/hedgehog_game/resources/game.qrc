@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>game/pics/actor_down.gif</file>
+        <file>game/pics/actor_left.gif</file>
+        <file>game/pics/actor_right.gif</file>
+        <file>game/pics/actor_stay.gif</file>
+        <file>game/pics/actor_up.gif</file>
+        <file>game/pics/cell.gif</file>
+        <file>game/pics/cellBang.gif</file>
+        <file>game/pics/wall.gif</file>
+        <file>game/audio/hardStep.wav</file>
+    </qresource>
+</RCC>

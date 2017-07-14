@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/gnome/animations">
+        <file>animations/process-working.png</file>
+    </qresource>
+</RCC>

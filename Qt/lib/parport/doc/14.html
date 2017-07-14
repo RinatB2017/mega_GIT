@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251">
+<title>Программирование портов ввода/вывода LPT и ISA | Статьи по электронике</title>
+<meta name="description" content="Программирование портов ввода/вывода LPT и ISA из раздела Интерфейсы">
+<meta name="keywords" content="статьи Программирование портов ввода/вывода LPT и ISA параллельным портом чтения состояний принтера шину ISA">
+<meta name="robots" content="index, follow">
+<meta name="verify-v1" content="0AyHUYOgyRPQnnlBgyWSEJqYUGo1OaY1lk8H+2yf/NU=">
+<meta name="webmoney.attestation.label" content="webmoney attestation label#9D2E009B-6EB9-46D4-A6A9-8956F1DB9BF7">
+<!-- base href="http://kazus.ru/" -->
+<link rel="shortcut icon" href="http://kazus.ru/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="14_files/style.css" type="text/css">
+<script type="text/javascript" src="14_files/functions.js"></script>
+</head>
+<body>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+<tbody><tr class="hbox">
+<td align="left">&nbsp;
+<a href="http://kazus.ru/adver/index.html">Реклама на сайте</a> | <a href="http://kazus.ru/donate/">Помощь сайту</a>
+<img src="14_files/top100.gif" alt="" border="0" height="1" width="1">
+
+<script type="text/javascript"><!--
+document.write('<img src="http://counter.yadro.ru/hit?r'+
+escape(document.referrer)+((typeof(screen)=='undefined')?'':
+';s'+screen.width+'*'+screen.height+'*'+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+';u'+escape(document.URL)+
+';i'+escape('Жж'+document.title.substring(0,80))+';'+Math.random()+
+'" width=1 height=1 alt="">')//--></script>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6715374-1");
+pageTracker._trackPageview();
+} catch(err) {}</script></td>
+<td align="right">
+<a href="http://kazus.ru/forums/login/">Гость (Вход)</a></td>
+<td align="right">
+<a href="http://kazus.info/articles/index.html" title="Article in electronics">English version</a>
+&nbsp;|&nbsp;
+<a title="datasheets" href="http://datasheets.ru/">Datasheets</a>
+&nbsp;
+</td>
+</tr>
+</tbody></table>
+<table align="center" border="0" cellpadding="14" cellspacing="0" width="760">
+<tbody><tr class="logobox">
+<td>
+<a href="http://kazus.ru/"><img alt="KAZUS.RU - Электронный портал. Принципиальные схемы, Datasheets, Форум по электронике" src="14_files/logo_kazus.gif" border="0" height="60" width="230"></a></td><td>
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" id="nanocad_2011" height="60" width="468">
+<param name="movie" value="http://kazus.ru/banners/adv/nanocad/728_a.swf">
+<param name="bgcolor" value="#FFFFFF">
+<param name="quality" value="high">
+<param name="seamlesstabbing" value="false">
+<param name="allowscriptaccess" value="samedomain">
+<a class="__noscriptPlaceholder__ __noscriptObjectPatchMe__" title="&lt;EMBED&gt;, shockwave-flash@http://kazus.ru/banners/adv/nanocad/728_a.swf" href="http://kazus.ru/banners/adv/nanocad/728_a.swf" id=""><div style="background-attachment: scroll;background-color: transparent;background-image: none;background-position: 0% 0%;background-repeat: repeat;border-bottom-color: rgb(24, 22, 20);border-bottom-style: none;border-bottom-width: 0px;border-collapse: separate;border-left-color: rgb(24, 22, 20);border-left-style: none;border-left-width: 0px;border-right-color: rgb(24, 22, 20);border-right-style: none;border-right-width: 0px;border-spacing: 0px 0px;border-top-color: rgb(24, 22, 20);border-top-style: none;border-top-width: 0px;bottom: auto;caption-side: top;clear: none;clip: auto;color: rgb(24, 22, 20);content: none;counter-increment: none;counter-reset: none;cursor: auto;direction: ltr;display: inline;empty-cells: show;float: none;font-family: serif;font-size: 12px;font-size-adjust: none;font-stretch: normal;font-style: normal;font-variant: normal;font-weight: 400;height: 60px;left: auto;letter-spacing: normal;line-height: 14px;list-style-image: none;list-style-position: outside;list-style-type: disc;margin-bottom: 0px;margin-left: 0px;margin-right: 0px;margin-top: 0px;marker-offset: auto;max-height: none;max-width: none;min-height: 0px;min-width: 0px;ime-mode: auto;opacity: 1;outline-color: rgb(0, 0, 0);outline-style: none;outline-width: 0px;outline-offset: 0px;overflow: visible;overflow-x: visible;overflow-y: visible;padding-bottom: 0px;padding-left: 0px;padding-right: 0px;padding-top: 0px;page-break-after: auto;page-break-before: auto;pointer-events: auto;position: static;quotes: &quot;“&quot; &quot;”&quot; &quot;‘&quot; &quot;’&quot;;right: auto;table-layout: auto;text-align: start;text-decoration: none;text-indent: 0px;text-shadow: none;text-transform: none;top: auto;unicode-bidi: normal;vertical-align: baseline;visibility: visible;white-space: normal;width: 468px;word-spacing: 0px;z-index: auto;-moz-animation-delay: 0s;-moz-animation-direction: normal;-moz-animation-duration: 0s;-moz-animation-fill-mode: none;-moz-animation-iteration-count: 1;-moz-animation-name: none;-moz-animation-play-state: running;-moz-animation-timing-function: cubic-bezier(0,250000, 0,100000, 0,250000, 1,000000);-moz-appearance: none;background-clip: border-box;-moz-background-inline-policy: continuous;background-origin: padding-box;background-size: auto auto;-moz-binding: url(&quot;chrome://flashblock/content/flashblock.xml#flash&quot;);-moz-border-bottom-colors: none;-moz-border-image: none;-moz-border-left-colors: none;-moz-border-right-colors: none;-moz-border-top-colors: none;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;border-top-left-radius: 0px;border-top-right-radius: 0px;-moz-box-align: stretch;-moz-box-direction: normal;-moz-box-flex: 0;-moz-box-ordinal-group: 1;-moz-box-orient: horizontal;-moz-box-pack: start;box-shadow: none;-moz-box-sizing: content-box;-moz-column-count: auto;-moz-column-width: auto;-moz-column-gap: 12px;-moz-column-rule-color: rgb(24, 22, 20);-moz-column-rule-width: 0px;-moz-column-rule-style: none;-moz-float-edge: content-box;-moz-font-feature-settings: normal;-moz-font-language-override: normal;-moz-force-broken-image-icon: 0;-moz-image-region: auto;-moz-outline-radius-bottomleft: 0px;-moz-outline-radius-bottomright: 0px;-moz-outline-radius-topleft: 0px;-moz-outline-radius-topright: 0px;resize: none;-moz-stack-sizing: stretch-to-fit;-moz-tab-size: 8;-moz-transform: none;-moz-transform-origin: 50% 50%;-moz-user-focus: none;-moz-user-input: auto;-moz-user-modify: read-only;-moz-user-select: auto;-moz-transition-delay: 0s;-moz-transition-duration: 0s;-moz-transition-property: all;-moz-transition-timing-function: cubic-bezier(0,250000, 0,100000, 0,250000, 1,000000);-moz-window-shadow: default;word-wrap: normal;clip-path: none;clip-rule: nonzero;color-interpolation: srgb;color-interpolation-filters: linearrgb;dominant-baseline: auto;fill: rgb(0, 0, 0);fill-opacity: 1;fill-rule: nonzero;filter: none;flood-color: rgb(0, 0, 0);flood-opacity: 1;lighting-color: rgb(255, 255, 255);image-rendering: auto;mask: none;marker-end: none;marker-mid: none;marker-start: none;shape-rendering: auto;stop-color: rgb(0, 0, 0);stop-opacity: 1;stroke: none;stroke-dasharray: none;stroke-dashoffset: 0px;stroke-linecap: butt;stroke-linejoin: miter;stroke-miterlimit: 4;stroke-opacity: 1;stroke-width: 1px;text-anchor: start;text-rendering: auto;;" class="__noscriptPlaceholder__1"><div style="background-position: right bottom; background-image: url(&quot;resource://noscript_0.9549765671528792/flash16.png&quot;);" class="__noscriptPlaceholder__2"></div></div></a>
+
+</object></td></tr><tr class="nbox"><td colspan="2" style="padding-top: 5px;">
+<!-- google_ad_section_start(weight=ignore) -->
+<table class="mainmenu" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><th>Литература</th><th>Каталоги</th><th>Документация</th>
+<th rowspan="2" width="160">
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-1317160794948979";
+/* Ссылки в главном меню */
+google_ad_slot = "0765990509";
+google_ad_width = 160;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="14_files/show_ads.js">
+</script>
+
+</th>
+<th>Datasheet search</th></tr>
+<tr><td>
+<a href="http://kazus.ru/ebooks/index.html">Электронные книги</a>
+<a href="http://kazus.ru/shemes/index.html">Избранные схемы</a>
+<a href="http://kazus.ru/articles/index.html">Сборник статей</a>
+<a href="http://kazus.ru/faq/index.html">FAQ по электронике</a>
+</td><td>
+<a href="http://kazus.ru/programs/index.html">Каталог программ</a>
+<a href="http://kazus.ru/manufactures/index.html">Производители</a>
+<a href="http://kazus.ru/indexs.html">Каталог схем</a>
+<a href="http://kazus.ru/datasheets/abc.html">Datasheet catalog</a>
+</td><td>
+
+
+
+<a href="http://kazus.ru/datasheets/index.html">Datasheets</a>
+<a href="http://kazus.ru/guide/index.html">On-line Справочник</a>
+<a href="http://kazus.ru/datasheets/info/logotypes/1.html">Логотипы IC</a>
+<a href="http://kazus.ru/forums/">Форум по электронике</a>
+</td><td>
+<!-- google_ad_section_end -->
+<br>
+<div style="font-size:11px;">Пример: <span class="hexms" onclick="document.forms['headdatasheets'].query.value=unescape_opera_br(this.innerHTML); return false;">max232</span></div>
+<form name="headdatasheets" method="post" action="http://kazus.ru/datasheets/search/go/">
+<input class="headdatasheets" size="21" name="query"><input src="14_files/hdatas.gif" alt="Search datasheet" style="width: 18px; vertical-align: middle;" type="image"><br>
+<input class="headdatasheets_checkbox" name="sklad" value="yes" checked="checked" type="checkbox"> <a style="display: inline; font-size: 11px;" href="http://kazus.ru/datasheets/search/sklad/index.html">Запросить склады</a><br>
+</form>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+<tbody><tr><td height="1"></td></tr>
+</tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+<tbody><tr><td class="lbox" height="90" width="16"> </td>
+<td width="728">
+<a href="http://kazus.ru/url.php?url=http://www.zao-zeo.ru/catalog" target="_blank"><img src="14_files/kazus_ru_728x90.jpg" alt="" border="0" height="90" width="728"></a>
+<script type="text/javascript"><!--
+google_ad_client = "pub-1317160794948979";
+google_ad_slot = "8350429781";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript" src="14_files/show_ads.js">
+</script>
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-1317160794948979";
+google_ad_slot = "4443299347";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript" src="14_files/show_ads.js">
+</script>
+<script type="text/javascript"><!--
+google_ad_client = "pub-1317160794948979";
+google_ad_slot = "2669628018";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript" src="14_files/show_ads.js">
+</script>
+</td><td class="lbox" width="16"> </td></tr>
+<tr bgcolor="white"><td colspan="3" height="2">
+</td></tr></tbody></table><table dir="rtl" align="center" border="0" cellpadding="0" cellspacing="0" width="760"><tbody><tr>
+<td dir="ltr" class="mainwin" width="100%">
+<table class="title-line" border="0" cellpadding="2" cellspacing="1" width="100%"><tbody><tr><th class="title-line"><h1>Программирование портов ввода/вывода LPT и ISA</h1></th></tr></tbody></table>
+<table border="0" cellpadding="8" cellspacing="1" width="100%"><tbody><tr><td>
+<h2>Программирование портов ввода/вывода LPT и ISA</h2><br><br>Раздел: <a href="http://kazus.ru/articles/4/index.html">Интерфейсы</a><br><br><div align="center"><script type="text/javascript"><!--
+google_ad_client = "pub-1317160794948979";
+google_ad_slot = "8750048586";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="14_files/show_ads.js">
+</script></div><div align="justify"><p>Данный материал основан на моём 
+(его) личном опыте работы с материнской платой неизвестного (нет, не 
+солдата) производителя. Чипсет - SIS. Если вдруг в Вашем случае дело 
+будет обстоять другим образом, напишите мне. Также хочу сразу 
+предупредить - я не профессиональный программист!!! Поэтому не ругайте 
+меня за отсутствие проф. терминов, может быть кривых объяснений или ещё 
+каких недочётов, которые я имею право не знать.</p>
+<p>В повседневной практике я использую язык программирования "Паскаль", 
+поэтому дальнейшие примеры буду давать на нём. Согласен, для написания 
+"драйверов" лучше знать СИ и Ассемблер. Последний я на данный момент 
+изучаю. Для моих устройств пока что хватает и Паскаля.</p>
+<h3 align="center">Работа с параллельным портом (LPT).</h3>
+<p>Обычно этот порт имеет базовый адрес 378h (LPT1), 278h (LPT2), 3BCh 
+(LPT3). Окончание "h" свидетельствует о шестнадцатиричной системе 
+счисления, так уж принято записывать адреса. Порт занимает три адреса, 
+первый из них называется базовым. Так, для LPT1 диапазон занимаемых им 
+адресов: 378h-37Ah. Базовый адрес служит для посылки/чтения байта на/из 
+линии d0-d7 (пины 2-9 разъёма DB-25). Посылка не инвертируется. Приведу 
+фрагмент программы, посылающей в порт число 170.</p>
+<p><font style="background-color: rgb(215, 255, 215);">{начало программы} <br>
+</font>... <br>
+begin <br>
+Port[$378]:=170 <br>
+end. <br>
+<font style="background-color: rgb(215, 255, 215);">{конец программы}</font></p>
+<p>При запуске её на линиях d0-d7 появится число 170 в двоичном виде, 
+что соответсвует 10101010. Т.е. единичный сигнал будет присутствовать на
+ выводах d1, d3, d5, d7 (обозначени выводов начинается с d0!). Число 170
+ останется на выводах разъёма до тех пор, пока Вы не перешлёте туда же 
+другое число (это может сделать и другая программа) или не выключите 
+компьютер. Заметьте, что адрес порта в команде задан в шестнадцатиричном
+ виде, а посылка - в десятиричном. Если вместо команды <br>
+Port[$378]:=170; <br>
+Вы примените <br>
+d:=Port[$378]; <br>
+где d - некоторая переменная, то переменная примет значение последнего 
+посланного в порт байта или, при переходе в режим приёма, значение 
+байта, поданного на порт внешним устройством.</p>
+<p>Базовый+1 адрес (379h для LPT1) служит для чтения состояний принтера,
+ поступающих на входы ACK, -BUSY, PE, SLCT, ERROR. Сигнал -BUSY - 
+инвертированныё, т.е. при подаче на него +5В компьютер будет считывать 
+"0". Для опроса линий используются только старшие 5 битов. "1" в третьем
+ бите соответствует высокому уровню сигнала на входе ERROR. В четвёртом 
+бите она индицирует о высоком уровне сигнала на входе SLCT, в пятом - на
+ входе PE. Единица в шестом бите соответствует высокому уровню сигнала 
+на ACK, а ноль в седьмом - выскому уровню на -BUSY. Если ваш компьютер 
+имеет однонаправленный порт передачи данных, то эти пять линий 
+предоставляют единственную возможность в опросе состояний внешних 
+датчиков.</p>
+<p>Ниже - пример программы, опрашивающей входные линии порта: <br>
+begin <br>
+d:=Port[$379] <br>
+end.</p>
+<p>В переменной d после выполнения программы будет отображено состояние 
+порта. Допустим, переменная вернула значение 126. В двоичном виде оно 
+выглядит как 01111110. Младшие (правые) три бита (нулевой, первый и 
+второй) не используются, и всегда равны 1, 1 и 0. Третий бит - 1, значит
+ на ERROR высокий уровень. Та же ситуация на SLCT, PE, ACK и BUSY.</p>
+<p>Базовый+2 адрес (37Ah) служит для записи битов на линии -STROBE, 
+-AUTO FD, INIT, -SLCT IN. Нулевой бит посылает сигнал на -STROBE, первый
+ - на -AUTO FD, второй - на INIT, и четвёртый - на -SLCT IN. Принцип 
+записи - тот же, что и по базовому адресу. Нам же очень интересны 
+следующие биты: Пятый бит служит для разрешения/запрещения прерывания от
+ внешнего устройства. Это полезно, если Вы умеете писать обработчики 
+прерываний.</p>
+<p>Шестой бит служит для перевода линий d0-d7 в режим приёма!!! Но перед
+ этим необходимо убедиться, что в BIOS в типе порта поставлено SPP/EPP. 
+Вот пример программы, которая считывает бит с линий данных: <br>
+begin <br>
+Port[$37A]:=32; {32 "зажигает" единицу в шестом бите} <br>
+d:=Port[$378]; <br>
+end.</p>
+<p>Не забудьте, что если Вы собрали устройство, которое через порт 
+принтера опрашивает, допустим, один датчик, подключенный к d0 (pin 2), а
+ остальные линии просто оставили "висеть" на воздухе, то в случае, когда
+ на втором контакте порта будет единица, принимаемый байт будет не "1" а
+ 255, т.к. неподключенные контакты имеют высокий уровень.</p>
+<h3 align="center">Программирование ISA устройств.</h3>
+<p>Программирование портов ISA практически не отличается от 
+программирование порта LPT, т.к. по сути дела сам порт принтера является
+ ISA устройством. Отличие состоит только в том, что при работе с 
+параллельним портом можно было обходится без прерываний (хотя при 
+разработке устройств, обрабатывающих данные в "real time" без них не 
+обойтись). Если Вы решили собирать ISA устройство, то очевидно, что Вам 
+как раз и нужна обработка в реальном времени или быстрый (по сравнению с
+ LPT) обмен данными. К сожалению, я пока что не имел опыта разработки 
+драйверов, используюих прервания, поэтому на данный момент не смогу Вам 
+объяснить методы написания таковых.</p>
+<p>Возъмём простейший случай, когда Вы решили использовать шину ISA 
+только для достижения 16-разрядного обмена. Если адрес LPT порта (в 
+общем случае) является уже заданным, то Ваше устройство может 
+использовать любые адреса (естественно, не занятые другими 
+устройствами). Могу дать несколько советов при выборе адреса, который 
+будет занимать устройство:</p>
+<ul>
+    <li>Тщательно проверьте, не будет ли оно конфликтовать с другими 
+устройствами. Это может быть не только видеокарта, модем или звуковая 
+карта, но и что-либо из внутренних устройств на материнской плате. Поиск
+ свободных адресов можно осуществить в простейшем случае из Windows 
+(Свойства: система -&gt; Устройства. Двойной щелчок по пиктограмме 
+"Компьютер" высветит меню, в котором можно будет просмотреть адреса).</li>
+    <li>Для подстраховки и удобства переноса устрйства на другой 
+компьютер лучше сделать возможность выбора разных адресов джамперами 
+(если Вы сможете организовать Plug&amp;Play, тогда преклоняю свои 
+колени..).</li>
+    <li>Старайтесь не занимать верхних адресов, т.к. они могут попросту 
+не выводится на шину. Держитесь в окресностях адресного пространства, 
+которое занимают другие ISA устройства.</li>
+    <li>Не забывайте выводить старшие линии адресов на своё устройство, 
+т.к. может оказаться, что оно будет совпадать с другими устройствами 
+младшими битами адреса.
+    <p>Если Вы сделали выборку адресов джамперами, то программируя на 
+Паскале трудно будет программно изменить адрес устройства (поправьте, 
+если я не прав). Будет гораздо проще применить Ассемблер-вставку в Вашу 
+программу: <br>
+    mov dx, a <br>
+    mov al, d <br>
+    out dx, al</p>
+    <p>Здесь в регистр dx мы кладём адрес порта, а в al - байт для 
+отправки. Переменные a и d мы может спокойно передавать вставке из 
+программы</p>
+    </li>
+</ul><br></div><div align="right">Источник: <a href="http://students.soros.karelia.ru/%7Eeugenes/">http://students.soros.karelia.ru/~eugenes/</a></div></td></tr></tbody></table>
+</td></tr></tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+<tbody><tr class="hbox"><td align="left">Реклама</td><td>  <a href="http://balkonof.ru/" target="_blank">остекление балконов в Москве</a> и Подмосковье .  Курсы <a href="http://www.id-centre.ru/trainings/hypnosis.php" target="_blank">гипноз</a> .  <a href="http://www.fixon.ru/goods/shoe/womens-shoes/" target="_blank">женская обувь</a>  </td><td align="right">Реклама</td></tr></tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+<tbody><tr class="hbox"><td align="left">&nbsp;© <strong>KAZUS.RU</strong> «Электронный портал» 2003-2011</td><td align="right"><a onclick="location.href=unescape('mai'+'lto'+':admin%40kazus.ru'); return false" href="mailto:[...]">Обр@тная связь</a>&nbsp;</td></tr></tbody></table>
+
+
+</body></html>

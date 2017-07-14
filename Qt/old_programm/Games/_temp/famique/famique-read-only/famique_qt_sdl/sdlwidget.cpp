@@ -1,0 +1,148 @@
+#include <iostream>
+
+//#include <QX11Info>
+
+#include <SDL/SDL.h>
+#include "sdlwidget.h"
+#include <QTime>
+
+#ifdef Q_WS_X11
+#include <X11/Xlib.h>
+#endif
+#ifdef Q_WS_MAC
+#include <QMacNativeWidget>
+#include <QtCore/QString>
+#include <QtCore/QTimer>
+#include <QtGui/QKeyEvent>
+#include <QtGui/QApplication>
+#include <QtGui/QtGui>
+#include <QtGui/QWidget>
+
+
+
+
+#endif
+
+
+
+QSDLScreenWidget::QSDLScreenWidget(QWidget *parent) :
+    QWidget(parent),
+    screen(0)
+{
+    // Turn off double buffering for this widget. Double buffering
+    // interferes with the ability for SDL to be properly displayed
+    // on the QWidget.
+    //
+    setAttribute(Qt::WA_PaintOnScreen);
+    //   setAttribute(Qt::WA_NoSystemBackground); //some french dude
+    setAttribute(Qt::WA_OpaquePaintEvent);
+
+    delta = 0;
+
+    timer_granularity = 10;
+
+}
+
+void QSDLScreenWidget::resizeEvent(QResizeEvent *)
+{
+    // We could get a resize event at any time, so clean previous mode.
+    // You do this because if you don't you wind up with two windows
+    // on the desktop: the Qt application and the SDL window. This keeps
+    // the SDL region synchronized inside the Qt widget and the subsequent
+    // application.
+    //
+    screen = 0;
+    SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+
+    std::cerr << "binding SDL and QT\n";
+
+#ifdef Q_WS_WIN
+    // Set the new video mode with the new window size
+    //
+
+    char
+            variable[64];
+    sprintf(variable, "SDL_WINDOWID=0x%lx", winId());
+    putenv(variable);
+
+#endif
+#ifdef Q_WS_MAC
+    /* QWidget *parentwidget = reinterpret_cast<QWidget *>(this->parent());
+    char var[64];
+    memset(var,0, sizeof(var));
+    //  HIViewRef nativeWidgetView = reinterpret_cast<HIViewRef>(this->winId());
+    //WON'T WORK, NEED COCOA :-L
+    //    sprintf(var, "SDL_WINDOWID=0x%lx",HIViewGetWindow(HIViewRef(this->winId())));
+    putenv(var);
+    */
+    char variable[64];
+    sprintf(variable, "SDL_WINDOWID=0x%lx", winId());
+    putenv(variable);
+#endif
+
+    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
+    {
+        std::cerr << "Unable to init SDL: " << SDL_GetError() << std::endl;
+        return;
+    }
+
+    /*
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    */
+
+
+    screen = SDL_SetVideoMode(256, 240, 32, SDL_SWSURFACE);
+
+
+
+    if (!screen)
+    {
+        std::cerr << "Unable to set video mode: " << SDL_GetError() <<
+                     std::endl;
+        return;
+    }
+}
+
+
+void QSDLScreenWidget::onReDraw()
+{
+#ifdef Q_WS_X11
+    // Make sure we're not conflicting with drawing from the Qt library
+    //
+    XSync(QX11Info::display(), FALSE);
+#endif
+
+    //    SDL_Delay(1);
+
+    if (screen && emu->isRunning())
+    {
+
+
+        emu->Update();
+
+
+    }
+    else
+        SDL_Delay(100);
+
+
+
+
+}
+
+void QSDLScreenWidget::GoFullScreen()
+{
+    emu->Stop();
+    screen = 0;
+    screen = SDL_SetVideoMode(640,480, 32, SDL_HWSURFACE | SDL_FULLSCREEN);
+
+    if(!screen)
+        std::cerr << "fuck all, fullscreen failed, bailing!";
+    return;
+    emu->SetSDLSurface(screen);
+    emu->Start();
+
+}

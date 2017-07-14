@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/sprites/large">
+        <file>rock10000.png</file>
+        <file>rock10001.png</file>
+        <file>rock10002.png</file>
+        <file>rock10003.png</file>
+        <file>rock10004.png</file>
+        <file>rock10005.png</file>
+        <file>rock10006.png</file>
+        <file>rock10007.png</file>
+        <file>rock10008.png</file>
+        <file>rock10009.png</file>
+        <file>rock10010.png</file>
+        <file>rock10011.png</file>
+        <file>rock10012.png</file>
+        <file>rock10013.png</file>
+        <file>rock10014.png</file>
+        <file>rock10015.png</file>
+        <file>rock10016.png</file>
+        <file>rock10017.png</file>
+        <file>rock10018.png</file>
+        <file>rock10019.png</file>
+        <file>rock10020.png</file>
+        <file>rock10021.png</file>
+        <file>rock10022.png</file>
+        <file>rock10023.png</file>
+        <file>rock10024.png</file>
+        <file>rock10025.png</file>
+        <file>rock10026.png</file>
+        <file>rock10027.png</file>
+        <file>rock10028.png</file>
+        <file>rock10029.png</file>
+        <file>rock10030.png</file>
+        <file>rock10031.png</file>
+    </qresource>
+</RCC>

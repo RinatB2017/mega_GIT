@@ -1,0 +1,73 @@
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2012                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+#include <QApplication>
+#include <QString>
+#include <QDebug>
+#include <QIcon>
+//--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
+
+#include "game.hpp"
+#include "defines.hpp"
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#include "../lib/codecs.h"
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    set_codecs();
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+
+#if 1
+    MainWindow main_window;
+    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+
+    Game *mainBox = new Game();
+    mainBox->setFocusPolicy(Qt::StrongFocus);
+    main_window.setCentralWidget(mainBox);
+
+    //---
+#if 0
+    qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
+    QString versionString(QLatin1String(reinterpret_cast<const char*>(glGetString(GL_VERSION))));
+    qDebug() << "Driver Version String:" << versionString;
+    qDebug() << "Current Context:" << mainBox->format();
+    QGLFormat format;
+    format.setVersion(4, 3);
+    QGLFormat::setDefaultFormat(format);
+#endif
+    //--
+
+    main_window.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
+    main_window.show();
+#else
+    Game *mainBox = new Game();
+    mainBox->show();
+#endif
+
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
+
+    return app.exec();
+}
+//--------------------------------------------------------------------------------

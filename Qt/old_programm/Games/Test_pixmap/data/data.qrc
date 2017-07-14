@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>labirint.dat</file>
+        <file>noname.dat</file>
+        <file>spiral.dat</file>
+        <file>wall.png</file>
+        <file>field.png</file>
+    </qresource>
+</RCC>

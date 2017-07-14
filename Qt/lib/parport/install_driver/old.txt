@@ -1,0 +1,278 @@
+void Parport::outportb(unsigned short PortAddress, unsigned char byte)
+{
+    unsigned int error;
+    DWORD BytesReturned;
+    unsigned char Buffer[3];
+    unsigned short * pBuffer;
+    pBuffer = (unsigned short *)&Buffer[0];
+    *pBuffer = PortAddress;
+    Buffer[2] = byte;
+
+    error = DeviceIoControl(Port_Handle,
+                            IOCTL_WRITE_PORT_UCHAR,
+                            &Buffer,
+                            3,
+                            NULL,
+                            0,
+                            &BytesReturned,
+                            NULL);
+
+    if (!error)
+    {
+        logger.debug("Error occured during outportb while talking to PortTalk driver");
+        DWORD err = GetLastError();
+        switch(err)
+        {
+        case ERROR_INVALID_HANDLE:
+            logger.debug("ERROR_INVALID_HANDLE");
+            break;
+        case ERROR_INVALID_PARAMETER:
+            logger.debug("ERROR_INVALID_PARAMETER");
+            break;
+        default:
+            logger.debug(QString("unknown error %1").arg(err));
+            break;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+unsigned char Parport::inportb(unsigned short PortAddress)
+{
+    unsigned int error;
+    DWORD BytesReturned;
+    unsigned char Buffer[3];
+    unsigned short * pBuffer;
+    pBuffer = (unsigned short *)&Buffer;
+    *pBuffer = PortAddress;
+
+    error = DeviceIoControl(Port_Handle,
+                            IOCTL_READ_PORT_UCHAR,
+                            &Buffer,
+                            2,
+                            &Buffer,
+                            1,
+                            &BytesReturned,
+                            NULL);
+
+    if (!error)
+    {
+        logger.debug(QString("Error occured during inportb while talking to PortTalk driver %1").arg(GetLastError()));
+    }
+    return(Buffer[0]);
+}
+//--------------------------------------------------------------------------------
+unsigned char Parport::OpenLptPort(void)
+{
+    /* Открыть Port Driver. Если его нельзя открыть, */
+    /* Пробуем его инсталлировать и стартовать */
+    Port_Handle = CreateFile((WCHAR *)QString("%1.sys").arg(NameDrv).data(),
+                              GENERIC_READ,
+                              0,
+                              NULL,
+                              OPEN_EXISTING,
+                              FILE_ATTRIBUTE_NORMAL,
+                              NULL);
+
+    if(Port_Handle == INVALID_HANDLE_VALUE)
+    {
+        message("ERROR_INVALID_HANDLE");
+        /* Старт или Инсталляция Port Driver */
+        StartLptPortDriver();
+        /* Пробуем открыть еще один раз */
+        Port_Handle = CreateFile((WCHAR *)NameDrv.data(),
+                                GENERIC_READ,
+                                0,
+                                NULL,
+                                OPEN_EXISTING,
+                                FILE_ATTRIBUTE_NORMAL,
+                                NULL);
+        /* Не получилось */
+        if(Port_Handle == INVALID_HANDLE_VALUE)
+        {
+            logger.debug("Port: Нет доступа к Port Driver, Убедитесь что драйвер загружен.");
+            if(Install == true)
+            {
+                StartLptPortDriver();
+                logger.debug("Port: Стартуем приложение.");
+                /* Пробуем открыть еще один раз */
+                Port_Handle = CreateFile((WCHAR *)NameDrv.data(),
+                                        GENERIC_READ,
+                                        0,
+                                        NULL,
+                                        OPEN_EXISTING,
+                                        FILE_ATTRIBUTE_NORMAL,
+                                        NULL);
+            }
+            else
+                return -1;
+        }
+    }
+    return 0;
+}
+//--------------------------------------------------------------------------------
+void Parport::CloseLptPort(void)
+{
+    CloseHandle(Port_Handle);
+}
+//--------------------------------------------------------------------------------
+unsigned char Parport::StartLptPortDriver(void)
+{
+    SC_HANDLE  SchSCManager;
+    SC_HANDLE  schService;
+    BOOL       ret;
+    DWORD      err;
+
+    /* Открыть управление Service Control Manager */
+    SchSCManager = OpenSCManager(NULL,                   /* machine (NULL == local) */
+                                 NULL,                   /* database (NULL == default) */
+                                 SC_MANAGER_ALL_ACCESS); /* access required */
+
+    if (SchSCManager == NULL)
+        if (GetLastError() == ERROR_ACCESS_DENIED)
+        {
+            /* У нас не достаточно прав для открытия SCM */
+            logger.debug("Port: Вы не имеете прав для доступа к Service Control Manager и");
+            logger.debug("Port: драйвер пока не инсталлирован или не стартовал.");
+            logger.debug("Port: В Ваших интересах обратиться к администратору по поводу инсталлирования драйвера.");
+            return(FALSE);
+        }
+
+    do
+    {
+        /* Открыть управление Port Service Database */
+        schService = OpenService(SchSCManager,             /* handle to service control manager database */
+                                 (WCHAR *)NameDrv.data(),      /* pointer to name of service to start */
+                                 SERVICE_ALL_ACCESS); /* type of access to service */
+
+        if (schService == NULL)
+        {
+            switch (GetLastError())
+            {
+            case ERROR_ACCESS_DENIED:
+                logger.debug("Port: У Вас нет прав на на Port service базу данных.");
+                return(FALSE);
+            case ERROR_INVALID_NAME:
+                logger.debug(NameDrv);
+                logger.debug("Port: Имя сервиса неверное.");
+                return(FALSE);
+            case ERROR_SERVICE_DOES_NOT_EXIST:
+                message("Port: Драйвера не существует. Придется инсталлировать.");
+                InstallLptPortDriver();
+                Install = true;
+                break;
+            }
+        }
+    } while (schService == NULL);
+
+    /* Старт Port Driver. Будет ошибка если Port.SYS файл не существует */
+    ret = StartService (schService,     /* service identifier */
+                               0,     /* number of arguments */
+                               NULL); /* pointer to arguments */
+
+    if (ret)
+    {
+        logger.debug("Port: Драйвер успешно стартовал.");
+    }
+    else
+    {
+        err = GetLastError();
+        if (err == ERROR_SERVICE_ALREADY_RUNNING)
+        {
+            logger.debug("Port: The Port driver уже запущен.");
+        }
+        else
+        {
+            logger.debug("Port: Неизвестная ошибка при старте Port driver.");
+            logger.debug("Port: Существует ли Port.SYS в \\System32\\Drivers директории?");
+            logger.debug("Port: Если нет придется его инсталлировать.");
+            InstallLptPortDriver();
+            Install = true;
+//            return(0);
+        }
+    }
+
+    /* Close handle to Service Control Manager */
+    CloseServiceHandle (schService);
+    return(TRUE);
+}
+//--------------------------------------------------------------------------------
+void Parport::InstallLptPortDriver(void)
+{
+    SC_HANDLE  SchSCManager;
+    SC_HANDLE  schService;
+    DWORD      err;
+    WCHAR         DriverFileName[80];
+
+    /* Получение текущей директории. Предполагается, что файл драйвера находится в текущ. дир.*/
+    /* Doesn't detect if file exists, nor if file is on removable media - if this  */
+    /* is the case then when windows next boots, the driver will fail to load and  */
+    /* a error entry is made in the event viewer to reflect this */
+
+    /* Get System Directory. This should be something like c:\windows\system32 or  */
+    /* c:\winnt\system32 with a Maximum Character lenght of 20. As we have a       */
+    /* buffer of 80 bytes and a string of 24 bytes to append, we can go for a max  */
+    /* of 55 bytes */
+
+    if (!GetSystemDirectory(DriverFileName, 55))
+    {
+        logger.debug("Port: Не удалось получить системную директорию. Путь к ней > 55 символов?");
+        logger.debug("Port: Если да придется скопировать вручную драйвер в system32/driver.");
+    }
+
+    /* Append our Driver Name */
+    lstrcat(DriverFileName,(WCHAR *)QString("\\Drivers\\%1.sys").arg(NameDrv).data());
+    logger.debug("Port: Копирование драйвера");
+
+    /* Копирование драйвера в System32/drivers. Будет ошибка если файла драйвера нет. */
+
+    if (!CopyFile((WCHAR *)QString("%1.sys").arg(NameDrv).data(), DriverFileName, FALSE))
+    {
+        logger.debug("Port: Ошибка при копировании драйвера");
+        logger.debug("Port: Скопируйте драйвер вручную в директорию system32/driver.");
+    }
+
+    /* Открыть управление Service Control Manager */
+    SchSCManager = OpenSCManager (NULL,                   /* machine (NULL == local) */
+                                NULL,                   /* database (NULL == default) */
+                                SC_MANAGER_ALL_ACCESS); /* access required */
+
+    /* Create Service/Driver - This adds the appropriate registry keys in */
+    /* HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services - It doesn't  */
+    /* care if the driver exists, or if the path is correct.              */
+
+    schService = CreateService (SchSCManager,                    /* SCManager database */
+                              (WCHAR *)NameDrv.data(),         /* name of service */
+                              (WCHAR *)NameDrv.data(),         /* name to display */
+                              SERVICE_ALL_ACCESS,              /* desired access */
+                              SERVICE_KERNEL_DRIVER,           /* service type */
+                              SERVICE_DEMAND_START,            /* start type */
+                              SERVICE_ERROR_NORMAL,            /* error control type */
+                              (WCHAR *)QString("System32\\Drivers\\%1.sys").arg(NameDrv).data(), /* service's binary */
+                              NULL,                            /* no load ordering group */
+                              NULL,                            /* no tag identifier */
+                              NULL,                            /* no dependencies */
+                              NULL,                            /* LocalSystem account */
+                              NULL                             /* no password */
+                              );
+
+    if (schService == NULL)
+    {
+        err = GetLastError();
+        if (err == ERROR_SERVICE_EXISTS)
+        {
+            logger.debug("Port: Или драйвер уже существует, тогда все запустится, или...");
+        }
+        else
+        {
+            logger.debug("Port: Неизвестная ошибка при создании сервиса.");
+        }
+    }
+    else
+    {
+        logger.debug("Port: Драйвер успешно инсталлирован.");
+    }
+
+    /* Close Handle to Service Control Manager */
+    CloseServiceHandle (schService);
+}
+//--------------------------------------------------------------------------------

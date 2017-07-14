@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>family_rus.txt</file>
+        <file>name_rus_men.txt</file>
+        <file>name_rus_women.txt</file>
+    </qresource>
+</RCC>

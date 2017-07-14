@@ -1,0 +1,53 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+	  "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+ <interface name="org.bluez.Headset">
+  <method name="Connect"/>
+  <method name="Disconnect"/>
+  <method name="IsConnected">
+    <arg type="b" direction="out"/>
+  </method>
+  <method name="IndicateCall"/>
+  <method name="CancelCall"/>
+  <method name="Play"/>
+  <method name="Stop"/>
+  <method name="IsPlaying">
+    <arg type="b" direction="out"/>
+  </method>
+  <method name="GetSpeakerGain">
+    <arg type="q" direction="out"/>
+  </method>
+  <method name="GetMicrophoneGain">
+    <arg type="q" direction="out"/>
+  </method>
+  <method name="SetSpeakerGain">
+    <arg type="q" direction="in"/>
+  </method>
+  <method name="SetMicrophoneGain">
+    <arg type="q" direction="in"/>
+  </method>
+  <method name="GetProperties">
+    <arg type="a{sv}" direction="out"/>
+    <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+  </method>
+  <method name="SetProperty">
+    <arg type="s" direction="in"/>
+    <arg type="v" direction="in"/>
+  </method>
+  <signal name="Connected"/>
+  <signal name="Disconnected"/>
+  <signal name="AnswerRequested"/>
+  <signal name="Stopped"/>
+  <signal name="Playing"/>
+  <signal name="SpeakerGainChanged">
+    <arg type="q"/> </signal>
+  <signal name="MicrophoneGainChanged">
+    <arg type="q"/>
+  </signal>
+  <signal name="CallTerminated"/>
+  <signal name="PropertyChanged">
+    <arg type="s"/>
+    <arg type="v"/>
+  </signal>
+ </interface>
+</node>

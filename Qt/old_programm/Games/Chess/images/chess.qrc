@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/chess">
+        <file>rook_white.svg</file>
+        <file>bishop_black.svg</file>
+        <file>bishop_white.svg</file>
+        <file>king_black.svg</file>
+        <file>king_white.svg</file>
+        <file>knight_black.svg</file>
+        <file>knight_white.svg</file>
+        <file>pawn_black.svg</file>
+        <file>pawn_white.svg</file>
+        <file>queen_black.svg</file>
+        <file>queen_white.svg</file>
+        <file>rook_black.svg</file>
+    </qresource>
+</RCC>

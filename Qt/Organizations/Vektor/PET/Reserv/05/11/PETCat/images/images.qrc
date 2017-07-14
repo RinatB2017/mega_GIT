@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>collapsing.png</file>
+        <file>expanding.png</file>
+        <file>database.png</file>
+        <file>security-high.png</file>
+        <file>security-low.png</file>
+        <file>security-medium.png</file>
+        <file>0.png</file>
+        <file>1.png</file>
+        <file>2.png</file>
+        <file>3.png</file>
+        <file>4.png</file>
+        <file>5.png</file>
+        <file>6.png</file>
+        <file>7.png</file>
+        <file>8.png</file>
+        <file>9.png</file>
+        <file>agt_print.png</file>
+        <file>agt_virussafe.png</file>
+        <file>computer.png</file>
+	<file>computer-laptop.png</file>
+        <file>exec.png</file>
+        <file>exit.png</file>
+        <file>playlist.png</file>
+        <file>rebuild.png</file>
+        <file>redo.png</file>
+        <file>viewmag+.png</file>
+        <file>radiation.png</file>
+        <file>radiation_black.png</file>
+	<file>PETCAT.ico</file>
+	<file>PETCAT.png</file>
+	<file>video-display.png</file>
+    </qresource>
+</RCC>

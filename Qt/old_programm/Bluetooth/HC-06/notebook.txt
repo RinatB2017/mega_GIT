@@ -1,0 +1,71 @@
+AT
+AT+RESET
+AT+VERSION?
+AT+ORGL
+AT+ADDR?
+AT+NAME?
+AT+RNAME?
+AT+ROLE?
+AT+CLASS?
+AT+IAC?
+AT+INQM?
+AT+PSWD?
+AT+UART?
+AT+CMODE?
+AT+BIND?
+AT+POLAR?
+AT+PIO
+AT+MPIO
+AT+MPIO?
+AT+IPSCAN
+AT+SNIFF
+AT+SENM
+AT+PMSAD
+AT+RMAAD
+AT+FSAD
+AT+ADCN?
+AT+MRAD?
+AT+STATE?
+AT+INIT
+AT+INQ
+AT+INQC
+AT+PAIR
+AT+LINK
+AT+DISC
+AT+ENSNIFF
+AT+EXSNIFF
+
+error_code(Hexadecimal)
+
+0 AT command error
+1 Default result
+2 PSKEY write error
+3 Too long length of device name (more than 32 bytes).
+4 No device name
+5 Bluetooth address: NAP is too long.
+6 Bluetooth address: UAP is too long.
+7 Bluetooth address: LAP is too long.
+8 No PIO number’s mask
+9 No PIO number
+A No Bluetooth devices.
+B Too length of devices
+C No inquire access code
+D Too long length of inquire access code
+E Invalid inquire access code
+F The length of passkey is 0.
+10 Too long length of passkey (more than 16 bytes)
+11 Invalid module role
+12 Invalid baud rate
+13 Invalid stop bit
+14 Invalid parity bit
+15 Authentication device is not at the pair list.
+16 SPP lib hasn’t been initialized.
+17 SPP lib has been repeated initialization.
+18 Invalid inquire mode
+19 Too long inquire time
+1A No Bluetooth address
+1B Invalid safe mode
+1C Invalid encryption mode
+
+
+AT+ROLE=1\r\n”

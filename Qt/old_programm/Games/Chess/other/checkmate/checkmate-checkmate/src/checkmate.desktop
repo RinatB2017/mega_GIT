@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=CheckMate
+Name[x-test]=xxCheckMatexx
+Exec=checkmate
+Icon=CheckMate
+Type=Application
+GenericName=Chess game
+Terminal=false
+Categories=Qt;KDE;Game;Chess game;

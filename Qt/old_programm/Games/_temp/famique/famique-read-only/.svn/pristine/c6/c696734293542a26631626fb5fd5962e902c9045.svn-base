@@ -1,0 +1,66 @@
+#define BLARGG_ENABLE_OPTIMIZER
+#ifndef APU_H
+#define APU_H
+
+
+#include "famicom.h"
+#include "apu/nes_apu/nes_apu.h"
+#include "apu/nes_apu/Blip_Buffer.h"
+#include "sound_queue.h"
+
+
+class MemoryManager; //forward declaration to avoid compilation hell. damn, I need to do inheritance....
+
+#define BUF_SIZE 4096
+static blip_sample_t out_buf[BUF_SIZE];
+
+class APU
+{
+public:
+    APU();
+    ~APU();
+
+
+
+
+    void SetMemManPtr(MemoryManager *ptr) { mem = ptr;}
+
+
+    /*blarggs APU*/
+    Blip_Buffer *blarggbuf;
+
+    Nes_Apu *blarggAPU;
+
+    void output_samples(const blip_sample_t *sample, size_t count);
+ //   size_t out_size;
+
+
+    int cpu_cycles_total;
+    int cpu_cycles_remain;
+    int APU_addr;
+
+
+
+    int elapsed()
+    {
+        return cpu_cycles_total - cpu_cycles_remain;
+
+    }
+
+    void RenderAudio(int length);
+
+
+
+    int dmc_read(void *, cpu_addr_t addr);
+
+
+    MemoryManager *mem; //ptr to memory manager
+private:
+
+    Sound_Queue *snd;
+
+
+
+};
+
+#endif // APU_H

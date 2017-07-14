@@ -1,0 +1,68 @@
+//--------------------------------------------------------------------------------
+#include "test_rs232_2.hpp"
+//--------------------------------------------------------------------------------
+const int Max_Pack_Length = 1500;
+const int Max_Pack_Count  = 1500;
+
+const uchar Send_info_message = 0x0D;
+const uchar Address_RS232_2   = 0x02;
+//--------------------------------------------------------------------------------
+Test_RS232_2::Test_RS232_2(QObject* parent,
+                           const QString address,
+                           unsigned int port) :
+    TestThread(parent)
+{
+    this->address.setAddress(address);
+    this->port = port;
+    sleep_interval = 1000;
+}
+//--------------------------------------------------------------------------------
+void Test_RS232_2::run()
+{
+    print("<br />Проверка последовательного канала обмена данными по интерфейсу RS-232 N2.<br />", 0, true);
+    if (!init_proto(address.toString(), port))
+    {
+        delete_proto();
+        return;
+    }
+    QByteArray array = get_filled_array( 0xFF );
+    QByteArray answer;
+    if (proto->sendTestCmd(Send_info_message, Address_RS232_2, array, answer, 60000) != Proto::State_Ok)
+    {
+        print(QString("Ошибка (%1)").arg(proto->errstr()), -1);
+    }
+    else
+    {
+        // --- контролируем ответ
+        // --- --- обрезаем заголовок
+        answer = answer.mid(proto->headerSize());
+        if (answer.length() == 0xFF)
+        {
+            for( int i = 0; i < 0xFF; i++ )
+            {
+                if( array[i] != answer[i] )
+                {
+                    print( "Неисправно", 2, true );
+                    return;
+                }
+            }
+            print("Исправно", 1, true);
+        }
+        else
+        {
+            qDebug() << answer.toHex();
+            print("Ответ неопределен");
+        }
+    }
+    delete_proto();
+}
+//--------------------------------------------------------------------------------
+QByteArray Test_RS232_2::get_filled_array(int size)
+{
+    QByteArray array;
+    uchar byte = 1;
+    for (int i = 0; i < size; i++)
+        array.append(byte++);
+    return array;
+}
+//--------------------------------------------------------------------------------

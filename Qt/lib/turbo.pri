@@ -27,18 +27,6 @@ win32 {
     CONFIG += no_fixpath
 }
 
-#win32 {
-#    # В проекте Monitor нельзя включать прекомпилированные заголовки
-#    !equals(TARGET, "Monitor") {
-#        CONFIG  += precompile_header
-#        PRECOMPILED_HEADER  = $$PWD/stable.h
-#        #message(precompile_header is ON)
-#        precompile_header:!isEmpty(PRECOMPILED_HEADER) {
-#            DEFINES += USING_PCH
-#        }
-#    }
-#}
-
 linux {
     DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
 }

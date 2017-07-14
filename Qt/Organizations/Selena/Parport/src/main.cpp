@@ -34,16 +34,14 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setOrganizationName(ORGNAME);
     a.setApplicationName(APPNAME);
+    a.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    MainWindow main_window(QObject::tr(ORGNAME),
-                           QObject::tr(APPNAME),
-                           QObject::tr(APPVERS));
+    MainWindow *main_window = new MainWindow;
 
-    ParportBox *mainBox = new ParportBox(main_window.getThis());
-    main_window.setCentralWidget(mainBox);
+    ParportBox *mainBox = new ParportBox(main_window->getThis());
+    main_window->setCentralWidget(mainBox);
 
-    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
-    main_window.show();
+    main_window->show();
 
     qDebug() << QString("Starting application \"%1\"").arg(APPNAME);
 

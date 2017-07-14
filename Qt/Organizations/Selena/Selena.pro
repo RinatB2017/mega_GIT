@@ -7,7 +7,7 @@ CONFIG   *= ordered
 
 SUBDIRS += \
     Navi \
-#    Parport \
+    Parport \
 #    Test_r4_serial_widget \
     Test_MKU5 \
     Test_Navi \

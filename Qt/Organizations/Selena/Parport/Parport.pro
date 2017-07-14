@@ -5,10 +5,8 @@
 TEMPLATE = app
 TARGET   = Parport
 
-DEPENDPATH  += \
-    /usr/include \
-    $$PWD/src
-INCLUDEPATH = $$DEPENDPATH
+DEPENDPATH  += $$PWD/src
+INCLUDEPATH += $$PWD/src
 
 QMAKE_CXXFLAGS += -fno-show-column
 
@@ -35,5 +33,7 @@ include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH/parport/parport.pri)
 include ($$LIB_PATH/parport/parportbox.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
+
+include ($$LIB_PATH/mywidgets/mywidget.pri)
 
 VPATH = $$INCLUDEPATH

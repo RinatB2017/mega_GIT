@@ -3,7 +3,6 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    /usr/include \
     $$PWD \
     $$PWD/unix
 INCLUDEPATH = $$DEPENDPATH

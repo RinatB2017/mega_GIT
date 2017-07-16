@@ -38,6 +38,7 @@
 **
 ****************************************************************************/
 #include <QVBoxLayout>
+#include <QSpinBox>
 #include <QDebug>
 
 #include "audiooutput.h"
@@ -49,7 +50,7 @@
 #define VOLUME_LABEL    "Volume:"
 
 const int DurationSeconds   = 1;
-const int ToneSampleRateHz  = 141;  //440;
+const int ToneSampleRateHz  = 440;
 const int DataSampleRateHz  = 44100;
 const int BufferSize        = 32768;
 //---------------------------------------------------------------------------
@@ -108,12 +109,51 @@ void AudioTest::initializeWindow(void)
     volumeBox->addWidget(m_volumeSlider);
     layout->addLayout(volumeBox);
 
+    //---
+    QPushButton *btn = new QPushButton;
+    btn->setText("TEST");
+    connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(test()));
+
+    sb_sampleRate1 = new QSpinBox;
+    sb_sampleRate1->setRange(1, 20000);
+
+    sb_sampleRate2 = new QSpinBox;
+    sb_sampleRate2->setRange(1, 20000);
+
+    QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->addWidget(new QLabel("FREQ1:"));
+    hbox->addWidget(sb_sampleRate1);
+    hbox->addWidget(new QLabel("FREQ2:"));
+    hbox->addWidget(sb_sampleRate2);
+    hbox->addWidget(new QLabel("RUN"));
+    hbox->addWidget(btn);
+
+    layout->addLayout(hbox);
+    //---
+
     window->setLayout(layout.data());
     layout.take(); // ownership transferred
 
     setCentralWidget(window.data());
     QWidget *const windowPtr = window.take(); // ownership transferred
     windowPtr->show();
+}
+//---------------------------------------------------------------------------
+void AudioTest::test(void)
+{
+    m_generator->stop();
+    m_audioOutput->stop();
+
+    delete m_generator;
+
+    m_generator = new Generator(m_format,
+                                DurationSeconds*1000000,
+                                sb_sampleRate1->value(),
+                                sb_sampleRate2->value(),
+                                this);
+
+    m_generator->start();
+    m_audioOutput->start(m_generator);
 }
 //---------------------------------------------------------------------------
 void AudioTest::initializeAudio(void)
@@ -123,7 +163,7 @@ void AudioTest::initializeAudio(void)
     m_pullMode = true;
 
     m_format.setSampleRate(DataSampleRateHz);
-    m_format.setChannelCount(1);
+    m_format.setChannelCount(2);
     m_format.setSampleSize(16);
     m_format.setCodec("audio/pcm");
     m_format.setByteOrder(QAudioFormat::LittleEndian);
@@ -138,6 +178,7 @@ void AudioTest::initializeAudio(void)
 
     m_generator = new Generator(m_format,
                                 DurationSeconds*1000000,
+                                ToneSampleRateHz,
                                 ToneSampleRateHz,
                                 this);
 

@@ -55,6 +55,8 @@
 //---------------------------------------------------------------------------
 #include "generator.h"
 //---------------------------------------------------------------------------
+class QSpinBox;
+//---------------------------------------------------------------------------
 class AudioTest : public QMainWindow
 {
     Q_OBJECT
@@ -84,6 +86,11 @@ private:
     QIODevice *m_output; // not owned
     QAudioFormat m_format;
 
+    //---
+    QSpinBox *sb_sampleRate1 = 0;
+    QSpinBox *sb_sampleRate2 = 0;
+    //---
+
     bool m_pullMode;
     QByteArray m_buffer;
 
@@ -93,6 +100,8 @@ private slots:
     void toggleSuspendResume(void);
     void deviceChanged(int index);
     void volumeChanged(int);
+
+    void test(void);
 
 };
 //---------------------------------------------------------------------------

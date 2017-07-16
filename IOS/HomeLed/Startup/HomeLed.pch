@@ -1,0 +1,14 @@
+//
+//  HomeLed.pch
+//  HomeLed
+//
+//  Created by ANDREI VAYAVODA on 05.08.15.
+//  Copyright (c) 2015 Voevoda's Incorporated. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "Categories.h"
+#import "HLSettings.h"
+
+CF_INLINE bool IsEqualFloat(float a, float b) { return ABS(a - b) < pow(10, -10); }

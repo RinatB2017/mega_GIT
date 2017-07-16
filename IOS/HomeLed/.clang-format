@@ -1,0 +1,5 @@
+BasedOnStyle: Google
+ColumnLimit: 120
+BreakBeforeBraces: Linux
+IndentWidth: 4
+Language: Cpp

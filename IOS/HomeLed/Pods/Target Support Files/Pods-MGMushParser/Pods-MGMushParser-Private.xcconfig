@@ -1,0 +1,5 @@
+#include "Pods-MGMushParser.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/MGMushParser" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/BlocksKit" "${PODS_ROOT}/Headers/Public/MGBoxKit" "${PODS_ROOT}/Headers/Public/MGEvents" "${PODS_ROOT}/Headers/Public/MGMushParser"
+OTHER_LDFLAGS = ${PODS_MGMUSHPARSER_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}

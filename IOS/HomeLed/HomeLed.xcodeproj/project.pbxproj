@@ -1,0 +1,1025 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		24B19B725E37184C8604EB45 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE9C0DE83B2A2667E7699C7 /* libPods.a */; };
+		4BAF0C951E3E4D2800F89DB0 /* HLGeneralPaintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAF0C941E3E4D2800F89DB0 /* HLGeneralPaintViewController.xib */; };
+		7E55FCBD1B73EF5E00F9DD75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCBB1B73EF5E00F9DD75 /* main.m */; };
+		7E55FCC01B73EF6800F9DD75 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCBF1B73EF6800F9DD75 /* AppDelegate.m */; };
+		7E55FCC71B73EF7900F9DD75 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FCC31B73EF7900F9DD75 /* LaunchScreen.xib */; };
+		7E55FCC81B73EF7900F9DD75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FCC51B73EF7900F9DD75 /* Main.storyboard */; };
+		7E55FCCA1B73EF8A00F9DD75 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FCC91B73EF8900F9DD75 /* Images.xcassets */; };
+		7E55FCD51B73F00F00F9DD75 /* HLGeneralPaintTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCD41B73F00F00F9DD75 /* HLGeneralPaintTableDataSource.m */; };
+		7E55FCD91B73F01800F9DD75 /* HLGeneralPaintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCD71B73F01800F9DD75 /* HLGeneralPaintViewController.m */; };
+		7E55FCDD1B73F01E00F9DD75 /* HLWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCDC1B73F01E00F9DD75 /* HLWelcomeViewController.m */; };
+		7E55FCE11B73F04000F9DD75 /* HLRemoteClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCE01B73F04000F9DD75 /* HLRemoteClient.mm */; };
+		7E55FCE61B73F19D00F9DD75 /* HLNetworkAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCE41B73F19D00F9DD75 /* HLNetworkAddressCell.m */; };
+		7E55FCE71B73F19D00F9DD75 /* HLNetworkAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FCE51B73F19D00F9DD75 /* HLNetworkAddressCell.xib */; };
+		7E55FCEC1B73F25B00F9DD75 /* HLBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCEB1B73F25B00F9DD75 /* HLBaseCell.m */; };
+		7E55FCF01B73F5AA00F9DD75 /* HLSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCEF1B73F5AA00F9DD75 /* HLSettings.m */; };
+		7E55FCF81B73F8A200F9DD75 /* NKOColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCF51B73F8A200F9DD75 /* NKOColorPickerView.m */; };
+		7E55FD001B73F90B00F9DD75 /* HLChangeColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FCFF1B73F90B00F9DD75 /* HLChangeColorCell.m */; };
+		7E55FD021B73F93F00F9DD75 /* HLChangeColorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FD011B73F93F00F9DD75 /* HLChangeColorCell.xib */; };
+		7E55FD061B7405B500F9DD75 /* HLColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FD051B7405B500F9DD75 /* HLColorPicker.xib */; };
+		7E55FD091B7405C800F9DD75 /* HLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FD081B7405C800F9DD75 /* HLColorPicker.m */; };
+		7E55FD0D1B740DB700F9DD75 /* HLMultiColorsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FD0C1B740DB700F9DD75 /* HLMultiColorsCell.m */; };
+		7E55FD0F1B740E2900F9DD75 /* HLMultiColorsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FD0E1B740E2900F9DD75 /* HLMultiColorsCell.xib */; };
+		7E55FD141B74139100F9DD75 /* HLSelectColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E55FD121B74139100F9DD75 /* HLSelectColorViewController.m */; };
+		7E55FD151B74139100F9DD75 /* HLSelectColorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E55FD131B74139100F9DD75 /* HLSelectColorViewController.xib */; };
+		7E56F0791B7150E000C0BCC5 /* HomeLedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E56F0781B7150E000C0BCC5 /* HomeLedTests.m */; };
+		7ED9590F1B72786100925CF6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED9590E1B72786100925CF6 /* AudioToolbox.framework */; };
+		7ED959111B72786600925CF6 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED959101B72786600925CF6 /* VideoToolbox.framework */; };
+		7ED959131B72786D00925CF6 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED959121B72786D00925CF6 /* libsqlite3.0.dylib */; };
+		7ED959151B72788500925CF6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED959141B72788500925CF6 /* CoreAudio.framework */; };
+		7ED959171B7278B200925CF6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED959161B7278B200925CF6 /* AVFoundation.framework */; };
+		7ED959191B7278D200925CF6 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED959181B7278D200925CF6 /* CoreMedia.framework */; };
+		C412F43D1B95AAC80080BB74 /* HLSettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C412F43B1B95AAC80080BB74 /* HLSettingsCell.m */; };
+		C412F43E1B95AAC80080BB74 /* HLSettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C412F43C1B95AAC80080BB74 /* HLSettingsCell.xib */; };
+		C412F4431B971B9C0080BB74 /* HLColorsAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C412F4411B971B9C0080BB74 /* HLColorsAnimationViewController.m */; };
+		C412F4441B971B9C0080BB74 /* HLColorsAnimationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C412F4421B971B9C0080BB74 /* HLColorsAnimationViewController.xib */; };
+		C412F4491B99D6420080BB74 /* HLLoadColorsAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C412F4471B99D6420080BB74 /* HLLoadColorsAnimationViewController.m */; };
+		C412F44A1B99D6420080BB74 /* HLLoadColorsAnimationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C412F4481B99D6420080BB74 /* HLLoadColorsAnimationViewController.xib */; };
+		C4880C6D1B750FE30040B43C /* HLPreviousColorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4880C6B1B750FE30040B43C /* HLPreviousColorsViewController.m */; };
+		C4880C6E1B750FE30040B43C /* HLPreviousColorsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4880C6C1B750FE30040B43C /* HLPreviousColorsViewController.xib */; };
+		C4F49DC91B90A093000FC065 /* HLAnimationOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F49DC71B90A093000FC065 /* HLAnimationOptionsCell.m */; };
+		C4F49DCA1B90A093000FC065 /* HLAnimationOptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F49DC81B90A093000FC065 /* HLAnimationOptionsCell.xib */; };
+		C4F7E2A91B88B6E700B33348 /* HLWidthColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F7E2A71B88B6E700B33348 /* HLWidthColorViewController.m */; };
+		C4F7E2AA1B88B6E700B33348 /* HLWidthColorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F7E2A81B88B6E700B33348 /* HLWidthColorViewController.xib */; };
+		C4FA8B011B76055C00769242 /* HLPreviousColorsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA8AFF1B76055C00769242 /* HLPreviousColorsCell.m */; };
+		C4FA8B021B76055C00769242 /* HLPreviousColorsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4FA8B001B76055C00769242 /* HLPreviousColorsCell.xib */; };
+		C4FA8B061B7B47F400769242 /* HLSaveLoadColorsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA8B051B7B47F400769242 /* HLSaveLoadColorsView.m */; };
+		C4FA8B131B7C978E00769242 /* HLLoadColorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA8B111B7C978E00769242 /* HLLoadColorsViewController.m */; };
+		C4FA8B141B7C978E00769242 /* HLLoadColorsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4FA8B121B7C978E00769242 /* HLLoadColorsViewController.xib */; };
+		C4FA8B171B7E056F00769242 /* HLSaveLoadColorsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4FA8B161B7E056F00769242 /* HLSaveLoadColorsView.xib */; };
+		C4FA8B1B1B7E27EB00769242 /* HLColorLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA8B1A1B7E27EB00769242 /* HLColorLineView.m */; };
+		C4FA8B1D1B7E3C0D00769242 /* HLColorLineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4FA8B1C1B7E3C0D00769242 /* HLColorLineView.xib */; };
+		C4FA8B271B838EF500769242 /* HLSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA8B251B838EF500769242 /* HLSlider.m */; };
+		C4FA8B281B838EF500769242 /* HLSlider.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4FA8B261B838EF500769242 /* HLSlider.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7E56F0731B7150E000C0BCC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E56F0511B7150E000C0BCC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E56F0581B7150E000C0BCC5;
+			remoteInfo = HomeLed;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4BA36196C09CD51A35DD1C30 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		4BAF0C941E3E4D2800F89DB0 /* HLGeneralPaintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HLGeneralPaintViewController.xib; path = ViewControllers/HLGeneralPaintViewController/HLGeneralPaintViewController.xib; sourceTree = "<group>"; };
+		7E2F2ACF1B7271D30047C796 /* asynctcpsocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = asynctcpsocket.h; path = ../../trunk/webrtc/base/asynctcpsocket.h; sourceTree = "<group>"; };
+		7E2F2AD01B7271D30047C796 /* asynctcpsocket.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = asynctcpsocket.cc; path = ../../trunk/webrtc/base/asynctcpsocket.cc; sourceTree = "<group>"; };
+		7E55FCBA1B73EF5E00F9DD75 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Startup/Info.plist; sourceTree = SOURCE_ROOT; };
+		7E55FCBB1B73EF5E00F9DD75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Startup/main.m; sourceTree = SOURCE_ROOT; };
+		7E55FCBE1B73EF6800F9DD75 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Startup/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		7E55FCBF1B73EF6800F9DD75 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Startup/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		7E55FCC41B73EF7900F9DD75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Startup/Base.lproj/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
+		7E55FCC61B73EF7900F9DD75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Startup/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		7E55FCC91B73EF8900F9DD75 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Startup/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		7E55FCCE1B73EFB500F9DD75 /* Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Utilities/Categories/Categories.h; sourceTree = "<group>"; };
+		7E55FCCF1B73EFD700F9DD75 /* HomeLed.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeLed.pch; path = Startup/HomeLed.pch; sourceTree = SOURCE_ROOT; };
+		7E55FCD31B73F00F00F9DD75 /* HLGeneralPaintTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLGeneralPaintTableDataSource.h; path = ViewControllers/HLGeneralPaintTableDataSource/HLGeneralPaintTableDataSource.h; sourceTree = "<group>"; };
+		7E55FCD41B73F00F00F9DD75 /* HLGeneralPaintTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLGeneralPaintTableDataSource.m; path = ViewControllers/HLGeneralPaintTableDataSource/HLGeneralPaintTableDataSource.m; sourceTree = "<group>"; };
+		7E55FCD61B73F01800F9DD75 /* HLGeneralPaintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLGeneralPaintViewController.h; path = ViewControllers/HLGeneralPaintViewController/HLGeneralPaintViewController.h; sourceTree = "<group>"; };
+		7E55FCD71B73F01800F9DD75 /* HLGeneralPaintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLGeneralPaintViewController.m; path = ViewControllers/HLGeneralPaintViewController/HLGeneralPaintViewController.m; sourceTree = "<group>"; };
+		7E55FCDB1B73F01E00F9DD75 /* HLWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLWelcomeViewController.h; path = ViewControllers/HLWelcomeViewController/HLWelcomeViewController.h; sourceTree = "<group>"; };
+		7E55FCDC1B73F01E00F9DD75 /* HLWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLWelcomeViewController.m; path = ViewControllers/HLWelcomeViewController/HLWelcomeViewController.m; sourceTree = "<group>"; };
+		7E55FCDF1B73F04000F9DD75 /* HLRemoteClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLRemoteClient.h; path = Utilities/HLRemoteClient/HLRemoteClient.h; sourceTree = "<group>"; };
+		7E55FCE01B73F04000F9DD75 /* HLRemoteClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HLRemoteClient.mm; path = Utilities/HLRemoteClient/HLRemoteClient.mm; sourceTree = "<group>"; };
+		7E55FCE31B73F19D00F9DD75 /* HLNetworkAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLNetworkAddressCell.h; path = Cells/HLNetworkAddressCell/HLNetworkAddressCell.h; sourceTree = "<group>"; };
+		7E55FCE41B73F19D00F9DD75 /* HLNetworkAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLNetworkAddressCell.m; path = Cells/HLNetworkAddressCell/HLNetworkAddressCell.m; sourceTree = "<group>"; };
+		7E55FCE51B73F19D00F9DD75 /* HLNetworkAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HLNetworkAddressCell.xib; path = Cells/HLNetworkAddressCell/HLNetworkAddressCell.xib; sourceTree = "<group>"; };
+		7E55FCEA1B73F25B00F9DD75 /* HLBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLBaseCell.h; path = Cells/HLBaseCell/HLBaseCell.h; sourceTree = "<group>"; };
+		7E55FCEB1B73F25B00F9DD75 /* HLBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLBaseCell.m; path = Cells/HLBaseCell/HLBaseCell.m; sourceTree = "<group>"; };
+		7E55FCEE1B73F5AA00F9DD75 /* HLSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSettings.h; path = Utilities/HLSettings/HLSettings.h; sourceTree = "<group>"; };
+		7E55FCEF1B73F5AA00F9DD75 /* HLSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLSettings.m; path = Utilities/HLSettings/HLSettings.m; sourceTree = "<group>"; };
+		7E55FCF41B73F8A200F9DD75 /* NKOColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NKOColorPickerView.h; path = thirdparties/ColorPicker/NKOColorPickerView.h; sourceTree = "<group>"; };
+		7E55FCF51B73F8A200F9DD75 /* NKOColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NKOColorPickerView.m; path = thirdparties/ColorPicker/NKOColorPickerView.m; sourceTree = "<group>"; };
+		7E55FCF61B73F8A200F9DD75 /* NKOColorPickerView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = NKOColorPickerView.podspec; path = thirdparties/ColorPicker/NKOColorPickerView.podspec; sourceTree = "<group>"; };
+		7E55FCFE1B73F90B00F9DD75 /* HLChangeColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLChangeColorCell.h; path = Cells/HLChangeColorCell/HLChangeColorCell.h; sourceTree = "<group>"; };
+		7E55FCFF1B73F90B00F9DD75 /* HLChangeColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLChangeColorCell.m; path = Cells/HLChangeColorCell/HLChangeColorCell.m; sourceTree = "<group>"; };
+		7E55FD011B73F93F00F9DD75 /* HLChangeColorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HLChangeColorCell.xib; path = Cells/HLChangeColorCell/HLChangeColorCell.xib; sourceTree = "<group>"; };
+		7E55FD051B7405B500F9DD75 /* HLColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HLColorPicker.xib; path = Views/HLColorPicker/HLColorPicker.xib; sourceTree = "<group>"; };
+		7E55FD071B7405C800F9DD75 /* HLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLColorPicker.h; path = Views/HLColorPicker/HLColorPicker.h; sourceTree = "<group>"; };
+		7E55FD081B7405C800F9DD75 /* HLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLColorPicker.m; path = Views/HLColorPicker/HLColorPicker.m; sourceTree = "<group>"; };
+		7E55FD0B1B740DB700F9DD75 /* HLMultiColorsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLMultiColorsCell.h; path = Cells/HLMultiColorsCell/HLMultiColorsCell.h; sourceTree = "<group>"; };
+		7E55FD0C1B740DB700F9DD75 /* HLMultiColorsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLMultiColorsCell.m; path = Cells/HLMultiColorsCell/HLMultiColorsCell.m; sourceTree = "<group>"; };
+		7E55FD0E1B740E2900F9DD75 /* HLMultiColorsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HLMultiColorsCell.xib; path = Cells/HLMultiColorsCell/HLMultiColorsCell.xib; sourceTree = "<group>"; };
+		7E55FD111B74139100F9DD75 /* HLSelectColorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSelectColorViewController.h; path = ViewControllers/HLSelectColorViewController/HLSelectColorViewController.h; sourceTree = "<group>"; };
+		7E55FD121B74139100F9DD75 /* HLSelectColorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLSelectColorViewController.m; path = ViewControllers/HLSelectColorViewController/HLSelectColorViewController.m; sourceTree = "<group>"; };
+		7E55FD131B74139100F9DD75 /* HLSelectColorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HLSelectColorViewController.xib; path = ViewControllers/HLSelectColorViewController/HLSelectColorViewController.xib; sourceTree = "<group>"; };
+		7E56F0591B7150E000C0BCC5 /* HomeLed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeLed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E56F0721B7150E000C0BCC5 /* HomeLedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeLedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E56F0771B7150E000C0BCC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7E56F0781B7150E000C0BCC5 /* HomeLedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeLedTests.m; sourceTree = "<group>"; };
+		7E56F09D1B71591800C0BCC5 /* peer_connection_client.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = peer_connection_client.h; path = ../../oxydesk/server/win/peer_connection_client.h; sourceTree = "<group>"; };
+		7E56F09E1B71591800C0BCC5 /* peer_connection_client.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = peer_connection_client.cc; path = ../../oxydesk/server/win/peer_connection_client.cc; sourceTree = "<group>"; };
+		7ED9590E1B72786100925CF6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		7ED959101B72786600925CF6 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		7ED959121B72786D00925CF6 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		7ED959141B72788500925CF6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		7ED959161B7278B200925CF6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		7ED959181B7278D200925CF6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		C412F43A1B95AAC80080BB74 /* HLSettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLSettingsCell.h; sourceTree = "<group>"; };
+		C412F43B1B95AAC80080BB74 /* HLSettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLSettingsCell.m; sourceTree = "<group>"; };
+		C412F43C1B95AAC80080BB74 /* HLSettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLSettingsCell.xib; sourceTree = "<group>"; };
+		C412F4401B971B9C0080BB74 /* HLColorsAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLColorsAnimationViewController.h; sourceTree = "<group>"; };
+		C412F4411B971B9C0080BB74 /* HLColorsAnimationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLColorsAnimationViewController.m; sourceTree = "<group>"; };
+		C412F4421B971B9C0080BB74 /* HLColorsAnimationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLColorsAnimationViewController.xib; sourceTree = "<group>"; };
+		C412F4461B99D6420080BB74 /* HLLoadColorsAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLLoadColorsAnimationViewController.h; sourceTree = "<group>"; };
+		C412F4471B99D6420080BB74 /* HLLoadColorsAnimationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLLoadColorsAnimationViewController.m; sourceTree = "<group>"; };
+		C412F4481B99D6420080BB74 /* HLLoadColorsAnimationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLLoadColorsAnimationViewController.xib; sourceTree = "<group>"; };
+		C4880C6A1B750FE30040B43C /* HLPreviousColorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLPreviousColorsViewController.h; path = ViewControllers/HLPreviousColorsViewController.h; sourceTree = "<group>"; };
+		C4880C6B1B750FE30040B43C /* HLPreviousColorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLPreviousColorsViewController.m; path = ViewControllers/HLPreviousColorsViewController.m; sourceTree = "<group>"; };
+		C4880C6C1B750FE30040B43C /* HLPreviousColorsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HLPreviousColorsViewController.xib; path = ViewControllers/HLPreviousColorsViewController.xib; sourceTree = "<group>"; };
+		C4F49DC61B90A093000FC065 /* HLAnimationOptionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLAnimationOptionsCell.h; sourceTree = "<group>"; };
+		C4F49DC71B90A093000FC065 /* HLAnimationOptionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLAnimationOptionsCell.m; sourceTree = "<group>"; };
+		C4F49DC81B90A093000FC065 /* HLAnimationOptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLAnimationOptionsCell.xib; sourceTree = "<group>"; };
+		C4F7E2A61B88B6E700B33348 /* HLWidthColorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLWidthColorViewController.h; sourceTree = "<group>"; };
+		C4F7E2A71B88B6E700B33348 /* HLWidthColorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLWidthColorViewController.m; sourceTree = "<group>"; };
+		C4F7E2A81B88B6E700B33348 /* HLWidthColorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLWidthColorViewController.xib; sourceTree = "<group>"; };
+		C4FA8AFE1B76055C00769242 /* HLPreviousColorsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPreviousColorsCell.h; sourceTree = "<group>"; };
+		C4FA8AFF1B76055C00769242 /* HLPreviousColorsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLPreviousColorsCell.m; sourceTree = "<group>"; };
+		C4FA8B001B76055C00769242 /* HLPreviousColorsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLPreviousColorsCell.xib; sourceTree = "<group>"; };
+		C4FA8B041B7B47F400769242 /* HLSaveLoadColorsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLSaveLoadColorsView.h; sourceTree = "<group>"; };
+		C4FA8B051B7B47F400769242 /* HLSaveLoadColorsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLSaveLoadColorsView.m; sourceTree = "<group>"; };
+		C4FA8B101B7C978E00769242 /* HLLoadColorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLLoadColorsViewController.h; sourceTree = "<group>"; };
+		C4FA8B111B7C978E00769242 /* HLLoadColorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLLoadColorsViewController.m; sourceTree = "<group>"; };
+		C4FA8B121B7C978E00769242 /* HLLoadColorsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLLoadColorsViewController.xib; sourceTree = "<group>"; };
+		C4FA8B161B7E056F00769242 /* HLSaveLoadColorsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLSaveLoadColorsView.xib; sourceTree = "<group>"; };
+		C4FA8B191B7E27EB00769242 /* HLColorLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLColorLineView.h; sourceTree = "<group>"; };
+		C4FA8B1A1B7E27EB00769242 /* HLColorLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLColorLineView.m; sourceTree = "<group>"; };
+		C4FA8B1C1B7E3C0D00769242 /* HLColorLineView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLColorLineView.xib; sourceTree = "<group>"; };
+		C4FA8B241B838EF500769242 /* HLSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLSlider.h; sourceTree = "<group>"; };
+		C4FA8B251B838EF500769242 /* HLSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLSlider.m; sourceTree = "<group>"; };
+		C4FA8B261B838EF500769242 /* HLSlider.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLSlider.xib; sourceTree = "<group>"; };
+		E1CE961B85C8A5BA9F65D906 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		FEE9C0DE83B2A2667E7699C7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7E56F0561B7150E000C0BCC5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ED959191B7278D200925CF6 /* CoreMedia.framework in Frameworks */,
+				7ED959171B7278B200925CF6 /* AVFoundation.framework in Frameworks */,
+				7ED959151B72788500925CF6 /* CoreAudio.framework in Frameworks */,
+				7ED959131B72786D00925CF6 /* libsqlite3.0.dylib in Frameworks */,
+				7ED959111B72786600925CF6 /* VideoToolbox.framework in Frameworks */,
+				7ED9590F1B72786100925CF6 /* AudioToolbox.framework in Frameworks */,
+				24B19B725E37184C8604EB45 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E56F06F1B7150E000C0BCC5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1E3E0D99272CCE7154D799AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7ED959181B7278D200925CF6 /* CoreMedia.framework */,
+				7ED959161B7278B200925CF6 /* AVFoundation.framework */,
+				7ED959141B72788500925CF6 /* CoreAudio.framework */,
+				7ED959121B72786D00925CF6 /* libsqlite3.0.dylib */,
+				7ED959101B72786600925CF6 /* VideoToolbox.framework */,
+				7ED9590E1B72786100925CF6 /* AudioToolbox.framework */,
+				FEE9C0DE83B2A2667E7699C7 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7E55FCCB1B73EF9100F9DD75 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C412F4451B99D5ED0080BB74 /* HLLoadColorsAnimationViewController */,
+				C412F43F1B971B6F0080BB74 /* HLColorsAnimationViewController */,
+				C4F7E2A51B88B6B000B33348 /* HLWidthColorViewController */,
+				C4FA8B151B7C979300769242 /* HLLoadColorsViewController */,
+				7E55FD101B74137200F9DD75 /* HLSelectColorViewController */,
+				7E55FCD21B73F00700F9DD75 /* HLWelcomeViewController */,
+				7E55FCD11B73F00000F9DD75 /* HLGeneralPaintViewController */,
+				7E55FCD01B73EFF700F9DD75 /* HLGeneralPaintTableDataSource */,
+				C4880C701B7510040040B43C /* HLPreviousColorsViewController */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7E55FCCC1B73EF9800F9DD75 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCED1B73F59400F9DD75 /* HLSettings */,
+				7E55FCDE1B73F03900F9DD75 /* HLRemoteClient */,
+				7E55FCCD1B73EFAB00F9DD75 /* Categories */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		7E55FCCD1B73EFAB00F9DD75 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCCE1B73EFB500F9DD75 /* Categories.h */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		7E55FCD01B73EFF700F9DD75 /* HLGeneralPaintTableDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCD31B73F00F00F9DD75 /* HLGeneralPaintTableDataSource.h */,
+				7E55FCD41B73F00F00F9DD75 /* HLGeneralPaintTableDataSource.m */,
+			);
+			name = HLGeneralPaintTableDataSource;
+			sourceTree = "<group>";
+		};
+		7E55FCD11B73F00000F9DD75 /* HLGeneralPaintViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCD61B73F01800F9DD75 /* HLGeneralPaintViewController.h */,
+				7E55FCD71B73F01800F9DD75 /* HLGeneralPaintViewController.m */,
+				4BAF0C941E3E4D2800F89DB0 /* HLGeneralPaintViewController.xib */,
+			);
+			name = HLGeneralPaintViewController;
+			sourceTree = "<group>";
+		};
+		7E55FCD21B73F00700F9DD75 /* HLWelcomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCDB1B73F01E00F9DD75 /* HLWelcomeViewController.h */,
+				7E55FCDC1B73F01E00F9DD75 /* HLWelcomeViewController.m */,
+			);
+			name = HLWelcomeViewController;
+			sourceTree = "<group>";
+		};
+		7E55FCDE1B73F03900F9DD75 /* HLRemoteClient */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCDF1B73F04000F9DD75 /* HLRemoteClient.h */,
+				7E55FCE01B73F04000F9DD75 /* HLRemoteClient.mm */,
+			);
+			name = HLRemoteClient;
+			sourceTree = "<group>";
+		};
+		7E55FCE21B73F16B00F9DD75 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C412F4361B95A9D10080BB74 /* HLSettingsCell */,
+				C4F49DC51B90A027000FC065 /* HLAnimationOptionsCell */,
+				7E55FD0A1B740D7800F9DD75 /* HLMultiColorsCell */,
+				7E55FCFA1B73F8BE00F9DD75 /* HLChangeColorCell */,
+				7E55FCE91B73F24500F9DD75 /* HLBaseCell */,
+				7E55FCE81B73F23A00F9DD75 /* HLNetworkAddressCell */,
+				C4FA8B031B76056600769242 /* HLPreviousColorsCell */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		7E55FCE81B73F23A00F9DD75 /* HLNetworkAddressCell */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCE31B73F19D00F9DD75 /* HLNetworkAddressCell.h */,
+				7E55FCE41B73F19D00F9DD75 /* HLNetworkAddressCell.m */,
+				7E55FCE51B73F19D00F9DD75 /* HLNetworkAddressCell.xib */,
+			);
+			name = HLNetworkAddressCell;
+			sourceTree = "<group>";
+		};
+		7E55FCE91B73F24500F9DD75 /* HLBaseCell */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCEA1B73F25B00F9DD75 /* HLBaseCell.h */,
+				7E55FCEB1B73F25B00F9DD75 /* HLBaseCell.m */,
+			);
+			name = HLBaseCell;
+			sourceTree = "<group>";
+		};
+		7E55FCED1B73F59400F9DD75 /* HLSettings */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCEE1B73F5AA00F9DD75 /* HLSettings.h */,
+				7E55FCEF1B73F5AA00F9DD75 /* HLSettings.m */,
+			);
+			name = HLSettings;
+			sourceTree = "<group>";
+		};
+		7E55FCF11B73F88300F9DD75 /* thirdparties */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCF21B73F88E00F9DD75 /* ColorPicker */,
+			);
+			name = thirdparties;
+			sourceTree = "<group>";
+		};
+		7E55FCF21B73F88E00F9DD75 /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCF41B73F8A200F9DD75 /* NKOColorPickerView.h */,
+				7E55FCF51B73F8A200F9DD75 /* NKOColorPickerView.m */,
+				7E55FCF61B73F8A200F9DD75 /* NKOColorPickerView.podspec */,
+			);
+			name = ColorPicker;
+			sourceTree = "<group>";
+		};
+		7E55FCFA1B73F8BE00F9DD75 /* HLChangeColorCell */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCFE1B73F90B00F9DD75 /* HLChangeColorCell.h */,
+				7E55FCFF1B73F90B00F9DD75 /* HLChangeColorCell.m */,
+				7E55FD011B73F93F00F9DD75 /* HLChangeColorCell.xib */,
+			);
+			name = HLChangeColorCell;
+			sourceTree = "<group>";
+		};
+		7E55FD031B74059600F9DD75 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C4FA8B1E1B838B8300769242 /* HLSlider */,
+				C4FA8B181B7E27A700769242 /* HLColorLineView */,
+				7E55FD041B74059C00F9DD75 /* HLColorPicker */,
+				C4FA8B071B7B47FF00769242 /* HLSaveLoadView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		7E55FD041B74059C00F9DD75 /* HLColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FD071B7405C800F9DD75 /* HLColorPicker.h */,
+				7E55FD081B7405C800F9DD75 /* HLColorPicker.m */,
+				7E55FD051B7405B500F9DD75 /* HLColorPicker.xib */,
+			);
+			name = HLColorPicker;
+			sourceTree = "<group>";
+		};
+		7E55FD0A1B740D7800F9DD75 /* HLMultiColorsCell */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FD0B1B740DB700F9DD75 /* HLMultiColorsCell.h */,
+				7E55FD0C1B740DB700F9DD75 /* HLMultiColorsCell.m */,
+				7E55FD0E1B740E2900F9DD75 /* HLMultiColorsCell.xib */,
+			);
+			name = HLMultiColorsCell;
+			sourceTree = "<group>";
+		};
+		7E55FD101B74137200F9DD75 /* HLSelectColorViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FD111B74139100F9DD75 /* HLSelectColorViewController.h */,
+				7E55FD121B74139100F9DD75 /* HLSelectColorViewController.m */,
+				7E55FD131B74139100F9DD75 /* HLSelectColorViewController.xib */,
+			);
+			name = HLSelectColorViewController;
+			sourceTree = "<group>";
+		};
+		7E56F0501B7150E000C0BCC5 = {
+			isa = PBXGroup;
+			children = (
+				7E55FD031B74059600F9DD75 /* Views */,
+				7E55FCE21B73F16B00F9DD75 /* Cells */,
+				7E55FCCC1B73EF9800F9DD75 /* Utilities */,
+				7E55FCCB1B73EF9100F9DD75 /* ViewControllers */,
+				7E56F05B1B7150E000C0BCC5 /* Startup */,
+				7E56F09C1B71590A00C0BCC5 /* external */,
+				7E56F0751B7150E000C0BCC5 /* HomeLedTests */,
+				7E56F05A1B7150E000C0BCC5 /* Products */,
+				FE8D76CEFDCB942CA304C0FA /* Pods */,
+				1E3E0D99272CCE7154D799AC /* Frameworks */,
+				7E55FCF11B73F88300F9DD75 /* thirdparties */,
+			);
+			sourceTree = "<group>";
+		};
+		7E56F05A1B7150E000C0BCC5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7E56F0591B7150E000C0BCC5 /* HomeLed.app */,
+				7E56F0721B7150E000C0BCC5 /* HomeLedTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7E56F05B1B7150E000C0BCC5 /* Startup */ = {
+			isa = PBXGroup;
+			children = (
+				7E55FCCF1B73EFD700F9DD75 /* HomeLed.pch */,
+				7E55FCC91B73EF8900F9DD75 /* Images.xcassets */,
+				7E55FCC31B73EF7900F9DD75 /* LaunchScreen.xib */,
+				7E55FCC51B73EF7900F9DD75 /* Main.storyboard */,
+				7E55FCBE1B73EF6800F9DD75 /* AppDelegate.h */,
+				7E55FCBF1B73EF6800F9DD75 /* AppDelegate.m */,
+				7E55FCBA1B73EF5E00F9DD75 /* Info.plist */,
+				7E55FCBB1B73EF5E00F9DD75 /* main.m */,
+			);
+			name = Startup;
+			path = HomeLed;
+			sourceTree = "<group>";
+		};
+		7E56F0751B7150E000C0BCC5 /* HomeLedTests */ = {
+			isa = PBXGroup;
+			children = (
+				7E56F0781B7150E000C0BCC5 /* HomeLedTests.m */,
+				7E56F0761B7150E000C0BCC5 /* Supporting Files */,
+			);
+			path = HomeLedTests;
+			sourceTree = "<group>";
+		};
+		7E56F0761B7150E000C0BCC5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7E56F0771B7150E000C0BCC5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7E56F09C1B71590A00C0BCC5 /* external */ = {
+			isa = PBXGroup;
+			children = (
+				7E2F2ACF1B7271D30047C796 /* asynctcpsocket.h */,
+				7E2F2AD01B7271D30047C796 /* asynctcpsocket.cc */,
+				7E56F09D1B71591800C0BCC5 /* peer_connection_client.h */,
+				7E56F09E1B71591800C0BCC5 /* peer_connection_client.cc */,
+			);
+			name = external;
+			sourceTree = "<group>";
+		};
+		C412F4361B95A9D10080BB74 /* HLSettingsCell */ = {
+			isa = PBXGroup;
+			children = (
+				C412F43A1B95AAC80080BB74 /* HLSettingsCell.h */,
+				C412F43B1B95AAC80080BB74 /* HLSettingsCell.m */,
+				C412F43C1B95AAC80080BB74 /* HLSettingsCell.xib */,
+			);
+			name = HLSettingsCell;
+			sourceTree = "<group>";
+		};
+		C412F43F1B971B6F0080BB74 /* HLColorsAnimationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C412F4401B971B9C0080BB74 /* HLColorsAnimationViewController.h */,
+				C412F4411B971B9C0080BB74 /* HLColorsAnimationViewController.m */,
+				C412F4421B971B9C0080BB74 /* HLColorsAnimationViewController.xib */,
+			);
+			name = HLColorsAnimationViewController;
+			sourceTree = "<group>";
+		};
+		C412F4451B99D5ED0080BB74 /* HLLoadColorsAnimationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C412F4461B99D6420080BB74 /* HLLoadColorsAnimationViewController.h */,
+				C412F4471B99D6420080BB74 /* HLLoadColorsAnimationViewController.m */,
+				C412F4481B99D6420080BB74 /* HLLoadColorsAnimationViewController.xib */,
+			);
+			name = HLLoadColorsAnimationViewController;
+			sourceTree = "<group>";
+		};
+		C4880C701B7510040040B43C /* HLPreviousColorsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C4880C6A1B750FE30040B43C /* HLPreviousColorsViewController.h */,
+				C4880C6B1B750FE30040B43C /* HLPreviousColorsViewController.m */,
+				C4880C6C1B750FE30040B43C /* HLPreviousColorsViewController.xib */,
+			);
+			name = HLPreviousColorsViewController;
+			sourceTree = "<group>";
+		};
+		C4F49DC51B90A027000FC065 /* HLAnimationOptionsCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4F49DC61B90A093000FC065 /* HLAnimationOptionsCell.h */,
+				C4F49DC71B90A093000FC065 /* HLAnimationOptionsCell.m */,
+				C4F49DC81B90A093000FC065 /* HLAnimationOptionsCell.xib */,
+			);
+			name = HLAnimationOptionsCell;
+			sourceTree = "<group>";
+		};
+		C4F7E2A51B88B6B000B33348 /* HLWidthColorViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C4F7E2A61B88B6E700B33348 /* HLWidthColorViewController.h */,
+				C4F7E2A71B88B6E700B33348 /* HLWidthColorViewController.m */,
+				C4F7E2A81B88B6E700B33348 /* HLWidthColorViewController.xib */,
+			);
+			name = HLWidthColorViewController;
+			sourceTree = "<group>";
+		};
+		C4FA8B031B76056600769242 /* HLPreviousColorsCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4FA8AFE1B76055C00769242 /* HLPreviousColorsCell.h */,
+				C4FA8AFF1B76055C00769242 /* HLPreviousColorsCell.m */,
+				C4FA8B001B76055C00769242 /* HLPreviousColorsCell.xib */,
+			);
+			name = HLPreviousColorsCell;
+			sourceTree = "<group>";
+		};
+		C4FA8B071B7B47FF00769242 /* HLSaveLoadView */ = {
+			isa = PBXGroup;
+			children = (
+				C4FA8B041B7B47F400769242 /* HLSaveLoadColorsView.h */,
+				C4FA8B051B7B47F400769242 /* HLSaveLoadColorsView.m */,
+				C4FA8B161B7E056F00769242 /* HLSaveLoadColorsView.xib */,
+			);
+			name = HLSaveLoadView;
+			sourceTree = "<group>";
+		};
+		C4FA8B151B7C979300769242 /* HLLoadColorsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C4FA8B101B7C978E00769242 /* HLLoadColorsViewController.h */,
+				C4FA8B111B7C978E00769242 /* HLLoadColorsViewController.m */,
+				C4FA8B121B7C978E00769242 /* HLLoadColorsViewController.xib */,
+			);
+			name = HLLoadColorsViewController;
+			sourceTree = "<group>";
+		};
+		C4FA8B181B7E27A700769242 /* HLColorLineView */ = {
+			isa = PBXGroup;
+			children = (
+				C4FA8B191B7E27EB00769242 /* HLColorLineView.h */,
+				C4FA8B1A1B7E27EB00769242 /* HLColorLineView.m */,
+				C4FA8B1C1B7E3C0D00769242 /* HLColorLineView.xib */,
+			);
+			name = HLColorLineView;
+			sourceTree = "<group>";
+		};
+		C4FA8B1E1B838B8300769242 /* HLSlider */ = {
+			isa = PBXGroup;
+			children = (
+				C4FA8B241B838EF500769242 /* HLSlider.h */,
+				C4FA8B251B838EF500769242 /* HLSlider.m */,
+				C4FA8B261B838EF500769242 /* HLSlider.xib */,
+			);
+			name = HLSlider;
+			sourceTree = "<group>";
+		};
+		FE8D76CEFDCB942CA304C0FA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4BA36196C09CD51A35DD1C30 /* Pods.debug.xcconfig */,
+				E1CE961B85C8A5BA9F65D906 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7E56F0581B7150E000C0BCC5 /* HomeLed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E56F07C1B7150E000C0BCC5 /* Build configuration list for PBXNativeTarget "HomeLed" */;
+			buildPhases = (
+				A6EE86FE5DF07C78AD06C6A5 /* Check Pods Manifest.lock */,
+				7E56F0551B7150E000C0BCC5 /* Sources */,
+				7E56F0561B7150E000C0BCC5 /* Frameworks */,
+				7E56F0571B7150E000C0BCC5 /* Resources */,
+				0FCEDC88F9B7527A6CCEDD43 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HomeLed;
+			productName = HomeLed;
+			productReference = 7E56F0591B7150E000C0BCC5 /* HomeLed.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7E56F0711B7150E000C0BCC5 /* HomeLedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E56F07F1B7150E000C0BCC5 /* Build configuration list for PBXNativeTarget "HomeLedTests" */;
+			buildPhases = (
+				7E56F06E1B7150E000C0BCC5 /* Sources */,
+				7E56F06F1B7150E000C0BCC5 /* Frameworks */,
+				7E56F0701B7150E000C0BCC5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E56F0741B7150E000C0BCC5 /* PBXTargetDependency */,
+			);
+			name = HomeLedTests;
+			productName = HomeLedTests;
+			productReference = 7E56F0721B7150E000C0BCC5 /* HomeLedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7E56F0511B7150E000C0BCC5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Voevoda's Incorporated";
+				TargetAttributes = {
+					7E56F0581B7150E000C0BCC5 = {
+						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = L2QFT5NA2Q;
+						ProvisioningStyle = Manual;
+					};
+					7E56F0711B7150E000C0BCC5 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 7E56F0581B7150E000C0BCC5;
+					};
+				};
+			};
+			buildConfigurationList = 7E56F0541B7150E000C0BCC5 /* Build configuration list for PBXProject "HomeLed" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7E56F0501B7150E000C0BCC5;
+			productRefGroup = 7E56F05A1B7150E000C0BCC5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7E56F0581B7150E000C0BCC5 /* HomeLed */,
+				7E56F0711B7150E000C0BCC5 /* HomeLedTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7E56F0571B7150E000C0BCC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E55FCCA1B73EF8A00F9DD75 /* Images.xcassets in Resources */,
+				C412F4441B971B9C0080BB74 /* HLColorsAnimationViewController.xib in Resources */,
+				7E55FD061B7405B500F9DD75 /* HLColorPicker.xib in Resources */,
+				7E55FD151B74139100F9DD75 /* HLSelectColorViewController.xib in Resources */,
+				4BAF0C951E3E4D2800F89DB0 /* HLGeneralPaintViewController.xib in Resources */,
+				7E55FD021B73F93F00F9DD75 /* HLChangeColorCell.xib in Resources */,
+				7E55FCE71B73F19D00F9DD75 /* HLNetworkAddressCell.xib in Resources */,
+				C4FA8B1D1B7E3C0D00769242 /* HLColorLineView.xib in Resources */,
+				C4880C6E1B750FE30040B43C /* HLPreviousColorsViewController.xib in Resources */,
+				C412F44A1B99D6420080BB74 /* HLLoadColorsAnimationViewController.xib in Resources */,
+				C4F7E2AA1B88B6E700B33348 /* HLWidthColorViewController.xib in Resources */,
+				7E55FCC71B73EF7900F9DD75 /* LaunchScreen.xib in Resources */,
+				7E55FCC81B73EF7900F9DD75 /* Main.storyboard in Resources */,
+				C4FA8B141B7C978E00769242 /* HLLoadColorsViewController.xib in Resources */,
+				C4F49DCA1B90A093000FC065 /* HLAnimationOptionsCell.xib in Resources */,
+				C4FA8B281B838EF500769242 /* HLSlider.xib in Resources */,
+				C4FA8B171B7E056F00769242 /* HLSaveLoadColorsView.xib in Resources */,
+				C412F43E1B95AAC80080BB74 /* HLSettingsCell.xib in Resources */,
+				C4FA8B021B76055C00769242 /* HLPreviousColorsCell.xib in Resources */,
+				7E55FD0F1B740E2900F9DD75 /* HLMultiColorsCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E56F0701B7150E000C0BCC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0FCEDC88F9B7527A6CCEDD43 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A6EE86FE5DF07C78AD06C6A5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7E56F0551B7150E000C0BCC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FA8B131B7C978E00769242 /* HLLoadColorsViewController.m in Sources */,
+				C4F7E2A91B88B6E700B33348 /* HLWidthColorViewController.m in Sources */,
+				7E55FCC01B73EF6800F9DD75 /* AppDelegate.m in Sources */,
+				C412F4431B971B9C0080BB74 /* HLColorsAnimationViewController.m in Sources */,
+				7E55FCD51B73F00F00F9DD75 /* HLGeneralPaintTableDataSource.m in Sources */,
+				C412F43D1B95AAC80080BB74 /* HLSettingsCell.m in Sources */,
+				7E55FCE11B73F04000F9DD75 /* HLRemoteClient.mm in Sources */,
+				7E55FD091B7405C800F9DD75 /* HLColorPicker.m in Sources */,
+				C4FA8B011B76055C00769242 /* HLPreviousColorsCell.m in Sources */,
+				C4F49DC91B90A093000FC065 /* HLAnimationOptionsCell.m in Sources */,
+				C4FA8B1B1B7E27EB00769242 /* HLColorLineView.m in Sources */,
+				7E55FCF81B73F8A200F9DD75 /* NKOColorPickerView.m in Sources */,
+				C4880C6D1B750FE30040B43C /* HLPreviousColorsViewController.m in Sources */,
+				7E55FCD91B73F01800F9DD75 /* HLGeneralPaintViewController.m in Sources */,
+				7E55FCE61B73F19D00F9DD75 /* HLNetworkAddressCell.m in Sources */,
+				7E55FCF01B73F5AA00F9DD75 /* HLSettings.m in Sources */,
+				C412F4491B99D6420080BB74 /* HLLoadColorsAnimationViewController.m in Sources */,
+				7E55FCDD1B73F01E00F9DD75 /* HLWelcomeViewController.m in Sources */,
+				7E55FD0D1B740DB700F9DD75 /* HLMultiColorsCell.m in Sources */,
+				7E55FD001B73F90B00F9DD75 /* HLChangeColorCell.m in Sources */,
+				7E55FCEC1B73F25B00F9DD75 /* HLBaseCell.m in Sources */,
+				C4FA8B271B838EF500769242 /* HLSlider.m in Sources */,
+				C4FA8B061B7B47F400769242 /* HLSaveLoadColorsView.m in Sources */,
+				7E55FD141B74139100F9DD75 /* HLSelectColorViewController.m in Sources */,
+				7E55FCBD1B73EF5E00F9DD75 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E56F06E1B7150E000C0BCC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E56F0791B7150E000C0BCC5 /* HomeLedTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7E56F0741B7150E000C0BCC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E56F0581B7150E000C0BCC5 /* HomeLed */;
+			targetProxy = 7E56F0731B7150E000C0BCC5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7E55FCC31B73EF7900F9DD75 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7E55FCC41B73EF7900F9DD75 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		7E55FCC51B73EF7900F9DD75 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7E55FCC61B73EF7900F9DD75 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7E56F07A1B7150E000C0BCC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7E56F07B1B7150E000C0BCC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7E56F07D1B7150E000C0BCC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BA36196C09CD51A35DD1C30 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = armv7;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = L2QFT5NA2Q;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Startup/HomeLed.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"WEBRTC_POSIX=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/BlocksKit\"",
+					"\"${PODS_ROOT}/Headers/Public/MGBoxKit\"",
+					"\"${PODS_ROOT}/Headers/Public/MGEvents\"",
+					"\"${PODS_ROOT}/Headers/Public/MGMushParser\"",
+					../../trunk,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Startup/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/evengeros/Desktop/oxydesk-ios/trunk/out_sim/Debug-iphonesimulator",
+					"../../trunk/out_sim/Debug-iphonesimulator",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.mail.horoscope-alpha-enterprise";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "08957822-d289-4690-afa6-9ea1ef5a4d45";
+				PROVISIONING_PROFILE_SPECIFIER = "Horoscope Alpha Enterprise";
+				VALID_ARCHS = armv7;
+			};
+			name = Debug;
+		};
+		7E56F07E1B7150E000C0BCC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1CE961B85C8A5BA9F65D906 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ARCHS = armv7;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = L2QFT5NA2Q;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Startup/HomeLed.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"WEBRTC_POSIX=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/BlocksKit\"",
+					"\"${PODS_ROOT}/Headers/Public/MGBoxKit\"",
+					"\"${PODS_ROOT}/Headers/Public/MGEvents\"",
+					"\"${PODS_ROOT}/Headers/Public/MGMushParser\"",
+					../../trunk,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Startup/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/evengeros/Desktop/oxydesk-ios/trunk/out_sim/Debug-iphonesimulator",
+					"../../trunk/out_sim/Debug-iphonesimulator",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.mail.horoscope-alpha-enterprise";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "08957822-d289-4690-afa6-9ea1ef5a4d45";
+				PROVISIONING_PROFILE_SPECIFIER = "Horoscope Alpha Enterprise";
+				VALID_ARCHS = armv7;
+			};
+			name = Release;
+		};
+		7E56F0801B7150E000C0BCC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HomeLedTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HomeLed.app/HomeLed";
+			};
+			name = Debug;
+		};
+		7E56F0811B7150E000C0BCC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HomeLedTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HomeLed.app/HomeLed";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7E56F0541B7150E000C0BCC5 /* Build configuration list for PBXProject "HomeLed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E56F07A1B7150E000C0BCC5 /* Debug */,
+				7E56F07B1B7150E000C0BCC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E56F07C1B7150E000C0BCC5 /* Build configuration list for PBXNativeTarget "HomeLed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E56F07D1B7150E000C0BCC5 /* Debug */,
+				7E56F07E1B7150E000C0BCC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E56F07F1B7150E000C0BCC5 /* Build configuration list for PBXNativeTarget "HomeLedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E56F0801B7150E000C0BCC5 /* Debug */,
+				7E56F0811B7150E000C0BCC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7E56F0511B7150E000C0BCC5 /* Project object */;
+}

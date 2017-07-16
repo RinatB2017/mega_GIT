@@ -1,0 +1,54 @@
+PODS:
+  - AFNetworking (2.2.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.2.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.2.3):
+    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (2.2.3)
+  - AFNetworking/Security (2.2.3)
+  - AFNetworking/Serialization (2.2.3)
+  - AFNetworking/UIKit (2.2.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - BlocksKit (2.2.5):
+    - BlocksKit/All
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - MGBoxKit (7.0.1):
+    - MGEvents
+    - MGMushParser
+  - MGEvents (1.0.3)
+  - MGMushParser (1.2.1)
+
+DEPENDENCIES:
+  - AFNetworking (= 2.2.3)
+  - BlocksKit (= 2.2.5)
+  - MGBoxKit (= 7.0.1)
+
+SPEC CHECKSUMS:
+  AFNetworking: fd6df10652c90fe082b188b5af0660f123423f80
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  MGBoxKit: 3817c0e0bcbed8a2a31bfcafa0f0b627e788a6cd
+  MGEvents: 739ea3e582a8df05bd1044500c7fb6d8f7aff5c8
+  MGMushParser: e5f80531a96a086694103592db4cbad3ffd78fa5
+
+COCOAPODS: 0.34.4

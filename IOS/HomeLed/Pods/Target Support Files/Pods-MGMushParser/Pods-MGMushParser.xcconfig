@@ -1,0 +1,1 @@
+PODS_MGMUSHPARSER_OTHER_LDFLAGS = -framework "CoreText"

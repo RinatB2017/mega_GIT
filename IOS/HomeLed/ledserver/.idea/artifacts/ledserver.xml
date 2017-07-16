@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ledserver">
+    <output-path>$PROJECT_DIR$/out/artifacts/ledserver</output-path>
+    <root id="archive" name="ledserver.jar">
+      <element id="module-output" name="ledserver" />
+      <element id="library" level="project" name="KotlinJavaRuntime (2)" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

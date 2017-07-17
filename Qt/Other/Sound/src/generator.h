@@ -52,6 +52,8 @@ public:
               qint64 durationUs,
               int sampleRate1,
               int sampleRate2,
+              int left_value,
+              int right_value,
               QObject *parent);
     ~Generator();
 
@@ -68,7 +70,9 @@ private:
     void generateData(const QAudioFormat &format,
                       qint64 durationUs,
                       int sampleRate1,
-                      int sampleRate2);
+                      int sampleRate2,
+                      int left_value,
+                      int right_value);
 
 private:
     qint64 m_pos;

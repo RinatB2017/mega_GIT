@@ -48,13 +48,20 @@ Generator::Generator(const QAudioFormat &format,
                      qint64 durationUs,
                      int sampleRate1,
                      int sampleRate2,
+                     int left_value,
+                     int right_value,
                      QObject *parent)
     :   QIODevice(parent)
     ,   m_pos(0)
 {
     if (format.isValid())
     {
-        generateData(format, durationUs, sampleRate1, sampleRate2);
+        generateData(format,
+                     durationUs,
+                     sampleRate1,
+                     sampleRate2,
+                     left_value,
+                     right_value);
     }
 }
 //---------------------------------------------------------------------------
@@ -74,11 +81,12 @@ void Generator::stop(void)
     close();
 }
 //---------------------------------------------------------------------------
-//TODO
 void Generator::generateData(const QAudioFormat &format,
                              qint64 durationUs,
                              int sampleRate1,
-                             int sampleRate2)
+                             int sampleRate2,
+                             int left_value,
+                             int right_value)
 {
     const int channelBytes = format.sampleSize() / 8;
     const int sampleBytes = format.channelCount() * channelBytes;
@@ -93,17 +101,24 @@ void Generator::generateData(const QAudioFormat &format,
     unsigned char *ptr = reinterpret_cast<unsigned char *>(m_buffer.data());
     int sampleIndex = 0;
 
+#if 0
     qDebug() << "length = " << length;
     qDebug() << "sampleRate1 = " << sampleRate1;
     qDebug() << "sampleRate2 = " << sampleRate2;
     qDebug() << "channelBytes = " << channelBytes;
     qDebug() << "format.channelCount() = " << format.channelCount();
     qDebug() << "m_buffer.length = " << m_buffer.length();
+#endif
     while (length)
     {
         for (int i=0; i<format.channelCount(); ++i)
         {
-            const qreal x = qSin(2 * M_PI * (i ? sampleRate2 : sampleRate1) * qreal(sampleIndex % format.sampleRate()) / format.sampleRate());
+            qreal x = qSin(2 * M_PI * (i ? sampleRate2 : sampleRate1) * qreal(sampleIndex % format.sampleRate()) / format.sampleRate());
+            if(!i)
+                x *= ((qreal)left_value / 100.0);
+            else
+                x *= ((qreal)right_value / 100.0);
+
             if (format.sampleSize() == 8 && format.sampleType() == QAudioFormat::UnSignedInt)
             {
                 const quint8 value = static_cast<quint8>((1.0 + x) / 2 * 255);

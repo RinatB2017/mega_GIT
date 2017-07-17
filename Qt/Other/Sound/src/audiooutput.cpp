@@ -38,6 +38,7 @@
 **
 ****************************************************************************/
 #include <QVBoxLayout>
+#include <QGroupBox>
 #include <QSpinBox>
 #include <QDebug>
 
@@ -50,14 +51,11 @@
 #define VOLUME_LABEL    "Volume:"
 
 const int DurationSeconds   = 1;
-const int ToneSampleRateHz  = 440;
 const int DataSampleRateHz  = 44100;
 const int BufferSize        = 32768;
 //---------------------------------------------------------------------------
 AudioTest::AudioTest()
     :   m_pushTimer(new QTimer(this))
-    ,   m_modeButton(0)
-    ,   m_suspendResumeButton(0)
     ,   m_deviceBox(0)
     ,   m_device(QAudioDeviceInfo::defaultOutputDevice())
     ,   m_generator(0)
@@ -67,6 +65,8 @@ AudioTest::AudioTest()
 {
     initializeWindow();
     initializeAudio();
+
+    setFixedSize(sizeHint());
 }
 //---------------------------------------------------------------------------
 void AudioTest::initializeWindow(void)
@@ -87,28 +87,6 @@ void AudioTest::initializeWindow(void)
     connect(m_deviceBox,SIGNAL(activated(int)),SLOT(deviceChanged(int)));
     layout->addWidget(m_deviceBox);
 
-    m_modeButton = new QPushButton(this);
-    m_modeButton->setText(tr(PUSH_MODE_LABEL));
-    connect(m_modeButton, SIGNAL(clicked()), SLOT(toggleMode()));
-    layout->addWidget(m_modeButton);
-
-    m_suspendResumeButton = new QPushButton(this);
-    m_suspendResumeButton->setText(tr(SUSPEND_LABEL));
-    connect(m_suspendResumeButton, SIGNAL(clicked()), SLOT(toggleSuspendResume()));
-    layout->addWidget(m_suspendResumeButton);
-
-    QHBoxLayout *volumeBox = new QHBoxLayout;
-    m_volumeLabel = new QLabel;
-    m_volumeLabel->setText(tr(VOLUME_LABEL));
-    m_volumeSlider = new QSlider(Qt::Horizontal);
-    m_volumeSlider->setMinimum(0);
-    m_volumeSlider->setMaximum(100);
-    m_volumeSlider->setSingleStep(10);
-    connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(volumeChanged(int)));
-    volumeBox->addWidget(m_volumeLabel);
-    volumeBox->addWidget(m_volumeSlider);
-    layout->addLayout(volumeBox);
-
     //---
     QPushButton *btn = new QPushButton;
     btn->setText("TEST");
@@ -128,7 +106,41 @@ void AudioTest::initializeWindow(void)
     hbox->addWidget(new QLabel("RUN"));
     hbox->addWidget(btn);
 
+    sb_sampleRate1->setValue(440);
+    sb_sampleRate2->setValue(440);
+
     layout->addLayout(hbox);
+
+    QGroupBox *gbox = new QGroupBox;
+    gbox->setTitle("Volume");
+
+    QGridLayout *grid = new QGridLayout;
+    grid->addWidget(new QLabel("L:"), 0, 0);
+    grid->addWidget(new QLabel("R:"), 1, 0);
+
+    m_left_volume   = new QSlider(Qt::Horizontal);
+    m_right_volume  = new QSlider(Qt::Horizontal);
+
+    m_left_volume->setRange(0, 100);
+    m_right_volume->setRange(0, 100);
+
+    grid->addWidget(m_left_volume,  0, 1);
+    grid->addWidget(m_right_volume, 1, 1);
+
+    connect(m_left_volume,  SIGNAL(valueChanged(int)), this, SLOT(test()));
+    connect(m_right_volume, SIGNAL(valueChanged(int)), this, SLOT(test()));
+
+    connect(sb_sampleRate1, SIGNAL(editingFinished()),  this,   SLOT(test()));
+    connect(sb_sampleRate2, SIGNAL(editingFinished()),  this,   SLOT(test()));
+
+    m_left_volume->setValue(100);
+    m_right_volume->setValue(100);
+
+    gbox->setLayout(grid);
+
+    gbox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+    layout->addWidget(gbox);
     //---
 
     window->setLayout(layout.data());
@@ -141,6 +153,9 @@ void AudioTest::initializeWindow(void)
 //---------------------------------------------------------------------------
 void AudioTest::test(void)
 {
+    if(m_generator == nullptr)      return;
+    if(m_audioOutput == nullptr)    return;
+
     m_generator->stop();
     m_audioOutput->stop();
 
@@ -150,6 +165,8 @@ void AudioTest::test(void)
                                 DurationSeconds*1000000,
                                 sb_sampleRate1->value(),
                                 sb_sampleRate2->value(),
+                                m_left_volume->value(),
+                                m_right_volume->value(),
                                 this);
 
     m_generator->start();
@@ -178,8 +195,10 @@ void AudioTest::initializeAudio(void)
 
     m_generator = new Generator(m_format,
                                 DurationSeconds*1000000,
-                                ToneSampleRateHz,
-                                ToneSampleRateHz,
+                                sb_sampleRate1->value(),
+                                sb_sampleRate2->value(),
+                                m_left_volume->value(),
+                                m_right_volume->value(),
                                 this);
 
     createAudioOutput();
@@ -192,12 +211,12 @@ void AudioTest::createAudioOutput(void)
     m_audioOutput = new QAudioOutput(m_device, m_format, this);
     m_generator->start();
     m_audioOutput->start(m_generator);
-    m_volumeSlider->setValue(int(m_audioOutput->volume()*100.0f));
 }
 //---------------------------------------------------------------------------
 AudioTest::~AudioTest()
 {
-
+    m_generator->stop();
+    m_audioOutput->stop();
 }
 //---------------------------------------------------------------------------
 void AudioTest::deviceChanged(int index)
@@ -208,14 +227,6 @@ void AudioTest::deviceChanged(int index)
     m_audioOutput->disconnect(this);
     m_device = m_deviceBox->itemData(index).value<QAudioDeviceInfo>();
     createAudioOutput();
-}
-//---------------------------------------------------------------------------
-void AudioTest::volumeChanged(int value)
-{
-    if (m_audioOutput)
-    {
-        m_audioOutput->setVolume(qreal(value/100.0f));
-    }
 }
 //---------------------------------------------------------------------------
 void AudioTest::pushTimerExpired(void)
@@ -236,53 +247,6 @@ void AudioTest::pushTimerExpired(void)
             }
             --chunks;
         }
-    }
-}
-//---------------------------------------------------------------------------
-void AudioTest::toggleMode(void)
-{
-    m_pushTimer->stop();
-    m_audioOutput->stop();
-
-    if (m_pullMode)
-    {
-        //switch to push mode (periodically push to QAudioOutput using a timer)
-        m_modeButton->setText(tr(PULL_MODE_LABEL));
-        m_output = m_audioOutput->start();
-        m_pullMode = false;
-        m_pushTimer->start(0);  //20
-    }
-    else
-    {
-        //switch to pull mode (QAudioOutput pulls from Generator as needed)
-        m_modeButton->setText(tr(PUSH_MODE_LABEL));
-        m_pullMode = true;
-        m_audioOutput->start(m_generator);
-    }
-
-    m_suspendResumeButton->setText(tr(SUSPEND_LABEL));
-}
-//---------------------------------------------------------------------------
-void AudioTest::toggleSuspendResume(void)
-{
-    if (m_audioOutput->state() == QAudio::SuspendedState)
-    {
-        m_audioOutput->resume();
-        m_suspendResumeButton->setText(tr(SUSPEND_LABEL));
-    }
-    else if (m_audioOutput->state() == QAudio::ActiveState)
-    {
-        m_audioOutput->suspend();
-        m_suspendResumeButton->setText(tr(RESUME_LABEL));
-    }
-    else if (m_audioOutput->state() == QAudio::StoppedState)
-    {
-        m_audioOutput->resume();
-        m_suspendResumeButton->setText(tr(SUSPEND_LABEL));
-    }
-    else if (m_audioOutput->state() == QAudio::IdleState)
-    {
-        // no-op
     }
 }
 //---------------------------------------------------------------------------

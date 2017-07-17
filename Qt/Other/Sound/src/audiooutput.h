@@ -71,19 +71,18 @@ private:
     void createAudioOutput(void);
 
 private:
-    QTimer *m_pushTimer;
+    QTimer *m_pushTimer = 0;
 
     // Owned by layout
-    QPushButton *m_modeButton;
-    QPushButton *m_suspendResumeButton;
-    QComboBox *m_deviceBox;
-    QLabel *m_volumeLabel;
-    QSlider *m_volumeSlider;
+    QComboBox *m_deviceBox = 0;
+
+    QSlider *m_left_volume = 0;
+    QSlider *m_right_volume = 0;
 
     QAudioDeviceInfo m_device;
-    Generator *m_generator;
-    QAudioOutput *m_audioOutput;
-    QIODevice *m_output; // not owned
+    Generator *m_generator = 0;
+    QAudioOutput *m_audioOutput = 0;
+    QIODevice *m_output = 0; // not owned
     QAudioFormat m_format;
 
     //---
@@ -96,10 +95,7 @@ private:
 
 private slots:
     void pushTimerExpired(void);
-    void toggleMode(void);
-    void toggleSuspendResume(void);
     void deviceChanged(int index);
-    void volumeChanged(int);
 
     void test(void);
 

@@ -46,6 +46,7 @@
 #include <QByteArray>
 #include <QComboBox>
 #include <QIODevice>
+#include <QSpinBox>
 #include <QLabel>
 #include <QMainWindow>
 #include <QObject>
@@ -54,8 +55,6 @@
 #include <QTimer>
 //---------------------------------------------------------------------------
 #include "generator.h"
-//---------------------------------------------------------------------------
-class QSpinBox;
 //---------------------------------------------------------------------------
 class AudioTest : public QMainWindow
 {
@@ -90,7 +89,6 @@ private:
     QSpinBox *sb_sampleRate2 = 0;
     //---
 
-    bool m_pullMode;
     QByteArray m_buffer;
 
 private slots:

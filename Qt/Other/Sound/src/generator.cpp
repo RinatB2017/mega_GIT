@@ -101,23 +101,17 @@ void Generator::generateData(const QAudioFormat &format,
     unsigned char *ptr = reinterpret_cast<unsigned char *>(m_buffer.data());
     int sampleIndex = 0;
 
-#if 0
-    qDebug() << "length = " << length;
-    qDebug() << "sampleRate1 = " << sampleRate1;
-    qDebug() << "sampleRate2 = " << sampleRate2;
-    qDebug() << "channelBytes = " << channelBytes;
-    qDebug() << "format.channelCount() = " << format.channelCount();
-    qDebug() << "m_buffer.length = " << m_buffer.length();
-#endif
+    qreal lv = (qreal)left_value / 100.0;
+    qreal rv = (qreal)right_value / 100.0;
     while (length)
     {
         for (int i=0; i<format.channelCount(); ++i)
         {
             qreal x = qSin(2 * M_PI * (i ? sampleRate2 : sampleRate1) * qreal(sampleIndex % format.sampleRate()) / format.sampleRate());
             if(!i)
-                x *= ((qreal)left_value / 100.0);
+                x *= lv;
             else
-                x *= ((qreal)right_value / 100.0);
+                x *= rv;
 
             if (format.sampleSize() == 8 && format.sampleType() == QAudioFormat::UnSignedInt)
             {

@@ -39,7 +39,6 @@
 ****************************************************************************/
 #include <QVBoxLayout>
 #include <QGroupBox>
-#include <QSpinBox>
 #include <QDebug>
 
 #include "audiooutput.h"
@@ -88,10 +87,6 @@ void AudioTest::initializeWindow(void)
     layout->addWidget(m_deviceBox);
 
     //---
-    QPushButton *btn = new QPushButton;
-    btn->setText("TEST");
-    connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(test()));
-
     sb_sampleRate1 = new QSpinBox;
     sb_sampleRate1->setRange(1, 20000);
 
@@ -101,10 +96,9 @@ void AudioTest::initializeWindow(void)
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->addWidget(new QLabel("FREQ1:"));
     hbox->addWidget(sb_sampleRate1);
+    hbox->addStretch(1);
     hbox->addWidget(new QLabel("FREQ2:"));
     hbox->addWidget(sb_sampleRate2);
-    hbox->addWidget(new QLabel("RUN"));
-    hbox->addWidget(btn);
 
     sb_sampleRate1->setValue(440);
     sb_sampleRate2->setValue(440);
@@ -176,8 +170,6 @@ void AudioTest::test(void)
 void AudioTest::initializeAudio(void)
 {
     connect(m_pushTimer, SIGNAL(timeout()), SLOT(pushTimerExpired()));
-
-    m_pullMode = true;
 
     m_format.setSampleRate(DataSampleRateHz);
     m_format.setChannelCount(2);

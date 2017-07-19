@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/temp">
+        <file>stm32_tux.bmp</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,542 @@
+Index: src/src.pro
+===================================================================
+--- src/src.pro	(révision 521)
++++ src/src.pro	(copie de travail)
+@@ -141,6 +141,7 @@
+         qwt_plot_panner.h \
+         qwt_plot_picker.h \
+         qwt_plot_zoomer.h \
++        qwt_plot_price.h \
+         qwt_plot_magnifier.h \
+         qwt_plot_rescaler.h \
+         qwt_raster_data.h \
+@@ -173,6 +174,7 @@
+         qwt_plot_zoomer.cpp \
+         qwt_plot_magnifier.cpp \
+         qwt_plot_rescaler.cpp \
++        qwt_plot_price.cpp \
+         qwt_raster_data.cpp \
+         qwt_series_data.cpp \
+         qwt_scale_widget.cpp 
+Index: src/qwt_plot_price.h
+===================================================================
+--- src/qwt_plot_price.h	(révision 0)
++++ src/qwt_plot_price.h	(révision 0)
+@@ -0,0 +1,65 @@
++#ifndef QWT_PLOT_PRICE_H
++#define QWT_PLOT_PRICE_H
++
++#include <qglobal.h>
++#include <qcolor.h>
++
++#include "qwt_plot_seriesitem.h" 
++#include "qwt_price_move.h"
++
++class QWT_EXPORT QwtPlotPrice: public QwtPlotSeriesItem<QwtPriceMove>
++{
++public:
++    enum CurveStyle
++    {
++        NoCurve,
++        OHLC,               // Open-High-Low-Close
++        Candlestick,        // Japanese candlesticks
++        UserCurve = 100
++    };
++
++    explicit QwtPlotPrice(const QString &title = QString::null);
++    explicit QwtPlotPrice(const QwtText &title);
++    virtual ~QwtPlotPrice();
++
++    virtual int rtti() const;
++
++    void setPen(const QPen &);
++    const QPen &pen() const;
++
++    void setUpBrush(const QBrush &);
++    const QBrush &upBrush() const;
++
++    void setDownBrush(const QBrush &);
++    const QBrush &downBrush() const;
++
++    void setData(const QwtArray<QwtPriceMove> &data);
++    void setData(const QwtSeriesData<QwtPriceMove> &data);
++
++    void setStyle(CurveStyle style);
++    CurveStyle style() const;
++
++    virtual void draw(QPainter *, const QwtScaleMap &xMap, 
++        const QwtScaleMap &yMap, const QRect &) const;
++
++    virtual void draw(QPainter *p,
++        const QwtScaleMap &xMap, const QwtScaleMap &yMap,
++        int from, int to) const;
++
++    virtual void updateLegend(QwtLegend *) const;
++
++protected:
++    void drawCandlesticks(QPainter *,
++        const QwtScaleMap &xMap, const QwtScaleMap &yMap,
++        int from, int to) const;
++    void drawOHLCs(QPainter *,
++        const QwtScaleMap &xMap, const QwtScaleMap &yMap,
++        int from, int to) const;
++
++private:
++    void init();
++    class PrivateData;
++    PrivateData *d_data;
++};
++
++#endif
+Index: src/qwt_series_data.cpp
+===================================================================
+--- src/qwt_series_data.cpp	(révision 521)
++++ src/qwt_series_data.cpp	(copie de travail)
+@@ -149,6 +149,59 @@
+     return QwtDoubleRect(minX, minY, maxX - minX, maxY - minY);
+ }
+ 
++
++/*!
++  \brief Calculate the bounding rect of a series
++
++  Slow implementation, that iterates over the series.
++
++  \param series Series
++  \return Bounding rectangle
++*/
++QwtDoubleRect qwtBoundingRect(const QwtSeriesData<QwtPriceMove>& series)
++{
++    double minX, maxX, minY, maxY;
++    minX = maxX = minY = maxY = 0.0;
++
++    bool isValid = false;
++
++    const size_t sz = series.size();
++    for ( size_t i = 0; i < sz; i++ )
++    {
++        const QwtPriceMove price = series.sample(i);
++
++        if ( !price.interval.isValid() )
++            continue;
++
++        if ( !isValid )
++        {
++            minX = price.interval.minValue();
++            maxX = price.interval.maxValue();
++            minY = price.low;
++            maxY = price.high;
++            
++            isValid = true;
++        }
++        else
++        {
++            if ( price.interval.minValue() < minX )
++                minX = price.interval.minValue();
++            if ( price.interval.maxValue() > maxX )
++                maxX = price.interval.maxValue();
++
++            if ( price.low < minY )
++                minY = price.low;
++            if ( price.high > maxY )
++                maxY = price.high;
++        }
++    }
++    if ( !isValid )
++        return QwtDoubleRect(1.0, 1.0, -2.0, -2.0); // invalid
++
++    return QwtDoubleRect(minX, minY, maxX - minX, maxY - minY);
++}
++
++
+ /*! 
+    Constructor
+    \param samples Samples
+@@ -165,6 +218,7 @@
+     return new QwtPointSeriesData(d_samples);
+ }
+ 
++
+ /*!
+   \brief Calculate the bounding rect
+ 
+@@ -180,6 +234,27 @@
+    Constructor
+    \param samples Samples
+ */
++QwtPriceMoveSeriesData::QwtPriceMoveSeriesData(
++    const QwtArray<QwtPriceMove> &samples):
++    QwtArraySeriesData<QwtPriceMove>(samples)
++{
++}   
++
++QwtSeriesData<QwtPriceMove> *QwtPriceMoveSeriesData::copy() const
++{
++    return new QwtPriceMoveSeriesData(d_samples);
++}
++
++QwtDoubleRect QwtPriceMoveSeriesData::boundingRect() const
++{
++    return qwtBoundingRect(*this);
++}
++
++
++/*! 
++   Constructor
++   \param samples Samples
++*/
+ QwtIntervalSeriesData::QwtIntervalSeriesData(
+         const QwtArray<QwtIntervalSample> &samples):
+     QwtArraySeriesData<QwtIntervalSample>(samples)
+Index: src/qwt_plot_price.cpp
+===================================================================
+--- src/qwt_plot_price.cpp	(révision 0)
++++ src/qwt_plot_price.cpp	(révision 0)
+@@ -0,0 +1,241 @@
++#include <qstring.h>
++#include <qpainter.h>
++#include <qwt_plot.h>
++#include <qwt_painter.h>
++#include <qwt_scale_map.h>
++#include <qwt_plot_price.h>
++
++class QwtPlotPrice::PrivateData
++{
++public:
++    PrivateData():
++        curveStyle(NoCurve)
++    {
++    }
++
++    ~PrivateData()
++    {
++    }
++
++    QPen pen;
++    QBrush upBrush;
++    QBrush downBrush;
++    QwtPlotPrice::CurveStyle curveStyle;
++};
++
++QwtPlotPrice::QwtPlotPrice(const QwtText &title):
++    QwtPlotSeriesItem<QwtPriceMove>(title)
++{
++    init();
++}
++
++QwtPlotPrice::QwtPlotPrice(const QString &title):
++    QwtPlotSeriesItem<QwtPriceMove>(title)
++{
++    init();
++}
++
++QwtPlotPrice::~QwtPlotPrice()
++{
++    delete d_data;
++}
++
++void QwtPlotPrice::init()
++{
++    d_data = new PrivateData();
++    d_series = new QwtPriceMoveSeriesData();
++
++    setUpBrush(QBrush(Qt::NoBrush));
++    setDownBrush(QBrush(Qt::black));
++
++    setItemAttribute(QwtPlotItem::AutoScale, true);
++    setItemAttribute(QwtPlotItem::Legend, true);
++
++    setZ(20.0);
++
++}
++
++void QwtPlotPrice::setStyle(CurveStyle style)
++{
++    if ( style != d_data->curveStyle )
++    {
++        d_data->curveStyle = style;
++        itemChanged();
++    }
++}
++
++QwtPlotPrice::CurveStyle QwtPlotPrice::style() const
++{
++    return d_data->curveStyle;
++}
++
++void QwtPlotPrice::setPen(const QPen &pen)
++{
++    if ( pen != d_data->pen )
++    {
++        d_data->pen = pen;
++        itemChanged();
++    }
++}
++
++const QPen &QwtPlotPrice::pen() const
++{
++    return d_data->pen;
++}
++
++void QwtPlotPrice::setUpBrush(const QBrush &brush)
++{
++    if ( brush != d_data->upBrush )
++    { 
++        d_data->upBrush = brush;
++        itemChanged();
++    }
++}
++
++const QBrush &QwtPlotPrice::upBrush() const
++{
++    return d_data->upBrush; 
++}
++
++void QwtPlotPrice::setDownBrush(const QBrush &brush)
++{
++    if ( brush != d_data->downBrush )
++    { 
++        d_data->downBrush = brush;
++        itemChanged();
++    }
++}
++
++const QBrush &QwtPlotPrice::downBrush() const
++{
++    return d_data->downBrush; 
++}
++
++int QwtPlotPrice::rtti() const
++{
++    return QwtPlotItem::Rtti_PlotPrice;
++}
++
++void QwtPlotPrice::setData(
++    const QwtArray<QwtPriceMove> &data)
++{
++    QwtPlotSeriesItem<QwtPriceMove>::setData(
++        QwtPriceMoveSeriesData(data));
++}
++
++void QwtPlotPrice::setData(
++    const QwtSeriesData<QwtPriceMove> &data)
++{
++    QwtPlotSeriesItem<QwtPriceMove>::setData(data);
++}
++
++void QwtPlotPrice::draw(QPainter *painter, 
++    const QwtScaleMap &xMap, const QwtScaleMap &yMap, 
++    const QRect &) const
++{
++    draw(painter, xMap, yMap, 0, -1);
++}
++
++void QwtPlotPrice::draw(QPainter *painter,
++    const QwtScaleMap &xMap, const QwtScaleMap &yMap,
++    int from, int to) const
++{
++    if ( !painter || dataSize() <= 0 )
++        return;
++
++    if (to < 0)
++        to = dataSize() - 1;
++
++    switch (d_data->curveStyle)
++    {
++        case OHLC:
++            drawOHLCs(painter, xMap, yMap, from, to);
++            break;
++        case Candlestick:
++            drawCandlesticks(painter, xMap, yMap, from, to);
++            break;
++        default:
++            break;
++    }
++}
++void QwtPlotPrice::drawOHLCs(QPainter *painter,
++    const QwtScaleMap &xMap, const QwtScaleMap &yMap,
++    int from, int to) const
++{
++    painter->setPen(d_data->pen);
++
++    for ( int i = from; i <= to; i++ )
++    {
++        const QwtPriceMove price = d_series->sample(i);
++        if ( !price.interval.isNull() )
++        {
++            const int open = yMap.transform(price.open);
++            const int close = yMap.transform(price.close);
++            const int centerAxis = xMap.transform(
++                (price.interval.minValue() + price.interval.maxValue()) / 2);
++
++            QwtPainter::drawLine(painter, centerAxis, yMap.transform(price.low), 
++                centerAxis, yMap.transform(price.high));
++
++            QwtPainter::drawLine(painter,
++                xMap.transform(price.interval.minValue()), open, centerAxis,
++                open);
++
++            QwtPainter::drawLine(painter, centerAxis, close,
++                xMap.transform(price.interval.maxValue()), close);
++
++        }
++    }
++}
++
++void QwtPlotPrice::drawCandlesticks(QPainter *painter,
++    const QwtScaleMap &xMap, const QwtScaleMap &yMap,
++    int from, int to) const
++{
++    painter->setPen(d_data->pen);
++
++    for ( int i = from; i <= to; i++ )
++    {
++        const QwtPriceMove price = d_series->sample(i);
++        if ( !price.interval.isNull() )
++        {
++            const int open = yMap.transform(price.open);
++            const int high = yMap.transform(price.high);
++            const int low = yMap.transform(price.low);
++            const int close = yMap.transform(price.close);
++
++            const bool upCandle = (price.close > price.open);
++            const int wickAxis = xMap.transform(
++                (price.interval.minValue() + price.interval.maxValue()) / 2);
++
++            QwtPainter::drawLine(painter, wickAxis, (upCandle ? close : open),
++                wickAxis, high);
++
++            QwtPainter::drawLine(painter, wickAxis, (upCandle ? open : close), 
++                wickAxis, low);
++
++            QRect body = QRect();
++            body.setCoords(xMap.transform(price.interval.minValue()), open,
++                xMap.transform(price.interval.maxValue()), close);
++            #if QT_VERSION < 0x040000
++                body = body.normalize();
++            #else
++                body = body.normalized();
++            #endif
++
++            QwtPainter::fillRect(painter, body,
++                (upCandle ? upBrush() : downBrush()));
++            QwtPainter::drawRect(painter, body);
++        }
++    }
++}
++
++
++void QwtPlotPrice::updateLegend(QwtLegend *) const
++{
++#if 0
++#ifdef __GNUC__
++#warning TODO
++#endif
++#endif
++}
+Index: src/qwt_plot_item.h
+===================================================================
+--- src/qwt_plot_item.h	(révision 521)
++++ src/qwt_plot_item.h	(copie de travail)
+@@ -83,6 +83,7 @@
+         Rtti_PlotHistogram,
+         Rtti_PlotSpectrogram,
+         Rtti_PlotSVG,
++        Rtti_PlotPrice,
+ 
+         Rtti_PlotUserItem = 1000
+     };
+Index: src/qwt_series_data.h
+===================================================================
+--- src/qwt_series_data.h	(révision 521)
++++ src/qwt_series_data.h	(copie de travail)
+@@ -16,6 +16,7 @@
+ #include "qwt_array.h"
+ #include "qwt_double_rect.h"
+ #include "qwt_double_interval.h"
++#include "qwt_price_move.h"
+ 
+ //! A sample of the types (x1-x2, y) or (x, y1-y2)
+ class QWT_EXPORT QwtIntervalSample
+@@ -230,6 +231,19 @@
+     virtual QwtDoubleRect boundingRect() const;
+ };
+ 
++
++//! Interface for iterating over an array of price moves
++class QWT_EXPORT QwtPriceMoveSeriesData: public QwtArraySeriesData<QwtPriceMove>
++{
++    public:
++        QwtPriceMoveSeriesData(
++        const QwtArray<QwtPriceMove> & = QwtArray<QwtPriceMove>());
++
++        virtual QwtSeriesData<QwtPriceMove> *copy() const;
++        virtual QwtDoubleRect boundingRect() const;
++};
++
++
+ /*! 
+   Interface for iterating over two QwtArray<double> objects.
+ */
+@@ -373,6 +387,8 @@
+     const QwtSeriesData<QwtIntervalSample> &);
+ QWT_EXPORT QwtDoubleRect qwtBoundingRect(
+     const QwtSeriesData<QwtSetSample> &);
++QWT_EXPORT QwtDoubleRect qwtBoundingRect(
++    const QwtSeriesData<QwtPriceMove> &);
+ 
+ #if defined(QWT_TEMPLATEDLL)
+ // MOC_SKIP_BEGIN
+@@ -381,6 +397,7 @@
+ #endif
+ template class QWT_EXPORT QwtArray<QwtIntervalSample>;
+ template class QWT_EXPORT QwtArray<QwtSetSample>;
++template class QWT_EXPORT QwtArray<QwtPriceMove>;
+ // MOC_SKIP_END
+ #endif
+ 
+Index: src/qwt_price_move.h
+===================================================================
+--- src/qwt_price_move.h	(révision 0)
++++ src/qwt_price_move.h	(révision 0)
+@@ -0,0 +1,40 @@
++#ifndef QWT_PRICE_MOVE_H
++#define QWT_PRICE_MOVE_H 1
++
++#include "qwt_global.h"
++#include "qwt_double_interval.h"
++
++/*!
++  The QwtPriceMove class describes the price movements of an equity over time.
++*/
++class QWT_EXPORT QwtPriceMove
++{
++public:
++
++    inline QwtPriceMove():
++        open(0.0), high(0.0), low(0.0), close(0.0)
++    {
++    }
++
++    inline QwtPriceMove(const QwtDoubleInterval &intv, double o, double h,
++        double l, double c):
++        open(o), high(h), low(l), close(c), interval(intv)
++    {
++    }
++
++    bool operator==(const QwtPriceMove &other) const
++    {
++        return interval == other.interval && open == other.open
++            && high == other.high && low == other.low && close == other.close;
++    }
++
++    bool operator!=(const QwtPriceMove &other) const
++    {
++        return !operator==(other);
++    }
++
++    double open, high, low, close;
++    QwtDoubleInterval interval;
++};
++
++#endif

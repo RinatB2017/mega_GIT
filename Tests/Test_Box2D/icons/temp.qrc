@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/temp">
+        <file>reload_page.png</file>
+        <file>up.png</file>
+        <file>mp3.png</file>
+        <file>system-log-out.png</file>
+        <file>edit-delete-shred.png</file>
+        <file>dialog-close.png</file>
+        <file>edit-clear-history.png</file>
+    </qresource>
+</RCC>

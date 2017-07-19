@@ -18,18 +18,20 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QDesktopServices>
 #include <QRect>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "aboutbox.hpp"
 #include "ui_aboutbox.h"
 #ifdef LOGO_GL
-    #include "glwidget.h"
+#   include "glwidget.h"
 #endif
 //--------------------------------------------------------------------------------
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    #define ICON_ABOUT_QT   ":/trolltech/qmessagebox/images/qtlogo-64.png"
+#   define ICON_ABOUT_QT   ":/trolltech/qmessagebox/images/qtlogo-64.png"
 #else
-    #define ICON_ABOUT_QT   ":/qt-project.org/qmessagebox/images/qtlogo-64.png"
+#   define ICON_ABOUT_QT   ":/qt-project.org/qmessagebox/images/qtlogo-64.png"
 #endif
 //--------------------------------------------------------------------------------
 AboutBox::AboutBox(const QString &orgName,
@@ -43,12 +45,18 @@ AboutBox::AboutBox(const QString &orgName,
     ui->setupUi(this);
 
     QString text;
-    text = QString(tr("<center>%1<br><br><b>%2</b><br><i>%3</i><br><br><i>%4</i>"))
+    text = QString(tr("<b>%1</b><br><br><b>%2</b><br><i>%3</i><br><br><i>%4</i>"))
             .arg(orgName)
             .arg(programmName)
             .arg(QString(tr("version %1")).arg(version))
-            .arg(author);
-    ui->teAbout->setText(text);
+            .arg(QString("<a href='mailto:tux4096@gmail.com'>%1</a>").arg(author));
+
+    ui->lbl_email->setAlignment(Qt::AlignTop);
+    ui->lbl_email->setText(text);
+    ui->lbl_email->connect(ui->lbl_email, &QLabel::linkActivated, [](const QString &link)
+    {
+        QDesktopServices::openUrl(QUrl(link));
+    });
 
 #ifdef LOGO_GL
     GLWidget *glWidget = new GLWidget(this);
@@ -59,8 +67,7 @@ AboutBox::AboutBox(const QString &orgName,
     ui->labelLogo->setLayout(vbox);
 #endif
 
-    QRect rect = geometry();
-    setFixedSize(rect.width(), rect.height());
+    setFixedSize(sizeHint());
 
     ui->btn_about_qt->setIcon(QPixmap(QLatin1String(ICON_ABOUT_QT)));
     ui->btn_about_qt->setToolTip(tr("About Qt"));

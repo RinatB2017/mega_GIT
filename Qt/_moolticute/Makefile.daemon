@@ -892,7 +892,7 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) /dev/shm/my_programm/moolticuted/moc/moc_UsbMonitor_linux.cpp /dev/shm/my_programm/moolticuted/moc/moc_MPDevice_linux.cpp /dev/shm/my_programm/moolticuted/moc/moc_MPDevice.cpp /dev/shm/my_programm/moolticuted/moc/moc_MPManager.cpp /dev/shm/my_programm/moolticuted/moc/moc_MooltipassCmds.cpp /dev/shm/my_programm/moolticuted/moc/moc_WSServer.cpp /dev/shm/my_programm/moolticuted/moc/moc_AppDaemon.cpp /dev/shm/my_programm/moolticuted/moc/moc_AsyncJobs.cpp /dev/shm/my_programm/moolticuted/moc/moc_WSServerCon.cpp /dev/shm/my_programm/moolticuted/moc/moc_HttpClient.cpp /dev/shm/my_programm/moolticuted/moc/moc_HttpServer.cpp
 /dev/shm/my_programm/moolticuted/moc/moc_UsbMonitor_linux.cpp: src/UsbMonitor_linux.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/UsbMonitor_linux.h -o /dev/shm/my_programm/moolticuted/moc/moc_UsbMonitor_linux.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/UsbMonitor_linux.h -o /dev/shm/my_programm/moolticuted/moc/moc_UsbMonitor_linux.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_MPDevice_linux.cpp: src/MPDevice.h \
 		src/Common.h \
@@ -902,7 +902,7 @@ compiler_moc_header_clean:
 		src/MPNode.h \
 		src/MPDevice_linux.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MPDevice_linux.h -o /dev/shm/my_programm/moolticuted/moc/moc_MPDevice_linux.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MPDevice_linux.h -o /dev/shm/my_programm/moolticuted/moc/moc_MPDevice_linux.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_MPDevice.cpp: src/Common.h \
 		src/MooltipassCmds.h \
@@ -911,7 +911,7 @@ compiler_moc_header_clean:
 		src/MPNode.h \
 		src/MPDevice.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MPDevice.h -o /dev/shm/my_programm/moolticuted/moc/moc_MPDevice.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MPDevice.h -o /dev/shm/my_programm/moolticuted/moc/moc_MPDevice.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_MPManager.cpp: src/MPDevice_win.h \
 		src/MPDevice.h \
@@ -925,11 +925,11 @@ compiler_moc_header_clean:
 		src/MPDevice_emul.h \
 		src/MPManager.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MPManager.h -o /dev/shm/my_programm/moolticuted/moc/moc_MPManager.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MPManager.h -o /dev/shm/my_programm/moolticuted/moc/moc_MPManager.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_MooltipassCmds.cpp: src/MooltipassCmds.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MooltipassCmds.h -o /dev/shm/my_programm/moolticuted/moc/moc_MooltipassCmds.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/MooltipassCmds.h -o /dev/shm/my_programm/moolticuted/moc/moc_MooltipassCmds.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_WSServer.cpp: src/Common.h \
 		src/MPManager.h \
@@ -945,7 +945,7 @@ compiler_moc_header_clean:
 		src/WSServerCon.h \
 		src/WSServer.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/WSServer.h -o /dev/shm/my_programm/moolticuted/moc/moc_WSServer.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/WSServer.h -o /dev/shm/my_programm/moolticuted/moc/moc_WSServer.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_AppDaemon.cpp: src/Common.h \
 		src/MPManager.h \
@@ -965,12 +965,12 @@ compiler_moc_header_clean:
 		src/http-parser/http_parser.h \
 		src/AppDaemon.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/AppDaemon.h -o /dev/shm/my_programm/moolticuted/moc/moc_AppDaemon.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/AppDaemon.h -o /dev/shm/my_programm/moolticuted/moc/moc_AppDaemon.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_AsyncJobs.cpp: src/Common.h \
 		src/AsyncJobs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/AsyncJobs.h -o /dev/shm/my_programm/moolticuted/moc/moc_AsyncJobs.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/AsyncJobs.h -o /dev/shm/my_programm/moolticuted/moc/moc_AsyncJobs.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_WSServerCon.cpp: src/Common.h \
 		src/MPManager.h \
@@ -985,18 +985,18 @@ compiler_moc_header_clean:
 		src/MPDevice_emul.h \
 		src/WSServerCon.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/WSServerCon.h -o /dev/shm/my_programm/moolticuted/moc/moc_WSServerCon.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/WSServerCon.h -o /dev/shm/my_programm/moolticuted/moc/moc_WSServerCon.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_HttpClient.cpp: src/http-parser/http_parser.h \
 		src/HttpClient.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/HttpClient.h -o /dev/shm/my_programm/moolticuted/moc/moc_HttpClient.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/HttpClient.h -o /dev/shm/my_programm/moolticuted/moc/moc_HttpClient.cpp
 
 /dev/shm/my_programm/moolticuted/moc/moc_HttpServer.cpp: src/HttpClient.h \
 		src/http-parser/http_parser.h \
 		src/HttpServer.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Dropbox/my_programm/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/HttpServer.h -o /dev/shm/my_programm/moolticuted/moc/moc_HttpServer.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/HDD/Programming/mega_GIT/Qt/_moolticute -I/usr/include/libusb-1.0 -I/usr/include/qt5 -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6 -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include/g++-v6/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/include-fixed -I/usr/include src/HttpServer.h -o /dev/shm/my_programm/moolticuted/moc/moc_HttpServer.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1214,7 +1214,7 @@ uninstall_target: FORCE
 
 install_systemd_user: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/local/lib/systemd/system/ || mkdir -p $(INSTALL_ROOT)/usr/local/lib/systemd/system/
-	-$(INSTALL_FILE) /home/boss/Dropbox/my_programm/Qt/_moolticute/systemd/moolticuted.service $(INSTALL_ROOT)/usr/local/lib/systemd/system/
+	-$(INSTALL_FILE) /home/boss/HDD/Programming/mega_GIT/Qt/_moolticute/systemd/moolticuted.service $(INSTALL_ROOT)/usr/local/lib/systemd/system/
 
 uninstall_systemd_user: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/lib/systemd/system/moolticuted.service

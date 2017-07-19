@@ -18,19 +18,13 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QGridLayout>
+#include <QColorDialog>
 #include <QVBoxLayout>
-#include <QMessageBox>
-#include <QTime>
-
-#include <QAction>
-#include <QMenu>
 
 #include <QPushButton>
 #include <QToolButton>
 #include <QToolBar>
 #include <QSpinBox>
-#include <QTimer>
 #include <QLabel>
 #include <QDebug>
 //--------------------------------------------------------------------------------
@@ -75,13 +69,27 @@ void MainBox::init_widgets(void)
 {
     ui->sb_len_line->setRange(1, 5);
     ui->sb_delay_ms->setRange(10, 0xFFFF);
-    ui->sb_R->setRange(0, 0xFF);
-    ui->sb_G->setRange(0, 0xFF);
-    ui->sb_B->setRange(0, 0xFF);
 
     load_widgets("sb_draw_line");
 
+    QVariant value_R;
+    QVariant value_G;
+    QVariant value_B;
+    get_param("color", "R", 0, &value_R);
+    get_param("color", "G", 0, &value_G);
+    get_param("color", "B", 0, &value_B);
+
+    color_R = value_R.toInt();
+    color_G = value_G.toInt();
+    color_B = value_B.toInt();
+
+    ui->frm_color->setStyleSheet(QString("background-color:rgb(%1,%2,%3)")
+                                 .arg(color_R)
+                                 .arg(color_G)
+                                 .arg(color_B));
+
     connect(ui->btn_set,    SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    connect(ui->btn_color,  SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -118,7 +126,7 @@ void MainBox::createTestBar(void)
                                        "0",
                                        "0");
 
-    connect(btn_test,   SIGNAL(clicked(bool)), this, SLOT(test()));
+    connect(btn_test,   SIGNAL(clicked(bool)), this, SLOT(set_color()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createSerialBox(void)
@@ -143,23 +151,54 @@ void MainBox::test(void)
 
     packet.body_t.data_t.len_line = ui->sb_len_line->value();
     packet.body_t.data_t.delay_ms = ui->sb_delay_ms->value();
-    packet.body_t.data_t.brightness_R = ui->sb_R->value();
-    packet.body_t.data_t.brightness_G = ui->sb_G->value();
-    packet.body_t.data_t.brightness_B = ui->sb_B->value();
+    packet.body_t.data_t.brightness_R = color_R;
+    packet.body_t.data_t.brightness_G = color_G;
+    packet.body_t.data_t.brightness_B = color_B;
 
     QByteArray ba;
     ba.clear();
     ba.append((char *)&packet.buf, sizeof(packet));
-    //emit info(ba.toHex());
+    //emit debug(ba.toHex());
 
     QString send_packet = QString(":%1\n")
             .arg(ba.toHex().toUpper().data());
-    emit info(send_packet);
+    emit debug(send_packet);
 
     QByteArray o_ba;
     o_ba.clear();
     o_ba.append(send_packet);
     emit send(o_ba);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_color(void)
+{
+    QColorDialog *dlg = new QColorDialog;
+    dlg->setCurrentColor(QColor(color_R, color_G, color_B));
+    int btn = dlg->exec();
+    if(btn == QDialog::Accepted)
+    {
+        QColor color = dlg->selectedColor();
+
+        color_R = color.red();
+        color_G = color.green();
+        color_B = color.blue();
+
+        emit debug("---");
+        emit debug(QString("R = %1").arg(color_R));
+        emit debug(QString("G = %1").arg(color_G));
+        emit debug(QString("B = %1").arg(color_B));
+
+        ui->frm_color->setStyleSheet(QString("background-color:rgb(%1,%2,%3)")
+                                     .arg(color_R)
+                                     .arg(color_G)
+                                     .arg(color_B));
+
+        set_param("color", "R", color_R);
+        set_param("color", "G", color_G);
+        set_param("color", "B", color_B);
+
+        test();
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)

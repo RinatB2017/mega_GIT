@@ -104,43 +104,61 @@ typedef struct HEADER
     uint8_t cmd;
     uint8_t len;
 } HEADER_t;
-//-----------------------------------------------------------------------------
+
 union F_01
 {
     struct BODY
     {
         HEADER  header;
-        struct data
+        struct DATA
         {
-          uint16_t len_line = 5;     // длина линии
-          uint16_t delay_ms = 100;   // задержка
-          uint8_t brightness_R = 0;
-          uint8_t brightness_G = 0;
-          uint8_t brightness_B = 0;
-        } data_t;
-    } body;
+          uint16_t len_line;    // длина линии
+          uint16_t delay_ms;    // задержка
+          uint8_t brightness_R;
+          uint8_t brightness_G;
+          uint8_t brightness_B;
+        } data_t __attribute__((packed));
+    } body_t __attribute__((packed));
     unsigned char buf[sizeof(BODY)];
 };
 //-----------------------------------------------------------------------------
 void func_0x01(void)
 {
-  if(len_modbus < sizeof(F_01)) return;
+//  serial_WIFI.print("sizeof(F_01) = ");
+//  serial_WIFI.println(sizeof(F_01));
+  if(len_modbus != sizeof(F_01))
+  {
+    serial_WIFI.println("Error size");
+    return;
+  }
   
   F_01 *packet = (F_01 *)buf_modbus;
 
-  uint16_t t_len_line    = packet->body.data_t.len_line;
-  uint16_t t_delay_ms    = packet->body.data_t.delay_ms;
-  uint8_t t_brightness_R = packet->body.data_t.brightness_R;
-  uint8_t t_brightness_G = packet->body.data_t.brightness_G;
-  uint8_t t_brightness_B = packet->body.data_t.brightness_B;
+  uint16_t t_len_line     = packet->body_t.data_t.len_line;
+  uint16_t t_delay_ms     = packet->body_t.data_t.delay_ms;
+  uint8_t  t_brightness_R = packet->body_t.data_t.brightness_R;
+  uint8_t  t_brightness_G = packet->body_t.data_t.brightness_G;
+  uint8_t  t_brightness_B = packet->body_t.data_t.brightness_B;
 
   if(t_len_line > max_len_line) t_len_line = max_len_line;
+  if(t_delay_ms < 10) t_delay_ms = 10;
 
   len_line = t_len_line;
   delay_ms = t_delay_ms;
   brightness_R = t_brightness_R;
   brightness_G = t_brightness_G;
   brightness_B = t_brightness_B;
+
+//  serial_WIFI.print("len_line = ");
+//  serial_WIFI.println(len_line);
+//  serial_WIFI.print("delay_ms = ");
+//  serial_WIFI.println(delay_ms);
+//  serial_WIFI.print("brightness_R = ");
+//  serial_WIFI.println(brightness_R);
+//  serial_WIFI.print("brightness_G = ");
+//  serial_WIFI.println(brightness_G);
+//  serial_WIFI.print("brightness_B = ");
+//  serial_WIFI.println(brightness_B);
 }
 //-----------------------------------------------------------------------------
 void analize()
@@ -165,17 +183,13 @@ void analize()
   switch(cmd)
   {
     case CMD_0x01:
+      //:0001070300E803FF0000
       func_0x01();
       break;
       
     default:
       break;
   }
-}
-//-----------------------------------------------------------------------------
-void work()
-{
-    analize();
 }
 //-----------------------------------------------------------------------------
 void serialEvent()
@@ -191,6 +205,7 @@ void serialEvent()
       len_ascii = 0;
       break;
   
+    case '\r':
     case '\n':
       stringComplete = true;
       break;
@@ -225,7 +240,7 @@ void setup()
 {
   clear_all();
   
-  serial_WIFI.begin(9600);
+  serial_WIFI.begin(115200);
 }
 //-----------------------------------------------------------------------------
 void prepare_line()
@@ -251,43 +266,6 @@ void prepare_line()
   else
   {
     index_led = 0;
-    switch(color_index)
-    {
-      case 0:
-        brightness_R = 255;
-        brightness_G = 0;
-        brightness_B = 0;
-        color_index = 1;
-        break;
-        
-      case 1:
-        brightness_R = 0;
-        brightness_G = 255;
-        brightness_B = 0;
-        color_index = 2;
-        break;
-        
-      case 2:
-        brightness_R = 0;
-        brightness_G = 0;
-        brightness_B = 255;
-        color_index = 0;
-        break;     
-        
-     default:
-        color_index = 0;
-        break;
-    }
-  }
-}
-//-----------------------------------------------------------------------------
-void prepare_color_line()
-{
-  for(int n=0; n<len_line; n++)
-  {
-    array_leds[index_led+n].r = brightness_R;
-    array_leds[index_led+n].g = brightness_G;
-    array_leds[index_led+n].b = brightness_B;
   }
 }
 //-----------------------------------------------------------------------------
@@ -347,20 +325,15 @@ void sleep()
   delay(delay_ms);
 }
 //-----------------------------------------------------------------------------
-void new_loop()
+void loop()
 {
   if(stringComplete)
   {
-    work();
+    analize();
   }
-  prepare_color_line();
+  prepare_line();
   draw_line();
   sleep();
-}
-//-----------------------------------------------------------------------------
-void loop()
-{
-  new_loop();
 }
 //-----------------------------------------------------------------------------
 

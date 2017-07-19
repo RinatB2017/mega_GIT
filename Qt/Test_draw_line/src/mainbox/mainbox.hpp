@@ -53,12 +53,17 @@ signals:
 private slots:
     void read_data(QByteArray ba);
     void test(void);
+    void set_color(void);
 
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
     SerialBox *serialBox = 0;
     QByteArray data_rs232;
+
+    int color_R = 0;
+    int color_G = 0;
+    int color_B = 0;
 
     void init(void);
     void init_widgets(void);

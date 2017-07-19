@@ -1,4 +1,4 @@
-
+#include <EEPROM.h>
 #include <FAB_LED.h>
 
 const int num_strip = 5;        // количество полос
@@ -21,13 +21,6 @@ ws2812b<D,3>  strip_3;
 
 // The pixel array to display
 grb  pixels[cnt_led_in_strip] = {};
-
-//-----------------------------------------------------------------------------
-uint16_t len_line = 5;     // длина линии
-uint16_t delay_ms = 100;   // задержка
-uint8_t brightness_R = 0;
-uint8_t brightness_G = 0;
-uint8_t brightness_B = 0;
 //-----------------------------------------------------------------------------
 boolean stringComplete = false;  
 int incomingByte = 0;
@@ -44,6 +37,55 @@ int len_ascii = 0;
 //-----------------------------------------------------------------------------
 uint8_t buf_modbus[MAX_LEN_MODBUS];
 int len_modbus = 0;
+//-----------------------------------------------------------------------------
+typedef struct HEADER
+{
+    uint8_t addr;
+    uint8_t cmd;
+    uint8_t len;
+} HEADER_t;
+
+union F_01
+{
+    struct BODY
+    {
+        HEADER  header;
+        struct DATA
+        {
+          uint16_t len_line;    // длина линии
+          uint16_t delay_ms;    // задержка
+          uint8_t brightness_R;
+          uint8_t brightness_G;
+          uint8_t brightness_B;
+        } data_t __attribute__((packed));
+    } body_t __attribute__((packed));
+    unsigned char buf[sizeof(BODY)];
+};
+
+union MEMORY
+{
+  struct M_BODY
+  {
+    uint16_t len_line;     // длина линии
+    uint16_t delay_ms;     // задержка
+    uint8_t brightness_R;
+    uint8_t brightness_G;
+    uint8_t brightness_B;
+  } m_body_t __attribute__((packed));
+  unsigned char buf[sizeof(M_BODY)];
+};
+
+MEMORY mem;
+//-----------------------------------------------------------------------------
+void logging(String text)
+{
+  //serial_WIFI.println(text);  
+}
+//-----------------------------------------------------------------------------
+void logging(int num)
+{
+  //serial_WIFI.println(num);  
+}
 //-----------------------------------------------------------------------------
 unsigned char convert_ascii_to_value(char hi, char lo)
 {
@@ -98,37 +140,13 @@ unsigned char convert_ascii_to_value(char hi, char lo)
   return ((b_hi << 4) | b_lo);
 }
 //-----------------------------------------------------------------------------
-typedef struct HEADER
-{
-    uint8_t addr;
-    uint8_t cmd;
-    uint8_t len;
-} HEADER_t;
-
-union F_01
-{
-    struct BODY
-    {
-        HEADER  header;
-        struct DATA
-        {
-          uint16_t len_line;    // длина линии
-          uint16_t delay_ms;    // задержка
-          uint8_t brightness_R;
-          uint8_t brightness_G;
-          uint8_t brightness_B;
-        } data_t __attribute__((packed));
-    } body_t __attribute__((packed));
-    unsigned char buf[sizeof(BODY)];
-};
-//-----------------------------------------------------------------------------
 void func_0x01(void)
 {
-//  serial_WIFI.print("sizeof(F_01) = ");
-//  serial_WIFI.println(sizeof(F_01));
+//  logging("sizeof(F_01)");
+//  logging(sizeof(F_01));
   if(len_modbus != sizeof(F_01))
   {
-    serial_WIFI.println("Error size");
+    logging("Error size");
     return;
   }
   
@@ -143,22 +161,13 @@ void func_0x01(void)
   if(t_len_line > max_len_line) t_len_line = max_len_line;
   if(t_delay_ms < 10) t_delay_ms = 10;
 
-  len_line = t_len_line;
-  delay_ms = t_delay_ms;
-  brightness_R = t_brightness_R;
-  brightness_G = t_brightness_G;
-  brightness_B = t_brightness_B;
+  mem.m_body_t.len_line = t_len_line;
+  mem.m_body_t.delay_ms = t_delay_ms;
+  mem.m_body_t.brightness_R = t_brightness_R;
+  mem.m_body_t.brightness_G = t_brightness_G;
+  mem.m_body_t.brightness_B = t_brightness_B;
 
-//  serial_WIFI.print("len_line = ");
-//  serial_WIFI.println(len_line);
-//  serial_WIFI.print("delay_ms = ");
-//  serial_WIFI.println(delay_ms);
-//  serial_WIFI.print("brightness_R = ");
-//  serial_WIFI.println(brightness_R);
-//  serial_WIFI.print("brightness_G = ");
-//  serial_WIFI.println(brightness_G);
-//  serial_WIFI.print("brightness_B = ");
-//  serial_WIFI.println(brightness_B);
+  save_EEPROM();
 }
 //-----------------------------------------------------------------------------
 void analize()
@@ -184,6 +193,8 @@ void analize()
   {
     case CMD_0x01:
       //:0001070300E803FF0000
+      //:0001070500C800FF0000
+      logging("CMD_0x01");
       func_0x01();
       break;
       
@@ -236,13 +247,6 @@ void clear_all()
   strip_7.clear(cnt_led_in_strip);
 }
 //-----------------------------------------------------------------------------
-void setup()
-{
-  clear_all();
-  
-  serial_WIFI.begin(115200);
-}
-//-----------------------------------------------------------------------------
 void prepare_line()
 {
   for(int i=0; i<max_cnt_led; i++)
@@ -252,11 +256,11 @@ void prepare_line()
     array_leds[i].b = 0;
   }    
 
-  for(int n=0; n<len_line; n++)
+  for(int n=0; n<mem.m_body_t.len_line; n++)
   {
-    array_leds[index_led+n].r = brightness_R;
-    array_leds[index_led+n].g = brightness_G;
-    array_leds[index_led+n].b = brightness_B;
+    array_leds[index_led+n].r = mem.m_body_t.brightness_R;
+    array_leds[index_led+n].g = mem.m_body_t.brightness_G;
+    array_leds[index_led+n].b = mem.m_body_t.brightness_B;
   }
   
   if(index_led<(max_cnt_led - cnt_led_in_strip))
@@ -322,7 +326,49 @@ void draw_line()
 //-----------------------------------------------------------------------------
 void sleep()
 {
-  delay(delay_ms);
+  delay(mem.m_body_t.delay_ms);
+}
+//-----------------------------------------------------------------------------
+void load_EEPROM()
+{
+  for(int n=0; n<sizeof(MEMORY); n++)
+  {
+    mem.buf[n] = EEPROM.read(n);
+  }
+
+  if(mem.m_body_t.len_line < 1) mem.m_body_t.len_line = 1;
+  if(mem.m_body_t.len_line < max_len_line) mem.m_body_t.len_line = max_len_line;
+
+  if(mem.m_body_t.delay_ms < 10) mem.m_body_t.delay_ms = 10;
+
+  logging(mem.m_body_t.len_line);
+  logging(mem.m_body_t.delay_ms);
+  logging(mem.m_body_t.brightness_R);
+  logging(mem.m_body_t.brightness_G);
+  logging(mem.m_body_t.brightness_B);
+}
+//-----------------------------------------------------------------------------
+void save_EEPROM()
+{
+  for(int n=0; n<sizeof(MEMORY); n++)
+  {
+    EEPROM.write(n, mem.buf[n]);
+  }
+}
+//-----------------------------------------------------------------------------
+void setup()
+{
+  serial_WIFI.begin(115200);
+
+  mem.m_body_t.len_line = 5;
+  mem.m_body_t.delay_ms = 100;
+  mem.m_body_t.brightness_R = 0;
+  mem.m_body_t.brightness_G = 0;
+  mem.m_body_t.brightness_B = 0;
+
+  load_EEPROM();
+  
+  clear_all();
 }
 //-----------------------------------------------------------------------------
 void loop()

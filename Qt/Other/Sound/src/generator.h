@@ -66,7 +66,6 @@ public:
                      qint64 len);
     qint64 bytesAvailable() const;
 
-private:
     void generateData(const QAudioFormat &format,
                       qint64 durationUs,
                       int sampleRate1,

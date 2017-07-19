@@ -147,24 +147,15 @@ void AudioTest::initializeWindow(void)
 //---------------------------------------------------------------------------
 void AudioTest::test(void)
 {
-    if(m_generator == nullptr)      return;
-    if(m_audioOutput == nullptr)    return;
-
-    m_generator->stop();
-    m_audioOutput->stop();
-
-    delete m_generator;
-
-    m_generator = new Generator(m_format,
-                                DurationSeconds*1000000,
-                                sb_sampleRate1->value(),
-                                sb_sampleRate2->value(),
-                                m_left_volume->value(),
-                                m_right_volume->value(),
-                                this);
-
-    m_generator->start();
-    m_audioOutput->start(m_generator);
+    if(m_generator)
+    {
+        m_generator->generateData(m_format,
+                                  DurationSeconds*1000000,
+                                  sb_sampleRate1->value(),
+                                  sb_sampleRate2->value(),
+                                  m_left_volume->value(),
+                                  m_right_volume->value());
+    }
 }
 //---------------------------------------------------------------------------
 void AudioTest::initializeAudio(void)

@@ -5,6 +5,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET      = test2
 TEMPLATE    = app
 
+PROGRAMM_PATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
+
 QT          += opengl
 
 LIBS        += -lglut -lGLU -lGL
@@ -19,3 +25,5 @@ HEADERS     += \
     oglwidget.h
 
 FORMS       += mainwindow.ui
+
+VPATH = $$INCLUDEPATH

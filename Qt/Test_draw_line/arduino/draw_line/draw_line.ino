@@ -77,6 +77,11 @@ union MEMORY
 
 MEMORY mem;
 //-----------------------------------------------------------------------------
+void a_logging(String text)
+{
+  serial_WIFI.println(text);  
+}
+//-----------------------------------------------------------------------------
 void logging(String text)
 {
   //serial_WIFI.println(text);  
@@ -168,6 +173,8 @@ void func_0x01(void)
   mem.m_body_t.brightness_B = t_brightness_B;
 
   save_EEPROM();
+
+  len_ascii = 0;
 }
 //-----------------------------------------------------------------------------
 void analize()
@@ -186,6 +193,7 @@ void analize()
         len_modbus++;
       }
   }
+  len_ascii = 0;
   //---
   HEADER *header = (HEADER *)buf_modbus;
   uint8_t cmd = header->cmd;
@@ -354,6 +362,7 @@ void save_EEPROM()
   {
     EEPROM.write(n, mem.buf[n]);
   }
+  a_logging("save_EEPROM");
 }
 //-----------------------------------------------------------------------------
 void setup()

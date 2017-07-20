@@ -67,6 +67,8 @@ void MyWidget::connect_log(QWidget *parent)
     connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
     connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
     connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
+
+    Q_UNUSED(parent);
 #else
 
     if(parent)

@@ -56,10 +56,16 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
+
+#include <QToolButton>
+#include <QToolButton>
+#include <QComboBox>
+#include <QToolBar>
+
 #include "logo.h"
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
-
+//--------------------------------------------------------------------------------
 class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
@@ -77,10 +83,24 @@ public slots:
     void setZRotation(int angle);
     void cleanup();
 
+    void choice_test(void);
+
+    bool test_0(void);
+    bool test_1(void);
+    bool test_2(void);
+    bool test_3(void);
+    bool test_4(void);
+    bool test_5(void);
+
 signals:
     void xRotationChanged(int angle);
     void yRotationChanged(int angle);
     void zRotationChanged(int angle);
+
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
 
 protected:
     void initializeGL() override;
@@ -90,6 +110,34 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MyGLWidget::*func)(void);
+    } CMD_t;
+
+    QComboBox *cb_test = 0;
+    QList<CMD> commands;
+
+    QToolButton *add_button(QToolBar *tool_bar,
+                            QToolButton *tool_button,
+                            QIcon icon,
+                            const QString &text,
+                            const QString &tool_tip);
+
+    void createTestBar(void);
+
     void setupVertexAttribs();
 
     bool m_core;
@@ -110,5 +158,5 @@ private:
     QMatrix4x4 m_world;
     bool m_transparent;
 };
-
+//--------------------------------------------------------------------------------
 #endif

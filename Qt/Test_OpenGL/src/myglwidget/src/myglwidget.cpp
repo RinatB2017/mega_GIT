@@ -51,9 +51,11 @@
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
-
+#include <QtMath>
+//--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
 #include "myglwidget.hpp"
-
+//--------------------------------------------------------------------------------
 MyGLWidget::MyGLWidget(QWidget *parent)
     : QOpenGLWidget(parent),
       m_xRot(0),
@@ -71,23 +73,25 @@ MyGLWidget::MyGLWidget(QWidget *parent)
         fmt.setAlphaBufferSize(8);
         setFormat(fmt);
     }
-}
 
+    createTestBar();
+}
+//--------------------------------------------------------------------------------
 MyGLWidget::~MyGLWidget()
 {
     cleanup();
 }
-
+//--------------------------------------------------------------------------------
 QSize MyGLWidget::minimumSizeHint() const
 {
     return QSize(50, 50);
 }
-
+//--------------------------------------------------------------------------------
 QSize MyGLWidget::sizeHint() const
 {
     return QSize(400, 400);
 }
-
+//--------------------------------------------------------------------------------
 static void qNormalizeAngle(int &angle)
 {
     while (angle < 0)
@@ -95,7 +99,7 @@ static void qNormalizeAngle(int &angle)
     while (angle > 360 * 16)
         angle -= 360 * 16;
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::setXRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -106,7 +110,7 @@ void MyGLWidget::setXRotation(int angle)
         update();
     }
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::setYRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -117,7 +121,7 @@ void MyGLWidget::setYRotation(int angle)
         update();
     }
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::setZRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -128,7 +132,7 @@ void MyGLWidget::setZRotation(int angle)
         update();
     }
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::cleanup()
 {
     makeCurrent();
@@ -137,7 +141,7 @@ void MyGLWidget::cleanup()
     m_program = 0;
     doneCurrent();
 }
-
+//--------------------------------------------------------------------------------
 static const char *vertexShaderSourceCore =
         "#version 150\n"
         "in vec4 vertex;\n"
@@ -192,7 +196,7 @@ static const char *fragmentShaderSource =
         "   highp vec3 col = clamp(color * 0.2 + color * 0.8 * NL, 0.0, 1.0);\n"
         "   gl_FragColor = vec4(col, 1.0);\n"
         "}\n";
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::initializeGL()
 {
     // In this example the widget's corresponding top-level window can change
@@ -237,14 +241,15 @@ void MyGLWidget::initializeGL()
 
     // Our camera never changes in this example.
     m_camera.setToIdentity();
-    m_camera.translate(0, 0, -1);
+    //m_camera.translate(0, 0, -1);
+    m_camera.translate(0, 0, -2);   //-1
 
     // Light position is fixed.
     m_program->setUniformValue(m_lightPosLoc, QVector3D(0, 0, 70));
 
     m_program->release();
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::setupVertexAttribs()
 {
     m_logoVbo.bind();
@@ -255,7 +260,7 @@ void MyGLWidget::setupVertexAttribs()
     f->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
     m_logoVbo.release();
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -278,29 +283,171 @@ void MyGLWidget::paintGL()
 
     m_program->release();
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::resizeGL(int w, int h)
 {
     m_proj.setToIdentity();
     m_proj.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::mousePressEvent(QMouseEvent *event)
 {
     m_lastPos = event->pos();
 }
-
+//--------------------------------------------------------------------------------
 void MyGLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     int dx = event->x() - m_lastPos.x();
     int dy = event->y() - m_lastPos.y();
 
-    if (event->buttons() & Qt::LeftButton) {
+    if (event->buttons() & Qt::LeftButton)
+    {
         setXRotation(m_xRot + 8 * dy);
         setYRotation(m_yRot + 8 * dx);
-    } else if (event->buttons() & Qt::RightButton) {
+    }
+    else if (event->buttons() & Qt::RightButton)
+    {
         setXRotation(m_xRot + 8 * dy);
         setZRotation(m_zRot + 8 * dx);
     }
     m_lastPos = event->pos();
 }
+//--------------------------------------------------------------------------------
+QToolButton *MyGLWidget::add_button(QToolBar *tool_bar,
+                                    QToolButton *tool_button,
+                                    QIcon icon,
+                                    const QString &text,
+                                    const QString &tool_tip)
+{
+    Q_CHECK_PTR(tool_bar);
+    Q_CHECK_PTR(tool_button);
+    if(tool_bar == nullptr)
+    {
+        return nullptr;
+    }
+    if(tool_button == nullptr)
+    {
+        return nullptr;
+    }
+
+    tool_button->setIcon(icon);
+    tool_button->setText(text);
+    tool_button->setToolTip(tool_tip);
+    tool_button->setObjectName(text);
+    tool_bar->addWidget(tool_button);
+
+    return tool_button;
+}
+//--------------------------------------------------------------------------------
+void MyGLWidget::createTestBar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    if(mw == nullptr)
+    {
+        return;
+    }
+
+    commands.clear();
+    commands.append({ ID_TEST_0, "test 0", &MyGLWidget::test_0 });
+    commands.append({ ID_TEST_1, "test 1", &MyGLWidget::test_1 });
+    commands.append({ ID_TEST_2, "test 2", &MyGLWidget::test_2 });
+    commands.append({ ID_TEST_3, "test 3", &MyGLWidget::test_3 });
+    commands.append({ ID_TEST_4, "test 4", &MyGLWidget::test_4 });
+    commands.append({ ID_TEST_5, "test 5", &MyGLWidget::test_5 });
+
+    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    toolBar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+
+    QCheckBox *cb_block = new QCheckBox("block");
+    toolBar->addWidget(cb_block);
+
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    toolBar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(toolBar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
+    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+}
+//--------------------------------------------------------------------------------
+void MyGLWidget::choice_test(void)
+{
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+    foreach (CMD command, commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef bool (MyGLWidget::*function)(void);
+            function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+bool MyGLWidget::test_0(void)
+{
+    emit info("test_0");
+
+    m_camera.rotate(5.0,
+                    0,
+                    1);
+    update();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MyGLWidget::test_1(void)
+{
+    emit info("test_1");
+
+    m_camera.rotate(-5.0,
+                    0,
+                    1);
+    update();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MyGLWidget::test_2(void)
+{
+    emit info("test_2");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MyGLWidget::test_3(void)
+{
+    emit info("test_3");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MyGLWidget::test_4(void)
+{
+    emit info("test_4");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MyGLWidget::test_5(void)
+{
+    emit info("test_5");
+    return true;
+}
+//--------------------------------------------------------------------------------

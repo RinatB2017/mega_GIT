@@ -13,7 +13,7 @@
 #define htonl(n) (unsigned int)((((unsigned int) (n)) << 16) | (((unsigned int) (n)) >> 16))
 //--------------------------------------------------------------------------------
 #define ORGNAME "Home"
-#define APPNAME "Template"
+#define APPNAME "Test_OpenGL"
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

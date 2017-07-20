@@ -40,10 +40,6 @@
 //--------------------------------------------------------------------------------
 #include "../lib/codecs.h"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#endif
-//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
@@ -72,20 +68,16 @@ int main(int argc, char *argv[])
 
     MyGLWidget *mainBox = new MyGLWidget(main_window->getThis());
 
+    QObject::connect(mainBox,    SIGNAL(info(QString)),  main_window,    SIGNAL(info(QString)));
+    QObject::connect(mainBox,    SIGNAL(debug(QString)), main_window,    SIGNAL(debug(QString)));
+    QObject::connect(mainBox,    SIGNAL(error(QString)), main_window,    SIGNAL(error(QString)));
+    QObject::connect(mainBox,    SIGNAL(trace(QString)), main_window,    SIGNAL(trace(QString)));
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-
-#ifdef QT_DEBUG
-    int test_result = QTest::qExec(new Test(), argc, argv);
-
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
 
     return app.exec();
 }

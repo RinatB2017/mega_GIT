@@ -302,10 +302,14 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
-    if(!mw) return;
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     QToolBar *toolBar = new QToolBar(tr("testbar"));
+    toolBar->setObjectName("testbar");
+
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     QToolButton *btn_back = add_button(toolBar,
@@ -329,8 +333,8 @@ void MainBox::createTestBar(void)
                                        "test",
                                        "test");
 
-    connect(site_address, SIGNAL(returnPressed()), this, SLOT(set_address()));
-    connect(btn_set_address, SIGNAL(clicked(bool)), this, SLOT(set_address()));
+    connect(site_address,       SIGNAL(returnPressed()),    this,   SLOT(set_address()));
+    connect(btn_set_address,    SIGNAL(clicked(bool)),      this,   SLOT(set_address()));
     connect(btn_back, SIGNAL(clicked(bool)), this, SLOT(back()));
 
     connect(btn_test, SIGNAL(clicked(bool)), this, SLOT(test()));

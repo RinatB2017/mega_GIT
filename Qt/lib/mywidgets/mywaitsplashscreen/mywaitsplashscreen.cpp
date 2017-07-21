@@ -46,7 +46,7 @@ MyWaitSplashScreen::MyWaitSplashScreen(const QPixmap &pixmap,
     progress->setMaximum(max_step);
     progress->setEnabled(true);
 
-    QVBoxLayout *vbox = new QVBoxLayout();
+    QVBoxLayout *vbox = new QVBoxLayout;
 
     QLabel *label = new QLabel(this);
     label->setPixmap(pixmap);

@@ -23,6 +23,9 @@
 #include <QWidget>
 #include <QDebug>
 //--------------------------------------------------------------------------------
+#include <QNetworkProxyFactory>
+#include <QWebSettings>
+//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -55,6 +58,13 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+#if 0
+    QNetworkProxyFactory::setUseSystemConfiguration(true);
+    QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
+    QWebSettings::globalSettings()->setAttribute(QWebSettings::AutoLoadImages, true);
+#endif
 
     QPixmap pixmap(":/logo/pinguin.png");
 
@@ -69,7 +79,6 @@ int main(int argc, char *argv[])
     MainBox *mainBox = new MainBox(main_window.getThis(), splash);
     main_window.setCentralWidget(mainBox);
 
-    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window.show();
 
     splash->finish(&main_window);

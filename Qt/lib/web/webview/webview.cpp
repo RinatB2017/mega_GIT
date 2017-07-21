@@ -73,7 +73,7 @@ void WebView::init(void)
     temp.name = "PluginsEnabled";
     temp.tooltip = "Enables or disables plugins in Web pages (e.g. using NPAPI).\n"
                    "Qt plugins with a mimetype such as \"application/x-qt-plugin\" are not affected by this setting. This is disabled by default.";
-    temp.value = false;
+    temp.value = true;
     attributes.append(temp);
 
     temp.attribute = QWebSettings::PrivateBrowsingEnabled;
@@ -271,21 +271,15 @@ void WebView::contextMenuEvent(QContextMenuEvent *event)
     home->setIcon(QIcon::fromTheme("go-home"));
 
     menu->addSeparator();
-    QAction *login = new QAction(QObject::tr("Login"), this);
-    login->setIcon(QIcon::fromTheme("dialog-password"));
-
-    menu->addSeparator();
     QAction *goto_in = new QAction(QObject::tr("Go to"), this);
     goto_in->setIcon(QIcon::fromTheme("konqueror"));
 
     connect(settings, SIGNAL(triggered()), this, SLOT(run_websettingbox()));
     connect(home, SIGNAL(triggered()), this, SLOT(go_home()));
-    connect(login, SIGNAL(triggered()), this, SLOT(login()));
     connect(goto_in, SIGNAL(triggered()), this, SLOT(goto_in()));
 
     menu->addAction(home);
     menu->addAction(settings);
-    menu->addAction(login);
     menu->addAction(goto_in);
     menu->exec(event->globalPos());
     delete menu;
@@ -304,19 +298,6 @@ void WebView::goto_in(void)
     {
         load(QUrl(text));
     }
-}
-//--------------------------------------------------------------------------------
-void WebView::login(void)
-{
-    if(JavaScript::setByName(page()->mainFrame(),   "flogin_user",      tr("Роман Платанов")) == false)
-    {
-        return;
-    }
-    if(JavaScript::setByName(page()->mainFrame(),   "flogin_password",  "feb79a47667bbb35e0ba4b9eecc4c528") == false)
-    {
-        return;
-    }
-    JavaScript::clickByName(page()->mainFrame(),    "flogin_submit");
 }
 //--------------------------------------------------------------------------------
 void WebView::wheelEvent(QWheelEvent *event)
@@ -466,6 +447,10 @@ PersistentCookieJar *WebView::get_cookies(void)
 //--------------------------------------------------------------------------------
 QWebFrame *WebView::get_mainframe(void)
 {
+    if(page() == nullptr)
+    {
+        return 0;
+    }
     return page()->mainFrame();
 }
 //--------------------------------------------------------------------------------

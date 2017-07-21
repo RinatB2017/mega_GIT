@@ -149,7 +149,7 @@ void LogBox::create_widgets(void)
 
     hbox = new QHBoxLayout;
     vbox = new QVBoxLayout;
-    mainbox = new QHBoxLayout(this);
+    mainbox = new QHBoxLayout;
 
 #ifndef LOG_READ_ONLY
     hbox->setMargin(0);

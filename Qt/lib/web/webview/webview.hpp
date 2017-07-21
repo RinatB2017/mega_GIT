@@ -91,12 +91,11 @@ protected:
 private slots:
     void run_websettingbox(void);
     void go_home(void);
-    void login(void);
     void slot_finished(bool state);
     void goto_in(void);
 
 private:
-    PersistentCookieJar *cookies;
+    PersistentCookieJar *cookies = 0;
     QVector<ATTR> attributes;
     QUrl home_page;
 

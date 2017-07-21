@@ -48,7 +48,6 @@ WebSettingBox::WebSettingBox(QVector<ATTR> &attr,
 void WebSettingBox::init(void)
 {
     setWindowTitle(tr("WebSettings"));
-    setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(0);
@@ -85,7 +84,7 @@ void WebSettingBox::init(void)
 
     vbox->addWidget(buttonBox);
 
-    QHBoxLayout *hbox = new QHBoxLayout();
+    QHBoxLayout *hbox = new QHBoxLayout;
     hbox->addWidget(btn_select_all);
     hbox->addWidget(btn_clear_all);
 

@@ -101,7 +101,8 @@ void MainBox::createTestBar(void)
     progressBar->setToolTip(tr("web progress"));
 
     address = new QLineEdit;
-    address->setText("https://2ip.ru/");
+    //address->setText("https://2ip.ru/");
+    address->setText("https://www.youtube.com");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -124,10 +125,10 @@ void MainBox::createTestBar(void)
     toolBar->addWidget(progressBar);
 
     browser = new WebView(this);
-    connect(browser,    SIGNAL(info(QString)),      this,   SIGNAL(info(QString)));
-    connect(browser,    SIGNAL(debug(QString)),     this,   SIGNAL(debug(QString)));
-    connect(browser,    SIGNAL(error(QString)),     this,   SIGNAL(error(QString)));
-    connect(browser,    SIGNAL(message(QString)),   this,   SIGNAL(message(QString)));
+    connect(browser,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(browser,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(browser,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(browser,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     connect(browser,    SIGNAL(titleChanged(QString)),  this,           SLOT(setWindowTitle(QString)));
     connect(browser,    SIGNAL(loadProgress(int)),      progressBar,    SLOT(setValue(int)));

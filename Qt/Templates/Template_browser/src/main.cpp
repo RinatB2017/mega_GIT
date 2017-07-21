@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
+#include <QWebSettings>
 #include <QString>
 #include <QDebug>
 #include <QTime>
@@ -38,6 +39,8 @@ int main(int argc, char *argv[])
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    //QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
 
     MainWindow main_window;
 

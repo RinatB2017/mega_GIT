@@ -261,6 +261,7 @@ void WebView::contextMenuEvent(QContextMenuEvent *event)
     if(!menu)
     {
         emit info("menu not created!");
+        return;
     }
     menu->addSeparator();
     QAction *settings = new QAction(QObject::tr("Settings"), this);
@@ -287,7 +288,7 @@ void WebView::contextMenuEvent(QContextMenuEvent *event)
 //--------------------------------------------------------------------------------
 void WebView::goto_in(void)
 {
-    bool ok;
+    bool ok = false;
     QString text = QInputDialog::getText(this,
                                          tr("goto"),
                                          tr("URL:"),

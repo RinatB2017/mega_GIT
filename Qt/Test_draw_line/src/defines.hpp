@@ -23,6 +23,7 @@ union F_01
         struct data
         {
             uint16_t len_line;      // длина линии
+            uint16_t len_pause;     // длина паузы
             uint16_t delay_ms;      // задержка
             uint8_t brightness_R;
             uint8_t brightness_G;

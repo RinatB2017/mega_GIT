@@ -43,10 +43,10 @@ bool MainWidget::test_0(void)
 {
     emit info("Test_0()");
 
-    emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
-    emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
-
-    //qFatal("Ой, все!");
+    emit info("info");
+    emit debug("debug");
+    emit error("error");
+    emit trace("trace");
 
     return true;
 }
@@ -55,10 +55,8 @@ bool MainWidget::test_1(void)
 {
     emit info("Test_1()");
 
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
+    emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
+    emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
 
     return true;
 }

@@ -56,7 +56,12 @@ MainWindow::MainWindow(QMainWindow *parent)
 MainWindow::~MainWindow()
 {
     qDebug() << "~MainWindow()";
+
 #ifndef NO_LOG
+    MyWidget::set_param("Main", "flag_show_info",   a_is_shows_info->isChecked());
+    MyWidget::set_param("Main", "flag_show_debug",  a_is_shows_debug->isChecked());
+    MyWidget::set_param("Main", "flag_show_error",  a_is_shows_error->isChecked());
+    MyWidget::set_param("Main", "flag_show_trace",  a_is_shows_trace->isChecked());
     if(ld)
     {
         ld->deleteLater();
@@ -315,17 +320,26 @@ void MainWindow::createMenus(void)
     connect(a_is_shows_error,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_error(bool)));
     connect(a_is_shows_trace,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_trace(bool)));
 
+    QVariant flag_show_info  = true;
+    QVariant flag_show_debug = true;
+    QVariant flag_show_error = true;
+    QVariant flag_show_trace = true;
+    MyWidget::get_param("Main", "flag_show_info",   true,   &flag_show_info);
+    MyWidget::get_param("Main", "flag_show_debug",  true,   &flag_show_debug);
+    MyWidget::get_param("Main", "flag_show_error",  true,   &flag_show_error);
+    MyWidget::get_param("Main", "flag_show_trace",  true,   &flag_show_trace);
+
     a_is_shows_info->setCheckable(true);
-    a_is_shows_info->setChecked(true);
+    a_is_shows_info->setChecked(flag_show_info.toBool());
 
     a_is_shows_debug->setCheckable(true);
-    a_is_shows_debug->setChecked(true);
+    a_is_shows_debug->setChecked(flag_show_debug.toBool());
 
     a_is_shows_error->setCheckable(true);
-    a_is_shows_error->setChecked(true);
+    a_is_shows_error->setChecked(flag_show_error.toBool());
 
     a_is_shows_trace->setCheckable(true);
-    a_is_shows_trace->setChecked(true);
+    a_is_shows_trace->setChecked(flag_show_trace.toBool());
 
     m_optionsMenu->addAction(a_is_shows_info);
     m_optionsMenu->addAction(a_is_shows_debug);
@@ -451,7 +465,7 @@ void MainWindow::setMenuLanguage(void)
     QString language;
     language = menu->text();
 #ifdef QT_DEBUG
-    qDebug() << language;
+    qDebug() << "language = " << language;
 #endif
     if(language.contains("Russian") || language.contains("Русский"))
     {
@@ -712,6 +726,11 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
 
     connect(this,   SIGNAL(syslog(int,QString,QString)),    ld,  SLOT(syslog(int,QString,QString)));
+
+    slot_is_shows_info(a_is_shows_info->isChecked());
+    slot_is_shows_debug(a_is_shows_debug->isChecked());
+    slot_is_shows_error(a_is_shows_error->isChecked());
+    slot_is_shows_trace(a_is_shows_trace->isChecked());
 
     addDockWidget(Qt::BottomDockWidgetArea, ld);
 }
@@ -1124,6 +1143,7 @@ void MainWindow::set_log_font(void)
 #ifndef NO_LOG
 void MainWindow::slot_is_shows_info(bool state)
 {
+    Q_CHECK_PTR(ld);
     ld->signal_is_shows_info(state);
 }
 #endif
@@ -1131,6 +1151,7 @@ void MainWindow::slot_is_shows_info(bool state)
 #ifndef NO_LOG
 void MainWindow::slot_is_shows_debug(bool state)
 {
+    Q_CHECK_PTR(ld);
     ld->signal_is_shows_debug(state);
 }
 #endif
@@ -1138,6 +1159,7 @@ void MainWindow::slot_is_shows_debug(bool state)
 #ifndef NO_LOG
 void MainWindow::slot_is_shows_error(bool state)
 {
+    Q_CHECK_PTR(ld);
     ld->signal_is_shows_error(state);
 }
 #endif
@@ -1145,6 +1167,7 @@ void MainWindow::slot_is_shows_error(bool state)
 #ifndef NO_LOG
 void MainWindow::slot_is_shows_trace(bool state)
 {
+    Q_CHECK_PTR(ld);
     ld->signal_is_shows_trace(state);
 }
 #endif

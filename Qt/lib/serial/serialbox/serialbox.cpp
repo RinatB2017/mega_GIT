@@ -380,7 +380,10 @@ int SerialBox::input(const QByteArray &sending_data)
 //--------------------------------------------------------------------------------
 int SerialBox::input(const QString &data)
 {
-    qDebug() << data;
+    if(data.isEmpty() == false)
+    {
+        qDebug() << data;
+    }
     if(!serial)
     {
         return E_PORT_NOT_INIT;

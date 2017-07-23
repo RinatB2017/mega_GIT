@@ -68,6 +68,7 @@ void MainBox::init(void)
 void MainBox::init_widgets(void)
 {
     ui->sb_len_line->setRange(1, 5);
+    ui->sb_len_pause->setRange(0, 0xFFFF);
     ui->sb_delay_ms->setRange(10, 0xFFFF);
 
     load_widgets("sb_draw_line");
@@ -150,6 +151,7 @@ void MainBox::test(void)
     packet.body_t.header.len = sizeof(packet.body_t.data_t);
 
     packet.body_t.data_t.len_line = ui->sb_len_line->value();
+    packet.body_t.data_t.len_pause = ui->sb_len_pause->value();
     packet.body_t.data_t.delay_ms = ui->sb_delay_ms->value();
     packet.body_t.data_t.brightness_R = color_R;
     packet.body_t.data_t.brightness_G = color_G;

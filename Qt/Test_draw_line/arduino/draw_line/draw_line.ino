@@ -22,6 +22,13 @@ ws2812b<D,3>  strip_3;
 // The pixel array to display
 grb  pixels[cnt_led_in_strip] = {};
 //-----------------------------------------------------------------------------
+#define LED_ON   1
+#define LED_OFF  0
+//-----------------------------------------------------------------------------
+int state = LED_OFF;
+int cnt_line  = 0;
+int cnt_pause = 0;
+//-----------------------------------------------------------------------------
 boolean stringComplete = false;  
 int incomingByte = 0;
 //-----------------------------------------------------------------------------
@@ -53,6 +60,7 @@ union F_01
         struct DATA
         {
           uint16_t len_line;    // длина линии
+          uint16_t len_pause;   // длина паузы
           uint16_t delay_ms;    // задержка
           uint8_t brightness_R;
           uint8_t brightness_G;
@@ -67,6 +75,7 @@ union MEMORY
   struct M_BODY
   {
     uint16_t len_line;     // длина линии
+    uint16_t len_pause;    // длина паузы
     uint16_t delay_ms;     // задержка
     uint8_t brightness_R;
     uint8_t brightness_G;
@@ -80,6 +89,13 @@ MEMORY mem;
 void a_logging(String text)
 {
   serial_WIFI.println(text);  
+}
+//-----------------------------------------------------------------------------
+void logging(String text, int value)
+{
+  //serial_WIFI.print(text);
+  //serial_WIFI.print(" ");
+  //serial_WIFI.println(value);
 }
 //-----------------------------------------------------------------------------
 void logging(String text)
@@ -158,6 +174,7 @@ void func_0x01(void)
   F_01 *packet = (F_01 *)buf_modbus;
 
   uint16_t t_len_line     = packet->body_t.data_t.len_line;
+  uint16_t t_len_pause    = packet->body_t.data_t.len_pause;
   uint16_t t_delay_ms     = packet->body_t.data_t.delay_ms;
   uint8_t  t_brightness_R = packet->body_t.data_t.brightness_R;
   uint8_t  t_brightness_G = packet->body_t.data_t.brightness_G;
@@ -167,6 +184,7 @@ void func_0x01(void)
   if(t_delay_ms < 10) t_delay_ms = 10;
 
   mem.m_body_t.len_line = t_len_line;
+  mem.m_body_t.len_pause = t_len_pause;
   mem.m_body_t.delay_ms = t_delay_ms;
   mem.m_body_t.brightness_R = t_brightness_R;
   mem.m_body_t.brightness_G = t_brightness_G;
@@ -259,26 +277,64 @@ void prepare_line()
 {
   for(int i=0; i<max_cnt_led; i++)
   {
-    array_leds[i].r = 0;
-    array_leds[i].g = 0;
-    array_leds[i].b = 0;
+    logging("state", state);
+    logging("cnt_line", cnt_line);
+    logging("cnt_pause", cnt_pause);
+    logging("index_led", index_led);
+    
+    switch(state)
+    {
+      case LED_ON:
+        if(cnt_line < mem.m_body_t.len_line)
+        {
+          array_leds[index_led].r = mem.m_body_t.brightness_R;
+          array_leds[index_led].g = mem.m_body_t.brightness_G;
+          array_leds[index_led].b = mem.m_body_t.brightness_B;
+          cnt_line++;
+          if(index_led < max_cnt_led)
+          {
+            index_led++;
+          }
+          else
+          {
+            index_led = 0;
+          }
+        }
+        else
+        {
+          cnt_line = 0;
+          state = LED_OFF;
+        }
+        break;
+      
+      case LED_OFF:
+        if(cnt_pause < mem.m_body_t.len_pause)
+        {
+          array_leds[index_led].r = 0;
+          array_leds[index_led].g = 0;
+          array_leds[index_led].b = 0;
+          cnt_pause++;
+          if(index_led < max_cnt_led)
+          {
+            index_led++;
+          }
+          else
+          {
+            index_led = 0;
+          }
+        }
+        else
+        {
+          cnt_pause = 0;
+          state = LED_ON;
+        }
+        break;
+      
+      default:
+        state = LED_OFF;
+        break;
+    }
   }    
-
-  for(int n=0; n<mem.m_body_t.len_line; n++)
-  {
-    array_leds[index_led+n].r = mem.m_body_t.brightness_R;
-    array_leds[index_led+n].g = mem.m_body_t.brightness_G;
-    array_leds[index_led+n].b = mem.m_body_t.brightness_B;
-  }
-  
-  if(index_led<(max_cnt_led - cnt_led_in_strip))
-  {
-    index_led++;
-  }
-  else
-  {
-    index_led = 0;
-  }
 }
 //-----------------------------------------------------------------------------
 void draw_line()
@@ -339,6 +395,7 @@ void sleep()
 //-----------------------------------------------------------------------------
 void load_EEPROM()
 {
+  a_logging("load_EEPROM");
   for(int n=0; n<sizeof(MEMORY); n++)
   {
     mem.buf[n] = EEPROM.read(n);
@@ -350,6 +407,7 @@ void load_EEPROM()
   if(mem.m_body_t.delay_ms < 10) mem.m_body_t.delay_ms = 10;
 
   logging(mem.m_body_t.len_line);
+  logging(mem.m_body_t.len_pause);
   logging(mem.m_body_t.delay_ms);
   logging(mem.m_body_t.brightness_R);
   logging(mem.m_body_t.brightness_G);
@@ -370,10 +428,18 @@ void setup()
   serial_WIFI.begin(115200);
 
   mem.m_body_t.len_line = 5;
+  mem.m_body_t.len_pause = 5;
   mem.m_body_t.delay_ms = 100;
   mem.m_body_t.brightness_R = 0;
   mem.m_body_t.brightness_G = 0;
   mem.m_body_t.brightness_B = 0;
+
+  for(int i=0; i<max_cnt_led; i++)
+  {
+    array_leds[i].r = 0;
+    array_leds[i].g = 0;
+    array_leds[i].b = 0;
+  }
 
   load_EEPROM();
   

@@ -4,11 +4,7 @@
 const int num_strip = 5;        // количество полос
 const int cnt_led_in_strip = 5; // количество светодиодов в полосе
 const int max_cnt_led = (num_strip + 2) * cnt_led_in_strip; // нужен запас, чтобы было откуда выезжать и куда заезжать полосе
-const int max_len_line = 5; // макс. длина линии
-
-int index_led = 0;
-
-int color_index = 0;
+const int max_len_line = max_cnt_led; // макс. длина линии
 
 grb array_leds[max_cnt_led] = {};
 
@@ -163,11 +159,11 @@ unsigned char convert_ascii_to_value(char hi, char lo)
 //-----------------------------------------------------------------------------
 void func_0x01(void)
 {
-//  logging("sizeof(F_01)");
-//  logging(sizeof(F_01));
   if(len_modbus != sizeof(F_01))
   {
     logging("Error size");
+    logging("sizeof(F_01)");
+    logging(sizeof(F_01));
     return;
   }
   
@@ -275,66 +271,51 @@ void clear_all()
 //-----------------------------------------------------------------------------
 void prepare_line()
 {
-  for(int i=0; i<max_cnt_led; i++)
+  for(int n=max_cnt_led; n>0; n--)
   {
-    logging("state", state);
-    logging("cnt_line", cnt_line);
-    logging("cnt_pause", cnt_pause);
-    logging("index_led", index_led);
+    array_leds[n] = array_leds[n - 1];
+  }
+  
+  logging("state", state);
+  logging("cnt_line", cnt_line);
+  logging("cnt_pause", cnt_pause);
     
-    switch(state)
-    {
-      case LED_ON:
-        if(cnt_line < mem.m_body_t.len_line)
-        {
-          array_leds[index_led].r = mem.m_body_t.brightness_R;
-          array_leds[index_led].g = mem.m_body_t.brightness_G;
-          array_leds[index_led].b = mem.m_body_t.brightness_B;
-          cnt_line++;
-          if(index_led < max_cnt_led)
-          {
-            index_led++;
-          }
-          else
-          {
-            index_led = 0;
-          }
-        }
-        else
-        {
-          cnt_line = 0;
-          state = LED_OFF;
-        }
-        break;
-      
-      case LED_OFF:
-        if(cnt_pause < mem.m_body_t.len_pause)
-        {
-          array_leds[index_led].r = 0;
-          array_leds[index_led].g = 0;
-          array_leds[index_led].b = 0;
-          cnt_pause++;
-          if(index_led < max_cnt_led)
-          {
-            index_led++;
-          }
-          else
-          {
-            index_led = 0;
-          }
-        }
-        else
-        {
-          cnt_pause = 0;
-          state = LED_ON;
-        }
-        break;
-      
-      default:
+  switch(state)
+  {
+    case LED_ON:
+      if(cnt_line < mem.m_body_t.len_line)
+      {
+        array_leds[0].r = mem.m_body_t.brightness_R;
+        array_leds[0].g = mem.m_body_t.brightness_G;
+        array_leds[0].b = mem.m_body_t.brightness_B;
+        cnt_line++;
+      }
+      else
+      {
+        cnt_line = 0;
         state = LED_OFF;
-        break;
-    }
-  }    
+      }
+      break;
+    
+    case LED_OFF:
+      if(cnt_pause < mem.m_body_t.len_pause)
+      {
+        array_leds[0].r = 0;
+        array_leds[0].g = 0;
+        array_leds[0].b = 0;
+        cnt_pause++;
+      }
+      else
+      {
+        cnt_pause = 0;
+        state = LED_ON;
+      }
+      break;
+    
+    default:
+      state = LED_OFF;
+      break;
+  }
 }
 //-----------------------------------------------------------------------------
 void draw_line()
@@ -402,7 +383,7 @@ void load_EEPROM()
   }
 
   if(mem.m_body_t.len_line < 1) mem.m_body_t.len_line = 1;
-  if(mem.m_body_t.len_line < max_len_line) mem.m_body_t.len_line = max_len_line;
+  if(mem.m_body_t.len_line > max_len_line) mem.m_body_t.len_line = max_len_line;
 
   if(mem.m_body_t.delay_ms < 10) mem.m_body_t.delay_ms = 10;
 

@@ -67,7 +67,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
 {
-    ui->sb_len_line->setRange(1, 5);
+    ui->sb_len_line->setRange(1, 0xFFFF);
     ui->sb_len_pause->setRange(0, 0xFFFF);
     ui->sb_delay_ms->setRange(10, 0xFFFF);
 

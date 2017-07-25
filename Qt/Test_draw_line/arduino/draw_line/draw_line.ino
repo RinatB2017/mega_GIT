@@ -89,9 +89,9 @@ void a_logging(String text)
 //-----------------------------------------------------------------------------
 void logging(String text, int value)
 {
-  //serial_WIFI.print(text);
-  //serial_WIFI.print(" ");
-  //serial_WIFI.println(value);
+  serial_WIFI.print(text);
+  serial_WIFI.print(" ");
+  serial_WIFI.println(value);
 }
 //-----------------------------------------------------------------------------
 void logging(String text)
@@ -271,20 +271,15 @@ void clear_all()
 //-----------------------------------------------------------------------------
 void prepare_line()
 {
-  for(int n=max_cnt_led; n>0; n--)
-  {
-    array_leds[n] = array_leds[n - 1];
-  }
-  
-  logging("state", state);
-  logging("cnt_line", cnt_line);
-  logging("cnt_pause", cnt_pause);
-    
   switch(state)
   {
     case LED_ON:
       if(cnt_line < mem.m_body_t.len_line)
       {
+        for(int n=max_cnt_led; n>0; n--)
+        {
+          array_leds[n] = array_leds[n - 1];
+        }
         array_leds[0].r = mem.m_body_t.brightness_R;
         array_leds[0].g = mem.m_body_t.brightness_G;
         array_leds[0].b = mem.m_body_t.brightness_B;
@@ -300,6 +295,10 @@ void prepare_line()
     case LED_OFF:
       if(cnt_pause < mem.m_body_t.len_pause)
       {
+        for(int n=max_cnt_led; n>0; n--)
+        {
+          array_leds[n] = array_leds[n - 1];
+        }
         array_leds[0].r = 0;
         array_leds[0].g = 0;
         array_leds[0].b = 0;
@@ -423,6 +422,9 @@ void setup()
   }
 
   load_EEPROM();
+  
+  logging("len_line",  mem.m_body_t.len_line);
+  logging("len_pause", mem.m_body_t.len_pause);
   
   clear_all();
 }

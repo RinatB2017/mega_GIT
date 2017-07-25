@@ -242,6 +242,14 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+#if 1
+    int max_cnt_led = 1;
+    for(int n=max_cnt_led; n>0; n--)
+    {
+        emit info(QString("n=%1").arg(n));
+    }
+#endif
+
 #if 0
     DecoratorTwo obj(new DecoratorOne(new Component()));
     obj.operation(); // prints "Hello, World!\n"

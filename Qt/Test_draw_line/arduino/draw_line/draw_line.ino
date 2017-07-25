@@ -89,19 +89,9 @@ void a_logging(String text)
 //-----------------------------------------------------------------------------
 void logging(String text, int value)
 {
-  serial_WIFI.print(text);
-  serial_WIFI.print(" ");
-  serial_WIFI.println(value);
-}
-//-----------------------------------------------------------------------------
-void logging(String text)
-{
-  //serial_WIFI.println(text);  
-}
-//-----------------------------------------------------------------------------
-void logging(int num)
-{
-  //serial_WIFI.println(num);  
+  //serial_WIFI.print(text);
+  //serial_WIFI.print(" ");
+  //serial_WIFI.println(value);
 }
 //-----------------------------------------------------------------------------
 unsigned char convert_ascii_to_value(char hi, char lo)
@@ -161,9 +151,6 @@ void func_0x01(void)
 {
   if(len_modbus != sizeof(F_01))
   {
-    logging("Error size");
-    logging("sizeof(F_01)");
-    logging(sizeof(F_01));
     return;
   }
   
@@ -214,9 +201,6 @@ void analize()
   switch(cmd)
   {
     case CMD_0x01:
-      //:0001070300E803FF0000
-      //:0001070500C800FF0000
-      logging("CMD_0x01");
       func_0x01();
       break;
       
@@ -385,13 +369,6 @@ void load_EEPROM()
   if(mem.m_body_t.len_line > max_len_line) mem.m_body_t.len_line = max_len_line;
 
   if(mem.m_body_t.delay_ms < 10) mem.m_body_t.delay_ms = 10;
-
-  logging(mem.m_body_t.len_line);
-  logging(mem.m_body_t.len_pause);
-  logging(mem.m_body_t.delay_ms);
-  logging(mem.m_body_t.brightness_R);
-  logging(mem.m_body_t.brightness_G);
-  logging(mem.m_body_t.brightness_B);
 }
 //-----------------------------------------------------------------------------
 void save_EEPROM()
@@ -422,9 +399,6 @@ void setup()
   }
 
   load_EEPROM();
-  
-  logging("len_line",  mem.m_body_t.len_line);
-  logging("len_pause", mem.m_body_t.len_pause);
   
   clear_all();
 }

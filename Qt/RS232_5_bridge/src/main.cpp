@@ -18,55 +18,44 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SENDBOX_HPP
-#define SENDBOX_HPP
+#include <QApplication>
+#include <QTranslator>
+#include <QLocale>
 //--------------------------------------------------------------------------------
-#include <QByteArray>
-#include <QFrame>
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-class QVBoxLayout;
-class QHBoxLayout;
-class QToolButton;
-class QLineEdit;
-class QComboBox;
-class QCheckBox;
+#include "../lib/codecs.h"
 //--------------------------------------------------------------------------------
-class SendBox5 : public QFrame
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
+    QApplication app(argc, argv);
 
-public:
-    explicit SendBox5(QWidget *parent = 0);
-    ~SendBox5();
+    set_codecs();
 
-    void updateText(void);
+    QTranslator translator;
+    translator.load(":/ru_RU.qm");
+    app.installTranslator(&translator);
 
-signals:
-    void sendData(const QByteArray &data);
+    QPixmap pixmap(":/logo/pinguin.png");
+    MySplashScreen *splash = new MySplashScreen(pixmap);
+    splash->show();
+    splash->showMessage(QObject::tr("Подождите ..."));
+    qApp->processEvents();
 
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    MainWindow main_window;
 
-private slots:
-    void send_text(void);
-    void send_bin(void);
+    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
+    main_window.setCentralWidget(mainBox);
 
-private:
-    QComboBox *cb_send_text = 0;
-    QComboBox *cb_send_bin = 0;
-    QComboBox *append_comboBox = 0;
+    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
+    main_window.show();
 
-    QToolButton *btn_send_text = 0;
-    QToolButton *btn_send_bin = 0;
+    splash->finish(&main_window);
 
-    QHBoxLayout *hbox_text = 0;
-    QHBoxLayout *hbox_bin = 0;
-
-    QCheckBox *cb_SendStenToStep = 0;
-
-    QVBoxLayout *vbox = 0;
-};
+    return app.exec();
+}
 //--------------------------------------------------------------------------------
-#endif // SENDBOX_HPP

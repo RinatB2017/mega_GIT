@@ -86,14 +86,14 @@ void SerialBox5::connect_log(void)
         connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
-        connect(this, SIGNAL(message(QString)), parent, SIGNAL(message(QString)));
+        connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
     }
     else
     {
         connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
         connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-        connect(this, SIGNAL(message(QString)), this, SLOT(log(QString)));
+        connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -588,10 +588,17 @@ bool SerialBox5::isOpen(void)
 //--------------------------------------------------------------------------------
 bool SerialBox5::add_menu(int index)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return false;
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw == nullptr)
+    {
+        return false;
+    }
 
-    QMenu *menu = new QMenu(tr("Настройка RS-232"));
+    QMenu *menu = new QMenu(objectName());
+    if(menu == nullptr)
+    {
+        return false;
+    }
 
     QAction *action_flag_in_hex = new QAction(menu);
     QAction *action_flag_byte_by_byte = new QAction(menu);
@@ -605,18 +612,36 @@ bool SerialBox5::add_menu(int index)
     menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, SIGNAL(triggered(bool)), this, SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_in_hex,         SIGNAL(triggered(bool)),    this,   SLOT(set_flag_in_hex(bool)));
+    connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
 
-    mw->add_menu(index, menu);
+    //---
+    QMenu *o_menu = mw->get_options_menu();
+    QList<QAction *> menus = o_menu->actions();
 
-    return true;
+    int pos = 0;
+    foreach (QAction *current_menu, menus)
+    {
+        if(pos == index)
+        {
+            o_menu->insertSeparator(current_menu);
+            o_menu->insertMenu(current_menu, menu);
+            return true;
+        }
+        pos++;
+    }
+    //---
+
+    return false;
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::add_menu(int index, const QString &title)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return false;
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw == nullptr)
+    {
+        return false;
+    }
 
     QMenu *menu = new QMenu(title);
 

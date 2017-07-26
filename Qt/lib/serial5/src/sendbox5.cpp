@@ -39,9 +39,10 @@ SendBox5::SendBox5(QWidget *parent) :
 {
     if(parent)
     {
-        connect(this, SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
+        connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
+        connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
+        connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
+        connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
     }
 
     vbox = new QVBoxLayout;

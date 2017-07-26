@@ -18,55 +18,57 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SENDBOX_HPP
-#define SENDBOX_HPP
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QByteArray>
-#include <QFrame>
+#include <QWidget>
 //--------------------------------------------------------------------------------
-class QVBoxLayout;
-class QHBoxLayout;
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class MainBox;
+}
+//--------------------------------------------------------------------------------
+class MySplashScreen;
 class QToolButton;
-class QLineEdit;
-class QComboBox;
-class QCheckBox;
+class QToolBar;
+class SerialBox5;
 //--------------------------------------------------------------------------------
-class SendBox5 : public QFrame
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit SendBox5(QWidget *parent = 0);
-    ~SendBox5();
-
-    void updateText(void);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    ~MainBox();
 
 signals:
-    void sendData(const QByteArray &data);
-
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    void send(QByteArray);
 
 private slots:
-    void send_text(void);
-    void send_bin(void);
+    void test(void);
 
 private:
-    QComboBox *cb_send_text = 0;
-    QComboBox *cb_send_bin = 0;
-    QComboBox *append_comboBox = 0;
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
 
-    QToolButton *btn_send_text = 0;
-    QToolButton *btn_send_bin = 0;
+    SerialBox5 *serialBox5_1 = 0;
+    SerialBox5 *serialBox5_2 = 0;
 
-    QHBoxLayout *hbox_text = 0;
-    QHBoxLayout *hbox_bin = 0;
+    void init(void);
 
-    QCheckBox *cb_SendStenToStep = 0;
+    QToolButton *add_button(QToolBar *tool_bar,
+                            QToolButton *tool_button,
+                            QIcon icon,
+                            const QString &text,
+                            const QString &tool_tip);
 
-    QVBoxLayout *vbox = 0;
+    void createTestBar(void);
+
+protected:
+    void changeEvent(QEvent *event);
+
 };
 //--------------------------------------------------------------------------------
-#endif // SENDBOX_HPP
+#endif // MAINBOX_HPP

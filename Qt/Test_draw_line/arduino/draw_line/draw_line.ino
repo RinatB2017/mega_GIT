@@ -25,7 +25,6 @@ int state = LED_OFF;
 int cnt_line  = 0;
 int cnt_pause = 0;
 //-----------------------------------------------------------------------------
-boolean stringComplete = false;  
 int incomingByte = 0;
 //-----------------------------------------------------------------------------
 #define serial_WIFI  Serial
@@ -218,13 +217,12 @@ void serialEvent()
     switch(incomingByte)
     {
     case ':':
-      stringComplete = false;
       len_ascii = 0;
       break;
   
     case '\r':
     case '\n':
-      stringComplete = true;
+      analize();
       break;
   
     default:
@@ -235,7 +233,6 @@ void serialEvent()
       }
       else
       {
-        stringComplete = false;
         len_ascii = 0;
       }      
       break;  
@@ -405,10 +402,6 @@ void setup()
 //-----------------------------------------------------------------------------
 void loop()
 {
-  if(stringComplete)
-  {
-    analize();
-  }
   prepare_line();
   draw_line();
   sleep();

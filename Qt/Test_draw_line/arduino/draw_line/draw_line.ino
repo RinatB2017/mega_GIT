@@ -5,6 +5,7 @@ const int num_strip = 5;        // количество полос
 const int cnt_led_in_strip = 5; // количество светодиодов в полосе
 const int max_cnt_led = (num_strip + 2) * cnt_led_in_strip; // нужен запас, чтобы было откуда выезжать и куда заезжать полосе
 const int max_len_line = max_cnt_led; // макс. длина линии
+const int max_len_pause = max_cnt_led; // макс. длина линии
 
 grb array_leds[max_cnt_led] = {};
 
@@ -88,9 +89,9 @@ void a_logging(String text)
 //-----------------------------------------------------------------------------
 void logging(String text, int value)
 {
-  //serial_WIFI.print(text);
-  //serial_WIFI.print(" ");
-  //serial_WIFI.println(value);
+  serial_WIFI.print(text);
+  serial_WIFI.print(" ");
+  serial_WIFI.println(value);
 }
 //-----------------------------------------------------------------------------
 unsigned char convert_ascii_to_value(char hi, char lo)
@@ -361,11 +362,21 @@ void load_EEPROM()
   {
     mem.buf[n] = EEPROM.read(n);
   }
-
+  
   if(mem.m_body_t.len_line < 1) mem.m_body_t.len_line = 1;
   if(mem.m_body_t.len_line > max_len_line) mem.m_body_t.len_line = max_len_line;
 
+  if(mem.m_body_t.len_pause > max_len_pause) mem.m_body_t.len_pause = max_len_pause;
+
   if(mem.m_body_t.delay_ms < 10) mem.m_body_t.delay_ms = 10;
+  if(mem.m_body_t.delay_ms > 1000) mem.m_body_t.delay_ms = 1000;
+
+  logging("len_line", mem.m_body_t.len_line);
+  logging("len_pause", mem.m_body_t.len_pause);
+  logging("delay_ms", mem.m_body_t.delay_ms);
+  logging("brightness_R", mem.m_body_t.brightness_R);
+  logging("brightness_G", mem.m_body_t.brightness_G);
+  logging("brightness_B", mem.m_body_t.brightness_B);
 }
 //-----------------------------------------------------------------------------
 void save_EEPROM()
@@ -379,12 +390,13 @@ void save_EEPROM()
 //-----------------------------------------------------------------------------
 void setup()
 {
+  //serial_WIFI.begin(9600);
   serial_WIFI.begin(115200);
 
   mem.m_body_t.len_line = 5;
   mem.m_body_t.len_pause = 5;
   mem.m_body_t.delay_ms = 100;
-  mem.m_body_t.brightness_R = 0;
+  mem.m_body_t.brightness_R = 10;
   mem.m_body_t.brightness_G = 0;
   mem.m_body_t.brightness_B = 0;
 

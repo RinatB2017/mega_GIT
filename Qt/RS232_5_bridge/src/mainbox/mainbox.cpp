@@ -68,8 +68,25 @@ void MainBox::init(void)
     ui->serial_layout->addWidget(serialBox5_2);
     ui->serial_layout->addStretch();
 
+#if 1
     connect(serialBox5_1,   SIGNAL(output(QByteArray)), serialBox5_2,   SLOT(input(QByteArray)));
     connect(serialBox5_2,   SIGNAL(output(QByteArray)), serialBox5_1,   SLOT(input(QByteArray)));
+#else
+    connect(serialBox5_1,   SIGNAL(output(QByteArray)), this,   SLOT(send_data_1(QByteArray)));
+    connect(serialBox5_2,   SIGNAL(output(QByteArray)), this,   SLOT(send_data_2(QByteArray)));
+#endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_data_1(QByteArray ba)
+{
+    emit info(QString("send_data_1: %1").arg(ba.toHex().data()));
+    //serialBox5_2->input(ba);
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_data_2(QByteArray ba)
+{
+    emit info(QString("send_data_2: %1").arg(ba.toHex().data()));
+    //serialBox5_1->input(ba);
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,

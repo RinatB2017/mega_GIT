@@ -49,6 +49,9 @@ signals:
 private slots:
     void test(void);
 
+    void send_data_1(QByteArray ba);
+    void send_data_2(QByteArray ba);
+
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;

@@ -57,6 +57,7 @@ SerialBox5::SerialBox5(QWidget *parent, const QString &caption) :
     QFrame(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
+    serial5(0),
     caption(caption),
     flag_in_hex(false),
     flag_byte_by_byte(false)
@@ -413,10 +414,12 @@ int SerialBox5::input(const QByteArray &sending_data)
     // emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
     if(!serial5)
     {
+        emit error("E_PORT_NOT_INIT");
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
+        emit error("E_PORT_NOT_OPEN");
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -438,10 +441,12 @@ int SerialBox5::input(const QString &data)
     qDebug() << data;
     if(!serial5)
     {
+        emit error("E_PORT_NOT_INIT");
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
+        emit error("E_PORT_NOT_OPEN");
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;
@@ -450,7 +455,9 @@ int SerialBox5::input(const QString &data)
     if(flag_byte_by_byte)
     {
         for(int n=0; n<sending_data.length(); n++)
+        {
             serial5->write(sending_data.constData()+n, 1);
+        }
     }
     else
     {

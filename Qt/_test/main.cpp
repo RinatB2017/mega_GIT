@@ -1,12 +1,14 @@
-#include <QApplication>
+#include <QCoreApplication>
+#include <QDebug>
 
-#include "mainwindow.hpp"
+#include "main.hpp"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    QCoreApplication a(argc, argv);
+
+    C *test = new C();
+    qDebug() << test->get_x();
 
     return a.exec();
 }

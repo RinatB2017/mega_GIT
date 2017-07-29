@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QComboBox>
+#include <QLineEdit>
 #include <QLabel>
 #include <QTime>
 
@@ -66,8 +67,8 @@ void MainBox::init(void)
     ui->serial_layout->addWidget(serialBox);
     ui->serial_layout->addStretch();
 
-    connect(this, SIGNAL(send(QByteArray)), serialBox, SLOT(input(QByteArray)));
-    connect(serialBox, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
+    connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
+    connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -137,14 +138,20 @@ void MainBox::createTestBar(void)
     cb_command->addItem("ENSNIFF", QVariant(Qt::UserRole + ENSNIFF));
     cb_command->addItem("EXSNIFF", QVariant(Qt::UserRole + EXSNIFF));
 
-    toolBar->addWidget(new QLabel(tr("command")));
+    le_name = new QLineEdit();
+    le_name->setText("HC-05");
+
+    toolBar->addWidget(new QLabel(tr("Command: ")));
     toolBar->addWidget(cb_command);
+    toolBar->addWidget(new QLabel("Name: "));
+    toolBar->addWidget(le_name);
 
     QToolButton *btn_reset = add_button(toolBar,
                                         new QToolButton(this),
                                         qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                         "run",
                                         "run");
+    toolBar->setFixedSize(toolBar->sizeHint());
 
     connect(btn_reset, SIGNAL(clicked()), this, SLOT(run()));
 }
@@ -215,6 +222,7 @@ void MainBox::wait(int max_time_ms)
 void MainBox::read_data(QByteArray ba)
 {
     emit debug("read_data");
+    emit debug(ba);
     data_rs232.append(ba);
     is_ready = true;
 }
@@ -225,10 +233,17 @@ QByteArray MainBox::get_command_string(const QString &cmd)
 
     ba.clear();
     ba.append(cmd);
-    ba.append((char)0x0D);
-    ba.append((char)0x0A);
+    //ba.append((char)0x0D);
+    //ba.append((char)0x0A);
 
     return ba;
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_data(void)
+{
+    emit info(QString("%1 [%2]")
+              .arg(data_rs232.data())
+              .arg(data_rs232.toHex().data()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_AT(void)
@@ -251,8 +266,7 @@ void MainBox::command_AT(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_RESET(void)
@@ -270,8 +284,7 @@ void MainBox::command_RESET(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_VERSION(void)
@@ -289,8 +302,7 @@ void MainBox::command_VERSION(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_ORGL(void)
@@ -308,8 +320,7 @@ void MainBox::command_ORGL(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_ADDR(void)
@@ -327,18 +338,23 @@ void MainBox::command_ADDR(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_NAME(void)
 {
     emit info("NAME");
 
+    if(le_name->text().isEmpty())
+    {
+        messagebox_critical("Ощибка", "Не задано имя модуля");
+        return;
+    }
+
     data_rs232.clear();
     is_ready = false;
 
-    serialBox->input(get_command_string("AT+NAME"));
+    serialBox->input(get_command_string(QString("AT+NAME%1").arg(le_name->text())));
     wait(1000);
 
     if(data_rs232.isEmpty())
@@ -346,8 +362,7 @@ void MainBox::command_NAME(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_RNAME(void)
@@ -365,8 +380,7 @@ void MainBox::command_RNAME(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_ROLE(void)
@@ -384,8 +398,7 @@ void MainBox::command_ROLE(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_CLASS(void)
@@ -403,8 +416,7 @@ void MainBox::command_CLASS(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_IAC(void)
@@ -422,8 +434,7 @@ void MainBox::command_IAC(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_INQM(void)
@@ -441,8 +452,7 @@ void MainBox::command_INQM(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_PSWD(void)
@@ -460,8 +470,7 @@ void MainBox::command_PSWD(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_UART(void)
@@ -479,8 +488,7 @@ void MainBox::command_UART(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_CMODE(void)
@@ -498,8 +506,7 @@ void MainBox::command_CMODE(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_BIND(void)
@@ -517,8 +524,7 @@ void MainBox::command_BIND(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_POLAR(void)
@@ -536,8 +542,7 @@ void MainBox::command_POLAR(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_PIO(void)
@@ -555,8 +560,7 @@ void MainBox::command_PIO(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_MPIO(void)
@@ -574,8 +578,7 @@ void MainBox::command_MPIO(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_IPSCAN(void)
@@ -593,8 +596,7 @@ void MainBox::command_IPSCAN(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_SNIFF(void)
@@ -612,8 +614,7 @@ void MainBox::command_SNIFF(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_SENM(void)
@@ -631,8 +632,7 @@ void MainBox::command_SENM(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_PMSAD(void)
@@ -650,8 +650,7 @@ void MainBox::command_PMSAD(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_RMAAD(void)
@@ -669,8 +668,7 @@ void MainBox::command_RMAAD(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_FSAD(void)
@@ -688,8 +686,7 @@ void MainBox::command_FSAD(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_ADCN(void)
@@ -707,8 +704,7 @@ void MainBox::command_ADCN(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_MRAD(void)
@@ -726,8 +722,7 @@ void MainBox::command_MRAD(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_STATE(void)
@@ -745,8 +740,7 @@ void MainBox::command_STATE(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_INIT(void)
@@ -764,8 +758,7 @@ void MainBox::command_INIT(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_INQ(void)
@@ -783,8 +776,7 @@ void MainBox::command_INQ(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_INQC(void)
@@ -802,8 +794,7 @@ void MainBox::command_INQC(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_PAIR(void)
@@ -821,8 +812,7 @@ void MainBox::command_PAIR(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_LINK(void)
@@ -840,8 +830,7 @@ void MainBox::command_LINK(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_DISC(void)
@@ -859,8 +848,7 @@ void MainBox::command_DISC(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_ENSNIFF(void)
@@ -878,8 +866,7 @@ void MainBox::command_ENSNIFF(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::command_EXSNIFF(void)
@@ -897,8 +884,7 @@ void MainBox::command_EXSNIFF(void)
         emit error(tr("Нет данных"));
         return;
     }
-
-    emit info(QString("[%1]").arg(data_rs232.toHex().data()));
+    show_data();
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)
@@ -914,51 +900,4 @@ void MainBox::changeEvent(QEvent *event)
         break;
     }
 }
-//--------------------------------------------------------------------------------
-#if 0
-QHash <QString, void (MainBox::*)()> pointFunc;
-
-pointFunc["at"] = &MainBox::command_AT;
-pointFunc["reset"] = &MainBox::command_RESET;
-
-(this->*pointFunc["at"])();
-(this->*pointFunc["reset"])();
-
-QHash<QString, void (MainBox::*)()>::const_iterator i = pointFunc.find("test2");
-qDebug() << (i != pointFunc.end());
-
-QStringList str;
-
-str.append("AT command error.");
-str.append("Default result.");
-str.append("PSKEY write error.");
-str.append("Too long length of device name (more than 32 bytes).");
-str.append("No device name.");
-str.append("Bluetooth address: NAP is too long.");
-str.append("Bluetooth address: UAP is too long.");
-str.append("Bluetooth address: LAP is too long.");
-str.append("No PIO number’s mask.");
-str.append("No PIO number.");
-str.append("No Bluetooth devices.");
-str.append("Too length of devices.");
-str.append("No inquire access code.");
-str.append("Too long length of inquire access code.");
-str.append("Invalid inquire access code.");
-str.append("The length of passkey is 0.");
-str.append("Too long length of passkey (more than 16 bytes).");
-str.append("Invalid module role.");
-str.append("Invalid baud rate.");
-str.append("Invalid stop bit.");
-str.append("Invalid parity bit.");
-str.append("Authentication device is not at the pair list.");
-str.append("SPP lib hasn’t been initialized.");
-str.append("SPP lib has been repeated initialization.");
-str.append("Invalid inquire mode.");
-str.append("Too long inquire time.");
-str.append("No Bluetooth address.");
-str.append("Invalid safe mode.");
-str.append("Invalid encryption mode.");
-
-emit info(QString("count 0x%1").arg(str.count(), 0, 16));
-#endif
 //--------------------------------------------------------------------------------

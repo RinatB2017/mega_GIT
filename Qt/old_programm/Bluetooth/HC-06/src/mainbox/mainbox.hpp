@@ -130,7 +130,10 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
+
     SerialBox *serialBox = 0;
+    QLineEdit *le_name = 0;
+
     QByteArray data_rs232;
     bool is_ready = false;
     unsigned char test_byte = 0;
@@ -141,6 +144,7 @@ private:
     void init(void);
     void connect_log(void);
     void wait(int max_time_ms);
+    void show_data(void);
 
     QToolButton *add_button(QToolBar *tool_bar,
                             QToolButton *tool_button,

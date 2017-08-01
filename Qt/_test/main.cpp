@@ -10,5 +10,7 @@ int main(int argc, char *argv[])
     C *test = new C();
     qDebug() << test->get_x();
 
+    E e;
+
     return a.exec();
 }

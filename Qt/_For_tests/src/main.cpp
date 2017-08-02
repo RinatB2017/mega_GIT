@@ -50,6 +50,8 @@
 //  rm /usr/lib/libGL.so.1
 //--------------------------------------------------------------------------------
 //#include <QGLFormat>
+
+#include <QScriptEngine>
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
@@ -77,6 +79,18 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+#if 0
+    QLabel lbl;
+
+    QScriptEngine scriptEngine;
+    QScriptValue scriptLbl = scriptEngine.newQObject(&lbl);
+    scriptEngine.globalObject().setProperty("lbl", scriptLbl);
+    scriptEngine.evaluate("lbl.text = 'Hello, world !'");
+    scriptEngine.evaluate("lbl.show()");
+
+    return app.exec();
+#endif
 
     QPixmap pixmap(":/logo/pinguin.png");
 

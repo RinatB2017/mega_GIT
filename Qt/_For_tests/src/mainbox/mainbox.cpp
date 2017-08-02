@@ -236,13 +236,37 @@ void MainBox::create_thread(void)
     thread->start();
 }
 //--------------------------------------------------------------------------------
+#include <QMouseEvent>
 #include <QDockWidget>
+#include <QImage>
+
 #include "logdock.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
 #if 1
+    QColor color;
+    //color.setRgb(255, 255, 0);
+    color.setHsv(120, 200, 255);
+
+    QPixmap image(300, 300);
+    image.fill(color);
+
+    QLabel *lbl = new QLabel;
+    lbl->setPixmap(image);
+
+    lbl->setMinimumSize(300, 300);
+    lbl->show();
+#endif
+
+#if 0
+    QPointF pos(500, 500);
+    QMouseEvent event(QEvent::MouseMove, pos, Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
+    QApplication::sendEvent(qApp, &event);
+#endif
+
+#if 0
     int max_cnt_led = 1;
     for(int n=max_cnt_led; n>0; n--)
     {

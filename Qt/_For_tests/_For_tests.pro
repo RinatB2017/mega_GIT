@@ -16,6 +16,7 @@ DEPENDPATH  += $$PROGRAMM_PATH
 QMAKE_CXXFLAGS += -fno-show-column
 
 #QT  += serialbus
+QT  += script
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE

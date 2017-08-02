@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>315</width>
-    <height>429</height>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -250,6 +250,9 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="lbl_result"/>
            </item>
           </layout>
          </widget>

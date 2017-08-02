@@ -81,11 +81,12 @@ void WebCamera::init(void)
     connect(ui->btn_start,  SIGNAL(clicked(bool)),  this,   SLOT(start()));
     connect(ui->btn_stop,   SIGNAL(clicked(bool)),  this,   SLOT(stop()));
 
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
     //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test1()));
     //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test2()));
     //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test3()));
     //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test4()));
-    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test5()));
+    //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test5()));
 
     connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  this,   SLOT(set_brightness(int)));
     connect(ui->sl_contrast,    SIGNAL(valueChanged(int)),  this,   SLOT(set_contrast(int)));
@@ -271,6 +272,16 @@ void WebCamera::timerEvent(QTimerEvent *event)
         mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
         //mFaceDetector.detectSingleScale(mOrigImage, rectVec);
 
+        if(faceVec.size() > 0)
+        {
+            //emit info(QString("faceVec.size() = %1").arg(faceVec.size()));
+            ui->lbl_result->setText("Found");
+        }
+        else
+        {
+            //emit error("Not found!");
+            ui->lbl_result->setText("NOT Found");
+        }
         for(size_t i=0; i<faceVec.size(); i++)
         {
             cv::rectangle(mElabImage, faceVec[i], CV_RGB(255,0,0), 2);

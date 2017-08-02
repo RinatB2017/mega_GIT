@@ -43,8 +43,15 @@ OTHER_FILES += doc/notebook.txt
 CONFIG  += c++11
 LIBS    += -lX11 -lXtst -lOpenCL
 
-LIB_PATH = "../../lib"
-include ($$LIB_PATH/meta/mainwindow.pri)
+LIB_PATH = "../lib"
+include ($$LIB_PATH/qtsingleapplication/qtsingleapplication.pri)
+include ($$LIB_PATH/mainwindow/mainwindow.pri)
+include ($$LIB_PATH/mywidgets/mywaitsplashscreen.pri)
+include ($$LIB_PATH/mywidgets/mysplashscreen.pri)
+include ($$LIB_PATH/mywidgets/mywidget.pri)
+include ($$LIB_PATH/time/time.pri)
+include ($$LIB_PATH/locale.pri)
+include ($$LIB_PATH/turbo.pri)
 
 include (src/WebCamera/WebCamera.pri)
 

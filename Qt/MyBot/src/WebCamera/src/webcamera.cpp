@@ -29,9 +29,9 @@
 #define FEAT_NOSE_FILE  "xml/haarcascade_mcs_nose.xml"
 #define FEAT_MOUTH_FILE "xml/haarcascade_mcs_mouth.xml"
 //--------------------------------------------------------------------------------
+#include "ui_webcamera.h"
 #include "webcamera.hpp"
 #include "sleeper.h"
-#include "ui_webcamera.h"
 //--------------------------------------------------------------------------------
 using namespace std;
 //--------------------------------------------------------------------------------
@@ -72,6 +72,8 @@ void WebCamera::init(void)
     ui->checkBox_nose->setChecked(true);
     ui->checkBox_mouth->setChecked(true);
     //---
+
+    ui->le_device->setText("rtsp://192.168.0.66:554/av0_1");
 
     set_brightness(1);
     set_contrast(1);
@@ -149,41 +151,59 @@ void WebCamera::start(void)
         return;
     }
 
-    if(!mCapture.isOpened())
+    QString dev_name = ui->le_device->text();
+    if(dev_name.isEmpty())
     {
-        ok = mCapture.open(0);
-        if(ok)
-        {
-            ui->sl_brightness->setValue(mCapture.get(CV_CAP_PROP_BRIGHTNESS) * 100.0);
-            ui->sl_contrast->setValue(mCapture.get(CV_CAP_PROP_CONTRAST) * 100.0);
-            ui->sl_saturation->setValue(mCapture.get(CV_CAP_PROP_SATURATION) * 100.0);
-            ui->sl_hue->setValue(mCapture.get(CV_CAP_PROP_HUE) * 100.0);
+        messagebox_critical("Ошибка", "Не задано имя");
+        return;
+    }
+    ok = false;
 
-            //TODO
-            mCapture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-            mCapture.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
-            //set_autofocus(true);
-            mCapture.set(CV_CAP_PROP_AUTOFOCUS, 1);
+    mCapture.release();
+    int num = dev_name.toInt(&ok);
+    if(ok)
+    {
+        mCapture.open(num);
+    }
+    else
+    {
+        mCapture.open(dev_name.toLatin1().data());
+    }
 
-            int w = mCapture.get(CV_CAP_PROP_FRAME_WIDTH);
-            int h = mCapture.get(CV_CAP_PROP_FRAME_HEIGHT);
+    //mCapture.open("rtsp://192.168.0.66:554/av0_0");
+    //mCapture.open("rtsp://192.168.0.66:554/av0_1");
+    //mCapture.open(0);
+    if(mCapture.isOpened())
+    {
+        ui->sl_brightness->setValue(mCapture.get(CV_CAP_PROP_BRIGHTNESS) * 100.0);
+        ui->sl_contrast->setValue(mCapture.get(CV_CAP_PROP_CONTRAST) * 100.0);
+        ui->sl_saturation->setValue(mCapture.get(CV_CAP_PROP_SATURATION) * 100.0);
+        ui->sl_hue->setValue(mCapture.get(CV_CAP_PROP_HUE) * 100.0);
 
-            emit info(QString("resolution %1*%2").arg(w).arg(h));
+        //TODO
+        mCapture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+        mCapture.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
+        //set_autofocus(true);
+        mCapture.set(CV_CAP_PROP_AUTOFOCUS, 1);
 
-            ui->sl_brightness->setDisabled(mCapture.get(CV_CAP_PROP_BRIGHTNESS) == 0);
-            ui->sl_contrast->setDisabled(mCapture.get(CV_CAP_PROP_CONTRAST) == 0);
-            ui->sl_saturation->setDisabled(mCapture.get(CV_CAP_PROP_SATURATION) == 0);
-            ui->sl_hue->setDisabled(mCapture.get(CV_CAP_PROP_HUE) == 0);
+        int w = mCapture.get(CV_CAP_PROP_FRAME_WIDTH);
+        int h = mCapture.get(CV_CAP_PROP_FRAME_HEIGHT);
 
-            ui->cameraWidget->setFixedSize(w, h);
-            ui->main_frame->setFixedWidth(ui->cameraWidget->width() + ui->frame->width());
+        emit info(QString("resolution %1*%2").arg(w).arg(h));
 
-            mCameraEventId = startTimer(50);
-        }
-        else
-        {
-            QMessageBox::critical(this, tr("error"), tr("Camera not found!"));
-        }
+        ui->sl_brightness->setDisabled(mCapture.get(CV_CAP_PROP_BRIGHTNESS) == 0);
+        ui->sl_contrast->setDisabled(mCapture.get(CV_CAP_PROP_CONTRAST) == 0);
+        ui->sl_saturation->setDisabled(mCapture.get(CV_CAP_PROP_SATURATION) == 0);
+        ui->sl_hue->setDisabled(mCapture.get(CV_CAP_PROP_HUE) == 0);
+
+        ui->cameraWidget->setFixedSize(w, h);
+        ui->main_frame->setFixedWidth(ui->cameraWidget->width() + ui->frame->width());
+
+        mCameraEventId = startTimer(0);    //50
+    }
+    else
+    {
+        QMessageBox::critical(this, tr("error"), tr("Camera not found!"));
     }
 }
 //--------------------------------------------------------------------------------

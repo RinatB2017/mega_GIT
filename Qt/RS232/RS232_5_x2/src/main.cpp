@@ -44,21 +44,30 @@ int main(int argc, char *argv[])
     translator.load(":/ru_RU.qm");
     app.installTranslator(&translator);
 
+    MainWindow main_window;
+
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
-    splash->show();
-    splash->showMessage(QObject::tr("Подождите ..."));
+    if(splash)
+    {
+        splash->show();
+        splash->showMessage(QObject::tr("Подождите ..."));
+    }
     qApp->processEvents();
-
-    MainWindow main_window;
 
     QFrame *frame = new QFrame;
 
-    splash->showMessage(QObject::tr("init RS-232_5 (1)..."));
+    if(splash)
+    {
+        splash->showMessage(QObject::tr("init RS-232_5 (1)..."));
+    }
     SerialBox5 *serial = new SerialBox5(main_window.getThis(), "RS-232_5 (1)");
     serial->add_menu(2, QObject::tr("Настройка RS-232_5 (1)"));
 
-    splash->showMessage(QObject::tr("init RS-232_5 (2)..."));
+    if(splash)
+    {
+        splash->showMessage(QObject::tr("init RS-232_5 (2)..."));
+    }
     SerialBox5 *serial2 = new SerialBox5(main_window.getThis(), "RS-232_5 (2)");
     serial2->add_menu(3, QObject::tr("Настройка RS-232_5 (2)"));
 
@@ -83,7 +92,10 @@ int main(int argc, char *argv[])
     main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window.show();
 
-    splash->finish(&main_window);
+    if(splash)
+    {
+        splash->finish(&main_window);
+    }
 
     return app.exec();
 }

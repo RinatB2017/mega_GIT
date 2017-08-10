@@ -3,53 +3,42 @@
 #**********************************************************************************
 
 TEMPLATE    = app
-TARGET      = RS232_5_bridge
+TARGET      = RS232_x2
+
+FOLDER      = RS232
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/mainbox
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-DEFINES += RS232_FIXED_SIZE
-#DEFINES += RS232_SEND
 DEFINES += RS232_LOG
+DEFINES += RS232_SEND
 
+#DEFINES += RS232_FIXED_SIZE
 DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += FLAG_RESIZE
 DEFINES += NO_TRAYICON
-DEFINES += QT_DEBUG
-#DEFINES += NO_LOG
 
-HEADERS += \
-    defines.hpp \
-    version.hpp \
-    mainbox.hpp
+#DEFINES += FLAG_RESIZE
+DEFINES += PROGRAMM_IN_UTF8
+DEFINES += NO_LOG
 
-SOURCES += \
-    mainbox.cpp \
-    main.cpp
-
-FORMS += mainbox.ui
+SOURCES += main.cpp
 
 win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../lib"
+LIB_PATH = "../../lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/serial5/serial5.pri)
+include ($$LIB_PATH/serial/serial.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
-}
-
-lessThan(QT_MAJOR_VERSION, 5) {
-    error (Only Qt5)
 }
 
 VPATH = $$INCLUDEPATH

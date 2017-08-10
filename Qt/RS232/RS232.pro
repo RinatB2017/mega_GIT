@@ -2,49 +2,16 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE    = app
-TARGET      = RS232
+TEMPLATE  = subdirs
+CONFIG   += ordered
 
-DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
-INCLUDEPATH = $$DEPENDPATH
+SUBDIRS += \
+    RS232_5 \
+    RS232_5_bridge \
+    RS232_5_x2
 
-QMAKE_CXXFLAGS += -fno-show-column
-
-DEFINES += RS232_FIXED_SIZE
-DEFINES += RS232_SEND
-#DEFINES += RS232_LOG
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += FLAG_RESIZE
-DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
-
-HEADERS += \
-    defines.hpp \
-    version.hpp \
-    mainbox.hpp
-
-SOURCES += \
-    mainbox.cpp \
-    main.cpp
-
-FORMS += mainbox.ui
-
-win32 {
-    RC_FILE = ico/myapp.rc
+lessThan(QT_MAJOR_VERSION, 5) {
+    message (QT4)
+    SUBDIRS += RS232
+    SUBDIRS += RS232_x2
 }
-
-LIB_PATH = "../lib"
-include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/serial/serial.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
-
-VPATH = $$INCLUDEPATH

@@ -3,36 +3,44 @@
 #**********************************************************************************
 
 TEMPLATE    = app
-TARGET      = RS232_x2
+TARGET      = RS232
 
-FOLDER  = old_programm
+FOLDER      = RS232
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox
+    $$PWD/src/mainbox \
+    $$PWD/src/mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-DEFINES += RS232_LOG
+DEFINES += RS232_FIXED_SIZE
 DEFINES += RS232_SEND
+#DEFINES += RS232_LOG
 
-#DEFINES += RS232_FIXED_SIZE
 DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-#DEFINES += FLAG_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_LOG
+DEFINES += FLAG_RESIZE
+DEFINES += NO_TRAYICON
+#DEFINES += NO_LOG
 
-SOURCES += main.cpp
+HEADERS += \
+    defines.hpp \
+    version.hpp \
+    mainbox.hpp
+
+SOURCES += \
+    mainbox.cpp \
+    main.cpp
+
+FORMS += mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
 }
 
 LIB_PATH = "../../lib"
-
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial/serial.pri)
 

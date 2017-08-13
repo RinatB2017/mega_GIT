@@ -59,11 +59,10 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox5 = new SerialBox5(this, "RS232_5");
+    serialBox5 = new SerialBox5(this, "RS232_5", "RS232");
     serialBox5->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox5);
-    ui->serial_layout->addStretch();
 
     connect(this,       SIGNAL(send(QByteArray)),   serialBox5, SLOT(input(QByteArray)));
     connect(serialBox5, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
@@ -89,10 +88,13 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
 void MainBox::createTestBar(void)
 {
     QToolBar *toolBar = new QToolBar(tr("testbar"));
+    toolBar->setObjectName("testbar");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
-    if(!mw) return;
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

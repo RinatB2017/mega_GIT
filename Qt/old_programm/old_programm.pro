@@ -19,8 +19,6 @@ SUBDIRS += \
     MTC \
     MTC_runner \
     QTextToSpeech \
-    RS232_x2 \
-    RS232_5_x2 \
     SBGlass \
     SIM900 \
     Sniffer_PCA10000 \

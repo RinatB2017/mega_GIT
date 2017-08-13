@@ -14,7 +14,6 @@ SUBDIRS += \
 #    MODBUS \
     PacketSender \
     RS232 \
-    RS232_5 \
     show_films \
     Teacher \
     Teacher_light \

@@ -48,28 +48,20 @@ int main(int argc, char *argv[])
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
-    if(splash)
-    {
-        splash->show();
-        splash->showMessage(QObject::tr("Подождите ..."));
-    }
+    Q_CHECK_PTR(splash);
+    splash->show();
+    splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
 
     QFrame *frame = new QFrame;
+    Q_CHECK_PTR(frame);
+    splash->showMessage(QObject::tr("init RS-232_5 (1)..."));
+    SerialBox5 *serial = new SerialBox5(main_window.getThis(), "RS-232_5 (1)", "RS-232_1");
+    serial->add_menu(2);
 
-    if(splash)
-    {
-        splash->showMessage(QObject::tr("init RS-232_5 (1)..."));
-    }
-    SerialBox5 *serial = new SerialBox5(main_window.getThis(), "RS-232_5 (1)");
-    serial->add_menu(2, QObject::tr("Настройка RS-232_5 (1)"));
-
-    if(splash)
-    {
-        splash->showMessage(QObject::tr("init RS-232_5 (2)..."));
-    }
-    SerialBox5 *serial2 = new SerialBox5(main_window.getThis(), "RS-232_5 (2)");
-    serial2->add_menu(3, QObject::tr("Настройка RS-232_5 (2)"));
+    splash->showMessage(QObject::tr("init RS-232_5 (2)..."));
+    SerialBox5 *serial2 = new SerialBox5(main_window.getThis(), "RS-232_5 (2)", "RS-232_2");
+    serial2->add_menu(4);
 
 #if 0
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -92,10 +84,7 @@ int main(int argc, char *argv[])
     main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window.show();
 
-    if(splash)
-    {
-        splash->finish(&main_window);
-    }
+    splash->finish(&main_window);
 
     return app.exec();
 }

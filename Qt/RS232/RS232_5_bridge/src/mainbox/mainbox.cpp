@@ -56,12 +56,10 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox5_1 = new SerialBox5(this, "RS232 (1)");
-    serialBox5_1->setObjectName("Настройка RS-232 (1)");
+    serialBox5_1 = new SerialBox5(this, "RS232 (1)", "RS232_1");
     serialBox5_1->add_menu(2);
 
-    serialBox5_2 = new SerialBox5(this, "RS232 (2)");
-    serialBox5_2->setObjectName("Настройка RS-232 (2)");
+    serialBox5_2 = new SerialBox5(this, "RS232 (2)", "RS232_2");
     serialBox5_2->add_menu(4);
 
     ui->serial_layout->addWidget(serialBox5_1);

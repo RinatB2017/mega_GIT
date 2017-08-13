@@ -73,7 +73,7 @@ LogBox::LogBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 LogBox::~LogBox()
 {
-    //save_settings();
+    save_settings();
 
     delete logBox;
 
@@ -95,6 +95,8 @@ void LogBox::init(void)
 void LogBox::popup(QPoint)
 {
     QMenu *popup_menu = logBox->createStandardContextMenu();
+    Q_CHECK_PTR(popup_menu);
+
     popup_menu->setStyleSheet("background:white;color:black;");
 
     QAction *clear_action   = new QAction(tr("clear"),   this);
@@ -238,8 +240,13 @@ void LogBox::infoLog(const QString &text)
         temp = text;
     }
 
-    flagColor ? logBox->setTextColor(QColor("blue")) : logBox->setTextColor(QColor("black"));
-    flagNoCRLF ? logBox->insertPlainText(temp) : logBox->append(temp);
+    flagColor ? logBox->setTextColor(QColor(Qt::blue)) : logBox->setTextColor(QColor(Qt::black));
+
+    if(flagNoCRLF)
+        logBox->insertPlainText(temp);
+    else
+        logBox->append(temp);
+
     logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
@@ -270,8 +277,13 @@ void LogBox::debugLog(const QString &text)
         temp = text;
     }
 
-    flagColor ? logBox->setTextColor(QColor("green")) : logBox->setTextColor(QColor("black"));
-    flagNoCRLF ? logBox->insertPlainText(temp) : logBox->append(temp);
+    flagColor ? logBox->setTextColor(QColor(Qt::green)) : logBox->setTextColor(QColor(Qt::black));
+
+    if(flagNoCRLF)
+        logBox->insertPlainText(temp);
+    else
+        logBox->append(temp);
+
     logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
@@ -312,8 +324,13 @@ void LogBox::errorLog(const QString &text)
         msgBox.exec();
     }
 
-    flagColor ? logBox->setTextColor(QColor("red")) : logBox->setTextColor(QColor("black"));
-    flagNoCRLF ? logBox->insertPlainText(temp) : logBox->append(temp);
+    flagColor ? logBox->setTextColor(QColor(Qt::red)) : logBox->setTextColor(QColor(Qt::black));
+
+    if(flagNoCRLF)
+        logBox->insertPlainText(temp);
+    else
+        logBox->append(temp);
+
     logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
@@ -344,8 +361,13 @@ void LogBox::traceLog(const QString &text)
         temp = text;
     }
 
-    flagColor ? logBox->setTextColor(QColor("gray")) : logBox->setTextColor(QColor("black"));
-    flagNoCRLF ? logBox->insertPlainText(temp) : logBox->append(temp);
+    flagColor ? logBox->setTextColor(QColor(Qt::gray)) : logBox->setTextColor(QColor(Qt::black));
+
+    if(flagNoCRLF)
+        logBox->insertPlainText(temp);
+    else
+        logBox->append(temp);
+
     logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
@@ -380,7 +402,12 @@ void LogBox::syslogLog(int level,
             .arg(message);
 
     flagColor ? logBox->setTextColor(QColor("blue")) : logBox->setTextColor(QColor("black"));
-    flagNoCRLF ? logBox->insertPlainText(temp) : logBox->append(temp);
+
+    if(flagNoCRLF)
+        logBox->insertPlainText(temp);
+    else
+        logBox->append(temp);
+
     logBox->moveCursor(QTextCursor::End);
     //---
     qApp->processEvents();
@@ -485,7 +512,13 @@ void LogBox::append(const QString &data)
 void LogBox::bappend(const QByteArray &data)
 {
     if(data.isEmpty()) return;
-    logBox->insertPlainText(data);
+
+    flagColor ? logBox->setTextColor(QColor(Qt::blue)) : logBox->setTextColor(QColor(Qt::black));
+    if(flagNoCRLF)
+        logBox->insertPlainText(data);
+    else
+        logBox->append(data);
+
     logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
@@ -572,14 +605,20 @@ void LogBox::load_settings(void)
 void LogBox::save_settings(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(!mw) return;
+    if(mw == nullptr)
+    {
+        return;
+    }
 
 #ifdef QT_DEBUG
     qDebug() << "LogBox::save_settings(void)";
 #endif
 
+    QString text = objectName();
+    if(text.isEmpty())  text = "RS-232";
+
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    settings->beginGroup("LogEdit");
+    settings->beginGroup(text);
     settings->setValue("readOnly",      (bool)logBox->isReadOnly());
     settings->setValue("acceptRichText",(bool)logBox->acceptRichText());
     settings->setValue("no_CRLF",       (bool)flagNoCRLF);

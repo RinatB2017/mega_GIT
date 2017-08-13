@@ -27,7 +27,7 @@ win32 {
     CONFIG += no_fixpath
 }
 
-linux {
+unix:!macx {
     DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
 }
 macx {

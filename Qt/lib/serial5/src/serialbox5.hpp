@@ -45,7 +45,9 @@ class SerialBox5 : public QFrame
     Q_OBJECT
 
 public:
-    explicit SerialBox5(QWidget *parent, const QString &caption);
+    explicit SerialBox5(QWidget *parent,
+                        const QString &caption,
+                        const QString &o_name);
     explicit SerialBox5(QWidget *parent = 0);
     ~SerialBox5();
 
@@ -65,6 +67,7 @@ private:
     QWidget *parent = 0;
     QSerialPort *serial5 = 0;
     QString caption;
+    QString o_name;
 
     bool flag_in_hex = false;
     bool flag_byte_by_byte = false;

@@ -80,6 +80,10 @@
         <translation>Файл</translation>
     </message>
     <message>
+        <source>Windows</source>
+        <translation>Окна</translation>
+    </message>
+    <message>
         <source>&amp;Settings</source>
         <translation>&amp;Настройки</translation>
     </message>

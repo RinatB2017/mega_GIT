@@ -53,12 +53,15 @@ SerialBox5::SerialBox5(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-SerialBox5::SerialBox5(QWidget *parent, const QString &caption) :
+SerialBox5::SerialBox5(QWidget *parent,
+                       const QString &caption,
+                       const QString &o_name) :
     QFrame(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
     serial5(0),
     caption(caption),
+    o_name(o_name),
     flag_in_hex(false),
     flag_byte_by_byte(false)
 {
@@ -141,6 +144,7 @@ void SerialBox5::createWidgets(void)
 
 #ifdef RS232_LOG
     logBox = new LogBox(this);
+    logBox->setObjectName(o_name);
     ui->layout_right_LOG->addWidget(logBox);
 #endif
 
@@ -601,7 +605,7 @@ bool SerialBox5::add_menu(int index)
         return false;
     }
 
-    QMenu *menu = new QMenu(objectName());
+    QMenu *menu = new QMenu(caption);
     if(menu == nullptr)
     {
         return false;

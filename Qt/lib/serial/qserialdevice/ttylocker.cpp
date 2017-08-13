@@ -164,7 +164,7 @@ QString TTYLocker::getLockFileInNumericForm() const
             result.clear();
         else {
             result.append("/LCK.%1.%2");
-            result = result.arg(major(buf.st_rdev)).arg(minor(buf.st_rdev));
+            //TODO проблема с major result = result.arg(major(buf.st_rdev)).arg(minor(buf.st_rdev));
         }
     }
     return result;

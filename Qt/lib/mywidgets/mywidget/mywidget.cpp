@@ -93,21 +93,7 @@ void MyWidget::connect_log(QWidget *parent)
 //--------------------------------------------------------------------------------
 void MyWidget::log(const QString data)
 {
-#ifdef NO_LOG
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-#ifndef NO_STATUSBAR
-        mw->set_status2_text(data);
-#endif
-    }
-    else
-    {
-        qDebug() << data;
-    }
-#else
     qDebug() << data;
-#endif
 }
 //--------------------------------------------------------------------------------
 void MyWidget::init_w_lists(void)

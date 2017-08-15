@@ -38,7 +38,8 @@ class LogBox : public QFrame
     Q_OBJECT
 
 public:
-    explicit LogBox(QWidget *parent = 0,
+    explicit LogBox(const QString &o_name,
+                    QWidget *parent = 0,
                     unsigned int min_width  = 1,
                     unsigned int min_height = 1);
     ~LogBox();
@@ -83,6 +84,8 @@ private slots:
 
 private:
     QTextEdit *logBox = 0;
+
+    QString o_name;
 
     bool flagNoCRLF = false;
     bool flagAddDateTime = false;

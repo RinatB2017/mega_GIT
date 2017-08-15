@@ -72,25 +72,17 @@ void setup(){
 }
 
 void loop(){
-  unsigned long time = millis();
-  
+  unsigned long data = millis();
   Mirf.setTADDR((byte *)"serv1");
+  Mirf.send((byte *)&data);
   
-  Mirf.send((byte *)&time);
-  
-  while(Mirf.isSending()){
+  unsigned long time = millis();
+  while(Mirf.isSending()) {
   }
-  Serial.println("Finished sending");
-  delay(10);
-  while(!Mirf.dataReady()){
-    //Serial.println("Waiting");
-    if ( ( millis() - time ) > 1000 ) {
-      Serial.println("Timeout on response from server!");
-      return;
-    }
+  while(!Mirf.dataReady()) {
   }
   
-  Mirf.getData((byte *) &time);
+  Mirf.getData((byte *) &data);
   
   Serial.print("Ping: ");
   Serial.println((millis() - time));

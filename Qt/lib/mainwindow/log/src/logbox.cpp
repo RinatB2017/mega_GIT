@@ -50,10 +50,12 @@
 //--------------------------------------------------------------------------------
 #include "LoggingCategories.hpp"
 //--------------------------------------------------------------------------------
-LogBox::LogBox(QWidget *parent,
+LogBox::LogBox(const QString &o_name,
+               QWidget *parent,
                unsigned int min_width,
                unsigned int min_height) :
     QFrame(parent),
+    o_name(o_name),
     flagNoCRLF(false),
     flagAddDateTime(false),
     flagColor(true),
@@ -569,9 +571,11 @@ void LogBox::load_settings(void)
     qDebug() << "LogBox::load_settings(void)";
 #endif
 
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QString text = o_name;
+    if(text.isEmpty())  text = "RS-232";
 
-    settings->beginGroup("LogEdit");
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    settings->beginGroup(text);
     logBox->setReadOnly(settings->value("readOnly", true).toBool());
     logBox->setAcceptRichText(settings->value("acceptRichText", true).toBool());
     flagNoCRLF      = settings->value("no_CRLF", false).toBool();
@@ -614,7 +618,7 @@ void LogBox::save_settings(void)
     qDebug() << "LogBox::save_settings(void)";
 #endif
 
-    QString text = objectName();
+    QString text = o_name;
     if(text.isEmpty())  text = "RS-232";
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);

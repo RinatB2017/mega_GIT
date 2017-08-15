@@ -135,7 +135,7 @@ void SerialBox::createWidgets(void)
     connect(this, SIGNAL(output(QByteArray)), this, SLOT(drawData(QByteArray)));
 
 #ifdef RS232_LOG
-    logBox = new LogBox(this);
+    logBox = new LogBox("RS232", this);
     ui->layout_right_LOG->addWidget(logBox);
 #endif
 

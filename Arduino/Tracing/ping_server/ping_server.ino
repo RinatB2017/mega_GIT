@@ -71,8 +71,9 @@ void loop(){
    * transitions from true to false.
    */
    
-  if(!Mirf.isSending() && Mirf.dataReady()){
-    Serial.println("Got packet");
+  if(!Mirf.isSending() && Mirf.dataReady())
+  {
+    //Serial.println("Got packet");
     
     /*
      * Get load the packet into the buffer.

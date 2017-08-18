@@ -15,16 +15,36 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QWidget" name="widget_serial" native="true"/>
+    <widget class="Serial" name="widget_serial" native="true"/>
    </item>
    <item>
-    <widget class="QWidget" name="widget_visual" native="true"/>
+    <widget class="Viewer" name="widget_visual" native="true"/>
    </item>
    <item>
-    <widget class="QWidget" name="widget_grapher" native="true"/>
+    <widget class="Grapher" name="widget_grapher" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Serial</class>
+   <extends>QWidget</extends>
+   <header>serial.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Viewer</class>
+   <extends>QWidget</extends>
+   <header>viewer.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Grapher</class>
+   <extends>QWidget</extends>
+   <header>grapher.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

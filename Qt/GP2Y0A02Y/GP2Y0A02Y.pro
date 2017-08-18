@@ -14,6 +14,10 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
+DEFINES += RS232_FIXED_SIZE
+#DEFINES += RS232_SEND
+#DEFINES += RS232_LOG
+
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += NO_RESIZE
@@ -46,6 +50,11 @@ OTHER_FILES += doc/notebook.txt
 LIB_PATH = "../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/meta/grapherbox.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
+
+include (src/serial/serial.pri)
+include (src/viewer/viewer.pri)
+include (src/grapher/grapher.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

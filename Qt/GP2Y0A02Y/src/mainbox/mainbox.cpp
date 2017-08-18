@@ -63,11 +63,13 @@ void MainBox::init(void)
 
     createTestBar();
 
-    //connect(ui->checkBox_0, SIGNAL(clicked(bool)),  ui->checkBox_1, SLOT(setDisabled(bool)));
+    connect(ui->widget_serial,  SIGNAL(set_value(int,int)), ui->widget_visual,  SLOT(set_value(int,int)));
+    connect(ui->widget_serial,  SIGNAL(set_value(int,int)), ui->widget_grapher, SLOT(set_value(int,int)));
 
     init_w_lists();
 
-    installEventFilter(this);
+    //installEventFilter(this);
+
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
@@ -267,43 +269,5 @@ void MainBox::changeEvent(QEvent *event)
     default:
         break;
     }
-}
-//--------------------------------------------------------------------------------
-bool MainBox::eventFilter(QObject*, QEvent* event)
-{
-    QMouseEvent *mouseEvent = (QMouseEvent *) event;
-    if(mouseEvent == nullptr)
-    {
-        return false;
-    }
-    //---
-    if(mouseEvent->type() == QMouseEvent::MouseButtonPress)
-    {
-        emit info(QString("%1 %2")
-                  .arg(mouseEvent->pos().x())
-                  .arg(mouseEvent->pos().y()));
-        return true;
-    }
-    //---
-    if(mouseEvent->type() == QMouseEvent::Wheel)
-    {
-        return true;
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-void MainBox::resizeEvent(QResizeEvent *event)
-{
-    Q_UNUSED(event);
-}
-//--------------------------------------------------------------------------------
-void MainBox::paintEvent(QPaintEvent *)
-{
-#if 0
-    QPainter p(this);
-    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    p.drawLine(0, 0, width(), height());
-    p.drawLine(0, height(), width(), 0);
-#endif
 }
 //--------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,83 +18,53 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "viewer.hpp"
+#include "ui_viewer.h"
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Viewer::Viewer(QWidget *parent) :
+    MyWidget(parent),
+    ui(new Ui::Viewer)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+Viewer::~Viewer()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
-    QList<CMD> commands;
-
-    //QPixmap picture_pixmap;
-    int w = 0;
-    int h = 0;
-    int timerId = 0;
-
-    void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
-    void createTestBar(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Viewer::init(void)
+{
+    ui->setupUi(this);
+
+    devices.append(ui->frame_0);
+    devices.append(ui->frame_1);
+    devices.append(ui->frame_2);
+    devices.append(ui->frame_3);
+    devices.append(ui->frame_4);
+    devices.append(ui->frame_5);
+    devices.append(ui->frame_6);
+    devices.append(ui->frame_7);
+
+    emit info("Viewer starting");
+}
+//--------------------------------------------------------------------------------
+bool Viewer::set_value(int channel, int value)
+{
+    emit debug("Viewer: set_value");
+
+    if(channel < 0)
+    {
+        emit error("Viewer: channel < 0");
+        return false;
+    }
+    if(channel > MAX_CHANNEL)
+    {
+        emit error(QString("Viewer: channel > MAX_CHANNEL (%1)").arg(channel));
+        return false;
+    }
+
+    devices[channel]->show_value(value);
+    return true;
+}
+//--------------------------------------------------------------------------------

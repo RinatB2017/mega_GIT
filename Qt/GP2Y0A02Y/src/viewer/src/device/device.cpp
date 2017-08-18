@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,83 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "device.hpp"
+#include "ui_device.h"
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Device::Device(QWidget *parent) :
+    QFrame(parent),
+    ui(new Ui::Device)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+Device::~Device()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
-    QList<CMD> commands;
-
-    //QPixmap picture_pixmap;
-    int w = 0;
-    int h = 0;
-    int timerId = 0;
-
-    void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
-    void createTestBar(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Device::init(void)
+{
+    ui->setupUi(this);
+
+    //show_value(-1);
+    setFixedWidth(100);
+}
+//--------------------------------------------------------------------------------
+void Device::show_value(int value)
+{
+    this->value = value;
+
+    ui->label->setText(QString("%1").arg(this->value));
+    uint8_t R = value;
+    uint8_t G = 0;
+    uint8_t B = 0;
+    ui->label->setStyleSheet(QString("background:#%1%2%3")
+            .arg(R, 2, 16, QChar('0'))
+            .arg(G, 2, 16, QChar('0'))
+            .arg(B, 2, 16, QChar('0')));
+}
+//--------------------------------------------------------------------------------

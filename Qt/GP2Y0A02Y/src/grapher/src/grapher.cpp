@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,83 +18,68 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "grapher.hpp"
+#include "defines.hpp"
+#include "ui_grapher.h"
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Grapher::Grapher(QWidget *parent) :
+    MyWidget(parent),
+    ui(new Ui::Grapher)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+Grapher::~Grapher()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
-    QList<CMD> commands;
-
-    //QPixmap picture_pixmap;
-    int w = 0;
-    int h = 0;
-    int timerId = 0;
-
-    void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
-    void createTestBar(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Grapher::init(void)
+{
+    ui->setupUi(this);
+
+    ui->grapher->set_silense(true);
+    ui->grapher->set_visible_btn_Options(false);
+    ui->grapher->set_visible_btn_all_ON(true);
+    ui->grapher->set_visible_btn_all_OFF(true);
+    ui->grapher->set_visible_btn_Clear(true);
+    ui->grapher->set_visible_btn_Load(false);
+    ui->grapher->set_visible_btn_Save(false);
+    ui->grapher->set_visible_btn_Statistic(false);
+
+    ui->grapher->set_title("Измерение расстояний");
+    ui->grapher->set_title_axis_X("Измерение");
+    ui->grapher->set_title_axis_Y("Дистанция");
+
+    for(int n=0; n<8; n++)
+    {
+        curves[n] = ui->grapher->add_curve(QString("%1").arg(n));
+    }
+
+    emit info("Grapher started");
+}
+//--------------------------------------------------------------------------------
+void Grapher::clean_all(void)
+{
+    ui->grapher->clear();
+}
+//--------------------------------------------------------------------------------
+bool Grapher::set_value(int channel, int value)
+{
+    emit debug("Grapher: set_value");
+
+    if(channel < 0)
+    {
+        emit error("Grapher: channel < 0");
+        return false;
+    }
+    if(channel > MAX_CHANNEL)
+    {
+        emit error(QString("Grapher: channel > MAX_CHANNEL (%1)").arg(channel));
+        return false;
+    }
+
+    ui->grapher->add_curve_data(curves[channel], value);
+    return true;
+}
+//--------------------------------------------------------------------------------

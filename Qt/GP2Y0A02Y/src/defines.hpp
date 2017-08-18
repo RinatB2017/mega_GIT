@@ -29,6 +29,8 @@
 #define ORGNAME "Work"
 #define APPNAME "GP2Y0A02Y"
 //--------------------------------------------------------------------------------
+#define MAX_CHANNEL 7   // начинается с 0
+//--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME

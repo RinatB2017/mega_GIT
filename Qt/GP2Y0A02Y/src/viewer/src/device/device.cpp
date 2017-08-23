@@ -46,12 +46,24 @@ void Device::show_value(int value)
     this->value = value;
 
     ui->label->setText(QString("%1").arg(this->value));
+
+    /*
+    0xFFFF  255
+    x       y
+    */
+
+#if 1
+    float max_value = 500;
+    uint8_t R = (float)value * 255.0 / max_value + 0.5;
+#else
     uint8_t R = value;
+#endif
     uint8_t G = 0;
     uint8_t B = 0;
     ui->label->setStyleSheet(QString("background:#%1%2%3")
             .arg(R, 2, 16, QChar('0'))
             .arg(G, 2, 16, QChar('0'))
             .arg(B, 2, 16, QChar('0')));
+    ui->label->setToolTip(QString("%1").arg(value));
 }
 //--------------------------------------------------------------------------------

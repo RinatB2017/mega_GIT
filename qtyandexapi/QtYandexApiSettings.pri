@@ -1,0 +1,8 @@
+PRECOMPILED_HEADER = Precompiled.h
+CONFIG += c++11
+
+OBJECTS_DIR = $$OUT_PWD/obj
+MOC_DIR = $$OUT_PWD/moc
+
+
+LIBS += -L$$DESTDIR

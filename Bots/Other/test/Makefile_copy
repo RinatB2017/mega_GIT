@@ -1,0 +1,14 @@
+CC 		:= g++
+CFLAGS 		:= -I/usr/include/opencv -L/usr/lib
+OBJECTS 	:= 
+LIBRARIES 	:= -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs
+
+.PHONY: all clean
+
+all: test
+
+test: 
+	$(CC) $(CFLAGS) -o test test.cpp $(LIBRARIES)
+	
+clean:
+	rm -f *.o

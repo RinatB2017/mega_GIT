@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/startingfaces">
+        <file>josh1.png</file>
+        <file>josh2.png</file>
+        <file>josh3.png</file>
+        <file>josh4.png</file>
+        <file>josh5.png</file>
+        <file>josh6.png</file>
+        <file>josh7.png</file>
+        <file>josh8.png</file>
+        <file>josh9.png</file>
+        <file>josh10.png</file>
+        <file>josh11.png</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>dirpics.png</file>
+        <file>internet-cloud-icon.jpg</file>
+        <file>videofile.png</file>
+        <file>webcam.png</file>
+    </qresource>
+    <qresource prefix="/cascades">
+        <file>haarcascade_eye_tree_eyeglasses.xml</file>
+        <file>lbpcascade_frontalface.xml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D1C44532-8E80-4A52-B60A-DA59C3AF38C8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlayingCardRecognition</RootNamespace>
+    <AssemblyName>PlayingCardRecognition</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\..\..\..\..\..\..\Nazmi\Pratik\C#\Library Archive\AForge\AForge.NET Framework-2.2.2\Release\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>..\..\..\..\..\..\..\Nazmi\Pratik\C#\Library Archive\AForge\AForge.NET Framework-2.2.2\Release\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.2.2.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Card.cs" />
+    <Compile Include="CardCollection.cs" />
+    <Compile Include="CardRecognizer.cs" />
+    <Compile Include="HeatonResearchNeural\Activation\ActivationFunction.cs" />
+    <Compile Include="HeatonResearchNeural\Activation\ActivationLinear.cs" />
+    <Compile Include="HeatonResearchNeural\Activation\ActivationSigmoid.cs" />
+    <Compile Include="HeatonResearchNeural\Activation\ActivationTANH.cs" />
+    <Compile Include="HeatonResearchNeural\Anneal\SimulatedAnnealing.cs" />
+    <Compile Include="HeatonResearchNeural\Exception\MatrixError.cs" />
+    <Compile Include="HeatonResearchNeural\Exception\NeuralNetworkError.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\FeedforwardLayer.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\FeedforwardNetwork.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Anneal\NeuralSimulatedAnnealing.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Backpropagation\Backpropagation.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Backpropagation\BackpropagationLayer.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Genetic\NeuralChromosome.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Genetic\NeuralGeneticAlgorithm.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Genetic\TrainingSetNeuralChromosome.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Genetic\TrainingSetNeuralGeneticAlgorithm.cs" />
+    <Compile Include="HeatonResearchNeural\Feedforward\Train\Train.cs" />
+    <Compile Include="HeatonResearchNeural\Genetic\Chromosome.cs" />
+    <Compile Include="HeatonResearchNeural\Genetic\GeneticAlgorithm.cs" />
+    <Compile Include="HeatonResearchNeural\Genetic\MateWorker.cs" />
+    <Compile Include="HeatonResearchNeural\Hopfield\Hopfield.cs" />
+    <Compile Include="HeatonResearchNeural\Matrix\BiPolarUtil.cs" />
+    <Compile Include="HeatonResearchNeural\Matrix\Matrix.cs" />
+    <Compile Include="HeatonResearchNeural\Matrix\MatrixCODEC.cs" />
+    <Compile Include="HeatonResearchNeural\Matrix\MatrixMath.cs" />
+    <Compile Include="HeatonResearchNeural\SOM\NormalizeInput.cs" />
+    <Compile Include="HeatonResearchNeural\SOM\SelfOrganizingMap.cs" />
+    <Compile Include="HeatonResearchNeural\SOM\TrainSelfOrganizingMap.cs" />
+    <Compile Include="HeatonResearchNeural\Util\BoundNumbers.cs" />
+    <Compile Include="HeatonResearchNeural\Util\ErrorCalculation.cs" />
+    <Compile Include="HeatonResearchNeural\Util\ReadCSV.cs" />
+    <Compile Include="HeatonResearchNeural\Util\SerializeObject.cs" />
+    <Compile Include="ImagePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ImagePanel.designer.cs">
+      <DependentUpon>ImagePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointComparer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ImagePanel.resx">
+      <DependentUpon>ImagePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HeatonResearchNeural\SOM\.svn\all-wcprops" />
+    <None Include="HeatonResearchNeural\SOM\.svn\entries" />
+    <None Include="HeatonResearchNeural\SOM\.svn\text-base\NormalizeInput.cs.svn-base" />
+    <None Include="HeatonResearchNeural\SOM\.svn\text-base\SelfOrganizingMap.cs.svn-base" />
+    <None Include="HeatonResearchNeural\SOM\.svn\text-base\TrainSelfOrganizingMap.cs.svn-base" />
+    <None Include="HeatonResearchNeural\Util\.svn\all-wcprops" />
+    <None Include="HeatonResearchNeural\Util\.svn\entries" />
+    <None Include="HeatonResearchNeural\Util\.svn\text-base\BoundNumbers.cs.svn-base" />
+    <None Include="HeatonResearchNeural\Util\.svn\text-base\ErrorCalculation.cs.svn-base" />
+    <None Include="HeatonResearchNeural\Util\.svn\text-base\ReadCSV.cs.svn-base" />
+    <None Include="HeatonResearchNeural\Util\.svn\text-base\SerializeObject.cs.svn-base" />
+    <None Include="Templates\Clubs.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\Diamonds.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\J.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\K.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\Q.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\Spades.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\Hearts.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HeatonResearchNeural\SOM\.svn\prop-base\" />
+    <Folder Include="HeatonResearchNeural\SOM\.svn\props\" />
+    <Folder Include="HeatonResearchNeural\SOM\.svn\tmp\prop-base\" />
+    <Folder Include="HeatonResearchNeural\SOM\.svn\tmp\props\" />
+    <Folder Include="HeatonResearchNeural\SOM\.svn\tmp\text-base\" />
+    <Folder Include="HeatonResearchNeural\Util\.svn\prop-base\" />
+    <Folder Include="HeatonResearchNeural\Util\.svn\props\" />
+    <Folder Include="HeatonResearchNeural\Util\.svn\tmp\prop-base\" />
+    <Folder Include="HeatonResearchNeural\Util\.svn\tmp\props\" />
+    <Folder Include="HeatonResearchNeural\Util\.svn\tmp\text-base\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

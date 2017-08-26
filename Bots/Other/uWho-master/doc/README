@@ -1,0 +1,25 @@
+Updates:
+
+Can open webcam for face processing.
+Can open video file for face processing.
+Can open directoyr of images for face processing.
+Cleaned up code some. Solved a few crashy areas.
+
+Todo:
+Sequentalize tracking instead of ugly std::rand()%30000 .
+Add another file to write that includes face ID to an entered name.
+Limits to how many samples of the same person's face.
+Add a tracker that adds to a file (Face ID, time) on webcam streams
+Add a IPcam module that pulls frames online at set intervals. 
+
+uWho is a Facial tracking program. I made this to suit the need to find unique faces and to count uniques.
+
+We are running Makevention in Bloomington, IN as part of the hackerspace Bloominglabs. Relying on someone to fill out a paper chit to track how many people showed up, I implemented a unique face finder by way of faceRecognizer class in OpenCV.
+
+The face ML algo stores the face.xml in the same directory the program is written.
+
+You'll need OpenCV compiled for your machine. Then go into the uWho.pro file in Qt Creator and change your paths appropriately. When you run the program, it will immediately start classifiying new faces. I included a few of my faces to start the seed for the faceRecognizer class.
+
+The console will output the face# attributed to that face, along with an estimation of how close that face is.
+
+On the video, the number in the upper right of a face is the face number in the video (can handle arbitrary amount of faces per image). The number in the upper right of image is face ID. The face ID is generated randomly on a new face.

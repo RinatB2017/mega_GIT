@@ -1,0 +1,17 @@
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.ImagePanel.resources
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.Properties.Resources.resources
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.csproj.GenerateResource.Cache
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\bin\Debug\PlayingCardRecognition.dll
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\bin\Debug\PlayingCardRecognition.pdb
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.csprojResolveAssemblyReference.cache
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.dll
+C:\Users\Gustavo\Desktop\IA2\IA\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.pdb
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\bin\Debug\PlayingCardRecognition.dll
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\bin\Debug\PlayingCardRecognition.pdb
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\ResolveAssemblyReference.cache
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.ImagePanel.resources
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.Properties.Resources.resources
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\GenerateResource.read.1.tlog
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\GenerateResource.write.1.tlog
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.dll
+D:\Workplace\PlayingCardRecognition_WebCam\PlayingCardRecognition\obj\Debug\PlayingCardRecognition.pdb

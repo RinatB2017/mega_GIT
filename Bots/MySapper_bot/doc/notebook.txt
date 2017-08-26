@@ -1,0 +1,59 @@
+//--------------------------------------------------------------------------------
+#if 0
+    IplImage *src, *templ,*result;
+
+    src = cvLoadImage("lena.png",1);
+
+    templ = cvLoadImage("lena_eye.png",1);
+
+    result = cvCreateImage(cvSize( src->width - templ->width + 1,src->height - templ->height + 1),32,1);
+
+    cvMatchTemplate( src, templ, result, CV_TM_CCOEFF_NORMED);
+    cvNormalize( result, result, 1, 0, CV_MINMAX );
+
+    cvShowImage( "Image", result );
+    double min,max;
+    CvPoint minpos, maxpos;
+    cvMinMaxLoc(result,&min,&max,&minpos,&maxpos);
+    printf("%5.3f; x = %d; y = %d",max,maxpos.x,maxpos.y);
+    cvWaitKey(0);
+#endif
+//--------------------------------------------------------------------------------
+http://itnotesblog.ru/note.php?id=241
+//--------------------------------------------------------------------------------
+#include <windows.h>
+
+#define VER_FILEVERSION             1,0,0,0
+#define VER_FILEVERSION_STR         "1.0.0.0\0"
+#define VER_PRODUCTVERSION          1,0,0
+#define VER_PRODUCTVERSION_STR      "1.0.0\0"
+#define VER_FILEDESCRIPTION_STR     "HelloWorld"
+#define VER_INTERNALNAME_STR        "Sensor"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright (C) 2015, MyCompany"
+#define VER_ORIGINALFILENAME_STR    "HelloWorld.exe"
+#define VER_PRODUCTNAME_STR         "Hello World"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "FileDescription",    VER_FILEDESCRIPTION_STR
+            VALUE "FileVersion",        VER_FILEVERSION_STR
+            VALUE "InternalName",       VER_INTERNALNAME_STR
+            VALUE "LegalCopyright",     VER_LEGALCOPYRIGHT_STR
+            VALUE "OriginalFilename",   VER_ORIGINALFILENAME_STR
+            VALUE "ProductName",        VER_PRODUCTNAME_STR
+            VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+//--------------------------------------------------------------------------------

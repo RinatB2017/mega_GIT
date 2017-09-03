@@ -12,6 +12,7 @@ SUBDIRS += \
     old_programm \
     Organizations \
 #    MODBUS \
+    QRCodeGenerator \
     PacketSender \
     RS232 \
     show_films \

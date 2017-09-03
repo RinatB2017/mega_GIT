@@ -244,6 +244,8 @@ private:
 
     void create_thread(void);
 
+    void updateQRImage(void);
+
 protected:
     void changeEvent(QEvent *event);
     bool eventFilter(QObject *, QEvent *e);

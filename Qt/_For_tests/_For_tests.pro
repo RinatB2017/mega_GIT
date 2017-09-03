@@ -77,6 +77,8 @@ include ($$LIB_PATH/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 
+include (src/QRCodeGenerator/QRCodeGenerator.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

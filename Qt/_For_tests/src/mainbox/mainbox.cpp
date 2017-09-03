@@ -236,6 +236,45 @@ void MainBox::create_thread(void)
     thread->start();
 }
 //--------------------------------------------------------------------------------
+#include <QRCodeGenerator.hpp>
+
+void MainBox::updateQRImage(void)
+{
+    int levelIndex = 1;
+    int versionIndex = 0;
+    bool bExtent = true;
+    int maskIndex = -1;
+    QString encodeString = "https://www.youtube.com/watch?v=2DWk47HnT9k";
+
+    CQR_Encode qrEncode;
+
+    bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
+    if ( !successfulEncoding )
+    {
+        emit error("!successfulEncoding");
+        return;
+    }
+
+    int qrImageSize = qrEncode.m_nSymbleSize;
+
+    // Создаем двумерный образ кода
+    int encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
+    QImage encodeImage( encodeImageSize, encodeImageSize, QImage::Format_Mono );
+    encodeImage.fill( 1 );
+
+    // Создать двумерный образ кода
+    for ( int i = 0; i < qrImageSize; i++ )
+        for ( int j = 0; j < qrImageSize; j++ )
+            if ( qrEncode.m_byModuleData[i][j] )
+                encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
+
+    //const QPixmap & scale_image = ui->image_label->pixmap()->scaled( scale_size, scale_size );
+
+    QLabel *image_label = new QLabel();
+    image_label->setPixmap( QPixmap::fromImage( encodeImage.scaled(600, 600) ) );
+    image_label->show();
+}
+//--------------------------------------------------------------------------------
 #include <QMouseEvent>
 #include <QDockWidget>
 #include <QImage>
@@ -246,6 +285,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    updateQRImage();
+#endif
+
+#if 0
     QColor color;
     //color.setRgb(255, 255, 0);
     color.setHsv(120, 200, 255);

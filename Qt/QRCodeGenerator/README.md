@@ -5,7 +5,7 @@ QRCodeGenerator
 
 ##
 
-Генератора кода взят отсюда: https://github.com/abinghu/qt_rc
+Генератор кода взят отсюда: https://github.com/abinghu/qt_rc
 
 ##
 

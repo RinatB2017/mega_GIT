@@ -133,6 +133,8 @@ private slots:
     void load_setting(void);
     void save_setting(void);
 
+    void shot(void);
+
 #ifndef NO_LOG
     void slot_is_shows_info(bool state);
     void slot_is_shows_debug(bool state);
@@ -255,6 +257,10 @@ protected:
     QAction *a_is_shows_debug = 0;
     QAction *a_is_shows_error = 0;
     QAction *a_is_shows_trace = 0;
+#endif
+
+#ifdef  DEMO
+    void check_date(void);
 #endif
 
     void closeEvent(QCloseEvent *event);

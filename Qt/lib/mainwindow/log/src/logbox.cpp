@@ -572,7 +572,7 @@ void LogBox::load_settings(void)
 #endif
 
     QString text = o_name;
-    if(text.isEmpty())  text = "RS-232";
+    if(text.isEmpty())  text = "noname";
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     settings->beginGroup(text);

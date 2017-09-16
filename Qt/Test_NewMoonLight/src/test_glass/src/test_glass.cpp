@@ -47,7 +47,7 @@ Test_Glass::Test_Glass(QWidget *parent) :
 
     for(int index=0; index<MAX_POINT; index++)
     {
-        points[index].color = Qt::red;
+        points[index].color = Qt::transparent;
     }
 
     installEventFilter(this);

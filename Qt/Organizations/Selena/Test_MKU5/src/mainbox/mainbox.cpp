@@ -76,7 +76,7 @@ void MainBox::init_log(void)
     ui->layout_serial->addWidget(serialBox);
 #endif
 
-    logBox = new LogBox(this);
+    logBox = new LogBox("Test_MKU5", this);
     ui->layout_log->addWidget(logBox);
 }
 //--------------------------------------------------------------------------------

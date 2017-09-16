@@ -189,7 +189,33 @@ void MainWindow::init(void)
 
     updateText();
 
+#ifdef  DEMO
+    check_date();
+#endif
+
     QTimer::singleShot(100, this, SLOT(load_setting()));
+}
+//--------------------------------------------------------------------------------
+#ifdef  DEMO
+void MainWindow::check_date(void)
+{
+    QDateTime now = QDateTime::currentDateTime();
+    if(now.date().year() >= DEMO_YEAR &&
+            now.date().month() >= DEMO_MONTH &&
+            now.date().day() > DEMO_DAY)
+    {
+        QTimer::singleShot(3000, this, SLOT(shot()));
+    }
+}
+#endif
+//--------------------------------------------------------------------------------
+void MainWindow::shot(void)
+{
+    //QMessageBox::information(this, "Информация", "Всё!");
+    int a = 5;
+    int b = 0;
+    int c = a / b;
+    qDebug() << a << b << c;
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_translations()
@@ -599,6 +625,7 @@ void MainWindow::setToolBarStyles(void)
 void MainWindow::about(void)
 {
     AboutBox *about = new AboutBox(orgName, appName, appVersion, tr("Author: Bikbao Rinat Zinorovich"));
+    about->setWindowIcon(QIcon(ICON_PROGRAMM));
     about->exec();
 }
 //--------------------------------------------------------------------------------

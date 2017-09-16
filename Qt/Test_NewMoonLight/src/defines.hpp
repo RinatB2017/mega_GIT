@@ -1,40 +1,21 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#include <stdint.h>
-//--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_NewMoonLight"
-//--------------------------------------------------------------------------------
-#define MAX_SCREEN_X    6
-#define MAX_SCREEN_Y    6
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
 //--------------------------------------------------------------------------------
 #define CMD_0x01    0x01
 //--------------------------------------------------------------------------------
-enum TYPE
-{
-    HOT  = 0xF0,
-    COLD = 0x0F
-};
-//--------------------------------------------------------------------------------
-typedef struct HEADER
-{
-    uint8_t addr;
-    uint8_t cmd;
-    uint8_t len;
-} HEADER_t;
-//--------------------------------------------------------------------------------
-union F_01
+union NewMoonLightPacket
 {
     struct BODY
     {
-        HEADER  header;
-        struct data
-        {
-            uint8_t leds[MAX_SCREEN_X][MAX_SCREEN_Y];
-        } data_t;
+        uint8_t     address;
+        uint8_t     command;
+        uint8_t     cnt_data;
+        uint16_t    data[3 * 6];
     } body;
     unsigned char buf[sizeof(BODY)];
 };

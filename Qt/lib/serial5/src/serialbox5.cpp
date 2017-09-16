@@ -23,6 +23,7 @@
 #include <QWidget>
 #include <QEvent>
 #include <QMenu>
+#include <QTimer>
 #include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
@@ -239,6 +240,10 @@ void SerialBox5::initEnumerator(void)
 void SerialBox5::initSerial(void)
 {
     serial5 = new QSerialPort(this);
+
+    //TODO
+    timer = new QTimer();
+    connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
 
     connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
     connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
@@ -479,6 +484,18 @@ void SerialBox5::procSerialDataReceive(void)
     {
         return;
     }
+
+    //TODO было
+    // emit output(serial5->readAll());
+
+    if (!timer->isActive())
+        timer->singleShot(20, this, SLOT(timer_stop()));
+    else
+        timer->stop();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::timer_stop(void)
+{
     emit output(serial5->readAll());
 }
 //--------------------------------------------------------------------------------

@@ -15,10 +15,12 @@ SUBDIRS += \
     QRCodeGenerator \
     PacketSender \
     RS232 \
+    RS485 \
     show_films \
     Teacher \
     Teacher_light \
-    Templates
+    Templates \
+    Test_NewMoonLight
     
 lessThan(QT_MAJOR_VERSION, 5) {
     message (QT4)

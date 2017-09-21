@@ -285,6 +285,16 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    uint32_t x = 0x01020304;
+    uint32_t y = htonl(x);
+
+    QByteArray ba;
+    ba.append(y);
+    emit info(ba.toHex());
+
+#endif
+
+#if 0
     updateQRImage();
 #endif
 

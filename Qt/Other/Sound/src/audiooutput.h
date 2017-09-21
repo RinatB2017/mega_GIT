@@ -85,15 +85,22 @@ private:
     QAudioFormat m_format;
 
     //---
-    QSpinBox *sb_sampleRate1 = 0;
-    QSpinBox *sb_sampleRate2 = 0;
+    QDoubleSpinBox *sb_sampleRate1 = 0;
+    QDoubleSpinBox *sb_sampleRate2 = 0;
     //---
+    QDoubleSpinBox *sb_base_freq = 0;
+    QDoubleSpinBox *sb_beats_freq = 0;
+    //---
+    void load_QDoubleSpinBox(QString group_name);
+    void save_QDoubleSpinBox(QString group_name);
 
     QByteArray m_buffer;
 
 private slots:
     void pushTimerExpired(void);
     void deviceChanged(int index);
+
+    void calc_freq(void);
 
     void test(void);
 

@@ -35,6 +35,8 @@
 #endif
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
+#define MAX_TIME_MSEC   100
+//--------------------------------------------------------------------------------
 typedef enum
 {
     E_NO_ERROR = 0,
@@ -489,7 +491,7 @@ void SerialBox5::procSerialDataReceive(void)
     // emit output(serial5->readAll());
 
     if (!timer->isActive())
-        timer->singleShot(20, this, SLOT(timer_stop()));
+        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
     else
         timer->stop();
 }

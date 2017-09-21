@@ -38,6 +38,7 @@
 **
 ****************************************************************************/
 #include <QVBoxLayout>
+#include <QSettings>
 #include <QGroupBox>
 #include <QDebug>
 
@@ -52,6 +53,8 @@
 const int DurationSeconds   = 1;
 const int DataSampleRateHz  = 44100;
 const int BufferSize        = 32768;
+//---------------------------------------------------------------------------
+#define APPNAME "audiooutput"
 //---------------------------------------------------------------------------
 AudioTest::AudioTest()
     :   m_pushTimer(new QTimer(this))
@@ -87,10 +90,12 @@ void AudioTest::initializeWindow(void)
     layout->addWidget(m_deviceBox);
 
     //---
-    sb_sampleRate1 = new QSpinBox;
+    sb_sampleRate1 = new QDoubleSpinBox;
+    sb_sampleRate1->setObjectName("sb_sampleRate1");
     sb_sampleRate1->setRange(1, 20000);
 
-    sb_sampleRate2 = new QSpinBox;
+    sb_sampleRate2 = new QDoubleSpinBox;
+    sb_sampleRate2->setObjectName("sb_sampleRate2");
     sb_sampleRate2->setRange(1, 20000);
 
     QHBoxLayout *hbox = new QHBoxLayout;
@@ -100,10 +105,36 @@ void AudioTest::initializeWindow(void)
     hbox->addWidget(new QLabel("FREQ2:"));
     hbox->addWidget(sb_sampleRate2);
 
-    sb_sampleRate1->setValue(440);
-    sb_sampleRate2->setValue(440);
+    //sb_sampleRate1->setValue(440);
+    //sb_sampleRate2->setValue(440);
 
     layout->addLayout(hbox);
+
+    //---
+    sb_base_freq = new QDoubleSpinBox;
+    sb_base_freq->setObjectName("sb_base_freq");
+    sb_base_freq->setRange(1, 20000);
+
+    sb_beats_freq = new QDoubleSpinBox;
+    sb_beats_freq->setObjectName("sb_beats_freq");
+    sb_beats_freq->setRange(0.01, 20000);
+
+    QPushButton *btn_calc_freq = new QPushButton(this);
+    btn_calc_freq->setText("CALC");
+    connect(sb_base_freq,   SIGNAL(editingFinished()),  this,   SLOT(calc_freq()));
+    connect(sb_beats_freq,  SIGNAL(editingFinished()),  this,   SLOT(calc_freq()));
+    connect(btn_calc_freq,  SIGNAL(clicked(bool)),      this,   SLOT(calc_freq()));
+
+    QHBoxLayout *cbox = new QHBoxLayout;
+    cbox->addWidget(new QLabel("Базовая частота"));
+    cbox->addWidget(sb_base_freq);
+    cbox->addWidget(new QLabel("Частота биений"));
+    cbox->addWidget(sb_beats_freq);
+    cbox->addWidget(btn_calc_freq);
+    cbox->addStretch(1);
+
+    layout->addLayout(cbox);
+    //---
 
     QGroupBox *gbox = new QGroupBox;
     gbox->setTitle("Volume");
@@ -121,8 +152,8 @@ void AudioTest::initializeWindow(void)
     grid->addWidget(m_left_volume,  0, 1);
     grid->addWidget(m_right_volume, 1, 1);
 
-    connect(m_left_volume,  SIGNAL(valueChanged(int)), this, SLOT(test()));
-    connect(m_right_volume, SIGNAL(valueChanged(int)), this, SLOT(test()));
+    connect(m_left_volume,  SIGNAL(valueChanged(int)),  this,   SLOT(test()));
+    connect(m_right_volume, SIGNAL(valueChanged(int)),  this,   SLOT(test()));
 
     connect(sb_sampleRate1, SIGNAL(editingFinished()),  this,   SLOT(test()));
     connect(sb_sampleRate2, SIGNAL(editingFinished()),  this,   SLOT(test()));
@@ -135,7 +166,6 @@ void AudioTest::initializeWindow(void)
     gbox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     layout->addWidget(gbox);
-    //---
 
     window->setLayout(layout.data());
     layout.take(); // ownership transferred
@@ -143,6 +173,65 @@ void AudioTest::initializeWindow(void)
     setCentralWidget(window.data());
     QWidget *const windowPtr = window.take(); // ownership transferred
     windowPtr->show();
+}
+//---------------------------------------------------------------------------
+void AudioTest::calc_freq(void)
+{
+    double delta = sb_beats_freq->value() / 2.0f;
+
+    sb_sampleRate1->setValue(sb_base_freq->value() - delta);
+    sb_sampleRate2->setValue(sb_base_freq->value() + delta);
+
+    //qDebug() << delta << sb_sampleRate1->value() << sb_sampleRate2->value();
+    test();
+}
+//---------------------------------------------------------------------------
+void AudioTest::load_QDoubleSpinBox(QString group_name)
+{
+    QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    if(settings == nullptr)
+    {
+        return;
+    }
+
+    settings->beginGroup(group_name);
+    foreach (QDoubleSpinBox *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            obj->setValue(settings->value("value", 0).toFloat());
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
+
+    settings->deleteLater();
+}
+//---------------------------------------------------------------------------
+void AudioTest::save_QDoubleSpinBox(QString group_name)
+{
+    QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    if(settings == nullptr)
+    {
+        return;
+    }
+
+    settings->beginGroup(group_name);
+    foreach(QDoubleSpinBox *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            settings->setValue("value", QVariant(obj->value()));
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
+
+    settings->deleteLater();
 }
 //---------------------------------------------------------------------------
 void AudioTest::test(void)
@@ -176,6 +265,7 @@ void AudioTest::initializeAudio(void)
         m_format = info.nearestFormat(m_format);
     }
 
+    load_QDoubleSpinBox("audio");
     m_generator = new Generator(m_format,
                                 DurationSeconds*1000000,
                                 sb_sampleRate1->value(),
@@ -200,6 +290,8 @@ AudioTest::~AudioTest()
 {
     m_generator->stop();
     m_audioOutput->stop();
+
+    save_QDoubleSpinBox("audio");
 }
 //---------------------------------------------------------------------------
 void AudioTest::deviceChanged(int index)

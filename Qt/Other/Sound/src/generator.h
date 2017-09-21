@@ -50,15 +50,12 @@ class Generator : public QIODevice
 public:
     Generator(const QAudioFormat &format,
               qint64 durationUs,
-              int sampleRate1,
-              int sampleRate2,
+              double sampleRate1,
+              double sampleRate2,
               int left_value,
               int right_value,
               QObject *parent);
     ~Generator();
-
-    void start(void);
-    void stop(void);
 
     qint64 readData(char *data,
                     qint64 maxlen);
@@ -68,10 +65,14 @@ public:
 
     void generateData(const QAudioFormat &format,
                       qint64 durationUs,
-                      int sampleRate1,
-                      int sampleRate2,
+                      double sampleRate1,
+                      double sampleRate2,
                       int left_value,
                       int right_value);
+
+public slots:
+    void start(void);
+    void stop(void);
 
 private:
     qint64 m_pos;

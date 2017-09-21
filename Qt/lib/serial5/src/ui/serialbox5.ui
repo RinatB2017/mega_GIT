@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>307</width>
-    <height>322</height>
+    <width>331</width>
+    <height>328</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -210,6 +210,17 @@ QPushButton#btn_power:checked {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>PortBox</tabstop>
+  <tabstop>BaudBox</tabstop>
+  <tabstop>DataBitsBox</tabstop>
+  <tabstop>ParityBox</tabstop>
+  <tabstop>StopBitsBox</tabstop>
+  <tabstop>FlowBox</tabstop>
+  <tabstop>btn_default</tabstop>
+  <tabstop>btn_refresh</tabstop>
+  <tabstop>btn_power</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

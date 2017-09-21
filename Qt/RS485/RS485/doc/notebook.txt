@@ -1,0 +1,59 @@
+aabb2000ff003100ffff000000000000000000000000000000000000ffff0000
+95e4fb019dff0100ffffffffffffffffffffffffffffffffff0100ff00
+
+read_data [007ff9ff8b8300007ff1ff897900] 14 bytes
+read_data [007ff1ff8b7b00007ff1ff817100007fb9ffffb700] 21 bytes
+read_data [007ff1ff817100007fb9ffffb700] 14 bytes
+read_data [007ff9ff8b8300007ff1ff897900] 14 bytes
+read_data [007ff1ff8b7b00007ff1ff817100007fb9ffffb700] 21 bytes
+read_data [007ff9ff8b8300007ff1ff897900] 14 bytes
+read_data [007ff1ff8b7b00007ff1ff817100007fb9ffffb700] 21 bytes
+read_data [007ff1ff817100007fb9ffffb700] 14 bytes
+read_data [007ff9ff8b8300007ff1ff897900] 14 bytes
+read_data [007ff1ff8b7b00007ff1ff817100007fb9ffffb700] 21 bytes
+read_data [007ff9ff8b8300007ff1ff897900] 14 bytes
+read_data [007ff1ff8b7b00007ff1ff817100007fb9ffffb700] 21 bytes
+read_data [007ff1ff817100007fb9ffffb700] 14 bytes
+
+
+//===================================================================//ЧТЕНИЕ СОСТОЯНИЯ МОДУЛЯ
+char	rain = 0;   // ПЕРЕМЕННАЯ ДОЖДЬ
+char	water = 0;  // ПЕРЕМЕННАЯ ВОДА
+char	manual = 0; // ПЕРЕМЕННАЯ ПРИНУДИТЕЛЬНАЯ ПОМЫВКА
+char	myaddr;     // ПЕРЕМЕННАЯ АДРЕСА МОДУЛЯ
+
+void get_sost ( void )
+{
+    uart1_32(0x000BBBAA);
+    uart1_32(0x00310000);
+    uart1(rain);
+    uart1(water);
+    uart1(manual);
+    uart1(myaddr);
+    uart1(0);
+    uart1(0);
+    uart1(0x77);
+    output_485();
+
+    uart2_32(0x000BBBAA);
+    uart2_32(0x00310000);
+    uart2(rain);
+    uart2(water);
+    uart2(manual);
+    uart2(myaddr);
+    uart2(0);
+    uart2(0);
+    uart2(0x77);
+    input_485();
+}
+
+if (command == 0x31)
+{
+    // ЧТЕНИЕ СОСТОЯНИЕ МОДУЛЯ
+    if (Buffer_in [0] == myaddr)
+    {
+        shadow = Buffer_in[0x04] & 1;
+        get_sost();
+    }
+    return 0;
+}

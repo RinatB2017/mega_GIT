@@ -46,8 +46,8 @@
 //---------------------------------------------------------------------------
 Generator::Generator(const QAudioFormat &format,
                      qint64 durationUs,
-                     int sampleRate1,
-                     int sampleRate2,
+                     double sampleRate1,
+                     double sampleRate2,
                      int left_value,
                      int right_value,
                      QObject *parent)
@@ -83,8 +83,8 @@ void Generator::stop(void)
 //---------------------------------------------------------------------------
 void Generator::generateData(const QAudioFormat &format,
                              qint64 durationUs,
-                             int sampleRate1,
-                             int sampleRate2,
+                             double sampleRate1,
+                             double sampleRate2,
                              int left_value,
                              int right_value)
 {

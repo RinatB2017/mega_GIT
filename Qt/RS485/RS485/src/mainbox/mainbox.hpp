@@ -51,9 +51,11 @@ private slots:
     void test(void);
     void read_data(QByteArray ba);
 
+    void cmd_31(void);
     void cmd_34(void);
     void cmd_36(void);
     void cmd_37(void);
+    void cmd_42(void);
 
 private:
     MySplashScreen *splash = 0;
@@ -63,8 +65,6 @@ private:
 
     QByteArray data_rs232;
     bool is_ready = false;
-    unsigned char test_byte;
-    unsigned int cnt;
 
     void init(void);
     void wait(int max_time_ms);
@@ -76,6 +76,9 @@ private:
                             const QString &tool_tip);
 
     void createTestBar(void);
+
+    uint16_t convert16(uint16_t prefix);
+    uint32_t convert32(uint32_t prefix);
 
 protected:
     void changeEvent(QEvent *event);

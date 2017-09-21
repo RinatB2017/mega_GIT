@@ -37,6 +37,8 @@ SOURCES += \
 
 FORMS += mainbox.ui
 
+OTHER_FILES += doc/notebook.txt
+
 win32 {
     RC_FILE = ico/myapp.rc
 }

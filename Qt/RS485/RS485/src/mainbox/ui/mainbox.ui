@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>770</width>
-    <height>407</height>
+    <height>462</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,9 +127,23 @@
        </layout>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_cmd_31">
+        <property name="text">
+         <string>Чтение состояния (31)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_cmd_34">
         <property name="text">
          <string>Чтение данных (34)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_cmd_42">
+        <property name="text">
+         <string>Тест (42)</string>
         </property>
        </widget>
       </item>
@@ -277,13 +291,17 @@
   <tabstop>sb_addr_upu</tabstop>
   <tabstop>sb_time_interval</tabstop>
   <tabstop>sb_time_washout</tabstop>
+  <tabstop>sb_time_pause_washout</tabstop>
   <tabstop>sb_addr_cam</tabstop>
   <tabstop>sb_preset_washout</tabstop>
   <tabstop>sb_time_preset_washout</tabstop>
+  <tabstop>btn_cmd_31</tabstop>
   <tabstop>btn_cmd_34</tabstop>
+  <tabstop>btn_cmd_42</tabstop>
   <tabstop>sb_addr_upu_2</tabstop>
   <tabstop>sb_time_interval_2</tabstop>
   <tabstop>sb_time_washout_2</tabstop>
+  <tabstop>sb_time_pause_washout_2</tabstop>
   <tabstop>sb_addr_cam_2</tabstop>
   <tabstop>sb_preset_washout_2</tabstop>
   <tabstop>sb_time_preset_washout_2</tabstop>

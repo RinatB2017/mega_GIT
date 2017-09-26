@@ -632,9 +632,12 @@ void MyWidget::load_QSpinBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setValue(settings->value("value", 0).toInt());
-            settings->endGroup();
+            if(obj->property("no_save") != 0)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setValue(settings->value("value", 0).toInt());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();

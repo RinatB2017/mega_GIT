@@ -98,6 +98,11 @@ void MainBox::init(void)
     connect(ui->btn_cmd_37, SIGNAL(clicked(bool)),  this,   SLOT(cmd_37()));
     connect(ui->btn_cmd_42, SIGNAL(clicked(bool)),  this,   SLOT(cmd_42()));
 
+    connect(ui->pelco_d,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(ui->pelco_d,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(ui->pelco_d,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(ui->pelco_d,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
     load_widgets("rs485");
 }
 //--------------------------------------------------------------------------------

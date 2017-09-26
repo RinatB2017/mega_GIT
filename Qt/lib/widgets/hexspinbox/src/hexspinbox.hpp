@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------
-#ifndef HEXSPINBOX_H
-#define HEXSPINBOX_H
+#ifndef HEXSPINBOX_HPP
+#define HEXSPINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QSpinBox>
 //--------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ class HexSpinBox : public QSpinBox
 {
     Q_OBJECT
     public:
-	HexSpinBox(QSpinBox *parent = 0);
+    HexSpinBox(QWidget *parent = 0);
 	
     protected:
 	QValidator::State validate(QString &text, int &pos) const;

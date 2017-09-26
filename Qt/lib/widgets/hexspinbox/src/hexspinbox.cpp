@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------
 #include "hexspinbox.hpp"
 //--------------------------------------------------------------------------------
-HexSpinBox::HexSpinBox(QSpinBox *parent)
+HexSpinBox::HexSpinBox(QWidget *parent)
     : QSpinBox(parent)
 {
 //    setRange(0,0xFFFF);

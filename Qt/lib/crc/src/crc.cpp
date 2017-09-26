@@ -227,3 +227,13 @@ uint8_t CRC::crc8(uint8_t *pcBlock, uint8_t len)
     return crc;
 }
 //--------------------------------------------------------------------------------
+uint8_t CRC::pelco_crc8(uint8_t *pcBlock, uint8_t len)
+{
+    uint8_t crc = 0;
+
+    while (len--)
+        crc += *pcBlock++;
+
+    return crc;
+}
+//--------------------------------------------------------------------------------

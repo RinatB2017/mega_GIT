@@ -22,9 +22,10 @@ void setup()
   pinMode(ledPin5, OUTPUT);
   pinMode(ledPin6, OUTPUT);
   pinMode(ledPin7, OUTPUT);
-  
+
+  Serial.begin(9600);
   Serial1.begin(9600);
-  
+
   t.every(500, doSomething);
 }
 
@@ -71,12 +72,50 @@ void test()
   delay(500);
 }
 
+int incomingByte = 0;
+
+void serialEvent()
+{
+  int cnt = 0;
+  int length_to_read = 1;
+
+  while (length_to_read != 0) 
+  {
+    if (!Serial1.available()) 
+    {
+      int i = 0;
+      while (!Serial1.available()) 
+      {
+        delay(1);
+        if (++i == 10) 
+        {
+          length_to_read  = 0;
+          if(cnt > 0)
+          {
+            Serial.print("Reading ");
+            Serial.print(cnt);
+            Serial.println(" bytes");
+          }
+          return;
+        }
+      }
+    }
+
+    incomingByte = Serial1.read();
+    cnt++;
+  }
+}
+
 void loop()
 {
   //Serial1.println("test");
   //delay(500);
-  
-  Serial1.println("loop");
-   t.update();
+
+  //Serial1.println("loop");
+  t.update();
 }
+
+
+
+
 

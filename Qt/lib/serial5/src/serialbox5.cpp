@@ -123,6 +123,8 @@ void SerialBox5::init(void)
 #endif
 
     connect(ui->btn_default, SIGNAL(clicked()), this, SLOT(set_default()));
+
+    updateText();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::createWidgets(void)

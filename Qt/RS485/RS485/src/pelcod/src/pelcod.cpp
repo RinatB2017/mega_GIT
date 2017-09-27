@@ -106,6 +106,7 @@ void PelcoD::f_send(void)
     QByteArray ba;
     ba.append((char *)&packet.buf, sizeof(packet));
 
+    emit send(ba);
     emit info(ba.toHex());
 }
 //--------------------------------------------------------------------------------

@@ -8,6 +8,7 @@ TARGET      = RS485
 FOLDER      = RS485
 
 DEPENDPATH  += \
+    ../common \
     $$PWD/src \
     $$PWD/src/mainbox \
     $$PWD/src/mainbox/ui
@@ -29,7 +30,8 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    mainbox.hpp \
+    packet.hpp
 
 SOURCES += \
     mainbox.cpp \

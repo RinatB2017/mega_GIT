@@ -68,6 +68,8 @@ void MainBox::init(void)
     connect(this,       SIGNAL(send(QByteArray)),   serialBox5, SLOT(input(QByteArray)));
     connect(serialBox5, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
 
+    connect(ui->pelco_d,    SIGNAL(send(QByteArray)),   serialBox5, SLOT(input(QByteArray)));
+
     ui->sb_addr_cam->setRange(0, 0xFFFF);
     ui->sb_addr_upu->setRange(0, 0xFFFF);
     ui->sb_time_washout->setRange(0, 0xFFFF);

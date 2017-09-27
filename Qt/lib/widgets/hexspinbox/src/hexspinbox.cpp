@@ -15,7 +15,8 @@ QValidator::State HexSpinBox::validate(QString &text, int &pos) const
 //--------------------------------------------------------------------------------
 QString HexSpinBox::textFromValue(int value) const
 {
-    return QString::number(value, 16).toUpper();
+    //return QString::number(value, 16).toUpper();
+    return QString("%1").arg(value, 2, 16, QChar('0')).toUpper();
 }
 //--------------------------------------------------------------------------------
 int HexSpinBox::valueFromText(const QString &text) const

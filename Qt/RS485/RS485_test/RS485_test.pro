@@ -8,6 +8,7 @@ TARGET      = RS485_test
 FOLDER      = RS485
 
 DEPENDPATH  += \
+    ../common \
     $$PWD/src \
     $$PWD/src/mainbox \
     $$PWD/src/mainbox/ui
@@ -27,7 +28,8 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    mainbox.hpp \
+    packet.hpp
 
 SOURCES += \
     mainbox.cpp \

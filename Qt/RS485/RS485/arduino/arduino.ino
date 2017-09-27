@@ -230,6 +230,12 @@ void work()
   NEW_PACKET *packet = (NEW_PACKET *)&buf;
   uint16_t crc = crc16((uint8_t *)&buf, sizeof(NEW_PACKET) - 2);
   if(crc != packet->body.crc16)  return;
+  
+  logging(String("prefix_16 0x" + packet->body.header.prefix_16));
+  logging(String("addr_8 0x" + packet->body.header.addr_8));
+  logging(String("cmd_8 0x" + packet->body.header.cmd_8));
+  logging(String("len_16 0x" + packet->body.header.len_16));
+
 }
 //--------------------------------------------------------------------------------
 void command()

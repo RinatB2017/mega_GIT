@@ -50,9 +50,11 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH = "../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/Box2D/Box2D.pri)
+
+#include ($$LIB_PATH/Box2D/Box2D.pri)
+LIBS    += -lBox2D
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

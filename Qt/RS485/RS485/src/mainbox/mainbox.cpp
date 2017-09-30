@@ -36,6 +36,7 @@
 #include "serialbox5.hpp"
 #include "defines.hpp"
 #include "mainbox.hpp"
+#include "crc.h"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -202,21 +203,20 @@ void MainBox::cmd_31(void)
 {
     emit info("Чтение состояния (31)");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    question.body.prefix_16 = convert16(0xAABB);                                            // префикс
-    question.body.len_16 = convert16(32);                                                   // длина пакета
-    question.body.addr_8 = ui->sb_addr_upu->value();                                        // адрес модуля
-    question.body.reserv_3_16 = 0;                                                          // резерв
-    question.body.cmd_8 = CMD_31;                                                           // команда
-    question.body.reserv_2_8 = 0;                                                           // резерв
-    question.body.time_interval_16 = convert16(ui->sb_time_interval->value());              // интервал дворника
-    question.body.reserv_3_16 = convert16(0);                                               // резерв
-    question.body.time_washout_32 = convert32(ui->sb_time_washout->value());                // время помывки
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout->value());    // время между помывками
+    question.body.header.prefix_16 = convert16(0xAABB);                                     // префикс
+    question.body.header.addr_8 = ui->sb_addr_upu->value();                                 // адрес модуля
+    question.body.header.cmd_8 = CMD_31;                                                    // команда
+    question.body.header.len_16 = convert16(32);                                            // длина пакета
+
     question.body.addr_cam_32 = convert32(ui->sb_addr_cam->value());                        // адрес камеры
+    question.body.time_washout_32 = convert32(ui->sb_time_washout->value());                // время помывки
+    question.body.time_interval_16 = convert16(ui->sb_time_interval->value());              // интервал дворника
+    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout->value());    // время между помывками
     question.body.preset_washout_32 = convert32(ui->sb_preset_washout->value());            // пресет помывки
     question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout->value());  // времен помывки
+    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
@@ -243,21 +243,20 @@ void MainBox::cmd_34(void)
 {
     emit info("Чтение из модуля (34)");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    question.body.prefix_16 = convert16(0xAABB);                                            // префикс
-    question.body.len_16 = convert16(32);                                                   // длина пакета
-    question.body.addr_8 = ui->sb_addr_upu->value();                                        // адрес модуля
-    question.body.reserv_3_16 = 0;                                                          // резерв
-    question.body.cmd_8 = CMD_34;                                                           // команда
-    question.body.reserv_2_8 = 0;                                                           // резерв
-    question.body.time_interval_16 = convert16(ui->sb_time_interval->value());              // интервал дворника
-    question.body.reserv_3_16 = convert16(0);                                               // резерв
-    question.body.time_washout_32 = convert32(ui->sb_time_washout->value());                // время помывки
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout->value());    // время между помывками
+    question.body.header.prefix_16 = convert16(0xAABB);                                     // префикс
+    question.body.header.len_16 = convert16(32);                                            // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu->value();                                 // адрес модуля
+    question.body.header.cmd_8 = CMD_34;                                                    // команда
+
     question.body.addr_cam_32 = convert32(ui->sb_addr_cam->value());                        // адрес камеры
+    question.body.time_washout_32 = convert32(ui->sb_time_washout->value());                // время помывки
+    question.body.time_interval_16 = convert16(ui->sb_time_interval->value());              // интервал дворника
+    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout->value());    // время между помывками
     question.body.preset_washout_32 = convert32(ui->sb_preset_washout->value());            // пресет помывки
     question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout->value());  // времен помывки
+    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
@@ -279,9 +278,9 @@ void MainBox::cmd_34(void)
 
     emit info(QString("Получено [%1]").arg(data_rs232.toHex().data()));
 
-    CMD_QUESTION *answer = (CMD_QUESTION *)data_rs232.data();
+    NEW_PACKET *answer = (NEW_PACKET *)data_rs232.data();
 
-    ui->sb_addr_upu->setValue(answer->body.addr_8);                                         // адрес модуля
+    ui->sb_addr_upu->setValue(answer->body.header.addr_8);                                  // адрес модуля
     ui->sb_time_interval->setValue(convert16(answer->body.time_interval_16));               // интервал дворника
     ui->sb_time_washout->setValue(convert32(answer->body.time_washout_32));                 // время помывки
     ui->sb_time_pause_washout->setValue(convert32(answer->body.time_pause_washout_32));     // время между помывками
@@ -294,21 +293,20 @@ void MainBox::cmd_36(void)
 {
     emit info("Запись в модуль (36)");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    question.body.prefix_16 = convert16(0xAABB);                                                // префикс
-    question.body.len_16 = convert16(32);                                                       // длина пакета
-    question.body.addr_8 = ui->sb_addr_upu_2->value();                                          // адрес модуля
-    question.body.reserv_3_16 = 0;                                                              // резерв
-    question.body.cmd_8 = CMD_36;                                                               // команда
-    question.body.reserv_2_8 = 0;                                                               // резерв
-    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
-    question.body.reserv_3_16 = convert16(0);                                                   // резерв
-    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
+    question.body.header.prefix_16 = convert16(0xAABB);                                         // префикс
+    question.body.header.len_16 = convert16(32);                                                // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu_2->value();                                   // адрес модуля
+    question.body.header.cmd_8 = CMD_36;                                                        // команда
+
     question.body.addr_cam_32 = convert32(ui->sb_addr_cam_2->value());                          // адрес камеры
+    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
+    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
+    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
     question.body.preset_washout_32 = convert32(ui->sb_preset_washout_2->value());              // пресет помывки
     question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout_2->value());    // времен помывки
+    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
@@ -334,21 +332,20 @@ void MainBox::cmd_37(void)
 {
     emit info("Запись в модуль (37)");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    question.body.prefix_16 = convert16(0xAABB);                                                // префикс
-    question.body.len_16 = convert16(32);                                                       // длина пакета
-    question.body.addr_8 = ui->sb_addr_upu_2->value();                                          // адрес модуля
-    question.body.reserv_3_16 = 0;                                                              // резерв
-    question.body.cmd_8 = CMD_37;                                                               // команда
-    question.body.reserv_2_8 = 0;                                                               // резерв
-    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
-    question.body.reserv_3_16 = convert16(0);                                                   // резерв
-    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
+    question.body.header.prefix_16 = convert16(0xAABB);                                         // префикс
+    question.body.header.len_16 = convert16(32);                                                // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu_2->value();                                   // адрес модуля
+    question.body.header.cmd_8 = CMD_37;                                                        // команда
+
     question.body.addr_cam_32 = convert32(ui->sb_addr_cam_2->value());                          // адрес камеры
+    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
+    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
+    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
     question.body.preset_washout_32 = convert32(ui->sb_preset_washout_2->value());              // пресет помывки
     question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout_2->value());    // времен помывки
+    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
@@ -374,21 +371,20 @@ void MainBox::cmd_42(void)
 {
     emit info("TEST (42)");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    question.body.prefix_16 = convert16(0xAABB);                                                // префикс
-    question.body.len_16 = convert16(32);                                                       // длина пакета
-    question.body.addr_8 = ui->sb_addr_upu_2->value();                                          // адрес модуля
-    question.body.reserv_8 = 0;                                                                 // резерв
-    question.body.cmd_8 = CMD_42;                                                               // команда
-    question.body.reserv_2_8 = 0;                                                               // резерв
-    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
-    question.body.reserv_3_16 = convert16(0);                                                   // резерв
-    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
+    question.body.header.prefix_16 = convert16(0xAABB);                                         // префикс
+    question.body.header.len_16 = convert16(32);                                                // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu_2->value();                                   // адрес модуля
+    question.body.header.cmd_8 = CMD_42;                                                        // команда
+
     question.body.addr_cam_32 = convert32(ui->sb_addr_cam_2->value());                          // адрес камеры
+    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
+    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
+    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
     question.body.preset_washout_32 = convert32(ui->sb_preset_washout_2->value());              // пресет помывки
     question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout_2->value());    // времен помывки
+    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));

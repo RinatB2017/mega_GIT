@@ -25,6 +25,7 @@
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "mywidget.hpp"
+#include "packet.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -57,7 +58,7 @@ private:
 
     SerialBox5 *serialBox5 = 0;
 
-    CMD_QUESTION memory;
+    NEW_PACKET memory;
 
     void init(void);
 

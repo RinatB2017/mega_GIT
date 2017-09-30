@@ -97,15 +97,15 @@ void MainBox::read_data(QByteArray ba)
         return;
     }
 
-    CMD_QUESTION *question = (CMD_QUESTION *)ba.data();
-    switch (question->body.cmd)
+    NEW_PACKET *question = (NEW_PACKET *)ba.data();
+    switch (question->body.header.cmd_8)
     {
     case CMD_34:    cmd_34();   break;
     case CMD_36:    cmd_36(ba); break;
     case CMD_37:    cmd_37(ba); break;
 
     default:
-        emit error(QString("uknown cmd 0x%1").arg(question->body.cmd, 0, 16));
+        emit error(QString("uknown cmd 0x%1").arg(question->body.header.cmd_8, 0, 16));
         break;
     }
 }
@@ -114,13 +114,13 @@ void MainBox::cmd_34(void)
 {
     emit info("cmd_34");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    for(unsigned int n=0; n<sizeof(CMD_QUESTION); n++)
+    for(unsigned int n=0; n<sizeof(question); n++)
     {
         question.buf[n] = memory.buf[n];
     }
-    question.body.cmd = CMD_34;
+    question.body.header.cmd_8 = CMD_34;
 
     QByteArray output;
     output.clear();
@@ -133,14 +133,14 @@ void MainBox::cmd_36(QByteArray ba)
 {
     emit info("cmd_36");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    for(unsigned int n=0; n<sizeof(CMD_QUESTION); n++)
+    for(unsigned int n=0; n<sizeof(question); n++)
     {
         memory.buf[n] = ba.at(n);
         question.buf[n] = ba.at(n);
     }
-    question.body.cmd = CMD_36;
+    question.body.header.cmd_8 = CMD_36;
 
     QByteArray output;
     output.clear();
@@ -153,14 +153,14 @@ void MainBox::cmd_37(QByteArray ba)
 {
     emit info("cmd_37");
 
-    CMD_QUESTION question;
+    NEW_PACKET question;
 
-    for(unsigned int n=0; n<sizeof(CMD_QUESTION); n++)
+    for(unsigned int n=0; n<sizeof(question); n++)
     {
         memory.buf[n] = ba.at(n);
         question.buf[n] = ba.at(n);
     }
-    question.body.cmd = CMD_37;
+    question.body.header.cmd_8 = CMD_37;
 
     QByteArray output;
     output.clear();

@@ -13,6 +13,8 @@ Timer t;
 uint8_t buf[MAX_BUF];
 int index_buf = 0;
 
+//int pin_DIR = 8;
+
 int pin_BLINK = A8;   // светодиод
 int pin_PUMP = A9;    // насос
 int pin_RELAY = A10;  // реле
@@ -53,10 +55,14 @@ uint8_t bit7:
 };
 //--------------------------------------------------------------------------------
 enum CMD {
-  CMD_TEST = 0,
+  CMD_TEST_42 = 0x42,
   CMD_READ = 1,
   CMD_WRITE = 2,
-  CMD_RESET = 3
+  CMD_RESET = 3,
+  CMD_READ_31 = 0x31,
+  CMD_READ_34 = 0x34,
+  CMD_WRITE_36 = 0x36,
+  CMD_WRITE_37 = 0x37,
 };
 
 typedef struct HEADER
@@ -119,11 +125,12 @@ void doSomething()
 }
 //--------------------------------------------------------------------------------
 int incomingByte = 0;
-void serialEvent()
+void serialEvent1()
 {
   int cnt = 0;
   int length_to_read = 1;
 
+  logging("serialEvent");
   while (length_to_read != 0) 
   {
     if (!serial_RS485.available()) 
@@ -168,12 +175,26 @@ void serialEvent()
 //--------------------------------------------------------------------------------
 void setup_RS232()
 {
-  serial_RS232.begin(9600);
+  //serial_RS232.begin(9600);
+  serial_RS232.begin(57600);
 }
 //--------------------------------------------------------------------------------
 void setup_RS485()
 {
-  serial_RS485.begin(9600);
+  //serial_RS485.begin(9600);
+  serial_RS485.begin(57600);
+
+  //pinMode(pin_DIR, OUTPUT);
+}
+//--------------------------------------------------------------------------------
+void RS485_ON()
+{
+  //digitalWrite(pin_DIR, HIGH);
+}
+//--------------------------------------------------------------------------------
+void RS485_OFF()
+{
+  //digitalWrite(pin_DIR, LOW);
 }
 //--------------------------------------------------------------------------------
 void init_timer()
@@ -239,7 +260,7 @@ void logging(String text)
   serial_RS232.println(text);
 }
 //--------------------------------------------------------------------------------
-bool f_test()
+bool f_test_42()
 {
   return true;
 }
@@ -259,14 +280,46 @@ bool f_reset()
   return true;
 }
 //--------------------------------------------------------------------------------
-void work()
+bool f_read_31()
 {
-  if(index_buf == 0)  return;
-  if(index_buf < sizeof(HEADER)) return;
+  return true;
+}
+//--------------------------------------------------------------------------------
+bool f_read_34()
+{
+  return true;
+}
+//--------------------------------------------------------------------------------
+bool f_write_36()
+{
+  return true;
+}
+//--------------------------------------------------------------------------------
+bool f_write_37()
+{
+  return true;
+}
+//--------------------------------------------------------------------------------
+void command()
+{
+  if(index_buf == 0)
+  {
+    return;
+  }
+  if(index_buf < sizeof(HEADER))
+  {
+    return;
+  }
 
   NEW_PACKET *packet = (NEW_PACKET *)&buf;
   uint16_t crc = crc16((uint8_t *)&buf, sizeof(NEW_PACKET) - 2);
-  if(crc != packet->body.crc16)  return;
+  if(crc != packet->body.crc16)
+  {
+    logging("bad crc16");
+    logging(String("crc ") + String(crc, HEX));
+    logging(String("packet->body.crc16 ") + String(packet->body.crc16, HEX));
+    return;
+  }
 
   logging(String("prefix_16 0x" + packet->body.header.prefix_16));
   logging(String("addr_8 0x" + packet->body.header.addr_8));
@@ -276,8 +329,8 @@ void work()
   uint8_t cmd = packet->body.header.cmd_8;
   switch(cmd)
   {
-  case CMD_TEST:
-    f_test();
+  case CMD_TEST_42:
+    f_test_42();
     break;
   case CMD_READ:
     f_read();
@@ -288,12 +341,25 @@ void work()
   case CMD_RESET:
     f_reset();
     break;
+  case CMD_READ_31:
+    f_read_31();
+    break;
+  case CMD_READ_34:
+    f_read_34();
+    break;
+  case CMD_WRITE_36:
+    f_write_36();
+    break;
+  case CMD_WRITE_37:
+    f_write_37();
+    break;
   default:
+    logging(String("unknown cmd ") + String(cmd, HEX));
     break;
   }
 }
 //--------------------------------------------------------------------------------
-void command()
+void work()
 {
 }
 //--------------------------------------------------------------------------------
@@ -318,6 +384,8 @@ void setup()
   setup_RS485();
   init_timer();
 
+  RS485_OFF();
+
   logging(String("address 0x" + String(get_address(), HEX)));
 }
 //--------------------------------------------------------------------------------
@@ -327,5 +395,6 @@ void loop()
   work();
 }
 //--------------------------------------------------------------------------------
+
 
 

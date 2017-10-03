@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
-    <height>462</height>
+    <width>416</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,141 +51,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="title">
-      <string>Чтение данных</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <property name="leftMargin">
-         <number>8</number>
-        </property>
-        <property name="topMargin">
-         <number>8</number>
-        </property>
-        <property name="rightMargin">
-         <number>8</number>
-        </property>
-        <property name="bottomMargin">
-         <number>8</number>
-        </property>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Пресет помывки:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QSpinBox" name="sb_addr_upu"/>
-        </item>
-        <item row="6" column="1">
-         <widget class="QSpinBox" name="sb_time_preset_washout"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QSpinBox" name="sb_time_washout"/>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_12">
-          <property name="text">
-           <string>Пресет временный:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>Адрес камеры:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QSpinBox" name="sb_preset_washout"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Интервал дворника:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="sb_time_interval"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>Время помывки:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="sb_addr_cam"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Адрес модуля УПУ:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Время между помывками:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="sb_time_pause_washout"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_cmd_31">
-        <property name="text">
-         <string>Чтение состояния (31)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_cmd_34">
-        <property name="text">
-         <string>Чтение данных (34)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_cmd_42">
-        <property name="text">
-         <string>Тест (42)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>75</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -194,7 +59,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Запись данных</string>
+      <string>Данные</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
@@ -212,7 +77,7 @@
          <number>8</number>
         </property>
         <item row="0" column="1">
-         <widget class="QSpinBox" name="sb_addr_upu_2"/>
+         <widget class="QSpinBox" name="sb_addr_upu"/>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_13">
@@ -236,7 +101,7 @@
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QSpinBox" name="sb_time_preset_washout_2"/>
+         <widget class="QSpinBox" name="sb_time_preset_washout"/>
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label_18">
@@ -253,16 +118,16 @@
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QSpinBox" name="sb_preset_washout_2"/>
+         <widget class="QSpinBox" name="sb_preset_washout"/>
         </item>
         <item row="4" column="1">
-         <widget class="QSpinBox" name="sb_addr_cam_2"/>
+         <widget class="QSpinBox" name="sb_addr_cam"/>
         </item>
         <item row="2" column="1">
-         <widget class="QSpinBox" name="sb_time_washout_2"/>
+         <widget class="QSpinBox" name="sb_time_washout"/>
         </item>
         <item row="1" column="1">
-         <widget class="QSpinBox" name="sb_time_interval_2"/>
+         <widget class="QSpinBox" name="sb_time_interval"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_14">
@@ -272,7 +137,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QSpinBox" name="sb_time_pause_washout_2"/>
+         <widget class="QSpinBox" name="sb_time_pause_washout"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_3">
@@ -284,16 +149,30 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_cmd_36">
+       <widget class="QPushButton" name="btn_read">
         <property name="text">
-         <string>Запись данных (36)</string>
+         <string>Read</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_cmd_37">
+       <widget class="QPushButton" name="btn_write">
         <property name="text">
-         <string>Запись данных (37)</string>
+         <string>Write</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_reset">
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_test">
+        <property name="text">
+         <string>Test</string>
         </property>
        </widget>
       </item>
@@ -313,6 +192,19 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -331,18 +223,10 @@
   <tabstop>sb_addr_cam</tabstop>
   <tabstop>sb_preset_washout</tabstop>
   <tabstop>sb_time_preset_washout</tabstop>
-  <tabstop>btn_cmd_31</tabstop>
-  <tabstop>btn_cmd_34</tabstop>
-  <tabstop>btn_cmd_42</tabstop>
-  <tabstop>sb_addr_upu_2</tabstop>
-  <tabstop>sb_time_interval_2</tabstop>
-  <tabstop>sb_time_washout_2</tabstop>
-  <tabstop>sb_time_pause_washout_2</tabstop>
-  <tabstop>sb_addr_cam_2</tabstop>
-  <tabstop>sb_preset_washout_2</tabstop>
-  <tabstop>sb_time_preset_washout_2</tabstop>
-  <tabstop>btn_cmd_36</tabstop>
-  <tabstop>btn_cmd_37</tabstop>
+  <tabstop>btn_read</tabstop>
+  <tabstop>btn_write</tabstop>
+  <tabstop>btn_reset</tabstop>
+  <tabstop>btn_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

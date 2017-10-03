@@ -24,10 +24,10 @@
 #pragma pack (push, 1)
 
 enum CMD {
-    CMD_TEST = 0,
-    CMD_READ,
-    CMD_WRITE,
-    CMD_RESET
+    CMD_TEST    = 0,
+    CMD_READ    = 1,
+    CMD_WRITE   = 2,
+    CMD_RESET   = 3
 };
 
 struct HEADER
@@ -38,7 +38,52 @@ struct HEADER
     uint16_t    len_16;                     // длина данных
 };
 
-union NEW_PACKET
+//--------------------------------------------
+union QUESTION_TEST
+{
+    struct BODY
+    {
+        HEADER      header;
+        uint16_t    data;
+        uint16_t    crc16;                  // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+
+union ANSWER_TEST
+{
+    struct BODY
+    {
+        HEADER      header;
+        uint16_t    data;
+        uint16_t    crc16;                  // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+//--------------------------------------------
+union QUESTION_RESET
+{
+    struct BODY
+    {
+        HEADER      header;
+        uint16_t    data;
+        uint16_t    crc16;                  // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+
+union ANSWER_RESET
+{
+    struct BODY
+    {
+        HEADER      header;
+        uint16_t    data;
+        uint16_t    crc16;                  // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+//--------------------------------------------
+union QUESTION_RW
 {
     struct BODY
     {
@@ -56,6 +101,24 @@ union NEW_PACKET
     unsigned char buf[sizeof(BODY)];
 };
 
+union ANSWER_RW
+{
+    struct BODY
+    {
+        HEADER      header;
+
+        uint32_t    addr_cam_32;                // адрес камеры
+        uint16_t    time_interval_16;           // интервал дворника
+        uint32_t    time_washout_32;            // время помывки
+        uint32_t    time_pause_washout_32;      // время между помывками
+        uint32_t    preset_washout_32;          // пресет помывки
+        uint32_t    time_preset_washout_32;     // времен помывки
+
+        uint16_t    crc16;                      // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+//--------------------------------------------
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
 #endif // PACKET_HPP

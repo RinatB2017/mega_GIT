@@ -79,27 +79,10 @@ void MainBox::init(void)
     ui->sb_time_preset_washout->setRange(0, 0xFFFF);
     ui->sb_time_pause_washout->setRange(0, 0xFFF);
 
-    ui->sb_addr_cam_2->setRange(0, 0xFFFF);
-    ui->sb_addr_upu_2->setRange(0, 0xFFFF);
-    ui->sb_time_washout_2->setRange(0, 0xFFFF);
-    ui->sb_preset_washout_2->setRange(0, 0xFFFF);
-    ui->sb_time_interval_2->setRange(0, 0xFFFF);
-    ui->sb_time_preset_washout_2->setRange(0, 0xFFFF);
-    ui->sb_time_pause_washout_2->setRange(0, 0xFFF);
-
-    ui->sb_addr_cam->setReadOnly(true);
-    ui->sb_addr_upu->setReadOnly(true);
-    ui->sb_time_washout->setReadOnly(true);
-    ui->sb_preset_washout->setReadOnly(true);
-    ui->sb_time_interval->setReadOnly(true);
-    ui->sb_time_preset_washout->setReadOnly(true);
-    ui->sb_time_pause_washout->setReadOnly(true);
-
-    connect(ui->btn_cmd_31, SIGNAL(clicked(bool)),  this,   SLOT(cmd_31()));
-    connect(ui->btn_cmd_34, SIGNAL(clicked(bool)),  this,   SLOT(cmd_34()));
-    connect(ui->btn_cmd_36, SIGNAL(clicked(bool)),  this,   SLOT(cmd_36()));
-    connect(ui->btn_cmd_37, SIGNAL(clicked(bool)),  this,   SLOT(cmd_37()));
-    connect(ui->btn_cmd_42, SIGNAL(clicked(bool)),  this,   SLOT(cmd_42()));
+    connect(ui->btn_read,   SIGNAL(clicked(bool)),  this,   SLOT(cmd_read()));
+    connect(ui->btn_write,  SIGNAL(clicked(bool)),  this,   SLOT(cmd_write()));
+    connect(ui->btn_reset,  SIGNAL(clicked(bool)),  this,   SLOT(cmd_reset()));
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(cmd_test()));
 
     connect(ui->pelco_d,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(ui->pelco_d,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
@@ -160,10 +143,8 @@ void MainBox::wait(int max_time_ms)
     while(time.elapsed() < max_time_ms)
     {
         QCoreApplication::processEvents();
-#if 0
         if(is_ready)
             break;
-#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -174,236 +155,211 @@ void MainBox::read_data(QByteArray ba)
         return;
     }
 
-    emit info(QString("read_data [%1] %2 bytes")
-              .arg(ba.toHex().data())
-              .arg(ba.size()));
+    emit debug(QString("read_data [%1] %2 bytes")
+               .arg(ba.toHex().data())
+               .arg(ba.size()));
     data_rs232.append(ba);
     is_ready = true;
 }
 //--------------------------------------------------------------------------------
-uint16_t MainBox::convert16(uint16_t prefix)
+QByteArray MainBox::convert(QByteArray ba)
 {
-#ifdef CONVERT
-    return htons(prefix);
-#else
-    return prefix;
-#endif
+    QByteArray temp;
+    temp.append(':');
+    temp.append(ba.toHex().toUpper());
+    temp.append('\n');
+
+    return temp;
 }
 //--------------------------------------------------------------------------------
-uint32_t MainBox::convert32(uint32_t prefix)
+void MainBox::cmd_read(void)
 {
-#ifdef CONVERT
-    return htonl(prefix);
-#else
-    return prefix;
-#endif
-}
-//--------------------------------------------------------------------------------
-void MainBox::cmd_31(void)
-{
-    emit info("Чтение состояния (31)");
+    emit info("Чтение");
 
-    NEW_PACKET question;
+    QUESTION_RW question;
 
-    question.body.header.prefix_16 = convert16(0xAABB);                                     // префикс
-    question.body.header.addr_8 = ui->sb_addr_upu->value();                                 // адрес модуля
-    question.body.header.cmd_8 = CMD_31;                                                    // команда
-    question.body.header.len_16 = convert16(32);                                            // длина пакета
+    question.body.header.prefix_16 = 0xBBAA;                                     // префикс
+    question.body.header.len_16 = sizeof(question);                              // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu->value();                      // адрес модуля
+    question.body.header.cmd_8 = CMD_READ;                                       // команда
 
-    question.body.addr_cam_32 = convert32(ui->sb_addr_cam->value());                        // адрес камеры
-    question.body.time_washout_32 = convert32(ui->sb_time_washout->value());                // время помывки
-    question.body.time_interval_16 = convert16(ui->sb_time_interval->value());              // интервал дворника
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout->value());    // время между помывками
-    question.body.preset_washout_32 = convert32(ui->sb_preset_washout->value());            // пресет помывки
-    question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout->value());  // времен помывки
+    question.body.addr_cam_32 = ui->sb_addr_cam->value();                        // адрес камеры
+    question.body.time_washout_32 = ui->sb_time_washout->value();                // время помывки
+    question.body.time_interval_16 = ui->sb_time_interval->value();              // интервал дворника
+    question.body.time_pause_washout_32 = ui->sb_time_pause_washout->value();    // время между помывками
+    question.body.preset_washout_32 = ui->sb_preset_washout->value();            // пресет помывки
+    question.body.time_preset_washout_32 = ui->sb_time_preset_washout->value();  // времен помывки
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
     emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем [%1]").arg(ba.toHex().data()));
+    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232.clear();
     is_ready = false;
-    emit send(ba);
+    emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != 32)
+    if(data_rs232.size() != sizeof(ANSWER_RW))
     {
         emit error("Нет данных!");
         return;
     }
 
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().data()));
+    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
+
+    ANSWER_RW *answer = (ANSWER_RW *)data_rs232.data();
+    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit info(QString("addr_cam_32 %1").arg(answer->body.addr_cam_32));
+    emit info(QString("time_interval_16 %1").arg(answer->body.time_interval_16));
+    emit info(QString("time_washout_32 %1").arg(answer->body.time_washout_32));
+    emit info(QString("time_pause_washout_32 %1").arg(answer->body.time_pause_washout_32));
+    emit info(QString("preset_washout_32 %1").arg(answer->body.preset_washout_32));
+    emit info(QString("time_preset_washout_32 %1").arg(answer->body.time_preset_washout_32));
+
 }
 //--------------------------------------------------------------------------------
-void MainBox::cmd_34(void)
+void MainBox::cmd_write(void)
 {
-    emit info("Чтение из модуля (34)");
+    emit info("Запись");
 
-    NEW_PACKET question;
+    QUESTION_RW question;
 
-    question.body.header.prefix_16 = convert16(0xAABB);                                     // префикс
-    question.body.header.len_16 = convert16(32);                                            // длина пакета
-    question.body.header.addr_8 = ui->sb_addr_upu->value();                                 // адрес модуля
-    question.body.header.cmd_8 = CMD_34;                                                    // команда
+    question.body.header.prefix_16 = 0xBBAA;                                       // префикс
+    question.body.header.len_16 = sizeof(question);                                // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu->value();                        // адрес модуля
+    question.body.header.cmd_8 = CMD_WRITE;                                        // команда
 
-    question.body.addr_cam_32 = convert32(ui->sb_addr_cam->value());                        // адрес камеры
-    question.body.time_washout_32 = convert32(ui->sb_time_washout->value());                // время помывки
-    question.body.time_interval_16 = convert16(ui->sb_time_interval->value());              // интервал дворника
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout->value());    // время между помывками
-    question.body.preset_washout_32 = convert32(ui->sb_preset_washout->value());            // пресет помывки
-    question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout->value());  // времен помывки
+    question.body.addr_cam_32 = ui->sb_addr_cam->value();                          // адрес камеры
+    question.body.time_washout_32 = ui->sb_time_washout->value();                  // время помывки
+    question.body.time_interval_16 = ui->sb_time_interval->value();                // интервал дворника
+    question.body.time_pause_washout_32 = ui->sb_time_pause_washout->value();      // время между помывками
+    question.body.preset_washout_32 = ui->sb_preset_washout->value();              // пресет помывки
+    question.body.time_preset_washout_32 = ui->sb_time_preset_washout->value();    // времен помывки
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
     emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем [%1]").arg(ba.toHex().data()));
+    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232.clear();
     is_ready = false;
-    emit send(ba);
+    emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != 32)
+    if(data_rs232.size() != sizeof(ANSWER_RW))
     {
         emit error("Нет данных!");
         return;
     }
+    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
 
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().data()));
+    ANSWER_RW *answer = (ANSWER_RW *)data_rs232.data();
+    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
 
-    NEW_PACKET *answer = (NEW_PACKET *)data_rs232.data();
-
-    ui->sb_addr_upu->setValue(answer->body.header.addr_8);                                  // адрес модуля
-    ui->sb_time_interval->setValue(convert16(answer->body.time_interval_16));               // интервал дворника
-    ui->sb_time_washout->setValue(convert32(answer->body.time_washout_32));                 // время помывки
-    ui->sb_time_pause_washout->setValue(convert32(answer->body.time_pause_washout_32));     // время между помывками
-    ui->sb_addr_cam->setValue(convert32(answer->body.addr_cam_32));                         // адрес камеры
-    ui->sb_preset_washout->setValue(convert32(answer->body.preset_washout_32));             // пресет помывки
-    ui->sb_time_preset_washout->setValue(convert32(answer->body.time_preset_washout_32));   // времен помывки
+    emit info(QString("addr_cam_32 %1").arg(answer->body.addr_cam_32));
+    emit info(QString("time_interval_16 %1").arg(answer->body.time_interval_16));
+    emit info(QString("time_washout_32 %1").arg(answer->body.time_washout_32));
+    emit info(QString("time_pause_washout_32 %1").arg(answer->body.time_pause_washout_32));
+    emit info(QString("preset_washout_32 %1").arg(answer->body.preset_washout_32));
+    emit info(QString("time_preset_washout_32 %1").arg(answer->body.time_preset_washout_32));
 }
 //--------------------------------------------------------------------------------
-void MainBox::cmd_36(void)
+void MainBox::cmd_test(void)
 {
-    emit info("Запись в модуль (36)");
+    emit info("Test");
 
-    NEW_PACKET question;
+    QUESTION_TEST question;
 
-    question.body.header.prefix_16 = convert16(0xAABB);                                         // префикс
-    question.body.header.len_16 = convert16(32);                                                // длина пакета
-    question.body.header.addr_8 = ui->sb_addr_upu_2->value();                                   // адрес модуля
-    question.body.header.cmd_8 = CMD_36;                                                        // команда
+    question.body.header.prefix_16 = 0xBBAA;                // префикс
+    question.body.header.len_16 = sizeof(question);         // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu->value(); // адрес модуля
+    question.body.header.cmd_8 = CMD_TEST;                  // команда
 
-    question.body.addr_cam_32 = convert32(ui->sb_addr_cam_2->value());                          // адрес камеры
-    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
-    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
-    question.body.preset_washout_32 = convert32(ui->sb_preset_washout_2->value());              // пресет помывки
-    question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout_2->value());    // времен помывки
+    question.body.data = 0;
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
     emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем [%1]").arg(ba.toHex().data()));
+    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232.clear();
     is_ready = false;
-    emit send(ba);
+    emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != 32)
+    if(data_rs232.size() != sizeof(ANSWER_TEST))
     {
         emit error("Нет данных!");
         return;
     }
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().data()));
+    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
+
+    ANSWER_TEST *answer = (ANSWER_TEST *)data_rs232.data();
+    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit info(QString("data %1").arg(answer->body.data));
 }
 //--------------------------------------------------------------------------------
-void MainBox::cmd_37(void)
+void MainBox::cmd_reset(void)
 {
-    emit info("Запись в модуль (37)");
+    emit info("Reset");
 
-    NEW_PACKET question;
+    QUESTION_RESET question;
 
-    question.body.header.prefix_16 = convert16(0xAABB);                                         // префикс
-    question.body.header.len_16 = convert16(32);                                                // длина пакета
-    question.body.header.addr_8 = ui->sb_addr_upu_2->value();                                   // адрес модуля
-    question.body.header.cmd_8 = CMD_37;                                                        // команда
+    question.body.header.prefix_16 = 0xBBAA;                // префикс
+    question.body.header.len_16 = sizeof(question);         // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu->value(); // адрес модуля
+    question.body.header.cmd_8 = CMD_RESET;                 // команда
 
-    question.body.addr_cam_32 = convert32(ui->sb_addr_cam_2->value());                          // адрес камеры
-    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
-    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
-    question.body.preset_washout_32 = convert32(ui->sb_preset_washout_2->value());              // пресет помывки
-    question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout_2->value());    // времен помывки
+    question.body.data = 0;
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
     emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем [%1]").arg(ba.toHex().data()));
+    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232.clear();
     is_ready = false;
-    emit send(ba);
+    emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != 32)
+    if(data_rs232.size() != sizeof(ANSWER_RESET))
     {
         emit error("Нет данных!");
         return;
     }
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().data()));
-}
-//--------------------------------------------------------------------------------
-void MainBox::cmd_42(void)
-{
-    emit info("TEST (42)");
+    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
 
-    NEW_PACKET question;
+    ANSWER_RESET *answer = (ANSWER_RESET *)data_rs232.data();
+    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
 
-    question.body.header.prefix_16 = convert16(0xAABB);                                         // префикс
-    question.body.header.len_16 = convert16(32);                                                // длина пакета
-    question.body.header.addr_8 = ui->sb_addr_upu_2->value();                                   // адрес модуля
-    question.body.header.cmd_8 = CMD_42;                                                        // команда
-
-    question.body.addr_cam_32 = convert32(ui->sb_addr_cam_2->value());                          // адрес камеры
-    question.body.time_washout_32 = convert32(ui->sb_time_washout_2->value());                  // время помывки
-    question.body.time_interval_16 = convert16(ui->sb_time_interval_2->value());                // интервал дворника
-    question.body.time_pause_washout_32 = convert32(ui->sb_time_pause_washout_2->value());      // время между помывками
-    question.body.preset_washout_32 = convert32(ui->sb_preset_washout_2->value());              // пресет помывки
-    question.body.time_preset_washout_32 = convert32(ui->sb_time_preset_washout_2->value());    // времен помывки
-    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
-
-    QByteArray ba;
-    ba.append((char *)&question.buf, sizeof(question.buf));
-
-    emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем [%1]").arg(ba.toHex().data()));
-
-    //---
-    data_rs232.clear();
-    is_ready = false;
-    emit send(ba);
-    wait(1000);
-
-    if(data_rs232.size() != 32)
-    {
-        emit error("Нет данных!");
-        return;
-    }
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().data()));
+    emit info(QString("data %1").arg(answer->body.data));
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

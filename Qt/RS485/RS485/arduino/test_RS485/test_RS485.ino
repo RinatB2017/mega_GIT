@@ -30,7 +30,6 @@ void setup()
   RS485_OFF();
 }
 //--------------------------------------------------------------------------------
-/*
 void serialEvent()
 {
   while(serial_RS232.available())
@@ -40,21 +39,27 @@ void serialEvent()
     serial_RS485.write(incomingByte);
     RS485_OFF();
   }
+}
+//--------------------------------------------------------------------------------
+void serialEvent3()
+{
   while(serial_RS485.available())
   {
     incomingByte = serial_RS485.read();
     serial_RS232.write(incomingByte);
   }
 }
-*/
 //--------------------------------------------------------------------------------
 void loop()
 {
+  /*
   if(serial_RS485.available())
   {
     incomingByte = serial_RS485.read();
     serial_RS232.write(incomingByte);
   }
+  */
 }
 //--------------------------------------------------------------------------------
+
 

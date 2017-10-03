@@ -51,6 +51,10 @@ private:
     Ui::PelcoD *ui = 0;
 
     void init(void);
+
+protected:
+    void changeEvent(QEvent *event);
+
 };
 //--------------------------------------------------------------------------------
 #endif

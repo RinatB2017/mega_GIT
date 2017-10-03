@@ -70,6 +70,30 @@
 	<source>reset</source>
 	<translation>Сброс</translation>
     </message>
+    <message>
+        <source>Test</source>
+        <translation>Тест</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Сброс</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Чтение</translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translation>Звпись</translation>
+    </message>
+</context>
+
+<context>
+    <name>PelcoD</name>
+    <message>
+        <source>Send</source>
+        <translation>Послать команду</translation>
+    </message>
 </context>
 
 <context>

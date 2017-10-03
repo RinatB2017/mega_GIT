@@ -354,6 +354,7 @@ void SerialBox5::setFlowBox(int index)
 void SerialBox5::setCloseState(void)
 {
     ui->PortBox->setEnabled(true);
+    ui->btn_refresh->setEnabled(true);
     ui->BaudBox->setEnabled(false);
     ui->DataBitsBox->setEnabled(false);
     ui->ParityBox->setEnabled(false);
@@ -365,6 +366,7 @@ void SerialBox5::setCloseState(void)
 void SerialBox5::setOpenState()
 {
     ui->PortBox->setEnabled(false);
+    ui->btn_refresh->setEnabled(false);
     ui->BaudBox->setEnabled(true);
     ui->DataBitsBox->setEnabled(true);
     ui->ParityBox->setEnabled(true);

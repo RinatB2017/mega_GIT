@@ -110,3 +110,17 @@ void PelcoD::f_send(void)
     emit info(ba.toHex());
 }
 //--------------------------------------------------------------------------------
+void PelcoD::changeEvent(QEvent *event)
+{
+    QWidget::changeEvent(event);
+    switch (event->type())
+    {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+
+    default:
+        break;
+    }
+}
+//--------------------------------------------------------------------------------

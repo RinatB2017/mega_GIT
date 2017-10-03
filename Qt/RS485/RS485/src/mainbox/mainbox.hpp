@@ -51,11 +51,10 @@ private slots:
     void test(void);
     void read_data(QByteArray ba);
 
-    void cmd_31(void);
-    void cmd_34(void);
-    void cmd_36(void);
-    void cmd_37(void);
-    void cmd_42(void);
+    void cmd_test(void);
+    void cmd_reset(void);
+    void cmd_read(void);
+    void cmd_write(void);
 
 private:
     MySplashScreen *splash = 0;
@@ -77,8 +76,7 @@ private:
 
     void createTestBar(void);
 
-    uint16_t convert16(uint16_t prefix);
-    uint32_t convert32(uint32_t prefix);
+    QByteArray convert(QByteArray ba);
 
 protected:
     void changeEvent(QEvent *event);

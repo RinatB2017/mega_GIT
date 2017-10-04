@@ -83,7 +83,35 @@ union ANSWER_RESET
     unsigned char buf[sizeof(BODY)];
 };
 //--------------------------------------------
-union QUESTION_RW
+union QUESTION_READ
+{
+    struct BODY
+    {
+        HEADER      header;
+        uint16_t    crc16;                      // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+
+union ANSWER_READ
+{
+    struct BODY
+    {
+        HEADER      header;
+
+        uint32_t    addr_cam_32;                // адрес камеры
+        uint16_t    time_interval_16;           // интервал дворника
+        uint32_t    time_washout_32;            // время помывки
+        uint32_t    time_pause_washout_32;      // время между помывками
+        uint32_t    preset_washout_32;          // пресет помывки
+        uint32_t    time_preset_washout_32;     // времен помывки
+
+        uint16_t    crc16;                      // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+//--------------------------------------------
+union QUESTION_WRITE
 {
     struct BODY
     {
@@ -101,7 +129,7 @@ union QUESTION_RW
     unsigned char buf[sizeof(BODY)];
 };
 
-union ANSWER_RW
+union ANSWER_WRITE
 {
     struct BODY
     {

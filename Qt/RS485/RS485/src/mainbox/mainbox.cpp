@@ -172,23 +172,220 @@ QByteArray MainBox::convert(QByteArray ba)
     return temp;
 }
 //--------------------------------------------------------------------------------
+bool MainBox::check_answer_test(QByteArray data)
+{
+    if(data.isEmpty())
+    {
+        emit error("Ответ пуст!");
+        return false;
+    }
+    if(data.length() <=2)
+    {
+        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
+        return false;
+    }
+
+    QByteArray temp;
+    temp.clear();
+    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
+
+    if(temp.size() != sizeof(ANSWER_TEST))
+    {
+        emit error("Размер пакета не корректен");
+        return false;
+    }
+
+    ANSWER_TEST *answer = (ANSWER_TEST *)temp.data();
+    uint16_t prefix = answer->body.header.prefix_16;
+    if(prefix != 0xBBAA)
+    {
+        emit error("Префикс не корректен");
+        return false;
+    }
+
+    emit info(QString("prefix_16 %1").arg(prefix, 0, 16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit info(QString("data %1").arg(answer->body.data));
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::check_answer_reset(QByteArray data)
+{
+    if(data.isEmpty())
+    {
+        emit error("Ответ пуст!");
+        return false;
+    }
+    if(data.length() <=2)
+    {
+        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
+        return false;
+    }
+
+    QByteArray temp;
+    temp.clear();
+    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
+
+    if(temp.size() != sizeof(ANSWER_RESET))
+    {
+        emit error("Размер пакета не корректен");
+        return false;
+    }
+
+    ANSWER_RESET *answer = (ANSWER_RESET *)temp.data();
+    uint16_t prefix = answer->body.header.prefix_16;
+    if(prefix != 0xBBAA)
+    {
+        emit error("Префикс не корректен");
+        return false;
+    }
+
+    emit info(QString("prefix_16 %1").arg(prefix, 0, 16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit info(QString("data %1").arg(answer->body.data));
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::check_answer_read(QByteArray data)
+{
+    if(data.isEmpty())
+    {
+        emit error("Ответ пуст!");
+        return false;
+    }
+    if(data.length() <=2)
+    {
+        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
+        return false;
+    }
+
+    QByteArray temp;
+    temp.clear();
+    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
+
+    if(temp.size() != sizeof(ANSWER_READ))
+    {
+        emit error("Размер пакета не корректен");
+        return false;
+    }
+
+    ANSWER_READ *answer = (ANSWER_READ *)temp.data();
+    uint16_t prefix = answer->body.header.prefix_16;
+    if(prefix != 0xBBAA)
+    {
+        emit error("Префикс не корректен");
+        return false;
+    }
+
+    uint32_t    addr_upu = answer->body.header.addr_8;                          // адрес upu
+    uint32_t    addr_cam_32 = answer->body.addr_cam_32;                         // адрес камеры
+    uint16_t    time_interval_16 = answer->body.time_interval_16;               // интервал дворника
+    uint32_t    time_washout_32 = answer->body.time_washout_32;                 // время помывки
+    uint32_t    time_pause_washout_32 = answer->body.time_pause_washout_32;     // время между помывками
+    uint32_t    preset_washout_32 = answer->body.preset_washout_32;             // пресет помывки
+    uint32_t    time_preset_washout_32 = answer->body.time_preset_washout_32;   // времен помывки
+
+    ui->sb_addr_upu->setValue(addr_upu);
+    ui->sb_addr_cam->setValue(addr_cam_32);                         // адрес камеры
+    ui->sb_time_interval->setValue(time_interval_16);               // интервал дворника
+    ui->sb_time_washout->setValue(time_washout_32);                 // время помывки
+    ui->sb_time_pause_washout->setValue(time_pause_washout_32);     // время между помывками
+    ui->sb_preset_washout->setValue(preset_washout_32);             // пресет помывки
+    ui->sb_time_preset_washout->setValue(time_preset_washout_32);   // времен помывки
+
+    emit info(QString("prefix_16 %1").arg(prefix, 0, 16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit info(QString("addr_cam_32 %1").arg(addr_cam_32));
+    emit info(QString("time_interval_16 %1").arg(time_interval_16));
+    emit info(QString("time_washout_32 %1").arg(time_washout_32));
+    emit info(QString("time_pause_washout_32 %1").arg(time_pause_washout_32));
+    emit info(QString("preset_washout_32 %1").arg(preset_washout_32));
+    emit info(QString("time_preset_washout_32 %1").arg(time_preset_washout_32));
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::check_answer_write(QByteArray data)
+{
+    if(data.isEmpty())
+    {
+        emit error("Ответ пуст!");
+        return false;
+    }
+    if(data.length() <=2)
+    {
+        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
+        return false;
+    }
+
+    QByteArray temp;
+    temp.clear();
+    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
+
+    if(temp.size() != sizeof(ANSWER_WRITE))
+    {
+        emit error("Размер пакета не корректен");
+        return false;
+    }
+
+    ANSWER_WRITE *answer = (ANSWER_WRITE *)temp.data();
+    uint16_t prefix = answer->body.header.prefix_16;
+    if(prefix != 0xBBAA)
+    {
+        emit error("Префикс не корректен");
+        return false;
+    }
+
+    uint32_t    addr_cam_32 = answer->body.addr_cam_32;                         // адрес камеры
+    uint16_t    time_interval_16 = answer->body.time_interval_16;               // интервал дворника
+    uint32_t    time_washout_32 = answer->body.time_washout_32;                 // время помывки
+    uint32_t    time_pause_washout_32 = answer->body.time_pause_washout_32;     // время между помывками
+    uint32_t    preset_washout_32 = answer->body.preset_washout_32;             // пресет помывки
+    uint32_t    time_preset_washout_32 = answer->body.time_preset_washout_32;   // времен помывки
+
+    ui->sb_addr_cam->setValue(addr_cam_32);                         // адрес камеры
+    ui->sb_time_interval->setValue(time_interval_16);               // интервал дворника
+    ui->sb_time_washout->setValue(time_washout_32);                 // время помывки
+    ui->sb_time_pause_washout->setValue(time_pause_washout_32);     // время между помывками
+    ui->sb_preset_washout->setValue(preset_washout_32);             // пресет помывки
+    ui->sb_time_preset_washout->setValue(time_preset_washout_32);   // времен помывки
+
+    emit info(QString("prefix_16 %1").arg(prefix, 0, 16));
+    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit info(QString("addr_cam_32 %1").arg(addr_cam_32));
+    emit info(QString("time_interval_16 %1").arg(time_interval_16));
+    emit info(QString("time_washout_32 %1").arg(time_washout_32));
+    emit info(QString("time_pause_washout_32 %1").arg(time_pause_washout_32));
+    emit info(QString("preset_washout_32 %1").arg(preset_washout_32));
+    emit info(QString("time_preset_washout_32 %1").arg(time_preset_washout_32));
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainBox::cmd_read(void)
 {
     emit info("Чтение");
 
-    QUESTION_RW question;
+    QUESTION_READ question;
 
     question.body.header.prefix_16 = 0xBBAA;                                     // префикс
     question.body.header.len_16 = sizeof(question);                              // длина пакета
     question.body.header.addr_8 = ui->sb_addr_upu->value();                      // адрес модуля
     question.body.header.cmd_8 = CMD_READ;                                       // команда
-
-    question.body.addr_cam_32 = ui->sb_addr_cam->value();                        // адрес камеры
-    question.body.time_washout_32 = ui->sb_time_washout->value();                // время помывки
-    question.body.time_interval_16 = ui->sb_time_interval->value();              // интервал дворника
-    question.body.time_pause_washout_32 = ui->sb_time_pause_washout->value();    // время между помывками
-    question.body.preset_washout_32 = ui->sb_preset_washout->value();            // пресет помывки
-    question.body.time_preset_washout_32 = ui->sb_time_preset_washout->value();  // времен помывки
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
     QByteArray ba;
@@ -203,34 +400,15 @@ void MainBox::cmd_read(void)
     emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != sizeof(ANSWER_RW))
-    {
-        emit error("Нет данных!");
-        return;
-    }
-
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
-
-    ANSWER_RW *answer = (ANSWER_RW *)data_rs232.data();
-    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
-    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
-    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
-    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
-
-    emit info(QString("addr_cam_32 %1").arg(answer->body.addr_cam_32));
-    emit info(QString("time_interval_16 %1").arg(answer->body.time_interval_16));
-    emit info(QString("time_washout_32 %1").arg(answer->body.time_washout_32));
-    emit info(QString("time_pause_washout_32 %1").arg(answer->body.time_pause_washout_32));
-    emit info(QString("preset_washout_32 %1").arg(answer->body.preset_washout_32));
-    emit info(QString("time_preset_washout_32 %1").arg(answer->body.time_preset_washout_32));
-
+    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
+    check_answer_read(data_rs232);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_write(void)
 {
     emit info("Запись");
 
-    QUESTION_RW question;
+    QUESTION_WRITE question;
 
     question.body.header.prefix_16 = 0xBBAA;                                       // префикс
     question.body.header.len_16 = sizeof(question);                                // длина пакета
@@ -257,25 +435,8 @@ void MainBox::cmd_write(void)
     emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != sizeof(ANSWER_RW))
-    {
-        emit error("Нет данных!");
-        return;
-    }
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
-
-    ANSWER_RW *answer = (ANSWER_RW *)data_rs232.data();
-    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
-    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
-    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
-    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
-
-    emit info(QString("addr_cam_32 %1").arg(answer->body.addr_cam_32));
-    emit info(QString("time_interval_16 %1").arg(answer->body.time_interval_16));
-    emit info(QString("time_washout_32 %1").arg(answer->body.time_washout_32));
-    emit info(QString("time_pause_washout_32 %1").arg(answer->body.time_pause_washout_32));
-    emit info(QString("preset_washout_32 %1").arg(answer->body.preset_washout_32));
-    emit info(QString("time_preset_washout_32 %1").arg(answer->body.time_preset_washout_32));
+    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
+    check_answer_write(data_rs232);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_test(void)
@@ -288,7 +449,6 @@ void MainBox::cmd_test(void)
     question.body.header.len_16 = sizeof(question);         // длина пакета
     question.body.header.addr_8 = ui->sb_addr_upu->value(); // адрес модуля
     question.body.header.cmd_8 = CMD_TEST;                  // команда
-
     question.body.data = 0;
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
@@ -304,20 +464,8 @@ void MainBox::cmd_test(void)
     emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != sizeof(ANSWER_TEST))
-    {
-        emit error("Нет данных!");
-        return;
-    }
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
-
-    ANSWER_TEST *answer = (ANSWER_TEST *)data_rs232.data();
-    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
-    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
-    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
-    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
-
-    emit info(QString("data %1").arg(answer->body.data));
+    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
+    check_answer_test(data_rs232);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_reset(void)
@@ -330,7 +478,6 @@ void MainBox::cmd_reset(void)
     question.body.header.len_16 = sizeof(question);         // длина пакета
     question.body.header.addr_8 = ui->sb_addr_upu->value(); // адрес модуля
     question.body.header.cmd_8 = CMD_RESET;                 // команда
-
     question.body.data = 0;
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
 
@@ -346,20 +493,8 @@ void MainBox::cmd_reset(void)
     emit send(convert(ba));
     wait(1000);
 
-    if(data_rs232.size() != sizeof(ANSWER_RESET))
-    {
-        emit error("Нет данных!");
-        return;
-    }
-    emit info(QString("Получено [%1]").arg(data_rs232.toHex().toUpper().data()));
-
-    ANSWER_RESET *answer = (ANSWER_RESET *)data_rs232.data();
-    emit info(QString("prefix_16 %1").arg(answer->body.header.prefix_16));
-    emit info(QString("addr_8 %1").arg(answer->body.header.addr_8));
-    emit info(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
-    emit info(QString("len_16 %1").arg(answer->body.header.len_16));
-
-    emit info(QString("data %1").arg(answer->body.data));
+    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
+    check_answer_reset(data_rs232);
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

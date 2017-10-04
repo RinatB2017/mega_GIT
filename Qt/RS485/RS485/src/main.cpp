@@ -22,6 +22,7 @@
 #include <QTranslator>
 #include <QLocale>
 //--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
@@ -32,14 +33,27 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+#if 1
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    MyApplication app(argc, argv);
+#endif
 
     set_codecs();
 
     QTranslator translator;
     translator.load(":/ru_RU.qm");
-    app.installTranslator(&translator);
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
+    app.installTranslator(&translator);
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);

@@ -47,10 +47,20 @@ private slots:
     void f_send(void);
     void refresh(void);
 
+    void f_Save_position(void);
+    void f_Move_position(void);
+    void f_Wiper(void);
+    void f_Run_Tur_1(void);
+
 private:
     Ui::PelcoD *ui = 0;
 
     void init(void);
+
+    void Camera_Save_position(char preset);
+    void Camera_Move_position(char preset);
+    void Camera_Wiper(void);
+    void Camera_Run_Tur_1(void);
 
 protected:
     void changeEvent(QEvent *event);

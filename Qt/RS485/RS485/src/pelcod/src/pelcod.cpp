@@ -21,6 +21,11 @@
 #include "pelcod.hpp"
 #include "ui_pelcod.h"
 //--------------------------------------------------------------------------------
+#define Set_Preset  3
+#define Clr_Preset  5
+#define Go_Preset   7
+#define Run_Pattern 0x23
+//--------------------------------------------------------------------------------
 #include "crc.h"
 //--------------------------------------------------------------------------------
 union PELCO_PACKET
@@ -62,6 +67,11 @@ void PelcoD::init(void)
     ui->sb_data2->setRange(0, 0xFF);
     ui->sb_chk_sum->setRange(0, 0xFF);
 
+    ui->sb_save_position->setRange(0, 0xFF);
+    ui->sb_move_position->setRange(0, 0xFF);
+
+    ui->sb_addr_cam_presets->setRange(0, 0xFF);
+
     ui->sb_sync->setValue(0xFF);
 
     ui->sb_sync->setProperty("no_save", 0);
@@ -77,6 +87,11 @@ void PelcoD::init(void)
     connect(ui->sb_cmd2,    SIGNAL(editingFinished()),  this,   SLOT(refresh()));
     connect(ui->sb_data1,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
     connect(ui->sb_data2,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+
+    connect(ui->btn_move_position,  SIGNAL(clicked(bool)),  this,   SLOT(f_Move_position()));
+    connect(ui->btn_save_position,  SIGNAL(clicked(bool)),  this,   SLOT(f_Save_position()));
+    connect(ui->btn_wiper,          SIGNAL(clicked(bool)),  this,   SLOT(f_Wiper()));
+    connect(ui->btn_run_tur_1,      SIGNAL(clicked(bool)),  this,   SLOT(f_Run_Tur_1()));
 }
 //--------------------------------------------------------------------------------
 void PelcoD::refresh(void)
@@ -92,6 +107,26 @@ void PelcoD::refresh(void)
     ui->sb_chk_sum->setValue(CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5));
 }
 //--------------------------------------------------------------------------------
+void PelcoD::f_Save_position(void)
+{
+    Camera_Save_position(ui->sb_save_position->value());
+}
+//--------------------------------------------------------------------------------
+void PelcoD::f_Move_position(void)
+{
+    Camera_Move_position(ui->sb_move_position->value());
+}
+//--------------------------------------------------------------------------------
+void PelcoD::f_Wiper(void)
+{
+    Camera_Wiper();
+}
+//--------------------------------------------------------------------------------
+void PelcoD::f_Run_Tur_1(void)
+{
+    Camera_Run_Tur_1();
+}
+//--------------------------------------------------------------------------------
 void PelcoD::f_send(void)
 {
     PELCO_PACKET packet;
@@ -101,6 +136,78 @@ void PelcoD::f_send(void)
     packet.body.cmd2     = ui->sb_cmd2->value();
     packet.body.data1    = ui->sb_data1->value();
     packet.body.data2    = ui->sb_data2->value();
+    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+
+    QByteArray ba;
+    ba.append((char *)&packet.buf, sizeof(packet));
+
+    emit send(ba);
+    emit info(ba.toHex());
+}
+//--------------------------------------------------------------------------------
+void PelcoD::Camera_Save_position(char preset)
+{
+    PELCO_PACKET packet;
+    packet.body.sync     = 0xFF;
+    packet.body.address  = ui->sb_addr_cam_presets->value();
+    packet.body.cmd1     = 0;
+    packet.body.cmd2     = Set_Preset;
+    packet.body.data1    = 0;
+    packet.body.data2    = preset;
+    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+
+    QByteArray ba;
+    ba.append((char *)&packet.buf, sizeof(packet));
+
+    emit send(ba);
+    emit info(ba.toHex());
+}
+//--------------------------------------------------------------------------------
+void PelcoD::Camera_Move_position(char preset)
+{
+    PELCO_PACKET packet;
+    packet.body.sync     = 0xFF;
+    packet.body.address  = ui->sb_addr_cam_presets->value();
+    packet.body.cmd1     = 0;
+    packet.body.cmd2     = Go_Preset;
+    packet.body.data1    = 0;
+    packet.body.data2    = preset;
+    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+
+    QByteArray ba;
+    ba.append((char *)&packet.buf, sizeof(packet));
+
+    emit send(ba);
+    emit info(ba.toHex());
+}
+//--------------------------------------------------------------------------------
+void PelcoD::Camera_Wiper(void)
+{
+    PELCO_PACKET packet;
+    packet.body.sync     = 0xFF;
+    packet.body.address  = ui->sb_addr_cam_presets->value();
+    packet.body.cmd1     = 0;
+    packet.body.cmd2     = Go_Preset;
+    packet.body.data1    = 0;
+    packet.body.data2    = 63;
+    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+
+    QByteArray ba;
+    ba.append((char *)&packet.buf, sizeof(packet));
+
+    emit send(ba);
+    emit info(ba.toHex());
+}
+//--------------------------------------------------------------------------------
+void PelcoD::Camera_Run_Tur_1(void)
+{
+    PELCO_PACKET packet;
+    packet.body.sync     = 0xFF;
+    packet.body.address  = ui->sb_addr_cam_presets->value();
+    packet.body.cmd1     = 0;
+    packet.body.cmd2     = Run_Pattern;
+    packet.body.data1    = 0;
+    packet.body.data2    = 0;
     packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
 
     QByteArray ba;

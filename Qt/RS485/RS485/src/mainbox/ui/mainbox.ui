@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>416</width>
-    <height>512</height>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -149,32 +149,36 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_read">
-        <property name="text">
-         <string>Read</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_write">
-        <property name="text">
-         <string>Write</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_reset">
-        <property name="text">
-         <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_test">
-        <property name="text">
-         <string>Test</string>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="btn_write">
+          <property name="text">
+           <string>Write</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="btn_read">
+          <property name="text">
+           <string>Read</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="btn_reset">
+          <property name="text">
+           <string>Reset</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="btn_test">
+          <property name="text">
+           <string>Test</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <spacer name="verticalSpacer_4">
@@ -223,10 +227,6 @@
   <tabstop>sb_addr_cam</tabstop>
   <tabstop>sb_preset_washout</tabstop>
   <tabstop>sb_time_preset_washout</tabstop>
-  <tabstop>btn_read</tabstop>
-  <tabstop>btn_write</tabstop>
-  <tabstop>btn_reset</tabstop>
-  <tabstop>btn_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -5,7 +5,8 @@ TARGET      = QTextToSpeech
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    /usr/include/qt5/QtCore/5.7.1/QtCore \
+    /usr/include/qt5/QtCore/5.9.2 \
+    /usr/include/qt5/QtCore/5.9.2/QtCore \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH

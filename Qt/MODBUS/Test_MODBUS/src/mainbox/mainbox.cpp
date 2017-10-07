@@ -49,7 +49,6 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     createTestBar();
 }

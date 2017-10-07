@@ -97,7 +97,7 @@ void MainBox::read_data(QByteArray ba)
         return;
     }
 
-    NEW_PACKET *question = (NEW_PACKET *)ba.data();
+    QUESTION_READ *question = (QUESTION_READ *)ba.data();
     switch (question->body.header.cmd_8)
     {
     case CMD_34:    cmd_34();   break;
@@ -114,7 +114,7 @@ void MainBox::cmd_34(void)
 {
     emit info("cmd_34");
 
-    NEW_PACKET question;
+    QUESTION_WRITE question;
 
     for(unsigned int n=0; n<sizeof(question); n++)
     {
@@ -133,7 +133,7 @@ void MainBox::cmd_36(QByteArray ba)
 {
     emit info("cmd_36");
 
-    NEW_PACKET question;
+    QUESTION_WRITE question;
 
     for(unsigned int n=0; n<sizeof(question); n++)
     {
@@ -153,7 +153,7 @@ void MainBox::cmd_37(QByteArray ba)
 {
     emit info("cmd_37");
 
-    NEW_PACKET question;
+    QUESTION_WRITE question;
 
     for(unsigned int n=0; n<sizeof(question); n++)
     {

@@ -5,7 +5,11 @@ TARGET = adueditor
 
 QT += serialport widgets network
 
-FORMS += interface.ui
+DEPENDPATH  += \
+    /usr/include/qt5/QtSerialBus/5.9.2 \
+    /usr/include/qt5/QtSerialBus/5.9.2/QtSerialBus \
+    /usr/include/qt5/QtCore/5.9.2/QtCore
+INCLUDEPATH = $$DEPENDPATH
 
 SOURCES += \
     main.cpp \
@@ -18,4 +22,6 @@ HEADERS += \
     modbustcpclient.h \
     modbustcpclient_p.h
 
-include (../../serialbus/serialbus.pri)
+FORMS += interface.ui
+
+QT  += serialbus

@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");
 
@@ -57,21 +58,18 @@ int main(int argc, char *argv[])
 
     qApp->processEvents();
 
-    MainWindow main_window(QObject::tr(ORGNAME),
-                           QObject::tr(APPNAME),
-                           QString("%1.%2.%3").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_BUILD));
+    MainWindow *main_window = new MainWindow;
     //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MODBUS_client *mainBox = new MODBUS_client(main_window.getThis());
+    MODBUS_client *mainBox = new MODBUS_client(main_window->getThis());
 
-    main_window.setCentralWidget(mainBox);
+    main_window->setCentralWidget(mainBox);
 
-    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
-    main_window.show();
+    main_window->show();
 
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), &main_window, SLOT(set_focus(QString)));
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 
 

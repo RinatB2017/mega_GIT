@@ -2,8 +2,8 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/src
-INCLUDEPATH = $$DEPENDPATH
+#DEPENDPATH  += $$PWD/src
+#INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += LoggingCategories.hpp
-SOURCES += LoggingCategories.cpp
+#HEADERS += LoggingCategories.hpp
+#SOURCES += LoggingCategories.cpp

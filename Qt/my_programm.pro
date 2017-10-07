@@ -11,7 +11,7 @@ SUBDIRS += \
     Icons \
     old_programm \
     Organizations \
-#    MODBUS \
+    MODBUS \
     QRCodeGenerator \
     PacketSender \
     RS232 \

@@ -46,7 +46,7 @@
 #include <QDebug>
 #include <QModbusReply>
 
-#include <qmodbustcpclient_p.h>
+#include <QtSerialBus/private/qmodbustcpclient_p.h>
 
 QT_USE_NAMESPACE
 

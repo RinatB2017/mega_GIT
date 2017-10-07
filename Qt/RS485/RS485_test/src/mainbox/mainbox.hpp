@@ -58,7 +58,7 @@ private:
 
     SerialBox5 *serialBox5 = 0;
 
-    NEW_PACKET memory;
+    QUESTION_WRITE memory;
 
     void init(void);
 

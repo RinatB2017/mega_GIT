@@ -48,7 +48,7 @@
 #include "defines.hpp"
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
-#include "LoggingCategories.hpp"
+//#include "LoggingCategories.hpp"
 //--------------------------------------------------------------------------------
 LogBox::LogBox(const QString &o_name,
                QWidget *parent,
@@ -229,7 +229,7 @@ void LogBox::infoLog(const QString &text)
         return;
     }
     //TODO
-    qInfo(logInfo()) << text;
+    //qInfo(logInfo()) << text;
 
     if(flagAddDateTime)
     {
@@ -266,7 +266,7 @@ void LogBox::debugLog(const QString &text)
         return;
     }
     //TODO
-    qDebug(logDebug()) << text;
+    //qDebug(logDebug()) << text;
 
     if(flagAddDateTime)
     {
@@ -303,7 +303,7 @@ void LogBox::errorLog(const QString &text)
         return;
     }
     //TODO
-    qCritical(logCritical()) << text;
+    //qCritical(logCritical()) << text;
 
     if(flagAddDateTime)
     {
@@ -350,7 +350,7 @@ void LogBox::traceLog(const QString &text)
         return;
     }
     //TODO
-    qInfo(logInfo()) << text;
+    //qInfo(logInfo()) << text;
 
     if(flagAddDateTime)
     {

@@ -181,7 +181,8 @@ bool MainWindow::eventFilter( QObject * object, QEvent * event )
                     scrollArea->setCursor( Qt::ArrowCursor );
             }
 
-        }else if ( event->type() == QEvent::MouseMove )
+        }
+        else if ( event->type() == QEvent::MouseMove )
         {
             QMouseEvent *mouseEvent = static_cast < QMouseEvent * > ( event );
 
@@ -198,7 +199,8 @@ bool MainWindow::eventFilter( QObject * object, QEvent * event )
                 lastPos = mouseEvent->pos();
             }
 
-        }else if ( event->type() == QEvent::MouseButtonRelease )
+        }
+        else if ( event->type() == QEvent::MouseButtonRelease )
             scrollArea->setCursor( Qt::ArrowCursor );
     }
 

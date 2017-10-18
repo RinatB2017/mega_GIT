@@ -114,6 +114,8 @@ void MainWindow::updateQRImage()
 
     setScale(ui->sBoxScale->value());
     ui->pButtonSave->setEnabled( successfulEncoding );
+
+    ui->scrollArea->setMinimumWidth(ui->scrollArea->height());
 }
 void MainWindow::setScale(int scale)
 {

@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/doc">
-        <file>RegistersProfiles_new.xml</file>
-        <file>Simulator.xml</file>
-    </qresource>
-</RCC>

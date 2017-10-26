@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/images">
-        <file>computer.ico</file>
-        <file>radiation.png</file>
-        <file>radiation_black.png</file>
-        </qresource>
-</RCC>

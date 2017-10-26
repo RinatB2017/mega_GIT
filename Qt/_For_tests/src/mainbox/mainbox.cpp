@@ -244,11 +244,24 @@ void MainBox::updateQRImage(void)
     int versionIndex = 0;
     bool bExtent = true;
     int maskIndex = -1;
-    QString encodeString = "https://www.youtube.com/watch?v=2DWk47HnT9k";
 
     CQR_Encode qrEncode;
 
+#if 0
+    QString encodeString = "https://www.youtube.com/watch?v=2DWk47HnT9k";
+    emit info(QString("len %1 bytes").arg(encodeString.size()));
     bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
+#else
+    QByteArray ba;
+    ba.clear();
+    for(int n=0; n<2754; n++)   //2376 2953
+    {
+        ba.append(n);
+    }
+    emit info(QString("len %1 bytes").arg(ba.size()));
+    bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, ba.toHex().data(), ba.size() );
+#endif
+
     if ( !successfulEncoding )
     {
         emit error("!successfulEncoding");
@@ -284,7 +297,7 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 1
+#if 0
     uint32_t x = 0x01020304;
     uint32_t y = htonl(x);
 
@@ -294,7 +307,7 @@ bool MainBox::test_0(void)
 
 #endif
 
-#if 0
+#if 1
     updateQRImage();
 #endif
 

@@ -84,6 +84,6 @@ void MainBox::send(void)
     ba.clear();
     ba.append("xxx");
 
-    client->send_broadcast_data(ba);
+    client->send(ba);
 }
 //--------------------------------------------------------------------------------

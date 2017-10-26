@@ -32,7 +32,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../lib"
+LIB_PATH = "../../../lib"
 
 VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)
@@ -41,5 +41,6 @@ include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH/ethernet/udp_client.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
+include ($$LIB_PATH/mywidgets/mywidget.pri)
 
 VPATH = $$INCLUDEPATH

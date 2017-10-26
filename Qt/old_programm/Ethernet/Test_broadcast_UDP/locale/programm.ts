@@ -56,6 +56,10 @@
         <translation>Программа скрыта</translation>
     </message>
     <message>
+        <source>Windows</source>
+        <translation>Окна</translation>
+    </message>
+    <message>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>

@@ -68,6 +68,10 @@
         <translation>Выйти из программы?</translation>
     </message>
     <message>
+        <source>Windows</source>
+        <translation>Окна</translation>
+    </message>
+    <message>
         <source>File</source>
         <translation>Файл</translation>
     </message>

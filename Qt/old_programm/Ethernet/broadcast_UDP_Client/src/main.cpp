@@ -35,18 +35,16 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(QLatin1String(":/mainwindow/computer.png")));
 
-    MainWindow main_window(QObject::tr(ORGNAME),
-                           QObject::tr(APPNAME),
-                           QString("%1.%2.%3").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_BUILD));
-    main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    MainWindow *main_window = new MainWindow();
+    main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MainBox *mainBox = new MainBox(main_window.getThis());
+    MainBox *mainBox = new MainBox(main_window->getThis());
 
-    main_window.setCentralWidget(mainBox, false);
+    main_window->setCentralWidget(mainBox);
 
-    main_window.setWindowIcon(QIcon(QLatin1String(":/mainwindow/computer.png")));
-    main_window.show();
+    main_window->show();
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 

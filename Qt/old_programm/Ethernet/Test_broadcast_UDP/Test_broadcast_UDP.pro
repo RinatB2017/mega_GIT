@@ -42,14 +42,9 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../lib"
+LIB_PATH = "../../../lib"
 
-include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH/qtsingleapplication/qtsingleapplication.pri)
-include ($$LIB_PATH/mywaitsplashscreen/mywaitsplashscreen.pri)
-include ($$LIB_PATH/mysplashscreen/mysplashscreen.pri)
-include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/turbo.pri)
+include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -46,6 +46,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    if(grapher) delete grapher;
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -125,11 +126,14 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    toolBar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

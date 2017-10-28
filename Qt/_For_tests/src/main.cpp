@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     //---
 
     //MainWindow *main_window = new MainWindow;
-    MyMainWindow *main_window = new MyMainWindow;
+    MyMainWindow *main_window = new MyMainWindow();
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     qDebug() << main_window->windowFlags();

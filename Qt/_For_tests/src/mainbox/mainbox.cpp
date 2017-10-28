@@ -31,6 +31,7 @@
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
+#include "mymainwindow.hpp"
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
@@ -51,8 +52,6 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
-
 void MainBox::init(void)
 {
     ui->setupUi(this);
@@ -83,25 +82,6 @@ void MainBox::init(void)
     {
         connect(mw, SIGNAL(notifySignal()), this,   SLOT(test_1()));
     }
-
-    //---
-#if 0
-    QSlider *slider = new QSlider(Qt::Horizontal, this);
-    slider->setRange(0, 100);
-
-    QSpinBox *sb = new QSpinBox(this);
-    sb->setRange(0, 100);
-
-    connect(slider, SIGNAL(sliderMoved(int)),   sb, SLOT(setValue(int)));
-    connect(sb, SIGNAL(valueChanged(int)),  slider, SLOT(setValue(int)));
-
-    QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->addWidget(slider);
-    hbox->addWidget(sb);
-
-    setLayout(hbox);
-#endif
-    //---
 
     if(sizeHint().height() > 0)
     {
@@ -288,202 +268,11 @@ void MainBox::updateQRImage(void)
     image_label->show();
 }
 //--------------------------------------------------------------------------------
-#include <QMouseEvent>
-#include <QDockWidget>
-#include <QImage>
-
-#include "logdock.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 0
-    uint32_t x = 0x01020304;
-    uint32_t y = htonl(x);
-
-    QByteArray ba;
-    ba.append(y);
-    emit info(ba.toHex());
-
-#endif
-
-#if 1
     updateQRImage();
-#endif
-
-#if 0
-    QColor color;
-    //color.setRgb(255, 255, 0);
-    color.setHsv(120, 200, 255);
-
-    QPixmap image(300, 300);
-    image.fill(color);
-
-    QLabel *lbl = new QLabel;
-    lbl->setPixmap(image);
-
-    lbl->setMinimumSize(300, 300);
-    lbl->show();
-#endif
-
-#if 0
-    QPointF pos(500, 500);
-    QMouseEvent event(QEvent::MouseMove, pos, Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
-    QApplication::sendEvent(qApp, &event);
-#endif
-
-#if 0
-    int max_cnt_led = 1;
-    for(int n=max_cnt_led; n>0; n--)
-    {
-        emit info(QString("n=%1").arg(n));
-    }
-#endif
-
-#if 0
-    DecoratorTwo obj(new DecoratorOne(new Component()));
-    obj.operation(); // prints "Hello, World!\n"
-#endif
-
-#if 0
-    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        QToolButton *btn1 = new QToolButton;
-        btn1->setIcon(QIcon(ICON_PROGRAMM));
-
-        QHBoxLayout *hbox = new QHBoxLayout;
-        hbox->addWidget(btn1);
-
-        QWidget * w = new QWidget;
-        w->setLayout(hbox);
-        w->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-        QDockWidget *dock = new QDockWidget;
-        dock->setFeatures(QDockWidget::DockWidgetMovable);
-        QString name = QString("dock_%1").arg(rand() % 1000);
-        dock->setObjectName(name);
-        dock->setWindowTitle(name);
-        dock->setWidget(w);
-        mw->addDockWidget(Qt::TopDockWidgetArea, dock);
-
-        QMenu *m_windowsMenu = mw->get_windows_menu();
-        if(m_windowsMenu)
-        {
-            m_windowsMenu->addAction(dock->toggleViewAction());
-        }
-    }
-    else
-    {
-        emit error("mw is false!");
-    }
-#endif
-
-#if 0
-    QWidgetList wl = qApp->allWidgets();
-    foreach (QWidget *w, wl)
-    {
-        LogDock *log = dynamic_cast<LogDock *>(w);
-        if(log)
-        {
-            emit info(QString("[qApp] %1").arg(log->objectName()));
-            log->errorLog("xxx");
-        }
-    }
-#endif
-
-#if 0
-    parent()->setProperty("normalProperty", 5);
-    emit info(QString("normalProperty %1").arg(parent()->property("normalProperty").toInt()));
-#endif
-
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return false;
-    }
-    QList<QMenuBar *> allobj = mw->findChildren<QMenuBar *>();
-    emit info(QString("QMenuBar: found %1 obj").arg(allobj.count()));
-    foreach (QMenuBar *obj, allobj)
-    {
-        QList<QMenu *> allobj = obj->findChildren<QMenu *>();
-        emit info(QString("QMenu: found %1 obj").arg(allobj.count()));
-        foreach (QMenu *obj, allobj)
-        {
-            QList<QAction *> allobj = obj->findChildren<QAction *>();
-            emit info(QString("QAction: found %1 obj").arg(allobj.count()));
-            foreach (QAction *obj, allobj)
-            {
-                emit info(obj->text());
-            }
-        }
-    }
-#endif
-
-#if 0
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
-#endif
-
-    //TODO
-#if 0
-    int index = ui->tableWidget->rowCount();
-
-    QTableWidgetItem *item = new QTableWidgetItem;
-    item->setText(QString("a%1").arg(index));
-    item->setCheckState(Qt::Unchecked);
-
-    ui->tableWidget->setRowCount(ui->tableWidget->rowCount()+1);
-    ui->tableWidget->setItem(index, 0, item);
-    ui->tableWidget->setItem(index, 1, new QTableWidgetItem("a1"));
-    ui->tableWidget->setItem(index, 2, new QTableWidgetItem("a2"));
-    ui->tableWidget->setItem(index, 3, new QTableWidgetItem("a3"));
-    ui->tableWidget->setItem(index, 4, new QTableWidgetItem("a4"));
-#endif
-
-#if 0
-    class_A *aaa = new class_A;
-    connect(aaa,    SIGNAL(info(QString)),  this, SIGNAL(info(QString)));
-
-    QByteArray input;
-    QByteArray output;
-
-    aaa->send(input, &output);
-    emit info(QString("%1").arg(output.data()));
-
-    aaa->deleteLater();
-#endif
-
-#if 0
-    MyDebug ddd;
-    QString xxx = "test";
-    ddd << xxx;
-#endif
-
-#if 0
-    QFile file(":/qss/dark_style.qss");
-    if(file.open(QFile::ReadOnly))
-    {
-        QString StyleSheet = QLatin1String(file.readAll());
-        qApp->setStyleSheet(StyleSheet);
-    }
-#endif
-
-#if 0
-    QDesktopServices::openUrl(QUrl("http://twitter.com/NagleCode"));
-#endif
-
-#if 0
-    block_this_button(true);
-    for(int n=0; n<50; n++)
-    {
-        create_thread();
-    }
-    block_this_button(false);
-#endif
 
     return true;
 }
@@ -491,21 +280,6 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-#if 0
-    for(int n=0; n<ui->tableWidget->rowCount(); n++)
-    {
-        bool state = (ui->tableWidget->item(n, 0)->checkState() == Qt::Checked);
-        if(state)
-        {
-            emit info(QString("%1").arg(ui->tableWidget->item(n, 0)->text()));
-        }
-    }
-#endif
-
-#if 0
-    emit info(QString("getSomeInfo() return %1").arg(SingletonClass::instance().getSomeInfo()));
-#endif
 
     return true;
 }

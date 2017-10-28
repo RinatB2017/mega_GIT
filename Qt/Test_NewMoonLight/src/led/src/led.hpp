@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,61 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_GLASS_HPP
-#define TEST_GLASS_HPP
+#ifndef LED_HPP
+#define LED_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-typedef struct point
-{
-    QPointF center;
-    qreal   radius;
-    QColor  color;
-} point_t;
-//--------------------------------------------------------------------------------
-#define MAX_POINT   (3*6+1)
-//--------------------------------------------------------------------------------
-class Test_Glass : public MyWidget
+class Led : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Test_Glass(QWidget *parent);
-    virtual ~Test_Glass();
+    explicit Led(int width,
+                 int height,
+                 QWidget *parent = 0);
+    ~Led();
 
-    virtual void install(QWidget* widget);
+    void set_color(uint16_t color);
+    void set_hot_color(uint8_t color);
+    void set_cold_color(uint8_t color);
 
-    void test(void);
-
-protected:
-    bool eventFilter(QObject* object, QEvent* event);
-    void paintEvent(QPaintEvent *);
+    void lock(void);
+    void unlock(void);
 
 private:
-    point points[MAX_POINT];
+    QPoint lastPoint;
+    bool b_move = false;
+    uint8_t hot_color = 0;
+    uint8_t cold_color = 0;
+    bool is_block = false;
 
-    qreal center_x;
-    qreal center_y;
-    qreal center_r;
-    qreal led_r;
-    qreal min_r;
-    qreal max_r;
-    qreal min_angle;
-    qreal max_angle;
-    int   inc_r;
-    qreal temp_x = 0;
-    qreal temp_y = 0;
-
-    void connect_log(void);
-
-    void calc_line(qreal center_x,
-                   qreal center_y,
-                   qreal angle,
-                   qreal radius,
-                   qreal *end_x,
-                   qreal *end_y);
+protected:
+    void paintEvent(QPaintEvent *);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -36,7 +36,7 @@ class SerialBox;
 class QToolButton;
 class QSpinBox;
 class QToolBar;
-class Test_Glass;
+class Led;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -47,8 +47,19 @@ public:
                      MySplashScreen *splash);
     ~MainBox();
 
+signals:
+    void send(QByteArray);
+
 private slots:
     void read_data(QByteArray ba);
+
+    void choice_test(void);
+    void test_0(void);
+    void test_1(void);
+    void test_2(void);
+    void test_3(void);
+    void test_4(void);
+    void test_5(void);
 
 private:
     MySplashScreen *splash = 0;
@@ -56,7 +67,39 @@ private:
     SerialBox *serialBox = 0;
     QByteArray data_rs232;
 
-    Test_Glass *glass = 0;
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        void (MainBox::*func)(void);
+    } CMD_t;
+    QList<CMD> commands;
+
+    QComboBox *cb_test = 0;
+
+    qreal center_x;
+    qreal center_y;
+    qreal center_r;
+    qreal led_r;
+    qreal min_r;
+    qreal max_r;
+    qreal min_angle;
+    qreal max_angle;
+    int   inc_r;
+    qreal temp_x = 0;
+    qreal temp_y = 0;
+
+    QList<Led *> leds;
 
     void init(void);
     void init_widgets(void);
@@ -67,10 +110,18 @@ private:
                             const QString &text,
                             const QString &tool_tip);
 
+    void createTestBar(void);
     void createSerialBox(void);
 
     QString convert_data_to_ascii(uint8_t data);
     uint8_t convert_ascii_to_value(char hi, char lo);
+
+    void calc_line(qreal center_x,
+                   qreal center_y,
+                   qreal angle,
+                   qreal radius,
+                   qreal *end_x,
+                   qreal *end_y);
 
     void analize(void);
 

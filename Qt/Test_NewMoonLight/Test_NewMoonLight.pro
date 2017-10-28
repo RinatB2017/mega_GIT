@@ -9,6 +9,7 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
+    $$PWD/src/led/src \
     $$PWD/src/mainbox \
     $$PWD/src/mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
@@ -38,6 +39,9 @@ SOURCES += \
     mainbox.cpp \
     main.cpp
 
+HEADERS += led.hpp
+SOURCES += led.cpp
+
 FORMS += mainbox.ui
 
 RESOURCES   += pic/pic.qrc
@@ -51,7 +55,6 @@ win32 {
 LIB_PATH = "../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial/serial.pri)
-include (src/test_glass/test_glass.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

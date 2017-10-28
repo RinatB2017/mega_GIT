@@ -30,7 +30,7 @@
 Test_Glass::Test_Glass(QWidget *parent) :
     MyWidget(parent)
 {
-    qDebug() << QString("%1 %2").arg(width()).arg(height());
+    //qDebug() << QString("width %1 height %2").arg(width()).arg(height());
 
     qreal WIDTH = 399;
     qreal HEIGHT = 392;
@@ -168,16 +168,6 @@ void Test_Glass::paintEvent(QPaintEvent *)
     painter.end();
 }
 //--------------------------------------------------------------------------------
-qreal Test_Glass::rad_to_grad(qreal rad)
-{
-    return (rad * 180.0f) / M_PI;
-}
-//--------------------------------------------------------------------------------
-qreal Test_Glass::grad_to_rad(qreal grad)
-{
-    return grad * (M_PI / 180.0f);
-}
-//--------------------------------------------------------------------------------
 void Test_Glass::calc_line(qreal center_x,
                            qreal center_y,
                            qreal angle,
@@ -186,8 +176,8 @@ void Test_Glass::calc_line(qreal center_x,
                            qreal *end_y)
 {
     qreal A = radius;
-    qreal B = qCos(grad_to_rad(angle)) * A;
-    qreal C = qSin(grad_to_rad(angle)) * A;
+    qreal B = qCos(qDegreesToRadians(angle)) * A;
+    qreal C = qSin(qDegreesToRadians(angle)) * A;
 
     *end_x = center_x + B;
     *end_y = center_y + C;

@@ -24,6 +24,7 @@
 #include <QTime>
 
 #include <QAction>
+#include <QtMath>
 #include <QMenu>
 
 #include <QPushButton>
@@ -43,21 +44,24 @@
 #include "defines.hpp"
 #include "sleeper.h"
 //--------------------------------------------------------------------------------
-#include "test_glass.hpp"
+#include "led.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    serialBox->deleteLater();
+    if(serialBox)   serialBox->deleteLater();
+
+    foreach (Led *led, leds) {
+        led->deleteLater();
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -65,6 +69,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+    createTestBar();
     createSerialBox();
 
     init_widgets();
@@ -72,13 +77,60 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
 {
-    QPixmap pix;
-    pix.load(":/pic/imgpsh_fullsize.jpe");
-    ui->lbl_pic->setPixmap(pix);
-    ui->lbl_pic->setFixedSize(pix.size());
+    ui->widget->setFixedSize(400, 400);
+    ui->widget->setStyleSheet("background:white;");
 
-    glass = new Test_Glass(this);
-    glass->install(ui->lbl_pic);
+    //---
+    int index = 0;
+    center_x = ui->widget->width() / 2.0f;
+    center_y = ui->widget->height() / 2.0f;
+    center_r = ui->widget->width() / 14.0f;
+    led_r = ui->widget->width() / 17.0f;
+    min_r = center_r + led_r + 10.0f;
+    max_r = ui->widget->width() / 2.0f - 20.0f;
+    min_angle = -30.0f;
+    max_angle = 330.0f;
+    inc_r = (int)((max_r - min_r) / 2.4f);
+    qreal angle = min_angle;
+    while(angle < max_angle)
+    {
+        for(int n=0; n<3; n++)
+        {
+            calc_line(center_x,
+                      center_y,
+                      angle,
+                      inc_r * (n + 1),
+                      &temp_x,
+                      &temp_y);
+            Led *led = new Led(led_r*2, led_r*2, ui->widget);
+            leds.append(led);
+            led->move(temp_x-led_r,
+                      temp_y-led_r);
+#ifndef QT_DEBUG
+            led->lock();
+#endif
+            index++;
+        }
+        angle += 60.0;
+    }
+    //---
+
+    setFixedSize(sizeHint());
+}
+//--------------------------------------------------------------------------------
+void MainBox::calc_line(qreal center_x,
+                        qreal center_y,
+                        qreal angle,
+                        qreal radius,
+                        qreal *end_x,
+                        qreal *end_y)
+{
+    qreal A = radius;
+    qreal B = qCos(qDegreesToRadians(angle)) * A;
+    qreal C = qSin(qDegreesToRadians(angle)) * A;
+
+    *end_x = center_x + B;
+    *end_y = center_y + C;
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -96,6 +148,44 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
     tool_bar->addWidget(tool_button);
 
     return tool_button;
+}
+//--------------------------------------------------------------------------------
+void MainBox::createTestBar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    if(mw == nullptr)
+    {
+        return;
+    }
+
+    commands.clear();
+    commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
+    commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
+    commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
+    commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
+    commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
+    commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
+
+    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    toolBar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    toolBar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(toolBar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createSerialBox(void)
@@ -145,22 +235,20 @@ void MainBox::analize(void)
         return;
     }
     NewMoonLightPacket *packet = (NewMoonLightPacket *)clean_data.data();
-    emit info(QString("address 0x%1").arg(packet->body.address));
-    emit info(QString("command 0x%1").arg(packet->body.command));
-    emit info(QString("cnt_data %1").arg(packet->body.cnt_data));
+    emit debug(QString("address 0x%1").arg(packet->body.address));
+    emit debug(QString("command 0x%1").arg(packet->body.command));
+    emit debug(QString("cnt_data %1").arg(packet->body.cnt_data));
 
-    QString temp;
+    if(packet->body.cnt_data != (MAX_LED * 2))
+    {
+        emit error(QString("error cnt_data %1").arg(packet->body.cnt_data));
+        return;
+    }
+
     for(int n=0; n<packet->body.cnt_data / 2; n++)
     {
-//        if((n % 6) == 0)
-//        {
-//            temp.append(0x0D);
-//        }
-        temp.append(QString("[%1] 0x%2   ")
-                    .arg(n, 2, 10, QChar('0'))
-                    .arg(packet->body.data[n], 0, 16));
+        leds.at(n)->set_color(packet->body.data[n]);
     }
-    emit info(temp);
 }
 //--------------------------------------------------------------------------------
 QString MainBox::convert_data_to_ascii(uint8_t data)
@@ -267,6 +355,71 @@ uint8_t MainBox::convert_ascii_to_value(char hi, char lo)
     //---
     uint8_t r_byte = (b_hi << 4) | b_lo;
     return r_byte;
+}
+//--------------------------------------------------------------------------------
+void MainBox::choice_test(void)
+{
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef void (MainBox::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_0(void)
+{
+    for(int n=0; n<18; n++)
+    {
+        leds.at(n)->set_hot_color(128);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_1(void)
+{
+    for(int n=0; n<18; n++)
+    {
+        leds.at(n)->set_cold_color(128);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_2(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_3(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_4(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_5(void)
+{
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

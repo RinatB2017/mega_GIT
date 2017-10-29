@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 TEMPLATE    = app
-TARGET      = Test_NewMoonLight_firmware
+TARGET      = Test_NewMoonLight
 
 FOLDER  = old_programm
 
@@ -48,9 +48,11 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../lib"
+LIB_PATH = "../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
+
+include (src/led/led.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

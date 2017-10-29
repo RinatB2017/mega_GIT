@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load(":/ru_RU.qm");
     app.installTranslator(&translator);
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
@@ -61,7 +62,6 @@ int main(int argc, char *argv[])
 
     main_window.set_status1_text(QString(QObject::tr("1 попугай = %1 uV")).arg(2500000.0f / pow(2, 23)));
 
-    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window.show();
 
     splash->finish(&main_window);

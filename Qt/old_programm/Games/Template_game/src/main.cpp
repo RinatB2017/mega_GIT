@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
 
 #if 1
     MainWindow main_window;
@@ -59,7 +60,6 @@ int main(int argc, char *argv[])
 #endif
     //--
 
-    main_window.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
     main_window.show();
 #else
     Game *mainBox = new Game();

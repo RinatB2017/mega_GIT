@@ -9,6 +9,7 @@ SUBDIRS += \
     _For_tests \
     auto_inc_version \
     Icons \
+    NewMoonLight \
     old_programm \
     Organizations \
     MODBUS \
@@ -19,8 +20,7 @@ SUBDIRS += \
     show_films \
     Teacher \
     Teacher_light \
-    Templates \
-    Test_NewMoonLight
+    Templates
     
 lessThan(QT_MAJOR_VERSION, 5) {
     message (QT4)

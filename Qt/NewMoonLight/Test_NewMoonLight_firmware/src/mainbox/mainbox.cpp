@@ -43,6 +43,8 @@
 #include "defines.hpp"
 #include "sleeper.h"
 //--------------------------------------------------------------------------------
+#include "button.hpp"
+//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
@@ -79,7 +81,13 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
 {
-
+    //---
+#if 0
+    Button *btn = new Button(48, 48, ui->widget);
+    btn->set_color(Qt::red, Qt::black);
+    btn->move(10, 10);
+#endif
+    //---
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,

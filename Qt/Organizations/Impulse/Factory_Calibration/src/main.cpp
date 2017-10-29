@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");
 
@@ -74,7 +75,6 @@ int main(int argc, char *argv[])
 
     main_window.setCentralWidget(mainBox);
 
-    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window.show();
 
     splash->finish(&main_window);

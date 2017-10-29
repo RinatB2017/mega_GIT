@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load(":/ru_RU.qm");
     app.installTranslator(&translator);
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
@@ -80,7 +81,6 @@ int main(int argc, char *argv[])
     main_window.setCentralWidget(frame, false, Qt::Horizontal);
 #endif
 
-    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window.show();
 
     splash->finish(&main_window);

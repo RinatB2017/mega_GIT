@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
@@ -52,7 +53,6 @@ int main(int argc, char *argv[])
     MultimeterBox *mainBox = new MultimeterBox(QObject::tr("Мультиметр В7-86"), main_window.getThis());
     main_window.setCentralWidget(mainBox);
 
-    main_window.setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window.show();
 
     //main_window.setFixedSize(main_window.sizeHint());

@@ -44,7 +44,6 @@
 #include "defines.hpp"
 #include "sleeper.h"
 //--------------------------------------------------------------------------------
-#include "button.hpp"
 #include "led.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -116,13 +115,6 @@ void MainBox::init_widgets(void)
         i++;
         angle -= 60.0;
     }
-    //---
-#if 0
-    Button *btn = new Button(48, 48, ui->widget);
-    btn->set_color(Qt::red, Qt::black);
-    btn->move(10, 10);
-#endif
-    //---
 
     setFixedSize(sizeHint());
 }

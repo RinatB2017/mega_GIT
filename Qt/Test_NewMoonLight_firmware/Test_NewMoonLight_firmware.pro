@@ -50,7 +50,7 @@ win32 {
 
 LIB_PATH = "../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/serial/serial.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

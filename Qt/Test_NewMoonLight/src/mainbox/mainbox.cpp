@@ -39,7 +39,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
 #include "sleeper.h"
@@ -199,7 +199,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::createSerialBox(void)
 {
-    serialBox = new SerialBox(this, "RS232");
+    serialBox = new SerialBox5(this, "RS232", "RS232");
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);

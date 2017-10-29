@@ -46,6 +46,7 @@ private:
     uint8_t hot_color = 0;
     uint8_t cold_color = 0;
     bool is_block = false;
+    uint8_t address = 0;
 
 protected:
     void paintEvent(QPaintEvent *);

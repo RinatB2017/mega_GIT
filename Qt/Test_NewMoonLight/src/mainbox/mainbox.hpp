@@ -124,6 +124,9 @@ private:
                    qreal *end_y);
 
     void analize(void);
+    int get_address(uint16_t value);
+
+    uint16_t get_value(NewMoonLightPacket *packet, uint16_t address);
 
 protected:
     void changeEvent(QEvent *event);

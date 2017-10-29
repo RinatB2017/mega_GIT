@@ -88,11 +88,12 @@ void MainBox::init_widgets(void)
     led_r = ui->widget->width() / 17.0f;
     min_r = center_r + led_r + 10.0f;
     max_r = ui->widget->width() / 2.0f - 20.0f;
-    min_angle = -30.0f;
-    max_angle = 330.0f;
+    min_angle = 270.0f; //-30.0f;
+    max_angle = -90.0f; //330.0f;
     inc_r = (int)((max_r - min_r) / 2.4f);
     qreal angle = min_angle;
-    while(angle < max_angle)
+    int i = 0;
+    while(angle > max_angle)
     {
         for(int n=0; n<3; n++)
         {
@@ -111,7 +112,8 @@ void MainBox::init_widgets(void)
 #endif
             index++;
         }
-        angle += 60.0;
+        i++;
+        angle -= 60.0;
     }
     //---
 
@@ -223,6 +225,24 @@ void MainBox::read_data(QByteArray ba)
     }
 }
 //--------------------------------------------------------------------------------
+uint16_t MainBox::get_value(NewMoonLightPacket *packet, uint16_t address)
+{
+    union UINT16 {
+        uint16_t value;
+        struct {
+            uint8_t c:4;
+            uint8_t d:4;
+            uint8_t a:4;
+            uint8_t b:4;
+        } bytes;
+    };
+
+    union UINT16 temp;
+    temp.value = address;
+
+    return packet->body.data[temp.bytes.a][temp.bytes.b] << 8 | packet->body.data[temp.bytes.c][temp.bytes.d];
+}
+//--------------------------------------------------------------------------------
 void MainBox::analize(void)
 {
     QByteArray clean_data = QByteArray::fromHex(data_rs232);
@@ -245,10 +265,64 @@ void MainBox::analize(void)
         return;
     }
 
-    for(int n=0; n<packet->body.cnt_data / 2; n++)
+    leds.at(0)->set_color(get_value(packet,   0x2112));
+    leds.at(1)->set_color(get_value(packet,   0x4151));
+    leds.at(2)->set_color(get_value(packet,   0x3102));
+
+    leds.at(3)->set_color(get_value(packet,   0x2255));
+    leds.at(4)->set_color(get_value(packet,   0x3245));
+    leds.at(5)->set_color(get_value(packet,   0x2535));
+
+    leds.at(6)->set_color(get_value(packet,   0x4223));
+    leds.at(7)->set_color(get_value(packet,   0x5213));
+    leds.at(8)->set_color(get_value(packet,   0x0333));
+
+    leds.at(9)->set_color(get_value(packet,   0x4314));
+    leds.at(10)->set_color(get_value(packet,  0x5334));
+    leds.at(11)->set_color(get_value(packet,  0x0424));
+
+    leds.at(12)->set_color(get_value(packet,  0x5415));
+    leds.at(13)->set_color(get_value(packet,  0x0510));
+    leds.at(14)->set_color(get_value(packet,  0x4400));
+
+    leds.at(15)->set_color(get_value(packet,  0x2001));
+    leds.at(16)->set_color(get_value(packet,  0x4011));
+    leds.at(17)->set_color(get_value(packet,  0x3050));
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_address(uint16_t value)
+{
+    int addr = -1;
+    switch(value)
     {
-        leds.at(n)->set_color(packet->body.data[n]);
+    case 0x2112:    addr = 0;   break;
+    case 0x4151:    addr = 1;   break;
+    case 0x3102:    addr = 2;   break;
+
+    case 0x2255:    addr = 3;   break;
+    case 0x3245:    addr = 4;   break;
+    case 0x2535:    addr = 5;   break;
+
+    case 0x4223:    addr = 6;   break;
+    case 0x5213:    addr = 7;   break;
+    case 0x0333:    addr = 8;   break;
+
+    case 0x4314:    addr = 9;   break;
+    case 0x5334:    addr = 10;  break;
+    case 0x0424:    addr = 11;  break;
+
+    case 0x5415:    addr = 12;  break;
+    case 0x0510:    addr = 13;  break;
+    case 0x4400:    addr = 14;  break;
+
+    case 0x2001:    addr = 15;  break;
+    case 0x4011:    addr = 16;  break;
+    case 0x3050:    addr = 17;  break;
+
+    default:
+        break;
     }
+    return addr;
 }
 //--------------------------------------------------------------------------------
 QString MainBox::convert_data_to_ascii(uint8_t data)
@@ -390,7 +464,7 @@ void MainBox::test_0(void)
 {
     for(int n=0; n<18; n++)
     {
-        leds.at(n)->set_hot_color(128);
+        //leds[n]->set_hot_color(128);
     }
 }
 //--------------------------------------------------------------------------------
@@ -398,7 +472,7 @@ void MainBox::test_1(void)
 {
     for(int n=0; n<18; n++)
     {
-        leds.at(n)->set_cold_color(128);
+        //leds[n]->set_cold_color(128);
     }
 }
 //--------------------------------------------------------------------------------

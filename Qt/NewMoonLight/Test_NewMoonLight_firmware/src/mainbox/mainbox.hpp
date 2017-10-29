@@ -36,6 +36,7 @@ class SerialBox5;
 class QToolButton;
 class QSpinBox;
 class QToolBar;
+class Button;
 class Diod;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -62,6 +63,7 @@ private slots:
     void click(void);
 
     void btn_click(bool state);
+    void btn_click_adv(bool state);
 
 private:
     MySplashScreen *splash = 0;
@@ -77,6 +79,20 @@ private:
         0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0
     };
+
+    qreal center_x;
+    qreal center_y;
+    qreal center_r;
+    qreal led_r;
+    qreal min_r;
+    qreal max_r;
+    qreal min_angle;
+    qreal max_angle;
+    int   inc_r;
+    qreal temp_x = 0;
+    qreal temp_y = 0;
+
+    QList<Button *> buttons;
 
     void init(void);
     void init_widgets(void);
@@ -97,6 +113,13 @@ private:
                             QIcon icon,
                             const QString &text,
                             const QString &tool_tip);
+
+    void calc_line(qreal center_x,
+                   qreal center_y,
+                   qreal angle,
+                   qreal radius,
+                   qreal *end_x,
+                   qreal *end_y);
 
     void createTestBar(void);
     void createSerialBox(void);

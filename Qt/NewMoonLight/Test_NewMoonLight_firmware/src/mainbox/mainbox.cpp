@@ -21,6 +21,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QtMath>
 #include <QTime>
 
 #include <QAction>
@@ -68,8 +69,6 @@ void MainBox::init(void)
     createSerialBox();
     createGridBox();
 
-    init_widgets();
-
     QPixmap pix;
     pix.load(":/pic/imgpsh_fullsize.jpe");
     ui->lbl_pic->setPixmap(pix);
@@ -77,17 +76,68 @@ void MainBox::init(void)
 
     connect(ui->sl_cold,    SIGNAL(valueChanged(int)),  ui->sb_cold,    SLOT(setValue(int)));
     connect(ui->sl_hot,     SIGNAL(valueChanged(int)),  ui->sb_hot,     SLOT(setValue(int)));
+
+#if 1
+    init_widgets();
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
 {
     //---
-#if 0
-    Button *btn = new Button(48, 48, ui->widget);
-    btn->set_color(Qt::red, Qt::black);
-    btn->move(10, 10);
-#endif
-    //---
+    int index = 0;
+    center_x = ui->lbl_pic->width() / 2.0f;
+    center_y = ui->lbl_pic->height() / 2.0f;
+    center_r = ui->lbl_pic->width() / 14.0f;
+    led_r = ui->lbl_pic->width() / 17.0f;
+    min_r = center_r + led_r + 10.0f;
+    max_r = ui->lbl_pic->width() / 2.0f - 20.0f;
+    min_angle = 270.0f; //-30.0f;
+    max_angle = -90.0f; //330.0f;
+    inc_r = (int)((max_r - min_r) / 2.4f);
+    qreal angle = min_angle;
+    int i = 0;
+    while(angle > max_angle)
+    {
+        for(int n=0; n<3; n++)
+        {
+            calc_line(center_x,
+                      center_y,
+                      angle,
+                      inc_r * (n + 1),
+                      &temp_x,
+                      &temp_y);
+            Button *btn = new Button(led_r*2, led_r*2, ui->lbl_pic);
+            btn->setProperty("property_x1", 0);
+            btn->setProperty("property_y1", 0);
+            btn->setProperty("property_x2", 0);
+            btn->setProperty("property_y2", 0);
+            btn->setCheckable(true);
+            buttons.append(btn);
+            btn->set_color(Qt::red, Qt::black);
+            btn->move(temp_x-led_r,
+                      temp_y-led_r);
+            connect(btn,    SIGNAL(toggled(bool)),  this,   SLOT(btn_click_adv(bool)));
+            index++;
+        }
+        i++;
+        angle -= 60.0;
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::calc_line(qreal center_x,
+                        qreal center_y,
+                        qreal angle,
+                        qreal radius,
+                        qreal *end_x,
+                        qreal *end_y)
+{
+    qreal A = radius;
+    qreal B = qCos(qDegreesToRadians(angle)) * A;
+    qreal C = qSin(qDegreesToRadians(angle)) * A;
+
+    *end_x = center_x + B;
+    *end_y = center_y + C;
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -160,7 +210,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::createGridBox(void)
 {
-    QGridLayout *grid = new QGridLayout(this);
+    QGridLayout *grid = new QGridLayout();
     grid->setMargin(0);
     grid->setSpacing(0);
     for(int y=0; y<MAX_SCREEN_Y; y++)
@@ -203,7 +253,7 @@ void MainBox::createGridBox(void)
     connect(sl_cold,    SIGNAL(valueChanged(int)),  sb_cold,    SLOT(setValue(int)));
     connect(sl_hot,     SIGNAL(valueChanged(int)),  sb_hot,     SLOT(setValue(int)));
 
-    QGridLayout *grid_btn = new QGridLayout(this);
+    QGridLayout *grid_btn = new QGridLayout();
     grid_btn->addWidget(new QLabel("Cold:"),    0, 0);
     grid_btn->addWidget(sl_cold,    0, 1);
     grid_btn->addWidget(sb_cold,    0, 2);
@@ -243,6 +293,53 @@ void MainBox::btn_click(bool state)
         for(int x=0; x<MAX_SCREEN_X; x++)
         {
             packet.body.data_t.leds[y][x] = buf_leds[x][y];
+        }
+    }
+
+    QByteArray ba;
+    ba.clear();
+    ba.append((char *)&packet.buf, sizeof(packet));
+    emit info(ba.toHex());
+
+    QString send_packet = QString(":%1\n")
+            .arg(ba.toHex().data());
+
+    QByteArray o_ba;
+    o_ba.clear();
+    o_ba.append(send_packet);
+    emit send(o_ba);
+}
+//--------------------------------------------------------------------------------
+void MainBox::btn_click_adv(bool state)
+{
+    Q_UNUSED(state)
+
+    QToolButton *btn = (QToolButton *)sender();
+    if(!btn) return;
+
+    int x1 = btn->property("property_x1").toInt();
+    int y1 = btn->property("property_y1").toInt();
+    int x2 = btn->property("property_x2").toInt();
+    int y2 = btn->property("property_y2").toInt();
+
+    F_01 packet;
+
+    packet.body.header.addr = 0;
+    packet.body.header.cmd = CMD_0x01;
+    packet.body.header.len = sizeof(packet.body.data_t);
+
+    uint8_t max = sb_max->value();
+    uint8_t min = sb_min->value();
+
+    buf_leds[x1][y1] = btn->isChecked() ? max : min;
+    buf_leds[x2][y2] = btn->isChecked() ? max : min;
+
+    for(int y=0; y<MAX_SCREEN_Y; y++)
+    {
+        for(int x=0; x<MAX_SCREEN_X; x++)
+        {
+            packet.body.data_t.leds[y][x] = buf_leds[x1][y1];
+            packet.body.data_t.leds[y][x] = buf_leds[x2][y2];
         }
     }
 

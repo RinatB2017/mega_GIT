@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include <QMouseEvent>
 #include <QPainter>
+#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QDebug>
 //--------------------------------------------------------------------------------
@@ -48,22 +49,20 @@ void Button::set_color(QColor value_ON, QColor value_OFF)
     update();
 }
 //--------------------------------------------------------------------------------
-void Button::mousePressEvent(QMouseEvent *event)
+void Button::nextCheckState(void)
 {
-    if(event->button() == Qt::LeftButton)
+    setChecked(!isChecked());
+
+    if(isChecked())
     {
         color = color_ON;
-        update();
     }
-}
-//--------------------------------------------------------------------------------
-void Button::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
+    else
     {
         color = color_OFF;
-        update();
     }
+    emit send(isChecked());
+    update();
 }
 //--------------------------------------------------------------------------------
 void Button::paintEvent(QPaintEvent *)

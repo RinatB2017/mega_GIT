@@ -35,6 +35,9 @@ public:
 
     void set_color(QColor value_ON, QColor value_OFF);
 
+signals:
+    void send(bool);
+
 private:
     QColor color_ON;
     QColor color_OFF;
@@ -42,8 +45,8 @@ private:
 
 protected:
     void paintEvent(QPaintEvent *);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+
+    void nextCheckState(void);
 
 };
 //--------------------------------------------------------------------------------

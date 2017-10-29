@@ -121,6 +121,8 @@ private:
                    qreal *end_x,
                    qreal *end_y);
 
+    void set_property(int btn_index, quint16 value);
+
     void createTestBar(void);
     void createSerialBox(void);
     void createGridBox(void);

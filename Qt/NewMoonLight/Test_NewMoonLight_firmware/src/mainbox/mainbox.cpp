@@ -108,10 +108,6 @@ void MainBox::init_widgets(void)
                       &temp_x,
                       &temp_y);
             Button *btn = new Button(led_r*2, led_r*2, ui->lbl_pic);
-            btn->setProperty("property_x1", 0);
-            btn->setProperty("property_y1", 0);
-            btn->setProperty("property_x2", 0);
-            btn->setProperty("property_y2", 0);
             btn->setCheckable(true);
             buttons.append(btn);
             btn->set_color(Qt::red, Qt::black);
@@ -123,6 +119,30 @@ void MainBox::init_widgets(void)
         i++;
         angle -= 60.0;
     }
+
+    set_property(0,   0x2112);
+    set_property(1,   0x4151);
+    set_property(2,   0x3102);
+
+    set_property(3,   0x2255);
+    set_property(4,   0x3245);
+    set_property(5,   0x2535);
+
+    set_property(6,   0x4223);
+    set_property(7,   0x5213);
+    set_property(8,   0x0333);
+
+    set_property(9,   0x4314);
+    set_property(10,  0x5334);
+    set_property(11,  0x0424);
+
+    set_property(12,  0x5415);
+    set_property(13,  0x0510);
+    set_property(14,  0x4400);
+
+    set_property(15,  0x2001);
+    set_property(16,  0x4011);
+    set_property(17,  0x3050);
 }
 //--------------------------------------------------------------------------------
 void MainBox::calc_line(qreal center_x,
@@ -310,6 +330,27 @@ void MainBox::btn_click(bool state)
     emit send(o_ba);
 }
 //--------------------------------------------------------------------------------
+void MainBox::set_property(int btn_index, quint16 value)
+{
+    union UINT16 {
+        uint16_t value;
+        struct {
+            uint8_t c:4;
+            uint8_t d:4;
+            uint8_t a:4;
+            uint8_t b:4;
+        } bytes;
+    };
+
+    union UINT16 temp;
+    temp.value = value;
+
+    buttons.at(btn_index)->setProperty("property_x1", temp.bytes.a);
+    buttons.at(btn_index)->setProperty("property_y1", temp.bytes.b);
+    buttons.at(btn_index)->setProperty("property_x2", temp.bytes.c);
+    buttons.at(btn_index)->setProperty("property_y2", temp.bytes.d);
+}
+//--------------------------------------------------------------------------------
 void MainBox::btn_click_adv(bool state)
 {
     Q_UNUSED(state)
@@ -338,8 +379,7 @@ void MainBox::btn_click_adv(bool state)
     {
         for(int x=0; x<MAX_SCREEN_X; x++)
         {
-            packet.body.data_t.leds[y][x] = buf_leds[x1][y1];
-            packet.body.data_t.leds[y][x] = buf_leds[x2][y2];
+            packet.body.data_t.leds[x][y] = buf_leds[x][y];
         }
     }
 

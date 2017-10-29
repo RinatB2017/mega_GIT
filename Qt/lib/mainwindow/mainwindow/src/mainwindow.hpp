@@ -208,10 +208,10 @@ protected:
 
     bool flag_close = false;
 
-    int app_left = 0;
-    int app_top = 0;
-    int app_width = 800;
-    int app_height = 600;
+    //TODO int app_left = 0;
+    //TODO int app_top = 0;
+    //TODO int app_width = 800;
+    //TODO int app_height = 600;
 
     void load_main(void);
     void save_main(void);

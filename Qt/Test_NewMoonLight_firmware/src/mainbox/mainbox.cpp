@@ -43,14 +43,11 @@
 #include "defines.hpp"
 #include "sleeper.h"
 //--------------------------------------------------------------------------------
-#include "test_glass.hpp"
-//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -71,24 +68,13 @@ void MainBox::init(void)
 
     init_widgets();
 
-#if 1
     QPixmap pix;
     pix.load(":/pic/imgpsh_fullsize.jpe");
     ui->lbl_pic->setPixmap(pix);
     ui->lbl_pic->setFixedSize(pix.size());
-#else
-    QPixmap pix;
-    pix.load(":/pic/lustre.jpg");
-    qDebug() << pix.width() << pix.height();
-    int w = 500.0f * 2448.0f / 3264.0f;
-    int h = 500; //ui->lbl_pic->height();
-    qDebug() << w << h;
-    QPixmap new_pix = pix.scaled(w, h, Qt::KeepAspectRatio);
-    ui->lbl_pic->setPixmap(new_pix);
-    ui->lbl_pic->setFixedSize(new_pix.size());
-#endif
-    Test_Glass *glass = new Test_Glass(this);
-    glass->install(ui->lbl_pic);
+
+    connect(ui->sl_cold,    SIGNAL(valueChanged(int)),  ui->sb_cold,    SLOT(setValue(int)));
+    connect(ui->sl_hot,     SIGNAL(valueChanged(int)),  ui->sb_hot,     SLOT(setValue(int)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
@@ -191,6 +177,34 @@ void MainBox::createGridBox(void)
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addLayout(hbox);
     vbox->addStretch(1);
+
+    sl_cold = new QSlider(Qt::Horizontal);
+    sb_cold = new QSpinBox;
+    sl_hot  = new QSlider(Qt::Horizontal);
+    sb_hot  = new QSpinBox;
+
+    sl_cold->setRange(0, 100);
+    sl_hot->setRange(0, 100);
+
+    sb_cold->setRange(0, 100);
+    sb_hot->setRange(0, 100);
+
+    sb_cold->setReadOnly(true);
+    sb_hot->setReadOnly(true);
+
+    connect(sl_cold,    SIGNAL(valueChanged(int)),  sb_cold,    SLOT(setValue(int)));
+    connect(sl_hot,     SIGNAL(valueChanged(int)),  sb_hot,     SLOT(setValue(int)));
+
+    QGridLayout *grid_btn = new QGridLayout(this);
+    grid_btn->addWidget(new QLabel("Cold:"),    0, 0);
+    grid_btn->addWidget(sl_cold,    0, 1);
+    grid_btn->addWidget(sb_cold,    0, 2);
+    grid_btn->addWidget(new QLabel("Hot:"),     1, 0);
+    grid_btn->addWidget(sl_hot,    1, 1);
+    grid_btn->addWidget(sb_hot,    1, 2);
+
+    vbox->addLayout(grid_btn);
+    vbox->addStretch(10);
 
     ui->frame->setLayout(vbox);
 }

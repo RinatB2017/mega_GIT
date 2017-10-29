@@ -18,39 +18,31 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef LED_HPP
-#define LED_HPP
+#ifndef BUTTON_HPP
+#define BUTTON_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QToolButton>
 //--------------------------------------------------------------------------------
-class Led : public QWidget
+class Button : public QToolButton
 {
     Q_OBJECT
 
 public:
-    explicit Led(int width,
-                 int height,
-                 QWidget *parent = 0);
-    ~Led();
+    explicit Button(int width,
+                    int height,
+                    QWidget *parent = 0);
+    ~Button();
 
-    void set_color(uint16_t color);
-    void set_hot_color(uint8_t color);
-    void set_cold_color(uint8_t color);
-
-    void lock(void);
-    void unlock(void);
+    void set_color(QColor value_ON, QColor value_OFF);
 
 private:
-    QPoint lastPoint;
-    bool b_move = false;
-    uint8_t hot_color = 0;
-    uint8_t cold_color = 0;
-    bool is_block = false;
+    QColor color_ON;
+    QColor color_OFF;
+    QColor color;
 
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
 };

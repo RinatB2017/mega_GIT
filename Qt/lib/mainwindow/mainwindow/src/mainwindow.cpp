@@ -44,11 +44,11 @@ MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
       orgName(ORGNAME),
       appName(APPNAME),
-      appVersion(QString("%1.%2.%3 (%4)").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_PATCH).arg(VER_BUILD)),
-      app_left(-1),
-      app_top(-1),
-      app_width(-1),
-      app_height(-1)
+      appVersion(QString("%1.%2.%3 (%4)").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_PATCH).arg(VER_BUILD))
+      //TODO app_left(-1),
+      //TODO app_top(-1),
+      //TODO app_width(-1),
+      //TODO app_height(-1)
 {
     init();
 }
@@ -660,10 +660,10 @@ void MainWindow::load_main(void)
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 
-    app_left    = settings->value("Left",   100).toInt();
-    app_top     = settings->value("Top",    100).toInt();
-    app_width   = settings->value("Width",  640).toInt();
-    app_height  = settings->value("Height", 380).toInt();
+    //TODO app_left    = settings->value("Left",   100).toInt();
+    //TODO app_top     = settings->value("Top",    100).toInt();
+    //TODO app_width   = settings->value("Width",  640).toInt();
+    //TODO app_height  = settings->value("Height", 380).toInt();
 
 #ifndef NO_MENU
     a_AskExit->setChecked(flag_close);
@@ -695,10 +695,10 @@ void MainWindow::save_main(void)
     settings->setValue("NoAnswerFromExit", a_AskExit->isChecked());
 #endif
 
-    settings->setValue("Left", geometry().x());
-    settings->setValue("Top",  geometry().y());
-    settings->setValue("Width", width());
-    settings->setValue("Height",height());
+    //TODO settings->setValue("Left", geometry().x());
+    //TODO settings->setValue("Top",  geometry().y());
+    //TODO settings->setValue("Width", width());
+    //TODO settings->setValue("Height",height());
 
     settings->endGroup();
 

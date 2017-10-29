@@ -18,41 +18,63 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef LED_HPP
-#define LED_HPP
+#include <QMouseEvent>
+#include <QPainter>
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QDebug>
 //--------------------------------------------------------------------------------
-class Led : public QWidget
+#include "button.hpp"
+//--------------------------------------------------------------------------------
+Button::Button(int width,
+               int height,
+               QWidget *parent) :
+    QToolButton(parent)
 {
-    Q_OBJECT
-
-public:
-    explicit Led(int width,
-                 int height,
-                 QWidget *parent = 0);
-    ~Led();
-
-    void set_color(uint16_t color);
-    void set_hot_color(uint8_t color);
-    void set_cold_color(uint8_t color);
-
-    void lock(void);
-    void unlock(void);
-
-private:
-    QPoint lastPoint;
-    bool b_move = false;
-    uint8_t hot_color = 0;
-    uint8_t cold_color = 0;
-    bool is_block = false;
-
-protected:
-    void paintEvent(QPaintEvent *);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-
-};
+    color_ON  = Qt::red;
+    color_OFF = Qt::black;
+    setFixedSize(width, height);
+}
 //--------------------------------------------------------------------------------
-#endif
+Button::~Button()
+{
+
+}
+//--------------------------------------------------------------------------------
+void Button::set_color(QColor value_ON, QColor value_OFF)
+{
+    color_ON  = value_ON;
+    color_OFF = value_OFF;
+
+    update();
+}
+//--------------------------------------------------------------------------------
+void Button::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        color = color_ON;
+        update();
+    }
+}
+//--------------------------------------------------------------------------------
+void Button::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        color = color_OFF;
+        update();
+    }
+}
+//--------------------------------------------------------------------------------
+void Button::paintEvent(QPaintEvent *)
+{
+    QPainter painter;
+    painter.begin(this);
+
+    painter.setPen(QPen(QBrush(color), 1, Qt::SolidLine));
+    painter.setBrush(QBrush(color));
+    painter.drawEllipse(QPointF(width()/2, height()/2), width()/2 - 1, height()/2 - 1);
+
+    painter.end();
+}
+//--------------------------------------------------------------------------------

@@ -87,6 +87,11 @@ private:
     QSpinBox *sb_min = 0;
     QSpinBox *sb_max = 0;
 
+    QSlider  *sl_cold = 0;
+    QSpinBox *sb_cold = 0;
+    QSlider  *sl_hot = 0;
+    QSpinBox *sb_hot = 0;
+
     QToolButton *add_button(QToolBar *tool_bar,
                             QToolButton *tool_button,
                             QIcon icon,

@@ -107,8 +107,6 @@ private:
 
     void update_brg_doubles(void);
 
-    qreal rad_to_grad(qreal rad);
-    qreal grad_to_rad(qreal grad);
     qreal get_angle(qreal x1,
                     qreal y1,
                     qreal x2,

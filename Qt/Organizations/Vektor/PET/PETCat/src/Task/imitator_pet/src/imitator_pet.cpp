@@ -100,16 +100,6 @@ QString Imitator_PET::convert_int_to_string(uint32_t value)
     return QString("%1").arg(value);
 }
 //--------------------------------------------------------------------------------
-qreal Imitator_PET::rad_to_grad(qreal rad)
-{
-    return (rad * 180.0) / M_PI;
-}
-//--------------------------------------------------------------------------------
-qreal Imitator_PET::grad_to_rad(qreal grad)
-{
-    return grad * (M_PI / 180.0);
-}
-//--------------------------------------------------------------------------------
 void Imitator_PET::calc_line(qreal center_x,
                         qreal center_y,
                         qreal angle,
@@ -120,8 +110,8 @@ void Imitator_PET::calc_line(qreal center_x,
     //qDebug() << "calc_line" << center_x << center_y << angle << radius;
 
     qreal A = radius;
-    qreal B = qCos(grad_to_rad(angle)) * A;
-    qreal C = qSin(grad_to_rad(angle)) * A;
+    qreal B = qCos(qDegreesToRadians(angle)) * A;
+    qreal C = qSin(qDegreesToRadians(angle)) * A;
 
     //qDebug() << center_x + B << center_y + C;
 

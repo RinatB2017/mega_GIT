@@ -77,12 +77,10 @@ void MainBox::init(void)
     connect(ui->sl_cold,    SIGNAL(valueChanged(int)),  ui->sb_cold,    SLOT(setValue(int)));
     connect(ui->sl_hot,     SIGNAL(valueChanged(int)),  ui->sb_hot,     SLOT(setValue(int)));
 
-    connect(ui->sl_cold,    SIGNAL(valueChanged(int)),  this,   SLOT(send_pic_question(int)));
-    connect(ui->sl_hot,    SIGNAL(valueChanged(int)),  this,   SLOT(send_pic_question(int)));
+    connect(ui->sl_cold,    SIGNAL(valueChanged(int)),  this,   SLOT(send_cold_pic_question(int)));
+    connect(ui->sl_hot,    SIGNAL(valueChanged(int)),  this,   SLOT(send_hot_pic_question(int)));
 
-    connect(sl_cold,    SIGNAL(valueChanged(int)),  this,   SLOT(send_grid_question(int)));
-    connect(sl_hot,     SIGNAL(valueChanged(int)),  this,   SLOT(send_grid_question(int)));
-
+    connect(sl_value,   SIGNAL(valueChanged(int)),  this,   SLOT(send_grid_question(int)));
 
 #if 1
     init_widgets();
@@ -232,8 +230,8 @@ void MainBox::createGridBox(void)
             btn[x][y] = new QToolButton(this);
             btn[x][y]->setCheckable(true);
             btn[x][y]->setText(QString("%1:%2").arg(x).arg(y));
-            btn[x][y]->setProperty("property_x", x);
-            btn[x][y]->setProperty("property_y", y);
+            btn[x][y]->setProperty(PROPERTY_X, x);
+            btn[x][y]->setProperty(PROPERTY_Y, y);
             connect(btn[x][y], SIGNAL(clicked(bool)),   this,   SLOT(btn_click(bool)));
             grid_buttons.append(btn[x][y]);
 
@@ -249,30 +247,18 @@ void MainBox::createGridBox(void)
     vbox->addLayout(hbox);
     vbox->addStretch(1);
 
-    sl_cold = new QSlider(Qt::Horizontal);
-    sb_cold = new QSpinBox;
-    sl_hot  = new QSlider(Qt::Horizontal);
-    sb_hot  = new QSpinBox;
+    sl_value = new QSlider(Qt::Horizontal);
+    sb_value = new QSpinBox;
 
-    sl_cold->setRange(0, 100);
-    sl_hot->setRange(0, 100);
+    sl_value->setRange(0, 100);
+    sl_value->setRange(0, 100);
 
-    sb_cold->setRange(0, 100);
-    sb_hot->setRange(0, 100);
-
-    sb_cold->setReadOnly(true);
-    sb_hot->setReadOnly(true);
-
-    connect(sl_cold,    SIGNAL(valueChanged(int)),  sb_cold,    SLOT(setValue(int)));
-    connect(sl_hot,     SIGNAL(valueChanged(int)),  sb_hot,     SLOT(setValue(int)));
+    connect(sl_value,   SIGNAL(valueChanged(int)),  sb_value,   SLOT(setValue(int)));
 
     QGridLayout *grid_btn = new QGridLayout();
-    grid_btn->addWidget(new QLabel("Cold:"),    0, 0);
-    grid_btn->addWidget(sl_cold,    0, 1);
-    grid_btn->addWidget(sb_cold,    0, 2);
-    grid_btn->addWidget(new QLabel("Hot:"),     1, 0);
-    grid_btn->addWidget(sl_hot,    1, 1);
-    grid_btn->addWidget(sb_hot,    1, 2);
+    grid_btn->addWidget(new QLabel("Value:"),    0, 0);
+    grid_btn->addWidget(sl_value,    0, 1);
+    grid_btn->addWidget(sb_value,    0, 2);
 
     vbox->addLayout(grid_btn);
     vbox->addStretch(10);
@@ -287,8 +273,8 @@ void MainBox::btn_click(bool state)
     QToolButton *btn = (QToolButton *)sender();
     if(!btn) return;
 
-    int x = btn->property("property_x").toInt();
-    int y = btn->property("property_y").toInt();
+    int x = btn->property(PROPERTY_X).toInt();
+    int y = btn->property(PROPERTY_Y).toInt();
 
     F_01 packet;
 
@@ -335,10 +321,10 @@ void MainBox::set_property(int btn_index, quint16 value)
     union UINT16 temp;
     temp.value = value;
 
-    pic_buttons.at(btn_index)->setProperty("property_x1", temp.bytes.a);
-    pic_buttons.at(btn_index)->setProperty("property_y1", temp.bytes.b);
-    pic_buttons.at(btn_index)->setProperty("property_x2", temp.bytes.c);
-    pic_buttons.at(btn_index)->setProperty("property_y2", temp.bytes.d);
+    pic_buttons.at(btn_index)->setProperty(PROPERTY_X1, temp.bytes.a);
+    pic_buttons.at(btn_index)->setProperty(PROPERTY_Y1, temp.bytes.b);
+    pic_buttons.at(btn_index)->setProperty(PROPERTY_X2, temp.bytes.c);
+    pic_buttons.at(btn_index)->setProperty(PROPERTY_Y2, temp.bytes.d);
 }
 //--------------------------------------------------------------------------------
 void MainBox::btn_click_adv(bool state)
@@ -348,10 +334,10 @@ void MainBox::btn_click_adv(bool state)
     QToolButton *btn = (QToolButton *)sender();
     if(!btn) return;
 
-    int x1 = btn->property("property_x1").toInt();
-    int y1 = btn->property("property_y1").toInt();
-    int x2 = btn->property("property_x2").toInt();
-    int y2 = btn->property("property_y2").toInt();
+    int x1 = btn->property(PROPERTY_X1).toInt();
+    int y1 = btn->property(PROPERTY_Y1).toInt();
+    int x2 = btn->property(PROPERTY_X2).toInt();
+    int y2 = btn->property(PROPERTY_Y2).toInt();
 
     F_01 packet;
 
@@ -390,8 +376,8 @@ void MainBox::send_grid_question(int value)
     {
         if(btn->isChecked())
         {
-            int x = btn->property("property_x").toInt();
-            int y = btn->property("property_y").toInt();
+            int x = btn->property(PROPERTY_X).toInt();
+            int y = btn->property(PROPERTY_Y).toInt();
             emit debug(QString("[%1:%2]")
                       .arg(x)
                       .arg(y));
@@ -427,22 +413,71 @@ void MainBox::send_grid_question(int value)
     emit send(o_ba);
 }
 //--------------------------------------------------------------------------------
-void MainBox::send_pic_question(int value)
+void MainBox::send_cold_pic_question(int value)
 {
     foreach (Button *btn, pic_buttons)
     {
         if(btn->isChecked())
         {
-            int x1 = btn->property("property_x1").toInt();
-            int y1 = btn->property("property_y1").toInt();
-            int x2 = btn->property("property_x1").toInt();
-            int y2 = btn->property("property_y1").toInt();
+            int x1 = btn->property(PROPERTY_X1).toInt();
+            int y1 = btn->property(PROPERTY_Y1).toInt();
+            int x2 = btn->property(PROPERTY_X2).toInt();
+            int y2 = btn->property(PROPERTY_Y2).toInt();
             emit debug(QString("[%1:%2] [%3:%4]")
                       .arg(x1)
                       .arg(y1)
                       .arg(x2)
                       .arg(y2));
             buf_leds[x1][y1] = value;
+            //buf_leds[x2][y2] = value;
+        }
+    }
+
+    //---
+    F_01 packet;
+
+    packet.body.header.addr = 0;
+    packet.body.header.cmd = CMD_0x01;
+    packet.body.header.len = sizeof(packet.body.data_t);
+
+    for(int y=0; y<MAX_SCREEN_Y; y++)
+    {
+        for(int x=0; x<MAX_SCREEN_X; x++)
+        {
+            packet.body.data_t.leds[x][y] = buf_leds[x][y];
+        }
+    }
+
+    QByteArray ba;
+    ba.clear();
+    ba.append((char *)&packet.buf, sizeof(packet));
+    emit debug(ba.toHex());
+
+    QString send_packet = QString(":%1\n")
+            .arg(ba.toHex().data());
+
+    QByteArray o_ba;
+    o_ba.clear();
+    o_ba.append(send_packet);
+    emit send(o_ba);
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_hot_pic_question(int value)
+{
+    foreach (Button *btn, pic_buttons)
+    {
+        if(btn->isChecked())
+        {
+            int x1 = btn->property(PROPERTY_X1).toInt();
+            int y1 = btn->property(PROPERTY_Y1).toInt();
+            int x2 = btn->property(PROPERTY_X2).toInt();
+            int y2 = btn->property(PROPERTY_Y2).toInt();
+            emit debug(QString("[%1:%2] [%3:%4]")
+                      .arg(x1)
+                      .arg(y1)
+                      .arg(x2)
+                      .arg(y2));
+            //buf_leds[x1][y1] = value;
             buf_leds[x2][y2] = value;
         }
     }

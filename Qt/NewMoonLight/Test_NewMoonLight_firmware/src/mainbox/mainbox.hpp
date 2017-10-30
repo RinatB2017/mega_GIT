@@ -65,7 +65,9 @@ private slots:
     void btn_click_adv(bool state);
 
     void send_grid_question(int value);
-    void send_pic_question(int value);
+
+    void send_hot_pic_question(int value);
+    void send_cold_pic_question(int value);
 
 private:
     MySplashScreen *splash = 0;
@@ -103,10 +105,8 @@ private:
 
     QToolButton *btn[MAX_SCREEN_X][MAX_SCREEN_Y];
 
-    QSlider  *sl_cold = 0;
-    QSpinBox *sb_cold = 0;
-    QSlider  *sl_hot = 0;
-    QSpinBox *sb_hot = 0;
+    QSlider  *sl_value = 0;
+    QSpinBox *sb_value = 0;
 
     QToolButton *add_button(QToolBar *tool_bar,
                             QToolButton *tool_button,

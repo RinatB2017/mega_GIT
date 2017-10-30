@@ -77,6 +77,13 @@ void MainBox::init(void)
     connect(ui->sl_cold,    SIGNAL(valueChanged(int)),  ui->sb_cold,    SLOT(setValue(int)));
     connect(ui->sl_hot,     SIGNAL(valueChanged(int)),  ui->sb_hot,     SLOT(setValue(int)));
 
+    connect(ui->sl_cold,    SIGNAL(valueChanged(int)),  this,   SLOT(send_pic_question(int)));
+    connect(ui->sl_hot,    SIGNAL(valueChanged(int)),  this,   SLOT(send_pic_question(int)));
+
+    connect(sl_cold,    SIGNAL(valueChanged(int)),  this,   SLOT(send_grid_question(int)));
+    connect(sl_hot,     SIGNAL(valueChanged(int)),  this,   SLOT(send_grid_question(int)));
+
+
 #if 1
     init_widgets();
 #endif
@@ -109,11 +116,11 @@ void MainBox::init_widgets(void)
                       &temp_y);
             Button *btn = new Button(led_r*2, led_r*2, ui->lbl_pic);
             btn->setCheckable(true);
-            buttons.append(btn);
+            pic_buttons.append(btn);
             btn->set_color(Qt::red, Qt::black);
             btn->move(temp_x-led_r,
                       temp_y-led_r);
-            connect(btn,    SIGNAL(toggled(bool)),  this,   SLOT(btn_click_adv(bool)));
+            // connect(btn,    SIGNAL(toggled(bool)),  this,   SLOT(btn_click_adv(bool)));
             index++;
         }
         i++;
@@ -183,27 +190,12 @@ void MainBox::createTestBar(void)
     toolBar->setObjectName("testbar");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
-    if(!mw) return;
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
-
-    sb_min = new QSpinBox(this);
-    sb_min->setObjectName("sb_min");
-    sb_min->setMinimum(0);
-    sb_min->setMaximum(100);
-    sb_min->setValue(0);
-
-    sb_max = new QSpinBox(this);
-    sb_max->setObjectName("sb_max");
-    sb_max->setMinimum(0);
-    sb_max->setMaximum(100);
-    sb_max->setValue(100);
-
-    toolBar->addWidget(new QLabel("min"));
-    toolBar->addWidget(sb_min);
-    toolBar->addWidget(new QLabel("max"));
-    toolBar->addWidget(sb_max);
 
     QToolButton *btn_on = add_button(toolBar,
                                      new QToolButton(this),
@@ -243,6 +235,7 @@ void MainBox::createGridBox(void)
             btn[x][y]->setProperty("property_x", x);
             btn[x][y]->setProperty("property_y", y);
             connect(btn[x][y], SIGNAL(clicked(bool)),   this,   SLOT(btn_click(bool)));
+            grid_buttons.append(btn[x][y]);
 
             grid->addWidget(btn[x][y], x, y);
         }
@@ -303,10 +296,7 @@ void MainBox::btn_click(bool state)
     packet.body.header.cmd = CMD_0x01;
     packet.body.header.len = sizeof(packet.body.data_t);
 
-    uint8_t max = sb_max->value();
-    uint8_t min = sb_min->value();
-
-    buf_leds[x][y] = btn->isChecked() ? max : min;
+    buf_leds[x][y] = btn->isChecked() ? 100 : 0;
 
     for(int y=0; y<MAX_SCREEN_Y; y++)
     {
@@ -319,7 +309,7 @@ void MainBox::btn_click(bool state)
     QByteArray ba;
     ba.clear();
     ba.append((char *)&packet.buf, sizeof(packet));
-    emit info(ba.toHex());
+    emit debug(ba.toHex());
 
     QString send_packet = QString(":%1\n")
             .arg(ba.toHex().data());
@@ -345,10 +335,10 @@ void MainBox::set_property(int btn_index, quint16 value)
     union UINT16 temp;
     temp.value = value;
 
-    buttons.at(btn_index)->setProperty("property_x1", temp.bytes.a);
-    buttons.at(btn_index)->setProperty("property_y1", temp.bytes.b);
-    buttons.at(btn_index)->setProperty("property_x2", temp.bytes.c);
-    buttons.at(btn_index)->setProperty("property_y2", temp.bytes.d);
+    pic_buttons.at(btn_index)->setProperty("property_x1", temp.bytes.a);
+    pic_buttons.at(btn_index)->setProperty("property_y1", temp.bytes.b);
+    pic_buttons.at(btn_index)->setProperty("property_x2", temp.bytes.c);
+    pic_buttons.at(btn_index)->setProperty("property_y2", temp.bytes.d);
 }
 //--------------------------------------------------------------------------------
 void MainBox::btn_click_adv(bool state)
@@ -369,11 +359,8 @@ void MainBox::btn_click_adv(bool state)
     packet.body.header.cmd = CMD_0x01;
     packet.body.header.len = sizeof(packet.body.data_t);
 
-    uint8_t max = sb_max->value();
-    uint8_t min = sb_min->value();
-
-    buf_leds[x1][y1] = btn->isChecked() ? max : min;
-    buf_leds[x2][y2] = btn->isChecked() ? max : min;
+    buf_leds[x1][y1] = btn->isChecked() ? 100 : 0;
+    buf_leds[x2][y2] = btn->isChecked() ? 100 : 0;
 
     for(int y=0; y<MAX_SCREEN_Y; y++)
     {
@@ -386,7 +373,99 @@ void MainBox::btn_click_adv(bool state)
     QByteArray ba;
     ba.clear();
     ba.append((char *)&packet.buf, sizeof(packet));
-    emit info(ba.toHex());
+    emit debug(ba.toHex());
+
+    QString send_packet = QString(":%1\n")
+            .arg(ba.toHex().data());
+
+    QByteArray o_ba;
+    o_ba.clear();
+    o_ba.append(send_packet);
+    emit send(o_ba);
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_grid_question(int value)
+{
+    foreach (QToolButton *btn, grid_buttons)
+    {
+        if(btn->isChecked())
+        {
+            int x = btn->property("property_x").toInt();
+            int y = btn->property("property_y").toInt();
+            emit debug(QString("[%1:%2]")
+                      .arg(x)
+                      .arg(y));
+            buf_leds[x][y] = value;
+        }
+    }
+
+    //---
+    F_01 packet;
+
+    packet.body.header.addr = 0;
+    packet.body.header.cmd = CMD_0x01;
+    packet.body.header.len = sizeof(packet.body.data_t);
+
+    for(int y=0; y<MAX_SCREEN_Y; y++)
+    {
+        for(int x=0; x<MAX_SCREEN_X; x++)
+        {
+            packet.body.data_t.leds[x][y] = buf_leds[x][y];
+        }
+    }
+    QByteArray ba;
+    ba.clear();
+    ba.append((char *)&packet.buf, sizeof(packet));
+    emit debug(ba.toHex());
+
+    QString send_packet = QString(":%1\n")
+            .arg(ba.toHex().data());
+
+    QByteArray o_ba;
+    o_ba.clear();
+    o_ba.append(send_packet);
+    emit send(o_ba);
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_pic_question(int value)
+{
+    foreach (Button *btn, pic_buttons)
+    {
+        if(btn->isChecked())
+        {
+            int x1 = btn->property("property_x1").toInt();
+            int y1 = btn->property("property_y1").toInt();
+            int x2 = btn->property("property_x1").toInt();
+            int y2 = btn->property("property_y1").toInt();
+            emit debug(QString("[%1:%2] [%3:%4]")
+                      .arg(x1)
+                      .arg(y1)
+                      .arg(x2)
+                      .arg(y2));
+            buf_leds[x1][y1] = value;
+            buf_leds[x2][y2] = value;
+        }
+    }
+
+    //---
+    F_01 packet;
+
+    packet.body.header.addr = 0;
+    packet.body.header.cmd = CMD_0x01;
+    packet.body.header.len = sizeof(packet.body.data_t);
+
+    for(int y=0; y<MAX_SCREEN_Y; y++)
+    {
+        for(int x=0; x<MAX_SCREEN_X; x++)
+        {
+            packet.body.data_t.leds[x][y] = buf_leds[x][y];
+        }
+    }
+
+    QByteArray ba;
+    ba.clear();
+    ba.append((char *)&packet.buf, sizeof(packet));
+    emit debug(ba.toHex());
 
     QString send_packet = QString(":%1\n")
             .arg(ba.toHex().data());
@@ -411,69 +490,18 @@ void MainBox::createSerialBox(void)
 //--------------------------------------------------------------------------------
 void MainBox::on(void)
 {
-    emit info("ON");
-
-    F_01 packet;
-
-    packet.body.header.addr = 0;
-    packet.body.header.cmd = CMD_0x01;
-    packet.body.header.len = sizeof(packet.body.data_t);
-
-    for(int y=0; y<MAX_SCREEN_Y; y++)
+    foreach (QToolButton *btn, grid_buttons)
     {
-        for(int x=0; x<MAX_SCREEN_X; x++)
-        {
-            packet.body.data_t.leds[y][x] = sb_max->value();
-        }
+        btn->setChecked(true);
     }
-
-    QByteArray ba;
-    ba.clear();
-    ba.append((char *)&packet.buf, sizeof(packet));
-
-    QString send_packet = QString(":%1\n")
-            .arg(ba.toHex().data())
-            .toUpper();
-    emit info(send_packet);
-
-    QByteArray o_ba;
-    o_ba.clear();
-    o_ba.append(send_packet);
-    emit send(o_ba);
-
 }
 //--------------------------------------------------------------------------------
 void MainBox::off(void)
 {
-    emit info("OFF");
-
-    F_01 packet;
-
-    packet.body.header.addr = 0;
-    packet.body.header.cmd = CMD_0x01;
-    packet.body.header.len = sizeof(packet.body.data_t);
-
-    for(int y=0; y<MAX_SCREEN_Y; y++)
+    foreach (QToolButton *btn, grid_buttons)
     {
-        for(int x=0; x<MAX_SCREEN_X; x++)
-        {
-            packet.body.data_t.leds[y][x] = sb_min->value();
-        }
+        btn->setChecked(false);
     }
-
-    QByteArray ba;
-    ba.clear();
-    ba.append((char *)&packet.buf, sizeof(packet));
-
-    QString send_packet = QString(":%1\n")
-            .arg(ba.toHex().data())
-            .toUpper();
-    emit info(send_packet);
-
-    QByteArray o_ba;
-    o_ba.clear();
-    o_ba.append(send_packet);
-    emit send(o_ba);
 }
 //--------------------------------------------------------------------------------
 void MainBox::click(void)
@@ -493,101 +521,15 @@ void MainBox::click(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    F_01 packet;
+    emit info("test");
 
-    packet.body.header.addr = 0;
-    packet.body.header.cmd = CMD_0x01;
-    packet.body.header.len = sizeof(packet.body.data_t);
-
-    buf_leds[4][1] = 5;
-    buf_leds[5][1] = 5;
-
-    buf_leds[3][2] = 5;
-    buf_leds[4][5] = 5;
-
-    buf_leds[5][2] = 5;
-    buf_leds[1][3] = 5;
-
-    buf_leds[5][3] = 5;
-    buf_leds[3][4] = 5;
-
-    buf_leds[0][5] = 5;
-    buf_leds[1][0] = 5;
-
-    buf_leds[4][0] = 5;
-    buf_leds[1][1] = 5;
-
-    for(int y=0; y<MAX_SCREEN_Y; y++)
+    foreach (Button *btn, pic_buttons)
     {
-        for(int x=0; x<MAX_SCREEN_X; x++)
-        {
-            packet.body.data_t.leds[y][x] = buf_leds[x][y];
-        }
+        //emit info(QString("%1").arg(btn->isChecked()));
+        btn->click();
+        //btn->setChecked(true);
+        //btn->update();
     }
-
-    QByteArray ba;
-    ba.clear();
-    ba.append((char *)&packet.buf, sizeof(packet));
-    emit info(ba.toHex());
-
-    QString send_packet = QString(":%1\n")
-            .arg(ba.toHex().data());
-
-    QByteArray o_ba;
-    o_ba.clear();
-    o_ba.append(send_packet);
-    emit send(o_ba);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test2(void)
-{
-    int btn = QMessageBox::question(this,
-                                    "Тест",
-                                    "Вы хотите запустить тест?",
-                                    QMessageBox::Yes | QMessageBox::No);
-    if(btn != QMessageBox::Yes)
-    {
-        return;
-    }
-
-    block_this_button(true);
-#if 0
-    emit info("TEST2");
-#else
-    QByteArray ba;
-
-    char val = 0;
-    int cnt = 0;
-    int max_cnt = 5;
-    while(cnt<max_cnt)
-    {
-        cnt++;
-        emit info(QString("cnt %1 max_cnt %2")
-                  .arg(cnt)
-                  .arg(max_cnt));
-        for(val=0; val<=100; val++)
-        {
-            QCoreApplication::processEvents();
-            ba.clear();
-            ba.append((char)0);
-            ba.append((char)0);
-            ba.append((char)val);
-
-            QString send_packet = QString(":%1\n")
-                    .arg(ba.toHex().data());
-
-            //emit info(QString("send: %1").arg(send_packet));
-
-            QByteArray o_ba;
-            o_ba.clear();
-            o_ba.append(send_packet);
-            emit send(o_ba);
-
-            Sleeper::msleep(100);
-        }
-    }
-#endif
-    block_this_button(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
@@ -700,46 +642,6 @@ uint8_t MainBox::convert_ascii_to_value(char hi, char lo)
     //---
     uint8_t r_byte = (b_hi << 4) | b_lo;
     return r_byte;
-}
-//--------------------------------------------------------------------------------
-void MainBox::block_this_button(bool state)
-{
-    QObject *btn = (QObject *)sender();
-    if(!btn) return;
-
-    if (QPushButton *pb=qobject_cast<QPushButton *>(btn))
-    {
-        pb->setDisabled(state);
-    }
-    if (QToolButton *tb=qobject_cast<QToolButton *>(btn))
-    {
-        tb->setDisabled(state);
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::block_interface(bool state)
-{
-    QList<QPushButton *> all_pushbutton = topLevelWidget()->findChildren<QPushButton *>();
-    foreach(QPushButton *obj, all_pushbutton)
-    {
-        obj->setDisabled(state);
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::block_widget(const QString name, bool state)
-{
-    if(name.isEmpty())
-    {
-        return;
-    }
-    QList<QWidget *> all_obj = topLevelWidget()->findChildren<QWidget *>();
-    foreach(QWidget *obj, all_obj)
-    {
-        if(obj->objectName() == name)
-        {
-            obj->setDisabled(state);
-        }
-    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

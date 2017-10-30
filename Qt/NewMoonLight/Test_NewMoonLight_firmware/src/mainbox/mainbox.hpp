@@ -56,7 +56,6 @@ private slots:
     void off(void);
 
     void test(void);
-    void test2(void);
 
     void read_data(QByteArray ba);
 
@@ -64,6 +63,9 @@ private slots:
 
     void btn_click(bool state);
     void btn_click_adv(bool state);
+
+    void send_grid_question(int value);
+    void send_pic_question(int value);
 
 private:
     MySplashScreen *splash = 0;
@@ -92,16 +94,14 @@ private:
     qreal temp_x = 0;
     qreal temp_y = 0;
 
-    QList<Button *> buttons;
+    QList<QToolButton *> grid_buttons;
+    QList<Button *>      pic_buttons;
 
     void init(void);
     void init_widgets(void);
     void connect_log(void);
 
     QToolButton *btn[MAX_SCREEN_X][MAX_SCREEN_Y];
-
-    QSpinBox *sb_min = 0;
-    QSpinBox *sb_max = 0;
 
     QSlider  *sl_cold = 0;
     QSpinBox *sb_cold = 0;
@@ -126,10 +126,6 @@ private:
     void createTestBar(void);
     void createSerialBox(void);
     void createGridBox(void);
-
-    void block_this_button(bool state);
-    void block_interface(bool state);
-    void block_widget(const QString name, bool state);
 
     QString convert_data_to_ascii(uint8_t data);
     uint8_t convert_ascii_to_value(char hi, char lo);

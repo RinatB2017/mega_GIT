@@ -84,7 +84,7 @@
     </message>
     <message>
         <source>Write</source>
-        <translation>Звпись</translation>
+        <translation>Запись</translation>
     </message>
 </context>
 

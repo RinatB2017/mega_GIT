@@ -131,11 +131,6 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
-{
-    emit debug(tr("reset"));
-}
-//--------------------------------------------------------------------------------
 void MainBox::wait(int max_time_ms)
 {
     QTime time;
@@ -155,11 +150,27 @@ void MainBox::read_data(QByteArray ba)
         return;
     }
 
-    emit debug(QString("read_data [%1] %2 bytes")
-               .arg(ba.toHex().data())
-               .arg(ba.size()));
-    data_rs232.append(ba);
-    is_ready = true;
+    emit error(ba.data());
+    for(int n=0; n<ba.size(); n++)
+    {
+        char s = ba.at(n);
+        switch(s)
+        {
+        case ':':
+            data_rs232_dirty.clear();
+            is_ready = false;
+            break;
+        case '\r':
+        case '\n':
+            data_rs232_clean.clear();
+            data_rs232_clean.append(QByteArray::fromHex(data_rs232_dirty));
+            is_ready = true;
+            break;
+        default:
+            data_rs232_dirty.append(s);
+            break;
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 QByteArray MainBox::convert(QByteArray ba)
@@ -185,21 +196,19 @@ bool MainBox::check_answer_test(QByteArray data)
         return false;
     }
 
-    QByteArray temp;
-    temp.clear();
-    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
+    emit error(QString("check_answer_test: %1").arg(data.data()));
 
-    if(temp.size() != sizeof(ANSWER_TEST))
+    if(data.size() != sizeof(ANSWER_TEST))
     {
         emit error("Размер пакета не корректен");
         return false;
     }
 
-    ANSWER_TEST *answer = (ANSWER_TEST *)temp.data();
+    ANSWER_TEST *answer = (ANSWER_TEST *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xBBAA)
+    if(prefix != 0xAABB)
     {
-        emit error("Префикс не корректен");
+        emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
     }
 
@@ -226,21 +235,17 @@ bool MainBox::check_answer_reset(QByteArray data)
         return false;
     }
 
-    QByteArray temp;
-    temp.clear();
-    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
-
-    if(temp.size() != sizeof(ANSWER_RESET))
+    if(data.size() != sizeof(ANSWER_RESET))
     {
         emit error("Размер пакета не корректен");
         return false;
     }
 
-    ANSWER_RESET *answer = (ANSWER_RESET *)temp.data();
+    ANSWER_RESET *answer = (ANSWER_RESET *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xBBAA)
+    if(prefix != 0xAABB)
     {
-        emit error("Префикс не корректен");
+        emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
     }
 
@@ -267,21 +272,17 @@ bool MainBox::check_answer_read(QByteArray data)
         return false;
     }
 
-    QByteArray temp;
-    temp.clear();
-    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
-
-    if(temp.size() != sizeof(ANSWER_READ))
+    if(data.size() != sizeof(ANSWER_READ))
     {
         emit error("Размер пакета не корректен");
         return false;
     }
 
-    ANSWER_READ *answer = (ANSWER_READ *)temp.data();
+    ANSWER_READ *answer = (ANSWER_READ *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xBBAA)
+    if(prefix != 0xAABB)
     {
-        emit error("Префикс не корректен");
+        emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
     }
 
@@ -329,21 +330,17 @@ bool MainBox::check_answer_write(QByteArray data)
         return false;
     }
 
-    QByteArray temp;
-    temp.clear();
-    temp = QByteArray::fromHex(data.mid(1, data.size()-1));
-
-    if(temp.size() != sizeof(ANSWER_WRITE))
+    if(data.size() != sizeof(ANSWER_WRITE))
     {
         emit error("Размер пакета не корректен");
         return false;
     }
 
-    ANSWER_WRITE *answer = (ANSWER_WRITE *)temp.data();
+    ANSWER_WRITE *answer = (ANSWER_WRITE *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xBBAA)
+    if(prefix != 0xAABB)
     {
-        emit error("Префикс не корректен");
+        emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
     }
 
@@ -395,13 +392,13 @@ void MainBox::cmd_read(void)
     emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
-    data_rs232.clear();
+    data_rs232_clean.clear();
     is_ready = false;
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
-    check_answer_read(data_rs232);
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    check_answer_read(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_write(void)
@@ -430,18 +427,26 @@ void MainBox::cmd_write(void)
     emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
-    data_rs232.clear();
+    data_rs232_clean.clear();
     is_ready = false;
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
-    check_answer_write(data_rs232);
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    check_answer_write(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_test(void)
 {
     emit info("Test");
+
+#if 0
+    QByteArray test;
+    test.clear();
+    test.append(QByteArray::fromHex(":010203\n"));
+    emit error(test.toHex());
+    return;
+#endif
 
     QUESTION_TEST question;
 
@@ -459,13 +464,13 @@ void MainBox::cmd_test(void)
     emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
-    data_rs232.clear();
+    data_rs232_clean.clear();
     is_ready = false;
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
-    check_answer_test(data_rs232);
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    check_answer_test(QByteArray::fromHex(data_rs232_clean));
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_reset(void)
@@ -488,13 +493,13 @@ void MainBox::cmd_reset(void)
     emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
-    data_rs232.clear();
+    data_rs232_clean.clear();
     is_ready = false;
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232.replace("\n", "").data()));
-    check_answer_reset(data_rs232);
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    check_answer_reset(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

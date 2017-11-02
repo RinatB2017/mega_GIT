@@ -48,7 +48,6 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
     void read_data(QByteArray ba);
 
     void cmd_test(void);
@@ -62,7 +61,8 @@ private:
 
     SerialBox5 *serialBox5 = 0;
 
-    QByteArray data_rs232;
+    QByteArray data_rs232_dirty;
+    QByteArray data_rs232_clean;
     bool is_ready = false;
 
     void init(void);

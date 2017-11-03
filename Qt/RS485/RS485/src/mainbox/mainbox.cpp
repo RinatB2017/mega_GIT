@@ -36,6 +36,7 @@
 #include "serialbox5.hpp"
 #include "defines.hpp"
 #include "mainbox.hpp"
+#include "packet.hpp"
 #include "crc.h"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -150,7 +151,7 @@ void MainBox::read_data(QByteArray ba)
         return;
     }
 
-    emit error(ba.data());
+    emit debug(QString("read_data: [%1]").arg(ba.data()));
     for(int n=0; n<ba.size(); n++)
     {
         char s = ba.at(n);
@@ -196,8 +197,6 @@ bool MainBox::check_answer_test(QByteArray data)
         return false;
     }
 
-    emit error(QString("check_answer_test: %1").arg(data.data()));
-
     if(data.size() != sizeof(ANSWER_TEST))
     {
         emit error("Размер пакета не корректен");
@@ -206,7 +205,7 @@ bool MainBox::check_answer_test(QByteArray data)
 
     ANSWER_TEST *answer = (ANSWER_TEST *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xAABB)
+    if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
@@ -243,7 +242,7 @@ bool MainBox::check_answer_reset(QByteArray data)
 
     ANSWER_RESET *answer = (ANSWER_RESET *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xAABB)
+    if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
@@ -280,7 +279,7 @@ bool MainBox::check_answer_read(QByteArray data)
 
     ANSWER_READ *answer = (ANSWER_READ *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xAABB)
+    if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
@@ -338,7 +337,7 @@ bool MainBox::check_answer_write(QByteArray data)
 
     ANSWER_WRITE *answer = (ANSWER_WRITE *)data.data();
     uint16_t prefix = answer->body.header.prefix_16;
-    if(prefix != 0xAABB)
+    if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
         return false;
@@ -397,7 +396,7 @@ void MainBox::cmd_read(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     check_answer_read(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
@@ -432,21 +431,13 @@ void MainBox::cmd_write(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     check_answer_write(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_test(void)
 {
     emit info("Test");
-
-#if 0
-    QByteArray test;
-    test.clear();
-    test.append(QByteArray::fromHex(":010203\n"));
-    emit error(test.toHex());
-    return;
-#endif
 
     QUESTION_TEST question;
 
@@ -469,8 +460,8 @@ void MainBox::cmd_test(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
-    check_answer_test(QByteArray::fromHex(data_rs232_clean));
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
+    check_answer_test(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_reset(void)
@@ -498,7 +489,7 @@ void MainBox::cmd_reset(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     check_answer_reset(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------

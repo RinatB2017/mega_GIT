@@ -279,7 +279,7 @@ void LogBox::debugLog(const QString &text)
         temp = text;
     }
 
-    flagColor ? logBox->setTextColor(QColor(Qt::green)) : logBox->setTextColor(QColor(Qt::black));
+    flagColor ? logBox->setTextColor(QColor(Qt::darkGreen)) : logBox->setTextColor(QColor(Qt::black));
 
     if(flagNoCRLF)
         logBox->insertPlainText(temp);

@@ -142,7 +142,7 @@ void PelcoD::f_send(void)
     ba.append((char *)&packet.buf, sizeof(packet));
 
     emit send(ba);
-    emit info(ba.toHex());
+    emit debug(ba.toHex());
 }
 //--------------------------------------------------------------------------------
 void PelcoD::Camera_Save_position(char preset)
@@ -160,7 +160,7 @@ void PelcoD::Camera_Save_position(char preset)
     ba.append((char *)&packet.buf, sizeof(packet));
 
     emit send(ba);
-    emit info(ba.toHex());
+    emit debug(ba.toHex());
 }
 //--------------------------------------------------------------------------------
 void PelcoD::Camera_Move_position(char preset)
@@ -178,7 +178,7 @@ void PelcoD::Camera_Move_position(char preset)
     ba.append((char *)&packet.buf, sizeof(packet));
 
     emit send(ba);
-    emit info(ba.toHex());
+    emit debug(ba.toHex());
 }
 //--------------------------------------------------------------------------------
 void PelcoD::Camera_Wiper(void)
@@ -196,7 +196,7 @@ void PelcoD::Camera_Wiper(void)
     ba.append((char *)&packet.buf, sizeof(packet));
 
     emit send(ba);
-    emit info(ba.toHex());
+    emit debug(ba.toHex());
 }
 //--------------------------------------------------------------------------------
 void PelcoD::Camera_Run_Tur_1(void)
@@ -214,7 +214,7 @@ void PelcoD::Camera_Run_Tur_1(void)
     ba.append((char *)&packet.buf, sizeof(packet));
 
     emit send(ba);
-    emit info(ba.toHex());
+    emit debug(ba.toHex());
 }
 //--------------------------------------------------------------------------------
 void PelcoD::changeEvent(QEvent *event)

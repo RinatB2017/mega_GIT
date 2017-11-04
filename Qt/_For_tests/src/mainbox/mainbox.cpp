@@ -272,7 +272,14 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    updateQRImage();
+    //updateQRImage();
+
+    emit info("using class_X");
+    c0::class_X *x0 = new c0::class_X();
+    x0->x();
+
+    c1::class_X *x1 = new c1::class_X();
+    x1->x();
 
     return true;
 }

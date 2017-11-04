@@ -188,6 +188,28 @@ public:
     }
 };
 //--------------------------------------------------------------------------------
+namespace c0 {
+    class class_X
+    {
+    public:
+        void x(void)
+        {
+            std::cout  << "111" << '\n';
+        }
+    };
+}
+
+namespace c1 {
+    class class_X
+    {
+    public:
+        void x(void)
+        {
+            std::cout  << "222" << '\n';
+        }
+    };
+}
+//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT

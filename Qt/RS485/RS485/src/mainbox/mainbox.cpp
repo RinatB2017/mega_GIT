@@ -151,7 +151,7 @@ void MainBox::read_data(QByteArray ba)
         return;
     }
 
-    emit debug(QString("read_data: [%1]").arg(ba.data()));
+    emit debug(QString("read_data: [%1]").arg(ba.toHex().toUpper().data()));
     for(int n=0; n<ba.size(); n++)
     {
         char s = ba.at(n);

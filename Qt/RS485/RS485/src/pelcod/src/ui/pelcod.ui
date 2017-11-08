@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
+    <width>265</width>
     <height>363</height>
    </rect>
   </property>
@@ -136,52 +136,39 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <layout class="QGridLayout" name="grid_presets">
-        <item row="2" column="0">
-         <widget class="QPushButton" name="btn_move_position">
-          <property name="text">
-           <string>move position</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QPushButton" name="btn_run_tur_1">
-          <property name="text">
-           <string>run tur 1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btn_save_position">
-          <property name="text">
-           <string>save position</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QPushButton" name="btn_wiper">
-          <property name="text">
-           <string>wiper</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="sb_save_position"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QSpinBox" name="sb_move_position"/>
-        </item>
-        <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
          <widget class="QLabel" name="label_8">
           <property name="text">
            <string>Адрес</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
+        <item>
          <widget class="QSpinBox" name="sb_addr_cam_presets"/>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_move_position">
+        <property name="text">
+         <string>move position</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_run_tur_1">
+        <property name="text">
+         <string>run tur 1</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_wiper">
+        <property name="text">
+         <string>wiper</string>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="verticalSpacer">
@@ -218,12 +205,9 @@
   <tabstop>sb_chk_sum</tabstop>
   <tabstop>btn_send</tabstop>
   <tabstop>sb_addr_cam_presets</tabstop>
-  <tabstop>btn_save_position</tabstop>
-  <tabstop>sb_save_position</tabstop>
   <tabstop>btn_move_position</tabstop>
-  <tabstop>sb_move_position</tabstop>
-  <tabstop>btn_wiper</tabstop>
   <tabstop>btn_run_tur_1</tabstop>
+  <tabstop>btn_wiper</tabstop>
  </tabstops>
  <resources/>
  <connections/>

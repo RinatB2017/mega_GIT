@@ -76,6 +76,20 @@
         <property name="bottomMargin">
          <number>8</number>
         </property>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string>Адрес камеры:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>Пресет помывки:</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="1">
          <widget class="QSpinBox" name="sb_addr_upu"/>
         </item>
@@ -86,30 +100,6 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_16">
-          <property name="text">
-           <string>Адрес камеры:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_15">
-          <property name="text">
-           <string>Пресет помывки:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QSpinBox" name="sb_time_preset_washout"/>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_18">
-          <property name="text">
-           <string>Пресет временный:</string>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_17">
           <property name="text">
@@ -117,14 +107,14 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
-         <widget class="QSpinBox" name="sb_preset_washout"/>
-        </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="sb_addr_cam"/>
-        </item>
         <item row="2" column="1">
          <widget class="QSpinBox" name="sb_time_washout"/>
+        </item>
+        <item row="6" column="1">
+         <widget class="QSpinBox" name="sb_preset_washout"/>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="sb_addr_cam"/>
         </item>
         <item row="1" column="1">
          <widget class="QSpinBox" name="sb_time_interval"/>
@@ -136,13 +126,17 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="sb_time_pause_washout"/>
-        </item>
-        <item row="3" column="0">
+        <item row="4" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>Время между помывками:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QTimeEdit" name="te_time_pause_washout">
+          <property name="displayFormat">
+           <string>H:mm:s</string>
           </property>
          </widget>
         </item>
@@ -223,10 +217,8 @@
   <tabstop>sb_addr_upu</tabstop>
   <tabstop>sb_time_interval</tabstop>
   <tabstop>sb_time_washout</tabstop>
-  <tabstop>sb_time_pause_washout</tabstop>
   <tabstop>sb_addr_cam</tabstop>
   <tabstop>sb_preset_washout</tabstop>
-  <tabstop>sb_time_preset_washout</tabstop>
  </tabstops>
  <resources/>
  <connections/>

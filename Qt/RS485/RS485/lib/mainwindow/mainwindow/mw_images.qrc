@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/mainwindow">
+	<file alias="applications-education-language.png">mw_images/applications-education-language.png</file>
+	<file alias="preferences-system-login.png">mw_images/preferences-system-login.png</file>
+	<file alias="edit-rename.png">mw_images/edit-rename.png</file>
+	<file alias="system-help.png">mw_images/system-help.png</file>
+	<file alias="database.png">mw_images/database.png</file>
+	<file alias="mplayer.png">mw_images/mplayer.png</file>
+	<file alias="computer.png">mw_images/computer.png</file>
+	<file alias="cookie.png">mw_images/cookie.png</file>
+	<file alias="ru.png">mw_images/ru.png</file>
+	<file alias="us.png">mw_images/us.png</file>
+	<file alias="system-shutdown.png">mw_images/system-shutdown.png</file>
+	<file alias="kfontview.png">mw_images/kfontview.png</file>
+	<file alias="style.png">mw_images/style.png</file>
+	<file alias="ucoz_favicon.ico">mw_images/ucoz_favicon.ico</file>
+    </qresource>
+</RCC>

@@ -50,7 +50,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "lib"
+LIB_PATH = "../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
 include ($$LIB_PATH/widgets/hexspinbox/hexspinbox.pri)

@@ -51,7 +51,7 @@
 #ifdef Q_OS_LINUX
     #include <syslog.h>
 #endif
-#ifdef Q_OS_WIN
+#if defined Q_OS_WIN || defined Q_OS_MAC
     #define LOG_EMERG       0       /* system is unusable */
     #define LOG_ALERT       1       /* action must be taken immediately */
     #define LOG_CRIT        2       /* critical conditions */

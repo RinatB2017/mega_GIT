@@ -227,11 +227,6 @@ void MainBox::updateQRImage(void)
 
     CQR_Encode qrEncode;
 
-#if 0
-    QString encodeString = "https://www.youtube.com/watch?v=2DWk47HnT9k";
-    emit info(QString("len %1 bytes").arg(encodeString.size()));
-    bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
-#else
     QByteArray ba;
     ba.clear();
     for(int n=0; n<2754; n++)   //2376 2953
@@ -240,7 +235,6 @@ void MainBox::updateQRImage(void)
     }
     emit info(QString("len %1 bytes").arg(ba.size()));
     bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, ba.toHex().data(), ba.size() );
-#endif
 
     if ( !successfulEncoding )
     {
@@ -261,8 +255,6 @@ void MainBox::updateQRImage(void)
             if ( qrEncode.m_byModuleData[i][j] )
                 encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
 
-    //const QPixmap & scale_image = ui->image_label->pixmap()->scaled( scale_size, scale_size );
-
     QLabel *image_label = new QLabel();
     image_label->setPixmap( QPixmap::fromImage( encodeImage.scaled(600, 600) ) );
     image_label->show();
@@ -272,14 +264,7 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    //updateQRImage();
-
-    emit info("using class_X");
-    c0::class_X *x0 = new c0::class_X();
-    x0->x();
-
-    c1::class_X *x1 = new c1::class_X();
-    x1->x();
+    updateQRImage();
 
     return true;
 }

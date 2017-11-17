@@ -44,6 +44,10 @@ int main(int argc, char *argv[])
     MyApplication app(argc, argv);
 #endif
 
+#ifdef UNDER_CONSTRUCTION
+    MyWidget::messagebox_warning("Warning", "UNDER_CONSTRUCTION");
+#endif
+
     set_codecs();
 
     QTranslator translator;

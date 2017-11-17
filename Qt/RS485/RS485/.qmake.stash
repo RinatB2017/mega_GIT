@@ -1,0 +1,46 @@
+QMAKE_DEFAULT_INCDIRS = \
+    C:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include \
+    C:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward
+QMAKE_DEFAULT_LIBDIRS = \
+    C:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0 \
+    C:/Qt/Tools/mingw530_32/lib/gcc \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/lib \
+    C:/Qt/Tools/mingw530_32/lib
+QMAKE_CXX.INCDIRS = \
+    C:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include \
+    C:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/include/g++-v6 \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/include/g++-v6/x86_64-pc-linux-gnu \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/include/g++-v6/backward \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/include \
+    /usr/local/include \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/include-fixed \
+    /usr/include
+QMAKE_CXX.LIBDIRS = \
+    C:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0 \
+    C:/Qt/Tools/mingw530_32/lib/gcc \
+    C:/Qt/Tools/mingw530_32/i686-w64-mingw32/lib \
+    C:/Qt/Tools/mingw530_32/lib \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0 \
+    /usr/lib64 \
+    /lib64 \
+    /usr/x86_64-pc-linux-gnu/lib \
+    /usr/lib \
+    /lib
+QMAKE_CXX.QT_COMPILER_STDCXX = 201402L
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 6
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 4
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 0
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION

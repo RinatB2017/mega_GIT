@@ -90,18 +90,19 @@ void MainBox::init_widgets(void)
 {
     ui->sb_num_image->setRange(0, 60000-1);
 
-    display = new QTableWidget;
+    display = new QTableWidget(MAX_ROW, MAX_COL, this);
     connect(display,        SIGNAL(cellClicked(int,int)),   this,   SLOT(click(int,int)));
     connect(ui->btn_show,   SIGNAL(clicked(bool)),          this,   SLOT(show_image()));
 
-    display->setRowCount(MAX_ROW);
-    display->setColumnCount(MAX_COL);
     display->horizontalHeader()->setVisible(false);
     display->verticalHeader()->setVisible(false);
+
     display->horizontalHeader()->setDefaultSectionSize(SIZE_GRID);
     display->horizontalHeader()->setMinimumSectionSize(SIZE_GRID);
+
     display->verticalHeader()->setDefaultSectionSize(SIZE_GRID);
     display->verticalHeader()->setMinimumSectionSize(SIZE_GRID);
+
     display->setEditTriggers(QTableWidget::NoEditTriggers);
     display->setSelectionMode(QTableWidget::NoSelection);
 
@@ -113,21 +114,49 @@ void MainBox::init_widgets(void)
             display->item(i,j)->setBackgroundColor(Qt::white);
         }
     }
-    display->setFixedSize(MAX_COL*SIZE_GRID + 8, MAX_ROW* SIZE_GRID + 8);
+    //---
+    display->item(0,0)->setBackgroundColor(Qt::red);
+    display->item(0,MAX_COL-1)->setBackgroundColor(Qt::red);
+    display->item(MAX_ROW-1,0)->setBackgroundColor(Qt::red);
+    display->item(MAX_ROW-1,MAX_COL-1)->setBackgroundColor(Qt::red);
+    //---
+
+    display->adjustSize();
+    emit info(QString("display %1 %2")
+              .arg(display->width())
+              .arg(display->height()));
+    display->setFixedSize(MAX_COL * SIZE_GRID + 4,
+                          MAX_ROW * SIZE_GRID + 4);
+
+#if 0
+    emit info(QString("column %1 %2")
+              .arg(display->columnWidth(0))
+              .arg(display->rowHeight(0)));
+#endif
 
     display_number = new QLCDNumber;
     display_number->setFixedHeight(32);
 
     QVBoxLayout *vbox = new QVBoxLayout;
+#if 0
+    vbox->setSpacing(0);
+    vbox->setMargin(0);
+#endif
+
     QFrame *frame = new QFrame;
 
     vbox->addWidget(display);
     vbox->addWidget(display_number);
 
     frame->setLayout(vbox);
-    frame->setFixedSize(frame->sizeHint());
+
+    emit info(QString("frame %1 %2")
+              .arg(frame->sizeHint().width())
+              .arg(frame->sizeHint().height()));
 
     ui->display_layout->addWidget(frame);
+
+    setFixedSize(ui->frame->sizeHint());
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,

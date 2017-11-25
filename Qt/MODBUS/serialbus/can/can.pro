@@ -5,9 +5,9 @@ TEMPLATE    = app
 CONFIG      += c++11
 
 DEPENDPATH  += \
-    /usr/include/qt5/QtSerialBus/5.9.2 \
-    /usr/include/qt5/QtSerialBus/5.9.2/QtSerialBus \
-    /usr/include/qt5/QtCore/5.9.2/QtCore \
+    /usr/include/qt5/QtSerialBus/5.9.3 \
+    /usr/include/qt5/QtSerialBus/5.9.3/QtSerialBus \
+    /usr/include/qt5/QtCore/5.9.3/QtCore \
     $$PWD
 INCLUDEPATH = $$DEPENDPATH
 

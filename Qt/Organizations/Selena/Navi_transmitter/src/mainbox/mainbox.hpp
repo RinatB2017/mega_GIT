@@ -29,7 +29,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Proto_NMEA_0183;
 class MySplashScreen;
 class SerialBox5;
 class QToolButton;
@@ -55,18 +54,25 @@ signals:
 
 private slots:
     void test(void);
-    void read_data(QByteArray ba);
+
+    void test_GGA(void);
+    void test_GSA(void);
+    void test_GSV(void);
+    void test_RMC(void);
+    void test_VTG(void);
+    void test_GLL(void);
+    void test_ZDA(void);
+
+    void test_PIREA(void);
+    void test_PIRFV(void);
+    void test_PIRGK(void);
+    void test_PIRRA(void);
 
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
-    QByteArray data_rs232;
-
-    Proto_NMEA_0183 *proto = 0;
 
     void init(void);
-    void init_protocol(void);
 
     QToolButton *add_button(QToolBar *tool_bar,
                             QToolButton *tool_button,
@@ -76,7 +82,7 @@ private:
 
     void createTestBar(void);
 
-    void analize(void);
+    QString get_checksum(const QString &data);
 
 protected:
     void changeEvent(QEvent *event);

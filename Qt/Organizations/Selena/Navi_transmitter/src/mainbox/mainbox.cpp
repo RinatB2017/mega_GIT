@@ -36,14 +36,11 @@
 #include "serialbox5.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
-#include "proto_NMEA_0183.hpp"
-//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -57,37 +54,26 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    init_protocol();
-
     createTestBar();
 
-    serialBox = new SerialBox5(this, "RS232", "RS232");
-    serialBox->add_menu(2);
+    ui->serialWidget->add_menu(2);
 
-    ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
+    connect(ui->btn_GCA,    SIGNAL(clicked(bool)),  this,   SLOT(test_GGA()));
+    connect(ui->btn_GSA,    SIGNAL(clicked(bool)),  this,   SLOT(test_GSA()));
+    connect(ui->btn_GSV,    SIGNAL(clicked(bool)),  this,   SLOT(test_GSV()));
+    connect(ui->btn_RMC,    SIGNAL(clicked(bool)),  this,   SLOT(test_RMC()));
+    connect(ui->btn_VTG,    SIGNAL(clicked(bool)),  this,   SLOT(test_VTG()));
+    connect(ui->btn_GLL,    SIGNAL(clicked(bool)),  this,   SLOT(test_GLL()));
+    connect(ui->btn_ZDA,    SIGNAL(clicked(bool)),  this,   SLOT(test_ZDA()));
 
-    connect(this, SIGNAL(send(QByteArray)), serialBox, SLOT(input(QByteArray)));
-    connect(serialBox, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
-}
-//--------------------------------------------------------------------------------
-void MainBox::init_protocol(void)
-{
-    emit info("init protocol NMEA-0183");
-    proto = new Proto_NMEA_0183();
+    connect(ui->btn_PIREA,  SIGNAL(clicked(bool)),  this,   SLOT(test_PIREA()));
+    connect(ui->btn_PIRFV,  SIGNAL(clicked(bool)),  this,   SLOT(test_PIRFV()));
+    connect(ui->btn_PIRGK,  SIGNAL(clicked(bool)),  this,   SLOT(test_PIRGK()));
+    connect(ui->btn_PIRRA,  SIGNAL(clicked(bool)),  this,   SLOT(test_PIRRA()));
 
-    connect(proto, SIGNAL(info(QString)),   this,   SIGNAL(info(QString)));
-    connect(proto, SIGNAL(debug(QString)),  this,   SIGNAL(debug(QString)));
-    connect(proto, SIGNAL(error(QString)),  this,   SIGNAL(error(QString)));
-    connect(proto, SIGNAL(trace(QString)),  this,   SIGNAL(trace(QString)));
 
-    connect(proto,  SIGNAL(output_latitude_string(QString)),    this,   SIGNAL(output_latitude_string(QString)));
-    connect(proto,  SIGNAL(output_longitude_string(QString)),   this,   SIGNAL(output_longitude_string(QString)));
-    connect(proto,  SIGNAL(output_observation(QString)),        this,   SIGNAL(output_observation(QString)));
-
-    connect(this,   SIGNAL(output_latitude_string(QString)),    this,   SIGNAL(message(QString)));
-    connect(this,   SIGNAL(output_longitude_string(QString)),   this,   SIGNAL(message(QString)));
-    connect(this,   SIGNAL(output_observation(QString)),        this,   SIGNAL(message(QString)));
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serialWidget,   SLOT(input(QByteArray)));
+    connect(ui->serialWidget,   SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -134,58 +120,331 @@ void MainBox::test(void)
     emit error(tr("test"));
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(QByteArray ba)
+QString MainBox::get_checksum(const QString &data)
 {
-    emit debug(ba.data());
+    QString temp;
+    uchar sum;
+    int n;
 
-    for (int n=0; n<ba.length(); n++)
+    if(data.length()<3)
     {
-        char s = ba.at(n);
-        switch (s)
-        {
-        case '$':
-            data_rs232.clear();
-            break;
-
-        case '\r':
-        case '\n':
-            analize();
-            break;
-
-        default:
-            data_rs232.append(s);
-            break;
-        }
+        emit error(QString("len = %1").arg(data.length()));
+        return "";
     }
+    temp = data.mid(0, data.length());
+
+    sum = 0;
+    for(n=0; n<temp.length(); n++)
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+        sum ^= temp.at(n).toAscii();
+#else
+        sum ^= temp.at(n).toLatin1();
+#endif
+
+    return QString("%1").arg(sum, 2, 16, QLatin1Char('0')).toUpper();
 }
 //--------------------------------------------------------------------------------
-void MainBox::analize(void)
+void MainBox::test_GGA(void)
 {
-    int err = proto->check_message(data_rs232.data());
-    if(err != E_NO_ERROR)
-    {
-        proto->print_error(data_rs232, err);
-        return;
-    }
-#if 0
-    proto->print_variable();
-    proto->test_cheksum();
-#endif
-#if 1
-    emit info(QString("latitude %1").arg(proto->get_latitude_string()));
-#endif
-#if 1
-    emit info(QString("longitude %1").arg(proto->get_longitude_string()));
-#endif
-#if 1
-    int hour = proto->get_observation_hour();
-    int min  = proto->get_observation_min();
-    int sec  = proto->get_observation_sec();
-    emit info(QString("%1:%2:%3")
-              .arg(hour)
-              .arg(min)
-              .arg(sec));
-#endif
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("GL");
+    message.append("GGA,");
+    message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+    message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append("N,");          // север/юг
+    message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append("E,");          // восток/запад
+    message.append("0,");          // показатель качества обсервации 0-1-2
+    message.append("12,");         // число НКА в решении
+    message.append("0.1,");        // величина горизонтального геометрического фактора
+    message.append("2.3,");        // высота над средним уровнем моря
+    message.append("M,");          // единица измерения высоты - метры
+    message.append("0.1,");        // превышение геоида на эллипсоидом WGS-84
+    message.append("M,");          // единица измерения - метры
+    message.append("0.1,");        // возраст дифференциальных поправок (время в секундах)
+    message.append("1234");        // идентификатор дифферинциальной станции 0000-1024
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_GSA(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("GL");
+    message.append("GSA,");
+    message.append("A,");      // тип управления   A-M
+    message.append("2,");      // режим работы     1-2-3
+    message.append("1,2,3,4,5,6,7,8,9,10,11,12,"); // номера НКА в решении
+    message.append("1.2,");    // пространственный геометрический фактор ухудшения точности (PDOP)
+    message.append("3.4,");    // геометрический фактор ухудшения точности в плане (HDOP)
+    message.append("5.6");     // геометрический фактор ухудшения точности в плане (VDOP)
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_GSV(void)
+{
+    emit error("test_GSV: пока не сделано");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_RMC(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("GL");
+    message.append("RMC,");
+    message.append("112233.44,");  // время UTC (часы, минуты, целая и дробная часть секунд)
+    message.append("A,");          // статус     A-D-V
+    message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append("N,");          // север/юг
+    message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append("E,");          // восток/запад
+    message.append("1.2,");        // наземная скорость, в узлах
+    message.append("3.4,");        // наземный курс, в градусах
+    message.append("01022012,");   // дата день-месяц-год
+    message.append("5.6,");        // магнитное склонение в градусах
+    message.append("E,");          // восток/запад
+    message.append("A");           // режим местоопределения     A-D-E-M-S-N
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_VTG(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("GL");
+    message.append("VTG,");
+    message.append("1.2,");    // наземный курс в градусах
+    message.append("T,");      // истинный T
+    message.append("3.4,");    // наземный курс в градусах
+    message.append("M,");      // магнитный M
+    message.append("5.6,");    // наземная скорость
+    message.append("Т,");      // в узлах
+    message.append("7.8,");    // наземная скорость
+    message.append("K,");      // в км/ч
+    message.append("A");       // режим местоопределения   A-D-E-M-S-N
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_GLL(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("GL");
+    message.append("GLL,");
+    message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append("N,");          // север/юг
+    message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append("E,");          // восток/запад
+    message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+    message.append("A,");          // статус A-D-V
+    message.append("A");           // режим местоопределения     A-D-E-M-S-N
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_ZDA(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("GL");
+    message.append("ZDA,");
+    message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+    message.append("01,");         // день UTC  (от 01 до 31)
+    message.append("02,");         // месяц UTC (от 01 до 12)
+    message.append("2012,");       // год UTC
+    message.append("01,");         // часы локальной временной зоны (от 00 до +- 13)
+    message.append("02");          // минуты локальной временной зоны (от 00 до 59)
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_PIREA(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("PIREA,");
+    message.append("5");  // результат теста (код ошибки)
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_PIRFV(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("PIRFV,");
+    message.append("12.34");  // номер версии встроенного ПО приемника
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_PIRGK(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("PIRGK,");
+    message.append("123456.12,");      // время UTC (часы, минуты, целая и дробная часть секунд)
+    message.append("1,");              // индикатор качества GNSS 0-1
+    message.append("1.2,");            // координата X, м
+    message.append("500000.1000000,"); // координата Y, м
+    message.append("3.4,");            // высота, м
+    message.append("5.6,");            // скорость, м/с
+    message.append("7.8,");            // курс, в градусах
+    message.append("01022012,");       // дата день-месяц-год
+    message.append("3.4,");            // геометрический фактор ухудшения точности в плане (HDOP)
+    message.append("5.6,");            // геометрический фактор ухудшения точности в плане (VDOP)
+    message.append("7");               // количество НКА в решении
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_PIRRA(void)
+{
+    QByteArray data;
+    QString message;
+    QString checksum;
+
+    message.clear();
+    message.append("PIRRA,");
+    message.append("1,");
+    message.append("2,");
+    message.append("3,");
+    message.append("4,");
+    message.append("5");
+
+    checksum = get_checksum(message);
+
+    data.clear();
+    data.append("$");
+    data.append(message);
+    data.append("*");
+    data.append(checksum);
+    data.append((char)0x0D);
+    data.append((char)0x0A);
+
+    emit send(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

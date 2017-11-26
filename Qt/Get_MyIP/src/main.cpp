@@ -32,10 +32,6 @@
 //--------------------------------------------------------------------------------
 #include "../lib/codecs.h"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#endif
-//--------------------------------------------------------------------------------
 MainWindow *main_window = 0;
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
@@ -53,21 +49,19 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    main_window = new MainWindow(QObject::tr(ORGNAME),
-                                 QObject::tr(APPNAME),
-                                 QString("%1.%2.%3 (%4)").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_PATCH).arg(VER_BUILD));
+    main_window = new MainWindow();
     //qDebug() << main_window->windowFlags();
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
 
-    main_window->setWindowIcon(QIcon(ICON_PROGRAMM));
     main_window->show();
 
     splash->finish(main_window);

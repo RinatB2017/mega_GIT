@@ -84,8 +84,6 @@ public:
     explicit MyWidget(QWidget *parent = 0);
     ~MyWidget();
 
-    void connect_log(QWidget *parent);
-
     void init_w_lists(void);
     void lock_interface(void);
     void unlock_interface(void);
@@ -123,6 +121,8 @@ public:
     void save_comboBox(QString group_name, QList<QComboBox *> data);
     void save_spinBox(QString group_name, QList<QSpinBox *> data);
     void save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data);
+
+    void connect_log(QWidget *parent);
 
     //---
     static int messagebox_noicon(const QString title,

@@ -123,9 +123,6 @@ void MainBox::createTestBar(void)
     toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
-    cb_block = new QCheckBox("block", this);
-    toolBar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -142,11 +139,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
-
-    //toolBar->setFixedWidth(toolBar->sizeHint().width());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

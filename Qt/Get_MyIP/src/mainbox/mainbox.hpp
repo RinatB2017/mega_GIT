@@ -21,7 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -49,6 +50,9 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
+
+    QNetworkRequest request;
+    QNetworkAccessManager networkManager;
 
     void init(void);
 

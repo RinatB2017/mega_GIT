@@ -8,6 +8,8 @@ CONFIG   += ordered
 SUBDIRS += \
     _For_tests \
     auto_inc_version \
+    Get_MyIP \
+    GP2Y0A02Y \
     Icons \
     NewMoonLight \
     old_programm \

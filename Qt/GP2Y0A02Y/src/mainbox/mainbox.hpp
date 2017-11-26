@@ -74,7 +74,6 @@ private:
     Ui::MainBox *ui = 0;
 
     QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
     QList<CMD> commands;
 
     //QPixmap picture_pixmap;

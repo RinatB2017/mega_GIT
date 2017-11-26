@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,36 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
+#include <QApplication>
+#include <QObject>
 #include <QWidget>
+#include <QList>
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#include <QTest>
+#include "test.hpp"
+#include "proto_NMEA_0183.hpp"
+//--------------------------------------------------------------------------------
+Test::Test()
+{
+
 }
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class Proto_NMEA_0183;
-class MySplashScreen;
-class SerialBox5;
-class QToolButton;
-class QToolBar;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void Test::test_func(void)
 {
-    Q_OBJECT
+    Proto_NMEA_0183 *proto = new Proto_NMEA_0183();
+    QCOMPARE(proto->test_GGA(), 0);    //E_NO_ERROR
+    QCOMPARE(proto->test_GSA(), 0);
+    QCOMPARE(proto->test_GSV(), 0);
+    QCOMPARE(proto->test_RMC(), 0);
+    QCOMPARE(proto->test_VTG(), 0);
+    QCOMPARE(proto->test_GLL(), 0);
+    QCOMPARE(proto->test_ZDA(), 0);
 
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    QCOMPARE(proto->test_PIREA(), 0);
+    QCOMPARE(proto->test_PIRFV(), 0);
+    QCOMPARE(proto->test_PIRGK(), 0);
+    QCOMPARE(proto->test_PIRRA(), 0);
 
-signals:
-    void output_latitude_string(QString);
-    void output_longitude_string(QString);
-    void output_observation(QString);
-
-    void message(QString);
-
-    void send(QByteArray);
-
-private slots:
-    void test(void);
-    void read_data(QByteArray ba);
-
-private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
-    QByteArray data_rs232;
-
-    Proto_NMEA_0183 *proto = 0;
-
-    void init(void);
-    void init_protocol(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
-    void createTestBar(void);
-
-    void analize(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
-};
+    proto->deleteLater();
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

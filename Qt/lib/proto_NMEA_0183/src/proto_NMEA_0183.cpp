@@ -11,6 +11,7 @@ Proto_NMEA_0183::Proto_NMEA_0183(QWidget *parent) :
         connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
+        connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
         connect(this, SIGNAL(message(QString)), parent, SIGNAL(message(QString)));
     }
 
@@ -254,7 +255,7 @@ int Proto_NMEA_0183::check_id_message(const QString &data)
     return MESSAGE_UNKNOWN;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::check_message(const QString &data)
+int Proto_NMEA_0183::check_message(QString data)
 {
     QStringList sl;
     int id_message;
@@ -272,6 +273,14 @@ int Proto_NMEA_0183::check_message(const QString &data)
         return E_ERROR_FORMAT_MESSAGE;
     }
 
+    int index = -1;
+
+    index = data.indexOf('*');
+    if(index > 0)
+    {
+        data = data.left(index);
+    }
+
     id_message = check_id_message(sl.at(0));
     switch(id_message)
     {
@@ -279,59 +288,48 @@ int Proto_NMEA_0183::check_message(const QString &data)
     case MESSAGE_GL_GGA:
     case MESSAGE_GN_GGA:
         return parse_message_GGA(data);
-        break;
 
     case MESSAGE_GP_GSA:
     case MESSAGE_GL_GSA:
     case MESSAGE_GN_GSA:
         return parse_message_GSA(data);
-        break;
 
     case MESSAGE_GP_GSV:
     case MESSAGE_GL_GSV:
     case MESSAGE_GN_GSV:
         return parse_message_GSV(data);
-        break;
 
     case MESSAGE_GP_RMC:
     case MESSAGE_GL_RMC:
     case MESSAGE_GN_RMC:
         return parse_message_RMC(data);
-        break;
 
     case MESSAGE_GP_VTG:
     case MESSAGE_GL_VTG:
     case MESSAGE_GN_VTG:
         return parse_message_VTG(data);
-        break;
 
     case MESSAGE_GP_GLL:
     case MESSAGE_GL_GLL:
     case MESSAGE_GN_GLL:
         return parse_message_GLL(data);
-        break;
 
     case MESSAGE_GP_ZDA:
     case MESSAGE_GL_ZDA:
     case MESSAGE_GN_ZDA:
         return parse_message_ZDA(data);
-        break;
 
     case MESSAGE_PIREA:
         return parse_message_PIREA(data);
-        break;
 
     case MESSAGE_PIRFV:
         return parse_message_PIRFV(data);
-        break;
 
     case MESSAGE_PIRGK:
         return parse_message_PIRGK(data);
-        break;
 
     case MESSAGE_PIRRA:
         return parse_message_PIRRA(data);
-        break;
 
     default:
         emit error(QString("unknown message %1").arg(id_message));
@@ -626,14 +624,11 @@ int Proto_NMEA_0183::parse_message_GSA(const QString &data)
         return E_ERROR_FORMAT_MESSAGE;
     }
 
-#if 0
-    // странный формат
     ok = string_to_float(sl.at(17), &VDOP);
     if(!ok)
     {
         return E_ERROR_FORMAT_MESSAGE;
     }
-#endif
 
     // print_variable();
 
@@ -803,7 +798,7 @@ int Proto_NMEA_0183::parse_message_GLL(const QString &data)
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::parse_message_ZDA(const QString &data)
+int Proto_NMEA_0183::parse_message_ZDA(QString &data)
 {
     bool ok;
     QStringList sl;
@@ -821,14 +816,20 @@ int Proto_NMEA_0183::parse_message_ZDA(const QString &data)
                   &time_observation_sec);
 
     ok = string_to_int(sl.at(2), &day_utc);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
     if(day_utc > 31)
     {
         return E_ERROR_FORMAT_MESSAGE;
     }
 
     ok = string_to_int(sl.at(3), &month_utc);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
     if(month_utc > 12)
     {
         return E_ERROR_FORMAT_MESSAGE;
@@ -987,7 +988,7 @@ void Proto_NMEA_0183::run_self_tests(void)
     test_PIRRA();
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_GGA(void)
+int Proto_NMEA_0183::test_GGA(void)
 {
     QString data;
     QString message;
@@ -1016,7 +1017,7 @@ void Proto_NMEA_0183::test_GGA(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1026,9 +1027,10 @@ void Proto_NMEA_0183::test_GGA(void)
     res = check_message(data);
     temp = QString("test_GGA: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_GSA(void)
+int Proto_NMEA_0183::test_GSA(void)
 {
     QString data;
     QString message;
@@ -1049,7 +1051,7 @@ void Proto_NMEA_0183::test_GSA(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1059,14 +1061,16 @@ void Proto_NMEA_0183::test_GSA(void)
     res = check_message(data);
     temp = QString("test_GSA: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_GSV(void)
+int Proto_NMEA_0183::test_GSV(void)
 {
     emit debug("test_GSV: пока не сделано");
+    return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_RMC(void)
+int Proto_NMEA_0183::test_RMC(void)
 {
     QString data;
     QString message;
@@ -1093,7 +1097,7 @@ void Proto_NMEA_0183::test_RMC(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1103,9 +1107,10 @@ void Proto_NMEA_0183::test_RMC(void)
     res = check_message(data);
     temp = QString("test_RMC: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_VTG(void)
+int Proto_NMEA_0183::test_VTG(void)
 {
     QString data;
     QString message;
@@ -1129,7 +1134,7 @@ void Proto_NMEA_0183::test_VTG(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1139,9 +1144,10 @@ void Proto_NMEA_0183::test_VTG(void)
     res = check_message(data);
     temp = QString("test_VTG: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_GLL(void)
+int Proto_NMEA_0183::test_GLL(void)
 {
     QString data;
     QString message;
@@ -1163,7 +1169,7 @@ void Proto_NMEA_0183::test_GLL(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1173,9 +1179,10 @@ void Proto_NMEA_0183::test_GLL(void)
     res = check_message(data);
     temp = QString("test_GLL: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_ZDA(void)
+int Proto_NMEA_0183::test_ZDA(void)
 {
     QString data;
     QString message;
@@ -1196,7 +1203,7 @@ void Proto_NMEA_0183::test_ZDA(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1206,9 +1213,10 @@ void Proto_NMEA_0183::test_ZDA(void)
     res = check_message(data);
     temp = QString("test_ZDA: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_PIREA(void)
+int Proto_NMEA_0183::test_PIREA(void)
 {
     QString data;
     QString message;
@@ -1223,7 +1231,7 @@ void Proto_NMEA_0183::test_PIREA(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1233,9 +1241,10 @@ void Proto_NMEA_0183::test_PIREA(void)
     res = check_message(data);
     temp = QString("test_PIREA: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_PIRFV(void)
+int Proto_NMEA_0183::test_PIRFV(void)
 {
     QString data;
     QString message;
@@ -1250,7 +1259,7 @@ void Proto_NMEA_0183::test_PIRFV(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1260,9 +1269,10 @@ void Proto_NMEA_0183::test_PIRFV(void)
     res = check_message(data);
     temp = QString("test_PIRFV: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_PIRGK(void)
+int Proto_NMEA_0183::test_PIRGK(void)
 {
     QString data;
     QString message;
@@ -1287,7 +1297,7 @@ void Proto_NMEA_0183::test_PIRGK(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1297,9 +1307,10 @@ void Proto_NMEA_0183::test_PIRGK(void)
     res = check_message(data);
     temp = QString("test_PIRGK: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_PIRRA(void)
+int Proto_NMEA_0183::test_PIRRA(void)
 {
     QString data;
     QString message;
@@ -1318,7 +1329,7 @@ void Proto_NMEA_0183::test_PIRRA(void)
     checksum = get_checksum(message);
 
     data.clear();
-    data.append("$");
+    //data.append("$");
     data.append(message);
     data.append("*");
     data.append(checksum);
@@ -1328,6 +1339,7 @@ void Proto_NMEA_0183::test_PIRRA(void)
     res = check_message(data);
     temp = QString("test_PIRRA: %1").arg((res == E_NO_ERROR) ? "пройден" : "НЕ пройден");
     emit debug(temp);
+    return res;
 }
 //--------------------------------------------------------------------------------
 void Proto_NMEA_0183::test(void)

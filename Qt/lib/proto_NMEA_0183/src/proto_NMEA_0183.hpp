@@ -95,7 +95,7 @@ public:
                  uint bauldrate,
                  uchar type_proto,
                  ushort mask);
-    int check_message(const QString &data);
+    int check_message(QString data);
     void run_self_tests(void);
     void test(void);
 
@@ -120,6 +120,19 @@ public:
     QString get_observation_string(void);
 
     float get_height(void);
+
+    int test_GGA(void);
+    int test_GSA(void);
+    int test_GSV(void);
+    int test_RMC(void);
+    int test_VTG(void);
+    int test_GLL(void);
+    int test_ZDA(void);
+
+    int test_PIREA(void);
+    int test_PIRFV(void);
+    int test_PIRGK(void);
+    int test_PIRRA(void);
 
 signals:
     void info(const QString &);
@@ -181,7 +194,7 @@ private:
     int parse_message_RMC(const QString &data);
     int parse_message_VTG(const QString &data);
     int parse_message_GLL(const QString &data);
-    int parse_message_ZDA(const QString &data);
+    int parse_message_ZDA(QString &data);
 
     int parse_message_PIREA(const QString &data);
     int parse_message_PIRFV(const QString &data);
@@ -199,19 +212,6 @@ private:
     int calc_longitude(const QString &data,
                        int *grad,
                        float *min);
-
-    void test_GGA(void);
-    void test_GSA(void);
-    void test_GSV(void);
-    void test_RMC(void);
-    void test_VTG(void);
-    void test_GLL(void);
-    void test_ZDA(void);
-
-    void test_PIREA(void);
-    void test_PIRFV(void);
-    void test_PIRGK(void);
-    void test_PIRRA(void);
 
     int check_id_message(const QString &data);
     int change_param_coord_and_time(QString *result,

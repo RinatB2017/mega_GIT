@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,20 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class Proto_NMEA_0183;
-class MySplashScreen;
-class SerialBox5;
-class QToolButton;
-class QToolBar;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-signals:
-    void output_latitude_string(QString);
-    void output_longitude_string(QString);
-    void output_observation(QString);
-
-    void message(QString);
-
-    void send(QByteArray);
+    Test();
 
 private slots:
-    void test(void);
-    void read_data(QByteArray ba);
-
-private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
-    QByteArray data_rs232;
-
-    Proto_NMEA_0183 *proto = 0;
-
-    void init(void);
-    void init_protocol(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
-    void createTestBar(void);
-
-    void analize(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
+    void test_func(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

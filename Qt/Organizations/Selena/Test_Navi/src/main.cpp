@@ -22,6 +22,7 @@
 #include <QTranslator>
 #include <QLocale>
 //--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
@@ -30,11 +31,20 @@
 //--------------------------------------------------------------------------------
 #include "../lib/codecs.h"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#endif
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-
     set_codecs();
+
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
 
     QTranslator translator;
     translator.load(":/ru_RU.qm");
@@ -56,6 +66,15 @@ int main(int argc, char *argv[])
     main_window.show();
 
     splash->finish(&main_window);
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
 
     return app.exec();
 }

@@ -48,14 +48,11 @@ win32 {
     include (./src/ftdi/ftdi.pri)
 }
 
-LIB_PATH = "../../lib"
+LIB_PATH = "../../../lib"
 
-include ($$LIB_PATH/qtsingleapplication/qtsingleapplication.pri)
-include ($$LIB_PATH/mysplashscreen/mysplashscreen.pri)
-include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/QHexEdit/qhexedit.pri)
-include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH/turbo.pri)
+include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+include ($$LIB_PATH/time/time.pri)
 
 include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH/csvreader/csvreader.pri)
@@ -66,6 +63,6 @@ VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)
 
 include (src/devices/devices.pri)
-include (src/ft2232h/ft2232h.pri)
+include ($$LIB_PATH/ft2232h/ft2232h.pri)
 
 VPATH = $$INCLUDEPATH

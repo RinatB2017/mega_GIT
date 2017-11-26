@@ -18,65 +18,45 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef I2C_HPP
-#define I2C_HPP
+#include <QVBoxLayout>
+#include <QLabel>
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "doublehexeditor.hpp"
+#include "defines.hpp"
+#include "qhexedit.h"
 //--------------------------------------------------------------------------------
-#include "ft2232h.hpp"
-//--------------------------------------------------------------------------------
-typedef unsigned char	BYTE;
-//typedef int             BOOL;
-//typedef unsigned long 	ULONG;
-
-typedef ULONG           FT_STATUS;
-//--------------------------------------------------------------------------------
-#define MAX_ADDRESS 0x7f
-//--------------------------------------------------------------------------------
-class FT2232H;
-//--------------------------------------------------------------------------------
-class AT93C56 : public QWidget
+DoubleHexEditor::DoubleHexEditor(const QString &caption1,
+                                 const QString &caption2,
+                                 QWidget *parent) :
+    QFrame(parent)
 {
-    Q_OBJECT
-public:
-    explicit AT93C56(I2C_Freq freq, QWidget *parent = 0);
-    ~AT93C56();
+    QVBoxLayout *vbox = new QVBoxLayout();
 
-    void HighSpeedSetI2CStart(void);
-    void HighSpeedSetI2CStop(void);
-    BOOL SendByteAndCheckACK(BYTE dwDataSend);
+    hexedit1 = new QHexEdit();
+    hexedit1->setMinimumWidth(640);
+    hexedit1->setReadOnly(true);
 
-    BOOL test(void);
-    void test_read(void);
-    void test_write(void);
+    hexedit2 = new QHexEdit();
+    hexedit2->setMinimumWidth(640);
+    hexedit2->setReadOnly(true);
 
-    void clear_all(void);
+    vbox->addWidget(new QLabel(caption1));
+    vbox->addWidget(hexedit1);
+    vbox->addWidget(new QLabel(caption2));
+    vbox->addWidget(hexedit2);
 
-    FT_STATUS open(int deviceNumber);
-    FT_STATUS read(unsigned char id,
-                   unsigned char address,
-                   unsigned char *data);
-    FT_STATUS write(unsigned char id,
-                    unsigned char address,
-                    unsigned char data);
-    FT_STATUS write_one_byte(unsigned char address,
-                             unsigned char data);
-    void close(void);
+    setLayout(vbox);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
+    setWindowIcon(QIcon(ICON_PROGRAMM));
 
-private slots:
-    void log(const QString &data);
-
-private:
-    FT2232H *ft2232h;
-    unsigned char  data;
-    unsigned short addr;
-
-    void connect_log(void);
-};
+    setFrameShape(StyledPanel);
+    setFrameShadow(Sunken);
+}
 //--------------------------------------------------------------------------------
-#endif // I2C_HPP
+void DoubleHexEditor::append(const QByteArray &array1,
+                             const QByteArray &array2)
+{
+    hexedit1->setData(QHexEditData::fromMemory(array1));
+    hexedit2->setData(QHexEditData::fromMemory(array2));
+}
+//--------------------------------------------------------------------------------

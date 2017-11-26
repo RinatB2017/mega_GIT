@@ -11,11 +11,12 @@ SUBDIRS += \
     Calibration \
     Externed_calibration \
     Factory_Calibration \
-#    FT2232 \
-#    FT2232_old \
+    FT2232 \
+    FT2232_old \
+    FT2232_reserv \
     GDS_840C \
-    Multimeter_V786 \
     Multimeter_calc_time \
+    Multimeter_V786 \
     Multimeter_V7XX \
     PowerSupply \
     PowerSupply_FRAM \

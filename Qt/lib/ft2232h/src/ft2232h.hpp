@@ -37,13 +37,13 @@ class FT2232H : public QWidget
 public:
     explicit FT2232H(I2C_Freq freq, QWidget *parent = 0);
 
-    BOOL prepare(void);
+    bool prepare(void);
 
     FT_STATUS open(int deviceNumber, bool silence = false);
     BOOL close(void);
 
     void clear_data(void);
-    void append_data(BOOL data);
+    void append_data(bool data);
     FT_STATUS write_data(void);
 
     FT_STATUS createDeviceInfoList(LPDWORD lpdwNumDevs);

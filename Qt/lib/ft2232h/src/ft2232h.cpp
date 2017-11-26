@@ -366,7 +366,7 @@ void FT2232H::clear_data(void)
     dwNumBytesToSend = 0;
 }
 //--------------------------------------------------------------------------------
-void FT2232H::append_data(BOOL data)
+void FT2232H::append_data(bool data)
 {
     OutputBuffer[dwNumBytesToSend++] = data;
 }

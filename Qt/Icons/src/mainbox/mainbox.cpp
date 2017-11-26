@@ -118,6 +118,13 @@ void MainBox::init(void)
     add_icons(lol, ":/lol/devices");
     add_icons(lol, ":/lol/filesystems");
     add_icons(lol, ":/lol/mimetypes");
+
+//    crystal_clear->setFixedSize(crystal_clear->sizeHint());
+//    oxygen = new QTabWidget(this);
+//    nuvola = new QTabWidget(this);
+//    gnome = new QTabWidget(this);
+//    hicolor = new QTabWidget(this);
+//    lol = new QTabWidget(this);
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -139,12 +146,15 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    // qDebug() << "(MainWindow *)" << mw;
+    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    toolBar->setObjectName("testbar");
+
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     QToolButton *btn_test = add_button(toolBar,
@@ -218,11 +228,6 @@ void MainBox::add_icons(QTabWidget *page,
         }
         n++;
     }
-#if 0
-    emit info(QString("in %1 found %2 files")
-              .arg(catalog_name)
-              .arg(n));
-#endif
 
     QScrollArea *area = new QScrollArea(this);
     area->setWidget(view);

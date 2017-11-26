@@ -18,65 +18,32 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef I2C_HPP
-#define I2C_HPP
+#ifndef DOUBLEHEXEDITOR_HPP
+#define DOUBLEHEXEDITOR_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QFrame>
 //--------------------------------------------------------------------------------
-#include "ft2232h.hpp"
+class QHexEdit;
 //--------------------------------------------------------------------------------
-typedef unsigned char	BYTE;
-//typedef int             BOOL;
-//typedef unsigned long 	ULONG;
-
-typedef ULONG           FT_STATUS;
-//--------------------------------------------------------------------------------
-#define MAX_ADDRESS 0x7f
-//--------------------------------------------------------------------------------
-class FT2232H;
-//--------------------------------------------------------------------------------
-class AT93C56 : public QWidget
+class DoubleHexEditor : public QFrame
 {
     Q_OBJECT
 public:
-    explicit AT93C56(I2C_Freq freq, QWidget *parent = 0);
-    ~AT93C56();
+    explicit DoubleHexEditor(const QString &caption1,
+                             const QString &caption2,
+                             QWidget *parent = 0);
 
-    void HighSpeedSetI2CStart(void);
-    void HighSpeedSetI2CStop(void);
-    BOOL SendByteAndCheckACK(BYTE dwDataSend);
-
-    BOOL test(void);
-    void test_read(void);
-    void test_write(void);
-
-    void clear_all(void);
-
-    FT_STATUS open(int deviceNumber);
-    FT_STATUS read(unsigned char id,
-                   unsigned char address,
-                   unsigned char *data);
-    FT_STATUS write(unsigned char id,
-                    unsigned char address,
-                    unsigned char data);
-    FT_STATUS write_one_byte(unsigned char address,
-                             unsigned char data);
-    void close(void);
+    void append(const QByteArray &array1,
+                const QByteArray &array2);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
 
-private slots:
-    void log(const QString &data);
+public slots:
 
 private:
-    FT2232H *ft2232h;
-    unsigned char  data;
-    unsigned short addr;
+    QHexEdit *hexedit1;
+    QHexEdit *hexedit2;
 
-    void connect_log(void);
 };
 //--------------------------------------------------------------------------------
-#endif // I2C_HPP
+#endif // DOUBLEHEXEDITOR_HPP

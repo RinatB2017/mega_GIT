@@ -14,7 +14,9 @@ HEADERS += \
     qhexeditprivate.h \
     qhexeditdata.h \
     qhexedit.h \
-    sparserangemap.h
+    sparserangemap.h \
+    doublehexeditor.hpp
+
 
 SOURCES += \
     qhexeditcomments.cpp \
@@ -25,7 +27,9 @@ SOURCES += \
     qhexeditprivate.cpp \
     qhexeditdata.cpp \
     qhexeditdatawriter.cpp \
-    sparserangemap.cpp
+    sparserangemap.cpp \
+    doublehexeditor.cpp
+
 
 OTHER_FILES += \
     LICENSE \

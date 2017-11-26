@@ -100,10 +100,15 @@ void MainBox::init(void)
 
     createTestBar();
 
-    grapher = new GrapherBox(0, 1000, -100, 100, tr("График"), tr("Время"), tr("Напряжение"), parentWidget());
+    grapher = new GrapherBox(this);
+    grapher->set_axis_scale_x(0, 1000);
+    grapher->set_axis_scale_y(-100, 100);
+    grapher->set_title("График");
+    grapher->set_title_axis_X("Время");
+    grapher->set_title_axis_Y("Напряжение");
 
     serial_data = new QByteArray;
-    serial = new SerialBox(this, "Arduido");
+    serial = new SerialBox(this, "Arduino");
     connect(serial, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
 
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -206,7 +211,7 @@ void MainBox::read_all(void)
             hex->setWindowIcon(QIcon(ICON_PROGRAMM));
             hex->setMinimumSize(800, 320);
             hex->setReadOnly(true);
-            hex->setData(ba);
+            hex->setData(QHexEditData::fromMemory(ba));
             hex->show();
         }
 
@@ -389,7 +394,7 @@ void MainBox::read(void)
     hex->setWindowIcon(QIcon(ICON_PROGRAMM));
     hex->setMinimumSize(800, 320);
     hex->setReadOnly(true);
-    hex->setData(ba);
+    hex->setData(QHexEditData::fromMemory(ba));
     hex->show();
 
     ftdi_usb_close(&ftdi);
@@ -600,7 +605,7 @@ void MainBox::test_eeprom(void)
     hex->setWindowIcon(QIcon(ICON_PROGRAMM));
     hex->setMinimumSize(800, 320);
     hex->setReadOnly(true);
-    hex->setData(ba);
+    hex->setData(QHexEditData::fromMemory(ba));
     hex->show();
 
     ftdi_usb_close(&ftdi);

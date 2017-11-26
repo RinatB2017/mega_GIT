@@ -44,7 +44,7 @@ win32 {
 LIB_PATH = "../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/serial/serial.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
 
 include ($$LIB_PATH/proto_NMEA_0183/proto_NMEA_0183.pri)
 

@@ -29,7 +29,7 @@
 #include "ui_parportbox.h"
 //--------------------------------------------------------------------------------
 ParportBox::ParportBox(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::ParportBox),
     parent(parent)
 {

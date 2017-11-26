@@ -33,7 +33,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
 #include "proto_NMEA_0183.hpp"
@@ -43,9 +43,7 @@ MainBox::MainBox(QWidget *parent,
     MyWidget(parent),
     splash(splash),
     ui(new Ui::MainBox),
-    serialBox(0),
-    test_byte(0),
-    cnt(0)
+    serialBox(0)
 {
     init();
 }
@@ -63,7 +61,7 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox(this, "RS232");
+    serialBox = new SerialBox5(this, "RS232", "RS232");
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);
@@ -77,6 +75,11 @@ void MainBox::init_protocol(void)
 {
     emit info("init protocol NMEA-0183");
     proto = new Proto_NMEA_0183();
+
+    connect(proto, SIGNAL(info(QString)),   this,   SIGNAL(info(QString)));
+    connect(proto, SIGNAL(debug(QString)),  this,   SIGNAL(debug(QString)));
+    connect(proto, SIGNAL(error(QString)),  this,   SIGNAL(error(QString)));
+    connect(proto, SIGNAL(trace(QString)),  this,   SIGNAL(trace(QString)));
 
     connect(proto,  SIGNAL(output_latitude_string(QString)),    this,   SIGNAL(output_latitude_string(QString)));
     connect(proto,  SIGNAL(output_longitude_string(QString)),   this,   SIGNAL(output_longitude_string(QString)));
@@ -106,11 +109,14 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -125,53 +131,60 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    emit info(tr("reset"));
-    cnt=0;
-    test_byte=0;
-}
-//--------------------------------------------------------------------------------
-void MainBox::wait(int max_time_ms)
-{
-    QTime time;
-    time.start();
-    while(time.elapsed() < max_time_ms)
-    {
-        QCoreApplication::processEvents();
-        if(is_ready)
-            break;
-    }
+    emit error(tr("test"));
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
     emit debug(ba.data());
-    data_rs232.append(ba);
-    is_ready = true;
 
-    //emit trace(ba);
-    int err = proto->check_message(ba.data());
-    proto->print_error(err);
+    for (int n=0; n<ba.length(); n++)
+    {
+        char s = ba.at(n);
+        switch (s)
+        {
+        case '$':
+            data_rs232.clear();
+            break;
+
+        case '\r':
+        case '\n':
+            analize();
+            break;
+
+        default:
+            data_rs232.append(s);
+            break;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::analize(void)
+{
+    int err = proto->check_message(data_rs232.data());
+    if(err != E_NO_ERROR)
+    {
+        proto->print_error(data_rs232, err);
+        return;
+    }
 #if 0
     proto->print_variable();
     proto->test_cheksum();
 #endif
-#if 0
+#if 1
     emit info(QString("latitude %1").arg(proto->get_latitude_string()));
 #endif
-#if 0
+#if 1
     emit info(QString("longitude %1").arg(proto->get_longitude_string()));
 #endif
 #if 1
     int hour = proto->get_observation_hour();
     int min  = proto->get_observation_min();
     int sec  = proto->get_observation_sec();
-    if((hour !=0) || (min != 0) || (sec != 0))
-    {
-        emit info(QString("%1:%2:%3")
-                  .arg(hour)
-                  .arg(min)
-                  .arg(sec));
-    }
+    emit info(QString("%1:%2:%3")
+              .arg(hour)
+              .arg(min)
+              .arg(sec));
 #endif
 }
 //--------------------------------------------------------------------------------

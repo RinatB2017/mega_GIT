@@ -99,7 +99,7 @@ public:
     void run_self_tests(void);
     void test(void);
 
-    void print_error(int err);
+    void print_error(QByteArray data, int err);
     void test_cheksum(void);
 
     void print_variable(void);
@@ -125,6 +125,7 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
     void output_latitude_string(const QString &data);
     void output_longitude_string(const QString &data);
@@ -132,8 +133,6 @@ signals:
 
     
 private:
-    QByteArray message;
-
     int time_observation_hour;
     int time_observation_min;
     float time_observation_sec;

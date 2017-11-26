@@ -94,7 +94,11 @@ void Worker::input_clear_data(const QByteArray &data)
 {
     // emit info(data);
     int err = proto->check_message(data.data());
-    proto->print_error(err);
+    if(err != E_NO_ERROR)
+    {
+        proto->print_error(data, err);
+        return;
+    }
 #if 0
     // proto->print_variable();
     // proto->test_cheksum();

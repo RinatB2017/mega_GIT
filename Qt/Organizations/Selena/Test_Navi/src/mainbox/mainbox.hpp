@@ -31,7 +31,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class Proto_NMEA_0183;
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QToolBar;
 //--------------------------------------------------------------------------------
@@ -58,17 +58,13 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox *serialBox = 0;
+    SerialBox5 *serialBox = 0;
     QByteArray data_rs232;
-    bool is_ready;
-    unsigned char test_byte;
-    unsigned int cnt;
 
     Proto_NMEA_0183 *proto = 0;
 
     void init(void);
     void init_protocol(void);
-    void wait(int max_time_ms);
 
     QToolButton *add_button(QToolBar *tool_bar,
                             QToolButton *tool_button,
@@ -77,6 +73,8 @@ private:
                             const QString &tool_tip);
 
     void createTestBar(void);
+
+    void analize(void);
 
 protected:
     void changeEvent(QEvent *event);

@@ -218,8 +218,6 @@ int Proto_NMEA_0183::select_satellite(QString *result,
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::check_id_message(const QString &data)
 {
-    // emit debug(QString("check_id_message [%1]").arg(data));
-    if(data.isEmpty())  return MESSAGE_UNKNOWN;
     if(data == "GPGGA") return MESSAGE_GP_GGA;
     if(data == "GLGGA") return MESSAGE_GL_GGA;
     if(data == "GNGGA") return MESSAGE_GN_GGA;
@@ -259,60 +257,15 @@ int Proto_NMEA_0183::check_id_message(const QString &data)
 int Proto_NMEA_0183::check_message(const QString &data)
 {
     QStringList sl;
-    QString message;
-    QString checksum;
-    QString calc_checksum;
     int id_message;
 
-    //emit debug(data);
     if(data.length() < 6)
     {
-        emit error(QString("ERROR_UNKNOWN_MESSAGE:data.length() < 6 %1")
-                   .arg(data));
+        emit error("data.length() < 6");
         return E_ERROR_UNKNOWN_MESSAGE;
     }
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    if(data.at(0).toAscii() != '$')
-#else
-    if(data.at(0).toLatin1() != '$')
-#endif
-    {
-        emit error(QString("ERROR_UNKNOWN_MESSAGE:$ %1")
-                   .arg(data));
-        return E_ERROR_UNKNOWN_MESSAGE;
-    }
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    if(data.at(data.length() - 5).toAscii() != '*')
-#else
-    if(data.at(data.length() - 5).toLatin1() != '*')
-#endif
-    {
-        emit error(QString("ERROR_UNKNOWN_MESSAGE:* %1")
-                   .arg(data));
-        return E_ERROR_UNKNOWN_MESSAGE;
-    }
-    if(data.at(data.length() - 2) != 0x0D)
-    {
-        emit error(QString("ERROR_UNKNOWN_MESSAGE:0x0D %1")
-                   .arg(data));
-        return E_ERROR_UNKNOWN_MESSAGE;
-    }
-    if(data.at(data.length() - 1) != 0x0A)
-    {
-        emit error(QString("ERROR_UNKNOWN_MESSAGE:0x0A %1")
-                   .arg(data));
-        return E_ERROR_UNKNOWN_MESSAGE;
-    }
-
-    // emit debug(data.left(data.length() - 2));
-
-    message  = data.mid(1, data.length() - 6);
-    checksum = data.mid(data.length() - 4, 2);
-    calc_checksum = get_checksum(message);
-    if(checksum != calc_checksum) return E_ERROR_CHECKSUM;
-
-    sl = message.split(",");
+    sl = data.split(",");
     if(sl.count() == 0)
     {
         emit debug("no delimiter");
@@ -325,59 +278,59 @@ int Proto_NMEA_0183::check_message(const QString &data)
     case MESSAGE_GP_GGA:
     case MESSAGE_GL_GGA:
     case MESSAGE_GN_GGA:
-        return parse_message_GGA(message);
+        return parse_message_GGA(data);
         break;
 
     case MESSAGE_GP_GSA:
     case MESSAGE_GL_GSA:
     case MESSAGE_GN_GSA:
-        return parse_message_GSA(message);
+        return parse_message_GSA(data);
         break;
 
     case MESSAGE_GP_GSV:
     case MESSAGE_GL_GSV:
     case MESSAGE_GN_GSV:
-        return parse_message_GSV(message);
+        return parse_message_GSV(data);
         break;
 
     case MESSAGE_GP_RMC:
     case MESSAGE_GL_RMC:
     case MESSAGE_GN_RMC:
-        return parse_message_RMC(message);
+        return parse_message_RMC(data);
         break;
 
     case MESSAGE_GP_VTG:
     case MESSAGE_GL_VTG:
     case MESSAGE_GN_VTG:
-        return parse_message_VTG(message);
+        return parse_message_VTG(data);
         break;
 
     case MESSAGE_GP_GLL:
     case MESSAGE_GL_GLL:
     case MESSAGE_GN_GLL:
-        return parse_message_GLL(message);
+        return parse_message_GLL(data);
         break;
 
     case MESSAGE_GP_ZDA:
     case MESSAGE_GL_ZDA:
     case MESSAGE_GN_ZDA:
-        return parse_message_ZDA(message);
+        return parse_message_ZDA(data);
         break;
 
     case MESSAGE_PIREA:
-        return parse_message_PIREA(message);
+        return parse_message_PIREA(data);
         break;
 
     case MESSAGE_PIRFV:
-        return parse_message_PIRFV(message);
+        return parse_message_PIRFV(data);
         break;
 
     case MESSAGE_PIRGK:
-        return parse_message_PIRGK(message);
+        return parse_message_PIRGK(data);
         break;
 
     case MESSAGE_PIRRA:
-        return parse_message_PIRRA(message);
+        return parse_message_PIRRA(data);
         break;
 
     default:
@@ -551,15 +504,15 @@ bool Proto_NMEA_0183::string_to_int(const QString &data, unsigned char *value)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::parse_message_GGA(const QString &data)
 {
-    bool ok;
+    bool ok = false;
     QString temp;
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 15)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_GGA: count %1 != 15").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     calc_time_UTC(sl.at(1),
@@ -580,25 +533,47 @@ int Proto_NMEA_0183::parse_message_GGA(const QString &data)
     longitude_dir = sl.at(5);
 
     ok = string_to_int(sl.at(6), &quality);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_int(sl.at(7), &nka);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(8), &horizont_faktor);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(9), &f_height);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(11), &f_geoid);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(13), &time_in_sec);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
-    ok = string_to_int(sl.at(14), &id_station);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    temp = sl[14].remove('*');
+    ok = string_to_int(temp, &id_station);
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     // print_variable();
 
@@ -616,31 +591,49 @@ int Proto_NMEA_0183::parse_message_GSA(const QString &data)
     bool ok;
 
     sl = data.split(",");
-    if(sl.count() != 18)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_GSA: count %1 != 18").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     type_management = sl.at(1);
 
     ok = string_to_int(sl.at(2), &state_work);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     for(n=3; n<15; n++)
     {
         ok = string_to_int(sl.at(n), &m_nka[n-3]);
-        if(!ok) return E_ERROR_FORMAT_MESSAGE;
+        if(!ok)
+        {
+            return E_ERROR_FORMAT_MESSAGE;
+        }
     }
 
     ok = string_to_float(sl.at(15), &PDOP);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(16), &HDOP);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
+#if 0
+    // странный формат
     ok = string_to_float(sl.at(17), &VDOP);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
+#endif
 
     // print_variable();
 
@@ -661,15 +654,15 @@ int Proto_NMEA_0183::parse_message_GSV(const QString &data)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::parse_message_RMC(const QString &data)
 {
-    QString temp;
+    //QString temp;
     bool ok;
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 13)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_RMC: count %1 != 13").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     calc_time_UTC(sl.at(1),
@@ -692,15 +685,24 @@ int Proto_NMEA_0183::parse_message_RMC(const QString &data)
     longitude_dir = sl.at(6);
 
     ok = string_to_float(sl.at(7), &speed_in_uzlah);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(8), &kurs_in_grad);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     data_str = sl.at(9);
 
     ok = string_to_float(sl.at(10), &magnet_sklon_in_grad);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     // temp = sl.at(11);
 
@@ -722,23 +724,35 @@ int Proto_NMEA_0183::parse_message_VTG(const QString &data)
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 10)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_VTG: count %1 != 10").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     ok = string_to_float(sl.at(1), &true_kurs_in_grad);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(3), &magnet_kurs_in_grad);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(5), &speed_in_uzlah);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(7), &speed_in_km);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     // temp = sl.at(9);
 
@@ -753,10 +767,10 @@ int Proto_NMEA_0183::parse_message_GLL(const QString &data)
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 8)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_GLL: count %1 != 8").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     calc_latitude(sl.at(1),
@@ -795,10 +809,10 @@ int Proto_NMEA_0183::parse_message_ZDA(const QString &data)
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 7)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_ZDA: count %1 != 7").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     calc_time_UTC(sl.at(1),
@@ -808,20 +822,35 @@ int Proto_NMEA_0183::parse_message_ZDA(const QString &data)
 
     ok = string_to_int(sl.at(2), &day_utc);
     if(!ok) return E_ERROR_FORMAT_MESSAGE;
-    if(day_utc > 31) return E_ERROR_FORMAT_MESSAGE;
+    if(day_utc > 31)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_int(sl.at(3), &month_utc);
     if(!ok) return E_ERROR_FORMAT_MESSAGE;
-    if(month_utc > 12) return E_ERROR_FORMAT_MESSAGE;
+    if(month_utc > 12)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_int(sl.at(4), &year_utc);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_int(sl.at(5), &local_hour);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_int(sl.at(6), &local_min);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     // print_variable();
 
@@ -835,10 +864,10 @@ int Proto_NMEA_0183::parse_message_PIREA(const QString &data)
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 2)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_PIREA: count %1 != 2").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     return E_NO_ERROR;
@@ -849,10 +878,10 @@ int Proto_NMEA_0183::parse_message_PIRFV(const QString &data)
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 2)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_PIRFV: count %1 != 2").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     return E_NO_ERROR;
@@ -864,10 +893,10 @@ int Proto_NMEA_0183::parse_message_PIRGK(const QString &data)
     QStringList sl;
 
     sl = data.split(",");
-    if(sl.count() != 12)
+    if(sl.count() == 0)
     {
-        emit debug(QString("parse_message_PIRGK: count %1 != 12").arg(sl.count()));
-        return E_ERROR_FORMAT_MESSAGE;
+        emit debug("sl.count() == 0");
+        return E_ERROR_UNKNOWN_MESSAGE;
     }
 
     calc_time_UTC(sl.at(1),
@@ -876,30 +905,54 @@ int Proto_NMEA_0183::parse_message_PIRGK(const QString &data)
                   &time_observation_sec);
 
     ok = string_to_float(sl.at(3), &X);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(4), &Y);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(5), &Z);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(6), &V);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(sl.at(7), &K);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     data_str = sl.at(8);
 
     ok = string_to_float(data.at(9), &HDOP);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_float(data.at(10), &VDOP);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     ok = string_to_int(sl.at(11), &nka);
-    if(!ok) return E_ERROR_FORMAT_MESSAGE;
+    if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
 
     // print_variable();
 
@@ -1411,12 +1464,16 @@ float Proto_NMEA_0183::get_height(void)
     return f_height;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::print_error(int err)
+void Proto_NMEA_0183::print_error(QByteArray data, int err)
 {
+    if(err != E_NO_ERROR)
+    {
+        emit debug(data);
+    }
     switch (err)
     {
     case E_NO_ERROR:
-        // emit info("NO_ERROR");
+        emit info("NO_ERROR");
         break;
 
     case E_ERROR_FORMAT_MESSAGE:

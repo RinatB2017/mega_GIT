@@ -24,6 +24,8 @@
 #include <QWidget>
 #include <QMap>
 //--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
 #define LED_ON  "background:green"
 #define LED_OFF ""
 //--------------------------------------------------------------------------------
@@ -62,18 +64,13 @@ class QVBoxLayout;
 class QMessageBox;
 class QFrame;
 //--------------------------------------------------------------------------------
-class ParportBox : public QWidget
+class ParportBox : public MyWidget
 {
     Q_OBJECT
 
 public:
     explicit ParportBox(QWidget *parent = 0);
     ~ParportBox();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
 
 private slots:
     void pressed();
@@ -90,12 +87,12 @@ private:
     LedPanel *ledPanel8;
     LedPanel *ledControlPanel8;
 #endif
-    QHBoxLayout *hbox;
-    QVBoxLayout *vbox;
-    QFrame *ledFrame;
-    Parport *parport;
-    QTimer *timer;
-    QTimer *timer2;
+    QHBoxLayout *hbox = 0;
+    QVBoxLayout *vbox = 0;
+    QFrame *ledFrame = 0;
+    Parport *parport = 0;
+    QTimer *timer = 0;
+    QTimer *timer2 = 0;
     void connect_log(void);
     void message(const QString &text);
     void set_enable(bool state);

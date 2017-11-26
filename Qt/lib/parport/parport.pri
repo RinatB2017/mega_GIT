@@ -4,6 +4,7 @@
 
 DEPENDPATH  += \
     $$PWD \
+    $$PWD/src \
     $$PWD/unix
 INCLUDEPATH = $$DEPENDPATH
 

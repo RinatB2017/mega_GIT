@@ -15,6 +15,7 @@ SUBDIRS += \
     old_programm \
     Organizations \
     MODBUS \
+    MyBot \
     QRCodeGenerator \
     PacketSender \
     RS232 \
@@ -22,7 +23,11 @@ SUBDIRS += \
     show_films \
     Teacher \
     Teacher_light \
-    Templates
+    Templates \
+    Test_Game \
+    Test_NeuronNet \
+    Test_OpenGL \
+    Test_draw_line \
     
 lessThan(QT_MAJOR_VERSION, 5) {
     message (QT4)

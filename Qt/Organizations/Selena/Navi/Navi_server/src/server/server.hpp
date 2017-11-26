@@ -26,11 +26,13 @@
 #include <QQueue>
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
 class Terminal;
 class Proto_NMEA_0183;
 class UDP_Server;
 //--------------------------------------------------------------------------------
-class Server : public QWidget
+class Server : public MyWidget
 {
     Q_OBJECT
 public:
@@ -38,10 +40,6 @@ public:
     void run_tests(void);
     
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
     void send_data(const QString &);
 
 public slots:
@@ -53,12 +51,12 @@ private slots:
     void log(const QString &data);
 
 private:
-    QWidget *parent;
-    Terminal *terminal;
-    UDP_Server *server;
+    QWidget *parent = 0;
+    Terminal *terminal = 0;
+    UDP_Server *server = 0;
     QQueue<unsigned char> queue;
     QByteArray message;
-    Proto_NMEA_0183 *proto;
+    Proto_NMEA_0183 *proto = 0;
     QString address;
     unsigned int port;
 

@@ -24,10 +24,11 @@
 #include "proto_NMEA_0183.hpp"
 #include "udp_server.hpp"
 #include "terminal.hpp"
+#include "mywidget.hpp"
 #include "server.hpp"
 //--------------------------------------------------------------------------------
 Server::Server(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     parent(parent)
 {
     init();

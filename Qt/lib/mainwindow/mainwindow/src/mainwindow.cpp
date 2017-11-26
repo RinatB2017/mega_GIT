@@ -45,10 +45,6 @@ MainWindow::MainWindow(QMainWindow *parent)
       orgName(ORGNAME),
       appName(APPNAME),
       appVersion(QString("%1.%2.%3 (%4)").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_PATCH).arg(VER_BUILD))
-      //TODO app_left(-1),
-      //TODO app_top(-1),
-      //TODO app_width(-1),
-      //TODO app_height(-1)
 {
     init();
 }
@@ -660,19 +656,14 @@ void MainWindow::load_main(void)
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 
-    //TODO app_left    = settings->value("Left",   100).toInt();
-    //TODO app_top     = settings->value("Top",    100).toInt();
-    //TODO app_width   = settings->value("Width",  640).toInt();
-    //TODO app_height  = settings->value("Height", 380).toInt();
-
 #ifndef NO_MENU
     a_AskExit->setChecked(flag_close);
 #endif
 
     settings->endGroup();
 
-    restoreGeometry(settings->value("geometry").toByteArray());
     restoreState(settings->value("windowState").toByteArray());
+    restoreGeometry(settings->value("geometry").toByteArray());
 
     settings->deleteLater();
 }

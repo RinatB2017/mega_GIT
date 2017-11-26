@@ -48,6 +48,10 @@
         <translation>Выход</translation>
     </message>
     <message>
+        <source>Windows</source>
+        <translation>Окна</translation>
+    </message>
+    <message>
         <source>Exit the program</source>
         <translation>Выход из программы</translation>
     </message>

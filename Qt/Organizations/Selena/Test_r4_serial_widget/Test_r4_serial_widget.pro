@@ -16,6 +16,7 @@ QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += FLAG_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
+DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
@@ -36,6 +37,7 @@ FORMS += mainbox.ui
 LIB_PATH = "../../../lib"
 
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
+include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
 

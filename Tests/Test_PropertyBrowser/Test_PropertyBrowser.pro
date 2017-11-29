@@ -36,7 +36,8 @@ win32 {
 
 RESOURCES += demo.qrc
 
-LIB_PATH = "../../../lib"
+
+LIB_PATH = "../../Qt/lib"
 
 include ($$LIB_PATH/QtPropertyBrowser/qtpropertybrowser.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)

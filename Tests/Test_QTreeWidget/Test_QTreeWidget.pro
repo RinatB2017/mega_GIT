@@ -39,7 +39,8 @@ RESOURCES += \
 OTHER_FILES += doc/notebook.txt
 
 #----------------------------------------------
-LIB_PATH = "../../../lib"
+
+LIB_PATH = "../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {

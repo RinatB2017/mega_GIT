@@ -147,8 +147,6 @@ void MainBox::load(void)
     {
         return;
     }
-
-    mw->load_html();
 }
 //--------------------------------------------------------------------------------
 void MainBox::save(void)
@@ -158,8 +156,6 @@ void MainBox::save(void)
     {
         return;
     }
-
-    mw->save_html();
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

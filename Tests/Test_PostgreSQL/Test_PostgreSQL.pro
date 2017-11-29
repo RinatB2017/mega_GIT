@@ -38,7 +38,8 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+
+LIB_PATH = "../../Qt/lib"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)

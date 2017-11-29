@@ -30,7 +30,6 @@ SUBDIRS += \
     Test_QsLog \
     Test_model \
     Test_SQL \
-    Test_template_qt5 \
     Test_thread \
     Test_Trader \
     Test_triangle \
@@ -40,7 +39,6 @@ SUBDIRS += \
     Tests_QtPlot3D \
     Test_WebKit \
 #
-    Test_NeuronNet \
     Test_OpenMP \
     Test_QDBus \
     Test_QGraphicsView \

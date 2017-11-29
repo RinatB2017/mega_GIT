@@ -44,7 +44,8 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH = "../../../lib"
+
+LIB_PATH = "../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

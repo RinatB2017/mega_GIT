@@ -94,17 +94,19 @@ void MainBox::createTestBar(void)
 void MainBox::load(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
-
-    mw->load_html();
+    if(mw == nullptr)
+    {
+        return;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::save(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
-
-    mw->save_html();
+    if(mw == nullptr)
+    {
+        return;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

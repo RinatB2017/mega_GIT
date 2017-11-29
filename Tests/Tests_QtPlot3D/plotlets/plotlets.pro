@@ -22,7 +22,7 @@ FORMS   = \
     src/mainwindowbase.ui \
     src/configframebase.ui
 
-LIB_PATH = "../../../../lib"
+LIB_PATH = "../../../Qt/lib"
 
 include ($$LIB_PATH/qwtplot3d/qwtplot3d.pri)
 include ($$LIB_PATH/turbo.pri)

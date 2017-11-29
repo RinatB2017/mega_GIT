@@ -41,7 +41,8 @@ win32 {
 
 include (src/test/test.pri)
 
-LIB_PATH = "../../../lib"
+
+LIB_PATH = "../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {

@@ -12,7 +12,7 @@ INCLUDEPATH = $$DEPENDPATH
 HEADERS = src/dynamicplot.h
 SOURCES = src/dynamicplot.cpp
 
-LIB_PATH = "../../../../lib"
+LIB_PATH = "../../../Qt/lib"
 
 include ($$LIB_PATH/qwtplot3d/qwtplot3d.pri)
 include ($$LIB_PATH/turbo.pri)

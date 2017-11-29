@@ -108,7 +108,7 @@ void MainBox::init()
 
     connect(sites, SIGNAL(ready(QModelIndex)), links, SLOT(get_links(QModelIndex)));
 
-    LogBox *log = new LogBox(this);
+    LogBox *log = new LogBox("WebKit", this);
 
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->addWidget(sites);

@@ -48,7 +48,6 @@ SerialBox5::SerialBox5(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
-    serial5(0),
     caption("no name"),
     flag_in_hex(false),
     flag_byte_by_byte(false)
@@ -62,7 +61,6 @@ SerialBox5::SerialBox5(QWidget *parent,
     QFrame(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
-    serial5(0),
     caption(caption),
     o_name(o_name),
     flag_in_hex(false),
@@ -84,6 +82,16 @@ SerialBox5::~SerialBox5()
     delete serial5;
 
     delete ui;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::set_caption(QString value)
+{
+    caption = value;
+    o_name = value;
+    if(value.isEmpty() == false)
+    {
+        ui->captionBox->setText(value);
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::connect_log(void)
@@ -576,7 +584,6 @@ void SerialBox5::drawData(const QByteArray &data)
     {
         logBox->bappend(data.data());
     }
-#else
     if(flag_in_hex)
     {
         emit info(ByteArrayToHex(data));
@@ -585,6 +592,8 @@ void SerialBox5::drawData(const QByteArray &data)
     {
         //emit info(data);
     }
+#else
+    Q_UNUSED(data);
 #endif
 }
 //--------------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = HLK-RM04_OpenWRT
 
-FOLDER  = old_programm
+FOLDER  = WiFi
 
 DEPENDPATH  += \
     $$PWD/src \

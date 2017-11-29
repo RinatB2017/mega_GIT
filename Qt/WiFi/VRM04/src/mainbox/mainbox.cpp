@@ -33,7 +33,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 #include "sleeper.h"
 //--------------------------------------------------------------------------------
@@ -41,8 +41,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -58,14 +57,10 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox(this, "RS232");
-    serialBox->add_menu(2);
+    ui->serialWidget->set_caption("VRM04");
 
-    ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
-
-    connect(this, SIGNAL(send(QByteArray)), serialBox, SLOT(input(QByteArray)));
-    connect(serialBox, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serialWidget,   SLOT(input(QByteArray)));
+    connect(ui->serialWidget,   SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -87,11 +82,14 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    toolBar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

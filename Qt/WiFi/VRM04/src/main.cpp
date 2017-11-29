@@ -22,6 +22,7 @@
 #include <QTranslator>
 #include <QLocale>
 //--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
@@ -32,9 +33,14 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-
     set_codecs();
+
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
 
     QTranslator translator;
     translator.load(":/ru_RU.qm");
@@ -47,14 +53,14 @@ int main(int argc, char *argv[])
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
-    main_window.setCentralWidget(mainBox);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
 
-    main_window.show();
+    main_window->show();
 
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
     return app.exec();
 }

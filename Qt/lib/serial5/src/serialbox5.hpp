@@ -62,6 +62,8 @@ public:
 
     QByteArray readAll(void);
 
+    void set_caption(QString value);
+
 private:
     Ui::SerialBox5 *ui = 0;
     QWidget *parent = 0;

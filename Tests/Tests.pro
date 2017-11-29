@@ -15,7 +15,6 @@ SUBDIRS += \
     Test_drawbuttons \
     Test_GrapherBox \
     Test_HistogramBox \
-    Test_HLK_RM04 \
     Test_QHexEdit \
     Test_LibVLC \
     Test_md5 \

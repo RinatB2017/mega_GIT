@@ -137,7 +137,7 @@ void WIFI_frame::init(void)
 
     server_is_created = false;
 
-    logBox = new LogBox(this);
+    logBox = new LogBox("WiFi");
 
     QVBoxLayout *main_layout = new QVBoxLayout();
 

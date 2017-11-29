@@ -63,9 +63,6 @@ private:
 
     void createTestBar(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
 protected:
     void changeEvent(QEvent *event);
 

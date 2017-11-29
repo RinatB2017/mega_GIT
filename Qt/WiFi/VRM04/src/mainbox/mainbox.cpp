@@ -121,6 +121,21 @@ void MainBox::test(void)
     //ba.append("at+ver=?\r");
     ba.append("at+wifi_conf=?\r");
 
+#if 0
+    ba.append("at+netmode=1\r");
+    ba.append("at+dhcpc=1\r");
+    ba.append("at+remoteip=192.168.11.245\r");
+    ba.append("at+remoteport=8080\r");
+    ba.append("at+remotepro=tcp\r");
+    ba.append("at+timeout=0\r");
+    ba.append("at+mode=server\r");
+    ba.append("at+uart=115200,8,n,1\r");
+    ba.append("at+uartpacklen=64\r");
+    ba.append("at+uartpacktimeout=10\r");
+    ba.append("at+net_commit=1\r");
+    ba.append("at+reconn=1\r");
+#endif
+
     data_rs232.clear();
     is_ready = false;
     emit send(ba);

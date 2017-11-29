@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     qDebug() << main_window->windowFlags();
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     // отключает заголовок
     //main_window->setWindowFlags(Qt::FramelessWindowHint);

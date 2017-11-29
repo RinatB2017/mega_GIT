@@ -39,12 +39,12 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window.getThis());
-    main_window.setCentralWidget(mainBox);
+    MainBox *mainBox = new MainBox(main_window->getThis());
+    main_window->setCentralWidget(mainBox);
 
-    main_window.showMaximized();
+    main_window->showMaximized();
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 

@@ -55,14 +55,13 @@ int main(int argc, char *argv[])
 
     qApp->processEvents();
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
-    main_window.setCentralWidget(mainBox);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-    main_window.show();
-
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 

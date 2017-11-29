@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);

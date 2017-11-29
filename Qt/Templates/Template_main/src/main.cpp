@@ -25,12 +25,12 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    a.setWindowIcon(QIcon(":/images/computer.ico"));
+    QApplication app(argc, argv);
+    app.setWindowIcon(QIcon(":/images/computer.ico"));
 
-    MainWindow w;
-    w.show();
+    MainWindow *w = new MainWindow();
+    w->show();
 
-    return a.exec();
+    return app.exec();
 }
 //--------------------------------------------------------------------------------

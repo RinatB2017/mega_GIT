@@ -48,17 +48,17 @@ int main(int argc, char *argv[])
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MultimeterBox *mainBox = new MultimeterBox(QObject::tr("Мультиметр В7-86"), main_window.getThis());
-    main_window.setCentralWidget(mainBox);
+    MultimeterBox *mainBox = new MultimeterBox(QObject::tr("Мультиметр В7-86"), main_window->getThis());
+    main_window->setCentralWidget(mainBox);
 
-    main_window.show();
+    main_window->show();
 
-    //main_window.setFixedSize(main_window.sizeHint());
-    main_window.setFixedWidth(mainBox->width());
+    //main_window->setFixedSize(main_window->sizeHint());
+    main_window->setFixedWidth(mainBox->width());
 
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
 #ifdef QT_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));

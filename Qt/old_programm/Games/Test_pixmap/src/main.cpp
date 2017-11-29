@@ -56,18 +56,18 @@ int main(int argc, char *argv[])
 
     qApp->processEvents();
 
-    MainWindow main_window;
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    MainWindow *main_window = new MainWindow();
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
-    main_window.setCentralWidget(mainBox);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
 
-    main_window.show();
-    //main_window.setFixedHeight(main_window.sizeHint().height());
+    main_window->show();
+    //main_window.setFixedHeight(main_window->sizeHint().height());
 
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), &main_window, SLOT(set_focus(QString)));
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
     qDebug() << QLocale().name();

@@ -42,11 +42,11 @@ int main(int argc, char *argv[])
 
     //QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window.getThis());
-    main_window.setCentralWidget(mainBox);
-    main_window.showMaximized();
+    MainBox *mainBox = new MainBox(main_window->getThis());
+    main_window->setCentralWidget(mainBox);
+    main_window->showMaximized();
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 

@@ -31,20 +31,19 @@ int main(int argc, char *argv[])
 {
     set_codecs();
 
-    QApplication a(argc, argv);
-    a.setOrganizationName(ORGNAME);
-    a.setApplicationName(APPNAME);
-    a.setWindowIcon(QIcon(ICON_PROGRAMM));
+    QApplication app(argc, argv);
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    MainWindow *main_window = new MainWindow;
+    MainWindow *main_window = new MainWindow();
 
     ParportBox *mainBox = new ParportBox(main_window->getThis());
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     qDebug() << QString("Starting application \"%1\"").arg(APPNAME);
 
-    return a.exec();
+    return app.exec();
 }
 //--------------------------------------------------------------------------------

@@ -73,6 +73,8 @@ void MainWindow::setCentralWidget(QWidget *widget)
 
     QMainWindow::setCentralWidget(mainWidget);
 
+    load_setting();
+
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
@@ -188,8 +190,6 @@ void MainWindow::init(void)
 #ifdef  DEMO
     check_date();
 #endif
-
-    QTimer::singleShot(100, this, SLOT(load_setting()));
 }
 //--------------------------------------------------------------------------------
 #ifdef  DEMO

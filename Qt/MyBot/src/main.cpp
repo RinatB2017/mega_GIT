@@ -53,17 +53,15 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-    main_window.setCentralWidget(mainBox);
+    splash->finish(main_window);
 
-    main_window.show();
-
-    splash->finish(&main_window);
-
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), &main_window, SLOT(set_focus(QString)));
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 
     return app.exec();

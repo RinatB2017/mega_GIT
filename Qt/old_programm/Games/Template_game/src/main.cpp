@@ -41,12 +41,12 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
 
 #if 1
-    MainWindow main_window;
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    MainWindow *main_window = new MainWindow();
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     Game *mainBox = new Game();
     mainBox->setFocusPolicy(Qt::StrongFocus);
-    main_window.setCentralWidget(mainBox);
+    main_window->setCentralWidget(mainBox);
 
     //---
 #if 0
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 #endif
     //--
 
-    main_window.show();
+    main_window->show();
 #else
     Game *mainBox = new Game();
     mainBox->show();

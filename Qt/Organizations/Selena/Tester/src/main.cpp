@@ -34,10 +34,10 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
 
-    Tester main_window;
-    main_window.setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
-    main_window.move(0, 0);
-    main_window.show();
+    Tester *main_window = new Tester();
+    main_window->setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
+    main_window->move(0, 0);
+    main_window->show();
 
     return app.exec();
 }

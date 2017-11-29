@@ -6,10 +6,10 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
+    QApplication app(argc, argv);
 	www testWidget;
 	SBControl control(&testWidget);
 	testWidget.show();
 	control.show();
-	return a.exec();
+    return app.exec();
 }

@@ -503,7 +503,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        QApplication a(argc, argv);
+        QApplication app(argc, argv);
 
         QDEBUGVAR(args);
 
@@ -519,11 +519,10 @@ int main(int argc, char *argv[])
         }
 #endif
 
-        MainWindow w;
+        MainWindow *w = new MainWindow();
+        w->show();
 
-        w.show();
-
-        return a.exec();
+        return app.exec();
     }
 
     return 0;

@@ -35,18 +35,18 @@ Test::Test()
 void Test::test_func(void)
 {
     Proto_NMEA_0183 *proto = new Proto_NMEA_0183();
-    QCOMPARE(proto->test_GGA(), 0);    //E_NO_ERROR
-    QCOMPARE(proto->test_GSA(), 0);
-    QCOMPARE(proto->test_GSV(), 0);
-    QCOMPARE(proto->test_RMC(), 0);
-    QCOMPARE(proto->test_VTG(), 0);
-    QCOMPARE(proto->test_GLL(), 0);
-    QCOMPARE(proto->test_ZDA(), 0);
+    QCOMPARE(proto->test_GGA(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_GSA(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_GSV(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_RMC(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_VTG(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_GLL(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_ZDA(), (int)ERRORS::E_NO_ERROR);
 
-    QCOMPARE(proto->test_PIREA(), 0);
-    QCOMPARE(proto->test_PIRFV(), 0);
-    QCOMPARE(proto->test_PIRGK(), 0);
-    QCOMPARE(proto->test_PIRRA(), 0);
+    QCOMPARE(proto->test_PIREA(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_PIRFV(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_PIRGK(), (int)ERRORS::E_NO_ERROR);
+    QCOMPARE(proto->test_PIRRA(), (int)ERRORS::E_NO_ERROR);
 
     proto->deleteLater();
 }

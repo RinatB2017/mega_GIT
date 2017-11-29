@@ -72,11 +72,10 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    MyMainWindow *main_window = new MyMainWindow;
+    MyMainWindow *main_window = new MyMainWindow();
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     MainWidget_GUI *mainBox = new MainWidget_GUI(main_window->getThis(), splash);
-
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

@@ -70,20 +70,19 @@ int main(int argc, char *argv[])
 
     qApp->processEvents();
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-    main_window.setCentralWidget(mainBox);
-    main_window.show();
+    splash->finish(main_window);
 
-    splash->finish(&main_window);
-
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), &main_window, SLOT(set_focus(QString)));
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 
 #ifdef QT_DEBUG
-    int test_result = QTest::qExec(new Test(&main_window), argc, argv);
+    int test_result = QTest::qExec(new Test(main_window), argc, argv);
 
     if (test_result != EXIT_SUCCESS)
     {

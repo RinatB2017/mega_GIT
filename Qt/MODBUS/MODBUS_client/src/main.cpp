@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow;
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     MODBUS_client *mainBox = new MODBUS_client(main_window->getThis());
 

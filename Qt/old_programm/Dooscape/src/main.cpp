@@ -44,14 +44,14 @@ static void associateFileTypes(const QStringList &fileTypes)
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
-    a.setApplicationName("Dooscape");
-    a.setApplicationVersion("1.2");
-    a.setOrganizationName("Doocode");
-    a.setOrganizationDomain("http://doocode.esy.es/");
-    a.setApplicationDisplayName(QCoreApplication::applicationName()+" "+QCoreApplication::applicationVersion());
-    a.setWindowIcon(QIcon(":/res/icon.ico"));
+    app.setApplicationName("Dooscape");
+    app.setApplicationVersion("1.2");
+    app.setOrganizationName("Doocode");
+    app.setOrganizationDomain("http://doocode.esy.es/");
+    app.setApplicationDisplayName(QCoreApplication::applicationName()+" "+QCoreApplication::applicationVersion());
+    app.setWindowIcon(QIcon(":/res/icon.ico"));
 
     /* ScreenShoot screen;
     screen.show();*/
@@ -95,5 +95,5 @@ int main(int argc, char *argv[])
         w->loadFile(fileName);
     }
 
-    return a.exec();
+    return app.exec();
 }

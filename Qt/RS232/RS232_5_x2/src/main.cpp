@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     app.installTranslator(&translator);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
@@ -57,11 +57,11 @@ int main(int argc, char *argv[])
     QFrame *frame = new QFrame;
     Q_CHECK_PTR(frame);
     splash->showMessage("init RS-232_5 (1)...");
-    SerialBox5 *serial = new SerialBox5(main_window.getThis(), "RS-232_5 (1)", "RS-232_1");
+    SerialBox5 *serial = new SerialBox5(main_window->getThis(), "RS-232_5 (1)", "RS-232_1");
     serial->add_menu(2);
 
     splash->showMessage("init RS-232_5 (2)...");
-    SerialBox5 *serial2 = new SerialBox5(main_window.getThis(), "RS-232_5 (2)", "RS-232_2");
+    SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
     serial2->add_menu(4);
 
 #if 0
@@ -77,14 +77,14 @@ int main(int argc, char *argv[])
 #endif
 
 #if 1
-    main_window.setCentralWidget(frame);
+    main_window->setCentralWidget(frame);
 #else
-    main_window.setCentralWidget(frame, false, Qt::Horizontal);
+    main_window->setCentralWidget(frame, false, Qt::Horizontal);
 #endif
 
-    main_window.show();
+    main_window->show();
 
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
     return app.exec();
 }

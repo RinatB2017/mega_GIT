@@ -57,15 +57,15 @@ int main(int argc, char *argv[])
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
 
-    MainWindow main_window;
+    MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
 
-    main_window.setCentralWidget(mainBox);
+    main_window->setCentralWidget(mainBox);
 
-    main_window.show();
+    main_window->show();
 
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);

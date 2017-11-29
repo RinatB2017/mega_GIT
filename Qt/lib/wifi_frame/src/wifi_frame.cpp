@@ -55,6 +55,7 @@ void WIFI_frame::connect_log(void)
         connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
+        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
     }
     else
     {
@@ -62,6 +63,7 @@ void WIFI_frame::connect_log(void)
         connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
         connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
+        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -702,7 +704,7 @@ void WIFI_frame::show_hex_data(QByteArray &data)
 {
     QHexEdit *hexedit = new QHexEdit();
     hexedit->setMinimumSize(640, 200);
-    hexedit->setData(data);
+    hexedit->setData(QHexEditData::fromMemory(data));
     hexedit->show();
 }
 //--------------------------------------------------------------------------------

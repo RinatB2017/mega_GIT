@@ -46,6 +46,7 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 public slots:
     void update_ports(void);

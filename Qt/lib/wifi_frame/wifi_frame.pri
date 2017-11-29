@@ -2,7 +2,7 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD
+DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += wifi_frame.hpp

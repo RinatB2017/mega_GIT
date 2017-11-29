@@ -31,6 +31,8 @@
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
+#include "wifi_frame.hpp"
+//--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
@@ -110,6 +112,11 @@ void MainBox::test(void)
     //ba.append("at+mode=?\r");
     //ba.append("at+net_ip=?\r");
     ba.append("at+version\r\n");
+
+#if 0
+    WIFI_frame *wf = new WIFI_frame("WiFi", false, this);
+    wf->show();
+#endif
 
     data_rs232.clear();
     is_ready = false;

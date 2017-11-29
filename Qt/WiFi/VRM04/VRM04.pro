@@ -44,7 +44,11 @@ LIB_PATH = "../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
+
 include ($$LIB_PATH/time/time.pri)
+
+include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+include ($$LIB_PATH/wifi_frame/wifi_frame.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

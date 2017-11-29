@@ -77,28 +77,28 @@ private:
     bool server_is_created;
     QSerialPort serial;
     QByteArray  serial_data;
-    LogBox *logBox;
+    LogBox *logBox = 0;
 
-    QLineEdit *le_Network;
-    QLineEdit *le_Password;
-    QLineEdit *le_IP;
-    QLineEdit *le_Gate;
-    QLineEdit *le_Mask;
-    QLineEdit *le_RemoteIP;
-    QLineEdit *le_RemotePort;
-    QComboBox *cb_EncryptType;
+    QLineEdit *le_Network = 0;
+    QLineEdit *le_Password = 0;
+    QLineEdit *le_IP = 0;
+    QLineEdit *le_Gate = 0;
+    QLineEdit *le_Mask = 0;
+    QLineEdit *le_RemoteIP = 0;
+    QLineEdit *le_RemotePort = 0;
+    QComboBox *cb_EncryptType = 0;
 
-    bool is_ready;
-    QLabel *port_caption;
-    QComboBox *cb_ports;
-    QPushButton *btn_open;
-    QPushButton *btn_close;
+    bool is_ready = false;
+    QLabel *port_caption = 0;
+    QComboBox *cb_ports = 0;
+    QPushButton *btn_open = 0;
+    QPushButton *btn_close = 0;
 
-    QPushButton *btn_server;
-    QPushButton *btn_client;
-    QPushButton *btn_send_data;
+    QPushButton *btn_server = 0;
+    QPushButton *btn_client = 0;
+    QPushButton *btn_send_data = 0;
 
-    QPushButton *btn_read_settings;
+    QPushButton *btn_read_settings = 0;
 
     void init(void);
     void connect_log(void);

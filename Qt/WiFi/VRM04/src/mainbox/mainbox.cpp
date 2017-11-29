@@ -57,6 +57,13 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#if 1
+    WIFI_frame *wf = new WIFI_frame("WiFi", false, this);
+    wf->setFixedSize(wf->sizeHint());
+    wf->show();
+    layout()->addWidget(wf);
+#endif
+
     createTestBar();
 
     ui->serialWidget->set_caption("VRM04");
@@ -111,12 +118,8 @@ void MainBox::test(void)
     ba.clear();
     //ba.append("at+mode=?\r");
     //ba.append("at+net_ip=?\r");
-    ba.append("at+version\r\n");
-
-#if 0
-    WIFI_frame *wf = new WIFI_frame("WiFi", false, this);
-    wf->show();
-#endif
+    //ba.append("at+ver=?\r");
+    ba.append("at+wifi_conf=?\r");
 
     data_rs232.clear();
     is_ready = false;
@@ -137,14 +140,14 @@ void MainBox::wait(int max_time_ms)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
-    emit info("read_data");
+    emit debug("read_data");
     for(int n=0; n<ba.length(); n++)
     {
         char temp = ba.at(n);
         if(temp == '\r')
         {
             is_ready = true;
-            emit info(QString("%1").arg(data_rs232.data()));
+            emit debug(QString("%1").arg(data_rs232.data()));
             data_rs232.clear();
         }
         else

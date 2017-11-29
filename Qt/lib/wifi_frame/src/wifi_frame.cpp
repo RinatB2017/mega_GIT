@@ -140,6 +140,10 @@ void WIFI_frame::init(void)
     server_is_created = false;
 
     logBox = new LogBox("WiFi");
+    connect(this,   SIGNAL(info(QString)),  logBox, SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(debug(QString)), logBox, SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(error(QString)), logBox, SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(trace(QString)), logBox, SLOT(traceLog(QString)));
 
     QVBoxLayout *main_layout = new QVBoxLayout();
 
@@ -231,25 +235,103 @@ void WIFI_frame::read_settings(void)
     emit info("begin read");
 
     ok = send_at_command("at+netmode=?\r");
-    if(!ok) return;
+    if(ok)
+    {
+        int temp = serial_data.toInt(&ok);
+        if(ok)
+        {
+            switch(temp)
+            {
+            case 0:
+                emit info("Default setup");
+                break;
+            case 1:
+                emit info("Ethernet");
+                break;
+            case 2:
+                emit info("Wifi client");
+                break;
+            case 3:
+                emit info("Wifi ap");
+                break;
+            default:
+                emit info(QString("Unknown value %1").arg(temp));
+                break;
+            }
+        }
+    }
 
     ok = send_at_command("at+wifi_conf=?\r");
-    if(!ok) return;
+    if(ok)
+    {
+        QStringList sl = QString(serial_data).split(',');
+        if(sl.count() == 3)
+        {
+            le_Network->setText(sl.at(0));
+            cb_EncryptType->setCurrentText(sl.at(1));
+            le_Password->setText(sl.at(2));
+        }
+        else
+        {
+            le_Network->setText("---");
+            cb_EncryptType->setCurrentText("---");
+            le_Password->setText("---");
+        }
+    }
 
     ok = send_at_command("at+dhcpd=?\r");
-    if(!ok) return;
+    if(ok)
+    {
+        int temp = serial_data.toInt(&ok);
+        if(ok)
+        {
+            switch(temp)
+            {
+            case 0:
+                emit info("Close");
+                break;
+            case 1:
+                emit info("Open");
+                break;
+            }
+        }
+    }
 
     ok = send_at_command("at+net_ip=?\r");
-    if(!ok) return;
+    if(ok)
+    {
+        QStringList sl = QString(serial_data).split(',');
+        if(sl.count() == 3)
+        {
+            le_IP->setText(sl.at(0));
+            le_Mask->setText(sl.at(1));
+            le_Gate->setText(sl.at(2));
+        }
+        else
+        {
+            le_IP->setText("---");
+            le_Mask->setText("---");
+            le_Gate->setText("---");
+        }
+    }
 
     ok = send_at_command("at+net_dns=?\r");
-    if(!ok) return;
+    if(ok)
+    {
+        //TODO
+    }
 
     ok = send_at_command("at+remotepro=?\r");
-    if(!ok) return;
+    if(ok)
+    {
+        //TODO
+    }
 
     ok = send_at_command("at+mode=?\r");
-    if(!ok) return;
+    if(ok)
+    {
+        //TODO
+    }
 
     emit info("end read");
 }

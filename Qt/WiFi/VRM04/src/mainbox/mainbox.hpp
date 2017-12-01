@@ -33,6 +33,8 @@ class MySplashScreen;
 class QToolButton;
 class QToolBar;
 //--------------------------------------------------------------------------------
+class WIFI_frame;
+//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
@@ -47,16 +49,15 @@ signals:
 
 private slots:
     void test(void);
-    void read_data(QByteArray ba);
+    void test2(void);
 
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    QByteArray data_rs232;
-    bool is_ready = false;
+
+    WIFI_frame *wf = 0;
 
     void init(void);
-    void wait(int max_time_ms);
 
     QToolButton *add_button(QToolBar *tool_bar,
                             QToolButton *tool_button,

@@ -134,7 +134,6 @@ QGridLayout *WIFI_frame::add_grid_layout(void)
 //--------------------------------------------------------------------------------
 void WIFI_frame::init(void)
 {
-    connect_log();
     connect_serial();
 
     server_is_created = false;
@@ -168,6 +167,8 @@ void WIFI_frame::init(void)
 
     setLayout(vbox);
     setFrameStyle(QFrame::Box | QFrame::Raised);
+
+    lock_interface();
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::server_port_read(void)
@@ -465,7 +466,9 @@ void WIFI_frame::wait_msec(int timeout_msec)
     QTime time;
 
     if(timeout_msec < 1)
+    {
         return;
+    }
 
     time.start();
     while(time.elapsed() < timeout_msec)
@@ -675,8 +678,11 @@ void WIFI_frame::send_data(void)
 //--------------------------------------------------------------------------------
 QVBoxLayout *WIFI_frame::add_server_cmd_layout(void)
 {
-    btn_server = new QPushButton("create server");
-    connect(btn_server, SIGNAL(clicked()), this, SLOT(create_server()));
+    if(is_server)
+    {
+        btn_server = new QPushButton("create server");
+        connect(btn_server, SIGNAL(clicked()), this, SLOT(create_server()));
+    }
 
     cb_ports = new QComboBox(this);
     update_ports();
@@ -709,8 +715,11 @@ QVBoxLayout *WIFI_frame::add_server_cmd_layout(void)
 //--------------------------------------------------------------------------------
 QVBoxLayout *WIFI_frame::add_client_cmd_layout(void)
 {
-    btn_client = new QPushButton("create client");
-    connect(btn_client, SIGNAL(clicked()), this, SLOT(create_client()));
+    if(is_server == false)
+    {
+        btn_client = new QPushButton("create client");
+        connect(btn_client, SIGNAL(clicked()), this, SLOT(create_client()));
+    }
 
     btn_send_data = new QPushButton("send data");
     connect(btn_send_data, SIGNAL(clicked()), this, SLOT(send_data()));
@@ -770,6 +779,7 @@ void WIFI_frame::serial_open(void)
                     emit info(QString(tr("Порт %1 успешно открыт на скорости %2"))
                               .arg(port.portName())
                               .arg(speed));
+                    unlock_interface();
                     return;
                 }
             }
@@ -779,7 +789,70 @@ void WIFI_frame::serial_open(void)
 //--------------------------------------------------------------------------------
 void WIFI_frame::serial_close(void)
 {
-    serial.close();
+    if(serial.isOpen())
+    {
+        serial.close();
+    }
+    lock_interface();
+}
+//--------------------------------------------------------------------------------
+void WIFI_frame::lock_interface(void)
+{
+    cb_ports->setEnabled(true);
+
+    btn_open->setEnabled(true);
+    btn_close->setEnabled(false);
+    if(is_server)
+    {
+        btn_server->setEnabled(false);
+    }
+    else
+    {
+        btn_client->setEnabled(false);
+        btn_send_data->setEnabled(false);
+    }
+
+    btn_read_settings->setEnabled(false);
+
+    le_Gate->setEnabled(false);
+    le_IP->setEnabled(false);
+    le_Mask->setEnabled(false);
+    le_Network->setEnabled(false);
+    le_Password->setEnabled(false);
+    le_RemoteIP->setEnabled(false);
+    le_RemotePort->setEnabled(false);
+
+    cb_EncryptType->setEnabled(false);
+}
+//--------------------------------------------------------------------------------
+void WIFI_frame::unlock_interface(void)
+{
+    cb_ports->setEnabled(false);
+
+    btn_open->setEnabled(false);
+    btn_close->setEnabled(true);
+
+    if(is_server)
+    {
+        btn_server->setEnabled(true);
+    }
+    else
+    {
+        btn_client->setEnabled(true);
+        btn_send_data->setEnabled(true);
+    }
+
+    btn_read_settings->setEnabled(true);
+
+    le_Gate->setEnabled(true);
+    le_IP->setEnabled(true);
+    le_Mask->setEnabled(true);
+    le_Network->setEnabled(true);
+    le_Password->setEnabled(true);
+    le_RemoteIP->setEnabled(true);
+    le_RemotePort->setEnabled(true);
+
+    cb_EncryptType->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::show_hex_data(QByteArray &data)

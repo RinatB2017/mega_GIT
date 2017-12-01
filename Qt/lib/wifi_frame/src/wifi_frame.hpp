@@ -42,6 +42,10 @@ public:
                         bool is_server,
                         QWidget *parent);
 
+    bool send_at_command(QString cmd,
+                         unsigned int wait_ms = 100,
+                         bool no_response = false);
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -50,12 +54,11 @@ signals:
 
 public slots:
     void update_ports(void);
+    void serial_open(void);
+    void serial_close(void);
 
 private slots:
     void log(const QString &data);
-
-    void serial_open(void);
-    void serial_close(void);
 
     void create_server(void);
     void create_client(void);
@@ -73,8 +76,8 @@ private slots:
 
 private:
     QString caption;
-    bool is_server;
-    bool server_is_created;
+    bool is_server = false;
+    bool server_is_created = false;
     QSerialPort serial;
     QByteArray  serial_data;
     LogBox *logBox = 0;
@@ -103,9 +106,6 @@ private:
     void init(void);
     void connect_log(void);
     void connect_serial(void);
-    bool send_at_command(QString cmd,
-                         unsigned int wait_ms = 100,
-                         bool no_response = false);
     bool send_command(QString cmd,
                       unsigned int wait_ms = 100);
 
@@ -121,6 +121,9 @@ private:
     QString get_client_string(void);
 
     void show_hex_data(QByteArray &data);
+
+    void lock_interface(void);
+    void unlock_interface(void);
 
 protected:
     void changeEvent(QEvent *event);

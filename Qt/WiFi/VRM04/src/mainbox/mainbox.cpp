@@ -57,19 +57,15 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#if 1
-    WIFI_frame *wf = new WIFI_frame("WiFi", false, this);
+    wf = new WIFI_frame("WiFi", false, this);
     wf->setFixedSize(wf->sizeHint());
     wf->show();
-    layout()->addWidget(wf);
-#endif
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(wf);
+    setLayout(vbox);
 
     createTestBar();
-
-    ui->serialWidget->set_caption("VRM04");
-
-    connect(this,               SIGNAL(send(QByteArray)),   ui->serialWidget,   SLOT(input(QByteArray)));
-    connect(ui->serialWidget,   SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -108,12 +104,67 @@ void MainBox::createTestBar(void)
                                        "test",
                                        "test");
 
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    connect(btn_test,   SIGNAL(clicked()),  this,   SLOT(test()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     emit info(tr("send data"));
+    bool ok = false;
+
+#if 0
+    QByteArray ba;
+    ba.clear();
+
+    ba.append("at+netmode=1\r");
+    ba.append("at+dhcpc=1\r");
+    ba.append("at+remoteip=192.168.0.10\r");
+    ba.append("at+remoteport=8080\r");
+    ba.append("at+remotepro=tcp\r");
+    ba.append("at+timeout=0\r");
+    ba.append("at+mode=server\r");
+    ba.append("at+uart=9600,8,n,1\r");
+    ba.append("at+uartpacklen=64\r");
+    ba.append("at+uartpacktimeout=10\r");
+    ba.append("at+net_commit=1\r");
+    ba.append("at+reconn=1\r");
+#endif
+
+    wf->serial_open();
+
+    ok = wf->send_at_command("at+netmode=1\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+dhcpc=1\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+remoteip=192.168.0.10\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+remoteport=8080\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+remotepro=tcp\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+timeout=0\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+mode=server\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+uart=9600,8,n,1\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+uartpacklen=64\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+uartpacktimeout=10\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+net_commit=1\r");
+    if(ok)  emit info("OK");
+    ok = wf->send_at_command("at+reconn=1\r");
+    if(ok)  emit info("OK");
+
+    wf->serial_close();;
+}
+//--------------------------------------------------------------------------------
+void MainBox::test2(void)
+{
+    emit info(tr("send data"));
+
+#if 0
     QByteArray ba;
     ba.clear();
     //ba.append("at+mode=?\r");
@@ -121,55 +172,10 @@ void MainBox::test(void)
     //ba.append("at+ver=?\r");
     ba.append("at+wifi_conf=?\r");
 
-#if 0
-    ba.append("at+netmode=1\r");
-    ba.append("at+dhcpc=1\r");
-    ba.append("at+remoteip=192.168.11.245\r");
-    ba.append("at+remoteport=8080\r");
-    ba.append("at+remotepro=tcp\r");
-    ba.append("at+timeout=0\r");
-    ba.append("at+mode=server\r");
-    ba.append("at+uart=115200,8,n,1\r");
-    ba.append("at+uartpacklen=64\r");
-    ba.append("at+uartpacktimeout=10\r");
-    ba.append("at+net_commit=1\r");
-    ba.append("at+reconn=1\r");
-#endif
-
     data_rs232.clear();
     is_ready = false;
     emit send(ba);
-}
-//--------------------------------------------------------------------------------
-void MainBox::wait(int max_time_ms)
-{
-    QTime time;
-    time.start();
-    while(time.elapsed() < max_time_ms)
-    {
-        QCoreApplication::processEvents();
-        if(is_ready)
-            break;
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::read_data(QByteArray ba)
-{
-    emit debug("read_data");
-    for(int n=0; n<ba.length(); n++)
-    {
-        char temp = ba.at(n);
-        if(temp == '\r')
-        {
-            is_ready = true;
-            emit debug(QString("%1").arg(data_rs232.data()));
-            data_rs232.clear();
-        }
-        else
-        {
-            data_rs232.append(temp);
-        }
-    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

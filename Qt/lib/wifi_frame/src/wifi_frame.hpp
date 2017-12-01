@@ -43,7 +43,7 @@ public:
                         QWidget *parent);
 
     bool send_at_command(QString cmd,
-                         unsigned int wait_ms = 100,
+                         unsigned int wait_ms = 200,
                          bool no_response = false);
 
 signals:
@@ -90,6 +90,7 @@ private:
     QLineEdit *le_RemoteIP = 0;
     QLineEdit *le_RemotePort = 0;
     QComboBox *cb_EncryptType = 0;
+    QComboBox *cb_speed = 0;
 
     bool is_ready = false;
     QLabel *port_caption = 0;

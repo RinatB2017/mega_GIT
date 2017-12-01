@@ -39,7 +39,7 @@ class LogBox : public QFrame
 
 public:
     explicit LogBox(const QString &o_name,
-                    QWidget *parent = 0,
+                    QWidget *parent,
                     unsigned int min_width  = 1,
                     unsigned int min_height = 1);
     ~LogBox();

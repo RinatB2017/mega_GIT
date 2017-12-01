@@ -29,6 +29,7 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
+#include "serialbox5_lite.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -61,10 +62,10 @@ int main(int argc, char *argv[])
     serial->add_menu(2);
 
     splash->showMessage("init RS-232_5 (2)...");
-    SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
+    SerialBox5_lite *serial2 = new SerialBox5_lite(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
     serial2->add_menu(4);
 
-#if 0
+#if 1
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(serial);
     vbox->addWidget(serial2);

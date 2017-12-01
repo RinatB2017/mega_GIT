@@ -138,7 +138,7 @@ void WIFI_frame::init(void)
 
     server_is_created = false;
 
-    logBox = new LogBox("WiFi");
+    logBox = new LogBox("WiFi", this);
     connect(this,   SIGNAL(info(QString)),  logBox, SLOT(infoLog(QString)));
     connect(this,   SIGNAL(debug(QString)), logBox, SLOT(debugLog(QString)));
     connect(this,   SIGNAL(error(QString)), logBox, SLOT(errorLog(QString)));
@@ -542,11 +542,11 @@ bool WIFI_frame::send_cmd_create_server(bool is_silense)
     if(!ok) return false;
 
     if(!is_silense) emit info("out_trans");
-    ok = send_at_command("at+out_trans=0\r", 100, true);
+    ok = send_at_command("at+out_trans=0\r", 200, true);
     if(!ok) return false;
 
     if(!is_silense) emit info("reconn");
-    ok = send_at_command("at+reconn=1\r", 100, true);
+    ok = send_at_command("at+reconn=1\r", 200, true);
     if(!ok) return false;
 
     return true;
@@ -628,11 +628,11 @@ bool WIFI_frame::send_cmd_create_client(bool is_silense)
     if(!ok) return false;
 
     if(!is_silense) emit info("out_trans");
-    ok = send_at_command("at+out_trans=0\r", 100, true);
+    ok = send_at_command("at+out_trans=0\r", 200, true);
     if(!ok) return false;
 
     if(!is_silense) emit info("reconn");
-    ok = send_at_command("at+reconn=1\r", 100, true);
+    ok = send_at_command("at+reconn=1\r", 200, true);
     if(!ok) return false;
 
     return true;
@@ -690,6 +690,10 @@ QVBoxLayout *WIFI_frame::add_server_cmd_layout(void)
     btn_open = new QPushButton(QObject::tr("open"));
     connect(btn_open, SIGNAL(clicked()), this, SLOT(serial_open()));
 
+    cb_speed = new QComboBox(this);
+    cb_speed->addItem("9600");
+    cb_speed->addItem("115200");
+
     btn_close = new QPushButton(QObject::tr("close"));
     connect(btn_close, SIGNAL(clicked()), this, SLOT(serial_close()));
 
@@ -698,6 +702,7 @@ QVBoxLayout *WIFI_frame::add_server_cmd_layout(void)
     QHBoxLayout *ports_box = new QHBoxLayout();
     ports_box->addWidget(port_caption);
     ports_box->addWidget(cb_ports);
+    ports_box->addWidget(cb_speed);
     ports_box->addWidget(btn_open);
     ports_box->addWidget(btn_close);
 
@@ -730,6 +735,10 @@ QVBoxLayout *WIFI_frame::add_client_cmd_layout(void)
     btn_open = new QPushButton(QObject::tr("open"));
     connect(btn_open, SIGNAL(clicked()), this, SLOT(serial_open()));
 
+    cb_speed = new QComboBox(this);
+    cb_speed->addItem("9600");
+    cb_speed->addItem("115200");
+
     btn_close = new QPushButton(QObject::tr("close"));
     connect(btn_close, SIGNAL(clicked()), this, SLOT(serial_close()));
 
@@ -738,6 +747,7 @@ QVBoxLayout *WIFI_frame::add_client_cmd_layout(void)
     QHBoxLayout *ports_box = new QHBoxLayout();
     ports_box->addWidget(port_caption);
     ports_box->addWidget(cb_ports);
+    ports_box->addWidget(cb_speed);
     ports_box->addWidget(btn_open);
     ports_box->addWidget(btn_close);
 
@@ -765,7 +775,7 @@ void WIFI_frame::update_ports(void)
 //--------------------------------------------------------------------------------
 void WIFI_frame::serial_open(void)
 {
-    int speed = 115200;
+    int speed = cb_speed->currentText().toInt();
     foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
     {
         if(port.portName() == cb_ports->currentText())
@@ -776,7 +786,7 @@ void WIFI_frame::serial_open(void)
             {
                 if(serial.open(QIODevice::ReadWrite))
                 {
-                    emit info(QString(tr("Порт %1 успешно открыт на скорости %2"))
+                    emit info(QString("Порт %1 успешно открыт на скорости %2")
                               .arg(port.portName())
                               .arg(speed));
                     unlock_interface();
@@ -794,6 +804,9 @@ void WIFI_frame::serial_close(void)
         serial.close();
     }
     lock_interface();
+
+    emit info(QString("Порт %1 успешно закрыт")
+              .arg(serial.portName()));
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::lock_interface(void)
@@ -823,6 +836,7 @@ void WIFI_frame::lock_interface(void)
     le_RemotePort->setEnabled(false);
 
     cb_EncryptType->setEnabled(false);
+    cb_speed->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::unlock_interface(void)
@@ -853,6 +867,7 @@ void WIFI_frame::unlock_interface(void)
     le_RemotePort->setEnabled(true);
 
     cb_EncryptType->setEnabled(true);
+    cb_speed->setEnabled(false);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::show_hex_data(QByteArray &data)

@@ -109,7 +109,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    emit info(tr("send data"));
+    emit info("test");
     bool ok = false;
 
 #if 0
@@ -132,6 +132,10 @@ void MainBox::test(void)
 
     wf->serial_open();
 
+    ok = wf->send_at_command("at+ver=?\r");
+    if(ok)  emit info("OK");
+
+#if 1
     ok = wf->send_at_command("at+netmode=1\r");
     if(ok)  emit info("OK");
     ok = wf->send_at_command("at+dhcpc=1\r");
@@ -156,13 +160,14 @@ void MainBox::test(void)
     if(ok)  emit info("OK");
     ok = wf->send_at_command("at+reconn=1\r");
     if(ok)  emit info("OK");
+#endif
 
     wf->serial_close();;
 }
 //--------------------------------------------------------------------------------
 void MainBox::test2(void)
 {
-    emit info(tr("send data"));
+    emit info("test2");
 
 #if 0
     QByteArray ba;

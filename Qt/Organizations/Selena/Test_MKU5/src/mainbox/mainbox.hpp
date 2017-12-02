@@ -34,7 +34,7 @@ namespace Ui {
 class TCP_Client;
 class Settings;
 #ifdef RS232
-class SerialBox;
+class SerialBox5;
 #endif
 class LogBox;
 class Test_RS232_1;
@@ -209,7 +209,7 @@ private:
     TCP_Client *client = 0;
     QByteArray data;
 #ifdef RS232
-    SerialBox *serialBox = 0;
+    SerialBox5 *serialBox = 0;
 #endif
     LogBox *logBox = 0;
     Test_RS232_1 *test_rs232_1 = 0;

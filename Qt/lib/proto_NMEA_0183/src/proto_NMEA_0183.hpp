@@ -15,19 +15,6 @@
 #define ZDA "ZDA"   // время, дата и временная зона.
 //---
 //--------------------------------------------------------------------------------
-enum ERRORS {
-    E_NO_ERROR    = 0,
-    E_ERROR_FORMAT_MESSAGE,
-    E_ERROR_UNKNOWN_MESSAGE,
-    E_ERROR_UNKNOWN_PORT,
-    E_ERROR_UNKNOWN_BAULDRATE,
-    E_ERROR_TYPE_PROTO,
-    E_ERROR_SYSTEM_COORD,
-    E_ERROR_HOUR,
-    E_ERROR_MIN,
-    E_ERROR_SEC,
-    E_ERROR_CHECKSUM
-};
 enum {
     MESSAGE_UNKNOWN = 0,
     MESSAGE_GP_GGA,
@@ -89,6 +76,20 @@ class Proto_NMEA_0183 : public QWidget
 {
     Q_OBJECT
 public:
+    enum {
+        E_NO_ERROR    = 0,
+        E_ERROR_FORMAT_MESSAGE,
+        E_ERROR_UNKNOWN_MESSAGE,
+        E_ERROR_UNKNOWN_PORT,
+        E_ERROR_UNKNOWN_BAULDRATE,
+        E_ERROR_TYPE_PROTO,
+        E_ERROR_SYSTEM_COORD,
+        E_ERROR_HOUR,
+        E_ERROR_MIN,
+        E_ERROR_SEC,
+        E_ERROR_CHECKSUM
+    };
+
     explicit Proto_NMEA_0183(QWidget *parent = 0);
     QString get_checksum(const QString &data);
     int set_port(QString *result,

@@ -41,7 +41,7 @@ class QwtPlotPicker;
 class QwtPlotCurve;
 class QwtPlotItem;
 class QToolButton;
-class SerialBox;
+class SerialBox5;
 class CurveData;
 class QwtLegend;
 class QwtSymbol;

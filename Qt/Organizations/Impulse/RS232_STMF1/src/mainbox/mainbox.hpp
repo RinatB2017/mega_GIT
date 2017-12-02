@@ -30,7 +30,7 @@ namespace Ui {
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QToolBar;
 class ControlBox;

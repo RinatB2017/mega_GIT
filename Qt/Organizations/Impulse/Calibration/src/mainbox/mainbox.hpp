@@ -151,6 +151,44 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
+    enum
+    {
+        E_NO_ERROR = 0x1000,
+        E_ERROR_MULTIMETR,
+        E_ERROR_INDEX_NOT_CORRECT,
+        E_ERROR_PORT_NOT_OPEN,
+        E_ERROR_BREAK,
+        E_ERROR_MAX_REPEAT,
+        E_ERROR_NO_ANSWER,
+        E_ERROR_BIG_ANSWER,
+        E_ERROR_SMALL_ANSWER,
+        E_ERROR_SMALL_PACKET,
+        E_ERROR_BAD_SERNO,
+        E_ERROR_BAD_ADDRESS,
+        E_ERROR_BAD_CRC,
+        E_ERROR_BAD_CMD,
+        E_ERROR_BAD_LEN,
+        E_ERROR_UNKNOWN_CMD,
+        E_ERROR_SIZE_NOT_CORRECT,
+        E_UNKNOWN_ERROR,
+        E_INVALID_FLOAT,
+        E_INVALID_LIMIT,
+        E_INVALID_DELTA,
+        E_BREAK_MEASURING,
+    };
+    enum {
+        TEST_CABLE_OFF = 0,
+        TEST_CABLE_IN,
+        TEST_CABLE_IN_UDC,
+        TEST_CABLE_IN_UAC,
+        TEST_CABLE_mA,
+        TEST_CABLE_mA_IDC,
+        TEST_CABLE_mA_IAC,
+        TEST_CABLE_A,
+        TEST_CABLE_A_IDC,
+        TEST_CABLE_A_IAC
+    };
+
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
     ~MainBox();

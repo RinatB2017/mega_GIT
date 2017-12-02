@@ -25,20 +25,20 @@
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
-#include "ui_serialbox.h"
+#include "serialbox4.hpp"
+#include "ui_serialbox4.h"
 //--------------------------------------------------------------------------------
 #include "serialdeviceenumerator.h"
 #include "abstractserial.h"
 //--------------------------------------------------------------------------------
 #ifdef RS232_SEND
-#include "sendbox.hpp"
+#   include "sendbox4.hpp"
 #endif
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
-SerialBox::SerialBox(QWidget *parent) :
+SerialBox4::SerialBox4(QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::SerialBox),
+    ui(new Ui::SerialBox4),
     parent(parent),
     serial(0),
     caption("no name"),
@@ -48,9 +48,9 @@ SerialBox::SerialBox(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-SerialBox::SerialBox(QWidget *parent, const QString &caption) :
+SerialBox4::SerialBox4(QWidget *parent, const QString &caption) :
     QFrame(parent),
-    ui(new Ui::SerialBox),
+    ui(new Ui::SerialBox4),
     parent(parent),
     caption(caption),
     flag_in_hex(false),
@@ -59,7 +59,7 @@ SerialBox::SerialBox(QWidget *parent, const QString &caption) :
     init();
 }
 //--------------------------------------------------------------------------------
-SerialBox::~SerialBox()
+SerialBox4::~SerialBox4()
 {
 #ifdef RS232_LOG
     delete logBox;
@@ -75,7 +75,7 @@ SerialBox::~SerialBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::connect_log(void)
+void SerialBox4::connect_log(void)
 {
     if(parent)
     {
@@ -93,12 +93,12 @@ void SerialBox::connect_log(void)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox::log(const QString &data)
+void SerialBox4::log(const QString &data)
 {
     qDebug() << data;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::init(void)
+void SerialBox4::init(void)
 {
     ui->setupUi(this);
     connect_log();
@@ -115,7 +115,7 @@ void SerialBox::init(void)
     connect(ui->btn_default, SIGNAL(clicked()), this, SLOT(set_default()));
 }
 //--------------------------------------------------------------------------------
-void SerialBox::createWidgets(void)
+void SerialBox4::createWidgets(void)
 {
     QFont font("Liberation Sans", 8, QFont::Bold);
     ui->captionBox->setFont(font);
@@ -140,7 +140,7 @@ void SerialBox::createWidgets(void)
 #endif
 
 #ifdef RS232_SEND
-    sendBox = new SendBox(this);
+    sendBox = new SendBox4(this);
     connect(sendBox, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
     ui->layout_SEND->addWidget(sendBox);
 #endif
@@ -162,7 +162,7 @@ void SerialBox::createWidgets(void)
 }
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
-void SerialBox::add_frame_text(QFrame *parent,
+void SerialBox4::add_frame_text(QFrame *parent,
                                const QString &text)
 {
     QHBoxLayout *hbox = new QHBoxLayout;
@@ -176,7 +176,7 @@ void SerialBox::add_frame_text(QFrame *parent,
 }
 #endif
 //--------------------------------------------------------------------------------
-void SerialBox::initBoxs()
+void SerialBox4::initBoxs()
 {
     ui->BaudBox->addItems(serial->listBaudRate());
     ui->DataBitsBox->addItems(serial->listDataBits());
@@ -188,20 +188,20 @@ void SerialBox::initBoxs()
 #endif
 }
 //--------------------------------------------------------------------------------
-void SerialBox::initEnumerator()
+void SerialBox4::initEnumerator()
 {
     enumerator = new SerialDeviceEnumerator(this);
     connect(enumerator, SIGNAL(hasChanged(QStringList)), this, SLOT(procEnumerate(QStringList)));
     enumerator->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
-void SerialBox::procEnumerate(const QStringList &l)
+void SerialBox4::procEnumerate(const QStringList &l)
 {
     ui->PortBox->clear();
     ui->PortBox->addItems(l);
 }
 //--------------------------------------------------------------------------------
-void SerialBox::initSerial()
+void SerialBox4::initSerial()
 {
     serial = new AbstractSerial(this);
 
@@ -221,27 +221,27 @@ void SerialBox::initSerial()
 }
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
-void SerialBox::ring_changed(bool state)
+void SerialBox4::ring_changed(bool state)
 {
     state ? frame_ring->setStyleSheet("background:green") : frame_ring->setStyleSheet("");
 }
 #endif
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
-void SerialBox::dsr_changed(bool state)
+void SerialBox4::dsr_changed(bool state)
 {
     state ? frame_dsr->setStyleSheet("background:green") : frame_dsr->setStyleSheet("");
 }
 #endif
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
-void SerialBox::cts_changed(bool state)
+void SerialBox4::cts_changed(bool state)
 {
     state ? frame_cts->setStyleSheet("background:green") : frame_cts->setStyleSheet("");
 }
 #endif
 //--------------------------------------------------------------------------------
-void SerialBox::getStatus(const QString &status, QDateTime current)
+void SerialBox4::getStatus(const QString &status, QDateTime current)
 {
     emit info(QString("%1 %2")
               .arg(status)
@@ -250,37 +250,37 @@ void SerialBox::getStatus(const QString &status, QDateTime current)
     get_parameter();
 }
 //--------------------------------------------------------------------------------
-void SerialBox::setBaudBox(const QString &text)
+void SerialBox4::setBaudBox(const QString &text)
 {
     serial->setBaudRate(text);
     parameter_baud = text;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::setDataBox(const QString &text)
+void SerialBox4::setDataBox(const QString &text)
 {
     serial->setDataBits(text);
     parameter_data = text;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::setParityBox(const QString &text)
+void SerialBox4::setParityBox(const QString &text)
 {
     serial->setParity(text);
     parameter_parity = text;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::setStopBox(const QString &text)
+void SerialBox4::setStopBox(const QString &text)
 {
     serial->setStopBits(text);
     parameter_stop = text;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::setFlowBox(const QString &text)
+void SerialBox4::setFlowBox(const QString &text)
 {
     serial->setFlowControl(text);
     parameter_flow = text;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::setCloseState()
+void SerialBox4::setCloseState()
 {
     ui->PortBox->setEnabled(true);
     ui->BaudBox->setEnabled(false);
@@ -291,7 +291,7 @@ void SerialBox::setCloseState()
     ui->btn_power->setChecked(false);
 }
 //--------------------------------------------------------------------------------
-void SerialBox::setOpenState()
+void SerialBox4::setOpenState()
 {
     ui->PortBox->setEnabled(false);
     ui->BaudBox->setEnabled(true);
@@ -302,7 +302,7 @@ void SerialBox::setOpenState()
     ui->btn_power->setChecked(true);
 }
 //--------------------------------------------------------------------------------
-void SerialBox::btnOpenPortClicked()
+void SerialBox4::btnOpenPortClicked()
 {
     int idx;
 
@@ -352,7 +352,7 @@ void SerialBox::btnOpenPortClicked()
     }
 }
 //--------------------------------------------------------------------------------
-int SerialBox::input(const QByteArray &sending_data)
+int SerialBox4::input(const QByteArray &sending_data)
 {
     // qDebug() << data;
     // emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
@@ -378,7 +378,7 @@ int SerialBox::input(const QByteArray &sending_data)
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-int SerialBox::input(const QString &data)
+int SerialBox4::input(const QString &data)
 {
     if(data.isEmpty() == false)
     {
@@ -407,7 +407,7 @@ int SerialBox::input(const QString &data)
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::procSerialDataReceive()
+void SerialBox4::procSerialDataReceive()
 {
     if(!serial)
     {
@@ -420,7 +420,7 @@ void SerialBox::procSerialDataReceive()
     emit output(serial->readAll());
 }
 //--------------------------------------------------------------------------------
-QString SerialBox::ByteArrayToHex(const QByteArray &data)
+QString SerialBox4::ByteArrayToHex(const QByteArray &data)
 {
 #if 0
     QByteArray temp_addr;
@@ -464,7 +464,7 @@ QString SerialBox::ByteArrayToHex(const QByteArray &data)
 #endif
 }
 //--------------------------------------------------------------------------------
-void SerialBox::sendData(const QByteArray &sending_data)
+void SerialBox4::sendData(const QByteArray &sending_data)
 {
     //qDebug() << "sendData[" << sending_data.toHex() << "]";
     if(flag_byte_by_byte)
@@ -482,7 +482,7 @@ void SerialBox::sendData(const QByteArray &sending_data)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox::drawData(const QByteArray &data)
+void SerialBox4::drawData(const QByteArray &data)
 {
     // qDebug() << "drawData[" << data << "]";
 #ifdef RS232_LOG
@@ -506,7 +506,7 @@ void SerialBox::drawData(const QByteArray &data)
 #endif
 }
 //--------------------------------------------------------------------------------
-void SerialBox::updateText(void)
+void SerialBox4::updateText(void)
 {
 #ifdef RS232_LOG
     logBox->updateText();
@@ -517,7 +517,7 @@ void SerialBox::updateText(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void SerialBox::changeEvent(QEvent *e)
+void SerialBox4::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type())
@@ -532,12 +532,12 @@ void SerialBox::changeEvent(QEvent *e)
     }
 }
 //--------------------------------------------------------------------------------
-bool SerialBox::isOpen(void)
+bool SerialBox4::isOpen(void)
 {
     return serial->isOpen();
 }
 //--------------------------------------------------------------------------------
-bool SerialBox::add_menu(int index)
+bool SerialBox4::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     if(!mw) return false;
@@ -564,7 +564,7 @@ bool SerialBox::add_menu(int index)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool SerialBox::add_menu(int index, const QString &title)
+bool SerialBox4::add_menu(int index, const QString &title)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     if(!mw) return false;
@@ -591,19 +591,19 @@ bool SerialBox::add_menu(int index, const QString &title)
     return true;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::set_flag_in_hex(bool state)
+void SerialBox4::set_flag_in_hex(bool state)
 {
     // emit debug(QString("state is %1").arg(state ? "true" : "false"));
     flag_in_hex = state;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::set_flag_byte_by_byte(bool state)
+void SerialBox4::set_flag_byte_by_byte(bool state)
 {
     // emit debug(QString("state is %1").arg(state ? "true" : "false"));
     flag_byte_by_byte = state;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::set_default(void)
+void SerialBox4::set_default(void)
 {
     if(serial->isOpen())
     {
@@ -623,7 +623,7 @@ void SerialBox::set_default(void)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox::get_parameter(void)
+void SerialBox4::get_parameter(void)
 {
     if(serial->isOpen() == false)
     {
@@ -647,19 +647,19 @@ void SerialBox::get_parameter(void)
     emit info(temp);
 }
 //--------------------------------------------------------------------------------
-QPushButton *SerialBox::add_QPushButton(const QString &title)
+QPushButton *SerialBox4::add_QPushButton(const QString &title)
 {
     QPushButton *btn = new QPushButton(title);
     ui->buttons_layout->addWidget(btn);
     return btn;
 }
 //--------------------------------------------------------------------------------
-void SerialBox::add_QHBoxLayout(QHBoxLayout * hbox)
+void SerialBox4::add_QHBoxLayout(QHBoxLayout * hbox)
 {
     ui->buttons_layout->addLayout(hbox);
 }
 //--------------------------------------------------------------------------------
-QByteArray SerialBox::readAll(void)
+QByteArray SerialBox4::readAll(void)
 {
     return serial->readAll();
 }

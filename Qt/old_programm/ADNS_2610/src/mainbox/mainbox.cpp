@@ -35,7 +35,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "screen.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox(this, "RS232");
+    serialBox = new SerialBox5(this, "RS232", "RS232");
     serialBox->add_menu(2);
 
     data_rs232.clear();

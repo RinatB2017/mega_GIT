@@ -39,7 +39,7 @@ win32 {
 LIB_PATH = "../../../lib"
 
 include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH/serial/serial.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/turbo.pri)

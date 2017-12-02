@@ -35,7 +35,7 @@
 #include "mysplashscreen.hpp"
 #include "grapherbox.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -59,7 +59,7 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox(this, "RS232");
+    serialBox = new SerialBox5(this, "RS232", "RS232");
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);

@@ -30,7 +30,7 @@ namespace Ui {
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class Generator_Curve;
-class SerialBox;
+class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -47,7 +47,7 @@ private:
     Ui::MainBox *ui = 0;
 
     Generator_Curve *generator = 0;
-    SerialBox *serial = 0;
+    SerialBox5 *serial = 0;
 
     void init(void);
 

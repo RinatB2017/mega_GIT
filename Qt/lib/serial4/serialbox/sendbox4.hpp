@@ -31,13 +31,13 @@ class QLineEdit;
 class QComboBox;
 class QCheckBox;
 //--------------------------------------------------------------------------------
-class SendBox : public QFrame
+class SendBox4 : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit SendBox(QWidget *parent = 0);
-    ~SendBox();
+    explicit SendBox4(QWidget *parent = 0);
+    ~SendBox4();
 
     void updateText(void);
 

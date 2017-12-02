@@ -36,7 +36,7 @@ class QToolButton;
 class QToolBar;
 
 class GrapherBox;
-class SerialBox;
+class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public QWidget
 {
@@ -91,7 +91,7 @@ private:
     bool test_flag;
 
     GrapherBox *grapher;
-    SerialBox *serial;
+    SerialBox5 *serial;
     QByteArray *serial_data;
 
     ftdi_context ftdi;

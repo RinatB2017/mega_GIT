@@ -45,9 +45,16 @@ class SerialBox5 : public QFrame
     Q_OBJECT
 
 public:
+    enum
+    {
+        E_NO_ERROR = 0,
+        E_PORT_NOT_INIT,
+        E_PORT_NOT_OPEN
+    };
+
     explicit SerialBox5(QWidget *parent,
                         const QString &caption,
-                        const QString &o_name);
+                        const QString &o_name = "SerialBox5");
     explicit SerialBox5(QWidget *parent = 0);
     ~SerialBox5();
 

@@ -36,7 +36,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -62,7 +62,7 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox(this, "RS232");
+    serialBox = new SerialBox5(this, "RS232", "RS232");
 
     ui->serial_layout->addWidget(serialBox);
     ui->serial_layout->addStretch();
@@ -254,7 +254,7 @@ void MainBox::command_AT(void)
     is_ready = false;
 
     int err = serialBox->input(get_command_string("AT"));
-    if(err != SerialBox::E_NO_ERROR)
+    if(err != SerialBox5::E_NO_ERROR)
     {
         emit error(QString("err = %1").arg(err));
         return;

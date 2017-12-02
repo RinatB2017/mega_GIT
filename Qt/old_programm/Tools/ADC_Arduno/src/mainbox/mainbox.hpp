@@ -75,7 +75,7 @@ typedef struct {
     uint8_t  count_channel;  // кол-во каналов
 } HEADER;
 //--------------------------------------------------------------------------------
-class SerialBox;
+class SerialBox5;
 class GrapherBox;
 class Plot;
 //--------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ private:
     GrapherBox *grapher = 0;
     QList<int> curves;
 
-    SerialBox *serial = 0;
+    SerialBox5 *serial = 0;
     QByteArray dirty_data;
     QByteArray clean_data;
 

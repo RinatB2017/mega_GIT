@@ -30,7 +30,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QToolBar;
 class ControlBox;

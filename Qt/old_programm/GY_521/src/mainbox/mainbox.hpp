@@ -30,7 +30,7 @@ namespace Ui {
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QToolBar;
 class GrapherBox;
@@ -55,7 +55,7 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox *serialBox = 0;
+    SerialBox5 *serialBox = 0;
 
     QByteArray data_rs232;
 

@@ -76,19 +76,6 @@
 #include "defines.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
-enum {
-    TEST_CABLE_OFF = 0,
-    TEST_CABLE_IN,
-    TEST_CABLE_IN_UDC,
-    TEST_CABLE_IN_UAC,
-    TEST_CABLE_mA,
-    TEST_CABLE_mA_IDC,
-    TEST_CABLE_mA_IAC,
-    TEST_CABLE_A,
-    TEST_CABLE_A_IDC,
-    TEST_CABLE_A_IAC
-};
-//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),

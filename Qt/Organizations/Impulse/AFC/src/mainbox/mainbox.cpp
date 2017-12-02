@@ -33,7 +33,7 @@
 #include "v786_2_packets.hpp"
 #include "v786_2_union.hpp"
 //--------------------------------------------------------------------------------
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 //--------------------------------------------------------------------------------
 #include "H4_X_calibrator.hpp"
 //--------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ void MainBox::init(void)
     grapher->add_curve(tr("Данные"));
     grapher->add_curve(tr("Идеал"));
 
-    serialPort_calibrator = new SerialBox(this, tr("Калибратор (RS-232)"));
+    serialPort_calibrator = new SerialBox5(this, "Калибратор (RS-232)", "Калибратор (RS-232)");
 
     calibrator = new Calibrator(this);
     multimeter = new Multimeter_V786_2(this);

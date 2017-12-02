@@ -33,7 +33,7 @@
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
@@ -116,7 +116,7 @@ void MainBox::createTimer(void)
 //--------------------------------------------------------------------------------
 void MainBox::createSerial(void)
 {
-    serial = new SerialBox(this, tr("RS-232"));
+    serial = new SerialBox5(this, tr("RS-232"));
     ui->layout_serial->addWidget(serial);
 
     connect(this, SIGNAL(send_data(QString)), serial, SLOT(input(QString)));

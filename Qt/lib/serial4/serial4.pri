@@ -9,14 +9,14 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    sendbox.hpp \
-    serialbox.hpp
+    sendbox4.hpp \
+    serialbox4.hpp
 
 SOURCES += \
-    sendbox.cpp \
-    serialbox.cpp
+    sendbox4.cpp \
+    serialbox4.cpp
 
-FORMS += serialbox.ui
+FORMS += serialbox4.ui
 
 #TODO: here in future replace
 contains( CONFIG, dll ) {

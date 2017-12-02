@@ -163,14 +163,14 @@ void MultimeterBox::init(void)
     ui->cb_measurement->addItem(tr("Измерение полной мощности"), QVariant(Qt::UserRole + V764_2_CMD_0x11));
     ui->cb_measurement->addItem(tr("Измерение коэффициента мощности"), QVariant(Qt::UserRole + V764_2_CMD_0x12));
 
-    ui->cb_retention->addItem(tr("Удержания нет"), QVariant(Qt::UserRole + RETENTION_0));
-    ui->cb_retention->addItem(tr("Удержание текущего значения"), QVariant(Qt::UserRole + RETENTION_1));
-    ui->cb_retention->addItem(tr("Удержание минимального значения"), QVariant(Qt::UserRole + RETENTION_2));
-    ui->cb_retention->addItem(tr("Удержание максимального значения"), QVariant(Qt::UserRole + RETENTION_3));
+    ui->cb_retention->addItem(tr("Удержания нет"), QVariant(Qt::UserRole + Multimeter_V786_2::RETENTION_0));
+    ui->cb_retention->addItem(tr("Удержание текущего значения"), QVariant(Qt::UserRole + Multimeter_V786_2::RETENTION_1));
+    ui->cb_retention->addItem(tr("Удержание минимального значения"), QVariant(Qt::UserRole + Multimeter_V786_2::RETENTION_2));
+    ui->cb_retention->addItem(tr("Удержание максимального значения"), QVariant(Qt::UserRole + Multimeter_V786_2::RETENTION_3));
 
-    ui->cb_deviation->addItem(tr("Вычисление не производится"), QVariant(Qt::UserRole + DEVIATION_0));
-    ui->cb_deviation->addItem(tr("Вычисление абсолютного отклонения"), QVariant(Qt::UserRole + DEVIATION_1));
-    ui->cb_deviation->addItem(tr("Вычисление относительного отклонения в %"), QVariant(Qt::UserRole + DEVIATION_2));
+    ui->cb_deviation->addItem(tr("Вычисление не производится"), QVariant(Qt::UserRole + Multimeter_V786_2::DEVIATION_0));
+    ui->cb_deviation->addItem(tr("Вычисление абсолютного отклонения"), QVariant(Qt::UserRole + Multimeter_V786_2::DEVIATION_1));
+    ui->cb_deviation->addItem(tr("Вычисление относительного отклонения в %"), QVariant(Qt::UserRole + Multimeter_V786_2::DEVIATION_2));
 
     ui->sb_Address->setMinimum(0);
     ui->sb_Address->setMaximum(255);

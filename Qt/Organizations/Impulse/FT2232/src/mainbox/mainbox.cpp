@@ -34,7 +34,7 @@
 //--------------------------------------------------------------------------------
 #include "qhexedit.h"
 #include "grapherbox.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -112,7 +112,7 @@ void MainBox::init(void)
 
 #ifdef SERIAL
     serial_data = new QByteArray;
-    serial = new SerialBox(this, "Arduido");
+    serial = new SerialBox5(this, "Arduido", "Arduido");
     connect(serial, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
 
     ui->serial_layout->addWidget(serial);

@@ -46,7 +46,7 @@ union DECADES
   decades;
 };
 //--------------------------------------------------------------------------------
-class SerialBox;
+class SerialBox5;
 class GrapherBox;
 class Plot;
 //--------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ private:
     QWidget *parent = 0;
 
     GrapherBox *grapher = 0;
-    SerialBox *serial = 0;
+    SerialBox5 *serial = 0;
     QByteArray dirty_data;
 
     void init(void);

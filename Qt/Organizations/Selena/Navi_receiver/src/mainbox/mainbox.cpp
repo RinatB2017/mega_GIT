@@ -161,7 +161,7 @@ void MainBox::read_data(QByteArray ba)
 void MainBox::analize(void)
 {
     int err = proto->check_message(data_rs232.data());
-    if(err != E_NO_ERROR)
+    if(err != Proto_NMEA_0183::E_NO_ERROR)
     {
         proto->print_error(data_rs232, err);
         return;

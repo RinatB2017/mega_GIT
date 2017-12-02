@@ -28,7 +28,7 @@
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "logbox.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ MainBox::~MainBox()
 void MainBox::init_log(void)
 {
 #ifdef RS232
-    serialBox = new SerialBox(this, tr("RS-232"));
+    serialBox = new SerialBox5(this, tr("RS-232"));
     ui->layout_serial->addWidget(serialBox);
 #endif
 

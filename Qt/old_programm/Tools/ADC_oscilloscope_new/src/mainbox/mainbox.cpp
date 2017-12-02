@@ -21,7 +21,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 //--------------------------------------------------------------------------------
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "grapherbox.hpp"
 #include "ui_mainbox.h"
 #include "mainbox.hpp"
@@ -44,7 +44,7 @@ void MainBox::init()
     //y[n] = double(308.0)*qSin(double(n)*double(M_PI)/double(180.0));;
     ui->setupUi(this);
 
-    serial = new SerialBox(this, tr("RS-232"));
+    serial = new SerialBox5(this, tr("RS-232"));
     connect(serial, SIGNAL(output(QByteArray)), this, SLOT(raw_data(QByteArray)));
 
     grapher = new GrapherBox(this);

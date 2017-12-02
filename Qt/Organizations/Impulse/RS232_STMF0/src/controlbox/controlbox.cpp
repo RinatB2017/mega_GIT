@@ -33,7 +33,7 @@
 #include <QLabel>
 //--------------------------------------------------------------------------------
 #include "grapherbox.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "controlbox.hpp"
 #include "sleeper.h"
 #include "ui_controlbox.h"
@@ -161,8 +161,8 @@ void ControlBox::create_timer(void)
 //--------------------------------------------------------------------------------
 void ControlBox::create_serial_widgets(void)
 {
-    stm32 = new SerialBox(this, "STM32F0 (USB1)");
-    calibrator = new SerialBox(this, "H4-6");
+    stm32 = new SerialBox5(this, "STM32F0 (USB1)", "STM32F0 (USB1)");
+    calibrator = new SerialBox5(this, "H4-6", "H4-6");
 
     connect(this, SIGNAL(send_to_serial(QByteArray)), stm32, SLOT(input(QByteArray)));
     connect(stm32, SIGNAL(output(QByteArray)), this, SLOT(read_data_serialBox(QByteArray)));

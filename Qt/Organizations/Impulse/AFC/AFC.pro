@@ -45,7 +45,7 @@ win32 {
 LIB_PATH = "../../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/meta/grapherbox.pri)
-include ($$LIB_PATH/serial/serial.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
 include ($$LIB_PATH/crc/crc.pri)
 
 include (../lib/measuring/multimeter_v786_2/multimeter_v786_2.pri)

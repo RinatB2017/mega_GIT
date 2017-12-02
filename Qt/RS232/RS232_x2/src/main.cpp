@@ -28,7 +28,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -56,11 +56,11 @@ int main(int argc, char *argv[])
     QFrame *frame = new QFrame;
 
     splash->showMessage(QObject::tr("init RS-232 (1)..."));
-    SerialBox *serial = new SerialBox(main_window->getThis(), "RS-232 (1)");
+    SerialBox5 *serial = new SerialBox5(main_window->getThis(), "RS-232 (1)");
     serial->add_menu(2, QObject::tr("Настройка RS-232 (1)"));
 
     splash->showMessage(QObject::tr("init RS-232 (2)..."));
-    SerialBox *serial2 = new SerialBox(main_window->getThis(), "RS-232 (2)");
+    SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232 (2)");
     serial2->add_menu(3, QObject::tr("Настройка RS-232 (2)"));
 
 #if 0

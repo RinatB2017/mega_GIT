@@ -92,7 +92,7 @@ class QHBoxLayout;
 class QGridLayout;
 class QPushButton;
 class GrapherBox;
-class SerialBox;
+class SerialBox5;
 class QLCDNumber;
 class QGroupBox;
 class QCheckBox;
@@ -176,8 +176,8 @@ private:
     QWidget *parent = 0;
 
     GrapherBox *grapher = 0;
-    SerialBox *stm32 = 0;
-    SerialBox *calibrator = 0;
+    SerialBox5 *stm32 = 0;
+    SerialBox5 *calibrator = 0;
 
     QLCDNumber *display = 0;
 

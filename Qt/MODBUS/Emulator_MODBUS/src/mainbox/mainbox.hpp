@@ -33,7 +33,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QComboBox;
 class QLineEdit;
@@ -78,7 +78,7 @@ private Q_SLOTS:
 private:
     MySplashScreen *splash;
     Ui::MainBox *ui;
-    SerialBox *serialBox;
+    SerialBox5 *serialBox;
 
     void init(void);
 

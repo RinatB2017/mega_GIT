@@ -69,7 +69,7 @@ union CMD_0x01_ANSWER
 };
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QToolBar;
 //--------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox *serialBox = 0;
+    SerialBox5 *serialBox = 0;
 
     QByteArray clean_data;
 

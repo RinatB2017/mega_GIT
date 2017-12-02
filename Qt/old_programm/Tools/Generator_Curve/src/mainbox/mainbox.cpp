@@ -27,7 +27,7 @@
 //--------------------------------------------------------------------------------
 #include "generator_curve.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
@@ -59,7 +59,7 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     generator = new Generator_Curve(this);
-    serial = new SerialBox(this, tr("RS-232"));
+    serial = new SerialBox5(this, tr("RS-232"));
 
     ui->layout_generator->addWidget(generator);
     ui->layout_serial->addWidget(serial);

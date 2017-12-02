@@ -68,7 +68,7 @@ enum {
 };
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QComboBox;
 class QToolBar;
@@ -131,7 +131,7 @@ private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 
-    SerialBox *serialBox = 0;
+    SerialBox5 *serialBox = 0;
     QLineEdit *le_name = 0;
 
     QByteArray data_rs232;

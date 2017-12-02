@@ -30,7 +30,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class SerialBox;
+class SerialBox5;
 class QTimer;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -59,7 +59,7 @@ private slots:
 private:
     Ui::MainBox *ui = 0;
     QWidget *parent = 0;
-    SerialBox *serial = 0;
+    SerialBox5 *serial = 0;
     QTimer *timer = 0;
     int index = 0;
 

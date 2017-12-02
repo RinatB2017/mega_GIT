@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SERIALBOX_HPP
-#define SERIALBOX_HPP
+#ifndef SERIALBOX4_HPP
+#define SERIALBOX4_HPP
 //--------------------------------------------------------------------------------
 #include <QByteArray>
 #include <QDateTime>
@@ -32,28 +32,28 @@ class AbstractSerial;
 class QHBoxLayout;
 class QPushButton;
 class LogBox;
-class SendBox;
+class SendBox4;
 //--------------------------------------------------------------------------------
 namespace Ui
 {
-    class SerialBox;
+    class SerialBox4;
 }
 //--------------------------------------------------------------------------------
-class SerialBox : public QFrame
+class SerialBox4 : public QFrame
 {
     Q_OBJECT
 
 public:
-    typedef enum
+    enum
     {
         E_NO_ERROR = 0,
         E_PORT_NOT_INIT,
         E_PORT_NOT_OPEN
-    } ERRORS;
+    };
 
-    explicit SerialBox(QWidget *parent, const QString &caption);
-    explicit SerialBox(QWidget *parent = 0);
-    ~SerialBox();
+    explicit SerialBox4(QWidget *parent, const QString &caption);
+    explicit SerialBox4(QWidget *parent = 0);
+    ~SerialBox4();
 
     bool isOpen(void);
     void updateText(void);
@@ -67,7 +67,7 @@ public:
     QByteArray readAll(void);
 
 private:
-    Ui::SerialBox *ui = 0;
+    Ui::SerialBox4 *ui = 0;
     QWidget *parent = 0;
     SerialDeviceEnumerator *enumerator = 0;
     AbstractSerial *serial = 0;
@@ -87,7 +87,7 @@ private:
 #endif
 
 #ifdef RS232_SEND
-    SendBox *sendBox = 0;
+    SendBox4 *sendBox = 0;
 #endif
 
 #ifndef RS232_NO_FRAME

@@ -38,7 +38,7 @@ class QToolBar;
 class QMenu;
 
 class GrapherBox;
-class SerialBox;
+class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public QWidget
 {
@@ -98,7 +98,7 @@ private:
 
     GrapherBox *grapher;
 #ifdef SERIAL
-    SerialBox *serial;
+    SerialBox5 *serial;
     QByteArray *serial_data;
 #endif
 

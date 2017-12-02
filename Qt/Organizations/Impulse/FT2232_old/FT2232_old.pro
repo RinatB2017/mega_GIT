@@ -72,7 +72,7 @@ include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH/csvreader/csvreader.pri)
-include ($$LIB_PATH/serial/serial.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
 include ($$LIB_PATH/qwt/qwt.pri)
 
 #include (src/mpsse/mpsse.pri)

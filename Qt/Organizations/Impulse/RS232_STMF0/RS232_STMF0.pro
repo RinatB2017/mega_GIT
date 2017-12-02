@@ -53,7 +53,7 @@ LIB_PATH = "../../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH/csvreader/csvreader.pri)
-include ($$LIB_PATH/serial/serial.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
 include ($$LIB_PATH/time/time.pri)
 include ($$LIB_PATH/qwt/qwt.pri)
 

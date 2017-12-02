@@ -30,7 +30,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class SerialBox;
+class SerialBox5;
 class GrapherBox;
 class Plot;
 //--------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ private:
     int curve_ch1 = 0;
     int curve_ch2 = 0;
 
-    SerialBox *serial = 0;
+    SerialBox5 *serial = 0;
     QByteArray dirty_data;
     QByteArray clean_data;
 

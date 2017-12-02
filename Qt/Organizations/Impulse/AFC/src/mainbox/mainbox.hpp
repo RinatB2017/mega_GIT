@@ -74,7 +74,7 @@ class QPushButton;
 class QToolButton;
 class GrapherBox;
 class QComboBox;
-class SerialBox;
+class SerialBox5;
 class QSpinBox;
 class QToolBar;
 //--------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ private:
     GrapherBox *grapher = 0;
     Calibrator *calibrator = 0;
     Multimeter_V786_2 *multimeter = 0;
-    SerialBox *serialPort_calibrator = 0;
+    SerialBox5 *serialPort_calibrator = 0;
 
     QSerialPort serial_radiomodule;
     QPushButton *btn_find_multimeter = 0;

@@ -30,7 +30,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox4;
 class QToolButton;
 class QToolBar;
 //--------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox *serialBox = 0;
+    SerialBox4 *serialBox = 0;
     QByteArray data_rs232;
     bool is_ready;
     unsigned char test_byte;

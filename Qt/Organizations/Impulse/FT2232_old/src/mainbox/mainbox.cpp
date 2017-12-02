@@ -34,7 +34,7 @@
 //--------------------------------------------------------------------------------
 #include "qhexedit.h"
 #include "grapherbox.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -108,7 +108,7 @@ void MainBox::init(void)
     grapher->set_title_axis_Y("Напряжение");
 
     serial_data = new QByteArray;
-    serial = new SerialBox(this, "Arduino");
+    serial = new SerialBox5(this, "Arduino", "Arduino");
     connect(serial, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
 
     QHBoxLayout *hbox = new QHBoxLayout();

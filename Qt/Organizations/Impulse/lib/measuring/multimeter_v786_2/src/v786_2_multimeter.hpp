@@ -33,45 +33,6 @@
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
 //--------------------------------------------------------------------------------
-enum
-{
-    E_NO_ERROR = 0x1000,
-    E_ERROR_MULTIMETR,
-    E_ERROR_INDEX_NOT_CORRECT,
-    E_ERROR_PORT_NOT_OPEN,
-    E_ERROR_BREAK,
-    E_ERROR_MAX_REPEAT,
-    E_ERROR_NO_ANSWER,
-    E_ERROR_BIG_ANSWER,
-    E_ERROR_SMALL_ANSWER,
-    E_ERROR_SMALL_PACKET,
-    E_ERROR_BAD_SERNO,
-    E_ERROR_BAD_ADDRESS,
-    E_ERROR_BAD_CRC,
-    E_ERROR_BAD_CMD,
-    E_ERROR_BAD_LEN,
-    E_ERROR_UNKNOWN_CMD,
-    E_ERROR_SIZE_NOT_CORRECT,
-    E_UNKNOWN_ERROR,
-    E_INVALID_FLOAT,
-    E_INVALID_LIMIT,
-    E_INVALID_DELTA,
-    E_BREAK_MEASURING,
-};
-enum
-{
-    RETENTION_0 = 0,
-    RETENTION_1 = 1,
-    RETENTION_2 = 2,
-    RETENTION_3 = 3
-};
-enum
-{
-    DEVIATION_0 = 0,
-    DEVIATION_1 = 1,
-    DEVIATION_2 = 2
-};
-//--------------------------------------------------------------------------------
 union BYTE_MEASURING
 {
     unsigned char value;
@@ -268,6 +229,45 @@ class Multimeter_V786_2 : public QObject
     Q_OBJECT
 
 public:
+    enum
+    {
+        E_NO_ERROR = 0x1000,
+        E_ERROR_MULTIMETR,
+        E_ERROR_INDEX_NOT_CORRECT,
+        E_ERROR_PORT_NOT_OPEN,
+        E_ERROR_BREAK,
+        E_ERROR_MAX_REPEAT,
+        E_ERROR_NO_ANSWER,
+        E_ERROR_BIG_ANSWER,
+        E_ERROR_SMALL_ANSWER,
+        E_ERROR_SMALL_PACKET,
+        E_ERROR_BAD_SERNO,
+        E_ERROR_BAD_ADDRESS,
+        E_ERROR_BAD_CRC,
+        E_ERROR_BAD_CMD,
+        E_ERROR_BAD_LEN,
+        E_ERROR_UNKNOWN_CMD,
+        E_ERROR_SIZE_NOT_CORRECT,
+        E_UNKNOWN_ERROR,
+        E_INVALID_FLOAT,
+        E_INVALID_LIMIT,
+        E_INVALID_DELTA,
+        E_BREAK_MEASURING,
+    };
+    enum
+    {
+        RETENTION_0 = 0,
+        RETENTION_1 = 1,
+        RETENTION_2 = 2,
+        RETENTION_3 = 3
+    };
+    enum
+    {
+        DEVIATION_0 = 0,
+        DEVIATION_1 = 1,
+        DEVIATION_2 = 2
+    };
+
     explicit Multimeter_V786_2(QObject *parent = 0);
     ~Multimeter_V786_2();
 

@@ -5,6 +5,7 @@ enum
 {
     E_CALIBRATOR_NO_ERROR = 0,
     E_CALIBRATOR_PORT_NOT_OPEN,
+    E_CALIBRATOR_BREAK,
     E_CALIBRATOR_ERROR
 };
 //--------------------------------------------------------------------------------

@@ -31,10 +31,10 @@
 #include <QFrame>
 #include <QDebug>
 //--------------------------------------------------------------------------------
-#include "sendbox.hpp"
+#include "sendbox4.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-SendBox::SendBox(QWidget *parent) :
+SendBox4::SendBox4(QWidget *parent) :
     QFrame(parent)
 {
     if(parent)
@@ -98,12 +98,12 @@ SendBox::SendBox(QWidget *parent) :
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
 //--------------------------------------------------------------------------------
-SendBox::~SendBox()
+SendBox4::~SendBox4()
 {
 
 }
 //--------------------------------------------------------------------------------
-void SendBox::send_text(void)
+void SendBox4::send_text(void)
 {
     QString data;
     QByteArray ba;
@@ -145,7 +145,7 @@ void SendBox::send_text(void)
     emit sendData(ba);
 }
 //--------------------------------------------------------------------------------
-void SendBox::send_bin(void)
+void SendBox4::send_bin(void)
 {
     QByteArray input_data;
     QByteArray output_data;
@@ -178,7 +178,7 @@ void SendBox::send_bin(void)
     emit sendData(output_data);
 }
 //--------------------------------------------------------------------------------
-void SendBox::updateText(void)
+void SendBox4::updateText(void)
 {
     btn_send_text->setText(tr("send"));
     btn_send_bin->setText(tr("send"));

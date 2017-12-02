@@ -57,12 +57,10 @@ public:
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
 
-    QPushButton *add_QPushButton(const QString &title);
-    void add_QHBoxLayout(QHBoxLayout *hbox);
-
     QByteArray readAll(void);
 
-    void set_caption(QString value);
+    qint64 bytesAvailable(void);
+    qint64 write ( const char *data );
 
 private:
     Ui::SerialBox5_lite *ui = 0;
@@ -73,14 +71,6 @@ private:
 
     bool flag_in_hex = false;
     bool flag_byte_by_byte = false;
-
-#ifdef RS232_LOG
-    LogBox  *logBox = 0;
-#endif
-
-#ifdef RS232_SEND
-    SendBox5 *sendBox5 = 0;
-#endif
 
     QTimer *timer = 0;
 
@@ -104,7 +94,14 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
+    void readyRead(void);
+    void readChannelFinished(void);
+    void error(QSerialPort::SerialPortError);
+
     void output(const QByteArray &data);
+
+    void is_open(void);
+    void is_close(void);
 
 public slots:
     int input(const QByteArray &sending_data);

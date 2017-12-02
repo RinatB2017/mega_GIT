@@ -33,6 +33,7 @@
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
+#include "serialbox5_lite.hpp"
 #include "wifi_frame.hpp"
 #include "qhexedit.h"
 #include "logbox.hpp"
@@ -74,14 +75,20 @@ void WIFI_frame::log(const QString &data)
 //--------------------------------------------------------------------------------
 void WIFI_frame::connect_serial(void)
 {
-    if(is_server)
-        connect(&serial, SIGNAL(readyRead()), this, SLOT(server_port_read()));
-    else
-        connect(&serial, SIGNAL(readyRead()), this, SLOT(client_port_read()));
+    serial = new SerialBox5_lite;
+    //serial->setFixedHeight(serial->sizeHint().height());
 
-    connect(&serial, SIGNAL(readChannelFinished()), this, SLOT(readChannelFinished()));
-    connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)),
-            this,    SLOT(port_error(QSerialPort::SerialPortError)));
+    connect(serial, SIGNAL(is_open()),  this,   SLOT(unlock_interface()));
+    connect(serial, SIGNAL(is_close()), this,   SLOT(lock_interface()));
+
+    if(is_server)
+        connect(serial, SIGNAL(readyRead()), this, SLOT(server_port_read()));
+    else
+        connect(serial, SIGNAL(readyRead()), this, SLOT(client_port_read()));
+
+    connect(serial, SIGNAL(readChannelFinished()), this, SLOT(readChannelFinished()));
+    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)),
+            this,   SLOT(port_error(QSerialPort::SerialPortError)));
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::readChannelFinished(void)
@@ -146,10 +153,11 @@ void WIFI_frame::init(void)
 
     QVBoxLayout *main_layout = new QVBoxLayout();
 
+    main_layout->addWidget(serial);
     if(is_server)
-        main_layout->addLayout(add_server_cmd_layout());
+            main_layout->addLayout(add_server_cmd_layout());
     else
-        main_layout->addLayout(add_client_cmd_layout());
+    main_layout->addLayout(add_client_cmd_layout());
 
     btn_read_settings = new QPushButton(tr("read settings"));
     connect(btn_read_settings, SIGNAL(clicked()), this, SLOT(read_settings()));
@@ -176,17 +184,17 @@ void WIFI_frame::server_port_read(void)
     //emit debug(QString("server_is_created %1").arg(server_is_created ? "true" : "false"));
     if(server_is_created)
     {
-        serial_data.append(serial.readAll());
+        serial_data.append(serial->readAll());
     }
     else
     {
-        while(serial.bytesAvailable())
+        while(serial->bytesAvailable())
         {
             QCoreApplication::processEvents();
-            //emit info(QString("bytesAvailable = %1").arg(serial.bytesAvailable()));
-            serial_data.append(serial.readAll());
-            //serial_data.append(serial.read(1));
-            //serial.waitForReadyRead(300);
+            //emit info(QString("bytesAvailable = %1").arg(serial->bytesAvailable()));
+            serial_data.append(serial->readAll());
+            //serial_data.append(serial->read(1));
+            //serial->waitForReadyRead(300);
         }
         emit debug(QString(tr("receive: %1")).arg(serial_data.data()));
         send_command("Don't worry, be happy!");
@@ -195,12 +203,12 @@ void WIFI_frame::server_port_read(void)
 //--------------------------------------------------------------------------------
 void WIFI_frame::client_port_read(void)
 {
-    //serial.waitForReadyRead(100);
-    while(serial.bytesAvailable())
+    //serial->waitForReadyRead(100);
+    while(serial->bytesAvailable())
     {
         QCoreApplication::processEvents();
-        //emit info(QString("bytesAvailable = %1").arg(serial.bytesAvailable()));
-        serial_data.append(serial.readAll());
+        //emit info(QString("bytesAvailable = %1").arg(serial->bytesAvailable()));
+        serial_data.append(serial->readAll());
     }
     //is_ready = true;
 }
@@ -389,7 +397,7 @@ bool WIFI_frame::send_at_command(QString cmd,
                                  unsigned int wait_ms,
                                  bool no_response)
 {
-    if(serial.isOpen() == false)
+    if(serial->isOpen() == false)
     {
         emit error(tr("Port not open!"));
         return false;
@@ -401,7 +409,7 @@ bool WIFI_frame::send_at_command(QString cmd,
 
     serial_data.clear();
     is_ready = false;
-    serial.write(ba);
+    serial->write(ba);
 
     wait_msec(wait_ms);
 
@@ -431,7 +439,7 @@ bool WIFI_frame::send_at_command(QString cmd,
 bool WIFI_frame::send_command(QString cmd,
                               unsigned int wait_ms)
 {
-    if(serial.isOpen() == false)
+    if(serial->isOpen() == false)
     {
         emit error(tr("Port not open!"));
         return false;
@@ -443,7 +451,7 @@ bool WIFI_frame::send_command(QString cmd,
 
     serial_data.clear();
     is_ready = false;
-    serial.write(ba);
+    serial->write(ba);
 
     if(caption == "server")
     {
@@ -684,34 +692,11 @@ QVBoxLayout *WIFI_frame::add_server_cmd_layout(void)
         connect(btn_server, SIGNAL(clicked()), this, SLOT(create_server()));
     }
 
-    cb_ports = new QComboBox(this);
-    update_ports();
-
-    btn_open = new QPushButton(QObject::tr("open"));
-    connect(btn_open, SIGNAL(clicked()), this, SLOT(serial_open()));
-
-    cb_speed = new QComboBox(this);
-    cb_speed->addItem("9600");
-    cb_speed->addItem("115200");
-
-    btn_close = new QPushButton(QObject::tr("close"));
-    connect(btn_close, SIGNAL(clicked()), this, SLOT(serial_close()));
-
-    port_caption = new QLabel(QObject::tr("port:"));
-
-    QHBoxLayout *ports_box = new QHBoxLayout();
-    ports_box->addWidget(port_caption);
-    ports_box->addWidget(cb_ports);
-    ports_box->addWidget(cb_speed);
-    ports_box->addWidget(btn_open);
-    ports_box->addWidget(btn_close);
-
     QVBoxLayout *cmd_box = new QVBoxLayout();
     cmd_box->addWidget(btn_server);
 
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->setSpacing(1);
-    vbox->addLayout(ports_box);
     vbox->addLayout(cmd_box);
     vbox->addStretch(1);
 
@@ -729,92 +714,20 @@ QVBoxLayout *WIFI_frame::add_client_cmd_layout(void)
     btn_send_data = new QPushButton("send data");
     connect(btn_send_data, SIGNAL(clicked()), this, SLOT(send_data()));
 
-    cb_ports = new QComboBox(this);
-    update_ports();
-
-    btn_open = new QPushButton(QObject::tr("open"));
-    connect(btn_open, SIGNAL(clicked()), this, SLOT(serial_open()));
-
-    cb_speed = new QComboBox(this);
-    cb_speed->addItem("9600");
-    cb_speed->addItem("115200");
-
-    btn_close = new QPushButton(QObject::tr("close"));
-    connect(btn_close, SIGNAL(clicked()), this, SLOT(serial_close()));
-
-    port_caption = new QLabel(QObject::tr("port:"));
-
-    QHBoxLayout *ports_box = new QHBoxLayout();
-    ports_box->addWidget(port_caption);
-    ports_box->addWidget(cb_ports);
-    ports_box->addWidget(cb_speed);
-    ports_box->addWidget(btn_open);
-    ports_box->addWidget(btn_close);
-
     QVBoxLayout *cmd_box = new QVBoxLayout();
     cmd_box->addWidget(btn_client);
     cmd_box->addWidget(btn_send_data);
 
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->setSpacing(1);
-    vbox->addLayout(ports_box);
     vbox->addLayout(cmd_box);
     vbox->addStretch(1);
 
     return vbox;
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::update_ports(void)
-{
-    cb_ports->clear();
-    foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
-    {
-        cb_ports->addItem(port.portName());
-    }
-}
-//--------------------------------------------------------------------------------
-void WIFI_frame::serial_open(void)
-{
-    int speed = cb_speed->currentText().toInt();
-    foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
-    {
-        if(port.portName() == cb_ports->currentText())
-        {
-            serial.setPort(port);
-            bool ok = serial.setBaudRate(speed);
-            if(ok)
-            {
-                if(serial.open(QIODevice::ReadWrite))
-                {
-                    emit info(QString("Порт %1 успешно открыт на скорости %2")
-                              .arg(port.portName())
-                              .arg(speed));
-                    unlock_interface();
-                    return;
-                }
-            }
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void WIFI_frame::serial_close(void)
-{
-    if(serial.isOpen())
-    {
-        serial.close();
-    }
-    lock_interface();
-
-    emit info(QString("Порт %1 успешно закрыт")
-              .arg(serial.portName()));
-}
-//--------------------------------------------------------------------------------
 void WIFI_frame::lock_interface(void)
 {
-    cb_ports->setEnabled(true);
-
-    btn_open->setEnabled(true);
-    btn_close->setEnabled(false);
     if(is_server)
     {
         btn_server->setEnabled(false);
@@ -836,16 +749,10 @@ void WIFI_frame::lock_interface(void)
     le_RemotePort->setEnabled(false);
 
     cb_EncryptType->setEnabled(false);
-    cb_speed->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::unlock_interface(void)
 {
-    cb_ports->setEnabled(false);
-
-    btn_open->setEnabled(false);
-    btn_close->setEnabled(true);
-
     if(is_server)
     {
         btn_server->setEnabled(true);
@@ -867,7 +774,6 @@ void WIFI_frame::unlock_interface(void)
     le_RemotePort->setEnabled(true);
 
     cb_EncryptType->setEnabled(true);
-    cb_speed->setEnabled(false);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::show_hex_data(QByteArray &data)
@@ -880,9 +786,6 @@ void WIFI_frame::show_hex_data(QByteArray &data)
 //--------------------------------------------------------------------------------
 void WIFI_frame::updateText(void)
 {
-    port_caption->setText(QObject::tr("port:"));
-    btn_open->setText(QObject::tr("open"));
-    btn_close->setText(QObject::tr("close"));
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::changeEvent(QEvent *event)

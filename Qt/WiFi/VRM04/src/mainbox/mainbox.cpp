@@ -130,8 +130,6 @@ void MainBox::test(void)
     ba.append("at+reconn=1\r");
 #endif
 
-    wf->serial_open();
-
     ok = wf->send_at_command("at+ver=?\r");
     if(ok)  emit info("OK");
 
@@ -161,8 +159,6 @@ void MainBox::test(void)
     ok = wf->send_at_command("at+reconn=1\r");
     if(ok)  emit info("OK");
 #endif
-
-    wf->serial_close();;
 }
 //--------------------------------------------------------------------------------
 void MainBox::test2(void)

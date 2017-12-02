@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>299</width>
-    <height>147</height>
+    <height>60</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -31,20 +31,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QLabel" name="captionBox">
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
@@ -66,28 +53,6 @@
             </item>
            </layout>
           </item>
-          <item>
-           <layout class="QVBoxLayout" name="buttons_layout"/>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="layout_SEND"/>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="layout_bottom_LOG"/>
-          </item>
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
         </item>
         <item>
@@ -104,26 +69,13 @@
              <string notr="true">QPushButton#btn_power {
 }
 QPushButton#btn_power:checked {
-	background:red;
+	background:green;
 }</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -140,7 +92,6 @@ QPushButton#btn_power:checked {
  <tabstops>
   <tabstop>PortBox</tabstop>
   <tabstop>btn_refresh</tabstop>
-  <tabstop>btn_power</tabstop>
  </tabstops>
  <resources/>
  <connections/>

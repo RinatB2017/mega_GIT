@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
 
     splash->showMessage("init RS-232_5 (2)...");
     SerialBox5_lite *serial2 = new SerialBox5_lite(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
+    serial2->setFixedSize(serial2->sizeHint());
     serial2->add_menu(4);
 
 #if 1

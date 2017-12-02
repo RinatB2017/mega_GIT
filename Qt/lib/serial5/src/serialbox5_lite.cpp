@@ -71,27 +71,18 @@ SerialBox5_lite::SerialBox5_lite(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5_lite::~SerialBox5_lite()
 {
-#ifdef RS232_LOG
-    delete logBox;
-#endif
-
-#ifdef RS232_SEND
-    delete sendBox5;
-#endif
-
     delete serial5;
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::set_caption(QString value)
+qint64 SerialBox5_lite::bytesAvailable(void)
 {
-    caption = value;
-    o_name = value;
-    if(value.isEmpty() == false)
-    {
-        ui->captionBox->setText(value);
-    }
+    return serial5->bytesAvailable();
+}
+//--------------------------------------------------------------------------------
+qint64 SerialBox5_lite::write(const char *data)
+{
+    return serial5->write(data);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::connect_log(void)
@@ -135,10 +126,6 @@ void SerialBox5_lite::init(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::createWidgets(void)
 {
-    QFont font("Liberation Sans", 8, QFont::Bold);
-    ui->captionBox->setFont(font);
-    ui->captionBox->setText(caption);
-
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
 
@@ -148,17 +135,6 @@ void SerialBox5_lite::createWidgets(void)
     connect(ui->BaudBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setBaudBox(int)));
 
     connect(this, SIGNAL(output(QByteArray)), this, SLOT(drawData(QByteArray)));
-
-#ifdef RS232_LOG
-    logBox = new LogBox(o_name, this);
-    ui->layout_right_LOG->addWidget(logBox);
-#endif
-
-#ifdef RS232_SEND
-    sendBox5 = new SendBox5(this);
-    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
-    ui->layout_SEND->addWidget(sendBox5);
-#endif
 }
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
@@ -204,6 +180,10 @@ void SerialBox5_lite::initEnumerator(void)
 void SerialBox5_lite::initSerial(void)
 {
     serial5 = new QSerialPort(this);
+
+    connect(serial5,    SIGNAL(readyRead()),                            this,   SIGNAL(readyRead(void)));
+    connect(serial5,    SIGNAL(readChannelFinished()),                  this,   SIGNAL(readChannelFinished(void)));
+    connect(serial5,    SIGNAL(error(QSerialPort::SerialPortError)),    this,   SIGNAL(error(QSerialPort::SerialPortError)));
 
     //TODO
     timer = new QTimer();
@@ -287,6 +267,7 @@ void SerialBox5_lite::btnOpenPortClicked()
         if (result)
         {
             serial5->close();
+            emit is_close();
             result = false;
         }
         else
@@ -299,12 +280,14 @@ void SerialBox5_lite::btnOpenPortClicked()
                 if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
                 get_parameter();
+                emit is_open();
             }
             else
             {
                 emit error(QString("ERROR: serial [%1] not open (%2)")
                            .arg(serial5->portName())
                            .arg(serial5->errorString()));
+                emit is_close();
             }
         }
 
@@ -460,11 +443,11 @@ void SerialBox5_lite::drawData(const QByteArray &data)
 #ifdef RS232_LOG
     if(flag_in_hex)
     {
-        logBox->append(ByteArrayToHex(data));
+        emit info(ByteArrayToHex(data));
     }
     else
     {
-        logBox->bappend(data.data());
+        emit info(data.data());
     }
     if(flag_in_hex)
     {
@@ -481,13 +464,6 @@ void SerialBox5_lite::drawData(const QByteArray &data)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::updateText(void)
 {
-#ifdef RS232_LOG
-    logBox->updateText();
-#endif
-
-#ifdef RS232_SEND
-    sendBox5->updateText();
-#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::changeEvent(QEvent *e)
@@ -631,18 +607,6 @@ void SerialBox5_lite::get_parameter(void)
             .arg(serial5->flowControl());
 #endif
     emit info(temp);
-}
-//--------------------------------------------------------------------------------
-QPushButton *SerialBox5_lite::add_QPushButton(const QString &title)
-{
-    QPushButton *btn = new QPushButton(title);
-    ui->buttons_layout->addWidget(btn);
-    return btn;
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_lite::add_QHBoxLayout(QHBoxLayout * hbox)
-{
-    ui->buttons_layout->addLayout(hbox);
 }
 //--------------------------------------------------------------------------------
 QByteArray SerialBox5_lite::readAll(void)

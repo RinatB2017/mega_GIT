@@ -33,6 +33,8 @@ class QTextEdit;
 class QLineEdit;
 class QLabel;
 class LogBox;
+
+class SerialBox5_lite;
 //--------------------------------------------------------------------------------
 class WIFI_frame : public QFrame
 {
@@ -52,11 +54,6 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-public slots:
-    void update_ports(void);
-    void serial_open(void);
-    void serial_close(void);
-
 private slots:
     void log(const QString &data);
 
@@ -72,13 +69,16 @@ private slots:
 
     void readChannelFinished(void);
 
+    void lock_interface(void);
+    void unlock_interface(void);
+
     void updateText(void);
 
 private:
     QString caption;
     bool is_server = false;
     bool server_is_created = false;
-    QSerialPort serial;
+    SerialBox5_lite *serial = 0;
     QByteArray  serial_data;
     LogBox *logBox = 0;
 
@@ -90,13 +90,8 @@ private:
     QLineEdit *le_RemoteIP = 0;
     QLineEdit *le_RemotePort = 0;
     QComboBox *cb_EncryptType = 0;
-    QComboBox *cb_speed = 0;
 
     bool is_ready = false;
-    QLabel *port_caption = 0;
-    QComboBox *cb_ports = 0;
-    QPushButton *btn_open = 0;
-    QPushButton *btn_close = 0;
 
     QPushButton *btn_server = 0;
     QPushButton *btn_client = 0;
@@ -122,9 +117,6 @@ private:
     QString get_client_string(void);
 
     void show_hex_data(QByteArray &data);
-
-    void lock_interface(void);
-    void unlock_interface(void);
 
 protected:
     void changeEvent(QEvent *event);

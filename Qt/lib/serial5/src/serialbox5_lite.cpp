@@ -143,6 +143,7 @@ void SerialBox5_lite::createWidgets(void)
     ui->gridLayout->setSpacing(0);
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
+    connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 
     connect(ui->BaudBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setBaudBox(int)));
 
@@ -157,21 +158,6 @@ void SerialBox5_lite::createWidgets(void)
     sendBox5 = new SendBox5(this);
     connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
     ui->layout_SEND->addWidget(sendBox5);
-#endif
-
-#ifndef RS232_NO_FRAME
-    frame_ring = new QFrame(this);
-    add_frame_text(frame_ring, tr("ring"));
-
-    frame_dsr = new QFrame(this);
-    add_frame_text(frame_dsr, tr("dsr"));
-
-    frame_cts = new QFrame(this);
-    add_frame_text(frame_cts, tr("cts"));
-
-    ui->layout_status->addWidget(frame_ring);
-    ui->layout_status->addWidget(frame_dsr);
-    ui->layout_status->addWidget(frame_cts);
 #endif
 }
 //--------------------------------------------------------------------------------

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>189</height>
+    <width>299</width>
+    <height>147</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -52,24 +52,17 @@
           <item>
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="1">
-             <widget class="QComboBox" name="PortBox"/>
+             <widget class="QComboBox" name="BaudBox"/>
             </item>
-            <item row="0" column="3">
+            <item row="0" column="2">
              <widget class="QToolButton" name="btn_refresh">
               <property name="text">
                <string>...</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QComboBox" name="BaudBox"/>
-            </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Устройство:</string>
-              </property>
-             </widget>
+             <widget class="QComboBox" name="PortBox"/>
             </item>
            </layout>
           </item>
@@ -78,9 +71,6 @@
           </item>
           <item>
            <layout class="QVBoxLayout" name="layout_SEND"/>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="layout_status"/>
           </item>
           <item>
            <layout class="QVBoxLayout" name="layout_bottom_LOG"/>
@@ -104,12 +94,6 @@
          <layout class="QVBoxLayout" name="layout_power">
           <item>
            <widget class="QPushButton" name="btn_power">
-            <property name="minimumSize">
-             <size>
-              <width>33</width>
-              <height>70</height>
-             </size>
-            </property>
             <property name="maximumSize">
              <size>
               <width>33</width>
@@ -118,12 +102,9 @@
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton#btn_power {
-	image: url(:/power_knock/image/black/off.png);
-	border-style: inset;
 }
 QPushButton#btn_power:checked {
-	image: url(:/power_knock/image/green/on.png);
-	border-style: inset;
+	background:red;
 }</string>
             </property>
             <property name="checkable">

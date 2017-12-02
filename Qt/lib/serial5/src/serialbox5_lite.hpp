@@ -85,9 +85,6 @@ private:
     QTimer *timer = 0;
 
 #ifndef RS232_NO_FRAME
-    QFrame *frame_ring = 0;
-    QFrame *frame_dsr = 0;
-    QFrame *frame_cts = 0;
     void add_frame_text(QFrame *parent,
                         const QString &text);
 #endif

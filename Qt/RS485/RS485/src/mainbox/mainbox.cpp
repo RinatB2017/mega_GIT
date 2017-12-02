@@ -43,8 +43,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox5(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -62,15 +61,12 @@ void MainBox::init(void)
 
     //createTestBar();
 
-    serialBox5 = new SerialBox5(this, "RS485", "RS485");
-    serialBox5->add_menu(2);
+    ui->serial_widget->add_menu(2);
 
-    ui->serial_layout->addWidget(serialBox5);
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 
-    connect(this,       SIGNAL(send(QByteArray)),   serialBox5, SLOT(input(QByteArray)));
-    connect(serialBox5, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
-
-    connect(ui->pelco_d,    SIGNAL(send(QByteArray)),   serialBox5, SLOT(input(QByteArray)));
+    connect(ui->pelco_d,    SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
 
     ui->sb_addr_cam->setRange(0, 0xFFFF);
     ui->sb_addr_upu->setRange(0, 0xFFFF);

@@ -60,6 +60,7 @@ private slots:
     void test2(void);
     void test3(void);
     void test4(void);
+    void test5(void);
 
 private:
     MySplashScreen *splash = 0;

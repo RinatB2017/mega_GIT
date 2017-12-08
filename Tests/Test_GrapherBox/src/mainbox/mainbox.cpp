@@ -96,14 +96,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    QByteArray ba = ui->splitter->saveState();
-    if(ba.isEmpty() ==  false)
-    {
-        settings->setValue("splitterState", ba);
-    }
-    settings->deleteLater();
-
     all_break = true;
     delete ui;
 }
@@ -153,14 +145,6 @@ void MainBox::init(void)
     connect(ui->cb_type_curve, SIGNAL(currentIndexChanged(int)),
             this,   SLOT(grapher_refresh()));
 
-    //---
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    QByteArray ba = settings->value("splitterState").toByteArray();
-    if(ba.isEmpty() == false)
-    {
-        ui->splitter->restoreState(ba);
-    }
-    settings->deleteLater();
     //---
     grapher_refresh();
 }
@@ -266,11 +250,17 @@ void MainBox::createTestBar(void)
                                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                          "test4",
                                          "test4");
+    QToolButton *btn_test_5 = add_button(toolBar,
+                                         new QToolButton(this),
+                                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                         "test5",
+                                         "test5");
 
     connect(btn_test,   SIGNAL(clicked()), this, SLOT(test()));
     connect(btn_test_2, SIGNAL(clicked()), this, SLOT(test2()));
     connect(btn_test_3, SIGNAL(clicked()), this, SLOT(test3()));
     connect(btn_test_4, SIGNAL(clicked()), this, SLOT(test4()));
+    connect(btn_test_5, SIGNAL(clicked()), this, SLOT(test5()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::load(void)
@@ -329,6 +319,24 @@ void MainBox::test4(void)
 {
     block_interface(true);
     ui->grapher_widget->setAxisScaleDraw(QwtPlot::xBottom, new MyScaleDraw(100.0f));
+    grapher_refresh();
+    block_interface(false);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test5(void)
+{
+    quint64 buf[100] = { 0 };
+
+    block_interface(true);
+    for(int n=0; n<1000000; n++)
+    {
+        int x = rand() % 100;
+        buf[x]++;
+    }
+    for(int n=0; n<100; n++)
+    {
+        ui->grapher_widget->add_curve_data(0, n, buf[n]);
+    }
     grapher_refresh();
     block_interface(false);
 }

@@ -9,9 +9,11 @@ QT       += core gui serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = RepRaptor
-TEMPLATE = app
-CONFIG += static
+TARGET      = RepRaptor
+TEMPLATE    = app
+CONFIG      += static
+
+DEFINES     += NO_TRAYICON
 
 PROGRAMM_PATH  += \
     $$PWD \

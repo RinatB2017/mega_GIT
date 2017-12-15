@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->btmpspin->installEventFilter(this);
     recentMenu = new QMenu(this);
     //Note about tray icon - possible bug with Qt 5.4
+#ifndef NO_TRAYICON
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(QIcon(":icons/repraptor.png"));
     trayIconMenu = new QMenu(this);
@@ -37,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIconMenu->addAction(ui->actionExit);
     trayIcon->setToolTip(tr("RepRaptor running in the background"));
     trayIcon->setContextMenu(trayIconMenu);
+#endif
     recentMenu->setTitle("Recent files");
     ui->menuFile->insertMenu(ui->actionSettings, recentMenu);
     ui->menuFile->insertSeparator(ui->actionSettings);
@@ -121,7 +123,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //Internal signal-slots
     connect(statusTimer, &QTimer::timeout, this, &MainWindow::checkStatus);
     connect(progressSDTimer, &QTimer::timeout, this, &MainWindow::checkSDStatus);
+#ifndef NO_TRAYICON
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconClicked);
+#endif
 
     //Parser thread signal-slots and init
     parserWorker->moveToThread(parserThread);
@@ -175,9 +179,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //Update recent files list
     updateRecent();
 
+#ifndef NO_TRAYICON
     //Update icon
-    if(trayIconEnabled) trayIcon->show();
-    else trayIcon->hide();
+    if(trayIconEnabled)
+        trayIcon->show();
+    else
+        trayIcon->hide();
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -906,8 +914,10 @@ void MainWindow::receivedSDDone()
 {
     sdprinting=false;
     ui->progressBar->setValue(0);
+#ifndef NO_TRAYICON
     if(trayIconEnabled && (this->isMinimized() || this->isHidden()))
         trayIcon->showMessage(tr("Done"), tr("Finished printing"));
+#endif
     ui->filename->setText(tr("Filename:"));
     ui->fileBox->setDisabled(true);
 }
@@ -919,8 +929,10 @@ void MainWindow::updateFileProgress(FileProgress p)
     {
         ui->sendBtn->setText(tr("Send"));
         ui->pauseBtn->setDisabled(true);
+#ifndef NO_TRAYICON
         if(trayIconEnabled && (this->isMinimized() || this->isHidden()))
             trayIcon->showMessage(tr("Done"), tr("Finished printing"));
+#endif
         sending = false;
         paused = false;
         emit pause(paused);
@@ -1046,6 +1058,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     else event->accept();
 }
 
+#ifndef NO_TRAYICON
 void MainWindow::trayIconClicked(QSystemTrayIcon::ActivationReason reason)
 {
     if(trayIconEnabled && reason == QSystemTrayIcon::Trigger)
@@ -1055,6 +1068,7 @@ void MainWindow::trayIconClicked(QSystemTrayIcon::ActivationReason reason)
     }
     else return;
 }
+#endif
 
 void MainWindow::recentClicked()
 {

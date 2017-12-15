@@ -70,7 +70,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QMainWindow* parent = 0);
+    MainWindow(QMainWindow* parent = 0);
     ~MainWindow();
 
     void setCentralWidget(QWidget *widget);

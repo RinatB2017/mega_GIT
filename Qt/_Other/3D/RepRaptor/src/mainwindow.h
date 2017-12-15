@@ -49,9 +49,13 @@ protected:
     QQueue <QString> userCommands;
     QTimer *progressSDTimer;
     QTimer *statusTimer;
+#ifndef NO_TRAYICON
     QSystemTrayIcon *trayIcon;
+#endif
     QMenu *recentMenu;
+#ifndef NO_TRAYICON
     QMenu *trayIconMenu;
+#endif
     QElapsedTimer *sinceLastTemp;
     QElapsedTimer *sinceLastSDStatus;
     QSettings settings;
@@ -111,7 +115,9 @@ private slots:
     void recentClicked();
     void updateFileProgress(FileProgress);
     void baudrateSetFailed(int b);
+#ifndef NO_TRAYICON
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
+#endif
 
     void xplus();
     void yplus();

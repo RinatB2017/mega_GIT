@@ -38,10 +38,10 @@ class LogBox : public QFrame
     Q_OBJECT
 
 public:
-    explicit LogBox(const QString &o_name,
-                    QWidget *parent,
-                    unsigned int min_width  = 1,
-                    unsigned int min_height = 1);
+    LogBox(const QString &o_name,
+           QWidget *parent,
+           unsigned int min_width  = 1,
+           unsigned int min_height = 1);
     ~LogBox();
 
     void load_settings(void);

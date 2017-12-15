@@ -249,6 +249,8 @@ void WebView::init(void)
     cookies->load();
 
     QBotNetworkAccessManager *m_NetManage = new QBotNetworkAccessManager;
+    Q_CHECK_PTR(m_NetManage);
+
     page()->setNetworkAccessManager(m_NetManage);
     page()->networkAccessManager()->setCookieJar(cookies);
 
@@ -265,7 +267,10 @@ void WebView::contextMenuEvent(QContextMenuEvent *event)
         return;
     }
     menu->addSeparator();
+
     QAction *settings = new QAction(QObject::tr("Settings"), this);
+    Q_CHECK_PTR(settings);
+
     settings->setIcon(QIcon::fromTheme("applications-system"));
 
     menu->addSeparator();
@@ -323,6 +328,7 @@ void WebView::run_websettingbox(void)
     int res = vBox->exec();
     if(res != QDialog::Accepted)
     {
+        vBox->deleteLater();
         return;
     }
 
@@ -333,6 +339,7 @@ void WebView::run_websettingbox(void)
     }
 
     save_setting();
+    vBox->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void WebView::load_setting(void)

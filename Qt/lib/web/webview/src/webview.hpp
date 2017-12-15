@@ -73,7 +73,7 @@ class WebView : public QWebView
     Q_OBJECT
 
 public:
-    explicit WebView(QWidget *parent = 0);
+    WebView(QWidget *parent = 0);
     void load(const QUrl &url);
     PersistentCookieJar *get_cookies(void);
     QWebFrame *get_mainframe(void);

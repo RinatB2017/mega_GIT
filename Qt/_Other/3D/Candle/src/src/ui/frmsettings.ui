@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
+    <width>643</width>
     <height>715</height>
    </rect>
   </property>
@@ -72,8 +72,8 @@ QGroupBox {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>436</width>
-          <height>1749</height>
+          <width>518</width>
+          <height>1903</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -114,7 +114,7 @@ QGroupBox {
                  <string>...</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="images.qrc">
+                 <iconset resource="../../images.qrc">
                   <normaloff>:/images/restart.png</normaloff>:/images/restart.png</iconset>
                 </property>
                </widget>
@@ -721,7 +721,7 @@ QGroupBox {
               <item row="0" column="0">
                <widget class="QRadioButton" name="radArcLengthMode">
                 <property name="text">
-                 <string>by length</string>
+                 <string>&amp;by length</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -766,7 +766,7 @@ QGroupBox {
               <item row="0" column="3">
                <widget class="QRadioButton" name="radArcDegreeMode">
                 <property name="text">
-                 <string>by angle (deg.)</string>
+                 <string>by &amp;angle (deg.)</string>
                 </property>
                </widget>
               </item>
@@ -892,7 +892,7 @@ QGroupBox {
               <item row="2" column="3">
                <widget class="QRadioButton" name="radDrawModeVectors">
                 <property name="text">
-                 <string>Vectors</string>
+                 <string>&amp;Vectors</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -905,7 +905,7 @@ QGroupBox {
               <item row="2" column="4">
                <widget class="QRadioButton" name="radDrawModeRaster">
                 <property name="text">
-                 <string>Raster</string>
+                 <string>&amp;Raster</string>
                 </property>
                 <property name="autoExclusive">
                  <bool>false</bool>
@@ -934,7 +934,7 @@ QGroupBox {
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>By 'Z'-code</string>
+                 <string>By '&amp;Z'-code</string>
                 </property>
                 <property name="autoExclusive">
                  <bool>false</bool>
@@ -947,7 +947,7 @@ QGroupBox {
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>By 'S'-code</string>
+                 <string>By '&amp;S'-code</string>
                 </property>
                 <property name="autoExclusive">
                  <bool>false</bool>
@@ -1574,7 +1574,7 @@ QGroupBox {
   <tabstop>cmdCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="images.qrc"/>
+  <include location="../../images.qrc"/>
  </resources>
  <connections>
   <connection>

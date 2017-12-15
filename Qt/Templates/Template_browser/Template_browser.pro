@@ -31,6 +31,7 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
+    posix.hpp \
     mainbox.hpp
 
 SOURCES += \

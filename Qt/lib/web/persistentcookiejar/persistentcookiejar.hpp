@@ -13,7 +13,7 @@ protected:
     QString _fname;
 
 public:
-    explicit PersistentCookieJar(QObject *parent, const QString& fname);
+    PersistentCookieJar(QObject *parent, const QString& fname);
     ~PersistentCookieJar ();
 
     void save(void);

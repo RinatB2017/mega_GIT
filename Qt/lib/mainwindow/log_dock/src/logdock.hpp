@@ -32,8 +32,8 @@ class LogDock : public QDockWidget
 {
     Q_OBJECT
 public:
-    explicit LogDock(const QString &title,
-                     QWidget *parent = 0);
+    LogDock(const QString &title,
+            QWidget *parent = 0);
     ~LogDock();
 
     void load_settings(void);

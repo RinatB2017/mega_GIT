@@ -164,7 +164,8 @@ frmMain::frmMain(QWidget *parent) :
     m_serialPort.setFlowControl(QSerialPort::NoFlowControl);
     m_serialPort.setStopBits(QSerialPort::OneStop);
 
-    if (m_settings->port() != "") {
+    if (m_settings->port() != "")
+    {
         m_serialPort.setPortName(m_settings->port());
         m_serialPort.setBaudRate(m_settings->baud());
     }
@@ -192,7 +193,8 @@ frmMain::frmMain(QWidget *parent) :
     m_timerStateQuery.start();
 
     // Handle file drop
-    if (qApp->arguments().count() > 1 && isGCodeFile(qApp->arguments().last())) {
+    if (qApp->arguments().count() > 1 && isGCodeFile(qApp->arguments().last()))
+    {
         loadFile(qApp->arguments().last());
     }
 }

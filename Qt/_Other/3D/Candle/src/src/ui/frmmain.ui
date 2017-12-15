@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>878</width>
+    <width>959</width>
     <height>899</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <string>Candle</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="images.qrc">
+   <iconset resource="../../images.qrc">
     <normaloff>:/images/candle_256.png</normaloff>:/images/candle_256.png</iconset>
   </property>
   <property name="styleSheet">
@@ -170,7 +170,7 @@ QSlider::handle:horizontal:hover {
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="images.qrc">
+          <iconset resource="../../images.qrc">
            <normaloff>:/images/cube.png</normaloff>:/images/cube.png</iconset>
          </property>
          <property name="iconSize">
@@ -196,7 +196,7 @@ QSlider::handle:horizontal:hover {
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="images.qrc">
+          <iconset resource="../../images.qrc">
            <normaloff>:/images/cubeTop.png</normaloff>:/images/cubeTop.png</iconset>
          </property>
          <property name="iconSize">
@@ -222,7 +222,7 @@ QSlider::handle:horizontal:hover {
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="images.qrc">
+          <iconset resource="../../images.qrc">
            <normaloff>:/images/cubeFront.png</normaloff>:/images/cubeFront.png</iconset>
          </property>
          <property name="iconSize">
@@ -248,7 +248,7 @@ QSlider::handle:horizontal:hover {
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="images.qrc">
+          <iconset resource="../../images.qrc">
            <normaloff>:/images/cubeLeft.png</normaloff>:/images/cubeLeft.png</iconset>
          </property>
          <property name="iconSize">
@@ -274,7 +274,7 @@ QSlider::handle:horizontal:hover {
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="images.qrc">
+          <iconset resource="../../images.qrc">
            <normaloff>:/images/fit_1.png</normaloff>:/images/fit_1.png</iconset>
          </property>
          <property name="iconSize">
@@ -1286,7 +1286,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/search_for_home2.png</normaloff>:/images/search_for_home2.png</iconset>
                </property>
                <property name="iconSize">
@@ -1312,7 +1312,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/search_for_z.png</normaloff>:/images/search_for_z.png</iconset>
                </property>
                <property name="iconSize">
@@ -1338,7 +1338,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/axis_zero.png</normaloff>:/images/axis_zero.png</iconset>
                </property>
                <property name="iconSize">
@@ -1364,7 +1364,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/zero_z.png</normaloff>:/images/zero_z.png</iconset>
                </property>
                <property name="iconSize">
@@ -1393,7 +1393,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/origin.png</normaloff>:/images/origin.png</iconset>
                </property>
                <property name="iconSize">
@@ -1419,7 +1419,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/run.png</normaloff>:/images/run.png</iconset>
                </property>
                <property name="iconSize">
@@ -1445,7 +1445,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/restart.png</normaloff>:/images/restart.png</iconset>
                </property>
                <property name="iconSize">
@@ -1474,7 +1474,7 @@ QSlider::handle:horizontal:hover {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="images.qrc">
+                <iconset resource="../../images.qrc">
                  <normaloff>:/images/unlock.png</normaloff>:/images/unlock.png</iconset>
                </property>
                <property name="iconSize">
@@ -1535,8 +1535,8 @@ QSlider::handle:horizontal:hover {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>231</width>
-            <height>725</height>
+            <width>245</width>
+            <height>806</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -1564,7 +1564,7 @@ QSlider::handle:horizontal:hover {
               <bool>true</bool>
              </property>
              <property name="title">
-              <string>User commands</string>
+              <string>&amp;User commands</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -1623,7 +1623,7 @@ QSlider::handle:horizontal:hover {
                       <string>Spindle on/off</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="images.qrc">
+                      <iconset resource="../../images.qrc">
                        <normaloff>:/images/num2.png</normaloff>:/images/num2.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1649,7 +1649,7 @@ QSlider::handle:horizontal:hover {
                       <string>Spindle on/off</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="images.qrc">
+                      <iconset resource="../../images.qrc">
                        <normaloff>:/images/num4.png</normaloff>:/images/num4.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1675,7 +1675,7 @@ QSlider::handle:horizontal:hover {
                       <string>Spindle on/off</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="images.qrc">
+                      <iconset resource="../../images.qrc">
                        <normaloff>:/images/num3.png</normaloff>:/images/num3.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1701,7 +1701,7 @@ QSlider::handle:horizontal:hover {
                       <string>Spindle on/off</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="images.qrc">
+                      <iconset resource="../../images.qrc">
                        <normaloff>:/images/num1.png</normaloff>:/images/num1.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1723,7 +1723,7 @@ QSlider::handle:horizontal:hover {
            <item>
             <widget class="GroupBox" name="grpHeightMap">
              <property name="title">
-              <string>Heightmap</string>
+              <string>H&amp;eightmap</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -1875,7 +1875,7 @@ QSlider::handle:horizontal:hover {
               <bool>true</bool>
              </property>
              <property name="title">
-              <string>Spindle</string>
+              <string>S&amp;pindle</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -1979,7 +1979,7 @@ QSlider::handle:horizontal:hover {
                     <string>Spindle on/off</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="images.qrc">
+                    <iconset resource="../../images.qrc">
                      <normaloff>:/images/cutter.png</normaloff>:/images/cutter.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -2005,7 +2005,7 @@ QSlider::handle:horizontal:hover {
               <bool>true</bool>
              </property>
              <property name="title">
-              <string>Feed</string>
+              <string>Fee&amp;d</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -2097,7 +2097,7 @@ QSlider::handle:horizontal:hover {
            <item>
             <widget class="GroupBox" name="grpJog">
              <property name="title">
-              <string>Jog</string>
+              <string>&amp;Jog</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -2165,7 +2165,7 @@ QSlider::handle:horizontal:hover {
                       <string>...</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="images.qrc">
+                      <iconset resource="../../images.qrc">
                        <normaloff>:/images/1401561986_chevron-left.png</normaloff>:/images/1401561986_chevron-left.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -2202,7 +2202,7 @@ QSlider::handle:horizontal:hover {
                         <string/>
                        </property>
                        <property name="icon">
-                        <iconset resource="images.qrc">
+                        <iconset resource="../../images.qrc">
                          <normaloff>:/images/1401562173_chevron-down.png</normaloff>:/images/1401562173_chevron-down.png</iconset>
                        </property>
                        <property name="iconSize">
@@ -2236,7 +2236,7 @@ QSlider::handle:horizontal:hover {
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="images.qrc">
+                      <iconset resource="../../images.qrc">
                        <normaloff>:/images/1401562173_chevron-right.png</normaloff>:/images/1401562173_chevron-right.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -2273,7 +2273,7 @@ QSlider::handle:horizontal:hover {
                         <string/>
                        </property>
                        <property name="icon">
-                        <iconset resource="images.qrc">
+                        <iconset resource="../../images.qrc">
                          <normaloff>:/images/1401562173_chevron-up.png</normaloff>:/images/1401562173_chevron-up.png</iconset>
                        </property>
                        <property name="iconSize">
@@ -2416,7 +2416,7 @@ QDoubleSpinBox:focus {
                         <string/>
                        </property>
                        <property name="icon">
-                        <iconset resource="images.qrc">
+                        <iconset resource="../../images.qrc">
                          <normaloff>:/images/1401562699_icon-arrow-up-b.png</normaloff>:/images/1401562699_icon-arrow-up-b.png</iconset>
                        </property>
                        <property name="iconSize">
@@ -2468,7 +2468,7 @@ QDoubleSpinBox:focus {
                         <string/>
                        </property>
                        <property name="icon">
-                        <iconset resource="images.qrc">
+                        <iconset resource="../../images.qrc">
                          <normaloff>:/images/1401562699_icon-arrow-down-b.png</normaloff>:/images/1401562699_icon-arrow-down-b.png</iconset>
                        </property>
                        <property name="iconSize">
@@ -2746,7 +2746,7 @@ padding-right: 8;</string>
                   <string>Send command</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="images.qrc">
+                  <iconset resource="../../images.qrc">
                    <normaloff>:/images/send_1.png</normaloff>:/images/send_1.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -2763,7 +2763,7 @@ padding-right: 8;</string>
                   <string>Clear console</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="images.qrc">
+                  <iconset resource="../../images.qrc">
                    <normaloff>:/images/erase_1.png</normaloff>:/images/erase_1.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -2792,8 +2792,8 @@ padding-right: 8;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>878</width>
-     <height>26</height>
+     <width>959</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="mnuFile">
@@ -2995,7 +2995,7 @@ padding-right: 8;</string>
   <tabstop>grpHeightMap</tabstop>
  </tabstops>
  <resources>
-  <include location="images.qrc"/>
+  <include location="../../images.qrc"/>
  </resources>
  <connections>
   <connection>

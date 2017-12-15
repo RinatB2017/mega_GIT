@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
 {
 #ifdef UNIX
     bool styleOverrided = false;
-    for (int i = 0; i < argc; i++) if (QString(argv[i]).toUpper() == "-STYLE") {
+    for (int i = 0; i < argc; i++) if (QString(argv[i]).toUpper() == "-STYLE")
+    {
         styleOverrided = true;
         break;
     }
@@ -49,14 +50,16 @@ int main(int argc, char *argv[])
 
     qDebug() << "locale:" << loc;
 
-    if(QFile::exists(translationFileName)) {
+    if(QFile::exists(translationFileName))
+    {
         QTranslator* translator = new QTranslator();
         if (translator->load(translationFileName)) a.installTranslator(translator); else delete translator;
     }
 
     QString baseTranslationFileName = translationsFolder + "qt_" + loc + ".qm";
 
-    if(QFile::exists(translationFileName)) {
+    if(QFile::exists(translationFileName))
+    {
         QTranslator* baseTranslator = new QTranslator();
         if (baseTranslator->load(baseTranslationFileName)) a.installTranslator(baseTranslator); else delete baseTranslator;
     }
@@ -64,9 +67,11 @@ int main(int argc, char *argv[])
     a.setApplicationVersion(APP_VERSION);
 
 #ifdef UNIX
-    if (!styleOverrided) foreach (QString str, QStyleFactory::keys()) {
+    if (!styleOverrided) foreach (QString str, QStyleFactory::keys())
+    {
         qDebug() << "style" << str;
-        if (str.contains("GTK+")) {
+        if (str.contains("GTK+"))
+        {
             a.setStyle(QStyleFactory::create(str));
             break;
         }

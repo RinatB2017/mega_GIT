@@ -40,7 +40,9 @@ WebSettingBox::WebSettingBox(QVector<ATTR> &attr,
 {
     attributes.clear();
     for(int n=0; n<attr.count(); n++)
+    {
         attributes.append(attr.at(n));
+    }
 
     init();
 }

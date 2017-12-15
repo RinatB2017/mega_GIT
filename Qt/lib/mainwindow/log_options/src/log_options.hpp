@@ -25,7 +25,7 @@
 #include <QList>
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class Log_options;
+class Log_options;
 }
 //--------------------------------------------------------------------------------
 class QTextEdit;
@@ -35,7 +35,7 @@ class Log_options : public QDialog
     Q_OBJECT
     
 public:
-    explicit Log_options(QWidget *parent = 0);
+    Log_options(QWidget *parent = 0);
     ~Log_options();
 
     Q_PROPERTY(bool flag_ReadOnly       READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)

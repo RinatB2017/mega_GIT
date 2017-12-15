@@ -31,8 +31,8 @@ class WebSettingBox : public QDialog
 {
     Q_OBJECT
 public:
-    explicit WebSettingBox(QVector<ATTR> &attr,
-                           QWidget *parent = 0);
+    WebSettingBox(QVector<ATTR> &attr,
+                  QWidget *parent = 0);
     QVector<ATTR> get_attributes(void);
     
 signals:

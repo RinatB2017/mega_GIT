@@ -1,0 +1,8 @@
+RepRaptor
+Makefile
+*.user
+*.o
+ui_*.h
+moc_*
+qrc_*
+*~

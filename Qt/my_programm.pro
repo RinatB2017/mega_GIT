@@ -17,7 +17,6 @@ SUBDIRS += \
     MODBUS \
     MyBot \
     QRCodeGenerator \
-    PacketSender \
     RS232 \
     RS485 \
     show_films \

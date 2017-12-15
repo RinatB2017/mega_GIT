@@ -48,7 +48,7 @@
 #include "ui_mainwindow.h"
 
 //#include <QTextToSpeech>
-#include <src/qtexttospeech.h>
+#include <qtexttospeech.h>
 
 class MainWindow : public QMainWindow
 {
@@ -72,7 +72,7 @@ public slots:
 
 private:
     Ui::MainWindow ui;
-    QTextToSpeech *m_speech;
+    QTextToSpeech *m_speech = 0;
     QVector<QVoice> m_voices;
 };
 

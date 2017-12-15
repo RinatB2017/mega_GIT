@@ -67,6 +67,7 @@ MainWindow::~MainWindow()
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(QWidget *widget)
 {
+    Q_CHECK_PTR(widget);
     if(!widget) return;
 
     mainWidget = widget;
@@ -99,6 +100,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
             //---
             MyWidget *w = dynamic_cast<MyWidget *>(mainWidget);
+            Q_CHECK_PTR(w);
             if(w)
             {
                 bool ok = w->close();
@@ -482,6 +484,8 @@ void MainWindow::setMenuLanguage(void)
 {
 #ifndef ONLY_ENGLISH
     QAction* menu =(QAction*)sender();
+    Q_CHECK_PTR(menu);
+
     if(!menu) return;
 
     QString language;
@@ -508,6 +512,8 @@ void MainWindow::setToolBarLanguage(void)
 {
 #ifndef ONLY_ENGLISH
     QToolButton* button = dynamic_cast<QToolButton*>(sender());
+    Q_CHECK_PTR(button);
+
     if(!button)
     {
         emit error("setToolBarLanguage: button");
@@ -574,6 +580,8 @@ void MainWindow::createStatusBar(void)
 void MainWindow::setStyles(void)
 {
     QAction* menu =(QAction*)sender();
+    Q_CHECK_PTR(menu);
+
     style_name = menu->text().remove("&");
 
     emit debug(style_name);
@@ -595,6 +603,8 @@ void MainWindow::setStyles(void)
 void MainWindow::setToolBarStyles(void)
 {
     QPushButton *button = dynamic_cast<QPushButton*>(sender());
+    Q_CHECK_PTR(button);
+
     if(!button)
     {
         emit error("setToolBarStyles: button");
@@ -621,7 +631,8 @@ void MainWindow::setToolBarStyles(void)
 void MainWindow::about(void)
 {
     AboutBox *about = new AboutBox(orgName, appName, appVersion, tr("Author: Bikbao Rinat Zinorovich"));
-    about->setWindowIcon(QIcon(ICON_PROGRAMM));
+    Q_CHECK_PTR(about);
+
     about->exec();
 }
 //--------------------------------------------------------------------------------
@@ -633,6 +644,8 @@ void MainWindow::load_main(void)
     int font_size;
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup("Main");
     font_weight = settings->value("FontWeight",   QFont::Normal).toInt();
     font_size   = settings->value("FontSize",     9).toInt();
@@ -671,6 +684,8 @@ void MainWindow::load_main(void)
 void MainWindow::save_main(void)
 {
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
     if(settings == nullptr)
     {
         return;
@@ -727,6 +742,7 @@ void MainWindow::save_setting(void)
 void MainWindow::createLog(void)
 {
     ld = new LogDock(QObject::tr("log"), this);
+    Q_CHECK_PTR(ld);
 
     if(m_windowsMenu)
     {
@@ -758,6 +774,8 @@ void MainWindow::createLog(void)
 void MainWindow::createToolBar(void)
 {
     QToolBar *toolBar = new QToolBar("toolbar", this);
+    Q_CHECK_PTR(toolBar);
+
     if(toolBar == nullptr)
     {
         return;
@@ -855,6 +873,8 @@ void MainWindow::createToolBar(void)
 void MainWindow::createStyleToolBar(void)
 {
     toolBar = new QToolBar("styletoolbar", this);
+    Q_CHECK_PTR(toolBar);
+
     if(toolBar == nullptr)
     {
         return;

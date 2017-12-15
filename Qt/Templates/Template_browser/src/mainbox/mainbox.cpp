@@ -59,9 +59,10 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::finished(bool state)
 {
-    if(!state) return;
-
-    progressBar->reset();
+    if(state)
+    {
+        progressBar->reset();
+    }
 }
 //--------------------------------------------------------------------------------
 QToolButton *MainBox::add_button(QToolBar *tool_bar,
@@ -84,12 +85,14 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return;
     }
 
     QToolBar *toolBar = new QToolBar(tr("testbar"));
+    Q_CHECK_PTR(toolBar);
     if(toolBar == nullptr)
     {
         return;
@@ -100,9 +103,11 @@ void MainBox::createTestBar(void)
     progressBar->setFixedWidth(200);
     progressBar->setToolTip(tr("web progress"));
 
-    address = new QLineEdit;
+    address = new QLineEdit(this);
     //address->setText("https://2ip.ru/");
-    address->setText("https://www.youtube.com");
+    //address->setText("https://www.youtube.com");
+    //address->setText("http://bash.im/quote/448209");
+    address->setText("http://bash.im");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -139,8 +144,8 @@ void MainBox::createTestBar(void)
     connect(btn_prev,   SIGNAL(clicked()), browser, SLOT(back()));
     connect(btn_next,   SIGNAL(clicked()), browser, SLOT(forward()));
 
-    connect(address,    SIGNAL(returnPressed()), this, SLOT(run()));
-    connect(btn_run,    SIGNAL(clicked()), this, SLOT(run()));
+    connect(address,    SIGNAL(returnPressed()),    this,   SLOT(run()));
+    connect(btn_run,    SIGNAL(clicked()),          this,   SLOT(run()));
 
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(browser);
@@ -149,6 +154,11 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::run(void)
 {
+    if(address->text().isEmpty())
+    {
+        emit error("address is empty!");
+        return;
+    }
     browser->load(address->text());
 }
 //--------------------------------------------------------------------------------

@@ -4,9 +4,9 @@ TARGET      = QTextToSpeech
 
 FOLDER  = old_programm
 
+QT  += texttospeech
+
 DEPENDPATH  += \
-    /usr/include/qt5/QtCore/5.9.3 \
-    /usr/include/qt5/QtCore/5.9.3/QtCore \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
@@ -19,8 +19,6 @@ SOURCES += \
     src/mainwindow.cpp
 
 FORMS   += src/ui/mainwindow.ui
-
-include (tts/tts.pri)
 
 unix:!macx {
     OBJECTS_DIR = /dev/shm/my_programm/$$TARGET/obj

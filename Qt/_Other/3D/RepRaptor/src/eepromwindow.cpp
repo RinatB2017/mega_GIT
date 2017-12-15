@@ -45,8 +45,8 @@ EEPROMWindow::EEPROMWindow(QStringList eepromLines, QWidget *parent) :
             edit->setObjectName("e"+QString::number(j)); //Name the LineEdit, so when it emits signal we know where it came from
 
             QRegExpValidator *doublevalidator = new QRegExpValidator(
-                                                    QRegExp("^\\-?\\d+\\.?\\d+(e\\-?\\d+)?$",
-                                                    Qt::CaseInsensitive), this);
+                        QRegExp("^\\-?\\d+\\.?\\d+(e\\-?\\d+)?$",
+                                Qt::CaseInsensitive), this);
             doublevalidator->setLocale(QLocale::English);
 
             switch(currentLine.T) // set right validator for the line
@@ -77,8 +77,8 @@ EEPROMWindow::EEPROMWindow(QStringList eepromLines, QWidget *parent) :
             j++; // increase counter
         }
 
-    for(int i = 0; i < lines.size(); i++) changed.append(false);
-    ui->eepromWidgets->setLayout(layout);
+        for(int i = 0; i < lines.size(); i++) changed.append(false);
+        ui->eepromWidgets->setLayout(layout);
     }
     else if(firmware == Marlin)
     {

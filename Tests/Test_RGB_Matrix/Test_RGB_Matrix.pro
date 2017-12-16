@@ -9,9 +9,9 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Diod \
-    $$PWD/src/Display \
-    $$PWD/src/Palette \
+    $$PWD/src/diod \
+    $$PWD/src/display \
+    $$PWD/src/palette \
     $$PWD/src/mainbox \
     $$PWD/src/mainbox/ui
 INCLUDEPATH = $$DEPENDPATH

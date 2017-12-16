@@ -62,7 +62,7 @@ CONFIG(debug, debug|release) {
 else {
     OPTIMIZE = -pipe -O2
 }
-message ($$OPTIMIZE)
+#message ($$OPTIMIZE)
 ###############################################################################
 #DEFINES += QT_STATIC_BUILD
 #win32 {

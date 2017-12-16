@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2016                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,67 +18,76 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include <QColorDialog>
+#include <QMouseEvent>
+#include <QVariant>
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "diod.hpp"
 //--------------------------------------------------------------------------------
-#include "defines.hpp"
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-class MainBox;
+Diod::Diod(QWidget *parent) :
+    QToolButton(parent)
+{
+    setFixedSize(WIDTH, HEIGHT);
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class SerialBox5;
-class QSpinBox;
-class QTimer;
-class Display;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void Diod::set_color(QColor color)
 {
-    Q_OBJECT
-
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-signals:
-    void send(QByteArray);
-
-private slots:
-    void run(bool state);
-    void read_data(QByteArray ba);
-    void update(void);
-
-private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
-    QByteArray data_rs232;
-
-    QSpinBox *sb_interval = 0;
-    QTimer *timer = 0;
-
-    Display *display = 0;
-    Display *control_display = 0;
-    int pos_x;
-
-    void init(void);
-    void connect_log(void);
-    void wait(int max_time_ms);
-
-    void createTestBar(void);
-    void createSerialBox(void);
-    void createDisplayBox(void);
-    void createTimer(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
-};
+    set_color(color.red(),
+              color.green(),
+              color.blue());
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Diod::set_color(uint8_t R_value,
+               uint8_t G_value,
+               uint8_t B_value)
+{
+    R_color = R_value;
+    G_color = G_value;
+    B_color = B_value;
+
+    setStyleSheet(QString("background:rgb(%1,%2,%3)")
+                  .arg(R_color)
+                  .arg(G_color)
+                  .arg(B_color));
+}
+//--------------------------------------------------------------------------------
+QRgb Diod::get_color(void)
+{
+    return qRgba(R_color, G_color, B_color, 0);
+}
+//--------------------------------------------------------------------------------
+uint8_t Diod::get_R(void)
+{
+    return R_color;
+}
+//--------------------------------------------------------------------------------
+uint8_t Diod::get_G(void)
+{
+    return G_color;
+}
+//--------------------------------------------------------------------------------
+uint8_t Diod::get_B(void)
+{
+    return B_color;
+}
+//--------------------------------------------------------------------------------
+void Diod::mousePressEvent(QMouseEvent *event)
+{
+    QColorDialog *dlg = 0;
+
+    switch(event->button())
+    {
+    case Qt::LeftButton:
+        dlg = new QColorDialog(QColor(R_color, G_color, B_color));
+        if(dlg->exec() == QColorDialog::Accepted)
+        {
+            set_color(dlg->selectedColor());
+        }
+        dlg->deleteLater();
+        break;
+
+    default:
+        break;
+    }
+}
+//--------------------------------------------------------------------------------

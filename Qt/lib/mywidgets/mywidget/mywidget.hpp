@@ -77,6 +77,9 @@ typedef struct d_spin_box
     double  default_value;
 } d_spin_box_t;
 //--------------------------------------------------------------------------------
+class QToolButton;
+class QToolBar;
+//--------------------------------------------------------------------------------
 class MyWidget : public QWidget
 {
     Q_OBJECT
@@ -142,6 +145,13 @@ public:
                                    unsigned int width = MESSAGEBOX_WIDTH);
 
     bool create_pixmap(QWidget *w_left, QWidget *w_central);
+
+    QToolButton *add_button(QToolBar *tool_bar,
+                            QToolButton *tool_button,
+                            QIcon icon,
+                            const QString &text,
+                            const QString &tool_tip);
+
     //---
     //TODO
     bool is_close = true;

@@ -40,15 +40,16 @@
 #include "serialbox5.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
-#include "crc.h"
 //--------------------------------------------------------------------------------
 #include "display.hpp"
+#include "diod.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox)
+    ui(new Ui::MainBox),
+    serialBox(0)
 {
     init();
 }
@@ -67,7 +68,7 @@ void MainBox::init(void)
 
     createTestBar();
     createSerialBox();
-    createDisplayBox();
+    createGridBox();
     createTimer();
 }
 //--------------------------------------------------------------------------------
@@ -93,20 +94,14 @@ void MainBox::createTestBar(void)
     toolBar->addWidget(new QLabel("interval in msec "));
     toolBar->addWidget(sb_interval);
     QToolButton *btn_run = add_button(toolBar,
-                                      new QToolButton(this),
-                                      qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                      "run",
-                                      "run");
-    QToolButton *btn_update = add_button(toolBar,
-                                         new QToolButton(this),
-                                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                         "update",
-                                         "update");
+                                       new QToolButton(this),
+                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                       "run",
+                                       "run");
     if(btn_run)
     {
         btn_run->setCheckable(true);
-        connect(btn_run,    SIGNAL(toggled(bool)),  this,   SLOT(run(bool)));
-        connect(btn_update, SIGNAL(clicked(bool)),  this,   SLOT(update()));
+        connect(btn_run, SIGNAL(toggled(bool)), this, SLOT(run(bool)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -122,23 +117,37 @@ void MainBox::createSerialBox(void)
     connect(serialBox, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::createDisplayBox(void)
+void MainBox::createGridBox(void)
 {
-    display = new Display(MAX_SCREEN_X, MAX_SCREEN_Y, this);
+    QGridLayout *grid = new QGridLayout();
+    grid->setMargin(0);
+    grid->setSpacing(0);
+    for(int y=0; y<MAX_SCREEN_Y; y++)
+    {
+        for(int x=0; x<MAX_SCREEN_X; x++)
+        {
+            diod[x][y] = new Diod(this);
+
+            grid->addWidget(diod[x][y], y, x);
+        }
+    }
+
+    Display *display = new Display(16, 8, this);
     connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    control_display = new Display(NUM_LEDS_PER_STRIP, NUM_STRIPS, this);
-    connect(control_display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(control_display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(control_display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(control_display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    Display *display2 = new Display(16, 8, this);
+    connect(display2,   SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(display2,   SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(display2,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(display2,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    QVBoxLayout *box = new QVBoxLayout();
+    QHBoxLayout *box = new QHBoxLayout();
     box->addWidget(display);
-    box->addWidget(control_display);
+    box->addWidget(display2);
+    box->addLayout(grid);
     box->addStretch(1);
 
     ui->frame->setLayout(box);
@@ -161,14 +170,17 @@ void MainBox::createDisplayBox(void)
             switch(buf[y][x])
             {
             case 'R':
+                diod[x][y]->set_color(255, 0, 0);
                 display->set_color(x, y, 255, 0, 0);
                 break;
 
             case 'G':
+                diod[x][y]->set_color(0, 255, 0);
                 display->set_color(x, y, 0, 255, 0);
                 break;
 
             case 'B':
+                diod[x][y]->set_color(0, 0, 255);
                 display->set_color(x, y, 0, 0, 255);
                 break;
 
@@ -193,25 +205,17 @@ void MainBox::update(void)
     question.body.header.cmd = RGB_CMD_0x01;
     question.body.header.count_data = sizeof(question.body.data);
 
-    uint8_t value_R = 0;
-    uint8_t value_G = 0;
-    uint8_t value_B = 0;
-
     for(int y=0; y<NUM_STRIPS; y++)
     {
         for(int x=0; x<NUM_LEDS_PER_STRIP; x++)
         {
-            display->get_R(x+pos_x, y, &value_R);
-            display->get_G(x+pos_x, y, &value_G);
-            display->get_B(x+pos_x, y, &value_B);
-
-            question.body.data[x][y].R = value_R;
-            question.body.data[x][y].G = value_G;
-            question.body.data[x][y].B = value_B;
+            question.body.data[x][y].R = diod[x+pos_x][y]->get_R();
+            question.body.data[x][y].G = diod[x+pos_x][y]->get_G();
+            question.body.data[x][y].B = diod[x+pos_x][y]->get_B();
         }
     }
 
-    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
+    question.body.crc16 = 0; //TODO ???
     pos_x++;
     if(pos_x > (MAX_SCREEN_X - NUM_LEDS_PER_STRIP))
     {
@@ -237,21 +241,10 @@ void MainBox::update(void)
     }
 #endif
 
-    for(int y=0; y<NUM_STRIPS; y++)
-    {
-        for(int x=0; x<NUM_LEDS_PER_STRIP; x++)
-        {
-            control_display->set_color(x, y,
-                                       question.body.data[x][y].R,
-                                       question.body.data[x][y].G,
-                                       question.body.data[x][y].B);
-        }
-    }
-
     data_rs232.clear();
 #ifdef FAKE
-    //emit trace(QString("[%1]").arg(ba.data()));
-    //emit info(QString("send %1 bytes").arg(ba.size()));
+    emit trace(QString("[%1]").arg(ba.toHex().data()));
+    emit info(QString("send %1 bytes").arg(ba.size()));
 #else
     //emit send(ba);
     serialBox->input(ba);

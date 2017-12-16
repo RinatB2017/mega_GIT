@@ -492,9 +492,6 @@ void SerialBox5::procSerialDataReceive(void)
         return;
     }
 
-    //TODO было
-    // emit output(serial5->readAll());
-
     if (!timer->isActive())
         timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
     else

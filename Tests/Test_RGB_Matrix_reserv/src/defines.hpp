@@ -7,7 +7,7 @@
 #define NUM_LEDS_PER_STRIP  16
 #define NUM_STRIPS          8
 
-#define MAX_SCREEN_X NUM_LEDS_PER_STRIP * 3
+#define MAX_SCREEN_X NUM_LEDS_PER_STRIP
 #define MAX_SCREEN_Y NUM_STRIPS
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)

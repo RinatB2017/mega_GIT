@@ -35,7 +35,7 @@ class MySplashScreen;
 class SerialBox5;
 class QSpinBox;
 class QTimer;
-class Display;
+class Diod;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -63,8 +63,7 @@ private:
     QSpinBox *sb_interval = 0;
     QTimer *timer = 0;
 
-    Display *display = 0;
-    Display *control_display = 0;
+    Diod *diod[MAX_SCREEN_X][MAX_SCREEN_Y];
     int pos_x;
 
     void init(void);
@@ -73,7 +72,7 @@ private:
 
     void createTestBar(void);
     void createSerialBox(void);
-    void createDisplayBox(void);
+    void createGridBox(void);
     void createTimer(void);
 
 protected:

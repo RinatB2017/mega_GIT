@@ -105,7 +105,7 @@ uint16_t CRC::java_crc16(uint8_t *pcBlock, uint8_t len)
 #endif
 }
 //--------------------------------------------------------------------------------
-uint16_t CRC::crc16(uint8_t *pcBlock, uint8_t len)
+uint16_t CRC::crc16(uint8_t *pcBlock, uint16_t len)
 {
     uint16_t a, crc = 0xFFFF;
     while(len--)

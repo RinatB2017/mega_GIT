@@ -1248,6 +1248,23 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
     return true;
 }
 //--------------------------------------------------------------------------------
+QToolButton *MyWidget::add_button(QToolBar *tool_bar,
+                                  QToolButton *tool_button,
+                                  QIcon icon,
+                                  const QString &text,
+                                  const QString &tool_tip)
+{
+    Q_CHECK_PTR(tool_bar);
+    Q_CHECK_PTR(tool_button);
+
+    tool_button->setIcon(icon);
+    tool_button->setText(text);
+    tool_button->setToolTip(tool_tip);
+    tool_bar->addWidget(tool_button);
+
+    return tool_button;
+}
+//--------------------------------------------------------------------------------
 bool MyWidget::eventFilter(QObject*, QEvent* event)
 {
     QMouseEvent *mouseEvent = (QMouseEvent *) event;

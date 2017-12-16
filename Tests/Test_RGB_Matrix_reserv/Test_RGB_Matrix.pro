@@ -53,7 +53,6 @@ win32 {
 LIB_PATH = "../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
-include ($$LIB_PATH/crc/crc.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

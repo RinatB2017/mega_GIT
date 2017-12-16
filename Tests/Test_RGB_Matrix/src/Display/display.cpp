@@ -1,0 +1,251 @@
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2016                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+#include <QGridLayout>
+#include <QSettings>
+//--------------------------------------------------------------------------------
+#include "display.hpp"
+#include "diod.hpp"
+//--------------------------------------------------------------------------------
+#include "defines.hpp"
+//--------------------------------------------------------------------------------
+Display::Display(int max_x,
+                 int max_y,
+                 QWidget *parent) :
+    QFrame(parent)
+{
+    if(max_x > MAX_DISPLAY_X)   max_x = MAX_DISPLAY_X;
+    if(max_x <= 0)              max_x = DEFAULT_X;
+    if(max_y > MAX_DISPLAY_Y)   max_y = MAX_DISPLAY_Y;
+    if(max_y <= 0)              max_y = DEFAULT_Y;
+
+    this->max_x = max_x;
+    this->max_y = max_y;
+
+    QGridLayout *grid = new QGridLayout();
+    grid->setMargin(0);
+    grid->setSpacing(0);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            diod[x][y] = new Diod(this);
+
+            grid->addWidget(diod[x][y], y, x);
+        }
+    }
+
+    setLayout(grid);
+
+    setFrameStyle( QFrame::StyledPanel | QFrame::Plain );
+    setFixedSize(sizeHint());
+
+    load_setting();
+}
+//--------------------------------------------------------------------------------
+QByteArray Display::get_data(void)
+{
+    uint8_t R = 0;
+    uint8_t G = 0;
+    uint8_t B = 0;
+    QByteArray ba;
+
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            R = diod[x][y]->get_R();
+            G = diod[x][y]->get_G();
+            B = diod[x][y]->get_B();
+
+            ba.append((uint8_t)R);
+            ba.append((uint8_t)G);
+            ba.append((uint8_t)B);
+        }
+    }
+    return ba;
+}
+//--------------------------------------------------------------------------------
+Display::~Display()
+{
+    save_setting();
+}
+//--------------------------------------------------------------------------------
+bool Display::set_color(int x,
+                        int y,
+                        QColor color)
+{
+    if(x < 0)
+    {
+        emit error("Display::set_color: x < 0");
+        return false;
+    }
+    if(x > MAX_DISPLAY_X)
+    {
+        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        return false;
+    }
+
+    if(y < 0)
+    {
+        emit error("Display::set_color: y < 0");
+        return false;
+    }
+    if(y > MAX_DISPLAY_Y)
+    {
+        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        return false;
+    }
+
+    diod[x][y]->set_color(color);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Display::set_color(int x,
+                        int y,
+                        uint8_t R_value,
+                        uint8_t G_value,
+                        uint8_t B_value)
+{
+    if(x < 0)
+    {
+        emit error("Display::set_color: x < 0");
+        return  false;
+    }
+    if(x > MAX_DISPLAY_X)
+    {
+        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        return false;
+    }
+
+    if(y < 0)
+    {
+        emit error("Display::set_color: y < 0");
+        return false;
+    }
+    if(y > MAX_DISPLAY_Y)
+    {
+        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        return false;
+    }
+
+    diod[x][y]->set_color(R_value,
+                          G_value,
+                          B_value);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Display::get_R(int x, int y, uint8_t *value)
+{
+    if(x < 0)
+    {
+        emit error("Display::set_color: x < 0");
+        return  false;
+    }
+    if(x > MAX_DISPLAY_X)
+    {
+        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        return false;
+    }
+
+    if(y < 0)
+    {
+        emit error("Display::set_color: y < 0");
+        return false;
+    }
+    if(y > MAX_DISPLAY_Y)
+    {
+        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        return false;
+    }
+    *value = diod[x][y]->get_R();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Display::get_G(int x, int y, uint8_t *value)
+{
+    if(x < 0)
+    {
+        emit error("Display::set_color: x < 0");
+        return  false;
+    }
+    if(x > MAX_DISPLAY_X)
+    {
+        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        return false;
+    }
+
+    if(y < 0)
+    {
+        emit error("Display::set_color: y < 0");
+        return false;
+    }
+    if(y > MAX_DISPLAY_Y)
+    {
+        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        return false;
+    }
+    *value = diod[x][y]->get_G();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Display::get_B(int x, int y, uint8_t *value)
+{
+    if(x < 0)
+    {
+        emit error("Display::set_color: x < 0");
+        return  false;
+    }
+    if(x > MAX_DISPLAY_X)
+    {
+        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        return false;
+    }
+
+    if(y < 0)
+    {
+        emit error("Display::set_color: y < 0");
+        return false;
+    }
+    if(y > MAX_DISPLAY_Y)
+    {
+        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        return false;
+    }
+    *value = diod[x][y]->get_B();
+    return true;
+}
+//--------------------------------------------------------------------------------
+void Display::load_setting(void)
+{
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
+    settings->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void Display::save_setting(void)
+{
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
+    settings->deleteLater();
+}
+//--------------------------------------------------------------------------------

@@ -18,79 +18,71 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QColorDialog>
 #include <QMouseEvent>
-#include <QVariant>
 //--------------------------------------------------------------------------------
 #include "diod.hpp"
 //--------------------------------------------------------------------------------
 Diod::Diod(QWidget *parent) :
     QToolButton(parent)
 {
-    state = DIOD_NONE;
-
-    setProperty("ID", QVariant(state));
     setFixedSize(WIDTH, HEIGHT);
 }
 //--------------------------------------------------------------------------------
-void Diod::set_state(int state)
+void Diod::set_color(QColor color)
 {
-    this->state = state;
-    setProperty("ID", QVariant(state));
-    draw_state();
+    set_color(color.red(),
+              color.green(),
+              color.blue());
 }
 //--------------------------------------------------------------------------------
-void Diod::draw_state(void)
+void Diod::set_color(uint8_t R_value,
+                     uint8_t G_value,
+                     uint8_t B_value)
 {
-    switch(state)
-    {
-    case DIOD_R:
-        setStyleSheet("background:red;");
-        setText("R");
-        break;
+    R_color = R_value;
+    G_color = G_value;
+    B_color = B_value;
 
-    case DIOD_G:
-        setStyleSheet("background:green;");
-        setText("G");
-        break;
-
-    case DIOD_B:
-        setStyleSheet("background:blue;");
-        setText("B");
-        break;
-
-    default:
-        setStyleSheet("");
-        setText("");
-        break;
-    }
+    setStyleSheet(QString("background:rgb(%1,%2,%3)")
+                  .arg(R_color)
+                  .arg(G_color)
+                  .arg(B_color));
+}
+//--------------------------------------------------------------------------------
+QRgb Diod::get_color(void)
+{
+    return qRgba(R_color, G_color, B_color, 0);
+}
+//--------------------------------------------------------------------------------
+uint8_t Diod::get_R(void)
+{
+    return R_color;
+}
+//--------------------------------------------------------------------------------
+uint8_t Diod::get_G(void)
+{
+    return G_color;
+}
+//--------------------------------------------------------------------------------
+uint8_t Diod::get_B(void)
+{
+    return B_color;
 }
 //--------------------------------------------------------------------------------
 void Diod::mousePressEvent(QMouseEvent *event)
 {
+    QColorDialog *dlg = 0;
+
     switch(event->button())
     {
     case Qt::LeftButton:
-        switch(state)
+        dlg = new QColorDialog(QColor(R_color, G_color, B_color));
+        if(dlg->exec() == QColorDialog::Accepted)
         {
-        case DIOD_R:
-            state = DIOD_G;
-            break;
-
-        case DIOD_G:
-            state = DIOD_B;
-            break;
-
-        case DIOD_B:
-            state = DIOD_NONE;
-            break;
-
-        default:
-            state = DIOD_R;
-            break;
+            set_color(dlg->selectedColor());
         }
-
-        setProperty("ID", QVariant(state));
-        draw_state();
+        dlg->deleteLater();
         break;
 
     default:

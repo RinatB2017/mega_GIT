@@ -21,7 +21,7 @@
 #ifndef CRC_H
 #define CRC_H
 //--------------------------------------------------------------------------------
-#include <stdint.h>
+//#include <stdint.h>
 #include <QObject>
 //--------------------------------------------------------------------------------
 #define htons(n) (unsigned short)((((unsigned short) (n)) << 8) | (((unsigned short) (n)) >> 8))
@@ -33,7 +33,7 @@ public:
     static uint8_t  pelco_crc8(uint8_t *pcBlock, uint8_t len);
 
     static uint8_t  crc8(uint8_t *pcBlock, uint8_t len);
-    static uint16_t crc16(uint8_t *pcBlock, uint8_t len);
+    static uint16_t crc16(uint8_t *pcBlock, uint16_t len);
     static uint16_t modbus_crc16(uint8_t *pcBlock, uint16_t len);
     static uint16_t multimeter_crc16(uint8_t *pcBlock, uint16_t len);
     static uint16_t powersupply_crc16(uint8_t *pcBlock, uint16_t len);

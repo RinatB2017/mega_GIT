@@ -36,7 +36,15 @@ public:
               QWidget *parent = 0);
     ~MyPalette();
 
-    void set_active(bool value);
+    void set_data(QByteArray data);
+    QByteArray get_data(void);
+
+    void set_left_btn_active(bool value);
+    void set_right_btn_active(bool value);
+    void set_flag_is_palette(bool value);
+
+    void load_setting(void);
+    void save_setting(void);
 
 signals:
     void info(const QString &);
@@ -48,10 +56,9 @@ private:
     QGridLayout *grid = 0;
     QList<Diod *> buttons;
 
+    int max_x = 0;
+    int max_y = 0;
     bool flag_active = false;
-
-    void load_setting(void);
-    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif

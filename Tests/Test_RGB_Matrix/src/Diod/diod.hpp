@@ -44,10 +44,18 @@ public:
     uint8_t get_G(void);
     uint8_t get_B(void);
 
+    void set_left_btn_active(bool value);
+    void set_right_btn_active(bool value);
+    void set_flag_is_palette(bool value);
+
 private:
     uint8_t R_color = 0;
     uint8_t G_color = 0;
     uint8_t B_color = 0;
+
+    bool active_left_btn = false;
+    bool active_right_btn = false;
+    bool is_palette = false;
 
     void set_cursor(void);
 

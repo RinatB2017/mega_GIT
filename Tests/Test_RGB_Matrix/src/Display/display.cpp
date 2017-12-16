@@ -47,7 +47,8 @@ Display::Display(int max_x,
         for(int x=0; x<max_x; x++)
         {
             diod[x][y] = new Diod(this);
-            diod[x][y]->setProperty(PALETTE_PROPERTY, flag_active);
+            diod[x][y]->set_left_btn_active(true);
+            diod[x][y]->set_right_btn_active(false);
 
             grid->addWidget(diod[x][y], y, x);
         }
@@ -57,18 +58,49 @@ Display::Display(int max_x,
 
     setFrameStyle( QFrame::StyledPanel | QFrame::Plain );
     setFixedSize(sizeHint());
-
-    load_setting();
 }
 //--------------------------------------------------------------------------------
-void Display::set_active(bool value)
+void Display::set_left_btn_active(bool value)
 {
     flag_active = value;
     for(int y=0; y<max_y; y++)
     {
         for(int x=0; x<max_x; x++)
         {
-            diod[x][y]->setProperty(PALETTE_PROPERTY, value);
+            diod[x][y]->set_left_btn_active(value);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void Display::set_right_btn_active(bool value)
+{
+    flag_active = value;
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            diod[x][y]->set_right_btn_active(value);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void Display::set_data(QByteArray data)
+{
+    if(data.length() != (max_x * max_y * 3))
+    {
+        emit error("Display::set_data bad data size!");
+        return;
+    }
+
+    int index = 0;
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            diod[x][y]->set_color((uint8_t)data[index],
+                                  (uint8_t)data[index+1],
+                                  (uint8_t)data[index+2]);
+            index+=3;
         }
     }
 }
@@ -251,6 +283,10 @@ void Display::load_setting(void)
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
+    settings->beginGroup(objectName());
+    set_data(settings->value("value").toByteArray());
+    settings->endGroup();
+
     settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
@@ -258,6 +294,10 @@ void Display::save_setting(void)
 {
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
+
+    settings->beginGroup(objectName());
+    settings->setValue("value", get_data());
+    settings->endGroup();
 
     settings->deleteLater();
 }

@@ -49,7 +49,7 @@ void Diod::set_color(uint8_t R_value,
     G_color = G_value;
     B_color = B_value;
 
-    setStyleSheet(QString("background:rgb(%1,%2,%3)")
+    setStyleSheet(QString("background:rgb(%1,%2,%3);")
                   .arg(R_color)
                   .arg(G_color)
                   .arg(B_color));
@@ -57,7 +57,7 @@ void Diod::set_color(uint8_t R_value,
 //--------------------------------------------------------------------------------
 QRgb Diod::get_color(void)
 {
-    return qRgba(R_color, G_color, B_color, 0);
+    return qRgba(R_color, G_color, B_color, 255);
 }
 //--------------------------------------------------------------------------------
 uint8_t Diod::get_R(void)
@@ -78,37 +78,65 @@ uint8_t Diod::get_B(void)
 void Diod::set_cursor(void)
 {
     QPixmap *pixmap = new QPixmap(WIDTH, HEIGHT);
+    Q_CHECK_PTR(pixmap);
+
     pixmap->fill(QColor(R_color, G_color, B_color, 255));
 
     QCursor cursor(*pixmap);
     topLevelWidget()->setCursor(cursor);
 }
 //--------------------------------------------------------------------------------
+void Diod::set_left_btn_active(bool value)
+{
+    active_left_btn = value;
+}
+//--------------------------------------------------------------------------------
+void Diod::set_right_btn_active(bool value)
+{
+    active_right_btn = value;
+}
+//--------------------------------------------------------------------------------
+void Diod::set_flag_is_palette(bool value)
+{
+    is_palette = value;
+}
+//--------------------------------------------------------------------------------
 void Diod::mousePressEvent(QMouseEvent *event)
 {
     QColorDialog *dlg = 0;
     QImage *img = 0;
-    bool flag = false;
 
     switch(event->button())
     {
     case Qt::LeftButton:
-        flag = property(PALETTE_PROPERTY).toBool();
-        if(!flag)
+        if(active_left_btn)
         {
             img = new QImage(cursor().pixmap().toImage());
-            set_color(img->pixelColor(WIDTH / 2, HEIGHT / 2));
+            if(is_palette == false)
+            {
+                if((img->width() >= WIDTH / 2) && (img->height() >= HEIGHT / 2))
+                {
+                    set_color(img->pixelColor(WIDTH / 2, HEIGHT / 2));
+                }
+            }
+            else
+            {
+                set_cursor();
+            }
         }
         break;
 
     case Qt::RightButton:
-        dlg = new QColorDialog(QColor(R_color, G_color, B_color));
-        if(dlg->exec() == QColorDialog::Accepted)
+        if(active_right_btn)
         {
-            set_color(dlg->selectedColor());
-            set_cursor();
+            dlg = new QColorDialog(QColor(R_color, G_color, B_color));
+            if(dlg->exec() == QColorDialog::Accepted)
+            {
+                set_color(dlg->selectedColor());
+                set_cursor();
+            }
+            dlg->deleteLater();
         }
-        dlg->deleteLater();
         break;
 
     default:

@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
 
+    //qApp->setPalette(qApp->style()->standardPalette());
     main_window->show();
 
     splash->finish(main_window);

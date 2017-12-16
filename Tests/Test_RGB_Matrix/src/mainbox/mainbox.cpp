@@ -57,6 +57,11 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     serialBox->deleteLater();
+
+    display->deleteLater();
+    control_display->deleteLater();
+    palette->deleteLater();
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -126,22 +131,35 @@ void MainBox::createSerialBox(void)
 void MainBox::createDisplayBox(void)
 {
     display = new Display(MAX_SCREEN_X, MAX_SCREEN_Y, this);
-    display->set_active(false);
+    display->setObjectName("display");
+    display->load_setting();
+    display->set_left_btn_active(true);
+    display->set_right_btn_active(false);
     connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     control_display = new Display(NUM_LEDS_PER_STRIP, NUM_STRIPS, this);
-    control_display->set_active(false);
+    control_display->setObjectName("control_display");
+    control_display->load_setting();
+    control_display->set_left_btn_active(false);
+    control_display->set_right_btn_active(false);
     connect(control_display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(control_display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(control_display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(control_display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     palette = new MyPalette(4, 4, this);
-    palette->set_active(true);
+    palette->setObjectName("MyPalette");
+    palette->load_setting();
+    palette->set_left_btn_active(true);
+    palette->set_right_btn_active(true);
     palette->setTitle("Палитра");
+    connect(palette,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(palette,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(palette,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(palette,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(palette);
@@ -155,7 +173,9 @@ void MainBox::createDisplayBox(void)
 
     ui->frame->setLayout(box);
     ui->frame->setFixedWidth(ui->frame->sizeHint().width());
-
+}
+//--------------------------------------------------------------------------------
+#if 0
     const char *buf[MAX_SCREEN_Y] = {
         ".............................R.R.R.R.R.R.R.R.R.R.R.R.R.R.R.R",
         "RRRR.GGG..B..B.RRR..GGGG.BBB..R.R.R.R.R.R.R.R.R.R.R.R.R.R.R.",
@@ -190,7 +210,7 @@ void MainBox::createDisplayBox(void)
 
         }
     }
-}
+#endif
 //--------------------------------------------------------------------------------
 void MainBox::createTimer(void)
 {

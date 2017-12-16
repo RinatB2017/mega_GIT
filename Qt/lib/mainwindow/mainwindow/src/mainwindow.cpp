@@ -701,11 +701,6 @@ void MainWindow::save_main(void)
     settings->setValue("NoAnswerFromExit", a_AskExit->isChecked());
 #endif
 
-    //TODO settings->setValue("Left", geometry().x());
-    //TODO settings->setValue("Top",  geometry().y());
-    //TODO settings->setValue("Width", width());
-    //TODO settings->setValue("Height",height());
-
     settings->endGroup();
 
     settings->setValue("geometry",      saveGeometry());

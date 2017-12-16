@@ -9,8 +9,6 @@
 
 #define MAX_SCREEN_X NUM_LEDS_PER_STRIP * 3
 #define MAX_SCREEN_Y NUM_STRIPS
-
-#define PALETTE_PROPERTY    "pr_palette"
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
 //--------------------------------------------------------------------------------

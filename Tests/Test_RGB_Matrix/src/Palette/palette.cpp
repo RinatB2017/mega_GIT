@@ -33,6 +33,9 @@ MyPalette::MyPalette(int max_x,
                      QWidget *parent) :
     QGroupBox(parent)
 {
+    this->max_x = max_x;
+    this->max_y = max_y;
+
     grid = new QGridLayout();
     grid->setMargin(0);
     grid->setSpacing(0);
@@ -41,7 +44,9 @@ MyPalette::MyPalette(int max_x,
         for(int x=0; x<max_x; x++)
         {
             Diod *diod = new Diod(this);
-            diod->setProperty(PALETTE_PROPERTY, flag_active);
+            diod->set_left_btn_active(true);
+            diod->set_right_btn_active(true);
+            diod->set_flag_is_palette(true);
             buttons.append(diod);
 
             grid->addWidget(diod, y, x);
@@ -52,8 +57,6 @@ MyPalette::MyPalette(int max_x,
     box->addStretch(1);
 
     setLayout(box);
-
-    load_setting();
 }
 //--------------------------------------------------------------------------------
 MyPalette::~MyPalette()
@@ -61,19 +64,73 @@ MyPalette::~MyPalette()
     save_setting();
 }
 //--------------------------------------------------------------------------------
-void MyPalette::set_active(bool value)
+void MyPalette::set_left_btn_active(bool value)
 {
     flag_active = value;
     foreach (Diod *diod, buttons)
     {
-        diod->setProperty(PALETTE_PROPERTY, value);
+        diod->set_left_btn_active(value);
     }
+}
+//--------------------------------------------------------------------------------
+void MyPalette::set_right_btn_active(bool value)
+{
+    flag_active = value;
+    foreach (Diod *diod, buttons)
+    {
+        diod->set_right_btn_active(value);
+    }
+}
+//--------------------------------------------------------------------------------
+void MyPalette::set_flag_is_palette(bool value)
+{
+    flag_active = value;
+    foreach (Diod *diod, buttons)
+    {
+        diod->set_flag_is_palette(value);
+    }
+}
+//--------------------------------------------------------------------------------
+void MyPalette::set_data(QByteArray data)
+{
+    if(data.length() != (max_x * max_y * 3))
+    {
+        qDebug() << "MyPalette::set_data:" << data.length() << (max_x * max_y * 3);
+        emit error("MyPalette::set_data bad data size!");
+        return;
+    }
+
+    int index = 0;
+    foreach (Diod *diod, buttons)
+    {
+        diod->set_color((uint8_t)data[index],
+                        (uint8_t)data[index+1],
+                        (uint8_t)data[index+2]);
+        index+=3;
+    }
+}
+//--------------------------------------------------------------------------------
+QByteArray MyPalette::get_data(void)
+{
+    QByteArray ba;
+
+    foreach (Diod *diod, buttons)
+    {
+        ba.append((uint8_t)diod->get_R());
+        ba.append((uint8_t)diod->get_G());
+        ba.append((uint8_t)diod->get_B());
+    }
+    return ba;
 }
 //--------------------------------------------------------------------------------
 void MyPalette::load_setting(void)
 {
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
+
+    settings->beginGroup(objectName());
+    set_data(settings->value("value").toByteArray());
+    settings->endGroup();
 
     settings->deleteLater();
 }
@@ -82,6 +139,10 @@ void MyPalette::save_setting(void)
 {
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
+
+    settings->beginGroup(objectName());
+    settings->setValue("value", get_data());
+    settings->endGroup();
 
     settings->deleteLater();
 }

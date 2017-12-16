@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef PALETTE_HPP
+#define PALETTE_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QGridLayout>
+#include <QGroupBox>
 //--------------------------------------------------------------------------------
-#include "defines.hpp"
+class Diod;
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class SerialBox5;
-class QSpinBox;
-class QTimer;
-class Display;
-class MyPalette;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MyPalette : public QGroupBox
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    MyPalette(int max_x,
+              int max_y,
+              QWidget *parent = 0);
+    ~MyPalette();
+
+    void set_active(bool value);
 
 signals:
-    void send(QByteArray);
-
-private slots:
-    void run(bool state);
-    void read_data(QByteArray ba);
-    void update(void);
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
-    QByteArray data_rs232;
+    QGridLayout *grid = 0;
+    QList<Diod *> buttons;
 
-    QSpinBox *sb_interval = 0;
-    QTimer *timer = 0;
+    bool flag_active = false;
 
-    Display *display = 0;
-    Display *control_display = 0;
-    MyPalette *palette = 0;
-    int pos_x;
-
-    void init(void);
-    void connect_log(void);
-    void wait(int max_time_ms);
-
-    void createTestBar(void);
-    void createSerialBox(void);
-    void createDisplayBox(void);
-    void createTimer(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

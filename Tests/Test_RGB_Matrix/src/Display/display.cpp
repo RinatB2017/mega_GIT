@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2016                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -47,6 +47,7 @@ Display::Display(int max_x,
         for(int x=0; x<max_x; x++)
         {
             diod[x][y] = new Diod(this);
+            diod[x][y]->setProperty(PALETTE_PROPERTY, flag_active);
 
             grid->addWidget(diod[x][y], y, x);
         }
@@ -58,6 +59,18 @@ Display::Display(int max_x,
     setFixedSize(sizeHint());
 
     load_setting();
+}
+//--------------------------------------------------------------------------------
+void Display::set_active(bool value)
+{
+    flag_active = value;
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            diod[x][y]->setProperty(PALETTE_PROPERTY, value);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 QByteArray Display::get_data(void)

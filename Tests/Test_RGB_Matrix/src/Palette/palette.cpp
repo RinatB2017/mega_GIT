@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,71 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include <QGridLayout>
+#include <QToolButton>
+#include <QSettings>
+#include <QDebug>
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "palette.hpp"
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
+#include "diod.hpp"
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-class MainBox;
+MyPalette::MyPalette(int max_x,
+                     int max_y,
+                     QWidget *parent) :
+    QGroupBox(parent)
+{
+    grid = new QGridLayout();
+    grid->setMargin(0);
+    grid->setSpacing(0);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            Diod *diod = new Diod(this);
+            diod->setProperty(PALETTE_PROPERTY, flag_active);
+            buttons.append(diod);
+
+            grid->addWidget(diod, y, x);
+        }
+    }
+    QVBoxLayout *box = new QVBoxLayout;
+    box->addLayout(grid);
+    box->addStretch(1);
+
+    setLayout(box);
+
+    load_setting();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class SerialBox5;
-class QSpinBox;
-class QTimer;
-class Display;
-class MyPalette;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+MyPalette::~MyPalette()
 {
-    Q_OBJECT
-
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-signals:
-    void send(QByteArray);
-
-private slots:
-    void run(bool state);
-    void read_data(QByteArray ba);
-    void update(void);
-
-private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
-    QByteArray data_rs232;
-
-    QSpinBox *sb_interval = 0;
-    QTimer *timer = 0;
-
-    Display *display = 0;
-    Display *control_display = 0;
-    MyPalette *palette = 0;
-    int pos_x;
-
-    void init(void);
-    void connect_log(void);
-    void wait(int max_time_ms);
-
-    void createTestBar(void);
-    void createSerialBox(void);
-    void createDisplayBox(void);
-    void createTimer(void);
-
-protected:
-    void changeEvent(QEvent *event);
-
-};
+    save_setting();
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void MyPalette::set_active(bool value)
+{
+    flag_active = value;
+    foreach (Diod *diod, buttons)
+    {
+        diod->setProperty(PALETTE_PROPERTY, value);
+    }
+}
+//--------------------------------------------------------------------------------
+void MyPalette::load_setting(void)
+{
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
+    settings->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MyPalette::save_setting(void)
+{
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
+    settings->deleteLater();
+}
+//--------------------------------------------------------------------------------

@@ -42,6 +42,7 @@
 #include "defines.hpp"
 #include "crc.h"
 //--------------------------------------------------------------------------------
+#include "palette.hpp"
 #include "display.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -125,19 +126,30 @@ void MainBox::createSerialBox(void)
 void MainBox::createDisplayBox(void)
 {
     display = new Display(MAX_SCREEN_X, MAX_SCREEN_Y, this);
+    display->set_active(false);
     connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     control_display = new Display(NUM_LEDS_PER_STRIP, NUM_STRIPS, this);
+    control_display->set_active(false);
     connect(control_display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(control_display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(control_display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(control_display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
+    palette = new MyPalette(4, 4, this);
+    palette->set_active(true);
+    palette->setTitle("Палитра");
+
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(palette);
+    hbox->addWidget(display);
+    hbox->addStretch(1);
+
     QVBoxLayout *box = new QVBoxLayout();
-    box->addWidget(display);
+    box->addLayout(hbox);
     box->addWidget(control_display);
     box->addStretch(1);
 
@@ -250,11 +262,11 @@ void MainBox::update(void)
 
     data_rs232.clear();
 #ifdef FAKE
-    //emit trace(QString("[%1]").arg(ba.data()));
-    //emit info(QString("send %1 bytes").arg(ba.size()));
+    emit trace(QString("[%1]").arg(ba.data()));
+    emit info(QString("send %1 bytes").arg(ba.size()));
 #else
-    //emit send(ba);
-    serialBox->input(ba);
+    emit send(ba);
+    //serialBox->input(ba);
 
     emit info(QString("send %1 bytes").arg(ba.size()));
 #endif

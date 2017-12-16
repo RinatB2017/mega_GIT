@@ -56,8 +56,7 @@ public:
 
     QByteArray get_data(void);
 
-    void load_setting(void);
-    void save_setting(void);
+    void set_active(bool value);
 
 signals:
     void info(const QString &);
@@ -70,6 +69,10 @@ private:
     int max_x = 0;
     int max_y = 0;
 
+    bool flag_active = false;
+
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif

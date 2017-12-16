@@ -11,6 +11,7 @@ DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/Diod \
     $$PWD/src/Display \
+    $$PWD/src/Palette \
     $$PWD/src/mainbox \
     $$PWD/src/mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
@@ -34,14 +35,16 @@ HEADERS += \
     defines.hpp \
     version.hpp \
     mainbox.hpp \
+    palette.hpp \
     display.hpp \
     diod.hpp
 
 SOURCES += \
     mainbox.cpp \
-    main.cpp \
+    palette.cpp \
     display.cpp \
-    diod.cpp
+    diod.cpp \
+    main.cpp \
 
 FORMS += mainbox.ui
 

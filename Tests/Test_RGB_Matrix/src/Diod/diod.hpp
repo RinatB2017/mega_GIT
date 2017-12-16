@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2016                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -28,6 +28,8 @@
 //--------------------------------------------------------------------------------
 class Diod : public QToolButton
 {
+    Q_OBJECT
+
 public:
     Diod(QWidget *parent);
 
@@ -46,6 +48,8 @@ private:
     uint8_t R_color = 0;
     uint8_t G_color = 0;
     uint8_t B_color = 0;
+
+    void set_cursor(void);
 
 protected:
     void mousePressEvent(QMouseEvent *event);

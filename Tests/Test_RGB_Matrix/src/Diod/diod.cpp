@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2016                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,9 +18,14 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QApplication>
 #include <QColorDialog>
 #include <QMouseEvent>
+#include <QCursor>
+#include <QPixmap>
+#include <QImage>
 //--------------------------------------------------------------------------------
+#include "defines.hpp"
 #include "diod.hpp"
 //--------------------------------------------------------------------------------
 Diod::Diod(QWidget *parent) :
@@ -70,17 +75,38 @@ uint8_t Diod::get_B(void)
     return B_color;
 }
 //--------------------------------------------------------------------------------
+void Diod::set_cursor(void)
+{
+    QPixmap *pixmap = new QPixmap(WIDTH, HEIGHT);
+    pixmap->fill(QColor(R_color, G_color, B_color, 255));
+
+    QCursor cursor(*pixmap);
+    topLevelWidget()->setCursor(cursor);
+}
+//--------------------------------------------------------------------------------
 void Diod::mousePressEvent(QMouseEvent *event)
 {
     QColorDialog *dlg = 0;
+    QImage *img = 0;
+    bool flag = false;
 
     switch(event->button())
     {
     case Qt::LeftButton:
+        flag = property(PALETTE_PROPERTY).toBool();
+        if(!flag)
+        {
+            img = new QImage(cursor().pixmap().toImage());
+            set_color(img->pixelColor(WIDTH / 2, HEIGHT / 2));
+        }
+        break;
+
+    case Qt::RightButton:
         dlg = new QColorDialog(QColor(R_color, G_color, B_color));
         if(dlg->exec() == QColorDialog::Accepted)
         {
             set_color(dlg->selectedColor());
+            set_cursor();
         }
         dlg->deleteLater();
         break;

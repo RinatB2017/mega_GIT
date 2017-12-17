@@ -18,7 +18,6 @@ SUBDIRS += \
     Test_QHexEdit \
     Test_LibVLC \
     Test_md5 \
-    Test_NewMoonLight \
     Test_OpenRPT \
     Test_OscilloscopeBox \
     Test_PostgreSQL \

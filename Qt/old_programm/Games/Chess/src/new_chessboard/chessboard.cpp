@@ -35,9 +35,10 @@ ChessBoard::ChessBoard(QWidget *parent) :
 //--------------------------------------------------------------------------------
 void ChessBoard::connect_log(void)
 {
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
+    connect(this,   SIGNAL(info(QString)),  topLevelWidget(),   SIGNAL(info(QString)));
+    connect(this,   SIGNAL(debug(QString)), topLevelWidget(),   SIGNAL(debug(QString)));
+    connect(this,   SIGNAL(error(QString)), topLevelWidget(),   SIGNAL(error(QString)));
+    connect(this,   SIGNAL(trace(QString)), topLevelWidget(),   SIGNAL(trace(QString)));
 }
 //--------------------------------------------------------------------------------
 void ChessBoard::create_figures(void)
@@ -75,8 +76,13 @@ void ChessBoard::create_chessboard(void)
             btn_chessboard[x][y]->setIconSize(QSize(WIDTH_FIELD, HEIGHT_FIELD));
             btn_chessboard[x][y]->setCheckable(true);
             btn_chessboard[x][y]->setIcon(QIcon());
-            if(b) btn_chessboard[x][y]->setStyleSheet("background:gray;");
-            else btn_chessboard[x][y]->setStyleSheet("background:white;");
+            connect(btn_chessboard[x][y],   SIGNAL(clicked(bool)),  this,   SLOT(click(bool)));
+
+            if(b)
+                btn_chessboard[x][y]->setStyleSheet("background:gray;");
+            else
+                btn_chessboard[x][y]->setStyleSheet("background:white;");
+
             connect(btn_chessboard[x][y], SIGNAL(clicked(bool)), this, SLOT(set_cursor()));
 
             chessboard_grid->addWidget(btn_chessboard[x][y], y, x);
@@ -422,6 +428,7 @@ bool ChessBoard::move(const QString text)
 void ChessBoard::set_cursor(void)
 {
     QToolButton *btn = (QToolButton *)sender();
+    Q_CHECK_PTR(btn);
     if(!btn)
     {
         emit error("set_cursor");
@@ -434,5 +441,10 @@ void ChessBoard::set_cursor(void)
     {
         setCursor(QCursor(pixmap));
     }
+}
+//--------------------------------------------------------------------------------
+void ChessBoard::click(bool state)
+{
+    emit debug(QString("state is %1").arg(state));
 }
 //--------------------------------------------------------------------------------

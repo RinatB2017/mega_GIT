@@ -69,6 +69,7 @@ public slots:
 
 private slots:
     void set_cursor(void);
+    void click(bool state);
 
 private:
     QPixmap w_bishop;

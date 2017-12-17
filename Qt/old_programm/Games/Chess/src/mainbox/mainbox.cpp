@@ -45,11 +45,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    #ifndef NO_CHESSBOARD
-    board(0),
-    #endif
-    m_engine(0)
+    ui(new Ui::MainBox)
 {
     init();
 }

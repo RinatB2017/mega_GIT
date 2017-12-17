@@ -355,7 +355,7 @@ void MyGLWidget::createTestBar(void)
     commands.append({ ID_TEST_4, "test 4", &MyGLWidget::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MyGLWidget::test_5 });
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
     toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

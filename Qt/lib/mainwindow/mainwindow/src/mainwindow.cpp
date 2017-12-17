@@ -664,7 +664,7 @@ void MainWindow::load_main(void)
 
     QApplication::setFont(font);
 
-    style_name = settings->value("StyleName", "Oxygen").toString();
+    style_name = settings->value("StyleName", "Breeze").toString();
     flag_close = settings->value("NoAnswerFromExit", false).toBool();
 
     QApplication::setStyle(QStyleFactory::create(style_name));
@@ -776,7 +776,7 @@ void MainWindow::createToolBar(void)
         return;
     }
 
-    toolBar->setObjectName("toolBar");
+    toolBar->setObjectName("testbar");
     toolBar->setMovable(true);  //TODO
 
     addToolBar(Qt::TopToolBarArea, toolBar);

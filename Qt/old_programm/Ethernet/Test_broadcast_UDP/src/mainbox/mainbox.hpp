@@ -22,6 +22,7 @@
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -31,7 +32,7 @@ class MySplashScreen;
 class QToolButton;
 class QToolBar;
 //--------------------------------------------------------------------------------
-class MainBox : public QWidget
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
@@ -58,12 +59,6 @@ private:
 
     void init(void);
     void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

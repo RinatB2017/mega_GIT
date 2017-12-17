@@ -91,7 +91,7 @@ ReportWriterWindow::ReportWriterWindow()
 
     connect(handler, SIGNAL(dbOpenClosed()), this, SLOT(setCaption()));
     connect(handler, SIGNAL(messageChanged(const QString &)),
-            statusBar(), SLOT(showMessage(QString)));
+            statusBar(), SLOT(showtrace(QString)));
     connect(handler, SIGNAL(messageCleared()),
             statusBar(), SLOT(clearMessage()));
     handler->onWinChanged(NULL);

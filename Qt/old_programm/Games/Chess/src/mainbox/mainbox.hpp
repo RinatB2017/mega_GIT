@@ -81,12 +81,6 @@ private:
 
     void analize(const QString &line);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     void createTestBar(void);
     void create_chessboard(void);
     void create_engine(void);

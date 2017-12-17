@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>B590</class>
- <widget class="QFrame" name="B590">
+ <widget class="QWidget" name="B590">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>816</width>
-    <height>677</height>
+    <width>953</width>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Frame</string>
-  </property>
-  <property name="frameShape">
-   <enum>QFrame::StyledPanel</enum>
-  </property>
-  <property name="frameShadow">
-   <enum>QFrame::Raised</enum>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>

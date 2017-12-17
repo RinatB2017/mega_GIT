@@ -108,12 +108,6 @@ private:
     QSlider  *sl_value = 0;
     QSpinBox *sb_value = 0;
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     void calc_line(qreal center_x,
                    qreal center_y,
                    qreal angle,

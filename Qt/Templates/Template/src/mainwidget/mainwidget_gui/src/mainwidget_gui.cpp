@@ -83,32 +83,6 @@ void MainWidget_GUI::init(void)
     }
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainWidget_GUI::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    Q_CHECK_PTR(tool_bar);
-    Q_CHECK_PTR(tool_button);
-    if(tool_bar == nullptr)
-    {
-        return nullptr;
-    }
-    if(tool_button == nullptr)
-    {
-        return nullptr;
-    }
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainWidget_GUI::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
@@ -126,7 +100,7 @@ void MainWidget_GUI::createTestBar(void)
     commands.append({ ID_TEST_5, "test 5", &MainWidget::test_5 });
     commands.append({ ID_TEST_6, "test 6", 0 });
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
     toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

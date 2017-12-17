@@ -21,7 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <stdint.h>
+//#include <stdint.h>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -88,12 +88,6 @@ private:
     QList<CMD> commands;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

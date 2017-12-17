@@ -64,7 +64,7 @@
 #endif
 //--------------------------------------------------------------------------------
 B588::B588(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::B588)
 {
     init();
@@ -83,7 +83,7 @@ void B588::connect_log(void)
         connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(message(QString)), parentWidget(), SIGNAL(message(QString)));
+        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
     }
     else
     {
@@ -91,7 +91,7 @@ void B588::connect_log(void)
         connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
         connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(message(QString)), this, SLOT(log(QString)));
+        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -125,12 +125,12 @@ void B588::init(void)
         connect(multimeter, SIGNAL(info(QString)),    mw, SIGNAL(info(QString)));
         connect(multimeter, SIGNAL(debug(QString)),   mw, SIGNAL(debug(QString)));
         connect(multimeter, SIGNAL(error(QString)),   mw, SIGNAL(error(QString)));
-        connect(multimeter, SIGNAL(message(QString)), mw, SIGNAL(message(QString)));
+        connect(multimeter, SIGNAL(trace(QString)), mw, SIGNAL(trace(QString)));
 
         connect(powersupply, SIGNAL(info(QString)),    mw, SIGNAL(info(QString)));
         connect(powersupply, SIGNAL(debug(QString)),   mw, SIGNAL(debug(QString)));
         connect(powersupply, SIGNAL(error(QString)),   mw, SIGNAL(error(QString)));
-        connect(powersupply, SIGNAL(message(QString)), mw, SIGNAL(message(QString)));
+        connect(powersupply, SIGNAL(trace(QString)), mw, SIGNAL(trace(QString)));
     }
 
     block_interface(true);
@@ -861,28 +861,14 @@ void B588::block_interface(bool state)
     ui->sb_shunt->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
-QToolButton *B588::add_button(QToolBar *tool_bar,
-                              QToolButton *tool_button,
-                              QIcon icon,
-                              const QString &text,
-                              const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void B588::createParrotBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     ParrotBar *parrotBar = new ParrotBar(this);
     connect(parrotBar, SIGNAL(set_UI(int,int)), this, SLOT(set_UI_parrot(int,int)));
@@ -902,9 +888,13 @@ void B588::set_UI_parrot(int U, int I)
 void B588::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    QToolBar *toolBar = new QToolBar(tr("testbar B5-88"));
+    QToolBar *toolBar = new QToolBar("testbar B5-88");
     toolBar->setObjectName("toolbar_B588");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -1690,7 +1680,11 @@ bool B588::Calibration_press_enter(void)
 void B588::createPowerSupplyBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     B588_toolbar *psBar = new B588_toolbar(tr("powersupply B5-88"), this);
     psBar->setObjectName("ps_B588");

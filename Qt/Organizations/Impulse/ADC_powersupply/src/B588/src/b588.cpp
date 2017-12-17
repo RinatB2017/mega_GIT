@@ -40,7 +40,7 @@
 #include "b588.hpp"
 //--------------------------------------------------------------------------------
 B588::B588(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::B588),
     is_blocked(false)
 {
@@ -70,7 +70,7 @@ void B588::init(void)
     connect(powersupply, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
     connect(powersupply, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
     connect(powersupply, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
-    connect(powersupply, SIGNAL(message(QString)), topLevelWidget(), SIGNAL(message(QString)));
+    connect(powersupply, SIGNAL(trace(QString)),   topLevelWidget(), SIGNAL(trace(QString)));
 
     grapher = new GrapherBox(this);
     curve_U_adc  = grapher->add_curve("U(adc)");
@@ -100,30 +100,17 @@ void B588::init(void)
     setMinimumSize(1024, 600);
 }
 //--------------------------------------------------------------------------------
-QToolButton *B588::add_button(QToolBar *tool_bar,
-                              QToolButton *tool_button,
-                              QIcon icon,
-                              const QString &text,
-                              const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void B588::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     QToolButton *btn_test = add_button(toolBar,

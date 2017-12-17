@@ -54,13 +54,10 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
-    QWidget(parent),
+    MyWidget(parent),
     splash(splash),
     ui(new Ui::MainBox),
-    test_flag(false),
-    grapher(0),
-    serial(0),
-    serial_data(0)
+    test_flag(false)
 {
     init();
 }
@@ -70,33 +67,9 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::log(const QString &data)
-{
-    qDebug() << data;
-}
-//--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     createTestBar();
 
@@ -247,29 +220,17 @@ void MainBox::write_data(void)
     i2c->deleteLater();
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = (MainWindow *)parentWidget();
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
+
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

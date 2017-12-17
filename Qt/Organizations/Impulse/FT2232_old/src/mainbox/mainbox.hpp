@@ -26,6 +26,8 @@
 #include <ftd2xx.h>
 #include <ftdi.h>
 #include "i2c.hpp"
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -38,7 +40,7 @@ class QToolBar;
 class GrapherBox;
 class SerialBox5;
 //--------------------------------------------------------------------------------
-class MainBox : public QWidget
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
@@ -92,20 +94,13 @@ private:
     Ui::MainBox *ui;
     bool test_flag;
 
-    GrapherBox *grapher;
-    SerialBox5 *serial;
-    QByteArray *serial_data;
+    GrapherBox *grapher = 0;
+    SerialBox5 *serial = 0;
+    QByteArray *serial_data = 0;
 
     ftdi_context ftdi;
 
     void init(void);
-    void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

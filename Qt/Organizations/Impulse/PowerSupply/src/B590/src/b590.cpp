@@ -43,7 +43,7 @@
 #include "b590_toolbar.hpp"
 //--------------------------------------------------------------------------------
 B590::B590(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::B590)
 {
     init();
@@ -54,18 +54,9 @@ B590::~B590()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void B590::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
-    connect(this, SIGNAL(message(QString)), topLevelWidget(), SIGNAL(message(QString)));
-}
-//--------------------------------------------------------------------------------
 void B590::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
 #ifdef TEST
     createTestBar();
@@ -78,31 +69,17 @@ void B590::init(void)
     block_interface(true);
 }
 //--------------------------------------------------------------------------------
-QToolButton *B590::add_button(QToolBar *tool_bar,
-                              QToolButton *tool_button,
-                              QIcon icon,
-                              const QString &text,
-                              const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void B590::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
-
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     QToolButton *btn_test = add_button(toolBar,
@@ -117,8 +94,11 @@ void B590::createTestBar(void)
 void B590::createParrotBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     ParrotBar *parrotBar = new ParrotBar(this);
     connect(parrotBar, SIGNAL(set_UI(int,int)), this, SLOT(set_UI_parrot(int,int)));
@@ -265,7 +245,7 @@ void B590::createPowersupply(void)
     connect(powersupply, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
     connect(powersupply, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
     connect(powersupply, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
-    connect(powersupply, SIGNAL(message(QString)), topLevelWidget(), SIGNAL(message(QString)));
+    connect(powersupply, SIGNAL(trace(QString)), topLevelWidget(), SIGNAL(trace(QString)));
 
     connect(ui->btn_rc_on,  SIGNAL(released()), powersupply, SLOT(rc_on()));
     connect(ui->btn_rc_off, SIGNAL(released()), powersupply, SLOT(rc_off()));

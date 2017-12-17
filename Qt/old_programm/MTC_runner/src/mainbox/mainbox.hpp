@@ -76,12 +76,6 @@ private:
     QToolButton *btn_run = 0;
     QProcess *proccess = 0;
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     void createRunBar(void);
     void createScriptBar(void);
 

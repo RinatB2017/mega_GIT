@@ -66,28 +66,14 @@ void MainBox::init(void)
     setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = (MainWindow *)topLevelWidget();
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     commands.clear();
     CMD command;
@@ -99,7 +85,8 @@ void MainBox::createTestBar(void)
     command.cmd = ID_TEST_5; command.cmd_text = "test 5";   command.func = &MainBox::test_5;  commands.append(command);
     command.cmd = ID_TEST_6; command.cmd_text = "test 6";   command.func = 0;    commands.append(command);
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     cb_test = new QComboBox(this);

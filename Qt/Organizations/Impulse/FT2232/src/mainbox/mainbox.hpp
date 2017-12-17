@@ -25,6 +25,8 @@
 //--------------------------------------------------------------------------------
 #include <ftd2xx.h>
 #include <ftdi.h>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #include "at93c56.hpp"
 //--------------------------------------------------------------------------------
@@ -40,7 +42,7 @@ class QMenu;
 class GrapherBox;
 class SerialBox5;
 //--------------------------------------------------------------------------------
-class MainBox : public QWidget
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
@@ -50,10 +52,6 @@ public:
     virtual ~MainBox();
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
     void send(QByteArray);
 
     void toolButtonStyleChanged(Qt::ToolButtonStyle);
@@ -92,26 +90,19 @@ private slots:
     void save(void);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-    bool test_flag;
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
+    bool test_flag = false;
 
-    GrapherBox *grapher;
+    GrapherBox *grapher = 0;
 #ifdef SERIAL
-    SerialBox5 *serial;
-    QByteArray *serial_data;
+    SerialBox5 *serial = 0;
+    QByteArray *serial_data = 0;
 #endif
 
     ftdi_context ftdi;
 
     void init(void);
-    void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
     void createMenu(void);

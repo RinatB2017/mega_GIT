@@ -65,23 +65,6 @@ void MainBox::finished(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
@@ -91,13 +74,8 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    Q_CHECK_PTR(toolBar);
-    if(toolBar == nullptr)
-    {
-        return;
-    }
-    toolBar->setObjectName("toolBar");
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
 
     progressBar = new QProgressBar(this);
     progressBar->setFixedWidth(200);

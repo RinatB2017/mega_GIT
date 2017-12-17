@@ -43,7 +43,7 @@ void Fake_oscilloscope_GDS_840C::connect_log(void)
         connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(message(QString)), topLevelWidget(), SIGNAL(message(QString)));
+        connect(this, SIGNAL(trace(QString)), topLevelWidget(), SIGNAL(trace(QString)));
     }
 }
 //--------------------------------------------------------------------------------

@@ -160,12 +160,6 @@ private:
     void init(void);
     void wait(int max_time_ms);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
 protected:
     void changeEvent(QEvent *event);
 

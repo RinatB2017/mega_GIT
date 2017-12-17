@@ -24,6 +24,8 @@
 #include <QFrame>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class B588;
@@ -50,7 +52,7 @@ class GrapherBox;
 
 class Multimeter_V786_2;
 //--------------------------------------------------------------------------------
-class B588 : public QFrame
+class B588 : public MyWidget
 {
     Q_OBJECT
 
@@ -59,12 +61,6 @@ public:
     ~B588();
 
     bool is_blocked_exit(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 private slots:
     void init_multimeter(void);
@@ -120,11 +116,6 @@ private:
     void connect_log(void);
     void init(void);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
     void createTestBar(void);
 
     int test_triangle_b588_U(void);

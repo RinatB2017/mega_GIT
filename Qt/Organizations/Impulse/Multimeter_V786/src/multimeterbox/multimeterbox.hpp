@@ -106,11 +106,6 @@ private:
     int curve_S = 0;
     int curve_PF = 0;
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 #ifdef FAKE
     void createTestBar(void);
 #endif

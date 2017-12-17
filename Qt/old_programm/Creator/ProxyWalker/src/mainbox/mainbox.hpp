@@ -42,7 +42,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
 protected:
@@ -75,12 +75,6 @@ private:
     int current_index;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

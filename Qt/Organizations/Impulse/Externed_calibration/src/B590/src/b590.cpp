@@ -56,7 +56,7 @@
 #endif
 //--------------------------------------------------------------------------------
 B590::B590(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::B590)
 {
     init();
@@ -105,7 +105,7 @@ void B590::init(void)
     connect(powersupply, SIGNAL(info(QString)),     this, SIGNAL(info(QString)));
     connect(powersupply, SIGNAL(debug(QString)),    this, SIGNAL(debug(QString)));
     connect(powersupply, SIGNAL(error(QString)),    this, SIGNAL(error(QString)));
-    connect(powersupply, SIGNAL(message(QString)),  this, SIGNAL(message(QString)));
+    connect(powersupply, SIGNAL(trace(QString)),  this, SIGNAL(trace(QString)));
 
     connect(ui->btn_on,  SIGNAL(released()), this, SLOT(on()));
     connect(ui->btn_off, SIGNAL(released()), this, SLOT(off()));
@@ -132,7 +132,7 @@ void B590::init(void)
     connect(multimeter, SIGNAL(info(QString)),     this, SIGNAL(info(QString)));
     connect(multimeter, SIGNAL(debug(QString)),    this, SIGNAL(debug(QString)));
     connect(multimeter, SIGNAL(error(QString)),    this, SIGNAL(error(QString)));
-    connect(multimeter, SIGNAL(message(QString)),  this, SIGNAL(message(QString)));
+    connect(multimeter, SIGNAL(trace(QString)),  this, SIGNAL(trace(QString)));
 
     ui->btn_find_devices->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
     connect(ui->btn_find_devices, SIGNAL(clicked()), this, SLOT(find_devices()));
@@ -141,29 +141,17 @@ void B590::init(void)
     block_interface(true);
 }
 //--------------------------------------------------------------------------------
-QToolButton *B590::add_button(QToolBar *tool_bar,
-                              QToolButton *tool_button,
-                              QIcon icon,
-                              const QString &text,
-                              const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void B590::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     QToolButton *btn_test = add_button(toolBar,

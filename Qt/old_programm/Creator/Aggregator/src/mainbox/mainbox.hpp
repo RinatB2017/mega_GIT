@@ -40,7 +40,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
 private slots:
@@ -53,12 +53,6 @@ private:
     ListWidget_Site *lw_site = 0;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

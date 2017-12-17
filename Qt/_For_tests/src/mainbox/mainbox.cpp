@@ -132,7 +132,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
     commands.append({ ID_TEST_6, "test 6", 0 });
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
     toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

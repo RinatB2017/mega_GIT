@@ -91,30 +91,17 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createOptionsBar(void)
 {
     QToolBar *optionsBar = new QToolBar(tr("optionsbar"));
     optionsBar->setObjectName("optionsBar");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     mw->addToolBar(Qt::TopToolBarArea, optionsBar);
 
@@ -153,8 +140,8 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    toolBar->setObjectName("toolBar");
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -855,7 +842,7 @@ void MainBox::init(void)
     connect(calibrator, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
     connect(calibrator, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
     connect(calibrator, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(calibrator, SIGNAL(message(QString)),   this, SIGNAL(message(QString)));
+    connect(calibrator, SIGNAL(trace(QString)),   this, SIGNAL(trace(QString)));
 
     if(splash) splash->showMessage(tr("init multimeter widget"));
 
@@ -863,7 +850,7 @@ void MainBox::init(void)
     connect(multimeter, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
     connect(multimeter, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
     connect(multimeter, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(multimeter, SIGNAL(message(QString)),   this, SIGNAL(message(QString)));
+    connect(multimeter, SIGNAL(trace(QString)),   this, SIGNAL(trace(QString)));
 
     if(splash) splash->showMessage(tr("connect"));
 

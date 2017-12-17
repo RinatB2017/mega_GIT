@@ -88,7 +88,7 @@ void SerialPort_B588_test::init_fram(void)
     connect(fram, SIGNAL(info(QString)),    this, SIGNAL(info(QString)));
     connect(fram, SIGNAL(debug(QString)),   this, SIGNAL(debug(QString)));
     connect(fram, SIGNAL(error(QString)),   this, SIGNAL(error(QString)));
-    connect(fram, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+    connect(fram, SIGNAL(trace(QString)), this, SIGNAL(trace(QString)));
 
     fram->init();
 }
@@ -96,7 +96,11 @@ void SerialPort_B588_test::init_fram(void)
 void SerialPort_B588_test::create_fake_toolbar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     sb_noise = new QSpinBox();
     sb_noise->setMinimum(0);

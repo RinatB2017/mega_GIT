@@ -376,12 +376,6 @@ private:
                                float limit,
                                int step);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     //---
     struct STEP {
         int step_a;

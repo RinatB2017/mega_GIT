@@ -77,32 +77,17 @@ MultimeterBox::~MultimeterBox()
 }
 //--------------------------------------------------------------------------------
 #ifdef TESTBAR
-QToolButton *MultimeterBox::add_button(QToolBar *tool_bar,
-                                       QToolButton *tool_button,
-                                       QIcon icon,
-                                       const QString &text,
-                                       const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifdef TESTBAR
 void MultimeterBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -148,7 +133,7 @@ void MultimeterBox::init(void)
     connect(multimeter, SIGNAL(info(QString)),    this, SIGNAL(info(QString)));
     connect(multimeter, SIGNAL(debug(QString)),   this, SIGNAL(debug(QString)));
     connect(multimeter, SIGNAL(error(QString)),   this, SIGNAL(error(QString)));
-    connect(multimeter, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+    connect(multimeter, SIGNAL(trace(QString)), this, SIGNAL(trace(QString)));
 
     ui->cb_measurement->addItem(tr("Измерение напряжения постоянного тока"), QVariant(Qt::UserRole + V764_2_CMD_0x06));
     ui->cb_measurement->addItem(tr("Измерение напряжения переменного тока"), QVariant(Qt::UserRole + V764_2_CMD_0x07));
@@ -567,31 +552,14 @@ void MultimeterBox::power(bool state)
 }
 //--------------------------------------------------------------------------------
 #ifdef FAKE
-QToolButton *MultimeterBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifdef FAKE
 void MultimeterBox::createFakeBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     QToolBar *fakeBar = new QToolBar(tr("fakebar"));
     mw->addToolBar(Qt::TopToolBarArea, fakeBar);

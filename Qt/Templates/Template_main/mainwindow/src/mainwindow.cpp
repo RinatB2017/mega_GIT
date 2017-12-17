@@ -71,7 +71,7 @@ void MainWindow::create_toolbars(void)
         return;
     }
 
-    toolBar->setObjectName("toolBar");
+    toolBar->setObjectName("toolbar");
 
     QToolButton *btn_exit = new QToolButton(this);
     btn_exit->setIcon(QIcon(":/images/computer.ico"));

@@ -296,27 +296,10 @@ void MKT_box::create_grapher(void)
     grapher_data.clear();
 }
 //--------------------------------------------------------------------------------
-QToolButton *MKT_box::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MKT_box::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return;
@@ -330,7 +313,8 @@ void MKT_box::createTestBar(void)
     commands.append({ ID_TEST_4, "test 4", &MKT_box::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MKT_box::test_5 });
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     cb_test = new QComboBox(this);

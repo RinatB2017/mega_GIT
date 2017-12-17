@@ -44,7 +44,7 @@
 #endif
 //--------------------------------------------------------------------------------
 B590::B590(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::B590),
     is_blocked(false),
     timer(0)
@@ -64,14 +64,14 @@ void B590::connect_log(void)
         connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(message(QString)), parentWidget(), SIGNAL(message(QString)));
+        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
     }
     else
     {
         connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
         connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(message(QString)), this, SLOT(log(QString)));
+        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void B590::init(void)
     connect(powersupply, SIGNAL(info(QString)),     topLevelWidget(), SIGNAL(info(QString)));
     connect(powersupply, SIGNAL(debug(QString)),    topLevelWidget(), SIGNAL(debug(QString)));
     connect(powersupply, SIGNAL(error(QString)),    topLevelWidget(), SIGNAL(error(QString)));
-    connect(powersupply, SIGNAL(message(QString)),  topLevelWidget(), SIGNAL(message(QString)));
+    connect(powersupply, SIGNAL(trace(QString)),  topLevelWidget(), SIGNAL(trace(QString)));
 
     ui->sb_address->setMinimum(1);
     ui->sb_address->setMaximum(251);
@@ -134,24 +134,6 @@ void B590::init(void)
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     connect(ui->btn_power, SIGNAL(toggled(bool)), this, SLOT(measuring(bool)));
     connect(ui->btn_find_device, SIGNAL(clicked()), SLOT(find_device()));
-}
-//--------------------------------------------------------------------------------
-QToolButton *B590::add_button(QToolBar *tool_bar,
-                              QToolButton *tool_button,
-                              QIcon icon,
-                              const QString &text,
-                              const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
 }
 //--------------------------------------------------------------------------------
 void B590::changeEvent(QEvent *event)
@@ -270,10 +252,14 @@ void B590::update(void)
 void B590::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
-
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     toolBar->addWidget(new QLabel("Ventilator"));

@@ -222,24 +222,6 @@ void AD9106_Box::btn_set_values_click(void)
     set_values();
 }
 //--------------------------------------------------------------------------------
-QToolButton *AD9106_Box::add_button(QToolBar *tool_bar,
-                                    QToolButton *tool_button,
-                                    QIcon icon,
-                                    const QString &text,
-                                    const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void AD9106_Box::init_sl_registers(void)
 {
     sl_registers.clear();
@@ -328,8 +310,8 @@ void AD9106_Box::createTestBar(void)
     commands.append({ ID_TEST_4, "test 4", &AD9106_Box::test_4 });
     commands.append({ ID_TEST_5, "test 5", &AD9106_Box::test_5 });
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    toolBar->setObjectName("toolBar");
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     cb_test = new QComboBox(this);

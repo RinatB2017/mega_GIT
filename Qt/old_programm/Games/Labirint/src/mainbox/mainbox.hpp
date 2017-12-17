@@ -79,12 +79,6 @@ private:
 
     void init(void);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     void new_map(int max_x, int max_y);
     bool load_map(const QString &filename);
     bool save_map(const QString &filename);

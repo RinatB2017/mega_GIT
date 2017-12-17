@@ -65,23 +65,6 @@ void MainBox::init(void)
     connect(serialBox5, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
     emit info(ba.toHex().data());

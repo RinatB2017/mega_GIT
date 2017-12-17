@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QFrame>
 #include <QList>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class B588;
@@ -35,22 +37,15 @@ class QHexEdit;
 
 class QStringList;
 //--------------------------------------------------------------------------------
-class B588 : public QFrame
+class B588 : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit B588(QWidget *parent = 0);
+    B588(QWidget *parent = 0);
     ~B588();
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
 private slots:
-    void log(const QString &data);
     void read_fram(void);
     void save_data_to_fram(void);
     void analize(void);
@@ -79,12 +74,6 @@ private:
 
     Powersupply_B588  *powersupply = 0;
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     QByteArray fram_data;
 
     QHexEdit *he = 0;
@@ -99,7 +88,6 @@ private:
     void create_hex_views(void);
 
     void init();
-    void connect_log();
 
     void add_user_points_U(void);
     void add_user_points_I(void);

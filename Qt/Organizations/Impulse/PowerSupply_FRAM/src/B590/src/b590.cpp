@@ -64,7 +64,7 @@
 #include "qhexedit.h"
 //--------------------------------------------------------------------------------
 B590::B590(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::B590)
 {
     init();
@@ -80,7 +80,7 @@ void B590::connect_log(void)
     connect(this, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
     connect(this, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
     connect(this, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
-    connect(this, SIGNAL(message(QString)), topLevelWidget(), SIGNAL(message(QString)));
+    connect(this, SIGNAL(trace(QString)), topLevelWidget(), SIGNAL(trace(QString)));
 }
 //--------------------------------------------------------------------------------
 void B590::create_hex_views(void)
@@ -175,7 +175,7 @@ void B590::init(void)
         connect(powersupply, SIGNAL(info(QString)),    mw, SIGNAL(info(QString)));
         connect(powersupply, SIGNAL(debug(QString)),   mw, SIGNAL(debug(QString)));
         connect(powersupply, SIGNAL(error(QString)),   mw, SIGNAL(error(QString)));
-        connect(powersupply, SIGNAL(message(QString)), mw, SIGNAL(message(QString)));
+        connect(powersupply, SIGNAL(trace(QString)), mw, SIGNAL(trace(QString)));
     }
 
     ui->btn_find_devices->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
@@ -239,12 +239,12 @@ void B590::tw_fram_clicked(QModelIndex index)
 void B590::add_menu(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
-    if(!mw)
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
     {
-        emit error("menu is failed!");
         return;
     }
+
     QMenu *menu = new QMenu(tr("Б5-90"));
 
     QAction *a_load_fram = new QAction(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton), "load fram", this);
@@ -335,29 +335,14 @@ void B590::block_interface(bool state)
     ui->sb_address->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
-QToolButton *B590::add_button(QToolBar *tool_bar,
-                              QToolButton *tool_button,
-                              QIcon icon,
-                              const QString &text,
-                              const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void B590::createPowerSupplyBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     B590_toolbar *psBar = new B590_toolbar(tr("powersupply B5-90"), this);
     psBar->setObjectName("ps_B590");

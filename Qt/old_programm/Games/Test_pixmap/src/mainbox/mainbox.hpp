@@ -72,12 +72,6 @@ private:
     void move_up(void);
     void move_down(void);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     void createTestBar(void);
 
 protected:

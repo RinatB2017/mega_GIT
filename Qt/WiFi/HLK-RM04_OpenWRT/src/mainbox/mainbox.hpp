@@ -26,7 +26,7 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -41,8 +41,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -68,12 +68,6 @@ private:
     QByteArray  serial_data;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

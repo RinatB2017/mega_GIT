@@ -27,6 +27,8 @@
 #include <QMouseEvent>
 #include <QToolButton>
 #include <QPushButton>
+#include <QToolButton>
+#include <QToolBar>
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QCheckBox>
@@ -1717,6 +1719,23 @@ void MyWidget::print_event_flag_log(void)
     emit info(QString("Отклонено событий:                      %1 (%2%)")
               .arg(all_filtered)
               .arg((all_filtered_perc > 0.01) ? QString("%1").arg(all_filtered_perc, 0, 'f', 2) : "< 0.01"));
+}
+//--------------------------------------------------------------------------------
+QToolButton *MyWidget::add_button(QToolBar *tool_bar,
+                                  QToolButton *tool_button,
+                                  QIcon icon,
+                                  const QString &text,
+                                  const QString &tool_tip)
+{
+    Q_CHECK_PTR(tool_bar);
+    Q_CHECK_PTR(tool_button);
+
+    tool_button->setIcon(icon);
+    tool_button->setText(text);
+    tool_button->setToolTip(tool_tip);
+    tool_bar->addWidget(tool_button);
+
+    return tool_button;
 }
 //--------------------------------------------------------------------------------
 bool MyWidget::eventFilter(QObject*, QEvent* event)

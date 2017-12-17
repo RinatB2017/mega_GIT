@@ -21,9 +21,10 @@
 #ifndef B590_HPP
 #define B590_HPP
 //--------------------------------------------------------------------------------
-#include <inttypes.h>
-#include <QFrame>
+//#include <inttypes.h>
 #include <QList>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #include "b590_powersupply.hpp"
 //--------------------------------------------------------------------------------
@@ -70,19 +71,13 @@ class QComboBox;
 class QtVariantProperty;
 class QStandardItemModel;
 //--------------------------------------------------------------------------------
-class B590 : public QFrame
+class B590 : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit B590(QWidget *parent = 0);
+    B590(QWidget *parent = 0);
     ~B590();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 private slots:
     void log(const QString &data);
@@ -258,12 +253,6 @@ private:
                         const QVariant &begin_DAC,
                         const QVariant &end_DAC);
     //---
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
     void createParrotBar(void);

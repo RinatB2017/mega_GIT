@@ -77,30 +77,17 @@ void MainBox::init(void)
     setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
- //(MainWindow *)parent;
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
+
+    QToolBar *toolBar = new QToolBar("testbar");
+    toolBar->setObjectName("testbar");
 
     // qDebug() << "(MainWindow *)" << mw;
     mw->addToolBar(Qt::TopToolBarArea, toolBar);

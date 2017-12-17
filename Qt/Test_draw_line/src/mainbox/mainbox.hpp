@@ -28,7 +28,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -43,8 +43,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -68,12 +68,6 @@ private:
     void init(void);
     void init_widgets(void);
     void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
     void createSerialBox(void);

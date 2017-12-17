@@ -86,7 +86,7 @@ class AD9106_Box : public MyWidget
     Q_OBJECT
 
 public:
-    explicit AD9106_Box(QWidget *parent);
+    AD9106_Box(QWidget *parent);
     ~AD9106_Box();
 
 signals:
@@ -178,12 +178,6 @@ private:
 
     void init(void);
     void init_sl_registers(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

@@ -26,9 +26,11 @@
 #include <ftd2xx.h>
 #include <ftdi.h>
 #include "i2c.hpp"
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -38,29 +40,22 @@ class QToolBar;
 class GrapherBox;
 class SerialBox5;
 //--------------------------------------------------------------------------------
-class MainBox : public QWidget
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     virtual ~MainBox();
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
     void send(QByteArray);
 
     void toolButtonStyleChanged(Qt::ToolButtonStyle);
     void iconSizeChanged(QSize);
 
-public slots:
-
 private slots:
-    void log(const QString &data);
     void test_i2c_read(void);
     void test_i2c_write(void);
 
@@ -86,24 +81,17 @@ private slots:
     void save(void);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
     bool test_flag;
 
-    GrapherBox *grapher;
-    SerialBox5 *serial;
-    QByteArray *serial_data;
+    GrapherBox *grapher = 0;
+    SerialBox5 *serial = 0;
+    QByteArray *serial_data = 0;
 
     ftdi_context ftdi;
 
     void init(void);
-    void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

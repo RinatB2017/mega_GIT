@@ -27,6 +27,9 @@
 //--------------------------------------------------------------------------------
 #define MESSAGEBOX_WIDTH 320
 //--------------------------------------------------------------------------------
+class QToolButton;
+class QToolBar;
+//--------------------------------------------------------------------------------
 class MyWidget : public QWidget
 {
     Q_OBJECT
@@ -200,6 +203,11 @@ public:
     quint64 cnt_PET_EVENT_FLAG_ADC_UNDERFLOW_filtered = 0;
     quint64 cnt_PET_EVENT_FLAG_SYNC_filtered = 0;
     //---
+    QToolButton *add_button(QToolBar *tool_bar,
+                            QToolButton *tool_button,
+                            QIcon icon,
+                            const QString &text,
+                            const QString &tool_tip);
 
 signals:
     void info(const QString &);

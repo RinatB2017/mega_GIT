@@ -68,7 +68,11 @@ SerialPort_V764_test::~SerialPort_V764_test()
 void SerialPort_V764_test::create_fake_toolbar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     sb_value = new QSpinBox();
     sb_value->setMinimum(-INT_MAX);

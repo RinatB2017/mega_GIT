@@ -553,7 +553,11 @@ void LogBox::save_html(void)
 void LogBox::load_settings(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
 #ifdef QT_DEBUG
     qDebug() << "LogBox::load_settings(void)";
@@ -597,7 +601,11 @@ void LogBox::load_settings(void)
 void LogBox::save_settings(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
 #ifdef QT_DEBUG
     qDebug() << "LogBox::save_settings(void)";

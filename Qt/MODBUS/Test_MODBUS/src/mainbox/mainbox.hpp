@@ -43,12 +43,6 @@ public:
                      MySplashScreen *splash);
     virtual ~MainBox();
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void message(const QString &);
-
 private slots:
     void test(void);
 
@@ -57,12 +51,6 @@ private:
     Ui::MainBox *ui;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

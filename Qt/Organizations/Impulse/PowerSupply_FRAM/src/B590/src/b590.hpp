@@ -24,6 +24,8 @@
 #include <QModelIndex>
 #include <QFrame>
 #include <QList>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class B590;
@@ -41,19 +43,13 @@ enum {
     DATA_SIZE
 };
 //--------------------------------------------------------------------------------
-class B590 : public QFrame
+class B590 : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit B590(QWidget *parent = 0);
+    B590(QWidget *parent = 0);
     ~B590();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 private slots:
     void load_fram(void);
@@ -81,12 +77,6 @@ private:
     Ui::B590 *ui = 0;
 
     Powersupply_B590  *powersupply = 0;
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     QByteArray fram_data;
 

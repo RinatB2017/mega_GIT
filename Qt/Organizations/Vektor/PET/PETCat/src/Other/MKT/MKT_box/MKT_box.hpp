@@ -55,7 +55,7 @@ class MKT_box : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MKT_box(QWidget *parent);
+    MKT_box(QWidget *parent);
     ~MKT_box();
 
 signals:
@@ -121,12 +121,6 @@ private:
 
     void init(void);
     void init_timer(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
     void create_grapher(void);

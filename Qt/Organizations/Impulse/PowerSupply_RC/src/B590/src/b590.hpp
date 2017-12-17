@@ -22,9 +22,10 @@
 #define B590_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
-#include <stdint.h>
+//#include <stdint.h>
 
 #include "b590_powersupply.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class B590;
@@ -45,19 +46,13 @@ class QAxisZoomSvc;
 
 class HexSpinBox;
 //--------------------------------------------------------------------------------
-class B590 : public QWidget
+class B590 : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit B590(QWidget *parent);
+    B590(QWidget *parent);
     ~B590();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 private slots:
     void inc_U(void);
@@ -136,11 +131,6 @@ private:
     void createWidgets(void);
     void createPowersupply(void);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
     void createTestBar(void);
     void createParrotBar(void);
 

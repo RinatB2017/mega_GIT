@@ -22,6 +22,7 @@
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class B588;
@@ -35,18 +36,13 @@ class QToolButton;
 class QToolBar;
 class QTimer;
 //--------------------------------------------------------------------------------
-class B588 : public QWidget
+class B588 : public MyWidget
 {
     Q_OBJECT
 
 public:
     explicit B588(QWidget *parent);
     ~B588();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
 
 private slots:
     void test(void);
@@ -75,12 +71,6 @@ private:
 
     void init(void);
     void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

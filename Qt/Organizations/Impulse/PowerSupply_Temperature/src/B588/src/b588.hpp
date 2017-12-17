@@ -22,6 +22,8 @@
 #define B588_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class B588;
@@ -35,19 +37,13 @@ class QTimer;
 class GrapherBox;
 class Powersupply_B588;
 //--------------------------------------------------------------------------------
-class B588 : public QWidget
+class B588 : public MyWidget
 {
     Q_OBJECT
 
 public:
     explicit B588(QWidget *parent);
     ~B588();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 private slots:
     void find_device(void);

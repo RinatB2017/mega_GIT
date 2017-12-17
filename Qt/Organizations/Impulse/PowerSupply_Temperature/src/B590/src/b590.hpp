@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 #include "B590_fram.hpp"
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class B590;
@@ -36,21 +38,13 @@ class QTimer;
 class GrapherBox;
 class Powersupply_B590;
 //--------------------------------------------------------------------------------
-class B590 : public QWidget
+class B590 : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit B590(QWidget *parent);
+    B590(QWidget *parent);
     ~B590();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
-public slots:
 
 private slots:
     void find_device(void);
@@ -88,12 +82,6 @@ private:
 
     void init(void);
     void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     uint16_t convert_ADC_U_to_mV(int32_t ADC_value);
     uint16_t convert_ADC_I_to_mA(int32_t ADC_value);

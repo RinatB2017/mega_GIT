@@ -152,6 +152,7 @@ private slots:
 protected:
 #ifndef ONLY_ENGLISH
     QTranslator *appTranslator = 0;
+    QTranslator *appTranslator2 = 0;
     QTranslator *sysTranslator = 0;
 #endif
     QString orgName;

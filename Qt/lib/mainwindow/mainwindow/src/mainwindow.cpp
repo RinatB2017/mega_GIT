@@ -226,24 +226,38 @@ void MainWindow::load_translations()
     if(!res)
     {
         QMessageBox::critical(0, "Error", "sysTranslator not loaded");
-#ifdef QT_DEBUG
         qDebug() << "sysTranslator not loaded!";
-#endif
         return;
     }
     qApp->installTranslator(sysTranslator);
     //---
     appTranslator = new QTranslator(this);
-    res = appTranslator->load(QLatin1String(":/programm"));
+    res = appTranslator->load(":/common");
     if(!res)
     {
-        //QMessageBox::critical(0, "Error", "appTranslator not loaded!");
+        QMessageBox::critical(0, "Error", "appTranslator (common) not loaded!");
 #ifdef QT_DEBUG
-        qDebug() << "appTranslator not loaded!";
+        qDebug() << "appTranslator (common) not loaded!";
 #endif
-        return;
     }
-    qApp->installTranslator(appTranslator);
+    else
+    {
+        qApp->installTranslator(appTranslator);
+    }
+    //---
+    appTranslator2 = new QTranslator(this);
+    res = appTranslator2->load(":/programm");
+    if(!res)
+    {
+        QMessageBox::critical(0, "Error", "appTranslator (programm) not loaded!");
+#ifdef QT_DEBUG
+        qDebug() << "appTranslator (programm) not loaded!";
+#endif
+    }
+    else
+    {
+        qApp->installTranslator(appTranslator2);
+    }
     //---
 #endif
 }

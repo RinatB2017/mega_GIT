@@ -57,33 +57,9 @@ B590::~B590()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void B590::connect_log(void)
-{
-    if(parentWidget())
-    {
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void B590::log(const QString &text)
-{
-    qDebug() << text;
-}
-//--------------------------------------------------------------------------------
 void B590::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     createTestBar();
 
@@ -304,7 +280,7 @@ void B590::vent_auto(void)
 //--------------------------------------------------------------------------------
 void B590::test(void)
 {
-    QFrame *frame = powersupply->add_frame_find_powersupply();
+    QWidget *frame = powersupply->add_frame_find_powersupply();
     frame->show();
 }
 //--------------------------------------------------------------------------------

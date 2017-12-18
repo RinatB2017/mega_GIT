@@ -70,7 +70,6 @@ private:
     int pos_x;
 
     void init(void);
-    void connect_log(void);
     void wait(int max_time_ms);
 
     void createTestBar(void);

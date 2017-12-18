@@ -82,12 +82,6 @@ private:
 
     void init(void);
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     void createTestBar(void);
     void prepare_treeWidget(void);
 

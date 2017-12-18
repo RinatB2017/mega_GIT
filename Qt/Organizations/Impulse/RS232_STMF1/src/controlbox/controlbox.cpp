@@ -49,7 +49,7 @@
 #define BUTTON_OFF  ""
 //--------------------------------------------------------------------------------
 ControlBox::ControlBox(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::ControlBox),
     display(0),
     timer(0)
@@ -62,18 +62,9 @@ ControlBox::~ControlBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void ControlBox::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
-}
-//--------------------------------------------------------------------------------
 void ControlBox::init(void)
 {
     ui->setupUi(this);
-
-    connect_log();
 
     grapher = new GrapherBox(this);
     grapher->set_axis_scale_x(0, 1000);

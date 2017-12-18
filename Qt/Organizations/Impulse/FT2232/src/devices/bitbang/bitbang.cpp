@@ -42,11 +42,9 @@ union B_BYTE
 //--------------------------------------------------------------------------------
 BitBang::BitBang(I2C_Freq freq,
                  QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ft2232h(0)
 {
-    connect_log();
-
     ft2232h = new FT2232H(freq, parent);
 
     open();
@@ -57,29 +55,6 @@ BitBang::~BitBang()
     close();
     ft2232h->close();
     ft2232h->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void BitBang::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void BitBang::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 void BitBang::power_on(void)

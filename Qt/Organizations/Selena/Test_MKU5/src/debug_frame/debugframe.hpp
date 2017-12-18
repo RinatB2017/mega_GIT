@@ -23,6 +23,8 @@
 #define DEBUGFRAME_H
 //--------------------------------------------------------------------------------
 #include <QFrame>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QPushButton;
 class QHBoxLayout;
@@ -31,7 +33,7 @@ class QComboBox;
 class TCP_Client;
 class QLabel;
 //--------------------------------------------------------------------------------
-class DebugFrame : public QFrame
+class DebugFrame : public MyWidget
 {
     Q_OBJECT
 public:
@@ -43,7 +45,6 @@ signals:
     void error(const QString &);
 
 private slots:
-    void log(const QString &data);
     void test(void);
 
 private:
@@ -58,7 +59,6 @@ private:
     QLabel *lbl_cmd;
     QComboBox *cmb_cmd;
 
-    void connect_log(void);
     int create_ba(QByteArray *data,
                   unsigned char table,
                   unsigned char takt,

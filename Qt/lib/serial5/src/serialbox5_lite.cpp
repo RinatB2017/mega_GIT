@@ -45,7 +45,7 @@ typedef enum
 } ERRORS;
 //--------------------------------------------------------------------------------
 SerialBox5_lite::SerialBox5_lite(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::SerialBox5_lite),
     parent(parent),
     caption("no name"),
@@ -58,7 +58,7 @@ SerialBox5_lite::SerialBox5_lite(QWidget *parent) :
 SerialBox5_lite::SerialBox5_lite(QWidget *parent,
                        const QString &caption,
                        const QString &o_name) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::SerialBox5_lite),
     parent(parent),
     caption(caption),
@@ -85,33 +85,9 @@ qint64 SerialBox5_lite::write(const char *data)
     return serial5->write(data);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::connect_log(void)
-{
-    if(parent)
-    {
-        connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-        connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_lite::log(const QString &data)
-{
-    qDebug() << data;
-}
-//--------------------------------------------------------------------------------
 void SerialBox5_lite::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     createWidgets();
     initEnumerator();

@@ -52,7 +52,7 @@ union DATA_FLOAT {
 };
 //--------------------------------------------------------------------------------
 ControlBox::ControlBox(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::ControlBox),
     parent(parent),
     display(0),
@@ -66,32 +66,9 @@ ControlBox::~ControlBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void ControlBox::connect_log(void)
-{
-    if(parent)
-    {
-        connect(this, SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void ControlBox::log(const QString &data)
-{
-    qDebug() << data;
-}
-//--------------------------------------------------------------------------------
 void ControlBox::init(void)
 {
     ui->setupUi(this);
-
-    connect_log();
 
     grapher = new GrapherBox(this);
     grapher->set_title("Мегаграфик");

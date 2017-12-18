@@ -67,7 +67,6 @@ private:
 
     void init(void);
     void init_widgets(void);
-    void connect_log(void);
 
     void createTestBar(void);
     void createSerialBox(void);

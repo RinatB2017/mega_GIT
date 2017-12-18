@@ -53,7 +53,6 @@ private:
     QWidget *parent = 0;
 
     void init(void);
-    void connect_log(void);
     void createTestBar(void);
 
     QSqlDatabase db;
@@ -61,8 +60,6 @@ private:
     void view_table(const QString &table_name);
     void drop_table(const QString &table_name);
     void close_database(const QString &database_name);
-
-    QToolButton *add_button(QToolBar *tool_bar, QToolButton *tool_button, QIcon icon, const QString &text, const QString &tool_tip);
 
     bool execTableBuild(QString &qryStr, QTextStream &out);
     bool odbcSanityCheck(QSqlDatabase &db, QString &dbServer);

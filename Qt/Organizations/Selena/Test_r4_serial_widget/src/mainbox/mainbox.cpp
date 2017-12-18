@@ -33,7 +33,7 @@
 #include "worker.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::MainBox),
     parent(parent)
 {
@@ -47,30 +47,8 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::connect_log(void)
-{
-    if(parent)
-    {
-        connect(this, SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::log(const QString &data)
-{
-    qDebug() << data;
-}
-//--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    connect_log();
     createTestBar();
 
     init_thread();

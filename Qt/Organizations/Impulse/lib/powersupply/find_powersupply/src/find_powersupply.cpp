@@ -33,7 +33,7 @@
 //--------------------------------------------------------------------------------
 Find_powersupply::Find_powersupply(Powersupply_B590 *powersupply,
                                    QFrame *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     powersupply(powersupply)
 {
     init();
@@ -46,33 +46,8 @@ Find_powersupply::~Find_powersupply()
     pb_update_port_list->deleteLater();
 }
 //--------------------------------------------------------------------------------
-void Find_powersupply::connect_log(void)
-{
-    if(parentWidget())
-    {
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void Find_powersupply::log(const QString &text)
-{
-    qDebug() << text;
-}
-//--------------------------------------------------------------------------------
 void Find_powersupply::init(void)
 {
-    connect_log();
-
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setMargin(0);
     hbox->setSpacing(0);

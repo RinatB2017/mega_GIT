@@ -24,6 +24,7 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "ft2232h.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #if 0
 typedef unsigned char	BYTE;
@@ -36,7 +37,7 @@ typedef ULONG           FT_STATUS;
 //--------------------------------------------------------------------------------
 class FT2232H;
 //--------------------------------------------------------------------------------
-class AT93C56 : public QWidget
+class AT93C56 : public MyWidget
 {
     Q_OBJECT
 public:
@@ -64,20 +65,10 @@ public:
                              unsigned char data);
     void close(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
-    FT2232H *ft2232h;
+    FT2232H *ft2232h = 0;
     unsigned char  data;
     unsigned short addr;
-
-    void connect_log(void);
 };
 //--------------------------------------------------------------------------------
 #endif // I2C_HPP

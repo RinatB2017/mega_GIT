@@ -29,10 +29,8 @@
 #include "grapher_curvebox.hpp"
 //--------------------------------------------------------------------------------
 GrapherCurveBox::GrapherCurveBox(QWidget *parent) :
-    QFrame(parent)
+    MyWidget(parent)
 {
-    connect_log();
-
     index = -1;
     caption_curve = new QLineEdit(this);
     caption_curve->setText("caption");
@@ -54,7 +52,6 @@ GrapherCurveBox::GrapherCurveBox(QWidget *parent) :
     cb_type_curve->addItem("Сглаженная кривая", SPLINE_LINES);
     //---
 
-
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(caption_curve);
     hbox->addWidget(color_curve);
@@ -63,8 +60,6 @@ GrapherCurveBox::GrapherCurveBox(QWidget *parent) :
     setLayout(hbox);
 
     color_curve->installEventFilter(this);
-
-    setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
 //--------------------------------------------------------------------------------
 bool GrapherCurveBox::eventFilter(QObject *obj, QEvent *event)
@@ -79,13 +74,6 @@ bool GrapherCurveBox::eventFilter(QObject *obj, QEvent *event)
         // standard event processing
         return QObject::eventFilter(obj, event);
     }
-}
-//--------------------------------------------------------------------------------
-void GrapherCurveBox::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
 }
 //--------------------------------------------------------------------------------
 void GrapherCurveBox::set_color(int r, int g, int b)

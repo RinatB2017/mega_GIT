@@ -27,30 +27,20 @@
 //--------------------------------------------------------------------------------
 class FT2232H;
 //--------------------------------------------------------------------------------
-class HD44780 : public QWidget
+class HD44780 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit HD44780(I2C_Freq freq, QWidget *parent = 0);
-    virtual ~HD44780();
+    HD44780(I2C_Freq freq, QWidget *parent = 0);
+    ~HD44780();
 
     bool open(int deviceNumber);
     void close(void);
 
     void test(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
-    FT2232H *ft2232h;
-
-    void connect_log(void);
+    FT2232H *ft2232h = 0;
 
     void screen_on(void);
     void screen_off(void);

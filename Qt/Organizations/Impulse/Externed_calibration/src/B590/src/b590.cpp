@@ -73,17 +73,9 @@ B590::~B590()
     if(grapher) grapher->deleteLater();
 }
 //--------------------------------------------------------------------------------
-void B590::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
-}
-//--------------------------------------------------------------------------------
 void B590::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     ui->sb_find->setMinimum(0);
     ui->sb_find->setMaximum(0xFFFF);

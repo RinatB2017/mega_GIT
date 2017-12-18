@@ -77,7 +77,6 @@ private:
     int curve_U3_adc = 0;
 
     void init(void);
-    void connect_log(void);
 
     void createTestBar(void);
 

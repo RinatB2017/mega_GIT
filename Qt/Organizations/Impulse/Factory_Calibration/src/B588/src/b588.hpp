@@ -153,7 +153,6 @@ private:
     void createPropertyBox(void);
 
     void init();
-    void connect_log();
     void block_interface(bool state);
 
     bool measuring(int value_uV, int *measuring_value_uV);

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Oscilloscope_GDS_840C</class>
- <widget class="QFrame" name="Oscilloscope_GDS_840C">
+ <widget class="QWidget" name="Oscilloscope_GDS_840C">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>581</width>
+    <width>577</width>
     <height>422</height>
    </rect>
   </property>

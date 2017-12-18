@@ -113,7 +113,6 @@ private:
     bool flag_stop_test_triangle;
     bool flag_stop_test_stability;
 
-    void connect_log(void);
     void init(void);
 
     void createTestBar(void);

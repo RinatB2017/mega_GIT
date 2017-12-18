@@ -24,8 +24,9 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "ft2232h.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class DS18B20 : public QWidget
+class DS18B20 : public MyWidget
 {
     Q_OBJECT
 public:
@@ -34,18 +35,8 @@ public:
 
     void test(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
-    FT2232H *ft2232h;
-
-    void connect_log(void);
+    FT2232H *ft2232h = 0;
 
     float convert_9bit(unsigned short  temp_ds18b20);
     float convert_10bit(unsigned short temp_ds18b20);

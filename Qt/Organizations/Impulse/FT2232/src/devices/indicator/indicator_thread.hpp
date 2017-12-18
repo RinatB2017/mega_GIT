@@ -31,8 +31,8 @@ class Indicator_thread : public QThread
 {
     Q_OBJECT
 public:
-    explicit Indicator_thread(I2C_Freq freq, QWidget *parent = 0);
-    virtual ~Indicator_thread();
+    Indicator_thread(I2C_Freq freq, QWidget *parent = 0);
+    ~Indicator_thread();
     void run(void);
     void stop(void);
 
@@ -40,6 +40,7 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 private slots:
     void log(const QString &data);

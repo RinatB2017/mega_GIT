@@ -22,40 +22,35 @@
 #define MAINBOX_H
 //--------------------------------------------------------------------------------
 #include <QWidget>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class UDP_Client;
 //--------------------------------------------------------------------------------
-class MainBox : public QWidget
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
 protected:
     void changeEvent(QEvent *e);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void message(const QString &);
 
 private slots:
     void updateText(void);
     void send(void);
 
 private:
-    Ui::MainBox *ui;
-    UDP_Client *client;
+    Ui::MainBox *ui = 0;
+    UDP_Client *client = 0;
 
     void init(void);
-    void connect_log(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

@@ -61,7 +61,7 @@ namespace Ui {
 class GrapherBox;
 class QSpinBox;
 //--------------------------------------------------------------------------------
-class Oscilloscope_GDS_840C : public QFrame
+class Oscilloscope_GDS_840C : public MyWidget
 {
     Q_OBJECT
 
@@ -384,11 +384,6 @@ public:
     bool test(unsigned int test_number);
     bool test_all(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
 public slots:
     void set_timeout(int timeout);
 
@@ -428,7 +423,6 @@ private:
     int channel_2;
     int timeout;
 
-    void connect_log(void);
     void init(void);
     bool find_oscilloscope(void);
     void wait_msec(int timeout_msec);

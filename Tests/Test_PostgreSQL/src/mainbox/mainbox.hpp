@@ -51,7 +51,6 @@ private:
     QSqlDatabase db;
 
     void init(void);
-    void connect_log(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

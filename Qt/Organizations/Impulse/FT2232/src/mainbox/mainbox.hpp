@@ -47,9 +47,9 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
 signals:
     void send(QByteArray);
@@ -57,10 +57,7 @@ signals:
     void toolButtonStyleChanged(Qt::ToolButtonStyle);
     void iconSizeChanged(QSize);
 
-public slots:
-
 private slots:
-    void log(const QString &data);
     void test_i2c_read(void);
     void test_i2c_write(void);
 

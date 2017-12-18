@@ -25,14 +25,16 @@
 
 #include <ftd2xx.h>
 #include <ftdi.h>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #define MemSize 16          // define data quantity you want to send out
 //--------------------------------------------------------------------------------
-class SPI : public QWidget
+class SPI : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit SPI(QWidget *parent = 0);
+    SPI(QWidget *parent = 0);
 
     BOOL open(void);
     BOOL close(void);
@@ -40,14 +42,6 @@ public:
     BOOL read(WORD address, WORD* bdata);
 
     BOOL test_at93c56(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
 
 private:
     FT_STATUS ftStatus;     // Status defined in D2XX to indicate operation result
@@ -63,8 +57,6 @@ private:
     WORD DataInBuffer[MemSize];
 
     FT_HANDLE ftdiHandle;
-
-    void connect_log(void);
 
     void SPI_CSEnable(void);
     void SPI_CSDisable(void);

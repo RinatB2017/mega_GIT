@@ -28,6 +28,8 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
+
+#include "mywidget.hpp"
 #include "ui_serialbox5.h"
 //--------------------------------------------------------------------------------
 #ifdef RS232_SEND
@@ -38,7 +40,7 @@
 #define MAX_TIME_MSEC   100
 //--------------------------------------------------------------------------------
 SerialBox5::SerialBox5(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
     caption("no name"),
@@ -51,7 +53,7 @@ SerialBox5::SerialBox5(QWidget *parent) :
 SerialBox5::SerialBox5(QWidget *parent,
                        const QString &caption,
                        const QString &o_name) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
     caption(caption),
@@ -87,33 +89,9 @@ void SerialBox5::set_caption(QString value)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::connect_log(void)
-{
-    if(parent)
-    {
-        connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-        connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::log(const QString &data)
-{
-    qDebug() << data;
-}
-//--------------------------------------------------------------------------------
 void SerialBox5::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     createWidgets();
     initEnumerator();

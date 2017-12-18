@@ -10,32 +10,10 @@
 #include "udp_client.hpp"
 //--------------------------------------------------------------------------------
 UDP_Client::UDP_Client(QWidget *parent) :
-    QWidget(parent),
-    parent(parent),
-    udpSocket(0)
+    MyWidget(parent),
+    parent(parent)
 {
     init();
-}
-//--------------------------------------------------------------------------------
-void UDP_Client::connect_log(void)
-{
-    if(parent)
-    {
-        connect(this, SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void UDP_Client::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 QString UDP_Client::getLocalAddress(void)
@@ -76,9 +54,7 @@ void UDP_Client::send_data(QByteArray data)
 //--------------------------------------------------------------------------------
 void UDP_Client::init()
 {
-    bool res;
-
-    connect_log();
+    bool res = false;
 
     address = "127.0.0.1";
     port = 10000;

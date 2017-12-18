@@ -124,7 +124,6 @@ private:
     unsigned int curve_T = 0;
 
     void init(void);
-    void connect_log(void);
 
     void createGrapherBox(void);
     void createTimer(void);

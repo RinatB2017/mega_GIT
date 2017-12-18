@@ -119,7 +119,6 @@ private:
     void init_grapherbox(void);
     void add_grapher_value(double value);
 #endif
-    void connect_log();
 
     int get_measurement(bool *ok);
     int get_retention(bool *ok);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SerialBox5_lite</class>
- <widget class="QFrame" name="SerialBox5_lite">
+ <widget class="QWidget" name="SerialBox5_lite">
   <property name="geometry">
    <rect>
     <x>0</x>

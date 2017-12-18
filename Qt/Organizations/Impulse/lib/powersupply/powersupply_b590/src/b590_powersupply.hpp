@@ -249,7 +249,7 @@ public:
     bool Set_Ventilator_MAX_Speed(void);
     //---
 
-    QFrame *add_frame_find_powersupply(void);
+    QWidget *add_frame_find_powersupply(void);
 
     bool get_error(uint32_t *bits, uint16_t *code);
 

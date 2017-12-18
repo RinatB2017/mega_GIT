@@ -33,7 +33,7 @@
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 #include "sleeper.h"
 //--------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serial = new SerialBox(this, "Arduino");
+    serial = new SerialBox5(this, "Arduino");
 
     connect(this, SIGNAL(send(QByteArray)), serial, SLOT(input(QByteArray)));
     connect(serial, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
@@ -174,30 +174,13 @@ void MainBox::read_data(const QByteArray &data)
     received_array.append(data);
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
 
     if(!mw) return;
+
+    QToolBar *toolBar = new QToolBar(tr("testbar"));
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

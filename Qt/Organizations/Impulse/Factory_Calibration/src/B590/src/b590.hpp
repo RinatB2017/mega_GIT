@@ -80,7 +80,6 @@ public:
     ~B590();
 
 private slots:
-    void log(const QString &data);
     void clear(void);
     void test(void);
 
@@ -261,7 +260,6 @@ private:
     void createInfoBar(void);
 
     void init();
-    void connect_log();
     void block_interface(bool state);
 
     void load_setting(void);

@@ -33,7 +33,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox.hpp"
+#include "serialbox5.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
 #include "sleeper.h"
@@ -60,7 +60,7 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox(this, "RS232");
+    serialBox = new SerialBox5(this, "RS232");
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);
@@ -68,23 +68,6 @@ void MainBox::init(void)
 
     connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
     connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
-}
-//--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

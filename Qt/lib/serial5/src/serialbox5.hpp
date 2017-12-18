@@ -29,6 +29,8 @@
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QHBoxLayout;
 class QPushButton;
@@ -37,10 +39,10 @@ class SendBox5;
 //--------------------------------------------------------------------------------
 namespace Ui
 {
-    class SerialBox5;
+class SerialBox5;
 }
 //--------------------------------------------------------------------------------
-class SerialBox5 : public QFrame
+class SerialBox5 : public MyWidget
 {
     Q_OBJECT
 
@@ -52,10 +54,10 @@ public:
         E_PORT_NOT_OPEN
     };
 
-    explicit SerialBox5(QWidget *parent,
-                        const QString &caption,
-                        const QString &o_name = "SerialBox5");
-    explicit SerialBox5(QWidget *parent = 0);
+    SerialBox5(QWidget *parent,
+               const QString &caption,
+               const QString &o_name = "SerialBox5");
+    SerialBox5(QWidget *parent = 0);
     ~SerialBox5();
 
     bool isOpen(void);
@@ -99,7 +101,6 @@ private:
                         const QString &text);
 #endif
 
-    void connect_log(void);
     void init(void);
     void createWidgets(void);
     void initEnumerator(void);
@@ -124,7 +125,6 @@ public slots:
     void set_flag_byte_by_byte(bool state);
 
 private slots:
-    void log(const QString &data);
     void drawData(const QByteArray &data);
     void sendData(const QByteArray &sending_data);
     void btnOpenPortClicked(void);

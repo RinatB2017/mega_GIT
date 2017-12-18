@@ -75,14 +75,6 @@ B590::~B590()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void B590::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
-    connect(this, SIGNAL(trace(QString)), topLevelWidget(), SIGNAL(trace(QString)));
-}
-//--------------------------------------------------------------------------------
 void B590::create_hex_views(void)
 {
     //TODO create_hex_views
@@ -164,7 +156,6 @@ void B590::calc_crc16_factory_I(void)
 void B590::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     powersupply = new Powersupply_B590();
 

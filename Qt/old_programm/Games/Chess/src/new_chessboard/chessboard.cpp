@@ -28,17 +28,9 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 ChessBoard::ChessBoard(QWidget *parent) :
-    QFrame(parent)
+    MyWidget(parent)
 {
     init();
-}
-//--------------------------------------------------------------------------------
-void ChessBoard::connect_log(void)
-{
-    connect(this,   SIGNAL(info(QString)),  topLevelWidget(),   SIGNAL(info(QString)));
-    connect(this,   SIGNAL(debug(QString)), topLevelWidget(),   SIGNAL(debug(QString)));
-    connect(this,   SIGNAL(error(QString)), topLevelWidget(),   SIGNAL(error(QString)));
-    connect(this,   SIGNAL(trace(QString)), topLevelWidget(),   SIGNAL(trace(QString)));
 }
 //--------------------------------------------------------------------------------
 void ChessBoard::create_figures(void)
@@ -163,15 +155,12 @@ void ChessBoard::new_game(void)
 //--------------------------------------------------------------------------------
 void ChessBoard::init(void)
 {
-    connect_log();
-
     create_figures();
     create_chessboard();
     new_game();
 
     setLayout(chessboard_grid);
     setFixedSize(WIDTH_FIELD * (MAX_X + 2), HEIGHT_FIELD * (MAX_Y + 2));
-    setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 }
 //--------------------------------------------------------------------------------
 QString ChessBoard::return_figure_name(int figure)

@@ -22,6 +22,8 @@
 #define FIND_POWERSUPPLY_HPP
 //--------------------------------------------------------------------------------
 #include <QFrame>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class Powersupply_B588;
 class Powersupply_B590;
@@ -29,34 +31,25 @@ class Powersupply_B590;
 class QPushButton;
 class QComboBox;
 //--------------------------------------------------------------------------------
-class Find_powersupply : public QFrame
+class Find_powersupply : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Find_powersupply(Powersupply_B590 *powersupply, QFrame *parent = 0);
+    Find_powersupply(Powersupply_B590 *powersupply, QFrame *parent = 0);
     ~Find_powersupply();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 private slots:
     void find(void);
     void update(void);
 
-    void log(const QString &text);
-
 private:
-    QComboBox   *cb_port_list;
-    QPushButton *pb_find;
-    QPushButton *pb_update_port_list;
+    QComboBox   *cb_port_list = 0;
+    QPushButton *pb_find = 0;
+    QPushButton *pb_update_port_list = 0;
 
-    Powersupply_B590 *powersupply;
+    Powersupply_B590 *powersupply = 0;
 
     void init(void);
-    void connect_log(void);
 };
 //--------------------------------------------------------------------------------
 #endif

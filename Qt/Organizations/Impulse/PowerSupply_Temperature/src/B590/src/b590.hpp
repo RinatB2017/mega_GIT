@@ -55,8 +55,6 @@ private slots:
     void vent_off(void);
     void vent_auto(void);
 
-    void log(const QString &text);
-
 private:
     Ui::B590 *ui = 0;
 
@@ -81,7 +79,6 @@ private:
     s_zero_b590_I calib_I;
 
     void init(void);
-    void connect_log(void);
 
     uint16_t convert_ADC_U_to_mV(int32_t ADC_value);
     uint16_t convert_ADC_I_to_mA(int32_t ADC_value);

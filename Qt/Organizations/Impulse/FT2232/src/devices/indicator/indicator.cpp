@@ -25,38 +25,15 @@
 //--------------------------------------------------------------------------------
 Indicator::Indicator(I2C_Freq freq,
                      QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     freq(freq)
 {
     init();
 }
 //--------------------------------------------------------------------------------
-void Indicator::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void Indicator::log(const QString &data)
-{
-    qDebug() << data;
-}
-//--------------------------------------------------------------------------------
 void Indicator::init(void)
 {
-    connect_log();
+
 }
 //--------------------------------------------------------------------------------
 void Indicator::run(void)

@@ -22,13 +22,15 @@
 #define GRAPHERCURVEBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QFrame>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QCheckBox;
 class QComboBox;
 class QLineEdit;
 class QLabel;
 //--------------------------------------------------------------------------------
-class GrapherCurveBox : public QFrame
+class GrapherCurveBox : public MyWidget
 {
     Q_OBJECT
 
@@ -46,12 +48,6 @@ public:
     void set_symbol_state(bool state);
     bool get_symbol_state(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
 private slots:
     void change_color(void);
 
@@ -63,12 +59,10 @@ private:
     };
 
     int index;
-    QLineEdit *caption_curve;
-    QLabel *color_curve;
-    QCheckBox *cb_symbol;
-    QComboBox *cb_type_curve;
-
-    void connect_log(void);
+    QLineEdit *caption_curve = 0;
+    QLabel *color_curve = 0;
+    QCheckBox *cb_symbol = 0;
+    QComboBox *cb_type_curve = 0;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

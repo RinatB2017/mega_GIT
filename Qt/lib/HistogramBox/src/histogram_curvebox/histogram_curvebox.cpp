@@ -27,10 +27,8 @@
 #include "histogram_curvebox.hpp"
 //--------------------------------------------------------------------------------
 Histogram_CurveBox::Histogram_CurveBox(QWidget *parent) :
-    QFrame(parent)
+    MyWidget(parent)
 {
-    connect_log();
-
     index = -1;
     caption_curve = new QLineEdit(this);
     caption_curve->setText("caption");
@@ -48,8 +46,6 @@ Histogram_CurveBox::Histogram_CurveBox(QWidget *parent) :
     setLayout(hbox);
 
     color_curve->installEventFilter(this);
-
-    setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
 //--------------------------------------------------------------------------------
 bool Histogram_CurveBox::eventFilter(QObject *obj, QEvent *event)
@@ -64,13 +60,6 @@ bool Histogram_CurveBox::eventFilter(QObject *obj, QEvent *event)
         // standard event processing
         return QObject::eventFilter(obj, event);
     }
-}
-//--------------------------------------------------------------------------------
-void Histogram_CurveBox::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
 }
 //--------------------------------------------------------------------------------
 void Histogram_CurveBox::set_color(int r, int g, int b)

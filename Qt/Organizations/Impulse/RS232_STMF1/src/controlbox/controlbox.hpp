@@ -31,6 +31,8 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class ControlBox;
@@ -47,7 +49,7 @@ class QGroupBox;
 class QCheckBox;
 class QSpinBox;
 //--------------------------------------------------------------------------------
-class ControlBox : public QFrame
+class ControlBox : public MyWidget
 {
     Q_OBJECT
 
@@ -58,11 +60,6 @@ public:
     void print_last_error(void);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
     void send_to_grapher(const QByteArray &);
     void send_to_serial(const QByteArray &);
 
@@ -141,7 +138,6 @@ private:
     QPushButton *btnStop = 0;
 
     void init(void);
-    void connect_log(void);
 
     QGroupBox *add_measure_group(void);
     QHBoxLayout *add_display_layout(void);

@@ -344,8 +344,6 @@ private:
     void createFakeBar(void);
 #endif
 
-    void connect_log(void);
-
     float return_freq(unsigned int step);
 
 #ifdef NEW_POINTS

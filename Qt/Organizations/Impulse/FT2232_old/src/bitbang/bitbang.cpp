@@ -41,40 +41,14 @@ union B_BYTE
 };
 //--------------------------------------------------------------------------------
 BitBang::BitBang(QWidget *parent) :
-    QWidget(parent),
-    ftHandle(0)
+    MyWidget(parent)
 {
-    connect_log();
-
     open();
 }
 //--------------------------------------------------------------------------------
 BitBang::~BitBang()
 {
     close();
-}
-//--------------------------------------------------------------------------------
-void BitBang::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void BitBang::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 void BitBang::power_on(void)

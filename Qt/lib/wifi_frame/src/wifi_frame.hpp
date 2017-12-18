@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QSerialPort>
 #include <QFrame>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QPushButton;
 class QVBoxLayout;
@@ -36,7 +38,7 @@ class LogBox;
 
 class SerialBox5_lite;
 //--------------------------------------------------------------------------------
-class WIFI_frame : public QFrame
+class WIFI_frame : public MyWidget
 {
     Q_OBJECT
 public:
@@ -48,15 +50,7 @@ public:
                          unsigned int wait_ms = 200,
                          bool no_response = false);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
 private slots:
-    void log(const QString &data);
-
     void create_server(void);
     void create_client(void);
     void send_data(void);
@@ -100,7 +94,6 @@ private:
     QPushButton *btn_read_settings = 0;
 
     void init(void);
-    void connect_log(void);
     void connect_serial(void);
     bool send_command(QString cmd,
                       unsigned int wait_ms = 100);

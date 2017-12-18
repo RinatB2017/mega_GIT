@@ -87,7 +87,6 @@ private:
     void create_hex_views(void);
 
     void init();
-    void connect_log();
 
     void add_menu(void);
 

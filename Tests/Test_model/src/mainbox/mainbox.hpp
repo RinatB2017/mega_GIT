@@ -41,8 +41,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
     int xxx(int x);
@@ -77,12 +77,6 @@ private:
     QStandardItemModel *model = 0;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

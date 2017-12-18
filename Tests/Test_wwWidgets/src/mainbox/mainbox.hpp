@@ -41,9 +41,9 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
     int xxx(int x);
     void test_ptr(QWidget *ptr);
@@ -84,12 +84,6 @@ private:
     QList<CMD> commands;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     QPushButton *btn_qwwcolorbutton = 0;
     QPushButton *btn_qwwhuesatradialpicker = 0;

@@ -24,10 +24,11 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "ft2232h.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class Indicator_thread;
 //--------------------------------------------------------------------------------
-class Indicator : public QWidget
+class Indicator : public MyWidget
 {
     Q_OBJECT
 public:
@@ -36,21 +37,15 @@ public:
     void stop(void);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
     void finished(void);
 
 private slots:
-    void log(const QString &data);
     void measuring_finished(void);
 
 private:
-    Indicator_thread *thread;
+    Indicator_thread *thread = 0;
     I2C_Freq freq;
 
-    void connect_log(void);
     void init(void);
 
 };

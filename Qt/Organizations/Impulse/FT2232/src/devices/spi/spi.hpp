@@ -31,7 +31,7 @@
 //--------------------------------------------------------------------------------
 class FT2232H;
 //--------------------------------------------------------------------------------
-class SPI : public QWidget
+class SPI : public MyWidget
 {
     Q_OBJECT
 public:
@@ -44,18 +44,9 @@ public:
 
     BOOL test_at93c56(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
-    FT2232H *ft2232h;
+    FT2232H *ft2232h = 0;
     DWORD dwClockDivisor;
-    void connect_log(void);
 
     void SPI_CSEnable(void);
     void SPI_CSDisable(void);

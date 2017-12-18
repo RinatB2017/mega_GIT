@@ -32,12 +32,10 @@
 #include "property_editor.hpp"
 //--------------------------------------------------------------------------------
 DebugFrame::DebugFrame(TCP_Client *client, QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     parent(parent),
     client(client)
 {
-    connect_log();
-
     hbox = new QHBoxLayout(this);
 
     lbl_table = new QLabel("table");
@@ -76,27 +74,6 @@ DebugFrame::DebugFrame(TCP_Client *client, QWidget *parent) :
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     connect(btnDebug, SIGNAL(clicked()), this, SLOT(test()));
-}
-//--------------------------------------------------------------------------------
-void DebugFrame::connect_log(void)
-{
-    if(parent)
-    {
-        connect(this, SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void DebugFrame::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 int DebugFrame::create_ba(QByteArray *data,

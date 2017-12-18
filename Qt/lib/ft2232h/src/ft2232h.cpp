@@ -33,10 +33,8 @@ sudo rmmod ftdi_sio
 //--------------------------------------------------------------------------------
 FT2232H::FT2232H(I2C_Freq freq,
                  QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
-    connect_log();
-
     ftHandle = 0;
     dwNumBytesToSend = 0;
 
@@ -57,29 +55,6 @@ FT2232H::FT2232H(I2C_Freq freq,
         emit info("частота I2C = 100кГц");
         break;
     }
-}
-//--------------------------------------------------------------------------------
-void FT2232H::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void FT2232H::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 void FT2232H::list_devices(void)

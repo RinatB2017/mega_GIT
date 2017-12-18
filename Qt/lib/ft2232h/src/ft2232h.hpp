@@ -24,6 +24,8 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include <ftd2xx.h>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 enum I2C_Freq {
     I2C_100kHz,
@@ -31,11 +33,11 @@ enum I2C_Freq {
     I2C_400kHz
 };
 //--------------------------------------------------------------------------------
-class FT2232H : public QWidget
+class FT2232H : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit FT2232H(I2C_Freq freq, QWidget *parent = 0);
+    FT2232H(I2C_Freq freq, QWidget *parent = 0);
 
     bool prepare(void);
 
@@ -68,14 +70,6 @@ public:
     void print_error(const QString &function,
                      FT_STATUS status);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
     FT_STATUS ftStatus;			// Status defined in D2XX to indicate operation result
     FT_HANDLE ftHandle;         // Handle of FT2232H device port
@@ -90,8 +84,6 @@ private:
     DWORD dwNumBytesSent;
     DWORD dwNumBytesRead;
 
-    void connect_log(void);
-    
     bool VerifyMPSSE(void);
     void ConfigureMPSSE(void);
 

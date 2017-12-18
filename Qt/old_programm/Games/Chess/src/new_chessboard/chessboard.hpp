@@ -25,11 +25,13 @@
 #include <QFrame>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QGridLayout;
 class QToolButton;
 //--------------------------------------------------------------------------------
-class ChessBoard : public QFrame
+class ChessBoard : public MyWidget
 {
     Q_OBJECT
 
@@ -49,7 +51,7 @@ public:
         QUEEN_WHITE,
         ROOK_WHITE
     };
-    explicit ChessBoard(QWidget *parent = 0);
+    ChessBoard(QWidget *parent = 0);
     bool set_figure(Figures figure, const QString &coord);
     bool set_figure(Figures figure, int x, int y);
 
@@ -57,12 +59,6 @@ public:
     bool get_figure(Figures *figure, int x, int y);
 
     bool move(const QString text);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 public slots:
     void new_game(void);
@@ -86,10 +82,9 @@ private:
     QPixmap b_queen;
     QPixmap b_rook;
 
-    QGridLayout *chessboard_grid;
-    QToolButton *btn_chessboard[8][8];
+    QGridLayout *chessboard_grid = 0;
+    QToolButton *btn_chessboard[8][8] = { 0 };
 
-    void connect_log(void);
     void init(void);
 
     void create_chessboard(void);
@@ -100,8 +95,6 @@ private:
 
     bool convert_simvol_to_int(int s, int *i_s);
     bool check_coordinate(const QString &coord, int *x, int *y);
-
-protected:
 };
 //--------------------------------------------------------------------------------
 #endif // CHESSBOARD_HPP

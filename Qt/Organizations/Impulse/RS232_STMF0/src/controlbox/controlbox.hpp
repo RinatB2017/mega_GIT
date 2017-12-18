@@ -23,9 +23,11 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 #include <QFrame>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class ControlBox;
+    class ControlBox;
 }
 //--------------------------------------------------------------------------------
 enum {
@@ -98,27 +100,21 @@ class QGroupBox;
 class QCheckBox;
 class QSpinBox;
 //--------------------------------------------------------------------------------
-class ControlBox : public QFrame
+class ControlBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit ControlBox(QWidget *parent = 0);
+    ControlBox(QWidget *parent = 0);
     ~ControlBox();
 
     void test(void);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
     void send_to_grapher(const QByteArray &);
     void send_to_serial(const QByteArray &);
 
 private slots:
-    void log(const QString &data);
-
     void read_data_serialBox(const QByteArray &data);
     void read_data_calibratorBox(const QByteArray &data);
 
@@ -244,7 +240,6 @@ private:
     QPushButton *btn_CALIBRATION_GAIN_MAX_640 = 0;
 
     void init(void);
-    void connect_log(void);
 
     QFrame *add_other_widget(void);
     QGroupBox *add_measure_group(void);

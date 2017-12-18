@@ -84,39 +84,14 @@ const BYTE SEARCH_ROM                       = 0xF0;
 // данные передаются младшим битом вперед
 //--------------------------------------------------------------------------------
 DS18B20::DS18B20(I2C_Freq freq, QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
-    connect_log();
-
     ft2232h = new FT2232H(freq, parent);
 }
 //--------------------------------------------------------------------------------
 DS18B20::~DS18B20()
 {
     ft2232h->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void DS18B20::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void DS18B20::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 float DS18B20::convert_9bit(unsigned short  temp_ds18b20)

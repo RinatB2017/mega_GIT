@@ -96,8 +96,6 @@ private:
     QVector<Object> _objects;
     bool flag_block_insert_objects;
 
-    void connect_log(void);
-
     bool is_busy;
 
     int  cnt;

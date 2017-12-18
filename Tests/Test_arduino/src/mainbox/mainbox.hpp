@@ -27,8 +27,8 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-    #define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
-    #define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
+#define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
+#define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
 #endif
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
@@ -41,7 +41,7 @@
 #define LED_MAX_VALUE       255
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 enum {
@@ -82,7 +82,7 @@ union MODBUS_FULL
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
-class SerialBox;
+class SerialBox5;
 class QHexEdit;
 class QToolBar;
 //--------------------------------------------------------------------------------
@@ -91,8 +91,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -123,7 +123,7 @@ private:
     Ui::MainBox *ui = 0;
     QWidget *parent = 0;
 
-    SerialBox *serial = 0;
+    SerialBox5 *serial = 0;
 
     char eeprom_buffer[MAX_EEPROM_BYTES+1];
     QByteArray sending_array;
@@ -131,12 +131,6 @@ private:
     bool data_is_ready = false;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

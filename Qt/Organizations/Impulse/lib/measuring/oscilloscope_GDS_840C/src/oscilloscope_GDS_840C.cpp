@@ -43,24 +43,16 @@
 #endif
 //--------------------------------------------------------------------------------
 Oscilloscope_GDS_840C::Oscilloscope_GDS_840C(QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     ui(new Ui::Oscilloscope_GDS_840C),
     timeout(1000)
 {
     init();
 }
 //--------------------------------------------------------------------------------
-void Oscilloscope_GDS_840C::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
-}
-//--------------------------------------------------------------------------------
 void Oscilloscope_GDS_840C::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
 #ifdef FAKE
 #endif
@@ -86,8 +78,6 @@ void Oscilloscope_GDS_840C::init(void)
     connect(ui->btn_stop, SIGNAL(clicked()), this, SLOT(set_STOP()));
     connect(ui->btn_cursor_X, SIGNAL(clicked(bool)), this, SLOT(set_CURSor_XDISplay(bool)));
     connect(ui->btn_cursor_Y, SIGNAL(clicked(bool)), this, SLOT(set_CURSor_YDISplay(bool)));
-
-    setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_GDS_840C::port_read(void)

@@ -6241,9 +6241,9 @@ bool Powersupply_B590::get_info(QTextEdit *log)
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 //#include "find_powersupply.hpp"
-QFrame *Powersupply_B590::add_frame_find_powersupply(void)
+QWidget *Powersupply_B590::add_frame_find_powersupply(void)
 {
-    QFrame *frame = new Find_powersupply(this);
+    QWidget *frame = new Find_powersupply(this);
 
     return frame;
 }

@@ -41,36 +41,11 @@
 WIFI_frame::WIFI_frame(const QString &caption,
                        bool is_server,
                        QWidget *parent) :
-    QFrame(parent),
+    MyWidget(parent),
     caption(caption),
     is_server(is_server)
 {
     init();
-}
-//--------------------------------------------------------------------------------
-void WIFI_frame::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void WIFI_frame::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::connect_serial(void)
@@ -174,7 +149,6 @@ void WIFI_frame::init(void)
     vbox->addLayout(main_layout);
 
     setLayout(vbox);
-    setFrameStyle(QFrame::Box | QFrame::Raised);
 
     lock_interface();
 }

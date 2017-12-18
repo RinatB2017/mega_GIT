@@ -146,30 +146,13 @@ void MainBox::itemChanged(QListWidgetItem *item)
                .arg(item->data(Qt::CheckStateRole).toBool()));
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createUrlBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("urlbar"));
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
 
     if(!mw) return;
+
+    QToolBar *toolBar = new QToolBar(tr("urlbar"));
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 

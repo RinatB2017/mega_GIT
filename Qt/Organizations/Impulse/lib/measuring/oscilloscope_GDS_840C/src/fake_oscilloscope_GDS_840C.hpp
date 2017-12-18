@@ -25,8 +25,10 @@
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
 #include <QFrame>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Fake_oscilloscope_GDS_840C : public QFrame
+class Fake_oscilloscope_GDS_840C : public MyWidget
 {
     Q_OBJECT
 public:
@@ -43,11 +45,6 @@ public:
     void write(const char *data, int len);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
     void readyRead(void);
     void error(QSerialPort::SerialPortError);
 
@@ -60,7 +57,6 @@ private:
 
     bool is_open;
 
-    void connect_log(void);
     void init(void);
 
 };

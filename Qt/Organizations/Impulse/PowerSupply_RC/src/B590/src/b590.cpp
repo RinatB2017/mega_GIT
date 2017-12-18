@@ -61,18 +61,9 @@ B590::~B590()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void B590::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
-    connect(this, SIGNAL(trace(QString)), topLevelWidget(), SIGNAL(trace(QString)));
-}
-//--------------------------------------------------------------------------------
 void B590::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     createGrapherBox();
     createTimer();

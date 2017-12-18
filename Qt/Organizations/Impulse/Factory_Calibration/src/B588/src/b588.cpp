@@ -75,39 +75,9 @@ B588::~B588()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void B588::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void B588::log(const QString &data)
-{
-#ifdef QT_DEBUG
-    qDebug() << data;
-#else
-    Q_UNUSED(data);
-#endif
-}
-//--------------------------------------------------------------------------------
 void B588::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
 #ifdef V764
     multimeter = new Multimeter_V764();

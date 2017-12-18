@@ -28,23 +28,15 @@
 #include <ftd2xx.h>
 #include <ftdi.h>
 //--------------------------------------------------------------------------------
-class MCP4922 : public QWidget
+class MCP4922 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit MCP4922(I2C_Freq freq, QWidget *parent = 0);
-    virtual ~MCP4922();
+    MCP4922(I2C_Freq freq, QWidget *parent = 0);
+    ~MCP4922();
 
     BOOL init(void);
     BOOL set_voltage(float value);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
 
 private:
     FT_STATUS ftStatus;     // Status defined in D2XX to indicate operation result
@@ -55,8 +47,6 @@ private:
     DWORD dwNumBytesSent, dwNumBytesRead, dwNumInputBuffer;
 
     FT_HANDLE ftdiHandle;
-
-    void connect_log(void);
 
     BOOL open(int deviceNumber);
     BOOL close(void);

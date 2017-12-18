@@ -56,7 +56,7 @@ union ANSWER
 };
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox;
+class SerialBox5;
 class QToolButton;
 class QToolBar;
 //--------------------------------------------------------------------------------
@@ -65,8 +65,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -79,18 +79,12 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox *serialBox = 0;
+    SerialBox5 *serialBox = 0;
     QByteArray data_rs232;
     bool is_ready = false;
 
     void init(void);
     void wait(int max_time_ms);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void createTestBar(void);
 

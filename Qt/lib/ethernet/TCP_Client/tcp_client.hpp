@@ -54,7 +54,6 @@ private:
     QString address;
     int port = 0;
     void init(void);
-    void connect_log(void);
 
 };
 //--------------------------------------------------------------------------------

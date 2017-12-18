@@ -29,6 +29,8 @@
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QHBoxLayout;
 class QPushButton;
@@ -40,15 +42,15 @@ namespace Ui
     class SerialBox5_lite;
 }
 //--------------------------------------------------------------------------------
-class SerialBox5_lite : public QFrame
+class SerialBox5_lite : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit SerialBox5_lite(QWidget *parent,
-                             const QString &caption,
-                             const QString &o_name);
-    explicit SerialBox5_lite(QWidget *parent = 0);
+    SerialBox5_lite(QWidget *parent,
+                    const QString &caption,
+                    const QString &o_name);
+    SerialBox5_lite(QWidget *parent = 0);
     ~SerialBox5_lite();
 
     bool isOpen(void);
@@ -79,7 +81,6 @@ private:
                         const QString &text);
 #endif
 
-    void connect_log(void);
     void init(void);
     void createWidgets(void);
     void initEnumerator(void);
@@ -89,14 +90,8 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
     void readyRead(void);
     void readChannelFinished(void);
-    void error(QSerialPort::SerialPortError);
 
     void output(const QByteArray &data);
 
@@ -111,7 +106,6 @@ public slots:
     void set_flag_byte_by_byte(bool state);
 
 private slots:
-    void log(const QString &data);
     void drawData(const QByteArray &data);
     void sendData(const QByteArray &sending_data);
     void btnOpenPortClicked(void);

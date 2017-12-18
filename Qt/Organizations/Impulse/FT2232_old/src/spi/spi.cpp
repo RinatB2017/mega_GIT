@@ -44,7 +44,7 @@ const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN   = '\x24';
 const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = '\x26';
 //--------------------------------------------------------------------------------
 SPI::SPI(QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
     dwClockDivisor = 29;  // Value of clock divisor, SCL Frequency = 60/((1+29)*2) (MHz) = 1Mhz
     dwNumBytesToSend = 0; // Index of output buffer
@@ -54,31 +54,6 @@ SPI::SPI(QWidget *parent) :
     MemAddress = 0x00;
 
     ftdiHandle = 0;
-
-    connect_log();
-}
-//--------------------------------------------------------------------------------
-void SPI::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void SPI::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 //this routine is used to enable SPI device

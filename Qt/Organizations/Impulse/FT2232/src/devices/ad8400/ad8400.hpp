@@ -24,10 +24,11 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "at93c56.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class FT2232H;
 //--------------------------------------------------------------------------------
-class AD8400 : public QWidget
+class AD8400 : public MyWidget
 {
     Q_OBJECT
 public:
@@ -40,18 +41,8 @@ public:
     BOOL write(BYTE data);
     void close(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
     FT2232H *ft2232h;
-
-    void connect_log(void);
 };
 //--------------------------------------------------------------------------------
 #endif // AD8400_HPP

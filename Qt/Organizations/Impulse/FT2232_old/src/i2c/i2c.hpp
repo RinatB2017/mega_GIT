@@ -25,6 +25,8 @@
 //--------------------------------------------------------------------------------
 #include <ftd2xx.h>
 #include <ftdi.h>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_ADDRESS 0x7f
 //--------------------------------------------------------------------------------
@@ -34,11 +36,11 @@ enum I2C_Freq {
     I2C_400kHz
 };
 //--------------------------------------------------------------------------------
-class I2C : public QWidget
+class I2C : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit I2C(I2C_Freq freq, QWidget *parent = 0);
+    I2C(I2C_Freq freq, QWidget *parent = 0);
     void HighSpeedSetI2CStart(void);
     void HighSpeedSetI2CStop(void);
     BOOL SendByteAndCheckACK(BYTE dwDataSend);
@@ -60,14 +62,6 @@ public:
                         unsigned char data);
     void close(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
     FT_STATUS ftStatus;			// Status defined in D2XX to indicate operation result
     FT_HANDLE ftHandle;         // Handle of FT2232H device port
@@ -84,8 +78,6 @@ private:
 
     unsigned char  data;
     unsigned short addr;
-
-    void connect_log(void);
 
     bool VerifyMPSSE(void);
     void ConfigureMPSSE(void);

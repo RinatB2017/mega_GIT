@@ -22,14 +22,16 @@
 #define MYREPORT_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class Database;
 //--------------------------------------------------------------------------------
-class MyReport : public QWidget
+class MyReport : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit MyReport(QWidget *parent = 0);
+    MyReport(QWidget *parent = 0);
     ~MyReport();
 
     void view(int serno, int year);
@@ -45,18 +47,9 @@ public:
     int get_count_tables(void);
     QString get_lastError(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
-    Database *database;
+    Database *database = 0;
 
-    void connect_log(void);
     void init(void);
 
     bool add_report_to_db(const QString &report_name,

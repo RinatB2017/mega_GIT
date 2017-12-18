@@ -142,7 +142,6 @@ private:
     QComboBox *cb_command = 0;
 
     void init(void);
-    void connect_log(void);
     void wait(int max_time_ms);
     void show_data(void);
 

@@ -23,12 +23,14 @@
 #define MAINBOX_H
 //--------------------------------------------------------------------------------
 #include <QWidget>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class MainBox : public QWidget
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
@@ -40,23 +42,15 @@ protected:
     void changeEvent(QEvent *e);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
     void send(const QString &);
 
-public slots:
-
 private slots:
-    void log(const QString &data);
     void test(void);
 
 private:
-    Ui::MainBox *ui;
-    QWidget *parent;
+    Ui::MainBox *ui = 0;
+    QWidget *parent = 0;
     void init(void);
-    void connect_log(void);
     void createTestBar(void);
 
     void init_thread(void);

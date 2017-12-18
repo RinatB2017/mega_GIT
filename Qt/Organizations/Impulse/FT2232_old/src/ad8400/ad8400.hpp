@@ -24,29 +24,22 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "i2c.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #include <ftd2xx.h>
 #include <ftdi.h>
 //--------------------------------------------------------------------------------
-class AD8400 : public QWidget
+class AD8400 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit AD8400(I2C_Freq freq, QWidget *parent = 0);
+    AD8400(I2C_Freq freq, QWidget *parent = 0);
 
     void test(void);
 
     BOOL open(int deviceNumber);
     BOOL write(BYTE data);
     void close(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
 
 private:
     FT_STATUS ftStatus;			// Status defined in D2XX to indicate operation result
@@ -62,7 +55,6 @@ private:
     DWORD dwNumBytesSent;
     DWORD dwNumBytesRead;
 
-    void connect_log(void);
     bool VerifyMPSSE(void);
     void ConfigureMPSSE(void);
     void print_error(const QString &function,

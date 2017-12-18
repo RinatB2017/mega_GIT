@@ -52,17 +52,9 @@ B588::~B588()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void B588::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
-}
-//--------------------------------------------------------------------------------
 void B588::init(void)
 {
     ui->setupUi(this);
-    connect_log();
 
     createTestBar();
 

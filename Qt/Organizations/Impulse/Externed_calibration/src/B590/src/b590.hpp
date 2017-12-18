@@ -86,7 +86,6 @@ private:
     int curve_U_parrot = 0;
     int curve_I_parrot = 0;
 
-    void connect_log(void);
     void init(void);
 
     void createTestBar(void);

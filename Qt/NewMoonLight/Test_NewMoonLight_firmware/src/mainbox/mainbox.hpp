@@ -101,7 +101,6 @@ private:
 
     void init(void);
     void init_widgets(void);
-    void connect_log(void);
 
     QToolButton *btn[MAX_SCREEN_X][MAX_SCREEN_Y];
 

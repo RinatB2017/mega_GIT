@@ -94,7 +94,6 @@ private:
     int curve_I = 0;
 #endif
     void init(void);
-    void connect_log(void);
 
     void createWidgets(void);
     void createPowersupply(void);

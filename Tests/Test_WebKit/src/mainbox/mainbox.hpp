@@ -106,12 +106,6 @@ private:
     QVector<page> pages;
     QStringList proxies;
 
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     bool create_content_data(void);
 
     void find_and_evaluateJavaScript(const QString &selector_element,

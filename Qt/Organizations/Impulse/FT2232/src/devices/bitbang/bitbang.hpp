@@ -20,6 +20,7 @@
 **********************************************************************************/
 #ifndef BITBANG_HPP
 #define BITBANG_HPP
+//--------------------------------------------------------------------------------
 #include <ftd2xx.h>
 #include <ftdi.h>
 //--------------------------------------------------------------------------------
@@ -29,7 +30,7 @@
 //--------------------------------------------------------------------------------
 class FT2232H;
 //--------------------------------------------------------------------------------
-class BitBang : public QWidget
+class BitBang : public MyWidget
 {
     Q_OBJECT
 public:
@@ -39,22 +40,12 @@ public:
     bool open(void);
     void close(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 public slots:
     void power_on(void);
     void power_off(void);
 
 private:
-    FT2232H *ft2232h;
-
-    void connect_log(void);
+    FT2232H *ft2232h = 0;
 };
 //--------------------------------------------------------------------------------
 #endif // BITBANG_HPP

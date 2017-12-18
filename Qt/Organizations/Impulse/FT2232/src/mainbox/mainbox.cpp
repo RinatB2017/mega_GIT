@@ -67,11 +67,6 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::log(const QString &data)
-{
-    qDebug() << data;
-}
-//--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);

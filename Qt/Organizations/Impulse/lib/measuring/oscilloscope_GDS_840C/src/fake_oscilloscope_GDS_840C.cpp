@@ -28,30 +28,14 @@
 #include "fake_oscilloscope_GDS_840C.hpp"
 //--------------------------------------------------------------------------------
 Fake_oscilloscope_GDS_840C::Fake_oscilloscope_GDS_840C(QWidget *parent) :
-    QFrame(parent)
+    MyWidget(parent)
 {
     init();
 }
 //--------------------------------------------------------------------------------
-void Fake_oscilloscope_GDS_840C::connect_log(void)
-{
-    if(topLevelWidget())
-    {
-#ifdef QT_DEBUG
-        qDebug() << "normal";
-#endif
-        connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)), topLevelWidget(), SIGNAL(trace(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
 void Fake_oscilloscope_GDS_840C::init(void)
 {
-    connect_log();
 
-    setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 }
 //--------------------------------------------------------------------------------
 bool Fake_oscilloscope_GDS_840C::isOpen(void)

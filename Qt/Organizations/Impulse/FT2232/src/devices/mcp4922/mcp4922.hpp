@@ -26,14 +26,15 @@
 #include <ftd2xx.h>
 //--------------------------------------------------------------------------------
 #include "ft2232h.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class FT2232H;
 //--------------------------------------------------------------------------------
-class MCP4922 : public QWidget
+class MCP4922 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit MCP4922(I2C_Freq freq, QWidget *parent = 0);
+    MCP4922(I2C_Freq freq, QWidget *parent = 0);
     virtual ~MCP4922();
 
     BOOL init(void);
@@ -42,24 +43,14 @@ public:
     BOOL open(int deviceNumber);
     BOOL close(void);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
-
 private:
-    FT2232H *ft2232h;
+    FT2232H *ft2232h = 0;
     DWORD dwClockDivisor;
 
     BOOL SPI_Initial(DWORD dwClockDivisor);
 
     void SPI_CSEnable(void);
     void SPI_CSDisable(void);
-
-    void connect_log(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MCP4922_HPP

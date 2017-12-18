@@ -24,24 +24,18 @@
 #include <ftdi.h>
 //--------------------------------------------------------------------------------
 #include <QWidget>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class BitBang : public QWidget
+class BitBang : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit BitBang(QWidget *parent = 0);
+    BitBang(QWidget *parent = 0);
     ~BitBang();
 
     bool open(void);
     void close(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
 
 public slots:
     void power_on(void);
@@ -61,7 +55,6 @@ private:
     DWORD dwNumBytesSent;
     DWORD dwNumBytesRead;
 
-    void connect_log(void);
     bool VerifyMPSSE(void);
     void ConfigureMPSSE(void);
     void print_error(const QString &function,

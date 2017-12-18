@@ -38,8 +38,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MyReport::MyReport(QWidget *parent) :
-    QWidget(parent),
-    database(0)
+    MyWidget(parent)
 {
     init();
 }
@@ -53,36 +52,9 @@ MyReport::~MyReport()
     }
 }
 //--------------------------------------------------------------------------------
-void MyReport::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void MyReport::log(const QString &data)
-{
-#ifdef QT_DEBUG
-    qDebug() << data;
-#else
-    Q_UNUSED(data)
-#endif
-}
-//--------------------------------------------------------------------------------
 void MyReport::init(void)
 {
-    connect_log();
+
 }
 //--------------------------------------------------------------------------------
 bool MyReport::open_database(const QString &driver_name,

@@ -51,10 +51,8 @@ const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = '\x26';
 //--------------------------------------------------------------------------------
 MCP4922::MCP4922(I2C_Freq freq,
                  QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
-    connect_log();
-
     switch(freq)
     {
     case I2C_400kHz:
@@ -75,29 +73,6 @@ MCP4922::MCP4922(I2C_Freq freq,
 MCP4922::~MCP4922()
 {
     close();
-}
-//--------------------------------------------------------------------------------
-void MCP4922::connect_log(void)
-{
-    if(parentWidget())
-    {
-        // qDebug() << "parent is true";
-        connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-    }
-    else
-    {
-        // qDebug() << "parent is false";
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
-}
-//--------------------------------------------------------------------------------
-void MCP4922::log(const QString &data)
-{
-    qDebug() << data;
 }
 //--------------------------------------------------------------------------------
 BOOL MCP4922::init(void)

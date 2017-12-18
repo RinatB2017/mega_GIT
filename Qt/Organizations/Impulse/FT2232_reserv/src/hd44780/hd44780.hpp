@@ -25,26 +25,20 @@
 
 #include <ftd2xx.h>
 #include <ftdi.h>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class HD44780 : public QWidget
+class HD44780 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit HD44780(QWidget *parent = 0);
-    virtual ~HD44780();
+    HD44780(QWidget *parent = 0);
+    ~HD44780();
 
     bool open(void);
     void close(void);
 
     void test(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-private slots:
-    void log(const QString &data);
 
 private:
     FT_STATUS ftStatus;			//Status defined in D2XX to indicate operation result
@@ -59,8 +53,6 @@ private:
     BYTE InputBuffer[1024];		// Buffer to hold Data bytes to be read from FT2232H
     DWORD dwNumBytesSent;
     DWORD dwNumBytesRead;
-
-    void connect_log(void);
 
     void screen_on(void);
     void screen_off(void);

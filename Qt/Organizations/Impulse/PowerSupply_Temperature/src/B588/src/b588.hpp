@@ -51,8 +51,6 @@ private slots:
     void update(void);
     void test(void);
 
-    void log(const QString &text);
-
 private:
     Ui::B588 *ui = 0;
 
@@ -74,13 +72,6 @@ private:
     QTimer *timer = 0;
 
     void init(void);
-    void connect_log(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
 
     void correct_temperature(void);
 

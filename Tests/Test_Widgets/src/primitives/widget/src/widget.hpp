@@ -25,26 +25,21 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QPoint>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QLabel;
 //--------------------------------------------------------------------------------
-class Widget : public QWidget
+class Widget : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Widget(QWidget *parent);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    Widget(QWidget *parent);
 
 private:
-    void connect_log(void);
     void init(void);
 
-    QLabel *label;
+    QLabel *label = 0;
     QPoint lastPoint;
     bool b_move;
 

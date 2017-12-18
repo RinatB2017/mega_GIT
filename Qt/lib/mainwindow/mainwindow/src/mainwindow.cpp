@@ -154,7 +154,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 //--------------------------------------------------------------------------------
 void MainWindow::init(void)
 {
-    flag_close = false;
+    flag_close = true;
 
     load_translations();
     setWindowTitle(QString("%1 (ver. %2)")
@@ -664,7 +664,7 @@ void MainWindow::load_main(void)
     QApplication::setFont(font);
 
     style_name = settings->value("StyleName", "Breeze").toString();
-    flag_close = settings->value("NoAnswerFromExit", false).toBool();
+    flag_close = settings->value("NoAnswerFromExit", true).toBool();
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 

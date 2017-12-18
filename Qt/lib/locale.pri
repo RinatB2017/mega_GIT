@@ -5,8 +5,11 @@
 DEPENDPATH  += $$PWD
 INCLUDEPATH = $$DEPENDPATH
 
+#TRANSLATIONS    += $$LIB_PATH/common/common.ts
 TRANSLATIONS    += locale/*.ts
 RESOURCES       += locale/programm.qrc
+
+#message ($$LIB_PATH)
 
 isEmpty(QMAKE_LRELEASE) {
     win32|os2:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe

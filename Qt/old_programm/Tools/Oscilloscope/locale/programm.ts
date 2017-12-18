@@ -72,6 +72,30 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <source>Windows</source>
+        <translation>Окна</translation>
+    </message>
+    <message>
+        <source>is_shows_info</source>
+        <translation>Отображение информационных сообщений</translation>
+    </message>
+    <message>
+        <source>is_shows_debug</source>
+        <translation>Отображение отладочных сообщений</translation>
+    </message>
+    <message>
+        <source>is_shows_error</source>
+        <translation>Отображение сообщений об ошибках</translation>
+    </message>
+    <message>
+        <source>is_shows_trace</source>
+        <translation>Отображение трассировочных сообщений</translation>
+    </message>
+</context>
+
+<context>
+    <name>MainWindow</name>
+    <message>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -90,10 +114,6 @@
     <message>
         <source>Help</source>
         <translation>Помощь</translation>
-    </message>
-    <message>
-        <source>Windows</source>
-        <translation>Окна</translation>
     </message>
     <message>
         <source>File</source>

@@ -7,6 +7,8 @@ INCLUDEPATH = $$DEPENDPATH
 
 #TRANSLATIONS    += $$LIB_PATH/common/common.ts
 TRANSLATIONS    += locale/*.ts
+
+#RESOURCES       += locale/common.qrc
 RESOURCES       += locale/programm.qrc
 
 #message ($$LIB_PATH)

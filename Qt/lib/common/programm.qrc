@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>common.qm</file>
-        <file>programm.qm</file>
-    </qresource>
-</RCC>

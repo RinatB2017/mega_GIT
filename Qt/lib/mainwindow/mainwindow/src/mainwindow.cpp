@@ -100,7 +100,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
             //---
             MyWidget *w = dynamic_cast<MyWidget *>(mainWidget);
-            Q_CHECK_PTR(w);
             if(w)
             {
                 bool ok = w->close();
@@ -238,7 +237,7 @@ void MainWindow::load_translations()
     res = appTranslator->load(QLatin1String(":/programm"));
     if(!res)
     {
-        QMessageBox::critical(0, "Error", "appTranslator not loaded!");
+        //QMessageBox::critical(0, "Error", "appTranslator not loaded!");
 #ifdef QT_DEBUG
         qDebug() << "appTranslator not loaded!";
 #endif

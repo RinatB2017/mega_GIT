@@ -84,14 +84,6 @@
         <translation>Программа скрыта</translation>
     </message>
     <message>
-        <source>About</source>
-        <translation>О программе</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation>Помощь</translation>
-    </message>
-    <message>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>

@@ -21,20 +21,13 @@
 #include "template.hpp"
 //--------------------------------------------------------------------------------
 Template::Template(QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
     init();
 }
 //--------------------------------------------------------------------------------
-void Template::connect_log(void)
-{
-    connect(this, SIGNAL(info(QString)),  topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)), topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)), topLevelWidget(), SIGNAL(error(QString)));
-}
-//--------------------------------------------------------------------------------
 void Template::init(void)
 {
-    connect_log();
+
 }
 //--------------------------------------------------------------------------------

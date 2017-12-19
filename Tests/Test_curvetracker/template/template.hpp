@@ -22,22 +22,16 @@
 #define TEMPLATE_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
+
+#include mywidget.h"
 //--------------------------------------------------------------------------------
-class Template : public QWidget
+class Template : public MyWidget
 {
     Q_OBJECT
 public:
     explicit Template(QWidget *parent = 0);
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
-public slots:
-
 private:
-    void connect_log(void);
     void init(void);
 
 };

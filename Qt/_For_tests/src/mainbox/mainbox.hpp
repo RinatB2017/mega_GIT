@@ -24,6 +24,8 @@
 #include <QApplication>
 #include <QWidget>
 #include <QDebug>
+
+#include <QPalette>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -269,6 +271,7 @@ private:
     void updateQRImage(void);
 
     void get_param(QString *str, QWidget *widget, QString w_name);
+    void get_color(QPalette::ColorRole role, QString r_name);
 
 protected:
     void changeEvent(QEvent *event);

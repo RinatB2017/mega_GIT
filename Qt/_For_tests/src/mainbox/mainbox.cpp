@@ -287,6 +287,23 @@ void MainBox::get_param(QString *str, QWidget *widget, QString w_name)
     (*str).append("\n");
 }
 //--------------------------------------------------------------------------------
+void MainBox::get_color(QPalette::ColorRole role, QString r_name)
+{
+    int R = palette().color(role).red();
+    int G = palette().color(role).red();
+    int B = palette().color(role).red();
+
+    QString str;
+    str.append(QString("%1    color:#%2%3%4;")
+               .arg(r_name)
+               .arg(R, 0, 16)
+               .arg(G, 0, 16)
+               .arg(B, 0, 16));
+    str.append("\n");
+
+    emit info(str);
+}
+//--------------------------------------------------------------------------------
 #include <QPlainTextEdit>
 #include <QStackedWidget>
 #include <QRadioButton>
@@ -308,10 +325,11 @@ void MainBox::get_param(QString *str, QWidget *widget, QString w_name)
 
 bool MainBox::test_0(void)
 {
-    emit info("Test_0()");
+    //emit info("Test_0()");
 
     //updateQRImage();
 
+#if 0
     QString str;
     //get_param(&str, new QToolTip,   "QToolTip");
     get_param(&str, new QWidget,    "QWidget");
@@ -353,6 +371,19 @@ bool MainBox::test_0(void)
     get_param(&str, new QDateEdit,   "QDateEdit");
 
     emit info(str);
+#endif
+
+#if 1
+    get_color(QPalette::WindowText, "QPalette::WindowText");
+    get_color(QPalette::Button,     "QPalette::Button");
+    get_color(QPalette::Light,      "QPalette::Light");
+    get_color(QPalette::Text,       "QPalette::Text");
+    get_color(QPalette::BrightText, "QPalette::BrightText");
+    get_color(QPalette::ButtonText, "QPalette::ButtonText");
+    get_color(QPalette::Base,       "QPalette::Base");
+    get_color(QPalette::Window,     "QPalette::Window");
+    get_color(QPalette::Shadow,     "QPalette::Shadow");
+#endif
 
     return true;
 }

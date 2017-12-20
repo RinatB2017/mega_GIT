@@ -49,6 +49,23 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
+#if 0
+    //Light
+    QPalette palette;
+
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4)));
+    palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::Text,        QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4)));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040)));
+
+    main_window->setPalette(palette);
+#endif
+
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
 

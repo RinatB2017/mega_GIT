@@ -49,6 +49,60 @@
 //--------------------------------------------------------------------------------
 //  rm /usr/lib/libGL.so.1
 //--------------------------------------------------------------------------------
+void set_blue_palette(void)
+{
+    //Blue
+    QPalette palette;
+
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::Button,      QBrush(QColor(32, 64, 96),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Light,       QBrush(QColor(24, 48, 44),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Text,        QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::Base,        QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Window,      QBrush(QColor(12, 24, 32),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+
+    qApp->setPalette(palette);
+}
+//--------------------------------------------------------------------------------
+void set_dark_palette(void)
+{
+    //Dark
+    QPalette palette;
+
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor(0xefefef)));
+    palette.setBrush(QPalette::Button,      QBrush(QColor(0x313131)));
+    palette.setBrush(QPalette::Light,       QBrush(QColor(0x454545)));
+    palette.setBrush(QPalette::Text,        QBrush(QColor(0xefefef)));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor(0xffffff)));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(0xefefef)));
+    palette.setBrush(QPalette::Base,        QBrush(QColor(0x232323)));
+    palette.setBrush(QPalette::Window,      QBrush(QColor(0x313131)));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor(0x141414)));
+
+    qApp->setPalette(palette);
+}
+//--------------------------------------------------------------------------------
+void set_light_palette(void)
+{
+    //Light
+    QPalette palette;
+
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4)));
+    palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::Text,        QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4)));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040)));
+
+    qApp->setPalette(palette);
+}
+//--------------------------------------------------------------------------------
 //#include <QGLFormat>
 
 #include <QScriptEngine>
@@ -127,22 +181,9 @@ int main(int argc, char *argv[])
     //main_window->setWindowFlags(Qt::FramelessWindowHint);
 
     //---
-#if 0
-    //Blue
-    QPalette palette;
-
-    palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    palette.setBrush(QPalette::Button,      QBrush(QColor(32, 64, 96),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Light,       QBrush(QColor(24, 48, 44),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Text,        QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    palette.setBrush(QPalette::BrightText,  QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
-    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    palette.setBrush(QPalette::Base,        QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Window,      QBrush(QColor(12, 24, 32),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Shadow,      QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-
-    main_window->setPalette(palette);
-#endif
+    //set_blue_palette();
+    //set_dark_palette();
+    set_light_palette();
     //---
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);

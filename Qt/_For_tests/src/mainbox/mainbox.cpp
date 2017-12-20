@@ -260,11 +260,99 @@ void MainBox::updateQRImage(void)
     image_label->show();
 }
 //--------------------------------------------------------------------------------
+void MainBox::get_param(QString *str, QWidget *widget, QString w_name)
+{
+    int R = widget->palette().color(QPalette::WindowText).red();
+    int G = widget->palette().color(QPalette::WindowText).red();
+    int B = widget->palette().color(QPalette::WindowText).red();
+
+    int b_R = widget->palette().background().color().red();
+    int b_G = widget->palette().background().color().green();
+    int b_B = widget->palette().background().color().blue();
+
+    (*str).append(w_name);
+    (*str).append(" {");
+    (*str).append("\n");
+    (*str).append(QString("    color:#%1%2%3;")
+                  .arg(R, 0, 16)
+                  .arg(G, 0, 16)
+                  .arg(B, 0, 16));
+    (*str).append("\n");
+    (*str).append(QString("    background-color:#%1%2%3;")
+                  .arg(b_R, 0, 16)
+                  .arg(b_G, 0, 16)
+                  .arg(b_B, 0, 16));
+    (*str).append("\n");
+    (*str).append("}");
+    (*str).append("\n");
+}
+//--------------------------------------------------------------------------------
+#include <QPlainTextEdit>
+#include <QStackedWidget>
+#include <QRadioButton>
+#include <QLineEdit>
+#include <QGroupBox>
+#include <QSizeGrip>
+#include <QToolTip>
+#include <QTreeView>
+#include <QListView>
+#include <QSplitter>
+#include <QDateEdit>
+#include <QScrollBar>
+#include <QHeaderView>
+#include <QSizeGrip>
+#include <QMenu>
+#include <QDockWidget>
+#include <QHeaderView>
+#include <QProgressBar>
+
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    updateQRImage();
+    //updateQRImage();
+
+    QString str;
+    //get_param(&str, new QToolTip,   "QToolTip");
+    get_param(&str, new QWidget,    "QWidget");
+    get_param(&str, new QCheckBox,  "QCheckBox");
+    get_param(&str, new QGroupBox,  "QGroupBox");
+    get_param(&str, new QRadioButton,   "QRadioButton");
+    get_param(&str, new QMenuBar,   "QMenuBar");
+    get_param(&str, new QMenu,   "QMenu");
+    //get_param(&str, new QAbstractItemView,   "QAbstractItemView");
+    get_param(&str, new QTabWidget,   "QTabWidget");
+    get_param(&str, new QLineEdit,   "QLineEdit");
+    get_param(&str, new QAbstractScrollArea,   "QAbstractScrollArea");
+    get_param(&str, new QScrollBar,   "QScrollBar");
+    get_param(&str, new QTextEdit,   "QTextEdit");
+    get_param(&str, new QPlainTextEdit,   "QPlainTextEdit");
+    get_param(&str, new QHeaderView(Qt::Horizontal),   "QHeaderView");
+    get_param(&str, new QSizeGrip(this),   "QSizeGrip");
+    get_param(&str, new QMainWindow,   "QMainWindow");
+    get_param(&str, new QFrame,   "QFrame");
+    get_param(&str, new QStackedWidget,   "QStackedWidget");
+    get_param(&str, new QToolBar,   "QToolBar");
+    get_param(&str, new QToolButton,   "QToolButton");
+    get_param(&str, new QPushButton,   "QPushButton");
+    get_param(&str, new QComboBox,   "QComboBox");
+    get_param(&str, new QAbstractSpinBox,   "QAbstractSpinBox");
+    get_param(&str, new QLabel,   "QLabel");
+    get_param(&str, new QTabWidget,   "QTabWidget");
+    get_param(&str, new QTabBar,   "QTabBar");
+    get_param(&str, new QDockWidget,   "QDockWidget");
+    get_param(&str, new QTreeView,   "QTreeView");
+    get_param(&str, new QListView,   "QListView");
+    get_param(&str, new QSlider,   "QSlider");
+    get_param(&str, new QTableView,   "QTableView");
+    //get_param(&str, new QTableCornerButton,   "QTableCornerButton");
+    get_param(&str, new QStatusBar,   "QStatusBar");
+    get_param(&str, new QFrame,   "QFrame");
+    get_param(&str, new QSplitter,   "QSplitter");
+    get_param(&str, new QProgressBar,   "QProgressBar");
+    get_param(&str, new QDateEdit,   "QDateEdit");
+
+    emit info(str);
 
     return true;
 }
@@ -272,6 +360,12 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    //QApplication::setStyle(QStyleFactory::create("Plastique"));
+
+    messagebox_question("Вопрос", "Шо, опять?");
+    //messagebox_critical("Вопрос", "Шо, опять?");
+    //QMessageBox::question(this, "Вопрос", "Шо, опять?");
 
     return true;
 }

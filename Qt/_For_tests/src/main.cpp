@@ -128,6 +128,7 @@ int main(int argc, char *argv[])
 
     //---
 #if 0
+    //Blue
     QPalette palette;
 
     palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));

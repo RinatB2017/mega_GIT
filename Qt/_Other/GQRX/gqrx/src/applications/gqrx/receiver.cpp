@@ -522,10 +522,11 @@ receiver::status receiver::set_rf_freq(double freq_hz)
 {
     d_rf_freq = freq_hz;
 
-    src->set_center_freq(d_rf_freq);
+    //src->set_center_freq(d_rf_freq);
     // FIXME: read back frequency?
 
-    return STATUS_OK;
+    //return STATUS_OK;
+    return (receiver::status)src->set_center_freq(d_rf_freq);
 }
 
 /**

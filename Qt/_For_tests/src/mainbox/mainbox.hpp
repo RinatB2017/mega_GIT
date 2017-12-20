@@ -189,25 +189,25 @@ public:
 };
 //--------------------------------------------------------------------------------
 namespace c0 {
-    class class_X
+class class_X
+{
+public:
+    void x(void)
     {
-    public:
-        void x(void)
-        {
-            std::cout  << "111" << '\n';
-        }
-    };
+        std::cout  << "111" << '\n';
+    }
+};
 }
 
 namespace c1 {
-    class class_X
+class class_X
+{
+public:
+    void x(void)
     {
-    public:
-        void x(void)
-        {
-            std::cout  << "222" << '\n';
-        }
-    };
+        std::cout  << "222" << '\n';
+    }
+};
 }
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -215,8 +215,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 public slots:
@@ -267,6 +267,8 @@ private:
     void create_thread(void);
 
     void updateQRImage(void);
+
+    void get_param(QString *str, QWidget *widget, QString w_name);
 
 protected:
     void changeEvent(QEvent *event);

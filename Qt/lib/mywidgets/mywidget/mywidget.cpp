@@ -1007,7 +1007,10 @@ int MyWidget::messagebox_question(const QString title,
                                   unsigned int width)
 {
     QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Question);
+
+    msgBox.setIconPixmap(QPixmap(":/qmessagebox/qmessagebox-quest.png"));
+    //msgBox.setIcon(QMessageBox::Question);
+
     msgBox.setWindowTitle(title);
     msgBox.setText(text);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);

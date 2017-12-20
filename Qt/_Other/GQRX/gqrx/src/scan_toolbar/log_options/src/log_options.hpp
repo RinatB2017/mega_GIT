@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,67 +18,59 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SCAN_TOOLDOCK_HPP
-#define SCAN_TOOLDOCK_HPP
+#ifndef LOG_OPTIONS_HPP
+#define LOG_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#include <QDockWidget>
+#include <QDialog>
+#include <QList>
 //--------------------------------------------------------------------------------
-class QPushButton;
-class MainWindow;
-class QSpinBox;
-class QTimer;
-class LogBox;
+namespace Ui {
+class Log_options;
+}
 //--------------------------------------------------------------------------------
-class Scan_ToolDock : public QDockWidget
+class QTextEdit;
+//--------------------------------------------------------------------------------
+class Log_options : public QDialog
 {
     Q_OBJECT
-
+    
 public:
-    explicit Scan_ToolDock(QWidget *parent);
-    ~Scan_ToolDock();
+    Log_options(QWidget *parent = 0);
+    ~Log_options();
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    Q_PROPERTY(bool flag_ReadOnly       READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)
+    Q_PROPERTY(bool flag_AcceptRichText READ get_flag_AcceptRichText    WRITE set_flag_AcceptRichText)
 
-private slots:
-    void test(void);
+    Q_PROPERTY(bool flag_NoCRLF         READ get_flag_NoCRLF            WRITE set_flag_NoCRLF)
+    Q_PROPERTY(bool flag_AddDateTime    READ get_flag_AddDateTime       WRITE set_flag_AddDateTime)
+    Q_PROPERTY(bool flag_Color          READ get_flag_Color             WRITE set_flag_Color)
+    Q_PROPERTY(bool flag_ErrorAsMessage READ get_flag_ErrorAsMessage    WRITE set_flag_ErrorAsMessage)
+    Q_PROPERTY(bool flag_TextIsWindows  READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
 
-    void start(void);
-    void stop(void);
+    bool get_flag_ReadOnly(void);
+    bool get_flag_AcceptRichText(void);
 
-    void prev(void);
-    void next(void);
+    bool get_flag_NoCRLF(void);
+    bool get_flag_AddDateTime(void);
+    bool get_flag_Color(void);
+    bool get_flag_ErrorAsMessage(void);
+    bool get_flag_TextIsWindows(void);
 
-    void update(void);
+    void set_flag_ReadOnly(bool value);
+    void set_flag_AcceptRichText(bool value);
+
+    void set_flag_NoCRLF(bool value);
+    void set_flag_AddDateTime(bool value);
+    void set_flag_Color(bool value);
+    void set_flag_ErrorAsMessage(bool value);
+    void set_flag_TextIsWindows(bool value);
 
 private:
-    MainWindow *mw = 0;
+    Ui::Log_options *ui = 0;
+    QList<QString> codecs;
+    QTextEdit *logEdit = 0;
 
-    int curr_freq = 0;
-
-    QTimer *timer = 0;
-
-    QSpinBox *sb_begin_freq = 0;
-    QSpinBox *sb_end_freq = 0;
-    QSpinBox *sb_step_freq = 0;
-    QSpinBox *sb_interval_timer = 0;
-
-    QPushButton *btn_scan_start = 0;
-    QPushButton *btn_scan_stop = 0;
-    QPushButton *btn_scan_test = 0;
-
-    QPushButton *btn_scan_next = 0;
-    QPushButton *btn_scan_prev = 0;
-
-    LogBox *log = 0;
-
-    int messagebox_question(const QString title,
-                            const QString text,
-                            unsigned int width);
-
+    void findCodecs(void);
 };
 //--------------------------------------------------------------------------------
-#endif // SCAN_TOOLBAR_HPP
+#endif // OPTIONS_BOX_HPP

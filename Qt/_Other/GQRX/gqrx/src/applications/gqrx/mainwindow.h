@@ -68,7 +68,7 @@ public:
     bool configOk; /*!< Main app uses this flag to know whether we should abort or continue. */
 
 public slots:
-    void setNewFrequency(qint64 rx_freq);
+    receiver::status setNewFrequency(qint64 rx_freq);
 
 private:
     Ui::MainWindow *ui;

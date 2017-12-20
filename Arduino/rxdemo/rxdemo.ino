@@ -9,17 +9,13 @@ void setup()
 {
     Serial.begin(115200);
   
-    Serial.println("setup begin()");
+    Serial.println("rxdemo");
     rf24l01p.nRF24L01_HW_Init();
     
-    //rf24l01p.nRF24L01_Set_RX_Address(0x01, 0x23, 0x45, 0x67, 0x89);
-    //rf24l01p.nRF24L01_Set_RX_Address(0x34, 0x43, 0x10, 0x10, 0x01);
-    //rf24l01p.nRF24L01_Set_RX_Address(0x05, 0x20, 0x20, 0x30, 0x01);
     rf24l01p.nRF24L01_Set_RX_Address(0x00, 0x00, 0x00, 0x00, 0x00);
     
     rf24l01p.nRF24L01_Config(120, P0dBm, R250kbps);
     rf24l01p.RX_Mode();
-    Serial.println("setup end()");  
 }
 void loop()
 {

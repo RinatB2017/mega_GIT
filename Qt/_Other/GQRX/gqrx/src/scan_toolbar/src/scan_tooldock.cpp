@@ -18,14 +18,19 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QStyleFactory>
 #include <QApplication>
+#include <QVBoxLayout>
 #include <QPushButton>
+#include <QTextEdit>
 #include <QSpinBox>
+#include <QLabel>
 #include <QStyle>
 #include <QTimer>
 #include <QDebug>
 //--------------------------------------------------------------------------------
 #include "applications/gqrx/mainwindow.h"
+#include "logbox.hpp"
 //--------------------------------------------------------------------------------
 #include "scan_tooldock.hpp"
 //--------------------------------------------------------------------------------
@@ -97,6 +102,12 @@ Scan_ToolDock::Scan_ToolDock(QWidget *parent) :
     btn_scan_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipForward));
     btn_scan_next->setToolTip("next");
 
+    log = new LogBox("log", this);
+    connect(this,   SIGNAL(info(QString)),  log,    SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(debug(QString)), log,    SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(error(QString)), log,    SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(trace(QString)), log,    SLOT(traceLog(QString)));
+
     QVBoxLayout *vbox = new QVBoxLayout;
 
     QHBoxLayout *hbox = new QHBoxLayout;
@@ -115,7 +126,7 @@ Scan_ToolDock::Scan_ToolDock(QWidget *parent) :
     vbox->addWidget(lbl_interval_timer);
     vbox->addWidget(sb_interval_timer);
     vbox->addLayout(hbox);
-    vbox->addWidget(new QTableView());
+    vbox->addWidget(log);
     vbox->addWidget(btn_scan_test);
 
     //vbox->addStretch(1);
@@ -154,11 +165,37 @@ Scan_ToolDock::~Scan_ToolDock()
     btn_scan_test->deleteLater();
 }
 //--------------------------------------------------------------------------------
+int Scan_ToolDock::messagebox_question(const QString title,
+                                       const QString text,
+                                       unsigned int width)
+{
+    //QApplication::setStyle(QStyleFactory::create("Breeze"));
+
+    QMessageBox msgBox;
+
+    msgBox.setIcon(QMessageBox::Question);
+    msgBox.setWindowTitle(title);
+    msgBox.setText(text);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    QSpacerItem* horizontalSpacer = new QSpacerItem(width, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+    return msgBox.exec();
+}
+//--------------------------------------------------------------------------------
 void Scan_ToolDock::test(void)
 {
+    int btn = messagebox_question("Установить частоту?",
+                                  QString("%1").arg(sb_begin_freq->value() * 1000),
+                                  300);
+    if(btn != QMessageBox::Yes)
+    {
+        return;
+    }
     if(mw)
     {
-        mw->setNewFrequency(sb_begin_freq->value() * 1000);
+        emit info(QString("setNewFrequency = %1").arg(mw->setNewFrequency(sb_begin_freq->value() * 1000)));
     }
 }
 //--------------------------------------------------------------------------------

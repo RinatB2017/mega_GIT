@@ -22,7 +22,7 @@ QT  += script
 #DEFINES += FIXED_SIZE
 #DEFINES += FLAG_RESIZE
 #
-DEFINES += NO_STYLETOOLBAR
+#DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
@@ -81,6 +81,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
+
+include ($$LIB_PATH/icons/qmessagebox.pri)
 
 include ($$LIB_PATH/QRCodeGenerator/QRCodeGenerator.pri)
 

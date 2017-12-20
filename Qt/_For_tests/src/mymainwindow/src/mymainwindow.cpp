@@ -31,9 +31,9 @@ QFile *MyMainWindow::m_logFile = 0;
 MyMainWindow::MyMainWindow(MainWindow *parent) :
     MainWindow(parent)
 {
-    m_logFile = new QFile(QString("%1.log").arg(qAppName()));
-    m_logFile->open(QFile::Append | QFile::Text);
-    qInstallMessageHandler(messageHandler);
+    //m_logFile = new QFile(QString("%1.log").arg(qAppName()));
+    //m_logFile->open(QFile::Append | QFile::Text);
+    //qInstallMessageHandler(messageHandler);
 
     create_local_menus();
     create_toolbars();

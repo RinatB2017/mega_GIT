@@ -77,6 +77,10 @@ void MainBox::init(void)
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     //---
 
+    ui->toolBox->setItemIcon(0, QIcon(ICON_PROGRAMM));
+    ui->toolBox->setItemIcon(1, QIcon(ICON_HELP));
+    //ui->toolBox->setFixedWidth(ui->toolBox->sizeHint().width());
+
     MyMainWindow *mw = dynamic_cast<MyMainWindow *>(parent());
     if(mw)
     {
@@ -305,24 +309,7 @@ void MainBox::get_color(QPalette::ColorRole role, QString r_name)
     emit info(str);
 }
 //--------------------------------------------------------------------------------
-#include <QPlainTextEdit>
-#include <QStackedWidget>
-#include <QRadioButton>
-#include <QLineEdit>
-#include <QGroupBox>
-#include <QSizeGrip>
-#include <QToolTip>
-#include <QTreeView>
-#include <QListView>
-#include <QSplitter>
-#include <QDateEdit>
-#include <QScrollBar>
-#include <QHeaderView>
-#include <QSizeGrip>
-#include <QMenu>
-#include <QDockWidget>
-#include <QHeaderView>
-#include <QProgressBar>
+#include <QtWidgets>
 
 bool MainBox::test_0(void)
 {

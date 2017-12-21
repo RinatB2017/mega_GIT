@@ -51,16 +51,16 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #endif
 
+    app.setApplicationName(NAME_PROGRAMM);
+    app.setOrganizationName("Work");
+    app.setApplicationVersion(QT_VERSION_STR);
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
 #ifdef UNDER_CONSTRUCTION
 #ifndef QT_DEBUG
     MyWidget::messagebox_warning("Warning", "UNDER_CONSTRUCTION");
 #endif
 #endif
-
-    app.setApplicationName(NAME_PROGRAMM);
-    app.setOrganizationName("Work");
-    app.setApplicationVersion(QT_VERSION_STR);
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QCommandLineParser parser;
     parser.setApplicationDescription(NAME_PROGRAMM);

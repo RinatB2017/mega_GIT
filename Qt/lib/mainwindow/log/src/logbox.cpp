@@ -50,6 +50,19 @@
 //--------------------------------------------------------------------------------
 //#include "LoggingCategories.hpp"
 //--------------------------------------------------------------------------------
+LogBox::LogBox(QWidget *parent) :
+    QFrame(parent),
+    flagNoCRLF(false),
+    flagAddDateTime(false),
+    flagColor(true),
+    flagErrorAsMessage(false),
+    flagTextIsWindows(false)
+{
+    init();
+
+    logBox->document()->setMaximumBlockCount(1000);
+}
+//--------------------------------------------------------------------------------
 LogBox::LogBox(const QString &o_name,
                QWidget *parent,
                unsigned int min_width,
@@ -96,6 +109,10 @@ void LogBox::init(void)
 void LogBox::popup(QPoint)
 {
     QMenu *popup_menu = logBox->createStandardContextMenu();
+    if(popup_menu == nullptr)
+    {
+        popup_menu = new QMenu();
+    }
     Q_CHECK_PTR(popup_menu);
 
     popup_menu->setStyleSheet("background:white;color:black;");
@@ -103,12 +120,6 @@ void LogBox::popup(QPoint)
     QAction *clear_action   = new QAction(tr("clear"),   this);
     QAction *save_to_action = new QAction(tr("save to"), this);
     QAction *options_action = new QAction(tr("options"), this);
-
-#if 0
-    clear_action->setIcon(qApp->style()->standardIcon(QStyle::SP_LineEditClearButton));
-    save_to_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
-    options_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DriveCDIcon));
-#endif
 
     popup_menu->addSeparator();
     popup_menu->addAction(clear_action);

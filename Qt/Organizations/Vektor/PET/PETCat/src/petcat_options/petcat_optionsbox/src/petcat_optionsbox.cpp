@@ -21,6 +21,7 @@
 #include <QNetworkAddressEntry>
 #include <QMouseEvent>
 #include <QSettings>
+#include <QToolBox>
 #include <QTimer>
 #include <QDebug>
 //--------------------------------------------------------------------------------
@@ -137,6 +138,10 @@ void PETCat_optionsBox::init(void)
 
     ui->sw_main->setCurrentIndex(index_main_options);
     //---
+
+//    ui->test_box->removeItem(0);
+//    ui->test_box->removeItem(0);
+//    ui->test_box->addItem(o_logging, "xxx");
 
     setFixedSize(sizeHint());
 

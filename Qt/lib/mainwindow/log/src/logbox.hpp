@@ -38,6 +38,7 @@ class LogBox : public QFrame
     Q_OBJECT
 
 public:
+    LogBox(QWidget *parent);
     LogBox(const QString &o_name,
            QWidget *parent,
            unsigned int min_width  = 1,

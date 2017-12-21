@@ -21,30 +21,32 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
-#include <QSystemTrayIcon>
-#include <QDesktopWidget>
-#include <QStyleFactory>
-#include <QResizeEvent>
-#include <QApplication>
-#include <QFontDialog>
-#include <QTranslator>
-#include <QToolButton>
-#include <QPushButton>
-#include <QMessageBox>
-#include <QMainWindow>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QStatusBar>
-#include <QSettings>
-#include <QDateTime>
-#include <QTextEdit>
-#include <QToolBar>
-#include <QMenuBar>
-#include <QAction>
-#include <QStyle>
-#include <QTimer>
-#include <QLabel>
-#include <QMenu>
+//#include <QSystemTrayIcon>
+//#include <QDesktopWidget>
+//#include <QStyleFactory>
+//#include <QResizeEvent>
+//#include <QApplication>
+//#include <QFontDialog>
+//#include <QTranslator>
+//#include <QToolButton>
+//#include <QPushButton>
+//#include <QMessageBox>
+//#include <QMainWindow>
+//#include <QVBoxLayout>
+//#include <QHBoxLayout>
+//#include <QStatusBar>
+//#include <QSettings>
+//#include <QDateTime>
+//#include <QTextEdit>
+//#include <QToolBar>
+//#include <QMenuBar>
+//#include <QAction>
+//#include <QStyle>
+//#include <QTimer>
+//#include <QLabel>
+//#include <QMenu>
+
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -76,6 +78,15 @@ typedef struct
     QString text;
     QIcon   *icon;
 } s_action;
+//--------------------------------------------------------------------------------
+#define ICON_HELP       ":/mainwindow/system-help.png"
+#define ICON_ABOUT      ":/mainwindow/computer.png"
+#define ICON_RU         ":/mainwindow/ru.png"
+#define ICON_US         ":/mainwindow/us.png"
+#define ICON_STYLE      ":/mainwindow/style.png"
+#define ICON_EXIT       ":/mainwindow/system-shutdown.png"
+#define ICON_FONT       ":/mainwindow/kfontview.png"
+#define ICON_LANG       ":/mainwindow/applications-education-language.png"
 //--------------------------------------------------------------------------------
 class LogBox;
 class LogDock;

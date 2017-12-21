@@ -31,15 +31,6 @@
 //--------------------------------------------------------------------------------
 #include "logdock.hpp"
 //--------------------------------------------------------------------------------
-#define ICON_HELP       ":/mainwindow/system-help.png"
-#define ICON_ABOUT      ":/mainwindow/computer.png"
-#define ICON_RU         ":/mainwindow/ru.png"
-#define ICON_US         ":/mainwindow/us.png"
-#define ICON_STYLE      ":/mainwindow/style.png"
-#define ICON_EXIT       ":/mainwindow/system-shutdown.png"
-#define ICON_FONT       ":/mainwindow/kfontview.png"
-#define ICON_LANG       ":/mainwindow/applications-education-language.png"
-//--------------------------------------------------------------------------------
 MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
       orgName(ORGNAME),

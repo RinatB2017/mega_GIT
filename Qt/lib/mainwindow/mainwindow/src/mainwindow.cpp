@@ -1186,6 +1186,7 @@ void MainWindow::set_blue_palette(void)
     //Blue
     QPalette palette;
 
+#ifdef Q_OS_LINUX
     palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
     palette.setBrush(QPalette::Button,      QBrush(QColor(32, 64, 96),      Qt::SolidPattern));
     palette.setBrush(QPalette::Light,       QBrush(QColor(24, 48, 44),      Qt::SolidPattern));
@@ -1195,6 +1196,19 @@ void MainWindow::set_blue_palette(void)
     palette.setBrush(QPalette::Base,        QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
     palette.setBrush(QPalette::Window,      QBrush(QColor(12, 24, 32),      Qt::SolidPattern));
     palette.setBrush(QPalette::Shadow,      QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+#endif
+
+#ifdef Q_OS_WIN
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::Button,      QBrush(QColor(32, 64, 96),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Light,       QBrush(QColor(24, 48, 44),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Text,        QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::Base,        QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Window,      QBrush(QColor(12, 24, 32),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+#endif
 
     qApp->setPalette(palette);
 }
@@ -1204,7 +1218,7 @@ void MainWindow::set_dark_palette(void)
     //Dark
     QPalette palette;
 
-#if 0
+#ifdef Q_OS_LINUX
     palette.setBrush(QPalette::WindowText,  QBrush(QColor(0xefefef)));
     palette.setBrush(QPalette::Button,      QBrush(QColor(0x313131)));
     palette.setBrush(QPalette::Light,       QBrush(QColor(0x454545)));
@@ -1214,7 +1228,9 @@ void MainWindow::set_dark_palette(void)
     palette.setBrush(QPalette::Base,        QBrush(QColor(0x232323)));
     palette.setBrush(QPalette::Window,      QBrush(QColor(0x313131)));
     palette.setBrush(QPalette::Shadow,      QBrush(QColor(0x141414)));
-#else
+#endif
+
+#ifdef Q_OS_WIN
     palette.setBrush(QPalette::WindowText,  QBrush(QColor(239, 239, 239),   Qt::SolidPattern));
     palette.setBrush(QPalette::Button,      QBrush(QColor(49, 49, 49),      Qt::SolidPattern));
     palette.setBrush(QPalette::Light,       QBrush(QColor(69, 69, 69),      Qt::SolidPattern));
@@ -1234,7 +1250,7 @@ void MainWindow::set_light_palette(void)
     //Light
     QPalette palette;
 
-#if 0
+#ifdef Q_OS_LINUX
     palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
     palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
     palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
@@ -1244,7 +1260,9 @@ void MainWindow::set_light_palette(void)
     palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
     palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
     palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040), Qt::SolidPattern));
-#else
+#endif
+
+#ifdef Q_OS_WIN
     palette.setBrush(QPalette::WindowText,  QBrush(QColor(0, 0, 0),         Qt::SolidPattern));
     palette.setBrush(QPalette::Button,      QBrush(QColor(240, 240, 240),   Qt::SolidPattern));
     palette.setBrush(QPalette::Light,       QBrush(QColor(255, 255, 255),   Qt::SolidPattern));

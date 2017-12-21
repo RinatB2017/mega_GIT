@@ -113,6 +113,8 @@ int main(int argc, char *argv[])
     }
 #endif
 
+    //qDebug() << qApp->palette();
+
     return app.exec();
 }
 //--------------------------------------------------------------------------------

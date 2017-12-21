@@ -80,62 +80,21 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-#if 0
-    QLabel lbl;
-
-    QScriptEngine scriptEngine;
-    QScriptValue scriptLbl = scriptEngine.newQObject(&lbl);
-    scriptEngine.globalObject().setProperty("lbl", scriptLbl);
-    scriptEngine.evaluate("lbl.text = 'Hello, world !'");
-    scriptEngine.evaluate("lbl.show()");
-
-    return app.exec();
-#endif
-
     QPixmap pixmap(":/logo/pinguin.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_CHECK_PTR(splash);
     splash->show();
 
-    //---
-#if 0
-    QPushButton *btn = new QPushButton;
-    btn->setFixedSize(320, 200);
-    btn->setText("test");
-    btn->show();
-#endif
-    //---
-#if 0
-    QFile file(":/images/style.css");
-    if(file.open(QFile::ReadOnly))
-    {
-        QString StyleSheet = QLatin1String(file.readAll());
-        app.setStyleSheet(StyleSheet);
-    }
-#endif
-    //---
-
-    //MainWindow *main_window = new MainWindow;
     MyMainWindow *main_window = new MyMainWindow();
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     qDebug() << main_window->windowFlags();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     // отключает заголовок
     //main_window->setWindowFlags(Qt::FramelessWindowHint);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-
-    //---
-#if 0
-    qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    QGLFormat format;
-    format.setVersion(4, 3);
-    QGLFormat::setDefaultFormat(format);
-#endif
-    //---
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

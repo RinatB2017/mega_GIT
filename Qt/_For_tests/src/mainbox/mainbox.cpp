@@ -293,12 +293,13 @@ void MainBox::get_color(QPalette::ColorRole role, QString r_name)
     int G = palette().color(role).red();
     int B = palette().color(role).red();
 
+    //palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
     QString str;
-    str.append(QString("%1    color:#%2%3%4;")
+    str.append(QString("palette.setBrush(%1,  QBrush(QColor(%2, %3, %4),    Qt::SolidPattern));")
                .arg(r_name)
-               .arg(R, 0, 16)
-               .arg(G, 0, 16)
-               .arg(B, 0, 16));
+               .arg(R)
+               .arg(G)
+               .arg(B));
     str.append("\n");
 
     emit info(str);

@@ -52,6 +52,8 @@ public:
     bool move(const QString text);
     void clear(void);
 
+    void new_game(void);
+
     void test(void);
 
 signals:

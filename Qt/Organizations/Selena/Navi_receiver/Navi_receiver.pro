@@ -42,6 +42,7 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
@@ -50,7 +51,7 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
 
-include ($$LIB_PATH/proto_NMEA_0183/proto_NMEA_0183.pri)
+include ($$LIB_PATH2/proto_NMEA_0183/proto_NMEA_0183.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

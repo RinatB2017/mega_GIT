@@ -103,20 +103,20 @@ void MyMainWindow::create_local_menus(void)
     connect(options_action, SIGNAL(triggered()),    this,   SLOT(options_action_click()));
     connect(help_action,    SIGNAL(triggered()),    this,   SLOT(help_action_click()));
 
-    QList<QAction *> f_temp = m_fileMenu->actions();
-    m_fileMenu->addAction(file_action);
-    m_fileMenu->addSeparator();
-    m_fileMenu->addActions(f_temp);
+    QList<QAction *> f_temp = get_file_menu()->actions();
+    get_file_menu()->addAction(file_action);
+    get_file_menu()->addSeparator();
+    get_file_menu()->addActions(f_temp);
 
-    QList<QAction *> f_options = m_optionsMenu->actions();
-    m_optionsMenu->addAction(options_action);
-    m_optionsMenu->addSeparator();
-    m_optionsMenu->addActions(f_options);
+    QList<QAction *> f_options = get_options_menu()->actions();
+    get_options_menu()->addAction(options_action);
+    get_options_menu()->addSeparator();
+    get_options_menu()->addActions(f_options);
 
-    QList<QAction *> f_help = m_helpMenu->actions();
-    m_helpMenu->addAction(help_action);
-    m_helpMenu->addSeparator();
-    m_helpMenu->addActions(f_help);
+    QList<QAction *> f_help = get_help_menu()->actions();
+    get_help_menu()->addAction(help_action);
+    get_help_menu()->addSeparator();
+    get_help_menu()->addActions(f_help);
 }
 //--------------------------------------------------------------------------------
 void MyMainWindow::create_toolbars(void)

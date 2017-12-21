@@ -153,7 +153,6 @@ public:
                             const QString &tool_tip);
 
     //---
-    //TODO
     bool is_close = true;
 
 signals:

@@ -50,13 +50,14 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/crc/crc.pri)
 
 include (../lib/measuring/multimeter_v786_2/multimeter_v786_2.pri)
 
-include ($$LIB_PATH/connection/connection.pri)
+include ($$LIB_PATH2/connection/connection.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

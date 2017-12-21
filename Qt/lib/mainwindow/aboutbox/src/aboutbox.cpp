@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QDesktopServices>
+#include <QLabel>
 #include <QRect>
 #include <QUrl>
 //--------------------------------------------------------------------------------

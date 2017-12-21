@@ -55,11 +55,14 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/meta/grapherbox.pri)
 include ($$LIB_PATH/crc/crc.pri)
 
-include ($$LIB_PATH/connection/connection.pri)
+include ($$LIB_PATH2/connection/connection.pri)
+
 include (../lib/powersupply/parrotbar/parrotbar.pri)
 
 use_b588 {

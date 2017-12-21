@@ -64,7 +64,6 @@ LogBox::LogBox(const QString &o_name,
 {
     init();
 
-    //TODO
     logBox->document()->setMaximumBlockCount(1000);
 
     if(min_width != 0)
@@ -228,8 +227,6 @@ void LogBox::infoLog(const QString &text)
     {
         return;
     }
-    //TODO
-    //qInfo(logInfo()) << text;
 
     if(flagAddDateTime)
     {
@@ -265,8 +262,6 @@ void LogBox::debugLog(const QString &text)
     {
         return;
     }
-    //TODO
-    //qDebug(logDebug()) << text;
 
     if(flagAddDateTime)
     {
@@ -302,8 +297,6 @@ void LogBox::errorLog(const QString &text)
     {
         return;
     }
-    //TODO
-    //qCritical(logCritical()) << text;
 
     if(flagAddDateTime)
     {
@@ -349,8 +342,6 @@ void LogBox::traceLog(const QString &text)
     {
         return;
     }
-    //TODO
-    //qInfo(logInfo()) << text;
 
     if(flagAddDateTime)
     {

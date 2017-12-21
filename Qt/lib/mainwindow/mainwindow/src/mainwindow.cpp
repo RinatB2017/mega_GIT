@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -89,7 +89,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     {
         if(mainWidget)
         {
-            //TODO
             bool flag_no_close = mainWidget->property("flag_no_close").toBool();
             if(flag_no_close)
             {
@@ -206,57 +205,49 @@ void MainWindow::check_date(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-void MainWindow::shot(void)
-{
-    //QMessageBox::information(this, "Информация", "Всё!");
-    int a = 5;
-    int b = 0;
-    int c = a / b;
-    qDebug() << a << b << c;
-}
-//--------------------------------------------------------------------------------
 void MainWindow::load_translations()
 {
 #ifdef ONLY_ENGLISH
     return;
 #else
-    sysTranslator = new QTranslator(this);
-    //res = sysTranslator->load(QLatin1String("qt_ru"), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    bool res = sysTranslator->load("qt_ru", ":/system");
+    translator_system = new QTranslator(this);
+    bool res = translator_system->load("qt_ru", ":/system");
     if(!res)
     {
         QMessageBox::critical(0, "Error", "sysTranslator not loaded");
-        qDebug() << "sysTranslator not loaded!";
+#ifdef QT_DEBUG
+        qDebug() << "translator_system not loaded!";
+#endif
         return;
     }
-    qApp->installTranslator(sysTranslator);
+    qApp->installTranslator(translator_system);
     //---
-    appTranslator = new QTranslator(this);
-    res = appTranslator->load(":/common");
+    translator_common = new QTranslator(this);
+    res = translator_common->load(":/common");
     if(!res)
     {
         QMessageBox::critical(0, "Error", "appTranslator (common) not loaded!");
 #ifdef QT_DEBUG
-        qDebug() << "appTranslator (common) not loaded!";
+        qDebug() << "translator_common not loaded!";
 #endif
     }
     else
     {
-        qApp->installTranslator(appTranslator);
+        qApp->installTranslator(translator_common);
     }
     //---
-    appTranslator2 = new QTranslator(this);
-    res = appTranslator2->load(":/programm");
+    translator_programm = new QTranslator(this);
+    res = translator_programm->load(":/programm");
     if(!res)
     {
         QMessageBox::critical(0, "Error", "appTranslator (programm) not loaded!");
 #ifdef QT_DEBUG
-        qDebug() << "appTranslator (programm) not loaded!";
+        qDebug() << "translator_programm not loaded!";
 #endif
     }
     else
     {
-        qApp->installTranslator(appTranslator2);
+        qApp->installTranslator(translator_programm);
     }
     //---
 #endif
@@ -270,50 +261,36 @@ void MainWindow::createMenus(void)
     mainBar = menuBar();
 
     m_fileMenu = new QMenu(mainBar);
+
     m_optionsMenu = new QMenu(mainBar);
 #ifndef NO_LOG
     m_windowsMenu = new QMenu(mainBar);
 #endif
     m_helpMenu = new QMenu(mainBar);
 
-#ifndef ONLY_ENGLISH
-    m_langMenu = new QMenu(m_optionsMenu);
-#endif
     m_styleMenu = new QMenu(m_optionsMenu);
-
-#ifndef ONLY_ENGLISH
-    m_langMenu->setIcon(QPixmap(QLatin1String(ICON_LANG)));
-#endif
     m_styleMenu->setIcon(QPixmap(QLatin1String(ICON_STYLE)));
 
-    a_Exit  = new QAction(m_fileMenu);
-    a_About = new QAction(m_helpMenu);
-    a_Help = new QAction(m_helpMenu);
-    a_Font  = new QAction(m_optionsMenu);
+    QAction *a_Exit  = add_new_action(m_fileMenu, "Exit", new QIcon(ICON_EXIT));
+    a_Exit->setShortcuts(QKeySequence::Quit);
+    connect(a_Exit, SIGNAL(triggered(bool)),    this,   SLOT(close()));
+
+    QAction *a_About  = add_new_action(m_helpMenu, "About", new QIcon(ICON_ABOUT));
+    connect(a_About, SIGNAL(triggered(bool)),    this,   SLOT(about()));
+
+    QAction *a_Help  = add_new_action(m_helpMenu, "Help", new QIcon(ICON_HELP));
+    connect(a_Help, SIGNAL(triggered(bool)),    this,   SLOT(help()));
+
 #ifndef NO_LOG
-    a_Log_Font = new QAction(m_optionsMenu);
-#endif
-#ifndef ONLY_ENGLISH
-    a_Rus = new QAction(m_langMenu);
-    a_Eng = new QAction(m_langMenu);
+    QAction *a_font_programm = add_new_action(m_optionsMenu, "Select the font program", new QIcon(ICON_FONT));
+    connect(a_font_programm, SIGNAL(triggered(bool)),    this,   SLOT(set_app_font()));
+
+    QAction *a_font_logging = add_new_action(m_optionsMenu, "Select the font logging", new QIcon(ICON_FONT));
+    connect(a_font_logging, SIGNAL(triggered(bool)),    this,   SLOT(set_log_font()));
+
+    m_optionsMenu->addSeparator();
 #endif
     a_AskExit = new QAction(m_optionsMenu);
-
-    a_Exit->setShortcuts(QKeySequence::Quit);
-    a_Exit->setIcon(QPixmap(QLatin1String(ICON_EXIT)));
-
-    a_Font->setIcon(QPixmap(QLatin1String(ICON_FONT)));
-#ifndef NO_LOG
-    a_Log_Font->setIcon(QPixmap(QLatin1String(ICON_FONT)));
-#endif
-
-    a_Help->setIcon(QPixmap(QLatin1String(ICON_HELP)));
-    a_About->setIcon(QPixmap(QLatin1String(ICON_ABOUT)));
-
-#ifndef ONLY_ENGLISH
-    a_Rus->setIcon(QPixmap(QLatin1String(ICON_RU)));
-    a_Eng->setIcon(QPixmap(QLatin1String(ICON_US)));
-#endif
 
     a_AskExit->setCheckable(true);
     a_AskExit->setChecked(flag_close);
@@ -322,11 +299,6 @@ void MainWindow::createMenus(void)
 
     m_helpMenu->addAction(a_Help);
     m_helpMenu->addAction(a_About);
-
-#ifndef ONLY_ENGLISH
-    m_langMenu->addAction(a_Rus);
-    m_langMenu->addAction(a_Eng);
-#endif
 
     mainBar->addMenu(m_fileMenu);
     mainBar->addMenu(m_optionsMenu);
@@ -341,16 +313,32 @@ void MainWindow::createMenus(void)
         QAction *action = m_styleMenu->addAction(style, this, SLOT(setStyles()));
         action->setIcon(QPixmap(QLatin1String(ICON_STYLE)));
     }
-
-    m_optionsMenu->addAction(a_Font);
 #ifndef NO_LOG
-    m_optionsMenu->addAction(a_Log_Font);
-    m_optionsMenu->addSeparator();
-
     a_is_shows_info  = new QAction(m_optionsMenu);
     a_is_shows_debug = new QAction(m_optionsMenu);
     a_is_shows_error = new QAction(m_optionsMenu);
     a_is_shows_trace = new QAction(m_optionsMenu);
+
+    m_themes = new QMenu(m_optionsMenu);
+    m_themes->setTitle(tr("Themes"));
+    m_themes->setStatusTip(tr("Themes"));
+    m_themes->setToolTip(tr("Themes"));
+
+    a_light_theme = new QAction(m_themes);
+    a_dark_theme = new QAction(m_themes);
+    a_blue_theme = new QAction(m_themes);
+
+    a_light_theme->setText(tr("Light theme"));
+    a_dark_theme->setText(tr("Dark theme"));
+    a_blue_theme->setText(tr("Blue theme"));
+
+    m_themes->addAction(a_light_theme);
+    m_themes->addAction(a_dark_theme);
+    m_themes->addAction(a_blue_theme);
+
+    connect(a_light_theme,      SIGNAL(triggered(bool)),    this,   SLOT(set_light_palette()));
+    connect(a_dark_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_dark_palette()));
+    connect(a_blue_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_blue_palette()));
 
     connect(a_is_shows_info,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_info(bool)));
     connect(a_is_shows_debug,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_debug(bool)));
@@ -382,26 +370,22 @@ void MainWindow::createMenus(void)
     m_optionsMenu->addAction(a_is_shows_debug);
     m_optionsMenu->addAction(a_is_shows_error);
     m_optionsMenu->addAction(a_is_shows_trace);
+
+    m_optionsMenu->addSeparator();
+    m_optionsMenu->addMenu(m_themes);
 #endif
     m_optionsMenu->addSeparator();
 #ifndef ONLY_ENGLISH
-    m_optionsMenu->addMenu(m_langMenu);
+    m_langMenu = add_new_menu(m_optionsMenu, "Language", new QIcon(QPixmap(ICON_LANG)));
+    QAction *a_rus =  add_new_action(m_langMenu,    "Russian", new QIcon(QPixmap(QLatin1String(ICON_RU))));
+    QAction *a_eng = add_new_action(m_langMenu,     "English", new QIcon(QPixmap(QLatin1String(ICON_US))));
+    connect(a_rus,  SIGNAL(triggered(bool)),    this,   SLOT(setMenuLanguage()));
+    connect(a_eng,  SIGNAL(triggered(bool)),    this,   SLOT(setMenuLanguage()));
 #endif
     m_optionsMenu->addMenu(m_styleMenu);
     m_optionsMenu->addSeparator();
     m_optionsMenu->addAction(a_AskExit);
 
-    connect(a_Exit,     SIGNAL(triggered()),    this, SLOT(close()));
-    connect(a_Help,     SIGNAL(triggered()),    this, SLOT(help()));
-    connect(a_About,    SIGNAL(triggered()),    this, SLOT(about()));
-    connect(a_Font,     SIGNAL(triggered()),    this, SLOT(set_app_font()));
-#ifndef NO_LOG
-    connect(a_Log_Font, SIGNAL(triggered()),    this, SLOT(set_log_font()));
-#endif
-#ifndef ONLY_ENGLISH
-    connect(a_Rus,      SIGNAL(triggered()),    this, SLOT(setMenuLanguage()));
-    connect(a_Eng,      SIGNAL(triggered()),    this, SLOT(setMenuLanguage()));
-#endif
     connect(a_AskExit,  SIGNAL(triggered()),    this, SLOT(closeOnExit()));
     connect(this,       SIGNAL(updateLanguage()), this, SLOT(updateText()));
 }
@@ -409,6 +393,26 @@ void MainWindow::createMenus(void)
 //--------------------------------------------------------------------------------
 void MainWindow::updateText(void)
 {
+    foreach (s_menu *menu, menus) {
+        QMenu *t_menu = menu->obj;
+        if(t_menu)
+        {
+            t_menu->setTitle(tr(menu->text.toLatin1().data()));
+            t_menu->setStatusTip(tr(menu->text.toLatin1().data()));
+            t_menu->setToolTip(tr(menu->text.toLatin1().data()));
+        }
+    }
+    foreach (s_action *action, actions) {
+        QAction *t_action = action->obj;
+        if(t_action)
+        {
+            t_action->setText(tr(action->text.toLatin1().data()));
+            t_action->setStatusTip(tr(action->text.toLatin1().data()));
+            t_action->setToolTip(tr(action->text.toLatin1().data()));
+        }
+    }
+
+
 #ifndef NO_MENU
     m_fileMenu->setTitle(tr("File"));
     m_fileMenu->setStatusTip(tr("File"));
@@ -426,11 +430,6 @@ void MainWindow::updateText(void)
     m_helpMenu->setTitle(tr("&Help"));
     m_helpMenu->setStatusTip(tr("&Help"));
     m_helpMenu->setToolTip(tr("&Help"));
-#ifndef ONLY_ENGLISH
-    m_langMenu->setTitle(tr("Language"));
-    m_langMenu->setStatusTip(tr("Language"));
-    m_langMenu->setToolTip(tr("Language"));
-#endif
     m_styleMenu->setTitle(tr("Style"));
     m_styleMenu->setStatusTip(tr("Style"));
     m_styleMenu->setToolTip(tr("Style"));
@@ -442,34 +441,6 @@ void MainWindow::updateText(void)
     a_is_shows_trace->setText(tr("is_shows_trace"));
 #endif
 
-    a_Exit->setText(tr("Exit"));
-    a_About->setText(tr("About"));
-    a_Help->setText(tr("Help"));
-    a_Font->setText(tr("Select the font program"));
-
-    a_Exit->setStatusTip(tr("Exit"));\
-    a_About->setStatusTip(tr("About"));
-    a_Help->setStatusTip(tr("Help"));
-    a_Font->setStatusTip(tr("Select the font program"));
-
-    a_Exit->setToolTip(tr("Exit"));\
-    a_About->setToolTip(tr("About"));
-    a_Help->setToolTip(tr("Help"));
-    a_Font->setToolTip(tr("Select the font program"));
-
-#ifndef NO_LOG
-    a_Log_Font->setText(tr("Select the font logging"));
-    a_Log_Font->setStatusTip(tr("Select the font logging"));
-    a_Log_Font->setToolTip(tr("Select the font logging"));
-#endif
-#ifndef ONLY_ENGLISH
-    a_Rus->setText(tr("Russian"));
-    a_Rus->setStatusTip(tr("Russian"));
-    a_Rus->setToolTip(tr("Russian"));
-    a_Eng->setText(tr("English"));
-    a_Eng->setStatusTip(tr("English"));
-    a_Eng->setToolTip(tr("English"));
-#endif
     a_AskExit->setText(tr("Do not ask when you exit"));
 #endif
 
@@ -490,6 +461,16 @@ void MainWindow::updateText(void)
     btnStyle->setToolTip(tr("Style"));
     btnAbout->setToolTip(tr("About"));
     btnHelp->setToolTip(tr("Help"));
+
+#ifndef NO_LOG
+    m_themes->setTitle(tr("Themes"));
+    m_themes->setStatusTip(tr("Themes"));
+    m_themes->setToolTip(tr("Themes"));
+
+    a_light_theme->setText(tr("Light theme"));
+    a_dark_theme->setText(tr("Dark theme"));
+    a_blue_theme->setText(tr("Blue theme"));
+#endif
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -508,14 +489,16 @@ void MainWindow::setMenuLanguage(void)
 #endif
     if(language.contains("Russian") || language.contains("Русский"))
     {
-        if(appTranslator) qApp->installTranslator(appTranslator);
-        if(sysTranslator) qApp->installTranslator(sysTranslator);
+        if(translator_common) qApp->installTranslator(translator_common);
+        if(translator_programm) qApp->installTranslator(translator_programm);
+        if(translator_system) qApp->installTranslator(translator_system);
         emit updateLanguage();
     }
     if(language.contains("English"))
     {
-        if(appTranslator) qApp->removeTranslator(appTranslator);
-        if(sysTranslator) qApp->removeTranslator(sysTranslator);
+        if(translator_common) qApp->removeTranslator(translator_common);
+        if(translator_programm) qApp->removeTranslator(translator_programm);
+        if(translator_system) qApp->removeTranslator(translator_system);
         emit updateLanguage();
     }
 #endif
@@ -537,15 +520,17 @@ void MainWindow::setToolBarLanguage(void)
     language = button->text().remove("&");
     if(language.contains("Russian") || language.contains("Русский"))
     {
-        if(appTranslator) qApp->installTranslator(appTranslator);
-        if(sysTranslator) qApp->installTranslator(sysTranslator);
+        if(translator_common) qApp->installTranslator(translator_common);
+        if(translator_programm) qApp->installTranslator(translator_programm);
+        if(translator_system) qApp->installTranslator(translator_system);
         emit updateLanguage();
         return;
     }
     if(language.contains("English"))
     {
-        if(appTranslator) qApp->removeTranslator(appTranslator);
-        if(sysTranslator) qApp->removeTranslator(sysTranslator);
+        if(translator_common) qApp->removeTranslator(translator_common);
+        if(translator_programm) qApp->removeTranslator(translator_programm);
+        if(translator_system) qApp->removeTranslator(translator_system);
         emit updateLanguage();
         return;
     }
@@ -790,7 +775,7 @@ void MainWindow::createToolBar(void)
     }
 
     toolBar->setObjectName("testbar");
-    toolBar->setMovable(true);  //TODO
+    toolBar->setMovable(true);
 
     addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -1144,45 +1129,23 @@ void MainWindow::log(const QString &data)
 //--------------------------------------------------------------------------------
 void MainWindow::set_app_font(void)
 {
-#if 1
     bool ok = false;
     QFont font = QFontDialog::getFont(&ok);
     if(ok)
     {
         QApplication::setFont(font);
     }
-#else
-    QFont font = qApp->font();
-    QFontDialog *dlg = new QFontDialog(font, this);
-    int btn = dlg->exec();
-    if(btn == QFontDialog::Accepted)
-    {
-        QFont font = dlg->currentFont();
-        QApplication::setFont(font);
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG
 void MainWindow::set_log_font(void)
 {
-#if 1
     bool ok = false;
     QFont font = QFontDialog::getFont(&ok, ld->get_font());
     if(ok)
     {
         QApplication::setFont(font);
     }
-#else
-    QFontDialog *dlg = new QFontDialog(this);
-    dlg->setCurrentFont(ld->get_font());
-
-    int btn = dlg->exec();
-    if(btn == QFontDialog::Accepted)
-    {
-        ld->set_font(dlg->currentFont());
-    }
-#endif
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -1190,7 +1153,7 @@ void MainWindow::set_log_font(void)
 void MainWindow::slot_is_shows_info(bool state)
 {
     Q_CHECK_PTR(ld);
-    ld->signal_is_shows_info(state);
+    emit signal_is_shows_info(state);
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -1198,7 +1161,7 @@ void MainWindow::slot_is_shows_info(bool state)
 void MainWindow::slot_is_shows_debug(bool state)
 {
     Q_CHECK_PTR(ld);
-    ld->signal_is_shows_debug(state);
+    emit signal_is_shows_debug(state);
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -1206,7 +1169,7 @@ void MainWindow::slot_is_shows_debug(bool state)
 void MainWindow::slot_is_shows_error(bool state)
 {
     Q_CHECK_PTR(ld);
-    ld->signal_is_shows_error(state);
+    emit signal_is_shows_error(state);
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -1214,8 +1177,115 @@ void MainWindow::slot_is_shows_error(bool state)
 void MainWindow::slot_is_shows_trace(bool state)
 {
     Q_CHECK_PTR(ld);
-    ld->signal_is_shows_trace(state);
+    emit signal_is_shows_trace(state);
 }
 #endif
 //--------------------------------------------------------------------------------
+void MainWindow::set_blue_palette(void)
+{
+    //Blue
+    QPalette palette;
 
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::Button,      QBrush(QColor(32, 64, 96),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Light,       QBrush(QColor(24, 48, 44),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Text,        QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+    palette.setBrush(QPalette::Base,        QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Window,      QBrush(QColor(12, 24, 32),      Qt::SolidPattern));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
+
+    qApp->setPalette(palette);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::set_dark_palette(void)
+{
+    //Dark
+    QPalette palette;
+
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor(0xefefef)));
+    palette.setBrush(QPalette::Button,      QBrush(QColor(0x313131)));
+    palette.setBrush(QPalette::Light,       QBrush(QColor(0x454545)));
+    palette.setBrush(QPalette::Text,        QBrush(QColor(0xefefef)));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor(0xffffff)));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(0xefefef)));
+    palette.setBrush(QPalette::Base,        QBrush(QColor(0x232323)));
+    palette.setBrush(QPalette::Window,      QBrush(QColor(0x313131)));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor(0x141414)));
+
+    qApp->setPalette(palette);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::set_light_palette(void)
+{
+    //Light
+    QPalette palette;
+
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4)));
+    palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::Text,        QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor((QRgb)0x000000)));
+    palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff)));
+    palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4)));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040)));
+
+    qApp->setPalette(palette);
+}
+//--------------------------------------------------------------------------------
+QMenu *MainWindow::add_new_menu(QMenu     *parent,
+                                QString   text,
+                                QIcon     *icon)
+{
+    Q_CHECK_PTR(parent);
+
+    QMenu *menu = new QMenu(parent);
+    menu->setTitle(text);
+    menu->setIcon(*icon);
+    menu->setToolTip(text);
+    menu->setStatusTip(text);
+
+    if(parent)
+    {
+        parent->addMenu(menu);
+    }
+
+    s_menu *temp = new s_menu;
+    temp->obj = menu;
+    temp->parent = parent;
+    temp->text = text;
+    temp->icon = icon;
+    menus.append(temp);
+
+    return menu;
+}
+//--------------------------------------------------------------------------------
+QAction *MainWindow::add_new_action(QMenu   *parent,
+                                    QString text,
+                                    QIcon   *icon)
+{
+    Q_CHECK_PTR(parent);
+
+    QAction *action = new QAction(parent);
+    action->setText(text);
+    action->setIcon(*icon);
+    action->setToolTip(text);
+    action->setStatusTip(text);
+
+    if(parent)
+    {
+        parent->addAction(action);
+    }
+
+    s_action *temp = new s_action;
+    temp->obj = action;
+    temp->parent = parent;
+    temp->text = text;
+    temp->icon = icon;
+    actions.append(temp);
+
+    return action;
+}
+//--------------------------------------------------------------------------------

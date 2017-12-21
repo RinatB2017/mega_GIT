@@ -47,6 +47,7 @@ win32 {
 RESOURCES += data/names.qrc
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
@@ -54,15 +55,16 @@ include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/database/database.pri)
 
-include ($$LIB_PATH/web/persistentcookiejar/persistentcookiejar.pri)
-include ($$LIB_PATH/web/websettingbox/websettingbox.pri)
-include ($$LIB_PATH/web/listwidgets/listwidget.pri)
-include ($$LIB_PATH/web/javascript/javascript.pri)
-include ($$LIB_PATH/web/tableview/tableview.pri)
-include ($$LIB_PATH/web/findlinks/findlinks.pri)
 include ($$LIB_PATH/QXmlPutGet/qxmlputget.pri)
-include ($$LIB_PATH/web/waiting/waiting.pri)
-include ($$LIB_PATH/web/webview/webview.pri)
+
+include ($$LIB_PATH2/web/persistentcookiejar/persistentcookiejar.pri)
+include ($$LIB_PATH2/web/websettingbox/websettingbox.pri)
+include ($$LIB_PATH2/web/listwidgets/listwidget.pri)
+include ($$LIB_PATH2/web/javascript/javascript.pri)
+include ($$LIB_PATH2/web/tableview/tableview.pri)
+include ($$LIB_PATH2/web/findlinks/findlinks.pri)
+include ($$LIB_PATH2/web/waiting/waiting.pri)
+include ($$LIB_PATH2/web/webview/webview.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

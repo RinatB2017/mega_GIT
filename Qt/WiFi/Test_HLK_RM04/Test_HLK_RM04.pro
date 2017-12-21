@@ -42,11 +42,14 @@ win32 {
 }
 
 LIB_PATH = "../../lib"
+LIB_PATH2 = "../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
 
 include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
-include ($$LIB_PATH/wifi_frame/wifi_frame.pri)
+
+include ($$LIB_PATH2/wifi_frame/wifi_frame.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

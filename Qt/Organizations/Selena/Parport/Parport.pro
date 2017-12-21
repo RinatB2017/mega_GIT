@@ -26,13 +26,15 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH/leds/leds.pri)
 include ($$LIB_PATH/turbo.pri)
-include ($$LIB_PATH/parport/parport.pri)
-include ($$LIB_PATH/parport/parportbox.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
+
+include ($$LIB_PATH2/leds/leds.pri)
+include ($$LIB_PATH2/parport/parport.pri)
+include ($$LIB_PATH2/parport/parportbox.pri)
 
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 

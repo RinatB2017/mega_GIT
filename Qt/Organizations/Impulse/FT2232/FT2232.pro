@@ -6,7 +6,8 @@ TEMPLATE    = app
 TARGET      = FT2232
 
 unix {
-DEPENDPATH  += /usr/include/libftdi1
+    DEPENDPATH  += /usr/include/libftdi1
+    DEPENDPATH  += /usr/include/libusb-1.0
 }
 DEPENDPATH  += \
     $$PWD/src \
@@ -49,6 +50,7 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
@@ -63,6 +65,7 @@ VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)
 
 include (src/devices/devices.pri)
-include ($$LIB_PATH/ft2232h/ft2232h.pri)
+
+include ($$LIB_PATH2/ft2232h/ft2232h.pri)
 
 VPATH = $$INCLUDEPATH

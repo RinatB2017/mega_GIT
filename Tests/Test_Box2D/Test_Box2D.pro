@@ -51,9 +51,12 @@ win32 {
 }
 
 LIB_PATH = "../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-#include ($$LIB_PATH/Box2D/Box2D.pri)
+#LIB_PATH2 = "../../Qt/lib2"
+#include ($$LIB_PATH2/Box2D/Box2D.pri)
+
 LIBS    += -lBox2D
 
 !exists(OBJECTS_DIR) {

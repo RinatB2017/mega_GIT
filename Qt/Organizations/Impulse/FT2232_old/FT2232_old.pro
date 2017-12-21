@@ -75,9 +75,6 @@ include ($$LIB_PATH/csvreader/csvreader.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
 include ($$LIB_PATH/qwt/qwt.pri)
 
-#include (src/mpsse/mpsse.pri)
-#include (src/ft2232/ft2232.pri)
-
 VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)
 

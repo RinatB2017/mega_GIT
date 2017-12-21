@@ -39,8 +39,11 @@ win32 {
 
 
 LIB_PATH = "../../Qt/lib"
+LIB_PATH2 = "../../Qt/lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/OpenRPT/OpenRPT.pri)
+
+include ($$LIB_PATH2/OpenRPT/OpenRPT.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

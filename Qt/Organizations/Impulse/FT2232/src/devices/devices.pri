@@ -40,3 +40,5 @@ SOURCES += indicator_thread.cpp
 
 HEADERS += ds18b20.hpp
 SOURCES += ds18b20.cpp
+
+include (ftdi/ftdi.pri)

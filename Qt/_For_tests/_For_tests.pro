@@ -77,6 +77,7 @@ CONFIG(debug, debug|release) {
 }
 
 LIB_PATH = "../lib"
+LIB_PATH2 = "../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/icons/digits.pri)
 
@@ -84,7 +85,7 @@ include (src/mymainwindow/mymainwindow.pri)
 
 include ($$LIB_PATH/icons/qmessagebox.pri)
 
-include ($$LIB_PATH/QRCodeGenerator/QRCodeGenerator.pri)
+include ($$LIB_PATH2/QRCodeGenerator/QRCodeGenerator.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

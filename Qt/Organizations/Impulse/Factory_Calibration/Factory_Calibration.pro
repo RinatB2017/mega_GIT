@@ -76,19 +76,19 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/time/time.pri)
 include ($$LIB_PATH/crc/crc.pri)
 
-include ($$LIB_PATH/QtPropertyBrowser/qtpropertybrowser.pri)
-
-include ($$LIB_PATH/OpenRPT/OpenRPT.pri)
 include ($$LIB_PATH/database/database.pri)
 
-include ($$LIB_PATH/connection/connection.pri)
-
 include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+
+include ($$LIB_PATH2/OpenRPT/OpenRPT.pri)
+include ($$LIB_PATH2/QtPropertyBrowser/qtpropertybrowser.pri)
+include ($$LIB_PATH2/connection/connection.pri)
 
 use_v764 {
     DEFINES += V764

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QVector>
-#include <QtMath>
+//#include <QtMath>
 //--------------------------------------------------------------------------------
 #include "listener.hpp"
 #include "defines.hpp"
@@ -303,7 +303,7 @@ void World::insert_objects(void)
 #if 1
     Object ball = createBall(b2Vec2(pixel_to_pt(10), pixel_to_pt(HEIGHT - 20)), pixel_to_pt(3.0f), 0);
     ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
-    ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f));
+    ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f), true);  //TODO
 
     _objects.append(ball);
 
@@ -385,7 +385,7 @@ void World::create_scene_1(void)
         _objects.append(ball);
 
         ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
-        ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f));
+        ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f), true);   //TODO
 
         _objects.append(createWall(50, 20, 1.0f, 12.0f, 90.0f*M_PI/180.0f, b2_dynamicBody));
 

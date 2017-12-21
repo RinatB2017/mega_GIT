@@ -86,6 +86,7 @@ void MainWidget_GUI::init(void)
 void MainWidget_GUI::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return;

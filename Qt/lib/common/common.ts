@@ -71,6 +71,23 @@
         <source>is_shows_trace</source>
         <translation>Отображение трассировочных сообщений</translation>
     </message>
+
+    <message>
+        <source>Themes</source>
+        <translation>Темы</translation>
+    </message>
+    <message>
+        <source>Light theme</source>
+        <translation>Светлая тема</translation>
+    </message>
+    <message>
+        <source>Dark theme</source>
+        <translation>Темная тема</translation>
+    </message>
+    <message>
+        <source>Blue theme</source>
+        <translation>Синяя тема</translation>
+    </message>
 </context>
 
 <context>

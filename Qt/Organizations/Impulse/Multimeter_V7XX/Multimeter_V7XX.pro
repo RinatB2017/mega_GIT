@@ -56,6 +56,7 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/power_knock/power_knock.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
@@ -81,7 +82,7 @@ use_v780 {
     include (../lib/measuring/multimeter_v780/multimeter_v780.pri)
 }
 
-include ($$LIB_PATH/connection/connection.pri)
+include ($$LIB_PATH2/connection/connection.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

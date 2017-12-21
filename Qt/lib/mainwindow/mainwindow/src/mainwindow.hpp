@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -49,18 +49,33 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-    #include <syslog.h>
+#   include <syslog.h>
 #endif
 #if defined Q_OS_WIN || defined Q_OS_MAC
-    #define LOG_EMERG       0       /* system is unusable */
-    #define LOG_ALERT       1       /* action must be taken immediately */
-    #define LOG_CRIT        2       /* critical conditions */
-    #define LOG_ERR         3       /* error conditions */
-    #define LOG_WARNING     4       /* warning conditions */
-    #define LOG_NOTICE      5       /* normal but significant condition */
-    #define LOG_INFO        6       /* informational */
-    #define LOG_DEBUG       7       /* debug-level messages */
+#define LOG_EMERG       0       /* system is unusable */
+#define LOG_ALERT       1       /* action must be taken immediately */
+#define LOG_CRIT        2       /* critical conditions */
+#define LOG_ERR         3       /* error conditions */
+#define LOG_WARNING     4       /* warning conditions */
+#define LOG_NOTICE      5       /* normal but significant condition */
+#define LOG_INFO        6       /* informational */
+#define LOG_DEBUG       7       /* debug-level messages */
 #endif
+//--------------------------------------------------------------------------------
+typedef struct
+{
+    QMenu   *parent;
+    QMenu   *obj;
+    QString text;
+    QIcon   *icon;
+} s_menu;
+typedef struct
+{
+    QMenu   *parent;
+    QAction *obj;
+    QString text;
+    QIcon   *icon;
+} s_action;
 //--------------------------------------------------------------------------------
 class LogBox;
 class LogDock;
@@ -133,14 +148,16 @@ private slots:
     void load_setting(void);
     void save_setting(void);
 
-    void shot(void);
-
 #ifndef NO_LOG
     void slot_is_shows_info(bool state);
     void slot_is_shows_debug(bool state);
     void slot_is_shows_error(bool state);
     void slot_is_shows_trace(bool state);
 #endif
+
+    void set_blue_palette(void);
+    void set_dark_palette(void);
+    void set_light_palette(void);
 
 #ifndef NO_TRAYICON
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -149,11 +166,22 @@ private slots:
     void setToolBarStyles(void);
 #endif
 
-protected:
+private:
+    QList<s_menu *> menus;
+    QList<s_action *> actions;
+
+    QMenu* add_new_menu(QMenu   *parent,
+                        QString text,
+                        QIcon   *icon);
+    QAction* add_new_action(QMenu   *parent,
+                            QString text,
+                            QIcon   *icon);
+
+
 #ifndef ONLY_ENGLISH
-    QTranslator *appTranslator = 0;
-    QTranslator *appTranslator2 = 0;
-    QTranslator *sysTranslator = 0;
+    QTranslator *translator_system = 0;
+    QTranslator *translator_common = 0;
+    QTranslator *translator_programm = 0;
 #endif
     QString orgName;
     QString appName;
@@ -170,23 +198,12 @@ protected:
 #endif
     QMenu *m_helpMenu = 0;
 
-    QAction *a_Exit = 0;
-    QAction *a_Help = 0;
-    QAction *a_About = 0;
-    QAction *a_Font = 0;
-#ifndef NO_LOG
-    QAction *a_Log_Font = 0;
-#endif
     QAction *a_AskExit = 0;
 
     QMenu *m_styleMenu = 0;
 
 #ifndef ONLY_ENGLISH
     QMenu *m_langMenu = 0;
-#endif
-#ifndef ONLY_ENGLISH
-    QAction *a_Rus = 0;
-    QAction *a_Eng = 0;
 #endif
 #endif
 
@@ -253,12 +270,19 @@ protected:
     QAction *a_is_shows_debug = 0;
     QAction *a_is_shows_error = 0;
     QAction *a_is_shows_trace = 0;
+
+    QMenu *m_themes = 0;
+
+    QAction *a_light_theme = 0;
+    QAction *a_dark_theme = 0;
+    QAction *a_blue_theme = 0;
 #endif
 
 #ifdef  DEMO
     void check_date(void);
 #endif
 
+protected:
     void closeEvent(QCloseEvent *event);
 #ifndef NO_RESIZE
     void resizeEvent (QResizeEvent * event);

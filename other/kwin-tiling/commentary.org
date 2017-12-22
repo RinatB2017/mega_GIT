@@ -1,0 +1,78 @@
+* TODO EDGECASES, EDGECASES, EDGECASES!
+** TODO Doesn't tile properly when screen disappears
+** TODO Resolution changes
+   Almost possible, but clientArea returns the _old_ resolution
+* TODO Testing
+** Weird apps (mplayer, gimp)
+   Add those to rules by default
+** Weird configurations
+** Multi-monitor
+** Crashes
+** Better release process (i.e. don't just pack up git, TEST)
+** Testcases
+*** Client on all desktops
+**** There, back, there again
+*** Client on last desktop
+**** was interpreted as being on all desktops
+* TODO Layouts
+** DONE Refactor layouts to share more code
+   See [[https://github.com/copycat-killer/vain-again][vain]]
+   This uses a simple "arrange" function as the layout function
+** TODO More/better layouts
+** Implement BladeLayout as HalfLayout with masterCount == tiles.length
+** Multi-master in spirallayout
+* TODO Crazy stuff
+** Layout switcher
+** Indicate layout/state (tiling on/off) somehow
+** Per-activity settings
+   Huge complexity increase (one additional layer on top of desktops/screens)
+   Investigate how the actual relationship between activities and desktops/clients is
+   Seems to be the following:
+   Each client belongs to multiple activities, but is on the same desktop on each
+   There can only be one activity at the same time
+*** Needs changes in tilingmanager (large) and maybe tile and tilelist
+** React on configuration change
+   Right now kwin restarts are needed every time the configuration is changed
+* TODO Report
+** Bugs
+*** INPROGRESS ClientArea doesn't update
+	https://bugs.kde.org/show_bug.cgi?id=330099
+*** INPROGRESS no tabGroup
+	https://bugs.kde.org/show_bug.cgi?id=330100
+*** INPROGRESS windowClosed's "deleted" not properly converted
+	https://bugs.kde.org/show_bug.cgi?id=330102
+*** INPROGRESS Pixmap issue
+	Seems it corrupts when clients are resized before windowShown (when compositing)
+	There are other cases, though, like firefox resizing after restoring the previous session
+	https://bugs.kde.org/show_bug.cgi?id=341195
+*** KWin maximizes windows automatically on certain conditions
+	Possibly caused by electricBorderMaximize
+*** QML doesn't draw stuff
+*** options.useCompositing/compositingMode doesn't keep up
+	It does not change to false when disabling compositing
+*** Crash when wrong desktop is used in workspace.clientArea()
+	See https://github.com/faho/kwin-tiling/issues/22
+*** Stacking order is buggy
+	i.e. sometimes maximizing a client maximizes it _below_ other clients
+  or glow is below other clients
+*** QTimer is not exported to qml
+	Either this or import functionality to javascript are needed to properly do resizes
+** Documentation
+*** ClientArea options
+*** conditions/guarantees (e.g. is windowClosed always executed before FFM selects new activeClient?)
+*** Difference between geometryChanged and geometryShapeChanged
+	geometryChanged fires on geometryShapeChanged and a few other signals
+*** windowClosed is only fired when compositing
+** Wishes
+*** Integration with rules
+*** Some way to draw small window borders
+	Outline doesn't work as it darkens the window and consumes mouse input
+	Effect?
+*** Handle maximize like minimize in the scripting API
+* INPROGRESS Document
+** INPROGRESS A usage section
+** DONE A goals section
+* Remove duplicate functionality
+* Refactor and beautify code
+** Use "filter" etc more often
+** Remove duplicate code

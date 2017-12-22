@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=Tiling Extension
+Icon=preferences-system-windows-script-test
+
+X-Plasma-API=declarativescript
+X-Plasma-MainScript=ui/main.qml
+X-KWin-Exclude-Listing=false
+
+X-KDE-PluginInfo-Author=Fabian Homborg
+X-KDE-PluginInfo-Email=FHomborg@gmail.com
+X-KDE-PluginInfo-Name=kwin-script-tiling
+X-KDE-PluginKeyword=kwin-script-tiling
+X-KDE-ParentComponents=kwin-script-tiling
+X-KDE-PluginInfo-Version=2.0.0
+
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-ServiceTypes=KWin/Script,KCModule
+X-KDE-Library=kwin/effects/configs/kcm_kwin4_genericscripted
+Type=Service

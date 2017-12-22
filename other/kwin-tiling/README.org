@@ -1,0 +1,81 @@
+* kwin-tiling
+
+  Tiling script for kwin, based on [[https://github.com/mgottschlag/kwin-tiling][Mathias Gottschlag's version]]
+
+  NOTE: This is the Plasma 5 version.
+  For the Plasma 1/KWin 4 version, see the Plasma1 branch
+
+** Goals:
+   The purpose of this is to create a userfriendly tiling solution that
+
+   - Integrates well with KDE Plasma
+
+   - Works for the general case
+	 More sophisticated users may prefer dedicated tiling window managers
+   - Provides most of the advantages of a tiling WM in a fully composited environment
+	 Window previews and effects alongside different tiling layouts
+   - Does not require the user to delve into scripting to get a sane configuration
+** Features:
+   - Three layouts, one with support for multiple "master" windows
+
+   - Support for minimizing and unminimizing windows
+
+   - Support for setting windows to floating or quitting tiling altogether, per-desktop (Meta+Shift+F11) and per-window (Meta-f)
+     ("Meta" refers to the "super" or "windows" key here)
+
+   - Support for a list of ignored windows in configuration (by class)
+
+   - An option to start windows at the master position (like in xmonad)
+
+   - Mouse resizing
+
+   - Useractionsmenu and keybinding (Meta+f) for toggling tiling/floating
+
+   - An option to turn off borders for tiled windows
+
+   - A hotkey to tile once
+
+   - Many bugfixes over mgottschlag's version
+** Installation:
+
+   #+BEGIN_SRC bash
+   git clone https://github.com/faho/kwin-tiling.git
+   cd kwin-tiling/
+   plasmapkg2 --type kwinscript -i .
+   #+END_SRC
+
+** Usage
+   Install
+
+   Move windows around and see that they are tiled :-)
+
+   Resize windows to resize the tiles
+
+   Declare shortcuts (in Systemsettings->Shortcuts_and_Gestures->Global_Keyboard_Shortcuts)
+   for resize, minimize and maximize operations.
+
+   Press Meta-PgUp or Meta-PgDn to switch the layout
+
+   Use the configuration menu (in Systemsettings->Window Behavior->Scripts)
+
+** Known Issues:
+   Activities aren't handled at all
+
+   Clients with min/maxSize may not tile properly
+
+   Multimonitor is untested
+
+** Bugs
+   There is no software without bugs. If you detect one please
+   share it. [[https://github.com/faho/kwin-tiling/issues?state=open]]
+   
+
+** Screenshots
+   Standard layout with two master windows
+   [[https://github.com/faho/faho.github.io/raw/master/img/kwin-tiling01.png]]
+   Standard layout with one master
+   [[https://github.com/faho/faho.github.io/raw/master/img/kwin-tiling02.png]]
+   Contrived example with four always-shown panels
+   [[https://github.com/faho/faho.github.io/raw/master/img/kwin-tiling03.png]]
+   Configuration
+   [[https://github.com/faho/faho.github.io/raw/master/img/kwin-tiling04.png]]

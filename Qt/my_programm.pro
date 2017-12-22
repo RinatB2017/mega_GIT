@@ -8,6 +8,7 @@ CONFIG   += ordered
 SUBDIRS += \
     _For_tests \
     auto_inc_version \
+    hello_speak \
     Get_MyIP \
     GP2Y0A02Y \
     Icons \

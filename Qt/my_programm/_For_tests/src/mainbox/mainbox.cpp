@@ -359,7 +359,7 @@ bool MainBox::test_0(void)
     emit info(str);
 #endif
 
-#if 1
+#if 0
     get_color(QPalette::WindowText, "QPalette::WindowText");
     get_color(QPalette::Button,     "QPalette::Button");
     get_color(QPalette::Light,      "QPalette::Light");
@@ -380,9 +380,27 @@ bool MainBox::test_1(void)
 
     //QApplication::setStyle(QStyleFactory::create("Plastique"));
 
-    messagebox_question("Вопрос", "Шо, опять?");
+    //messagebox_question("Вопрос", "Шо, опять?");
     //messagebox_critical("Вопрос", "Шо, опять?");
     //QMessageBox::question(this, "Вопрос", "Шо, опять?");
+
+#if 1
+    QWidget *widget = new QWidget;
+
+    QAction *ae = new QAction("xxx");
+    connect(ae, SIGNAL(triggered(bool)),    widget, SLOT(close()));
+
+    QMenuBar *mb = new QMenuBar;
+    mb->addAction(ae);
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(mb);
+    vbox->addWidget(new QTextEdit);
+
+    widget->setLayout(vbox);
+
+    widget->show();
+#endif
 
     return true;
 }

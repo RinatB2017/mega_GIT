@@ -1008,8 +1008,8 @@ int MyWidget::messagebox_question(const QString title,
 {
     QMessageBox msgBox;
 
-    msgBox.setIconPixmap(QPixmap(":/qmessagebox/qmessagebox-quest.png"));
-    //msgBox.setIcon(QMessageBox::Question);
+    //msgBox.setIconPixmap(QPixmap(":/qmessagebox/qmessagebox-quest.png"));
+    msgBox.setIcon(QMessageBox::Question);
 
     msgBox.setWindowTitle(title);
     msgBox.setText(text);

@@ -11,6 +11,7 @@ SUBDIRS += \
     hello_speak \
     Get_MyIP \
     GP2Y0A02Y \
+    imageviewer \
     Icons \
     NewMoonLight \
     old_programm \

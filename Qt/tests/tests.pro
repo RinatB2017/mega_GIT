@@ -50,4 +50,5 @@ SUBDIRS += \
     Test_NeuronNet \
     Test_OpenGL \
     Test_draw_line \
-   
+#
+    Tester

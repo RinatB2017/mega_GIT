@@ -11,14 +11,15 @@ class ListWidget_Site : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit ListWidget_Site(QWebView *webview,
-                             QWidget *parent = 0);
+    ListWidget_Site(QWebView *webview,
+                    QWidget *parent = 0);
     void add_item(const QString &name);
     
 signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
     void ready(QModelIndex);
 

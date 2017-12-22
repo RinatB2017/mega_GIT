@@ -31,13 +31,14 @@ class ListWidget_Link : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit ListWidget_Link(QWebView *webview,
-                             QWidget *parent = 0);
+    ListWidget_Link(QWebView *webview,
+                    QWidget *parent = 0);
     
 signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 public slots:
     void get_links(QModelIndex);

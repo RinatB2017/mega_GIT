@@ -29,9 +29,9 @@ class DoubleHexEditor : public QFrame
 {
     Q_OBJECT
 public:
-    explicit DoubleHexEditor(const QString &caption1,
-                             const QString &caption2,
-                             QWidget *parent = 0);
+    DoubleHexEditor(const QString &caption1,
+                    const QString &caption2,
+                    QWidget *parent = 0);
 
     void append(const QByteArray &array1,
                 const QByteArray &array2);

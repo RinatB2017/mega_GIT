@@ -1230,6 +1230,7 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
         frame->setLayout(vbox);
         frame->setFixedSize(te->width(), w_central->height());
         //---
+#ifdef HAVE_QT5
         QPixmap p_central = w_central->grab(QRect(0, 0, w_central->width(), w_central->height()));
         QPixmap left_pixmap = ((QWidget *)frame)->grab(QRect(0, 0, frame->width(), frame->height()));
         QPixmap *main_pixmap = new QPixmap(left_pixmap.width() + p_central.width(), p_central.height());
@@ -1246,6 +1247,7 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
         label->show();
 
         frame->deleteLater();
+#endif
     }
 
     return true;

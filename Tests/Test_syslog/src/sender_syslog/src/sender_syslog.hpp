@@ -26,20 +26,20 @@
 #include <QTimer>
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-    #include </usr/include/syslog.h>
+#include </usr/include/syslog.h>
 #endif
 #ifdef Q_OS_WIN
-    enum SYSLOG_LEVELS
-    {
-        LOG_EMERG   = 0,       /* system is unusable */
-        LOG_ALERT   = 1,       /* action must be taken immediately */
-        LOG_CRIT    = 2,       /* critical conditions */
-        LOG_ERR     = 3,       /* error conditions */
-        LOG_WARNING = 4,       /* warning conditions */
-        LOG_NOTICE  = 5,       /* normal but significant condition */
-        LOG_INFO    = 6,       /* informational */
-        LOG_DEBUG   = 7        /* debug-level messages */
-    };
+enum SYSLOG_LEVELS
+{
+    LOG_EMERG   = 0,       /* system is unusable */
+    LOG_ALERT   = 1,       /* action must be taken immediately */
+    LOG_CRIT    = 2,       /* critical conditions */
+    LOG_ERR     = 3,       /* error conditions */
+    LOG_WARNING = 4,       /* warning conditions */
+    LOG_NOTICE  = 5,       /* normal but significant condition */
+    LOG_INFO    = 6,       /* informational */
+    LOG_DEBUG   = 7        /* debug-level messages */
+};
 #endif
 //--------------------------------------------------------------------------------
 class QPushButton;
@@ -52,10 +52,10 @@ class Sender_syslog : public QToolBar
     Q_OBJECT
 
 public:
-    explicit Sender_syslog(const QString &title,
-                           int default_src,
-                           int default_level,
-                           QWidget *parent = Q_NULLPTR);
+    Sender_syslog(const QString &title,
+                  int default_src,
+                  int default_level,
+                  QWidget *parent = Q_NULLPTR);
     ~Sender_syslog();
 
 signals:

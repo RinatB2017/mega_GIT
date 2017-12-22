@@ -30,7 +30,7 @@ class NeuronNet : public QObject
 {
     Q_OBJECT
 public:
-    explicit NeuronNet(QObject *parent = nullptr);
+    NeuronNet(QObject *parent = nullptr);
 
     QList<Neuron> init_web(void);
     Neuron neuron_create(void);

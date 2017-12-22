@@ -2,9 +2,14 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/ui
+DEPENDPATH  += $$PWD/src
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    DEPENDPATH  += $$PWD/src/ui5
+} else {
+    DEPENDPATH  += $$PWD/src/ui4
+}
+
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += serial.hpp

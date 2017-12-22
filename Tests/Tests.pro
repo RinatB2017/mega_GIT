@@ -44,4 +44,10 @@ SUBDIRS += \
     Test_QStateMachine \
     Test_QTreeWidget \
     Test_wwWidgets \    
-    Test_syslog
+    Test_syslog \
+#
+    Test_Game \
+    Test_NeuronNet \
+    Test_OpenGL \
+    Test_draw_line \
+   

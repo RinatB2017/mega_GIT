@@ -20,6 +20,9 @@ public:
              QWidget *parent = 0);
     ~AboutBox();
 
+private slots:
+    void send_mail(QString link);
+
 private:
     Ui::AboutBox *ui = 0;
 };

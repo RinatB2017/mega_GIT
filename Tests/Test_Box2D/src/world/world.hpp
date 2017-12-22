@@ -36,8 +36,8 @@ class World : public MyWidget
     Q_OBJECT
 
 public:
-    explicit World(QWidget *parent = 0);
-    virtual ~World();
+    World(QWidget *parent = 0);
+    ~World();
 
     Object createWall(float32 x,
                       float32 y,

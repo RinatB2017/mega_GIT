@@ -29,8 +29,8 @@ class HLine : public QWidget
     Q_OBJECT
     
 public:
-    explicit HLine(unsigned int len,
-                   QWidget *parent);
+    HLine(unsigned int len,
+          QWidget *parent);
     ~HLine();
 
 public slots:

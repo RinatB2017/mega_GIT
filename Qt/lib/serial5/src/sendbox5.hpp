@@ -36,7 +36,7 @@ class SendBox5 : public QFrame
     Q_OBJECT
 
 public:
-    explicit SendBox5(QWidget *parent = 0);
+    SendBox5(QWidget *parent = 0);
     ~SendBox5();
 
     void updateText(void);

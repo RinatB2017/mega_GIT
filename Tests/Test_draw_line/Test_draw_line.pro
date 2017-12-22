@@ -2,11 +2,12 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE = app
-TARGET   = Test_NeuronNet
+TEMPLATE    = app
+TARGET      = Test_draw_line
+
+FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/mainbox \
     $$PWD/src/mainbox/ui
@@ -14,10 +15,16 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
+DEFINES += RS232_FIXED_SIZE
+#DEFINES += RS232_SEND
+#DEFINES += RS232_LOG
+#DEFINES += NO_LOG
+
 DEFINES += NO_STYLETOOLBAR
+DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
-DEFINES += PROGRAMM_IN_UTF8
+DEFINES += SAVE_WIDGETS_SPINBOX
 
 HEADERS += \
     defines.hpp \
@@ -28,32 +35,22 @@ SOURCES += \
     mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS += mainbox.ui
+
+OTHER_FILES += doc/notebook.txt
 
 win32 {
     RC_FILE = ico/myapp.rc
 }
 
-RESOURCES += \
-    images/images.qrc \
-    data_NMIST/data_nmist.qrc
+LIB_PATH = "../../Qt/lib"
 
-OTHER_FILES += doc/notebook.txt
-
-LIB_PATH = "../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
-include (src/neuro/neuro.pri)
+include ($$LIB_PATH/serial5/serial5.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
-}
-
-CONFIG(debug, debug|release) {
-    message(debug mode)
-}
-else {
-    message(release mode)
 }
 
 VPATH = $$INCLUDEPATH

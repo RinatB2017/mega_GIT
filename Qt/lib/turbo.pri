@@ -26,7 +26,7 @@ win32 {
     CONFIG -= debug_and_release #debug_and_release_target
     CONFIG += no_fixpath
 }
-
+###############################################################################
 unix:!macx {
     DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
 }
@@ -36,10 +36,6 @@ macx {
 win32 {
     DESTDIR = C:/Programming/my_programm_bin/$$FOLDER/$$TARGET
 }
-
-
-#message ($$DESTDIR)
-
 ###############################################################################
 #управление оптимизацией компилятора
 #OPTIMIZE = -pipe -O0 #no optimization
@@ -49,39 +45,18 @@ win32 {
 #OPTIMIZE = -pipe -Os #only size code optimization
 #OPTIMIZE = -pipe -Ofast #only for gcc-4.6
 
-#OPTIMIZE = -pipe -ggdb -O0
-
-#linux {
-#    OPTIMIZE += -std=c++11
-#}
-#CONFIG  += c++11
-
 CONFIG(debug, debug|release) {
     OPTIMIZE = -pipe -O0
 }
 else {
     OPTIMIZE = -pipe -O2
 }
-#message ($$OPTIMIZE)
 ###############################################################################
-#DEFINES += QT_STATIC_BUILD
-#win32 {
-#    CONFIG      += static
-#    OPTIMIZE    += -static
-#    OPTIMIZE    += -static-libgcc
-#    OPTIMIZE    += -static-libstdc++
-#}
-#QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
-###############################################################################
-
-#QMAKE_CXX       = ccache g++
-
 QMAKE_CFLAGS   += $${OPTIMIZE}
 QMAKE_CXXFLAGS += $${OPTIMIZE}
 QMAKE_LFLAGS   += $${OPTIMIZE}
 QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 ###############################################################################
-
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += HAVE_QT5
@@ -89,3 +64,4 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 } else {
     message(Qt4 = $$QT)
 }
+###############################################################################

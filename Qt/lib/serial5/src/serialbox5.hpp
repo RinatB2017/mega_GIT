@@ -27,9 +27,11 @@
 #include <QString>
 #include <QFrame>
 //--------------------------------------------------------------------------------
-#include <QSerialPortInfo>
-#include <QSerialPort>
-
+#ifdef HAVE_QT5
+#   include <QSerialPortInfo>
+#   include <QSerialPort>
+#endif
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QHBoxLayout;

@@ -32,11 +32,11 @@ class Histogram_Options : public QDialog
     Q_OBJECT
 
 public:
-    explicit Histogram_Options(double min_axis_X,
-                                double max_axis_X,
-                                double min_axis_Y,
-                                double max_axis_Y,
-                                QWidget *parent = 0);
+    Histogram_Options(double min_axis_X,
+                      double max_axis_X,
+                      double min_axis_Y,
+                      double max_axis_Y,
+                      QWidget *parent = 0);
     ~Histogram_Options();
 
     int get_min_axis_x(void);

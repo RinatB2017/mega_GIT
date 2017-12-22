@@ -31,10 +31,11 @@ class Database : public QObject
 {
     Q_OBJECT
 public:
-    explicit Database(const QString &driver_name,
+    Database(const QString &driver_name,
                       const QString &database_name,
                       QObject *parent = 0);
     ~Database();
+
     bool isValid(void);
     QString get_lastError(void);
     void removeDatabase(const QString &database_name);
@@ -46,6 +47,7 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 public slots:
     bool open(void);

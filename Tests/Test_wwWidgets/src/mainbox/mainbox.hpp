@@ -138,9 +138,10 @@ private:
     void createTestBar(void);
 
 protected:
-    virtual void changeEvent(QEvent *event);
-    virtual bool eventFilter(QObject*, QEvent* event);
+    void changeEvent(QEvent *event);
+    bool eventFilter(QObject*, QEvent* event);
     void paintEvent(QPaintEvent *);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

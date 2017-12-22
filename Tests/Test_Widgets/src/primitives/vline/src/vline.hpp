@@ -29,8 +29,8 @@ class VLine : public QWidget
     Q_OBJECT
     
 public:
-    explicit VLine(unsigned int len,
-                   QWidget *parent);
+    VLine(unsigned int len,
+          QWidget *parent);
     ~VLine();
 
 public slots:

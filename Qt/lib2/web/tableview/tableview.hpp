@@ -30,14 +30,16 @@ class TableView : public QTableView
 {
     Q_OBJECT
 public:
-    explicit TableView(QWidget *parent = 0);
+    TableView(QWidget *parent = 0);
     ~TableView();
+
     void init(const QString &query);
 
 signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 private slots:
     void log(const QString &text);

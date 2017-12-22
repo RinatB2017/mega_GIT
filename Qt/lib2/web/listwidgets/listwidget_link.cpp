@@ -40,12 +40,14 @@ ListWidget_Link::ListWidget_Link(QWebView *webview,
         connect(this, SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
+        connect(this, SIGNAL(trace(QString)), parent, SIGNAL(trace(QString)));
     }
     else
     {
         connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
         connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
+        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
     }
 
     connect(this, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(itemChanged(QListWidgetItem*)));

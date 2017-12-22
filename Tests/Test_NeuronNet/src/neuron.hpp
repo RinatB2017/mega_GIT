@@ -29,7 +29,7 @@ class Neuron : public QObject
 {
     Q_OBJECT
 public:
-    explicit Neuron(QObject *parent = nullptr);
+    Neuron(QObject *parent = nullptr);
 
     QString get_name(void);
     void clear(QString name, int x, int y);

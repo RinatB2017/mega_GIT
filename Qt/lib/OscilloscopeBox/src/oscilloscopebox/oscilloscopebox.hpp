@@ -69,7 +69,7 @@ class OscilloscopeBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit OscilloscopeBox(QWidget *parent = 0);
+    OscilloscopeBox(QWidget *parent = 0);
     ~OscilloscopeBox();
     void updateText(void);
     void test(void);

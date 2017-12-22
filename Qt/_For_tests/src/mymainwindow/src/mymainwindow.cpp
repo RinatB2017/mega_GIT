@@ -31,9 +31,14 @@ QFile *MyMainWindow::m_logFile = 0;
 MyMainWindow::MyMainWindow(MainWindow *parent) :
     MainWindow(parent)
 {
-    //m_logFile = new QFile(QString("%1.log").arg(qAppName()));
-    //m_logFile->open(QFile::Append | QFile::Text);
-    //qInstallMessageHandler(messageHandler);
+    m_logFile = new QFile(QString("%1.log").arg(qAppName()));
+    m_logFile->open(QFile::Append | QFile::Text);
+
+#ifdef HAVE_QT5
+    qInstallMessageHandler(messageHandler);
+#else
+    qInstallMsgHandler(messageHandler);
+#endif
 
     create_local_menus();
     create_toolbars();
@@ -44,6 +49,7 @@ MyMainWindow::~MyMainWindow()
     qDebug() << "~NyMainWindow()";
 }
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
 void MyMainWindow::messageHandler(QtMsgType type,
                                   const QMessageLogContext &context,
                                   const QString &msg)
@@ -62,10 +68,35 @@ void MyMainWindow::messageHandler(QtMsgType type,
     case QtFatalMsg:    out << "FTL ";  break;
     }
     // Записываем в вывод категорию сообщения и само сообщение
-    out << context.category << ": "
-        << msg << endl;
+    out << context.category
+        << ": "
+        << msg
+        << endl;
     out.flush();    // Очищаем буферизированные данные
 }
+#else
+void MyMainWindow::messageHandler(QtMsgType type,
+                                  const char *msg)
+{
+    // Открываем поток записи в файл
+    QTextStream out(m_logFile);
+    // Записываем дату записи
+    out << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz ");
+    // По типу определяем, к какому уровню относится сообщение
+    switch (type)
+    {
+    case QtDebugMsg:    out << "DBG ";  break;
+    case QtWarningMsg:  out << "WRN ";  break;
+    case QtCriticalMsg: out << "CRT ";  break;
+    case QtFatalMsg:    out << "FTL ";  break;
+    }
+    // Записываем в вывод категорию сообщения и само сообщение
+    out << ": "
+        << msg
+        << endl;
+    out.flush();    // Очищаем буферизированные данные
+}
+#endif
 //--------------------------------------------------------------------------------
 #if 0
 void MyMainWindow::closeEvent(QCloseEvent *event)

@@ -28,12 +28,19 @@ class MyMainWindow : public MainWindow
     Q_OBJECT
 
 public:
-    explicit MyMainWindow(MainWindow *parent = 0);
+    MyMainWindow(MainWindow *parent = 0);
     ~MyMainWindow();
 
+    void install_handler(void);
+
+#ifdef HAVE_QT5
     static void messageHandler(QtMsgType type,
                                const QMessageLogContext &context,
                                const QString &msg);
+#else
+    static void messageHandler(QtMsgType type,
+                               const char *msg);
+#endif
 
 private:
     static QFile *m_logFile;

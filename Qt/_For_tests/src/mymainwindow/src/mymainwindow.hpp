@@ -126,9 +126,14 @@ public:
     }
     void setCentralWidget(QWidget *widget);
 
+#ifdef HAVE_QT5
     static void messageHandler(QtMsgType type,
                                const QMessageLogContext &context,
                                const QString &msg);
+#else
+    static void messageHandler(QtMsgType type,
+                               const char *msg);
+#endif
 
 signals:
     void notifySignal(void);

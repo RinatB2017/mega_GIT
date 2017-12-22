@@ -41,14 +41,15 @@ DESTDIR = bin
 
 SOURCES += \
     main.cpp \
-    QRCodeGenerator.cpp \
     mainwindow.cpp
 
 HEADERS  += \
-    QRCodeGenerator.h \
     mainwindow.h
 
 FORMS    += \
     mainwindow.ui
+
+LIB_PATH2 = "../lib2"
+include ($$LIB_PATH2/QRCodeGenerator/QRCodeGenerator.pri)
 
 VPATH = $$INCLUDEPATH

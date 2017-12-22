@@ -323,7 +323,7 @@ bool GrapherBox::add_curve(const QString &title,
 //--------------------------------------------------------------------------------
 void GrapherBox::remove_curve(int curve_ID)
 {
-    for(int n=0; n<curves.length(); n++)
+    for(int n=0; n<curves.size(); n++)
     {
         GRAPHER_CURVE curve = curves[n];
         //emit info(QString("%1 %2").arg(curve.title).arg(curve.curve_ID));
@@ -339,7 +339,7 @@ void GrapherBox::remove_curve(int curve_ID)
 //--------------------------------------------------------------------------------
 void GrapherBox::remove_all_curve(void)
 {
-    while(curves.length())
+    while(curves.size())
     {
         delete curves[0].plot_curve;
         curves.remove(0);

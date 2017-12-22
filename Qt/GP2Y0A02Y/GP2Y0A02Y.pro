@@ -50,7 +50,12 @@ OTHER_FILES += doc/notebook.txt
 LIB_PATH = "../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/meta/grapherbox.pri)
-include ($$LIB_PATH/serial5/serial5.pri)
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    include ($$LIB_PATH/serial5/serial5.pri)
+} esle {
+    include ($$LIB_PATH/serial4/serial4.pri)
+}
 
 include (src/serial/serial.pri)
 include (src/viewer/viewer.pri)

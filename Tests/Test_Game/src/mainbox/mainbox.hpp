@@ -25,67 +25,41 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+#include "scene.hpp"
+#include "scene2.hpp"
+#include "scene3.hpp"
+//--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
-#pragma pack(push, 1)
-
-typedef struct labels
-{
-    int32_t magic_number;
-    int32_t numbers_of_items;
-} labels_t;
-
-typedef struct images
-{
-    int32_t magic_number;
-    int32_t numbers_of_images;
-    int32_t numbers_of_rows;
-    int32_t numbers_of_columns;
-} images_t;
-
-typedef struct data_NMIST
-{
-    uint8_t     label;
-    QByteArray  image;
-} data_NMIST_t;
-
-#pragma pack(pop)
-//--------------------------------------------------------------------------------
 class MySplashScreen;
-class QTableWidget;
-class QTextEdit;
 class QToolButton;
 class QToolBar;
 class QComboBox;
-class QLCDNumber;
+class QCheckBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
-
-    void test_ptr(QWidget *ptr);
-
-signals:
-    void block_widget(bool);
 
 private slots:
     void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
-    void test_4(void);
-    void test_5(void);
+    bool test_0(void);
+    bool test_1(void);
+    bool test_2(void);
+    bool test_3(void);
+    bool test_4(void);
+    bool test_5(void);
 
-    void click(int row, int col);
-    void show_image(void);
+    void start(void);
+    void stop(void);
+    void update(void);
 
 private:
     enum {
@@ -97,47 +71,31 @@ private:
         ID_TEST_5,
         ID_TEST_6
     };
-    struct CMD
+    typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        void (MainBox::*func)(void);
-    };
+        bool (MainBox::*func)(void);
+    } CMD_t;
+
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
-    QTableWidget *display = 0;
-    QLCDNumber *display_number = 0;
-
-    QList<data_NMIST> test_data;
+    //Scene *scene = 0;
+    //Scene2 *scene = 0;
+    Scene3 *scene = 0;
 
     void init(void);
-    void init_widgets(void);
 
     void createTestBar(void);
 
-    bool get_label(QString filename,
-                   int num_label,
-                   int *label);
-    bool get_label_param(QString filename,
-                         int *numbers_of_items);
-
-    bool get_image(QString filename,
-                   int num_image,
-                   QImage *image);
-    bool get_image_param(QString filename,
-                         int *numbers_of_images,
-                         int *numbers_of_rows,
-                         int *numbers_of_columns);
-    bool get_image_data(QString filename,
-                        int num_image,
-                        QByteArray *data);
-
 protected:
     void changeEvent(QEvent *event);
+    bool eventFilter(QObject*, QEvent* event);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

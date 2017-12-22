@@ -27,11 +27,11 @@ class MyButton : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MyButton(int width,
-                      int height,
-                      int b_width,
-                      const QString &caption,
-                      QWidget *parent = 0);
+    MyButton(int width,
+             int height,
+             int b_width,
+             const QString &caption,
+             QWidget *parent = 0);
 
 signals:
     void clicked(void);

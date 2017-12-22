@@ -35,9 +35,9 @@ class HistogramSettings : public QDialog
 {
     Q_OBJECT
 public:
-    explicit HistogramSettings(QVector<HISTOGRAM_CURVE> curves,
-                             QwtPlotPicker *picker,
-                             QWidget *parent);
+    HistogramSettings(QVector<HISTOGRAM_CURVE> curves,
+                      QwtPlotPicker *picker,
+                      QWidget *parent);
     void get_RGB(int index, int *r, int *g, int *b, bool *ok);
     QString get_caption(int index, bool *ok);
     QwtPicker::RubberBand get_rubberband(void);

@@ -37,8 +37,6 @@ MainBox::MainBox(QWidget *parent) :
     ui(new Ui::MainBox),
     parent(parent)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -49,24 +47,29 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
     createTestBar();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
+
+    QToolBar *toolBar = new QToolBar(this);
+    toolBar->setObjectName("toolBar");
+
     QToolButton *btnTest = new QToolButton(this);
     btnTest->setText("test");
     btnTest->setIcon(QIcon::fromTheme(QLatin1String("applications-system")));
 
-    QToolBar *toolBar = new QToolBar(this);
-
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw)
-    {
-        mw->addToolBar(Qt::TopToolBarArea, toolBar);
-    }
-
     toolBar->addWidget(btnTest);
+
+    mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
 }
@@ -90,27 +93,6 @@ void MainBox::test(void)
               .arg(max_n)
               .arg(time.elapsed())
               .arg((float)max_n / (float)time.elapsed()));
-
-#if 0
-    QFileDialog *dlg;
-    QString temp;
-
-    dlg = new QFileDialog;
-    dlg->setNameFilter(tr("QSS files (*.*)"));
-    // dlg->setDefaultSuffix(tr("qss"));
-    // dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    dlg->setConfirmOverwrite(true);
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        temp = get_md5(files.at(0));
-        emit debug(QString("%1=%2")
-                   .arg(files.at(0))
-                   .arg(temp));
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 QString MainBox::get_md5(const QString &filename)
@@ -143,15 +125,5 @@ void MainBox::changeEvent(QEvent *e)
     default:
         break;
     }
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

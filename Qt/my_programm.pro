@@ -23,10 +23,6 @@ SUBDIRS += \
     Teacher \
     Teacher_light \
     Templates \
-    Test_Game \
-    Test_NeuronNet \
-    Test_OpenGL \
-    Test_draw_line \
     WiFi \
     
 lessThan(QT_MAJOR_VERSION, 5) {

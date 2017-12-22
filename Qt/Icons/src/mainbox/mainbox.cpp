@@ -130,6 +130,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return;
@@ -266,7 +267,7 @@ void MainBox::test(void)
         return;
     }
 
-    QFileDialog *dlg;
+    QFileDialog *dlg = 0;
     dlg = new QFileDialog;
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setNameFilter(tr("qrc files (*.qrc)"));

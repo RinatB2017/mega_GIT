@@ -52,8 +52,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -102,8 +102,9 @@ private:
     void createTestBar(void);
 
 protected:
-    virtual void closeEvent(QCloseEvent *event);
-    virtual void changeEvent(QEvent *event);
+    void closeEvent(QCloseEvent *event);
+    void changeEvent(QEvent *event);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

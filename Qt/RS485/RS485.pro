@@ -5,6 +5,8 @@
 TEMPLATE  = subdirs
 CONFIG   += ordered
 
-SUBDIRS += \
-    RS485 \
-    RS485_test
+greaterThan(QT_MAJOR_VERSION, 4) {
+    SUBDIRS += \
+        RS485 \
+        RS485_test
+}

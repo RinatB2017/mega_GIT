@@ -28,7 +28,12 @@
 #include <QComboBox>
 #include <QToolBar>
 #include <QDebug>
-#include <QtMath>
+//--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtMath>
+#else
+#   include <qmath.h>
+#endif
 //--------------------------------------------------------------------------------
 #include <QHostAddress>
 #include <QNetworkRequest>

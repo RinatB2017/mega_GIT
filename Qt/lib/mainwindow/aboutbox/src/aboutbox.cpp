@@ -54,10 +54,11 @@ AboutBox::AboutBox(const QString &orgName,
 
     ui->lbl_email->setAlignment(Qt::AlignTop);
     ui->lbl_email->setText(text);
-    ui->lbl_email->connect(ui->lbl_email, &QLabel::linkActivated, [](const QString &link)
-    {
-        QDesktopServices::openUrl(QUrl(link));
-    });
+    connect(ui->lbl_email,  SIGNAL(linkActivated(QString)), this,   SLOT(send_mail(QString)));
+//    ui->lbl_email->connect(ui->lbl_email, &QLabel::linkActivated, [](const QString &link)
+//    {
+//        QDesktopServices::openUrl(QUrl(link));
+//    });
 
 #ifdef LOGO_GL
     GLWidget *glWidget = new GLWidget(this);
@@ -76,6 +77,11 @@ AboutBox::AboutBox(const QString &orgName,
     connect(ui->btn_about_qt, SIGNAL(clicked()),    qApp, SLOT(aboutQt()));
 
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+}
+//--------------------------------------------------------------------------------
+void AboutBox::send_mail(QString link)
+{
+    QDesktopServices::openUrl(QUrl(link));
 }
 //--------------------------------------------------------------------------------
 AboutBox::~AboutBox()

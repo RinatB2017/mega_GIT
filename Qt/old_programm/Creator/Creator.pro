@@ -8,7 +8,6 @@ CONFIG   *= ordered
 SUBDIRS += \
     Aggregator \
     CalcMd5 \
-    Copyrighter \
     Double_browser \
     Platanov_blowser \
     ProxyWalker \
@@ -16,3 +15,7 @@ SUBDIRS += \
     WebKit \
     WebKit_old
     
+greaterThan(QT_MAJOR_VERSION, 4) {
+    SUBDIRS += Copyrighter
+}
+

@@ -83,7 +83,7 @@ class GrapherBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit GrapherBox(QWidget *parent);
+    GrapherBox(QWidget *parent);
     ~GrapherBox();
 
     void updateText(void);

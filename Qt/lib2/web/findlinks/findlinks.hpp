@@ -30,12 +30,13 @@ class FindLinks : public QDialog
 {
     Q_OBJECT
 public:
-    explicit FindLinks(QWebFrame *frame, QWidget *parent = 0);
+    FindLinks(QWebFrame *frame, QWidget *parent = 0);
     
 signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 private slots:
     void log(const QString &data);

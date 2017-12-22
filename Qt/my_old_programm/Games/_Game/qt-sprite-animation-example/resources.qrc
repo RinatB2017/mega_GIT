@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/hedgehog_down.png</file>
+        <file>resources/hedgehog_left.png</file>
+        <file>resources/hedgehog_right.png</file>
+        <file>resources/hedgehog_stay.png</file>
+        <file>resources/hedgehog_up.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,32 @@
+#**********************************************************************************
+#**                   Author: Bikbao Rinat Zinorovich                            **
+#**********************************************************************************
+
+TEMPLATE  = subdirs
+CONFIG   += ordered
+
+SUBDIRS += \
+    _For_tests \
+    auto_inc_version \
+    hello_speak \
+    Get_MyIP \
+    GP2Y0A02Y \
+    imageviewer \
+    Icons \
+    NewMoonLight \
+    Organizations \
+    MODBUS \
+    MyBot \
+    QRCodeGenerator \
+    RS232 \
+    RS485 \
+    show_films \
+    Teacher \
+    Teacher_light \
+    Templates \
+    WiFi \
+    
+lessThan(QT_MAJOR_VERSION, 5) {
+    message (QT4)
+    SUBDIRS += neural/QNeuralNet
+}

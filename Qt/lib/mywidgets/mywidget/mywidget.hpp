@@ -125,8 +125,6 @@ public:
     void save_spinBox(QString group_name, QList<QSpinBox *> data);
     void save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data);
 
-    void connect_log(QWidget *parent);
-
     //---
     static int messagebox_noicon(const QString title,
                                  const QString text,
@@ -176,6 +174,8 @@ private slots:
     void show_objectname(void);
 
 private:
+    void connect_log(QWidget *parent);
+
     void load_QCheckBox(QString group_name);
     void load_QComboBox(QString group_name);
     void load_QPushButton(QString group_name);

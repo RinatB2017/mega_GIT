@@ -259,6 +259,8 @@ void SerialBox5::serial5_error(QSerialPort::SerialPortError err)
 
     setCloseState();
     refresh();
+
+    emit not_working();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::getStatus(const QString &status, QDateTime current)
@@ -408,11 +410,13 @@ int SerialBox5::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
+        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
+        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -435,11 +439,13 @@ int SerialBox5::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
+        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
+        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;
@@ -599,12 +605,14 @@ bool SerialBox5::isOpen(void)
 bool SerialBox5::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return false;
     }
 
     QMenu *menu = new QMenu(caption);
+    Q_CHECK_PTR(menu);
     if(menu == nullptr)
     {
         return false;

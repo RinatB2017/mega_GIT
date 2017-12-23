@@ -31,8 +31,9 @@ union CMD_0x01_QUESTION
 {
     struct BODY{
         RGB_HEADER header;
-        LED_COLOR data[NUM_LEDS_PER_STRIP][NUM_STRIPS];
-        unsigned short crc16;
+        uint8_t     brightness;
+        LED_COLOR   data[NUM_LEDS_PER_STRIP][NUM_STRIPS];
+        uint16_t    crc16;
     } body;
     unsigned char buf[sizeof(BODY)];
 };

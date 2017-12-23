@@ -92,6 +92,8 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
+    void not_working(void);
+
     void readyRead(void);
     void readChannelFinished(void);
 

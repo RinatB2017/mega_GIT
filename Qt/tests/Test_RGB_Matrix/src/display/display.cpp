@@ -29,7 +29,7 @@
 Display::Display(int max_x,
                  int max_y,
                  QWidget *parent) :
-    QFrame(parent)
+    MyWidget(parent)
 {
     if(max_x > MAX_DISPLAY_X)   max_x = MAX_DISPLAY_X;
     if(max_x <= 0)              max_x = DEFAULT_X;
@@ -56,8 +56,10 @@ Display::Display(int max_x,
 
     setLayout(grid);
 
-    setFrameStyle( QFrame::StyledPanel | QFrame::Plain );
     setFixedSize(sizeHint());
+
+    emit info(QString("max_x = %1").arg(max_x));
+    emit info(QString("max_y = %1").arg(max_y));
 }
 //--------------------------------------------------------------------------------
 void Display::set_left_btn_active(bool value)
@@ -142,7 +144,7 @@ bool Display::set_color(int x,
         emit error("Display::set_color: x < 0");
         return false;
     }
-    if(x > MAX_DISPLAY_X)
+    if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
         return false;
@@ -153,7 +155,7 @@ bool Display::set_color(int x,
         emit error("Display::set_color: y < 0");
         return false;
     }
-    if(y > MAX_DISPLAY_Y)
+    if(y > max_y)
     {
         emit error("Display::set_color: y > MAX_DISPLAY_X");
         return false;
@@ -174,7 +176,7 @@ bool Display::set_color(int x,
         emit error("Display::set_color: x < 0");
         return  false;
     }
-    if(x > MAX_DISPLAY_X)
+    if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
         return false;
@@ -185,7 +187,7 @@ bool Display::set_color(int x,
         emit error("Display::set_color: y < 0");
         return false;
     }
-    if(y > MAX_DISPLAY_Y)
+    if(y > max_y)
     {
         emit error("Display::set_color: y > MAX_DISPLAY_X");
         return false;
@@ -204,9 +206,9 @@ bool Display::get_R(int x, int y, uint8_t *value)
         emit error("Display::set_color: x < 0");
         return  false;
     }
-    if(x > MAX_DISPLAY_X)
+    if(x > max_x)
     {
-        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        emit error(QString("Display::set_color: x = %1").arg(x));
         return false;
     }
 
@@ -215,13 +217,17 @@ bool Display::get_R(int x, int y, uint8_t *value)
         emit error("Display::set_color: y < 0");
         return false;
     }
-    if(y > MAX_DISPLAY_Y)
+    if(y > max_y)
     {
-        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        emit error(QString("Display::set_color: y = %1").arg(y));
         return false;
     }
-    *value = diod[x][y]->get_R();
-    return true;
+    if(diod[x][y] != nullptr)
+    {
+        *value = diod[x][y]->get_R();
+        return true;
+    }
+    return false;
 }
 //--------------------------------------------------------------------------------
 bool Display::get_G(int x, int y, uint8_t *value)
@@ -231,7 +237,7 @@ bool Display::get_G(int x, int y, uint8_t *value)
         emit error("Display::set_color: x < 0");
         return  false;
     }
-    if(x > MAX_DISPLAY_X)
+    if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
         return false;
@@ -242,7 +248,7 @@ bool Display::get_G(int x, int y, uint8_t *value)
         emit error("Display::set_color: y < 0");
         return false;
     }
-    if(y > MAX_DISPLAY_Y)
+    if(y > max_y)
     {
         emit error("Display::set_color: y > MAX_DISPLAY_X");
         return false;
@@ -258,7 +264,7 @@ bool Display::get_B(int x, int y, uint8_t *value)
         emit error("Display::set_color: x < 0");
         return  false;
     }
-    if(x > MAX_DISPLAY_X)
+    if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
         return false;
@@ -269,7 +275,7 @@ bool Display::get_B(int x, int y, uint8_t *value)
         emit error("Display::set_color: y < 0");
         return false;
     }
-    if(y > MAX_DISPLAY_Y)
+    if(y > max_y)
     {
         emit error("Display::set_color: y > MAX_DISPLAY_X");
         return false;

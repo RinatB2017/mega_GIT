@@ -21,7 +21,7 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
 //--------------------------------------------------------------------------------
-#include <QFrame>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_DISPLAY_X    128
 #define MAX_DISPLAY_Y    32
@@ -31,7 +31,7 @@
 //--------------------------------------------------------------------------------
 class Diod;
 //--------------------------------------------------------------------------------
-class Display : public QFrame
+class Display : public MyWidget
 {
     Q_OBJECT
 
@@ -62,12 +62,6 @@ public:
 
     void load_setting(void);
     void save_setting(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 private:
     Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];

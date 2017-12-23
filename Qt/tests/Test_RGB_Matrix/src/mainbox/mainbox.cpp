@@ -124,8 +124,8 @@ void MainBox::createSerialBox(void)
     ui->serial_layout->addWidget(serialBox);
     ui->serial_layout->addStretch();
 
-    connect(this, SIGNAL(send(QByteArray)), serialBox, SLOT(input(QByteArray)));
-    connect(serialBox, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
+    connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
+    connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createDisplayBox(void)
@@ -135,20 +135,12 @@ void MainBox::createDisplayBox(void)
     display->load_setting();
     display->set_left_btn_active(true);
     display->set_right_btn_active(false);
-    connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     control_display = new Display(NUM_LEDS_PER_STRIP, NUM_STRIPS, this);
     control_display->setObjectName("control_display");
     control_display->load_setting();
     control_display->set_left_btn_active(false);
     control_display->set_right_btn_active(false);
-    connect(control_display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(control_display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(control_display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(control_display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     palette = new MyPalette(4, 4, this);
     palette->setObjectName("MyPalette");
@@ -215,7 +207,11 @@ void MainBox::createDisplayBox(void)
 void MainBox::createTimer(void)
 {
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
+    if(serialBox)
+    {
+        connect(serialBox,  SIGNAL(not_working()), timer,  SLOT(stop()));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::update(void)
@@ -225,6 +221,8 @@ void MainBox::update(void)
     question.body.header.cmd = RGB_CMD_0x01;
     question.body.header.count_data = sizeof(question.body.data);
 
+    question.body.brightness = 128; //TODO brightness
+
     uint8_t value_R = 0;
     uint8_t value_G = 0;
     uint8_t value_B = 0;
@@ -233,9 +231,16 @@ void MainBox::update(void)
     {
         for(int x=0; x<NUM_LEDS_PER_STRIP; x++)
         {
-            display->get_R(x+pos_x, y, &value_R);
-            display->get_G(x+pos_x, y, &value_G);
-            display->get_B(x+pos_x, y, &value_B);
+            int temp_x = x + pos_x;
+            if(temp_x >= MAX_SCREEN_X)
+            {
+                temp_x -= MAX_SCREEN_X;
+            }
+            display->get_R(temp_x, y, &value_R);
+
+            display->get_R(temp_x, y, &value_R);
+            display->get_G(temp_x, y, &value_G);
+            display->get_B(temp_x, y, &value_B);
 
             question.body.data[x][y].R = value_R;
             question.body.data[x][y].G = value_G;
@@ -245,7 +250,7 @@ void MainBox::update(void)
 
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
     pos_x++;
-    if(pos_x > (MAX_SCREEN_X - NUM_LEDS_PER_STRIP))
+    if(pos_x >= MAX_SCREEN_X)
     {
         pos_x = 0;
     }

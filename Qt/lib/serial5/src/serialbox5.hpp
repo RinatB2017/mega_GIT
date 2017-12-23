@@ -41,7 +41,7 @@ class SendBox5;
 //--------------------------------------------------------------------------------
 namespace Ui
 {
-class SerialBox5;
+    class SerialBox5;
 }
 //--------------------------------------------------------------------------------
 class SerialBox5 : public MyWidget
@@ -112,10 +112,7 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    void not_working(void);
 
     void output(const QByteArray &data);
 

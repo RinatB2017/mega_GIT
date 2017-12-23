@@ -278,11 +278,13 @@ int SerialBox5_lite::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
+        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
+        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -305,11 +307,13 @@ int SerialBox5_lite::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
+        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
+        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;
@@ -465,12 +469,14 @@ bool SerialBox5_lite::isOpen(void)
 bool SerialBox5_lite::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return false;
     }
 
     QMenu *menu = new QMenu(caption);
+    Q_CHECK_PTR(menu);
     if(menu == nullptr)
     {
         return false;
@@ -514,12 +520,14 @@ bool SerialBox5_lite::add_menu(int index)
 bool SerialBox5_lite::add_menu(int index, const QString &title)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return false;
     }
 
     QMenu *menu = new QMenu(title);
+    Q_CHECK_PTR(menu);
 
     QAction *action_flag_in_hex = new QAction(menu);
     QAction *action_flag_byte_by_byte = new QAction(menu);

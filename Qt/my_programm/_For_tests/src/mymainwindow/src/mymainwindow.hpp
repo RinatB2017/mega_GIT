@@ -112,7 +112,7 @@ class MyMainWindow : public MainWindow
     Q_PROPERTY(int normalProperty READ get WRITE set NOTIFY notifySignal)
 
 public:
-    explicit MyMainWindow(MainWindow *parent = 0);
+    MyMainWindow(MainWindow *parent = 0);
     ~MyMainWindow();
 
     int get(void)

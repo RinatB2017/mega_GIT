@@ -212,26 +212,6 @@ void MyMainWindow::file_action_click(void)
     QString title = "Информация";
     QString text = "file_action_click";
     MyWidget::messagebox_info(title, text);
-
-    QWidget *w = centralWidget();
-    emit info(QString("%1 %2")
-              .arg(w->width())
-              .arg(w->height()));
-
-    QPixmap *pix = new QPixmap(w->width(),
-                               w->height());
-    pix->fill(QColor(Qt::red));
-
-    QLabel *label = new QLabel(w);
-    label->setMinimumWidth(w->width());
-    label->setMinimumHeight(w->height());
-    //label->setText("XEP");
-    label->setPixmap(*pix);
-    label->show();
-
-    emit info(QString("%1 %2")
-              .arg(label->width())
-              .arg(label->height()));
 }
 //--------------------------------------------------------------------------------
 void MyMainWindow::options_action_click(void)

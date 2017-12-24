@@ -49,9 +49,6 @@
 //--------------------------------------------------------------------------------
 //  rm /usr/lib/libGL.so.1
 //--------------------------------------------------------------------------------
-//#include <QGLFormat>
-
-#include <QScriptEngine>
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
@@ -89,7 +86,7 @@ int main(int argc, char *argv[])
     MyMainWindow *main_window = new MyMainWindow();
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
-    qDebug() << main_window->windowFlags();
+    //qDebug() << main_window->windowFlags();
 
     // отключает заголовок
     //main_window->setWindowFlags(Qt::FramelessWindowHint);

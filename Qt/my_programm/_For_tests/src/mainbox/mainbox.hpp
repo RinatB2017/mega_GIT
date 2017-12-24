@@ -30,13 +30,21 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
 class QComboBox;
 class QToolBar;
+//--------------------------------------------------------------------------------
+class Programmer : public QObject
+{
+    Q_OBJECT
+public:
+    enum Language {ASM, C, CPP, PASCAL, FORTRAN, BASIC, JAVA};
+    Q_ENUMS(Language)
+};
 //--------------------------------------------------------------------------------
 class MyThread : public QObject
 {
@@ -267,8 +275,6 @@ private:
     void createTestBar(void);
 
     void create_thread(void);
-
-    void updateQRImage(void);
 
     void get_param(QString *str, QWidget *widget, QString w_name);
     void get_color(QPalette::ColorRole role, QString r_name);

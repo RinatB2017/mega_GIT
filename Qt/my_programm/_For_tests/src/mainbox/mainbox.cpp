@@ -220,50 +220,6 @@ void MainBox::create_thread(void)
     thread->start();
 }
 //--------------------------------------------------------------------------------
-#include <QRCodeGenerator.hpp>
-
-void MainBox::updateQRImage(void)
-{
-    int levelIndex = 1;
-    int versionIndex = 0;
-    bool bExtent = true;
-    int maskIndex = -1;
-
-    CQR_Encode qrEncode;
-
-    QByteArray ba;
-    ba.clear();
-    for(int n=0; n<2754; n++)   //2376 2953
-    {
-        ba.append(n);
-    }
-    emit info(QString("len %1 bytes").arg(ba.size()));
-    bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, ba.toHex().data(), ba.size() );
-
-    if ( !successfulEncoding )
-    {
-        emit error("!successfulEncoding");
-        return;
-    }
-
-    int qrImageSize = qrEncode.m_nSymbleSize;
-
-    // Создаем двумерный образ кода
-    int encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
-    QImage encodeImage( encodeImageSize, encodeImageSize, QImage::Format_Mono );
-    encodeImage.fill( 1 );
-
-    // Создать двумерный образ кода
-    for ( int i = 0; i < qrImageSize; i++ )
-        for ( int j = 0; j < qrImageSize; j++ )
-            if ( qrEncode.m_byModuleData[i][j] )
-                encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
-
-    QLabel *image_label = new QLabel();
-    image_label->setPixmap( QPixmap::fromImage( encodeImage.scaled(600, 600) ) );
-    image_label->show();
-}
-//--------------------------------------------------------------------------------
 void MainBox::get_param(QString *str, QWidget *widget, QString w_name)
 {
     int R = widget->palette().color(QPalette::WindowText).red();
@@ -311,9 +267,22 @@ void MainBox::get_color(QPalette::ColorRole role, QString r_name)
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
-    //emit info("Test_0()");
+    emit info("Test_0()");
 
-    //updateQRImage();
+#if 1
+    const QMetaObject &mo = Programmer::staticMetaObject;
+    int index = mo.indexOfEnumerator("Language");
+    QMetaEnum me = mo.enumerator(index);
+    Programmer::Language p = Programmer::CPP;
+    Programmer::Language l= static_cast<Programmer::Language>(me.keyToValue("CPP"));
+    emit info(QString("%1:%2")
+              .arg(me.valueToKey(p))
+              .arg(l));
+#endif
+
+#if 0
+    emit info(QChar(8592));
+#endif
 
 #if 0
     QString str;
@@ -383,24 +352,6 @@ bool MainBox::test_1(void)
     //messagebox_question("Вопрос", "Шо, опять?");
     //messagebox_critical("Вопрос", "Шо, опять?");
     //QMessageBox::question(this, "Вопрос", "Шо, опять?");
-
-#if 1
-    QWidget *widget = new QWidget;
-
-    QAction *ae = new QAction("xxx");
-    connect(ae, SIGNAL(triggered(bool)),    widget, SLOT(close()));
-
-    QMenuBar *mb = new QMenuBar;
-    mb->addAction(ae);
-
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(mb);
-    vbox->addWidget(new QTextEdit);
-
-    widget->setLayout(vbox);
-
-    widget->show();
-#endif
 
     return true;
 }

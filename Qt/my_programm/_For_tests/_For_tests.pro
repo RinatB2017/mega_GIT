@@ -15,9 +15,6 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-#QT  += serialbus
-QT  += script
-
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 #DEFINES += FLAG_RESIZE
@@ -66,9 +63,7 @@ win32 {
 }
 
 RESOURCES += \
-    images/images.qrc \
-    QSS/qss.qrc \
-    doc/doc.qrc
+    images/images.qrc
 
 OTHER_FILES += doc/notebook.txt
 
@@ -77,15 +72,13 @@ CONFIG(debug, debug|release) {
 }
 
 LIB_PATH = "../../lib"
-LIB_PATH2 = "../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 
 include ($$LIB_PATH/icons/qmessagebox.pri)
-
-include ($$LIB_PATH2/QRCodeGenerator/QRCodeGenerator.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -45,7 +45,6 @@ MainWidget_GUI::MainWidget_GUI(QWidget *parent,
     ui(new Ui::MainWidget_GUI)
 {
     init();
-    load_config();
 }
 //--------------------------------------------------------------------------------
 MainWidget_GUI::~MainWidget_GUI()
@@ -81,6 +80,8 @@ void MainWidget_GUI::init(void)
     {
         setMinimumHeight(sizeHint().height());
     }
+
+    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::createTestBar(void)

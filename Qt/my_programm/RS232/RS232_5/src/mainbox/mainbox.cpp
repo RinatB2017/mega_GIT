@@ -40,10 +40,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox5(0),
-    test_byte(0),
-    cnt(0)
+    ui(new Ui::MainBox)
 {
     init();
 }

@@ -32,7 +32,7 @@ class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox5;
+class SerialBox5_lite;
 class QSpinBox;
 class QTimer;
 class Display;
@@ -52,13 +52,18 @@ signals:
 
 private slots:
     void run(bool state);
+    void read_display_data(QByteArray ba);
     void read_data(QByteArray ba);
     void update(void);
 
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+
+    SerialBox5_lite *main_serialBox = 0;
+    SerialBox5_lite *control_serialBox = 0;
+
+    QByteArray display_data_rs232;
     QByteArray data_rs232;
 
     QSpinBox *sb_interval = 0;
@@ -68,6 +73,9 @@ private:
     Display *control_display = 0;
     MyPalette *palette = 0;
     int pos_x;
+
+    bool is_busy = false;
+    bool is_ready = false;
 
     void init(void);
     void wait(int max_time_ms);

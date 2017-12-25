@@ -50,6 +50,9 @@ public:
                    uint8_t G_value,
                    uint8_t B_value);
 
+    int get_max_x(void);
+    int get_max_y(void);
+
     bool get_R(int x, int y, uint8_t *value);
     bool get_G(int x, int y, uint8_t *value);
     bool get_B(int x, int y, uint8_t *value);
@@ -62,6 +65,8 @@ public:
 
     void load_setting(void);
     void save_setting(void);
+
+    void clear(void);
 
 private:
     Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];

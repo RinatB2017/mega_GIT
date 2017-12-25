@@ -299,7 +299,10 @@ bool MyWidget::get_param(QString group_name,
                          QVariant default_value,
                          QVariant *value)
 {
-    if(name.isEmpty())  return false;
+    if(name.isEmpty())
+    {
+        return false;
+    }
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     if(settings == nullptr)

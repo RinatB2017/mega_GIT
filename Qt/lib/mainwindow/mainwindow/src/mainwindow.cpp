@@ -181,6 +181,8 @@ void MainWindow::init(void)
 #ifdef  DEMO
     check_date();
 #endif
+
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 //--------------------------------------------------------------------------------
 #ifdef  DEMO
@@ -856,6 +858,7 @@ void MainWindow::createToolBar(void)
 #ifndef NO_STYLETOOLBAR
 void MainWindow::createStyleToolBar(void)
 {
+#if 0
     toolBar = new QToolBar("styletoolbar", this);
     Q_CHECK_PTR(toolBar);
 
@@ -869,7 +872,7 @@ void MainWindow::createStyleToolBar(void)
     QStringList sl;
     sl.append(QStyleFactory::keys());
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QBoxLayout *vbox = new QBoxLayout(QBoxLayout::TopToBottom);
     vbox->setMargin(0);
     vbox->setSpacing(0);
     foreach (QString style, sl)
@@ -886,6 +889,135 @@ void MainWindow::createStyleToolBar(void)
     frame->setLayout(vbox);
     toolBar->addWidget(frame);
     addToolBar(Qt::LeftToolBarArea, toolBar);
+#else
+    sd = new QDockWidget(QObject::tr("Styles"), this);
+    Q_CHECK_PTR(sd);
+    sd->setObjectName("sd");
+
+#ifndef NO_LOG
+    if(m_windowsMenu)
+    {
+        m_windowsMenu->addAction(sd->toggleViewAction());
+    }
+#endif
+
+    QBoxLayout *box = 0;
+    QWidget *w = 0;
+    QStringList sl;
+    sl.append(QStyleFactory::keys());
+
+    if(box) box->deleteLater();
+    box = new QBoxLayout(QBoxLayout::LeftToRight);
+    box->setMargin(0);
+    box->setSpacing(0);
+    foreach (QString style, sl)
+    {
+        QPushButton *btnTemp = new QPushButton(this);
+        btnTemp->setText(style);
+
+        box->addWidget(btnTemp);
+        connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
+    }
+    box->addStretch(1);
+
+    w = new QWidget(this);
+    w->setLayout(box);
+
+    //TODO setFixedWidth
+    //w->show();
+    //w->setFixedWidth(w->sizeHint().width());
+    //---
+
+    sd->setWidget(w);
+
+    connect(sd, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),    this,   SLOT(dockLocationChanged(Qt::DockWidgetArea)));
+#endif
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_STYLETOOLBAR
+void MainWindow::dockLocationChanged(Qt::DockWidgetArea area)
+{
+    QBoxLayout *box = 0;
+    QWidget *w = 0;
+    QStringList sl;
+
+    switch(area)
+    {
+    case Qt::LeftDockWidgetArea:
+    case Qt::RightDockWidgetArea:
+        emit debug("LeftDockWidgetArea");
+
+        if(sd->widget())
+        {
+            sd->widget()->deleteLater();
+        }
+        sl.append(QStyleFactory::keys());
+
+        if(box) box->deleteLater();
+        box = new QBoxLayout(QBoxLayout::TopToBottom);
+        box->setMargin(0);
+        box->setSpacing(0);
+        foreach (QString style, sl)
+        {
+            QPushButton *btnTemp = new QPushButton(this);
+            btnTemp->setText(style);
+
+            box->addWidget(btnTemp);
+            connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
+        }
+        box->addStretch(1);
+
+        w = new QWidget(this);
+        w->setLayout(box);
+
+        //TODO setFixedWidth
+        //w->show();
+        //w->setFixedWidth(w->sizeHint().width());
+        //---
+
+        sd->setWidget(w);
+        break;
+
+    case Qt::TopDockWidgetArea:
+    case Qt::BottomDockWidgetArea:
+        emit debug("TopDockWidgetArea");
+
+        if(sd->widget())
+        {
+            sd->widget()->deleteLater();
+        }
+        sl.append(QStyleFactory::keys());
+
+        if(box) box->deleteLater();
+        box = new QBoxLayout(QBoxLayout::LeftToRight);
+        box->setMargin(0);
+        box->setSpacing(0);
+        foreach (QString style, sl)
+        {
+            QPushButton *btnTemp = new QPushButton(this);
+            btnTemp->setText(style);
+
+            box->addWidget(btnTemp);
+            connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
+        }
+        box->addStretch(1);
+
+        w = new QWidget(this);
+        w->setLayout(box);
+
+        //TODO setFixedWidth
+        //w->show();
+        //w->setFixedHeight(w->sizeHint().height());
+        //---
+
+        sd->setWidget(w);
+        break;
+
+    default:
+        emit info("default");
+        break;
+    }
 }
 #endif
 //--------------------------------------------------------------------------------

@@ -29,7 +29,7 @@ LED_COLOR;
 //--------------------------------------------------------------------------------
 union CMD_0x01_QUESTION
 {
-    struct BODY{
+    struct BODY {
         RGB_HEADER header;
         uint8_t     brightness;
         LED_COLOR   data[NUM_LEDS_PER_STRIP][NUM_STRIPS];
@@ -46,6 +46,8 @@ union CMD_0x01_ANSWER
     } body;
     unsigned char buf[sizeof(BODY)];
 };
+//--------------------------------------------------------------------------------
+#pragma pack(pop)
 //--------------------------------------------------------------------------------
 #define RGB_CMD_0x01  0x01
 //--------------------------------------------------------------------------------

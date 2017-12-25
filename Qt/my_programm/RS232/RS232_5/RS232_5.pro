@@ -19,7 +19,7 @@ QMAKE_CXXFLAGS += -fno-show-column
 DEFINES += RS232_SEND
 DEFINES += RS232_LOG
 
-DEFINES += NO_STYLETOOLBAR
+#DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
@@ -40,6 +40,7 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)
 

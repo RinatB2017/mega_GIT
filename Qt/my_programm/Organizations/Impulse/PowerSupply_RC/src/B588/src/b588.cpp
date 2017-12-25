@@ -143,6 +143,8 @@ void B588::createParrotBar(void)
     }
 
     ParrotBar *parrotBar = new ParrotBar(this);
+    parrotBar->setObjectName("parrotBar");
+
     connect(parrotBar, SIGNAL(set_UI(int,int)), this, SLOT(set_UI_parrot(int,int)));
 
     mw->addToolBar(Qt::TopToolBarArea, parrotBar);

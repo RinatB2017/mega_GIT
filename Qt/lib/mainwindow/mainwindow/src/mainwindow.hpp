@@ -175,8 +175,10 @@ private slots:
 #ifndef NO_TRAYICON
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 #endif
+
 #ifndef NO_STYLETOOLBAR
     void setToolBarStyles(void);
+    void dockLocationChanged(Qt::DockWidgetArea area);
 #endif
 
 private:
@@ -232,10 +234,12 @@ private:
     QMenu *trayIconMenu = 0;
 #endif
 
+#ifndef NO_TRAYICON
     QAction *a_minimizeAction = 0;
     QAction *a_maximizeAction = 0;
     QAction *a_restoreAction = 0;
     QAction *a_quitAction = 0;
+#endif
 
     bool flag_close = false;
 
@@ -270,6 +274,7 @@ private:
 
 #ifndef NO_STYLETOOLBAR
     QToolBar *toolBar = 0;
+    QDockWidget *sd = 0;
     void createStyleToolBar(void);
 #endif
 

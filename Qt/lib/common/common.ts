@@ -173,6 +173,14 @@
         <translation>Лог</translation>
     </message>
     <message>
+        <source>Styles</source>
+        <translation>Стили</translation>
+    </message>
+</context>
+
+<context>
+    <name>QObject</name>
+    <message>
         <source>Template</source>
         <translation>Шаблон</translation>
     </message>

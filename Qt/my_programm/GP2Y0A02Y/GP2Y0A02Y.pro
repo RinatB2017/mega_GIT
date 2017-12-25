@@ -48,6 +48,7 @@ OTHER_FILES += doc/notebook.txt
 
 #----------------------------------------------
 LIB_PATH = "../../lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/meta/grapherbox.pri)
 

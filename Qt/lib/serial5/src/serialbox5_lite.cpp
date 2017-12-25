@@ -159,7 +159,6 @@ void SerialBox5_lite::initSerial(void)
 
     connect(serial5,    SIGNAL(readyRead()),                            this,   SIGNAL(readyRead(void)));
     connect(serial5,    SIGNAL(readChannelFinished()),                  this,   SIGNAL(readChannelFinished(void)));
-    connect(serial5,    SIGNAL(error(QSerialPort::SerialPortError)),    this,   SIGNAL(error(QSerialPort::SerialPortError)));
 
     //TODO
     timer = new QTimer();

@@ -59,8 +59,6 @@ LogBox::LogBox(QWidget *parent) :
     flagTextIsWindows(false)
 {
     init();
-
-    logBox->document()->setMaximumBlockCount(1000);
 }
 //--------------------------------------------------------------------------------
 LogBox::LogBox(const QString &o_name,
@@ -76,8 +74,6 @@ LogBox::LogBox(const QString &o_name,
     flagTextIsWindows(false)
 {
     init();
-
-    logBox->document()->setMaximumBlockCount(1000);
 
     if(min_width != 0)
         setMinimumWidth(min_width);
@@ -104,6 +100,8 @@ void LogBox::init(void)
 
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(logBox, SIGNAL(customContextMenuRequested(QPoint)),   this, SLOT(popup(QPoint)));
+
+    logBox->document()->setMaximumBlockCount(1000);
 }
 //--------------------------------------------------------------------------------
 void LogBox::popup(QPoint)

@@ -199,6 +199,16 @@ bool Display::set_color(int x,
     return true;
 }
 //--------------------------------------------------------------------------------
+int Display::get_max_x(void)
+{
+    return max_x;
+}
+//--------------------------------------------------------------------------------
+int Display::get_max_y(void)
+{
+    return max_y;
+}
+//--------------------------------------------------------------------------------
 bool Display::get_R(int x, int y, uint8_t *value)
 {
     if(x < 0)
@@ -282,6 +292,17 @@ bool Display::get_B(int x, int y, uint8_t *value)
     }
     *value = diod[x][y]->get_B();
     return true;
+}
+//--------------------------------------------------------------------------------
+void Display::clear(void)
+{
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            set_color(x, y, QColor(Qt::black));
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void Display::load_setting(void)

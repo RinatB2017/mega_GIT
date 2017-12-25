@@ -165,7 +165,7 @@ class Powersupply_B590 : public QObject
     Q_OBJECT
 
 public:
-    explicit Powersupply_B590(QObject *parent = 0);
+    Powersupply_B590(QObject *parent = 0);
     ~Powersupply_B590();
 
     bool port_is_open(void);

@@ -40,8 +40,8 @@ class MainWidget_GUI : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainWidget_GUI(QWidget *parent,
-                     MySplashScreen *splash);
+    MainWidget_GUI(QWidget *parent,
+                   MySplashScreen *splash);
     ~MainWidget_GUI();
 
 private slots:

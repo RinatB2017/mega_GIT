@@ -37,10 +37,11 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox5.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
 #include "crc.h"
+//--------------------------------------------------------------------------------
+#include "serialbox5_lite.hpp"
 //--------------------------------------------------------------------------------
 #include "palette.hpp"
 #include "display.hpp"
@@ -56,7 +57,8 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    serialBox->deleteLater();
+    main_serialBox->deleteLater();
+    control_serialBox->deleteLater();
 
     display->deleteLater();
     control_display->deleteLater();
@@ -75,6 +77,8 @@ void MainBox::init(void)
     createSerialBox();
     createDisplayBox();
     createTimer();
+
+    setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -118,14 +122,26 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::createSerialBox(void)
 {
-    serialBox = new SerialBox5(this, "RS232");
-    serialBox->add_menu(2);
+    main_serialBox = new SerialBox5_lite(this);
+    main_serialBox->add_menu(2);
 
-    ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
+    control_serialBox = new SerialBox5_lite(this);
 
-    connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
-    connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+    QVBoxLayout *vbox1 = new QVBoxLayout;
+    vbox1->addWidget(main_serialBox);
+    vbox1->addStretch(1);
+
+    QVBoxLayout *vbox2 = new QVBoxLayout;
+    vbox2->addWidget(control_serialBox);
+    vbox2->addStretch(1);
+
+    ui->gridLayout->addLayout(vbox1,    0, 0);
+    ui->gridLayout->addLayout(vbox2,    1, 0);
+
+    connect(this,           SIGNAL(send(QByteArray)),   main_serialBox, SLOT(input(QByteArray)));
+    connect(main_serialBox, SIGNAL(output(QByteArray)), this,           SLOT(read_data(QByteArray)));
+
+    connect(control_serialBox, SIGNAL(output(QByteArray)), this,   SLOT(read_display_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createDisplayBox(void)
@@ -141,6 +157,10 @@ void MainBox::createDisplayBox(void)
     control_display->load_setting();
     control_display->set_left_btn_active(false);
     control_display->set_right_btn_active(false);
+
+    //clear control_display
+    control_display->clear();
+    //---
 
     palette = new MyPalette(4, 4, this);
     palette->setObjectName("MyPalette");
@@ -158,13 +178,8 @@ void MainBox::createDisplayBox(void)
     hbox->addWidget(display);
     hbox->addStretch(1);
 
-    QVBoxLayout *box = new QVBoxLayout();
-    box->addLayout(hbox);
-    box->addWidget(control_display);
-    box->addStretch(1);
-
-    ui->frame->setLayout(box);
-    ui->frame->setFixedWidth(ui->frame->sizeHint().width());
+    ui->gridLayout->addLayout(hbox,             0,  1);
+    ui->gridLayout->addWidget(control_display,  1,  1);
 }
 //--------------------------------------------------------------------------------
 #if 0
@@ -208,20 +223,26 @@ void MainBox::createTimer(void)
 {
     timer = new QTimer(this);
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
-    if(serialBox)
+    if(main_serialBox)
     {
-        connect(serialBox,  SIGNAL(not_working()), timer,  SLOT(stop()));
+        connect(main_serialBox,  SIGNAL(not_working()), timer,  SLOT(stop()));
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::update(void)
 {
+    if(is_busy)
+    {
+        return;
+    }
+    is_busy = true;
+
     CMD_0x01_QUESTION question;
     question.body.header.address = 1;
     question.body.header.cmd = RGB_CMD_0x01;
     question.body.header.count_data = sizeof(question.body.data);
 
-    question.body.brightness = 128; //TODO brightness
+    //question.body.brightness = 128; //TODO brightness
 
     uint8_t value_R = 0;
     uint8_t value_G = 0;
@@ -249,11 +270,6 @@ void MainBox::update(void)
     }
 
     question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
-    pos_x++;
-    if(pos_x >= MAX_SCREEN_X)
-    {
-        pos_x = 0;
-    }
 
 #ifdef MODBUS
     QByteArray ba;
@@ -274,6 +290,7 @@ void MainBox::update(void)
     }
 #endif
 
+#if 0
     for(int y=0; y<NUM_STRIPS; y++)
     {
         for(int x=0; x<NUM_LEDS_PER_STRIP; x++)
@@ -284,17 +301,37 @@ void MainBox::update(void)
                                        question.body.data[x][y].B);
         }
     }
+#endif
 
-    data_rs232.clear();
 #ifdef FAKE
     emit trace(QString("[%1]").arg(ba.data()));
     emit info(QString("send %1 bytes").arg(ba.size()));
 #else
-    emit send(ba);
-    //serialBox->input(ba);
 
-    emit info(QString("send %1 bytes").arg(ba.size()));
+    data_rs232.clear();
+    is_ready = false;
+    emit send(ba);
+
+    emit trace(ba);
+    emit debug(QString("send %1 bytes").arg(ba.size()));
+
+    wait(1000);
+
+    if(is_ready == false)
+    {
+        emit error("data is empty!");
+    }
+    else
+    {
+        pos_x++;
+        if(pos_x >= MAX_SCREEN_X)
+        {
+            pos_x = 0;
+        }
+    }
 #endif
+
+    is_busy = false;
 }
 //--------------------------------------------------------------------------------
 void MainBox::run(bool state)
@@ -318,13 +355,75 @@ void MainBox::wait(int max_time_ms)
     while(time.elapsed() < max_time_ms)
     {
         QCoreApplication::processEvents();
+        if(is_ready)
+        {
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_display_data(QByteArray ba)
+{
+    //emit debug("read_display_data");
+    emit debug(ba);
+
+    QByteArray data;
+
+    for(int n=0; n<ba.length(); n++)
+    {
+        char s = ba.at(n);
+        switch (s) {
+        case ':':
+            display_data_rs232.clear();
+            break;
+
+        case '\r':
+        case '\n':
+            data = QByteArray::fromHex(display_data_rs232);
+            if(data.length() == 5)
+            {
+                control_display->set_color((int)data.at(0),
+                                           (int)data.at(1),
+                                           (uint8_t)data.at(2),
+                                           (uint8_t)data.at(3),
+                                           (uint8_t)data.at(4));
+            }
+            else
+            {
+                emit error(QString("len = %1").arg(data.length()));
+            }
+            break;
+
+        default:
+            display_data_rs232.append(s);
+            break;
+        }
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
-    emit debug("read_data");
-    data_rs232.append(ba);
+    //emit debug("read_data");
+    emit debug(ba);
+
+    for(int n=0; n<ba.length(); n++)
+    {
+        char s = ba.at(n);
+        switch (s) {
+        case ':':
+            data_rs232.clear();
+            break;
+
+        case '\r':
+        case '\n':
+            is_ready = true;
+            break;
+
+        default:
+            data_rs232.append(s);
+            break;
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::changeEvent(QEvent *event)

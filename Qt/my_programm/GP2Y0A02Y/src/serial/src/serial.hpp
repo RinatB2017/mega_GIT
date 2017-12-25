@@ -34,7 +34,7 @@ class Serial : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Serial(QWidget *parent = 0);
+    Serial(QWidget *parent = 0);
     ~Serial();
 
 signals:
@@ -44,7 +44,7 @@ private slots:
     void get_data(QByteArray data);
 
 private:
-    Ui::Serial  *ui;
+    Ui::Serial  *ui = 0;
     QByteArray  data_rs232;
 
     void init(void);

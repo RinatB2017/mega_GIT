@@ -2,7 +2,9 @@
 
 cd qt-everywhere-src-5.10.0
 
-./configure -static -release -silent \
+./configure -static \
+-release -debug \
+-silent \
 -prefix ~/Qt/5.10.0_static \
 -opensource -confirm-license -opengl \
 -nomake examples \

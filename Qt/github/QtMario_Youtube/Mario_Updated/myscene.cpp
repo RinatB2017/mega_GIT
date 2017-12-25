@@ -369,6 +369,7 @@ void MyScene::keyReleaseEvent(QKeyEvent *event)
             checkTimer();
             break;
         }
+        break;
 
     case Qt::Key_Left:
         if(bigMario){
@@ -388,6 +389,8 @@ void MyScene::keyReleaseEvent(QKeyEvent *event)
             checkTimer();
             break;
         }
+        break;
+
     default:
         break;
     }

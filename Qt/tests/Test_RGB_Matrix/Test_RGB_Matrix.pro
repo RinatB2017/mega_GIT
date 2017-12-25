@@ -29,7 +29,6 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 DEFINES += MODBUS
-#DEFINES += FAKE
 
 HEADERS += \
     defines.hpp \
@@ -54,6 +53,7 @@ win32 {
 
 
 LIB_PATH = "../../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/crc/crc.pri)
 

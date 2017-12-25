@@ -57,12 +57,12 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    main_serialBox->deleteLater();
-    control_serialBox->deleteLater();
+    if(main_serialBox) main_serialBox->deleteLater();
+    if(control_serialBox) control_serialBox->deleteLater();
 
-    display->deleteLater();
-    control_display->deleteLater();
-    palette->deleteLater();
+    if(display) display->deleteLater();
+    if(control_display) control_display->deleteLater();
+    if(palette) palette->deleteLater();
 
     delete ui;
 }
@@ -242,7 +242,7 @@ void MainBox::update(void)
     question.body.header.cmd = RGB_CMD_0x01;
     question.body.header.count_data = sizeof(question.body.data);
 
-    //question.body.brightness = 128; //TODO brightness
+    question.body.brightness = 128; //TODO brightness
 
     uint8_t value_R = 0;
     uint8_t value_G = 0;
@@ -290,23 +290,8 @@ void MainBox::update(void)
     }
 #endif
 
-#if 0
-    for(int y=0; y<NUM_STRIPS; y++)
-    {
-        for(int x=0; x<NUM_LEDS_PER_STRIP; x++)
-        {
-            control_display->set_color(x, y,
-                                       question.body.data[x][y].R,
-                                       question.body.data[x][y].G,
-                                       question.body.data[x][y].B);
-        }
-    }
-#endif
-
-#ifdef FAKE
-    emit trace(QString("[%1]").arg(ba.data()));
-    emit info(QString("send %1 bytes").arg(ba.size()));
-#else
+    emit debug(QString("[%1]").arg(ba.data()));
+    emit debug(QString("send %1 bytes").arg(ba.size()));
 
     data_rs232.clear();
     is_ready = false;
@@ -329,7 +314,6 @@ void MainBox::update(void)
             pos_x = 0;
         }
     }
-#endif
 
     is_busy = false;
 }

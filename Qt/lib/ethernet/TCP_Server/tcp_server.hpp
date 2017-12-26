@@ -18,7 +18,7 @@ class TCP_Server : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit TCP_Server(QWidget *parent = 0);
+    TCP_Server(QWidget *parent = 0);
     ~TCP_Server();
 
 signals:

@@ -858,7 +858,7 @@ void MainWindow::createToolBar(void)
 #ifndef NO_STYLETOOLBAR
 void MainWindow::createStyleToolBar(void)
 {
-#if 0
+#if 1
     toolBar = new QToolBar("styletoolbar", this);
     Q_CHECK_PTR(toolBar);
 
@@ -872,22 +872,16 @@ void MainWindow::createStyleToolBar(void)
     QStringList sl;
     sl.append(QStyleFactory::keys());
 
-    QBoxLayout *vbox = new QBoxLayout(QBoxLayout::TopToBottom);
-    vbox->setMargin(0);
-    vbox->setSpacing(0);
     foreach (QString style, sl)
     {
         QPushButton *btnTemp = new QPushButton(this);
         btnTemp->setText(style);
 
-        vbox->addWidget(btnTemp);
+        toolBar->addWidget(btnTemp);
         connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
     }
-    vbox->addStretch(1);
+    //toolBar->addStretch(1);
 
-    QFrame *frame = new QFrame;
-    frame->setLayout(vbox);
-    toolBar->addWidget(frame);
     addToolBar(Qt::LeftToolBarArea, toolBar);
 #else
     sd = new QDockWidget(QObject::tr("Styles"), this);

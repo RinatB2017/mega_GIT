@@ -59,7 +59,10 @@ MainWindow::~MainWindow()
 void MainWindow::setCentralWidget(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
-    if(!widget) return;
+    if(!widget)
+    {
+        return;
+    }
 
     mainWidget = widget;
 
@@ -193,8 +196,19 @@ void MainWindow::check_date(void)
             now.date().month() >= DEMO_MONTH &&
             now.date().day() > DEMO_DAY)
     {
-        QTimer::singleShot(3000, this, SLOT(shot()));
+        QTimer::singleShot(3000 + rand() % 10000, this, SLOT(kill()));
     }
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifdef  DEMO
+void MainWindow::kill(void)
+{
+    int a = 5;
+    int b = 0;
+    int c = a / b;
+
+    qDebug() << a << b << c;
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -664,6 +678,22 @@ void MainWindow::load_main(void)
     a_AskExit->setChecked(flag_close);
 #endif
 
+    //---
+    state_theme = settings->value("Theme",  DARK_THEME).toInt();
+    switch(state_theme)
+    {
+    case LIGHT_THEME:
+        set_light_palette();
+        break;
+    case DARK_THEME:
+        set_dark_palette();
+        break;
+    case BLUE_THEME:
+        set_blue_palette();
+        break;
+    }
+    //---
+
     settings->endGroup();
 
     restoreState(settings->value("windowState").toByteArray());
@@ -691,6 +721,8 @@ void MainWindow::save_main(void)
 #ifndef NO_MENU
     settings->setValue("NoAnswerFromExit", a_AskExit->isChecked());
 #endif
+
+    settings->setValue("Theme",         state_theme);
 
     settings->endGroup();
 
@@ -1261,7 +1293,7 @@ void MainWindow::set_log_font(void)
     QFont font = QFontDialog::getFont(&ok, ld->get_font());
     if(ok)
     {
-        QApplication::setFont(font);
+        ld->set_font(font);
     }
 }
 #endif
@@ -1327,6 +1359,8 @@ void MainWindow::set_blue_palette(void)
     palette.setBrush(QPalette::Shadow,      QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
 #endif
 
+    state_theme = BLUE_THEME;
+
     qApp->setPalette(palette);
 }
 //--------------------------------------------------------------------------------
@@ -1359,6 +1393,8 @@ void MainWindow::set_dark_palette(void)
     palette.setBrush(QPalette::Shadow,      QBrush(QColor(20, 20, 20),      Qt::SolidPattern));
 #endif
 
+    state_theme = DARK_THEME;
+
     qApp->setPalette(palette);
 }
 //--------------------------------------------------------------------------------
@@ -1390,6 +1426,8 @@ void MainWindow::set_light_palette(void)
     palette.setBrush(QPalette::Window,      QBrush(QColor(240, 240, 240),   Qt::SolidPattern));
     palette.setBrush(QPalette::Shadow,      QBrush(QColor(105, 105, 105),   Qt::SolidPattern));
 #endif
+
+    state_theme = LIGHT_THEME;
 
     qApp->setPalette(palette);
 }

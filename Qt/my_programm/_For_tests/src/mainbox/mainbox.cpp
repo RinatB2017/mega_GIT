@@ -25,6 +25,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QToolBar>
+#include <QThread>
 #include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
@@ -162,8 +163,6 @@ void MainBox::createTestBar(void)
 
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
-
-    toolBar->setFixedWidth(toolBar->sizeHint().width() + 10);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -191,93 +190,11 @@ void MainBox::choice_test(void)
         }
     }
 }
-//--------------------------------------------------------------------------------
-#include <QThread>
-void MainBox::thread_is_finished(void)
-{
-    emit info("thread_is_finished");
-}
-//--------------------------------------------------------------------------------
-void MainBox::create_thread(void)
-{
-    QThread *thread = new QThread;
 
-    MyThread *worker = new MyThread;
-    connect(worker, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
-    connect(worker, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
-    connect(worker, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(worker, SIGNAL(message(QString)),   this, SIGNAL(message(QString)));
-
-    connect(thread, SIGNAL(started()),  worker, SLOT(process()));
-    connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
-    connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
-    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-
-    connect(thread, SIGNAL(finished()), this, SLOT(thread_is_finished()));
-
-    worker->moveToThread(thread);
-
-    thread->start();
-}
-//--------------------------------------------------------------------------------
-void MainBox::get_param(QString *str, QWidget *widget, QString w_name)
-{
-    int R = widget->palette().color(QPalette::WindowText).red();
-    int G = widget->palette().color(QPalette::WindowText).red();
-    int B = widget->palette().color(QPalette::WindowText).red();
-
-    int b_R = widget->palette().background().color().red();
-    int b_G = widget->palette().background().color().green();
-    int b_B = widget->palette().background().color().blue();
-
-    (*str).append(w_name);
-    (*str).append(" {");
-    (*str).append("\n");
-    (*str).append(QString("    color:#%1%2%3;")
-                  .arg(R, 0, 16)
-                  .arg(G, 0, 16)
-                  .arg(B, 0, 16));
-    (*str).append("\n");
-    (*str).append(QString("    background-color:#%1%2%3;")
-                  .arg(b_R, 0, 16)
-                  .arg(b_G, 0, 16)
-                  .arg(b_B, 0, 16));
-    (*str).append("\n");
-    (*str).append("}");
-    (*str).append("\n");
-}
-//--------------------------------------------------------------------------------
-void MainBox::get_color(QPalette::ColorRole role, QString r_name)
-{
-    int R = palette().color(role).red();
-    int G = palette().color(role).red();
-    int B = palette().color(role).red();
-
-    //palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    QString str;
-    str.append(QString("palette.setBrush(%1,  QBrush(QColor(%2, %3, %4),    Qt::SolidPattern));")
-               .arg(r_name)
-               .arg(R)
-               .arg(G)
-               .arg(B));
-    str.append("\n");
-
-    emit info(str);
-}
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-
-#if 1
-    LED led;
-    led.value = 0x01020304;
-
-    emit info(QString("R %1").arg(led.body.R));
-    emit info(QString("G %1").arg(led.body.G));
-    emit info(QString("B %1").arg(led.body.B));
-    emit info(QString("alpha %1").arg(led.body.alpha));
-#endif
 
 #if 0
     const QMetaObject &mo = Programmer::staticMetaObject;
@@ -290,78 +207,12 @@ bool MainBox::test_0(void)
               .arg(l));
 #endif
 
-#if 0
-    emit info(QChar(8592));
-#endif
-
-#if 0
-    QString str;
-    //get_param(&str, new QToolTip,   "QToolTip");
-    get_param(&str, new QWidget,    "QWidget");
-    get_param(&str, new QCheckBox,  "QCheckBox");
-    get_param(&str, new QGroupBox,  "QGroupBox");
-    get_param(&str, new QRadioButton,   "QRadioButton");
-    get_param(&str, new QMenuBar,   "QMenuBar");
-    get_param(&str, new QMenu,   "QMenu");
-    //get_param(&str, new QAbstractItemView,   "QAbstractItemView");
-    get_param(&str, new QTabWidget,   "QTabWidget");
-    get_param(&str, new QLineEdit,   "QLineEdit");
-    get_param(&str, new QAbstractScrollArea,   "QAbstractScrollArea");
-    get_param(&str, new QScrollBar,   "QScrollBar");
-    get_param(&str, new QTextEdit,   "QTextEdit");
-    get_param(&str, new QPlainTextEdit,   "QPlainTextEdit");
-    get_param(&str, new QHeaderView(Qt::Horizontal),   "QHeaderView");
-    get_param(&str, new QSizeGrip(this),   "QSizeGrip");
-    get_param(&str, new QMainWindow,   "QMainWindow");
-    get_param(&str, new QFrame,   "QFrame");
-    get_param(&str, new QStackedWidget,   "QStackedWidget");
-    get_param(&str, new QToolBar,   "QToolBar");
-    get_param(&str, new QToolButton,   "QToolButton");
-    get_param(&str, new QPushButton,   "QPushButton");
-    get_param(&str, new QComboBox,   "QComboBox");
-    get_param(&str, new QAbstractSpinBox,   "QAbstractSpinBox");
-    get_param(&str, new QLabel,   "QLabel");
-    get_param(&str, new QTabWidget,   "QTabWidget");
-    get_param(&str, new QTabBar,   "QTabBar");
-    get_param(&str, new QDockWidget,   "QDockWidget");
-    get_param(&str, new QTreeView,   "QTreeView");
-    get_param(&str, new QListView,   "QListView");
-    get_param(&str, new QSlider,   "QSlider");
-    get_param(&str, new QTableView,   "QTableView");
-    //get_param(&str, new QTableCornerButton,   "QTableCornerButton");
-    get_param(&str, new QStatusBar,   "QStatusBar");
-    get_param(&str, new QFrame,   "QFrame");
-    get_param(&str, new QSplitter,   "QSplitter");
-    get_param(&str, new QProgressBar,   "QProgressBar");
-    get_param(&str, new QDateEdit,   "QDateEdit");
-
-    emit info(str);
-#endif
-
-#if 0
-    get_color(QPalette::WindowText, "QPalette::WindowText");
-    get_color(QPalette::Button,     "QPalette::Button");
-    get_color(QPalette::Light,      "QPalette::Light");
-    get_color(QPalette::Text,       "QPalette::Text");
-    get_color(QPalette::BrightText, "QPalette::BrightText");
-    get_color(QPalette::ButtonText, "QPalette::ButtonText");
-    get_color(QPalette::Base,       "QPalette::Base");
-    get_color(QPalette::Window,     "QPalette::Window");
-    get_color(QPalette::Shadow,     "QPalette::Shadow");
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-    //QApplication::setStyle(QStyleFactory::create("Plastique"));
-
-    //messagebox_question("Вопрос", "Шо, опять?");
-    //messagebox_critical("Вопрос", "Шо, опять?");
-    //QMessageBox::question(this, "Вопрос", "Шо, опять?");
 
     return true;
 }

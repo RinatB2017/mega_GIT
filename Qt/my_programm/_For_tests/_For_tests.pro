@@ -15,13 +15,12 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-#DEFINES += LOGO_GL
+DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
-#DEFINES += FLAG_RESIZE
 #
 #DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
+#DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_MENU
 #DEFINES += NO_LOG
@@ -41,9 +40,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += SAVE_WIDGETS_LINEEDIT
 
 #DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2017"
-#DEFINES += "DEMO_MONTH=9"
-#DEFINES += "DEMO_DAY=9"
+#DEFINES += "DEMO_YEAR=2018"
+#DEFINES += "DEMO_MONTH=6"
+#DEFINES += "DEMO_DAY=1"
 
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -76,9 +75,8 @@ LIB_PATH = "../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/icons/digits.pri)
 
-include (src/mymainwindow/mymainwindow.pri)
-
 include ($$LIB_PATH/icons/qmessagebox.pri)
+include (src/mymainwindow/mymainwindow.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

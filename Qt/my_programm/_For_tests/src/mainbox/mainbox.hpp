@@ -30,207 +30,13 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
 class QComboBox;
 class QToolBar;
-//--------------------------------------------------------------------------------
-class Programmer : public QObject
-{
-    Q_OBJECT
-public:
-    enum Language {ASM, C, CPP, PASCAL, FORTRAN, BASIC, JAVA};
-    Q_ENUMS(Language)
-};
-//--------------------------------------------------------------------------------
-class MyThread : public QObject
-{
-    Q_OBJECT
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
-    void finished(void);
-
-public slots:
-    void process(void)
-    {
-        for(int n=0; n<1000; n++)
-        {
-            emit info(QString("info: n=%1").arg(n));
-            emit debug(QString("debug: n=%1").arg(n));
-            emit error(QString("error: n=%1").arg(n));
-            emit trace(QString("trace: n=%1").arg(n));
-        }
-        emit finished();
-    }
-};
-//--------------------------------------------------------------------------------
-//Синглтон Меерса
-class SingletonClass
-{
-public:
-    int getSomeInfo()
-    {
-        return 10;
-    }
-
-    static SingletonClass &instance()
-    {
-        static SingletonClass instance;
-        return instance;
-    }
-
-private:
-    SingletonClass(){}
-};
-//--------------------------------------------------------------------------------
-class MyDebug
-{
-public:
-    QString &operator << (QString &data)
-    {
-        qDebug() << data;
-        return data;
-    }
-};
-//--------------------------------------------------------------------------------
-class class_C : public QObject
-{
-    Q_OBJECT
-
-public:
-    void xxx(void)
-    {
-        qDebug() << "yes";
-    }
-
-    void send(QByteArray input, QByteArray *output)
-    {
-        emit info("class_C");
-        (*output).append("class_C ");
-        Q_UNUSED(input);
-    }
-
-signals:
-    void info(const QString &);
-
-};
-class class_B : public class_C
-{
-public:
-    void send(QByteArray input, QByteArray *output)
-    {
-        emit info("class_B");
-        (*output).append("class_B ");
-        class_C::send(input, output);
-        Q_UNUSED(input);
-    }
-};
-class class_A : public class_B
-{
-public:
-    void send(QByteArray input, QByteArray *output)
-    {
-        emit info("class_A");
-        (*output).append("class_A ");
-        class_B::send(input, output);
-        Q_UNUSED(input);
-    }
-};
-//--------------------------------------------------------------------------------
-#include <iostream>
-#include <memory>
-
-class IComponent
-{
-public:
-    virtual void operation() = 0;
-    virtual ~IComponent(){}
-};
-
-class Component : public IComponent
-{
-public:
-    virtual void operation()
-    {
-        std::cout<<"World!"<<std::endl;
-    }
-};
-
-class DecoratorOne : public IComponent
-{
-    std::shared_ptr<IComponent> m_component;
-
-public:
-    DecoratorOne(IComponent* component): m_component(component)
-    {
-
-    }
-
-    virtual void operation()
-    {
-        std::cout << ", ";
-        m_component->operation();
-    }
-};
-
-class DecoratorTwo : public IComponent
-{
-    std::shared_ptr<IComponent> m_component;
-
-public:
-    DecoratorTwo(IComponent* component): m_component(component)
-    {
-
-    }
-
-    virtual void operation()
-    {
-        std::cout << "Hello";
-        m_component->operation();
-    }
-};
-//--------------------------------------------------------------------------------
-namespace c0 {
-class class_X
-{
-public:
-    void x(void)
-    {
-        std::cout  << "111" << '\n';
-    }
-};
-}
-
-namespace c1 {
-class class_X
-{
-public:
-    void x(void)
-    {
-        std::cout  << "222" << '\n';
-    }
-};
-}
-//--------------------------------------------------------------------------------
-union LED
-{
-    uint32_t value;
-    struct BODY
-    {
-        uint8_t alpha;
-        uint8_t B;
-        uint8_t G;
-        uint8_t R;
-    } body;
-};
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -249,8 +55,6 @@ public slots:
     bool test_3(void);
     bool test_4(void);
     bool test_5(void);
-
-    void thread_is_finished(void);
 
 private:
     enum {
@@ -285,11 +89,6 @@ private:
                             const QString &tool_tip);
 
     void createTestBar(void);
-
-    void create_thread(void);
-
-    void get_param(QString *str, QWidget *widget, QString w_name);
-    void get_color(QPalette::ColorRole role, QString r_name);
 
 protected:
     void changeEvent(QEvent *event);

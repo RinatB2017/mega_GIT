@@ -181,7 +181,17 @@ private slots:
     void dockLocationChanged(Qt::DockWidgetArea area);
 #endif
 
+#ifdef  DEMO
+    void kill(void);
+#endif
+
 private:
+    enum {
+        LIGHT_THEME = 0,
+        DARK_THEME,
+        BLUE_THEME
+    };
+
     QList<s_menu *> menus;
     QList<s_action *> actions;
 
@@ -282,6 +292,8 @@ private:
     LogDock *ld = 0;
     void createLog(void);
 #endif
+
+    int state_theme = DARK_THEME;
 
 #ifndef NO_LOG
     QAction *a_is_shows_info = 0;

@@ -366,11 +366,16 @@ void MainBox::read_display_data(QByteArray ba)
             data = QByteArray::fromHex(display_data_rs232);
             if(data.length() == 5)
             {
-                control_display->set_color((int)data.at(0),
-                                           (int)data.at(1),
-                                           (uint8_t)data.at(2),
-                                           (uint8_t)data.at(3),
-                                           (uint8_t)data.at(4));
+                int x = (int)data.at(0);
+                int y = (int)data.at(1);
+                uint8_t r = (uint8_t)data.at(2);
+                uint8_t g = (uint8_t)data.at(3);
+                uint8_t b = (uint8_t)data.at(4);
+                if((r!=0) && (g!=0) && (b!=0))
+                {
+                    emit info("found");
+                }
+                control_display->set_color(x, y, r, g, b);
             }
             else
             {

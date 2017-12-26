@@ -50,10 +50,10 @@ union LED
   uint32_t value;
   struct BODY
   {
-    uint8_t R;
-    uint8_t G;
-    uint8_t B;
     uint8_t alpha;
+    uint8_t B;
+    uint8_t G;
+    uint8_t R;
   } body;
 };
 
@@ -118,7 +118,7 @@ void PrintHex8(uint8_t data) // prints 8-bit data in hex with leading zeroes
   Serial1.print(tmp);
 }
 //---------------------------------------------------------------
-void draw_led(int x, int y, int color)
+void draw_led(int x, int y, uint32_t color)
 {
 #ifdef USE_DISPLAY
   tft.fillRect(y*size_y, x*size_x, size_y, size_x, color);

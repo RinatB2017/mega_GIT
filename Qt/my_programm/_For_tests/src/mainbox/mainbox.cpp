@@ -270,6 +270,16 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    LED led;
+    led.value = 0x01020304;
+
+    emit info(QString("R %1").arg(led.body.R));
+    emit info(QString("G %1").arg(led.body.G));
+    emit info(QString("B %1").arg(led.body.B));
+    emit info(QString("alpha %1").arg(led.body.alpha));
+#endif
+
+#if 0
     const QMetaObject &mo = Programmer::staticMetaObject;
     int index = mo.indexOfEnumerator("Language");
     QMetaEnum me = mo.enumerator(index);

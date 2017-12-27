@@ -77,6 +77,10 @@
         <translation>Темы</translation>
     </message>
     <message>
+        <source>System theme</source>
+        <translation>Системная тема</translation>
+    </message>
+    <message>
         <source>Light theme</source>
         <translation>Светлая тема</translation>
     </message>

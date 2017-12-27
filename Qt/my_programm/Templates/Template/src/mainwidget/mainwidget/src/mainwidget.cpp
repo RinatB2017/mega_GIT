@@ -30,7 +30,9 @@ MainWidget::MainWidget(QObject *parent)
 //--------------------------------------------------------------------------------
 MainWidget::~MainWidget()
 {
+#ifdef QT_DEBUG
     qDebug() << "~MainWidget()";
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWidget::get(void)

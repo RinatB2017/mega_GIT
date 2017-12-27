@@ -168,6 +168,7 @@ private slots:
     void slot_is_shows_trace(bool state);
 #endif
 
+    void set_system_palette(void);
     void set_blue_palette(void);
     void set_dark_palette(void);
     void set_light_palette(void);
@@ -187,7 +188,8 @@ private slots:
 
 private:
     enum {
-        LIGHT_THEME = 0,
+        SYSTEM_THEME = 0,
+        LIGHT_THEME,
         DARK_THEME,
         BLUE_THEME
     };
@@ -303,6 +305,7 @@ private:
 
     QMenu *m_themes = 0;
 
+    QAction *a_system_theme = 0;
     QAction *a_light_theme = 0;
     QAction *a_dark_theme = 0;
     QAction *a_blue_theme = 0;

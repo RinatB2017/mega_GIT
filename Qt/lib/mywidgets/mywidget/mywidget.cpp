@@ -267,13 +267,17 @@ bool MyWidget::is_slot_exists(QWidget *obj, const char *slot_sign)
 //--------------------------------------------------------------------------------
 void MyWidget::load_config(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "load_config";
+#endif
     load_widgets("MyWidget");
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_config(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "save_config";
+#endif
     save_widgets("MyWidget");
 }
 //--------------------------------------------------------------------------------

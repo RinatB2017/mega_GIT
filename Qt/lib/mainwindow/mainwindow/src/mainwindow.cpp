@@ -42,7 +42,9 @@ MainWindow::MainWindow(QMainWindow *parent)
 //--------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
+#ifdef QT_DEBUG
     qDebug() << "~MainWindow()";
+#endif
 
 #ifndef NO_LOG
     MyWidget::set_param("Main", "flag_show_info",   a_is_shows_info->isChecked());
@@ -331,18 +333,22 @@ void MainWindow::createMenus(void)
     m_themes->setStatusTip(tr("Themes"));
     m_themes->setToolTip(tr("Themes"));
 
+    a_system_theme = new QAction(m_themes);
     a_light_theme = new QAction(m_themes);
     a_dark_theme = new QAction(m_themes);
     a_blue_theme = new QAction(m_themes);
 
+    a_system_theme->setText(tr("System theme"));
     a_light_theme->setText(tr("Light theme"));
     a_dark_theme->setText(tr("Dark theme"));
     a_blue_theme->setText(tr("Blue theme"));
 
+    m_themes->addAction(a_system_theme);
     m_themes->addAction(a_light_theme);
     m_themes->addAction(a_dark_theme);
     m_themes->addAction(a_blue_theme);
 
+    connect(a_system_theme,     SIGNAL(triggered(bool)),    this,   SLOT(set_system_palette()));
     connect(a_light_theme,      SIGNAL(triggered(bool)),    this,   SLOT(set_light_palette()));
     connect(a_dark_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_dark_palette()));
     connect(a_blue_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_blue_palette()));
@@ -474,6 +480,7 @@ void MainWindow::updateText(void)
     m_themes->setStatusTip(tr("Themes"));
     m_themes->setToolTip(tr("Themes"));
 
+    a_system_theme->setText(tr("System theme"));
     a_light_theme->setText(tr("Light theme"));
     a_dark_theme->setText(tr("Dark theme"));
     a_blue_theme->setText(tr("Blue theme"));
@@ -679,9 +686,12 @@ void MainWindow::load_main(void)
 #endif
 
     //---
-    state_theme = settings->value("Theme",  DARK_THEME).toInt();
+    state_theme = settings->value("Theme",  SYSTEM_THEME).toInt();
     switch(state_theme)
     {
+    case SYSTEM_THEME:
+        set_system_palette();
+        break;
     case LIGHT_THEME:
         set_light_palette();
         break;
@@ -1329,6 +1339,13 @@ void MainWindow::slot_is_shows_trace(bool state)
     emit signal_is_shows_trace(state);
 }
 #endif
+//--------------------------------------------------------------------------------
+void MainWindow::set_system_palette(void)
+{
+    state_theme = SYSTEM_THEME;
+
+    qApp->setPalette(style()->standardPalette());
+}
 //--------------------------------------------------------------------------------
 void MainWindow::set_blue_palette(void)
 {

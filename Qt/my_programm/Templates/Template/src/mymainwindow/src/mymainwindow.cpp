@@ -93,6 +93,8 @@ void MyMainWindow::messageHandler(QtMsgType type,
 //--------------------------------------------------------------------------------
 MyMainWindow::~MyMainWindow()
 {
-    qDebug() << "~NyMainWindow()";
+#ifdef QT_DEBUG
+    qDebug() << "~MyMainWindow()";
+#endif
 }
 //--------------------------------------------------------------------------------

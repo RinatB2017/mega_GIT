@@ -56,6 +56,8 @@ private slots:
     void read_data(QByteArray ba);
     void update(void);
 
+    void test(void);
+
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;

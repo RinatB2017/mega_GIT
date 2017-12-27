@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>849</width>
-    <height>169</height>
+    <width>917</width>
+    <height>212</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
            <string>Power</string>
           </property>
           <property name="icon">
-           <iconset resource="../../mainwindow/images.qrc">
+           <iconset resource="../../../lib/mainwindow/mainwindow/mw_images.qrc">
             <normaloff>:/mainwindow/system-shutdown.png</normaloff>:/mainwindow/system-shutdown.png</iconset>
           </property>
           <property name="iconSize">
@@ -255,7 +255,7 @@
   <tabstop>btnData7</tabstop>
  </tabstops>
  <resources>
-  <include location="../../mainwindow/images.qrc"/>
+  <include location="../../../lib/mainwindow/mainwindow/mw_images.qrc"/>
  </resources>
  <connections/>
 </ui>

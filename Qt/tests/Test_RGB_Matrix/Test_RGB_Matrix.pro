@@ -36,6 +36,7 @@ HEADERS += \
     mainbox.hpp \
     palette.hpp \
     display.hpp \
+    font-5x7.hpp \
     diod.hpp
 
 SOURCES += \
@@ -58,6 +59,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/crc/crc.pri)
 
 include ($$LIB_PATH/serial5/serial5.pri)
+include ($$LIB_PATH/time/time.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

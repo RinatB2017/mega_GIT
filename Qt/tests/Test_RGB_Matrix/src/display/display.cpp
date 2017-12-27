@@ -161,7 +161,10 @@ bool Display::set_color(int x,
         return false;
     }
 
-    diod[x][y]->set_color(color);
+    if(diod[x][y])
+    {
+        diod[x][y]->set_color(color);
+    }
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -193,9 +196,12 @@ bool Display::set_color(int x,
         return false;
     }
 
-    diod[x][y]->set_color(R_value,
-                          G_value,
-                          B_value);
+    if(diod[x][y])
+    {
+        diod[x][y]->set_color(R_value,
+                              G_value,
+                              B_value);
+    }
     return true;
 }
 //--------------------------------------------------------------------------------

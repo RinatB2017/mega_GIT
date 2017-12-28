@@ -83,10 +83,8 @@ class GrapherBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit GrapherBox(QWidget *parent);
+    GrapherBox(QWidget *parent);
     ~GrapherBox();
-
-    void updateText(void);
 
     void set_axis_scale_x(double new_axis_X_min, double new_axis_X_max);
     void set_axis_scale_y(double new_axis_Y_min, double new_axis_Y_max);
@@ -262,8 +260,7 @@ private:
 
     void test_get_info(void);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

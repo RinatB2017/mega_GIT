@@ -95,6 +95,8 @@ private:
 
     bool convert_simvol_to_int(int s, int *i_s);
     bool check_coordinate(const QString &coord, int *x, int *y);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // CHESSBOARD_HPP

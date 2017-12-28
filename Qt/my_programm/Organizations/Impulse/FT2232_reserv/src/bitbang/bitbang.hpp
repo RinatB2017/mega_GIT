@@ -31,7 +31,7 @@ class BitBang : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit BitBang(QWidget *parent = 0);
+    BitBang(QWidget *parent = 0);
     ~BitBang();
 
     bool open(void);
@@ -59,6 +59,9 @@ private:
     void ConfigureMPSSE(void);
     void print_error(const QString &function,
                      FT_STATUS status);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // BITBANG_HPP

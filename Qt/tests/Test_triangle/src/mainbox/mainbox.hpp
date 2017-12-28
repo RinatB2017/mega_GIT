@@ -38,9 +38,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
     void test(void);
 
@@ -65,6 +62,7 @@ private:
 
     bool calc(double A, double B, double C, double angle_grad);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -28,7 +28,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -43,8 +43,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
     int get_direction(int pos_x, int pos_y);
@@ -85,10 +85,11 @@ private:
     void move_top(QObject *obj);
     void move_bottom(QObject *obj);
 
+    void updateText(void);
+
 protected:
-    virtual bool eventFilter(QObject *obj, QEvent *event);
-    virtual void resizeEvent (QResizeEvent * event);
-    void changeEvent(QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
+    void resizeEvent (QResizeEvent * event);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

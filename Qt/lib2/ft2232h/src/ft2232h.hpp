@@ -88,6 +88,8 @@ private:
     void ConfigureMPSSE(void);
 
     void list_devices(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // FT2232_HPP

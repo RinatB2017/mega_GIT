@@ -41,7 +41,7 @@ class AT93C56 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit AT93C56(I2C_Freq freq, QWidget *parent = 0);
+    AT93C56(I2C_Freq freq, QWidget *parent = 0);
     ~AT93C56();
 
     void HighSpeedSetI2CStart(void);
@@ -69,6 +69,9 @@ private:
     FT2232H *ft2232h = 0;
     unsigned char  data;
     unsigned short addr;
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // I2C_HPP

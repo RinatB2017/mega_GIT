@@ -77,9 +77,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-public slots:
-    void updateText(void);
-
 private slots:
     void test(void);
 
@@ -104,8 +101,7 @@ private:
     void add_data_4byte(unsigned int index_curve, int32_t data);
     void add_data_float(unsigned int index_curve, float data);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

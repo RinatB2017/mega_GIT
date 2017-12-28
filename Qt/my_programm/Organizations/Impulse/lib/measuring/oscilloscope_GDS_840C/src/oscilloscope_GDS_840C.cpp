@@ -2884,3 +2884,8 @@ bool Oscilloscope_GDS_840C::test_all(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+void Oscilloscope_GDS_840C::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------

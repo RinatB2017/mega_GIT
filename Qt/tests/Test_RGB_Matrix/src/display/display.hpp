@@ -74,6 +74,8 @@ private:
     int max_y = 0;
 
     bool flag_active = false;
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

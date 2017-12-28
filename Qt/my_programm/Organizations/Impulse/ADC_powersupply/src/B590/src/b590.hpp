@@ -43,7 +43,7 @@ class B590 : public MyWidget
     Q_OBJECT
 
 public:
-    explicit B590(QWidget *parent);
+    B590(QWidget *parent);
     ~B590();
 
 private slots:
@@ -85,8 +85,7 @@ private:
     uint16_t convert_ADC_U_to_mV(unsigned long ADC_value);
     uint16_t convert_ADC_I_to_mA(unsigned long ADC_value);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

@@ -67,6 +67,8 @@ private:
 
     void print_error(const QString &function,
                      FT_STATUS status);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // HD44780_HPP

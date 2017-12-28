@@ -171,8 +171,7 @@ private:
                          int color_G,
                          int color_B);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

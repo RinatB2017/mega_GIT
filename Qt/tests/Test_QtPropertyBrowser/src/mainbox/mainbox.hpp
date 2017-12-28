@@ -101,9 +101,10 @@ private:
 
     void createTestBar(void);
 
+    void updateText(void);
+
 protected:
     void closeEvent(QCloseEvent *event);
-    void changeEvent(QEvent *event);
 
 };
 //--------------------------------------------------------------------------------

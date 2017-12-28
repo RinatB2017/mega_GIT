@@ -39,23 +39,22 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
 private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
 
     void init(void);
 
     void createTestBar(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

@@ -44,8 +44,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -85,8 +85,7 @@ private:
     void create_chessboard(void);
     void create_engine(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

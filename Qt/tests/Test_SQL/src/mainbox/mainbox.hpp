@@ -42,9 +42,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
     void test(void);
 
@@ -69,6 +66,8 @@ private:
 
     void load_setting(void);
     void save_setting(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

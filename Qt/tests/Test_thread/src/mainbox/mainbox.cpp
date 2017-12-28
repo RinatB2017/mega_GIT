@@ -151,17 +151,8 @@ void MainBox::set_sec(unsigned char sec)
     ui->lcd_sec->display(QString("%1").arg(sec, 2, 10, QChar('0')));
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

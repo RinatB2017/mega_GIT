@@ -1007,17 +1007,8 @@ void B590::get_UI(void)
     grapher->add_curve_data(curve_T, temp);
 }
 //--------------------------------------------------------------------------------
-void B590::changeEvent(QEvent *event)
+void B590::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

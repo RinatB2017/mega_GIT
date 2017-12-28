@@ -42,11 +42,7 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
-    void updateText(void);
     void startBroadcasting(void);
     void broadcastDatagram(void);
 
@@ -66,6 +62,8 @@ private:
     void createTestBar(void);
 
     void init(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

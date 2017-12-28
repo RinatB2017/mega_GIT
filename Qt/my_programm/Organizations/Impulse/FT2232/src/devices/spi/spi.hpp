@@ -35,7 +35,7 @@ class SPI : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit SPI(I2C_Freq freq, QWidget *parent = 0);
+    SPI(I2C_Freq freq, QWidget *parent = 0);
 
     BOOL open(void);
     BOOL close(void);
@@ -54,6 +54,8 @@ private:
     BOOL SPI_Initial(DWORD dwClockDivisor);
     BOOL SPI_WriteByte2RandomAddr(WORD address, WORD bdata);
     BOOL SPI_ReadByteRandomAddr(WORD address, WORD* bdata);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // AT93C56_HPP

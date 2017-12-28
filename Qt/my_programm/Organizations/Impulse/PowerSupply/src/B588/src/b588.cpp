@@ -599,17 +599,8 @@ void B588::clear_profile(void)
     emit info("clear_profile");
 }
 //--------------------------------------------------------------------------------
-void B588::changeEvent(QEvent *event)
+void B588::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

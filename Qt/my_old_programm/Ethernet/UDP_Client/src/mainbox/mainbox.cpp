@@ -145,20 +145,6 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
-    emit debug("updateText()");
-}
-//--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

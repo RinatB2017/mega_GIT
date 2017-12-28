@@ -36,14 +36,10 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
-    void updateText(void);
     void processPendingDatagrams(void);
     void get_data(const QByteArray &data);
 
@@ -58,6 +54,7 @@ private:
 
     void init(void);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

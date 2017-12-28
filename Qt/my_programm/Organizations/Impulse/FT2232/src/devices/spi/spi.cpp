@@ -425,3 +425,8 @@ BOOL SPI::read(WORD address, WORD* bdata)
     return SPI_ReadByteRandomAddr(address, bdata);
 }
 //--------------------------------------------------------------------------------
+void SPI::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------

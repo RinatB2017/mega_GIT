@@ -76,8 +76,7 @@ private:
     void load_setting(void);
     void save_setting(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

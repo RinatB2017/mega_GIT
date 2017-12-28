@@ -264,20 +264,6 @@ void MainBox::run(void)
     msgInfo(tr("Измерения закончены!"));
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 QString MainBox::prepare_string(const QString &prefix,
                                 float value,
                                 float limit,
@@ -437,5 +423,10 @@ void MainBox::load_setting(void)
 void MainBox::save_setting(void)
 {
 
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

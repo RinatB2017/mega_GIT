@@ -89,10 +89,7 @@ private:
                             const QString &tool_tip);
 
     void createTestBar(void);
-
-protected:
-    void changeEvent(QEvent *event);
-    bool eventFilter(QObject *, QEvent *e);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

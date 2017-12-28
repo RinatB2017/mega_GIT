@@ -48,6 +48,8 @@ private:
     int width;
     int height;
 
+    void updateText(void);
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

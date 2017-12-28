@@ -1592,20 +1592,6 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 void MainBox::prepare_steps(void)
 {
     emit info(tr("Подготовка шагов калибровки"));
@@ -10230,4 +10216,9 @@ void MainBox::fake(void)
     multimeter->set_fake_channel(channel->value());
 }
 #endif
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
+}
 //--------------------------------------------------------------------------------

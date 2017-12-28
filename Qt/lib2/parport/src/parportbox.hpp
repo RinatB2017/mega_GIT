@@ -69,19 +69,17 @@ class ParportBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit ParportBox(QWidget *parent = 0);
+    ParportBox(QWidget *parent = 0);
     ~ParportBox();
 
 private slots:
     void pressed();
     void drawData();
     void on_powerButton_toggled(bool checked);
-    void log(const QString &data);
-    void updateText(void);
 
 private:
-    Ui::ParportBox *ui;
-    QWidget *parent;
+    Ui::ParportBox *ui = 0;
+    QWidget *parent = 0;
     QMap <QPushButton *, int> keymap;
 #if LEDPANEL_ON
     LedPanel *ledPanel8;
@@ -103,6 +101,9 @@ private:
     void connects(void);
     void set_timers(void);
     int open_parport(void);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif

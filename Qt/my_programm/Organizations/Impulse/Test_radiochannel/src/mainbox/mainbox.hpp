@@ -82,8 +82,7 @@ private:
     bool find_device(void);
     bool check_breloque(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

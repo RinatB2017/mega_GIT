@@ -68,3 +68,8 @@ bool Viewer::set_value(int channel, int value)
     return true;
 }
 //--------------------------------------------------------------------------------
+void Viewer::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------

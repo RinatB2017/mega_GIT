@@ -87,11 +87,6 @@ void MainBox::init(void)
     setMinimumSize(640, 480);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
-{
-    plot->setTitle(QObject::tr("generator"));
-}
-//--------------------------------------------------------------------------------
 int MainBox::load(const QString &filename)
 {
     QString line;
@@ -139,20 +134,10 @@ int MainBox::load(const QString &filename)
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        updateText();
-        ui->retranslateUi(this);
-        plot->replot();
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
+    plot->setTitle(QObject::tr("generator"));
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)

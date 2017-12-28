@@ -45,9 +45,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
     void get_proxies_list(void);
     void check_proxies_list(void);
@@ -87,7 +84,7 @@ private:
                      const QString &address);
     bool append_proxy(const QString &ip_and_port);
 
-protected:
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

@@ -114,6 +114,9 @@ private:
 
     void block_this_button(bool state);
     void block_interface(bool state);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif

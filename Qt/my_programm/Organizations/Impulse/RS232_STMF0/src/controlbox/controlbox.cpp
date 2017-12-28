@@ -1592,3 +1592,8 @@ void ControlBox::draw_value(double value)
     display->display(QString("%1").arg(value, 0, 'f', 3));
 }
 //--------------------------------------------------------------------------------
+void ControlBox::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------

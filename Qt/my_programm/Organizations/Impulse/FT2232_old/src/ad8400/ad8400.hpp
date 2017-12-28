@@ -59,6 +59,9 @@ private:
     void ConfigureMPSSE(void);
     void print_error(const QString &function,
                      FT_STATUS status);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // AD8400_HPP

@@ -66,9 +66,10 @@ private:
     void createTestBar(void);
     void prepare_and_show_cards(void);
 
+    void updateText(void);
+
 protected:
     virtual void closeEvent(QCloseEvent *event);
-    virtual void changeEvent(QEvent *event);
 
 };
 //--------------------------------------------------------------------------------

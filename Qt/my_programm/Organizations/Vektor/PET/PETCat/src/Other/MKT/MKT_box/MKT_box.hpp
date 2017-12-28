@@ -145,6 +145,7 @@ private:
 
 protected:
     void changeEvent(QEvent *event);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MKT_box_HPP

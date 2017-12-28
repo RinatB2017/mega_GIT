@@ -135,8 +135,7 @@ private:
 
     void block_interface(bool state);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

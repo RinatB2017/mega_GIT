@@ -60,11 +60,10 @@ class B588 : public MyWidget
     Q_OBJECT
 
 public:
-    explicit B588(QWidget *parent = 0);
+    B588(QWidget *parent = 0);
     ~B588();
 
 private slots:
-    void log(const QString &data);
     void test(void);
 
     void calibration_ADC_U(void);
@@ -192,6 +191,8 @@ private:
     bool wait_temp_30(unsigned char *current_temp);
 
     bool Calibration_remote_control_off(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

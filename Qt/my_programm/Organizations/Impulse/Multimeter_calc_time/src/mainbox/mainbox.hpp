@@ -63,10 +63,10 @@ private:
 #ifdef FAKE
     void createFakeBar(void);
 #endif
+    void updateText(void);
 
 protected:
     void closeEvent(QCloseEvent *event);
-    void changeEvent(QEvent *event);
 
 };
 //--------------------------------------------------------------------------------

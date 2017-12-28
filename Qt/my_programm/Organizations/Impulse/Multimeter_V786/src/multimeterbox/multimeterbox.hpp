@@ -37,7 +37,7 @@ class QToolBar;
 class Multimeter_V786_2;
 
 #ifndef NO_GRAPHER
-    class GrapherBox;
+class GrapherBox;
 #endif
 //--------------------------------------------------------------------------------
 class MultimeterBox : public MyWidget
@@ -45,11 +45,9 @@ class MultimeterBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MultimeterBox(const QString &title,
-                           QWidget *parent = 0);
+    MultimeterBox(const QString &title,
+                  QWidget *parent = 0);
     ~MultimeterBox();
-
-    void updateText(void);
 
 signals:
     void start(void);
@@ -129,6 +127,8 @@ private:
     void prepare_param(void);
 
     void msgError(const QString &message);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MULTIMETERBOX_HPP

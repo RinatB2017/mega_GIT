@@ -34,7 +34,7 @@ class SPI : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit SPI(QWidget *parent = 0);
+    SPI(QWidget *parent = 0);
 
     BOOL open(void);
     BOOL close(void);
@@ -66,6 +66,8 @@ private:
     BOOL SPI_ReadByteRandomAddr(FT_HANDLE ftHandle, WORD address, WORD* bdata);
 
     void print_error(const QString &function, FT_STATUS status);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // SPI_HPP

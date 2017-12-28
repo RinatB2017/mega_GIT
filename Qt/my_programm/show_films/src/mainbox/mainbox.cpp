@@ -278,22 +278,9 @@ void MainBox::change_player(void)
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
+    ui->retranslateUi(this);
+
     change_player_action->setText(QObject::tr("change player"));
     save_action->setText(QObject::tr("save"));
-}
-//--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        updateText();
-        break;
-
-    default:
-        break;
-    }
 }
 //--------------------------------------------------------------------------------

@@ -48,9 +48,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-public slots:
-    void updateText(void);
-
 private slots:
     void calc(double voltage);
     void updateGraphics(void);
@@ -74,8 +71,7 @@ private:
     int getPositionStep(void);
     int getSizeStep(void);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

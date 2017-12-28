@@ -71,7 +71,7 @@ class OscilloscopeBox : public MyWidget
 public:
     OscilloscopeBox(QWidget *parent = 0);
     ~OscilloscopeBox();
-    void updateText(void);
+
     void test(void);
 
 public slots:
@@ -146,8 +146,7 @@ private:
     void set_zoom(bool x_state, bool y_state);
     void set_panning(bool x_state, bool y_state);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

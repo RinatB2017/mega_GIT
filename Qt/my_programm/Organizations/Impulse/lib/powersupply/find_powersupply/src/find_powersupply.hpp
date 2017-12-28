@@ -50,6 +50,7 @@ private:
     Powersupply_B590 *powersupply = 0;
 
     void init(void);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

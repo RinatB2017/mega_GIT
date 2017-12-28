@@ -69,11 +69,6 @@ void ParportBox::connect_log(void)
         connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
     }
 }
-//--------------------------------------------------------------------------------
-void ParportBox::log(const QString &data)
-{
-    qDebug() << data;
-}
 //================================================================================
 void ParportBox::initTimers()
 {

@@ -32,7 +32,8 @@ class Indicator : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Indicator(I2C_Freq freq, QWidget *parent = 0);
+    Indicator(I2C_Freq freq, QWidget *parent = 0);
+
     void run(void);
     void stop(void);
 
@@ -48,6 +49,7 @@ private:
 
     void init(void);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // INDICATOR_HPP

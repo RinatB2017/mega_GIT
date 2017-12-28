@@ -35,7 +35,7 @@ class GrapherCurveBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit GrapherCurveBox(QWidget *parent);
+    GrapherCurveBox(QWidget *parent);
 
     void set_color(int r, int g, int b);
     void set_caption(const QString &caption);

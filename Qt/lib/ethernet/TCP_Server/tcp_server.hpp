@@ -39,6 +39,7 @@ private:
     QTcpServer *tcpServer = 0;
     QTcpSocket *clientConnection = 0;
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

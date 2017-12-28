@@ -40,20 +40,15 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
 #ifdef QT_DEBUG
     int xxx(int x);
 #endif
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void message(const QString &);
-
     void block_widget(bool);
 
 private slots:
@@ -91,8 +86,7 @@ private:
 
     void createTestBar(void);
 
-protected:
-    virtual void changeEvent(QEvent *event);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

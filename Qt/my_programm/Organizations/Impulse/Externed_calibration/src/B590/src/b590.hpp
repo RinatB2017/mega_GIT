@@ -96,6 +96,9 @@ private:
     void wait_msec(int timeout_msec);
 
     void block_interface(bool state);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // B590_HPP

@@ -66,7 +66,7 @@ class Oscilloscope_GDS_840C : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Oscilloscope_GDS_840C(QWidget *parent = 0);
+    Oscilloscope_GDS_840C(QWidget *parent = 0);
 
     enum Channel {
         A = 1,
@@ -430,6 +430,8 @@ private:
     bool send(QByteArray input,
               QByteArray *output,
               bool no_answer = false);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

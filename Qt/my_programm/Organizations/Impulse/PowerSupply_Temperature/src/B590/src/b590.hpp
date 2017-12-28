@@ -83,8 +83,7 @@ private:
     uint16_t convert_ADC_U_to_mV(int32_t ADC_value);
     uint16_t convert_ADC_I_to_mA(int32_t ADC_value);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

@@ -600,20 +600,6 @@ void MainBox::test_MCP4922(void)
     emit info("test_MCP4922 end");
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 I2C_Freq MainBox::get_i2c_freq(void)
 {
     if(ui->rb_400->isChecked()) return I2C_400kHz;
@@ -630,5 +616,10 @@ void MainBox::load_setting(void)
 void MainBox::save_setting(void)
 {
 
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

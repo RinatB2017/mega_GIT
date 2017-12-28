@@ -56,7 +56,6 @@ public:
     ~SerialBox5_lite();
 
     bool isOpen(void);
-    void updateText(void);
 
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
@@ -130,8 +129,7 @@ private slots:
 
     void timer_stop(void);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALBOX_HPP

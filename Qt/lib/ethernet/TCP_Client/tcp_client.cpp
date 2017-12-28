@@ -96,3 +96,8 @@ QByteArray TCP_Client::input(const QByteArray &data)
     return send_data(data);
 }
 //--------------------------------------------------------------------------------
+void TCP_Client::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------

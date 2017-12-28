@@ -34,7 +34,7 @@ class BitBang : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit BitBang(I2C_Freq freq, QWidget *parent = 0);
+    BitBang(I2C_Freq freq, QWidget *parent = 0);
     ~BitBang();
 
     bool open(void);
@@ -46,6 +46,9 @@ public slots:
 
 private:
     FT2232H *ft2232h = 0;
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // BITBANG_HPP

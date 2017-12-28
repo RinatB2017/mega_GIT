@@ -72,8 +72,7 @@ private:
     QVector<QPointF> circle(float x, float y, float r);
     QVector<QLine> circle_line(float x, float y, float r);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

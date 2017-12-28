@@ -58,9 +58,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-public slots:
-    void updateText(void);
-
 private slots:
     void raw_data( QByteArray );
 
@@ -80,8 +77,7 @@ private:
     void drawing(void);
     void append(double value);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

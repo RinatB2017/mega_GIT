@@ -34,11 +34,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
-
-protected:
-    void changeEvent(QEvent *e);
 
 public slots:
     QString get_md5(const QString &filename);
@@ -51,6 +48,9 @@ private:
     QWidget *parent = 0;
 
     void init(void);
+
+protected:
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

@@ -310,20 +310,6 @@ void MainBox::move_down(void)
     painter.drawPixmap(100, h, pix, 0, 0, w/2, h/2);
 #endif
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 void MainBox::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
@@ -346,5 +332,10 @@ void MainBox::paintEvent(QPaintEvent *event)
     painter.drawPixmap(0, 0, p, x, y, width(), height());
 
     Q_UNUSED(event)
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

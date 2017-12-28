@@ -111,8 +111,7 @@ private:
 
     bool erase_eerpom(int VID, int PID);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

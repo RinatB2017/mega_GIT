@@ -35,7 +35,7 @@ class MCP4922 : public MyWidget
     Q_OBJECT
 public:
     MCP4922(I2C_Freq freq, QWidget *parent = 0);
-    virtual ~MCP4922();
+    ~MCP4922();
 
     BOOL init(void);
     FT_STATUS set_voltage(float value);
@@ -51,6 +51,9 @@ private:
 
     void SPI_CSEnable(void);
     void SPI_CSDisable(void);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MCP4922_HPP

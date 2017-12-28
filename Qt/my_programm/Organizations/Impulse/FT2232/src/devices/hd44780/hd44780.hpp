@@ -49,6 +49,9 @@ private:
     void write(unsigned char data);
 
     void strobe(void);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // HD44780_HPP

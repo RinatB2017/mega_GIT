@@ -337,6 +337,9 @@ private:
 
     double convert_uA_to_uV(double value_uA, double R_om);
     double convert_uV_to_uA(double value_uV, double R_om);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif

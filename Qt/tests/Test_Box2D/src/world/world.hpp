@@ -105,6 +105,8 @@ private:
 
     float pixel_to_pt(float value);
 
+    void updateText(void);
+
 protected:
     void paintEvent(QPaintEvent *);
 

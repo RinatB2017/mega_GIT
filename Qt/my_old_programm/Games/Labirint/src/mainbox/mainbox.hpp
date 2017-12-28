@@ -49,8 +49,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -104,9 +104,10 @@ private:
     void block_this_button(bool state);
     void block_interface(bool state);
 
+    void updateText(void);
+
 protected:
-    virtual bool eventFilter(QObject *obj, QEvent *event);
-    virtual void changeEvent(QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

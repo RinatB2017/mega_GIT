@@ -42,7 +42,7 @@ class B588 : public MyWidget
     Q_OBJECT
 
 public:
-    explicit B588(QWidget *parent);
+    B588(QWidget *parent);
     ~B588();
 
 private slots:
@@ -75,8 +75,7 @@ private:
 
     void correct_temperature(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

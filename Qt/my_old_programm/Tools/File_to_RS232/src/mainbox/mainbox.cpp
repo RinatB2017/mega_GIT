@@ -193,6 +193,9 @@ void MainBox::load_file(const QString &filename)
 void MainBox::updateText(void)
 {
     int index;
+
+    ui->retranslateUi(this);
+
     ui->btnPower->setText(ui->btnPower->isChecked() ? tr("stop") : tr("start"));
 
     index = ui->cb_append->currentIndex();
@@ -205,21 +208,6 @@ void MainBox::updateText(void)
                             << tr("0x0A")
                             << tr("0x0D 0x0A") );
     ui->cb_append->setCurrentIndex(index);
-}
-//--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        updateText();
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)

@@ -24,7 +24,7 @@ class Generator_Curve : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Generator_Curve(QWidget *parent = 0);
+    Generator_Curve(QWidget *parent = 0);
     
 signals:
     void send(const QByteArray &data);
@@ -37,7 +37,6 @@ private slots:
     void send_4_bytes(void);
     void send_2_bytes(void);
 
-    void updateText(void);
     void update_values(void);
 
     void gen_sinus(void);
@@ -48,8 +47,8 @@ private slots:
     void start(bool state);
 
 private:
-    QWidget *parent;
-    QTimer *timer;
+    QWidget *parent = 0;
+    QTimer *timer = 0;
     QSlider *sliders[MAX_SLIDER];
     int values[MAX_SLIDER];
     int index;
@@ -70,8 +69,7 @@ private:
     void load_setting(void);
     void save_setting(void);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

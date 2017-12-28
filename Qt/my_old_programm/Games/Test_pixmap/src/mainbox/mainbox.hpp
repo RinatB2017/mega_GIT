@@ -26,7 +26,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -40,8 +40,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -74,10 +74,11 @@ private:
 
     void createTestBar(void);
 
+    void updateText(void);
+
 protected:
-    virtual void changeEvent(QEvent *event);
-    virtual void keyPressEvent(QKeyEvent *event);
-    virtual void paintEvent (QPaintEvent * event);
+    void keyPressEvent(QKeyEvent *event);
+    void paintEvent (QPaintEvent * event);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -48,7 +48,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
 signals:
@@ -85,7 +85,6 @@ private:
     void updateText(void);
 
 protected:
-    void changeEvent(QEvent *e);
     bool eventFilter(QObject *obj, QEvent *event);
     void resizeEvent(QResizeEvent *event);
 

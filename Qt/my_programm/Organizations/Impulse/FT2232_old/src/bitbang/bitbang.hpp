@@ -59,6 +59,8 @@ private:
     void ConfigureMPSSE(void);
     void print_error(const QString &function,
                      FT_STATUS status);
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // BITBANG_HPP

@@ -162,17 +162,3 @@ void MainBox::updateText()
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        updateText();
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------

@@ -34,7 +34,7 @@ class AD8400 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit AD8400(I2C_Freq freq, QWidget *parent = 0);
+    AD8400(I2C_Freq freq, QWidget *parent = 0);
 
     void test(void);
 
@@ -60,6 +60,8 @@ private:
     void ConfigureMPSSE(void);
     void print_error(const QString &function,
                      FT_STATUS status);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // AD8400_HPP

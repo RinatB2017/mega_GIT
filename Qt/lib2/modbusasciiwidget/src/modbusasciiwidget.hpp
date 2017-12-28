@@ -45,7 +45,7 @@ class ModbusAsciiWidget : public MyWidget
     Q_OBJECT
 
 public:
-    explicit ModbusAsciiWidget(QWidget *parent = 0);
+    ModbusAsciiWidget(QWidget *parent = 0);
 
 signals:
     void get_data(const DATA &);
@@ -75,6 +75,9 @@ private:
 
     void init(void);
     bool processing(void);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MODBUSASCIIWIDGET_HPP

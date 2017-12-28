@@ -40,7 +40,7 @@ class WebCamera : public MyWidget
     Q_OBJECT
 
 public:
-    explicit WebCamera(QWidget *parent = 0);
+    WebCamera(QWidget *parent = 0);
     ~WebCamera();
 
 private slots:
@@ -60,7 +60,7 @@ private slots:
     void set_autofocus(bool state);
 
 private:
-    Ui::WebCamera *ui;
+    Ui::WebCamera *ui = 0;
 
     int mCameraEventId;
 
@@ -82,6 +82,8 @@ private:
     void show_image_hw(void);
 
     bool searchObjectByTemplate(QString srcImgName, QString templImgName, QRect *rect);
+
+    void updateText(void);
 
 protected:
     void timerEvent(QTimerEvent *);

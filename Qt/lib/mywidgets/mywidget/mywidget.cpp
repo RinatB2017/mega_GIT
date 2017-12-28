@@ -1277,6 +1277,20 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
     return tool_button;
 }
 //--------------------------------------------------------------------------------
+void MyWidget::changeEvent(QEvent *event)
+{
+    QWidget::changeEvent(event);
+    switch (event->type())
+    {
+    case QEvent::LanguageChange:
+        updateText();
+        break;
+
+    default:
+        break;
+    }
+}
+//--------------------------------------------------------------------------------
 #ifndef BLOCK_WHEEL
 bool MyWidget::eventFilter(QObject*, QEvent* event)
 {

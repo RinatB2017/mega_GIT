@@ -112,20 +112,6 @@ void B590::init(void)
     connect(ui->btn_find_device, SIGNAL(clicked()), SLOT(find_device()));
 }
 //--------------------------------------------------------------------------------
-void B590::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 void B590::measuring(bool state)
 {
     if(state)
@@ -371,5 +357,10 @@ uint16_t B590::convert_ADC_I_to_mA(int32_t ADC_value)
     }
     return 0xFFFF;
 #endif
+}
+//--------------------------------------------------------------------------------
+void B590::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

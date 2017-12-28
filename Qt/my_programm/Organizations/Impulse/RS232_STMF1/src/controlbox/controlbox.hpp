@@ -54,7 +54,7 @@ class ControlBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit ControlBox(QWidget *parent = 0);
+    ControlBox(QWidget *parent = 0);
     ~ControlBox();
 
     void print_last_error(void);
@@ -164,6 +164,9 @@ private:
     QByteArray convert_data_to_ascii(QByteArray data);
 
     int check_len_and_crc8(int len);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // CONTROLBOX_HPP

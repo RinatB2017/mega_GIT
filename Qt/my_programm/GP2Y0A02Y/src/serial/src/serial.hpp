@@ -53,6 +53,8 @@ private:
 
     QString convert_data_to_ascii(uint8_t data);
     uint8_t convert_ascii_to_value(char hi, char lo);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // SERIAL_HPP

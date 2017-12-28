@@ -85,8 +85,7 @@ private:
     void createSenderBar(void);
     void createSysLog_dock(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

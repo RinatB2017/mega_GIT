@@ -115,17 +115,8 @@ void MainBox::test(void)
     emit info("test");
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

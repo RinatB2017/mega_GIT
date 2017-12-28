@@ -94,8 +94,7 @@ private:
 
     void createTestBar(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

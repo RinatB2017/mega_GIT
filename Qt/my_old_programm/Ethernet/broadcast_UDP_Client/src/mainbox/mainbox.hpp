@@ -22,7 +22,7 @@
 #define MAINBOX_H
 //--------------------------------------------------------------------------------
 #include <QWidget>
-
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -39,11 +39,7 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
-    void updateText(void);
     void send(void);
 
 private:
@@ -51,6 +47,7 @@ private:
     UDP_Client *client = 0;
 
     void init(void);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

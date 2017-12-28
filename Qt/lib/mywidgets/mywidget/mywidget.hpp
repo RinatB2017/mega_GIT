@@ -201,6 +201,8 @@ private:
     QList<QWidget *> w_lists;
 
 protected:
+    virtual void updateText(void) = 0;
+    void changeEvent(QEvent *event);
 #ifndef BLOCK_WHEEL
     bool eventFilter(QObject*, QEvent* event);
 #endif

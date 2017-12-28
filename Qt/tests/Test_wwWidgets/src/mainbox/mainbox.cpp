@@ -958,18 +958,9 @@ void MainBox::f_qwwtwocolorindicator(void)
     connect(btn_qwwtwocolorindicator, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::eventFilter(QObject*, QEvent* event)

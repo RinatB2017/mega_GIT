@@ -910,3 +910,8 @@ void MultimeterBox::add_grapher_value(double value)
 }
 #endif
 //--------------------------------------------------------------------------------
+void MultimeterBox::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------

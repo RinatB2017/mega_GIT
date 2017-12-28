@@ -32,8 +32,8 @@ class HD44780 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit HD44780(QWidget *parent = 0);
-    virtual ~HD44780();
+    HD44780(QWidget *parent = 0);
+    ~HD44780();
 
     bool open(void);
     void close(void);
@@ -67,6 +67,8 @@ private:
 
     void print_error(const QString &function,
                      FT_STATUS status);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // HD44780_HPP

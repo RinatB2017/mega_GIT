@@ -38,9 +38,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 signals:
     void send(const QString &);
 
@@ -54,6 +51,8 @@ private:
     void createTestBar(void);
 
     void init_thread(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

@@ -662,17 +662,8 @@ uint8_t MainBox::convert_ascii_to_value(char hi, char lo)
     return r_byte;
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

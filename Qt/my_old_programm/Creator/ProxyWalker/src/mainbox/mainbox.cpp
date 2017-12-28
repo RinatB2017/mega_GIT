@@ -477,20 +477,6 @@ void MainBox::test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 void MainBox::load_url(const QString &address,
                        bool show_address)
 {
@@ -575,5 +561,10 @@ void MainBox::save_setting(void)
     }
     xmlPut->save(PROXIES_XML);
 #endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

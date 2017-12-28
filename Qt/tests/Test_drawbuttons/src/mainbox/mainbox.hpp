@@ -68,8 +68,7 @@ private:
 
     QStringList qslGetPrintText(const QStringList qslStructText);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

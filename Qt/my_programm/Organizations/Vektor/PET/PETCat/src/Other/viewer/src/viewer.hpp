@@ -41,7 +41,7 @@ class Viewer : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Viewer(QWidget *parent = 0);
+    Viewer(QWidget *parent = 0);
 
     bool set_floodmap_size(int value);
     bool clear_all(void);
@@ -92,6 +92,8 @@ private:
 
     void generate_test_circle(int event_count);
     void generate_test_square(int max_point, int event_count);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

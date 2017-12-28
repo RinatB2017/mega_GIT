@@ -85,8 +85,9 @@ private:
 
     void create_widgets(void);
 
+    void updateText(void);
+
 protected:
-    void changeEvent(QEvent *event);
     bool eventFilter(QObject *obj, QEvent *event);
 
 };

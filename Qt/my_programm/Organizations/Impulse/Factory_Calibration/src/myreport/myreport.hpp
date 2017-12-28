@@ -69,6 +69,8 @@ private:
     bool save_report_to_xml(const QString &filename,
                             const QString &report_txt);
     QString load_report_from_xml(const QString &filename);
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MYREPORT_HPP

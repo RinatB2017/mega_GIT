@@ -37,13 +37,8 @@ class DebugFrame : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit DebugFrame(TCP_Client *client, QWidget *parent = 0);
+    DebugFrame(TCP_Client *client, QWidget *parent = 0);
     
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-
 private slots:
     void test(void);
 
@@ -63,6 +58,8 @@ private:
                   unsigned char table,
                   unsigned char takt,
                   unsigned char cmd);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

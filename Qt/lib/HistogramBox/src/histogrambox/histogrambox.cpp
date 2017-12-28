@@ -465,24 +465,11 @@ void HistogramBox::updateGraphics(void)
 //--------------------------------------------------------------------------------
 void HistogramBox::updateText()
 {
+    ui->retranslateUi(this);
+
     for(int n=0; n<histograms.count(); n++)
     {
         histograms[n].plot_histogram->setTitle(histograms[n].title);
-    }
-}
-//--------------------------------------------------------------------------------
-void HistogramBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        updateText();
-        break;
-
-    default:
-        break;
     }
 }
 //--------------------------------------------------------------------------------

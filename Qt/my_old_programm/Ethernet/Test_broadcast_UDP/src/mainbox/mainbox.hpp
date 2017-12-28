@@ -37,9 +37,9 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
 signals:
     void info(const QString &);
@@ -54,8 +54,8 @@ private slots:
     void client_thread_is_finished(void);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
 
     void init(void);
     void connect_log(void);
@@ -65,8 +65,7 @@ private:
     bool create_server(void);
     bool create_client(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

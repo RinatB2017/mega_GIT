@@ -329,17 +329,8 @@ void MainBox::test(void)
     emit debug(QString(tr("обработано %1")).arg(cnt));
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

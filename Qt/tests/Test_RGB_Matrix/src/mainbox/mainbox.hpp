@@ -87,8 +87,7 @@ private:
     void createDisplayBox(void);
     void createTimer(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

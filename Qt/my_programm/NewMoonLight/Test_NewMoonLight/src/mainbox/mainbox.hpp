@@ -43,8 +43,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -121,9 +121,7 @@ private:
     int get_address(uint16_t value);
 
     uint16_t get_value(NewMoonLightPacket *packet, uint16_t address);
-
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

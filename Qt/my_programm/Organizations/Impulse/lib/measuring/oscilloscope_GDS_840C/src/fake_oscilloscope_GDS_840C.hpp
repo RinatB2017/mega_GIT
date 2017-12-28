@@ -32,7 +32,7 @@ class Fake_oscilloscope_GDS_840C : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Fake_oscilloscope_GDS_840C(QWidget *parent = 0);
+    Fake_oscilloscope_GDS_840C(QWidget *parent = 0);
 
     bool isOpen(void);
     void close(void);
@@ -59,6 +59,7 @@ private:
 
     void init(void);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

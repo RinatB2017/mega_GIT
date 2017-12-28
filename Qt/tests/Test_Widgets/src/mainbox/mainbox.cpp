@@ -144,20 +144,6 @@ void MainBox::test_3(void)
     emit info("Test_3()");
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 void MainBox::paintEvent(QPaintEvent *)
 {
     static const QPointF points[4] = {
@@ -186,5 +172,10 @@ void MainBox::save_setting(void)
 int MainBox::xxx(int x)
 {
     return x+5;
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

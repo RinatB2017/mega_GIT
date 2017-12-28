@@ -38,8 +38,7 @@ const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = '\x26';
 //--------------------------------------------------------------------------------
 AD8400::AD8400(I2C_Freq freq,
                QWidget *parent) :
-    MyWidget(parent),
-    ft2232h(0)
+    MyWidget(parent)
 {
     ft2232h = new FT2232H(freq, parent);
 }
@@ -98,5 +97,10 @@ void AD8400::test(void)
         emit error("test failed!");
     }
     emit info("test end");
+}
+//--------------------------------------------------------------------------------
+void AD8400::updateText(void)
+{
+
 }
 //--------------------------------------------------------------------------------

@@ -30,7 +30,7 @@ class DS18B20 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit DS18B20(I2C_Freq freq, QWidget *parent = 0);
+    DS18B20(I2C_Freq freq, QWidget *parent = 0);
     ~DS18B20();
 
     void test(void);
@@ -45,6 +45,9 @@ private:
 
     void prepare_data(void);
     void prepare_data2(void);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // DS18B20_HPP

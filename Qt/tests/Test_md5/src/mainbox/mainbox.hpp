@@ -38,9 +38,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 public slots:
     QString get_md5(const QString &filename);
 
@@ -54,6 +51,7 @@ private:
     void init(void);
     void createTestBar(void);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

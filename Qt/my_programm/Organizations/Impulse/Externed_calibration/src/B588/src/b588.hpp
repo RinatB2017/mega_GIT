@@ -48,7 +48,7 @@ class B588 : public MyWidget
     Q_OBJECT
 
 public:
-    explicit B588(QWidget *parent = 0);
+    B588(QWidget *parent = 0);
     ~B588();
 
     bool is_blocked_exit(void);
@@ -93,6 +93,8 @@ private:
     void wait_msec(int timeout_msec);
 
     void block_interface(bool state);
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // B588_HPP

@@ -47,7 +47,7 @@ class B590 : public MyWidget
     Q_OBJECT
 
 public:
-    explicit B590(QWidget *parent);
+    B590(QWidget *parent);
     ~B590();
 
 private slots:
@@ -103,8 +103,7 @@ private:
 
     void block_interface(bool state);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

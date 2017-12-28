@@ -28,8 +28,8 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
-    class SettingsDialog;
+class MainBox;
+class SettingsDialog;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -47,15 +47,9 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void message(const QString &);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox(void);
 
 private slots:
     void test(void);
@@ -95,8 +89,7 @@ private:
     QHash<QString, QLineEdit *> registers;
     SettingsDialog *m_settingsDialog;
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

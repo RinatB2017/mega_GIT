@@ -34,6 +34,8 @@ private:
     void send_data(QByteArray);
     QString getLocalAddress(void);
     void init(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -1864,21 +1864,6 @@ void MainBox::print(const QString& text, int type, bool bold)
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        // updateText();
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

@@ -755,3 +755,8 @@ bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName,
     return true;
 }
 //--------------------------------------------------------------------------------
+void WebCamera::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------

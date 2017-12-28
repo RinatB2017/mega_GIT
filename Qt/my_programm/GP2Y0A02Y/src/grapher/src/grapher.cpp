@@ -83,3 +83,8 @@ bool Grapher::set_value(int channel, int value)
     return true;
 }
 //--------------------------------------------------------------------------------
+void Grapher::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------

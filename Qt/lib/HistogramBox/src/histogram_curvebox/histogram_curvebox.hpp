@@ -50,6 +50,8 @@ private:
     QLineEdit *caption_curve = 0;
     QLabel *color_curve = 0;
 
+    void updateText(void);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 

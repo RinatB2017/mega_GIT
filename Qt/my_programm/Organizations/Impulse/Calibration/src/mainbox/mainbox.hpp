@@ -123,7 +123,7 @@ struct log_data
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -189,12 +189,9 @@ public:
         TEST_CABLE_A_IAC
     };
 
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
-
-protected:
-    void changeEvent(QEvent *e);
 
 private slots:
     void item_clicked(QTreeWidgetItem *item, int column);
@@ -364,9 +361,9 @@ private:
 #ifdef NEW_POINTS
     //добавлено 22.09.14
     QString prepare_string_new_points(const QString &prefix,
-                               float value,
-                               float limit,
-                               int step);
+                                      float value,
+                                      float limit,
+                                      int step);
 #endif
 
     QString prepare_string_adv(const QString &prefix,
@@ -614,6 +611,8 @@ private:
     int message_critical(QWidget *parent,
                          const QString &title,
                          const QString& text);
+
+    void updateText(void);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

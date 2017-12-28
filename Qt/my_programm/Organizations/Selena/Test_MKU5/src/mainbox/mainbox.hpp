@@ -144,14 +144,10 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
-    void updateText(void);
     void updateClient(void);
 
     void clear_main_checkable(void);
@@ -255,6 +251,8 @@ private:
                   QLabel *label);
 
     void print(const QString&, int = 0, bool = false);
+
+    void updateText(void);
 
 protected:
     void customEvent(QEvent*);

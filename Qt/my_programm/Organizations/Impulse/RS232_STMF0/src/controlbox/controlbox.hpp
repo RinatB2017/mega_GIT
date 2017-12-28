@@ -275,6 +275,8 @@ private:
                              int max_count,
                              bool *result_ok);
     float get_data_value(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // CONTROLBOX_HPP

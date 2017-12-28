@@ -35,13 +35,13 @@ class Card : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Card(QString name,
-                  int pos_x,
-                  int pos_y,
-                  int card_width,
-                  int card_height,
-                  QSvgRenderer *renderer,
-                  QWidget *parent);
+    Card(QString name,
+         int pos_x,
+         int pos_y,
+         int card_width,
+         int card_height,
+         QSvgRenderer *renderer,
+         QWidget *parent);
 
 private:
     void init(void);
@@ -62,6 +62,8 @@ private:
     int get_corr_y1(QPixmap *pix);
     int get_corr_x2(QPixmap *pix);
     int get_corr_y2(QPixmap *pix);
+
+    void updateText(void);
 
 protected:
     void mousePressEvent(QMouseEvent *event);

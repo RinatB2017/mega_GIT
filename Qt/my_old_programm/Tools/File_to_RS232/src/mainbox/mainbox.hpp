@@ -41,9 +41,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 signals:
     void send_data(const QString &);
 
@@ -53,8 +50,6 @@ private slots:
     void power_timer(bool state);
 
     void load_data(void);
-
-    void updateText(void);
 
 private:
     Ui::MainBox *ui = 0;
@@ -72,6 +67,7 @@ private:
     void load_setting(void);
     void save_setting(void);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

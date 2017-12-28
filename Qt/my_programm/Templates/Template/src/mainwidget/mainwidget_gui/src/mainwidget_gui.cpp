@@ -156,21 +156,12 @@ void MainWidget_GUI::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainWidget_GUI::changeEvent(QEvent *event)
+void MainWidget_GUI::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
+    ui->retranslateUi(this);
+    if(testbar)
     {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        if(testbar)
-        {
-            testbar->setWindowTitle(tr("testbar"));
-        }
-        break;
-
-    default:
-        break;
+        testbar->setWindowTitle(tr("testbar"));
     }
 }
 //--------------------------------------------------------------------------------

@@ -47,7 +47,7 @@ class MainBox : public MyWidget
 public:
     MainBox(QWidget *parent,
             MySplashScreen *splash);
-    virtual ~MainBox();
+    ~MainBox();
 
 signals:
     void send(QByteArray);
@@ -102,8 +102,7 @@ private:
 
     bool erase_eerpom(int VID, int PID);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

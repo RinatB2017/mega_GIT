@@ -90,8 +90,7 @@ private:
     void expanded_item(QTreeWidgetItem *root);
     void show_itemtext(QTreeWidgetItem *root);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

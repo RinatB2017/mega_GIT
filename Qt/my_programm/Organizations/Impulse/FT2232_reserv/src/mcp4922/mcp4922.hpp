@@ -57,6 +57,8 @@ private:
     BOOL SPI_Initial(FT_HANDLE ftHandle);
 
     void print_error(const QString &function, FT_STATUS status);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MCP4922_HPP

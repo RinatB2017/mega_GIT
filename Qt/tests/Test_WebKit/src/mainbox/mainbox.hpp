@@ -56,9 +56,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-public slots:
-    void updateText(void);
-
 private slots:
     void open_url(void);
 
@@ -135,6 +132,9 @@ private:
 
     QString get_link(QWebElement element);
     QStringList get_links(QWebElementCollection collection);
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

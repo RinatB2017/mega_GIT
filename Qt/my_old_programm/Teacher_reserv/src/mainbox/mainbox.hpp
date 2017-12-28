@@ -39,8 +39,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -58,9 +58,10 @@ private:
     void createTestBar(void);
     void prepare_browsers(void);
 
+    void updateText(void);
+
 protected:
-    virtual void changeEvent(QEvent *event);
-    virtual bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
 
 };
 //--------------------------------------------------------------------------------

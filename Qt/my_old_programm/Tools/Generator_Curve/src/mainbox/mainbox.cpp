@@ -67,17 +67,8 @@ void MainBox::init(void)
     //connect(generator, SIGNAL(send(QByteArray)), serial, SLOT(input(QByteArray)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

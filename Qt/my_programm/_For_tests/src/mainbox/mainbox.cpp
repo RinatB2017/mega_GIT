@@ -165,6 +165,11 @@ void MainBox::createTestBar(void)
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 }
 //--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
 {
     bool ok = false;
@@ -243,31 +248,5 @@ bool MainBox::test_5(void)
     emit info("Test_5()");
 
     return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::eventFilter(QObject *, QEvent *e)
-{
-    if (e->type() == QEvent::MouseButtonRelease)
-    {
-        if (static_cast<QMouseEvent*>(e)->button() == Qt::RightButton)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
 }
 //--------------------------------------------------------------------------------

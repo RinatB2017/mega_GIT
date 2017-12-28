@@ -41,9 +41,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
     void test(void);
     void drag(void);
@@ -63,6 +60,7 @@ private:
                    int max_x = 30);
 
     void createTestBar(void);
+    void updateText(void);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *ev);

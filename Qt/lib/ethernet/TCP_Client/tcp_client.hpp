@@ -55,6 +55,7 @@ private:
     int port = 0;
     void init(void);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

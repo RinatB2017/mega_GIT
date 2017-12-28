@@ -86,8 +86,9 @@ private:
 
     void createTestBar(void);
 
+    void updateText(void);
+
 protected:
-    void changeEvent(QEvent *event);
     bool eventFilter(QObject*, QEvent* event);
     void paintEvent(QPaintEvent *);
 

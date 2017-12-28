@@ -36,7 +36,7 @@ class Viewer : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Viewer(QWidget *parent = 0);
+    Viewer(QWidget *parent = 0);
     ~Viewer();
 
 public slots:
@@ -47,6 +47,8 @@ private:
     QList<Device *> devices;
 
     void init(void);
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // VIEWER_HPP

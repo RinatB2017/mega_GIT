@@ -441,25 +441,6 @@ void SerialBox5_lite::drawData(const QByteArray &data)
 #endif
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::updateText(void)
-{
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_lite::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        updateText();
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 bool SerialBox5_lite::isOpen(void)
 {
     return serial5->isOpen();
@@ -595,5 +576,10 @@ void SerialBox5_lite::get_parameter(void)
 QByteArray SerialBox5_lite::readAll(void)
 {
     return serial5->readAll();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_lite::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

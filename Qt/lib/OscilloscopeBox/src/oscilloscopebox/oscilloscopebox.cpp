@@ -384,24 +384,11 @@ void OscilloscopeBox::updateGraphics(void)
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::updateText()
 {
+    ui->retranslateUi(this);
+
     for(int n=0; n<curves.count(); n++)
     {
         curves.at(n).plot_curve->setTitle(curves.at(n).title);
-    }
-}
-//--------------------------------------------------------------------------------
-void OscilloscopeBox::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        updateText();
-        break;
-
-    default:
-        break;
     }
 }
 //--------------------------------------------------------------------------------

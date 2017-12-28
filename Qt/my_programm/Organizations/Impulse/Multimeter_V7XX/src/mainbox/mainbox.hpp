@@ -24,13 +24,13 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #ifdef V764
-    #include "v764_multimeter.hpp"
+#include "v764_multimeter.hpp"
 #endif
 #ifdef V7642
-    #include "v764_2_multimeter.hpp"
+#include "v764_2_multimeter.hpp"
 #endif
 #ifdef V780
-    #include "v780_multimeter.hpp"
+#include "v780_multimeter.hpp"
 #endif
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -52,8 +52,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -121,8 +121,7 @@ private:
     void block_interface(bool state);
     void display_measuring_value(int value_uV);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

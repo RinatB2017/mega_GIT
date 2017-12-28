@@ -66,8 +66,7 @@ private:
     void cmd_36(QByteArray ba);
     void cmd_37(QByteArray ba);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

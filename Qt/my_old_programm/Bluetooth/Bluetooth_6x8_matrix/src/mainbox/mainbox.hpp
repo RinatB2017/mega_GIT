@@ -38,36 +38,36 @@ namespace Ui {
 //---------------------------------------------------------------
 typedef struct
 {
-  uint8_t address;
-  uint8_t cmd;
-  uint8_t count_data;
+    uint8_t address;
+    uint8_t cmd;
+    uint8_t count_data;
 }
 RGB_HEADER;
 //---------------------------------------------------------------
 union CMD_0x01_QUESTION
 {
-  struct {
-    RGB_HEADER header;
     struct {
-        uint8_t led[NUM_LEDS_PER_STRIP][NUM_STRIPS];
-    } data;
-    uint8_t crc16;
-  }
-  body;
-  uint8_t buf[sizeof(body)];
+        RGB_HEADER header;
+        struct {
+            uint8_t led[NUM_LEDS_PER_STRIP][NUM_STRIPS];
+        } data;
+        uint8_t crc16;
+    }
+    body;
+    uint8_t buf[sizeof(body)];
 };
 
 union CMD_0x01_ANSWER
 {
-  struct {
-    RGB_HEADER header;
     struct {
-        uint8_t result;
-    } data;
-    uint8_t crc8;
-  }
-  body;
-  uint8_t buf[sizeof(body)];
+        RGB_HEADER header;
+        struct {
+            uint8_t result;
+        } data;
+        uint8_t crc8;
+    }
+    body;
+    uint8_t buf[sizeof(body)];
 };
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -81,8 +81,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -107,8 +107,7 @@ private:
     void read_modbus(void);
     void send_answer_data(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

@@ -578,6 +578,8 @@ void SerialBox5::drawData(const QByteArray &data)
 //--------------------------------------------------------------------------------
 void SerialBox5::updateText(void)
 {
+    ui->retranslateUi(this);
+
 #ifdef RS232_LOG
     logBox->updateText();
 #endif
@@ -585,21 +587,6 @@ void SerialBox5::updateText(void)
 #ifdef RS232_SEND
     sendBox5->updateText();
 #endif
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        updateText();
-        break;
-
-    default:
-        break;
-    }
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::isOpen(void)

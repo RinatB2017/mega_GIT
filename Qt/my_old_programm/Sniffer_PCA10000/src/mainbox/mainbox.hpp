@@ -24,7 +24,7 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -40,8 +40,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
     void load_setting(void);
@@ -69,8 +69,7 @@ private:
     void createTestBar(void);
     void create_sniffer(void);
 
-protected:
-    virtual void changeEvent(QEvent *event);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

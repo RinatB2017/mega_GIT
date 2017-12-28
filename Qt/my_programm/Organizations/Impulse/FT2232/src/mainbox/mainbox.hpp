@@ -116,8 +116,7 @@ private:
     void add_menu_tests(QMenu *main_menu);
     void add_menu_test_at24c02(QMenu *main_menu);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

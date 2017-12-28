@@ -32,7 +32,7 @@ class Notebook : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Notebook(QWidget *parent = 0);
+    Notebook(QWidget *parent = 0);
     ~Notebook();
 
     void check_modified(void);
@@ -51,6 +51,7 @@ private:
     QStackedWidget *sw = 0;
     QPushButton *btn_save_all = 0;
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

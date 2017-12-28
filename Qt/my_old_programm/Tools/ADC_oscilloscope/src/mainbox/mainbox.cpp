@@ -131,11 +131,6 @@ void MainBox::add_data_float(unsigned int index_curve, float data)
     oscilloscope->add_curve_data(index_curve, data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText()
-{
-
-}
-//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
@@ -146,6 +141,8 @@ void MainBox::createTestBar(void)
     }
 
     QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     QToolButton *btn_test = add_button(testbar,
@@ -180,17 +177,8 @@ void MainBox::test(void)
     emit info("test");
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        updateText();
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

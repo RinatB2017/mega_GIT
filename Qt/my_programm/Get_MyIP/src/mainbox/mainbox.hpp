@@ -40,9 +40,9 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
 private slots:
     void show_my_IP(void);
@@ -55,6 +55,7 @@ private:
     QNetworkAccessManager networkManager;
 
     void init(void);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

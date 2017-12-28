@@ -774,21 +774,12 @@ void MainBox::test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *e)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(e);
-    switch (e->type())
+    ui->retranslateUi(this);
+    if(save_action)
     {
-    case QEvent::LanguageChange:
-        if(save_action)
-        {
-            save_action->setText(QObject::tr("save"));
-        }
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
+        save_action->setText(QObject::tr("save"));
     }
 }
 //--------------------------------------------------------------------------------

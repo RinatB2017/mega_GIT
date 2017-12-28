@@ -323,17 +323,3 @@ void Generator_Curve::updateText()
     btn_4bytes->setText(tr("uint"));
 }
 //--------------------------------------------------------------------------------
-void Generator_Curve::changeEvent(QEvent *e)
-{
-    QWidget::changeEvent(e);
-    switch (e->type())
-    {
-    case QEvent::LanguageChange:
-        updateText();
-        break;
-
-    default:
-        break;
-    }
-}
-//--------------------------------------------------------------------------------

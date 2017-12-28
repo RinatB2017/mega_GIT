@@ -42,8 +42,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -96,8 +96,9 @@ private:
     void mouse_move_to(QPoint pos);
     bool find_window(const QString programm_title, int *x, int *y, int *width, int *heigth);
 
+    void updateText(void);
+
 protected:
-    void changeEvent(QEvent *event);
     bool eventFilter(QObject*, QEvent* event);
 
 };

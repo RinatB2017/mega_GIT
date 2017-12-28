@@ -44,9 +44,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private:
     Ui::MainBox *ui = 0;
     QWidget *parent = 0;
@@ -55,10 +52,11 @@ private:
 
     void init(void);
     int load(const QString &filename);
-    void updateText(void);
 
     void load_setting(void);
     void save_setting(void);
+
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

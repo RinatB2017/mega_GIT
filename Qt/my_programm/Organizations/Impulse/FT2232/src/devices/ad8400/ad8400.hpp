@@ -32,7 +32,7 @@ class AD8400 : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit AD8400(I2C_Freq freq, QWidget *parent = 0);
+    AD8400(I2C_Freq freq, QWidget *parent = 0);
     ~AD8400();
 
     void test(void);
@@ -42,7 +42,10 @@ public:
     void close(void);
 
 private:
-    FT2232H *ft2232h;
+    FT2232H *ft2232h = 0;
+
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // AD8400_HPP

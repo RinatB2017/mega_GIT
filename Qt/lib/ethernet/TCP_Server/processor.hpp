@@ -14,7 +14,7 @@ class Processor : public MyWidget
 {
     Q_OBJECT
 public:
-    explicit Processor(QWidget *parent = 0);
+    Processor(QWidget *parent = 0);
     
 signals:
     void output(const QByteArray &);
@@ -22,6 +22,8 @@ signals:
 public slots:
     void input(const QByteArray &data);
 
+private:
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

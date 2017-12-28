@@ -65,8 +65,7 @@ private:
     void createTestBar(void);
     void thread_start(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

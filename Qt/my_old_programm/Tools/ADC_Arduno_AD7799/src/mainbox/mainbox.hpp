@@ -42,9 +42,6 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
-public slots:
-    void updateText(void);
-
 private slots:
     void raw_data(QByteArray);
     void analize_packet(void);
@@ -67,8 +64,7 @@ private:
     unsigned char convert_ansi_to_dec(char data);
     QString convert_dec_to_ansi(unsigned char data);
 
-protected:
-    void changeEvent(QEvent *e);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

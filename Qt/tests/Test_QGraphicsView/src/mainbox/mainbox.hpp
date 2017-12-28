@@ -118,8 +118,9 @@ private:
     void create_scene_1(void);
     void create_scene_2(void);
 
+    void updateText(void);
+
 protected:
-    void changeEvent(QEvent *event);
     bool eventFilter(QObject *, QEvent *e);
 
     void keyPressEvent(QKeyEvent *event);

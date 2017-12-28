@@ -34,7 +34,7 @@ class Grapher : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Grapher(QWidget *parent = 0);
+    Grapher(QWidget *parent = 0);
     ~Grapher();
 
     void clean_all(void);
@@ -43,10 +43,12 @@ public slots:
     bool set_value(int channel, int value);
 
 private:
-    Ui::Grapher *ui;
+    Ui::Grapher *ui = 0;
     int curves[8];
 
     void init(void);
+    void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
 #endif // GRAPHER_HPP

@@ -101,3 +101,8 @@ void TCP_Server::clientDisconnected(void)
     clientConnection->deleteLater();
 }
 //--------------------------------------------------------------------------------
+void TCP_Server::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------

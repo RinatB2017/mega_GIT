@@ -62,8 +62,7 @@ private:
 
     void draw_progress(void);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

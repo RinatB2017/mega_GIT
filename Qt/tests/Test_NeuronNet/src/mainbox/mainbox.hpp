@@ -136,8 +136,7 @@ private:
                         int num_image,
                         QByteArray *data);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

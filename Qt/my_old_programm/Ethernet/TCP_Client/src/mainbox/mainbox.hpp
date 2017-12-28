@@ -37,14 +37,10 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private slots:
-    void updateText(void);
     void send(void);
 
 private:
@@ -55,6 +51,7 @@ private:
     void init_widgets(void);
     void init_client(void);
 
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

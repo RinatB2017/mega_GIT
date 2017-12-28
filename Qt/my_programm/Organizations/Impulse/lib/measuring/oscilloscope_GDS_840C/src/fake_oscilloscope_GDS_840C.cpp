@@ -128,3 +128,8 @@ void Fake_oscilloscope_GDS_840C::receive(const QVariant &data)
     Q_UNUSED(data); //???
 }
 //--------------------------------------------------------------------------------
+void Fake_oscilloscope_GDS_840C::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------

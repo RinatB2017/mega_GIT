@@ -73,8 +73,7 @@ private:
     bool check_answer_read(QByteArray data);
     bool check_answer_write(QByteArray data);
 
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

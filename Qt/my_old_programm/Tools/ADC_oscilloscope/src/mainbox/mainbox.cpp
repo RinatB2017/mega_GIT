@@ -145,10 +145,10 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                        "test",
@@ -167,9 +167,12 @@ void MainBox::createSerialBar(void)
     }
 
     widget = new ModbusAsciiWidget(this);
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->addWidget(widget);
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+
+    QToolBar *testbar = new QToolBar("testbar");
+    Q_CHECK_PTR(testbar);
+
+    testbar->addWidget(testbar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

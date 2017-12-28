@@ -204,36 +204,39 @@ void MainBox::grapher_refresh(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    toolBar->setObjectName("toolBar");
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test",
                                        "test");
-    QToolButton *btn_test_2 = add_button(toolBar,
+    QToolButton *btn_test_2 = add_button(testbar,
                                          new QToolButton(this),
                                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                          "test2",
                                          "test2");
-    QToolButton *btn_test_3 = add_button(toolBar,
+    QToolButton *btn_test_3 = add_button(testbar,
                                          new QToolButton(this),
                                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                          "test3",
                                          "test3");
-    QToolButton *btn_test_4 = add_button(toolBar,
+    QToolButton *btn_test_4 = add_button(testbar,
                                          new QToolButton(this),
                                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                          "test4",
                                          "test4");
-    QToolButton *btn_test_5 = add_button(toolBar,
+    QToolButton *btn_test_5 = add_button(testbar,
                                          new QToolButton(this),
                                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                          "test5",

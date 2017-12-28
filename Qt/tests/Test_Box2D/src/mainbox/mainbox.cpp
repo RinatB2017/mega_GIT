@@ -75,10 +75,14 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     commands.clear();
     commands.append({ 0x10, "create_scene_0", &World::create_scene_0 });
@@ -92,13 +96,13 @@ void MainBox::createTestBar(void)
     lcd->setDigitCount(10);
     lcd->setStyleSheet("background-color:black; color:green;");
     lcd->setMinimumSize(16*10, 32);
-    toolBar->addWidget(lcd);
+    testbar->addWidget(lcd);
 #endif
 
 #if 0
     cb_block_insert_object = new QCheckBox("block insert objects");
     cb_block_insert_object->setObjectName("cb_block_insert_object");
-    toolBar->addWidget(cb_block_insert_object);
+    testbar->addWidget(cb_block_insert_object);
 #endif
 
     cb_test = new QComboBox(this);
@@ -108,16 +112,16 @@ void MainBox::createTestBar(void)
         cb_test->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
     }
 
-    toolBar->addWidget(cb_test);
+    testbar->addWidget(cb_test);
 
-    QToolButton *btn_choice_test = add_button(toolBar,
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    QToolButton *btn_clear = add_button(toolBar,
+    QToolButton *btn_clear = add_button(testbar,
                                      new QToolButton(this),
                                      qApp->style()->standardIcon(QStyle::SP_MessageBoxWarning),
                                      "clear",

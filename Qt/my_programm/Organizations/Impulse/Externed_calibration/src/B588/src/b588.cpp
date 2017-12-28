@@ -138,11 +138,11 @@ void B588::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                        tr("test_sinus"),

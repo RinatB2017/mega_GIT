@@ -151,9 +151,9 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -162,8 +162,8 @@ void MainBox::createTestBar(void)
     cb_test->addItem(TEST_2_TEXT, QVariant(Qt::UserRole + TEST_2));
     cb_test->addItem(TEST_3_TEXT, QVariant(Qt::UserRole + TEST_3));
 
-    toolBar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(toolBar,
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",

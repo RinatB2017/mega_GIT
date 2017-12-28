@@ -111,14 +111,18 @@ void MainBox::draw_my_buttons(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
-
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test",
@@ -152,22 +156,6 @@ void MainBox::test(void)
 {
     emit debug(tr("тест"));
 
-    // QApplication::beep();
-
-#if 0
-    union BYTE byte;
-    byte.bits.bit0 = 1;
-    qDebug() << byte.value;
-#endif
-
-#if 0
-    QSettings *s = new QSettings("test.ini", QSettings::IniFormat, this);
-    QByteArray temp;
-    temp.append("\r\n1,2,3\r\n1,2,3\r\n1,2,3\r\n1,2,3\r\n1,2,3\r\n1,2,3\r\n");
-    s->setValue("x", temp);
-#endif
-
-#if 1
     CsvReader *csv = new CsvReader(0,"Склад_ПКИ.csv"); //
     if(csv->Open())
     {
@@ -178,7 +166,6 @@ void MainBox::test(void)
         }
         qDebug() << str.count();
     }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::usb(void)

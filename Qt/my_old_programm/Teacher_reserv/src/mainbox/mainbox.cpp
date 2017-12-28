@@ -104,14 +104,14 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     site_address = new QLineEdit(this);
-    toolBar->addWidget(site_address);
+    testbar->addWidget(site_address);
 
-    QToolButton *btn_choice_test = add_button(toolBar,
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "test",

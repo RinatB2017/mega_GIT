@@ -124,16 +124,16 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    startButton = add_button(toolBar,
+    startButton = add_button(testbar,
                              new QToolButton(this),
                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                              "startBroadcasting",
                              "startBroadcasting");
-    QToolButton *start_fast_client = add_button(toolBar,
+    QToolButton *start_fast_client = add_button(testbar,
                                                 new QToolButton(this),
                                                 qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                                 "start fast client",

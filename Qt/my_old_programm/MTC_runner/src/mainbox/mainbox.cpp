@@ -69,17 +69,17 @@ void MainBox::createRunBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     cb_auto_run = new QCheckBox();
     cb_auto_run->setText("auto");
     cb_auto_run->setObjectName("cb_auto_run");
 
-    toolBar->addWidget(cb_auto_run);
+    testbar->addWidget(cb_auto_run);
 
-    btn_run = add_button(toolBar,
+    btn_run = add_button(testbar,
                          new QToolButton(this),
                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                          "run",

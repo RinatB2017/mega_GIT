@@ -865,20 +865,20 @@ void B588::createTestBar(void)
     }
 
     QToolBar *toolBar = new QToolBar("testbar B5-88");
-    toolBar->setObjectName("toolbar_B588");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    testbar->setObjectName("toolbar_B588");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test B5-88",
                                        "test B5-88");
-    QToolButton *btn_rc_on = add_button(toolBar,
+    QToolButton *btn_rc_on = add_button(testbar,
                                         new QToolButton(this),
                                         QIcon(":/pictures/button_ok.png"),
                                         "ON",
                                         "ON");
-    QToolButton *btn_rc_off = add_button(toolBar,
+    QToolButton *btn_rc_off = add_button(testbar,
                                          new QToolButton(this),
                                          QIcon(":/pictures/button_cancel.png"),
                                          "OFF",

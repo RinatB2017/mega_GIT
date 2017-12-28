@@ -39,6 +39,7 @@ LogDock::LogDock(const QString &title,
     setObjectName(title);
 
     le = new LogBox("RS232", this);
+    Q_CHECK_PTR(le);
     if(!le) return;
 
     connect(this,   SIGNAL(signal_is_shows_info(bool)),     le, SLOT(set_flag_is_shows_info(bool)));

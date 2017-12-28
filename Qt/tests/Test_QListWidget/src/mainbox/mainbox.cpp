@@ -98,17 +98,22 @@ void MainBox::makeItem(QListWidget* lstWgt)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(toolBar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "test",
-                                              "test");
+    QToolButton *btn_test = add_button(testbar,
+                                       new QToolButton(this),
+                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                       "test",
+                                       "test");
     btn_test->setObjectName("btn_test");
 
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));

@@ -35,11 +35,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    flag(false),
-    browser(0),
-    progressBar(0),
-    address(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -74,8 +70,8 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
     progressBar = new QProgressBar(this);
     progressBar->setFixedWidth(200);
@@ -85,27 +81,28 @@ void MainBox::createTestBar(void)
     //address->setText("https://2ip.ru/");
     //address->setText("https://www.youtube.com");
     //address->setText("http://bash.im/quote/448209");
-    address->setText("http://bash.im");
+    //address->setText("http://bash.im");
+    address->setText("https://maps.google.com/");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_prev = add_button(toolBar,
+    QToolButton *btn_prev = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_ArrowLeft),
                                        "prev",
                                        "prev");
-    QToolButton *btn_next = add_button(toolBar,
+    QToolButton *btn_next = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_ArrowRight),
                                        "prev",
                                        "prev");
-    toolBar->addWidget(address);
-    QToolButton *btn_run = add_button(toolBar,
+    testbar->addWidget(address);
+    QToolButton *btn_run = add_button(testbar,
                                       new QToolButton(this),
                                       qApp->style()->standardIcon(QStyle::SP_BrowserReload),
                                       "run",
                                       "run");
-    toolBar->addWidget(progressBar);
+    testbar->addWidget(progressBar);
 
     browser = new WebView(this);
     connect(browser,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));

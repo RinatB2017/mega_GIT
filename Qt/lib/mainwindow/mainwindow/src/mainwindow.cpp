@@ -77,6 +77,37 @@ void MainWindow::setCentralWidget(QWidget *widget)
 #endif
 }
 //--------------------------------------------------------------------------------
+void MainWindow::changeEvent(QEvent *event)
+{
+    QWidget::changeEvent(event);
+    switch (event->type())
+    {
+    case QEvent::LanguageChange:
+#ifndef NO_TOOLBAR
+        if(toolbar)
+        {
+            toolbar->setWindowTitle(tr("toolbar"));
+        }
+#endif
+#ifndef NO_STYLETOOLBAR
+        if(styletoolbar)
+        {
+            styletoolbar->setWindowTitle(tr("styletoolbar"));
+        }
+#endif
+#ifndef NO_LOG
+        if(ld)
+        {
+            ld->setWindowTitle(tr("log"));
+        }
+#endif
+        break;
+
+    default:
+        break;
+    }
+}
+//--------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     QMessageBox msgBox;
@@ -769,7 +800,7 @@ void MainWindow::save_setting(void)
 #ifndef NO_LOG
 void MainWindow::createLog(void)
 {
-    ld = new LogDock(QObject::tr("log"), this);
+    ld = new LogDock(tr("log"), this);
     Q_CHECK_PTR(ld);
 
     if(m_windowsMenu)
@@ -801,18 +832,18 @@ void MainWindow::createLog(void)
 #ifndef NO_TOOLBAR
 void MainWindow::createToolBar(void)
 {
-    QToolBar *toolBar = new QToolBar("toolbar", this);
-    Q_CHECK_PTR(toolBar);
+    toolbar = new QToolBar(tr("toolbar"), this);
+    Q_CHECK_PTR(toolbar);
 
-    if(toolBar == nullptr)
+    if(toolbar == nullptr)
     {
         return;
     }
 
-    toolBar->setObjectName("testbar");
-    toolBar->setMovable(true);
+    toolbar->setObjectName(tr("toolbar"));
+    toolbar->setMovable(true);
 
-    addToolBar(Qt::TopToolBarArea, toolBar);
+    addToolBar(Qt::TopToolBarArea, toolbar);
 
     btnExit    = new QToolButton(this);
     btnFont    = new QToolButton(this);
@@ -855,19 +886,19 @@ void MainWindow::createToolBar(void)
 
     btnHelp->setShortcut(Qt::Key_F1);
 
-    toolBar->addWidget(btnExit);
-    toolBar->addSeparator();
-    toolBar->addWidget(btnFont);
+    toolbar->addWidget(btnExit);
+    toolbar->addSeparator();
+    toolbar->addWidget(btnFont);
 #ifndef ONLY_ENGLISH
-    toolBar->addSeparator();
-    toolBar->addWidget(btnRus);
-    toolBar->addWidget(btnEng);
+    toolbar->addSeparator();
+    toolbar->addWidget(btnRus);
+    toolbar->addWidget(btnEng);
 #endif
-    toolBar->addSeparator();
-    toolBar->addWidget(btnStyle);
-    toolBar->addSeparator();
-    toolBar->addWidget(btnHelp);
-    toolBar->addWidget(btnAbout);
+    toolbar->addSeparator();
+    toolbar->addWidget(btnStyle);
+    toolbar->addSeparator();
+    toolbar->addWidget(btnHelp);
+    toolbar->addWidget(btnAbout);
 
     QMenu *menu = new QMenu(this);
 
@@ -900,16 +931,15 @@ void MainWindow::createToolBar(void)
 #ifndef NO_STYLETOOLBAR
 void MainWindow::createStyleToolBar(void)
 {
-#if 1
-    toolBar = new QToolBar("styletoolbar", this);
-    Q_CHECK_PTR(toolBar);
+    styletoolbar = new QToolBar(tr("styletoolbar"), this);
+    Q_CHECK_PTR(styletoolbar);
 
-    if(toolBar == nullptr)
+    if(styletoolbar == nullptr)
     {
         return;
     }
 
-    toolBar->setObjectName("styletoolbar");
+    styletoolbar->setObjectName("styletoolbar");
 
     QStringList sl;
     sl.append(QStyleFactory::keys());
@@ -919,141 +949,11 @@ void MainWindow::createStyleToolBar(void)
         QPushButton *btnTemp = new QPushButton(this);
         btnTemp->setText(style);
 
-        toolBar->addWidget(btnTemp);
+        styletoolbar->addWidget(btnTemp);
         connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
     }
-    //toolBar->addStretch(1);
 
-    addToolBar(Qt::LeftToolBarArea, toolBar);
-#else
-    sd = new QDockWidget(QObject::tr("Styles"), this);
-    Q_CHECK_PTR(sd);
-    sd->setObjectName("sd");
-
-#ifndef NO_LOG
-    if(m_windowsMenu)
-    {
-        m_windowsMenu->addAction(sd->toggleViewAction());
-    }
-#endif
-
-    QBoxLayout *box = 0;
-    QWidget *w = 0;
-    QStringList sl;
-    sl.append(QStyleFactory::keys());
-
-    if(box) box->deleteLater();
-    box = new QBoxLayout(QBoxLayout::LeftToRight);
-    box->setMargin(0);
-    box->setSpacing(0);
-    foreach (QString style, sl)
-    {
-        QPushButton *btnTemp = new QPushButton(this);
-        btnTemp->setText(style);
-
-        box->addWidget(btnTemp);
-        connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
-    }
-    box->addStretch(1);
-
-    w = new QWidget(this);
-    w->setLayout(box);
-
-    //TODO setFixedWidth
-    //w->show();
-    //w->setFixedWidth(w->sizeHint().width());
-    //---
-
-    sd->setWidget(w);
-
-    connect(sd, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),    this,   SLOT(dockLocationChanged(Qt::DockWidgetArea)));
-#endif
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_STYLETOOLBAR
-void MainWindow::dockLocationChanged(Qt::DockWidgetArea area)
-{
-    QBoxLayout *box = 0;
-    QWidget *w = 0;
-    QStringList sl;
-
-    switch(area)
-    {
-    case Qt::LeftDockWidgetArea:
-    case Qt::RightDockWidgetArea:
-        emit debug("LeftDockWidgetArea");
-
-        if(sd->widget())
-        {
-            sd->widget()->deleteLater();
-        }
-        sl.append(QStyleFactory::keys());
-
-        if(box) box->deleteLater();
-        box = new QBoxLayout(QBoxLayout::TopToBottom);
-        box->setMargin(0);
-        box->setSpacing(0);
-        foreach (QString style, sl)
-        {
-            QPushButton *btnTemp = new QPushButton(this);
-            btnTemp->setText(style);
-
-            box->addWidget(btnTemp);
-            connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
-        }
-        box->addStretch(1);
-
-        w = new QWidget(this);
-        w->setLayout(box);
-
-        //TODO setFixedWidth
-        //w->show();
-        //w->setFixedWidth(w->sizeHint().width());
-        //---
-
-        sd->setWidget(w);
-        break;
-
-    case Qt::TopDockWidgetArea:
-    case Qt::BottomDockWidgetArea:
-        emit debug("TopDockWidgetArea");
-
-        if(sd->widget())
-        {
-            sd->widget()->deleteLater();
-        }
-        sl.append(QStyleFactory::keys());
-
-        if(box) box->deleteLater();
-        box = new QBoxLayout(QBoxLayout::LeftToRight);
-        box->setMargin(0);
-        box->setSpacing(0);
-        foreach (QString style, sl)
-        {
-            QPushButton *btnTemp = new QPushButton(this);
-            btnTemp->setText(style);
-
-            box->addWidget(btnTemp);
-            connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
-        }
-        box->addStretch(1);
-
-        w = new QWidget(this);
-        w->setLayout(box);
-
-        //TODO setFixedWidth
-        //w->show();
-        //w->setFixedHeight(w->sizeHint().height());
-        //---
-
-        sd->setWidget(w);
-        break;
-
-    default:
-        emit info("default");
-        break;
-    }
+    addToolBar(Qt::LeftToolBarArea, styletoolbar);
 }
 #endif
 //--------------------------------------------------------------------------------

@@ -144,9 +144,9 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     sb_address = new QSpinBox(this);
     sb_address->setMinimum(0);
@@ -166,19 +166,19 @@ void MainBox::createTestBar(void)
     sb_time_multimeter->setObjectName("sb_time_multimeter");
     //sb_time_multimeter->setValue(3000);
 
-    toolBar->addWidget(new QLabel(tr("Адрес:")));
-    toolBar->addWidget(sb_address);
-    toolBar->addWidget(new QLabel(tr("Канал:")));
-    toolBar->addWidget(sb_channel);
-    toolBar->addWidget(new QLabel(tr("Max time msec:")));
-    toolBar->addWidget(sb_time_multimeter);
+    testbar->addWidget(new QLabel(tr("Адрес:")));
+    testbar->addWidget(sb_address);
+    testbar->addWidget(new QLabel(tr("Канал:")));
+    testbar->addWidget(sb_channel);
+    testbar->addWidget(new QLabel(tr("Max time msec:")));
+    testbar->addWidget(sb_time_multimeter);
 
-    QToolButton *btn_test_start = add_button(toolBar,
+    QToolButton *btn_test_start = add_button(testbar,
                                              new QToolButton(this),
                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                              "start",
                                              "start");
-    QToolButton *btn_test_stop = add_button(toolBar,
+    QToolButton *btn_test_stop = add_button(testbar,
                                             new QToolButton(this),
                                             qApp->style()->standardIcon(QStyle::SP_MediaStop),
                                             "stop",
@@ -187,7 +187,7 @@ void MainBox::createTestBar(void)
     connect(btn_test_start, SIGNAL(clicked()), this, SLOT(test_start()));
     connect(btn_test_stop,  SIGNAL(clicked()), this, SLOT(test_stop()));
 
-    toolBar->setFixedSize(toolBar->sizeHint());
+    testbar->setFixedSize(testbar->sizeHint());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::find_device(void)

@@ -109,9 +109,12 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    //MainWindow *mw =(MainWindow *)topLevelWidget();
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(!mw) return;
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
     commands.clear();
     CMD command;
@@ -123,12 +126,13 @@ void MainBox::createTestBar(void)
     command.cmd = ID_TEST_5; command.cmd_text = "test 5";   command.func = &MainBox::test_5;  commands.append(command);
     command.cmd = ID_TEST_6; command.cmd_text = "test 6";   command.func = 0;    commands.append(command);
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
+
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     QCheckBox *cb_block = new QCheckBox("block");
-    toolBar->addWidget(cb_block);
+    testbar->addWidget(cb_block);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -137,8 +141,8 @@ void MainBox::createTestBar(void)
         cb_test->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
     }
 
-    toolBar->addWidget(cb_test);
-    QToolButton *frm_choice_test = add_button(toolBar,
+    testbar->addWidget(cb_test);
+    QToolButton *frm_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",

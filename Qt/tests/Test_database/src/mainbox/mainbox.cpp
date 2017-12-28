@@ -61,12 +61,16 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -75,8 +79,8 @@ void MainBox::createTestBar(void)
     cb_test->addItem(TEST_2_TEXT, QVariant(Qt::UserRole + TEST_2));
     cb_test->addItem(TEST_3_TEXT, QVariant(Qt::UserRole + TEST_3));
 
-    toolBar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(toolBar,
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",

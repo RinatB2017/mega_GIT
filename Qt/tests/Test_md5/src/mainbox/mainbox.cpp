@@ -60,16 +60,16 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar(this);
-    toolBar->setObjectName("toolBar");
+    QToolBar *testbar = new QToolBar("testbar", this);
+    testbar->setObjectName("testbar");
 
     QToolButton *btnTest = new QToolButton(this);
     btnTest->setText("test");
     btnTest->setIcon(QIcon::fromTheme(QLatin1String("applications-system")));
 
-    toolBar->addWidget(btnTest);
+    testbar->addWidget(btnTest);
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
 }

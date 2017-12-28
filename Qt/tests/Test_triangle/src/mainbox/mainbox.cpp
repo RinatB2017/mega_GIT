@@ -35,8 +35,6 @@ MainBox::MainBox(QWidget *parent) :
     ui(new Ui::MainBox),
     parent(parent)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -47,24 +45,30 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
     createTestBar();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
+
     QToolButton *btnTest = new QToolButton(this);
     btnTest->setText("test");
     btnTest->setIcon(QIcon::fromTheme(QLatin1String("applications-system")));
 
-    QToolBar *toolBar = new QToolBar(this);
+    QToolBar *testbar = new QToolBar("testbar", this);
+    testbar->setObjectName("testbar");
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw)
-    {
-        mw->addToolBar(Qt::TopToolBarArea, toolBar);
-    }
+    testbar->addWidget(btnTest);
 
-    toolBar->addWidget(btnTest);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
 }

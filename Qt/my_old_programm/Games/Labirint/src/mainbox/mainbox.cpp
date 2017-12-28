@@ -87,22 +87,22 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_new_map = add_button(toolBar,
+    QToolButton *btn_new_map = add_button(testbar,
                                           new QToolButton(this),
                                           qApp->style()->standardIcon(QStyle::SP_FileDialogNewFolder),
                                           "new map",
                                           "new map");
-    QToolButton *btn_load_map = add_button(toolBar,
+    QToolButton *btn_load_map = add_button(testbar,
                                            new QToolButton(this),
                                            qApp->style()->standardIcon(QStyle::SP_DialogOpenButton),
                                            "load map",
                                            "load map");
-    QToolButton *btn_save_map = add_button(toolBar,
+    QToolButton *btn_save_map = add_button(testbar,
                                            new QToolButton(this),
                                            qApp->style()->standardIcon(QStyle::SP_DialogSaveButton),
                                            "save map",
@@ -113,14 +113,14 @@ void MainBox::createTestBar(void)
     sb_interval->setMaximum(10000);
     sb_interval->setObjectName("sb_interval");
 
-    toolBar->addWidget(sb_interval);
+    testbar->addWidget(sb_interval);
 
-    QToolButton *btn_start = add_button(toolBar,
+    QToolButton *btn_start = add_button(testbar,
                                         new QToolButton(this),
                                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                         "start",
                                         "start");
-    QToolButton *btn_stop = add_button(toolBar,
+    QToolButton *btn_stop = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaStop),
                                        "stop",

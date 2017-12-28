@@ -201,8 +201,9 @@ private:
     QList<QWidget *> w_lists;
 
 protected:
+#ifndef BLOCK_WHEEL
     bool eventFilter(QObject*, QEvent* event);
-
+#endif
     void closeEvent(QCloseEvent *);
 };
 //--------------------------------------------------------------------------------

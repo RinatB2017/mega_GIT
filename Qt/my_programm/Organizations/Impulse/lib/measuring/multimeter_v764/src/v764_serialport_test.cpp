@@ -83,15 +83,15 @@ void SerialPort_V764_test::create_fake_toolbar(void)
     connect(cb_hand_value, SIGNAL(toggled(bool)), this, SLOT(hand_data(bool)));
     connect(sb_value, SIGNAL(editingFinished()), this, SLOT(regenerate_value()));
 
-    QToolBar *toolBar = new QToolBar(tr("fake_toolbar"));
-    toolBar->setObjectName("fake_toolbar");
-    toolBar->addWidget(new QLabel(tr("Value")));
-    toolBar->addWidget(sb_value);
-    toolBar->addWidget(cb_hand_value);
+    QToolBar *fake_toolbar = new QToolBar(tr("fake_toolbar"));
+    fake_toolbar->setObjectName("fake_toolbar");
+    fake_toolbar->addWidget(new QLabel(tr("Value")));
+    fake_toolbar->addWidget(sb_value);
+    fake_toolbar->addWidget(cb_hand_value);
 
     hand_data(false);
     //mw->addToolBarBreak();
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, fake_toolbar);
 }
 //--------------------------------------------------------------------------------
 void SerialPort_V764_test::regenerate_value(void)

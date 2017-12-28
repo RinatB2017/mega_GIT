@@ -144,28 +144,28 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
     // qDebug() << "(MainWindow *)" << mw;
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_get_proxies_list = add_button(toolBar,
+    QToolButton *btn_get_proxies_list = add_button(testbar,
                                                    new QToolButton(this),
                                                    QIcon(),
                                                    "get_proxies_list",
                                                    "get_proxies_list");
-    QToolButton *btn_check_proxies_list = add_button(toolBar,
+    QToolButton *btn_check_proxies_list = add_button(testbar,
                                                      new QToolButton(this),
                                                      QIcon(),
                                                      "check_proxies_list",
                                                      "check_proxies_list");
-    QToolButton *btn_walker = add_button(toolBar,
+    QToolButton *btn_walker = add_button(testbar,
                                          new QToolButton(this),
                                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                          "walker",
                                          "walker");
-    QToolButton *btn_stop = add_button(toolBar,
+    QToolButton *btn_stop = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaStop),
                                        "stop",
@@ -174,7 +174,7 @@ void MainBox::createTestBar(void)
     result_progressBar = new QProgressBar(this);
     result_progressBar->setToolTip(tr("result progress"));
 
-    toolBar->addWidget(result_progressBar);
+    testbar->addWidget(result_progressBar);
 
     connect(btn_get_proxies_list, SIGNAL(clicked()), this, SLOT(get_proxies_list()));
     connect(btn_check_proxies_list, SIGNAL(clicked()), this, SLOT(check_proxies_list()));

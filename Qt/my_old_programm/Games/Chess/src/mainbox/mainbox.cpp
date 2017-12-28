@@ -95,11 +95,11 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    btn_test = add_button(toolBar,
+    btn_test = add_button(testbar,
                           new QToolButton(this),
                           qApp->style()->standardIcon(QStyle::SP_CommandLink),
                           "test",
@@ -107,9 +107,9 @@ void MainBox::createTestBar(void)
 
     le_test = new QLineEdit(this);
     le_test->setText("e2e4");
-    toolBar->addWidget(le_test);
+    testbar->addWidget(le_test);
 
-    btn_run = add_button(toolBar,
+    btn_run = add_button(testbar,
                          new QToolButton(this),
                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                          "run",

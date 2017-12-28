@@ -1478,21 +1478,21 @@ void B590::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar B5-90");
-    toolBar->setObjectName("toolbar_B590");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar B5-90");
+    testbar->setObjectName("toolbar_B590");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test B5-90",
                                        "test B5-90");
-    QToolButton *btn_rc_on = add_button(toolBar,
+    QToolButton *btn_rc_on = add_button(testbar,
                                         new QToolButton(this),
                                         QIcon(":/pictures/button_ok.png"),
                                         "ON",
                                         "ON");
-    QToolButton *btn_rc_off = add_button(toolBar,
+    QToolButton *btn_rc_off = add_button(testbar,
                                          new QToolButton(this),
                                          QIcon(":/pictures/button_cancel.png"),
                                          "OFF",
@@ -1523,8 +1523,8 @@ void B590::createTestBar(void)
 
     cb_test->addItem(CMD_TEST_TEXT, QVariant(Qt::UserRole + CMD_TEST));
 
-    toolBar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(toolBar,
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
@@ -1581,11 +1581,11 @@ void B590::createInfoBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar B5-90");
-    toolBar->setObjectName("toolbar_B590");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar B5-90");
+    testbar->setObjectName("toolbar_B590");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_info = add_button(toolBar,
+    QToolButton *btn_info = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "info B5-90",

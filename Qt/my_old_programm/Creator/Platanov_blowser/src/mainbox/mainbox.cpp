@@ -83,8 +83,8 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
     progressBar = new QProgressBar(this);
     progressBar->setFixedWidth(100);
@@ -94,25 +94,27 @@ void MainBox::createTestBar(void)
     address->setText("http://unixforum.org");
 
     if(mw)
-        mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    {
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+    }
 
-    QToolButton *btn_prev = add_button(toolBar,
+    QToolButton *btn_prev = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_ArrowLeft),
                                        "prev",
                                        "prev");
-    QToolButton *btn_next = add_button(toolBar,
+    QToolButton *btn_next = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_ArrowRight),
                                        "prev",
                                        "prev");
-    toolBar->addWidget(address);
-    QToolButton *btn_run = add_button(toolBar,
+    testbar->addWidget(address);
+    QToolButton *btn_run = add_button(testbar,
                                       new QToolButton(this),
                                       qApp->style()->standardIcon(QStyle::SP_BrowserReload),
                                       "run",
                                       "run");
-    toolBar->addWidget(progressBar);
+    testbar->addWidget(progressBar);
 
     browser = new WebView(this);
     connect(browser, SIGNAL(titleChanged(QString)), this, SLOT(setWindowTitle(QString)));
@@ -141,11 +143,11 @@ void MainBox::createTestBar(void)
     connect(btn_facebook, SIGNAL(clicked()), this, SLOT(slot_facebook()));
     connect(btn_platanov, SIGNAL(clicked()), this, SLOT(slot_platanov()));
 
-    toolBar->addWidget(btn_livejournal);
-    toolBar->addWidget(btn_odnoklassniki);
-    toolBar->addWidget(btn_twitter);
-    toolBar->addWidget(btn_facebook);
-    toolBar->addWidget(btn_platanov);
+    testbar->addWidget(btn_livejournal);
+    testbar->addWidget(btn_odnoklassniki);
+    testbar->addWidget(btn_twitter);
+    testbar->addWidget(btn_facebook);
+    testbar->addWidget(btn_platanov);
 
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->addWidget(browser);

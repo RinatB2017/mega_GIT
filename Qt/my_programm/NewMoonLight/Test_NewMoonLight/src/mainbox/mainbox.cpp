@@ -150,9 +150,9 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -161,8 +161,8 @@ void MainBox::createTestBar(void)
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
     }
 
-    toolBar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(toolBar,
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",

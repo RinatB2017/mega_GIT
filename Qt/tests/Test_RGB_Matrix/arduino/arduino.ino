@@ -127,6 +127,11 @@ void draw_led(int x, int y, uint32_t color)
   LED led;
   led.value = color;
 
+#if 1
+  char tmp[16];
+  sprintf(tmp, ":%.2X%.2X%.2X%.2X%.2X\n",x,y,led.body.R,led.body.G,led.body.B);
+  Serial1.print(tmp);
+#else  
   Serial1.print(":");
   PrintHex8(x);
   PrintHex8(y);
@@ -134,6 +139,7 @@ void draw_led(int x, int y, uint32_t color)
   PrintHex8(led.body.G);
   PrintHex8(led.body.B);
   Serial1.println("");
+#endif
 }
 //---------------------------------------------------------------
 unsigned char convert_ascii_to_value(char hi, char lo)

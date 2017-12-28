@@ -1277,6 +1277,7 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
     return tool_button;
 }
 //--------------------------------------------------------------------------------
+#ifndef BLOCK_WHEEL
 bool MyWidget::eventFilter(QObject*, QEvent* event)
 {
     QMouseEvent *mouseEvent = (QMouseEvent *) event;
@@ -1287,6 +1288,7 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
     }
     return false;
 }
+#endif
 //--------------------------------------------------------------------------------
 bool MyWidget::close(void)
 {

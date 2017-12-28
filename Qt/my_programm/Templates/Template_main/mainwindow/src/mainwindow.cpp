@@ -65,21 +65,22 @@ void MainWindow::create_menu(void)
 //--------------------------------------------------------------------------------
 void MainWindow::create_toolbars(void)
 {
-    QToolBar *toolBar = new QToolBar("toolbar", this);
-    if(toolBar == nullptr)
+    QToolBar *toolbar = new QToolBar("toolbar", this);
+    Q_CHECK_PTR(toolbar);
+    if(toolbar == nullptr)
     {
         return;
     }
 
-    toolBar->setObjectName("toolbar");
+    toolbar->setObjectName("toolbar");
 
     QToolButton *btn_exit = new QToolButton(this);
     btn_exit->setIcon(QIcon(":/images/computer.ico"));
     connect(btn_exit,   SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
-    toolBar->addWidget(btn_exit);
+    toolbar->addWidget(btn_exit);
 
-    addToolBar(Qt::TopToolBarArea, toolBar);
+    addToolBar(Qt::TopToolBarArea, toolbar);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::create_central_widget(void)

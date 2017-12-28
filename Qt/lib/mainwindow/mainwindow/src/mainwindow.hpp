@@ -179,7 +179,6 @@ private slots:
 
 #ifndef NO_STYLETOOLBAR
     void setToolBarStyles(void);
-    void dockLocationChanged(Qt::DockWidgetArea area);
 #endif
 
 #ifdef  DEMO
@@ -284,8 +283,12 @@ private:
     void createToolBar(void);
 #endif
 
+#ifndef NO_TOOLBAR
+    QToolBar *toolbar = 0;
+#endif
+
 #ifndef NO_STYLETOOLBAR
-    QToolBar *toolBar = 0;
+    QToolBar *styletoolbar = 0;
     QDockWidget *sd = 0;
     void createStyleToolBar(void);
 #endif
@@ -316,6 +319,7 @@ private:
 #endif
 
 protected:
+    void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);
 #ifndef NO_RESIZE
     void resizeEvent (QResizeEvent * event);

@@ -57,20 +57,24 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    if(mw == nullptr)
+    {
+        return;
+    }
 
-    if(!mw) return;
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_set_clock = add_button(toolBar,
+    QToolButton *btn_set_clock = add_button(testbar,
                                             new QToolButton(this),
                                             qApp->style()->standardIcon(QStyle::SP_ComputerIcon),
                                             "set clock",
                                             "set clock");
 
-    QToolButton *btn_exit = add_button(toolBar,
+    QToolButton *btn_exit = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaStop),
                                        "stop",

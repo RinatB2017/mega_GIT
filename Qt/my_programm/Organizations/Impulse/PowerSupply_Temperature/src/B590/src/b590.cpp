@@ -234,17 +234,17 @@ void B590::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    toolBar->addWidget(new QLabel("Ventilator"));
-    QToolButton *btn_vent_off = add_button(toolBar,
+    testbar->addWidget(new QLabel("Ventilator"));
+    QToolButton *btn_vent_off = add_button(testbar,
                                            new QToolButton(this),
                                            qApp->style()->standardIcon(QStyle::SP_MediaPause),
                                            "off",
                                            "off");
-    QToolButton *btn_vent_auto = add_button(toolBar,
+    QToolButton *btn_vent_auto = add_button(testbar,
                                            new QToolButton(this),
                                            qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                            "auto",

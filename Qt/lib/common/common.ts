@@ -171,11 +171,23 @@
 </context>
 
 <context>
-    <name>QObject</name>
+    <name>MainWindow</name>
     <message>
         <source>log</source>
         <translation>Лог</translation>
     </message>
+    <message>
+        <source>toolbar</source>
+        <translation>Панель инструментов</translation>
+    </message>
+    <message>
+        <source>styletoolbar</source>
+        <translation>Панель стилей</translation>
+    </message>
+</context>
+
+<context>
+    <name>QObject</name>
     <message>
         <source>Styles</source>
         <translation>Стили</translation>

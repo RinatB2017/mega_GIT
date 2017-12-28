@@ -167,8 +167,8 @@ void MainBox::calc_line(qreal center_x,
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     if(mw == nullptr)
@@ -176,20 +176,20 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_on = add_button(toolBar,
+    QToolButton *btn_on = add_button(testbar,
                                      new QToolButton(this),
-                                     QIcon(),   //qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                     QIcon(),
                                      "1",
                                      "1");
-    QToolButton *btn_off = add_button(toolBar,
+    QToolButton *btn_off = add_button(testbar,
                                       new QToolButton(this),
-                                      QIcon(),  //qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                      QIcon(),
                                       "0",
                                       "0");
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "0",

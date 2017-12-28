@@ -155,18 +155,18 @@ void MainBox::createUrlBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar(tr("urlbar"));
-    toolBar->setObjectName("urlbar");
+    QToolBar *urlbar = new QToolBar(tr("urlbar"));
+    urlbar->setObjectName("urlbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, urlbar);
 
     leAddress = new QLineEdit;
     leAddress->setText("http://www.home.net/svow");
     //leAddress->setMaximumWidth(400);
 
-    toolBar->addWidget(leAddress);
+    urlbar->addWidget(leAddress);
 
-    QToolButton *btn_open_url = add_button(toolBar,
+    QToolButton *btn_open_url = add_button(urlbar,
                                            new QToolButton(this),
                                            qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                            "open url",
@@ -177,62 +177,62 @@ void MainBox::createUrlBar(void)
 
     progressBar = new QProgressBar;
     progressBar->setMaximumWidth(100);
-    toolBar->addWidget(progressBar);
+    urlbar->addWidget(progressBar);
 
-    toolBar->addSeparator();
+    urlbar->addSeparator();
 
-    QToolButton *btn_run = add_button(toolBar,
+    QToolButton *btn_run = add_button(urlbar,
                                       new QToolButton(this),
                                       qApp->style()->standardIcon(QStyle::SP_BrowserReload),
                                       "run",
                                       "run");
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(urlbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                        "test",
                                        "test");
-    QToolButton *btn_show_pages = add_button(toolBar,
+    QToolButton *btn_show_pages = add_button(urlbar,
                                              new QToolButton(this),
                                              QIcon(),
                                              "show pages",
                                              "show pages");
-    QToolButton *btn_show_content_data = add_button(toolBar,
+    QToolButton *btn_show_content_data = add_button(urlbar,
                                                     new QToolButton(this),
                                                     QIcon(QLatin1String(":/mainwindow/database.png")),
                                                     "show content_data",
                                                     "show content_data");
-    QToolButton *btn_show_cookies = add_button(toolBar,
+    QToolButton *btn_show_cookies = add_button(urlbar,
                                                new QToolButton(this),
                                                QIcon(QLatin1String(":/mainwindow/cookie.png")),
                                                "show cookies",
                                                "show cookies");
-    QToolButton *btn_test_login = add_button(toolBar,
+    QToolButton *btn_test_login = add_button(urlbar,
                                              new QToolButton(this),
                                              QIcon(QLatin1String(":/mainwindow/preferences-system-login.png")),
                                              "test login",
                                              "test login");
 
-    QToolButton *btn_find_and_append = add_button(toolBar,
+    QToolButton *btn_find_and_append = add_button(urlbar,
                                                   new QToolButton(this),
                                                   QIcon(),
                                                   "find_and_append",
                                                   "find_and_append");
 
-    QToolButton *btn_add_news = add_button(toolBar,
+    QToolButton *btn_add_news = add_button(urlbar,
                                            new QToolButton(this),
                                            QIcon(QLatin1String(":/mainwindow/ucoz_favicon.ico")),
                                            "add news",
                                            "add news");
 
-    QToolButton *btn_del_news = add_button(toolBar,
+    QToolButton *btn_del_news = add_button(urlbar,
                                            new QToolButton(this),
                                            QIcon(QLatin1String(":/mainwindow/ucoz_favicon.ico")),
                                            "del news",
                                            "del news");
 
-    toolBar->addSeparator();
+    urlbar->addSeparator();
 
-    QToolButton *btn_get_rank = add_button(toolBar,
+    QToolButton *btn_get_rank = add_button(urlbar,
                                            new QToolButton(this),
                                            qApp->style()->standardIcon(QStyle::SP_MessageBoxInformation),
                                            "get rank site",

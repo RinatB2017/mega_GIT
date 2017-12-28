@@ -80,10 +80,10 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     cb_command = new QComboBox(this);
     cb_command->addItem("AT", QVariant(Qt::UserRole + AT));
@@ -125,17 +125,17 @@ void MainBox::createTestBar(void)
     le_name = new QLineEdit();
     le_name->setText("HC-05");
 
-    toolBar->addWidget(new QLabel(tr("Command: ")));
-    toolBar->addWidget(cb_command);
-    toolBar->addWidget(new QLabel("Name: "));
-    toolBar->addWidget(le_name);
+    testbar->addWidget(new QLabel(tr("Command: ")));
+    testbar->addWidget(cb_command);
+    testbar->addWidget(new QLabel("Name: "));
+    testbar->addWidget(le_name);
 
-    QToolButton *btn_reset = add_button(toolBar,
+    QToolButton *btn_reset = add_button(testbar,
                                         new QToolButton(this),
                                         qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                         "run",
                                         "run");
-    toolBar->setFixedSize(toolBar->sizeHint());
+    testbar->setFixedSize(testbar->sizeHint());
 
     connect(btn_reset, SIGNAL(clicked()), this, SLOT(run()));
 }

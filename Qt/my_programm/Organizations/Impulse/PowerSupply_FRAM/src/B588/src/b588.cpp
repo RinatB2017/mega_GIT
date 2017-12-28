@@ -353,31 +353,31 @@ void B588::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar B5-88");
-    toolBar->setObjectName("toolbar_B588");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar B5-88");
+    testbar->setObjectName("toolbar_B588");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_read_fram = add_button(toolBar,
+    QToolButton *btn_read_fram = add_button(testbar,
                                             new QToolButton(this),
                                             QIcon(),
                                             "read FRAM",
                                             "read FRAM");
-    QToolButton *btn_save_fram_to_file = add_button(toolBar,
+    QToolButton *btn_save_fram_to_file = add_button(testbar,
                                                     new QToolButton(this),
                                                     QIcon(),
                                                     "save FRAM to file",
                                                     "save FRAM to file");
-    QToolButton *btn_save_data_to_fram = add_button(toolBar,
+    QToolButton *btn_save_data_to_fram = add_button(testbar,
                                                     new QToolButton(this),
                                                     QIcon(),
                                                     "save data to FRAM",
                                                     "save data to FRAM");
-    QToolButton *btn_analize = add_button(toolBar,
+    QToolButton *btn_analize = add_button(testbar,
                                           new QToolButton(this),
                                           QIcon(),
                                           "analize",
                                           "analize");
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        QIcon(),
                                        "test",

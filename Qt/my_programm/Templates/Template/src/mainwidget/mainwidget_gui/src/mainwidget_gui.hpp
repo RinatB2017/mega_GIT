@@ -70,6 +70,8 @@ private:
 
     MainWidget *w = 0;
 
+    QToolBar *testbar = 0;
+
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 

@@ -73,32 +73,34 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(!mw)
+    Q_CHECK_PTR(mw);
+    if(mw ==nullptr)
     {
         return;
     }
 
-    QToolBar *toolBar = new QToolBar(this);
+    QToolBar *testbar = new QToolBar(this);
+    testbar->setObjectName("testbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        QIcon::fromTheme("system-run"), //qApp->style()->standardIcon(QStyle::SP_ComputerIcon),
                                        "test",
                                        "test");
-    QToolButton *btn_open = add_button(toolBar,
+    QToolButton *btn_open = add_button(testbar,
                                        new QToolButton(this),
                                        QIcon::fromTheme("document-open"), //qApp->style()->standardIcon(QStyle::SP_DialogOpenButton),
                                        "open",
                                        "open");
-    QToolButton *btn_close = add_button(toolBar,
+    QToolButton *btn_close = add_button(testbar,
                                         new QToolButton(this),
                                         QIcon::fromTheme("document-close"), //qApp->style()->standardIcon(QStyle::SP_DialogCloseButton),
                                         "close",
                                         "close");
 
-    add_button(toolBar, new QToolButton(this), qApp->style()->standardIcon(QStyle::SP_ArrowLeft), "abc", "xxx");
+    add_button(testbar, new QToolButton(this), qApp->style()->standardIcon(QStyle::SP_ArrowLeft), "abc", "xxx");
 
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
     connect(btn_open, SIGNAL(clicked()), this, SLOT(test()));

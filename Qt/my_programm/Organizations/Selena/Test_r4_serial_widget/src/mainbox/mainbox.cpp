@@ -56,16 +56,20 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
+    Q_CHECK_PTR(parent);
+    MainWindow *mw = (MainWindow *)parent;
+    Q_CHECK_PTR(mw);
+
     QToolButton *btnTest = new QToolButton(this);
     btnTest->setText("test");
     btnTest->setIcon(QIcon::fromTheme(QLatin1String("applications-system")));
 
     QToolBar *toolBar = new QToolBar(this);
-
-    MainWindow *mw = (MainWindow *)parent;
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    toolBar->setObjectName("toolBar");
 
     toolBar->addWidget(btnTest);
+
+    mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
 }

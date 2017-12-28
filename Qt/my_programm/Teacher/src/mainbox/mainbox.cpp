@@ -289,27 +289,27 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_back = add_button(toolBar,
+    QToolButton *btn_back = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward),
                                        "back",
                                        "back");
 
     site_address = new QLineEdit(this);
-    toolBar->addWidget(site_address);
+    testbar->addWidget(site_address);
 
-    QToolButton *btn_set_address = add_button(toolBar,
+    QToolButton *btn_set_address = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "set address",
                                               "set address");
 
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_ComputerIcon),
                                        "test",

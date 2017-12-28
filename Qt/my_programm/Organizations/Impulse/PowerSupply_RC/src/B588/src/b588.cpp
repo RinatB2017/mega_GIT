@@ -84,9 +84,9 @@ void B588::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     //sb_begin = new HexSpinBox();
     sb_begin = new QSpinBox();
@@ -104,24 +104,24 @@ void B588::createTestBar(void)
     toolBar->addWidget(sb_begin);
     toolBar->addWidget(sb_end);
 
-    QToolButton *btn_test_U = add_button(toolBar,
+    QToolButton *btn_test_U = add_button(testbar,
                                          new QToolButton(this),
                                          QIcon(),
                                          "test U",
                                          "test U");
-    QToolButton *btn_test_I = add_button(toolBar,
+    QToolButton *btn_test_I = add_button(testbar,
                                          new QToolButton(this),
                                          QIcon(),
                                          "test I",
                                          "test I");
     toolBar->addSeparator();
 
-    QToolButton *btn_read = add_button(toolBar,
+    QToolButton *btn_read = add_button(testbar,
                                        new QToolButton(this),
                                        QIcon(),
                                        "read points",
                                        "read points");
-    QToolButton *btn_test_temp = add_button(toolBar,
+    QToolButton *btn_test_temp = add_button(testbar,
                                             new QToolButton(this),
                                             QIcon(),
                                             "temperature",

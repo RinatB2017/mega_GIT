@@ -85,34 +85,33 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-
     if(mw == nullptr)
     {
         return;
     }
 
-    QToolBar *toolBar = new QToolBar(tr("testbar"));
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     sb_interval = new QSpinBox(this);
     sb_interval->setMinimum(100);
     sb_interval->setMaximum(60000);
 
-    toolBar->addWidget(new QLabel("interval in msec "));
-    toolBar->addWidget(sb_interval);
-    QToolButton *btn_run = add_button(toolBar,
+    testbar->addWidget(new QLabel("interval in msec "));
+    testbar->addWidget(sb_interval);
+    QToolButton *btn_run = add_button(testbar,
                                       new QToolButton(this),
                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                       "run",
                                       "run");
-    QToolButton *btn_update = add_button(toolBar,
+    QToolButton *btn_update = add_button(testbar,
                                          new QToolButton(this),
                                          qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                          "update",
                                          "update");
-    QToolButton *btn_test = add_button(toolBar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        QIcon(),
                                        "test",
@@ -349,7 +348,9 @@ void MainBox::test(void)
     //static QTextCodec *codec=QTextCodec::codecForName("Ascii");
     //QByteArray str2 = codec->fromUnicode(str);  //.toLocal8Bit();
     QString str = "АБВГД";
+    //QString str = "01234";
     QByteArray str2 = str.toLocal8Bit();
+    //QByteArray str2 = str.toLatin1();
     emit info(QString("%1").arg(str2.length()));
     emit info(QString("%1").arg(str2.toHex().toUpper().data()));
 

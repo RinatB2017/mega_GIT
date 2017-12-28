@@ -99,40 +99,40 @@ void MainBox::createTestBar(void)
         return;
     }
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    btn_refresh_devices = add_button(toolBar,
+    btn_refresh_devices = add_button(testbar,
                                      new QToolButton(this),
                                      qApp->style()->standardIcon(QStyle::SP_BrowserReload),
                                      tr("Обновить порты"),
                                      tr("Обновить порты"));
 
-    toolBar->addWidget(new QLabel(tr("Порт:")));
+    testbar->addWidget(new QLabel(tr("Порт:")));
 
     cb_ports = new QComboBox();
     refresh_devices();
-    toolBar->addWidget(cb_ports);
+    testbar->addWidget(cb_ports);
 
-    btn_open  = add_button(toolBar,
+    btn_open  = add_button(testbar,
                            new QToolButton(this),
                            qApp->style()->standardIcon(QStyle::SP_DialogOpenButton),
                            tr("Открыть порт"),
                            tr("Открыть порт"));
-    btn_close = add_button(toolBar,
+    btn_close = add_button(testbar,
                            new QToolButton(this),
                            qApp->style()->standardIcon(QStyle::SP_DialogCloseButton),
                            tr("Закрыть порт"),
                            tr("Закрыть порт"));
-    btn_load_firmvare  = add_button(toolBar,
+    btn_load_firmvare  = add_button(testbar,
                                     new QToolButton(this),
                                     qApp->style()->standardIcon(QStyle::SP_DialogSaveButton),
                                     tr("Загрузить прошивку"),
                                     tr("Загрузить прошивку"));
 
-    toolBar->setFixedSize(toolBar->sizeHint());
+    testbar->setFixedSize(testbar->sizeHint());
 
     connect(btn_refresh_devices,    SIGNAL(clicked()), this, SLOT(refresh_devices()));
     connect(btn_open,               SIGNAL(clicked()), this, SLOT(open()));

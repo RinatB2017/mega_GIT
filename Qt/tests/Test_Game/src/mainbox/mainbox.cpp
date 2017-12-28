@@ -91,6 +91,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
     if(mw == nullptr)
     {
         return;
@@ -105,9 +106,9 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
     commands.append({ ID_TEST_6, "test 6", 0 });
 
-    QToolBar *toolBar = new QToolBar("testbar");
-    toolBar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, toolBar);
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -116,8 +117,8 @@ void MainBox::createTestBar(void)
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
     }
 
-    toolBar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(toolBar,
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
@@ -136,9 +137,9 @@ void MainBox::createTestBar(void)
     btn_update->setObjectName("btn_update");
     btn_update->setText("UPDATE");
 
-    toolBar->addWidget(btn_timer_start);
-    toolBar->addWidget(btn_timer_stop);
-    toolBar->addWidget(btn_update);
+    testbar->addWidget(btn_timer_start);
+    testbar->addWidget(btn_timer_stop);
+    testbar->addWidget(btn_update);
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 

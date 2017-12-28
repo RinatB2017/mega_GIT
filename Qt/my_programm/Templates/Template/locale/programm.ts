@@ -7,5 +7,9 @@
         <source>PushButton</source>
         <translation>Проба</translation>
     </message>
+    <message>
+        <source>testbar</source>
+        <translation>Тестовая панель</translation>
+    </message>
 </context>
 </TS>

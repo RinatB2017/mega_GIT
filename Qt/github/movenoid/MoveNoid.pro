@@ -25,6 +25,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
+
+unix:!macx {
+    OBJECTS_DIR = /dev/shm/my_programm/$$TARGET/obj
+    MOC_DIR     = /dev/shm/my_programm/$$TARGET/moc
+    UI_DIR      = /dev/shm/my_programm/$$TARGET/ui
+    RCC_DIR     = /dev/shm/my_programm/$$TARGET/rc
+}
 
 SOURCES += \
     main.cpp \
@@ -87,3 +98,6 @@ unix {
     #PKGCONFIG += box2d
     LIBS    += -lBox2D
 }
+
+VPATH = $$INCLUDEPATH
+

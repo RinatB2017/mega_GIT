@@ -41,6 +41,9 @@ int main(int argc, char *argv[])
 #endif
 
     qApp->setPalette(palette);
+
+    QFont font("Liberation Serif", 9);
+    qApp->setFont(font);
 #endif
 
     MainWindow w;

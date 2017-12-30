@@ -91,9 +91,9 @@ int main(int argc, char *argv[])
                     QMenuBar::item:pressed {border: 1px solid #505050; border-bottom: 1px; border-top-left-radius: 3px; border-top-right-radius: 3px; background: #404040; color: white;}\
                     QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white;}\
                     QDialog {border: 1px solid palette(mid);}");
-                #endif
+#endif
 
-                    a.setStyleSheet(a.styleSheet() + "QWidget {font-size: 8pt}");
+    a.setStyleSheet(a.styleSheet() + "QWidget {font-size: 8pt}");
 
 
 #if 1

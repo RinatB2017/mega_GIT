@@ -24,7 +24,6 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include <QDebug>
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif

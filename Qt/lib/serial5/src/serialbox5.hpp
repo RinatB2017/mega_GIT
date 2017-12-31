@@ -21,16 +21,18 @@
 #ifndef SERIALBOX5_HPP
 #define SERIALBOX5_HPP
 //--------------------------------------------------------------------------------
-#include <QByteArray>
-#include <QDateTime>
-#include <QWidget>
-#include <QString>
-#include <QFrame>
-//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
-#   include <QSerialPortInfo>
-#   include <QSerialPort>
+#   include <QtWidgets>
+#else
+#   include <QByteArray>
+#   include <QDateTime>
+#   include <QWidget>
+#   include <QString>
+#   include <QFrame>
 #endif
+//--------------------------------------------------------------------------------
+#include <QSerialPortInfo>
+#include <QSerialPort>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

@@ -22,7 +22,7 @@
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
-#include <QtWidgets>
+#   include <QtWidgets>
 #else
 #include <QSystemTrayIcon>
 #include <QDesktopWidget>

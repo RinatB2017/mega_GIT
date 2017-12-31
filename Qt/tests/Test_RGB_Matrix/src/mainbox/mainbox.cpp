@@ -18,20 +18,27 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QGridLayout>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QGridLayout>
+#   include <QVBoxLayout>
+#   include <QMessageBox>
+#   include <QTime>
 
-#include <QAction>
-#include <QMenu>
+#   include <QAction>
+#   include <QMenu>
 
-#include <QToolButton>
-#include <QToolBar>
-#include <QSpinBox>
-#include <QTimer>
-#include <QLabel>
-#include <QDebug>
+#   include <QToolButton>
+#   include <QToolBar>
+#   include <QSpinBox>
+#   include <QTimer>
+#   include <QLabel>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -45,6 +52,8 @@
 //--------------------------------------------------------------------------------
 #include "palette.hpp"
 #include "display.hpp"
+//--------------------------------------------------------------------------------
+//#include "font-5x7.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -324,13 +333,14 @@ void MainBox::update(void)
     is_busy = false;
 }
 //--------------------------------------------------------------------------------
-//#include "font-5x7.hpp"
-#include <QPixmap>
 void MainBox::test(void)
 {
-    QFont font("Terminal", 5);
+    QFont *font = new QFont("Terminal", 5);
+    //QFont *font = new QFont("Monospace", 5);
+    Q_CHECK_PTR(font);
+
     QString text = "Hello, world! ПРИВЕТ, МИР!";
-    QFontMetrics fm(font);
+    QFontMetrics fm(*font);
     int w = fm.width(text);
     int h = fm.height();
 
@@ -340,16 +350,26 @@ void MainBox::test(void)
     painter.begin(&picture);
     painter.setPen(QPen(Qt::white));
     painter.fillRect(0, 0, w, h, QBrush(Qt::black));
-    painter.setFont(font);
+    painter.setFont(*font);
     painter.drawText(0, 0, w, h, Qt::AlignCenter, text);
     painter.end();
 
     emit info(QString("w = %1").arg(picture.width()));
     emit info(QString("h = %1").arg(picture.height()));
-    emit info("OK");
 
+#if 0
+    display->resize(w, h);
+    display->clear();
+    for(int y=1; y<h; y++)
+    {
+        for(int x=0; x<w; x++)
+        {
+            display->set_color(x, y, picture.pixelColor(x, y));
+        }
+    }
+#else
     control_display->resize(w, h);
-    control_display->resize_led(10, 10);
+    control_display->resize_led(8, 8);
     control_display->clear();
     for(int y=1; y<h; y++)
     {
@@ -358,6 +378,8 @@ void MainBox::test(void)
             control_display->set_color(x, y, picture.pixelColor(x, y));
         }
     }
+#endif
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::run(bool state)

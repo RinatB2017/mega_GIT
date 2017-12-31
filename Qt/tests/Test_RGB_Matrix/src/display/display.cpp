@@ -31,6 +31,14 @@ Display::Display(int max_x,
                  QWidget *parent) :
     MyWidget(parent)
 {
+    for(int y=0; y<MAX_DISPLAY_Y; y++)
+    {
+        for(int x=0; x<MAX_DISPLAY_X; x++)
+        {
+            diod[x][y] = 0;
+        }
+    }
+
     create_display(max_x, max_y);
 
     emit info(QString("max_x = %1").arg(max_x));

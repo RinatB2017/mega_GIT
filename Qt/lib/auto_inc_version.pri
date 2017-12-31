@@ -11,5 +11,5 @@ win32 {
 }
 versiontarget.depends = Makefile
 
-PRE_TARGETDEPS += $$VERSION_HEADER
+PRE_TARGETDEPS      += $$VERSION_HEADER
 QMAKE_EXTRA_TARGETS += versiontarget

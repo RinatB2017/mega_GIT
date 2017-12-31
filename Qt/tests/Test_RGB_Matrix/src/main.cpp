@@ -28,48 +28,39 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "qtsingleapplication.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-
     set_codecs();
+#if 1
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    MyApplication app(argc, argv);
+#endif
 
-    QTranslator translator;
-    translator.load(":/ru_RU.qm");
-    app.installTranslator(&translator);
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
+    Q_CHECK_PTR(splash);
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
 
-#if 0
-    //Light
-    QPalette palette;
-
-    palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000)));
-    palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4)));
-    palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff)));
-    palette.setBrush(QPalette::Text,        QBrush(QColor((QRgb)0x000000)));
-    palette.setBrush(QPalette::BrightText,  QBrush(QColor((QRgb)0xffffff)));
-    palette.setBrush(QPalette::ButtonText,  QBrush(QColor((QRgb)0x000000)));
-    palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff)));
-    palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4)));
-    palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040)));
-
-    main_window->setPalette(palette);
-#endif
-
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
 
-    //qApp->setPalette(qApp->style()->standardPalette());
     main_window->show();
 
     splash->finish(main_window);

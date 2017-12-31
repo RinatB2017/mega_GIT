@@ -23,7 +23,7 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define MAX_DISPLAY_X    128
+#define MAX_DISPLAY_X    256
 #define MAX_DISPLAY_Y    32
 //--------------------------------------------------------------------------------
 #define DEFAULT_X       16
@@ -68,13 +68,17 @@ public:
 
     void clear(void);
 
+    bool resize(int w, int h);
+    bool resize_led(int w, int h);
+
 private:
-    Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];
+    Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y] = { 0 };
     int max_x = 0;
     int max_y = 0;
 
     bool flag_active = false;
 
+    bool create_display(int w, int h);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

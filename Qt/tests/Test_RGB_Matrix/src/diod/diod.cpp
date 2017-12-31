@@ -101,6 +101,16 @@ void Diod::set_flag_is_palette(bool value)
     is_palette = value;
 }
 //--------------------------------------------------------------------------------
+bool Diod::resize(int w, int h)
+{
+    if(w <= 0)  return false;
+    if(h <= 0)  return false;
+
+    setFixedSize(w, h);
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 void Diod::mousePressEvent(QMouseEvent *event)
 {
     QColorDialog *dlg = 0;

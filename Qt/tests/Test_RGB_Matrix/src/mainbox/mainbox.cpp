@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -78,7 +78,7 @@ void MainBox::init(void)
     createDisplayBox();
     createTimer();
 
-    setFixedSize(sizeHint());
+    //setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -179,13 +179,13 @@ void MainBox::createDisplayBox(void)
     connect(palette,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(palette,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addWidget(palette);
-    hbox->addWidget(display);
-    hbox->addStretch(1);
+    QScrollArea *area = new QScrollArea(this);
+    area->setWidget(display);
+    area->setWidgetResizable(true);
 
-    ui->gridLayout->addLayout(hbox,             0,  1);
-    ui->gridLayout->addWidget(control_display,  1,  1);
+    ui->gridLayout->addWidget(palette,          0,  1);
+    ui->gridLayout->addWidget(area,             0,  2);
+    ui->gridLayout->addWidget(control_display,  1,  2);
 }
 //--------------------------------------------------------------------------------
 #if 0
@@ -324,73 +324,40 @@ void MainBox::update(void)
     is_busy = false;
 }
 //--------------------------------------------------------------------------------
-#include "font-5x7.hpp"
-union CHAR
-{
-    uint8_t value;
-    struct BODY
-    {
-        uint8_t b0:1;
-        uint8_t b1:1;
-        uint8_t b2:1;
-        uint8_t b3:1;
-        uint8_t b4:1;
-        uint8_t b5:1;
-        uint8_t b6:1;
-        uint8_t b7:1;
-    } bites;
-};
-
-#include "sleeper.h"
+//#include "font-5x7.hpp"
+#include <QPixmap>
 void MainBox::test(void)
 {
-#if 1
-    //static QTextCodec *codec=QTextCodec::codecForName("Ascii");
-    //QByteArray str2 = codec->fromUnicode(str);  //.toLocal8Bit();
-    QString str = "АБВГД";
-    //QString str = "01234";
-    QByteArray str2 = str.toLocal8Bit();
-    //QByteArray str2 = str.toLatin1();
-    emit info(QString("%1").arg(str2.length()));
-    emit info(QString("%1").arg(str2.toHex().toUpper().data()));
+    QFont font("Terminal", 5);
+    QString text = "Hello, world! ПРИВЕТ, МИР!";
+    QFontMetrics fm(font);
+    int w = fm.width(text);
+    int h = fm.height();
 
-#else
-    int y = 0;
-    int begin_addr = 0;
-    int end_address = begin_addr + 5;
+    QImage picture(w, h, QImage::Format_Mono);
 
-    block_this_button(true);
-    for(int i=0; i<256; i++)
-    {
-        begin_addr = i * 5;
-        end_address = begin_addr + 5;
-        y = 0;
+    QPainter painter;
+    painter.begin(&picture);
+    painter.setPen(QPen(Qt::white));
+    painter.fillRect(0, 0, w, h, QBrush(Qt::black));
+    painter.setFont(font);
+    painter.drawText(0, 0, w, h, Qt::AlignCenter, text);
+    painter.end();
 
-        //emit info(QString("%1").arg(i));
-        for(int n=begin_addr; n<end_address; n++)
-        {
-            CHAR s;
-            if(i<128 || i>=(128 + 32*2))
-                s.value = font_data[n];
-            else
-                s.value = font_data_rus[n - 128 * 5];
-
-            control_display->set_color(y, 0, s.bites.b0 ? QColor(Qt::white) : QColor(Qt::black));
-            control_display->set_color(y, 1, s.bites.b1 ? QColor(Qt::white) : QColor(Qt::black));
-            control_display->set_color(y, 2, s.bites.b2 ? QColor(Qt::white) : QColor(Qt::black));
-            control_display->set_color(y, 3, s.bites.b3 ? QColor(Qt::white) : QColor(Qt::black));
-            control_display->set_color(y, 4, s.bites.b4 ? QColor(Qt::white) : QColor(Qt::black));
-            control_display->set_color(y, 5, s.bites.b5 ? QColor(Qt::white) : QColor(Qt::black));
-            control_display->set_color(y, 6, s.bites.b6 ? QColor(Qt::white) : QColor(Qt::black));
-            control_display->set_color(y, 7, s.bites.b7 ? QColor(Qt::white) : QColor(Qt::black));
-            y++;
-        }
-        wait(250);
-        control_display->clear();
-    }
-    block_this_button(false);
+    emit info(QString("w = %1").arg(picture.width()));
+    emit info(QString("h = %1").arg(picture.height()));
     emit info("OK");
-#endif
+
+    control_display->resize(w, h);
+    control_display->resize_led(10, 10);
+    control_display->clear();
+    for(int y=1; y<h; y++)
+    {
+        for(int x=0; x<w; x++)
+        {
+            control_display->set_color(x, y, picture.pixelColor(x, y));
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::run(bool state)

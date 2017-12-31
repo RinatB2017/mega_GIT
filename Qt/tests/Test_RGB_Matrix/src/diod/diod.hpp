@@ -48,6 +48,8 @@ public:
     void set_right_btn_active(bool value);
     void set_flag_is_palette(bool value);
 
+    bool resize(int w, int h);
+
 private:
     uint8_t R_color = 0;
     uint8_t G_color = 0;

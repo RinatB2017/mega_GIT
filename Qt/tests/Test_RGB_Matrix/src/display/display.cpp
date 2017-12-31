@@ -31,13 +31,23 @@ Display::Display(int max_x,
                  QWidget *parent) :
     MyWidget(parent)
 {
-    if(max_x > MAX_DISPLAY_X)   max_x = MAX_DISPLAY_X;
-    if(max_x <= 0)              max_x = DEFAULT_X;
-    if(max_y > MAX_DISPLAY_Y)   max_y = MAX_DISPLAY_Y;
-    if(max_y <= 0)              max_y = DEFAULT_Y;
+    create_display(max_x, max_y);
 
-    this->max_x = max_x;
-    this->max_y = max_y;
+    emit info(QString("max_x = %1").arg(max_x));
+    emit info(QString("max_y = %1").arg(max_y));
+}
+//--------------------------------------------------------------------------------
+bool Display::create_display(int w, int h)
+{
+    if(w > MAX_DISPLAY_X)   w = MAX_DISPLAY_X;
+    if(w <= 0)              w = DEFAULT_X;
+    if(h > MAX_DISPLAY_Y)   h = MAX_DISPLAY_Y;
+    if(h <= 0)              h = DEFAULT_Y;
+
+    this->max_x = w;
+    this->max_y = h;
+
+    emit debug(QString("create_display(%1, %2)").arg(w).arg(h));
 
     QGridLayout *grid = new QGridLayout();
     grid->setMargin(0);
@@ -55,11 +65,13 @@ Display::Display(int max_x,
     }
 
     setLayout(grid);
+    adjustSize();
+    //setFixedSize(sizeHint());
 
-    setFixedSize(sizeHint());
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    emit info(QString("max_x = %1").arg(max_x));
-    emit info(QString("max_y = %1").arg(max_y));
+    update();
+    return true;
 }
 //--------------------------------------------------------------------------------
 void Display::set_left_btn_active(bool value)
@@ -101,7 +113,7 @@ void Display::set_data(QByteArray data)
         {
             diod[x][y]->set_color((uint8_t)data[index],
                                   (uint8_t)data[index+1],
-                                  (uint8_t)data[index+2]);
+                    (uint8_t)data[index+2]);
             index+=3;
         }
     }
@@ -157,7 +169,7 @@ bool Display::set_color(int x,
     }
     if(y > max_y)
     {
-        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        emit error("Display::set_color: y > MAX_DISPLAY_Y");
         return false;
     }
 
@@ -192,7 +204,7 @@ bool Display::set_color(int x,
     }
     if(y > max_y)
     {
-        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        emit error("Display::set_color: y > MAX_DISPLAY_Y");
         return false;
     }
 
@@ -266,7 +278,7 @@ bool Display::get_G(int x, int y, uint8_t *value)
     }
     if(y > max_y)
     {
-        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        emit error("Display::set_color: y > MAX_DISPLAY_Y");
         return false;
     }
     *value = diod[x][y]->get_G();
@@ -293,7 +305,7 @@ bool Display::get_B(int x, int y, uint8_t *value)
     }
     if(y > max_y)
     {
-        emit error("Display::set_color: y > MAX_DISPLAY_X");
+        emit error("Display::set_color: y > MAX_DISPLAY_Y");
         return false;
     }
     *value = diod[x][y]->get_B();
@@ -333,6 +345,50 @@ void Display::save_setting(void)
     settings->endGroup();
 
     settings->deleteLater();
+}
+//--------------------------------------------------------------------------------
+bool Display::resize(int w, int h)
+{
+    if(w < 0)
+    {
+        emit error("Display::resize: w < 0");
+        return  false;
+    }
+    if(w > MAX_DISPLAY_X)
+    {
+        emit error("Display::resize: w > MAX_DISPLAY_X");
+        return false;
+    }
+
+    if(h < 0)
+    {
+        emit error("Display::resize: h < 0");
+        return false;
+    }
+    if(h > MAX_DISPLAY_Y)
+    {
+        emit error("Display::resize: h > MAX_DISPLAY_Y");
+        return false;
+    }
+
+    qDeleteAll(children());
+
+    return create_display(w, h);
+}
+//--------------------------------------------------------------------------------
+bool Display::resize_led(int w, int h)
+{
+    for(int y=0; y<MAX_DISPLAY_Y; y++)
+    {
+        for(int x=0; x<MAX_DISPLAY_X; x++)
+        {
+            if(diod[x][y])
+            {
+                diod[x][y]->resize(w, h);
+            }
+        }
+    }
+    return true;
 }
 //--------------------------------------------------------------------------------
 void Display::updateText(void)

@@ -30,12 +30,11 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
-//#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QtMath>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "b590_serialport_test.hpp"

@@ -33,7 +33,10 @@
 #include <QSpinBox>
 #include <QVariant>
 #include <QTimer>
-#include <QDebug>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mywidget.hpp"

@@ -20,9 +20,12 @@
 **********************************************************************************/
 #include <stdint.h>
 #include <QObject>
-#include <QDebug>
 #include <QFile>
 #include <qmath.h>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "B590_fram.hpp"
 //--------------------------------------------------------------------------------
@@ -35,10 +38,12 @@ B590_Fram::B590_Fram(QObject *parent) :
 void B590_Fram::init(void)
 {
     for(int n=0; n<MAX_ADDRESS_FRAM_B590; n++) fram_data[n]=0;
-    bool ok = false;
+    //bool ok = false;
     //ok = read_fram_from_file(":/fram/fram.dat");
-    ok = read_fram_from_default_data();
+    read_fram_from_default_data();
+#ifdef QT_DEBUG
     qDebug() << "read_fram_from_default_data" << ok;
+#endif
 }
 //--------------------------------------------------------------------------------
 bool B590_Fram::read_fram_from_file(const QString &filename)

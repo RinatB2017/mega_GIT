@@ -23,8 +23,11 @@
 #include <QThread>
 #include <QAction>
 #include <QTimer>
-#include <QDebug>
 #include <QMenu>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "logdock.hpp"
 //#include "logdock_options.hpp"

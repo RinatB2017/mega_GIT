@@ -7,7 +7,9 @@
 #include <QPushButton>
 #include <QStyle>
 //--------------------------------------------------------------------------------
-#include <QDebug>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "helpbrowser.hpp" 
 #include "defines.hpp"

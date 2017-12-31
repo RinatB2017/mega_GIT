@@ -22,10 +22,13 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QComboBox>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "b590_powersupply.hpp"
 //--------------------------------------------------------------------------------
@@ -84,7 +87,9 @@ void Find_powersupply::find(void)
     {
         if(model->item(i)->checkState() == Qt::Checked)
         {
+#ifdef QT_DEBUG
             qDebug() << model->item(i)->text();
+#endif
         }
     }
 }

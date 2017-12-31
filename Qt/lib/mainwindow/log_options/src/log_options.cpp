@@ -23,7 +23,9 @@
 #include <QDialog>
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include <QDebug>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "log_options.hpp"
 #include "ui_log_options.h"

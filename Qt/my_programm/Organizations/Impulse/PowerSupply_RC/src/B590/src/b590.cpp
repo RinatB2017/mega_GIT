@@ -24,9 +24,12 @@
 #include <QPushButton>
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 #include <QTimer>
 #include <QMenu>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_b590.h"
 //--------------------------------------------------------------------------------

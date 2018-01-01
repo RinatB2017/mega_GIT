@@ -61,6 +61,7 @@ void MainBox::init(void)
 
     //createTestBar();
 
+    ui->serial_widget->set_caption("RS-485");
     ui->serial_widget->add_menu(2);
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));

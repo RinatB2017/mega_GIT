@@ -29,7 +29,7 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -42,9 +42,13 @@ int main(int argc, char *argv[])
         if(app.sendMessage("Wake up!")) return 0;
     }
 
-    QTranslator translator;
-    translator.load(":/ru_RU.qm");
-    app.installTranslator(&translator);
+//    QTranslator translator;
+//    translator.load(":/ru_RU.qm");
+//    app.installTranslator(&translator);
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");

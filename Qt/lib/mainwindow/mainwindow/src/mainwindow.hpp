@@ -306,13 +306,14 @@ private:
     QAction *a_is_shows_error = 0;
     QAction *a_is_shows_trace = 0;
 
+#endif
+
     QMenu *m_themes = 0;
 
     QAction *a_system_theme = 0;
     QAction *a_light_theme = 0;
     QAction *a_dark_theme = 0;
     QAction *a_blue_theme = 0;
-#endif
 
 #ifdef  DEMO
     void check_date(void);

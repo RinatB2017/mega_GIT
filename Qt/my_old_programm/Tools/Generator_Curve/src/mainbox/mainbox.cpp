@@ -32,12 +32,8 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    generator(0),
-    serial(0)
+    ui(new Ui::MainBox)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -53,13 +49,17 @@ MainBox::~MainBox()
     }
 
     delete ui;
+#ifdef QT_DEBUG
     qDebug() << "~MainBox()";
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
     generator = new Generator_Curve(this);
-    serial = new SerialBox5(this, tr("RS-232"));
+    serial = new SerialBox5(this, "RS-232");
 
     ui->layout_generator->addWidget(generator);
     ui->layout_serial->addWidget(serial);

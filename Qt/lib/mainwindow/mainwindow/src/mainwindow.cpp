@@ -358,31 +358,6 @@ void MainWindow::createMenus(void)
     a_is_shows_error = new QAction(m_optionsMenu);
     a_is_shows_trace = new QAction(m_optionsMenu);
 
-    m_themes = new QMenu(m_optionsMenu);
-    m_themes->setTitle(tr("Themes"));
-    m_themes->setStatusTip(tr("Themes"));
-    m_themes->setToolTip(tr("Themes"));
-
-    a_system_theme = new QAction(m_themes);
-    a_light_theme = new QAction(m_themes);
-    a_dark_theme = new QAction(m_themes);
-    a_blue_theme = new QAction(m_themes);
-
-    a_system_theme->setText(tr("System theme"));
-    a_light_theme->setText(tr("Light theme"));
-    a_dark_theme->setText(tr("Dark theme"));
-    a_blue_theme->setText(tr("Blue theme"));
-
-    m_themes->addAction(a_system_theme);
-    m_themes->addAction(a_light_theme);
-    m_themes->addAction(a_dark_theme);
-    m_themes->addAction(a_blue_theme);
-
-    connect(a_system_theme,     SIGNAL(triggered(bool)),    this,   SLOT(set_system_palette()));
-    connect(a_light_theme,      SIGNAL(triggered(bool)),    this,   SLOT(set_light_palette()));
-    connect(a_dark_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_dark_palette()));
-    connect(a_blue_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_blue_palette()));
-
     connect(a_is_shows_info,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_info(bool)));
     connect(a_is_shows_debug,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_debug(bool)));
     connect(a_is_shows_error,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_error(bool)));
@@ -415,8 +390,36 @@ void MainWindow::createMenus(void)
     m_optionsMenu->addAction(a_is_shows_trace);
 
     m_optionsMenu->addSeparator();
-    m_optionsMenu->addMenu(m_themes);
 #endif
+
+    m_themes = new QMenu(m_optionsMenu);
+    m_themes->setTitle(tr("Themes"));
+    m_themes->setStatusTip(tr("Themes"));
+    m_themes->setToolTip(tr("Themes"));
+
+    a_system_theme = new QAction(m_themes);
+    a_light_theme = new QAction(m_themes);
+    a_dark_theme = new QAction(m_themes);
+    a_blue_theme = new QAction(m_themes);
+
+    a_system_theme->setText(tr("System theme"));
+    a_light_theme->setText(tr("Light theme"));
+    a_dark_theme->setText(tr("Dark theme"));
+    a_blue_theme->setText(tr("Blue theme"));
+
+    m_themes->addAction(a_system_theme);
+    m_themes->addAction(a_light_theme);
+    m_themes->addAction(a_dark_theme);
+    m_themes->addAction(a_blue_theme);
+
+    connect(a_system_theme,     SIGNAL(triggered(bool)),    this,   SLOT(set_system_palette()));
+    connect(a_light_theme,      SIGNAL(triggered(bool)),    this,   SLOT(set_light_palette()));
+    connect(a_dark_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_dark_palette()));
+    connect(a_blue_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_blue_palette()));
+
+    m_optionsMenu->addMenu(m_themes);
+
+    m_optionsMenu->addSeparator();
     m_optionsMenu->addSeparator();
 #ifndef ONLY_ENGLISH
     m_langMenu = add_new_menu(m_optionsMenu, "Language", new QIcon(QPixmap(ICON_LANG)));
@@ -505,7 +508,6 @@ void MainWindow::updateText(void)
     btnAbout->setToolTip(tr("About"));
     btnHelp->setToolTip(tr("Help"));
 
-#ifndef NO_LOG
     m_themes->setTitle(tr("Themes"));
     m_themes->setStatusTip(tr("Themes"));
     m_themes->setToolTip(tr("Themes"));
@@ -514,7 +516,6 @@ void MainWindow::updateText(void)
     a_light_theme->setText(tr("Light theme"));
     a_dark_theme->setText(tr("Dark theme"));
     a_blue_theme->setText(tr("Blue theme"));
-#endif
 #endif
 }
 //--------------------------------------------------------------------------------

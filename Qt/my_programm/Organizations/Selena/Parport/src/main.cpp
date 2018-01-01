@@ -25,7 +25,7 @@
 #include "parportbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

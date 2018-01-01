@@ -41,14 +41,23 @@ union SHORT_TO_BYTES
 };
 //--------------------------------------------------------------------------------
 Generator_Curve::Generator_Curve(QWidget *parent) :
-    MyWidget(parent),
-    parent(parent),
-    index(0)
+    MyWidget(parent)
 {
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);
     hbox->setSpacing(0);
 
+    hbox->addWidget(add_frame());
+    hbox->addWidget(add_grapher());
+    setLayout(hbox);
+
+    load_setting();
+    init_timer();
+    updateText();
+}
+//--------------------------------------------------------------------------------
+QWidget *Generator_Curve::add_frame(void)
+{
     QFrame *frame = new QFrame(this);
 
     btnPower = new QPushButton(this);
@@ -76,8 +85,6 @@ Generator_Curve::Generator_Curve(QWidget *parent) :
     knob_Interval->setScaleMaxMinor(10);
     knob_Interval->setValue(1000);
 
-    updateText();
-
     connect(btnSinus, SIGNAL(clicked()), this, SLOT(gen_sinus()));
     connect(btnTriangle, SIGNAL(clicked()), this, SLOT(gen_triangle()));
     connect(btnSaw, SIGNAL(clicked()), this, SLOT(gen_saw()));
@@ -91,28 +98,35 @@ Generator_Curve::Generator_Curve(QWidget *parent) :
     vbox->addWidget(btnMeandr);
     vbox->addWidget(group);
     vbox->addWidget(knob_Interval);
-    vbox->addStretch();
 
     frame->setLayout(vbox);
+    frame->setFixedSize(frame->sizeHint());
 
-    hbox->addWidget(frame);
+    frame->setFrameStyle(QFrame::Box | QFrame::Raised);
 
+    return frame;
+}
+//--------------------------------------------------------------------------------
+QWidget *Generator_Curve::add_grapher(void)
+{
+    QWidget *w = new QWidget(this);
+    QHBoxLayout *sl = new QHBoxLayout;
     for(int n=0; n<MAX_SLIDER; n++)
     {
         sliders[n] = new QSlider(Qt::Vertical);
         sliders[n]->setMinimum(MIN_VALUE);
         sliders[n]->setMaximum(MAX_VALUE);
-        hbox->addWidget(sliders[n]);
+        sl->addWidget(sliders[n]);
 
         connect(sliders[n], SIGNAL(sliderReleased()), this, SLOT(update_values()));
     }
-    hbox->addStretch();
+    w->setLayout(sl);
 
-    setLayout(hbox);
+    QScrollArea *area = new QScrollArea(this);
+    area->setWidgetResizable(true);
+    area->setWidget(w);
 
-    load_setting();
-
-    init_timer();
+    return area;
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::start(bool state)

@@ -64,6 +64,8 @@ public:
 
     QByteArray readAll(void);
 
+    void set_caption(QString value);
+
     qint64 bytesAvailable(void);
     qint64 write ( const char *data );
 

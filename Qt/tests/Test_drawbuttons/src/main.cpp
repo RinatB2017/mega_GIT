@@ -31,7 +31,7 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "codecs.h"
 
 #include <QPushButton>
 #include <QMdiSubWindow>

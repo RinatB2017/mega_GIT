@@ -75,6 +75,12 @@ SerialBox5_lite::~SerialBox5_lite()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+void SerialBox5_lite::set_caption(QString value)
+{
+    caption = value;
+    o_name = value;
+}
+//--------------------------------------------------------------------------------
 qint64 SerialBox5_lite::bytesAvailable(void)
 {
     return serial5->bytesAvailable();

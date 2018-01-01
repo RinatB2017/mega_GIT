@@ -10,7 +10,7 @@
 class Settings;
 class QTimer;
 //--------------------------------------------------------------------------------
-#define MAX_SLIDER  32
+#define MAX_SLIDER  100
 #define MIN_VALUE   0
 #define MAX_VALUE   1024
 //--------------------------------------------------------------------------------
@@ -47,11 +47,10 @@ private slots:
     void start(bool state);
 
 private:
-    QWidget *parent = 0;
     QTimer *timer = 0;
     QSlider *sliders[MAX_SLIDER];
     int values[MAX_SLIDER];
-    int index;
+    int index = 0;
     QPushButton *btnPower = 0;
     QPushButton *btnSinus = 0;
     QPushButton *btnTriangle = 0;
@@ -65,6 +64,9 @@ private:
     QwtKnob *knob_Interval = 0;
 
     void init_timer(void);
+
+    QWidget *add_frame(void);
+    QWidget *add_grapher(void);
 
     void load_setting(void);
     void save_setting(void);

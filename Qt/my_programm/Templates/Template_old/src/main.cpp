@@ -39,7 +39,7 @@
 #endif
 #include "log_to_file.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include "test.hpp"
@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/logo/pinguin.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_CHECK_PTR(splash);
     splash->show();
 
     qApp->processEvents();

@@ -26,6 +26,9 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(":/images/computer.ico"));
 
     MainWindow *w = new MainWindow();

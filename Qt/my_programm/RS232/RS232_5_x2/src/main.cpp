@@ -33,13 +33,22 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "qtsingleapplication.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-
     set_codecs();
+#if 1
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    MyApplication app(argc, argv);
+#endif
 
     QTranslator translator;
     translator.load(":/ru_RU.qm");
@@ -51,22 +60,23 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
     Q_CHECK_PTR(splash);
+
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
 
     QFrame *frame = new QFrame;
     Q_CHECK_PTR(frame);
+
     splash->showMessage("init RS-232_5 (1)...");
     SerialBox5 *serial = new SerialBox5(main_window->getThis(), "RS-232_5 (1)", "RS-232_1");
     serial->add_menu(2);
 
     splash->showMessage("init RS-232_5 (2)...");
-    SerialBox5_lite *serial2 = new SerialBox5_lite(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
-    serial2->setFixedSize(serial2->sizeHint());
+    SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
     serial2->add_menu(4);
 
-#if 1
+#if 0
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(serial);
     vbox->addWidget(serial2);
@@ -78,12 +88,7 @@ int main(int argc, char *argv[])
     frame->setLayout(hbox);
 #endif
 
-#if 1
     main_window->setCentralWidget(frame);
-#else
-    main_window->setCentralWidget(frame, false, Qt::Horizontal);
-#endif
-
     main_window->show();
 
     splash->finish(main_window);

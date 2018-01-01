@@ -38,7 +38,7 @@
 #include "v786_2_multimeter.hpp"
 #include "v786_2_union.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 #if ((not defined USE_ONLY_H4_6) & (not defined USE_ONLY_H4_7) & (not defined USE_BOTH))
     error("Calibrator not defined")

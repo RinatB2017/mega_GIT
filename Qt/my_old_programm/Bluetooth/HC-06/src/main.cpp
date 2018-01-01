@@ -30,7 +30,7 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 void noMessageOutput(QtMsgType, const QMessageLogContext &, const QString &)
 {

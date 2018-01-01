@@ -29,10 +29,11 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "../lib/codecs.h"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
+    set_codecs();
 #if 1
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
@@ -48,19 +49,15 @@ int main(int argc, char *argv[])
     MyWidget::messagebox_warning("Warning", "UNDER_CONSTRUCTION");
 #endif
 
-    set_codecs();
-
-    QTranslator translator;
-    translator.load(":/ru_RU.qm");
-
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
-    app.installTranslator(&translator);
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
+    Q_CHECK_PTR(splash);
+
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();

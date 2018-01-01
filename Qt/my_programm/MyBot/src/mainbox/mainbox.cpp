@@ -85,10 +85,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });

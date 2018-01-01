@@ -167,14 +167,11 @@ void MainBox::calc_line(qreal center_x,
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
-
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 

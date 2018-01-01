@@ -1449,12 +1449,9 @@ void B590::createParrotBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     ParrotBar *parrotBar = new ParrotBar(this);
+    Q_CHECK_PTR(parrotBar);
     connect(parrotBar, SIGNAL(set_UI(int,int)), this, SLOT(set_UI_parrot(int,int)));
 
     mw->addToolBar(Qt::TopToolBarArea, parrotBar);
@@ -1473,10 +1470,6 @@ void B590::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar B5-90");
     testbar->setObjectName("toolbar_B590");
@@ -1576,10 +1569,6 @@ void B590::createInfoBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar B5-90");
     testbar->setObjectName("toolbar_B590");
@@ -4014,10 +4003,6 @@ void B590::createPowerSupplyBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     B590_toolbar *psBar = new B590_toolbar(tr("powersupply B5-90"), this);
     psBar->setObjectName("ps_B590");

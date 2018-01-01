@@ -88,10 +88,6 @@ void MainWidget_GUI::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &MainWidget::test_0 });
@@ -122,6 +118,7 @@ void MainWidget_GUI::createTestBar(void)
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
+    Q_CHECK_PTR(btn_choice_test);
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));

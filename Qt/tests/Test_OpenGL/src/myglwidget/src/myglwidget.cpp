@@ -342,10 +342,7 @@ QToolButton *MyGLWidget::add_button(QToolBar *tool_bar,
 void MyGLWidget::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &MyGLWidget::test_0 });

@@ -137,10 +137,7 @@ void MainBox::calc_line(qreal center_x,
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });

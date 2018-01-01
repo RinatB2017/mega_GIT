@@ -495,10 +495,7 @@ void LogBox::changeOptions(void)
 {
 #if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
     mw->f_petcat_options(ID_LOGGING);
 #else
     Log_options *optionsBox = new Log_options();
@@ -624,10 +621,6 @@ void LogBox::load_settings(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
 #ifdef QT_DEBUG
     qDebug() << "LogBox::load_settings(void)";
@@ -672,10 +665,6 @@ void LogBox::save_settings(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
 #ifdef QT_DEBUG
     qDebug() << "LogBox::save_settings(void)";

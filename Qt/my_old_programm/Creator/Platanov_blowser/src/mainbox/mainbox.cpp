@@ -78,10 +78,7 @@ void MainBox::web_finished(bool state)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -93,10 +90,7 @@ void MainBox::createTestBar(void)
     address = new QLineEdit;
     address->setText("http://unixforum.org");
 
-    if(mw)
-    {
-        mw->addToolBar(Qt::TopToolBarArea, testbar);
-    }
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     QToolButton *btn_prev = add_button(testbar,
                                        new QToolButton(this),
@@ -122,8 +116,7 @@ void MainBox::createTestBar(void)
     connect(browser, SIGNAL(loadFinished(bool)), this, SLOT(web_finished(bool)));
     connect(browser, SIGNAL(loadProgress(int)), progressBar, SLOT(setValue(int)));
 
-    if(mw)
-        connect(browser, SIGNAL(statusBarMessage(QString)), mw, SLOT(set_status1_text(QString)));
+    connect(browser, SIGNAL(statusBarMessage(QString)), mw, SLOT(set_status1_text(QString)));
 
     connect(btn_prev, SIGNAL(clicked()), browser, SLOT(back()));
     connect(btn_next, SIGNAL(clicked()), browser, SLOT(forward()));

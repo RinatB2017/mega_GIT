@@ -249,10 +249,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = (MainWindow *)parentWidget();
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -264,7 +260,7 @@ void MainBox::createTestBar(void)
                                        qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                        "test",
                                        "test");
-
+    
     connect(btn_test,  SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
@@ -322,10 +318,6 @@ void MainBox::createMenu(void)
 {
     MainWindow *mw = (MainWindow *)topLevelWidget();
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QMenu *menu = new QMenu("FT2232H");
     QAction *a_test_eeprom = menu->addAction("test_eeprom");

@@ -93,15 +93,11 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::createOptionsBar(void)
 {
-    QToolBar *optionsBar = new QToolBar(tr("optionsbar"));
-    optionsBar->setObjectName("optionsBar");
-
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
+
+    QToolBar *optionsBar = new QToolBar(tr("optionsbar"));
+    optionsBar->setObjectName("optionsBar");
 
     mw->addToolBar(Qt::TopToolBarArea, optionsBar);
 
@@ -135,10 +131,7 @@ void MainBox::createOptionsBar(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -10134,10 +10127,7 @@ int MainBox::message_critical(QWidget *parent,
 void MainBox::createFakeBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     QToolBar *fakeBar = new QToolBar(tr("fakebar"));
     fakeBar->setObjectName("fakeBar");
@@ -10149,7 +10139,7 @@ void MainBox::createFakeBar(void)
                                        qApp->style()->standardIcon(QStyle::SP_ComputerIcon),
                                        "fake",
                                        "fake");
-
+    
     connect(btn_fake, SIGNAL(pressed()), this, SLOT(fake()));
 }
 #endif

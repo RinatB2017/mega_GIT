@@ -297,10 +297,7 @@ void AD9106_Box::init_sl_registers(void)
 void AD9106_Box::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &AD9106_Box::test_0 });

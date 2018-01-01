@@ -65,22 +65,18 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(test()));
+    QToolButton *btn_test = add_button(testbar,
+                                       new QToolButton(this),
+                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                       "choice_test",
+                                       "choice_test");
+    
+    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
@@ -290,24 +286,24 @@ void MainBox::move_down(void)
 }
 //--------------------------------------------------------------------------------
 #if 0
-    QPixmap pix(p.width()*3, p.height()*3);
-    pix.fill(Qt::blue);
+QPixmap pix(p.width()*3, p.height()*3);
+pix.fill(Qt::blue);
 
-    int w = pix.width();
-    int h = pix.height();
+int w = pix.width();
+int h = pix.height();
 
-    QPainter t(&pix);
-    //t.drawLine(0, 0, p, h);
-    t.drawPixmap(0, 0, p);
-    t.drawPixmap(w-p.width(), 0, p);
-    t.drawPixmap(0, h-p.height(), p);
-    t.drawPixmap(w-p.width(), h-p.height(), p);
+QPainter t(&pix);
+//t.drawLine(0, 0, p, h);
+t.drawPixmap(0, 0, p);
+t.drawPixmap(w-p.width(), 0, p);
+t.drawPixmap(0, h-p.height(), p);
+t.drawPixmap(w-p.width(), h-p.height(), p);
 
-    QPainter painter(this);
-    painter.drawPixmap(0, 0, p);
-    painter.drawPixmap(100, 0, pix);
-    //???
-    painter.drawPixmap(100, h, pix, 0, 0, w/2, h/2);
+QPainter painter(this);
+painter.drawPixmap(0, 0, p);
+painter.drawPixmap(100, 0, pix);
+//???
+painter.drawPixmap(100, h, pix, 0, 0, w/2, h/2);
 #endif
 //--------------------------------------------------------------------------------
 void MainBox::keyPressEvent(QKeyEvent *event)

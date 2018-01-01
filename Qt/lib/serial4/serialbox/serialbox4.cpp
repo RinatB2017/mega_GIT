@@ -541,10 +541,6 @@ bool SerialBox4::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return false;
-    }
 
     QMenu *menu = new QMenu(tr("Настройка RS-232"));
 
@@ -572,10 +568,6 @@ bool SerialBox4::add_menu(int index, const QString &title)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return false;
-    }
 
     QMenu *menu = new QMenu(title);
 

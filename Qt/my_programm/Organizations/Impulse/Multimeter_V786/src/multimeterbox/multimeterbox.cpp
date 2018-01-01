@@ -81,10 +81,6 @@ void MultimeterBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -556,10 +552,6 @@ void MultimeterBox::createFakeBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *fakeBar = new QToolBar(tr("fakebar"));
     mw->addToolBar(Qt::TopToolBarArea, fakeBar);

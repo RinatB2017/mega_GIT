@@ -150,10 +150,6 @@ void MainBox::createUrlBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *urlbar = new QToolBar(tr("urlbar"));
     urlbar->setObjectName("urlbar");

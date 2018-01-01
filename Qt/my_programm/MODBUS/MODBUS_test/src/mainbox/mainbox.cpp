@@ -70,10 +70,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = (MainWindow *)topLevelWidget();
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     commands.clear();
     CMD command;
@@ -97,14 +93,15 @@ void MainBox::createTestBar(void)
     }
 
     testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
+
+    QToolButton *btn_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    
+    btn_test->setObjectName("btn_choice_test");
+    connect(btn_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

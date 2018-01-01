@@ -22,15 +22,14 @@
 #include <QObject>
 #include <QWidget>
 #include <QList>
-//--------------------------------------------------------------------------------
 #include <QTest>
-#include "test.hpp"
 //--------------------------------------------------------------------------------
 #define private public
-
-#include "mainwindow.hpp"
+//--------------------------------------------------------------------------------
 #include "mainwidget_gui.hpp"
+#include "mainwindow.hpp"
 #include "mainwidget.hpp"
+#include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -44,23 +43,20 @@ void Test::test_GUI(void)
 
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
-    if(cb)
-    {
-        QTest::keyClick(cb, Qt::Key_Down);
-        QTest::keyClick(cb, Qt::Key_Down);
-    }
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
 
     QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
     QVERIFY(tb);
-    if(tb)
-    {
-        QTest::mouseClick(tb, Qt::LeftButton);
-    }
+    QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    MainWidget *mb = new MainWidget;
+    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
+
+    MainWidget *mb = new MainWidget(mw->getThis());
     QCOMPARE(mb->test_0(), true);
     QCOMPARE(mb->test_1(), true);
     QCOMPARE(mb->test_2(), true);

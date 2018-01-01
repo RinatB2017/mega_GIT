@@ -456,17 +456,9 @@ bool SerialBox5_lite::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return false;
-    }
 
     QMenu *menu = new QMenu(caption);
     Q_CHECK_PTR(menu);
-    if(menu == nullptr)
-    {
-        return false;
-    }
 
     QAction *action_flag_in_hex = new QAction(menu);
     QAction *action_flag_byte_by_byte = new QAction(menu);
@@ -507,10 +499,6 @@ bool SerialBox5_lite::add_menu(int index, const QString &title)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return false;
-    }
 
     QMenu *menu = new QMenu(title);
     Q_CHECK_PTR(menu);

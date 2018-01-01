@@ -59,10 +59,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = (MainWindow *)parentWidget();
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -75,6 +71,7 @@ void MainBox::createTestBar(void)
                                        "test",
                                        "test");
 
+    
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------

@@ -348,10 +348,6 @@ void B588::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar B5-88");
     testbar->setObjectName("toolbar_B588");
@@ -395,10 +391,6 @@ void B588::createPowerSupplyBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     B588_toolbar *psBar = new B588_toolbar(tr("powersupply B5-88"), this);
     psBar->setObjectName("ps_B588");

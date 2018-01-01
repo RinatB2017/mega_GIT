@@ -82,10 +82,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow*>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -170,10 +166,7 @@ void MainBox::set_cursor(void)
 void MainBox::createImagesDock(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow*>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     QGridLayout *grid = new QGridLayout();
     grid->setMargin(0);

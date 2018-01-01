@@ -100,10 +100,6 @@ void SerialPort_B590_test::create_fake_toolbar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QPushButton *btn_R1 = new QPushButton();
     btn_R1->setText(QString("%1").arg(R1_VALUE));

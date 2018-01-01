@@ -75,10 +75,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -135,6 +131,7 @@ void MainBox::createTestBar(void)
                                         qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                         "run",
                                         "run");
+    Q_CHECK_PTR(btn_reset);
     testbar->setFixedSize(testbar->sizeHint());
 
     connect(btn_reset, SIGNAL(clicked()), this, SLOT(run()));

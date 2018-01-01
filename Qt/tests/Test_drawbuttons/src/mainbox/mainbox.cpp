@@ -112,10 +112,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -127,7 +123,7 @@ void MainBox::createTestBar(void)
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test",
                                        "test");
-
+    
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------

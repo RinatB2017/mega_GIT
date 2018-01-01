@@ -970,6 +970,7 @@ MainWindow *MainWindow::getThis(void)
 #ifndef NO_MENU
 QMenuBar *MainWindow::get_menubar(void)
 {
+    Q_CHECK_PTR(mainBar);
     return mainBar;
 }
 #endif
@@ -977,6 +978,7 @@ QMenuBar *MainWindow::get_menubar(void)
 #ifndef NO_MENU
 QMenu *MainWindow::get_file_menu(void)
 {
+    Q_CHECK_PTR(m_fileMenu);
     return m_fileMenu;
 }
 #endif
@@ -984,6 +986,7 @@ QMenu *MainWindow::get_file_menu(void)
 #ifndef NO_MENU
 QMenu *MainWindow::get_help_menu(void)
 {
+    Q_CHECK_PTR(m_helpMenu);
     return m_helpMenu;
 }
 #endif
@@ -991,6 +994,7 @@ QMenu *MainWindow::get_help_menu(void)
 #ifndef NO_MENU
 QMenu *MainWindow::get_options_menu(void)
 {
+    Q_CHECK_PTR(m_optionsMenu);
     return m_optionsMenu;
 }
 #endif
@@ -999,6 +1003,7 @@ QMenu *MainWindow::get_options_menu(void)
 QMenu *MainWindow::get_windows_menu(void)
 {
 #ifndef NO_LOG
+    Q_CHECK_PTR(m_windowsMenu);
     return m_windowsMenu;
 #else
     return 0;
@@ -1373,6 +1378,8 @@ QMenu *MainWindow::add_new_menu(QMenu     *parent,
     temp->icon = icon;
     menus.append(temp);
 
+    Q_CHECK_PTR(menu);
+
     return menu;
 }
 //--------------------------------------------------------------------------------
@@ -1399,6 +1406,8 @@ QAction *MainWindow::add_new_action(QMenu   *parent,
     temp->text = text;
     temp->icon = icon;
     actions.append(temp);
+
+    Q_CHECK_PTR(action);
 
     return action;
 }

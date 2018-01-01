@@ -1277,6 +1277,8 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
     tool_button->setToolTip(tool_tip);
     tool_bar->addWidget(tool_button);
 
+    Q_CHECK_PTR(tool_button);
+
     return tool_button;
 }
 //--------------------------------------------------------------------------------

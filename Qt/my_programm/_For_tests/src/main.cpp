@@ -87,8 +87,6 @@ int main(int argc, char *argv[])
     MyMainWindow *main_window = new MyMainWindow();
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
-    //qDebug() << main_window->windowFlags();
-
     // отключает заголовок
     //main_window->setWindowFlags(Qt::FramelessWindowHint);
 
@@ -110,8 +108,6 @@ int main(int argc, char *argv[])
         return test_result;
     }
 #endif
-
-    //qDebug() << qApp->palette();
 
     return app.exec();
 }

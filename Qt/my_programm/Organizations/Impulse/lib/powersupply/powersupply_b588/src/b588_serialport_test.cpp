@@ -97,10 +97,6 @@ void SerialPort_B588_test::create_fake_toolbar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     sb_noise = new QSpinBox();
     sb_noise->setMinimum(0);

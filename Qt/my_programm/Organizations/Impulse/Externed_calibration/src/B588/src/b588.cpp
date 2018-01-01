@@ -133,10 +133,6 @@ void B588::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(nw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -147,7 +143,7 @@ void B588::createTestBar(void)
                                        qApp->style()->standardIcon(QStyle::SP_CommandLink),
                                        tr("test_sinus"),
                                        tr("test_sinus"));
-
+    
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------

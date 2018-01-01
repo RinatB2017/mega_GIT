@@ -94,10 +94,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -127,7 +123,7 @@ void MainBox::createTestBar(void)
                                        "test");
     Q_CHECK_PTR(btn_run);
     Q_CHECK_PTR(btn_update);
-    Q_CHECK_PTR(btn_test);
+    
 
     btn_run->setCheckable(true);
     connect(btn_run,    SIGNAL(toggled(bool)),  this,   SLOT(run(bool)));

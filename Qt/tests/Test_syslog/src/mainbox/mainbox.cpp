@@ -74,10 +74,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
@@ -120,10 +116,7 @@ void MainBox::createTestBar(void)
 void MainBox::createSenderBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     Sender_syslog *syslogBar_0 = new Sender_syslog("syslogBar_0", 0, LOG_EMERG);
     Sender_syslog *syslogBar_1 = new Sender_syslog("syslogBar_1", 1, LOG_ALERT);
@@ -164,10 +157,7 @@ void MainBox::createSenderBar(void)
 void MainBox::createSysLog_dock(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     SysLog_dock *dock = new SysLog_dock("syslog", this);
     if(dock == nullptr)

@@ -300,10 +300,6 @@ void MKT_box::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &MKT_box::test_0 });

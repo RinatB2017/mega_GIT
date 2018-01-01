@@ -69,10 +69,6 @@ void B588::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -83,7 +79,7 @@ void B588::createTestBar(void)
                                        QIcon(),
                                        "test",
                                        "test");
-
+    
     connect(btn_test,  SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
@@ -91,12 +87,9 @@ void B588::createParrotBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     ParrotBar *parrotBar = new ParrotBar(this);
+    Q_CHECK_PTR(parrotBar);
     connect(parrotBar, SIGNAL(set_UI(int,int)), this, SLOT(set_UI_parrot(int,int)));
 
     mw->addToolBar(Qt::TopToolBarArea, parrotBar);

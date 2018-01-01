@@ -65,10 +65,7 @@ void MainBox::init(void)
 void MainBox::add_menu(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     QAction *action = new QAction(this);
     action->setText("new game");

@@ -200,10 +200,6 @@ void MainBox::createFakeBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *fakeBar = new QToolBar("fakebar");
     fakeBar->setObjectName("fakebar");
@@ -214,7 +210,7 @@ void MainBox::createFakeBar(void)
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "fake",
                                        "fake");
-
+    Q_CHECK_PTR(btn_fake);
     connect(btn_fake, SIGNAL(pressed()), this, SLOT(fake()));
 }
 #endif

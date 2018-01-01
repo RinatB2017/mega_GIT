@@ -55,7 +55,12 @@ void Test::test_GUI(void)
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    MainBox *mb = new MainBox(0, 0);
+    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
+
+    MainBox *mb = new MainBox(mw->getThis(), 0);
+    Q_CHECK_PTR(mb);
+
     QCOMPARE(mb->test_0(), true);
     QCOMPARE(mb->test_1(), true);
     QCOMPARE(mb->test_2(), true);
@@ -84,8 +89,10 @@ void Test::test_safe(void)
     QToolButton *tb7 = mw->findChild<QToolButton *>("btn_7");
     QToolButton *tb8 = mw->findChild<QToolButton *>("btn_8");
     QToolButton *tb9 = mw->findChild<QToolButton *>("btn_9");
+
     QToolButton *tb_back = mw->findChild<QToolButton *>("btn_back");
     QToolButton *tb_clear = mw->findChild<QToolButton *>("btn_clear");
+
     QVERIFY(tb0);
     QVERIFY(tb1);
     QVERIFY(tb2);
@@ -131,6 +138,8 @@ void Test::test_safe(void)
     QTest::mouseClick(tb9, Qt::LeftButton);
     QCOMPARE(safe->get_value(), 9);
 
+    QTest::mouseClick(tb_back, Qt::LeftButton);
+    QCOMPARE(safe->get_value(), 0);
     QTest::mouseClick(tb_clear, Qt::LeftButton);
     QCOMPARE(safe->get_value(), 0);
 

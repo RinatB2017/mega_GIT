@@ -105,10 +105,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("toolBar");
@@ -120,26 +116,20 @@ void MainBox::createTestBar(void)
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test",
                                        "test");
-
+    
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::load(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 }
 //--------------------------------------------------------------------------------
 void MainBox::save(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

@@ -58,34 +58,9 @@ void MainBox::init(void)
 
     createTestBar();
 
-    //---
-    QStringList sl;
-    sl.append("head0");
-    sl.append("head1");
-    sl.append("head2");
-    sl.append("head3");
-    sl.append("head4");
-
-    ui->tableWidget->setColumnCount(sl.count());
-    ui->tableWidget->setHorizontalHeaderLabels(sl);
-
-    //QHeaderView *header = ui->tableWidget->horizontalHeader();
-    //header->setIndexWidget(QModelIndex().child(0, 0), new QCheckBox("head", ui->tableWidget));
-    //ui->tableWidget->horizontalHeader()->setIndexWidget(QModelIndex().child(1, 0), new QCheckBox("head", ui->tableWidget));
-
-    ui->tableWidget->setEditTriggers(QTableWidget::NoEditTriggers);
-    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    //---
-
-    //ui->toolBox->setItemIcon(0, QIcon(ICON_PROGRAMM));
-    //ui->toolBox->setItemIcon(1, QIcon(ICON_HELP));
-    //ui->toolBox->setFixedWidth(ui->toolBox->sizeHint().width());
-
     MyMainWindow *mw = dynamic_cast<MyMainWindow *>(parent());
-    if(mw)
-    {
-        connect(mw, SIGNAL(notifySignal()), this,   SLOT(test_1()));
-    }
+    Q_CHECK_PTR(mw);
+    connect(mw, SIGNAL(notifySignal()), this,   SLOT(test_1()));
 
     if(sizeHint().height() > 0)
     {
@@ -94,39 +69,10 @@ void MainBox::init(void)
     load_config();
 }
 //--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    Q_CHECK_PTR(tool_bar);
-    Q_CHECK_PTR(tool_button);
-    if(tool_bar == nullptr)
-    {
-        return nullptr;
-    }
-    if(tool_button == nullptr)
-    {
-        return nullptr;
-    }
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_button->setObjectName(text);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
-}
-//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(mw);
 
     commands.clear();
     commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });

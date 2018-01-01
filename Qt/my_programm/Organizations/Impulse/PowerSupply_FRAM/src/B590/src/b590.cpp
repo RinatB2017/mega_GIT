@@ -231,10 +231,6 @@ void B590::add_menu(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     QMenu *menu = new QMenu(tr("Б5-90"));
 
@@ -330,10 +326,6 @@ void B590::createPowerSupplyBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     B590_toolbar *psBar = new B590_toolbar(tr("powersupply B5-90"), this);
     psBar->setObjectName("ps_B590");

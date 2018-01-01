@@ -96,14 +96,18 @@ public:
 
     void block_this_button(bool state);
     void block_interface(bool state);
-    void block_widget(const QString name, bool state);
+    void block_widget(const QString name,
+                      bool state);
 
-    bool is_slot_exists(QWidget *obj, const char *slot_sign);
+    bool is_slot_exists(QWidget *obj,
+                        const char *slot_sign);
 
     void load_config(void);
     void save_config(void);
 
-    static bool set_param(QString group_name,QString name, QVariant value);
+    static bool set_param(QString group_name,
+                          QString name,
+                          QVariant value);
     static bool get_param(QString group_name,
                           QString name,
                           QVariant default_value,

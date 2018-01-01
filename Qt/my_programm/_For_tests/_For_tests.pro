@@ -78,6 +78,8 @@ include ($$LIB_PATH/icons/digits.pri)
 include ($$LIB_PATH/icons/qmessagebox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
+include (src/safe/safe.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

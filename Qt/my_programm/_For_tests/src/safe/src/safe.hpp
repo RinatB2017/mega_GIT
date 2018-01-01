@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,24 +18,36 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef SAFE_HPP
+#define SAFE_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
-#include <QTest>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Test : public QObject
+namespace Ui {
+    class Safe;
+}
+//--------------------------------------------------------------------------------
+class Safe : public MyWidget
 {
     Q_OBJECT
 
 public:
-    Test();
+    Safe(QWidget *parent = 0);
+    ~Safe();
+
+    int get_value(void);
 
 private slots:
-    void test_GUI(void);
-    void test_func(void);
+    void click(void);
+    void s_back(void);
+    void s_clear(void);
 
-    void test_safe(void);
+private:
+    Ui::Safe *ui = 0;
+    int value = 0;
+
+    void init(void);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // SAFE_HPP

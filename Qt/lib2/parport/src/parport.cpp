@@ -734,7 +734,7 @@ void Parport::send_LED_off(unsigned char data)
     write_data(temp);
 }
 //--------------------------------------------------------------------------------
-void Parport::load_setting()
+void Parport::load_setting(void)
 {
     bool ok;
     QString temp;

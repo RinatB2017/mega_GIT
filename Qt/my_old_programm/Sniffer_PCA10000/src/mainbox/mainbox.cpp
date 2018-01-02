@@ -148,12 +148,12 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    qDebug() << "MainBox::load_setting";
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    qDebug() << "MainBox::save_setting";
+
 }
 //--------------------------------------------------------------------------------
 int MainBox::xxx(int x)

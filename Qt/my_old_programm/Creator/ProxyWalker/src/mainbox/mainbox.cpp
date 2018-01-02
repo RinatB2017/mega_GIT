@@ -495,7 +495,7 @@ void MainBox::load_url(const QString &address,
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    bool ok;
+    bool ok = false;
     QXmlGet xmlGet;
     if(!QFile(PROXIES_XML).exists())
     {

@@ -48,7 +48,9 @@
 MyWidget::MyWidget(QWidget *parent) :
     QWidget(parent)
 {
+#ifndef RS232_LOG
     connect_log(parent);
+#endif
 #ifdef QT_DEBUG
     qDebug() << "MyWidget()";
     QTimer::singleShot(100, this, SLOT(debug()));
@@ -263,7 +265,7 @@ void MyWidget::block_widget(const QString name, bool state)
 //--------------------------------------------------------------------------------
 bool MyWidget::is_slot_exists(QWidget *obj, const char *slot_sign)
 {
-    if(obj == NULL) return false;
+    if(obj == nullptr) return false;
     if(obj->metaObject()->indexOfSlot(QMetaObject::normalizedSignature(qPrintable(slot_sign))) == -1) return false;
     return true;
 }

@@ -79,6 +79,7 @@ include ($$LIB_PATH/icons/qmessagebox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
 include (src/safe/safe.pri)
+include (src/ext/ext.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

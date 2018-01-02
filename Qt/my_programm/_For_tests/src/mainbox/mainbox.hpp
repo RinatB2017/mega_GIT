@@ -37,6 +37,8 @@ class MySplashScreen;
 class QToolButton;
 class QComboBox;
 class QToolBar;
+
+class Ext;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -47,6 +49,9 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
+    typedef void (MainBox::*saveSlot)(void);
+    void inFunc(QPushButton *btn, saveSlot slot);
+
 public slots:
     void choice_test(void);
     bool test_0(void);
@@ -55,6 +60,8 @@ public slots:
     bool test_3(void);
     bool test_4(void);
     bool test_5(void);
+
+    void s_inFunc(void);
 
 private:
     enum {
@@ -79,6 +86,8 @@ private:
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
+
+    Ext *e = 0;
 
     void init(void);
     void createTestBar(void);

@@ -76,19 +76,21 @@ void Safe::click(void)
     int x = btn->property("value").toInt(&ok);
     if(ok)
     {
-        value *= 10;
-        value += x;
-        if(value > 99999)
+        int new_value = value;
+        new_value *= 10;
+        new_value += x;
+        if(new_value > 99999)
         {
-            value = 99999;
+            return;
         }
+        value = new_value;
         ui->lcdNumber->display(value);
     }
 }
 //--------------------------------------------------------------------------------
 void Safe::s_back(void)
 {
-    value = 0;
+    value /= 10;
     ui->lcdNumber->display(value);
 }
 //--------------------------------------------------------------------------------

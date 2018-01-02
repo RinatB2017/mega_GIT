@@ -141,11 +141,34 @@ void MainBox::choice_test(void)
         }
     }
 }
-
 //--------------------------------------------------------------------------------
+void MainBox::inFunc(QPushButton *btn, saveSlot slot)
+{
+    connect(btn,    &QPushButton::clicked,  this,   slot);
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_inFunc(void)
+{
+    QMessageBox::information(0,"","info");
+}
+//--------------------------------------------------------------------------------
+// http://www.cyberforum.ru/qt/thread1323920.html
+//#include "ext.h"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+#if 1
+    QPushButton *btn = new QPushButton;
+    inFunc(btn, &MainBox::s_inFunc);
+    btn->show();
+#endif
+
+#if 0
+    e = new Ext();
+    e->start();
+    e->deleteLater();
+#endif
 
 #if 0
     const QMetaObject &mo = Programmer::staticMetaObject;

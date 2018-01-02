@@ -804,7 +804,7 @@ void MainBox::load_url(int index,
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    bool ok;
+    bool ok = false;
     QXmlGet xmlGet;
     if(!QFile(PROXIES_XML).exists())
     {

@@ -25,12 +25,16 @@
 #include "defines.hpp"
 #include "screen.hpp"
 //--------------------------------------------------------------------------------
-Screen::Screen(QWidget *parent) : QWidget(parent)
+Screen::Screen(QWidget *parent) :
+    MyWidget(parent)
 {
     for(int n=0; n<MAX_SIZE; n++)
     {
         buf[n] = 0;
     }
+
+    setMinimumSize(MAX_X * 24 + 10,
+                   MAX_Y * 24 + 10);
 }
 //--------------------------------------------------------------------------------
 void Screen::draw(QByteArray data)
@@ -42,6 +46,11 @@ void Screen::draw(QByteArray data)
         buf[n] = data.at(n) * 4; //map 63 >> 255
     }
     update();
+}
+//--------------------------------------------------------------------------------
+void Screen::updateText(void)
+{
+
 }
 //--------------------------------------------------------------------------------
 void Screen::paintEvent(QPaintEvent *)

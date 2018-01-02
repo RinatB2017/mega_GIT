@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QAction>
-//--------------------------------------------------------------------------------
 #include "helpbrowser.hpp"
 #include "mainwindow.hpp"
 #include "aboutbox.hpp"
@@ -312,13 +310,22 @@ void MainWindow::createMenus(void)
     m_styleMenu = new QMenu(m_optionsMenu);
     m_styleMenu->setIcon(QPixmap(QLatin1String(ICON_STYLE)));
 
-    add_new_action(m_fileMenu, "Exit",  new QIcon(ICON_EXIT),   &MainWindow::close);
-    add_new_action(m_helpMenu, "About", new QIcon(ICON_ABOUT),  &MainWindow::about);
-    add_new_action(m_helpMenu, "Help",  new QIcon(ICON_HELP),   &MainWindow::help);
+    QAction *a_Exit  = add_new_action(m_fileMenu, "Exit", new QIcon(ICON_EXIT));
+    a_Exit->setShortcuts(QKeySequence::Quit);
+    connect(a_Exit, SIGNAL(triggered(bool)),    this,   SLOT(close()));
+
+    QAction *a_About  = add_new_action(m_helpMenu, "About", new QIcon(ICON_ABOUT));
+    connect(a_About, SIGNAL(triggered(bool)),    this,   SLOT(about()));
+
+    QAction *a_Help  = add_new_action(m_helpMenu, "Help", new QIcon(ICON_HELP));
+    connect(a_Help, SIGNAL(triggered(bool)),    this,   SLOT(help()));
 
 #ifndef NO_LOG
-    add_new_action(m_optionsMenu, "Select the font program", new QIcon(ICON_FONT), &MainWindow::set_app_font);
-    add_new_action(m_optionsMenu, "Select the font logging", new QIcon(ICON_FONT), &MainWindow::set_log_font);
+    QAction *a_font_programm = add_new_action(m_optionsMenu, "Select the font program", new QIcon(ICON_FONT));
+    connect(a_font_programm, SIGNAL(triggered(bool)),    this,   SLOT(set_app_font()));
+
+    QAction *a_font_logging = add_new_action(m_optionsMenu, "Select the font logging", new QIcon(ICON_FONT));
+    connect(a_font_logging, SIGNAL(triggered(bool)),    this,   SLOT(set_log_font()));
 
     m_optionsMenu->addSeparator();
 #endif
@@ -326,6 +333,11 @@ void MainWindow::createMenus(void)
 
     a_AskExit->setCheckable(true);
     a_AskExit->setChecked(flag_close);
+
+    m_fileMenu->addAction(a_Exit);
+
+    m_helpMenu->addAction(a_Help);
+    m_helpMenu->addAction(a_About);
 
     mainBar->addMenu(m_fileMenu);
     mainBar->addMenu(m_optionsMenu);
@@ -385,10 +397,25 @@ void MainWindow::createMenus(void)
     m_themes->setStatusTip(tr("Themes"));
     m_themes->setToolTip(tr("Themes"));
 
-    add_new_action(m_themes,    "System theme", 0,  &MainWindow::set_system_palette);
-    add_new_action(m_themes,    "Light theme",  0,  &MainWindow::set_light_palette);
-    add_new_action(m_themes,    "Dark theme",   0,  &MainWindow::set_dark_palette);
-    add_new_action(m_themes,    "Blue theme",   0,  &MainWindow::set_blue_palette);
+    a_system_theme = new QAction(m_themes);
+    a_light_theme = new QAction(m_themes);
+    a_dark_theme = new QAction(m_themes);
+    a_blue_theme = new QAction(m_themes);
+
+    a_system_theme->setText(tr("System theme"));
+    a_light_theme->setText(tr("Light theme"));
+    a_dark_theme->setText(tr("Dark theme"));
+    a_blue_theme->setText(tr("Blue theme"));
+
+    m_themes->addAction(a_system_theme);
+    m_themes->addAction(a_light_theme);
+    m_themes->addAction(a_dark_theme);
+    m_themes->addAction(a_blue_theme);
+
+    connect(a_system_theme,     SIGNAL(triggered(bool)),    this,   SLOT(set_system_palette()));
+    connect(a_light_theme,      SIGNAL(triggered(bool)),    this,   SLOT(set_light_palette()));
+    connect(a_dark_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_dark_palette()));
+    connect(a_blue_theme,       SIGNAL(triggered(bool)),    this,   SLOT(set_blue_palette()));
 
     m_optionsMenu->addMenu(m_themes);
 
@@ -396,15 +423,17 @@ void MainWindow::createMenus(void)
     m_optionsMenu->addSeparator();
 #ifndef ONLY_ENGLISH
     m_langMenu = add_new_menu(m_optionsMenu, "Language", new QIcon(QPixmap(ICON_LANG)));
-    add_new_action(m_langMenu,  "Russian", new QIcon(QPixmap(QLatin1String(ICON_RU))), &MainWindow::setMenuLanguage);
-    add_new_action(m_langMenu,  "English", new QIcon(QPixmap(QLatin1String(ICON_US))), &MainWindow::setMenuLanguage);
+    QAction *a_rus =  add_new_action(m_langMenu,    "Russian", new QIcon(QPixmap(QLatin1String(ICON_RU))));
+    QAction *a_eng = add_new_action(m_langMenu,     "English", new QIcon(QPixmap(QLatin1String(ICON_US))));
+    connect(a_rus,  SIGNAL(triggered(bool)),    this,   SLOT(setMenuLanguage()));
+    connect(a_eng,  SIGNAL(triggered(bool)),    this,   SLOT(setMenuLanguage()));
 #endif
     m_optionsMenu->addMenu(m_styleMenu);
     m_optionsMenu->addSeparator();
     m_optionsMenu->addAction(a_AskExit);
 
-    connect(a_AskExit,  SIGNAL(triggered()),        this,   SLOT(closeOnExit()));
-    connect(this,       SIGNAL(updateLanguage()),   this,   SLOT(updateText()));
+    connect(a_AskExit,  SIGNAL(triggered()),    this, SLOT(closeOnExit()));
+    connect(this,       SIGNAL(updateLanguage()), this, SLOT(updateText()));
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -461,6 +490,13 @@ void MainWindow::updateText(void)
     a_AskExit->setText(tr("Do not ask when you exit"));
 #endif
 
+#ifndef NO_TRAYICON
+    a_minimizeAction->setText(tr("Minimize"));
+    a_maximizeAction->setText(tr("Maximize"));
+    a_restoreAction->setText(tr("Restore"));
+    a_quitAction->setText(tr("Quit"));
+#endif
+
 #ifndef NO_TOOLBAR
     btnExit->setToolTip(tr("Exit"));
     btnFont->setToolTip(tr("Select the font program"));
@@ -476,10 +512,10 @@ void MainWindow::updateText(void)
     m_themes->setStatusTip(tr("Themes"));
     m_themes->setToolTip(tr("Themes"));
 
-    //    a_system_theme->setText(tr("System theme"));
-    //    a_light_theme->setText(tr("Light theme"));
-    //    a_dark_theme->setText(tr("Dark theme"));
-    //    a_blue_theme->setText(tr("Blue theme"));
+    a_system_theme->setText(tr("System theme"));
+    a_light_theme->setText(tr("Light theme"));
+    a_dark_theme->setText(tr("Dark theme"));
+    a_blue_theme->setText(tr("Blue theme"));
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -986,31 +1022,25 @@ void MainWindow::createTrayIcon(void)
         return;
     }
 
-    //    a_minimizeAction = new QAction(this);
-    //    connect(a_minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
+    a_minimizeAction = new QAction(this);
+    connect(a_minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
 
-    //    a_maximizeAction = new QAction(this);
-    //    connect(a_maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
+    a_maximizeAction = new QAction(this);
+    connect(a_maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
 
-    //    a_restoreAction = new QAction(this);
-    //    connect(a_restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+    a_restoreAction = new QAction(this);
+    connect(a_restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 
-    //    a_quitAction = new QAction(this);
-    //    a_quitAction->setIcon(QIcon(ICON_EXIT));
-    //    connect(a_quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    a_quitAction = new QAction(this);
+    a_quitAction->setIcon(QIcon(ICON_EXIT));
+    connect(a_quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     trayIconMenu = new QMenu(this);
-
-    add_new_action(trayIconMenu,    "Minimize", 0,  &MainWindow::showMinimized);
-    add_new_action(trayIconMenu,    "Maximize", 0,  &MainWindow::showMaximized);
-    add_new_action(trayIconMenu,    "Restore",  0,  &MainWindow::showNormal);
-
-    //trayIconMenu->addAction(a_minimizeAction);
-    //trayIconMenu->addAction(a_maximizeAction);
-    //trayIconMenu->addAction(a_restoreAction);
+    trayIconMenu->addAction(a_minimizeAction);
+    trayIconMenu->addAction(a_maximizeAction);
+    trayIconMenu->addAction(a_restoreAction);
     trayIconMenu->addSeparator();
-    add_new_action(trayIconMenu,    "Quit",     0,  &MainWindow::quit);
-    //trayIconMenu->addAction(a_quitAction);
+    trayIconMenu->addAction(a_quitAction);
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
@@ -1353,19 +1383,15 @@ QMenu *MainWindow::add_new_menu(QMenu     *parent,
     return menu;
 }
 //--------------------------------------------------------------------------------
-bool MainWindow::add_new_action(QMenu   *parent,
-                                QString text,
-                                QIcon   *icon,
-                                v_saveSlot slot)
+QAction *MainWindow::add_new_action(QMenu   *parent,
+                                    QString text,
+                                    QIcon   *icon)
 {
     Q_CHECK_PTR(parent);
 
     QAction *action = new QAction(parent);
     action->setText(text);
-    if(icon)
-    {
-        action->setIcon(*icon);
-    }
+    action->setIcon(*icon);
     action->setToolTip(text);
     action->setStatusTip(text);
 
@@ -1383,73 +1409,6 @@ bool MainWindow::add_new_action(QMenu   *parent,
 
     Q_CHECK_PTR(action);
 
-    connect(action, &QAction::triggered,  this,   slot);
-    parent->addAction(action);
-
     return action;
 }
-//--------------------------------------------------------------------------------
-bool MainWindow::add_new_action(QMenu   *parent,
-                                QString text,
-                                QIcon   *icon,
-                                b_saveSlot slot)
-{
-    Q_CHECK_PTR(parent);
-
-    QAction *action = new QAction(parent);
-    action->setText(text);
-    if(icon)
-    {
-        action->setIcon(*icon);
-    }
-    action->setToolTip(text);
-    action->setStatusTip(text);
-
-    if(parent)
-    {
-        parent->addAction(action);
-    }
-
-    s_action *temp = new s_action;
-    temp->obj = action;
-    temp->parent = parent;
-    temp->text = text;
-    temp->icon = icon;
-    actions.append(temp);
-
-    Q_CHECK_PTR(action);
-
-    connect(action, &QAction::triggered,  this,   slot);
-    parent->addAction(action);
-
-    return action;
-}
-//--------------------------------------------------------------------------------
-#ifndef NO_TRAYICON
-void MainWindow::showMinimized(void)
-{
-    QMainWindow::showMinimized();
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_TRAYICON
-void MainWindow::showMaximized(void)
-{
-    QMainWindow::showMaximized();
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_TRAYICON
-void MainWindow::showNormal(void)
-{
-    QMainWindow::showNormal();
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_TRAYICON
-void MainWindow::quit(void)
-{
-    qApp->quit();
-}
-#endif
 //--------------------------------------------------------------------------------

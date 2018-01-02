@@ -49,8 +49,9 @@ MainWidget_GUI::MainWidget_GUI(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainWidget_GUI::~MainWidget_GUI()
 {
+#ifdef QT_DEBUG
     qDebug() << "~MainWidget_GUI()";
-
+#endif
     save_config();
     if(w) w->deleteLater();
     delete ui;

@@ -18,24 +18,27 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SCREEN_H
-#define SCREEN_H
-//--------------------------------------------------------------------------------
-#include <stdint.h>
+#ifndef SCREEN_HPP
+#define SCREEN_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-class Screen : public QWidget
+class Screen : public MyWidget
 {
     Q_OBJECT
+
 public:
-    explicit Screen(QWidget *parent = 0);
+    Screen(QWidget *parent);
+
     void draw(QByteArray data);
 
 private:
     uint8_t buf[MAX_SIZE];
+
+    void updateText(void);
 
 protected:
     void paintEvent(QPaintEvent *);

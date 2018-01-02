@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <stdint.h>
-//--------------------------------------------------------------------------------
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QTime>
@@ -43,8 +41,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -62,6 +59,7 @@ void MainBox::init(void)
 
     serialBox = new SerialBox5(this, "RS232", "RS232");
     serialBox->add_menu(2);
+    serialBox->setFixedWidth(serialBox->sizeHint().width());
 
     data_rs232.clear();
 
@@ -90,8 +88,6 @@ void MainBox::createTestBar(void)
                                    qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                    "choice_test",
                                    "choice_test");
-    Q_CHECK_PTR(test);
-
     connect(test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------

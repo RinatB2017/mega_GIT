@@ -185,13 +185,6 @@ private slots:
     void kill(void);
 #endif
 
-#ifndef NO_TRAYICON
-    void showMinimized(void);
-    void showMaximized(void);
-    void showNormal(void);
-    void quit(void);
-#endif
-
 private:
     enum {
         SYSTEM_THEME = 0,
@@ -206,16 +199,10 @@ private:
     QMenu* add_new_menu(QMenu   *parent,
                         QString text,
                         QIcon   *icon);
-    typedef void (MainWindow::*v_saveSlot)(void);
-    typedef bool (MainWindow::*b_saveSlot)(void);
-    bool add_new_action(QMenu   *parent,
-                        QString text,
-                        QIcon   *icon,
-                        v_saveSlot slot);
-    bool add_new_action(QMenu   *parent,
-                        QString text,
-                        QIcon   *icon,
-                        b_saveSlot slot);
+    QAction* add_new_action(QMenu   *parent,
+                            QString text,
+                            QIcon   *icon);
+
 
 #ifndef ONLY_ENGLISH
     QTranslator *translator_system = 0;
@@ -256,6 +243,13 @@ private:
 #ifndef NO_TRAYICON
     QSystemTrayIcon *trayIcon = 0;
     QMenu *trayIconMenu = 0;
+#endif
+
+#ifndef NO_TRAYICON
+    QAction *a_minimizeAction = 0;
+    QAction *a_maximizeAction = 0;
+    QAction *a_restoreAction = 0;
+    QAction *a_quitAction = 0;
 #endif
 
     bool flag_close = false;
@@ -307,7 +301,7 @@ private:
     int state_theme = DARK_THEME;
 
 #ifndef NO_LOG
-    QAction *a_is_shows_info  = 0;
+    QAction *a_is_shows_info = 0;
     QAction *a_is_shows_debug = 0;
     QAction *a_is_shows_error = 0;
     QAction *a_is_shows_trace = 0;
@@ -315,6 +309,11 @@ private:
 #endif
 
     QMenu *m_themes = 0;
+
+    QAction *a_system_theme = 0;
+    QAction *a_light_theme = 0;
+    QAction *a_dark_theme = 0;
+    QAction *a_blue_theme = 0;
 
 #ifdef  DEMO
     void check_date(void);

@@ -3,7 +3,8 @@
 //--------------------------------------------------------------------------------
 #include "csvreader.hpp"
 //--------------------------------------------------------------------------------
-CsvReader::CsvReader(QObject *parent, const QString& file_name): QObject(parent),
+CsvReader::CsvReader(QObject *parent, const QString& file_name):
+    QObject(parent),
     _file(file_name),
     _separator(',')
 {
@@ -12,7 +13,7 @@ CsvReader::CsvReader(QObject *parent, const QString& file_name): QObject(parent)
 //--------------------------------------------------------------------------------
 CsvReader::~CsvReader()
 {
-    close();
+
 }
 //--------------------------------------------------------------------------------
 bool CsvReader::Open()
@@ -37,7 +38,6 @@ QString trimCSV(QString item)
     if(!item.isEmpty())
         item = item.replace("\"\"","\"");
     return item;
-
 }
 //--------------------------------------------------------------------------------
 //Paзбop файла
@@ -80,7 +80,6 @@ QList<QStringList> CsvReader::CSVRead()
                     item = "";
                 }
             }
-
         }
     }
     close();

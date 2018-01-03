@@ -311,7 +311,6 @@ private:
     QAction *a_is_shows_debug = 0;
     QAction *a_is_shows_error = 0;
     QAction *a_is_shows_trace = 0;
-
 #endif
 
     QMenu *m_themes = 0;

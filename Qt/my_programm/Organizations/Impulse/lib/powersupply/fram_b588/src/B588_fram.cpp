@@ -18,7 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <stdint.h>
 #include <QObject>
 #include <QFile>
 //--------------------------------------------------------------------------------
@@ -40,7 +39,11 @@ void B588_Fram::init(void)
     bool ok = false;
     //ok = read_fram_from_file(":/fram/fram.dat");
     ok = read_fram_from_default_data();
+#ifdef QT_DEBUG
     qDebug() << "read_fram_from_default_data" << ok;
+#else
+    Q_UNUSED(ok);
+#endif
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::read_fram_from_file(const QString &filename)

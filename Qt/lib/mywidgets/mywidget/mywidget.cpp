@@ -265,7 +265,9 @@ void MyWidget::block_widget(const QString name, bool state)
 //--------------------------------------------------------------------------------
 bool MyWidget::is_slot_exists(QWidget *obj, const char *slot_sign)
 {
-    if(obj == nullptr) return false;
+    Q_CHECK_PTR(obj);
+    Q_CHECK_PTR(slot_sign);
+
     if(obj->metaObject()->indexOfSlot(QMetaObject::normalizedSignature(qPrintable(slot_sign))) == -1) return false;
     return true;
 }
@@ -291,10 +293,8 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
     if(name.isEmpty())  return false;
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return false;
-    }
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup(group_name);
     settings->setValue(name, value);
     settings->endGroup();
@@ -314,10 +314,8 @@ bool MyWidget::get_param(QString group_name,
     }
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return false;
-    }
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup(group_name);
     QVariant temp = settings->value(name, default_value);
     settings->endGroup();
@@ -330,10 +328,8 @@ bool MyWidget::get_param(QString group_name,
 QStringList MyWidget::get_all_param_name(void)
 {
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return QStringList();
-    }
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup(PARAMS_GROUP_NAME);
     QStringList temp = settings->allKeys();
     settings->endGroup();
@@ -346,10 +342,7 @@ void MyWidget::load_QCheckBox(QString group_name)
 {
     QList<QCheckBox *> widgets = findChildren<QCheckBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QCheckBox *obj, widgets)
@@ -370,10 +363,7 @@ void MyWidget::save_QCheckBox(QString group_name)
 {
     QList<QCheckBox *> allobj = findChildren<QCheckBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QCheckBox *obj, allobj)
@@ -394,10 +384,7 @@ void MyWidget::load_QComboBox(QString group_name)
 {
     QList<QComboBox *> allobj = findChildren<QComboBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QComboBox *obj, allobj)
@@ -418,10 +405,7 @@ void MyWidget::save_QComboBox(QString group_name)
 {
     QList<QComboBox *> allobj = findChildren<QComboBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QComboBox *obj, allobj)
@@ -442,10 +426,7 @@ void MyWidget::load_QPushButton(QString group_name)
 {
     QList<QPushButton *> allobj = findChildren<QPushButton *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QPushButton *obj, allobj)
@@ -466,10 +447,7 @@ void MyWidget::save_QPushButton(QString group_name)
 {
     QList<QPushButton *> allobj = findChildren<QPushButton *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QPushButton *obj, allobj)
@@ -490,10 +468,7 @@ void MyWidget::load_QToolButton(QString group_name)
 {
     QList<QToolButton *> allobj = findChildren<QToolButton *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QToolButton *obj, allobj)
@@ -514,10 +489,7 @@ void MyWidget::save_QToolButton(QString group_name)
 {
     QList<QToolButton *> allobj = findChildren<QToolButton *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QToolButton *obj, allobj)
@@ -538,10 +510,7 @@ void MyWidget::load_QTextEdit(QString group_name)
 {
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QTextEdit *obj, allobj)
@@ -562,10 +531,7 @@ void MyWidget::save_QTextEdit(QString group_name)
 {
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QTextEdit *obj, allobj)
@@ -586,10 +552,7 @@ void MyWidget::load_QLineEdit(QString group_name)
 {
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QLineEdit *obj, allobj)
@@ -610,10 +573,7 @@ void MyWidget::save_QLineEdit(QString group_name)
 {
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QLineEdit *obj, allobj)
@@ -634,10 +594,7 @@ void MyWidget::load_QSpinBox(QString group_name)
 {
     QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QSpinBox *obj, allobj)
@@ -661,10 +618,7 @@ void MyWidget::save_QSpinBox(QString group_name)
 {
     QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QSpinBox *obj, allobj)
@@ -685,10 +639,7 @@ void MyWidget::load_QDoubleSpinBox(QString group_name)
 {
     QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QDoubleSpinBox *obj, allobj)
@@ -709,10 +660,7 @@ void MyWidget::save_QDoubleSpinBox(QString group_name)
 {
     QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QDoubleSpinBox *obj, allobj)
@@ -733,10 +681,7 @@ void MyWidget::load_QSlider(QString group_name)
 {
     QList<QSlider *> allobj = findChildren<QSlider *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QSlider *obj, allobj)
@@ -757,10 +702,7 @@ void MyWidget::save_QSlider(QString group_name)
 {
     QList<QSlider *> allobj = findChildren<QSlider *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QSlider *obj, allobj)
@@ -781,10 +723,7 @@ void MyWidget::load_QSplitter(QString group_name)
 {
     QList<QSplitter *> allobj = findChildren<QSplitter *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach (QSplitter *obj, allobj)
@@ -805,10 +744,7 @@ void MyWidget::save_QSplitter(QString group_name)
 {
     QList<QSplitter *> allobj = findChildren<QSplitter *>();
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    if(settings == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
     foreach(QSplitter *obj, allobj)
@@ -1210,16 +1146,8 @@ void MyWidget::save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data)
 #include <QPainter>
 bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
 {
-    if(w_left == nullptr)
-    {
-        emit error("w_left is null");
-        return false;
-    }
-    if(w_central == nullptr)
-    {
-        emit error("w_central is null");
-        return false;
-    }
+    Q_CHECK_PTR(w_left);
+    Q_CHECK_PTR(w_central);
 
     QStringList *sl = reinterpret_cast<QStringList *>(w_left);
     if(sl)
@@ -1278,8 +1206,6 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
     tool_button->setText(text);
     tool_button->setToolTip(tool_tip);
     tool_bar->addWidget(tool_button);
-
-    Q_CHECK_PTR(tool_button);
 
     return tool_button;
 }

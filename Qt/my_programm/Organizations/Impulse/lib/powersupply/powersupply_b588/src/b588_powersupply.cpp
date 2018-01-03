@@ -6708,7 +6708,7 @@ bool Powersupply_B588::test_3_channel(int PWM,
     unsigned int delta = abs(result - get_voltage_mV);
 
     *result_mV = result;
-    return !(abs(delta) > abs(max_deviation_mV));
+    return !(delta > abs(max_deviation_mV));
 }
 //--------------------------------------------------------------------------------
 bool Powersupply_B588::test(void)

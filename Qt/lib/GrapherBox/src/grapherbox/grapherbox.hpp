@@ -114,8 +114,6 @@ public:
 
     int get_curves_count(void);
 
-    void retranslateUi(void);
-
     void set_zoom(bool x_state, bool y_state);
 
     void set_panning(bool x_state, bool y_state);
@@ -202,8 +200,8 @@ private slots:
     void statistic(void);
 
     //---
-    void clicked(QVariant v,int i);
-    void checked(QVariant v,bool b,int i);
+    void clicked(QVariant v, int i);
+    void checked(QVariant v, bool b, int i);
     //---
 
 private:

@@ -18,29 +18,35 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QProgressBar>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QToolButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QFileDialog>
-#include <QDateTime>
-#include <QCheckBox>
-#include <QTextEdit>
-#include <QSettings>
-#include <QWidget>
-#include <QLocale>
-#include <QEvent>
-#include <QFrame>
-#include <QFile>
-#include <QFont>
-#include <QStyle>
-#include <QMenu>
-#include <QMap>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QApplication>
+#   include <QProgressBar>
+#   include <QMessageBox>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QHBoxLayout>
+#   include <QVBoxLayout>
+#   include <QFileDialog>
+#   include <QDateTime>
+#   include <QCheckBox>
+#   include <QTextEdit>
+#   include <QSettings>
+#   include <QWidget>
+#   include <QLocale>
+#   include <QEvent>
+#   include <QFrame>
+#   include <QFile>
+#   include <QFont>
+#   include <QStyle>
+#   include <QMenu>
+#   include <QMap>
+#endif
 //--------------------------------------------------------------------------------
-#include <QDebug>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
@@ -83,14 +89,13 @@ LogBox::LogBox(const QString &o_name,
 //--------------------------------------------------------------------------------
 LogBox::~LogBox()
 {
+    Q_CHECK_PTR(logBox);
+    Q_CHECK_PTR(progressBar);
+
     save_settings();
 
-    delete logBox;
-
-    delete progressBar;
-    delete hbox;
-    delete vbox;
-    delete mainbox;
+    logBox->deleteLater();
+    progressBar->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void LogBox::init(void)
@@ -107,10 +112,6 @@ void LogBox::init(void)
 void LogBox::popup(QPoint)
 {
     QMenu *popup_menu = logBox->createStandardContextMenu();
-    if(popup_menu == nullptr)
-    {
-        popup_menu = new QMenu();
-    }
     Q_CHECK_PTR(popup_menu);
 
     popup_menu->setStyleSheet("background:white;color:black;");
@@ -526,7 +527,6 @@ void LogBox::bappend(const QByteArray &data)
 //--------------------------------------------------------------------------------
 void LogBox::clear()
 {
-    //logs.clear();
     logBox->clear();
 }
 //--------------------------------------------------------------------------------
@@ -569,6 +569,8 @@ void LogBox::load_settings(void)
     if(text.isEmpty())  text = "noname";
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup(text);
     logBox->setReadOnly(settings->value("readOnly", true).toBool());
     logBox->setAcceptRichText(settings->value("acceptRichText", true).toBool());
@@ -610,6 +612,8 @@ void LogBox::save_settings(void)
     if(text.isEmpty())  text = "RS-232";
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup(text);
     settings->setValue("readOnly",      (bool)logBox->isReadOnly());
     settings->setValue("acceptRichText",(bool)logBox->acceptRichText());

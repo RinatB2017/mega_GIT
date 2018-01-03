@@ -43,7 +43,6 @@ LogDock::LogDock(const QString &title,
 
     le = new LogBox("RS232", this);
     Q_CHECK_PTR(le);
-    if(!le) return;
 
     connect(this,   SIGNAL(signal_is_shows_info(bool)),     le, SLOT(set_flag_is_shows_info(bool)));
     connect(this,   SIGNAL(signal_is_shows_debug(bool)),    le, SLOT(set_flag_is_shows_debug(bool)));
@@ -59,7 +58,16 @@ LogDock::LogDock(const QString &title,
 //--------------------------------------------------------------------------------
 LogDock::~LogDock()
 {
+    if(le)
+    {
+        le->deleteLater();
+    }
 
+    if(timer)
+    {
+        timer->stop();
+        timer->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void LogDock::update(void)
@@ -125,14 +133,12 @@ void LogDock::syslog(int level,
 //--------------------------------------------------------------------------------
 void LogDock::load_settings(void)
 {
-    Q_CHECK_PTR(le);
-    le->load_settings();
+
 }
 //--------------------------------------------------------------------------------
 void LogDock::save_settings(void)
 {
-    Q_CHECK_PTR(le);
-    le->save_settings();
+
 }
 //--------------------------------------------------------------------------------
 void  LogDock::set_font(QFont font)

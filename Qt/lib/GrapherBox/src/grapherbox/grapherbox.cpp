@@ -18,24 +18,25 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDialogButtonBox>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QToolButton>
-#include <QPointF>
-#include <QToolBar>
-#include <QDialog>
-#include <QLabel>
-
-#include <QDateTime>
-#include <QDate>
-#include <QTime>
-
-#include <QFile>
-#include <QMenu>
-
-//#include <limits.h>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QDialogButtonBox>
+#   include <QFileDialog>
+#   include <QMessageBox>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QPointF>
+#   include <QToolBar>
+#   include <QDialog>
+#   include <QLabel>
+#   include <QDateTime>
+#   include <QDate>
+#   include <QTime>
+#   include <QFile>
+#   include <QMenu>
+#endif
+//--------------------------------------------------------------------------------
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include <qwt_plot_renderer.h>
@@ -54,11 +55,6 @@
 #include <qwt_plot.h>
 //--------------------------------------------------------------------------------
 #include "ui_grapherbox.h"
-
-//#include "grapherbox_options.hpp"
-//#include "grapher_settings.hpp"
-
-//#include "curve_corrects.hpp"
 
 #include "mainwindow.hpp"
 #include "grapherbox.hpp"
@@ -239,6 +235,12 @@ int GrapherBox::add_curve(const QString &title,
 {
     GRAPHER_CURVE curve;
 
+    if(curves.count() >= MAX_CHANNELS)
+    {
+        emit error(QString("curves.count() %1 > %2").arg(curves.count()).arg(MAX_CHANNELS));
+        return -1;
+    }
+
     curve.is_active = true;
     curve.title = title;
     curve.color = curve_colors[curves.count()];
@@ -284,6 +286,12 @@ int GrapherBox::add_curve(const QString &title,
 bool GrapherBox::add_curve(const QString &title,
                            int curve_ID)
 {
+    if(curves.count() >= MAX_CHANNELS)
+    {
+        emit error(QString("curves.count() %1 > %2").arg(curves.count()).arg(MAX_CHANNELS));
+        return false;
+    }
+
     foreach (GRAPHER_CURVE curve, curves)
     {
         if(curve.curve_ID == curve_ID)
@@ -659,8 +667,6 @@ void GrapherBox::click_legend(void)
 void GrapherBox::setAxisScaleDraw( int axisId, QwtScaleDraw *scaleDraw )
 {
     Q_CHECK_PTR(scaleDraw);
-
-    if(scaleDraw == nullptr) return;
     ui->qwtPlot->setAxisScaleDraw(axisId, scaleDraw);
 }
 //--------------------------------------------------------------------------------
@@ -668,7 +674,7 @@ void GrapherBox::clear_d_picker(void)
 {
     if(d_picker)
     {
-        delete d_picker;
+        d_picker->deleteLater();
     }
 }
 //--------------------------------------------------------------------------------
@@ -723,18 +729,10 @@ void GrapherBox::init()
     curve_colors[14] = QColor(Qt::gray);
     curve_colors[15] = QColor(Qt::darkGray);
 
-#ifdef VEKTOR
-    curve_colors[0]  = QColor(0,    0,   255);
-    curve_colors[1]  = QColor(0,    128, 0);
-    curve_colors[2]  = QColor(128,  0,   0);
-    curve_colors[3]  = QColor(128,  0,   128);
-    curve_colors[4]  = QColor(255,  0,   128);
-#endif
-
     create_widgets();
-    updateText();
     load_setting();
     updateGraphics();
+    updateText();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::add_curve_data_points(int channel, QVector<QPointF> *points)
@@ -1021,6 +1019,7 @@ void GrapherBox::save_curves(void)
         file.close();
         emit info(QString(tr("файл %1 записан успешно"))
                   .arg(files.at(0)));
+        Q_CHECK_PTR(dlg);
         dlg->deleteLater();
     }
 }
@@ -1357,11 +1356,6 @@ void GrapherBox::set_silense(bool state)
     is_silence = state;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::retranslateUi(void)
-{
-    ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
 void GrapherBox::set_legend_is_visible(bool state)
 {
     legend_is_visible = state;
@@ -1369,7 +1363,6 @@ void GrapherBox::set_legend_is_visible(bool state)
 //--------------------------------------------------------------------------------
 void GrapherBox::clicked(QVariant v, int i)
 {
-    //TODO //???
     qDebug() << "clicked" << v << i;
 }
 //--------------------------------------------------------------------------------

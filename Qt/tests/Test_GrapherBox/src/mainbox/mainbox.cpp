@@ -18,16 +18,22 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDoubleSpinBox>
-#include <QColorDialog>
-#include <QPushButton>
-#include <QSplitter>
-#include <QComboBox>
-#include <QDateTime>
-
-#include <QToolButton>
-#include <QToolBar>
-#include <QDebug>
+#ifdef QT_HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QDoubleSpinBox>
+#   include <QColorDialog>
+#   include <QPushButton>
+#   include <QSplitter>
+#   include <QComboBox>
+#   include <QDateTime>
+#   include <QToolButton>
+#   include <QToolBar>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include <qwt_picker_machine.h>
 #include <qwt_plot_picker.h>
@@ -54,12 +60,12 @@ private:
 class PlotPicker: public QwtPlotPicker
 {
 public:
-    explicit PlotPicker(int xAxis,
-                        int yAxis,
-                        RubberBand rubberBand,
-                        DisplayMode trackerMode,
-                        double val,
-                        QWidget * wgt)
+    PlotPicker(int xAxis,
+               int yAxis,
+               RubberBand rubberBand,
+               DisplayMode trackerMode,
+               double val,
+               QWidget * wgt)
         :QwtPlotPicker(xAxis, yAxis, rubberBand, trackerMode, wgt)
     {
         divider = val;
@@ -131,7 +137,7 @@ void MainBox::init(void)
 #endif
 
     //grapher->set_legend_is_visible(false);
-    for(int n=0; n<MAX_CHANNELS; n++)
+    for(int n=0; n<MAX_CHANNELS + 5 ; n++)
     {
         ui->grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
     }
@@ -247,14 +253,12 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::load(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::save(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

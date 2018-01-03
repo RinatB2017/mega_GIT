@@ -48,6 +48,13 @@ MainWindow::~MainWindow()
 #endif
 
 #ifndef NO_LOG
+    Q_CHECK_PTR(a_is_shows_info);
+    Q_CHECK_PTR(a_is_shows_debug);
+    Q_CHECK_PTR(a_is_shows_error);
+    Q_CHECK_PTR(a_is_shows_trace);
+
+    Q_CHECK_PTR(ld);
+
     MyWidget::set_param("Main", "flag_show_info",   a_is_shows_info->isChecked());
     MyWidget::set_param("Main", "flag_show_debug",  a_is_shows_debug->isChecked());
     MyWidget::set_param("Main", "flag_show_error",  a_is_shows_error->isChecked());
@@ -62,10 +69,6 @@ MainWindow::~MainWindow()
 void MainWindow::setCentralWidget(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
-    if(!widget)
-    {
-        return;
-    }
 
     mainWidget = widget;
 
@@ -80,6 +83,11 @@ void MainWindow::setCentralWidget(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MainWindow::changeEvent(QEvent *event)
 {
+    if(event == nullptr)
+    {
+        return;
+    }
+
     QWidget::changeEvent(event);
     switch (event->type())
     {
@@ -111,6 +119,8 @@ void MainWindow::changeEvent(QEvent *event)
 //--------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    Q_CHECK_PTR(mainWidget);
+
     QMessageBox msgBox;
 
     if(flag_close)
@@ -410,7 +420,8 @@ void MainWindow::createMenus(void)
 //--------------------------------------------------------------------------------
 void MainWindow::updateText(void)
 {
-    foreach (s_menu *menu, menus) {
+    foreach (s_menu *menu, menus)
+    {
         QMenu *t_menu = menu->obj;
         if(t_menu)
         {
@@ -419,7 +430,8 @@ void MainWindow::updateText(void)
             t_menu->setToolTip(tr(menu->text.toLatin1().data()));
         }
     }
-    foreach (s_action *action, actions) {
+    foreach (s_action *action, actions)
+    {
         QAction *t_action = action->obj;
         if(t_action)
         {
@@ -712,11 +724,6 @@ void MainWindow::save_main(void)
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
-    if(settings == nullptr)
-    {
-        return;
-    }
-
     settings->beginGroup("Main");
     settings->setValue("FontName",      QApplication::font().family());
     settings->setValue("FontWeight",    QApplication::font().weight());
@@ -752,13 +759,6 @@ void MainWindow::load_setting(void)
 void MainWindow::save_setting(void)
 {
     save_main();
-
-#ifndef NO_LOG
-    if(ld)
-    {
-        ld->save_settings();
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG
@@ -798,11 +798,6 @@ void MainWindow::createToolBar(void)
 {
     toolbar = new QToolBar(tr("toolbar"), this);
     Q_CHECK_PTR(toolbar);
-
-    if(toolbar == nullptr)
-    {
-        return;
-    }
 
     toolbar->setObjectName(tr("toolbar"));
     toolbar->setMovable(true);
@@ -897,11 +892,6 @@ void MainWindow::createStyleToolBar(void)
 {
     styletoolbar = new QToolBar(tr("styletoolbar"), this);
     Q_CHECK_PTR(styletoolbar);
-
-    if(styletoolbar == nullptr)
-    {
-        return;
-    }
 
     styletoolbar->setObjectName("styletoolbar");
 
@@ -1039,11 +1029,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 bool MainWindow::add_menu(int pos_x,
                           QMenu *menu)
 {
-    if(menu == nullptr)
-    {
-        emit error("add_menu: menu is empty!");
-        return false;
-    }
+    Q_CHECK_PTR(menu);
 
 #ifndef NO_MENU
     QList<QAction *> menus = mainBar->actions();
@@ -1117,12 +1103,6 @@ bool MainWindow::add_separator(QMenu *menu,
                                int pos_y)
 {
     Q_CHECK_PTR(menu);
-
-    if(menu == nullptr)
-    {
-        emit error("add_separator: menu is empty!");
-        return false;
-    }
 
     QList<QAction *> actions = menu->actions();
     if(actions.count() == 0)

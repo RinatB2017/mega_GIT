@@ -42,10 +42,9 @@ win32 {
 
 
 LIB_PATH = "../../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/meta/oscilloscopebox.pri)
-
-#include ($$LIB_PATH/meta/grapherbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

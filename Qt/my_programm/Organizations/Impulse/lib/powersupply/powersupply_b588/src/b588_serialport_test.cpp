@@ -112,7 +112,7 @@ void SerialPort_B588_test::create_fake_toolbar(void)
     connect(btn_set_noice, SIGNAL(pressed()), this, SLOT(regenerate_all()));
 
     QToolBar *toolBar = new QToolBar(tr("fake_toolbar B5-88"));
-    testbar->setObjectName("fake_toolbar_B588");
+    toolBar->setObjectName("fake_toolbar_B588");
     toolBar->addWidget(new QLabel(tr("fake Б5-88")));
     toolBar->addSeparator();
     toolBar->addWidget(new QLabel(tr("Noise")));
@@ -122,7 +122,7 @@ void SerialPort_B588_test::create_fake_toolbar(void)
     toolBar->addWidget(btn_set_noice);
 
     mw->addToolBarBreak();
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
+    mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));

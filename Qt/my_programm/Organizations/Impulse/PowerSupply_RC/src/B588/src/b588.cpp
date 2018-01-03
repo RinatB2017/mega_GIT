@@ -100,8 +100,8 @@ void B588::createTestBar(void)
     sb_begin->setValue(0);
     sb_end->setValue(0xFFFF);
 
-    toolBar->addWidget(sb_begin);
-    toolBar->addWidget(sb_end);
+    testbar->addWidget(sb_begin);
+    testbar->addWidget(sb_end);
 
     QToolButton *btn_test_U = add_button(testbar,
                                          new QToolButton(this),
@@ -113,7 +113,7 @@ void B588::createTestBar(void)
                                          QIcon(),
                                          "test I",
                                          "test I");
-    toolBar->addSeparator();
+    testbar->addSeparator();
 
     QToolButton *btn_read = add_button(testbar,
                                        new QToolButton(this),
@@ -126,10 +126,10 @@ void B588::createTestBar(void)
                                             "temperature",
                                             "temperature");
 
-    connect(btn_test_U,  SIGNAL(clicked()), this, SLOT(test_U()));
-    connect(btn_test_I,  SIGNAL(clicked()), this, SLOT(test_I()));
-    connect(btn_read,  SIGNAL(clicked()), this, SLOT(read()));
-    connect(btn_test_temp, SIGNAL(clicked()), this, SLOT(show_temp()));
+    connect(btn_test_U,     SIGNAL(clicked()), this, SLOT(test_U()));
+    connect(btn_test_I,     SIGNAL(clicked()), this, SLOT(test_I()));
+    connect(btn_read,       SIGNAL(clicked()), this, SLOT(read()));
+    connect(btn_test_temp,  SIGNAL(clicked()), this, SLOT(show_temp()));
 }
 //--------------------------------------------------------------------------------
 void B588::createParrotBar(void)
@@ -1048,17 +1048,8 @@ void B588::ignore_bad_cmd(void)
     powersupply->set_ignore_bad_cmd(ui->cb_ignore_bad_cmd->isChecked());
 }
 //--------------------------------------------------------------------------------
-void B588::changeEvent(QEvent *event)
+void B588::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

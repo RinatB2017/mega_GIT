@@ -18,16 +18,22 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QWidget>
+#else
+#   include <QVBoxLayout>
+#   include <QMessageBox>
+#   include <QTime>
 
-#include <QAction>
-#include <QMenu>
+#   include <QAction>
+#   include <QMenu>
 
-#include <QToolButton>
-#include <QToolBar>
-#include <QDebug>
+#   include <QToolButton>
+#   include <QToolBar>
+#endif
+#ifdef Q_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -40,8 +46,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox5(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -57,41 +62,17 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox5 = new SerialBox5(this, "RS232_5", "RS232");
-    serialBox5->add_menu(2);
-
-    ui->serial_layout->addWidget(serialBox5);
-
-    connect(serialBox5, SIGNAL(output(QByteArray)), serialBox5, SLOT(input(QByteArray)));
-}
-//--------------------------------------------------------------------------------
-QToolButton *MainBox::add_button(QToolBar *tool_bar,
-                                 QToolButton *tool_button,
-                                 QIcon icon,
-                                 const QString &text,
-                                 const QString &tool_tip)
-{
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
-
-    tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
-    tool_bar->addWidget(tool_button);
-
-    return tool_button;
+    ui->serial0->set_caption("RS232");
+    connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->serial0,    SLOT(input(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+
     QToolBar *toolBar = new QToolBar(tr("testbar"));
     toolBar->setObjectName("testbar");
-
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw == nullptr)
-    {
-        return;
-    }
 
     mw->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -109,17 +90,8 @@ void MainBox::test(void)
     emit debug(tr("test"));
 }
 //--------------------------------------------------------------------------------
-void MainBox::changeEvent(QEvent *event)
+void MainBox::updateText(void)
 {
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

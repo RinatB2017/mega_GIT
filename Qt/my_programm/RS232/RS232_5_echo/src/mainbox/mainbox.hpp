@@ -32,7 +32,6 @@ namespace Ui {
 class MySplashScreen;
 class QToolButton;
 class QToolBar;
-class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -49,21 +48,11 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox5 = 0;
     QByteArray data_rs232;
 
     void init(void);
-
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
     void createTestBar(void);
-
-protected:
-    void changeEvent(QEvent *event);
+    void updateText(void);
 
 };
 //--------------------------------------------------------------------------------

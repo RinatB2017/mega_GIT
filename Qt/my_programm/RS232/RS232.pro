@@ -13,6 +13,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 SUBDIRS += \
     RS232_5 \
     RS232_5_x2 \
-    RS232_5_bridge
+    RS232_5_bridge \
+    RS232_5_echo
 }
 

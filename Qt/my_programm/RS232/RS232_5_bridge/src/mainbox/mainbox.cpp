@@ -18,16 +18,23 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QWidget>
+#else
+#   include <QVBoxLayout>
+#   include <QMessageBox>
+#   include <QTime>
 
-#include <QAction>
-#include <QMenu>
+#   include <QAction>
+#   include <QMenu>
 
-#include <QToolButton>
-#include <QToolBar>
-#include <QDebug>
+#   include <QToolButton>
+#   include <QToolBar>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef Q_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -56,35 +63,29 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox5_1 = new SerialBox5(this, "RS232 (1)", "RS232_1");
-    serialBox5_1->add_menu(2);
+    ui->serial0->set_caption("RS232 (0)");
+    ui->serial1->set_caption("RS232 (1)");
 
-    serialBox5_2 = new SerialBox5(this, "RS232 (2)", "RS232_2");
-    serialBox5_2->add_menu(4);
-
-    ui->serial_layout->addWidget(serialBox5_1);
-    ui->serial_layout->addWidget(serialBox5_2);
-    ui->serial_layout->addStretch();
+    ui->serial0->add_menu(1, "RS232 (0)");
+    ui->serial1->add_menu(2, "RS232 (1)");
 
 #if 1
-    connect(serialBox5_1,   SIGNAL(output(QByteArray)), serialBox5_2,   SLOT(input(QByteArray)));
-    connect(serialBox5_2,   SIGNAL(output(QByteArray)), serialBox5_1,   SLOT(input(QByteArray)));
+    connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->log0,   SLOT(bappend(QByteArray)));
+    connect(ui->serial1,    SIGNAL(output(QByteArray)), ui->log1,   SLOT(bappend(QByteArray)));
 #else
-    connect(serialBox5_1,   SIGNAL(output(QByteArray)), this,   SLOT(send_data_1(QByteArray)));
-    connect(serialBox5_2,   SIGNAL(output(QByteArray)), this,   SLOT(send_data_2(QByteArray)));
+    connect(ui->serial0,    SIGNAL(output(QByteArray)), this,   SLOT(send_data_1(QByteArray)));
+    connect(ui->serial1,    SIGNAL(output(QByteArray)), this,   SLOT(send_data_2(QByteArray)));
 #endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::send_data_1(QByteArray ba)
 {
-    emit info(QString("send_data_1: %1").arg(ba.toHex().data()));
-    //serialBox5_2->input(ba);
+    emit debug(QString("send_data_1: %1").arg(ba.toHex().data()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::send_data_2(QByteArray ba)
 {
-    emit info(QString("send_data_2: %1").arg(ba.toHex().data()));
-    //serialBox5_1->input(ba);
+    emit debug(QString("send_data_2: %1").arg(ba.toHex().data()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

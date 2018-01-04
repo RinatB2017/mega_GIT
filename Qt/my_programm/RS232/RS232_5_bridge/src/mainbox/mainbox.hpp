@@ -26,7 +26,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -56,13 +56,8 @@ private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 
-    SerialBox5 *serialBox5_1 = 0;
-    SerialBox5 *serialBox5_2 = 0;
-
     void init(void);
-
     void createTestBar(void);
-
     void updateText(void);
 
 };

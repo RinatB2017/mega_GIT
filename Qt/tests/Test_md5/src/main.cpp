@@ -38,13 +38,13 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    MainWindow main_window;
-    // main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    MainWindow *main_window = new MainWindow;
+    // main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MainBox *mainBox = new MainBox(main_window.getThis());
+    MainBox *mainBox = new MainBox(main_window->getThis());
 
-    main_window.setCentralWidget(mainBox);
-    main_window.show();
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 

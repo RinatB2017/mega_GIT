@@ -33,12 +33,12 @@ int main(int argc, char *argv[])
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
 
-    Tester main_window;
-    main_window.setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
-    main_window.move(0, 0);
-    main_window.show();
+    Tester *main_window = new Tester;
+    main_window->setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
+    main_window->move(0, 0);
+    main_window->show();
 
-    main_window.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
+    main_window->setWindowIcon(QIcon(QLatin1String(":/programm.png")));
 
     return app.exec();
 }

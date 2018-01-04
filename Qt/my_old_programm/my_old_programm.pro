@@ -8,8 +8,6 @@ CONFIG   += ordered
 SUBDIRS += \
     ADNS_2610 \
     Bluetooth \
-    Creator \
-    Dooscape \
     Ethernet \
     event \
     Games \
@@ -21,10 +19,12 @@ SUBDIRS += \
     SBGlass \
     SIM900 \
     Sniffer_PCA10000 \
-    Teacher_reserv \
     Tools \
 
-unix {
+contains( DEFINES, Q_WS_LINUX ) {
 SUBDIRS += \
+    Creator \
+    Dooscape \
+    Teacher_reserv \
     Analyzer
 }

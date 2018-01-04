@@ -1345,7 +1345,7 @@ int Proto_NMEA_0183::test_PIRRA(void)
 void Proto_NMEA_0183::test(void)
 {
 #if 1
-    union USHORT mask;
+    union U_USHORT mask;
     QString temp;
 
     mask.value = 0;

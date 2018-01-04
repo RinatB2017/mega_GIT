@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     //---
 
     MainWindow *main_window = new MainWindow;
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     //---
 #if 0

@@ -54,10 +54,14 @@ LIB_PATH = "../../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-#LIB_PATH2 = "../../../Qt/lib2"
-#include ($$LIB_PATH2/Box2D/Box2D.pri)
+LIB_PATH2 = "../../../Qt/lib2"
 
-LIBS    += -lBox2D
+win32 {
+    #include ($$LIB_PATH2/Box2D/Box2D.pri)
+}
+unix {
+    LIBS    += -lBox2D
+}
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

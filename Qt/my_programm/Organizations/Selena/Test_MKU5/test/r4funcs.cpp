@@ -6,9 +6,6 @@
 //--------------------------------------------------------------------------------
 #define END_SECTION	"END\n"
 //--------------------------------------------------------------------------------
-#define htons(n) (unsigned short)((((unsigned short) (n)) << 8) | (((unsigned short) (n)) >> 8))
-#define htonl(n) (unsigned int)((((unsigned int) (n)) << 16) | (((unsigned int) (n)) >> 16))
-//--------------------------------------------------------------------------------
 ushort array_to_ushort(const QByteArray& array,
                        int pos,
                        bool net_order,

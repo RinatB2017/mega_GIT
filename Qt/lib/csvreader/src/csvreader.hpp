@@ -22,6 +22,7 @@ private:
 public:
     CsvReader(QObject *parent = 0, const QString& file_name = QString(""));
     ~CsvReader();
+
     void setFileName(const QString& name) { _file.setFileName(name); }  // ycmaнoвka имени файла
     bool Open();                                                        // omkpыmue файла
     QList<QStringList> CSVRead();                                       // разбор файла

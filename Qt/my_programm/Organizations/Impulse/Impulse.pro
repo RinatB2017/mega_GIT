@@ -11,9 +11,6 @@ SUBDIRS += \
     Calibration \
     Externed_calibration \
     Factory_Calibration \
-    FT2232 \
-    FT2232_old \
-    FT2232_reserv \
     GDS_840C \
     Multimeter_calc_time \
     Multimeter_V786 \
@@ -25,4 +22,11 @@ SUBDIRS += \
     RS232_STMF0 \
     RS232_STMF1 \
     Test_PowerSupply \
-    Test_radiochannel
+    Test_radiochannel \
+
+contains( DEFINES, Q_WS_LINUX ) {
+SUBDIRS += \
+    FT2232 \
+    FT2232_old \
+    FT2232_reserv
+}

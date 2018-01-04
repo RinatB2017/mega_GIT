@@ -9,9 +9,6 @@
 //  float c = 1.123456789f;
 //  emit info(QString("%1").arg(c, 0, 'f', 3));
 //--------------------------------------------------------------------------------
-#define htons(n) (unsigned short)((((unsigned short) (n)) << 8) | (((unsigned short) (n)) >> 8))
-#define htonl(n) (unsigned int)((((unsigned int) (n)) << 16) | (((unsigned int) (n)) >> 16))
-//--------------------------------------------------------------------------------
 #define ORGNAME "Home"
 #define APPNAME "MyBot"
 //--------------------------------------------------------------------------------

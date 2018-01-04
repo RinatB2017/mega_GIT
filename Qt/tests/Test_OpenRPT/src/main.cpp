@@ -51,16 +51,15 @@ int main(int argc, char *argv[])
     splash.showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
 
-    MainWindow main_window;
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    MainWindow *main_window = new MainWindow;
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MainBox *mainBox = new MainBox(main_window.getThis());
+    MainBox *mainBox = new MainBox(main_window->getThis());
 
-    main_window.setCentralWidget(mainBox);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-    main_window.show();
-
-    splash.finish(&main_window);
+    splash.finish(main_window);
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
     qDebug() << QLocale().name();

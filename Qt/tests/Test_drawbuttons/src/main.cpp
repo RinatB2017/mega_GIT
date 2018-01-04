@@ -58,13 +58,13 @@ int main(int argc, char *argv[])
 
     qApp->processEvents();
 
-    MainWindow main_window;
-    //main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    MainWindow *main_window = new MainWindow;
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
 #if 1
-    MainBox *mainBox = new MainBox(main_window.getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
 #else
-    QMdiArea *mainBox = new QMdiArea(main_window.getThis());
+    QMdiArea *mainBox = new QMdiArea(main_window->getThis());
     mainBox->setViewMode(QMdiArea::TabbedView);
     mainBox->setTabsClosable(true);
     mainBox->setTabsMovable(true);
@@ -101,10 +101,10 @@ int main(int argc, char *argv[])
     mainBox->setActiveSubWindow(subWindow1);
 #endif
 
-    main_window.setCentralWidget(mainBox);
-    main_window.show();
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-    splash->finish(&main_window);
+    splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
     qDebug() << QLocale().name();

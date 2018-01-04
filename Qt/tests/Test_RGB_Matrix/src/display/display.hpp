@@ -72,7 +72,7 @@ public:
     bool resize_led(int w, int h);
 
 private:
-    Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y] = { 0 };
+    Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];
     int max_x = 0;
     int max_y = 0;
 

@@ -1,8 +1,9 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#define htons(n) (unsigned short)((((unsigned short) (n)) << 8) | (((unsigned short) (n)) >> 8))
-#define htonl(n) (unsigned int)((((unsigned int) (n)) << 16) | (((unsigned int) (n)) >> 16))
+#ifdef Q_OS_WIN
+#   include <winsock2.h>
+#endif
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_broadcast_UDP"

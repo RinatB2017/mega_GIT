@@ -83,7 +83,7 @@ private:
     QPixmap b_rook;
 
     QGridLayout *chessboard_grid = 0;
-    QToolButton *btn_chessboard[8][8] = { 0 };
+    QToolButton *btn_chessboard[8][8];
 
     void init(void);
 

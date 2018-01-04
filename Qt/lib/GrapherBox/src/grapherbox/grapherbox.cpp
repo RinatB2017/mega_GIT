@@ -361,6 +361,8 @@ int GrapherBox::get_curves_count(void)
 //--------------------------------------------------------------------------------
 QVariant GrapherBox::itemToInfo(QwtPlotItem *plotItem) const
 {
+    Q_CHECK_PTR(plotItem);
+
     QVariant itemInfo;
     qVariantSetValue(itemInfo, plotItem);
 
@@ -369,6 +371,8 @@ QVariant GrapherBox::itemToInfo(QwtPlotItem *plotItem) const
 //--------------------------------------------------------------------------------
 void GrapherBox::showCurve(QwtPlotItem *item, bool on)
 {
+    Q_CHECK_PTR(item);
+
     item->setVisible(on);
 
     if(legend_is_visible)

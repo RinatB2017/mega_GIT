@@ -9,6 +9,9 @@ SUBDIRS += \
     Navi_receiver \
     Navi_transmitter \
     Parport \
-    Test_r4_serial_widget \
     Test_MKU5 \
-    Tester
+    Tester \
+
+contains( DEFINES, Q_WS_LINUX ) {
+    SUBDIRS += Test_r4_serial_widget
+}

@@ -21,11 +21,6 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#ifndef Q_OS_MAC
-#define htons(n) (unsigned short)((((unsigned short) (n)) << 8) | (((unsigned short) (n)) >> 8))
-#define htonl(n) (unsigned int)((((unsigned int) (n)) << 16) | (((unsigned int) (n)) >> 16))
-#endif
-//--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "RS485"
 //--------------------------------------------------------------------------------

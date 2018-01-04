@@ -16,15 +16,19 @@ SUBDIRS += \
     NewMoonLight \
     Organizations \
     MODBUS \
-    MyBot \
-    QRCodeGenerator \
     RS232 \
     RS485 \
     show_films \
-    Teacher \
-    Teacher_light \
     Templates \
     WiFi \
+
+contains( DEFINES, Q_WS_LINUX ) {
+    SUBDIRS += \
+        MyBot \
+        QRCodeGenerator \
+        Teacher \
+        Teacher_light \
+}
     
 lessThan(QT_MAJOR_VERSION, 5) {
     message (QT4)

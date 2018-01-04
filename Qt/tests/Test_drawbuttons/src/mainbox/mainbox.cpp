@@ -44,7 +44,7 @@
 #include "mydisplay.hpp"
 #include "mybutton.hpp"
 //--------------------------------------------------------------------------------
-union BYTE
+union U_BYTE
 {
     unsigned char value;
     struct

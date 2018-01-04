@@ -45,9 +45,6 @@
 // emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
 // emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
 //--------------------------------------------------------------------------------
-#define htons(n) (unsigned short)((((unsigned short) (n)) << 8) | (((unsigned short) (n)) >> 8))
-#define htonl(n) (unsigned int)((((unsigned int) (n)) << 16) | (((unsigned int) (n)) >> 16))
-//--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_wwWidgets"
 //--------------------------------------------------------------------------------

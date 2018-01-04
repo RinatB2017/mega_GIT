@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------
-#ifndef PROTO_NMEA_0183_H
-#define PROTO_NMEA_0183_H
+#ifndef PROTO_NMEA_0183_HPP
+#define PROTO_NMEA_0183_HPP
 //--------------------------------------------------------------------------------
 #include <QObject>
 #include <QString>
@@ -51,7 +51,7 @@ enum {
     MESSAGE_PIRRA
 };
 //---
-union USHORT
+union U_USHORT
 {
     unsigned short value;
     struct

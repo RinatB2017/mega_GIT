@@ -61,7 +61,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     message(Qt5 = $$QT)
 }
 else {
-    message(Qt4 = $$QT)
+    error("Only Qt5")
 }
 
 VPATH   += $INCLUDEPATH

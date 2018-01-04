@@ -69,6 +69,9 @@ void RaceClient::onConnected()
             m_socket->write(QByteArray("driver:Martyman\n"));
             m_socket->write(QByteArray("color:FF0000\n\n"));
             break;
+
+        default:
+            break;
         }
     }
 }
@@ -92,6 +95,9 @@ void RaceClient::readFromServer()
                 m_socket->connectToHost(m_host, m_port);
                 break;
             case RaceClient::ConnectingToRace:
+                break;
+
+            default:
                 break;
             }
         } else if (response.contains("round"))

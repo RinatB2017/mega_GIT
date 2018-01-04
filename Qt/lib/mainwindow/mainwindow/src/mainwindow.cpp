@@ -1363,7 +1363,12 @@ bool MainWindow::add_new_action(QMenu   *parent,
 
     Q_CHECK_PTR(action);
 
+#if QT_VERSION >= 0x050000
     connect(action, &QAction::triggered,  this,   slot);
+#else
+    Q_UNUSED(slot); //FIXME
+#endif
+
     parent->addAction(action);
 
     return action;
@@ -1399,7 +1404,12 @@ bool MainWindow::add_new_action(QMenu   *parent,
 
     Q_CHECK_PTR(action);
 
+#if QT_VERSION >= 0x050000
     connect(action, &QAction::triggered,  this,   slot);
+#else
+    Q_UNUSED(slot); //FIXME
+#endif
+
     parent->addAction(action);
 
     return action;

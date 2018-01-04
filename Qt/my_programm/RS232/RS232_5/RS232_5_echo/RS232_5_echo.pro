@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 TEMPLATE    = app
-TARGET      = RS232_5_bridge
+TARGET      = RS232_5_echo
 
 FOLDER      = RS232
 
@@ -15,14 +15,14 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-DEFINES += RS232_FIXED_SIZE
+#DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
-#DEFINES += RS232_LOG
+DEFINES += RS232_LOG
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
+DEFINES += NO_LOG
 
 HEADERS += \
     defines.hpp \
@@ -39,7 +39,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH = "../../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/serial5/serial5.pri)

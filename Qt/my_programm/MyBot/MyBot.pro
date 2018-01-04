@@ -44,6 +44,7 @@ CONFIG  += c++11
 LIBS    += -lX11 -lXtst -lOpenCL
 
 LIB_PATH = "../../lib"
+
 include ($$LIB_PATH/qtsingleapplication/qtsingleapplication.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywaitsplashscreen.pri)

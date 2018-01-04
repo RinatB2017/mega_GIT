@@ -98,7 +98,11 @@ void MyWidget::connect_log(QWidget *parent)
 //--------------------------------------------------------------------------------
 void MyWidget::log(const QString data)
 {
+#ifdef QT_DEBUG
     qDebug() << data;
+#else
+    Q_UNUSED(data);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyWidget::init_w_lists(void)
@@ -838,7 +842,9 @@ void MyWidget::block_close(bool state)
 //--------------------------------------------------------------------------------
 void MyWidget::closeEvent(QCloseEvent *)
 {
+#ifdef QT_DEBUG
     qDebug() << "closeEvent";
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyWidget::debug(void)

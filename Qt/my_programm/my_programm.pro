@@ -16,21 +16,24 @@ SUBDIRS += \
     NewMoonLight \
     Organizations \
     MODBUS \
-    RS232 \
     RS485 \
     show_films \
     Templates \
     WiFi \
 
-contains( DEFINES, Q_WS_LINUX ) {
-    SUBDIRS += \
-        MyBot \
-        QRCodeGenerator \
-        Teacher \
-        Teacher_light \
+unix {
+SUBDIRS += \
+    MyBot \
+    QRCodeGenerator \
+    Teacher \
+    Teacher_light \
 }
     
 lessThan(QT_MAJOR_VERSION, 5) {
-    message (QT4)
-    SUBDIRS += neural/QNeuralNet
+SUBDIRS += \
+    neural/QNeuralNet \
+    RS232/RS232_4
+} else {
+SUBDIRS += \
+    RS232/RS232_5
 }

@@ -10,7 +10,7 @@ SUBDIRS += \
     Template_main \
     Template_old \
 
-contains( DEFINES, Q_WS_LINUX ) {
+unix {
 SUBDIRS += \
     Template_browser \
 }

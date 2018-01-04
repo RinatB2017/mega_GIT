@@ -40,6 +40,11 @@
 #include "mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
+#   define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
+#endif
+//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),

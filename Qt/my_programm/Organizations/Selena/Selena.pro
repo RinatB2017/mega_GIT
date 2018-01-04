@@ -12,6 +12,6 @@ SUBDIRS += \
     Test_MKU5 \
     Tester \
 
-contains( DEFINES, Q_WS_LINUX ) {
+unix {
     SUBDIRS += Test_r4_serial_widget
 }

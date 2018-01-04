@@ -27,8 +27,10 @@
 //--------------------------------------------------------------------------------
 #include <QObject>
 //--------------------------------------------------------------------------------
-#define htons(n) (unsigned short)((((unsigned short) (n)) << 8) | (((unsigned short) (n)) >> 8))
-#define htonl(n) (unsigned int)((((unsigned int) (n)) << 16) | (((unsigned int) (n)) >> 16))
+#ifdef Q_OS_LINUX
+#   define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
+#   define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
+#endif
 //--------------------------------------------------------------------------------
 class CRC
 {

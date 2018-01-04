@@ -6,14 +6,5 @@ TEMPLATE  = subdirs
 CONFIG   += ordered
 
 SUBDIRS += \
-    RS232 \
-    RS232_x2
-
-greaterThan(QT_MAJOR_VERSION, 4) {
-SUBDIRS += \
-    RS232_5 \
-    RS232_5_x2 \
-    RS232_5_bridge \
-    RS232_5_echo
-}
-
+    RS232_4 \
+    RS232_4_x2

@@ -1029,29 +1029,29 @@ int Multimeter_V764_2::print_last_error(void)
     {
     case E_V764_2_NO_ERROR:
         break;
-    case E_V764_2_ERROR_INDEX_NOT_CORRECT:  emit error(tr("E_V764_2_ERROR_INDEX_NOT_CORRECT")); break;
-    case E_V764_2_ERROR_PORT_NOT_OPEN:      emit error(tr("Порт мультиметра В7-64/2 не открыт!")); break;
-    case E_V764_2_ERROR_BREAK:              emit error(tr("E_V764_2_ERROR_BREAK")); break;
-    case E_V764_2_ERROR_MAX_REPEAT:         emit error(tr("E_V764_2_ERROR_MAX_REPEAT")); break;
-    case E_V764_2_ERROR_NO_ANSWER:          emit error(tr("Мультиметр не отвечает")); break;
-    case E_V764_2_ERROR_BIG_ANSWER:         emit error(tr("Неверная длина пакета (слишком большая)")); break;
-    case E_V764_2_ERROR_SMALL_ANSWER:       emit error(tr("Неверная длина пакета (слишком маленькая)")); break;
-    case E_V764_2_ERROR_BAD_SERNO:          emit error(tr("Неверный серийный номер")); break;
-    case E_V764_2_ERROR_BAD_ADDRESS:        emit error(tr("Неверный адрес")); break;
-    case E_V764_2_ERROR_BAD_CRC:            emit error(tr("Неверная контрольная сумма")); break;
-    case E_V764_2_ERROR_BAD_COMMAND:        emit error(tr("Неверная команда")); break;
-    case E_V764_2_ERROR_BAD_LEN:            emit error(tr("Неверная длина")); break;
-    case E_V764_2_ERROR_UNKNOWN_COMMAND:    emit error(tr("Неизвестная команда")); break;
-    case E_V764_2_ERROR_SIZE_NOT_CORRECT:   emit error(tr("Длина данных не соответствует завленной"));
-    case E_V764_2_UNKNOWN_ERROR:            emit error(tr("Неизвестная ошибка")); break;
-    case E_V764_2_INVALID_FLOAT:            emit error(tr("E_V764_2_INVALID_FLOAT")); break;
-    case E_V764_2_INVALID_LIMIT:            emit error(tr("E_V764_2_INVALID_LIMIT")); break;
-    case E_V764_2_INVALID_DELTA:            emit error(tr("E_V764_2_INVALID_DELTA")); break;
-    case E_V764_2_BREAK_MEASURING:          emit error(tr("E_V764_2_BREAK_MEASURING")); break;
-    case E_V764_2_ILLEGAL_FUNCTION:         emit error(tr("Команда не реализована (недопустимый номер функции")); break;
-    case E_V764_2_ILLEGAL_DATA_VALUE:       emit error(tr("Не корректные данные или не верный CRC")); break;
-    case E_V764_2_OVERLOAD:                 emit error(tr("Перегрузка")); break;
-    case E_V764_2_LO_FREQ:                  emit error(tr("Низкая частота")); break;
+    case E_V764_2_ERROR_INDEX_NOT_CORRECT:  emit error("E_V764_2_ERROR_INDEX_NOT_CORRECT");     break;
+    case E_V764_2_ERROR_PORT_NOT_OPEN:      emit error("Порт мультиметра В7-64/2 не открыт!");  break;
+    case E_V764_2_ERROR_BREAK:              emit error("E_V764_2_ERROR_BREAK");                 break;
+    case E_V764_2_ERROR_MAX_REPEAT:         emit error("E_V764_2_ERROR_MAX_REPEAT");            break;
+    case E_V764_2_ERROR_NO_ANSWER:          emit error("Мультиметр не отвечает");               break;
+    case E_V764_2_ERROR_BIG_ANSWER:         emit error("Неверная длина пакета (слишком большая)");      break;
+    case E_V764_2_ERROR_SMALL_ANSWER:       emit error("Неверная длина пакета (слишком маленькая)");    break;
+    case E_V764_2_ERROR_BAD_SERNO:          emit error("Неверный серийный номер");              break;
+    case E_V764_2_ERROR_BAD_ADDRESS:        emit error("Неверный адрес");                       break;
+    case E_V764_2_ERROR_BAD_CRC:            emit error("Неверная контрольная сумма");           break;
+    case E_V764_2_ERROR_BAD_COMMAND:        emit error("Неверная команда");                     break;
+    case E_V764_2_ERROR_BAD_LEN:            emit error("Неверная длина");                       break;
+    case E_V764_2_ERROR_UNKNOWN_COMMAND:    emit error("Неизвестная команда");                  break;
+    case E_V764_2_ERROR_SIZE_NOT_CORRECT:   emit error("Длина данных не соответствует завленной");  break;
+    case E_V764_2_UNKNOWN_ERROR:            emit error("Неизвестная ошибка");                   break;
+    case E_V764_2_INVALID_FLOAT:            emit error("E_V764_2_INVALID_FLOAT");               break;
+    case E_V764_2_INVALID_LIMIT:            emit error("E_V764_2_INVALID_LIMIT");               break;
+    case E_V764_2_INVALID_DELTA:            emit error("E_V764_2_INVALID_DELTA");               break;
+    case E_V764_2_BREAK_MEASURING:          emit error("E_V764_2_BREAK_MEASURING");             break;
+    case E_V764_2_ILLEGAL_FUNCTION:         emit error("Команда не реализована (недопустимый номер функции");   break;
+    case E_V764_2_ILLEGAL_DATA_VALUE:       emit error("Не корректные данные или не верный CRC");   break;
+    case E_V764_2_OVERLOAD:                 emit error("Перегрузка");                           break;
+    case E_V764_2_LO_FREQ:                  emit error("Низкая частота");                       break;
 
     default: emit error(QString(tr("Unknown cmd %1")).arg(last_error)); break;
     }

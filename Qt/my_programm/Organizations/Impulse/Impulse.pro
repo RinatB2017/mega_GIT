@@ -24,7 +24,7 @@ SUBDIRS += \
     Test_PowerSupply \
     Test_radiochannel \
 
-contains( DEFINES, Q_WS_LINUX ) {
+unix {
 SUBDIRS += \
     FT2232 \
     FT2232_old \

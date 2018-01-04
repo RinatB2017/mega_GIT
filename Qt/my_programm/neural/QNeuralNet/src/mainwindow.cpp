@@ -646,7 +646,10 @@ void MainWindow::recognizeNumber()
         }
 
         //init network with 4 layers, alpha=0.8, learningRate=0.1 and maxError=0.05
-        m_network = new Network(QList<int>() << 25 << 18 << 8 << 4, 0.8f, 0.1f, 0.05f);
+        m_network = new Network(QList<int>() << 25 << 18 << 8 << 4,
+                                0.8f,
+                                0.1f,
+                                0.05f);
         m_netForRecognition = true;
     }
 

@@ -21,7 +21,7 @@ SUBDIRS += \
     Sniffer_PCA10000 \
     Tools \
 
-contains( DEFINES, Q_WS_LINUX ) {
+unix {
 SUBDIRS += \
     Creator \
     Dooscape \

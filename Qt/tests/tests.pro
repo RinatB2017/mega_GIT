@@ -45,7 +45,7 @@ SUBDIRS += \
 #
     Tester
 
-contains( DEFINES, Q_WS_LINUX ) {
+unix {
 SUBDIRS += \
     Test_Box2D \
     Test_Qt3D \

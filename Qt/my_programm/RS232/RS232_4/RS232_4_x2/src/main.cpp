@@ -19,13 +19,15 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
-#include <QTranslator>
+#include <QVBoxLayout>
 #include <QLocale>
+#include <QFrame>
+
+#include <QAction>
 //--------------------------------------------------------------------------------
-#include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "serialbox4.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -35,16 +37,7 @@ int main(int argc, char *argv[])
 {
     set_codecs();
 
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
-        if(app.sendMessage("Wake up!")) return 0;
-    }
-
-//    QTranslator translator;
-//    translator.load(":/ru_RU.qm");
-//    app.installTranslator(&translator);
+    QApplication app(argc, argv);
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
@@ -59,8 +52,27 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-    main_window->setCentralWidget(mainBox);
+    QFrame *frame = new QFrame;
+
+    splash->showMessage(QObject::tr("init RS-232 (1)..."));
+    SerialBox4 *serial = new SerialBox4(main_window->getThis(), "RS-232 (1)");
+    serial->add_menu(2, QObject::tr("Настройка RS-232 (1)"));
+
+    splash->showMessage(QObject::tr("init RS-232 (2)..."));
+    SerialBox4 *serial2 = new SerialBox4(main_window->getThis(), "RS-232 (2)");
+    serial2->add_menu(3, QObject::tr("Настройка RS-232 (2)"));
+
+#if 1
+    QBoxLayout *box = new QBoxLayout(QBoxLayout::LeftToRight);
+#else
+    QBoxLayout *box = new QBoxLayout(QBoxLayout::TopToBottom);
+#endif
+    box->addWidget(serial);
+    box->addWidget(serial2);
+    frame->setLayout(box);
+
+    main_window->setCentralWidget(frame);
+
     main_window->show();
 
     splash->finish(main_window);

@@ -137,6 +137,11 @@ void SerialBox4::createWidgets(void)
 #ifdef RS232_LOG
     logBox = new LogBox("RS232", this);
     ui->layout_right_LOG->addWidget(logBox);
+
+    connect(this,   SIGNAL(info(QString)),  logBox, SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(debug(QString)), logBox, SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(error(QString)), logBox, SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(trace(QString)), logBox, SLOT(traceLog(QString)));
 #endif
 
 #ifdef RS232_SEND
@@ -539,7 +544,7 @@ bool SerialBox4::isOpen(void)
 //--------------------------------------------------------------------------------
 bool SerialBox4::add_menu(int index)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
     QMenu *menu = new QMenu(tr("Настройка RS-232"));

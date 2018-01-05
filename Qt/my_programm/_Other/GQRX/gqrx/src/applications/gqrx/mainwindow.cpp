@@ -56,7 +56,9 @@
 
 #include "qtgui/bookmarkstaglist.h"
 
-MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
+MainWindow::MainWindow(const QString cfgfile,
+                       bool edit_conf,
+                       QWidget *parent) :
     QMainWindow(parent),
     configOk(true),
     ui(new Ui::MainWindow),
@@ -414,7 +416,8 @@ MainWindow::~MainWindow()
  *
  * FIXME: Refactor.
  */
-bool MainWindow::loadConfig(const QString cfgfile, bool check_crash,
+bool MainWindow::loadConfig(const QString cfgfile,
+                            bool check_crash,
                             bool restore_mainwindow)
 {
     double      actual_rate;

@@ -71,24 +71,25 @@ struct BookmarkInfo
         this->bandwidth = 0;
     }
 
-/*    BookmarkInfo( qint64 frequency, QString name, qint64 bandwidth, QString modulation )
+    /*
+    BookmarkInfo( qint64 frequency, QString name, qint64 bandwidth, QString modulation )
     {
         this->frequency = frequency;
         this->name = name;
         this->modulation = modulation;
         this->bandwidth = bandwidth;
     }
-*/
+    */
     bool operator<(const BookmarkInfo &other) const
     {
         return frequency < other.frequency;
     }
-/*
+    /*
     void setTags(QString tagString);
     QString getTagString();
     bool hasTags(QString _tags);
     bool hasTags(QStringList _tags);
- */
+    */
 
     const QColor GetColor() const;
     bool IsActive() const;

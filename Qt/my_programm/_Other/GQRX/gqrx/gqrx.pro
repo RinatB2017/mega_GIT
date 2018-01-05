@@ -19,8 +19,8 @@ lessThan(QT_MAJOR_VERSION,5) {
 TEMPLATE = app
 
 macx {
-    TARGET = Gqrx
-    ICON = resources/icons/gqrx.icns
+    TARGET  = Gqrx
+    ICON    = resources/icons/gqrx.icns
     DEFINES += GQRX_OS_MACX
 } else {
     TARGET = gqrx

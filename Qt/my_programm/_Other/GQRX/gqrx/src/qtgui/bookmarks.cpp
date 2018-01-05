@@ -176,10 +176,10 @@ bool Bookmarks::save()
 
         stream << endl;
 
-        stream << QString("# Frequency").leftJustified(12) + "; " +
-                  QString("Name").leftJustified(25)+ "; " +
-                  QString("Modulation").leftJustified(20) + "; " +
-                  QString("Bandwidth").rightJustified(10) + "; " +
+        stream << QString("# Frequency").leftJustified(12)  + "; " +
+                  QString("Name").leftJustified(25)         + "; " +
+                  QString("Modulation").leftJustified(20)   + "; " +
+                  QString("Bandwidth").rightJustified(10)   + "; " +
                   QString("Tags") << endl;
 
         for (int i = 0; i < m_BookmarkList.size(); i++)

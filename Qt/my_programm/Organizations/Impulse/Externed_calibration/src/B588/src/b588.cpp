@@ -132,7 +132,7 @@ void B588::init(void)
 void B588::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(nw);
+    Q_CHECK_PTR(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -241,11 +241,6 @@ void B588::measuring_B588(void)
     }
 }
 //--------------------------------------------------------------------------------
-void B588::block_interface(bool state)
-{
-
-}
-//--------------------------------------------------------------------------------
 bool B588::is_blocked_exit(void)
 {
     return true;
@@ -254,5 +249,10 @@ bool B588::is_blocked_exit(void)
 int B588::xxx(int x)
 {
     return x+5;
+}
+//--------------------------------------------------------------------------------
+void B588::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

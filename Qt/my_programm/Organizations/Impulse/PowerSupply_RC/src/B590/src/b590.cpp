@@ -18,14 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QCoreApplication>
-#include <QProgressDialog>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QToolButton>
-#include <QToolBar>
-#include <QTimer>
-#include <QMenu>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QCoreApplication>
+#   include <QProgressDialog>
+#   include <QMessageBox>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QToolBar>
+#   include <QTimer>
+#   include <QMenu>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

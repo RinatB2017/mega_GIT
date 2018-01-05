@@ -18,20 +18,20 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QPushButton>
-#include <QToolButton>
-#include <QSplitter>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
-#include <QDebug>
-//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
-#   include <QtMath>
+#   include <QtWidgets>
 #else
+#   include <QApplication>
+#   include <QMouseEvent>
+#   include <QPainter>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QSplitter>
+#   include <QCheckBox>
+#   include <QComboBox>
+#   include <QToolBar>
+#   include <QDebug>
+
 #   include <qmath.h>
 #endif
 //--------------------------------------------------------------------------------
@@ -54,12 +54,6 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox)
 {
     init();
-    load_config();
-
-    ui->lcd_0->display("---");
-    ui->lcd_1->display("---");
-    ui->lcd_2->display("---");
-    ui->lcd_3->display("---");
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -72,6 +66,13 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
     connect(ui->btn_get_my_ip,  SIGNAL(clicked(bool)),  this,   SLOT(show_my_IP()));
+
+    load_config();
+
+    ui->lcd_0->display("---");
+    ui->lcd_1->display("---");
+    ui->lcd_2->display("---");
+    ui->lcd_3->display("---");
 }
 //--------------------------------------------------------------------------------
 void MainBox::show_my_IP(void)

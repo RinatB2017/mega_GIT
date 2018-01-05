@@ -18,24 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDialogButtonBox>
-#include <QGridLayout>
-#include <QVBoxLayout>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QToolBar>
-#include <QDialog>
-#include <QSlider>
-#include <QLabel>
-#include <QFrame>
-#include <QTimer>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QDialogButtonBox>
+#   include <QGridLayout>
+#   include <QVBoxLayout>
+#   include <QFileDialog>
+#   include <QMessageBox>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QCheckBox>
+#   include <QToolBar>
+#   include <QDialog>
+#   include <QSlider>
+#   include <QLabel>
+#   include <QFrame>
+#   include <QTimer>
 
-#include <QFile>
-#include <QMenu>
-
+#   include <QFile>
+#   include <QMenu>
+#endif
+//--------------------------------------------------------------------------------
 #include <limits.h>
 #include "defines.hpp"
 //--------------------------------------------------------------------------------

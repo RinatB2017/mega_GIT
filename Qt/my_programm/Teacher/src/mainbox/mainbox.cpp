@@ -18,18 +18,22 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QStackedWidget>
-#include <QPushButton>
-#include <QToolButton>
-#include <QTabWidget>
-#include <QLineEdit>
-#include <QToolBar>
-#include <QtWebKit>
-#include <QWebView>
-#include <QSplitter>
-#include <QComboBox>
-#include <QDebug>
-#include <QLabel>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QStackedWidget>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QTabWidget>
+#   include <QLineEdit>
+#   include <QToolBar>
+#   include <QtWebKit>
+#   include <QWebView>
+#   include <QSplitter>
+#   include <QComboBox>
+#   include <QDebug>
+#   include <QLabel>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------

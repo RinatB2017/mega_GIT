@@ -59,7 +59,8 @@ void B588::init(void)
     createTestBar();
 
 #ifndef NO_GRAPH
-    grapher = new GrapherBox(0, 1000, 0, qPow(2, 24), "parrots", "time", "value", this);
+    //grapher = new GrapherBox(0, 1000, 0, qPow(2, 24), "parrots", "time", "value", this);
+    grapher = new GrapherBox(this);
     curve_1 = grapher->add_curve("channel 1");
     curve_2 = grapher->add_curve("channel 2");
     curve_3 = grapher->add_curve("channel 3");
@@ -94,20 +95,6 @@ void B588::init(void)
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     connect(ui->btn_power, SIGNAL(toggled(bool)), this, SLOT(measuring(bool)));
     connect(ui->btn_find_device, SIGNAL(clicked()), SLOT(find_device()));
-}
-//--------------------------------------------------------------------------------
-void B588::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
 }
 //--------------------------------------------------------------------------------
 void B588::measuring(bool state)
@@ -235,5 +222,10 @@ void B588::test(void)
 {
     //QFrame *frame = powersupply->add_frame_find_powersupply();
     //frame->show();
+}
+//--------------------------------------------------------------------------------
+void B588::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

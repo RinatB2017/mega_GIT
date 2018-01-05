@@ -481,7 +481,7 @@ void B588::read_profile(int number_profile)
         uint8_t  r_profile = 0;
         uint8_t  r_point = 0;
         uint16_t r_voltage = 0;
-        int16_t  r_current = 0;
+        uint16_t r_current = 0;
         uint16_t r_time = 0;
         ok = powersupply->get_point_profile(number_profile,
                                             point,

@@ -21,8 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QNetworkRequest>
 #include <QNetworkAccessManager>
+#include <QNetworkRequest>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

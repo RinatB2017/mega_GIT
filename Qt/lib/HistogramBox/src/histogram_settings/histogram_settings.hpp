@@ -21,11 +21,6 @@
 #ifndef GRAPHER_SETTINGS_HPP
 #define GRAPHER_SETTINGS_HPP
 //--------------------------------------------------------------------------------
-#include <QComboBox>
-#include <QDialog>
-#include <QLabel>
-#include <QColor>
-//--------------------------------------------------------------------------------
 #include "qwt_picker.h"
 //--------------------------------------------------------------------------------
 #include "histogrambox.hpp"

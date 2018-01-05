@@ -72,15 +72,6 @@ B588::~B588()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void B588::log(const QString &data)
-{
-#ifdef QT_DEBUG
-    qDebug() << data;
-#else
-    Q_UNUSED(data);
-#endif
-}
-//--------------------------------------------------------------------------------
 void B588::create_hex_views(void)
 {
     he = new QHexEdit(this);
@@ -183,17 +174,17 @@ void B588::popup_factory_I(QPoint)
 //--------------------------------------------------------------------------------
 void B588::calc_crc16_user_U(void)
 {
+#if 0
     uint8_t data[0xFFFF] = { 0 };
-    uint16_t len = he_user_U->data().length();
+    uint16_t len = he_user_U->data()->length();
     for(int n=0; n<len; n++)
     {
-        data[n] = he_user_U->data().at(n);
+        data[n] = he_user_U->data()->at(n);
     }
     uint16_t crc16 = CRC::powersupply_crc16(data, len-2);
     emit info(QString("len %1").arg(len));
     emit info(QString("CRC16(user_U) 0x%1").arg(crc16, 0, 16));
 
-#if 0
     for(int n=0; n<len; n++)
     {
         emit info(QString("0x%1").arg(data[n], 0, 16));
@@ -203,41 +194,47 @@ void B588::calc_crc16_user_U(void)
 //--------------------------------------------------------------------------------
 void B588::calc_crc16_user_I(void)
 {
+#if 0
     uint8_t data[1024] = { 0 };
-    uint16_t len = he_user_I->data().length();
+    uint16_t len = he_user_I->data()->length();
     for(int n=0; n<len; n++)
     {
-        data[n] = he_user_I->data().at(n);
+        data[n] = he_user_I->data()->at(n);
     }
     uint16_t crc16 = CRC::powersupply_crc16(data, len-2);
     emit info(QString("len %1").arg(len));
     emit info(QString("CRC16(user_I) 0x%1").arg(crc16, 0, 16));
+#endif
 }
 //--------------------------------------------------------------------------------
 void B588::calc_crc16_factory_U(void)
 {
+#if 0
     uint8_t data[1024] = { 0 };
-    uint16_t len = he_factory_U->data().length();
+    uint16_t len = he_factory_U->data()->length();
     for(int n=0; n<len; n++)
     {
-        data[n] = he_factory_U->data().at(n);
+        data[n] = he_factory_U->data()->at(n);
     }
     uint16_t crc16 = CRC::powersupply_crc16(data, len-2);
     emit info(QString("len %1").arg(len));
     emit info(QString("CRC16(factory_U) 0x%1").arg(crc16, 0, 16));
+#endif
 }
 //--------------------------------------------------------------------------------
 void B588::calc_crc16_factory_I(void)
 {
+#if 0
     uint8_t data[1024] = { 0 };
-    uint16_t len = he_factory_I->data().length();
+    uint16_t len = he_factory_I->data()->length();
     for(int n=0; n<len; n++)
     {
-        data[n] = he_factory_I->data().at(n);
+        data[n] = he_factory_I->data()->at(n);
     }
     uint16_t crc16 = CRC::powersupply_crc16(data, len-2);
     emit info(QString("len %1").arg(len));
     emit info(QString("CRC16(factory_I) 0x%1").arg(crc16, 0, 16));
+#endif
 }
 //--------------------------------------------------------------------------------
 void B588::init(void)
@@ -280,7 +277,8 @@ void B588::init(void)
 //--------------------------------------------------------------------------------
 void B588::dataChanged(void)
 {
-    uint16_t address = he->cursorPosition();
+#if 0
+    uint16_t address = he->cursorPos();
     uint8_t data = he->data().at(address);
     emit trace(QString("address 0x%1 data 0x%2")
                  .arg(address, 0, 16)
@@ -291,6 +289,7 @@ void B588::dataChanged(void)
         emit error(QString("address 0x%1 is bad!")
                    .arg(address, 0, 16));
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void B588::find_devices(void)
@@ -443,7 +442,7 @@ void B588::save_data_to_fram(void)
     }
     powersupply->set_state_silence(false);
 
-    he->setData(fram_data);
+    he->setData(QHexEditData::fromMemory(fram_data));
     emit info(QString("save %1 bytes").arg(fram_data.size()));
     emit info("save_data_to_fram end");
     block_this_button(false);
@@ -487,7 +486,7 @@ void B588::read_fram(void)
     pd->close();
     powersupply->set_state_silence(false);
 
-    he->setData(fram_data);
+    he->setData(QHexEditData::fromMemory(fram_data));
     emit info(QString("read %1 bytes").arg(fram_data.size()));
 
     uint16_t begin_user_U = offsetof(FRAM_ADDR_B588, user_points_U);
@@ -504,10 +503,10 @@ void B588::read_fram(void)
     QByteArray ba_factory_U = fram_data.mid(begin_factory_U, size_factory_U);
     QByteArray ba_factory_I = fram_data.mid(begin_factory_I, size_factory_I);
 
-    he_user_U->setData(ba_user_U);
-    he_user_I->setData(ba_user_I);
-    he_factory_U->setData(ba_factory_U);
-    he_factory_I->setData(ba_factory_I);
+    he_user_U->setData(QHexEditData::fromMemory(ba_user_U));
+    he_user_I->setData(QHexEditData::fromMemory(ba_user_I));
+    he_factory_U->setData(QHexEditData::fromMemory(ba_factory_U));
+    he_factory_I->setData(QHexEditData::fromMemory(ba_factory_I));
 
     emit info("read_fram end");
     block_this_button(false);

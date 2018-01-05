@@ -70,11 +70,7 @@ private:
     int curve_U3_adc = 0;
 
     void init(void);
-
     void createTestBar(void);
-
-    void block_interface(bool state);
-
     void updateText(void);
 
 };

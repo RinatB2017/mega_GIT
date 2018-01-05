@@ -18,13 +18,17 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QFileDialog>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QToolButton>
-#include <QToolBar>
-#include <QDebug>
-#include <QTimer>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QFileDialog>
+#   include <QVBoxLayout>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QToolBar>
+#   include <QDebug>
+#   include <QTimer>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------

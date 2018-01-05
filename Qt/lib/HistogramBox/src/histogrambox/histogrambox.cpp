@@ -18,24 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDialogButtonBox>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QToolButton>
-#include <QToolBar>
-#include <QDialog>
-#include <QLabel>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QDialogButtonBox>
+#   include <QFileDialog>
+#   include <QMessageBox>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QToolBar>
+#   include <QDialog>
+#   include <QLabel>
 
-#include <QDateTime>
-#include <QDate>
-#include <QTime>
+#   include <QDateTime>
+#   include <QDate>
+#   include <QTime>
 
-#include <QFile>
-#include <QMenu>
+#   include <QFile>
+#   include <QMenu>
 
-#include <limits.h>
-#include "defines.hpp"
+#   include <QWidget>
+#   include <QVector>
+
+#   include <limits.h>
+#endif
 //--------------------------------------------------------------------------------
 #include <qwt_plot_histogram.h>
 #include <qwt_plot_renderer.h>
@@ -60,6 +66,8 @@
 #include "mainwindow.hpp"
 #include "histogrambox.hpp"
 #include "csvreader.hpp"
+
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 HistogramBox::HistogramBox(QWidget *parent) :
     MyWidget(parent),

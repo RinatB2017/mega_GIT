@@ -18,14 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QStackedWidget>
-#include <QApplication>
-#include <QMessageBox>
-#include <QVBoxLayout>
-#include <QToolButton>
-#include <QPushButton>
-#include <QTextEdit>
-#include <QStyle>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QStackedWidget>
+#   include <QApplication>
+#   include <QMessageBox>
+#   include <QVBoxLayout>
+#   include <QToolButton>
+#   include <QPushButton>
+#   include <QTextEdit>
+#   include <QStyle>
+#endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "notebook.hpp"

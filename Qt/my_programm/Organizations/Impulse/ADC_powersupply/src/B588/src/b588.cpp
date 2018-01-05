@@ -200,26 +200,8 @@ int B588::measuring(void)
     return 0;
 }
 //--------------------------------------------------------------------------------
-void B588::block_interface(bool state)
+void B588::updateText(void)
 {
-    QList<QPushButton *> all_pushbutton = topLevelWidget()->findChildren<QPushButton *>();
-    foreach(QPushButton *obj, all_pushbutton)
-    {
-        obj->setDisabled(state);
-    }
-}
-//--------------------------------------------------------------------------------
-void B588::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

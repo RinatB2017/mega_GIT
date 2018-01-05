@@ -752,11 +752,6 @@ void B588::save_data(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void B588::generate_fake_data(void)
-{
-
-}
-//--------------------------------------------------------------------------------
 void B588::save_report(void)
 {
 #ifndef USER_CALIBRATIONS
@@ -857,7 +852,7 @@ void B588::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
-    QToolBar *toolBar = new QToolBar("testbar B5-88");
+    QToolBar *testbar = new QToolBar("testbar B5-88");
     testbar->setObjectName("toolbar_B588");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
@@ -1785,5 +1780,10 @@ void B588::stop_check_U(void)
 void B588::stop_check_I(void)
 {
     flag_stop_check_I = true;
+}
+//--------------------------------------------------------------------------------
+void B588::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

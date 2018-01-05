@@ -35,6 +35,10 @@
 #   include <QTime>
 #   include <QFile>
 #   include <QMenu>
+
+#   include <QWidget>
+#   include <QVector>
+#   include <QPointF>
 #endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"

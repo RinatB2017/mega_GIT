@@ -18,11 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QColorDialog>
-#include <QHBoxLayout>
-#include <QLineEdit>
-#include <QEvent>
-#include <QLabel>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QColorDialog>
+#   include <QHBoxLayout>
+#   include <QLineEdit>
+#   include <QEvent>
+#   include <QLabel>
+#endif
 //--------------------------------------------------------------------------------
 #include "histogram_curvebox.hpp"
 //--------------------------------------------------------------------------------

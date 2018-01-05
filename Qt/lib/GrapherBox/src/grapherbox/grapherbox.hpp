@@ -21,10 +21,6 @@
 #ifndef GRAPHERBOX_HPP
 #define GRAPHERBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QVector>
-#include <QPointF>
-//--------------------------------------------------------------------------------
 #include "qwt_curve_fitter.h"
 #include "qwt_legend_data.h"
 #include "qwt_plot_curve.h"

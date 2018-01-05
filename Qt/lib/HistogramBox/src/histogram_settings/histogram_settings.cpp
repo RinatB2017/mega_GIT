@@ -18,16 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDialogButtonBox>
-#include <QColorDialog>
-#include <QApplication>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QVector>
-#include <QLabel>
-#include <QStyle>
-#include <QDebug>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QDialogButtonBox>
+#   include <QColorDialog>
+#   include <QApplication>
+#   include <QHBoxLayout>
+#   include <QVBoxLayout>
+#   include <QPushButton>
+#   include <QVector>
+#   include <QLabel>
+#   include <QStyle>
+
+#   include <QComboBox>
+#   include <QDialog>
+#   include <QLabel>
+#   include <QColor>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "qwt_plot_histogram.h"
 #include "qwt_plot_picker.h"

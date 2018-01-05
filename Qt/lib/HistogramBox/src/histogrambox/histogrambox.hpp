@@ -21,9 +21,6 @@
 #ifndef HISTOGRAMBOX_HPP
 #define HISTOGRAMBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QVector>
-//--------------------------------------------------------------------------------
 #include "qwt_plot_histogram.h"
 #include "qwt_series_data.h"
 #include "qwt_legend_data.h"

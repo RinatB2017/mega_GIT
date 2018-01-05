@@ -21,8 +21,6 @@
 #ifndef HISTOGRAMCURVEBOX_HPP
 #define HISTOGRAMCURVEBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QFrame>
-
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QLineEdit;

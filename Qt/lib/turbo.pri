@@ -53,6 +53,9 @@ else {
     OPTIMIZE = -pipe -O2
 }
 ###############################################################################
+#CONFIG	 += precompile_header
+#PRECOMPILED_HEADER  = stable.h
+###############################################################################
 QMAKE_CFLAGS   += $${OPTIMIZE}
 QMAKE_CXXFLAGS += $${OPTIMIZE}
 QMAKE_LFLAGS   += $${OPTIMIZE}
@@ -63,6 +66,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     DEFINES += HAVE_QT5
     message(Qt5 = $$QT)
 } else {
+    DEFINES += HAVE_QT4
     message(Qt4 = $$QT)
 }
 ###############################################################################

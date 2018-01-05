@@ -21,11 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QApplication>
-#include <QWidget>
-#include <QDebug>
-
-#include <QPalette>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

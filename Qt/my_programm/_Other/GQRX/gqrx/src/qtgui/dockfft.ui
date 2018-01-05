@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>386</height>
+    <width>321</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -39,7 +39,7 @@
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
-   <string>FFT Settings</string>
+   <string>&amp;FFT Settings</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -83,8 +83,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>310</width>
-         <height>357</height>
+         <width>311</width>
+         <height>372</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">

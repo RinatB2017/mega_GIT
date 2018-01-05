@@ -54,9 +54,11 @@
 #if defined __cplusplus
 /* Add C++ includes here */
 
-# include <iostream>
-# include <QApplication>
-# include <QPushButton>
-# include <QLabel>
+#include <QtWidgets>
+
+//# include <iostream>
+//# include <QApplication>
+//# include <QPushButton>
+//# include <QLabel>
 #endif
 //! [0]

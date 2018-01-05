@@ -49,11 +49,11 @@
 #include "receivers/receiver_base.h"
 
 #ifdef WITH_PULSEAUDIO
-#include "pulseaudio/pa_sink.h"
+#   include "pulseaudio/pa_sink.h"
 #elif WITH_PORTAUDIO
-#include "portaudio/portaudio_sink.h"
+#   include "portaudio/portaudio_sink.h"
 #else
-#include <gnuradio/audio/sink.h>
+#   include <gnuradio/audio/sink.h>
 #endif
 
 /**

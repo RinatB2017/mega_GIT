@@ -4,6 +4,7 @@
 #include "ext.h"
 //--------------------------------------------------------------------------------
 // http://www.cyberforum.ru/qt/thread1250144.html
+// http://www.cyberforum.ru/qt/thread1323920.html
 //--------------------------------------------------------------------------------
 Ext::Ext(QObject *parent) :
     QObject(parent)

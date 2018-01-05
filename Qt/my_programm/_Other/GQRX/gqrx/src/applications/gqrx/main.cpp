@@ -31,7 +31,7 @@
 #include <QtGlobal>
 
 #ifdef WITH_PORTAUDIO
-#include <portaudio.h>
+#   include <portaudio.h>
 #endif
 
 #include "mainwindow.h"
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
         qDebug() << "Failed to disable controlport";
 
 #ifdef WITH_PORTAUDIO
-    PaError     err = Pa_Initialize();
+    PaError err = Pa_Initialize();
     if (err != paNoError)
         qCritical() << "Failed to initialize Portaudio backend:"
                     << Pa_GetErrorText(err);

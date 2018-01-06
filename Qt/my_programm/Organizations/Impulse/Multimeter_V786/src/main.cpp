@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
 #ifdef QT_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-    //qDebug() << QLocale().name();
+    //
 #endif
 
     return app.exec();

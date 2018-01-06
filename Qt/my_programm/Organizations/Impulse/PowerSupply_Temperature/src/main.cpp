@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     splash->finish(main_window);
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-    qDebug() << QLocale().name();
+    
 
     //QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SIGNAL(info(const QString &)));
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));

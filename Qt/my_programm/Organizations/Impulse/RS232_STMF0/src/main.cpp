@@ -19,7 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
-#include <QTranslator>
 #include <QMessageBox>
 #include <QLocale>
 #include <QDebug>
@@ -30,13 +29,13 @@
 #include "mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
-#include "math.h"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
+
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -44,9 +43,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    QTranslator translator;
-    translator.load(":/ru_RU.qm");
-    app.installTranslator(&translator);
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");

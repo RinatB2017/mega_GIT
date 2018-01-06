@@ -25,6 +25,7 @@
 
 #include <QTest>
 //--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
@@ -35,27 +36,11 @@ Test::Test()
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    QList<QWidget *> tlw = qApp->allWidgets();
 
-    foreach (QWidget *w, tlw)
-    {
-        if (w->objectName() == "cb_test")
-        {
-            QTest::keyClick(w, Qt::Key_Down);
-        }
-        if (w->objectName() == "btn_choice_test")
-        {
-            QTest::mouseClick(w, Qt::LeftButton);
-        }
-    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    MainBox *mb = new MainBox(0, 0);
-    QCOMPARE(mb->xxx(5), 10);
-    QCOMPARE(mb->xxx(10), 15);
 
-    //QTest::qWait(5000);
 }
 //--------------------------------------------------------------------------------

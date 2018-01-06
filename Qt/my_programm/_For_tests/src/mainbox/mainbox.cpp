@@ -48,9 +48,11 @@ void MainBox::init(void)
 
     createTestBar();
 
+#if 0
     MyMainWindow *mw = dynamic_cast<MyMainWindow *>(parent());
     Q_CHECK_PTR(mw);
     connect(mw, SIGNAL(notifySignal()), this,   SLOT(test_1()));
+#endif
 
     if(sizeHint().height() > 0)
     {

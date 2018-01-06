@@ -32,20 +32,19 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
     set_codecs();
+    QApplication app(argc, argv);
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     MainWindow *main_window = new MainWindow;
-    //    main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    //  main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     MainBox *mainBox = new MainBox(main_window->getThis());
 
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));

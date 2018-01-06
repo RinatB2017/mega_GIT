@@ -36,6 +36,10 @@ private slots:
     void test_func(void);
 
     void test_safe(void);
+
+private:
+    void test_slider(void);
+    void test_mainbox(void);
 };
 //--------------------------------------------------------------------------------
 #endif

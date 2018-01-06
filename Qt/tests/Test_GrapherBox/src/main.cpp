@@ -33,7 +33,6 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-
     set_codecs();
 #if 1
     QtSingleApplication app(argc, argv);
@@ -66,7 +65,6 @@ int main(int argc, char *argv[])
     splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-    
 
     //unsigned short x = 1;
     //qDebug() << (((unsigned char *) &x) == 0 ? "big-endian" : "little-endian");

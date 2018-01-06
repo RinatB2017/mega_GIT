@@ -18,14 +18,16 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDebug>
-//--------------------------------------------------------------------------------
 #include "mainwidget.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainWidget::MainWidget(QObject *parent)
     : QObject(parent)
 {
-
+    setObjectName("MainWidget");
 }
 //--------------------------------------------------------------------------------
 MainWidget::~MainWidget()
@@ -45,10 +47,8 @@ bool MainWidget::test_0(void)
 {
     emit info("Test_0()");
 
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
+    //emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
+    //emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
 
     return true;
 }
@@ -56,9 +56,6 @@ bool MainWidget::test_0(void)
 bool MainWidget::test_1(void)
 {
     emit info("Test_1()");
-
-    emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
-    emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
 
     return true;
 }

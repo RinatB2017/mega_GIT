@@ -56,14 +56,14 @@ void Test::test_func(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 
-    MainWidget *mb = new MainWidget(mw->getThis());
+    MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
+    QVERIFY(mb);
+
     QCOMPARE(mb->test_0(), true);
     QCOMPARE(mb->test_1(), true);
     QCOMPARE(mb->test_2(), true);
     QCOMPARE(mb->test_3(), true);
     QCOMPARE(mb->test_4(), true);
     QCOMPARE(mb->test_5(), true);
-
-    mb->deleteLater();
 }
 //--------------------------------------------------------------------------------

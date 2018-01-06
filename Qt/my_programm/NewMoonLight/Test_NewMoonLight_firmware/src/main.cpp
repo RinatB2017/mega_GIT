@@ -19,7 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
-#include <QTranslator>
 #include <QLocale>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"

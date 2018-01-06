@@ -28,12 +28,13 @@
 #   include <QLineEdit>
 #   include <QToolBar>
 #   include <QtWebKit>
-#   include <QWebView>
 #   include <QSplitter>
 #   include <QComboBox>
 #   include <QDebug>
 #   include <QLabel>
 #endif
+//--------------------------------------------------------------------------------
+#include <QWebView>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------

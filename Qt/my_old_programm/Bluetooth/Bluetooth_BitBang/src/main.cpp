@@ -19,7 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
-#include <QTranslator>
 #include <QLocale>
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -36,9 +35,8 @@ int main(int argc, char *argv[])
 
     set_codecs();
 
-    QTranslator translator;
-    translator.load(":/ru_RU.qm");
-    app.installTranslator(&translator);
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/pinguin.png");

@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QApplication>
 #include <QVBoxLayout>
-#include <QTranslator>
 #include <QLocale>
 #include <QFrame>
 

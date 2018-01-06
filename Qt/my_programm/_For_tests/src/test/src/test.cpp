@@ -38,6 +38,22 @@ Test::Test()
 
 }
 //--------------------------------------------------------------------------------
+void Test::test_slider(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
+
+    QSlider *slider = mw->findChild<QSlider *>("verticalSlider");
+    QVERIFY(slider);
+    QSignalSpy spy(slider, SIGNAL(valueChanged(int)));
+    QCOMPARE(spy.isValid(), true); // signal exists
+
+    slider->setValue(10);
+
+    QCOMPARE(spy.count(), 1);                    // fired exactly once
+    QCOMPARE(spy.takeFirst().at(0).toInt(), 10); // with right arguments
+}
+//--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
@@ -53,12 +69,12 @@ void Test::test_GUI(void)
     QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+void Test::test_mainbox(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 
-    MainBox *mb = new MainBox(mw->getThis(), 0);
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
     Q_CHECK_PTR(mb);
 
     QCOMPARE(mb->test_0(), true);
@@ -67,8 +83,12 @@ void Test::test_func(void)
     QCOMPARE(mb->test_3(), true);
     QCOMPARE(mb->test_4(), true);
     QCOMPARE(mb->test_5(), true);
-
-    mb->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void Test::test_func(void)
+{
+    test_mainbox();
+    test_slider();
 }
 //--------------------------------------------------------------------------------
 void Test::test_safe(void)
@@ -143,6 +163,22 @@ void Test::test_safe(void)
     QTest::mouseClick(tb_clear, Qt::LeftButton);
     QCOMPARE(safe->get_value(), 0);
 
+    QTest::mouseClick(tb1,  Qt::LeftButton);
+    QTest::mouseClick(tb2,  Qt::LeftButton);
+    QTest::mouseClick(tb3,  Qt::LeftButton);
+    QTest::mouseClick(tb4,  Qt::LeftButton);
+    QTest::mouseClick(tb5,  Qt::LeftButton);
+    QCOMPARE(safe->get_value(), 12345);
+
+    QTest::mouseClick(tb_clear, Qt::LeftButton);
+    QCOMPARE(safe->get_value(), 0);
+
+    QTest::mouseClick(tb9,  Qt::LeftButton);
+    QTest::mouseClick(tb9,  Qt::LeftButton);
+    QTest::mouseClick(tb9,  Qt::LeftButton);
+    QTest::mouseClick(tb9,  Qt::LeftButton);
+    QTest::mouseClick(tb9,  Qt::LeftButton);
+    QCOMPARE(safe->get_value(), 99999);
 
     QSignalSpy spy(safe, SIGNAL(info(QString)));
     emit safe->info("test info");

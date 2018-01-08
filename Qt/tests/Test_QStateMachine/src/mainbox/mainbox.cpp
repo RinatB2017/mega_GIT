@@ -47,7 +47,6 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox)
 {
     init();
-    load_config();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -109,6 +108,7 @@ void MainBox::init(void)
     {
         setMinimumHeight(sizeHint().height());
     }
+    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::start_machine(void)

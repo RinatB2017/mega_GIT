@@ -25,37 +25,37 @@
 
 #include <QTest>
 //--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    QList<QWidget *> tlw = qApp->allWidgets();
+    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
+    QVERIFY(cb);
 
-    foreach (QWidget *w, tlw)
-    {
-        if (w->objectName() == "cb_test")
-        {
-            QTest::keyClick(w, Qt::Key_Down);
-        }
-        if (w->objectName() == "btn_choice_test")
-        {
-            QTest::mouseClick(w, Qt::LeftButton);
-        }
-    }
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
+
+    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
+    QVERIFY(tb);
+
+    QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    MainBox *mb = new MainBox(0, 0);
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
+
     QCOMPARE(mb->xxx(5), 10);
     QCOMPARE(mb->xxx(10), 15);
-
-    //QTest::qWait(5000);
 }
 //--------------------------------------------------------------------------------

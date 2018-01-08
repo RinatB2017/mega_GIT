@@ -25,6 +25,10 @@ DEFINES += PROGRAMM_IN_UTF8
 
 SOURCES += main.cpp
 
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
+
 win32 {
     RC_FILE = ico/myapp.rc
 }

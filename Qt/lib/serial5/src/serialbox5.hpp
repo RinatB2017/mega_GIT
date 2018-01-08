@@ -76,6 +76,21 @@ public:
 
     void set_caption(QString value);
 
+    bool set_baudRate(qint32 value);
+    bool set_dataBits(QSerialPort::DataBits value);
+    bool set_parity(QSerialPort::Parity value);
+    bool set_stopBits(QSerialPort::StopBits value);
+    bool set_flowControl(QSerialPort::FlowControl value);
+
+    qint32 get_baudRate(void);
+    QSerialPort::DataBits       get_dataBits(void);
+    QSerialPort::Parity         get_parity(void);
+    QSerialPort::StopBits       get_stopBits(void);
+    QSerialPort::FlowControl    get_flowControl(void);
+
+    bool power_on(void);
+    bool power_off(void);
+
 private:
     Ui::SerialBox5 *ui = 0;
     QWidget *parent = 0;
@@ -114,7 +129,6 @@ private:
 
 signals:
     void not_working(void);
-
     void output(const QByteArray &data);
 
 public slots:
@@ -138,6 +152,16 @@ private slots:
     void setParityBox(int index);
     void setStopBox(int index);
     void setFlowBox(int index);
+
+    void baudRateChanged(qint32 baudRate, QSerialPort::Directions);
+    void breakEnabledChanged(bool);
+    void dataBitsChanged(QSerialPort::DataBits dataBits);
+    void dataTerminalReadyChanged(bool);
+    void errorOccurred(QSerialPort::SerialPortError error);
+    void flowControlChanged(QSerialPort::FlowControl flow);
+    void parityChanged(QSerialPort::Parity parity);
+    void requestToSendChanged(bool);
+    void stopBitsChanged(QSerialPort::StopBits stopBits);
 
     void getStatus(const QString &status, QDateTime current);
 

@@ -47,23 +47,16 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
+    bool test(void);
     void read_data(QByteArray ba);
 
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
     SerialBox5 *serialBox5 = 0;
-    QByteArray data_rs232;
-    bool is_ready = false;
-    unsigned char test_byte;
-    unsigned int cnt;
 
     void init(void);
-    void wait(int max_time_ms);
-
     void createTestBar(void);
-
     void updateText(void);
 
 };

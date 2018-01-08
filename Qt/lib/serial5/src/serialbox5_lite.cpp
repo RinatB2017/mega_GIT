@@ -148,15 +148,15 @@ void SerialBox5_lite::initEnumerator(void)
     refresh();
     //---
     ui->BaudBox->clear();
-    ui->BaudBox->addItem("Undefined Baud",  Qt::UserRole + QSerialPort::UnknownBaud);
-    ui->BaudBox->addItem("1200 baud",       Qt::UserRole + QSerialPort::Baud1200);
-    ui->BaudBox->addItem("2400 baud",       Qt::UserRole + QSerialPort::Baud2400);
-    ui->BaudBox->addItem("4800 baud",       Qt::UserRole + QSerialPort::Baud4800);
-    ui->BaudBox->addItem("9600 baud",       Qt::UserRole + QSerialPort::Baud9600);
-    ui->BaudBox->addItem("19200 baud",      Qt::UserRole + QSerialPort::Baud19200);
-    ui->BaudBox->addItem("38400 baud",      Qt::UserRole + QSerialPort::Baud38400);
-    ui->BaudBox->addItem("57600 baud",      Qt::UserRole + QSerialPort::Baud57600);
-    ui->BaudBox->addItem("115200 baud",     Qt::UserRole + QSerialPort::Baud115200);
+    ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
+    ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
+    ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
+    ui->BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
+    ui->BaudBox->addItem("9600 baud",       QSerialPort::Baud9600);
+    ui->BaudBox->addItem("19200 baud",      QSerialPort::Baud19200);
+    ui->BaudBox->addItem("38400 baud",      QSerialPort::Baud38400);
+    ui->BaudBox->addItem("57600 baud",      QSerialPort::Baud57600);
+    ui->BaudBox->addItem("115200 baud",     QSerialPort::Baud115200);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::initSerial(void)
@@ -215,7 +215,7 @@ void SerialBox5_lite::getStatus(const QString &status, QDateTime current)
 void SerialBox5_lite::setBaudBox(int index)
 {
     bool ok = false;
-    int value = ui->BaudBox->itemData(index, Qt::UserRole).toInt(&ok) - Qt::UserRole;
+    int value = ui->BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
@@ -257,7 +257,7 @@ void SerialBox5_lite::btnOpenPortClicked()
             result = serial5->open(QIODevice::ReadWrite);
             if(result)
             {
-                idx = ui->BaudBox->findData(Qt::UserRole + serial5->baudRate());
+                idx = ui->BaudBox->findData(serial5->baudRate());
                 if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
                 get_parameter();

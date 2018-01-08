@@ -63,6 +63,8 @@ void MainBox::init(void)
 
     connect(this,       SIGNAL(send(QByteArray)),   serialBox5, SLOT(input(QByteArray)));
     connect(serialBox5, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+
+    emit info("test");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -81,33 +83,21 @@ void MainBox::createTestBar(void)
                                        "test",
                                        "test");
     
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+bool MainBox::test(void)
 {
-    emit debug(tr("reset"));
-    cnt=0;
-    test_byte=0;
-}
-//--------------------------------------------------------------------------------
-void MainBox::wait(int max_time_ms)
-{
-    QTime time;
-    time.start();
-    while(time.elapsed() < max_time_ms)
-    {
-        QCoreApplication::processEvents();
-        if(is_ready)
-            break;
-    }
+    serialBox5->power_off();
+    serialBox5->set_baudRate(9600);
+    serialBox5->power_on();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
     emit debug(ba.data());
-    data_rs232.append(ba);
-    is_ready = true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

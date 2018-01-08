@@ -24,6 +24,8 @@
 #include <QObject>
 #include <QTest>
 //--------------------------------------------------------------------------------
+class MyMainWindow;
+//--------------------------------------------------------------------------------
 class Test : public QObject
 {
     Q_OBJECT
@@ -38,6 +40,8 @@ private slots:
     void test_safe(void);
 
 private:
+    //MyMainWindow *mw = 0;
+
     void test_slider(void);
     void test_mainbox(void);
 };

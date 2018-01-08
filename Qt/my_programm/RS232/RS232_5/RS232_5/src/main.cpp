@@ -29,6 +29,10 @@
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#endif
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
@@ -52,13 +56,25 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
+    Q_CHECK_PTR(main_window);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    Q_CHECK_PTR(mainBox);
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 
     splash->finish(main_window);
 
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+    
     return app.exec();
 }
 //--------------------------------------------------------------------------------

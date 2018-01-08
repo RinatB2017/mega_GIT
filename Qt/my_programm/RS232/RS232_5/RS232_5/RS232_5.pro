@@ -35,6 +35,10 @@ SOURCES += \
 
 FORMS += mainbox.ui
 
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
+
 win32 {
     RC_FILE = ico/myapp.rc
 }

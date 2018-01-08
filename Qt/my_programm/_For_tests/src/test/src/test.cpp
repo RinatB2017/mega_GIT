@@ -29,7 +29,7 @@
 //--------------------------------------------------------------------------------
 #define private public
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
+#include "mymainwindow.hpp"
 #include "mainbox.hpp"
 #include "safe.hpp"
 //--------------------------------------------------------------------------------
@@ -40,11 +40,12 @@ Test::Test()
 //--------------------------------------------------------------------------------
 void Test::test_slider(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 
     QSlider *slider = mw->findChild<QSlider *>("verticalSlider");
     QVERIFY(slider);
+
     QSignalSpy spy(slider, SIGNAL(valueChanged(int)));
     QCOMPARE(spy.isValid(), true); // signal exists
 
@@ -56,22 +57,24 @@ void Test::test_slider(void)
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
+
     QTest::keyClick(cb, Qt::Key_Down);
     QTest::keyClick(cb, Qt::Key_Down);
 
     QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
     QVERIFY(tb);
+
     QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
 void Test::test_mainbox(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
@@ -93,10 +96,13 @@ void Test::test_func(void)
 //--------------------------------------------------------------------------------
 void Test::test_safe(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 
-    Safe *safe = mw->findChild<Safe *>("safe");
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    Q_CHECK_PTR(mb);
+
+    Safe *safe = mb->findChild<Safe *>("safe");
     QVERIFY(safe);
 
     QToolButton *tb0 = mw->findChild<QToolButton *>("btn_0");

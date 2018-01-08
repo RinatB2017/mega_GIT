@@ -154,13 +154,13 @@ private slots:
     void setFlowBox(int index);
 
     void baudRateChanged(qint32 baudRate, QSerialPort::Directions);
-    void breakEnabledChanged(bool);
+    void breakEnabledChanged(bool set);
     void dataBitsChanged(QSerialPort::DataBits dataBits);
-    void dataTerminalReadyChanged(bool);
+    void dataTerminalReadyChanged(bool set);
     void errorOccurred(QSerialPort::SerialPortError error);
     void flowControlChanged(QSerialPort::FlowControl flow);
     void parityChanged(QSerialPort::Parity parity);
-    void requestToSendChanged(bool);
+    void requestToSendChanged(bool set);
     void stopBitsChanged(QSerialPort::StopBits stopBits);
 
     void getStatus(const QString &status, QDateTime current);

@@ -798,9 +798,9 @@ void SerialBox5::baudRateChanged(qint32 baudRate, QSerialPort::Directions)
     if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::breakEnabledChanged(bool)
+void SerialBox5::breakEnabledChanged(bool set)
 {
-    emit debug("breakEnabledChanged");
+    emit debug(QString("breakEnabledChanged %1").arg(set));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::dataBitsChanged(QSerialPort::DataBits dataBits)
@@ -809,9 +809,9 @@ void SerialBox5::dataBitsChanged(QSerialPort::DataBits dataBits)
     if (idx != -1) ui->DataBitsBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::dataTerminalReadyChanged(bool)
+void SerialBox5::dataTerminalReadyChanged(bool set)
 {
-    emit info("dataTerminalReadyChanged");
+    emit debug(QString("dataTerminalReadyChanged %1").arg(set));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::errorOccurred(QSerialPort::SerialPortError error)
@@ -831,9 +831,9 @@ void SerialBox5::parityChanged(QSerialPort::Parity parity)
     if (idx != -1) ui->ParityBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::requestToSendChanged(bool)
+void SerialBox5::requestToSendChanged(bool set)
 {
-    emit info("requestToSendChanged");
+    emit debug(QString("requestToSendChanged %1").arg(set));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::stopBitsChanged(QSerialPort::StopBits stopBits)

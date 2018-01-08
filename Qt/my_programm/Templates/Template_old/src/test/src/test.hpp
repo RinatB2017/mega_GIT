@@ -24,20 +24,20 @@
 #include <QObject>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
 class Test : public QObject {
     Q_OBJECT
 
 public:
-    Test(MainWindow *value);
+    Test();
 
 private slots:
     void test_GUI(void);
     void test_func(void);
-
+    
 private:
-    MainWindow *mw;
+    MainWindow *mw = 0;
 };
 //--------------------------------------------------------------------------------
 #endif

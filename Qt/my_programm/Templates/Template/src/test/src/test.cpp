@@ -33,14 +33,12 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
     QTest::keyClick(cb, Qt::Key_Down);
@@ -53,9 +51,6 @@ void Test::test_GUI(void)
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-
     MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
     QVERIFY(mb);
 

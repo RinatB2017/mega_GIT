@@ -69,7 +69,6 @@ public:
     void set_title_axis_X(const QString &title);
     void set_title_axis_Y(const QString &title);
 
-
     void setVisible_btn_Options(bool state);
     void setVisible_btn_Load(bool state);
     void setVisible_btn_Save(bool state);
@@ -84,6 +83,12 @@ public:
 
     int get_pos_x(int index_histogram);
 
+    bool get_histogram_data(int channel,
+                            int index,
+                            float *data);
+
+    void remove_all_histogram(void);
+
 public slots:
     int add_histogram(int index_histogram,
                       const QString &title,
@@ -93,11 +98,11 @@ public slots:
     void set_histogram_style(int index_histogram,
                              QwtPlotHistogram::HistogramStyle style);
 
-    void add_histogram_data(int index_histogram,
+    bool add_histogram_data(int index_histogram,
                             unsigned int pos_x,
                             unsigned int width,
                             int height);
-    void add_histogram_data(int index_histogram,
+    bool add_histogram_data(int index_histogram,
                             unsigned int width,
                             int height);
     void clear(void);

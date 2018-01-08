@@ -114,6 +114,8 @@ void MainBox::init(void)
 
     createTestBar();
 
+    ui->grapher_widget->setObjectName("GrapherBox");
+
 #ifdef USE_SCALE_POINT_DATETIME
     uint x = QDateTime::currentDateTime().toTime_t();
     ui->grapher_widget->set_title("тест");
@@ -137,7 +139,7 @@ void MainBox::init(void)
 #endif
 
     //grapher->set_legend_is_visible(false);
-    for(int n=0; n<MAX_CHANNELS + 5 ; n++)
+    for(int n=0; n<MAX_CHANNELS; n++)
     {
         ui->grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
     }
@@ -279,7 +281,7 @@ void MainBox::test(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test2(void)
+void MainBox::test1(void)
 {
     block_interface(true);
     ui->grapher_widget->test_sinus();
@@ -287,7 +289,7 @@ void MainBox::test2(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test3(void)
+void MainBox::test2(void)
 {
     block_interface(true);
     ui->grapher_widget->test_single_sinus();
@@ -295,7 +297,7 @@ void MainBox::test3(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test4(void)
+void MainBox::test3(void)
 {
     block_interface(true);
     ui->grapher_widget->setAxisScaleDraw(QwtPlot::xBottom, new MyScaleDraw(100.0f));
@@ -303,7 +305,7 @@ void MainBox::test4(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test5(void)
+void MainBox::test4(void)
 {
     quint64 buf[100] = { 0 };
 

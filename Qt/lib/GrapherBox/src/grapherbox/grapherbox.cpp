@@ -792,19 +792,19 @@ bool GrapherBox::get_curve_data(int channel,
     return true;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::add_curve_data(int channel,
+bool GrapherBox::add_curve_data(int channel,
                                 float data)
 {
     if(curves.count() == 0)
     {
         emit error(tr("curves.count() == 0"));
-        return;
+        return false;
     }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
                    .arg(curves.count()));
-        return;
+        return false;
     }
 
 #ifdef USE_SCALE_POINT_DATETIME
@@ -828,21 +828,23 @@ void GrapherBox::add_curve_data(int channel,
     tune_horizontal_axis(ui->btn_Horizontal->isChecked());
     tune_vertical_axis(ui->btn_Vertical->isChecked());
     updateGraphics();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::add_curve_array(int channel,
+bool GrapherBox::add_curve_array(int channel,
                                  QList<QPointF> a_points)
 {
     if(curves.count() == 0)
     {
         emit error(tr("curves.count() == 0"));
-        return;
+        return false;
     }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
                    .arg(curves.count()));
-        return;
+        return false;
     }
 
 #ifdef USE_SCALE_POINT_DATETIME
@@ -868,6 +870,8 @@ void GrapherBox::add_curve_array(int channel,
     tune_horizontal_axis(ui->btn_Horizontal->isChecked());
     tune_vertical_axis(ui->btn_Vertical->isChecked());
     updateGraphics();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::updateGraphics(void)

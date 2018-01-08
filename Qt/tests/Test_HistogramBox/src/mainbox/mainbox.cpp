@@ -62,6 +62,7 @@ void MainBox::init(void)
     createTestBar();
 
     histogram = new HistogramBox(this);
+    histogram->setObjectName("HistogramBox");
     histogram->set_title("тест");
     histogram->set_title_axis_X("тест X");
     histogram->set_title_axis_Y("тест Y");

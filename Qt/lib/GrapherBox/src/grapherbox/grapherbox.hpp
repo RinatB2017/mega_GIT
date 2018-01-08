@@ -140,9 +140,9 @@ public slots:
     void add_curve_data(int channel,
                         int x,
                         float data);
-    void add_curve_data(int channel,
+    bool add_curve_data(int channel,
                         float data);
-    void add_curve_array(int channel,
+    bool add_curve_array(int channel,
                          QList<QPointF> a_points);
     bool get_curve_data(int channel,
                         int index,

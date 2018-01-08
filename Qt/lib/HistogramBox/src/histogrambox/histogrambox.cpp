@@ -169,6 +169,35 @@ int HistogramBox::add_histogram(int index_histogram,
     return histograms.count() - 1;
 }
 //--------------------------------------------------------------------------------
+bool HistogramBox::get_histogram_data(int channel,
+                                      int index,
+                                      float *data)
+{
+    if(histograms.count() == 0)
+    {
+        emit error(tr("curves.count() == 0"));
+        return false;
+    }
+    if(channel >= histograms.count())
+    {
+        emit error(QString(tr("channel > %1"))
+                   .arg(histograms.count()));
+        return false;
+    }
+    float temp = histograms[channel].data_histogram.at(index).value;
+    *data = temp;
+    return true;
+}
+//--------------------------------------------------------------------------------
+void HistogramBox::remove_all_histogram(void)
+{
+    while(histograms.size())
+    {
+        delete histograms[0].plot_histogram;
+        histograms.remove(0);
+    }
+}
+//--------------------------------------------------------------------------------
 int HistogramBox::get_histograms_count(void)
 {
     return histograms.count();
@@ -410,7 +439,7 @@ void HistogramBox::init()
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::add_histogram_data(int index_histogram,
+bool HistogramBox::add_histogram_data(int index_histogram,
                                       unsigned int pos_x,
                                       unsigned int width,
                                       int height)
@@ -418,13 +447,13 @@ void HistogramBox::add_histogram_data(int index_histogram,
     if(histograms.count() == 0)
     {
         emit error(tr("histograms.count() == 0"));
-        return;
+        return false;
     }
     if(index_histogram >= histograms.count())
     {
         emit error(QString(tr("index_histogram > %1"))
                    .arg(histograms.count()));
-        return;
+        return false;
     }
     histograms[index_histogram].data_histogram.append(QwtIntervalSample((double)height,
                                                                         (double)pos_x,
@@ -437,21 +466,23 @@ void HistogramBox::add_histogram_data(int index_histogram,
 
     histograms[index_histogram].plot_histogram->setSamples(histograms[index_histogram].data_histogram);
     updateGraphics();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::add_histogram_data(int index_histogram,
+bool HistogramBox::add_histogram_data(int index_histogram,
                                       unsigned int width,
                                       int height)
 {
     if(histograms.count() == 0)
     {
         emit error(tr("histograms.count() == 0"));
-        return;
+        return false;
     }
     if(index_histogram >= histograms.count())
     {
         emit error(QString(tr("channel > %1")).arg(histograms.count()));
-        return;
+        return false;
     }
 
     histograms[index_histogram].data_histogram.append(QwtIntervalSample(height,
@@ -464,6 +495,8 @@ void HistogramBox::add_histogram_data(int index_histogram,
 
     histograms[index_histogram].plot_histogram->setSamples(histograms[index_histogram].data_histogram);
     updateGraphics();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void HistogramBox::updateGraphics(void)
@@ -538,7 +571,7 @@ void HistogramBox::load_histograms(void)
                 }
                 else
                 {
-                    emit error("error data");
+                    emit error(QString("error data: sl.count() = %1").arg(sl.count()));
                     break;
                 }
 

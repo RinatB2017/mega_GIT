@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,59 +18,53 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
+#include <QApplication>
+#include <QObject>
 #include <QWidget>
+#include <QList>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#define private public
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
+#include "mainwindow.hpp"
+#include "grapherbox.hpp"
+#include "mainbox.hpp"
+#include "test.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Test::Test()
+{
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void Test::test_grapher(void)
 {
-    Q_OBJECT
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    GrapherBox *gb = mb->findChild<GrapherBox *>("GrapherBox");
+    QVERIFY(gb);
 
-private slots:
-    void load(void);
-    void save(void);
+    gb->remove_all_curve();
 
-    void grapher_refresh(void);
+    QCOMPARE(gb->add_curve("curve0"),   0);
+    QCOMPARE(gb->add_curve("curve1"),   1);
+    QCOMPARE(gb->add_curve("curve2"),   2);
+    QCOMPARE(gb->add_curve("curve3"),   3);
+    QCOMPARE(gb->add_curve("curve4"),   4);
 
-    void test(void);
-    void test1(void);
-    void test2(void);
-    void test3(void);
-    void test4(void);
+    QCOMPARE(gb->get_curves_count(),    5);
 
-private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    bool all_break = false;
+    for(int n=0; n<1000; n++)
+    {
+        QCOMPARE(gb->add_curve_data(0, n),  true);
+    }
 
-    void init(void);
-    void createTestBar(void);
-    void updateText(void);
-
-};
+    float x = 0;
+    for(int n=0; n<1000; n++)
+    {
+        gb->get_curve_data(0, n, &x);
+        QCOMPARE((int)x, n);
+    }
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

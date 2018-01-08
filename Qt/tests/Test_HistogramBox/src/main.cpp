@@ -31,6 +31,10 @@
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#endif
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
@@ -66,6 +70,14 @@ int main(int argc, char *argv[])
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
     
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
 
     return app.exec();
 }

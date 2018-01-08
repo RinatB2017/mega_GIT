@@ -35,14 +35,12 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-
+    mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
 void Test::test_slider(void)
 {
-    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-
     QSlider *slider = mw->findChild<QSlider *>("verticalSlider");
     QVERIFY(slider);
 
@@ -57,9 +55,6 @@ void Test::test_slider(void)
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
 
@@ -74,9 +69,6 @@ void Test::test_GUI(void)
 //--------------------------------------------------------------------------------
 void Test::test_mainbox(void)
 {
-    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     Q_CHECK_PTR(mb);
 
@@ -96,9 +88,6 @@ void Test::test_func(void)
 //--------------------------------------------------------------------------------
 void Test::test_safe(void)
 {
-    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     Q_CHECK_PTR(mb);
 

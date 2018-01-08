@@ -40,7 +40,7 @@ private slots:
     void test_safe(void);
 
 private:
-    //MyMainWindow *mw = 0;
+    MyMainWindow *mw = 0;
 
     void test_slider(void);
     void test_mainbox(void);

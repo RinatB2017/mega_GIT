@@ -74,11 +74,11 @@ void MainBox::createTestBar(void)
     progressBar->setToolTip(tr("web progress"));
 
     address = new QLineEdit(this);
-    //address->setText("https://2ip.ru/");
+    address->setText("https://2ip.ru/");
     //address->setText("https://www.youtube.com");
     //address->setText("http://bash.im/quote/448209");
     //address->setText("http://bash.im");
-    address->setText("https://maps.google.com/");
+    //address->setText("https://maps.google.com/");
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 

@@ -38,7 +38,7 @@
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
-    set_signals();
+    //set_signals();
 #endif
 
     set_codecs();

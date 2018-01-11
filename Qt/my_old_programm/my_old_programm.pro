@@ -24,7 +24,6 @@ SUBDIRS += \
 unix {
 SUBDIRS += \
     Creator \
-    Dooscape \
     Teacher_reserv \
     Analyzer
 }

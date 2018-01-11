@@ -28,7 +28,7 @@ TRANSLATIONS = dooscape_fr.ts\
 RC_FILE = res.rc
 
 SOURCES += \
-    main.cpp\
+    main.cpp \
     mainwindow.cpp \
     sidepanel.cpp \
     webview.cpp \

@@ -111,7 +111,6 @@ void MainBox::test(void)
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);
 
     PreviewDialog *dlg = new PreviewDialog(document, printer);
-    dlg->setWindowIcon(QIcon(ICON_PROGRAMM));
     int res = dlg->exec();
     if(res)
     {

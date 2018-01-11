@@ -1483,7 +1483,6 @@ void MainBox::test(void)
                                       multimeter,
                                       this);
     hc->setWindowTitle(tr("Ручное управление"));
-    hc->setWindowIcon(QIcon(ICON_PROGRAMM));
     hc->set_serno(ui->sb_SerNo->value());
     hc->set_year(ui->sb_Year->value());
 

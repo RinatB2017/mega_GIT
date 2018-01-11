@@ -75,18 +75,6 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::load(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-}
-//--------------------------------------------------------------------------------
-void MainBox::save(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-}
-//--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -94,11 +82,14 @@ void MainBox::test(void)
                                                     ".",
                                                     tr("Video Files (*.avi *.mpg *.mov)"));
 
-    if(fileName.isEmpty()) return;
+    if(fileName.isEmpty())
+    {
+        return;
+    }
 
-    libvlc_instance_t * inst;
-    libvlc_media_player_t *mp;
-    libvlc_media_t *m;
+    libvlc_instance_t *inst = 0;
+    libvlc_media_player_t *mp = 0;
+    libvlc_media_t *m = 0;
 
     /* Load the VLC engine */
     inst = libvlc_new (0, NULL);
@@ -130,8 +121,7 @@ void MainBox::test(void)
 
     //libvlc_media_player_set_position(mp, 100);
 
-    return;
-
+#if 0
     Sleeper::sleep(3); /* Let it play a bit */
 
     /* Stop playing */
@@ -141,20 +131,11 @@ void MainBox::test(void)
     libvlc_media_player_release (mp);
 
     libvlc_release (inst);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

@@ -322,7 +322,6 @@ void MainBox::show_pages(void)
 
     QTabWidget *tab = new QTabWidget;
     tab->setWindowTitle("show pages");
-    tab->setWindowIcon(QIcon(ICON_PROGRAMM));
     tab->setMinimumSize(1024, 600);
 
     emit info(tr("Отобразим полученные данные"));
@@ -1291,7 +1290,6 @@ void MainBox::generate_random_name(void)
     model->setStringList(final_data);
 
     QListView *view = new QListView;
-    view->setWindowIcon(QIcon(ICON_PROGRAMM));
     view->setWindowTitle(tr("view"));
     view->setModel(model);
     view->show();
@@ -1465,7 +1463,6 @@ void MainBox::test(void)
     model->setStringList(list);
     QTableView *view = new QTableView;
     view->setWindowTitle("valid proxy");
-    view->setWindowIcon(QIcon(ICON_PROGRAMM));
 
     view->setModel(model);
 

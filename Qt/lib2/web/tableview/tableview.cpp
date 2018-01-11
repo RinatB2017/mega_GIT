@@ -34,7 +34,6 @@ TableView::TableView(QWidget *parent) :
     QTableView(parent)
 {
     setWindowTitle("view table");
-    setWindowIcon(QIcon(ICON_PROGRAMM));
     setMinimumSize(1024, 600);
 }
 //--------------------------------------------------------------------------------
@@ -97,7 +96,6 @@ void TableView::doubleClicked(QModelIndex index)
 
     QDialog *dialog = new QDialog(this);
     dialog->setWindowTitle("dialog");
-    dialog->setWindowIcon(QIcon(ICON_PROGRAMM));
     dialog->setMinimumSize(800, 600);
 
     QVBoxLayout *vbox = new QVBoxLayout;

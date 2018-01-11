@@ -260,7 +260,6 @@ QString title = "Заголовок";
 QString text = "Текст";
 
 QMessageBox msgBox;
-msgBox.setWindowIcon(QIcon(ICON_PROGRAMM));
 msgBox.setIcon(QMessageBox::Information);
 msgBox.setWindowTitle(title);
 msgBox.setText(text);
@@ -313,7 +312,6 @@ QString title = "Заголовок";
 QString text = "Текст";
 
 QMessageBox msgBox;
-msgBox.setWindowIcon(QIcon(ICON_PROGRAMM));
 msgBox.setIcon(QMessageBox::Information);
 msgBox.setWindowTitle(title);
 msgBox.setText(text);

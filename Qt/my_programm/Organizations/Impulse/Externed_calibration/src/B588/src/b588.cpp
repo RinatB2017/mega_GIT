@@ -125,8 +125,6 @@ void B588::init(void)
 
     ui->btn_find_devices->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
     connect(ui->btn_find_devices, SIGNAL(clicked()), this, SLOT(find_devices()));
-
-    setWindowIcon(QIcon(ICON_PROGRAMM));
 }
 //--------------------------------------------------------------------------------
 void B588::createTestBar(void)

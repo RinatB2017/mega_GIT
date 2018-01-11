@@ -61,7 +61,6 @@ CarefulMessageBox::CarefulMessageBox(const QString &caption,
     vbox->addLayout(buttons_box);
     setLayout(vbox);
 
-    setWindowIcon(QIcon(ICON_PROGRAMM));
     setWindowTitle(caption);
 }
 //--------------------------------------------------------------------------------

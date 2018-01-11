@@ -47,8 +47,6 @@ DoubleHexEditor::DoubleHexEditor(const QString &caption1,
 
     setLayout(vbox);
 
-    setWindowIcon(QIcon(ICON_PROGRAMM));
-
     setFrameShape(StyledPanel);
     setFrameShadow(Sunken);
 }

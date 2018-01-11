@@ -64,17 +64,11 @@ int main(int argc, char *argv[])
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
-
-    //QTextEdit log;
-    //QObject::connect( mainBox, SIGNAL(gotEvent(QString)), &log, SLOT(append(QString)) );
-    //log.show();
 
     splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-    
 
     return app.exec();
 }

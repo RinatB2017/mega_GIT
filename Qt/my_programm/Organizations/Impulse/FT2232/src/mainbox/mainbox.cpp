@@ -183,7 +183,6 @@ void MainBox::read_all(void)
         if(flag_read)
         {
             QHexEdit *hex = new QHexEdit();
-            hex->setWindowIcon(QIcon(ICON_PROGRAMM));
             hex->setMinimumSize(800, 320);
             hex->setReadOnly(true);
             hex->setData(QHexEditData::fromMemory(ba));
@@ -366,16 +365,19 @@ void MainBox::erase(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    //Indicator *indi = new Indicator(get_i2c_freq(), this);
-    //indi->run();
+    // Indicator *indi = new Indicator(get_i2c_freq(), this);
+    // Q_CHECK_PTR(indi);
+    // indi->run();
 
     DS18B20 *ds = new DS18B20(get_i2c_freq(), this);
+    Q_CHECK_PTR(ds);
+
     ds->test();
 }
 //--------------------------------------------------------------------------------
 void MainBox::read(void)
 {
-    int err;
+    int err = 0;
     unsigned char buf[FTDI_MAX_EEPROM_SIZE];
 
     emit info("read");
@@ -449,7 +451,6 @@ void MainBox::read(void)
     for(int n=0; n<FTDI_MAX_EEPROM_SIZE; n++)
         ba.append(buf[n]);
     QHexEdit *hex = new QHexEdit();
-    hex->setWindowIcon(QIcon(ICON_PROGRAMM));
     hex->setMinimumSize(800, 320);
     hex->setReadOnly(true);
     hex->setData(QHexEditData::fromMemory(ba));
@@ -691,7 +692,6 @@ void MainBox::test_eeprom(void)
     te->append(QString("CHANNEL_D_RS485\t\t%1").arg(read_eeprom_value(CHANNEL_D_RS485)));
 
     QFrame *frame = new QFrame;
-    frame->setWindowIcon(QIcon(ICON_PROGRAMM));
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->setStretch(0, 100);
     vbox->setStretch(1, 1);
@@ -741,7 +741,6 @@ void MainBox::test_eeprom(void)
     for(int n=0; n<FTDI_MAX_EEPROM_SIZE; n++)
         ba.append(buf[n]);
     QHexEdit *hex = new QHexEdit();
-    hex->setWindowIcon(QIcon(ICON_PROGRAMM));
     hex->setMinimumSize(800, 320);
     hex->setReadOnly(true);
     hex->setData(QHexEditData::fromMemory(ba));

@@ -137,7 +137,6 @@ void MainBox::view_table(const QString &table_name)
 
     QTableView *view = new QTableView;
     view->setModel(model);
-    view->setWindowIcon(QIcon(ICON_PROGRAMM));
     view->setMinimumSize(640, 480);
     view->show();
 }

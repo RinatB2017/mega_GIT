@@ -185,7 +185,6 @@ void MainBox::read_all(void)
         if(flag_read)
         {
             QHexEdit *hex = new QHexEdit();
-            hex->setWindowIcon(QIcon(ICON_PROGRAMM));
             hex->setMinimumSize(800, 320);
             hex->setReadOnly(true);
             hex->setData(QHexEditData::fromMemory(ba));
@@ -352,7 +351,6 @@ void MainBox::read(void)
     for(int n=0; n<FTDI_MAX_EEPROM_SIZE; n++)
         ba.append(buf[n]);
     QHexEdit *hex = new QHexEdit();
-    hex->setWindowIcon(QIcon(ICON_PROGRAMM));
     hex->setMinimumSize(800, 320);
     hex->setReadOnly(true);
     hex->setData(QHexEditData::fromMemory(ba));
@@ -563,7 +561,6 @@ void MainBox::test_eeprom(void)
     for(int n=0; n<FTDI_MAX_EEPROM_SIZE; n++)
         ba.append(buf[n]);
     QHexEdit *hex = new QHexEdit();
-    hex->setWindowIcon(QIcon(ICON_PROGRAMM));
     hex->setMinimumSize(800, 320);
     hex->setReadOnly(true);
     hex->setData(QHexEditData::fromMemory(ba));

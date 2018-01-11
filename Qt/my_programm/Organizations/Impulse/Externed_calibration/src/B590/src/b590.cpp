@@ -129,7 +129,6 @@ void B590::init(void)
     ui->btn_find_devices->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
     connect(ui->btn_find_devices, SIGNAL(clicked()), this, SLOT(find_devices()));
 
-    setWindowIcon(QIcon(ICON_PROGRAMM));
     block_interface(true);
 }
 //--------------------------------------------------------------------------------

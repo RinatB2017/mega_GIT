@@ -43,8 +43,6 @@ public:
     ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
     void test(void);
 
 private:
@@ -54,14 +52,8 @@ private:
     bool is_blocked = false;
 
     void init(void);
-
     void createTestBar(void);
-
-    void load_setting(void);
-    void save_setting(void);
-
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

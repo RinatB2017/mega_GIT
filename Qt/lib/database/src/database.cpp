@@ -122,7 +122,6 @@ void Database::view(const QString &query)
 
     table_view = new QTableView;
     table_view->setWindowTitle("view table");
-    table_view->setWindowIcon(QIcon(ICON_PROGRAMM));
     table_view->setMinimumSize(1024, 600);
 
     table_view->setModel(model);

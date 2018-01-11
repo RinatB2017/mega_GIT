@@ -521,7 +521,6 @@ void HistogramBox::options(void)
                                                    axis_X_max,
                                                    axis_Y_min,
                                                    axis_Y_max);
-    dlg->setWindowIcon(QIcon(ICON_PROGRAMM));
     int button = dlg->exec();
     if(button == QDialog::Accepted)
     {
@@ -536,7 +535,6 @@ void HistogramBox::load_histograms(void)
     QFileDialog *dlg;
 
     dlg = new QFileDialog;
-    dlg->setWindowIcon(QIcon(ICON_PROGRAMM));
     dlg->setNameFilter(tr("CSV files (*.csv)"));
     dlg->setDefaultSuffix(tr("csv"));
 #ifdef Q_OS_LINUX
@@ -607,7 +605,6 @@ void HistogramBox::save_histograms(void)
     QFileDialog *dlg;
 
     dlg = new QFileDialog;
-    dlg->setWindowIcon(QIcon(ICON_PROGRAMM));
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setNameFilter(tr("CSV files (*.csv)"));
     dlg->setDefaultSuffix(tr("csv"));

@@ -259,8 +259,6 @@ void B590::init(void)
 
     ui->cb_active_V7642->setChecked(true);
     ui->cb_active_V7862->setChecked(true);
-
-    setWindowIcon(QIcon(ICON_PROGRAMM));
 }
 //--------------------------------------------------------------------------------
 void B590::createTestBar(void)

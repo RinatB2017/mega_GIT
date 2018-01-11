@@ -5,8 +5,8 @@ TEMPLATE = app
 CONFIG += c++11
 
 DEPENDPATH  += \
-    /usr/include/qt5/QtSerialBus/5.9.3 \
-    /usr/include/qt5/QtSerialBus/5.9.3/QtSerialBus
+    $$PWD/src \
+    $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
 SOURCES += \
@@ -28,3 +28,5 @@ RESOURCES += \
     master.qrc
 
 QT  += serialbus
+
+VPATH = $$INCLUDEPATH

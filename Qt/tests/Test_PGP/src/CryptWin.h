@@ -3,21 +3,23 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-class CryptWindow;
+namespace Ui
+{
+    class CryptWindow;
 }
 
-class CryptWindow : public QMainWindow {
-	Q_OBJECT
+class CryptWindow : public QMainWindow
+{
+    Q_OBJECT
 public:
-	explicit CryptWindow(QWidget * =0L);
-	~CryptWindow();
+    explicit CryptWindow(QWidget * =0L);
+    ~CryptWindow();
 
 public slots:
-	void encrypt();
+    void encrypt();
 
 private:
-	Ui::CryptWindow *ui;
+    Ui::CryptWindow *ui;
 };
 
 #endif // CRYPTWIN_H

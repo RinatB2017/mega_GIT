@@ -52,6 +52,7 @@ SUBDIRS += \
     Tests_QtPlot3D \
     Test_LibVLC \
     Test_NeuronNet \
+    Test_PGP \
     Test_syslog \
     Test_Trader \
     Test_WebKit \

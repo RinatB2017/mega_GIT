@@ -27,6 +27,7 @@ SUBDIRS += \
     Test_QsLog \
     Test_model \
     Test_SQL \
+    Test_SMTP \
     Test_thread \
     Test_triangle \
     Test_RGB_Matrix \

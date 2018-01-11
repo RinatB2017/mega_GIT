@@ -4,7 +4,7 @@
 
 TEMPLATE    = app
 TARGET      = event
-DEPENDPATH += . src
+DEPENDPATH  += . src
 INCLUDEPATH += . src
 
 # Input

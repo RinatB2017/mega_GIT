@@ -1,3 +1,9 @@
+
+PROGRAMM_PATH  += \
+    $$PWD/src
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
+
 QT           += network
 
 HEADERS = receiver.h
@@ -12,3 +18,5 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 else {
     message(Qt4 = $$QT)
 }
+
+VPATH = $$INCLUDEPATH

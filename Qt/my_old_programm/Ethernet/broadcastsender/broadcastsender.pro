@@ -1,3 +1,9 @@
+
+PROGRAMM_PATH  += \
+    $$PWD/src
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
+
 QT           += network
 
 HEADERS = sender.h
@@ -13,3 +19,4 @@ else {
     message(Qt4 = $$QT)
 }
 
+VPATH = $$INCLUDEPATH

@@ -6,6 +6,8 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
+    broadcastreceiver \
+    broadcastsender \
     broadcast_UDP_Client \
     Test_broadcast_UDP \
     TCP_Server \

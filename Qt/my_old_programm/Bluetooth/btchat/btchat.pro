@@ -1,8 +1,14 @@
 TEMPLATE = app
 TARGET = btchat
 
-QT += core bluetooth widgets
-#QT += core gui widgets
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
+
+QT          += bluetooth widgets
+CONFIG      += mobility
+MOBILITY    += connectivity
 
 SOURCES = \
     main.cpp \
@@ -21,5 +27,4 @@ FORMS = \
     chat.ui \
     remoteselector.ui
 
-#target.path = $$[QT_INSTALL_EXAMPLES]/bluetooth/btchat
-#INSTALLS += target
+VPATH = $$INCLUDEPATH

@@ -40,8 +40,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -55,45 +54,45 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    ui->cb_command->addItem(SIM900_GMM_TEXT, QVariant(Qt::UserRole + SIM900_GMM));
-    ui->cb_command->addItem(SIM900_GOI_TEXT, QVariant(Qt::UserRole + SIM900_GOI));
-    ui->cb_command->addItem(SIM900_GMR_TEXT, QVariant(Qt::UserRole + SIM900_GMR));
-    ui->cb_command->addItem(SIM900_GSV_TEXT, QVariant(Qt::UserRole + SIM900_GSV));
-    ui->cb_command->addItem(SIM900_GSN_TEXT, QVariant(Qt::UserRole + SIM900_GSN));
+    ui->cb_command->addItem(SIM900_GMM_TEXT, SIM900_GMM);
+    ui->cb_command->addItem(SIM900_GOI_TEXT, SIM900_GOI);
+    ui->cb_command->addItem(SIM900_GMR_TEXT, SIM900_GMR);
+    ui->cb_command->addItem(SIM900_GSV_TEXT, SIM900_GSV);
+    ui->cb_command->addItem(SIM900_GSN_TEXT, SIM900_GSN);
     ui->cb_command->insertSeparator(ui->cb_command->count());
 
-    ui->cb_command->addItem(SIM900_CSQ_TEXT, QVariant(Qt::UserRole + SIM900_CSQ));
-    ui->cb_command->addItem(SIM900_CREG_A_TEXT, QVariant(Qt::UserRole + SIM900_CREG_A));
-    ui->cb_command->addItem(SIM900_CREG_Q_TEXT, QVariant(Qt::UserRole + SIM900_CREG_Q));
-    ui->cb_command->addItem(SIM900_CSPN_TEXT, QVariant(Qt::UserRole + SIM900_CSPN));
-    ui->cb_command->addItem(SIM900_COPS_TEXT, QVariant(Qt::UserRole + SIM900_COPS));
-    ui->cb_command->addItem(SIM900_CPAS_TEXT, QVariant(Qt::UserRole + SIM900_CPAS));
-    ui->cb_command->addItem(SIM900_CCLK_A_TEXT, QVariant(Qt::UserRole + SIM900_CCLK_A));
-    ui->cb_command->addItem(SIM900_CCLK_Q_TEXT, QVariant(Qt::UserRole + SIM900_CCLK_Q));
+    ui->cb_command->addItem(SIM900_CSQ_TEXT, SIM900_CSQ);
+    ui->cb_command->addItem(SIM900_CREG_A_TEXT, SIM900_CREG_A);
+    ui->cb_command->addItem(SIM900_CREG_Q_TEXT, SIM900_CREG_Q);
+    ui->cb_command->addItem(SIM900_CSPN_TEXT, SIM900_CSPN);
+    ui->cb_command->addItem(SIM900_COPS_TEXT, SIM900_COPS);
+    ui->cb_command->addItem(SIM900_CPAS_TEXT, SIM900_CPAS);
+    ui->cb_command->addItem(SIM900_CCLK_A_TEXT, SIM900_CCLK_A);
+    ui->cb_command->addItem(SIM900_CCLK_Q_TEXT, SIM900_CCLK_Q);
     ui->cb_command->insertSeparator(ui->cb_command->count());
 
-    ui->cb_command->addItem(SIM900_ATE0_TEXT, QVariant(Qt::UserRole + SIM900_ATE0));
-    ui->cb_command->addItem(SIM900_ATV0_TEXT, QVariant(Qt::UserRole + SIM900_ATV0));
-    ui->cb_command->addItem(SIM900_CMEE_TEXT, QVariant(Qt::UserRole + SIM900_CMEE));
+    ui->cb_command->addItem(SIM900_ATE0_TEXT, SIM900_ATE0);
+    ui->cb_command->addItem(SIM900_ATV0_TEXT, SIM900_ATV0);
+    ui->cb_command->addItem(SIM900_CMEE_TEXT, SIM900_CMEE);
     ui->cb_command->insertSeparator(ui->cb_command->count());
 
-    ui->cb_command->addItem(SIM900_ATD_TEXT, QVariant(Qt::UserRole + SIM900_ATD));
-    ui->cb_command->addItem(SIM900_ATD1_TEXT, QVariant(Qt::UserRole + SIM900_ATD1));
-    ui->cb_command->addItem(SIM900_ATDL_TEXT, QVariant(Qt::UserRole + SIM900_ATDL));
-    ui->cb_command->addItem(SIM900_CLIP_TEXT, QVariant(Qt::UserRole + SIM900_CLIP));
-    ui->cb_command->addItem(SIM900_ATA_TEXT, QVariant(Qt::UserRole + SIM900_ATA));
-    ui->cb_command->addItem(SIM900_ATH0_TEXT, QVariant(Qt::UserRole + SIM900_ATH0));
-    ui->cb_command->addItem(SIM900_ATS0_TEXT, QVariant(Qt::UserRole + SIM900_ATS0));
-    ui->cb_command->addItem(SIM900_GSMBUSY_TEXT, QVariant(Qt::UserRole + SIM900_GSMBUSY));
+    ui->cb_command->addItem(SIM900_ATD_TEXT, SIM900_ATD);
+    ui->cb_command->addItem(SIM900_ATD1_TEXT, SIM900_ATD1);
+    ui->cb_command->addItem(SIM900_ATDL_TEXT, SIM900_ATDL);
+    ui->cb_command->addItem(SIM900_CLIP_TEXT, SIM900_CLIP);
+    ui->cb_command->addItem(SIM900_ATA_TEXT, SIM900_ATA);
+    ui->cb_command->addItem(SIM900_ATH0_TEXT, SIM900_ATH0);
+    ui->cb_command->addItem(SIM900_ATS0_TEXT, SIM900_ATS0);
+    ui->cb_command->addItem(SIM900_GSMBUSY_TEXT, SIM900_GSMBUSY);
     ui->cb_command->insertSeparator(ui->cb_command->count());
 
-    ui->cb_command->addItem(SIM900_CSCA_TEXT, QVariant(Qt::UserRole + SIM900_CSCA));
-    ui->cb_command->addItem(SIM900_CMGF_TEXT, QVariant(Qt::UserRole + SIM900_CMGF));
-    ui->cb_command->addItem(SIM900_CSCB_TEXT, QVariant(Qt::UserRole + SIM900_CSCB));
-    ui->cb_command->addItem(SIM900_CMGL_TEXT, QVariant(Qt::UserRole + SIM900_CMGL));
-    ui->cb_command->addItem(SIM900_CMGDA_TEXT, QVariant(Qt::UserRole + SIM900_CMGDA));
-    ui->cb_command->addItem(SIM900_CMGD_TEXT, QVariant(Qt::UserRole + SIM900_CMGD));
-    ui->cb_command->addItem(SIM900_CMGS_TEXT, QVariant(Qt::UserRole + SIM900_CMGS));
+    ui->cb_command->addItem(SIM900_CSCA_TEXT, SIM900_CSCA);
+    ui->cb_command->addItem(SIM900_CMGF_TEXT, SIM900_CMGF);
+    ui->cb_command->addItem(SIM900_CSCB_TEXT, SIM900_CSCB);
+    ui->cb_command->addItem(SIM900_CMGL_TEXT, SIM900_CMGL);
+    ui->cb_command->addItem(SIM900_CMGDA_TEXT, SIM900_CMGDA);
+    ui->cb_command->addItem(SIM900_CMGD_TEXT, SIM900_CMGD);
+    ui->cb_command->addItem(SIM900_CMGS_TEXT, SIM900_CMGS);
     ui->cb_command->insertSeparator(ui->cb_command->count());
 
     ui->cb_command->addItem(SIM900_CUSD_TEXT);
@@ -102,10 +101,9 @@ void MainBox::init(void)
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
 
-    connect(this, SIGNAL(send(QByteArray)), serialBox, SLOT(input(QByteArray)));
-    connect(serialBox, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
+    connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
+    connect(serialBox,  SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
     connect(ui->btn_run_command, SIGNAL(clicked()), this, SLOT(run_command()));
 }
 //--------------------------------------------------------------------------------
@@ -140,7 +138,7 @@ void MainBox::send_command(const QString &command)
 //--------------------------------------------------------------------------------
 void MainBox::run_command(void)
 {
-    int cmd = ui->cb_command->itemData(ui->cb_command->currentIndex(), Qt::UserRole).toInt() - Qt::UserRole;
+    int cmd = ui->cb_command->itemData(ui->cb_command->currentIndex(), Qt::UserRole).toInt();
     switch(cmd)
     {
     case SIM900_AT:

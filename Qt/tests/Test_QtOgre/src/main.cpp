@@ -1,22 +1,13 @@
-/**********************************************************************************************************************
-**         __________              ___                              ________                                         **
-**         \______   \_____     __| _/ _____  _____     ____       /  _____/ _____     _____    ____    ______       **
-**          |       _/\__  \   / __ | /     \ \__  \   /    \     /   \  ___ \__  \   /     \ _/ __ \  /  ___/       **
-**          |    |   \ / __ \_/ /_/ ||  Y Y  \ / __ \_|   |  \    \    \_\  \ / __ \_|  Y Y  \\  ___/  \___ \        **
-**          |____|_  /(____  /\____ ||__|_|  /(____  /|___|  /     \______  /(____  /|__|_|  / \___  \/____  \       **
-**                 \/      \/      \/      \/      \/      \/             \/      \/       \/      \/      \/        **
-**                                                         2012                                                      **
-**********************************************************************************************************************/
-
-#include "QtOgreApplication.hpp"
-
 #include <QApplication>
+
+#include "QOgreWidgetDemo.hpp"
 
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
 
-    rad::QtOgreApplication window;
+    QOgreWidgetDemo *window = new QOgreWidgetDemo;
+    window->show();
 
     // the call to exec will block until the last GUI window has been closed
     app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );

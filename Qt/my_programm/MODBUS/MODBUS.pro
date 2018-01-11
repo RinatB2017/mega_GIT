@@ -10,5 +10,5 @@ SUBDIRS += \
     MODBUS_test \
     MODBUS_client \
     MODBUS_server \
-#    serialbus \
+    serialbus \
     Test_MODBUS

@@ -1,29 +1,18 @@
-QT += serialport widgets network
+QT += serialbus serialport widgets
 
 TARGET = modbusslave
 TEMPLATE = app
 CONFIG += c++11
 
-DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/ui
-INCLUDEPATH = $$DEPENDPATH
+SOURCES += main.cpp\
+        mainwindow.cpp \
+        settingsdialog.cpp
 
-SOURCES += \
-    main.cpp\
-    mainwindow.cpp \
-    settingsdialog.cpp
+HEADERS  += mainwindow.h settingsdialog.h
 
-HEADERS += \
-    mainwindow.h \
-    settingsdialog.h
-
-FORMS   += \
-    mainwindow.ui \
-    settingsdialog.ui
+FORMS    += mainwindow.ui settingsdialog.ui
 
 RESOURCES += slave.qrc
 
-QT  += serialbus
-
-VPATH = $$INCLUDEPATH
+target.path = $$[QT_INSTALL_EXAMPLES]/serialbus/modbus/slave
+INSTALLS += target

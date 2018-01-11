@@ -1,29 +1,26 @@
-QT += widgets serialport network
+QT += serialbus widgets
 
-TARGET      = can
-TEMPLATE    = app
-CONFIG      += c++11
+TARGET = can
+TEMPLATE = app
 
-DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/ui
-INCLUDEPATH = $$DEPENDPATH
-
-SOURCES     += \
+SOURCES += \
+    bitratebox.cpp \
+    connectdialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    connectdialog.cpp
+    sendframebox.cpp
 
-HEADERS     += \
+HEADERS += \
+    bitratebox.h \
+    connectdialog.h \
     mainwindow.h \
-    connectdialog.h
+    sendframebox.h
 
-FORMS       += \
-    mainwindow.ui \
-    connectdialog.ui
+FORMS   += mainwindow.ui \
+    connectdialog.ui \
+    sendframebox.ui
 
-RESOURCES   += can.qrc
+RESOURCES += can.qrc
 
-QT          += serialbus
-
-VPATH = $$INCLUDEPATH
+target.path = $$[QT_INSTALL_EXAMPLES]/serialbus/can
+INSTALLS += target

@@ -9,9 +9,7 @@
 **********************************************************************************************************************/
 
 #include "QtOgreApplication.hpp"
-
-#include "/usr/include/OGRE/RenderSystems/GL/OgreGLPlugin.h"
-
+#include </usr/include/OGRE/RenderSystems/GL/OgreGLPlugin.h>
 #include "QOgreWidget.hpp" // must be included after the OGRE plugin
 
 namespace rad

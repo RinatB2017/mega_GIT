@@ -2,24 +2,31 @@
 TEMPLATE    = app
 TARGET      = QOgreWidget
 
-QT          += opengl
+QT          += opengl x11extras
 
 DEPENDPATH += \
     /usr/include/OGRE/RenderSystems/GL \
     $$PWD \
-    $$PWD/src \
-    $$PWD/src/QOgreWidget
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
+unix:!macx {
+    OBJECTS_DIR = /dev/shm/my_programm/$$TARGET/obj
+    MOC_DIR     = /dev/shm/my_programm/$$TARGET/moc
+    UI_DIR      = /dev/shm/my_programm/$$TARGET/ui
+    RCC_DIR     = /dev/shm/my_programm/$$TARGET/rc
+}
+
 HEADERS += \
-    QOgreWidget.hpp
-
+    IOgreEventHandler.hpp \
+    QCameraMan.h \
+    QOgreWidget.hpp \
+    QOgreWidgetDemo.hpp
+           
 SOURCES += \
+    main.cpp \
     QOgreWidget.cpp \
-    main.cpp
-
-HEADERS += QtOgreApplication.hpp
-SOURCES += QtOgreApplication.cpp
+    QOgreWidgetDemo.cpp
 
 LIBS    += -lOIS
 LIBS    += -lOgreMain
@@ -29,6 +36,8 @@ LIBS    += -lOgreOverlay
 LIBS    += -lOgreVolume
 LIBS    += -lOgreRTShaderSystem
 LIBS    += -lOgrePaging
+
+LIBS    += -lX11
 
 PKGCONFIG   += OGRE
 CONFIG      += link_pkgconfig

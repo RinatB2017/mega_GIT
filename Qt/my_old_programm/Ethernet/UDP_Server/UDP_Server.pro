@@ -17,7 +17,7 @@ QT  += network
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-DEFINES += FLAG_RESIZE
+
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 

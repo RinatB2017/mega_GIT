@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QSerialPort>
 #include <QFrame>
+
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef FAKE
     #include "fake_oscilloscope_GDS_840C.hpp"

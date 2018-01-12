@@ -54,7 +54,7 @@ private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 
-    Oscilloscope_GDS_840C *oscilloscope;
+    Oscilloscope_GDS_840C *oscilloscope = 0;
 
     void init(void);
 

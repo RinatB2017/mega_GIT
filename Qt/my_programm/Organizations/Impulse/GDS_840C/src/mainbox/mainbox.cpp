@@ -83,26 +83,40 @@ void MainBox::test(void)
 {
     emit info(tr("Тесты начаты"));
 
+    bool ok = false;
 #if 1
-    //oscilloscope->set_TIMebase_SCALe(Oscilloscope_GDS_840C::HScale_250ms);
+    ok = oscilloscope->set_TIMebase_SCALe(Oscilloscope_GDS_840C::HScale_250ms);
+    if(!ok) emit error("set_TIMebase_SCALe return false");
 
-    //oscilloscope->set_CHANnel_SCALe(Oscilloscope_GDS_840C::A, Oscilloscope_GDS_840C::VScale_100mV);
-    //oscilloscope->set_CHANnel_SCALe(Oscilloscope_GDS_840C::B, Oscilloscope_GDS_840C::VScale_100mV);
+    ok = oscilloscope->set_CHANnel_SCALe(Oscilloscope_GDS_840C::A, Oscilloscope_GDS_840C::VScale_100mV);
+    if(!ok) emit error("set_CHANnel_SCALe return false");
+    ok = oscilloscope->set_CHANnel_SCALe(Oscilloscope_GDS_840C::B, Oscilloscope_GDS_840C::VScale_100mV);
+    if(!ok) emit error("set_CHANnel_SCALe return false");
 
-    //oscilloscope->set_CHANnel_DISPlay(Oscilloscope_GDS_840C::A, true);
-    //oscilloscope->set_CHANnel_DISPlay(Oscilloscope_GDS_840C::B, true);
+    ok = oscilloscope->set_CHANnel_DISPlay(Oscilloscope_GDS_840C::A, true);
+    if(!ok) emit error("set_CHANnel_DISPlay return false");
+    ok = oscilloscope->set_CHANnel_DISPlay(Oscilloscope_GDS_840C::B, true);
+    if(!ok) emit error("set_CHANnel_DISPlay return false");
 
-    //oscilloscope->set_CHANnel_COUPling(Oscilloscope_GDS_840C::A, Oscilloscope_GDS_840C::AC);
-    //oscilloscope->set_CHANnel_COUPling(Oscilloscope_GDS_840C::B, Oscilloscope_GDS_840C::DC);
+    ok = oscilloscope->set_CHANnel_COUPling(Oscilloscope_GDS_840C::A, Oscilloscope_GDS_840C::AC);
+    if(!ok) emit error("set_CHANnel_COUPling return false");
+    ok = oscilloscope->set_CHANnel_COUPling(Oscilloscope_GDS_840C::B, Oscilloscope_GDS_840C::DC);
+    if(!ok) emit error("set_CHANnel_COUPling return false");
 
-    //oscilloscope->set_CHANnel_INVert(Oscilloscope_GDS_840C::A, true);
-    //oscilloscope->set_CHANnel_INVert(Oscilloscope_GDS_840C::B, true);
+    ok = oscilloscope->set_CHANnel_INVert(Oscilloscope_GDS_840C::A, true);
+    if(!ok) emit error("set_CHANnel_INVert return false");
+    ok = oscilloscope->set_CHANnel_INVert(Oscilloscope_GDS_840C::B, true);
+    if(!ok) emit error("set_CHANnel_INVert return false");
 
-    //oscilloscope->set_CHANnel_BWLimit(Oscilloscope_GDS_840C::A, true);
-    //oscilloscope->set_CHANnel_BWLimit(Oscilloscope_GDS_840C::B, true);
+    ok = oscilloscope->set_CHANnel_BWLimit(Oscilloscope_GDS_840C::A, true);
+    if(!ok) emit error("set_CHANnel_BWLimit return false");
+    ok = oscilloscope->set_CHANnel_BWLimit(Oscilloscope_GDS_840C::B, true);
+    if(!ok) emit error("set_CHANnel_BWLimit return false");
 
-    oscilloscope->set_CHANnel_PROBe(Oscilloscope_GDS_840C::A, Oscilloscope_GDS_840C::X1);
-    oscilloscope->set_CHANnel_PROBe(Oscilloscope_GDS_840C::B, Oscilloscope_GDS_840C::X1);
+    ok = oscilloscope->set_CHANnel_PROBe(Oscilloscope_GDS_840C::A, Oscilloscope_GDS_840C::X1);
+    if(!ok) emit error("set_CHANnel_PROBe return false");
+    ok = oscilloscope->set_CHANnel_PROBe(Oscilloscope_GDS_840C::B, Oscilloscope_GDS_840C::X1);
+    if(!ok) emit error("set_CHANnel_PROBe return false");
 #endif
 
 #if 0

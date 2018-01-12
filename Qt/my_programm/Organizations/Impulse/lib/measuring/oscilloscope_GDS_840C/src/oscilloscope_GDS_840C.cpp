@@ -71,13 +71,13 @@ void Oscilloscope_GDS_840C::init(void)
 
     ui->btn_find_device->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
 
-    connect(ui->btn_find_device, SIGNAL(clicked()), this, SLOT(find_device()));
-    connect(ui->btn_auto, SIGNAL(clicked()), this, SLOT(set_AUToset()));
-    connect(ui->sb_timeout, SIGNAL(valueChanged(int)), this, SLOT(set_timeout(int)));
-    connect(ui->btn_run, SIGNAL(clicked()), this, SLOT(set_RUN()));
-    connect(ui->btn_stop, SIGNAL(clicked()), this, SLOT(set_STOP()));
-    connect(ui->btn_cursor_X, SIGNAL(clicked(bool)), this, SLOT(set_CURSor_XDISplay(bool)));
-    connect(ui->btn_cursor_Y, SIGNAL(clicked(bool)), this, SLOT(set_CURSor_YDISplay(bool)));
+    connect(ui->btn_find_device,    SIGNAL(clicked(bool)), this, SLOT(find_device()));
+    connect(ui->btn_auto,           SIGNAL(clicked(bool)), this, SLOT(set_AUToset()));
+    connect(ui->sb_timeout,         SIGNAL(valueChanged(int)), this, SLOT(set_timeout(int)));
+    connect(ui->btn_run,            SIGNAL(clicked(bool)), this, SLOT(set_RUN()));
+    connect(ui->btn_stop,           SIGNAL(clicked(bool)), this, SLOT(set_STOP()));
+    connect(ui->btn_cursor_X,       SIGNAL(clicked(bool)), this, SLOT(set_CURSor_XDISplay(bool)));
+    connect(ui->btn_cursor_Y,       SIGNAL(clicked(bool)), this, SLOT(set_CURSor_YDISplay(bool)));
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_GDS_840C::port_read(void)

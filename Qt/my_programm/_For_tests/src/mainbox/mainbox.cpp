@@ -144,9 +144,71 @@ void MainBox::s_inFunc(void)
     QMessageBox::information(0,"","info");
 }
 //--------------------------------------------------------------------------------
+bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *d, int *port)
+{
+    QStringList sl = address.split(":");
+    if(sl.count() != 2)
+    {
+        //emit error(QString("count %1").arg(sl.count()));
+        return false;
+    }
+    QString host = sl.at(0);
+    QStringList sl_address = host.split(".");
+    if(sl_address.count() != 4)
+    {
+        //emit error(QString("count %1").arg(sl_address.count()));
+        return false;
+    }
+    bool ok = false;
+    int t_a = sl_address.at(0).toInt(&ok);
+    if(!ok) return false;
+    int t_b = sl_address.at(1).toInt(&ok);
+    if(!ok) return false;
+    int t_c = sl_address.at(2).toInt(&ok);
+    if(!ok) return false;
+    int t_d = sl_address.at(3).toInt(&ok);
+    if(!ok) return false;
+    *a = t_a;
+    *b = t_b;
+    *c = t_c;
+    *d = t_d;
+
+    QString port_str = sl.at(1);
+    int t_port = port_str.toInt(&ok);
+    if(!ok) return false;
+    *port = t_port;
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+#include <QHostAddress>
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+#if 1
+    QString address = "1.2.3.4:5678";
+
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    int port = 0;
+    bool ok = split_address(address, &a, &b, &c, &d, &port);
+    if(ok)
+    {
+        emit info(QString("address %1.%2.%3.%4:%5")
+                  .arg(a)
+                  .arg(b)
+                  .arg(c)
+                  .arg(d)
+                  .arg(port));
+    }
+    else
+    {
+        emit error("ERROR");
+    }
+#endif
 
 #if 0
     const QMetaObject &mo = Programmer::staticMetaObject;

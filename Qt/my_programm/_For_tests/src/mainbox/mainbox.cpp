@@ -181,12 +181,22 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
-#include <QHostAddress>
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
 #if 1
+    My_class addr;
+    addr = 0x12345678;
+    emit info(QString("0x%1").arg(addr[0], 2, 16, QChar('0')));
+    emit info(QString("0x%1").arg(addr[1], 2, 16, QChar('0')));
+    emit info(QString("0x%1").arg(addr[2], 2, 16, QChar('0')));
+    emit info(QString("0x%1").arg(addr[3], 2, 16, QChar('0')));
+
+    emit info(QString("0x%1").arg(addr.get_value(), 8, 16, QChar('0')));
+#endif
+
+#if 0
     QString address = "1.2.3.4:5678";
 
     int a = 0;

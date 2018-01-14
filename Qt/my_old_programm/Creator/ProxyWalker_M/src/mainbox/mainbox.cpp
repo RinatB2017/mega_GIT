@@ -54,10 +54,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    global_stop_flag(false),
-    proxy_list(0),
-    current_index(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -75,7 +72,7 @@ void MainBox::init(void)
     createTestBar();
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-
+    Q_CHECK_PTR(mw);
 
     QTabWidget *tw = new QTabWidget(this);
     for(int n=0; n<MAX_TAB; n++)
@@ -87,8 +84,7 @@ void MainBox::init(void)
         connect(web.webview, SIGNAL(loadStarted()), this, SLOT(web_started()));
         connect(web.webview, SIGNAL(loadFinished(bool)), this, SLOT(web_finished(bool)));
         connect(web.webview, SIGNAL(loadProgress(int)), web.progressBar, SLOT(setValue(int)));
-        if(mw)
-            connect(web.webview, SIGNAL(statusBarMessage(QString)), mw, SLOT(set_status1_text(QString)));
+        connect(web.webview, SIGNAL(statusBarMessage(QString)), mw, SLOT(set_status1_text(QString)));
 
         QFrame *frame = new QFrame(this);
         QVBoxLayout *vbox = new QVBoxLayout;
@@ -110,8 +106,9 @@ void MainBox::init(void)
 
     load_setting();
     if(current_index > 0)
+    {
         proxy_list->setCurrentRow(current_index);
-
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_menu(void)
@@ -172,10 +169,10 @@ void MainBox::createTestBar(void)
 
     testbar->addWidget(result_progressBar);
 
-    connect(btn_get_proxies_list, SIGNAL(clicked()), this, SLOT(get_proxies_list()));
-    connect(btn_check_proxies_list, SIGNAL(clicked()), this, SLOT(check_proxies_list()));
-    connect(btn_walker, SIGNAL(clicked()), this, SLOT(run_walker()));
-    connect(btn_stop, SIGNAL(clicked()), this, SLOT(stop()));
+    connect(btn_get_proxies_list,   SIGNAL(clicked(bool)), this, SLOT(get_proxies_list()));
+    connect(btn_check_proxies_list, SIGNAL(clicked(bool)), this, SLOT(check_proxies_list()));
+    connect(btn_walker,             SIGNAL(clicked(bool)), this, SLOT(run_walker()));
+    connect(btn_stop,               SIGNAL(clicked(bool)), this, SLOT(stop()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::stop(void)
@@ -278,16 +275,34 @@ void MainBox::get_proxies_list(void)
 {
     int button = QMessageBox::question(this, tr("Коллекция прокси"), tr("Собираем коллекцию прокси?"), QMessageBox::Yes, QMessageBox::No);
     if(button != QMessageBox::Yes)
+    {
         return;
+    }
 
     global_stop_flag = false;
 
-    QStringList old_proxy_list;
-    QStringList found_proxy_list;
     QStringList new_proxy_list;
 
     //---
 #if 1
+    QFile file("socks5_all.txt");
+    bool ok = file.open(QIODevice::ReadOnly);
+    if(ok)
+    {
+        while (!file.atEnd())
+        {
+            QString temp = file.readLine();
+            if(!temp.isEmpty())
+            {
+                //emit info(temp);
+                new_proxy_list.append(temp);
+            }
+        }
+    }
+#else
+    QStringList old_proxy_list;
+    QStringList found_proxy_list;
+
     old_proxy_list.clear();
     for(int n=0; n<proxy_list->count(); n++)
     {
@@ -311,8 +326,8 @@ void MainBox::get_proxies_list(void)
                 QString proxy = td_collection.at(0).toPlainText();
                 QString port  = td_collection.at(1).toPlainText();
                 QString uri = QString("%1:%2")
-                          .arg(proxy)
-                          .arg(port);
+                        .arg(proxy)
+                        .arg(port);
                 found_proxy_list.append(uri);
             }
         }
@@ -325,8 +340,8 @@ void MainBox::get_proxies_list(void)
                 QString proxy = td_collection.at(0).toPlainText();
                 QString port  = td_collection.at(1).toPlainText();
                 QString uri = QString("%1:%2")
-                          .arg(proxy)
-                          .arg(port);
+                        .arg(proxy)
+                        .arg(port);
                 found_proxy_list.append(uri);
             }
         }
@@ -356,7 +371,9 @@ void MainBox::get_proxies_list(void)
             }
         }
         if(found == false)
+        {
             new_proxy_list.append(old_proxy);
+        }
     }
 #endif
     //---
@@ -409,10 +426,14 @@ int MainBox::check_url(int index,
                        const QString &check_string)
 {
     if(webviews[index].time.elapsed() >= MAX_TIMEOUT)
+    {
         return E_ERROR_TIMEOUT;
+    }
 
     if(webviews[index].is_block)
+    {
         return E_ERROR_IS_BLOCK;
+    }
 
     if(webviews[index].is_loaded == true)
     {
@@ -446,7 +467,9 @@ int MainBox::check_url(int index,
 int MainBox::next_proxy(int index)
 {
     if(index < (proxy_list->count() - 1))
+    {
         return (index + 1);
+    }
     return -1;
 }
 //--------------------------------------------------------------------------------
@@ -466,7 +489,9 @@ void MainBox::check_proxies_list(void)
 {
     int button = QMessageBox::question(this, tr("Коллекция прокси"), tr("Проверяем коллекцию прокси?"), QMessageBox::Yes, QMessageBox::No);
     if(button != QMessageBox::Yes)
+    {
         return;
+    }
 
     result_progressBar->setMaximum(proxy_list->count());
     for(int n=0; n<MAX_TAB; n++)
@@ -490,7 +515,10 @@ void MainBox::check_proxies_list(void)
 
     while(true)
     {
-        if(global_stop_flag) return;
+        if(global_stop_flag)
+        {
+            return;
+        }
 
         int err = check_url(index, "Google");
         switch (err)
@@ -523,9 +551,10 @@ void MainBox::check_proxies_list(void)
             if(webviews[index].is_block == false)
             {
                 bad_proxy++;
-                emit error(QString("index %1 err %2 bad_proxy %3")
+                emit error(QString("index %1 err %2 good_proxy %3 bad_proxy %4")
                            .arg(index)
                            .arg(err)
+                           .arg(good_proxy)
                            .arg(bad_proxy));
                 res = next_proxy(current_index);
                 if(res > 0)
@@ -552,7 +581,7 @@ void MainBox::check_proxies_list(void)
         if(index < (MAX_TAB - 1)) index++;
         else index = 0;
         QCoreApplication::processEvents();
-        emit info("The end!");
+        //emit info("The end!");
         if(is_not_working())
         {
             emit info(QString(tr("all proxy %1")).arg(proxy_list->count()));
@@ -577,7 +606,9 @@ void MainBox::run_walker(void)
 {
     int button = QMessageBox::question(this, tr("run walker"), tr("Run walker?"), QMessageBox::Yes, QMessageBox::No);
     if(button != QMessageBox::Yes)
+    {
         return;
+    }
 
     for(int n=0; n<MAX_TAB; n++)
     {
@@ -784,7 +815,10 @@ void MainBox::load_url(int index,
                        bool show_address,
                        bool waiting_load)
 {
-    if(global_stop_flag) return;
+    if(global_stop_flag)
+    {
+        return;
+    }
 
     if(webviews[index].webview == 0)
     {
@@ -793,13 +827,17 @@ void MainBox::load_url(int index,
     }
 
     if(show_address)
+    {
         emit info(QString(tr("Загружаем %1")).arg(address));
+    }
     webviews[index].is_loaded = false;
     webviews[index].webview->load(address);
     webviews[index].webview->show();
 
     if(waiting_load)
+    {
         Waiting::is_loaded(&webviews[index].is_loaded);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
@@ -855,7 +893,9 @@ void MainBox::save_setting(void)
                                        QMessageBox::Yes,
                                        QMessageBox::No);
     if(button != QMessageBox::Yes)
+    {
         return;
+    }
 
     if(proxy_list->count() == 0) return;
     emit debug("save_setting");

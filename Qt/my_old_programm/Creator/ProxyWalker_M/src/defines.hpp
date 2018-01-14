@@ -1,5 +1,5 @@
-#ifndef DEFINES_H
-#define DEFINES_H
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
 enum errors{
     E_NO_ERROR = 0,
@@ -19,7 +19,7 @@ enum errors{
 #define PROXIES_XML "proxies.xml"
 #define WEBSETTINGS_XML "websettings.xml"
 #define MAX_TIMEOUT 30000
-#define MAX_TAB 15
+#define MAX_TAB 10
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM   ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------

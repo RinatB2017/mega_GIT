@@ -75,7 +75,7 @@ private slots:
 private:
     Ui::MainBox *ui = 0;
     QList <web_struct> webviews;
-    bool global_stop_flag;
+    bool global_stop_flag = false;
     QProgressBar *result_progressBar = 0;
     QListWidget *proxy_list = 0;
     QAction *save_action = 0;

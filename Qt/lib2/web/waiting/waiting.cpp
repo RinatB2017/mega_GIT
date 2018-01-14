@@ -41,7 +41,9 @@ bool Waiting::is_loaded(bool *is_loaded, int timeout_msec)
     {
         QCoreApplication::processEvents();
         if(time.elapsed() > timeout_msec)
+        {
             return E_ERROR_TIMEOUT;
+        }
     }
     return E_NO_ERROR;
 }
@@ -55,7 +57,9 @@ void Waiting::sec(int timeout_sec)
     {
         QCoreApplication::processEvents();
         if(time.elapsed() > (timeout_sec * 1000))
+        {
             break;
+        }
     }
 }
 //--------------------------------------------------------------------------------
@@ -68,7 +72,9 @@ void Waiting::msec(int timeout_msec)
     {
         QCoreApplication::processEvents();
         if(time.elapsed() > timeout_msec)
+        {
             break;
+        }
     }
 }
 //--------------------------------------------------------------------------------

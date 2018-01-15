@@ -9,7 +9,6 @@ SUBDIRS += \
     Cards \
     Chess \
     Game_15 \
-    Labirint \
     Test_pixmap \
 
 unix {

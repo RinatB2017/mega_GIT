@@ -71,8 +71,14 @@ void MainBox::createTestBar(void)
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test",
                                        "test");
-    
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    QToolButton *btn_test_rtsp = add_button(testbar,
+                                            new QToolButton(this),
+                                            qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                            "rtsp",
+                                            "rtsp");
+
+    connect(btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    connect(btn_test_rtsp,  SIGNAL(clicked(bool)),  this,   SLOT(test_rtsp()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
@@ -103,35 +109,28 @@ void MainBox::test(void)
     /* No need to keep the media now */
     libvlc_media_release (m);
 
-#if 0
-    /* This is a non working code that show how to hooks into a window,
- * if we have a window around */
-    libvlc_media_player_set_xwindow (mp, xid);
-    /* or on windows */
-    libvlc_media_player_set_hwnd (mp, hwnd);
-    /* or on mac os */
-    libvlc_media_player_set_nsobject (mp, view);
-#endif
-
     qDebug() << "time" << libvlc_media_player_get_time(mp);
     qDebug() << "title" << libvlc_media_player_get_title(mp);
 
     /* play the media_player */
     libvlc_media_player_play (mp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_rtsp(void)
+{
+    libvlc_instance_t *inst = 0;
+    libvlc_media_player_t *mp = 0;
+    libvlc_media_t *m = 0;
 
-    //libvlc_media_player_set_position(mp, 100);
+    inst = libvlc_new (0, NULL);
+    mp = libvlc_media_player_new(inst);
+    m = libvlc_media_new_location(inst, "rtsp://192.168.0.66:554/av0_0");
+    Q_CHECK_PTR(m);
 
-#if 0
-    Sleeper::sleep(3); /* Let it play a bit */
+    libvlc_media_player_set_media (mp, m);
 
-    /* Stop playing */
-    libvlc_media_player_stop (mp);
-
-    /* Free the media_player */
-    libvlc_media_player_release (mp);
-
-    libvlc_release (inst);
-#endif
+    libvlc_media_player_set_xwindow (mp, ui->widget->winId() );
+    libvlc_media_player_play (mp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

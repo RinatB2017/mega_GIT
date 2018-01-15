@@ -2,7 +2,7 @@
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_WIN
-#   include <winsock2.h>
+//#   include <winsock2.h>
 #endif
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
@@ -15,7 +15,9 @@
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_BUILD
 //--------------------------------------------------------------------------------
 #define PLAYER_ID   31
+#define WALL_ID     13
 #define SPACE_ID    5
+#define START_ID    30
 #define EXIT_ID     1
 //--------------------------------------------------------------------------------
 #define MIN_WIDTH   5

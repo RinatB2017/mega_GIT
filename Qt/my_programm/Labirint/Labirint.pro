@@ -21,7 +21,6 @@ DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
-
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 HEADERS += \
@@ -45,7 +44,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH = "../../lib"
 
 include ($$LIB_PATH/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)

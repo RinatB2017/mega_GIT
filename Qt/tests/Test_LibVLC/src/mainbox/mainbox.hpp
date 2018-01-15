@@ -44,6 +44,7 @@ public:
 
 private slots:
     void test(void);
+    void test_rtsp(void);
 
 private:
     MySplashScreen *splash = 0;

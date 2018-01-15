@@ -13,6 +13,7 @@ SUBDIRS += \
     GP2Y0A02Y \
     imageviewer \
     Icons \
+    Labirint \
     NewMoonLight \
     Organizations \
     MODBUS \

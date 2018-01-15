@@ -69,11 +69,43 @@ void MainBox::init(void)
     player_x = -1;
     player_y = -1;
 
+    init_widgets();
     createTimer();
     createTestBar();
     createImagesDock();
 
+    init_id_map();
     load_map(":/map.dat");
+    //setFixedSize(sizeHint());
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_widgets(void)
+{
+    ui->btn_new_game->setIcon(qApp->style()->standardIcon(QStyle::SP_FileDialogNewFolder));
+    ui->btn_load_map->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton));
+    ui->btn_save_map->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
+
+    ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
+
+    ui->sb_interval->setRange(50, 10000);
+
+    connect(ui->btn_new_game,   SIGNAL(clicked(bool)),  this,   SLOT(new_map()));
+    connect(ui->btn_load_map,   SIGNAL(clicked(bool)),  this,   SLOT(load_map()));
+    connect(ui->btn_save_map,   SIGNAL(clicked(bool)),  this,   SLOT(save_map()));
+    connect(ui->btn_start,      SIGNAL(clicked(bool)),  this,   SLOT(start()));
+    connect(ui->btn_stop,       SIGNAL(clicked(bool)),  this,   SLOT(stop()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_id_map(void)
+{
+    for(int y=0; y<MAX_HEIGHT; y++)
+    {
+        for(int x=0; x<MAX_WIDTH; x++)
+        {
+            id_map[x][y] = -1;
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTimer(void)
@@ -92,45 +124,13 @@ void MainBox::createTestBar(void)
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_new_map = add_button(testbar,
-                                          new QToolButton(this),
-                                          qApp->style()->standardIcon(QStyle::SP_FileDialogNewFolder),
-                                          "new map",
-                                          "new map");
-    QToolButton *btn_load_map = add_button(testbar,
-                                           new QToolButton(this),
-                                           qApp->style()->standardIcon(QStyle::SP_DialogOpenButton),
-                                           "load map",
-                                           "load map");
-    QToolButton *btn_save_map = add_button(testbar,
-                                           new QToolButton(this),
-                                           qApp->style()->standardIcon(QStyle::SP_DialogSaveButton),
-                                           "save map",
-                                           "save map");
-
-    sb_interval = new QSpinBox(this);
-    sb_interval->setMinimum(50);
-    sb_interval->setMaximum(10000);
-    sb_interval->setObjectName("sb_interval");
-
-    testbar->addWidget(sb_interval);
-
-    QToolButton *btn_start = add_button(testbar,
-                                        new QToolButton(this),
-                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                        "start",
-                                        "start");
-    QToolButton *btn_stop = add_button(testbar,
+    QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaStop),
-                                       "stop",
-                                       "stop");
+                                       qApp->style()->standardIcon(QStyle::SP_CommandLink),
+                                       "test",
+                                       "test");
 
-    connect(btn_new_map,  SIGNAL(clicked(bool)), this, SLOT(new_map()));
-    connect(btn_load_map, SIGNAL(clicked(bool)), this, SLOT(load_map()));
-    connect(btn_save_map, SIGNAL(clicked(bool)), this, SLOT(save_map()));
-    connect(btn_start,    SIGNAL(clicked(bool)), this, SLOT(start()));
-    connect(btn_stop,     SIGNAL(clicked(bool)), this, SLOT(stop()));
+    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 }
 //--------------------------------------------------------------------------------
 QToolButton * MainBox::create_button(const QString &name,
@@ -172,42 +172,22 @@ void MainBox::createImagesDock(void)
     MainWindow *mw = dynamic_cast<MainWindow*>(parentWidget());
     Q_CHECK_PTR(mw);
 
-    QGridLayout *grid = new QGridLayout();
-    grid->setMargin(0);
-    grid->setSpacing(0);
+    QToolBar *image_bar = new QToolBar("image_bar");
+    image_bar->setObjectName("image_bar");
 
-    int cnt = 1;
-    //int angle = 90;
-    for(int y=0; y<7; y++)
-    {
-        for(int x=0; x<5; x++)
-        {
-            QString filename = QString(":/images/%1.png").arg(cnt);
-            if(cnt < 33)
-            {
-                grid->addWidget(create_button(filename, cnt), y, x);
-            }
-            cnt++;
-        }
-    }
+    QString i_player    = QString(":/images/%1.png").arg(PLAYER_ID);
+    QString i_wall      = QString(":/images/%1.png").arg(WALL_ID);
+    QString i_space     = QString(":/images/%1.png").arg(SPACE_ID);
+    QString i_start     = QString(":/images/%1.png").arg(START_ID);
+    QString i_exit      = QString(":/images/%1.png").arg(EXIT_ID);
 
-    QHBoxLayout *box = new QHBoxLayout;
-    box->addLayout(grid);
-    //box->addStretch(1);
+    image_bar->addWidget(create_button(i_player,    PLAYER_ID));
+    image_bar->addWidget(create_button(i_wall,      WALL_ID));
+    image_bar->addWidget(create_button(i_space,     SPACE_ID));
+    image_bar->addWidget(create_button(i_start,     START_ID));
+    image_bar->addWidget(create_button(i_exit,      EXIT_ID));
 
-    QFrame *frame = new QFrame();
-    frame->setLayout(box);
-
-    QDockWidget *dock = new QDockWidget("image_dock");
-    dock->setObjectName("image_dock");
-    dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
-    dock->setWidget(frame);
-
-    mw->addDockWidget(Qt::LeftDockWidgetArea, dock);
-
-    QMenu *windowsMenu = mw->get_windows_menu();
-    Q_CHECK_PTR(windowsMenu);
-    windowsMenu->addAction(dock->toggleViewAction());
+    mw->addToolBar(Qt::TopToolBarArea, image_bar);
 }
 //--------------------------------------------------------------------------------
 QPixmap MainBox::rotate(const QString &filename, int angle)
@@ -249,20 +229,53 @@ bool MainBox::find_player(void)
     return false;
 }
 //--------------------------------------------------------------------------------
+bool MainBox::find_start(void)
+{
+    int cnt = 0;
+    for(int y=0; y<ui->grid_map->rowCount(); y++)
+    {
+        for(int x=0; x<ui->grid_map->columnCount(); x++)
+        {
+            int id = get_picture_id(x, y);
+            if(id == START_ID)
+            {
+                start_x = x;
+                start_y = y;
+                cnt++;
+            }
+        }
+    }
+    if(cnt == 1) return true;
+    return false;
+}
+//--------------------------------------------------------------------------------
 void MainBox::start(void)
 {
-    bool ok = find_player();
+    bool ok = false;
+
+    ok = find_start();
     if(!ok)
     {
-        QMessageBox::critical(this, "Ошибка!", "Объект player(31) не найден!");
+        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(PLAYER_ID));
         return;
     }
-    timer->start(sb_interval->value());
+    ok = find_player();
+    if(!ok)
+    {
+        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(PLAYER_ID));
+        return;
+    }
+    timer->start(ui->sb_interval->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::stop(void)
 {
     timer->stop();
+}
+//--------------------------------------------------------------------------------
+void MainBox::test(void)
+{
+    emit info("test");
 }
 //--------------------------------------------------------------------------------
 void MainBox::update(void)
@@ -301,7 +314,7 @@ void MainBox::player_move_up(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QMessageBox::information(this, "Победа!", "Цель достигнута!");
+        messagebox_info("Победа!", "Цель достигнута!");
         return;
     }
 
@@ -469,13 +482,16 @@ void MainBox::new_map(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::put_picture(int id,
+bool MainBox::put_picture(int id,
                           int x,
                           int y)
 {
     QPixmap pixmap;
     bool ok = pixmap.load(QString(":/images/%1.png").arg(id));
-    if(!ok) return;
+    if(!ok)
+    {
+        return false;
+    }
 
     QLabel *label = new QLabel();
     label->setProperty("property_id", id);
@@ -490,6 +506,7 @@ void MainBox::put_picture(int id,
             w->setProperty("property_id", id);
         }
     }
+    return true;
 }
 //--------------------------------------------------------------------------------
 int MainBox::get_picture_id(int x, int y)
@@ -647,13 +664,16 @@ bool MainBox::load_map(const QString &filename)
         //emit trace(ba.toHex());
         for(int x=0; x<ba.length(); x++)
         {
-            put_picture(ba.at(x), x, y);
+            ok = put_picture(ba.at(x), x, y);
+            if(ok)
+            {
+                id_map[x][y] = ba.at(x);
+            }
         }
 
         y++;
         ok = xmlGet->findNext("items");
     }
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -685,7 +705,7 @@ bool MainBox::save_map(const QString &filename)
                 }
             }
         }
-        emit info(temp);
+        //emit debug(temp);
         xmlPut->putString("items", ba.toHex());
     }
 
@@ -776,9 +796,15 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::MouseButtonPress)
     {
-        QLabel *label = (QLabel *)obj;
-        label->setPixmap(cursor().pixmap());
-        label->setProperty("property_id", id);
+        if(id > 0)
+        {
+            QLabel *label = (QLabel *)obj;
+            if(label)
+            {
+                label->setPixmap(cursor().pixmap());
+                label->setProperty("property_id", id);
+            }
+        }
         return true;
     }
     return QObject::eventFilter(obj, event);

@@ -25,6 +25,7 @@
 #include <QList>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -64,6 +65,8 @@ private slots:
 
     void set_cursor(void);
 
+    void test(void);
+
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
@@ -74,23 +77,29 @@ private:
     int direction_move = 0;
     int player_x = 0;
     int player_y = 0;
-    QSpinBox *sb_interval = 0;
+    int start_x = 0;
+    int start_y = 0;
     QTimer *timer = 0;
 
+    int id_map[MAX_WIDTH][MAX_HEIGHT];
+
     void init(void);
+    void init_id_map(void);
 
     void new_map(int max_x, int max_y);
     bool load_map(const QString &filename);
     bool save_map(const QString &filename);
 
-    void put_picture(int id, int x, int y);
+    bool put_picture(int id, int x, int y);
     int  get_picture_id(int x, int y);
 
+    void init_widgets(void);
     void createTimer(void);
     void createTestBar(void);
     void createImagesDock(void);
 
     bool find_player(void);
+    bool find_start(void);
 
     QPixmap rotate(const QString &filename, int angle);
 

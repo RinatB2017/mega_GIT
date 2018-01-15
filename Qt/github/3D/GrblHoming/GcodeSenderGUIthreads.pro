@@ -7,13 +7,14 @@
 
 QT       += core gui widgets
 
-TARGET = GrblController
-TEMPLATE = app
+TARGET      = GrblController
+TEMPLATE    = app
 
 include(QextSerialPort/qextserialport.pri)
 include(log4qt/log4qt.pri)
 
 PROGRAMM_PATH  += \
+    $$PWD \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH += $$PROGRAMM_PATH
@@ -69,7 +70,8 @@ FORMS    += \
     grbldialog.ui \
     about.ui
 
-RESOURCES += GrblController.qrc
+RESOURCES += \
+    GrblController.qrc
 
 RC_FILE = grbl.rc
 

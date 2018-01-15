@@ -45,7 +45,7 @@
     <enum>Qt::PlainText</enum>
    </property>
    <property name="pixmap">
-    <pixmap resource="GrblController.qrc">:/img/logotiny.PNG</pixmap>
+    <pixmap resource="../../GrblController.qrc">:/img/logotiny.PNG</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="warrantyLabel">
@@ -110,12 +110,12 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="GrblController.qrc">:/img/zapmaker-logo-130.png</pixmap>
+    <pixmap resource="../../GrblController.qrc">:/img/zapmaker-logo-130.png</pixmap>
    </property>
   </widget>
  </widget>
  <resources>
-  <include location="GrblController.qrc"/>
+  <include location="../../GrblController.qrc"/>
  </resources>
  <connections>
   <connection>

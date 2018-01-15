@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     splash->finish(main_window);
@@ -70,7 +69,6 @@ int main(int argc, char *argv[])
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
     
-
     return app.exec();
 }
 //--------------------------------------------------------------------------------

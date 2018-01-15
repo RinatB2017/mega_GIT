@@ -18,20 +18,24 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDialogButtonBox>
-#include <QDockWidget>
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QGridLayout>
-#include <QPushButton>
-#include <QToolButton>
-#include <QComboBox>
-#include <QPainter>
-#include <QSpinBox>
-#include <QToolBar>
-#include <QDialog>
-#include <QLabel>
-#include <QDebug>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QDialogButtonBox>
+#   include <QDockWidget>
+#   include <QMessageBox>
+#   include <QFileDialog>
+#   include <QGridLayout>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QComboBox>
+#   include <QPainter>
+#   include <QSpinBox>
+#   include <QToolBar>
+#   include <QDialog>
+#   include <QLabel>
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -187,12 +191,12 @@ void MainBox::createImagesDock(void)
         }
     }
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addLayout(grid);
-    vbox->addStretch(1);
+    QHBoxLayout *box = new QHBoxLayout;
+    box->addLayout(grid);
+    //box->addStretch(1);
 
     QFrame *frame = new QFrame();
-    frame->setLayout(vbox);
+    frame->setLayout(box);
 
     QDockWidget *dock = new QDockWidget("image_dock");
     dock->setObjectName("image_dock");
@@ -202,10 +206,8 @@ void MainBox::createImagesDock(void)
     mw->addDockWidget(Qt::LeftDockWidgetArea, dock);
 
     QMenu *windowsMenu = mw->get_windows_menu();
-    if(windowsMenu)
-    {
-        windowsMenu->addAction(dock->toggleViewAction());
-    }
+    Q_CHECK_PTR(windowsMenu);
+    windowsMenu->addAction(dock->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 QPixmap MainBox::rotate(const QString &filename, int angle)

@@ -59,7 +59,6 @@ int main(int argc, char *argv[])
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     //main_window->setFixedSize(main_window->sizeHint());

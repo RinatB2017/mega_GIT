@@ -34,6 +34,8 @@
 #include <QtCore/QMutex>
 #include <QtCore/QStringList>
 
+#include <QObject>
+
 
 /******************************************************************************
  * Declarations

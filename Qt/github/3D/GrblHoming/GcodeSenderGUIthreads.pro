@@ -13,9 +13,15 @@ TEMPLATE = app
 include(QextSerialPort/qextserialport.pri)
 include(log4qt/log4qt.pri)
 
+PROGRAMM_PATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
+SOURCES += \
+    main.cpp \
+    mainwindow.cpp \
     rs232.cpp \
     options.cpp \
     grbldialog.cpp \
@@ -33,7 +39,8 @@ SOURCES += main.cpp\
     pointitem.cpp \
     controlparams.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
+    mainwindow.h \
     rs232.h \
     options.h \
     grbldialog.h \
@@ -56,7 +63,8 @@ HEADERS  += mainwindow.h \
     controlparams.h \
     version.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
+    mainwindow.ui \
     options.ui \
     grbldialog.ui \
     about.ui
@@ -101,5 +109,7 @@ OTHER_FILES += \
     android/version.xml
 
 # Translations
-	TRANSLATIONS += trlocale/GrblController_xx.ts
-	TRANSLATIONS += trlocale/GrblController_fr.ts
+    TRANSLATIONS += trlocale/GrblController_xx.ts
+    TRANSLATIONS += trlocale/GrblController_fr.ts
+
+VPATH = $$INCLUDEPATH

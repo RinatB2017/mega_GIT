@@ -20,7 +20,10 @@
 **********************************************************************************/
 #include <QApplication>
 #include <QMessageBox>
-#include <QDebug>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"

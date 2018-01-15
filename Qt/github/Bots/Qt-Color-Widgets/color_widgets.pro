@@ -31,8 +31,8 @@ RCC_DIR = out/generated
 include(color_widgets.pri)
 
 build_all:!build_pass {
- CONFIG -= build_all
- CONFIG += release
+    CONFIG -= build_all
+    CONFIG += release
 }
 
 unix {
@@ -45,9 +45,9 @@ win32 {
 isEmpty(PREFIX) {
     PREFIX = /usr/local
 }
-target.path = $$PREFIX/lib
-headers.path = $$PREFIX/include/QtColorWidgets
-headers.files = $$HEADERS
+target.path     = $$PREFIX/lib
+headers.path    = $$PREFIX/include/QtColorWidgets
+headers.files   = $$HEADERS
 
 INSTALLS += target headers
 

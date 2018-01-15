@@ -65,8 +65,6 @@ private slots:
 
     void set_cursor(void);
 
-    void test(void);
-
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
@@ -95,7 +93,6 @@ private:
 
     void init_widgets(void);
     void createTimer(void);
-    void createTestBar(void);
     void createImagesDock(void);
 
     bool find_player(void);

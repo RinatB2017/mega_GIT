@@ -71,7 +71,6 @@ void MainBox::init(void)
 
     init_widgets();
     createTimer();
-    createTestBar();
     createImagesDock();
 
     init_id_map();
@@ -112,25 +111,6 @@ void MainBox::createTimer(void)
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-}
-//--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow*>(parentWidget());
-    Q_CHECK_PTR(mw);
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_CommandLink),
-                                       "test",
-                                       "test");
-
-    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 }
 //--------------------------------------------------------------------------------
 QToolButton * MainBox::create_button(const QString &name,
@@ -271,11 +251,6 @@ void MainBox::start(void)
 void MainBox::stop(void)
 {
     timer->stop();
-}
-//--------------------------------------------------------------------------------
-void MainBox::test(void)
-{
-    emit info("test");
 }
 //--------------------------------------------------------------------------------
 void MainBox::update(void)

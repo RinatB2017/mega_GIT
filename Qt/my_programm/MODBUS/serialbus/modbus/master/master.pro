@@ -1,23 +1,32 @@
+
 QT += serialbus serialport widgets
 
-TARGET = modbusmaster
-TEMPLATE = app
-CONFIG += c++11
+TARGET      = modbusmaster
+TEMPLATE    = app
+CONFIG      += c++11
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-        settingsdialog.cpp \
-        writeregistermodel.cpp
+PROGRAMM_PATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
 
-HEADERS  += mainwindow.h \
-         settingsdialog.h \
-        writeregistermodel.h
+SOURCES += \
+    main.cpp \
+    mainwindow.cpp \
+    settingsdialog.cpp \
+    writeregistermodel.cpp
 
-FORMS    += mainwindow.ui \
-         settingsdialog.ui
+HEADERS  += \
+    mainwindow.h \
+    settingsdialog.h \
+    writeregistermodel.h
+
+FORMS    += \
+    mainwindow.ui \
+    settingsdialog.ui
 
 RESOURCES += \
     master.qrc
 
-target.path = $$[QT_INSTALL_EXAMPLES]/serialbus/modbus/master
-INSTALLS += target
+VPATH = $$INCLUDEPATH

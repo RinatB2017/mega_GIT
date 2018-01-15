@@ -75,12 +75,12 @@ void MainBox::init(void)
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(board);
     vbox->addLayout(grid);
-    vbox->addStretch(1);
+    //vbox->addStretch(1);
     setLayout(vbox);
 #else
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(board);
-    hbox->addStretch(1);
+    //hbox->addStretch(1);
     setLayout(hbox);
 #endif
 #endif
@@ -169,16 +169,12 @@ void MainBox::test(void)
 #ifndef NO_CHESSBOARD
     board->move(le_test->text());
 #endif
-    //board->test();
-
     //board->move("a1a8");
 
     //board->move("f2f3");
     //board->move("e7e6");
     //board->move("g2g4");
     //board->move("d8h4");
-
-    //board->test();
 }
 //--------------------------------------------------------------------------------
 void MainBox::run(void)
@@ -186,7 +182,10 @@ void MainBox::run(void)
     QString text = le_test->text().trimmed();
     le_test->clear();
 
-    if(text.isEmpty()) return;
+    if(text.isEmpty())
+    {
+        return;
+    }
 
     text.append("\n");
     if(m_engine)

@@ -1,0 +1,636 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+ <title>Шахматная программа "Кветка" | Описание формата UCI</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+ <link href="%D0%A8%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20%22%D0%9A%D0%B2%D0%B5%D1%82%D0%BA%D0%B0%22%20|%20%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0%20UCI_files/styles.css" type="text/css" rel="stylesheet">
+ <link rel="icon" href="http://kvetka.org/favicon.ico" type="image/x-icon">
+ <meta name="Keywords" content="шахматы скачать бесплатно pgn uci бесплатная шахматная программа кветка онлайн chess online интернет компьютер он лайн">
+ <meta name="description" content="Кветка - бесплатная программа для просмотра и анализа шахматных партий в интернете">
+</head>
+
+<body>
+<table width="100%" cellspacing="0" cellpadding="0" height="100%">
+<tbody><tr bgcolor="#E4E6EA">
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+
+<td style="padding-right: 20px" valign="middle" height="30" align="right">
+<a href="http://kvetka.org/en/">English version</a> | Русская версия
+</td>
+
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+</tr>
+
+<tr>
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+
+<td style="border-top: 1px solid #BCC2CC; border-bottom: 1px solid #BCC2CC;" width="1000" valign="middle" height="130" align="left">
+<img src="%D0%A8%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20%22%D0%9A%D0%B2%D0%B5%D1%82%D0%BA%D0%B0%22%20|%20%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0%20UCI_files/dots1.gif" alt="" vspace="8" hspace="20" align="right">
+	<table width="100%">
+	<tbody><tr>
+	<td width="120"><a href="http://kvetka.org/"><img src="%D0%A8%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20%22%D0%9A%D0%B2%D0%B5%D1%82%D0%BA%D0%B0%22%20|%20%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0%20UCI_files/kvetka.gif" alt="Кветка логотип" hspace="20" border="0"></a></td>
+	<td valign="bottom"><div class="title">Кветка</div>
+	<br>
+	<div class="subtitle div-top">Программа для анализа шахматных партий</div>
+	</td>
+	</tr>
+	</tbody></table>
+</td>
+
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+</tr>
+
+<!-- main -->
+<tr>
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+
+<td class="main" width="1000" valign="top" align="center">
+
+	<table width="100%">
+	<tbody><tr>
+	<td width="180" valign="top">
+<!-- menu --> 
+		<table class="menu">
+		<tbody><tr><td><a class="m" href="http://kvetka.org/">Главная</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/about.shtml">О программе</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/history.shtml">История изменений</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/download.shtml">Скачать!</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/tutorial/tutorial.shtml">Руководство</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/UCI_engines.shtml">UCI-движки</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/document.shtml">Документация</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/forum/forumdisplay.php?fid=3">Гостевая книга</a></td></tr>
+		<tr><td><a class="m" href="http://kvetka.org/donate.shtml">Поддержать</a></td></tr>
+		<tr><td align="center">
+		<br>
+<form style="border:1px solid #ccc;padding-bottom:10px;padding-left:3px;padding-right:3px;text-
+align:center;" action="http://www.feedburner.com/fb/a/
+emailverify" method="post" target="popupwindow" onsubmit="window.open('http://www.feedburner.com/fb/a/
+emailverifySubmit?feedId=2560658', 'popupwindow', 
+'scrollbars=yes,width=550,height=520');return true"><p>Хотите оперативно узнавать о том, что вышла новая версия Кветки? Просто введите ваш <nobr>e-mail</nobr></p><p><input style="width:140px" name="email" type="text"></p><input value="http://feeds.feedburner.com/~e?ffid=2560658" name="url" type="hidden"><input value="Шахматная программа Кветка" name="title" type="hidden"><input name="loc" value="en_US" type="hidden"><input value="Подписаться!" type="submit"></form>
+<p align="center">
+Подписка на RSS:
+</p><p align="center">
+<noindex><a rel="nofollow" href="http://feeds.feedburner.com/kvetka"><img src="%D0%A8%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20%22%D0%9A%D0%B2%D0%B5%D1%82%D0%BA%D0%B0%22%20|%20%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0%20UCI_files/kvetka_002.gif" style="border:0" alt="" width="88" height="26"></a></noindex>
+		</p></td></tr>
+<!--		<tr><td><a class="m" href="">Контакты</a></td></tr>		
+		<tr><td><a class="m" href="">Поддержать</a></td></tr>		-->
+		</tbody></table>
+<!-- /menu -->	
+	</td>
+
+
+	<td style="padding: 6px 20px" valign="top">
+<p>
+</p><center><h1>Описание формата UCI.</h1></center>
+
+Формат UCI (Universal Chess Interface) используется для взаимодействия 
+шахматных движков с их графическими оболочками. Шахматный движок 
+представляет собой обычное приложение (чаще всего консольное). Оно 
+получает различные команды по стандартному устройству ввода (stdin), 
+как-то их обрабатывает и результат подаёт на стандартное устройство 
+вывода (stdout). Таким образом, теоретически движок можно использовать и
+ вручную: вводить команды на клавиатуре и смотреть, какие результаты 
+будут выводиться. Однако это достаточно громоздко, да и требует хорошего
+ знания UCI. Чтобы всё эту работу упростить, используются графические 
+оболочки (GUI), которые общение с движком берут на себя и представляют 
+все необходимые данные в удобном виде. Формат UCI описывает, какие 
+команды движок может получить на вход, и как он должен на них 
+реагировать.
+
+
+<p></p><h2>общие положения.</h2>
+
+<b>1.</b> После запуска движок должен войти в состояние ожидания команд. Он не должен начинать обдумывание без соответствующей команды.
+
+<p><b>2.</b> Чтобы запуск происходил побыстрее, движок должен дождаться команд <a href="#isready">"<b>isready</b>"</a> или <a href="#setoption">"<b>setoption</b>"</a> перед тем, как начать установку своих внутренних параметров. <i>Далеко
+ не все движки придерживаются этого правила. Например Rybka 3 при 
+запуске производит инициализацию каких-то своих параметров, в течение 
+которой ввод команд оказывается невозможным.</i>
+
+</p><p><b>3.</b> Движок должен быть готовым принимать команды на обработку в любое время, даже во время обдумывания.
+
+</p><p><b>4.</b> Все передаваемые движку команды должны заканчиваться переводом строки (<font color="navy">"\n"</font>). Символом <font color="navy">"\n"</font> должна оканчиваться и каждая строка на выходе движка. В разных системах <font color="navy">"\n"</font> может кодироваться разными символами (<font color="navy">0x0A, 0x0A0D</font> и т.п.). <i>Было бы неплохо, если бы движки могли воспринимать разные варианты перевода строки, однако, к сожалению, мало кто это умеет.</i>
+
+</p><p><b>5.</b> Между отдельными словами в командах можно вставлять любое число пробелов и символов табуляции.
+
+</p><p><b>6.</b> Если на входе появляется команда, неизвестная движку, 
+то он должен просто проигнорировать её и пытаться обработать строку так,
+ будто команда эта отсутствует. То же самое касается и известных команд,
+ появившихся в неположенном месте.
+
+
+</p><p></p><h2>Принцип работы движка.</h2>
+
+Для того, чтобы движок начал обдумывание позиции, используется команда <a href="#go">"<b>go</b>"</a>. Однако сначала нужно подготовить позицию, которую движок будет анализировать. Это делается с помощью команды <a href="#position">"<b>position</b>"</a>. В принципе, эти две команды --- основные при работе с движком.
+
+<p>Во время обдумывания движок должен периодически выдавать результаты 
+своей работы: рекомендуемые ходы, глубину обдумывания, затраченное на 
+него время и т.д. (подробнее об этом см. <a href="#info">далее</a>). Чтобы остановить этот процесс, используется команда <a href="#stop">"<b>stop</b>"</a>.
+
+</p><p>Чтобы убедиться, что запущенное приложение --- действительно UCI движок, рекомендуется первой командой ввести <a href="#uci">"<b>uci</b>"</a>.
+ В этом случае движок должен перейти в режим UCI, идентифицировать себя,
+ передать информацию о поддерживаемых настройках и в конце выдать <a href="#uciok">"<b>uciok</b>"</a>. По последней строчке GUI и должна определять, что перед ним действительно UCI-движок.
+
+
+<a name="move"></a></p><p></p><h2>Формат ходов.</h2>
+
+В UCI каждый ход описывается начальной и конечной координатой перемещаемой фигуры. Например: <font color="navy">e2e4, b8c6, e1g1</font> (для рокировки). При превращении пешки в конце приписывается фигура, в которую она превратилась (<font color="navy">n</font> --- конь, <font color="navy">b</font> --- слон, <font color="navy">r</font> --- ладья, <font color="navy">q</font> --- королева). Например: <font color="navy">e7e8q</font>.
+
+<p>Пустой ход должен передаваться от движка к GUI как <font color="navy">0000</font>. <i> Хотя большинство движков этого не делают. Рыбка, например, выдаёт <font color="navy">a1a1</font>, Fruit вообще ничего не выдаёт.</i>
+
+
+</p><p></p><h2>Описания команд для движка.</h2>
+
+<ol>
+<li> <a name="uci"></a><b>uci</b>
+<br>Говорит движку использовать формат uci. Ожидается, что эта команда 
+будет идти первой, сразу же после загрузки движка, чтобы перевести его в
+ uci-режим.
+
+<p>После получения команды "<b>uci</b>" движок должен идентифицировать себя с помощью команды <a href="#id">"<b>id</b>"</a> и затем послать GUI набор команд <a href="#option">"<b>option</b>"</a>, чтобы сообщить ему, какие настройки он поддерживает. В конце движок должен выдать команду <a href="#uciok">"<b>uciok</b>"</a>. Если в течение некоторого времени эта команда не появилась, то GUI следует закрыть приложение.
+
+</p><p></p></li><li><a name="debug"></a><b>debug</b> [ <font color="navy">on</font> | <font color="navy">off</font> ]
+<br>Включает (<font color="navy">on</font>) или выключает (<font color="navy">off</font>) режим отладки движка.
+<p>В режиме отладки движок должен посылать для GUI дополнительную отладочную информацию,  например, команды <a href="#info_string">"<b>info string</b>"</a>.
+</p><p>По умолчанию отладочный режим должен быть выключен. Эту команду можно ввести в любое время, даже во время обдумывания.
+
+</p><p></p></li><li><a name="isready"></a><b>isready</b>
+<br>Посылается движку, чтобы выяснить, готов ли он к работе. Эту команду
+ рекомендуется посылать, например, после других команд, требующих 
+длительное время для своего выполнения. Она также может быть 
+использована для проверки, не завис ли движок.
+<p>После ввода команды движок обязан ответить <a href="#readyok">"<b>readyok</b>"</a>, как только он будет готов. В режиме обдумывания он также обязан немедленно ответить <a href="#readyok">"<b>readyok</b>"</a>, не прекращая при этом анализ.
+
+</p><p></p></li><li><a name="setoption"></a><b>setoption name</b> <font color="navy">#id</font> [<b>value</b> <font color="navy">#x</font>]
+<br>Посылается движку, чтобы изменить какой-то его внутренний параметр. Точнее, движок должен установить параметр с именем <font color="navy">#id</font> установить в значение <font color="navy">#x</font>.
+<p>Некоторые стандартные имена <font color="navy">#id</font> и значения <font color="navy">#x</font> параметров будут даны позже при описании сообщения <a href="#option">"<b>option</b>"</a>. Кроме того, у движков могут быть свои собственные параметры. <font color="navy">#id</font> и <font color="navy">#x</font> могут состоять из нескольких слов, они не должны быть чувствительным к регистру и не должны содержать слов <font color="navy">"name"</font> и <font color="navy">"value"</font>,
+ чтобы не сбивать движок с толку. На каждый параметр должна выделяться 
+одна строка. Эта команда может посылаться только когда движок находится в
+ режиме ожидания.
+
+</p><p></p></li><li><a name="register"></a><b>register</b>
+<br>Используется для регистрации движка или для того, чтобы сообщить, 
+что регистрация будет произведена позже. Эту команду обязательно 
+необходимо послать, если при запуске движок выдал "<b>registration error</b>".
+<p>Далее должно следовать одно из следующих слов:
+</p><p></p><ul><li><b>later</b>
+<br>Пользователь пока не хочет регистрировать движок.
+<p></p></li><li><b>name</b> <font color="navy">#x</font>
+<br>Движок должен быть зарегистрирован на имя <font color="navy">#x</font>.
+<p></p></li><li><b>code</b> <font color="navy">#y</font>
+<br>Движок должен быть зарегистрирован кодом <font color="navy">#y</font>.
+<br>Например: <font color="navy">"register name DimaBest code 123456789"</font>.
+</li></ul>
+<p></p></li><li><a name="ucinewgame"></a><b>ucinewgame</b>
+<br>Посылается движку, если анализ следующей позиции (идущий после команд "<b>position</b>" и <a href="#go">"<b>go</b>"</a>) будет производиться из другой партии.
+<p>Движок не должен сильно полагаться на эту команду, поскольку GUI может её и не поддерживать. Если GUI не послал "<b>ucinewgame</b>" перед первой командой "<b>position</b>", то движку следует действовать так, как будто эта команда не поддерживается.
+</p><p>Так как реакция на "</p><p>ucinewgame" может занять некоторое время, рекомендуется после этой команды посылать <a href="#isready">"<b>isready</b>"</a>, чтобы дождаться, пока движок не будет готов продолжать работу.
+
+</p><p></p></li><li><a name="position"></a><b>position</b> [<b>fen</b> <font color="navy">#fenstring</font> | <b>startpos</b> ]  <b>moves</b> <font color="navy">#move1 .... #movei</font>
+<br>Устанавливает новую позицию на внутренней доске. Именно эта позиция в дальнейшем будет анализироваться.
+<p>Позиция устанавливается следующим образом: сначала на внутренней 
+доске устанавливается начальная позиция, а затем проигрываются ходы <font color="navy">#move1, #move2, ..., #movei</font>. Начальная позиция либо стандартна (если записано "<b>startpos</b>"), либо устанавливается из <font color="navy">#fenstring</font>, описанной в формате <a href="http://kvetka.org/FEN_format.shtml">fen</a> (если записано <b>fen</b> <font color="navy">#fenstring</font>).
+</p><p>Например: "<font color="navy">position startpos moves e2e4 e7e5 b1c3</font>"
+</p><p><i>Зачастую слово "<b>startpos</b>" можно опустить. Однако GUI лучше на это не полагаться.</i>
+
+</p><p></p></li><li><a name="go"></a><b>go</b>
+<br>Запускает анализ текущей позиции, установленной с помощью команды "<b>position</b>".
+ За этой командой должно следовать несколько других команд. Все они 
+пишутся в одной строке. Если какая-то из этих команд отсутствует, то 
+движок должен проинтерпретировать её значение так, чтобы оно не влияло 
+на анализ.
+<p>Команды:
+</p><ul><li><b>searchmoves</b> <font color="navy">#move1 .... #movei</font>
+<br>Ограничивает анализ только указанными ходами <font color="navy">#move1, #move2, ..., #movei</font>. Остальные возможные ходы исследоваться не должны.
+<p></p></li><li><b>ponder</b>
+<br>Начать исследование в режиме ожидания хода противника. В этом случае последний ход, записанный в команде "<b>position</b>" должен рассматриваться, как вероятный ход противника, над которым следует подумать.
+<br>В принципе, движок не обязан анализировать только этот ход. Однако 
+если он будет рассматривать и другие ходы, то ему не следует их подавать
+ на вывод, чтобы не сбивать с толку GUI.
+<br>Если в режиме ожидания хода противника последует команда <a href="#ponderhit">"<b>ponderhit</b>"</a>, это будет означать, что противник сделал тот ход, который и предполагалось.
+<br>Движок не должен выходить из этого режима, даже если он видит мат.
+<p></p></li><li><b>wtime</b> <font color="navy">#x</font>
+<br>У белых на часах осталось <font color="navy">#x</font> миллисекунд.
+<p></p></li><li><b>btime</b> <font color="navy">#x</font>
+<br>У чёрных на часах осталось <font color="navy">#x</font> миллисекунд.
+<p></p></li><li><b>winc</b> <font color="navy">#x</font>
+<br>За каждый ход белым прибавляется <font color="navy">#x</font> миллисекунд ко времени.
+<p></p></li><li><b>binc</b> <font color="navy">#x</font>
+<br>За каждый ход чёрным прибавляется <font color="navy">#x</font> миллисекунд ко времени.
+<p></p></li><li><b>movestogo</b> <font color="navy">#x</font>
+<br>До следующего контроля времени осталось <font color="navy">#x</font> ходов.
+<br>Эту команду следует посылать только в случае <font color="navy">x &gt; 0</font>. Если эта команда отсутствует, но присутствуют "<b>wtime</b>" и "<b>btime</b>",
+ то время которое есть сейчас у игрока, дано ему до конца игры, и 
+никаких добавлений (каждый ход или по контролю) не будет (sudden death).
+<p></p></li><li><b>depth</b> <font color="navy">#x</font>
+<br>Исследовать позицию только до глубины в <font color="navy">#x</font> полуходов.
+<p></p></li><li><b>nodes</b> <font color="navy">#x</font>
+<br>Исследовать только <font color="navy">#x</font> вероятных продолжений партии.
+<p></p></li><li><b>mate</b> <font color="navy">#x</font>
+<br>Искать мат в <font color="navy">#x</font> ходов.
+<p></p></li><li><b>movetime</b> <font color="navy">#x</font>
+<br>Обдумывать позицию в течение ровно <font color="navy">#x</font> миллисекунд. <i>Реально
+ же, тут уж на сколько точности у системы хватит. Например, стандартные 
+средства Windows 98 позволяют измерять время с точностью где-то 1/18 
+сек. В Windows XP --- 10 мсек.</i>
+<p></p></li><li><b>infinite</b>
+<br>Исследовать позицию до тех пор, пока не встретится команда "<b>stop</b>".
+</li></ul>
+
+<p></p></li><li><a name="stop"></a><b>stop</b>
+<br>После этой команды движок должен немедленно остановить анализ позиции.
+<p>При завершении обдумывания должно быть выведено сообщение <a href="#bestmove">"<b>bestmove</b>"</a> и, возможно, <a href="#bestmove">"<b>ponder</b>"</a>.
+
+</p><p></p></li><li><a name="ponderhit"></a><b>ponderhit</b>
+<br>Означает, что противник походил именно так, как и предполагалось.
+<p>Эта команда должна посылаться только в том случае, если движок находился в режиме ожидания хода противника (включается командой <a href="#go">"<b>ponder</b>"</a>). После этого движок должен продолжить анализ позиции, только уже в обычном режиме.
+
+</p><p></p></li><li><a name="quit"></a><b>quit</b>
+<br>Немедленно выйти из программы.
+</li></ol>
+
+<p></p><h2>Описание вывода движка.</h2>
+
+Вывод движка должен начинаться одним из следующих слов:
+
+<ol>
+<li><a name="id"></a><b>id</b>
+<br>Должно посылаться сразу после получения команды <a href="#uci">"<b>uci</b>"</a>. Далее следуют:
+<br><ul><li><b>name</b> <font color="navy">#x</font>
+<br>Выводит название движка.
+<br>Например: <font color="navy">"id name MyEngine 1.8"</font>
+<p></p></li><li><b>author</b> <font color="navy">#x</font>
+<br>Выводит автора движка.
+<br>Например: <font color="navy">"id author Vasya Pupkin"</font>
+</li></ul>
+
+<p></p></li><li><a name="uciok"></a><b>uciok</b>
+<br>Должно посылаться после строк с "<b>id</b>", и, возможно, с <a href="#option">"<b>option</b>"</a>. Гооврит GUI, что движок послал всю имеющуюся информацию и готов к работе в режиме uci.
+
+<p></p></li><li><a name="readyok"></a><b>readyok</b>
+<br>Должно посылаться в ответ на команду <a href="#isready">"<b>isready</b>"</a>
+ после того, как движок завершил выполнение всех задач, посланных ему 
+ранее. Тем самым он сообщает, что готов принимать новые команды.
+
+<p></p></li><li><a name="bestmove"></a><b>bestmove</b> <font color="navy">#move1</font> [ <b>ponder</b> <font color="navy">#move2</font> ]
+<br>Означает, что движок закончил анализ позиции и рекомендует сделать в ней ход <font color="navy">#move1</font>.
+<p>Движок также может вывести следующий ход, который он считает в партии наиболее вероятным. В этом случае выводится "<b>ponder</b> <font color="navy">#move2</font>". Движок не должен автоматически переходить в режим обдумывания этого хода.
+</p><p>Эта строчка должна посылаться всегда, когда движок заканчивает 
+анализ позиции. Даже в режиме ожидания хода противника, если была 
+введена команда <a href="#stop">"<b>stop</b>"</a>. Таким образом, на каждую команду <a href="#go">"<b>go</b>"</a> должна должна быть выведена "<b>bestmove</b>".
+
+</p><p></p></li><li><a name="copyprotection"></a><b>copyprotection</b>
+<br>Необходимо для движков, защищённых от копирования. После <a href="#uciok">"<b>uciok</b>"</a> может сообщить GUI, что сейчас он проверит защиту от копирования. Это делается с помощью строки "<b>copyprotection checking</b>".
+<p>Если проверка проведена успешно, то необходимо вывести "<b>copyprotection ok</b>", в противном случае необходимо вывести "<b>copyprotection error</b>". В случае ошибки, движок не будет функционировать нормально, но он не должен при этом автоматически завершать работу.
+</p><p>Если GUI встретит строку "<b>copyprotection error</b>", То ему не следует использовать этот движок, а вместо этого вывести сообщение об ошибке.
+
+</p><p></p></li><li><a name="registration"></a><b>registration</b>
+<br>Необходимо для движков, требующих имя пользователя и регистрационный код для полноценной работы.
+<p>По аналогии с "<b>copyprotection</b>" после строки <a href="#uciok">"<b>uciok</b>"</a> движок должен послать "<b>registration checking</b>", и далее "<b>registration ok</b>" или "<b>registration error</b>", в зависимости от успешности проверки.
+</p><p>Также после каждой попытки зарегистрироваться (командой <a href="#register">"<b>register</b>"</a>), движок должен отвечать строками "<b>registration checking</b>" и далее "<b>registration ok</b>" или "<b>registration error</b>".
+</p><p>В отличие от "<b>copyprotection</b>" после сообщения об ошибке 
+регистрации движком можно продолжать пользоваться. Но GUI следует 
+предупредить пользователя, что движок не зарегистрирован надлежащим 
+образом и, возможно, не использует все имеющиеся возможности. Также GUI 
+следует предоставить пользователю диалог для регистрации движка. GUI 
+обязан ответить движку командой <a href="#register">"<b>register</b>"</a> после каждого сообщения "<b>registration error</b>".
+
+</p><p></p></li><li><a name="info"></a><b>info</b>
+<br>Означает, что движок передаёт информацию для GUI. Оно должно выводиться каждый раз, когда некоторая её часть изменилась.
+<p>За одним словом "<b>info</b>" может следовать несколько сообщений для GUI. Все сообщения, привязанные к <a href="#pv">"<b>pv</b>"</a>, должны следовать в одной строке.
+    За "<b>info</b>" могут следовать следующие слова:
+</p><ul><li><b>depth</b> <font color="navy">#x</font>
+<br>Означает, что текущая глубина анализа --- <font color="navy">#x</font> полуходов.
+<p></p></li><li><b>seldepth</b> <font color="navy">#x</font>
+<br>Означает, что текущая глубина анализа избранных ходов --- <font color="navy">#x</font> полуходов.
+<br>Если движок посылает "<b>seldepth</b>", то в этой же строчке он обязан послать и "<b>depth</b>".
+<p></p></li><li><b>time</b> <font color="navy">#x</font>
+<br>Время исследования --- <font color="navy">#x</font> мсек. Должно выводиться вместе с "<b>pv</b>".
+<p></p></li><li><b>nodes</b> <font color="navy">#x</font>
+<br>обработано <font color="navy">#x</font> позиций. Движок должен регулярно выдавать это сообщение.
+<p></p></li><li><a name="pv"></a><b>pv</b> <font color="navy">#move1 ... #movei</font>
+<br>Наилучшее продолжение партии.
+<p></p></li><li><b>multipv</b> <font color="navy">#num</font>
+<br>Это сообщение выдаётся, если выбран режим <b>multipv</b>. В этом случае оно должно выводиться вместе с "<b>pv</b>". Для лучшего хода выводится "<b>multipv</b> <font color="navy">1</font>", для следующего --- "<b>multipv</b> <font color="navy">#2</font>" и т.д.
+<br>Если выбран режим выводить <font color="navy">k</font> рекомендованных ходов, то все <font color="navy">k</font> вариантов должны выводиться подряд в <font color="navy">k</font> строках.
+<p></p></li><li><b>score</b>
+<br>Оценка позиции после рекомендованного хода. Должно выводиться вместе с <a href="#pv">"<b>pv</b>"</a>. Возможные продолжения:
+
+<ul><li><b>cp</b> <font color="navy">#x</font>
+<br>Оценка в десятых долях пешки. Положительное значение <font color="navy">#x</font> означает, что позиция лучше у того, чей сейчас ход. Отрицательноe --- у его соперника.
+<p></p></li><li><b>mate</b> <font color="navy">#y</font>
+<br>Мат в <font color="navy">#y</font> ходов. Положительное значение <font color="navy">#y</font> означает, что мат ставит тот, чей сейчас ход. Отрицательноe --- его соперник.
+<p></p></li><li><b>lowerbound</b>
+<br>Приводится нижняя оценка позиции.
+<p></p></li><li><b>upperbound</b>
+<br>приводится верхняя оценка позиции.
+</li></ul>
+
+<p></p></li><li><b>currmove</b> <font color="navy">#move</font>
+<br>В данный момент движок исследует ход <font color="navy">#move</font>.
+<p></p></li><li><b>currmovenumber</b> <font color="navy">#x</font>
+<br>Сейчас анализируется ход <font color="navy">№#x</font>. Для первого хода <font color="navy">#x</font> должно быть равно 1, а не 0.
+<p></p></li><li><b>hashfull</b> <font color="navy">#x</font>
+<br>Хеш заполнен на <font color="navy">#x</font> промилле (0.1%). Движок должен регулярно выдавать это сообщение.
+<p></p></li><li><b>nps</b> <font color="navy">#x</font>
+<br>За секунду было обработано <font color="navy">#x</font> возможных продолжений. Движок должен регулярно выдавать это сообщение.
+<p></p></li><li><b>tbhits</b> <font color="navy">#x</font>
+<br>В эндшпильных базах было найдено <font color="navy">#x</font> позиций.
+<p></p></li><li><b>sbhits</b> <font color="navy">#x</font>
+<br>В эндшпильных базах Шредера (shredder endgame databases) было найдено <font color="navy">#x</font> позиций.
+<p></p></li><li><b>cpuload</b> <font color="navy">#x</font>
+<br>Процессор загружен на <font color="navy">#x</font> промилле (0.1%).
+<p></p></li><li><a name="info_string"></a><b>string</b> <font color="navy">#str</font>
+<br>Посылается произвольная строка. В качестве <font color="navy">#str</font> должен быть проинтерпретирован весь текст до конца строки.
+<p></p></li><li><a name="refutation"></a><b>refutation</b> <font color="navy">#move1 #move2 ... #movei</font>
+<br>ход <font color="navy">#move1</font> опровергается последовательностью ходов <font color="navy">#move2, #move3, ..., #movei</font>, где <font color="navy">i</font> --- любое число &gt;= 1.
+<br>Пример: после анализа хода <font color="navy">d1h5</font> движок может вывести "<font color="navy">info refutation d1h5 g6h5</font>" в случае если <font color="navy">g6h5</font> --- наилучший ответ на <font color="navy">d1h5</font> либо <font color="navy">g6h5</font> опровергает ход <font color="navy">d1h5</font>. Если для хода <font color="navy">d1h5</font> опровержений не найдено, то движок может вывести "<font color="navy">info refutation d1h5</font>".
+<br>Движок должен выводить эту информацию только в том случае, если опция <a href="#UCI_ShowRefutations">"<b>UCI_ShowRefutations</b>"</a> установлена в значение <font color="navy">true</font>.
+<p></p></li><li><a name="currline"></a><b>currline</b> <font color="navy">#cpunr #move1 ... #movei</font>
+<br>В данный момент анализируется последовательность ходов <font color="navy">#move1, #move2, ..., #movei</font>. <font color="navy">#cpunr</font> указывает на номер процессора, анализирующего данную последовательность (<font color="navy">#cpunr = 1, 2, 3, ...</font>). Если работает только один процессор, то <font color="navy">#cpunr</font> может в сообщении отсутствовать.
+<br>Если используется <font color="navy">k</font> процессоров, то все <font color="navy">k</font> строк с сообщениями "<b>currline</b>" должны располагаться подряд.
+<br>Движок должен выводить эту информацию только в случае, когда опция <a href="#UCI_ShowCurrLine">"<b>UCI_ShowCurrLine</b>"</a> установлена в значение <font color="navy">true</font>.
+</li></ul>
+
+<p></p></li><li><a name="option"></a><b>option</b>
+<br>Говорит GUI о том, какой параметр может быть в движке изменён.
+<p>Строки с сообщениями "<b>option</b>" должны посылаться в ответ на команду <a href="#uci">"<b>uci</b>"</a> после сообщений <a href="#id">"<b>id</b>"</a> в случае, если какой-то параметр может быть изменён. Чтобы изменить его, GUI должен послать команду <a href="#setoption">"<b>setoption</b>"</a>. В одной строке может содержаться информация только об одном параметре.
+</p><p>Далее в строке должны следовать комбинации из следующих слов (все допустимые комбинации будут приведены в примерах):
+
+</p><ul><li><b>name</b> <font color="navy">#id</font>
+<br>Параметр имеет имя <font color="navy">#id</font>.
+<br>Некоторые из параметров имеют стандартизированные имена. Большинство из них, кроме первых 6-ти, начинаются с приставки <font color="navy">"UCI_"</font>.
+ Эта приставка сама по себе означает, что имя зарезервировано. Если GUI 
+встретит неизвестное ему имя с этой приставкой, то оно должно его 
+проигнорировать.
+<br>Список стандартных параметров:
+
+<ul><li><font color="navy">#id</font> = <b>Hash</b>, тип <a href="#spin"><b>spin</b></a>
+<br>объём памяти в МБ для хеш-таблиц.
+<br>Этот параметр следует установить первым с помощью <a href="#setoption">"<b>setoption</b>"</a> после запуска движка. Он должен поддерживаться всеми движками.
+<br>По умолчанию движок должен выделять очень мало памяти для своих хеш-таблиц.
+
+<p></p></li><li><font color="navy">#id</font> = <b>NalimovPath</b>, тип <a href="#string"><b>string</b></a>
+<br>Путь к эндшпильным базам в сжатом формате Налимова (Nalimov compressed format).
+<br>Можно указывать несколько путей, разделённых символом "<font color="navy">;</font>".
+
+<p></p></li><li><font color="navy">#id</font> = <b>NalimovCache</b>, тип <a href="#spin"><b>spin</b></a>
+<br>Объём памяти в МБ под кэш для таблиц Налимова (nalimov table bases).
+
+<p></p></li><li><font color="navy">#id</font> = <b>Ponder</b>, тип <a href="#check"><b>check</b></a>
+<br>Означает, что движок поддерживает режим обдумывания партии в ожидании хода противника.
+<br>В принципе, GUI может послать команду ponder в независимости, 
+поддерживается этот режим или нет, так что к этому надо быть готовым.
+<br>Движок не должен начинать анализ в этом режиме сам по себе. Этот 
+параметр нужен только потому, что в режиме анализа партии в ожидании 
+хода противника движок может скорректировать своё управление временем.
+
+<p></p></li><li><font color="navy">#id</font> = <b>OwnBook</b>, тип <a href="#check"><b>check</b></a>
+<br>Означает, что движок имеет свою собственную дебютную книгу, к 
+которой он имеет доступ. Если установлен этот параметр, то движок 
+черпает информацию из своей дебютной книги и будет обрабатывать только 
+ходы, выходящие за её пределы. Если параметр установить в <font color="navy">false</font>, то движок не должен обращаться к своей дебютной книге.
+
+<p></p></li><li><font color="navy">#id</font> = <b>MultiPV</b>, тип <a href="#spin"><b>spin</b></a>
+<br>Движок поддерживает возможность вывода нескольких рекомендуемых ходов. Значение по умолчанию --- 1.
+
+<p></p></li><li><a name="UCI_ShowCurrLine"></a><font color="navy">#id</font> = <b>UCI_ShowCurrLine</b>, тип <a href="#check"><b>check</b></a>
+<br>Движок может возвращать информацию о текущей последовательности ходов, над которой он думает. (см. <a href="#currline">"<b>info currline</b>"</a>). Значение по умолчанию --- <font color="navy">false</font>.
+
+<p></p></li><li><a name="UCI_ShowRefutations"></a><font color="navy">#id</font> = <b>UCI_ShowRefutations</b>, тип <a href="#check"><b>check</b></a>
+<br>Движок может показывать ход и его опровержения (см. <a href="#refutation">"<b>info refutation</b>"</a>). Значение по умолчанию --- <font color="navy">false</font>.
+
+<p></p></li><li><font color="navy">#id</font> = <b>UCI_LimitStrength</b>, тип <a href="#check"><b>check</b></a>
+<br>Движок может ограничивать свою силу до конкретного значения <font color="navy">Elo</font>. Значение по умолчанию --- <font color="navy">false</font>.
+<br>Этот параметр должен быть реализован вместе с "<b>UCI_Elo</b>".
+
+<p></p></li><li><font color="navy">#id</font> = <b>UCI_Elo</b>, тип <a href="#spin"><b>spin</b></a>
+<br>Движок может ограничивать свою силу в <font color="navy">Elo</font> в пределах указанного интервала.
+<br>Если "<b>UCI_LimitStrength</b>" установлен в <font color="navy">false</font>, то это значение должно игнорироваться. Если же он установлен в <font color="navy">true</font>, то движок должен анализировать ходы в соответствие с указанной силой.
+<br>Этот параметр должен быть реализован вместе с "<b>UCI_LimitStrength</b>".
+
+<p></p></li><li><a name="UCI_AnalyseMode"></a><font color="navy">#id</font> = <b>UCI_AnalyseMode</b>, тип <a href="#check"><b>check</b></a>
+<br>Означает, что движок ведёт себя по-разному при анализе партии и при игре в шахматы. Например, при игре он может самообучаться.
+<br>Устанавливается в <font color="navy">false</font>, если движок играет в шахматы. В противном случае устанавливается в <font color="navy">true</font>.
+
+<p></p></li><li><font color="navy">#id</font> = <b>UCI_Opponent</b>, тип <a href="#string"><b>string</b></a>
+<br>С помощью этого параметра GUI может послать движку имя, титул, Elo 
+игрока, а также играет ли движок с человеком или с компьютером.
+<br>Формат строки должен быть следующим:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;[<font color="navy">GM|IM|FM|WGM|WIM|none</font>] [<font color="navy">#elo|none</font>] [<font color="navy">computer|human</font>] <font color="navy">#name</font>
+<br>Примеры:
+<br>&nbsp;&nbsp;&nbsp;&nbsp; "<font color="navy">setoption name UCI_Opponent value GM 2800 human Gary Kasparov</font>"
+<br>&nbsp;&nbsp;&nbsp;&nbsp; "<font color="navy">setoption name UCI_Opponent value none none computer Shredder</font>"
+
+<p></p></li><li><font color="navy">#id</font> = <b>UCI_EngineAbout</b>, тип <a href="#string"><b>string</b></a>
+<br>С помощью этого параметра движок сообщает GUI некоторую информацию о
+ себе, например, лицензионное соглашение. Обычно изменять его с помощью <a href="#setoption">"<b>setoption</b>"</a> не имеет смысла.
+<br>Пример:
+<br>&nbsp;&nbsp;&nbsp;&nbsp; "<font color="navy">option name UCI_EngineAbout type string default MyEngine By Vasya Pupkin</font>"
+
+<p></p></li><li><font color="navy">#id</font> = <b>UCI_ShredderbasesPath</b>, тип <a href="#string"><b>string</b></a>
+<br>Либо указывает путь на каталог, содержащий эндшпильные базы Шреддера
+ (Shredder endgame databases), либо на конкретный файл с эндшпильными 
+базами Шреддера.
+
+<p></p></li><li><font color="navy">#id</font> = <b>UCI_SetPositionValue</b>, тип <a href="#string"><b>string</b></a>
+<br>GUI может изменить этот параметр, если хочет установить конкретный 
+рейтинг для определённой позиции в десятых долях пешки с точки зрения 
+белых.
+<br>Строка должна быть в одном из следующих форматов:
+<br>&nbsp;&nbsp;&nbsp;&nbsp; <font color="navy">#value + #fen</font> | <b>clear</b> + <font color="navy">#fen</font> | <b>clearall</b>
+<br>В первом случае рейтинг позиции <font color="navy">#fen</font>, записанной в формате FEN, должен быть установлен в <font color="navy">#value</font>. Во втором случае рейтинг позиции <font color="navy">#fen</font> должен устанавливаться движком. В третьем случае, рейтинг любой позиции должен устанавливаться движком.
+</li></ul>
+
+<p></p></li><li><b>type</b> <font color="navy">#t</font>
+<br>Параметр имеет тип <font color="navy">#t</font>. Всего имеется 5 различных типов для параметров:
+
+<ul><li><a name="check"></a><b>check</b>
+<br>Логический параметр. Может принимать значения <font color="navy">true</font> и <font color="navy">false</font>. (в диалоге должен оформляться в виде checkbox).
+
+<p></p></li><li><a name="spin"></a><b>spin</b>
+<br>целочисленный параметр, изменяющийся в заданных пределах. (В диалоге должен оформляться в виде ползунка).
+
+<p></p></li><li><a name="combo"></a><b>combo</b>
+<br>Параметр, принимающий значения из множества предустановленных 
+строковых значений. (В диалоге должен оформляться в виде группы из combo
+ box.)
+
+<p></p></li><li><a name="button"></a><b>button</b>
+<br>Параметр, не принимающий значений. С его помощью GUI может 
+отправлять соответствующую команду движку. (В диалоге должен оформляться
+ в виде кнопки).
+
+<p></p></li><li><a name="string"></a><b>string</b>
+<br>Строковый параметр. (В диалоге должен оформляться в виде поля редактирования).
+<br>Пустая строка оформляется значением "<font color="navy">&lt; empty &gt;</font>".
+</li></ul>
+
+<p></p></li><li><b>default</b> <font color="navy">#x</font>
+<br>Значение данного параметра по умолчанию --- <font color="navy">#x</font>.
+
+<p></p></li><li><b>min</b> <font color="navy">#x</font>
+<br>Минимальное значение данного параметра --- <font color="navy">#x</font>.
+
+<p></p></li><li><b>max</b> <font color="navy">#x</font>
+<br>Максимальное значение данного параметра --- <font color="navy">#x</font>.
+
+<p></p></li><li><b>var</b> <font color="navy">#x</font>
+<br>Возможное строковое значение этого параметра --- <font color="navy">#x</font>.
+</li></ul>
+
+<p>Примеры: приведём 5 примеров, соответствующих 5-ти возможным типам параметра.
+<br>"<font color="navy">option name Nullmove type check default true</font>"
+<br>"<font color="navy">option name Selectivity type spin default 2 min 0 max 4</font>"
+<br>"<font color="navy">option name Style type combo default Normal var Solid var Normal var Risky</font>"
+<br>"<font color="navy">option name NalimovPath type string default c:\</font>"
+<br>"<font color="navy">option name Clear Hash type button</font>"
+
+</p></li></ol>
+
+<p></p><h2>Пример работы с UCI.</h2>
+
+Рассмотрим, как может выглядеть общение между движком и GUI.
+
+<p>=&gt;: команда --- GUI
+<br>сообщение     --- движок.
+
+</p><p>//Сначала говорим движку переключиться в режим UCI
+<br><font color="navy">=&gt;: uci</font>
+
+</p><p>//Движок идентифицирует себя
+<font color="navy"><br>id name Shredder
+<br>id author Stefan MK</font>
+
+</p><p>//Движок посылает параметры, которые можно изменить
+<br>//Движок может установить размер хеша от 1 до 128 МБ
+<br><font color="navy">option name Hash type spin default 1 min 1 max 128</font>
+
+</p><p>//Движок поддерживает эндшпильные таблицы Налимова
+<font color="navy"><br>option name NalimovPath type string default &lt; empty&gt;
+<br>option name NalimovCache type spin default 1 min 1 max 32</font>
+
+</p><p>//Движок может отключить пустой ход и установить стиль игры
+<font color="navy"><br>option name Nullmove type check default true
+<br>option name Style type combo default Normal var Solid var Normal var Risky</font>
+
+</p><p>//Движок выслал все параметры и готов к работе
+<br><font color="navy">uciok</font>
+
+</p><p>//Отметим, что GUI может послать команду <a href="#quit">"<b>quit</b>"</a> уже сейчас,
+<br>//если, например, он всего лишь хотел узнать, что умеет этот движок.
+<br>//Таким образом, движку не следует инициализировать
+<br>//свои внутренние параметры до этого момента. <i>Хотя зачастую они это делают.</i>
+<br>//Теперь GUI устанавливает в движке некоторые из параметров
+<br>//Установить объём хеша в 32 МБ
+<br><font color="navy">=&gt;: setoption name Hash value 32</font>
+
+</p><p>//Инициализировать эндшпильные таблицы
+<br><font color="navy">=&gt;: setoption name NalimovCache value 1
+<br>=&gt;: setoption name NalimovPath value d:\tb;c\tb</font>
+
+</p><p>//Ждём, пока движок не завершит инициализацию
+<br><font color="navy">=&gt;: isready</font>
+
+</p><p>//Движок завершил инициализацию и готов продолжать
+<br><font color="navy">readyok</font>
+
+</p><p>// Теперь мы готовы к работе
+<br>// Если GUI это поддерживает, сообщим движку,
+<br>//что он будет анализировать игру, которую ещё не анализировал ранее.
+<br><font color="navy">=&gt;: ucinewgame</font>
+
+</p><p>// Если движок поддерживает параметр <a href="#UCI_AnalyseMode">"<b>UCI_AnalyseMode</b>"</a>
+<br>//и мы собираемся именно анализировать партию,
+<br>//то GUI должен установить <a href="#UCI_AnalyseMode">"<b>UCI_AnalyseMode</b>"</a> в <font color="navy">true</font>.
+<br><font color="navy">=&gt;: setoption name UCI_AnalyseMode value true</font>
+
+</p><p>//Говорим движку начать бесконечный анализ позиции после ходов <font color="navy">1.e4 e5</font>
+<br><font color="navy">=&gt;: position startpos moves e2e4 e7e5
+<br>=&gt;: go infinite</font>
+
+</p><p>//Движок начинает посылать информацию о ходе анализа
+<br>//(приведём только некоторые из возможных вариантов вывода)
+
+<font color="navy"></font></p><p><font color="navy">info depth 1 seldepth 0
+<br>info score cp 13  depth 1 nodes 13 time 15 pv f1b5
+<br>info depth 2 seldepth 2
+<br>info nps 15937
+<br>info score cp 14  depth 2 nodes 255 time 15 pv f1c4 f8c5
+<br>info depth 2 seldepth 7 nodes 255
+<br>info depth 3 seldepth 7
+<br>info nps 26437
+<br>info score cp 20  depth 3 nodes 423 time 15 pv f1c4 g8f6 b1c3
+<br>info nps 41562
+<br>....</font>
+
+</p><p>//Мы получили достаточно информации и просим движок остановиться
+<br><font color="navy">=&gt;: stop</font>
+
+</p><p>//Движок прекращает анализ и посылает сообщение <a href="#bestmove">"<b>bestmove</b>"</a>, которое должно появиться после каждой команды <a href="#go">"<b>go</b>"</a>, чтобы передать GUI, что движок готов продолжать.
+<br><font color="navy">bestmove g1f3 ponder d8f6</font>
+
+</p><p></p><div align="right">
+<i>Вольный перевод с английского <a href="http://www.shredderchess.com/chess-info/features/uci-universal-chess-interface.html">спецификации UCI</a>
+<br>Автор перевода --- Бодягин Дмитрий
+</i></div><i>
+	</i></td>	
+
+	</tr>
+	</tbody></table>
+</td>
+
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+</tr>
+<!-- /main -->
+
+<tr>
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+
+<td style="padding: 0 20px" valign="bottom" height="33">
+<p align="right">   <noindex>
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a rel=nofollow href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='http://counter.yadro.ru/hit?t44.1;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,80))+";"+Math.random()+
+"' alt='' title='LiveInternet' "+
+"border=0 width=31 height=31><\/a>")//--></script><!--/LiveInternet--></noindex>
+</p></td>
+
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+</tr>
+
+
+<tr>
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+
+<td style="padding: 0 20px" valign="bottom" height="33">
+<!-- bottom -->
+<img src="%D0%A8%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20%22%D0%9A%D0%B2%D0%B5%D1%82%D0%BA%D0%B0%22%20|%20%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0%20UCI_files/dots1.gif" alt="" vspace="8" hspace="0" align="right">
+<div class="subtitle">
+<!-- <a class="bot" href="index.html">Главная</a> | <a class="bot" href="index.html">Скачать</a> | 
+<a class="bot" href="index.html">Контакты</a> | <a class="bot" href="index.html">Гостевая</a>-->
+</div>
+<!-- /bottom -->
+</td>
+
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+</tr>
+
+<tr>
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+
+<td style="padding-right: 20px" valign="middle" height="40" align="right">
+<!-- copyright -->
+<a class="bot" href="http://kvetka.org/"><img src="%D0%A8%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20%22%D0%9A%D0%B2%D0%B5%D1%82%D0%BA%D0%B0%22%20|%20%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0%20UCI_files/logo-25x27.gif" border="0" align="right"></a>
+<div class="subtitle" style="margin: 9px 36px 0 0"><a class="bot" href="mailto:info@kvetka.org">info@kvetka.org</a></div>
+<!-- /copyright -->
+</td>
+<td width="*" bgcolor="#C0C0C0">&nbsp;</td>
+</tr>
+
+</tbody></table>
+
+<div id="SL_balloon_obj" alt="0" style="display: block;"><div id="SL_button" class="SL_ImTranslatorLogo" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/imtranslator-s.png&quot;) repeat scroll 0% 0%; opacity: 1; display: none; left: 411px; top: 911px;"></div><div id="SL_shadow_translation_result2" style="display: none;"></div><div id="SL_shadow_translator" style="display: none;"><div id="SL_planshet"><div id="SL_arrow_up" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/up.png&quot;) repeat scroll 0% 0%;"></div><div id="SL_Bproviders"><div class="SL_BL_LABLE_ON" title="Google" id="SL_P0">G</div><div class="SL_BL_LABLE_ON" title="Microsoft" id="SL_P1">M</div><div class="SL_BL_LABLE_ON" title="Translator" id="SL_P2">T</div></div><div id="SL_alert_bbl" style="display: none;"><div id="SLHKclose" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/delete.png&quot;) repeat scroll 0% 0%;"></div><div id="SL_alert_cont"></div></div><div id="SL_TB"><table id="SL_tables" cellspacing="1"><tr><td class="SL_td" width="10%" align="right"><input id="SL_locer" title="Зафиксировать язык" type="checkbox"></td><td class="SL_td" width="20%" align="left"><select id="SL_lng_from" style="background: rgb(255, 255, 255) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/select.png&quot;) no-repeat scroll 100% 0px;"><option value="auto" selected="selected">Определить язык</option><option value="az">Азербайджанский</option><option value="sq">Албанский</option><option value="en">Английский</option><option value="ar">Арабский</option><option value="hy">Армянский</option><option value="af">Африкаанс</option><option value="eu">Баскский</option><option value="be">Белорусский</option><option value="bn">Бенгальский</option><option value="my">Бирманский</option><option value="bg">Болгарский</option><option value="bs">Боснийский</option><option value="cy">Валлийский</option><option value="hu">Венгерский</option><option value="vi">Вьетнамский</option><option value="gl">Галисийский</option><option value="el">Греческий</option><option value="ka">Грузинский</option><option value="gu">Гуджарати</option><option value="da">Датский</option><option value="zu">Зулу</option><option value="iw">Иврит</option><option value="ig">Игбо</option><option value="yi">Идиш</option><option value="id">Индонезийский</option><option value="ga">Ирландский</option><option value="is">Исландский</option><option value="es">Испанский</option><option value="it">Итальянский</option><option value="yo">Йоруба</option><option value="kk">Казахский</option><option value="kn">Каннада</option><option value="ca">Каталанский</option><option value="zh-CN">Китайский (Упр)</option><option value="zh-TW">Китайский (Трад)</option><option value="ko">Корейский</option><option value="ht">Креольский (Гаити)</option><option value="km">Кхмерский</option><option value="lo">Лаосский</option><option value="la">Латинский</option><option value="lv">Латышский</option><option value="lt">Литовский</option><option value="mk">Македонский</option><option value="mg">Малагасийский</option><option value="ms">Малайский</option><option value="ml">Малайялам</option><option value="mt">Мальтийский</option><option value="mi">Маори</option><option value="mr">Маратхи</option><option value="mn">Монгольский</option><option value="de">Немецкий</option><option value="ne">Непали</option><option value="nl">Нидерландский</option><option value="no">Норвежский</option><option value="pa">Панджаби</option><option value="fa">Персидский</option><option value="pl">Польский</option><option value="pt">Португальский</option><option value="ro">Румынский</option><option value="ru">Русский</option><option value="ceb">Себуанский</option><option value="sr">Сербский</option><option value="st">Сесото</option><option value="si">Сингальский</option><option value="sk">Словацкий</option><option value="sl">Словенский</option><option value="so">Сомали</option><option value="sw">Суахили</option><option value="su">Суданский</option><option value="tl">Тагальский</option><option value="tg">Таджикский</option><option value="th">Тайский</option><option value="ta">Тамильский</option><option value="te">Телугу</option><option value="tr">Турецкий</option><option value="uz">Узбекский</option><option value="uk">Украинский</option><option value="ur">Урду</option><option value="fi">Финский</option><option value="fr">Французский</option><option value="ha">Хауса</option><option value="hi">Хинди</option><option value="hmn">Хмонг</option><option value="hr">Хорватский</option><option value="ny">Чева</option><option value="cs">Чешский</option><option value="sv">Шведский</option><option value="eo">Эсперанто</option><option value="et">Эстонский</option><option value="jw">Яванский</option><option value="ja">Японский</option></select></td><td class="SL_td" width="3" align="center"><div id="SL_switch_b" title="Перевернуть языки" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/switchb.png&quot;) repeat scroll 0% 0%;"></div></td><td class="SL_td" width="20%" align="left"><select id="SL_lng_to" style="background: rgb(255, 255, 255) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/select.png&quot;) no-repeat scroll 100% 0px;"><option value="az">Азербайджанский</option><option value="sq">Албанский</option><option value="en">Английский</option><option value="ar">Арабский</option><option value="hy">Армянский</option><option value="af">Африкаанс</option><option value="eu">Баскский</option><option value="be">Белорусский</option><option value="bn">Бенгальский</option><option value="my">Бирманский</option><option value="bg">Болгарский</option><option value="bs">Боснийский</option><option value="cy">Валлийский</option><option value="hu">Венгерский</option><option value="vi">Вьетнамский</option><option value="gl">Галисийский</option><option value="el">Греческий</option><option value="ka">Грузинский</option><option value="gu">Гуджарати</option><option value="da">Датский</option><option value="zu">Зулу</option><option value="iw">Иврит</option><option value="ig">Игбо</option><option value="yi">Идиш</option><option value="id">Индонезийский</option><option value="ga">Ирландский</option><option value="is">Исландский</option><option value="es">Испанский</option><option value="it">Итальянский</option><option value="yo">Йоруба</option><option value="kk">Казахский</option><option value="kn">Каннада</option><option value="ca">Каталанский</option><option value="zh-CN">Китайский (Упр)</option><option value="zh-TW">Китайский (Трад)</option><option value="ko">Корейский</option><option value="ht">Креольский (Гаити)</option><option value="km">Кхмерский</option><option value="lo">Лаосский</option><option value="la">Латинский</option><option value="lv">Латышский</option><option value="lt">Литовский</option><option value="mk">Македонский</option><option value="mg">Малагасийский</option><option value="ms">Малайский</option><option value="ml">Малайялам</option><option value="mt">Мальтийский</option><option value="mi">Маори</option><option value="mr">Маратхи</option><option value="mn">Монгольский</option><option value="de">Немецкий</option><option value="ne">Непали</option><option value="nl">Нидерландский</option><option value="no">Норвежский</option><option value="pa">Панджаби</option><option value="fa">Персидский</option><option value="pl">Польский</option><option value="pt">Португальский</option><option value="ro">Румынский</option><option selected="selected" value="ru">Русский</option><option value="ceb">Себуанский</option><option value="sr">Сербский</option><option value="st">Сесото</option><option value="si">Сингальский</option><option value="sk">Словацкий</option><option value="sl">Словенский</option><option value="so">Сомали</option><option value="sw">Суахили</option><option value="su">Суданский</option><option value="tl">Тагальский</option><option value="tg">Таджикский</option><option value="th">Тайский</option><option value="ta">Тамильский</option><option value="te">Телугу</option><option value="tr">Турецкий</option><option value="uz">Узбекский</option><option value="uk">Украинский</option><option value="ur">Урду</option><option value="fi">Финский</option><option value="fr">Французский</option><option value="ha">Хауса</option><option value="hi">Хинди</option><option value="hmn">Хмонг</option><option value="hr">Хорватский</option><option value="ny">Чева</option><option value="cs">Чешский</option><option value="sv">Шведский</option><option value="eo">Эсперанто</option><option value="et">Эстонский</option><option value="jw">Яванский</option><option value="ja">Японский</option></select></td><td class="SL_td" width="8%" align="center"><div id="SL_TTS_voice" title="Прослушать" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/ttsvoice.png&quot;) repeat scroll 0% 0%;"></div></td><td class="SL_td" width="8%" align="center"><div id="SL_copy" title="Скопировать" class="SL_copy" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/copy.png&quot;) repeat scroll 0% 0%;"></div></td><td class="SL_td" width="8%" align="center"><div id="SL_bbl_font_patch"></div><div id="SL_bbl_font" title="Размер шрифта" class="SL_bbl_font" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/font.png&quot;) repeat scroll 0% 0%;"></div></td><td class="SL_td" width="8%" align="center"><div id="SL_bbl_help" title="Справка" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/bhelp.png&quot;) repeat scroll 0% 0%;"></div></td><td class="SL_td" width="15%" align="right"><div id="SL_pin" class="SL_pin_off" title="Закрепить всплывающее окно" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/pin-on.png&quot;) repeat scroll 0% 0%;"></div></td></tr></table></div></div><div id="SL_shadow_translation_result" style="visibility: visible;"></div><div id="SL_loading" class="SL_loading" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/loading.gif&quot;) repeat scroll 0% 0%;"></div><div id="SL_player2"></div><div id="SL_alert100">Звуковая функция ограничена 200 символами</div><div id="SL_Balloon_options" style="background: rgb(255, 255, 255) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/bg3.png&quot;) repeat scroll 0% 0%;"><div id="SL_arrow_down" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/down.png&quot;) repeat scroll 0% 0%;"></div><table id="SL_tbl_opt" width="100%"><tr><td width="5%" align="center"><input id="SL_BBL_locer" checked="checked" title="Показывать кнопку ImTranslator Bubble 3 секунд" type="checkbox"></td><td width="5%" align="left"><div id="SL_BBL_IMG" title="Показывать кнопку ImTranslator Bubble 3 секунд" style="background: rgba(0, 0, 0, 0) url(&quot;moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/img/util/bbl-logo.png&quot;) repeat scroll 0% 0%;"></div></td><td width="70%" align="center"><a href="moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/html/options/options.html?bbl" target="_blank" class="SL_options" title="Показать настройки">Настройки</a> : <a href="moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/html/options/options.html?hist" target="_blank" class="SL_options" title="История переводов">История</a> : <a href="moz-extension://eb76a261-f3a7-498c-8941-e4eb26fcbf4f/content/html/options/options.html?feed" target="_blank" class="SL_options" title="Обратная связь">Обратная связь</a> : <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=GD9D8CPW8HFA2" target="_blank" class="SL_options" title="Сделать пожертвование">Donate</a></td><td width="15%" align="right"><span id="SL_Balloon_Close" title="Закрыть">Закрыть</span></td></tr></table></div></div></div></body></html>

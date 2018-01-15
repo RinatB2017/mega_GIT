@@ -81,8 +81,8 @@ void ChessBoard::create_chessboard(void)
             b=!b;
         }
 
-        QLabel *l_temp = new QLabel(QString("%1").arg(abs(y-8)));
-        l_temp->setAlignment(Qt::AlignLeft);
+        QLabel *l_temp = new QLabel(QString(" %1").arg(abs(y-8)));
+        l_temp->setAlignment(Qt::AlignVCenter);
         l_temp->setFont(font);
         chessboard_grid->addWidget(l_temp, y, 9);
         b=!b;

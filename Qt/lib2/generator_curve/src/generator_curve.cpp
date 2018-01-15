@@ -104,6 +104,8 @@ QWidget *Generator_Curve::add_frame(void)
 
     frame->setFrameStyle(QFrame::Box | QFrame::Raised);
 
+    Q_CHECK_PTR(frame);
+
     return frame;
 }
 //--------------------------------------------------------------------------------
@@ -125,6 +127,8 @@ QWidget *Generator_Curve::add_grapher(void)
     QScrollArea *area = new QScrollArea(this);
     area->setWidgetResizable(true);
     area->setWidget(w);
+
+    Q_CHECK_PTR(area);
 
     return area;
 }

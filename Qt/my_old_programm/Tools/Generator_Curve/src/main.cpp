@@ -51,9 +51,7 @@ int main(int argc, char *argv[])
     // main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     MainBox *mainBox = new MainBox(main_window->getThis());
-
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));

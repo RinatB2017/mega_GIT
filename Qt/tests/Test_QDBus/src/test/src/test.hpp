@@ -26,18 +26,19 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
-class Test : public QObject {
+class Test : public QObject
+{
     Q_OBJECT
 
 public:
-    Test(MainWindow *value);
+    Test(void);
 
 private slots:
     void test_GUI(void);
     void test_func(void);
 
 private:
-    MainWindow *mw;
+    MainWindow *mw = 0;
 };
 //--------------------------------------------------------------------------------
 #endif

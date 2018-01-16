@@ -30,7 +30,7 @@ class Test : public QObject {
     Q_OBJECT
 
 public:
-    Test(MainWindow *value);
+    Test(void);
 
 private slots:
     void test_GUI(void);

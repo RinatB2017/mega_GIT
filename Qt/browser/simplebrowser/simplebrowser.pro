@@ -4,6 +4,8 @@ TARGET      = simplebrowser
 QT          += webenginewidgets
 CONFIG      += c++11
 
+FOLDER = browser
+
 PROGRAMM_PATH  += \
     $$PWD/src \
     $$PWD/src/ui

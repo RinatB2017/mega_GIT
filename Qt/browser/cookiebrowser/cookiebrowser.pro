@@ -4,6 +4,8 @@ TARGET      = cookiebrowser
 TEMPLATE    = app
 CONFIG      += c++11
 
+FOLDER = browser
+
 PROGRAMM_PATH  += \
     $$PWD/src \
     $$PWD/src/ui

@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>DownloadWidget</class>
  <widget class="QFrame" name="DownloadWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>148</width>
+    <height>98</height>
+   </rect>
+  </property>
   <property name="styleSheet">
    <string notr="true">#DownloadWidget {
   background: palette(button);
@@ -27,7 +35,10 @@
    <item row="0" column="1">
     <widget class="QPushButton" name="m_cancelButton">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed"/>
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
@@ -73,8 +84,6 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="data/simplebrowser.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -49,8 +49,8 @@ CONFIG(debug, debug|release) {
 }
 
 #----------------------------------------------
-
 LIB_PATH = "../../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {

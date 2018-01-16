@@ -16,7 +16,6 @@
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME
 #define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
-#define RC_ICONS                ":/images/computer.ico"
 //--------------------------------------------------------------------------------
 #define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
 #define VER_FILEVERSION_STR         "##VER_MAJOR##VER_MINOR##VER_BUILD\0"
@@ -29,6 +28,5 @@
 #define VER_PRODUCTNAME_STR         APPNAME
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM   ":/mainwindow/computer.png"
-#define ICON_US         ":/mainwindow/us.png"
 //--------------------------------------------------------------------------------
 #endif

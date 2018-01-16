@@ -185,7 +185,7 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 1
+#if 0
     My_class addr;
     addr = 0x12345678;
     emit info(QString("0x%1").arg(addr[0], 2, 16, QChar('0')));

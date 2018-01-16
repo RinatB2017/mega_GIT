@@ -94,7 +94,8 @@ QUrl commandLineUrlArgument()
             return QUrl::fromUserInput(arg);
     }
     //return QUrl(QStringLiteral("https://www.qt.io"));
-    return QUrl(QStringLiteral("https://2ip.ru/"));
+    //return QUrl(QStringLiteral("https://2ip.ru/"));
+    return QUrl(QStringLiteral("https://www.google.ru/maps"));
 }
 
 int main(int argc, char **argv)

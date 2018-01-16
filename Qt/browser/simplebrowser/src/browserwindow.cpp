@@ -48,11 +48,6 @@
 **
 ****************************************************************************/
 
-#include "browser.h"
-#include "browserwindow.h"
-#include "downloadmanagerwidget.h"
-#include "tabwidget.h"
-#include "webview.h"
 #include <QApplication>
 #include <QCloseEvent>
 #include <QDesktopWidget>
@@ -66,6 +61,13 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <QWebEngineProfile>
+#include <QComboBox>
+
+#include "browser.h"
+#include "browserwindow.h"
+#include "downloadmanagerwidget.h"
+#include "tabwidget.h"
+#include "webview.h"
 
 BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile)
     : m_browser(browser)
@@ -82,6 +84,36 @@ BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile)
 {
     setAttribute(Qt::WA_DeleteOnClose, true);
     setFocusPolicy(Qt::ClickFocus);
+
+    //TODO
+//    profile->setHttpUserAgent("Mozilla Firefox 36 (Win 8.1 x64): Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0");
+//    profile->setHttpUserAgent("Google Chrome 53 (Win 10 x64): Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36");
+//    profile->setHttpUserAgent("Google Chrome 40 (Win 8.1 x64): Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36");
+//    profile->setHttpUserAgent("Opera 40 (Win 10 x64): Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36 OPR/40.0.2308.62");
+//    profile->setHttpUserAgent("Opera 12.17 (Win 8 x64): Opera/9.80 (Windows NT 6.2; WOW64) Presto/2.12.388 Version/12.17");
+//    profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2");
+//    profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; .NET4.0C; .NET4.0E; rv:11.0) like Gecko");
+//    profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; ASU2JS; rv:11.0) like Gecko");
+    profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586");
+
+//    profile->setHttpUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
+//    profile->setHttpUserAgent("Mozilla/5.0 (Linux; U; Android 2.3.5; ru-ru; Philips W632 Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");
+
+//    profile->setHttpUserAgent("Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
+
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; Linux x86_64; Mail.RU_Bot/Fast/2.0; +http://go.mail.ru/help/robots)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; SputnikBot/2.3; +http://corp.sputnik.ru/webmaster)");
+
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robot/)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; MJ12bot/v1.4.5; http://www.majestic12.co.uk/bot.php?+)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; SMTBot/1.0; +http://www.similartech.com/smtbot)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; linkdexbot/2.2; +http://www.linkdex.com/bots/)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; Exabot/3.0; +http://www.exabot.com/go/robot)");
+//    profile->setHttpUserAgent("Mozilla/5.0 (compatible; StatOnlineRuBot/1.0)");
 
     QToolBar *toolbar = createToolBar();
     addToolBar(toolbar);

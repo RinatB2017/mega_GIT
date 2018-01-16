@@ -258,7 +258,8 @@ void TabWidget::setUrl(const QUrl &url)
 
 void TabWidget::triggerWebPageAction(QWebEnginePage::WebAction action)
 {
-    if (WebView *webView = currentWebView()) {
+    if (WebView *webView = currentWebView())
+    {
         webView->triggerPageAction(action);
         webView->setFocus();
     }

@@ -117,6 +117,7 @@ void MainWindow::updateQRImage()
 
     ui->scrollArea->setMinimumWidth(ui->scrollArea->height());
 }
+
 void MainWindow::setScale(int scale)
 {
     if ( successfulEncoding )
@@ -139,14 +140,17 @@ void MainWindow::on_pButtonSave_clicked()
 
     ui->image_label->pixmap()->save( path );
 }
+
 void MainWindow::on_sBoxScale_valueChanged(int arg1)
 {
     setScale( arg1 );
 }
+
 void MainWindow::on_pTextEditQRText_textChanged()
 {
     updateQRImage();
 }
+
 void MainWindow::on_pButtonQuit_clicked()
 {
     close();
@@ -163,6 +167,7 @@ void MainWindow::closeEvent(QCloseEvent *)
 
     qApp->quit();
 }
+
 bool MainWindow::eventFilter( QObject * object, QEvent * event )
 {
     QScrollArea * scrollArea = ui->scrollArea;

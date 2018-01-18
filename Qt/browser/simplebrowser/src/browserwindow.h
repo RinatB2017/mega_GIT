@@ -70,7 +70,8 @@ class BrowserWindow : public QMainWindow
 
 public:
     BrowserWindow(Browser *browser, QWebEngineProfile *profile);
-    QSize sizeHint() const override;
+    ~BrowserWindow(void);
+    //QSize sizeHint() const override;
     TabWidget *tabWidget() const;
     WebView *currentTab() const;
     Browser *browser() { return m_browser; }
@@ -95,6 +96,9 @@ private:
     QMenu *createWindowMenu(TabWidget *tabWidget);
     QMenu *createHelpMenu();
     QToolBar *createToolBar();
+
+    void load_setting(void);
+    void save_setting(void);
 
 private:
     Browser *m_browser;

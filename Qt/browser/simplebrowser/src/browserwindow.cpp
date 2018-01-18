@@ -63,6 +63,8 @@
 #include <QWebEngineProfile>
 #include <QComboBox>
 
+#include <QSettings>
+
 #include "browser.h"
 #include "browserwindow.h"
 #include "downloadmanagerwidget.h"
@@ -161,14 +163,43 @@ BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile)
 
     handleWebViewTitleChanged(QString());
     m_tabWidget->createTab();
+
+    load_setting();
 }
 
-QSize BrowserWindow::sizeHint() const
+BrowserWindow::~BrowserWindow(void)
 {
-    QRect desktopRect = QApplication::desktop()->screenGeometry();
-    QSize size = desktopRect.size() * qreal(0.9);
-    return size;
+    save_setting();
 }
+
+void BrowserWindow::load_setting(void)
+{
+    QSettings *settings = new QSettings(QString("%1%2").arg("simplebrpwser").arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
+    restoreState(settings->value("windowState").toByteArray());
+    restoreGeometry(settings->value("geometry").toByteArray());
+
+    settings->deleteLater();
+}
+
+void BrowserWindow::save_setting(void)
+{
+    QSettings *settings = new QSettings(QString("%1%2").arg("simplebrpwser").arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
+    settings->setValue("windowState",   saveState());
+    settings->setValue("geometry",      saveGeometry());
+
+    settings->deleteLater();
+}
+
+//QSize BrowserWindow::sizeHint() const
+//{
+//    QRect desktopRect = QApplication::desktop()->screenGeometry();
+//    QSize size = desktopRect.size() * qreal(0.9);
+//    return size;
+//}
 
 QMenu *BrowserWindow::createFileMenu(TabWidget *tabWidget)
 {

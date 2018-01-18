@@ -174,7 +174,7 @@ BrowserWindow::~BrowserWindow(void)
 
 void BrowserWindow::load_setting(void)
 {
-    QSettings *settings = new QSettings(QString("%1%2").arg("simplebrpwser").arg(".ini"), QSettings::IniFormat);
+    QSettings *settings = new QSettings("MySoft", "SimpleBrowser");
     Q_CHECK_PTR(settings);
 
     restoreState(settings->value("windowState").toByteArray());
@@ -185,7 +185,7 @@ void BrowserWindow::load_setting(void)
 
 void BrowserWindow::save_setting(void)
 {
-    QSettings *settings = new QSettings(QString("%1%2").arg("simplebrpwser").arg(".ini"), QSettings::IniFormat);
+    QSettings *settings = new QSettings("MySoft", "SimpleBrowser");
     Q_CHECK_PTR(settings);
 
     settings->setValue("windowState",   saveState());

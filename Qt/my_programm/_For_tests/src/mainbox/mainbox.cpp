@@ -185,6 +185,10 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+#if 1
+
+#endif
+
 #if 0
     My_class addr;
     addr = 0x12345678;

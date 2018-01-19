@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>557</width>
-    <height>378</height>
+    <width>574</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -437,8 +437,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>557</width>
-     <height>29</height>
+     <width>574</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDevice">

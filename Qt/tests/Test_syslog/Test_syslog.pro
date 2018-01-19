@@ -42,6 +42,7 @@ OTHER_FILES += doc/notebook.txt
 
 
 LIB_PATH = "../../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/sender_syslog/sender_syslog.pri)

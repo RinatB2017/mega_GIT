@@ -99,29 +99,33 @@ void MainWindow::initActions()
     connect(ui->actionDisconnect, &QAction::triggered,
             this, &MainWindow::on_connectButton_clicked);
 
-    connect(ui->actionExit, &QAction::triggered, this, &QMainWindow::close);
-    connect(ui->actionOptions, &QAction::triggered, m_settingsDialog, &QDialog::show);
+    connect(ui->actionExit,     &QAction::triggered,    this,               &QMainWindow::close);
+    connect(ui->actionOptions,  &QAction::triggered,    m_settingsDialog,   &QDialog::show);
 }
 
 void MainWindow::on_connectType_currentIndexChanged(int index)
 {
-    if (modbusDevice) {
+    if (modbusDevice)
+    {
         modbusDevice->disconnect();
         delete modbusDevice;
         modbusDevice = nullptr;
     }
 
     ModbusConnection type = static_cast<ModbusConnection> (index);
-    if (type == Serial) {
+    if (type == Serial)
+    {
         modbusDevice = new QModbusRtuSerialSlave(this);
-    } else if (type == Tcp) {
+    } else if (type == Tcp)
+    {
         modbusDevice = new QModbusTcpServer(this);
         if (ui->portEdit->text().isEmpty())
-            ui->portEdit->setText(QLatin1Literal("127.0.0.1:502"));
+            ui->portEdit->setText(QLatin1Literal("127.0.0.1:1500"));
     }
     ui->listenOnlyBox->setEnabled(type == Serial);
 
-    if (!modbusDevice) {
+    if (!modbusDevice)
+    {
         ui->connectButton->setDisabled(true);
         if (type == Serial)
             statusBar()->showMessage(tr("Could not create Modbus slave."), 5000);

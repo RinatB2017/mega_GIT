@@ -186,7 +186,8 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-
+    QString temp = qApp->applicationName();
+    emit info(temp);
 #endif
 
 #if 0

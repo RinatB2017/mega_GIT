@@ -39,8 +39,10 @@ win32 {
 }
 
 LIB_PATH = "../../../Qt/lib"
+LIB_PATH2 = "../../../Qt/lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

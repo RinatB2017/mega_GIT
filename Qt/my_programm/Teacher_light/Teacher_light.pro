@@ -53,9 +53,11 @@ win32 {
 }
 
 LIB_PATH = "../../lib"
+LIB_PATH2 = "../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/notebook/notebook.pri)
-include ($$LIB_PATH/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

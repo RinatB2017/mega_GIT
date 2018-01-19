@@ -40,11 +40,12 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-
 LIB_PATH = "../../../Qt/lib"
+LIB_PATH2 = "../../../Qt/lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/serial5/serial5.pri)
-include ($$LIB_PATH/crc/crc.pri)
+include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

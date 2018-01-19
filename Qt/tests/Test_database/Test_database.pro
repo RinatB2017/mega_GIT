@@ -21,7 +21,6 @@ DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
-
 DEFINES += SAVE_WIDGETS_COMBOBOX
 
 HEADERS += \
@@ -41,11 +40,11 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-
 LIB_PATH = "../../../Qt/lib"
+LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/database/database.pri)
+include ($$LIB_PATH2/database/database.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

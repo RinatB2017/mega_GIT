@@ -16,7 +16,6 @@ INCLUDEPATH = $$DEPENDPATH
 #QMAKE_CXXFLAGS += -fno-show-column
 #QMAKE_CXXFLAGS += -std=c++11
 
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
@@ -44,20 +43,17 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-RESOURCES += \
-    pictures/dialog.qrc \
-    pictures/places.qrc \
-    pictures/devices.qrc \
-    pictures/arrow.qrc
-
 RESOURCES += jquery/jquery.qrc
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
+
+include ($$LIB_PATH2/pictures/pictures.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

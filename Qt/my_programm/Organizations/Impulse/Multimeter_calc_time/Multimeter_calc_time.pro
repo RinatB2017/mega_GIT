@@ -53,7 +53,7 @@ LIB_PATH = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/crc/crc.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
 include (../lib/measuring/multimeter_v786_2/multimeter_v786_2.pri)
 

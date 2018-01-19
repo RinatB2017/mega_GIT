@@ -13,7 +13,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
@@ -33,13 +32,14 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
-include ($$LIB_PATH/ethernet/udp_client.pri)
+include ($$LIB_PATH2/ethernet/udp_client.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 

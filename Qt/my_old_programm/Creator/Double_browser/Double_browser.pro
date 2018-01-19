@@ -57,7 +57,7 @@ include ($$LIB_PATH2/web/websettingbox/websettingbox.pri)
 include ($$LIB_PATH2/web/javascript/javascript.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
 
-include ($$LIB_PATH/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 
 DESTDIR = bin
 

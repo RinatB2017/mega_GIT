@@ -80,11 +80,11 @@ LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/time/time.pri)
-include ($$LIB_PATH/crc/crc.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
-include ($$LIB_PATH/database/database.pri)
+include ($$LIB_PATH2/database/database.pri)
 
-include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include ($$LIB_PATH2/OpenRPT/OpenRPT.pri)
 include ($$LIB_PATH2/QtPropertyBrowser/qtpropertybrowser.pri)

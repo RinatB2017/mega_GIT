@@ -36,10 +36,12 @@ win32 {
 }
 
 LIB_PATH = "../../lib"
+LIB_PATH2 = "../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 QMAKE_RESOURCE_FLAGS += -no-compress
-include ($$LIB_PATH/icons.pri)
+include ($$LIB_PATH2/icons.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

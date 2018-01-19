@@ -39,14 +39,15 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
+include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/turbo.pri)
-include ($$LIB_PATH/qwt/qwt.pri)
-include ($$LIB_PATH/csvreader/csvreader.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
+include ($$LIB_PATH2/csvreader/csvreader.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

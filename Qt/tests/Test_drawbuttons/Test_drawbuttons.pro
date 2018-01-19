@@ -50,7 +50,7 @@ LIB_PATH = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/csvreader/csvreader.pri)
+include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH/mywidgets/mydisplay.pri)
 include ($$LIB_PATH/mywidgets/mybutton.pri)
 

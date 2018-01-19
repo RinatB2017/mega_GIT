@@ -50,7 +50,7 @@ LIB_PATH = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 
 include ($$LIB_PATH2/web/persistentcookiejar/persistentcookiejar.pri)
 include ($$LIB_PATH2/web/websettingbox/websettingbox.pri)

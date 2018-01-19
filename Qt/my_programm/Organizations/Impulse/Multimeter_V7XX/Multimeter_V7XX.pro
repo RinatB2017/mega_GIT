@@ -61,11 +61,11 @@ LIB_PATH2 = "../../../../lib2"
 include ($$LIB_PATH/power_knock/power_knock.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/time/time.pri)
-include ($$LIB_PATH/crc/crc.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
-include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
-include ($$LIB_PATH/csvreader/csvreader.pri)
-include ($$LIB_PATH/qwt/qwt.pri)
+include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
+include ($$LIB_PATH2/csvreader/csvreader.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
 
 use_v764 {
     DEFINES += V764

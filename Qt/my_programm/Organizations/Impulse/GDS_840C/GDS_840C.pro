@@ -45,12 +45,13 @@ win32 {
 }
 
 LIB_PATH = "../../../../lib"
+LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
-include ($$LIB_PATH/csvreader/csvreader.pri)
-include ($$LIB_PATH/qwt/qwt.pri)
+include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
+include ($$LIB_PATH2/csvreader/csvreader.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
 
 include (../lib/measuring/oscilloscope_GDS_840C/oscilloscope_GDS_840C.pri)
 

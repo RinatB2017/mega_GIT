@@ -53,13 +53,13 @@ LIB_PATH = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 include ($$LIB_PATH/time/time.pri)
 
-include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
-include ($$LIB_PATH/csvreader/csvreader.pri)
-include ($$LIB_PATH/serial5/serial5.pri)
-include ($$LIB_PATH/qwt/qwt.pri)
+include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
+include ($$LIB_PATH2/csvreader/csvreader.pri)
+include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
 
 VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)

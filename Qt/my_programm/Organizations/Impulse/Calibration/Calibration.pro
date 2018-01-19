@@ -117,11 +117,11 @@ include (../common/handcontrol/handcontrol.pri)
 include (src/controllog/controllog.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/crc/crc.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
-include ($$LIB_PATH/icons/digits.pri)
+include ($$LIB_PATH2/icons/digits.pri)
 
-include ($$LIB_PATH/database/database.pri)
+include ($$LIB_PATH2/database/database.pri)
 
 include (../lib/measuring/multimeter_v786_2/multimeter_v786_2.pri)
 include (../lib/measuring/calibrator/calibrator.pri)

@@ -48,7 +48,7 @@ LIB_PATH = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)

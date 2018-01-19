@@ -15,8 +15,6 @@ QMAKE_CXXFLAGS += -fno-show-column
 
 QT      += serialport
 
-
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -30,7 +28,6 @@ DEFINES += NO_TEST
 
 DEFINES += CONVERT_DATA_TO_ASCII
 #DEFINES += USE_HTONS
-
 
 DEFINES += FAST_COMMAND
 #DEFINES += FAKE
@@ -57,12 +54,12 @@ win32 {
 LIB_PATH = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
-include ($$LIB_PATH/GrapherBox/GrapherBox.pri)
+include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/csvreader/csvreader.pri)
+include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH/time/time.pri)
-include ($$LIB_PATH/qwt/qwt.pri)
-include ($$LIB_PATH/crc/crc.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
 include (../lib/measuring/multimeter_v786_2/multimeter_v786_2.pri)
 
@@ -77,7 +74,7 @@ use_v7642 {
 
 include ($$LIB_PATH2/connection/connection.pri)
 
-include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 use_b588 {
     message (use B5-88)

@@ -49,7 +49,7 @@ LIB_PATH = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/crc/crc.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
 use_b588 {
     message (use B5-88)
@@ -71,8 +71,8 @@ use_b590 {
     include (../lib/powersupply/find_powersupply/find_powersupply.pri)
 }
 
-include ($$LIB_PATH/meta/grapherbox.pri)
-include ($$LIB_PATH/QHexEdit_QT5/QHexEdit_QT5.pri)
+include ($$LIB_PATH2/meta/grapherbox.pri)
+include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include ($$LIB_PATH2/connection/connection.pri)
 

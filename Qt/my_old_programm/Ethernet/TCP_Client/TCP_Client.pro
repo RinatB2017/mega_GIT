@@ -36,6 +36,7 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
@@ -44,7 +45,7 @@ LIB_PATH = "../../../lib"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
-include ($$LIB_PATH/ethernet/tcp_client.pri)
+include ($$LIB_PATH2/ethernet/tcp_client.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 

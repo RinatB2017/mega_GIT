@@ -1,5 +1,5 @@
 
-DEPENDPATH  += $$PWD
+DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT *= network

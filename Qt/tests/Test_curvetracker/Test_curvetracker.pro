@@ -67,8 +67,10 @@ win32 {
 
 
 LIB_PATH = "../../../Qt/lib"
+LIB_PATH2 = "../../../Qt/lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/qwt/qwt.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

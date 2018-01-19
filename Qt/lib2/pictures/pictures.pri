@@ -2,8 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
+DEPENDPATH  += $$PWD
+INCLUDEPATH = $$DEPENDPATH
+
 RESOURCES += \
-    pictures/dialog.qrc \
-    pictures/places.qrc \
-    pictures/devices.qrc \
-    pictures/arrow.qrc
+    dialog.qrc \
+    places.qrc \
+    devices.qrc \
+    arrow.qrc

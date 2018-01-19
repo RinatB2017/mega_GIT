@@ -48,9 +48,10 @@ win32 {
 
 #----------------------------------------------
 LIB_PATH = "../../../Qt/lib"
+LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/meta/grapherbox.pri)
+include ($$LIB_PATH2/meta/grapherbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

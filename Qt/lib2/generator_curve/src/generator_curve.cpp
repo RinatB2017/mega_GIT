@@ -1,18 +1,25 @@
 //--------------------------------------------------------------------------------
-#include <QRadioButton>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QStringList>
-#include <QGroupBox>
-#include <QSettings>
-#include <QSlider>
-#include <qmath.h>
-#include <QEvent>
-#include <QFrame>
-#include <QDebug>
-#include <QTimer>
-#include <QIcon>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QRadioButton>
+#   include <QPushButton>
+#   include <QVBoxLayout>
+#   include <QHBoxLayout>
+#   include <QStringList>
+#   include <QGroupBox>
+#   include <QSettings>
+#   include <QSlider>
+#   include <qmath.h>
+#   include <QEvent>
+#   include <QFrame>
+#   include <QTimer>
+#   include <QIcon>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "generator_curve.hpp"
 #include "mainwindow.hpp"
@@ -56,6 +63,11 @@ Generator_Curve::Generator_Curve(QWidget *parent) :
     updateText();
 }
 //--------------------------------------------------------------------------------
+Generator_Curve::~Generator_Curve(void)
+{
+    save_setting();
+}
+//--------------------------------------------------------------------------------
 QWidget *Generator_Curve::add_frame(void)
 {
     QFrame *frame = new QFrame(this);
@@ -70,13 +82,16 @@ QWidget *Generator_Curve::add_frame(void)
     btnMeandr   = new QPushButton(this);
 
     group = new QGroupBox(this);
+    btn_1bytes  = new QRadioButton(this);
     btn_2bytes  = new QRadioButton(this);
-    btn_4bytes  = new QRadioButton(this);
     btn_2bytes->setChecked(true);
 
+    connect(btn_1bytes, SIGNAL(toggled(bool)),  this,   SLOT(update_sliders()));
+    connect(btn_2bytes, SIGNAL(toggled(bool)),  this,   SLOT(update_sliders()));
+
     QVBoxLayout *group_vbox = new QVBoxLayout;
+    group_vbox->addWidget(btn_1bytes);
     group_vbox->addWidget(btn_2bytes);
-    group_vbox->addWidget(btn_4bytes);
     group->setLayout(group_vbox);
 
     knob_Interval = new QwtKnob(this);
@@ -109,19 +124,35 @@ QWidget *Generator_Curve::add_frame(void)
     return frame;
 }
 //--------------------------------------------------------------------------------
+void Generator_Curve::update_sliders(void)
+{
+    foreach (QSlider *slider, sliders)
+    {
+        if(btn_1bytes->isChecked())
+        {
+            slider->setRange(0, 0xFF);
+        }
+        if(btn_2bytes->isChecked())
+        {
+            slider->setRange(0, 0xFFFF);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 QWidget *Generator_Curve::add_grapher(void)
 {
     QWidget *w = new QWidget(this);
     QHBoxLayout *sl = new QHBoxLayout;
     for(int n=0; n<MAX_SLIDER; n++)
     {
-        sliders[n] = new QSlider(Qt::Vertical);
-        sliders[n]->setMinimum(MIN_VALUE);
-        sliders[n]->setMaximum(MAX_VALUE);
-        sl->addWidget(sliders[n]);
+        QSlider *slider = new QSlider(Qt::Vertical);
+        if(btn_1bytes->isChecked()) slider->setRange(0, 0xFF);
+        if(btn_2bytes->isChecked()) slider->setRange(0, 0xFFFF);
+        sl->addWidget(slider);
 
-        connect(sliders[n], SIGNAL(sliderReleased()), this, SLOT(update_values()));
+        sliders.append(slider);
     }
+    sl->addStretch(1);
     w->setLayout(sl);
 
     QScrollArea *area = new QScrollArea(this);
@@ -150,15 +181,15 @@ void Generator_Curve::start(bool state)
 //--------------------------------------------------------------------------------
 void Generator_Curve::gen_sinus(void)
 {
-    int n;
+    int n = 0;
     double y;
 
-    for(n=0; n<MAX_SLIDER; n++)
+    foreach (QSlider *slider, sliders)
     {
-        y = double(MAX_VALUE / 2)*qSin(double(n)*double(M_PI)/double(16));
-        sliders[n]->setValue(y+(MAX_VALUE / 2)+0.5f);
+        y = double(slider->maximum() / 2)*qSin(double(n)*double(M_PI)/double(16));
+        slider->setValue(y+(slider->maximum() / 2)+0.5f);
+        n++;
     }
-    update_values();
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::gen_triangle(void)
@@ -166,110 +197,96 @@ void Generator_Curve::gen_triangle(void)
     int n;
     double y, delta;
 
-    delta = MAX_VALUE / (MAX_SLIDER / 2);
     y = 0;
-    for(n=0; n<MAX_SLIDER; n++)
+    n = 0;
+    foreach (QSlider *slider, sliders)
     {
+        delta = slider->maximum() / (MAX_SLIDER / 2);
         if(n<(MAX_SLIDER / 2))
             y += delta;
         else
             y -= delta;
-        sliders[n]->setValue(y);
+        n++;
+        slider->setValue(y);
     }
-    update_values();
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::gen_saw(void)
 {
-    int n;
     double y, delta;
 
-    delta = MAX_VALUE / MAX_SLIDER;
     y = 0;
-    for(n=0; n<MAX_SLIDER; n++)
+    foreach (QSlider *slider, sliders)
     {
+        delta = slider->maximum() / MAX_SLIDER;
         y += delta;
-        sliders[n]->setValue(y);
+        slider->setValue(y);
     }
-    update_values();
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::gen_meandr(void)
 {
-    int n;
+    int n = 0;
     double y;
 
     y = 0;
-    for(n=0; n<MAX_SLIDER; n++)
+    foreach (QSlider *slider, sliders)
     {
         if(n<(MAX_SLIDER / 2))
             y = 0;
         else
-            y = MAX_VALUE;
-        sliders[n]->setValue(y);
+            y = slider->maximum();
+        slider->setValue(y);
+        n++;
     }
-    update_values();
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::init_timer(void)
 {
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    // timer->start(10);
+    connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::update(void)
 {
+    if(btn_1bytes->isChecked())
+    {
+        send_1_bytes();
+        return;
+    }
     if(btn_2bytes->isChecked())
     {
         send_2_bytes();
-    }
-    else
-    {
-        send_4_bytes();
+        return;
     }
 }
 //--------------------------------------------------------------------------------
-void Generator_Curve::send_4_bytes(void)
+void Generator_Curve::send_1_bytes(void)
 {
-    union INT_TO_BYTES data;
     QByteArray ba;
-
-    double y = values[index];
-    if(index < (MAX_SLIDER - 1)) index++;
-    else index = 0;
-
-    data.value = y;
-
     ba.clear();
-    ba.append((char)data.bytes.d);
-    ba.append((char)data.bytes.c);
-    ba.append((char)data.bytes.b);
-    ba.append((char)data.bytes.a);
-    emit send(ba);
+    foreach (QSlider *slider, sliders)
+    {
+        ba.append((char)slider->value());
+    }
+    QString temp = QString(":%1\n").arg(ba.toHex().toUpper().data());
+    emit send(temp);
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::send_2_bytes(void)
 {
     union SHORT_TO_BYTES data;
+
     QByteArray ba;
-
-    double y = values[index];
-    if(index < (MAX_SLIDER - 1))
-    {
-        index++;
-    }
-    else
-    {
-        index = 0;
-    }
-
-    data.value = y;
-
     ba.clear();
-    ba.append((char)data.bytes.b);
-    ba.append((char)data.bytes.a);
-    emit send(ba);
+    foreach (QSlider *slider, sliders)
+    {
+        data.value = slider->value();
+        ba.append((char)data.bytes.b);
+        ba.append((char)data.bytes.a);
+    }
+    QString temp = QString(":%1\n").arg(ba.toHex().toUpper().data());
+    emit send(temp);
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::close_gen(void)
@@ -277,36 +294,24 @@ void Generator_Curve::close_gen(void)
     close();
 }
 //--------------------------------------------------------------------------------
-void Generator_Curve::update_values(void)
-{
-    for(int n=0; n<MAX_SLIDER; n++)
-    {
-        values[n] = sliders[n]->value();
-        sliders[n]->setToolTip(QString("%1").arg(sliders[n]->value()));
-    }
-    save_setting();
-}
-//--------------------------------------------------------------------------------
 void Generator_Curve::load_setting(void)
 {
     QStringList sl;
     QString temp;
-    int n,y;
+    int n = 0;
+    int y = 0;
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 
-    temp = "0,32,64,96,128,160,192,224,256,288,320,352,384,416,448,480,512,544,576,608,640,672,704,736,768,800,832,864,896,928,960,992";
     temp = settings->value("SlidersValue").toString();
     sl = temp.split(',');
 
-    for(n=0; n<MAX_SLIDER; n++)
+    n = 0;
+    foreach (QSlider *slider, sliders)
     {
-        if(n < sl.count())
-        {
-            y = sl.at(n).toInt(); //1024 / MAX_SLIDER) * n;
-            sliders[n]->setValue(y);
-            values[n] = y;
-        }
+        y = sl.at(n).toInt(); //1024 / MAX_SLIDER) * n;
+        slider->setValue(y);
+        n++;
     }
 
     settings->deleteLater();
@@ -315,14 +320,12 @@ void Generator_Curve::load_setting(void)
 void Generator_Curve::save_setting(void)
 {
     QString temp;
-    int n;
 
     temp.clear();
-    for(n=0; n<(MAX_SLIDER - 1); n++)
+    foreach (QSlider *slider, sliders)
     {
-        temp.append(QString("%1,").arg(values[n]));
+        temp.append(QString("%1,").arg(slider->value()));
     }
-    temp.append(QString("%1").arg(values[n]));
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     settings->setValue("SlidersValue", QVariant(temp));
@@ -337,7 +340,7 @@ void Generator_Curve::updateText()
     btnSaw->setText(tr("saw"));
     btnMeandr->setText(tr("meandr"));
 
-    btn_2bytes->setText(tr("short"));
-    btn_4bytes->setText(tr("uint"));
+    btn_1bytes->setText(tr("1 byte"));
+    btn_2bytes->setText(tr("2 byte"));
 }
 //--------------------------------------------------------------------------------

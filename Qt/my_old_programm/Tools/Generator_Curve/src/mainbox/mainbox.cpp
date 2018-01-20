@@ -61,10 +61,15 @@ void MainBox::init(void)
     generator = new Generator_Curve(this);
     serial = new SerialBox5(this, "RS-232");
 
+    Q_CHECK_PTR(generator);
+    Q_CHECK_PTR(serial);
+
     ui->layout_generator->addWidget(generator);
     ui->layout_serial->addWidget(serial);
 
-    //connect(generator, SIGNAL(send(QByteArray)), serial, SLOT(input(QByteArray)));
+    //TODO
+    connect(generator,  SIGNAL(send(QByteArray)),   serial, SLOT(input(QByteArray)));
+    //connect(generator,  SIGNAL(send(QString)),  this,   SIGNAL(info(QString)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

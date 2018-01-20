@@ -110,7 +110,7 @@ void serialEvent()
   }
 }
 //---------------------------------------------------------------
-void init2(void)
+void init_buf(void)
 {
   int delta = 256 / MAX_SLIDER;
   int value = 0;
@@ -128,7 +128,7 @@ void setup()
   Serial.begin(115200);
   pinMode(pin_out, OUTPUT);
 
-  init2();
+  init_buf();
 }
 //---------------------------------------------------------------
 void loop()

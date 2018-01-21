@@ -38,15 +38,13 @@ RESOURCES += \
 
 OTHER_FILES += doc/notebook.txt
 
-#----------------------------------------------
-
 LIB_PATH = "../../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
-#----------------------------------------------
 
 VPATH = $$INCLUDEPATH

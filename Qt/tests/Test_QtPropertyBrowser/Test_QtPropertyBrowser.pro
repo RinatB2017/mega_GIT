@@ -21,7 +21,6 @@ DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
-
 HEADERS += \
     defines.hpp \
     version.hpp \
@@ -38,7 +37,6 @@ OTHER_FILES += doc/notebook.txt
 win32 {
     RC_FILE = ico/myapp.rc
 }
-
 
 LIB_PATH = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"

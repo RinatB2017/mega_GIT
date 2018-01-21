@@ -35,18 +35,21 @@ DEFINES += __QSTL_VER__=\"$${VERSTR}\" # create a VER macro containing the versi
 
 INCLUDEPATH += inc
 
-FORMS += ui/mainwindow.ui \
+FORMS += \
+    ui/mainwindow.ui \
     ui/dialog.ui
 
-SOURCES += src/main.cpp\
-        src/mainwindow.cpp \
+SOURCES += \
+    src/main.cpp\
+    src/mainwindow.cpp \
     src/stlinkv2.cpp \
     src/devices.cpp \
     src/dialog.cpp \
-   src/transferthread.cpp \
+    src/transferthread.cpp \
     src/loader.cpp
 
-HEADERS  += inc/mainwindow.h \
+HEADERS  += \
+    inc/mainwindow.h \
     inc/stlinkv2.h \
     inc/devices.h \
     inc/dialog.h \

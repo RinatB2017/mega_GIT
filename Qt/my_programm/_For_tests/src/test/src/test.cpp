@@ -86,6 +86,7 @@ struct TEST
 {
     uint8_t  addr;
     uint16_t cmd;
+    uint8_t  reserved;
     uint8_t  data;
 };
 
@@ -103,11 +104,12 @@ void Test::test_func(void)
     QCOMPARE(mb->test(QByteArray::fromHex("1F1F1F1F1F1F")), 6*0x1F);
 
     TEST test;
+    test.reserved = 0;
     test.addr = 1;
     test.cmd  = 2;
     test.data = 3;
 
-    QCOMPARE(sizeof(TEST), 4);
+    QCOMPARE(sizeof(TEST), 5);
 
     QByteArray ba;
     ba.append((char *)&test, sizeof(test));

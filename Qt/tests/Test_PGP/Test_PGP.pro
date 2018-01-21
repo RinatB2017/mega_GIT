@@ -18,11 +18,11 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+HEADERS     += CryptWin.h
+
 SOURCES     += \
     main.cpp \
     CryptWin.cpp
-
-HEADERS     += CryptWin.h
 
 FORMS       += CryptWin.ui
 

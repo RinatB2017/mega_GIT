@@ -38,7 +38,6 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-
 LIB_PATH = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 

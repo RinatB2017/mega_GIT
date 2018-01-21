@@ -18,7 +18,6 @@ QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += FIXED_SIZE
 
-
 #DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
@@ -45,14 +44,14 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-
 LIB_PATH = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH/mywidgets/mydisplay.pri)
 include ($$LIB_PATH/mywidgets/mybutton.pri)
+
+include ($$LIB_PATH2/csvreader/csvreader.pri)
 
 include ($$LIB_PATH2/CarefulMessageBox/CarefulMessageBox.pri)
 
@@ -62,4 +61,3 @@ include ($$LIB_PATH2/CarefulMessageBox/CarefulMessageBox.pri)
 }
 
 VPATH = $$INCLUDEPATH
-#message ($$QT)

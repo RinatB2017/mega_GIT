@@ -61,45 +61,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-#if 1
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-#else
-    QMdiArea *mainBox = new QMdiArea(main_window->getThis());
-    mainBox->setViewMode(QMdiArea::TabbedView);
-    mainBox->setTabsClosable(true);
-    mainBox->setTabsMovable(true);
-
-    QMdiSubWindow *subWindow1 = new QMdiSubWindow;
-    QMdiSubWindow *subWindow2 = new QMdiSubWindow;
-    QMdiSubWindow *subWindow3 = new QMdiSubWindow;
-    QMdiSubWindow *subWindow4 = new QMdiSubWindow;
-    QMdiSubWindow *subWindow5 = new QMdiSubWindow;
-
-    subWindow1->setWindowTitle("tab1");
-    subWindow2->setWindowTitle("tab2");
-    subWindow3->setWindowTitle("tab3");
-    subWindow4->setWindowTitle("tab4");
-    subWindow5->setWindowTitle("tab5");
-
-    QPushButton *btn = new QPushButton("test");
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(btn);
-    vbox->addStretch();
-
-    QFrame *frame = new QFrame();
-    frame->setLayout(vbox);
-
-    subWindow1->setWidget(frame);
-
-    mainBox->addSubWindow(subWindow1);
-    mainBox->addSubWindow(subWindow2);
-    mainBox->addSubWindow(subWindow3);
-    mainBox->addSubWindow(subWindow4);
-    mainBox->addSubWindow(subWindow5);
-
-    mainBox->setActiveSubWindow(subWindow2);
-    mainBox->setActiveSubWindow(subWindow1);
-#endif
 
     main_window->setCentralWidget(mainBox);
     main_window->show();
@@ -107,7 +69,6 @@ int main(int argc, char *argv[])
     splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-    
 
     return app.exec();
 }

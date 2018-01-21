@@ -64,9 +64,6 @@ private:
 
     void load_file(const QString &filename);
 
-    void load_setting(void);
-    void save_setting(void);
-
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

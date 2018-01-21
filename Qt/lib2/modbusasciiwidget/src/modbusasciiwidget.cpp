@@ -136,25 +136,9 @@ void ModbusAsciiWidget::port_read(void)
 //--------------------------------------------------------------------------------
 bool ModbusAsciiWidget::processing(void)
 {
-    //emit info(clean_data);
-    //emit info(QString("len %1").arg(clean_data.count()));
-
-    //QByteArray temp = QByteArray::fromHex(clean_data);
-    //emit info(temp.toHex());
     if((clean_data.count() % 8) == 0)
     {
         emit get_data(clean_data);
-#if 0
-        for(int index=0; index<clean_data.count(); index+=8)
-        {
-            union DATA regs;
-            for(int n=0; n<8; n++)
-            {
-                regs.buf[n] = temp.at(n+index);
-            }
-            emit get_data(regs);
-        }
-#endif
         return true;
     }
     return false;

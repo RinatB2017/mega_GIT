@@ -43,8 +43,6 @@ public:
     ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
     void test(void);
 
 private:
@@ -56,9 +54,6 @@ private:
     void init(void);
 
     void createTestBar(void);
-
-    void load_setting(void);
-    void save_setting(void);
 
     void updateText(void);
 

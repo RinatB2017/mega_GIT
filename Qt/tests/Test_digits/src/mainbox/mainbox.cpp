@@ -103,39 +103,15 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::load(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-}
-//--------------------------------------------------------------------------------
-void MainBox::save(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-}
-//--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
-    //is_blocked = !is_blocked;
-    //block_interface(is_blocked);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

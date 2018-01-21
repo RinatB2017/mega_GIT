@@ -15,8 +15,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-DEFINES += WOODSTYLE
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
@@ -39,10 +37,11 @@ LIB_PATH = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/turbo.pri)
+
+include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)
 
 !exists(OBJECTS_DIR) {

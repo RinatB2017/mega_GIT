@@ -160,7 +160,7 @@ void MainBox::createSerialBar(void)
     QToolBar *testbar = new QToolBar("testbar");
     Q_CHECK_PTR(testbar);
 
-    testbar->addWidget(testbar);
+    testbar->addWidget(widget);
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 }
 //--------------------------------------------------------------------------------

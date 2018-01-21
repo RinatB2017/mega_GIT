@@ -21,7 +21,6 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
-
 HEADERS += \
     defines.hpp \
     version.hpp \
@@ -41,8 +40,8 @@ LIB_PATH = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/meta/oscilloscopebox.pri)
 
+include ($$LIB_PATH2/meta/oscilloscopebox.pri)
 include ($$LIB_PATH2/modbusasciiwidget/modbusasciiwidget.pri)
 
 !exists(OBJECTS_DIR) {

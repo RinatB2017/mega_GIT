@@ -69,21 +69,6 @@ void MainBox::createTestBar(void)
     connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
-{
-    ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
 bool MainBox::check_triangle(double A, double B, double C)
 {
     if((A+B)<C)
@@ -244,5 +229,10 @@ bool MainBox::calc(double A, double B, double C, double angle_grad)
     emit info(QString("c = %1").arg(c));
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

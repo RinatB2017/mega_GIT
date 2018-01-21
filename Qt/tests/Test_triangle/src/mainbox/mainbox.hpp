@@ -48,9 +48,6 @@ private:
     void init(void);
     void createTestBar(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
     bool check_triangle(double A, double B, double C);
     bool check_angle(const QString &angle_name, double angle_grad);
     bool check_trianle_120(double A, double B, double C);

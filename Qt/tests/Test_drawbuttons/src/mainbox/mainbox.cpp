@@ -30,8 +30,6 @@
 #include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
-
-//#include "usb.h"
 #include "csvreader.hpp"
 //--------------------------------------------------------------------------------
 #include "CarefulMessageBox.hpp"
@@ -85,7 +83,6 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::draw_my_buttons(void)
 {
-
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setSpacing(0);
 
@@ -229,15 +226,5 @@ void MainBox::usb(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

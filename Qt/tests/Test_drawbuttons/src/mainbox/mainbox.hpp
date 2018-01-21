@@ -63,9 +63,6 @@ private:
     void usb(void);
     void draw_my_buttons(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
     QStringList qslGetPrintText(const QStringList qslStructText);
 
     void updateText(void);

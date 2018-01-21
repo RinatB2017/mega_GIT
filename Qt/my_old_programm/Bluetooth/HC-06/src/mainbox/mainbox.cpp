@@ -18,19 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QComboBox>
-#include <QLineEdit>
-#include <QLabel>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QVBoxLayout>
+#   include <QMessageBox>
+#   include <QComboBox>
+#   include <QLineEdit>
+#   include <QLabel>
+#   include <QTime>
 
-#include <QAction>
-#include <QMenu>
+#   include <QAction>
+#   include <QMenu>
 
-#include <QToolButton>
-#include <QToolBar>
-#include <QDebug>
+#   include <QToolButton>
+#   include <QToolBar>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -43,10 +50,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0),
-    test_byte(0),
-    cnt(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -63,6 +67,7 @@ void MainBox::init(void)
     createTestBar();
 
     serialBox = new SerialBox5(this, "RS232", "RS232");
+    Q_CHECK_PTR(serialBox);
 
     ui->serial_layout->addWidget(serialBox);
     ui->serial_layout->addStretch();

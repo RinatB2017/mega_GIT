@@ -42,8 +42,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -60,6 +59,7 @@ void MainBox::init(void)
     createTestBar();
 
     serialBox = new SerialBox5(this, "RS232", "RS232");
+    Q_CHECK_PTR(serialBox);
     serialBox->add_menu(2);
 
     QFrame *frame = new QFrame(this);
@@ -116,7 +116,6 @@ void MainBox::test(void)
 {
     emit info(tr("test"));
     send_answer_data();
-
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)

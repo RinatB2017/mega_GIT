@@ -9,7 +9,6 @@ FOLDER  = old_programm
 
 SUBDIRS += \
     btchat \
-    Bluetooth \
     Bluetooth_BitBang \
     Bluetooth_6x8_matrix \
     HC-06

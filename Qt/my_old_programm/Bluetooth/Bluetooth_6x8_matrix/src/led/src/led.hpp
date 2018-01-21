@@ -27,7 +27,7 @@ class Led : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit Led(QToolButton *parent = 0);
+    Led(QToolButton *parent = 0);
     void set_color(char color);
     char get_color(void);
 

@@ -139,6 +139,7 @@ void loop()
     index = 0;
   analogWrite(pin_out, buf[index]);
 
+  //delay(100);
   //Serial.println(buf[index]);
 }
 //---------------------------------------------------------------

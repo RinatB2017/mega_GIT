@@ -113,6 +113,7 @@ private:
     void createTestBar(void);
     void updateText(void);
 
+    quint32 test(const QByteArray ba);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

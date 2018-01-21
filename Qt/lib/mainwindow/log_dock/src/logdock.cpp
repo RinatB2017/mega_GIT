@@ -75,7 +75,7 @@ void LogDock::update(void)
     if(is_busy) return;
     is_busy = true;
 
-    if(queue_log.isEmpty() ==  false)
+    if(queue_log.isEmpty() == false)
     {
         LOG log = queue_log.dequeue();
         switch(log.level)

@@ -153,10 +153,7 @@ void MyMainWindow::create_local_menus(void)
 void MyMainWindow::create_toolbars(void)
 {
     QToolBar *toolBar = new QToolBar("tb", this);
-    if(toolBar == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(toolBar);
 
     toolBar->setObjectName("tb");
 
@@ -176,10 +173,7 @@ void MyMainWindow::create_toolbars(void)
     //---
 
     QToolBar *toolBar2 = new QToolBar("tb2", this);
-    if(toolBar2 == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(toolBar2);
 
     toolBar2->setObjectName("tb2");
 

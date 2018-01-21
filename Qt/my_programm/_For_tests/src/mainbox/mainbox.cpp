@@ -186,7 +186,7 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 1
+#if 0
     int max_x = 50;
     int max_y = 50;
     Display *display = new Display(max_x, max_y, 16, 16);
@@ -287,5 +287,17 @@ bool MainBox::test_5(void)
     emit info("Test_5()");
 
     return true;
+}
+//--------------------------------------------------------------------------------
+quint32 MainBox::test(const QByteArray ba)
+{
+    quint32 temp = 0;
+
+    for(int n=0; n<ba.length(); n++)
+    {
+        temp += (char)ba.at(n);
+    }
+
+    return temp;
 }
 //--------------------------------------------------------------------------------

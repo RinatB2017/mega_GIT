@@ -15,12 +15,9 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 HelpBrowser::HelpBrowser(QString &page,
-                         QWidget *parent,
-                         const char *name)
+                         QWidget *parent)
     : QWidget(parent)
 {
-    setObjectName(name);
-
     textBrowser = new QTextBrowser(this);
     homeButton  = new QPushButton(QObject::tr("&Home"), this);
     backButton  = new QPushButton(QObject::tr("&Back"), this);
@@ -53,7 +50,6 @@ HelpBrowser::HelpBrowser(QString &page,
 //--------------------------------------------------------------------------------
 void HelpBrowser::updateCaption(QUrl)
 { 
-    //setCaption(tr("Help: %1").arg(textBrowser->documentTitle()));
     setCaption(textBrowser->documentTitle());
 }
 //--------------------------------------------------------------------------------

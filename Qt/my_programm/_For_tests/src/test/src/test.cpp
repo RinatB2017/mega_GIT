@@ -84,6 +84,12 @@ void Test::test_func(void)
 {
     test_mainbox();
     test_slider();
+
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    Q_CHECK_PTR(mb);
+
+    QCOMPARE(mb->test(QByteArray::fromHex("000102030405")), 15);
+    QCOMPARE(mb->test(QByteArray::fromHex("1F1F1F1F1F1F")), 6*0x1F);
 }
 //--------------------------------------------------------------------------------
 void Test::test_safe(void)

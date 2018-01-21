@@ -52,7 +52,6 @@
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
-#include <math.h>
 
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent),

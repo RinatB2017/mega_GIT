@@ -4,11 +4,13 @@
 #include <QWidget>
 #include <QtScript/QScriptEngine>
 
-namespace Ui {
-class MainWidget;
+namespace Ui
+{
+    class MainWidget;
 }
 
-class MainWidget : public QWidget {
+class MainWidget : public QWidget
+{
     Q_OBJECT
 
 public:
@@ -16,14 +18,13 @@ public:
     ~MainWidget();
 
 private slots:
-    void loadScript();
-    void runScript();
+    void loadScript(void);
+    void runScript(void);
 
 private:
-    Ui::MainWidget* ui;
+    Ui::MainWidget* ui = 0;
 
     QScriptEngine m_engine;
-
 };
 
 #endif // MAINWIDGET_H

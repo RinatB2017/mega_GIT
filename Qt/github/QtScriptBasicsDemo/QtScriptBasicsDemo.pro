@@ -4,20 +4,30 @@
 #
 #-------------------------------------------------
 
-QT       += core gui script
+TEMPLATE    = app
+TARGET      = QtScriptBasicsDemo
+
+QT          += core gui script
+
+PROGRAMM_PATH  += \
+    $$PWD \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = QtScriptBasicsDemo
-TEMPLATE = app
+SOURCES     += \
+    main.cpp \
+    mainwidget.cpp
 
+HEADERS     += mainwidget.h
 
-SOURCES += main.cpp\
-        mainwidget.cpp
+FORMS       += mainwidget.ui
 
-HEADERS  += mainwidget.h
-
-FORMS    += mainwidget.ui
-
-RESOURCES += \
+RESOURCES   += \
     resources/resources.qrc
+
+VPATH = $$INCLUDEPATH
+    

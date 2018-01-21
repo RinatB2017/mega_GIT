@@ -5,7 +5,8 @@
 
 MainWidget::MainWidget( QWidget* parent ) :
     QWidget( parent ),
-    ui( new Ui::MainWidget ) {
+    ui( new Ui::MainWidget )
+{
     ui->setupUi( this );
 
     connect( ui->bnRun, SIGNAL( clicked( bool ) ), SLOT( runScript() ) );
@@ -22,33 +23,41 @@ MainWidget::MainWidget( QWidget* parent ) :
     loadScript();
 }
 
-MainWidget::~MainWidget() {
+MainWidget::~MainWidget()
+{
     delete ui;
 }
 
-void MainWidget::loadScript() {
+void MainWidget::loadScript(void)
+{
     QString fileName = "";
-    if( ui->rbUpperDemo->isChecked() ) {
+    if( ui->rbUpperDemo->isChecked() )
+    {
         fileName = "upper_demo.js";
-    } else if( ui->rbConnectDemo->isChecked() ) {
+    } else if( ui->rbConnectDemo->isChecked() )
+    {
         fileName = "connect_demo.js";
-    } else if( ui->rbConnectFuncDemo->isChecked() ) {
+    } else if( ui->rbConnectFuncDemo->isChecked() )
+    {
         fileName = "connect_func_demo.js";
     }
 
     QFile f( ":/" + fileName );
-    if( f.open( QIODevice::ReadOnly ) ) {
+    if( f.open( QIODevice::ReadOnly ) )
+    {
         ui->txtScript->setText( f.readAll() );
     }
 }
 
-void MainWidget::runScript() {
+void MainWidget::runScript(void)
+{
     ui->edInput->disconnect();
     ui->edOutput->disconnect();
     ui->edOutput->clear();
 
     QScriptValue result = m_engine.evaluate( ui->txtScript->toPlainText() );
-    if( result.isError() ) {
+    if( result.isError() )
+    {
         ui->edOutput->setText( result.toString() );
     }
 }

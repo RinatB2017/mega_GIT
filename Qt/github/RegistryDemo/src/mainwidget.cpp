@@ -12,7 +12,8 @@ static const auto REG_PATH_SEPARATOR = "\\";
 
 MainWidget::MainWidget( QWidget* parent ) :
     QWidget( parent ),
-    ui( new Ui::MainWidget ) {
+    ui( new Ui::MainWidget ) 
+    {
     ui->setupUi( this );
 
     auto* root = new QTreeWidgetItem( QStringList() << "Computer" );
@@ -48,23 +49,27 @@ MainWidget::MainWidget( QWidget* parent ) :
     connect( ui->bnRemove, SIGNAL( clicked( bool ) ), SLOT( onRemove() ) );
 }
 
-MainWidget::~MainWidget() {
+MainWidget::~MainWidget()
+{
     delete ui;
 }
 
-void MainWidget::onRegistryItemExpanded( QTreeWidgetItem* item ) {
+void MainWidget::onRegistryItemExpanded( QTreeWidgetItem* item )
+{
     QSettings settings( findPathForItem( item ), QSettings::NativeFormat );
     addRegistryGroup( item, &settings );
 }
 
-void MainWidget::onRegistryItemClicked( QTreeWidgetItem* item, int column ) {
+void MainWidget::onRegistryItemClicked( QTreeWidgetItem* item, int column )
+{
     Q_UNUSED( column )
 
     if( item && item->parent() ) {
         QSettings settings( findPathForItem( item ), QSettings::NativeFormat );
         ui->tableWidget->setRowCount( 0 );
         ui->tableWidget->clearContents();
-        for( const auto& key : settings.childKeys() ) {
+        for( const auto& key : settings.childKeys() )
+        {
             auto row = ui->tableWidget->rowCount();
             ui->tableWidget->insertRow( row );
 
@@ -80,9 +85,11 @@ void MainWidget::onRegistryItemClicked( QTreeWidgetItem* item, int column ) {
     }
 }
 
-void MainWidget::onCreate() {
+void MainWidget::onCreate()
+{
     RegistryItemCreationDialog dlg( this );
-    if( dlg.exec() == QDialog::Accepted ) {
+    if( dlg.exec() == QDialog::Accepted )
+    {
         auto item = ui->treeWidget->currentItem();
         QSettings settings( findPathForItem( item ), QSettings::NativeFormat );
         settings.setValue( dlg.getName(), dlg.getValue() );
@@ -91,7 +98,8 @@ void MainWidget::onCreate() {
     }
 }
 
-void MainWidget::onRemove() {
+void MainWidget::onRemove()
+{
     auto item = ui->treeWidget->currentItem();
     auto path = findPathForItem( item );
     QSettings settings( findPathForItem( item ), QSettings::NativeFormat );
@@ -100,16 +108,20 @@ void MainWidget::onRemove() {
     onRegistryItemClicked( item, 0 );
 }
 
-void MainWidget::addRegistryGroup( QTreeWidgetItem* root, QSettings* settings ) {
+void MainWidget::addRegistryGroup( QTreeWidgetItem* root, QSettings* settings )
+{
     static int depth = 0;
     static const int MAX_DEPTH = 2;
 
     ++depth;
 
-    if( 0 < root->childCount() ) {
-        for( int i = 0; i < root->childCount(); ++i ) {
+    if( 0 < root->childCount() )
+    {
+        for( int i = 0; i < root->childCount(); ++i )
+        {
             auto child = root->child( i );
-            if( 0 < child->childCount() ) {
+            if( 0 < child->childCount() )
+            {
                 break;
             }
 
@@ -117,8 +129,10 @@ void MainWidget::addRegistryGroup( QTreeWidgetItem* root, QSettings* settings ) 
             addRegistryGroup( child, settings );
             settings->endGroup();
         }
-    } else if( depth <= MAX_DEPTH ) {
-        for( const auto& g : settings->childGroups() ) {
+    } else if( depth <= MAX_DEPTH )
+    {
+        for( const auto& g : settings->childGroups() )
+        {
             auto* item = new QTreeWidgetItem( QStringList() << g );
             root->addChild( item );
 
@@ -131,9 +145,11 @@ void MainWidget::addRegistryGroup( QTreeWidgetItem* root, QSettings* settings ) 
     --depth;
 }
 
-QString MainWidget::findPathForItem( QTreeWidgetItem* item ) const {
+QString MainWidget::findPathForItem( QTreeWidgetItem* item ) const
+{
     QStringList reversePath;
-    for( ; item != nullptr; item = item->parent() ) {
+    for( ; item != nullptr; item = item->parent() )
+    {
         reversePath << item->text( 0 );
     }
 

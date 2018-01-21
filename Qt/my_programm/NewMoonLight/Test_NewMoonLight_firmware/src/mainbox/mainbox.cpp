@@ -18,22 +18,29 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QGridLayout>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QtMath>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QGridLayout>
+#   include <QVBoxLayout>
+#   include <QMessageBox>
+#   include <QtMath>
+#   include <QTime>
 
-#include <QAction>
-#include <QMenu>
+#   include <QAction>
+#   include <QMenu>
 
-#include <QPushButton>
-#include <QToolButton>
-#include <QToolBar>
-#include <QSpinBox>
-#include <QTimer>
-#include <QLabel>
-#include <QDebug>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QToolBar>
+#   include <QSpinBox>
+#   include <QTimer>
+#   include <QLabel>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -82,9 +89,7 @@ void MainBox::init(void)
 
     connect(sl_value,   SIGNAL(valueChanged(int)),  this,   SLOT(send_grid_question(int)));
 
-#if 1
     init_widgets();
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)

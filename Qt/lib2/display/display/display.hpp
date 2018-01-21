@@ -24,7 +24,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_DISPLAY_X    256
-#define MAX_DISPLAY_Y    32
+#define MAX_DISPLAY_Y    256
 //--------------------------------------------------------------------------------
 #define DEFAULT_X       16
 #define DEFAULT_Y       8
@@ -38,7 +38,7 @@ class Display : public MyWidget
 public:
     Display(int max_x,
             int max_y,
-            QWidget *parent);
+            QWidget *parent = 0);
     ~Display();
 
     bool set_color(int x,

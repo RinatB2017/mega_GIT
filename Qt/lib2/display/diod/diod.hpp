@@ -62,6 +62,7 @@ private:
     void set_cursor(void);
 
 protected:
+    void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *event);
 };
 //--------------------------------------------------------------------------------

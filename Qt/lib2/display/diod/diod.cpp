@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QColorDialog>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QCursor>
 #include <QPixmap>
 #include <QImage>
@@ -49,10 +50,12 @@ void Diod::set_color(uint8_t R_value,
     G_color = G_value;
     B_color = B_value;
 
+#if 0
     setStyleSheet(QString("background:rgb(%1,%2,%3);")
                   .arg(R_color)
                   .arg(G_color)
                   .arg(B_color));
+#endif
 }
 //--------------------------------------------------------------------------------
 QRgb Diod::get_color(void)
@@ -80,7 +83,16 @@ void Diod::set_cursor(void)
     QPixmap *pixmap = new QPixmap(WIDTH, HEIGHT);
     Q_CHECK_PTR(pixmap);
 
-    pixmap->fill(QColor(R_color, G_color, B_color, 255));
+    pixmap->fill(QColor(0, 0, 0, 0));
+
+    QPainter painter;
+    painter.begin(pixmap);
+
+    painter.setPen(QPen(QColor(R_color, G_color, B_color), 1, Qt::SolidLine));
+    painter.setBrush(QBrush(QColor(R_color, G_color, B_color)));
+    painter.drawEllipse(QPoint(width() / 2, height() / 2), width() / 2 - 2, height() / 2 - 2);
+
+    painter.end();
 
     QCursor cursor(*pixmap);
     topLevelWidget()->setCursor(cursor);
@@ -152,5 +164,17 @@ void Diod::mousePressEvent(QMouseEvent *event)
     default:
         break;
     }
+}
+//--------------------------------------------------------------------------------
+void Diod::paintEvent(QPaintEvent *)
+{
+    QPainter painter;
+    painter.begin(this);
+
+    painter.setPen(QPen(QColor(R_color, G_color, B_color), 1, Qt::SolidLine));
+    painter.setBrush(QBrush(QColor(R_color, G_color, B_color)));
+    painter.drawEllipse(QPoint(width() / 2, height() / 2), width() / 2 - 2, height() / 2 - 2);
+
+    painter.end();
 }
 //--------------------------------------------------------------------------------

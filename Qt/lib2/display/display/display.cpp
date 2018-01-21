@@ -381,11 +381,19 @@ bool Display::resize(int w, int h)
 
     qDeleteAll(children());
 
-    return create_display(w, h);
+    bool ok = create_display(w, h);
+    if(ok)
+    {
+        adjustSize();
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
 bool Display::resize_led(int w, int h)
 {
+    if(w <= 0)  return false;
+    if(h <= 0)  return false;
+
     for(int y=0; y<MAX_DISPLAY_Y; y++)
     {
         for(int x=0; x<MAX_DISPLAY_X; x++)
@@ -396,6 +404,7 @@ bool Display::resize_led(int w, int h)
             }
         }
     }
+    adjustSize();
     return true;
 }
 //--------------------------------------------------------------------------------

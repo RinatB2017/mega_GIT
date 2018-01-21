@@ -34,16 +34,11 @@ HEADERS += \
     defines.hpp \
     version.hpp \
     mainbox.hpp \
-    palette.hpp \
-    display.hpp \
-    font-5x7.hpp \
-    diod.hpp
+    palette.hpp
 
 SOURCES += \
     mainbox.cpp \
     palette.cpp \
-    display.cpp \
-    diod.cpp \
     main.cpp \
 
 FORMS += mainbox.ui
@@ -56,10 +51,11 @@ LIB_PATH = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/crc/crc.pri)
-
-include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH/time/time.pri)
+
+include ($$LIB_PATH2/crc/crc.pri)
+include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/display/display.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -145,7 +145,6 @@ void MainBox::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-#include <QDebug>
 void MainBox::procfunc(void)
 {
     proccess = new QProcess();
@@ -227,10 +226,5 @@ void MainBox::process_error(QProcess::ProcessError p_error)
         emit error("UnknownError");
         break;
     }
-}
-//--------------------------------------------------------------------------------
-int MainBox::xxx(int x)
-{
-    return x+5;
 }
 //--------------------------------------------------------------------------------

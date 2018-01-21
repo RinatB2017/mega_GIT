@@ -24,11 +24,11 @@
 #include <QProcess>
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
@@ -46,8 +46,6 @@ public:
     MainBox(QWidget *parent,
             MySplashScreen *splash);
     ~MainBox();
-
-    int xxx(int x);
 
 private slots:
     void run(void);

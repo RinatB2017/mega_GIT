@@ -201,39 +201,52 @@ void MainBox::mouse_move_to(QPoint pos)
 void MainBox::run_kmines(void)
 {
     QString program = "kmines";
+    QString program_name = "KMines";
     QStringList arguments;
 
-    QProcess *myProcess = new QProcess(this);
-    myProcess->start(program, arguments);
-
-    ui->le_programm->setText("KMines");
+    run_program(program, program_name, arguments);
 }
 //--------------------------------------------------------------------------------
 void MainBox::run_kpat(void)
 {
     QString program = "kpat";
+    QString program_name = "KPatience";
     QStringList arguments;
 
-    QProcess *myProcess = new QProcess(this);
-    myProcess->start(program, arguments);
-
-    ui->le_programm->setText("KPatience");
+    run_program(program, program_name, arguments);
 }
 //--------------------------------------------------------------------------------
 void MainBox::run_kdiamond(void)
 {
     QString program = "kdiamond";
+    QString program_name = "KDiamond";
     QStringList arguments;
 
+    run_program(program, program_name, arguments);
+}
+//--------------------------------------------------------------------------------
+void MainBox::run_program(const QString program,
+                          const QString program_name,
+                          const QStringList arguments)
+{
+    if(program.isEmpty())
+    {
+        emit error("program is empty");
+        return;
+    }
+    if(program_name.isEmpty())
+    {
+        emit error("program_name is empty");
+        return;
+    }
+
     QProcess *myProcess = new QProcess(this);
+    connect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
+    connect(myProcess,  SIGNAL(finished(int)),                  this,   SLOT(finished(int)));
+    connect(myProcess,  SIGNAL(error(QProcess::ProcessError)),  this,   SLOT(process_error(QProcess::ProcessError)));
     myProcess->start(program, arguments);
 
-    if(myProcess->state() != QProcess::Starting)
-    {
-        emit error(QString("ERROR: state %1").arg(myProcess->state()));
-    };
-
-    ui->le_programm->setText("KDiamond");
+    ui->le_programm->setText(program_name);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::find_window(const QString programm_title, int *x, int *y, int *width, int *heigth)
@@ -669,6 +682,50 @@ bool MainBox::test_card(void)
 
     emit info("OK");
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::started(void)
+{
+    emit info(tr("Процесс начат!"));
+}
+//--------------------------------------------------------------------------------
+void MainBox::finished(int result)
+{
+    emit info(tr("Процесс завершен!"));
+    if(result)
+    {
+        emit error(QString(tr("code %1")).arg(result));
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::process_error(QProcess::ProcessError p_error)
+{
+    switch(p_error)
+    {
+    case QProcess::FailedToStart:
+        emit error("FailedToStart");
+        break;
+
+    case QProcess::Crashed:
+        emit error("Crashed");
+        break;
+
+    case QProcess::Timedout:
+        emit error("Timedout");
+        break;
+
+    case QProcess::ReadError:
+        emit error("ReadError");
+        break;
+
+    case QProcess::WriteError:
+        emit error("WriteError");
+        break;
+
+    case QProcess::UnknownError:
+        emit error("UnknownError");
+        break;
+    }
 }
 //--------------------------------------------------------------------------------
 bool MainBox::eventFilter(QObject*, QEvent* event)

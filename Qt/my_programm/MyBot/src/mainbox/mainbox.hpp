@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QProcess>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -61,7 +62,15 @@ private slots:
     void run_kpat(void);
     void run_kdiamond(void);
 
+    void run_program(const QString program,
+                     const QString program_name,
+                     const QStringList arguments);
+
     void find_programm(void);
+
+    void started(void);
+    void finished(int result);
+    void process_error(QProcess::ProcessError p_error);
 
 private:
     enum {

@@ -80,6 +80,17 @@ void Test::test_mainbox(void)
     QCOMPARE(mb->test_5(), true);
 }
 //--------------------------------------------------------------------------------
+#pragma pack (push, 1)
+
+struct TEST
+{
+    uint8_t  addr;
+    uint16_t cmd;
+    uint8_t  data;
+};
+
+#pragma pack(pop)
+//--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
     test_mainbox();
@@ -90,6 +101,17 @@ void Test::test_func(void)
 
     QCOMPARE(mb->test(QByteArray::fromHex("000102030405")), 15);
     QCOMPARE(mb->test(QByteArray::fromHex("1F1F1F1F1F1F")), 6*0x1F);
+
+    TEST test;
+    test.addr = 1;
+    test.cmd  = 2;
+    test.data = 3;
+
+    QCOMPARE(sizeof(TEST), 4);
+
+    QByteArray ba;
+    ba.append((char *)&test, sizeof(test));
+    QCOMPARE(mb->test(ba), 6);
 }
 //--------------------------------------------------------------------------------
 void Test::test_safe(void)

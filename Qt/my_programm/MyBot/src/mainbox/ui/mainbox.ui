@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
-    <height>57</height>
+    <width>567</width>
+    <height>59</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="btn_kdiamond">
+       <property name="text">
+        <string>KDiamond</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="le_programm"/>
      </item>
      <item>
@@ -47,6 +54,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>btn_kpat</tabstop>
+  <tabstop>btn_kmines</tabstop>
+  <tabstop>btn_kdiamond</tabstop>
+  <tabstop>le_programm</tabstop>
+  <tabstop>btn_find_programm</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

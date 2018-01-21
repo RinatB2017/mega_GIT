@@ -59,6 +59,8 @@ private slots:
 
     void run_kmines(void);
     void run_kpat(void);
+    void run_kdiamond(void);
+
     void find_programm(void);
 
 private:

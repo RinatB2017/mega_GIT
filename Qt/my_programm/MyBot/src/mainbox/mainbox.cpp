@@ -18,17 +18,21 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QProcess>
-#include <QToolBar>
-#include <QScreen>
-#include <QDebug>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QApplication>
+#   include <QMouseEvent>
+#   include <QPainter>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QCheckBox>
+#   include <QComboBox>
+#   include <QProcess>
+#   include <QToolBar>
+#   include <QScreen>
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -50,7 +54,6 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox)
 {
     init();
-    load_config();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -65,8 +68,9 @@ void MainBox::init(void)
 
     createTestBar();
 
-    connect(ui->btn_kmines, SIGNAL(clicked(bool)),  this,   SLOT(run_kmines()));
-    connect(ui->btn_kpat,   SIGNAL(clicked(bool)),  this,   SLOT(run_kpat()));
+    connect(ui->btn_kmines,         SIGNAL(clicked(bool)),  this,   SLOT(run_kmines()));
+    connect(ui->btn_kpat,           SIGNAL(clicked(bool)),  this,   SLOT(run_kpat()));
+    connect(ui->btn_kdiamond,       SIGNAL(clicked(bool)),  this,   SLOT(run_kdiamond()));
     connect(ui->btn_find_programm,  SIGNAL(clicked(bool)),  this,   SLOT(find_programm()));
 
     setFixedHeight(sizeHint().height());
@@ -80,6 +84,7 @@ void MainBox::init(void)
     {
         setMinimumHeight(sizeHint().height());
     }
+    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -215,13 +220,26 @@ void MainBox::run_kpat(void)
     ui->le_programm->setText("KPatience");
 }
 //--------------------------------------------------------------------------------
+void MainBox::run_kdiamond(void)
+{
+    QString program = "kdiamond";
+    QStringList arguments;
+
+    QProcess *myProcess = new QProcess(this);
+    myProcess->start(program, arguments);
+
+    if(myProcess->state() != QProcess::Starting)
+    {
+        emit error(QString("ERROR: state %1").arg(myProcess->state()));
+    };
+
+    ui->le_programm->setText("KDiamond");
+}
+//--------------------------------------------------------------------------------
 bool MainBox::find_window(const QString programm_title, int *x, int *y, int *width, int *heigth)
 {
     Display* display = XOpenDisplay( nullptr );
-    if( display == nullptr )
-    {
-        return false;
-    }
+    Q_CHECK_PTR(display);
 
     bool is_found = false;
     ulong count = 0;

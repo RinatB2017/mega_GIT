@@ -26,8 +26,10 @@
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-Display::Display(int max_x,
-                 int max_y,
+Display::Display(unsigned int max_x,
+                 unsigned int max_y,
+                 unsigned int led_width,
+                 unsigned int led_height,
                  QWidget *parent) :
     MyWidget(parent)
 {
@@ -39,13 +41,16 @@ Display::Display(int max_x,
         }
     }
 
-    create_display(max_x, max_y);
+    create_display(max_x, max_y, led_width, led_height);
 
     emit info(QString("max_x = %1").arg(max_x));
     emit info(QString("max_y = %1").arg(max_y));
 }
 //--------------------------------------------------------------------------------
-bool Display::create_display(int w, int h)
+bool Display::create_display(unsigned int w,
+                             unsigned int h,
+                             unsigned int led_width,
+                             unsigned int led_height)
 {
     if(w > MAX_DISPLAY_X)   w = MAX_DISPLAY_X;
     if(w <= 0)              w = DEFAULT_X;
@@ -60,11 +65,13 @@ bool Display::create_display(int w, int h)
     QGridLayout *grid = new QGridLayout();
     grid->setMargin(0);
     grid->setSpacing(0);
-    for(int y=0; y<max_y; y++)
+    for(unsigned int y=0; y<max_y; y++)
     {
-        for(int x=0; x<max_x; x++)
+        for(unsigned int x=0; x<max_x; x++)
         {
-            diod[x][y] = new Diod(this);
+            diod[x][y] = new Diod(led_width,
+                                  led_height,
+                                  this);
             diod[x][y]->set_left_btn_active(true);
             diod[x][y]->set_right_btn_active(false);
 
@@ -85,9 +92,9 @@ bool Display::create_display(int w, int h)
 void Display::set_left_btn_active(bool value)
 {
     flag_active = value;
-    for(int y=0; y<max_y; y++)
+    for(unsigned int y=0; y<max_y; y++)
     {
-        for(int x=0; x<max_x; x++)
+        for(unsigned int x=0; x<max_x; x++)
         {
             diod[x][y]->set_left_btn_active(value);
         }
@@ -97,9 +104,9 @@ void Display::set_left_btn_active(bool value)
 void Display::set_right_btn_active(bool value)
 {
     flag_active = value;
-    for(int y=0; y<max_y; y++)
+    for(unsigned int y=0; y<max_y; y++)
     {
-        for(int x=0; x<max_x; x++)
+        for(unsigned int x=0; x<max_x; x++)
         {
             diod[x][y]->set_right_btn_active(value);
         }
@@ -108,16 +115,16 @@ void Display::set_right_btn_active(bool value)
 //--------------------------------------------------------------------------------
 void Display::set_data(QByteArray data)
 {
-    if(data.length() != (max_x * max_y * 3))
+    if((unsigned int)data.length() != (max_x * max_y * 3))
     {
         emit error("Display::set_data bad data size!");
         return;
     }
 
     int index = 0;
-    for(int y=0; y<max_y; y++)
+    for(unsigned int y=0; y<max_y; y++)
     {
-        for(int x=0; x<max_x; x++)
+        for(unsigned int x=0; x<max_x; x++)
         {
             diod[x][y]->set_color((uint8_t)data[index],
                                   (uint8_t)data[index+1],
@@ -134,9 +141,9 @@ QByteArray Display::get_data(void)
     uint8_t B = 0;
     QByteArray ba;
 
-    for(int y=0; y<max_y; y++)
+    for(unsigned int y=0; y<max_y; y++)
     {
-        for(int x=0; x<max_x; x++)
+        for(unsigned int x=0; x<max_x; x++)
         {
             R = diod[x][y]->get_R();
             G = diod[x][y]->get_G();
@@ -155,24 +162,13 @@ Display::~Display()
     save_setting();
 }
 //--------------------------------------------------------------------------------
-bool Display::set_color(int x,
-                        int y,
+bool Display::set_color(unsigned int x,
+                        unsigned int y,
                         QColor color)
 {
-    if(x < 0)
-    {
-        emit error("Display::set_color: x < 0");
-        return false;
-    }
     if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
-        return false;
-    }
-
-    if(y < 0)
-    {
-        emit error("Display::set_color: y < 0");
         return false;
     }
     if(y > max_y)
@@ -188,26 +184,15 @@ bool Display::set_color(int x,
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Display::set_color(int x,
-                        int y,
+bool Display::set_color(unsigned int x,
+                        unsigned int y,
                         uint8_t R_value,
                         uint8_t G_value,
                         uint8_t B_value)
 {
-    if(x < 0)
-    {
-        emit error("Display::set_color: x < 0");
-        return  false;
-    }
     if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
-        return false;
-    }
-
-    if(y < 0)
-    {
-        emit error("Display::set_color: y < 0");
         return false;
     }
     if(y > max_y)
@@ -235,22 +220,12 @@ int Display::get_max_y(void)
     return max_y;
 }
 //--------------------------------------------------------------------------------
-bool Display::get_R(int x, int y, uint8_t *value)
+bool Display::get_R(unsigned int x,
+                    unsigned int y, uint8_t *value)
 {
-    if(x < 0)
-    {
-        emit error("Display::set_color: x < 0");
-        return  false;
-    }
     if(x > max_x)
     {
         emit error(QString("Display::set_color: x = %1").arg(x));
-        return false;
-    }
-
-    if(y < 0)
-    {
-        emit error("Display::set_color: y < 0");
         return false;
     }
     if(y > max_y)
@@ -258,6 +233,7 @@ bool Display::get_R(int x, int y, uint8_t *value)
         emit error(QString("Display::set_color: y = %1").arg(y));
         return false;
     }
+
     if(diod[x][y] != nullptr)
     {
         *value = diod[x][y]->get_R();
@@ -266,22 +242,13 @@ bool Display::get_R(int x, int y, uint8_t *value)
     return false;
 }
 //--------------------------------------------------------------------------------
-bool Display::get_G(int x, int y, uint8_t *value)
+bool Display::get_G(unsigned int x,
+                    unsigned int y,
+                    uint8_t *value)
 {
-    if(x < 0)
-    {
-        emit error("Display::set_color: x < 0");
-        return  false;
-    }
     if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
-        return false;
-    }
-
-    if(y < 0)
-    {
-        emit error("Display::set_color: y < 0");
         return false;
     }
     if(y > max_y)
@@ -289,26 +256,18 @@ bool Display::get_G(int x, int y, uint8_t *value)
         emit error("Display::set_color: y > MAX_DISPLAY_Y");
         return false;
     }
+
     *value = diod[x][y]->get_G();
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Display::get_B(int x, int y, uint8_t *value)
+bool Display::get_B(unsigned int x,
+                    unsigned int y,
+                    uint8_t *value)
 {
-    if(x < 0)
-    {
-        emit error("Display::set_color: x < 0");
-        return  false;
-    }
     if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
-        return false;
-    }
-
-    if(y < 0)
-    {
-        emit error("Display::set_color: y < 0");
         return false;
     }
     if(y > max_y)
@@ -316,15 +275,16 @@ bool Display::get_B(int x, int y, uint8_t *value)
         emit error("Display::set_color: y > MAX_DISPLAY_Y");
         return false;
     }
+
     *value = diod[x][y]->get_B();
     return true;
 }
 //--------------------------------------------------------------------------------
 void Display::clear(void)
 {
-    for(int y=0; y<max_y; y++)
+    for(unsigned int y=0; y<max_y; y++)
     {
-        for(int x=0; x<max_x; x++)
+        for(unsigned int x=0; x<max_x; x++)
         {
             set_color(x, y, QColor(Qt::black));
         }
@@ -355,22 +315,11 @@ void Display::save_setting(void)
     settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
-bool Display::resize(int w, int h)
+bool Display::resize(unsigned int w, unsigned int h)
 {
-    if(w < 0)
-    {
-        emit error("Display::resize: w < 0");
-        return  false;
-    }
     if(w > MAX_DISPLAY_X)
     {
         emit error("Display::resize: w > MAX_DISPLAY_X");
-        return false;
-    }
-
-    if(h < 0)
-    {
-        emit error("Display::resize: h < 0");
         return false;
     }
     if(h > MAX_DISPLAY_Y)
@@ -381,7 +330,7 @@ bool Display::resize(int w, int h)
 
     qDeleteAll(children());
 
-    bool ok = create_display(w, h);
+    bool ok = create_display(w, h, diod[0][0]->width(), diod[0][0]->height());
     if(ok)
     {
         adjustSize();
@@ -389,10 +338,12 @@ bool Display::resize(int w, int h)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool Display::resize_led(int w, int h)
+bool Display::resize_led(unsigned int w, unsigned int h)
 {
-    if(w <= 0)  return false;
-    if(h <= 0)  return false;
+    if(w == 0)  return false;
+    if(h == 0)  return false;
+    if(w > MAX_LED_SIZE_W)  return false;
+    if(h > MAX_LED_SIZE_H)  return false;
 
     for(int y=0; y<MAX_DISPLAY_Y; y++)
     {

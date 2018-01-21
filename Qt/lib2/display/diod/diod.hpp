@@ -23,15 +23,15 @@
 //--------------------------------------------------------------------------------
 #include <QToolButton>
 //--------------------------------------------------------------------------------
-#define WIDTH  32
-#define HEIGHT 32
+#define MAX_LED_SIZE_W  32
+#define MAX_LED_SIZE_H  32
 //--------------------------------------------------------------------------------
 class Diod : public QToolButton
 {
     Q_OBJECT
 
 public:
-    Diod(QWidget *parent);
+    Diod(int led_width, int led_height, QWidget *parent);
 
     void set_color(QColor color);
     void set_color(uint8_t R_value,

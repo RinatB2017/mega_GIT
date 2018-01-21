@@ -187,10 +187,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    int max_x = 150;
+    int max_x = 50;
     int max_y = 50;
-    Display *display = new Display(max_x, max_y);
-    display->resize_led(16,16);
+    Display *display = new Display(max_x, max_y, 16, 16);
+    Q_CHECK_PTR(display);
 
     display->set_color(0,       0,          QColor(Qt::red));
     display->set_color(max_x-1, 0,          QColor(Qt::red));

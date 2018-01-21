@@ -36,16 +36,18 @@ class Display : public MyWidget
     Q_OBJECT
 
 public:
-    Display(int max_x,
-            int max_y,
+    Display(unsigned int max_x,
+            unsigned int max_y,
+            unsigned int led_width = 32,
+            unsigned int led_height = 32,
             QWidget *parent = 0);
     ~Display();
 
-    bool set_color(int x,
-                   int y,
+    bool set_color(unsigned int x,
+                   unsigned int y,
                    QColor color);
-    bool set_color(int x,
-                   int y,
+    bool set_color(unsigned int x,
+                   unsigned int y,
                    uint8_t R_value,
                    uint8_t G_value,
                    uint8_t B_value);
@@ -53,9 +55,15 @@ public:
     int get_max_x(void);
     int get_max_y(void);
 
-    bool get_R(int x, int y, uint8_t *value);
-    bool get_G(int x, int y, uint8_t *value);
-    bool get_B(int x, int y, uint8_t *value);
+    bool get_R(unsigned int x,
+               unsigned int y,
+               uint8_t *value);
+    bool get_G(unsigned int x,
+               unsigned int y,
+               uint8_t *value);
+    bool get_B(unsigned int x,
+               unsigned int y,
+               uint8_t *value);
 
     void set_data(QByteArray data);
     QByteArray get_data(void);
@@ -68,17 +76,22 @@ public:
 
     void clear(void);
 
-    bool resize(int w, int h);
-    bool resize_led(int w, int h);
+    bool resize(unsigned int w,
+                unsigned int h);
+    bool resize_led(unsigned int w,
+                    unsigned int h);
 
 private:
     Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];
-    int max_x = 0;
-    int max_y = 0;
+    unsigned int max_x = 0;
+    unsigned int max_y = 0;
 
     bool flag_active = false;
 
-    bool create_display(int w, int h);
+    bool create_display(unsigned int w,
+                        unsigned int h,
+                        unsigned int led_width,
+                        unsigned int led_height);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

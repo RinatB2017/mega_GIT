@@ -43,7 +43,7 @@ MyPalette::MyPalette(int max_x,
     {
         for(int x=0; x<max_x; x++)
         {
-            Diod *diod = new Diod(this);
+            Diod *diod = new Diod(32, 32, this);
             diod->set_left_btn_active(true);
             diod->set_right_btn_active(true);
             diod->set_flag_is_palette(true);

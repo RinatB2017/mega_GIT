@@ -29,10 +29,18 @@
 #include "defines.hpp"
 #include "diod.hpp"
 //--------------------------------------------------------------------------------
-Diod::Diod(QWidget *parent) :
+Diod::Diod(int led_width,
+           int led_height,
+           QWidget *parent) :
     QToolButton(parent)
 {
-    setFixedSize(WIDTH, HEIGHT);
+    if(led_width < 0)   led_width = MAX_LED_SIZE_W;
+    if(led_width > MAX_LED_SIZE_W)   led_width = MAX_LED_SIZE_W;
+    if(led_height < 0)   led_height = MAX_LED_SIZE_H;
+    if(led_height > MAX_LED_SIZE_H)   led_height = MAX_LED_SIZE_H;
+
+    setFixedSize(led_width,
+                 led_height);
 }
 //--------------------------------------------------------------------------------
 void Diod::set_color(QColor color)
@@ -80,7 +88,8 @@ uint8_t Diod::get_B(void)
 //--------------------------------------------------------------------------------
 void Diod::set_cursor(void)
 {
-    QPixmap *pixmap = new QPixmap(WIDTH, HEIGHT);
+    QPixmap *pixmap = new QPixmap(MAX_LED_SIZE_W,
+                                  MAX_LED_SIZE_H);
     Q_CHECK_PTR(pixmap);
 
     pixmap->fill(QColor(0, 0, 0, 0));
@@ -117,6 +126,8 @@ bool Diod::resize(int w, int h)
 {
     if(w <= 0)  return false;
     if(h <= 0)  return false;
+    if(w > MAX_LED_SIZE_W)  return false;
+    if(h > MAX_LED_SIZE_H)  return false;
 
     setFixedSize(w, h);
 
@@ -136,9 +147,9 @@ void Diod::mousePressEvent(QMouseEvent *event)
             img = new QImage(cursor().pixmap().toImage());
             if(is_palette == false)
             {
-                if((img->width() >= WIDTH / 2) && (img->height() >= HEIGHT / 2))
+                if((img->width() >= MAX_LED_SIZE_W / 2) && (img->height() >= MAX_LED_SIZE_H / 2))
                 {
-                    set_color(img->pixelColor(WIDTH / 2, HEIGHT / 2));
+                    set_color(img->pixelColor(MAX_LED_SIZE_W / 2, MAX_LED_SIZE_H / 2));
                 }
             }
             else

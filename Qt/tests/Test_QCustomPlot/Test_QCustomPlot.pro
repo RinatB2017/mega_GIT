@@ -15,8 +15,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
@@ -34,7 +32,6 @@ FORMS += mainbox.ui
 win32 {
     RC_FILE = ico/myapp.rc
 }
-
 
 LIB_PATH = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"

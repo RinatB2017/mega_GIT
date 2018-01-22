@@ -55,7 +55,7 @@
 #include <QWebEnginePage>
 
 QT_BEGIN_NAMESPACE
-class QUrl;
+    class QUrl;
 QT_END_NAMESPACE
 
 class WebView;

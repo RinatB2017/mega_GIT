@@ -25,7 +25,6 @@
 #include <QFrame>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
-
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QGridLayout;
@@ -36,6 +35,11 @@ class ChessBoard : public MyWidget
     Q_OBJECT
 
 public:
+    enum states {
+        STATE_IDLE = 0,
+        STATE_1,
+        STATE_2
+    };
     enum Figures {
         NO_FIGURE = 0,
         BISHOP_BLACK,
@@ -60,12 +64,15 @@ public:
 
     bool move(const QString text);
 
+signals:
+    void s_move(const QString text);
+
 public slots:
     void new_game(void);
 
 private slots:
     void set_cursor(void);
-    void click(bool state);
+    void click(void);
 
 private:
     QPixmap w_bishop;
@@ -84,6 +91,11 @@ private:
 
     QGridLayout *chessboard_grid = 0;
     QToolButton *btn_chessboard[8][8];
+
+    QString first_str;
+    QString second_str;
+
+    int state = STATE_1;
 
     void init(void);
 

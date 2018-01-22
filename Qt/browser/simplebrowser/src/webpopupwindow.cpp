@@ -77,7 +77,8 @@ WebPopupWindow::WebPopupWindow(QWebEngineProfile *profile)
     m_urlLineEdit->addAction(m_favAction, QLineEdit::LeadingPosition);
 
     connect(m_view, &WebView::titleChanged, this, &QWidget::setWindowTitle);
-    connect(m_view, &WebView::urlChanged, [this](const QUrl &url) {
+    connect(m_view, &WebView::urlChanged, [this](const QUrl &url)
+    {
         m_urlLineEdit->setText(url.toDisplayString());
     });
     connect(m_view, &WebView::favIconChanged, m_favAction, &QAction::setIcon);

@@ -66,9 +66,12 @@ void ChessBoard::create_chessboard(void)
         {
             btn_chessboard[x][y] = new QToolButton(this);
             btn_chessboard[x][y]->setIconSize(QSize(WIDTH_FIELD, HEIGHT_FIELD));
-            btn_chessboard[x][y]->setCheckable(true);
+            //btn_chessboard[x][y]->setCheckable(true);
             btn_chessboard[x][y]->setIcon(QIcon());
-            connect(btn_chessboard[x][y],   SIGNAL(clicked(bool)),  this,   SLOT(click(bool)));
+            btn_chessboard[x][y]->setProperty("pos_x", x);
+            btn_chessboard[x][y]->setProperty("pos_y", abs(y-7));
+
+            connect(btn_chessboard[x][y],   SIGNAL(clicked(bool)),  this,   SLOT(click()));
 
             if(b)
                 btn_chessboard[x][y]->setStyleSheet("background:gray;");
@@ -189,7 +192,7 @@ QString ChessBoard::return_figure_position(int x, int y)
 {
     QString temp_x;
     QString temp_y;
-    switch(x)
+    switch(x+1)
     {
     case 1: temp_x="A"; break;
     case 2: temp_x="B"; break;
@@ -200,7 +203,7 @@ QString ChessBoard::return_figure_position(int x, int y)
     case 7: temp_x="G"; break;
     case 8: temp_x="H"; break;
     }
-    temp_y = QString::number(y);
+    temp_y = QString::number(y+1);
 
     return temp_x+temp_y;
 }
@@ -283,9 +286,12 @@ bool ChessBoard::set_figure(Figures figure, const QString &coord)
     int x = 0;
     int y = 0;
     bool ok = check_coordinate(coord, &x, &y);
-    if(!ok) return false;
+    if(!ok)
+    {
+        return false;
+    }
 
-    emit debug(QString("set_figure: figure %1 coord %2 ").arg(return_figure_name(figure)).arg(coord));
+    //emit debug(QString("set_figure: figure %1 coord %2 ").arg(return_figure_name(figure)).arg(coord));
 
     switch(figure)
     {
@@ -319,7 +325,7 @@ bool ChessBoard::set_figure(Figures figure, int x, int y)
     if(y<0) return false;
     if(y>MAX_X) return false;
 
-    emit debug(QString("figure %1").arg(figure));
+    //emit debug(QString("figure %1").arg(figure));
 
     switch(figure)
     {
@@ -371,6 +377,8 @@ bool ChessBoard::move(const QString text)
         return false;
     }
 
+    emit s_move(text);
+
     QString from = text.left(2);
     QString to = text.right(2);
 
@@ -411,6 +419,7 @@ bool ChessBoard::move(const QString text)
               .arg(x2)
               .arg(y2)
               .arg(return_figure_name(figure_from)));
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -432,9 +441,50 @@ void ChessBoard::set_cursor(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::click(bool state)
+void ChessBoard::click(void)
 {
-    emit debug(QString("state is %1").arg(state));
+    QToolButton *btn = (QToolButton *)sender();
+    if(!btn)
+    {
+        return;
+    }
+
+    int pos_x = btn->property("pos_x").toInt();
+    int pos_y = btn->property("pos_y").toInt();
+    emit debug(QString("pos: %1 %2")
+               .arg(pos_x)
+               .arg(pos_y));
+
+    bool ok = false;
+    switch(state)
+    {
+    case STATE_IDLE:
+        emit debug("STATE_IDLE");
+        break;
+
+    case STATE_1:
+        first_str = return_figure_position(pos_x, pos_y);
+        second_str = "";
+        emit debug("STATE_1");
+        state = STATE_2;
+        break;
+
+    case STATE_2:
+        second_str = return_figure_position(pos_x, pos_y);
+        emit debug("STATE_2");
+        QString temp = QString("%1%2")
+                .arg(first_str)
+                .arg(second_str)
+                .toLower();
+        emit debug(temp);
+        ok = move(temp);
+        if(ok == false)
+        {
+            emit error("Bad move");
+        }
+        state = STATE_1;
+        break;
+    }
 }
 //--------------------------------------------------------------------------------
 void ChessBoard::updateText(void)

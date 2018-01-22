@@ -89,7 +89,8 @@ void set_light_palette(void)
 QUrl commandLineUrlArgument()
 {
     const QStringList args = QCoreApplication::arguments();
-    for (const QString &arg : args.mid(1)) {
+    for (const QString &arg : args.mid(1))
+    {
         if (!arg.startsWith(QLatin1Char('-')))
             return QUrl::fromUserInput(arg);
     }

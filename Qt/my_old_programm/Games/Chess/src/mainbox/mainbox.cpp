@@ -84,6 +84,8 @@ void MainBox::init(void)
     setLayout(hbox);
 #endif
 #endif
+
+    connect(this,   SIGNAL(invalide_move()),    this,   SLOT(restore_move()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -102,6 +104,7 @@ void MainBox::createTestBar(void)
                           "test");
 
     le_test = new QLineEdit(this);
+    le_test->setFixedWidth(100);
     le_test->setText("e2e4");
     testbar->addWidget(le_test);
 
@@ -119,7 +122,15 @@ void MainBox::create_chessboard(void)
 {
 #ifndef NO_CHESSBOARD
     board = new ChessBoard(this);
+    connect(board,  SIGNAL(s_move(QString)),    this,   SLOT(move(QString)));
 #endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::move(QString text)
+{
+    emit error(QString("move(%1)").arg(text));
+    text += "\n";
+    m_engine->write(text.toLocal8Bit());
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_engine(void)
@@ -194,7 +205,7 @@ void MainBox::run(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::analize(const QString &line)
+bool MainBox::analize(const QString &line)
 {
     if(illegalMoveRegEx.indexIn(line) >= 0)
     {
@@ -202,14 +213,14 @@ void MainBox::analize(const QString &line)
         if(coordenateRegEx.indexIn(line) >= 0)
         {
             emit error(QString("coordenateRegEx: %1").arg(coordenateRegEx.cap(1)));
+            return false;
         }
-        return;
     }
 
     if(resultOutputRegEx.indexIn(line) >= 0)
     {
         emit error(QString("resultOutputRegEx: %1").arg(resultOutputRegEx.cap(1)));
-        return;
+        return false;
     }
 
     //---
@@ -221,7 +232,7 @@ void MainBox::analize(const QString &line)
 #ifndef NO_CHESSBOARD
         board->move(blackMoveRegEx.cap(1));
 #endif
-        return;
+        return false;
     }
 
     if(whiteMoveRegEx.indexIn(line) >= 0)
@@ -231,21 +242,34 @@ void MainBox::analize(const QString &line)
 #ifndef NO_CHESSBOARD
         board->move(whiteMoveRegEx.cap(1));
 #endif
-        return;
+        return false;
     }
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::readData(void)
 {
     QString output = m_engine->readAllStandardOutput();
     QStringList lines = output.split("\n");
-    emit error(QString("received %1 bytes").arg(output.size()));
+    //emit debug(QString("received %1 bytes").arg(output.size()));
     for(int n=0; n<lines.size(); n++)
     {
         QString line = lines.at(n);
         emit trace(QString("%1").arg(line));
-        analize(line);
+        if(line.contains("invalid", Qt::CaseInsensitive))
+        {
+            emit invalide_move();
+        }
+        else
+        {
+            analize(line);
+        }
     }
+}
+//--------------------------------------------------------------------------------
+void MainBox::restore_move(void)
+{
+    emit error("restore_move");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

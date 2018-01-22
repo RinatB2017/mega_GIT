@@ -67,7 +67,8 @@ WebPage::WebPage(QWebEngineProfile *profile, QObject *parent)
 bool WebPage::certificateError(const QWebEngineCertificateError &error)
 {
     QWidget *mainWindow = view()->window();
-    if (error.isOverridable()) {
+    if (error.isOverridable())
+    {
         QDialog dialog(mainWindow);
         dialog.setModal(true);
         dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -104,7 +105,8 @@ void WebPage::handleAuthenticationRequired(const QUrl &requestUrl, QAuthenticato
     passwordDialog.m_infoLabel->setText(introMessage);
     passwordDialog.m_infoLabel->setWordWrap(true);
 
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted)
+    {
         auth->setUser(passwordDialog.m_userNameLineEdit->text());
         auth->setPassword(passwordDialog.m_passwordLineEdit->text());
     } else {
@@ -132,7 +134,8 @@ void WebPage::handleProxyAuthenticationRequired(const QUrl &, QAuthenticator *au
     passwordDialog.m_infoLabel->setText(introMessage);
     passwordDialog.m_infoLabel->setWordWrap(true);
 
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted)
+    {
         auth->setUser(passwordDialog.m_userNameLineEdit->text());
         auth->setPassword(passwordDialog.m_passwordLineEdit->text());
     } else {

@@ -4,8 +4,8 @@
 
 TEMPLATE    = app
 TARGET      = CallBackExampe_win
-DEPENDPATH  += .
-INCLUDEPATH += .
+DEPENDPATH  += . $$PWD/src $$PWD/src/ui
+INCLUDEPATH += . $$PWD/src $$PWD/src/ui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,3 +21,5 @@ SOURCES += \
 
 FORMS   += \
     mainwindow.ui
+
+VPATH = $$INCLUDEPATH

@@ -7,9 +7,9 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-	www testWidget;
-	SBControl control(&testWidget);
-	testWidget.show();
-	control.show();
+    www testWidget;
+    SBControl control(&testWidget);
+    testWidget.show();
+    control.show();
     return app.exec();
 }

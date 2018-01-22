@@ -48,6 +48,9 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
+signals:
+    void invalide_move(void);
+
 private slots:
     void test(void);
     void run(void);
@@ -55,6 +58,9 @@ private slots:
     void x2(void);
     void readData(void);
     void new_game(void);
+
+    void restore_move(void);
+    void move(QString text);
 
 private:
     MySplashScreen *splash = 0;
@@ -79,7 +85,7 @@ private:
     QRegExp resultOutputRegEx;
     QRegExp coordenateRegEx;
 
-    void analize(const QString &line);
+    bool analize(const QString &line);
 
     void createTestBar(void);
     void create_chessboard(void);

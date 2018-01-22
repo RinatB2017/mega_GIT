@@ -100,7 +100,7 @@ CookieWidget::CookieWidget(const QNetworkCookie &cookie, QWidget *parent): QWidg
     setAutoFillBackground(true);
     m_nameLabel->setText(cookie.name());
     m_domainLabel->setText(cookie.domain());
-    connect(m_viewButton, &QPushButton::clicked, this, &CookieWidget::viewClicked);
+    connect(m_viewButton,   &QPushButton::clicked, this, &CookieWidget::viewClicked);
     connect(m_deleteButton, &QPushButton::clicked, this, &CookieWidget::deleteClicked);
 }
 
@@ -133,9 +133,9 @@ MainWindow::MainWindow(const QUrl &url) :
     m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    connect(m_urlButton, &QPushButton::clicked, this, &MainWindow::handleUrlClicked);
-    connect(m_deleteAllButton, &QPushButton::clicked, this, &MainWindow::handleDeleteAllClicked);
-    connect(m_newButton, &QPushButton::clicked, this, &MainWindow::handleNewClicked);
+    connect(m_urlButton,        &QPushButton::clicked, this, &MainWindow::handleUrlClicked);
+    connect(m_deleteAllButton,  &QPushButton::clicked, this, &MainWindow::handleDeleteAllClicked);
+    connect(m_newButton,        &QPushButton::clicked, this, &MainWindow::handleNewClicked);
 
     m_store = m_webview->page()->profile()->cookieStore();
     connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainWindow::handleCookieAdded);
@@ -145,7 +145,8 @@ MainWindow::MainWindow(const QUrl &url) :
 
 bool MainWindow::containsCookie(const QNetworkCookie &cookie)
 {
-    for (auto c: m_cookies) {
+    for (auto c: m_cookies)
+    {
         if (c.hasSameIdentifier(cookie))
             return true;
     }
@@ -163,18 +164,21 @@ void MainWindow::handleCookieAdded(const QNetworkCookie &cookie)
     m_cookies.append(cookie);
     m_layout->insertWidget(0,widget);
 
-    connect(widget, &CookieWidget::deleteClicked, [this, cookie, widget]() {
+    connect(widget, &CookieWidget::deleteClicked, [this, cookie, widget]()
+    {
         m_store->deleteCookie(cookie);
         delete widget;
         m_cookies.removeOne(cookie);
-        for (int i = 0; i < m_layout->count() - 1; i++) {
+        for (int i = 0; i < m_layout->count() - 1; i++)
+        {
             // fix background colors
             auto widget = qobject_cast<CookieWidget*>(m_layout->itemAt(i)->widget());
             widget->setHighlighted(i % 2);
         }
     });
 
-    connect(widget, &CookieWidget::viewClicked, [cookie]() {
+    connect(widget, &CookieWidget::viewClicked, [cookie]()
+    {
         CookieDialog dialog(cookie);
         dialog.exec();
     });

@@ -98,6 +98,7 @@ void MainBox::init(void)
     ui->cb_command->addItem(SIM900_CUSD_TEXT);
 
     serialBox = new SerialBox5(this, "RS232");
+    Q_CHECK_PTR(serialBox);
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);

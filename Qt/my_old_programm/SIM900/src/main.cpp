@@ -19,8 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
-#include <QLocale>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -47,19 +45,15 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
+    Q_CHECK_PTR(main_window);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-    main_window->setCentralWidget(mainBox);
+    Q_CHECK_PTR(mainBox);
 
+    main_window->setCentralWidget(mainBox);
     main_window->show();
 
     splash->finish(main_window);
-
-#if 0
-    QByteArray ba = QByteArray::fromHex("004F0043005400410054004F004B0020003100300030002E0030003000200070002E00200420043004370434034734D3453001003484403002063000000084082074054044024030060070060030070");
-    QString str = QString::fromUtf16(reinterpret_cast<const ushort*>(ba.constData()));
-    qDebug() <<"[" << qPrintable(str) << "]";
-#endif
 
     return app.exec();
 }

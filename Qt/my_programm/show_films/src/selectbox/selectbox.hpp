@@ -33,11 +33,11 @@ class SelectBox : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SelectBox(QWidget *parent = 0,
-                       const QString &caption = "no caption",
-                       const QString &path = "path",
-                       const QString &filename = "filename",
-                       const QStringList &list_pict = QStringList());
+    SelectBox(QWidget *parent = 0,
+              const QString &caption = "no caption",
+              const QString &path = "path",
+              const QString &filename = "filename",
+              const QStringList &list_pict = QStringList());
     QString selected_pictures(void);
     
 signals:
@@ -47,10 +47,10 @@ private slots:
     void select_picture(QModelIndex index);
 
 private:
-    QDialogButtonBox *buttonBox;
-    QListWidget *list_pictures;
-    QLabel *picture_label;
-    QLabel *current_filename;
+    QDialogButtonBox *buttonBox = 0;
+    QListWidget *list_pictures = 0;
+    QLabel *picture_label = 0;
+    QLabel *current_filename = 0;
     QString path;
     QString current_picture;
 };

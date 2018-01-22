@@ -103,5 +103,4 @@ protected:
     void resizeEvent(QResizeEvent *event);
 };
 
-
 #endif

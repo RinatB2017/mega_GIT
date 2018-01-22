@@ -57,10 +57,13 @@ TreeFilms::~TreeFilms()
 //--------------------------------------------------------------------------------
 void TreeFilms::connect_log(void)
 {
-    connect(this, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
-    connect(this, SIGNAL(message(QString)), topLevelWidget(), SIGNAL(message(QString)));
+    if(topLevelWidget())
+    {
+        connect(this, SIGNAL(info(QString)),    topLevelWidget(), SIGNAL(info(QString)));
+        connect(this, SIGNAL(debug(QString)),   topLevelWidget(), SIGNAL(debug(QString)));
+        connect(this, SIGNAL(error(QString)),   topLevelWidget(), SIGNAL(error(QString)));
+        connect(this, SIGNAL(trace(QString)),   topLevelWidget(), SIGNAL(trace(QString)));
+    }
 }
 //--------------------------------------------------------------------------------
 void TreeFilms::init(void)

@@ -39,14 +39,14 @@ class MODBUS_server : public QWidget
     Q_OBJECT
 
 public:
-    explicit MODBUS_server(QWidget *parent = 0);
+    MODBUS_server(QWidget *parent = 0);
     ~MODBUS_server();
 
 signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
-    void message(const QString &);
+    void trace(const QString &);
 
 private slots:
     void log(QString data);

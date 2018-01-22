@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2016                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,53 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MODBUS_CLIENT_HPP
-#define MODBUS_CLIENT_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include <QModbusDataUnit>
-#include <QModbusDevice>
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MODBUS_client;
-}
-//--------------------------------------------------------------------------------
-class QModbusClient;
-class QModbusReply;
-//--------------------------------------------------------------------------------
-class MODBUS_client : public QWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    MODBUS_client(QWidget *parent = 0);
-    ~MODBUS_client();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    Test();
 
 private slots:
-    void log(QString data);
-    void readReady(void);
-    void errorOccurred(QModbusDevice::Error);
-    void stateChanged(QModbusDevice::State state);
-
-    void connect_device(void);
-    void refresh(void);
-    void test(void);
-
+    void test_GUI(void);
+    void test_func(void);
+    
 private:
-    Ui::MODBUS_client *ui;
-
-    QModbusReply *lastRequest;
-    QModbusClient *modbusDevice;
-
-    QModbusDataUnit readRequest() const;
-    QModbusDataUnit writeRequest() const;
+    MainWindow *mw = 0;
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -36,17 +36,17 @@ MODBUS_server::MODBUS_server(QWidget *parent) :
     //---
     if(parentWidget())
     {
-        connect(this,   SIGNAL(info(QString)),      parentWidget(), SIGNAL(info(QString)));
-        connect(this,   SIGNAL(debug(QString)),     parentWidget(), SIGNAL(debug(QString)));
-        connect(this,   SIGNAL(error(QString)),     parentWidget(), SIGNAL(error(QString)));
-        connect(this,   SIGNAL(message(QString)),   parentWidget(), SIGNAL(message(QString)));
+        connect(this,   SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
+        connect(this,   SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
+        connect(this,   SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
+        connect(this,   SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
     }
     else
     {
-        connect(this,   SIGNAL(info(QString)),      this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(debug(QString)),     this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(error(QString)),     this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(message(QString)),   this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(info(QString)),  this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(debug(QString)), this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(error(QString)), this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(trace(QString)), this,   SLOT(log(QString)));
     }
     //---
     modbusDevice = new QModbusRtuSerialSlave(this);
@@ -68,7 +68,7 @@ MODBUS_server::MODBUS_server(QWidget *parent) :
         modbusDevice->setData(QModbusDataUnit::Coils,               i, 1);
         modbusDevice->setData(QModbusDataUnit::DiscreteInputs,      i, 1);
         modbusDevice->setData(QModbusDataUnit::InputRegisters,      i, i);
-        //modbusDevice->setData(QModbusDataUnit::HoldingRegisters,    i, i);
+        //TODO modbusDevice->setData(QModbusDataUnit::HoldingRegisters,    i, i);
     }
     //---
 
@@ -157,23 +157,19 @@ void MODBUS_server::updateWidgets(QModbusDataUnit::RegisterType table, int addre
             //coilButtons.button(address + i)->setChecked(value);
             break;
 
-        //case QModbusDataUnit::DiscreteInputs:
-        //    modbusDevice->data(QModbusDataUnit::DiscreteInputs, address + i, &value);
-        //    registers.value(QStringLiteral("DiscreteInputs_%1").arg(address + i))->setText(text.setNum(value, 16));
-        //    break;
-
-        //case QModbusDataUnit::InputRegisters:
-        //    modbusDevice->data(QModbusDataUnit::InputRegisters, address + i, &value);
-        //    registers.value(QStringLiteral("InputRegisters_%1").arg(address + i))->setText(text.setNum(value, 16));
-        //    break;
-
         case QModbusDataUnit::HoldingRegisters:
             modbusDevice->data(QModbusDataUnit::HoldingRegisters, address + i, &value);
             registers.value(QStringLiteral("HoldingRegisters_%1").arg(address + i))->setText(text.setNum(value, 16));
             break;
 
+        case QModbusDataUnit::DiscreteInputs:
+            break;
+
+        case QModbusDataUnit::InputRegisters:
+            break;
+
         default:
-            //emit error(QString("unknown table %1").arg(table));
+            emit error(QString("unknown table %1").arg(table));
             break;
         }
     }

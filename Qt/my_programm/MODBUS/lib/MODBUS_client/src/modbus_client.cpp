@@ -36,17 +36,17 @@ MODBUS_client::MODBUS_client(QWidget *parent) :
     //---
     if(parentWidget())
     {
-        connect(this,   SIGNAL(info(QString)),      parentWidget(), SIGNAL(info(QString)));
-        connect(this,   SIGNAL(debug(QString)),     parentWidget(), SIGNAL(debug(QString)));
-        connect(this,   SIGNAL(error(QString)),     parentWidget(), SIGNAL(error(QString)));
-        connect(this,   SIGNAL(message(QString)),   parentWidget(), SIGNAL(message(QString)));
+        connect(this,   SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
+        connect(this,   SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
+        connect(this,   SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
+        connect(this,   SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
     }
     else
     {
-        connect(this,   SIGNAL(info(QString)),      this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(debug(QString)),     this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(error(QString)),     this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(message(QString)),   this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(info(QString)),  this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(debug(QString)), this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(error(QString)), this,   SLOT(log(QString)));
+        connect(this,   SIGNAL(trace(QString)), this,   SLOT(log(QString)));
     }
     //---
     modbusDevice = new QModbusRtuSerialMaster(this);

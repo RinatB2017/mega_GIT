@@ -262,19 +262,23 @@ void MainWindow::setRegister(const QString &value)
 
 void MainWindow::updateWidgets(QModbusDataUnit::RegisterType table, int address, int size)
 {
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i)
+    {
         quint16 value;
         QString text;
-        switch (table) {
+        switch (table)
+        {
         case QModbusDataUnit::Coils:
             modbusDevice->data(QModbusDataUnit::Coils, address + i, &value);
             coilButtons.button(address + i)->setChecked(value);
             break;
+
         case QModbusDataUnit::HoldingRegisters:
             modbusDevice->data(QModbusDataUnit::HoldingRegisters, address + i, &value);
             registers.value(QStringLiteral("holdReg_%1").arg(address + i))->setText(text
                 .setNum(value, 16));
             break;
+
         default:
             break;
         }

@@ -59,8 +59,9 @@ int main(int argc, char *argv[])
     // right now we always need it
     QLoggingCategory::setFilterRules(QStringLiteral("qt.modbus* = true"));
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+
+    MainWindow *w = new MainWindow;
+    w->show();
 
     return a.exec();
 }

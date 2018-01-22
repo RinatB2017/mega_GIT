@@ -113,7 +113,7 @@ void MainBox::choice_test(void)
     {
         if(command.cmd == cmd)
         {
-            typedef void (MainBox::*function)(void);
+            typedef bool (MainBox::*function)(void);
             function x;
             x = command.func;
             if(x)
@@ -130,45 +130,50 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+bool MainBox::test_2(void)
 {
     emit info("Test_2()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_3(void)
+bool MainBox::test_3(void)
 {
     emit info("Test_3()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_4(void)
+bool MainBox::test_4(void)
 {
     emit info("Test_4()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_5(void)
+bool MainBox::test_5(void)
 {
     emit info("Test_5()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
 }
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-int MainBox::xxx(int x)
-{
-    return x+5;
-}
-#endif
 //--------------------------------------------------------------------------------

@@ -53,12 +53,12 @@ signals:
 
 private slots:
     void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
-    void test_4(void);
-    void test_5(void);
+    bool test_0(void);
+    bool test_1(void);
+    bool test_2(void);
+    bool test_3(void);
+    bool test_4(void);
+    bool test_5(void);
 
 private:
     enum {
@@ -74,7 +74,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        void (MainBox::*func)(void);
+        bool (MainBox::*func)(void);
     };
     MySplashScreen *splash;
     Ui::MainBox *ui;

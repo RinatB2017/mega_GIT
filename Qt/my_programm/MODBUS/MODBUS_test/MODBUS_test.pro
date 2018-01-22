@@ -14,7 +14,11 @@ DEPENDPATH  += \
     $$PWD/src/mainbox/ui 
 INCLUDEPATH = $$DEPENDPATH
 
-QT  += serialport network
+QT  += \
+    serialport \
+    serialbus \
+    network
+
 QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += LOGO_GL
@@ -63,11 +67,13 @@ RESOURCES += images/images.qrc
 
 OTHER_FILES += doc/notebook.txt
 
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
+
 LIB_PATH = "../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
-QT  += serialbus
 
 include (../lib/MODBUS_server/MODBUS_server.pri)
 include (../lib/MODBUS_client/MODBUS_client.pri)

@@ -148,6 +148,7 @@ void MainBox::create_engine(void)
     m_engine->setProgram("gnuchess");
     m_engine->start();
     m_pid = m_engine->pid();
+    //TODO
     m_engine->write("xboard\n");
     m_engine->write("protover 2\n");
 
@@ -261,6 +262,7 @@ void MainBox::readData(void)
     QString output = m_engine->readAllStandardOutput();
     QStringList lines = output.split("\n");
     emit debug(QString("received %1 bytes").arg(output.size()));
+    //emit debug(QString("lines.size() %1").arg(lines.size()));
     for(int n=0; n<lines.size(); n++)
     {
         QString line = lines.at(n);

@@ -128,7 +128,7 @@ void MainBox::create_chessboard(void)
 //--------------------------------------------------------------------------------
 void MainBox::move(QString text)
 {
-    emit error(QString("move(%1)").arg(text));
+    emit debug(QString("move(%1)").arg(text));
     text += "\n";
     m_engine->write(text.toLocal8Bit());
 }
@@ -154,6 +154,7 @@ void MainBox::create_engine(void)
     whiteMoveRegEx    = QRegExp("\\. \\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
     blackMoveRegEx    = QRegExp("\\. \\.\\.\\. \\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
     illegalMoveRegEx  = QRegExp("Illegal move(?::| \\(([a-zA-Z0-9\\s]+)\\) :) (\\S+)");
+    invalidMoveRegEx  = QRegExp("Invalid move(?::| \\(([a-zA-Z0-9\\s]+)\\) :) (\\S+)");
     resultOutputRegEx = QRegExp("(0-1|1-0|1/2-1/2) \\{([a-zA-Z0-9\\s]+)\\}");
     coordenateRegEx   = QRegExp("\\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
 }
@@ -209,7 +210,17 @@ bool MainBox::analize(const QString &line)
 {
     if(illegalMoveRegEx.indexIn(line) >= 0)
     {
-        emit error(QString("illegalMoveRegEx: %1").arg(illegalMoveRegEx.cap(0)));
+        emit debug(QString("illegalMoveRegEx: %1").arg(illegalMoveRegEx.cap(0)));
+        if(coordenateRegEx.indexIn(line) >= 0)
+        {
+            emit error(QString("coordenateRegEx: %1").arg(coordenateRegEx.cap(1)));
+            return false;
+        }
+    }
+
+    if(invalidMoveRegEx.indexIn(line) >= 0)
+    {
+        emit debug(QString("invalidMoveRegEx: %1").arg(invalidMoveRegEx.cap(0)));
         if(coordenateRegEx.indexIn(line) >= 0)
         {
             emit error(QString("coordenateRegEx: %1").arg(coordenateRegEx.cap(1)));
@@ -227,43 +238,34 @@ bool MainBox::analize(const QString &line)
 
     if(blackMoveRegEx.indexIn(line) >= 0)
     {
-        //emit confirmedMove(blackMoveRegEx.cap(1) + blackMoveRegEx.cap(2));
-        emit error(QString("blackMoveRegEx: %1").arg(blackMoveRegEx.cap(1)));
+        emit debug(QString("blackMoveRegEx: %1").arg(blackMoveRegEx.cap(1)));
 #ifndef NO_CHESSBOARD
         board->move(blackMoveRegEx.cap(1));
 #endif
-        return false;
+        return true;
     }
 
     if(whiteMoveRegEx.indexIn(line) >= 0)
     {
-        //emit confirmedMove(whiteMoveRegEx.cap(1) + whiteMoveRegEx.cap(2));
-        emit error(QString("whiteMoveRegEx: %1").arg(whiteMoveRegEx.cap(1)));
+        emit debug(QString("whiteMoveRegEx: %1").arg(whiteMoveRegEx.cap(1)));
 #ifndef NO_CHESSBOARD
         board->move(whiteMoveRegEx.cap(1));
 #endif
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 //--------------------------------------------------------------------------------
 void MainBox::readData(void)
 {
     QString output = m_engine->readAllStandardOutput();
     QStringList lines = output.split("\n");
-    //emit debug(QString("received %1 bytes").arg(output.size()));
+    emit debug(QString("received %1 bytes").arg(output.size()));
     for(int n=0; n<lines.size(); n++)
     {
         QString line = lines.at(n);
         emit trace(QString("%1").arg(line));
-        if(line.contains("invalid", Qt::CaseInsensitive))
-        {
-            emit invalide_move();
-        }
-        else
-        {
-            analize(line);
-        }
+        analize(line);
     }
 }
 //--------------------------------------------------------------------------------

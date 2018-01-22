@@ -82,6 +82,7 @@ private:
     QRegExp whiteMoveRegEx;
     QRegExp blackMoveRegEx;
     QRegExp illegalMoveRegEx;
+    QRegExp invalidMoveRegEx;
     QRegExp resultOutputRegEx;
     QRegExp coordenateRegEx;
 

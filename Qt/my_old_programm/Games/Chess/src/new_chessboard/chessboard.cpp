@@ -291,8 +291,6 @@ bool ChessBoard::set_figure(Figures figure, const QString &coord)
         return false;
     }
 
-    //emit debug(QString("set_figure: figure %1 coord %2 ").arg(return_figure_name(figure)).arg(coord));
-
     switch(figure)
     {
     case NO_FIGURE:     btn_chessboard[x][y]->setIcon(QIcon());  break;
@@ -324,8 +322,6 @@ bool ChessBoard::set_figure(Figures figure, int x, int y)
     if(x>MAX_X) return false;
     if(y<0) return false;
     if(y>MAX_X) return false;
-
-    //emit debug(QString("figure %1").arg(figure));
 
     switch(figure)
     {
@@ -377,12 +373,10 @@ bool ChessBoard::move(const QString text)
         return false;
     }
 
-    emit s_move(text);
-
     QString from = text.left(2);
     QString to = text.right(2);
 
-    emit info(QString("move: form %1 to %2").arg(from).arg(to));
+    emit debug(QString("move: form %1 to %2").arg(from).arg(to));
 
     int x1 = 0;
     int y1 = 0;
@@ -413,12 +407,14 @@ bool ChessBoard::move(const QString text)
     set_figure(NO_FIGURE, from);
     set_figure(figure_from, to);
 
-    emit info(QString("[%1 %2] [%3 %4] %5")
-              .arg(x1)
-              .arg(y1)
-              .arg(x2)
-              .arg(y2)
-              .arg(return_figure_name(figure_from)));
+#if 0
+    emit debug(QString("[%1 %2] [%3 %4] %5")
+               .arg(x1)
+               .arg(y1)
+               .arg(x2)
+               .arg(y2)
+               .arg(return_figure_name(figure_from)));
+#endif
 
     return true;
 }
@@ -455,7 +451,6 @@ void ChessBoard::click(void)
                .arg(pos_x)
                .arg(pos_y));
 
-    bool ok = false;
     switch(state)
     {
     case STATE_IDLE:
@@ -471,17 +466,13 @@ void ChessBoard::click(void)
 
     case STATE_2:
         second_str = return_figure_position(pos_x, pos_y);
+        unsetCursor();
         emit debug("STATE_2");
         QString temp = QString("%1%2")
                 .arg(first_str)
                 .arg(second_str)
                 .toLower();
-        emit debug(temp);
-        ok = move(temp);
-        if(ok == false)
-        {
-            emit error("Bad move");
-        }
+        emit s_move(temp);
         state = STATE_1;
         break;
     }

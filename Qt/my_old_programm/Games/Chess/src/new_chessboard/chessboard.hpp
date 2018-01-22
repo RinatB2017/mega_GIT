@@ -65,7 +65,7 @@ public:
     bool move(const QString text);
 
 signals:
-    void s_move(const QString text);
+    void s_move(QString data);
 
 public slots:
     void new_game(void);

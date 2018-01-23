@@ -10,7 +10,8 @@ MainWidget::MainWidget( QWidget* parent ) :
     ui->setupUi( this );
 
     connect( ui->bnRun, SIGNAL( clicked( bool ) ), SLOT( runScript() ) );
-    foreach( QRadioButton* rb, findChildren< QRadioButton* >() ) {
+    foreach( QRadioButton* rb, findChildren< QRadioButton* >() )
+    {
         connect( rb, SIGNAL( toggled( bool ) ), SLOT( loadScript() ) );
     }
 

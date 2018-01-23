@@ -22,9 +22,11 @@ SOURCES     += \
     main.cpp \
     mainwidget.cpp
 
-HEADERS     += mainwidget.h
+HEADERS     += \
+    mainwidget.h
 
-FORMS       += mainwidget.ui
+FORMS       += \
+    mainwidget.ui
 
 RESOURCES   += \
     resources/resources.qrc

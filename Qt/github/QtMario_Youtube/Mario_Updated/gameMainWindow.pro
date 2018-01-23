@@ -4,23 +4,32 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       += multimedia\
-            core gui sql
-
+QT       += \
+    multimedia \
+    core \
+    gui \
+    sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+PROGRAMM_PATH  += \
+    $$PWD \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
 
 TARGET = gameMainWindow
 TEMPLATE = app
 
 CONFIG += c++11
 
-SOURCES += main.cpp\
-           mainwindow.cpp \
-           settings.cpp \
-           title.cpp \
-           view.cpp \
+SOURCES += \
+    main.cpp \
+    mainwindow.cpp \
+    settings.cpp \
+    title.cpp \
+    view.cpp \
     backgrounditem.cpp \
     bomb.cpp \
     brickplatform.cpp \
@@ -61,10 +70,11 @@ SOURCES += main.cpp\
     flower.cpp \
     soundmanager.cpp
 
-HEADERS  += mainwindow.h \
-            settings.h \
-            title.h \
-            view.h \
+HEADERS  += \
+    mainwindow.h \
+    settings.h \
+    title.h \
+    view.h \
     backgrounditem.h \
     bomb.h \
     brickplatform.h \
@@ -117,4 +127,4 @@ RESOURCES += \
     mario.qrc \
     audio.qrc
 
-
+VPATH = $$INCLUDEPATH

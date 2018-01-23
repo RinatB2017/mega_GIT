@@ -15,11 +15,13 @@ Profile ProfileManager::getByName(QString name)
             return profile;
         }
     }
+    return Profile("", "");
 }
 
 bool ProfileManager::addProfile(Profile profile)
 {
-    for (Profile p : profiles) {
+    for (Profile p : profiles)
+    {
         if (p.getName() == profile.getName()) return false;
     }
 
@@ -29,7 +31,8 @@ bool ProfileManager::addProfile(Profile profile)
 
 bool ProfileManager::deleteByName(QString name)
 {
-    for (unsigned int i = 0; i < profiles.size(); i++) {
+    for (unsigned int i = 0; i < profiles.size(); i++)
+    {
         if (profiles[i].getName() == name)
         {
             profiles.erase(profiles.begin() + i);
@@ -42,7 +45,8 @@ bool ProfileManager::deleteByName(QString name)
 void ProfileManager::refreshList(QComboBox *box)
 {
     box->clear();
-    for (Profile profile : profiles) {
+    for (Profile profile : profiles)
+    {
         box->addItem(profile.getName());
     }
 }

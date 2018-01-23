@@ -1,4 +1,6 @@
+
 #include "profilemanager.h"
+#include "profile.h"
 
 ProfileManager::ProfileManager()
 {
@@ -8,7 +10,10 @@ Profile ProfileManager::getByName(QString name)
 {
     for (Profile profile : profiles)
     {
-        if (profile.getName() == name) return profile;
+        if (profile.getName() == name)
+        {
+            return profile;
+        }
     }
 }
 

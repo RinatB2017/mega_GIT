@@ -13,7 +13,7 @@
 #include "profilemanager.h"
 
 namespace Ui {
-class CreateDialog;
+    class CreateDialog;
 }
 
 class CreateDialog : public QDialog

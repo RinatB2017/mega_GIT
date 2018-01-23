@@ -29,7 +29,8 @@ TEMPLATE = lib
 
 DEFINES += IOT_LIBRARY
 
-HEADERS += device.h \
+HEADERS += \
+    device.h \
     device_p.h \
     requesthandler.h \
     response.h \
@@ -43,7 +44,8 @@ HEADERS += device.h \
     connection_p.h \
     requesthandlerprovider.h
 
-SOURCES += device.cpp \
+SOURCES += \
+    device.cpp \
     device_p.cpp \
     devicelist.cpp \
     devicelist_p.cpp \

@@ -1,7 +1,0 @@
- INFO 2016-08-02T15:30:33.318 Program started 
- INFO 2016-08-02T15:30:33.318 Built with Qt 5.7.0 running on 5.7.0 
-TRACE 2016-08-02T15:30:33.318 Here's a "trace" message 
-DEBUG 2016-08-02T15:30:33.318 Here's a 1 message 
- WARN 2016-08-02T15:30:33.318 Uh-oh! 
-ERROR 2016-08-02T15:30:33.318 An error has occurred 
-FATAL 2016-08-02T15:30:33.318 Fatal error! 

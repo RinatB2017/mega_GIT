@@ -20,9 +20,10 @@ SOURCES += \
     plot.cpp \
     scalepicker.cpp
 
-LIB_PATH = "../lib"
+LIB_PATH = "../../lib"
+LIB_PATH2 = "../../lib2"
 
-include ($$LIB_PATH/qwt/qwt.pri)
 include ($$LIB_PATH/turbo.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
 
 VPATH = $$INCLUDEPATH

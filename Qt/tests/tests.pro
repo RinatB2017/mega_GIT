@@ -12,6 +12,7 @@ SUBDIRS += \
     Test_digits \
     Test_database \
     Test_drawbuttons \
+    Test_event_filter \
     Test_GrapherBox \
     Test_HistogramBox \
     Test_QHexEdit \

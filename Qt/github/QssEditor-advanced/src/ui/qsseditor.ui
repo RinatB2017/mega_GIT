@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>915</width>
-    <height>520</height>
+    <width>1059</width>
+    <height>531</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -123,7 +123,7 @@
          <item>
           <widget class="QToolButton" name="toolAbout">
            <property name="icon">
-            <iconset resource="qsseditor.qrc">
+            <iconset resource="../../qsseditor.qrc">
              <normaloff>:/images/qsseditor.ico</normaloff>:/images/qsseditor.ico</iconset>
            </property>
           </widget>
@@ -217,7 +217,7 @@
              <item row="0" column="0">
               <widget class="QRadioButton" name="radioButton">
                <property name="text">
-                <string notr="true">RadioButton</string>
+                <string notr="true">&amp;RadioButton</string>
                </property>
               </widget>
              </item>
@@ -531,21 +531,21 @@
                   <item>
                    <widget class="QRadioButton" name="radioButton_2">
                     <property name="text">
-                     <string>RadioButton</string>
+                     <string>R&amp;adioButton</string>
                     </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QRadioButton" name="radioButton_3">
                     <property name="text">
-                     <string>RadioButton</string>
+                     <string>Rad&amp;ioButton</string>
                     </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QRadioButton" name="radioButton_4">
                     <property name="text">
-                     <string>RadioButton</string>
+                     <string>Radio&amp;Button</string>
                     </property>
                    </widget>
                   </item>
@@ -584,8 +584,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>118</width>
-                  <height>168</height>
+                  <width>158</width>
+                  <height>146</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_7">
@@ -654,7 +654,7 @@ larger</string>
                <string notr="true">I1</string>
               </property>
               <property name="icon">
-               <iconset resource="qsseditor.qrc">
+               <iconset resource="../../qsseditor.qrc">
                 <normaloff>:/images/battery.png</normaloff>:/images/battery.png</iconset>
               </property>
              </item>
@@ -663,7 +663,7 @@ larger</string>
                <string notr="true">I2</string>
               </property>
               <property name="icon">
-               <iconset resource="qsseditor.qrc">
+               <iconset resource="../../qsseditor.qrc">
                 <normaloff>:/images/image-sunset.png</normaloff>:/images/image-sunset.png</iconset>
               </property>
              </item>
@@ -672,7 +672,7 @@ larger</string>
                <string notr="true">I3</string>
               </property>
               <property name="icon">
-               <iconset resource="qsseditor.qrc">
+               <iconset resource="../../qsseditor.qrc">
                 <normaloff>:/images/user.png</normaloff>:/images/user.png</iconset>
               </property>
              </item>
@@ -771,7 +771,7 @@ larger</string>
                <string notr="true">I1</string>
               </property>
               <property name="icon">
-               <iconset resource="qsseditor.qrc">
+               <iconset resource="../../qsseditor.qrc">
                 <normaloff>:/images/battery.png</normaloff>:/images/battery.png</iconset>
               </property>
              </item>
@@ -780,7 +780,7 @@ larger</string>
                <string notr="true">I2</string>
               </property>
               <property name="icon">
-               <iconset resource="qsseditor.qrc">
+               <iconset resource="../../qsseditor.qrc">
                 <normaloff>:/images/image-sunset.png</normaloff>:/images/image-sunset.png</iconset>
               </property>
              </item>
@@ -789,7 +789,7 @@ larger</string>
                <string notr="true">I3</string>
               </property>
               <property name="icon">
-               <iconset resource="qsseditor.qrc">
+               <iconset resource="../../qsseditor.qrc">
                 <normaloff>:/images/user.png</normaloff>:/images/user.png</iconset>
               </property>
              </item>
@@ -1084,9 +1084,9 @@ larger</string>
               <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;QTextBrowser&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;QTextBrowser&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Text &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:600;&quot;&gt;browser&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-style:italic;&quot;&gt;with&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline;&quot;&gt;some&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:600; font-style:italic;&quot;&gt;text &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;and &lt;/span&gt;&lt;a href=&quot;http://google.com&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;links&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="openLinks">
@@ -1100,12 +1100,12 @@ p, li { white-space: pre-wrap; }
               <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;QTextEdit&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;QTextEdit&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;QTextEdit&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; color:#ee0808;&quot;&gt;QTextEdit&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;www.hao123.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;QTextEdit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:11pt;&quot;&gt;QTextEdit&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:11pt; color:#ee0808;&quot;&gt;QTextEdit&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;www.hao123.com&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt; text-decoration: underline; color:#0000ff;&quot;&gt;QTextEdit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -1177,8 +1177,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>100</width>
-                <height>263</height>
+                <width>84</width>
+                <height>16</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1345,7 +1345,7 @@ page1</string>
   <tabstop>tree</tabstop>
  </tabstops>
  <resources>
-  <include location="qsseditor.qrc"/>
+  <include location="../../qsseditor.qrc"/>
  </resources>
  <connections>
   <connection>

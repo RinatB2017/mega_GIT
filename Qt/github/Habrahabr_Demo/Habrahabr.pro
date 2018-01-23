@@ -28,15 +28,17 @@ INCLUDEPATH +=  ./Include \
                 ./Include/LED
 
 
-SOURCES += main.cpp\
-        MainWindow.cpp \    
+SOURCES += \
+    main.cpp \
+    MainWindow.cpp \    
     Source/ComPort/ComPortThread.cpp \
     Source/ComPort/ModelComPort.cpp \
     Source/ComPort/PresenterComPort.cpp \
     Source/Console/CLI.cpp \
     Source/LED/LED.cpp
 
-HEADERS  += MainWindow.h \    
+HEADERS  += \
+    MainWindow.h \    
     Include/ComPort/Commands.h \
     Include/ComPort/ComPortThread.h \
     Include/ComPort/IViewComPort.h \

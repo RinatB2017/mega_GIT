@@ -8,7 +8,8 @@ DarkStyle::DarkStyle(QStyle *style):
     QProxyStyle(style)
 { }
 
-QStyle *DarkStyle::styleBase(QStyle *style) const {
+QStyle *DarkStyle::styleBase(QStyle *style) const
+{
     static QStyle *base = !style ? QStyleFactory::create("Fusion") : style;
     return base;
 }
@@ -53,7 +54,7 @@ void DarkStyle::polish(QApplication *app)
     defaultFont.setPointSize(defaultFont.pointSize()+1);
     app->setFont(defaultFont);
 
-    // loadstylesheet    
+    // loadstylesheet
     QFile qfDarkstyle(QString(":/darkstyle/darkstyle.qss"));
     if (qfDarkstyle.open(QIODevice::ReadOnly | QIODevice::Text))
     {

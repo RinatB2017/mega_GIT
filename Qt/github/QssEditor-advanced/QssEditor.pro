@@ -27,6 +27,13 @@ NVER3=6
 
 include($$_PRO_FILE_PWD_/QssEditor-common.pri)
 
+PROGRAMM_PATH  += \
+    $$PWD \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
+
 SOURCES += \
     main.cpp \
     qsseditor.cpp \
@@ -58,7 +65,7 @@ RESOURCES += qsseditor.qrc
 RC_FILE = qsseditor.rc
 
 unix:!mac {
-    LIBS += -lqscintilla2
+    LIBS += -lqscintilla2_qt5
 }
 
 # QScintilla files
@@ -443,3 +450,5 @@ exists($$INNO) {
 } else {
     warning("Inno Setup is not found, will not create a setup file in a custom dist target")
 }
+
+VPATH = $$INCLUDEPATH

@@ -64,9 +64,6 @@ private:
     bool buildTable(QSqlDatabase &db, QTextStream &out, QString &dbServer);
     void create_report_tables(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

@@ -74,10 +74,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw ==nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar(this);
     testbar->setObjectName("testbar");
@@ -517,15 +513,5 @@ void MainBox::test(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

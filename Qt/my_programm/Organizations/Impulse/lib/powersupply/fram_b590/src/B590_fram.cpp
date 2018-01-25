@@ -42,7 +42,7 @@ void B590_Fram::init(void)
     //ok = read_fram_from_file(":/fram/fram.dat");
     read_fram_from_default_data();
 #ifdef QT_DEBUG
-    qDebug() << "read_fram_from_default_data" << ok;
+    //qDebug() << "read_fram_from_default_data" << ok;
 #endif
 }
 //--------------------------------------------------------------------------------

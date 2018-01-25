@@ -612,25 +612,26 @@ void LogBox::save_settings(void)
     if(text.isEmpty())  text = "RS-232";
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(text);
-    settings->setValue("readOnly",      (bool)logBox->isReadOnly());
-    settings->setValue("acceptRichText",(bool)logBox->acceptRichText());
-    settings->setValue("no_CRLF",       (bool)flagNoCRLF);
-    settings->setValue("addDateTime",   (bool)flagAddDateTime);
-    settings->setValue("color",         (bool)flagColor);
-    settings->setValue("ErrorAsMessage",(bool)flagErrorAsMessage);
-    settings->setValue("TextIsWindows", (bool)flagTextIsWindows);
+    if(settings)
+    {
+        settings->beginGroup(text);
+        settings->setValue("readOnly",      (bool)logBox->isReadOnly());
+        settings->setValue("acceptRichText",(bool)logBox->acceptRichText());
+        settings->setValue("no_CRLF",       (bool)flagNoCRLF);
+        settings->setValue("addDateTime",   (bool)flagAddDateTime);
+        settings->setValue("color",         (bool)flagColor);
+        settings->setValue("ErrorAsMessage",(bool)flagErrorAsMessage);
+        settings->setValue("TextIsWindows", (bool)flagTextIsWindows);
 
 #ifndef NO_LOG
-    QFont font = get_font();
-    settings->setValue("FontWeight",  font.weight());
-    settings->setValue("FontSize",    font.pointSize());
-    settings->setValue("FontName",    font.family());
+        QFont font = get_font();
+        settings->setValue("FontWeight",  font.weight());
+        settings->setValue("FontSize",    font.pointSize());
+        settings->setValue("FontName",    font.family());
 #endif
 
-    settings->endGroup();
-    settings->deleteLater();
+        settings->endGroup();
+        settings->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------

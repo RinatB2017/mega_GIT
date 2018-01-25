@@ -27,8 +27,9 @@ DEFINES += NO_RESIZE
 
 DEFINES += USE_DOUBLE_COUNT_DATA
 
+#DEFINES += FAKE
+
 DEFINES += FAST_COMMAND
-DEFINES += FAKE
 DEFINES += TEST
 DEFINES += PARROT_BAR
 DEFINES += ADD_TOOLBAR
@@ -49,6 +50,10 @@ OTHER_FILES += \
     doc/notebook.txt \
     doc/tables.txt \
     doc/tables_last.txt
+    
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
 
 win32 {
     RC_FILE = ico/myapp.rc

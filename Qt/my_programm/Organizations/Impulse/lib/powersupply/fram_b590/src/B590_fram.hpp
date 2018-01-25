@@ -21,7 +21,6 @@
 #ifndef B590_FRAM_HPP
 #define B590_FRAM_HPP
 //--------------------------------------------------------------------------------
-#include <stdint.h>
 #include <QObject>
 //--------------------------------------------------------------------------------
 #include "b590_defines.hpp"
@@ -112,24 +111,24 @@ typedef struct
 //=============================================================================
 typedef struct
 {
-  int32_t  Value_ADC_U[CALIBRATION_POINTS_U];
-  uint16_t Value_DAC_U[CALIBRATION_POINTS_U];
-  int8_t   temp_cal_U[CALIBRATION_POINTS_U];
-  uint16_t POINT_U[CALIBRATION_POINTS_U];
+    int32_t  Value_ADC_U[CALIBRATION_POINTS_U];
+    uint16_t Value_DAC_U[CALIBRATION_POINTS_U];
+    int8_t   temp_cal_U[CALIBRATION_POINTS_U];
+    uint16_t POINT_U[CALIBRATION_POINTS_U];
 
-  uint16_t parrot_in_point;
+    uint16_t parrot_in_point;
 } s_zero_b590_U;
 
 typedef struct
 {
-  int32_t  Value_ADC_I[CALIBRATION_POINTS_I];
-  uint16_t Value_DAC_I[CALIBRATION_POINTS_I];
-  int8_t   temp_cal_I[CALIBRATION_POINTS_I];
-  uint16_t POINT_I[CALIBRATION_POINTS_I];
+    int32_t  Value_ADC_I[CALIBRATION_POINTS_I];
+    uint16_t Value_DAC_I[CALIBRATION_POINTS_I];
+    int8_t   temp_cal_I[CALIBRATION_POINTS_I];
+    uint16_t POINT_I[CALIBRATION_POINTS_I];
 
-  int32_t  Value_ADC_I_HOT;
-  uint16_t Value_DAC_I_HOT;
-  int8_t   temp_cal_I_HOT;
+    int32_t  Value_ADC_I_HOT;
+    uint16_t Value_DAC_I_HOT;
+    int8_t   temp_cal_I_HOT;
 } s_zero_b590_I;
 
 //=============================================================================
@@ -191,7 +190,7 @@ class B590_Fram : public QObject
     Q_OBJECT
 
 public:
-    explicit B590_Fram(QObject *parent = 0);
+    B590_Fram(QObject *parent = 0);
 
     void init(void);
     bool read_fram_from_file(const QString &filename);

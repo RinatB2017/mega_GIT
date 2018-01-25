@@ -21,7 +21,6 @@
 #ifndef B590_POWERSUPPLY_HPP
 #define B590_POWERSUPPLY_HPP
 //--------------------------------------------------------------------------------
-#include <stdint.h>
 #include <QSerialPort>
 #include <QObject>
 #include <QFrame>

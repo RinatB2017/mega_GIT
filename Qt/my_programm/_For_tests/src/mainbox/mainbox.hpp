@@ -114,6 +114,7 @@ private:
     void updateText(void);
 
     quint32 test(const QByteArray ba);
+    bool test2(int a, int b, int *c, int *d);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

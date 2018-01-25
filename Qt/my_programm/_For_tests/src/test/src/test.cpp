@@ -114,6 +114,14 @@ void Test::test_func(void)
     QByteArray ba;
     ba.append((char *)&test, sizeof(test));
     QCOMPARE(mb->test(ba), 6);
+
+    int a = 5;
+    int b = 6;
+    int c = 0;
+    int d = 0;
+    QCOMPARE(mb->test2(a, b, &c, &d), true);
+    QCOMPARE(a, c);
+    QCOMPARE(b, d);
 }
 //--------------------------------------------------------------------------------
 void Test::test_safe(void)

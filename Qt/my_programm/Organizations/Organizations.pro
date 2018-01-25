@@ -6,6 +6,6 @@ TEMPLATE  = subdirs
 CONFIG   += ordered
 
 SUBDIRS += \
-    Impulse \
-    Selena \
-    Vektor
+    Organization_00 \
+    Organization_01 \
+    Organization_02

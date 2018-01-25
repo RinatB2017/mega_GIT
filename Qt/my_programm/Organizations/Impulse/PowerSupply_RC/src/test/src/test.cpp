@@ -64,6 +64,23 @@ void Test::test_GUI(void)
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    
+    B590 *mb = mw->findChild<B590 *>("B590");
+    QVERIFY(mb);
+
+    QCOMPARE(mb->search_power_supply(), true);
+//    QCOMPARE(mb->rc_on(),   true);
+//    QCOMPARE(mb->rc_off(),  true);
+
+//    QCOMPARE(mb->test_U(),  0);
+//    QCOMPARE(mb->test_I(),  0);
+
+//    QCOMPARE(mb->send_0_0(),    E_B590_NO_ERROR);
+
+    QCOMPARE(mb->set_vent_speed(),      E_B590_NO_ERROR);
+    QCOMPARE(mb->set_vent_speed_0(),    E_B590_NO_ERROR);
+    QCOMPARE(mb->set_vent_speed_max(),  E_B590_NO_ERROR);
+    QCOMPARE(mb->set_vent_speed_auto(), E_B590_NO_ERROR);
+
+//    QCOMPARE(mb->set_UI_parrot(0, 0),   E_B590_NO_ERROR);
 }
 //--------------------------------------------------------------------------------

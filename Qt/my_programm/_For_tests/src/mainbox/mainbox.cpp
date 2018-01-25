@@ -181,31 +181,11 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
-#include "display.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 0
-    int max_x = 50;
-    int max_y = 50;
-    Display *display = new Display(max_x, max_y, 16, 16);
-    Q_CHECK_PTR(display);
-
-    display->set_color(0,       0,          QColor(Qt::red));
-    display->set_color(max_x-1, 0,          QColor(Qt::red));
-    display->set_color(0,       max_y-1,    QColor(Qt::red));
-    display->set_color(max_x-1, max_y-1,    QColor(Qt::red));
-
-    display->show();
-#endif
-
-#if 0
-    QString temp = qApp->applicationName();
-    emit info(temp);
-#endif
-
-#if 0
+#if 1
     My_class addr;
     addr = 0x12345678;
     emit info(QString("0x%1").arg(addr[0], 2, 16, QChar('0')));

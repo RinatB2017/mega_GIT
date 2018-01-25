@@ -70,7 +70,9 @@ SerialPort_B590_test::SerialPort_B590_test()
     regenerate_dac_U_values(0);
     regenerate_dac_I_values(0);
     init_fram();
-    QTimer::singleShot(1000, this, SLOT(create_fake_toolbar()));
+
+    //TODO singleShot
+    QTimer::singleShot(100, this, SLOT(create_fake_toolbar()));
 }
 //--------------------------------------------------------------------------------
 SerialPort_B590_test::~SerialPort_B590_test()
@@ -2587,6 +2589,8 @@ void SerialPort_B590_test::calculate(int32_t  new_setting_U,
     {
         new_setting_U *= (-1);
     }
+
+    Q_CHECK_PTR(sb_R);
 
     double R = sb_R->value();
     double U = new_setting_U;

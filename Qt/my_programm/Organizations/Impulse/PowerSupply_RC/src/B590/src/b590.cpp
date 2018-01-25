@@ -164,7 +164,10 @@ int B590::set_UI_parrot(int U, int I)
     //powersupply->set_state_silence(true);
     ok = powersupply->set_UI_parrot(U, I);
     //powersupply->set_state_silence(false);
-    if(!ok) return powersupply->print_last_error();
+    if(!ok)
+    {
+        return powersupply->print_last_error();
+    }
     emit info("OK");
     return E_B590_NO_ERROR;
 }
@@ -189,7 +192,10 @@ int B590::send_0_0(void)
     bool ok = false;
 
     ok = powersupply->set_UI(0, 0);
-    if(!ok) return powersupply->print_last_error();
+    if(!ok)
+    {
+        return powersupply->print_last_error();
+    }
 
     emit info("OK");
     return E_B590_NO_ERROR;

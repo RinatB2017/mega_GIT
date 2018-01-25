@@ -35,13 +35,16 @@ MyFileDialog::MyFileDialog(const QString gName,
     setObjectName(oName);
     //---
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    settings->beginGroup(gName);
+    if(settings)
+    {
+        settings->beginGroup(gName);
 
-    QString dir = settings->value(oName, ".").toString();
-    setDirectory(dir);
+        QString dir = settings->value(oName, ".").toString();
+        setDirectory(dir);
 
-    settings->endGroup();
-    settings->deleteLater();
+        settings->endGroup();
+        settings->deleteLater();
+    }
     //---
 }
 //--------------------------------------------------------------------------------
@@ -52,12 +55,15 @@ int MyFileDialog::exec(void)
     if(res == Accepted)
     {
         QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-        settings->beginGroup(gName);
+        if(settings)
+        {
+            settings->beginGroup(gName);
 
-        settings->setValue(oName, directory().absolutePath());
+            settings->setValue(oName, directory().absolutePath());
 
-        settings->endGroup();
-        settings->deleteLater();
+            settings->endGroup();
+            settings->deleteLater();
+        }
     }
 
     return res;

@@ -113,8 +113,8 @@ private:
     QSpinBox *sb_begin = 0;
     QSpinBox *sb_end = 0;
 
-    bool flag_find_stop;
-    bool flag_test_stop;
+    bool flag_find_stop = false;
+    bool flag_test_stop = false;
 
     unsigned int curve_U = 0;
     unsigned int curve_I = 0;

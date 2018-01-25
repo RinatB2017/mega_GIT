@@ -107,9 +107,9 @@ private:
     uint16_t dac_U[0xFFFF]; //[MAX_CALIBRATION_POINTS_B590_U];
     uint16_t dac_I[0xFFFF]; //[MAX_CALIBRATION_POINTS_B590_I];
 
-    QSpinBox *sb_noise;
-    QDoubleSpinBox *sb_R;
-    QPushButton *btn_set_noice;
+    QSpinBox *sb_noise = 0;
+    QDoubleSpinBox *sb_R = 0;
+    QPushButton *btn_set_noice = 0;
 
     QSpinBox *sb_voltage;
     QSpinBox *sb_current;

@@ -231,6 +231,11 @@ void MyDisplay::paintEvent(QPaintEvent *)
 //--------------------------------------------------------------------------------
 bool MyDisplay::display(unsigned int value)
 {
+    if(value < 0xF)
+    {
+        return false;
+    }
+
     draw(value);
     repaint();
 

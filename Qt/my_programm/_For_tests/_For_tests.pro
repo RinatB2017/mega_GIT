@@ -75,12 +75,10 @@ LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-include ($$LIB_PATH/icons/qmessagebox.pri)
-include (src/mymainwindow/mymainwindow.pri)
-
+#include ($$LIB_PATH2/icons/qmessagebox.pri)
 include ($$LIB_PATH2/icons/digits.pri)
-include ($$LIB_PATH2/display/display.pri)
 
+include (src/mymainwindow/mymainwindow.pri)
 include (src/safe/safe.pri)
 
 !exists(OBJECTS_DIR) {

@@ -29,10 +29,13 @@
 #include <QPixmap>
 #include <QStyle>
 #include <QFrame>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "sendbox4.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 SendBox4::SendBox4(QWidget *parent) :
     QFrame(parent)

@@ -27,7 +27,6 @@
 #include <QPicture>
 #include <QWidget>
 #include <QPixmap>
-#include <QDebug>
 #include <QLabel>
 #include <QProcess>
 //--------------------------------------------------------------------------------
@@ -40,6 +39,10 @@
 #include "mainbox.hpp"
 //--------------------------------------------------------------------------------
 #include "chessboard.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

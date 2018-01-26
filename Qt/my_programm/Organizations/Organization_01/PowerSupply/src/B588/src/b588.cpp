@@ -25,7 +25,6 @@
 #include <QPushButton>
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "ui_b588.h"
@@ -40,6 +39,10 @@
 #include "parrotbar.hpp"
 #include "b588_powersupply.hpp"
 #include "b588_toolbar.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 B588::B588(QWidget *parent) :
     MyWidget(parent),

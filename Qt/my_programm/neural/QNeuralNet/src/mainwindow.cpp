@@ -24,7 +24,6 @@
 #include "race-client.h"
 
 #include <QGraphicsEllipseItem>
-#include <QDebug>
 #include <QPointF>
 #include <QFileDialog>
 #include <QFile>
@@ -35,6 +34,10 @@
 #include <QList>
 
 #include <math.h>
+
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

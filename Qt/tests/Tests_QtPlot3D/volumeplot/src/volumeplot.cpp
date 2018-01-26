@@ -6,7 +6,11 @@
  ************************************************************/
 
 #include <QApplication>
-#include <QDebug>
+#include <QTextStream>
+
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 #include <qwt3d_volumeplot.h>
 
@@ -59,7 +63,9 @@ Plot::Plot(): VolumePlot()
     QFile modelFile("../data/bunny.xyz");
     if (modelFile.open(QFile::ReadOnly))
     {
+#ifdef QT_DEBUG
         qDebug() << "opened: " << modelFile.fileName();
+#endif
 
         float x,y,z;
         float d,a;
@@ -73,10 +79,15 @@ Plot::Plot(): VolumePlot()
         }
     }
     else
+    {
+#ifdef QT_DEBUG
         qDebug() << "failed: " << modelFile.fileName();
+#endif
+    }
 
-
+#ifdef QT_DEBUG
     qDebug() << "points: " << data.size();
+#endif
 
     createDataset(data);
 

@@ -33,7 +33,6 @@
 #include <QWebFrame>
 #include <QTextEdit>
 #include <QWidget>
-#include <QDebug>
 #include <QtSql>
 #include <QUrl>
 //--------------------------------------------------------------------------------
@@ -41,6 +40,10 @@
 //--------------------------------------------------------------------------------
 #include "mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

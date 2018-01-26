@@ -25,9 +25,12 @@
 #include <QToolButton>
 #include <QComboBox>
 #include <QLabel>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "modbusasciiwidget.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 ModbusAsciiWidget::ModbusAsciiWidget(QWidget *parent) :
     MyWidget(parent)

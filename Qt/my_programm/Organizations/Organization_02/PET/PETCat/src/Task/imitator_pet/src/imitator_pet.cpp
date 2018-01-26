@@ -24,7 +24,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QToolBar>
-#include <QDebug>
 #include <QtMath>
 //--------------------------------------------------------------------------------
 #include <QFile>
@@ -43,6 +42,10 @@
 #include "viewer.hpp"
 #include "pet_defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Imitator_PET::Imitator_PET(QWidget *parent) :
     MyWidget(parent),

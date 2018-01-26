@@ -18,12 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDebug>
 #include <QtMath>
 //--------------------------------------------------------------------------------
 #include "testserialport.hpp"
 #include "defines.hpp"
 #include "crc.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 TestSerialPort::TestSerialPort(QObject *parent) :
     QObject(parent)
@@ -40,7 +43,10 @@ bool TestSerialPort::isOpen(void)
 //--------------------------------------------------------------------------------
 bool TestSerialPort::open(int mode)
 {
+#ifdef QT_DEBUG
     qDebug() << "open" << mode;
+#endif
+
     Q_UNUSED(mode)
     is_open = true;
     return is_open;
@@ -48,19 +54,25 @@ bool TestSerialPort::open(int mode)
 //--------------------------------------------------------------------------------
 void TestSerialPort::close(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "close";
+#endif
     is_open = false;
 }
 //--------------------------------------------------------------------------------
 void TestSerialPort::setPort(QSerialPortInfo info)
 {
+#ifdef QT_DEBUG
     qDebug() << "setPort" << info.portName();
+#endif
     Q_UNUSED(info)
 }
 //--------------------------------------------------------------------------------
 bool TestSerialPort::setBaudRate(int speed)
 {
+#ifdef QT_DEBUG
     qDebug() << "setBaudRate" << speed;
+#endif
     Q_UNUSED(speed)
     return true;
 }
@@ -123,7 +135,9 @@ void TestSerialPort::write(QByteArray data)
                         break;
 
                     default:
+#ifdef QT_DEBUG
                         qDebug() << "unknown command" << question->data.cmd;
+#endif
                         break;
                     }
                 }
@@ -180,7 +194,9 @@ QByteArray TestSerialPort::convert_data_to_ascii(QByteArray data)
     temp.append(data.toHex());
     temp.append((char)0x0D);
 
+#ifdef QT_DEBUG
     qDebug() << "convert_data_to_ascii" << temp.data();
+#endif
     return temp;
 }
 //--------------------------------------------------------------------------------

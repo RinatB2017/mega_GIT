@@ -53,10 +53,13 @@
 
 #include "modbustcpclient.h"
 
-#include <QDebug>
 #include <QModbusReply>
 
 #include <private/qmodbustcpclient_p.h>
+
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 QT_USE_NAMESPACE
 

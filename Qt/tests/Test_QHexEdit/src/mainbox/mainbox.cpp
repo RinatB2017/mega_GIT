@@ -22,7 +22,6 @@
 #include <QToolButton>
 #include <QToolBar>
 #include <QComboBox>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -34,6 +33,10 @@
 
 #include "qhexeditdata.h"
 #include "qhexedit.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

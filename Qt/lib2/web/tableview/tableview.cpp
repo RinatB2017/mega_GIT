@@ -25,10 +25,13 @@
 #include <QSqlRecord>
 #include <QLineEdit>
 #include <QDialog>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "tableview.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 TableView::TableView(QWidget *parent) :
     QTableView(parent)
@@ -39,14 +42,18 @@ TableView::TableView(QWidget *parent) :
 //--------------------------------------------------------------------------------
 TableView::~TableView()
 {
+#ifdef QT_DEBUG
     qDebug() << "~TableView()";
+#endif
     db.close();
     db.removeDatabase(database_name);
 }
 //--------------------------------------------------------------------------------
 void TableView::log(const QString &text)
 {
+#ifdef QT_DEBUG
     qDebug() << text;
+#endif
 }
 //--------------------------------------------------------------------------------
 void TableView::init(const QString &query)

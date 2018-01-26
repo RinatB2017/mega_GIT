@@ -45,6 +45,12 @@ bool UPacket::check_packet(QByteArray packet, int *cmd, QByteArray *data)
     B590_HEADER *header = (B590_HEADER *)packet.data();
     Q_CHECK_PTR(header);
 
+    if(packet.isEmpty())
+    {
+        err = ERR_EMPTY_PACKET;
+        return false;
+    }
+
     int full_packet_len = sizeof(B590_HEADER) + header->count_data + 2;
     if(packet.size() != full_packet_len)
     {
@@ -74,6 +80,10 @@ QString UPacket::get_err_str(void)
 
     switch (err)
     {
+    case ERR_EMPTY_PACKET:
+        temp = "ERR_EMPTY_PACKET";
+        break;
+
     case ERR_BAD_PACKET:
         temp = "ERR_BAD_PACKET";
         break;

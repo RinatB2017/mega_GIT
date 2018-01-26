@@ -13,8 +13,11 @@
 #include <QMovie>
 #include <QEvent>
 #include <QBrush>
-#include <QDebug>
 #include <QGraphicsOpacityEffect>
+
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 
 class SBGlass : public QObject

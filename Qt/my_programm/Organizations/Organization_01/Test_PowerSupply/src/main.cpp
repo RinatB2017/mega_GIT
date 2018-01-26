@@ -21,7 +21,6 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QString>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
@@ -30,16 +29,20 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef USE_B588
-    #include "b588.hpp"
+#   include "b588.hpp"
 #endif
 #ifdef USE_B590
-    #include "b590.hpp"
+#   include "b590.hpp"
 #endif
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-    #include "posix.hpp"
+#   include "posix.hpp"
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])

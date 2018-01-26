@@ -24,11 +24,14 @@
 #include <QWebFrame>
 #include <QSqlQuery>
 #include <QWebView>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "listwidget_link.hpp"
 #include "database.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 ListWidget_Link::ListWidget_Link(QWebView *webview,
                                  QWidget *parent) :

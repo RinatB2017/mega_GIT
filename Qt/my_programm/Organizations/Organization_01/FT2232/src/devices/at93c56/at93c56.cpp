@@ -19,11 +19,14 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ft2232h.hpp"
 #include "sleeper.h"
 #include "at93c56.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 const BYTE MSB_VEDGE_CLOCK_IN_BIT = '\x22';
 const BYTE MSB_EDGE_CLOCK_OUT_BYTE = '\x11';

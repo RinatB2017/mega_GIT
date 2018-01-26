@@ -19,11 +19,14 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QDebug>
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "waiting.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Waiting::Waiting(QObject *parent) :
     QObject(parent)

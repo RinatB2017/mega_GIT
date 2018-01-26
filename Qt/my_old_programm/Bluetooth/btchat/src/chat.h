@@ -46,7 +46,9 @@
 #include <qbluetoothsocket.h>
 #include <qbluetoothhostinfo.h>
 
-#include <QDebug>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 QT_USE_NAMESPACE
 

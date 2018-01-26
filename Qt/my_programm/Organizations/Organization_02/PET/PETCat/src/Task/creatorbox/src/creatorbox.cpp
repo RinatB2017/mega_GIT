@@ -31,7 +31,6 @@
 #include <QImage>
 
 #include <QtMath>
-#include <QDebug>
 
 #include <QFileInfo>
 #include <QSpinBox>
@@ -52,6 +51,10 @@
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 CreatorBox::CreatorBox(QWidget *parent) :
     MyWidget(parent),

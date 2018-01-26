@@ -26,7 +26,6 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QFrame>
-#include <QDebug>
 #include <QLabel>
 #include <QTime>
 //--------------------------------------------------------------------------------
@@ -37,6 +36,10 @@
 #include "wifi_frame.hpp"
 #include "qhexedit.h"
 #include "logbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 WIFI_frame::WIFI_frame(const QString &caption,
                        bool is_server,

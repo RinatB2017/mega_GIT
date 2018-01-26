@@ -31,7 +31,6 @@
 #include <QImage>
 
 #include <QtMath>
-#include <QDebug>
 
 #include <QFileInfo>
 #include <QSpinBox>
@@ -53,6 +52,10 @@
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 ViewerBox::ViewerBox(QString file_auto_open, QWidget *parent) :
     MyWidget(parent),

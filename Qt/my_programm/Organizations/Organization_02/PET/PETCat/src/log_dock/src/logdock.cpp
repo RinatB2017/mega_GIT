@@ -24,7 +24,6 @@
 #include <QThread>
 #include <QAction>
 #include <QTimer>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -33,6 +32,10 @@
 //#include "logdock_options.hpp"
 //--------------------------------------------------------------------------------
 #include "logbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 LogDock::LogDock(const QString &title,
                  QWidget *parent) :

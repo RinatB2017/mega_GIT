@@ -20,10 +20,13 @@
 **********************************************************************************/
 #include <QTextStream>
 #include <QString>
-#include <QDebug>
 #include <QFile>
 //--------------------------------------------------------------------------------
 #include "map.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Map::Map(void)
 {
@@ -71,7 +74,9 @@ int Map::load(const QString &filename)
     }
     else
     {
+#ifdef QT_DEBUG
         qDebug() << QString("file %1 not found").arg(filename);
+#endif
     }
     return NO_ERROR_ADV;
 }

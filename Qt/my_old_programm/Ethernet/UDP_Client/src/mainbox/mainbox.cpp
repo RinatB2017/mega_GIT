@@ -24,7 +24,6 @@
 #include <QToolBar>
 #include <QThread>
 #include <QWidget>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -32,6 +31,10 @@
 #include "mainbox.hpp"
 #include "client.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

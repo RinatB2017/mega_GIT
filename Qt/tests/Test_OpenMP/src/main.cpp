@@ -1,5 +1,6 @@
 #include <QTime>
-#include <QDebug>
+
+#   include <QDebug>
 
 #include <qmath.h>
 
@@ -25,7 +26,7 @@ int main(void)
 #endif
 
     //---
-#if 0
+#if 1
     QTime timer;
     timer.start();
 
@@ -38,9 +39,7 @@ int main(void)
             {
                 x = sin(a*b*c);
             }
-
         }
-
     }
 
     qDebug() << x;

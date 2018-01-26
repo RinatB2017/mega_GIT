@@ -22,11 +22,14 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QVariant>
-#include <QDebug>
 #include <QLabel>
 //--------------------------------------------------------------------------------
 #include "CarefulMessageBox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 CarefulMessageBox::CarefulMessageBox(const QString &caption,
                                      const QString &message,

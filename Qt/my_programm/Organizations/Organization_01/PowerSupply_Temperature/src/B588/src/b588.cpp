@@ -23,7 +23,6 @@
 #include <QToolBar>
 #include <QComboBox>
 #include <QTimer>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "ui_b588.h"
@@ -37,6 +36,10 @@
 #include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
 #include "b588_powersupply.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 B588::B588(QWidget *parent) :
     MyWidget(parent),

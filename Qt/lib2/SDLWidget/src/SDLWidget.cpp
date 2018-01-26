@@ -4,11 +4,14 @@
 #include <SDL/SDL_image.h>
 #include "SDLWidget.h"
 
-#include <QDebug>
 #include <QKeyEvent>
 
 #ifdef Q_WS_X11
-#include <X11/Xlib.h>
+#   include <X11/Xlib.h>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include <QTimer>
@@ -252,7 +255,9 @@ void QSDLScreenWidget::paintEvent(QPaintEvent *)
 
     if (screen)
     {
+#ifdef QT_DEBUG
         qDebug() << "paintEvent";
+#endif
         SDL_FillRect(screen, NULL, 0);
 
         SDL_BlitSurface(background, NULL, screen, 0);

@@ -22,7 +22,6 @@
 #include <QToolButton>
 #include <QFileDialog>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <vlc/vlc.h>
 //--------------------------------------------------------------------------------
@@ -33,6 +32,10 @@
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "sleeper.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

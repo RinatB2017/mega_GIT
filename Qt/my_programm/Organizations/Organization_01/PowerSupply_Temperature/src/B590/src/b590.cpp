@@ -23,7 +23,6 @@
 #include <QToolBar>
 #include <QComboBox>
 #include <QTimer>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "ui_b590.h"
@@ -37,10 +36,14 @@
 #include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef USE_B588
-#include "b588_powersupply.hpp"
+#   include "b588_powersupply.hpp"
 #endif
 #ifdef USE_B590
-#include "b590_powersupply.hpp"
+#   include "b590_powersupply.hpp"
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 B590::B590(QWidget *parent) :

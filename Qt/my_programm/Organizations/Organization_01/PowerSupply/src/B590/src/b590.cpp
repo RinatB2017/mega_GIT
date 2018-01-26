@@ -26,7 +26,6 @@
 #include <QToolButton>
 #include <QToolBar>
 #include <QDialog>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "ui_b590.h"
@@ -41,6 +40,10 @@
 #include "b590_powersupply.hpp"
 #include "parrotbar.hpp"
 #include "b590_toolbar.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 B590::B590(QWidget *parent) :
     MyWidget(parent),

@@ -21,7 +21,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QTimer>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "petcat_options.hpp"
 //--------------------------------------------------------------------------------
@@ -35,6 +34,10 @@
 #include "pet_bos.h"
 #include "pet_brg.h"
 #include "pet_td.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Scan_control::Scan_control(QWidget *parent) : PET_device_brg(parent),
     ui(new Ui::Scan_control)

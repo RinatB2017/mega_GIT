@@ -27,11 +27,14 @@
 #include <QSqlQuery>
 #include <QLineEdit>
 #include <QWebFrame>
-#include <QDebug>
 #include <QLabel>
 #include <QUrl>
 //--------------------------------------------------------------------------------
 #include "findlinks.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 FindLinks::FindLinks(QWebFrame *frame, QWidget *parent) :
     QDialog(parent),

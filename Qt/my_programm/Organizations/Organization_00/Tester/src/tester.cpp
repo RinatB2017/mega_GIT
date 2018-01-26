@@ -25,12 +25,15 @@
 #include <QPicture>
 #include <QPainter>
 #include <QLabel>
-#include <QDebug>
 #include <QList>
 #include <QPen>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "tester.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Tester::Tester(QWidget *parent) :
     QWidget(parent),

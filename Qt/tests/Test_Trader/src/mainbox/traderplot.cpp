@@ -19,7 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QBrush>
-#include <QDebug>
 
 #include <qwt_picker_machine.h>
 #include <qwt_plot_magnifier.h>
@@ -31,6 +30,10 @@
 #include "curvedata.hpp"
 //--------------------------------------------------------------------------------
 #include "traderplot.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 class RangeMarker: public QwtPlotItem
 {

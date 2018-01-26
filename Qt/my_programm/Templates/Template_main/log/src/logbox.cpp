@@ -38,8 +38,6 @@
 #include <QFile>
 #include <QFont>
 //--------------------------------------------------------------------------------
-#include <QDebug>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 #include "log_options.hpp"
@@ -54,6 +52,10 @@
 #define	LOG_NOTICE	5	/* normal but significant condition */
 #define	LOG_INFO	6	/* informational */
 #define	LOG_DEBUG	7	/* debug-level messages */
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 LogBox::LogBox(QWidget *parent,
                unsigned int min_width,

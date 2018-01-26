@@ -46,16 +46,16 @@
 #include <QDir>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
 #ifdef CALIBRATION_WIRED
-#include "ui_mainbox_wired.h"
+#   include "ui_mainbox_wired.h"
 #else
-#include "ui_mainbox.h"
+#   include "ui_mainbox.h"
 #endif
 //--------------------------------------------------------------------------------
 #include "H4_X_errors.hpp"

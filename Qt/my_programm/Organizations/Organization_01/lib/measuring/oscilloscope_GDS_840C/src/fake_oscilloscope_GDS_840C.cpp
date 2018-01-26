@@ -22,7 +22,7 @@
 #include <QVariant>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "fake_oscilloscope_GDS_840C.hpp"

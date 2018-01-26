@@ -26,7 +26,6 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QPainter>
-#include <QDebug>
 #include <QFile>
 #include <QMenu>
 //--------------------------------------------------------------------------------
@@ -34,6 +33,10 @@
 #include "selectbox.hpp"
 #include "qxmlputget.h"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 TreeFilms::TreeFilms(QWidget *parent) :
     QTreeWidget(parent),

@@ -34,7 +34,9 @@
 #include <QSettings>
 #include <QApplication>
 
-#include <QDebug>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 const QString getIniPath()
 {

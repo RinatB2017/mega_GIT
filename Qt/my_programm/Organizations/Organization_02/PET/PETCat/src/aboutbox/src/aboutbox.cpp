@@ -20,8 +20,6 @@
 **********************************************************************************/
 #include <QRect>
 //--------------------------------------------------------------------------------
-#include <QDebug>
-//--------------------------------------------------------------------------------
 #include "aboutbox.hpp"
 #include "ui_aboutbox.h"
 #ifdef LOGO_GL
@@ -29,12 +27,16 @@
 #endif
 //--------------------------------------------------------------------------------
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#define ICON_ABOUT_QT   ":/trolltech/qmessagebox/images/qtlogo-64.png"
+#   define ICON_ABOUT_QT   ":/trolltech/qmessagebox/images/qtlogo-64.png"
 #else
-#define ICON_ABOUT_QT   ":/qt-project.org/qmessagebox/images/qtlogo-64.png"
+#   define ICON_ABOUT_QT   ":/qt-project.org/qmessagebox/images/qtlogo-64.png"
 #endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 AboutBox::AboutBox(const QString &orgName,
                    const QString &programmName,

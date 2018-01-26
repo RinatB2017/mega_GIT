@@ -22,7 +22,6 @@
 #include <QToolButton>
 #include <QToolBar>
 #include <QComboBox>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QSqlQuery>
 #include <QSqlError>
@@ -36,6 +35,10 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "database.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

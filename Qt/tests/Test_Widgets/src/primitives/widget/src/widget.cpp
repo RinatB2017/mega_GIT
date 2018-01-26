@@ -23,10 +23,13 @@
 #include <QPainter>
 #include <QBitmap>
 #include <QLabel>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "widget.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Widget::Widget(QWidget *parent) :
     MyWidget(parent)

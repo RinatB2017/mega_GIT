@@ -134,6 +134,8 @@ void B590_imitator::test(void)
 {
     Q_CHECK_PTR(up);
 
+    emit trace("test");
+
     //up->set_address(ui->sb_addr->value());
     emit info(QString("addr %1").arg(up->get_address()));
     emit info(QString("speed %1").arg(ui->serial_widget->get_baudRate()));
@@ -141,6 +143,8 @@ void B590_imitator::test(void)
 //--------------------------------------------------------------------------------
 void B590_imitator::input(QByteArray data)
 {
+    emit debug(QString("input: [%1]").arg(data.toHex().data()));
+
     int err = ui->serial_widget->input(data);
     if(err != SerialBox5::E_NO_ERROR)
     {
@@ -152,6 +156,11 @@ void B590_imitator::input(QByteArray data)
 //--------------------------------------------------------------------------------
 void B590_imitator::output(QByteArray data)
 {
+    if(data.isEmpty())
+    {
+        return;
+    }
+
     emit debug(QString("output: [%1]").arg(data.toHex().data()));
 
     int cmd = 0;
@@ -160,7 +169,11 @@ void B590_imitator::output(QByteArray data)
     bool ok = up->check_packet(data, &cmd, &r_packet);
     if(!ok)
     {
-        emit error(up->get_err_str());
+        int err = up->get_err();
+        if(err != ERR_EMPTY_PACKET)
+        {
+            emit error(up->get_err_str());
+        }
         return;
     }
     foreach (CMD c, commands)
@@ -189,7 +202,6 @@ void B590_imitator::output(QByteArray data)
             Sleeper::msleep(100);   //TODO
 
             emit send(output);
-            emit debug(QString("emit send(%1)").arg(output.toHex().data()));
             return;
         }
     }

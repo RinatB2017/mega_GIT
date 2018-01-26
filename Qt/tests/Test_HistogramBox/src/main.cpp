@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QtMessageHandler>
 #include <QMessageBox>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
@@ -33,6 +32,7 @@
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include "test.hpp"
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])

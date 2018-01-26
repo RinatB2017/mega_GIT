@@ -22,13 +22,16 @@
 #define MYMAINWINDOW_HPP
 //--------------------------------------------------------------------------------
 #include <QPainter>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 #define COLOR   Qt::yellow
 #define PEN     QPen(COLOR, 2, Qt::SolidLine)
 #define ELLIPSE QPointF(width()/2, height()/2), width()/8, height()/8
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 class HorizontalWidget : public QWidget
 {

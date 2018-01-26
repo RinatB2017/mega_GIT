@@ -43,7 +43,6 @@
 #include <QTextEdit>
 #include <QToolBar>
 #include <QWidget>
-#include <QDebug>
 #include <QTest>
 #include <QtSql>
 #include <QUrl>
@@ -66,7 +65,9 @@
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
-#include <stdarg.h>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

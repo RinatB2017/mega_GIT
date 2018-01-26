@@ -20,11 +20,14 @@
 **********************************************************************************/
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "scene2.hpp"
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Scene2::Scene2(void)
 {
@@ -66,14 +69,18 @@ Scene2::Scene2(void)
     addItem(test_group);
     //---
     QList<QGraphicsItem *>list_items = items();
+#ifdef QT_DEBUG
     qDebug() << "count =" << list_items.count();
+#endif
 #if 1
     foreach (QGraphicsItem *item, list_items)
     {
         QVariant var = item->data(0x1000);
         if(var.toInt() != 0)
         {
+#ifdef QT_DEBUG
             qDebug() << "var =" << var.toInt();
+#endif
             //delete item;
         }
     }

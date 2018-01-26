@@ -22,7 +22,6 @@
 #include <QPushButton>
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 #include <QtMath>
 #include <QTimer>
 #include <QMenu>
@@ -39,6 +38,10 @@
 #include "defines.hpp"
 #include "B590_fram.hpp"
 #include "b590.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 B590::B590(QWidget *parent) :
     MyWidget(parent),

@@ -29,7 +29,6 @@
 #include <QSplitter>
 #include <QSpinBox>
 #include <QWidget>
-#include <QDebug>
 #include <QLabel>
 #include <QTimer>
 //--------------------------------------------------------------------------------
@@ -50,6 +49,10 @@
 #include "pet_sim_main_page.hpp"
 #include "pet_td_main_page.hpp"
 #include "pet_brg_sim_main_page.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 OptionBox::OptionBox(QList<pet_discovery_data> pet_config, QWidget *parent) :
     MyWidget(parent),

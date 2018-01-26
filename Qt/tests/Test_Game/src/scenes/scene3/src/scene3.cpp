@@ -22,7 +22,6 @@
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 #include <QtMath>
-#include <QDebug>
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include "scene3.hpp"
@@ -32,6 +31,10 @@
 #include "ship.hpp"
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Scene3::Scene3(void)
 {
@@ -43,12 +46,16 @@ Scene3::Scene3(void)
     init_ship();
     init_rocks();
 
+#ifdef QT_DEBUG
     qDebug() << "items().count() =" << items().count();
+#endif
 }
 //--------------------------------------------------------------------------------
 Scene3::~Scene3()
 {
+#ifdef QT_DEBUG
     qDebug() << "~Scene";
+#endif
 }
 //--------------------------------------------------------------------------------
 void Scene3::init_player(void)
@@ -94,7 +101,9 @@ void Scene3::init_rocks(void)
         if((w==0) && (h==0))
         {
             emit error(QString("m=%1").arg(n));
+#ifdef QT_DEBUG
             qDebug() << "n =" << n;
+#endif
             return;
         }
 

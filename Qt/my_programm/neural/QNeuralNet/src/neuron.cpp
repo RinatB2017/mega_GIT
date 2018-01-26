@@ -21,7 +21,9 @@
 #include "neuron.h"
 #include <math.h>
 
-#include <QDebug>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 NeuronLink::NeuronLink(Neuron *input, Neuron *output, float inputValue, float weight)
 {

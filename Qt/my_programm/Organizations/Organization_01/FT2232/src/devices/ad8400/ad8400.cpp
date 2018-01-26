@@ -19,12 +19,15 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ft2232h.hpp"
 #include "ad8400.hpp"
 #include "sleeper.h"
 #include "at93c56.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 //declare for MPSSE command
 const BYTE MSB_RISING_EDGE_CLOCK_BYTE_OUT   = '\x10';

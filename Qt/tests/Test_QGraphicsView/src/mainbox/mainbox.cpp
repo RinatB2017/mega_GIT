@@ -25,7 +25,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QToolBar>
-#include <QDebug>
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include <QGraphicsPixmapItem>
@@ -40,6 +39,10 @@
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

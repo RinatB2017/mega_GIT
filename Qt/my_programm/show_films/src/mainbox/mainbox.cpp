@@ -36,7 +36,6 @@
 #include <QPicture>
 #include <QWidget>
 #include <QLabel>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
@@ -46,6 +45,10 @@
 #include "qxmlputget.h"
 #include "mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

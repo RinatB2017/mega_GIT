@@ -30,7 +30,6 @@
 #include <QToolBar>
 #include <QLabel>
 #include <QFile>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -39,6 +38,10 @@
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))

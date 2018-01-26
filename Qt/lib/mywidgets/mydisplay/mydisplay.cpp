@@ -21,12 +21,15 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPoint>
-#include <QDebug>
 #include <QBrush>
 #include <QEvent>
 #include <QRect>
 
 #include "mydisplay.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MyDisplay::MyDisplay(QWidget *parent) :
     QWidget(parent)

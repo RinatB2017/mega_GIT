@@ -30,7 +30,6 @@
 #include <QSpinBox>
 #include <QToolBar>
 #include <QThread>
-#include <QDebug>
 #include <QList>
 #include <QMenu>
 //--------------------------------------------------------------------------------
@@ -57,6 +56,10 @@
 #include "pet.h"
 #include "pet_bos.h"
 #include "pet_brg.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PET_demo::PET_demo(QString caption, QWidget *parent) :
     PET_device_base(parent),

@@ -21,7 +21,6 @@
 #include <QApplication>
 #include <QTextCodec>
 #include <QString>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
@@ -29,6 +28,10 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

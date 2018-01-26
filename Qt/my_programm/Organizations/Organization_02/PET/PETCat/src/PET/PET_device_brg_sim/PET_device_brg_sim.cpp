@@ -22,7 +22,6 @@
 #include <QSettings>
 #include <QSpinBox>
 #include <QWidget>
-#include <QDebug>
 #include <QIcon>
 //--------------------------------------------------------------------------------
 #include "PET_device_brg_sim.hpp"
@@ -32,6 +31,10 @@
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PET_device_brg_sim::PET_device_brg_sim(QWidget *parent) :
     PET_device_base(parent)

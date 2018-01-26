@@ -22,7 +22,6 @@
 #include <QSpinBox>
 #include <QSettings>
 #include <QWidget>
-#include <QDebug>
 #include <QIcon>
 //--------------------------------------------------------------------------------
 #include "PET_device_brg.hpp"
@@ -32,6 +31,10 @@
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PET_device_brg::PET_device_brg(QWidget *parent) :
     PET_device_base(parent)

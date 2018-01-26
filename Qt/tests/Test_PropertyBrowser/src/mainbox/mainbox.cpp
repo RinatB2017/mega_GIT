@@ -23,7 +23,6 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QWidget>
-#include <QDebug>
 #include <QLabel>
 #include <QList>
 //--------------------------------------------------------------------------------
@@ -36,6 +35,10 @@
 #include "qttreepropertybrowser.h"
 #include "qtpropertymanager.h"
 #include "qteditorfactory.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

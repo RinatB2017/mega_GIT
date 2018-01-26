@@ -21,7 +21,6 @@
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QString>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
@@ -31,6 +30,10 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

@@ -23,10 +23,13 @@
 #include <QPainter>
 #include <QBitmap>
 #include <QLabel>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "card.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Card::Card(QString name,
            int pos_x,

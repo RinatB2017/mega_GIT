@@ -26,7 +26,6 @@
 #include <QToolBar>
 #include <QThread>
 #include <QLabel>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
@@ -36,6 +35,10 @@
 #include "mainwindow.hpp"
 #include "ui_mainbox.h"
 #include "mainbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

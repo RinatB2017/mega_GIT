@@ -26,9 +26,12 @@
 #include <QHeaderView>
 #include <QDateTime>
 #include <QLabel>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "syslog_dock.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 SysLog_dock::SysLog_dock(const QString &title,
                          QWidget *parent) :
@@ -113,26 +116,36 @@ void SysLog_dock::syslog(QDateTime dtime,
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_first(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "first";
+#endif
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_prev(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "prev";
+#endif
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_next(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "next";
+#endif
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_last(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "last";
+#endif
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::test(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "l_syslog.count" << l_syslog.count();
+#endif
 }
 //--------------------------------------------------------------------------------

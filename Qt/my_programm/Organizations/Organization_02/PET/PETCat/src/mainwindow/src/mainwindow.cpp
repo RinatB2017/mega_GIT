@@ -24,7 +24,6 @@
 #include <QtNetwork>
 #include <QtWidgets>
 #include <QSplitter>
-#include <QDebug>
 #include <QFont>
 #include <QList>
 #include <QRect>
@@ -67,6 +66,10 @@
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent)

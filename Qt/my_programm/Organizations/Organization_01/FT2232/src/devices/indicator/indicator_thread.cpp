@@ -19,11 +19,14 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "indicator_thread.hpp"
 #include "ft2232h.hpp"
 #include "sleeper.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Indicator_thread::Indicator_thread(I2C_Freq freq, QWidget *parent) :
     QThread(parent),
@@ -63,7 +66,9 @@ void Indicator_thread::connect_log(void)
 //--------------------------------------------------------------------------------
 void Indicator_thread::log(const QString &data)
 {
+#ifdef QT_DEBUG
     qDebug() << data;
+#endif
 }
 //--------------------------------------------------------------------------------
 bool Indicator_thread::read(void)

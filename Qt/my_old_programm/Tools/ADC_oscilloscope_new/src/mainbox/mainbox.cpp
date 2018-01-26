@@ -19,12 +19,15 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "serialbox5.hpp"
 #include "grapherbox.hpp"
 #include "ui_mainbox.h"
 #include "mainbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

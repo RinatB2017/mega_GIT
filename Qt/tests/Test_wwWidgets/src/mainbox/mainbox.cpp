@@ -26,7 +26,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -59,6 +58,10 @@
 #include "qwwloginbox.h"
 #include "qwwrichtextbutton.h"
 #include "qwwtwocolorindicator.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

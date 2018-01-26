@@ -21,7 +21,6 @@
 #include <QApplication>
 #include <QWebSettings>
 #include <QString>
-#include <QDebug>
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
@@ -33,6 +32,10 @@
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])

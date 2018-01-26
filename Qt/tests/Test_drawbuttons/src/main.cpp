@@ -21,7 +21,6 @@
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QString>
-#include <QDebug>
 #include <QFrame>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
@@ -36,6 +35,10 @@
 #include <QPushButton>
 #include <QMdiSubWindow>
 #include <QMdiArea>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

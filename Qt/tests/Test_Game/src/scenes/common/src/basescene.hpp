@@ -26,7 +26,10 @@
 #include <QKeyEvent>
 #include <QObject>
 #include <QTimer>
-#include <QDebug>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 class BaseScene : public QGraphicsScene
 {

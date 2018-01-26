@@ -423,6 +423,7 @@ void SerialBox5::btnOpenPortClicked()
 //--------------------------------------------------------------------------------
 int SerialBox5::input(const QByteArray &sending_data)
 {
+    emit trace(QString("SerialBox5::input [%1]").arg(sending_data.toHex().data()));
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");

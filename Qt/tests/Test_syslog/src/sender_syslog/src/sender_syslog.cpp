@@ -23,9 +23,12 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QLabel>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "sender_syslog.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Sender_syslog::Sender_syslog(const QString &title,
                              int default_src,
@@ -110,7 +113,9 @@ void Sender_syslog::start(void)
     if(timer)
     {
         timer->start(sb_interval->value());
+#ifdef QT_DEBUG
         qDebug() << "start";
+#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -119,7 +124,9 @@ void Sender_syslog::stop(void)
     if(timer)
     {
         timer->stop();
+#ifdef QT_DEBUG
         qDebug() << "stop";
+#endif
     }
 }
 //--------------------------------------------------------------------------------

@@ -24,7 +24,6 @@
 #include <QToolBar>
 #include <QAction>
 #include <QStyle>
-#include <QDebug>
 #include <QMenu>
 #include <QTime>
 
@@ -51,6 +50,10 @@
 #include "mcp4922.hpp"
 #include "i2c.hpp"
 #include "spi.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

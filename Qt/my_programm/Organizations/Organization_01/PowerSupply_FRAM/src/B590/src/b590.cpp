@@ -38,7 +38,6 @@
 #include <QCursor>
 #include <QMenu>
 #include <QAction>
-#include <QDebug>
 
 #include <QFileDialog>
 #include <QFileInfo>

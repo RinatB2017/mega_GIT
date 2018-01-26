@@ -27,13 +27,16 @@
 #include <QDateTime>
 #include <QLineEdit>
 #include <QSpinBox>
-#include <QDebug>
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include "pet_sim_main_page.hpp"
 #include "ui_pet_sim_main_page.h"
 #include "defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PET_sim_main_page::PET_sim_main_page(QWidget *parent, bool is_demo) :
     PET_device_sim(parent),

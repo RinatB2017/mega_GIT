@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QApplication>
 #include <QMessageBox>
-#include <QDebug>
 #include <QLibraryInfo>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
@@ -33,7 +32,8 @@
 #include "codecs.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-    #include "test.hpp"
+#   include "test.hpp"
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])

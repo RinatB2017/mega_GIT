@@ -27,7 +27,7 @@
 #include <QUrl>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -218,7 +218,6 @@ QString MyReport::load_report_from_xml(const QString &filename)
     return "";
 }
 //--------------------------------------------------------------------------------
-#include <QDebug>
 void MyReport::view(int serno, int year)
 {
     ReportString *report = new ReportString(this);

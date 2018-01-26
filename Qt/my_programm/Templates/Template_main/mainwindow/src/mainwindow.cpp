@@ -24,12 +24,15 @@
 #include <QToolButton>
 #include <QToolBar>
 #include <QMenuBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mainwidget.hpp"
 #include "menudock.hpp"
 #include "logdock.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)

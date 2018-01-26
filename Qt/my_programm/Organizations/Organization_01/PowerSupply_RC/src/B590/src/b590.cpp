@@ -948,6 +948,7 @@ bool B590::rc_off(void)
 //--------------------------------------------------------------------------------
 bool B590::search_power_supply(void)
 {
+    emit trace("search_power_supply");
     bool ok = false;
 
     emit info(tr("Поиск устройств"));

@@ -28,7 +28,6 @@
 
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QModbusRtuSerialSlave>
 #include <QModbusTcpServer>
@@ -42,6 +41,10 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 enum ModbusConnection {
     Serial,

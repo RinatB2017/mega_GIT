@@ -38,7 +38,6 @@
 #include <QSpinBox>
 #include <QVariant>
 #include <QTimer>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mywidget.hpp"
@@ -47,6 +46,10 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #define PARAMS_GROUP_NAME   "Params"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MyWidget::MyWidget(QWidget *parent) :
     QWidget(parent)

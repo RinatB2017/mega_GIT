@@ -37,7 +37,6 @@
 #include <QToolBar>
 #include <QWidget>
 #include <QTimer>
-#include <QDebug>
 #include <QMenu>
 #include <QTest>
 //--------------------------------------------------------------------------------
@@ -51,6 +50,10 @@
 #include "waiting.hpp"
 #include "mainbox.hpp"
 #include "logbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

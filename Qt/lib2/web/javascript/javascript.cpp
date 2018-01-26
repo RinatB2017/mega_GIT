@@ -22,9 +22,12 @@
 #include <QWebFrame>
 #include <QVariant>
 #include <QString>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "javascript.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 JavaScript::JavaScript(QObject *parent) :
     QObject(parent)

@@ -22,10 +22,13 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QFrame>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "chessboard.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 ChessBoard::ChessBoard(QWidget *parent) :
     MyWidget(parent)

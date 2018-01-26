@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QApplication>
 #include <QString>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
@@ -28,6 +27,10 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -44,7 +47,9 @@ int main(int argc, char *argv[])
     MainBox *mainBox = new MainBox(main_window->getThis());
     main_window->setCentralWidget(mainBox);
 
+#ifdef QT_DEBUG
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+#endif
 
     return app.exec();
 }

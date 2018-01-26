@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QCoreApplication>
 #include <QUdpSocket>
-#include <QDebug>
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include "PET_comm.hpp"
@@ -30,6 +29,10 @@
 #include "pet_defines.hpp"
 #include "pet_errno.h"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PET_comm::PET_comm(void)
 {

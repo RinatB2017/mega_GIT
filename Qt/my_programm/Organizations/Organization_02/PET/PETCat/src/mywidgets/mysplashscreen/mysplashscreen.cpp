@@ -27,9 +27,11 @@
 #include <QLabel>
 #include <QRect>
 //--------------------------------------------------------------------------------
-#include <QDebug>
-//--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MySplashScreen::MySplashScreen(const QPixmap &pixmap,
                                int max_step,
@@ -79,10 +81,11 @@ void MySplashScreen::showMessage(const QString &message,
     repaint();
 }
 //--------------------------------------------------------------------------------
-#include <QDebug>
 bool MySplashScreen::eventFilter(QObject *target, QEvent *event)
 {
+#ifdef QT_DEBUG
     qDebug() << "event!!!!";
+#endif
     Q_UNUSED(target)
     Q_UNUSED(event)
     return true;

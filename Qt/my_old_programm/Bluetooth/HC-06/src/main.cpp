@@ -21,7 +21,6 @@
 #include <QtMessageHandler>
 #include <QApplication>
 #include <QLocale>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -30,6 +29,10 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 void noMessageOutput(QtMsgType, const QMessageLogContext &, const QString &)
 {

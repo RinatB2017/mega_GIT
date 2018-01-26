@@ -21,7 +21,6 @@
 #include <QPushButton>
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -29,6 +28,10 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

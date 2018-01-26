@@ -23,7 +23,6 @@
 #include <QToolBar>
 #include <QWidget>
 #include <QStyle>
-#include <QDebug>
 #include <QtSql>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
@@ -48,6 +47,10 @@
 #define EXIT_ERROR_MISSING_PASSWORD   7
 #define EXIT_ERROR_MISSING_DB_ENGINE  8
 #define EXIT_ERROR_BAD_ARGS           9
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

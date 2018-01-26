@@ -22,7 +22,6 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QWidget>
-#include <QDebug>
 #include <QIcon>
 //--------------------------------------------------------------------------------
 #include "PET_device_td.hpp"
@@ -32,6 +31,10 @@
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PET_device_td::PET_device_td(QWidget *parent) :
     PET_device_base(parent)

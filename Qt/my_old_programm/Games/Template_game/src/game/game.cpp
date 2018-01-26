@@ -23,7 +23,6 @@
 #include <QPaintEvent>
 #include <QGLWidget>
 #include <QPainter>
-#include <QDebug>
 #include <QTimer>
 #include <QBrush>
 //--------------------------------------------------------------------------------
@@ -33,12 +32,16 @@
 #include "game.hpp"
 //--------------------------------------------------------------------------------
 #ifndef GL_MULTISAMPLE
-#define GL_MULTISAMPLE  0x809D
+#   define GL_MULTISAMPLE  0x809D
 #endif
 //--------------------------------------------------------------------------------
 #define SIZE_IMAGE 32
 //--------------------------------------------------------------------------------
 #define INTERVAL_TIMER 100
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Game::Game(QWidget *parent) :
     QGLWidget(parent),
@@ -209,11 +212,15 @@ void Game::mousePressEvent(QMouseEvent *event)
     switch(event->button())
     {
     case Qt::LeftButton:
+#ifdef QT_DEBUG
         qDebug() << "left press" << event->x() << ":" << event->y();
+#endif
         break;
 
     case Qt::RightButton:
+#ifdef QT_DEBUG
         qDebug() << "right press" << event->x() << ":" << event->y();
+#endif
         break;
 
     default:
@@ -242,7 +249,9 @@ void Game::keyPressEvent(QKeyEvent *event)
         break;
 
     case Qt::Key_Space:
+#ifdef QT_DEBUG
         qDebug() << "Key_Space";
+#endif
         break;
 
     case Qt::Key_Escape:

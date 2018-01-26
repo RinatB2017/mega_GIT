@@ -26,7 +26,6 @@
 #include <QToolBar>
 #include <QSpinBox>
 #include <QLabel>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -36,6 +35,10 @@
 #include "mainbox.hpp"
 #include "defines.hpp"
 #include "sleeper.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

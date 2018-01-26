@@ -34,7 +34,6 @@
 #include <QVector>
 #include <sys/sysinfo.h>
 
-#include <QDebug>
 
 #include <qwt_plot_seriesitem.h>
 #include <qwt_series_data.h>
@@ -58,6 +57,10 @@
 #include "logbox.hpp"
 
 #include "grapherbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

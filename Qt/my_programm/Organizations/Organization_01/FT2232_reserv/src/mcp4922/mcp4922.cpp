@@ -19,10 +19,13 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QDebug>
 
 #include "sleeper.h"
 #include "mcp4922.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 union MCP4922_DATA
 {
@@ -53,7 +56,9 @@ MCP4922::MCP4922(QWidget *parent) :
     MyWidget(parent)
 {
     dwClockDivisor = 0;
+#ifdef QT_DEBUG
     qDebug() << dwClockDivisor;
+#endif
 }
 //--------------------------------------------------------------------------------
 MCP4922::~MCP4922()

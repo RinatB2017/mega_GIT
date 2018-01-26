@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QLibrary>
 #include <QString>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,6 +35,10 @@
 //--------------------------------------------------------------------------------
 #include "parport.hpp"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
 Parport::Parport(QObject *parent) :
     QObject(parent),
     parent((QWidget *)parent),
@@ -65,7 +68,9 @@ void Parport::connect_log(void)
 //--------------------------------------------------------------------------------
 void Parport::log(const QString &data)
 {
+#ifdef QT_DEBUG
     qDebug() << data;
+#endif
 }
 //================================================================================
 bool Parport::open_parport()

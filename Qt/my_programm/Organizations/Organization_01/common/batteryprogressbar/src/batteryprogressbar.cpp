@@ -19,7 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "batteryprogressbar.hpp"

@@ -5,10 +5,13 @@
 #include <QDateTime>
 #include <QWidget>
 #include <QString>
-#include <QDebug>
 #include <QFile>
 //--------------------------------------------------------------------------------
 #include "persistentcookiejar.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PersistentCookieJar::PersistentCookieJar (QObject *parent, const QString& fname) :
     QNetworkCookieJar (parent)
@@ -35,7 +38,9 @@ PersistentCookieJar::~PersistentCookieJar ()
 //--------------------------------------------------------------------------------
 void PersistentCookieJar::log(const QString &text)
 {
+#ifdef QT_DEBUG
     qDebug() << text;
+#endif
 }
 //--------------------------------------------------------------------------------
 void PersistentCookieJar::debug(void)

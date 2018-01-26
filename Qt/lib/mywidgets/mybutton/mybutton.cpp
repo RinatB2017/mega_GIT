@@ -20,12 +20,15 @@
 **********************************************************************************/
 #include <QPainter>
 #include <QPointF>
-#include <QDebug>
 #include <QMouseEvent>
 #include <QEvent>
 #include <QRect>
-
+//--------------------------------------------------------------------------------
 #include "mybutton.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MyButton::MyButton(int width,
                    int height,

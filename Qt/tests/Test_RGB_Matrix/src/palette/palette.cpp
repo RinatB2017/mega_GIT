@@ -21,12 +21,15 @@
 #include <QGridLayout>
 #include <QToolButton>
 #include <QSettings>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "palette.hpp"
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "diod.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MyPalette::MyPalette(int max_x,
                      int max_y,
@@ -95,7 +98,9 @@ void MyPalette::set_data(QByteArray data)
 {
     if(data.length() != (max_x * max_y * 3))
     {
+#ifdef QT_DEBUG
         qDebug() << "MyPalette::set_data:" << data.length() << (max_x * max_y * 3);
+#endif
         emit error("MyPalette::set_data bad data size!");
         return;
     }

@@ -21,7 +21,6 @@
 #include <QApplication>
 #include <QLibraryInfo>
 #include <QMessageBox>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= 0x050000
 #   include <QtMessageHandler>
@@ -46,6 +45,7 @@
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include "test.hpp"
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 //  rm /usr/lib/libGL.so.1

@@ -22,7 +22,6 @@
 #include <QSignalSpy>
 #include <QObject>
 #include <QWidget>
-#include <QDebug>
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
@@ -31,6 +30,10 @@
 #include "serialbox5.hpp"
 #include "mainwindow.hpp"
 #include "test.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Test::Test()
 {

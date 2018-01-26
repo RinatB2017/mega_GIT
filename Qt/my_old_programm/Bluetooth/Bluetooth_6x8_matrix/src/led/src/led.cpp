@@ -18,8 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDebug>
 #include "led.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Led::Led(QToolButton *parent) :
     QToolButton(parent)
@@ -60,7 +63,9 @@ void Led::set_color(char color)
         break;
 
     default:
+#ifdef QT_DEBUG
         qDebug() << "unknown color" << color;
+#endif
         break;
     }
 }

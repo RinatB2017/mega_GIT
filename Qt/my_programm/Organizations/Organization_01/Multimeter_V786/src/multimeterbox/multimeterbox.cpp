@@ -35,7 +35,7 @@
 #include <qmath.h>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "batteryprogressbar.hpp"
@@ -46,13 +46,13 @@
 #include "multimeterbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef NO_GRAPHER
-#include "ui_multimeterbox_no_grapher.h"
+#   include "ui_multimeterbox_no_grapher.h"
 #else
-#include "ui_multimeterbox.h"
+#   include "ui_multimeterbox.h"
 #endif
 //--------------------------------------------------------------------------------
 #ifdef TESTBAR
-#include "handcontrol.hpp"
+#   include "handcontrol.hpp"
 #endif
 //--------------------------------------------------------------------------------
 #include "qwt_symbol.h"

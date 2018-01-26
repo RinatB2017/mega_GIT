@@ -27,7 +27,6 @@
 #include <QDateTime>
 #include <QLineEdit>
 #include <QSpinBox>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "pet_brg_main_page.hpp"
 #include "ui_pet_brg_main_page.h"
@@ -40,6 +39,10 @@
 #include "pet_defines.hpp"
 #include "pet.h"
 #include "pet_brg.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 PET_brg_main_page::PET_brg_main_page(QWidget *parent, bool is_demo) :
     PET_device_brg(parent),

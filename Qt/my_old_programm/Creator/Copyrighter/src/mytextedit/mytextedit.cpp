@@ -22,10 +22,13 @@
 #include <QApplication>
 #include <QFileDialog>
 #include <QStyle>
-#include <QDebug>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "mytextedit.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MyTextEdit::MyTextEdit(QWidget *parent) :
     QTextEdit(parent)
@@ -73,7 +76,9 @@ void MyTextEdit::connect_log(void)
 //--------------------------------------------------------------------------------
 void MyTextEdit::log(const QString &data)
 {
+#ifdef QT_DEBUG
     qDebug() << data;
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyTextEdit::open_file(void)

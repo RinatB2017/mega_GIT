@@ -21,7 +21,6 @@
 #include <QPushButton>
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -34,13 +33,17 @@
 #include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef V764
-#include "v764_multimeter.hpp"
+#   include "v764_multimeter.hpp"
 #endif
 #ifdef V7642
-#include "v764_2_multimeter.hpp"
+#   include "v764_2_multimeter.hpp"
 #endif
 #ifdef V780
-#include "v780_multimeter.hpp"
+#   include "v780_multimeter.hpp"
+#endif
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,

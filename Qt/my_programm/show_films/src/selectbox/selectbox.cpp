@@ -26,12 +26,15 @@
 #include <QListWidget>
 #include <QFileInfo>
 #include <QDialog>
-#include <QDebug>
 #include <QLabel>
 #include <QFile>
 //--------------------------------------------------------------------------------
 #include "selectbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 SelectBox::SelectBox(QWidget *parent,
                      const QString &caption,

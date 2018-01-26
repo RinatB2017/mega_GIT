@@ -386,6 +386,7 @@ int Powersupply_B590::check_dirty_packet(const QByteArray &data)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x11(void)
 {
+    emit trace("send_cmd_0x11");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -435,6 +436,7 @@ int Powersupply_B590::send_cmd_0x11(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x12(void)
 {
+    emit trace("send_cmd_0x12");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -484,6 +486,7 @@ int Powersupply_B590::send_cmd_0x12(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x15(void)
 {
+    emit trace("send_cmd_0x15");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -533,6 +536,7 @@ int Powersupply_B590::send_cmd_0x15(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x16(void)
 {
+    emit trace("send_cmd_0x16");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -582,6 +586,7 @@ int Powersupply_B590::send_cmd_0x16(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x17(void)
 {
+    emit trace("send_cmd_0x17");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -631,6 +636,7 @@ int Powersupply_B590::send_cmd_0x17(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x41(void)
 {
+    emit trace("send_cmd_0x41");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -680,6 +686,7 @@ int Powersupply_B590::send_cmd_0x41(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x42(unsigned char code_speed)
 {
+    emit trace("send_cmd_0x42");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -731,8 +738,10 @@ int Powersupply_B590::send_cmd_0x42(unsigned char code_speed)
 int Powersupply_B590::check_packet_answer(unsigned char cmd,
                                           int packet_len)
 {
+    emit trace("check_packet_answer");
     if(data_powersupply.isEmpty())
     {
+        emit debug("E_B590_ERROR_NO_ANSWER");
         last_error = E_B590_ERROR_NO_ANSWER;
         return last_error;
     }
@@ -752,11 +761,13 @@ int Powersupply_B590::check_packet_answer(unsigned char cmd,
         unsigned char data_cmd = data_powersupply.at(1) & 0x7F;
         if(data_cmd != cmd)
         {
+            emit debug("E_B590_ERROR_UNKNOWN_COMMAND");
             last_error = E_B590_ERROR_UNKNOWN_COMMAND;
             return last_error;
         }
         if(temp)
         {
+            emit debug("E_B590_ERROR_BAD_COMMAND");
             last_error = E_B590_ERROR_BAD_COMMAND;
             return last_error;
         }
@@ -793,9 +804,12 @@ int Powersupply_B590::check_packet_answer(unsigned char cmd,
     unsigned short data_crc16 = temp_crc.value;
     if(data_crc16 != calc_crc16)
     {
+        emit debug("E_B590_ERROR_BAD_CRC");
         last_error = E_B590_ERROR_BAD_CRC;
         return last_error;
     }
+
+    emit debug("E_B590_NO_ERROR");
     last_error = E_B590_NO_ERROR;
     return last_error;
 }
@@ -805,6 +819,7 @@ int Powersupply_B590::send_cmd_0x46(uint8_t  *type,
                                     uint8_t  *month,
                                     uint16_t *serno)
 {
+    emit trace("send_cmd_0x46");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -883,6 +898,7 @@ int Powersupply_B590::send_cmd_0x47(int32_t  *in_voltage,
                                     uint8_t  *active_profile,
                                     bool *flag_zummer)
 {
+    emit trace("send_cmd_0x47");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -959,6 +975,7 @@ int Powersupply_B590::send_cmd_0x47(int32_t  *in_voltage,
 int Powersupply_B590::send_cmd_0x48(unsigned char new_address_MODBUS,
                                     unsigned char *r_new_address_MODBUS)
 {
+    emit trace("send_cmd_0x48");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1030,6 +1047,7 @@ int Powersupply_B590::send_cmd_0x48(unsigned char new_address_MODBUS,
 int Powersupply_B590::send_cmd_0x49(int32_t  voltage,
                                     uint16_t current)
 {
+    emit trace("send_cmd_0x49");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1120,6 +1138,7 @@ int Powersupply_B590::send_cmd_0x49(int32_t  voltage,
 int Powersupply_B590::send_cmd_0x4A(uint32_t *bits,
                                     uint16_t *code)
 {
+    emit trace("send_cmd_0x4A");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1192,6 +1211,7 @@ int Powersupply_B590::send_cmd_0x54(unsigned char profile,
                                     unsigned char *count_point,
                                     unsigned char *count_repeat_profile)
 {
+    emit trace("send_cmd_0x54");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1282,6 +1302,7 @@ int Powersupply_B590::send_cmd_0x54(unsigned char profile,
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x55(unsigned int *mototime_min)
 {
+    emit trace("send_cmd_0x55");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1357,6 +1378,7 @@ int Powersupply_B590::send_cmd_0x56(uint8_t  profile,
                                     uint16_t *r_current,
                                     uint16_t *r_time)
 {
+    emit trace("send_cmd_0x56");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1464,6 +1486,7 @@ int Powersupply_B590::send_cmd_0x56(uint8_t  profile,
 int Powersupply_B590::send_cmd_0x57(uint16_t U,
                                     uint16_t I)
 {
+    emit trace("send_cmd_0x57");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1536,6 +1559,7 @@ int Powersupply_B590::send_cmd_0x5A(uint16_t *setting_U,
                                     unsigned char  *active_profile,
                                     unsigned char  *point)
 {
+    emit trace("send_cmd_0x5A");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1612,6 +1636,7 @@ int Powersupply_B590::send_cmd_0x5B(uint32_t *U,
                                     uint32_t *I,
                                     uint32_t *U_input)
 {
+    emit trace("send_cmd_0x5B");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1684,6 +1709,7 @@ int Powersupply_B590::send_cmd_0x5C(s_zero_b590_U zero_U,
                                     s_zero_b590_I zero_I,
                                     uint8_t       *r_error)
 {
+    emit trace("send_cmd_0x5C");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1758,6 +1784,7 @@ int Powersupply_B590::send_cmd_0x5C(s_zero_b590_U zero_U,
 int Powersupply_B590::send_cmd_0x5D(s_zero_b590_U *zero_U,
                                     s_zero_b590_I *zero_I)
 {
+    emit trace("send_cmd_0x5D");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1838,6 +1865,7 @@ int Powersupply_B590::send_cmd_0x5E(uint8_t  profile,
                                     uint16_t *r_current,
                                     uint16_t *r_time)
 {
+    emit trace("send_cmd_0x5E");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -1940,6 +1968,7 @@ int Powersupply_B590::send_cmd_0x5E(uint8_t  profile,
 int Powersupply_B590::send_cmd_0x5F(unsigned char profile,
                                     unsigned char *number_profile)
 {
+    emit trace("send_cmd_0x5F");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2018,6 +2047,7 @@ int Powersupply_B590::send_cmd_0x5F(unsigned char profile,
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x60(void)
 {
+    emit trace("send_cmd_0x60");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2085,6 +2115,7 @@ int Powersupply_B590::send_cmd_0x61(int32_t *Value_ADC_Zero_U,
                                     double  *factor_k_DAC,
                                     double  *factor_k_ADC)
 {
+    emit trace("send_cmd_0x61");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2159,6 +2190,7 @@ int Powersupply_B590::send_cmd_0x62(int32_t *Value_ADC_Zero_I,
                                     double  *factor_k_DAC,
                                     double  *factor_k_ADC)
 {
+    emit trace("send_cmd_0x62");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2235,6 +2267,7 @@ int Powersupply_B590::send_cmd_0x63(uint8_t  code,
                                     uint8_t *r_number_point,
                                     uint16_t *r_data_point)
 {
+    emit trace("send_cmd_0x63");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2316,6 +2349,7 @@ int Powersupply_B590::send_cmd_0x63(uint8_t  code,
  */
 int Powersupply_B590::send_cmd_0x64(char code)
 {
+    emit trace("send_cmd_0x64");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2386,6 +2420,7 @@ int Powersupply_B590::send_cmd_0x64(char code)
 int Powersupply_B590::send_cmd_0x65(uint8_t *number_current_point,
                                     uint8_t *state)
 {
+    emit trace("send_cmd_0x65");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2459,6 +2494,7 @@ int Powersupply_B590::send_cmd_0x66(uint16_t code,
                                     uint16_t index,
                                     uint16_t *value)
 {
+    emit trace("send_cmd_0x66");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2538,6 +2574,7 @@ int Powersupply_B590::send_cmd_0x66(uint16_t code,
 int Powersupply_B590::send_cmd_0x67(unsigned short speed_cooler,
                                     unsigned short *r_speed_cooler)
 {
+    emit trace("send_cmd_0x67");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2610,6 +2647,7 @@ int Powersupply_B590::send_cmd_0x67(unsigned short speed_cooler,
 int Powersupply_B590::send_cmd_0x68(unsigned short data_PWM,
                                     unsigned short *r_data_PWM)
 {
+    emit trace("send_cmd_0x68");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2684,6 +2722,7 @@ int Powersupply_B590::send_cmd_0x68(unsigned short data_PWM,
 int Powersupply_B590::send_cmd_0x69(unsigned short *OCR3A,
                                     unsigned short *OCR3B)
 {
+    emit trace("send_cmd_0x69");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2755,6 +2794,7 @@ int Powersupply_B590::send_cmd_0x69(unsigned short *OCR3A,
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x6A(void)
 {
+    emit trace("send_cmd_0x6A");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2830,6 +2870,7 @@ int Powersupply_B590::send_cmd_0x6A(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x6B(void)
 {
+    emit trace("send_cmd_0x6B");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -2906,6 +2947,7 @@ int Powersupply_B590::send_cmd_0x6B(void)
 //--------------------------------------------------------------------------------
 int Powersupply_B590::send_cmd_0x6C(unsigned int number_string)
 {
+    emit trace("send_cmd_0x6C");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3059,6 +3101,7 @@ int Powersupply_B590::send_cmd_0x6D(uint8_t secret_cmd,
                                     uint8_t *result,
                                     QByteArray *output_data)
 {
+    emit trace("send_cmd_0x6D");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3148,6 +3191,7 @@ int Powersupply_B590::send_cmd_0x6E(unsigned char profile,
                                     unsigned char *r_profile,
                                     unsigned char *r_repeat)
 {
+    emit trace("send_cmd_0x6E");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3233,6 +3277,7 @@ int Powersupply_B590::send_cmd_0x6E(unsigned char profile,
 int Powersupply_B590::send_cmd_0x6F(unsigned char profile,
                                     unsigned char *r_profile)
 {
+    emit trace("send_cmd_0x6F");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3316,6 +3361,7 @@ int Powersupply_B590::send_cmd_0x71(unsigned char *state_ADC_U,
                                     unsigned char *state_ADC_I,
                                     unsigned char *state_ADC_Ui)
 {
+    emit trace("send_cmd_0x71");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3388,6 +3434,7 @@ int Powersupply_B590::send_cmd_0x71(unsigned char *state_ADC_U,
 int Powersupply_B590::send_cmd_0x72(unsigned short conf_ADC,
                                     unsigned short *r_conf_ADC)
 {
+    emit trace("send_cmd_0x72");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3461,6 +3508,7 @@ int Powersupply_B590::send_cmd_0x73(unsigned short *real_DAC_U,
                                     unsigned char  *revers,
                                     unsigned short *temperature)
 {
+    emit trace("send_cmd_0x73");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3538,6 +3586,7 @@ int Powersupply_B590::send_cmd_0x75(unsigned char *count_ReStart_ADC_1,
                                     unsigned int   *count_Error_ADC,
                                     unsigned short *MCUCSR)
 {
+    emit trace("send_cmd_0x75");
     if(busy)
     {
         last_error = E_B590_BUSY;
@@ -3689,6 +3738,7 @@ bool Powersupply_B590::get_accurate_temperature(double *temp)
 //--------------------------------------------------------------------------------
 void Powersupply_B590::set_state_silence(bool state)
 {
+    emit trace(QString("set_state_silence(%1)").arg(state ? "true" : "false"));
     is_silence = state;
 }
 //--------------------------------------------------------------------------------

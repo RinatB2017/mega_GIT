@@ -35,14 +35,13 @@
 #include <QCursor>
 #include <QMenu>
 #include <QAction>
-#include <QDebug>
 
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFile>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"

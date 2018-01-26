@@ -21,7 +21,6 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QWidget>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QNetworkProxyFactory>
 #include <QWebSettings>
@@ -34,10 +33,14 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-    #include "posix.hpp"
+#   include "posix.hpp"
 #endif
 //--------------------------------------------------------------------------------
 #include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

@@ -26,7 +26,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainwidget_gui.h"
 //--------------------------------------------------------------------------------
@@ -37,6 +36,10 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "mainwidget.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainWidget_GUI::MainWidget_GUI(QWidget *parent,
                  MySplashScreen *splash) :

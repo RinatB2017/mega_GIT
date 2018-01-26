@@ -20,11 +20,14 @@
 **********************************************************************************/
 #include <QSettings>
 #include <QtGlobal>
-#include <QDebug>
 #include <QDir>
 //--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MyFileDialog::MyFileDialog(const QString gName,
                            const QString oName,

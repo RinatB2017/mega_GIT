@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include </usr/include/stdlib.h>
 //--------------------------------------------------------------------------------
@@ -32,6 +31,10 @@
 #include "ui_webcamera.h"
 #include "webcamera.hpp"
 #include "sleeper.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 using namespace std;
 //--------------------------------------------------------------------------------
@@ -474,9 +477,11 @@ void WebCamera::test(void)
     }
 
     double k = (double)ui->cameraWidget->height() / (double)mElabImage.rows;
+#ifdef QT_DEBUG
     qDebug() << "mElabImage" << mElabImage.cols << mElabImage.rows;
     qDebug() << "cameraWidget" << ui->cameraWidget->width() << ui->cameraWidget->height();
     qDebug() << "K" << k;
+#endif
     ui->cameraWidget->setMinimumWidth(k * (double)mElabImage.cols); // ui->cameraWidget->width());
 
     ui->cameraWidget->showImage(mElabImage);

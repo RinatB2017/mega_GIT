@@ -43,7 +43,7 @@
 #include "myreport.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-#include <QDebug>
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
@@ -144,7 +144,6 @@ bool B590::create_setting(const QString  &name,
     return true;
 }
 //--------------------------------------------------------------------------------
-#include <QDebug>
 void B590::load_setting(void)
 {
 #ifndef USER_CALIBRATIONS

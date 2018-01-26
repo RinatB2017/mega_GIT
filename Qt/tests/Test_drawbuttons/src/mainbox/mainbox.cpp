@@ -27,7 +27,6 @@
 #include <QTreeWidget>
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 #include "csvreader.hpp"
@@ -41,6 +40,10 @@
 
 #include "mydisplay.hpp"
 #include "mybutton.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 union U_BYTE
 {

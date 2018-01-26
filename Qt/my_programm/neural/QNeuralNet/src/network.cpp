@@ -24,7 +24,10 @@
 #include <math.h>
 
 #include <QList>
-#include <QDebug>
+
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 Layer::Layer(int neuronCount)
 {

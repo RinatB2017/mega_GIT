@@ -4,10 +4,13 @@
 #include <QNetworkInterface>
 #include <QHostAddress>
 #include <QFileDialog>
-#include <QDebug>
 #include <QList>
 //--------------------------------------------------------------------------------
 #include "udp_client.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 UDP_Client::UDP_Client(QWidget *parent) :
     MyWidget(parent),

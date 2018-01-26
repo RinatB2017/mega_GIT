@@ -3,11 +3,14 @@
 #include <QApplication>
 #include <QInputDialog>
 #include <QWebView>
-#include <QDebug>
 #include <QTime>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "listwidget_site.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 ListWidget_Site::ListWidget_Site(QWebView *webview,
                                  QWidget *parent) :

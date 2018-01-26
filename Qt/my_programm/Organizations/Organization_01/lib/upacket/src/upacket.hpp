@@ -26,6 +26,7 @@
 enum UP_ERRORS
 {
     NO_ERRORS = 0,
+    ERR_EMPTY_PACKET,
     ERR_BAD_PACKET,
     ERR_BAD_ADDR,
     ERR_BAD_CMD,

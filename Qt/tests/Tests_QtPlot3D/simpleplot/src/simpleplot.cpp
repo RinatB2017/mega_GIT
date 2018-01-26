@@ -4,7 +4,9 @@
 //      A simple example which shows how to use GridPlot
 //-----------------------------------------------------------------
 
-#include <QDebug>
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 #include <math.h>
 #include <qapplication.h>
@@ -54,7 +56,9 @@ Plot::Plot()
     setShift(0.15,0,0);
     setZoom(0.6);
 
+#ifdef QT_DEBUG
     qDebug() << coordinates()->axes.size();
+#endif
 
     for (unsigned i=0; i!=coordinates()->axes.size(); ++i)
     {

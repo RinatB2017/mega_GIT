@@ -29,7 +29,6 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QLabel>
-#include <QDebug>
 #include <QMenu>
 #include <QTime>
 //--------------------------------------------------------------------------------
@@ -49,6 +48,10 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "v786_2_multimeter.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef USE_V764
     #include "v764_multimeter.hpp"

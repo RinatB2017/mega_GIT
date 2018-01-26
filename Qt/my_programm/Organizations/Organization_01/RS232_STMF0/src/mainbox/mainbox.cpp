@@ -26,7 +26,6 @@
 
 #include <QToolButton>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -38,18 +37,8 @@
 
 #include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
-#if 0
-unsigned int value_data = 0x12345678;
-unsigned char d = (value_data) 	     & 0xFF;
-unsigned char c = (value_data >> 8)  & 0xFF;
-unsigned char b = (value_data >> 16) & 0xFF;
-unsigned char a = (value_data >> 24) & 0xFF;
-
-emit info(QString("%1%2%3%4")
-          .arg(a, 0, 16)
-          .arg(b, 0, 16)
-          .arg(c, 0, 16)
-          .arg(d, 0, 16));
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,

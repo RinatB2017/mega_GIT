@@ -25,7 +25,6 @@
 #include <QPicture>
 #include <QBitmap>
 #include <QWidget>
-#include <QDebug>
 #include <QtMath>
 #include <QFile>
 #include <QIcon>
@@ -40,6 +39,10 @@
 #include "dat3.hpp"
 //--------------------------------------------------------------------------------
 #include "pet.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 Viewer::Viewer(QWidget *parent) :
     MyWidget(parent)

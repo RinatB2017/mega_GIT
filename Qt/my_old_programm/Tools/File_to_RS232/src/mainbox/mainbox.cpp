@@ -25,7 +25,6 @@
 #include <QToolBar>
 #include <QWidget>
 #include <QTimer>
-#include <QDebug>
 #include <QList>
 #include <QFile>
 //--------------------------------------------------------------------------------
@@ -35,6 +34,10 @@
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
 #include "mainbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

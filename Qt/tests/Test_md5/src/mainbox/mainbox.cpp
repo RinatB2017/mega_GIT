@@ -23,7 +23,6 @@
 #include <QToolButton>
 #include <QToolBar>
 #include <QWidget>
-#include <QDebug>
 #include <QFile>
 #include <QTime>
 //--------------------------------------------------------------------------------
@@ -31,6 +30,10 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),

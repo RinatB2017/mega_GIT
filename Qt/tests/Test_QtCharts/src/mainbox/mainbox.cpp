@@ -24,7 +24,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QToolBar>
-#include <QDebug>
 //--------------------------------------------------------------------------------
 #include <QtCharts>
 QT_CHARTS_USE_NAMESPACE
@@ -36,6 +35,10 @@ QT_CHARTS_USE_NAMESPACE
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

@@ -28,13 +28,15 @@
 #include <QLabel>
 #include <QStyle>
 //--------------------------------------------------------------------------------
-#include <QDebug>
-//--------------------------------------------------------------------------------
 #include "qwt_plot_picker.h"
 //--------------------------------------------------------------------------------
 #include "grapher_settings.hpp"
 #include "grapherbox.hpp"
 #include "grapher_curvebox.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 GrapherSettings::GrapherSettings(QVector<GRAPHER_CURVE> curves,
                                  QwtPlotPicker *picker,

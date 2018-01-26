@@ -28,7 +28,6 @@
 #include <QGroupBox>
 #include <QSpinBox>
 #include <QFrame>
-#include <QDebug>
 #include <QTimer>
 #include <QLabel>
 #include <QTime>
@@ -47,6 +46,10 @@
 //--------------------------------------------------------------------------------
 #define BUTTON_ON   "background:gray"
 #define BUTTON_OFF  ""
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 ControlBox::ControlBox(QWidget *parent) :
     MyWidget(parent),

@@ -25,7 +25,6 @@
 #include <QSpinBox>
 #include <QToolBar>
 #include <QLabel>
-#include <QDebug>
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
@@ -37,6 +36,10 @@
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "sleeper.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #define MAX_LEN_DATA    10
 

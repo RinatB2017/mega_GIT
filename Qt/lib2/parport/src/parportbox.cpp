@@ -19,7 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QMessageBox>
-#include <QDebug>
 #include <QTimer>
 #include <QFrame>
 //--------------------------------------------------------------------------------
@@ -27,6 +26,10 @@
 #include "parport.hpp"
 #include "ledpanel.hpp"
 #include "ui_parportbox.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 ParportBox::ParportBox(QWidget *parent) :
     MyWidget(parent),

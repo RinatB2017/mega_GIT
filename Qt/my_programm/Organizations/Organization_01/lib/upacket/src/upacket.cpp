@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,82 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
+#include "b590_packets.hpp"
+#include "upacket.hpp"
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "b590.hpp"
-#include "test.hpp"
-//--------------------------------------------------------------------------------
-#if 0
-    MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
-    QVERIFY(mb);
-
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
-
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-    
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
-#endif
-//--------------------------------------------------------------------------------
-Test::Test()
+UPacket::UPacket(void) :
+    QObject()
 {
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
+
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+void UPacket::set_address(int address)
 {
-    
+    addr = address;
+    emit info(QString("set address: %1").arg(addr));
 }
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+bool UPacket::check_packet(QByteArray packet, int *cmd, QByteArray *data)
 {
-    B590 *mb = mw->findChild<B590 *>("B590");
-    QVERIFY(mb);
+    Q_CHECK_PTR(data);
 
-//    QCOMPARE(mb->search_power_supply(), true);
-//    QCOMPARE(mb->rc_on(),   true);
-//    QCOMPARE(mb->rc_off(),  true);
+    B590_HEADER *header = (B590_HEADER *)packet.data();
+    Q_CHECK_PTR(header);
 
-//    QCOMPARE(mb->test_U(),  0);
-//    QCOMPARE(mb->test_I(),  0);
+    int full_packet_len = sizeof(B590_HEADER) + header->count_data + 2;
+    if(packet.size() != full_packet_len)
+    {
+        err = ERR_BAD_LEN;
+        return false;
+    }
 
-//    QCOMPARE(mb->send_0_0(),    E_B590_NO_ERROR);
+    if(header->address != addr)
+    {
+        err = ERR_BAD_ADDR;
+        return false;
+    }
 
-//    QCOMPARE(mb->set_vent_speed(),      E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_0(),    E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_max(),  E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_auto(), E_B590_NO_ERROR);
+    *cmd = header->cmd;
 
-//    QCOMPARE(mb->set_UI_parrot(0, 0),   E_B590_NO_ERROR);
+    return true;
+}
+//--------------------------------------------------------------------------------
+int UPacket::get_err(void)
+{
+    return err;
+}
+//--------------------------------------------------------------------------------
+QString UPacket::get_err_str(void)
+{
+    QString temp;
+
+    switch (err)
+    {
+    case ERR_BAD_PACKET:
+        temp = "ERR_BAD_PACKET";
+        break;
+
+    case ERR_BAD_ADDR:
+        temp = "ERR_BAD_ADDR";
+        break;
+
+    case ERR_BAD_CMD:
+        temp = "ERR_BAD_CMD";
+        break;
+
+    case ERR_BAD_LEN:
+        temp = "ERR_BAD_LEN";
+        break;
+
+    case ERR_BAD_CRC:
+        temp = "ERR_BAD_CRC";
+        break;
+
+    default:
+        temp = QString("unknown err code: %1").arg(err);
+        break;
+    }
+
+    return temp;
 }
 //--------------------------------------------------------------------------------

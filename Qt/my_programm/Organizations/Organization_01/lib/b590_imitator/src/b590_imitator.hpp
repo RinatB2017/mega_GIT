@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,55 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
+//--------------------------------------------------------------------------------
 #include <QWidget>
-#include <QList>
-#include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "b590.hpp"
-#include "test.hpp"
-//--------------------------------------------------------------------------------
-#if 0
-    MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
-    QVERIFY(mb);
-
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
-
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-    
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
-#endif
-//--------------------------------------------------------------------------------
-Test::Test()
-{
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
+namespace Ui {
+    class B590_imitator;
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    
-}
+class SerialBox5;
+class UPacket;
+class QToolButton;
+class QToolBar;
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+class B590_imitator : public MyWidget
 {
-    B590 *mb = mw->findChild<B590 *>("B590");
-    QVERIFY(mb);
+    Q_OBJECT
 
-//    QCOMPARE(mb->search_power_supply(), true);
-//    QCOMPARE(mb->rc_on(),   true);
-//    QCOMPARE(mb->rc_off(),  true);
+public:
+    B590_imitator(QWidget *parent);
+    ~B590_imitator();
 
-//    QCOMPARE(mb->test_U(),  0);
-//    QCOMPARE(mb->test_I(),  0);
+signals:
+    void send(QByteArray);
 
-//    QCOMPARE(mb->send_0_0(),    E_B590_NO_ERROR);
+public slots:
+    void input(QByteArray data);
+    void output(QByteArray data);
 
-//    QCOMPARE(mb->set_vent_speed(),      E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_0(),    E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_max(),  E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_auto(), E_B590_NO_ERROR);
+private slots:
+    void test(void);
 
-//    QCOMPARE(mb->set_UI_parrot(0, 0),   E_B590_NO_ERROR);
-}
+private:
+    Ui::B590_imitator *ui = 0;
+    UPacket *up = 0;
+
+    typedef struct
+    {
+        int cmd;
+        QString cmd_text;
+    } CMD;
+    QList<CMD> commands;
+
+    void init(void);
+
+    void updateText(void);
+
+};
 //--------------------------------------------------------------------------------
+#endif // MAINBOX_HPP

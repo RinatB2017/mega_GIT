@@ -21,7 +21,6 @@
 #ifndef PACKETS_B590_HPP
 #define PACKETS_B590_HPP
 //--------------------------------------------------------------------------------
-#include <stdint.h>
 #include "defines.hpp"
 #include "b590_defines.hpp"
 #include "B590_fram.hpp"

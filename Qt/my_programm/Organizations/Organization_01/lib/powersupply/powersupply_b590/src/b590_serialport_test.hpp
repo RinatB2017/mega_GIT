@@ -24,7 +24,6 @@
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
-#include <stdint.h>
 #include <QObject>
 //--------------------------------------------------------------------------------
 #include "B590_fram.hpp"
@@ -45,7 +44,7 @@ class SerialPort_B590_test : public QObject
     Q_OBJECT
 
 public:
-    explicit SerialPort_B590_test();
+    SerialPort_B590_test();
     ~SerialPort_B590_test();
 
     bool isOpen(void);

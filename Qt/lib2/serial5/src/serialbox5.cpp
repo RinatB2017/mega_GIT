@@ -24,7 +24,10 @@
 #include <QEvent>
 #include <QMenu>
 #include <QTimer>
-#include <QDebug>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
@@ -43,9 +46,7 @@ SerialBox5::SerialBox5(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
-    caption("no name"),
-    flag_in_hex(false),
-    flag_byte_by_byte(false)
+    caption("no name")
 {
     init();
 }
@@ -57,9 +58,7 @@ SerialBox5::SerialBox5(QWidget *parent,
     ui(new Ui::SerialBox5),
     parent(parent),
     caption(caption),
-    o_name(o_name),
-    flag_in_hex(false),
-    flag_byte_by_byte(false)
+    o_name(o_name)
 {
     init();
 }
@@ -126,7 +125,7 @@ void SerialBox5::createWidgets(void)
     connect(ui->StopBitsBox, SIGNAL(currentIndexChanged(int)),  this,   SLOT(setStopBox(int)));
     connect(ui->FlowBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setFlowBox(int)));
 
-    connect(this, SIGNAL(output(QByteArray)), this, SLOT(drawData(QByteArray)));
+    connect(this,   SIGNAL(output(QByteArray)), this,   SLOT(drawData(QByteArray)));
 
 #ifdef RS232_LOG
     logBox = new LogBox(o_name, this);
@@ -237,7 +236,7 @@ void SerialBox5::initSerial(void)
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
 
     connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    //connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
+    connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
 
     connect(serial5, SIGNAL(baudRateChanged(qint32,QSerialPort::Directions)),   this,   SLOT(baudRateChanged(qint32,QSerialPort::Directions)));
     connect(serial5, SIGNAL(breakEnabledChanged(bool)),                         this,   SLOT(breakEnabledChanged(bool)));
@@ -454,7 +453,10 @@ int SerialBox5::input(const QByteArray &sending_data)
 //--------------------------------------------------------------------------------
 int SerialBox5::input(const QString &data)
 {
+#ifdef QT_DEBUG
     qDebug() << data;
+#endif
+
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
@@ -715,6 +717,11 @@ void SerialBox5::add_QHBoxLayout(QHBoxLayout * hbox)
 QByteArray SerialBox5::readAll(void)
 {
     return serial5->readAll();
+}
+//--------------------------------------------------------------------------------
+qint64 SerialBox5::bytesAvailable(void)
+{
+    return serial5->bytesAvailable();
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::set_baudRate(qint32 value)

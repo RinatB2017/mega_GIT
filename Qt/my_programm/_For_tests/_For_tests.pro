@@ -75,11 +75,12 @@ LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-#include ($$LIB_PATH2/icons/qmessagebox.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/safe/safe.pri)
+
+#include (src/upacket/upacket.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

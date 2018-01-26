@@ -91,6 +91,8 @@ public:
     bool power_on(void);
     bool power_off(void);
 
+    qint64 bytesAvailable(void);
+
 private:
     Ui::SerialBox5 *ui = 0;
     QWidget *parent = 0;
@@ -128,6 +130,9 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
+    void readyRead(void);
+    void readChannelFinished(void);
+
     void not_working(void);
     void output(const QByteArray &data);
 

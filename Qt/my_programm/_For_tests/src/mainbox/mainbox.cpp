@@ -181,11 +181,48 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
+//#include "upacket.hpp"
+//#pragma pack (push, 1)
+//    typedef struct HEADER
+//    {
+//        uint16_t    address;
+//        uint8_t     cmd;
+//        uint16_t    len_data;
+//    } *header_t;
+//#pragma pack(pop)
+
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 1
+#if 0
+    QByteArray packet;
+    QByteArray r_packet;
+    int cmd = 0;
+    bool ok = false;
+    UPacket *up = new UPacket;
+
+    HEADER header;
+    header.address = 0;
+    header.cmd = 1;
+    header.len_data = 0;
+
+    packet.clear();
+    packet.append((char *)&header, sizeof(header));
+    packet.append((char)0);
+    packet.append((char)0);
+
+    ok = up->check_packet(packet, &cmd, &r_packet);
+    if(!ok)
+    {
+        emit error(up->get_err_str());
+        //return false;
+    }
+    emit info("OK");
+
+#endif
+
+#if 0
     My_class addr;
     addr = 0x12345678;
     emit info(QString("0x%1").arg(addr[0], 2, 16, QChar('0')));

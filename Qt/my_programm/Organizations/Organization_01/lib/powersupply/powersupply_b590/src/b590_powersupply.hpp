@@ -384,17 +384,17 @@ private:
     QSerialPort serial;
 #endif
 
-    bool is_ready;
+    bool is_ready = false;
     QByteArray data_powersupply;
-    int last_error;
-    bool busy;
-    int address;
-    int delay_ms;
+    int last_error = 0;
+    bool busy = false;
+    int address = 1;
+    int delay_ms = 3000;
 
-    bool flag_closed;
-    bool is_silence;
+    bool flag_closed = false;
+    bool is_silence = false;
 
-    bool ignore_bad_cmd;
+    bool ignore_bad_cmd = false;
 
     void init(void);
 

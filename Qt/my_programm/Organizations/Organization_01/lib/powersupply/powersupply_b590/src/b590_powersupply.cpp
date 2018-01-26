@@ -47,7 +47,7 @@
 #include "find_powersupply.hpp"
 
 #ifdef NEEDED_PAUSE
-    #include "sleeper.h"
+#include "sleeper.h"
 #endif
 //--------------------------------------------------------------------------------
 union U_BYTE
@@ -166,13 +166,7 @@ union FLOAT_BYTES
 #define MAX_NUM_SPEED 8
 //--------------------------------------------------------------------------------
 Powersupply_B590::Powersupply_B590(QObject *parent) :
-    QObject(parent),
-    is_ready(false),
-    busy(false),
-    address(1),
-    delay_ms(3000),
-    is_silence(false),
-    ignore_bad_cmd(false)
+    QObject(parent)
 {
     init();
 }
@@ -196,7 +190,7 @@ void Powersupply_B590::init(void)
     busy = false;
 
     connect(&serial, SIGNAL(readyRead()), this, SLOT(port_read()));
-    //connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
+    connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
 
 #ifdef FAKE
     connect(&serial, SIGNAL(info(QString)),     this, SIGNAL(info(QString)));
@@ -221,6 +215,8 @@ bool Powersupply_B590::find_device(void)
     QList<int> speeds;
 
     speeds.clear();
+
+    //TODO speeds
     speeds.append(4800);
     speeds.append(9600);
     speeds.append(19200);
@@ -230,7 +226,10 @@ bool Powersupply_B590::find_device(void)
     speeds.append(76800);
     speeds.append(115200);
 
-    if(serial.isOpen()) serial.close();
+    if(serial.isOpen())
+    {
+        serial.close();
+    }
 
     set_address(address);
     flag_closed = false;
@@ -731,11 +730,11 @@ int Powersupply_B590::check_packet_answer(unsigned char cmd,
         return last_error;
     }
 
-    emit debug(data_powersupply.toHex());
+    emit debug(QString("check_packet_answer: [%1]").arg(data_powersupply.toHex().data()));
 
     if(data_powersupply.length() < 2)
     {
-        emit debug(data_powersupply.toHex());
+        emit debug(QString("E_B590_ERROR_SMALL_ANSWER: [%1]").arg(data_powersupply.toHex().data()));
         last_error = E_B590_ERROR_SMALL_ANSWER;
         return last_error;
     }
@@ -758,7 +757,7 @@ int Powersupply_B590::check_packet_answer(unsigned char cmd,
 
     if(data_powersupply.length() > packet_len)
     {
-        emit debug(data_powersupply.toHex());
+        emit debug(QString("E_B590_ERROR_BIG_ANSWER: [%1]").arg(data_powersupply.toHex().data()));
 #ifdef QT_DEBUG
         qDebug() << "data_powersupply.length()" << data_powersupply.length() << "packet_len" << packet_len;
         qDebug() << "data" << data_powersupply.toHex();
@@ -768,7 +767,7 @@ int Powersupply_B590::check_packet_answer(unsigned char cmd,
     }
     if(data_powersupply.length() < packet_len)
     {
-        emit debug(data_powersupply.toHex());
+        emit debug(QString("E_B590_ERROR_SMALL_ANSWER: [%1]").arg(data_powersupply.toHex().data()));
 #ifdef QT_DEBUG
         qDebug() << "data_powersupply.length()" << data_powersupply.length() << "packet_len" << packet_len;
         qDebug() << "data" << data_powersupply.toHex();
@@ -857,10 +856,13 @@ int Powersupply_B590::send_cmd_0x46(uint8_t  *type,
     //---
 
     B590_CMD_46_ANSWER *answer = (B590_CMD_46_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *type = answer->body.data.type;
     *year = answer->body.data.year;
     *month = answer->body.data.month;
     *serno = answer->body.data.serno;
+
     busy = false;
     last_error = E_B590_NO_ERROR;
     return last_error;
@@ -932,6 +934,7 @@ int Powersupply_B590::send_cmd_0x47(int32_t  *in_voltage,
     //---
 
     B590_CMD_47_ANSWER *answer = (B590_CMD_47_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
 
     *in_voltage = answer->body.data.in_voltage;
     *in_current = answer->body.data.in_current;
@@ -1008,6 +1011,8 @@ int Powersupply_B590::send_cmd_0x48(unsigned char new_address_MODBUS,
     //---
 
     B590_CMD_48_ANSWER *answer = (B590_CMD_48_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_new_address_MODBUS = answer->body.data.new_address_modbus;
 
     last_error = E_B590_NO_ERROR;
@@ -1078,6 +1083,8 @@ int Powersupply_B590::send_cmd_0x49(int32_t  voltage,
     //---
 
     B590_CMD_49_ANSWER *answer = (B590_CMD_49_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     if(answer->body.data.error != 0)
     {
         U_BYTE error_byte;
@@ -1164,6 +1171,8 @@ int Powersupply_B590::send_cmd_0x4A(uint32_t *bits,
     //---
 
     B590_CMD_4A_ANSWER *answer = (B590_CMD_4A_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *bits = answer->body.data.error_bits;
     *code = answer->body.data.error_code;
 
@@ -1223,6 +1232,8 @@ int Powersupply_B590::send_cmd_0x54(unsigned char profile,
     if(data_powersupply.length() == sizeof(B590_CMD_54_ANSWER_ERROR))
     {
         B590_CMD_54_ANSWER_ERROR *answer_error = (B590_CMD_54_ANSWER_ERROR *)data_powersupply.data();
+        Q_CHECK_PTR(answer_error);
+
         if(answer_error->body.data.error == 1)
         {
             last_error = E_B590_UNKNOWN_PROFILE;
@@ -1245,6 +1256,8 @@ int Powersupply_B590::send_cmd_0x54(unsigned char profile,
     //---
 
     B590_CMD_54_ANSWER *answer = (B590_CMD_54_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     if(answer->body.data.error == 1)
     {
         last_error = E_B590_NUMBER_PROFILE_ERROR;
@@ -1320,6 +1333,8 @@ int Powersupply_B590::send_cmd_0x55(unsigned int *mototime_min)
     //---
 
     B590_CMD_55_ANSWER *answer = (B590_CMD_55_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *mototime_min = answer->body.data.mototime_min;
 
     last_error = E_B590_NO_ERROR;
@@ -1382,6 +1397,8 @@ int Powersupply_B590::send_cmd_0x56(uint8_t  profile,
     if(data_powersupply.length() == sizeof(B590_CMD_56_ANSWER_ERROR))
     {
         B590_CMD_56_ANSWER_ERROR *answer_error = (B590_CMD_56_ANSWER_ERROR *)data_powersupply.data();
+        Q_CHECK_PTR(answer_error);
+
         if(answer_error->body.data.error == 1)
         {
             last_error = E_B590_UNKNOWN_PROFILE;
@@ -1424,6 +1441,8 @@ int Powersupply_B590::send_cmd_0x56(uint8_t  profile,
     }
 
     B590_CMD_56_ANSWER *answer = (B590_CMD_56_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_profile = answer->body.data.profile;
     *r_point = answer->body.data.point;
     *r_voltage = answer->body.data.voltage;
@@ -1567,6 +1586,8 @@ int Powersupply_B590::send_cmd_0x5A(uint16_t *setting_U,
     }
 
     B590_CMD_5A_ANSWER *answer = (B590_CMD_5A_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *setting_U = answer->body.data.setting_DAC_U;
     *setting_I = answer->body.data.setting_DAC_I;
     *current_U = answer->body.data.current_ADC_U;
@@ -1641,6 +1662,8 @@ int Powersupply_B590::send_cmd_0x5B(uint32_t *U,
     }
 
     B590_CMD_5B_ANSWER *answer = (B590_CMD_5B_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *U = answer->body.data.ADC_U;
     *I = answer->body.data.ADC_I;
     *U_input = answer->body.data.ADC_U_input;
@@ -1716,6 +1739,8 @@ int Powersupply_B590::send_cmd_0x5C(s_zero_b590_U zero_U,
     //---
 
     B590_CMD_5C_ANSWER *answer = (B590_CMD_5C_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_error  = answer->body.data.error;
 
     last_error = E_B590_NO_ERROR;
@@ -1786,6 +1811,8 @@ int Powersupply_B590::send_cmd_0x5D(s_zero_b590_U *zero_U,
     //---
 
     B590_CMD_5D_ANSWER *answer = (B590_CMD_5D_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *zero_U  = answer->body.data.zero_U;
     *zero_I  = answer->body.data.zero_I;
 
@@ -1868,6 +1895,8 @@ int Powersupply_B590::send_cmd_0x5E(uint8_t  profile,
     //---
 
     B590_CMD_5E_ANSWER *answer = (B590_CMD_5E_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     if(answer->body.data.error)
     {
         U_SHORT error_short;
@@ -1964,6 +1993,8 @@ int Powersupply_B590::send_cmd_0x5F(unsigned char profile,
     //---
 
     B590_CMD_5F_ANSWER *answer = (B590_CMD_5F_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     if(answer->body.data.error)
     {
         last_error = E_B590_NO_ERROR;
@@ -2106,6 +2137,8 @@ int Powersupply_B590::send_cmd_0x61(int32_t *Value_ADC_Zero_U,
     //---
 
     B590_CMD_61_ANSWER *answer = (B590_CMD_61_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *Value_ADC_Zero_U = answer->body.data.Value_ADC_U_0;
     *factor_k_DAC     = answer->body.data.factor_k_DAC;
     *factor_k_ADC     = answer->body.data.factor_k_ADC;
@@ -2178,6 +2211,8 @@ int Powersupply_B590::send_cmd_0x62(int32_t *Value_ADC_Zero_I,
     //---
 
     B590_CMD_62_ANSWER *answer = (B590_CMD_62_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *Value_ADC_Zero_I = answer->body.data.Value_ADC_I_0;
     *factor_k_DAC     = answer->body.data.factor_k_DAC;
     *factor_k_ADC     = answer->body.data.factor_k_ADC;
@@ -2255,6 +2290,8 @@ int Powersupply_B590::send_cmd_0x63(uint8_t  code,
     //---
 
     B590_CMD_63_ANSWER *answer = (B590_CMD_63_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_number_point = answer->body.data.number_point;
     *r_data_point = answer->body.data.data_point;
 
@@ -2331,6 +2368,7 @@ int Powersupply_B590::send_cmd_0x64(char code)
     }
 
     //B590_CMD_64_ANSWER *answer = (B590_CMD_64_ANSWER *)data_powersupply.data();
+    //Q_CHECK_PTR(answer);
     //emit info(QString("code %1").arg(answer->body.data.code));
 
     last_error = E_B590_NO_ERROR;
@@ -2400,6 +2438,8 @@ int Powersupply_B590::send_cmd_0x65(uint8_t *number_current_point,
     //---
 
     B590_CMD_65_ANSWER *answer = (B590_CMD_65_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *number_current_point = answer->body.data.number_current_point;
     *state = answer->body.data.state;
 
@@ -2479,6 +2519,8 @@ int Powersupply_B590::send_cmd_0x66(uint16_t code,
     //---
 
     B590_CMD_66_ANSWER *answer = (B590_CMD_66_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *value = answer->body.data.point_value;
 
     last_error = E_B590_NO_ERROR;
@@ -2549,6 +2591,8 @@ int Powersupply_B590::send_cmd_0x67(unsigned short speed_cooler,
     //---
 
     B590_CMD_67_ANSWER *answer = (B590_CMD_67_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_speed_cooler = answer->body.data.speed_cooler;
 
     last_error = E_B590_NO_ERROR;
@@ -2621,6 +2665,8 @@ int Powersupply_B590::send_cmd_0x68(unsigned short data_PWM,
     //---
 
     B590_CMD_68_ANSWER *answer = (B590_CMD_68_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_data_PWM = answer->body.data.data_PWM;
 
     last_error = E_B590_NO_ERROR;
@@ -2690,6 +2736,7 @@ int Powersupply_B590::send_cmd_0x69(unsigned short *OCR3A,
     //---
 
     B590_CMD_69_ANSWER *answer = (B590_CMD_69_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
 
     *OCR3A = answer->body.data.OCR3A;
     *OCR3B = answer->body.data.OCR3B;
@@ -2760,6 +2807,8 @@ int Powersupply_B590::send_cmd_0x6A(void)
     //---
 
     B590_CMD_6A_ANSWER *answer = (B590_CMD_6A_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     U_BYTE data_byte;
     data_byte.value = answer->body.data.current_driver;
     if(data_byte.bites.bit0) emit info(tr("Захват произведен."));
@@ -2834,6 +2883,8 @@ int Powersupply_B590::send_cmd_0x6B(void)
     //---
 
     B590_CMD_6B_ANSWER *answer = (B590_CMD_6B_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     U_BYTE data_byte;
     data_byte.value = answer->body.data.current_driver;
     if(data_byte.bites.bit0) emit info(tr("Снятие произведено."));
@@ -2956,6 +3007,7 @@ int Powersupply_B590::send_cmd_0x6C(unsigned int number_string)
         }
 
         B590_CMD_6C_ANSWER_DATA8 *answer = (B590_CMD_6C_ANSWER_DATA8 *)data_powersupply.data();
+        Q_CHECK_PTR(answer);
         for(unsigned int n=0; n<sizeof(answer8->body.data); n++)
             temp_data.append(answer->body.data.data[n]);
 
@@ -3070,6 +3122,8 @@ int Powersupply_B590::send_cmd_0x6D(uint8_t secret_cmd,
     //---
 
     B590_CMD_6D_ANSWER *answer = (B590_CMD_6D_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_secret_cmd = answer->body.data.secret_cmd;
     *result = answer->body.data.result;
     for(int n=0; n<128; n++)
@@ -3147,6 +3201,8 @@ int Powersupply_B590::send_cmd_0x6E(unsigned char profile,
     //---
 
     B590_CMD_6E_ANSWER *answer = (B590_CMD_6E_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     if(answer->body.data.error)
     {
         U_BYTE error_byte;
@@ -3229,6 +3285,8 @@ int Powersupply_B590::send_cmd_0x6F(unsigned char profile,
     //---
 
     B590_CMD_6F_ANSWER *answer = (B590_CMD_6F_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     if(answer->body.data.error)
     {
         U_BYTE error_byte;
@@ -3309,6 +3367,7 @@ int Powersupply_B590::send_cmd_0x71(unsigned char *state_ADC_U,
     //---
 
     B590_CMD_71_ANSWER *answer = (B590_CMD_71_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
 
     *state_ADC_U = answer->body.data.state_ADC_U;
     *state_ADC_I = answer->body.data.state_ADC_I;
@@ -3381,6 +3440,8 @@ int Powersupply_B590::send_cmd_0x72(unsigned short conf_ADC,
     //---
 
     B590_CMD_72_ANSWER *answer = (B590_CMD_72_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *r_conf_ADC = answer->body.data.conf_ADC;
 
     last_error = E_B590_NO_ERROR;
@@ -3451,6 +3512,8 @@ int Powersupply_B590::send_cmd_0x73(unsigned short *real_DAC_U,
     //---
 
     B590_CMD_73_ANSWER *answer = (B590_CMD_73_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *real_DAC_U = answer->body.data.real_DAC_U;
     *real_DAC_I = answer->body.data.real_DAC_I;
     *revers = answer->body.data.revers;
@@ -3525,6 +3588,8 @@ int Powersupply_B590::send_cmd_0x75(unsigned char *count_ReStart_ADC_1,
     }
     //---
     B590_CMD_75_ANSWER *answer = (B590_CMD_75_ANSWER *)data_powersupply.data();
+    Q_CHECK_PTR(answer);
+
     *count_ReStart_ADC_1 = answer->body.data.count_ReStart_ADC_1;
     *count_ReStart_ADC_0 = answer->body.data.count_ReStart_ADC_0;
     *count_ReStart_ADC_2 = answer->body.data.count_ReStart_ADC_2;

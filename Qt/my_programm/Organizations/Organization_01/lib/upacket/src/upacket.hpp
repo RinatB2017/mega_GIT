@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,43 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
+#ifndef UPACKET_HPP
+#define UPACKET_HPP
+//--------------------------------------------------------------------------------
 #include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+enum UP_ERRORS
+{
+    NO_ERRORS = 0,
+    ERR_BAD_PACKET,
+    ERR_BAD_ADDR,
+    ERR_BAD_CMD,
+    ERR_BAD_LEN,
+    ERR_BAD_CRC
+};
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "b590.hpp"
-#include "test.hpp"
-//--------------------------------------------------------------------------------
-#if 0
-    MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
-    QVERIFY(mb);
+class UPacket : public QObject
+{
+    Q_OBJECT
 
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
 
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-    
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
+public:
+    UPacket(void);
+
+    void set_address(int address);
+
+    bool check_packet(QByteArray packet, int *cmd, QByteArray *data);
+    int get_err(void);
+    QString get_err_str(void);
+
+private:
+    int err = 0;
+    int addr = 0;
+};
+//--------------------------------------------------------------------------------
 #endif
-//--------------------------------------------------------------------------------
-Test::Test()
-{
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-}
-//--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-    B590 *mb = mw->findChild<B590 *>("B590");
-    QVERIFY(mb);
-
-//    QCOMPARE(mb->search_power_supply(), true);
-//    QCOMPARE(mb->rc_on(),   true);
-//    QCOMPARE(mb->rc_off(),  true);
-
-//    QCOMPARE(mb->test_U(),  0);
-//    QCOMPARE(mb->test_I(),  0);
-
-//    QCOMPARE(mb->send_0_0(),    E_B590_NO_ERROR);
-
-//    QCOMPARE(mb->set_vent_speed(),      E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_0(),    E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_max(),  E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_auto(), E_B590_NO_ERROR);
-
-//    QCOMPARE(mb->set_UI_parrot(0, 0),   E_B590_NO_ERROR);
-}
-//--------------------------------------------------------------------------------

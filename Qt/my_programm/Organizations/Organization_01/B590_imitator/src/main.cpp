@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -19,68 +19,41 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
+#include <QMessageBox>
+#include <QLocale>
+#include <QDebug>
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
 #include "mainwindow.hpp"
-#include "b590.hpp"
-#include "test.hpp"
+#include "b590_imitator.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-#if 0
-    MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
-    QVERIFY(mb);
-
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
-
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-    
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
-#endif
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-Test::Test()
+int main(int argc, char *argv[])
 {
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-}
-//--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-    B590 *mb = mw->findChild<B590 *>("B590");
-    QVERIFY(mb);
+    set_codecs();
 
-//    QCOMPARE(mb->search_power_supply(), true);
-//    QCOMPARE(mb->rc_on(),   true);
-//    QCOMPARE(mb->rc_off(),  true);
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        return -1;
+    }
 
-//    QCOMPARE(mb->test_U(),  0);
-//    QCOMPARE(mb->test_I(),  0);
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-//    QCOMPARE(mb->send_0_0(),    E_B590_NO_ERROR);
+    MainWindow *main_window = new MainWindow();
 
-//    QCOMPARE(mb->set_vent_speed(),      E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_0(),    E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_max(),  E_B590_NO_ERROR);
-//    QCOMPARE(mb->set_vent_speed_auto(), E_B590_NO_ERROR);
+    B590_imitator *mainBox = new B590_imitator(main_window->getThis());
+    main_window->setCentralWidget(mainBox);
 
-//    QCOMPARE(mb->set_UI_parrot(0, 0),   E_B590_NO_ERROR);
+    main_window->set_status1_text(QString(QObject::tr("1 попугай = %1 uV")).arg(2500000.0f / pow(2, 23)));
+    main_window->show();
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------

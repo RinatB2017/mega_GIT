@@ -27,9 +27,9 @@ DEFINES += NO_RESIZE
 
 DEFINES += USE_DOUBLE_COUNT_DATA
 
-DEFINES += FAKE
+#DEFINES += FAKE
 
-DEFINES += FAST_COMMAND
+#DEFINES += FAST_COMMAND
 DEFINES += TEST
 DEFINES += PARROT_BAR
 DEFINES += ADD_TOOLBAR
@@ -66,9 +66,10 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/crc/crc.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
-include (../lib/powersupply/parrotbar/parrotbar.pri)
-
+include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH2/connection/connection.pri)
+
+include (../lib/powersupply/parrotbar/parrotbar.pri)
 
 use_b588 {
     message (use B5-88)

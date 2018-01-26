@@ -308,9 +308,11 @@ private:
 
 #ifndef NO_LOG
     QAction *a_is_shows_info  = 0;
-    QAction *a_is_shows_debug = 0;
     QAction *a_is_shows_error = 0;
+#ifdef QT_DEBUG
+    QAction *a_is_shows_debug = 0;
     QAction *a_is_shows_trace = 0;
+#endif
 #endif
 
     QMenu *m_themes = 0;

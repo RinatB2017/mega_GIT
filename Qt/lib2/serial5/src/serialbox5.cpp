@@ -423,8 +423,6 @@ void SerialBox5::btnOpenPortClicked()
 //--------------------------------------------------------------------------------
 int SerialBox5::input(const QByteArray &sending_data)
 {
-    // qDebug() << data;
-    // emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
@@ -445,7 +443,7 @@ int SerialBox5::input(const QByteArray &sending_data)
     }
     else
     {
-        //emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
+        emit debug(QString("send [%1]").arg(sending_data.toHex().data()));
         serial5->write(sending_data);
     }
     return E_NO_ERROR;
@@ -643,13 +641,13 @@ bool SerialBox5::add_menu(int index, const QString &title)
 //--------------------------------------------------------------------------------
 void SerialBox5::set_flag_in_hex(bool state)
 {
-    // emit debug(QString("state is %1").arg(state ? "true" : "false"));
+    emit debug(QString("state is %1").arg(state ? "true" : "false"));
     flag_in_hex = state;
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::set_flag_byte_by_byte(bool state)
 {
-    // emit debug(QString("state is %1").arg(state ? "true" : "false"));
+    emit debug(QString("state is %1").arg(state ? "true" : "false"));
     flag_byte_by_byte = state;
 }
 //--------------------------------------------------------------------------------

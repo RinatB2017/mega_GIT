@@ -265,6 +265,8 @@ public slots:
     bool rc_on(void);
     bool rc_off(void);
 
+    int get_address(void);
+
     void close_connect(void);
 
     void run_dialog(int index);
@@ -526,6 +528,8 @@ private:
                       uint16_t *count_Error_Answer_ADC,
                       unsigned int *count_Error_ADC,
                       uint16_t *MCUCSR);
+
+    void serial_send(const char *data, int len);
 
 #ifdef NEEDED_PAUSE
     void pause(unsigned int msec = 3000);

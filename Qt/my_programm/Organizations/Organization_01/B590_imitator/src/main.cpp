@@ -21,7 +21,10 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QLocale>
-#include <QDebug>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mainwindow.hpp"

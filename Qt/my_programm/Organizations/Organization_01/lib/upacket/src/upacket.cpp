@@ -33,6 +33,11 @@ void UPacket::set_address(int address)
     emit info(QString("set address: %1").arg(addr));
 }
 //--------------------------------------------------------------------------------
+int UPacket::get_address(void)
+{
+    return addr;
+}
+//--------------------------------------------------------------------------------
 bool UPacket::check_packet(QByteArray packet, int *cmd, QByteArray *data)
 {
     Q_CHECK_PTR(data);

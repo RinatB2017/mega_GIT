@@ -36,6 +36,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_b590_imitator.h"
+#include "sleeper.h"
 #include "crc.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -124,6 +125,8 @@ void B590_imitator::init(void)
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(output(QByteArray)));
     connect(this,               SIGNAL(send(QByteArray)),   this,   SLOT(input(QByteArray)));
 
+    connect(ui->sb_addr,    SIGNAL(valueChanged(int)),  up, SLOT(set_address(int)));
+
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 }
 //--------------------------------------------------------------------------------
@@ -131,7 +134,9 @@ void B590_imitator::test(void)
 {
     Q_CHECK_PTR(up);
 
-    up->set_address(ui->sb_addr->value());
+    //up->set_address(ui->sb_addr->value());
+    emit info(QString("addr %1").arg(up->get_address()));
+    emit info(QString("speed %1").arg(ui->serial_widget->get_baudRate()));
 }
 //--------------------------------------------------------------------------------
 void B590_imitator::input(QByteArray data)
@@ -180,6 +185,8 @@ void B590_imitator::output(QByteArray data)
             QByteArray output;
             output.clear();
             output.append((const char *)answer.buf, sizeof(B590_CMD_46_ANSWER));
+
+            Sleeper::msleep(100);   //TODO
 
             emit send(output);
             emit debug(QString("emit send(%1)").arg(output.toHex().data()));

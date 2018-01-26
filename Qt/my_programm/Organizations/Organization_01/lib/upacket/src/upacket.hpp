@@ -46,11 +46,14 @@ signals:
 public:
     UPacket(void);
 
-    void set_address(int address);
+    int get_address(void);
 
     bool check_packet(QByteArray packet, int *cmd, QByteArray *data);
     int get_err(void);
     QString get_err_str(void);
+
+public slots:
+    void set_address(int address);
 
 private:
     int err = 0;

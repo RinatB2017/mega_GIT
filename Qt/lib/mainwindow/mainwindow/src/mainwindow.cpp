@@ -49,16 +49,20 @@ MainWindow::~MainWindow()
 
 #ifndef NO_LOG
     Q_CHECK_PTR(a_is_shows_info);
-    Q_CHECK_PTR(a_is_shows_debug);
     Q_CHECK_PTR(a_is_shows_error);
+#ifdef QT_DEBUG
+    Q_CHECK_PTR(a_is_shows_debug);
     Q_CHECK_PTR(a_is_shows_trace);
+#endif
 
     Q_CHECK_PTR(ld);
 
     MyWidget::set_param("Main", "flag_show_info",   a_is_shows_info->isChecked());
-    MyWidget::set_param("Main", "flag_show_debug",  a_is_shows_debug->isChecked());
     MyWidget::set_param("Main", "flag_show_error",  a_is_shows_error->isChecked());
+#ifdef QT_DEBUG
+    MyWidget::set_param("Main", "flag_show_debug",  a_is_shows_debug->isChecked());
     MyWidget::set_param("Main", "flag_show_trace",  a_is_shows_trace->isChecked());
+#endif
     if(ld)
     {
         ld->deleteLater();
@@ -352,19 +356,29 @@ void MainWindow::createMenus(void)
     }
 #ifndef NO_LOG
     a_is_shows_info  = new QAction(m_optionsMenu);
-    a_is_shows_debug = new QAction(m_optionsMenu);
     a_is_shows_error = new QAction(m_optionsMenu);
+
+#ifdef QT_DEBUG
+    a_is_shows_debug = new QAction(m_optionsMenu);
     a_is_shows_trace = new QAction(m_optionsMenu);
+#endif
 
     connect(a_is_shows_info,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_info(bool)));
-    connect(a_is_shows_debug,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_debug(bool)));
     connect(a_is_shows_error,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_error(bool)));
+#ifdef QT_DEBUG
+    connect(a_is_shows_debug,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_debug(bool)));
     connect(a_is_shows_trace,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_trace(bool)));
+#endif
 
     QVariant flag_show_info  = true;
-    QVariant flag_show_debug = true;
     QVariant flag_show_error = true;
+#ifdef QT_DEBUG
+    QVariant flag_show_debug = true;
     QVariant flag_show_trace = true;
+#else
+    QVariant flag_show_debug = false;
+    QVariant flag_show_trace = false;
+#endif
     MyWidget::get_param("Main", "flag_show_info",   true,   &flag_show_info);
     MyWidget::get_param("Main", "flag_show_debug",  true,   &flag_show_debug);
     MyWidget::get_param("Main", "flag_show_error",  true,   &flag_show_error);
@@ -373,19 +387,25 @@ void MainWindow::createMenus(void)
     a_is_shows_info->setCheckable(true);
     a_is_shows_info->setChecked(flag_show_info.toBool());
 
+#ifdef QT_DEBUG
     a_is_shows_debug->setCheckable(true);
     a_is_shows_debug->setChecked(flag_show_debug.toBool());
+#endif
 
     a_is_shows_error->setCheckable(true);
     a_is_shows_error->setChecked(flag_show_error.toBool());
 
+#ifdef QT_DEBUG
     a_is_shows_trace->setCheckable(true);
     a_is_shows_trace->setChecked(flag_show_trace.toBool());
+#endif
 
     m_optionsMenu->addAction(a_is_shows_info);
-    m_optionsMenu->addAction(a_is_shows_debug);
     m_optionsMenu->addAction(a_is_shows_error);
+#ifdef QT_DEBUG
+    m_optionsMenu->addAction(a_is_shows_debug);
     m_optionsMenu->addAction(a_is_shows_trace);
+#endif
 
     m_optionsMenu->addSeparator();
 #endif
@@ -465,9 +485,11 @@ void MainWindow::updateText(void)
 
 #ifndef NO_LOG
     a_is_shows_info->setText(tr("is_shows_info"));
-    a_is_shows_debug->setText(tr("is_shows_debug"));
     a_is_shows_error->setText(tr("is_shows_error"));
+#ifdef QT_DEBUG
+    a_is_shows_debug->setText(tr("is_shows_debug"));
     a_is_shows_trace->setText(tr("is_shows_trace"));
+#endif
 #endif
 
     a_AskExit->setText(tr("Do not ask when you exit"));
@@ -785,9 +807,11 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(syslog(int,QString,QString)),    ld,  SLOT(syslog(int,QString,QString)));
 
     slot_is_shows_info(a_is_shows_info->isChecked());
-    slot_is_shows_debug(a_is_shows_debug->isChecked());
     slot_is_shows_error(a_is_shows_error->isChecked());
+#ifdef QT_DEBUG
+    slot_is_shows_debug(a_is_shows_debug->isChecked());
     slot_is_shows_trace(a_is_shows_trace->isChecked());
+#endif
 
     addDockWidget(Qt::BottomDockWidgetArea, ld);
 }

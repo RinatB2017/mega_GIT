@@ -29,7 +29,10 @@
 #include <QPixmap>
 #include <QStyle>
 #include <QFrame>
-#include <QDebug>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "sendbox5.hpp"
 #include "defines.hpp"

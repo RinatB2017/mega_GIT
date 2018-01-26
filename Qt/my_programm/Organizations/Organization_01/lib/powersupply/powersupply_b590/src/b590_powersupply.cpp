@@ -196,7 +196,7 @@ void Powersupply_B590::init(void)
     connect(&serial, SIGNAL(info(QString)),     this, SIGNAL(info(QString)));
     connect(&serial, SIGNAL(debug(QString)),    this, SIGNAL(debug(QString)));
     connect(&serial, SIGNAL(error(QString)),    this, SIGNAL(error(QString)));
-    connect(&serial, SIGNAL(trace(QString)),  this, SIGNAL(trace(QString)));
+    connect(&serial, SIGNAL(trace(QString)),    this, SIGNAL(trace(QString)));
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -231,7 +231,6 @@ bool Powersupply_B590::find_device(void)
         serial.close();
     }
 
-    set_address(address);
     flag_closed = false;
     foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
     {
@@ -241,12 +240,20 @@ bool Powersupply_B590::find_device(void)
             if(flag_closed) return false;
 
             serial.setPort(port);
-            //emit info(QString("speed %1").arg(speed));
-            bool ok = serial.setBaudRate(speed);
-            if(ok)
+            if(serial.open(QIODevice::ReadWrite))
             {
-                if(serial.open(QIODevice::ReadWrite))
+                emit info(QString("BaudRate %1").arg(speed));
+                bool ok = serial.setBaudRate(speed);
+                if(ok)
                 {
+#ifndef FAKE
+                    if(serial.baudRate() != speed)
+                    {
+                        emit error(QString("ERROR: %1 != %2")
+                                   .arg(serial.baudRate())
+                                   .arg(speed));
+                    }
+#endif
                     uint8_t  type  = 0;
                     uint16_t year  = 0;
                     uint8_t  month = 0;
@@ -269,8 +276,8 @@ bool Powersupply_B590::find_device(void)
                     {
                         print_last_error();
                     }
-                    serial.close();
                 }
+                serial.close();
             }
         }
     }
@@ -406,7 +413,7 @@ int Powersupply_B590::send_cmd_0x11(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_11_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_11_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -455,7 +462,7 @@ int Powersupply_B590::send_cmd_0x12(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_12_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_12_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -504,7 +511,7 @@ int Powersupply_B590::send_cmd_0x15(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_15_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_15_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -553,7 +560,7 @@ int Powersupply_B590::send_cmd_0x16(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_16_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_16_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -602,7 +609,7 @@ int Powersupply_B590::send_cmd_0x17(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_17_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_17_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -651,7 +658,7 @@ int Powersupply_B590::send_cmd_0x41(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_41_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_41_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -701,7 +708,7 @@ int Powersupply_B590::send_cmd_0x42(unsigned char code_speed)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_42_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_42_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -825,7 +832,7 @@ int Powersupply_B590::send_cmd_0x46(uint8_t  *type,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf, sizeof(B590_CMD_46_QUESTION));
+    serial_send((const char *)question.buf, sizeof(B590_CMD_46_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -903,7 +910,7 @@ int Powersupply_B590::send_cmd_0x47(int32_t  *in_voltage,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_47_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_47_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -980,7 +987,7 @@ int Powersupply_B590::send_cmd_0x48(unsigned char new_address_MODBUS,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_48_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_48_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1052,7 +1059,7 @@ int Powersupply_B590::send_cmd_0x49(int32_t  voltage,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_49_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_49_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1140,7 +1147,7 @@ int Powersupply_B590::send_cmd_0x4A(uint32_t *bits,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_4A_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_4A_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1213,7 +1220,7 @@ int Powersupply_B590::send_cmd_0x54(unsigned char profile,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_54_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_54_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1302,7 +1309,7 @@ int Powersupply_B590::send_cmd_0x55(unsigned int *mototime_min)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_55_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_55_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1379,7 +1386,7 @@ int Powersupply_B590::send_cmd_0x56(uint8_t  profile,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_56_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_56_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1485,7 +1492,7 @@ int Powersupply_B590::send_cmd_0x57(uint16_t U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_57_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_57_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1557,7 +1564,7 @@ int Powersupply_B590::send_cmd_0x5A(uint16_t *setting_U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_5A_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_5A_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1633,7 +1640,7 @@ int Powersupply_B590::send_cmd_0x5B(uint32_t *U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_5B_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_5B_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1708,7 +1715,7 @@ int Powersupply_B590::send_cmd_0x5C(s_zero_b590_U zero_U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_5C_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_5C_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1780,7 +1787,7 @@ int Powersupply_B590::send_cmd_0x5D(s_zero_b590_U *zero_U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_5D_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_5D_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1864,7 +1871,7 @@ int Powersupply_B590::send_cmd_0x5E(uint8_t  profile,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_5E_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_5E_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -1962,7 +1969,7 @@ int Powersupply_B590::send_cmd_0x5F(unsigned char profile,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_5F_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_5F_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2039,7 +2046,7 @@ int Powersupply_B590::send_cmd_0x60(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_60_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_60_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2106,7 +2113,7 @@ int Powersupply_B590::send_cmd_0x61(int32_t *Value_ADC_Zero_U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_61_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_61_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2180,7 +2187,7 @@ int Powersupply_B590::send_cmd_0x62(int32_t *Value_ADC_Zero_I,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_62_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_62_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2259,7 +2266,7 @@ int Powersupply_B590::send_cmd_0x63(uint8_t  code,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_63_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_63_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2339,7 +2346,7 @@ int Powersupply_B590::send_cmd_0x64(char code)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_64_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_64_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2407,7 +2414,7 @@ int Powersupply_B590::send_cmd_0x65(uint8_t *number_current_point,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_65_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_65_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2482,7 +2489,7 @@ int Powersupply_B590::send_cmd_0x66(uint16_t code,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_66_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_66_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2560,7 +2567,7 @@ int Powersupply_B590::send_cmd_0x67(unsigned short speed_cooler,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_67_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_67_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2632,7 +2639,7 @@ int Powersupply_B590::send_cmd_0x68(unsigned short data_PWM,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_68_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_68_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2705,7 +2712,7 @@ int Powersupply_B590::send_cmd_0x69(unsigned short *OCR3A,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_69_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_69_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2776,7 +2783,7 @@ int Powersupply_B590::send_cmd_0x6A(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_6A_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_6A_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2852,7 +2859,7 @@ int Powersupply_B590::send_cmd_0x6B(void)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_6B_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_6B_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -2934,7 +2941,7 @@ int Powersupply_B590::send_cmd_0x6C(unsigned int number_string)
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_6C_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_6C_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3091,7 +3098,7 @@ int Powersupply_B590::send_cmd_0x6D(uint8_t secret_cmd,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_6D_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_6D_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3170,7 +3177,7 @@ int Powersupply_B590::send_cmd_0x6E(unsigned char profile,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_6E_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_6E_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3254,7 +3261,7 @@ int Powersupply_B590::send_cmd_0x6F(unsigned char profile,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_6F_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_6F_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3336,7 +3343,7 @@ int Powersupply_B590::send_cmd_0x71(unsigned char *state_ADC_U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_71_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_71_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3409,7 +3416,7 @@ int Powersupply_B590::send_cmd_0x72(unsigned short conf_ADC,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_72_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_72_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3481,7 +3488,7 @@ int Powersupply_B590::send_cmd_0x73(unsigned short *real_DAC_U,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_73_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_73_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3558,7 +3565,7 @@ int Powersupply_B590::send_cmd_0x75(unsigned char *count_ReStart_ADC_1,
 
     data_powersupply.clear();
     is_ready = false;
-    serial.write((const char *)question.buf,sizeof(B590_CMD_75_QUESTION));
+    serial_send((const char *)question.buf,sizeof(B590_CMD_75_QUESTION));
 #ifndef FAST_COMMAND
     wait(delay_ms);
 #else
@@ -3612,6 +3619,17 @@ bool Powersupply_B590::rc_off(void)
 {
     int err = send_cmd_0x6B();
     return (err == E_B590_NO_ERROR);
+}
+//--------------------------------------------------------------------------------
+void Powersupply_B590::set_address(int new_address)
+{
+    emit debug(QString("new_address: %1").arg(new_address));
+    address = new_address;
+}
+//--------------------------------------------------------------------------------
+int Powersupply_B590::get_address(void)
+{
+    return address;
 }
 //--------------------------------------------------------------------------------
 void Powersupply_B590::close_connect(void)
@@ -3825,6 +3843,8 @@ void Powersupply_B590::wait(int time_msec)
 #else
     QTime time;
 
+    //emit debug(QString("wait: time_msec = %1").arg(time_msec));
+
     time.start();
     while(true)
     {
@@ -3870,11 +3890,6 @@ void Powersupply_B590::wait(int max_len,
 void Powersupply_B590::msgError(const QString &message)
 {
     QMessageBox::critical(0, tr("Ошибка"), message);
-}
-//--------------------------------------------------------------------------------
-void Powersupply_B590::set_address(int new_address)
-{
-    address = new_address;
 }
 //--------------------------------------------------------------------------------
 bool Powersupply_B590::Set_DAC_U_I(signed int U,signed int I)
@@ -6221,6 +6236,15 @@ bool Powersupply_B590::get_error(uint32_t *bits, uint16_t *code)
 {
     int err = send_cmd_0x4A(bits, code);
     return (err == E_B590_NO_ERROR);
+}
+//--------------------------------------------------------------------------------
+void Powersupply_B590::serial_send(const char *data, int len)
+{
+    QByteArray ba;
+    ba.append(data, len);
+    emit debug(QString("serial_send: [%1]").arg(ba.toHex().data()));
+
+    serial.write(data, len);
 }
 //--------------------------------------------------------------------------------
 bool Powersupply_B590::get_info(QTextEdit *log)

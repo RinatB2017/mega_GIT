@@ -545,8 +545,11 @@ void B590::createPowersupply(void)
 
     connect(ui->btn_close_connect, SIGNAL(pressed()), powersupply, SLOT(close_connect()));
 
+    connect(ui->sb_address, SIGNAL(valueChanged(int)),  powersupply,   SLOT(set_address(int)));
+
 #ifdef ADD_TOOLBAR
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
 
     if(mw)
     {

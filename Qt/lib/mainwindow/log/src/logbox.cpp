@@ -261,6 +261,10 @@ void LogBox::infoLog(const QString &text)
 //--------------------------------------------------------------------------------
 void LogBox::debugLog(const QString &text)
 {
+#ifndef QT_DEBUG
+    return;
+#endif
+
     if(flag_is_shows_debug == false)
     {
         return;
@@ -341,6 +345,10 @@ void LogBox::errorLog(const QString &text)
 //--------------------------------------------------------------------------------
 void LogBox::traceLog(const QString &text)
 {
+#ifndef QT_DEBUG
+    return;
+#endif
+
     if(flag_is_shows_trace == false)
     {
         return;

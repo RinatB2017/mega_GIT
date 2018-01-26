@@ -181,19 +181,16 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
-//#include "upacket.hpp"
-//#pragma pack (push, 1)
-//    typedef struct HEADER
-//    {
-//        uint16_t    address;
-//        uint8_t     cmd;
-//        uint16_t    len_data;
-//    } *header_t;
-//#pragma pack(pop)
-
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+#if 1
+    emit info("info");
+    emit debug("debug");
+    emit error("error");
+    emit trace("trace");
+#endif
 
 #if 0
     QByteArray packet;

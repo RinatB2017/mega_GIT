@@ -225,8 +225,7 @@ bool MainBox::find_start(void)
             }
         }
     }
-    if(cnt == 1) return true;
-    return false;
+    return (cnt == 1);
 }
 //--------------------------------------------------------------------------------
 void MainBox::start(void)
@@ -236,7 +235,7 @@ void MainBox::start(void)
     ok = find_start();
     if(!ok)
     {
-        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(PLAYER_ID));
+        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(START_ID));
         return;
     }
     ok = find_player();
@@ -245,16 +244,30 @@ void MainBox::start(void)
         QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(PLAYER_ID));
         return;
     }
+    cnt_move = 0;
     timer->start(ui->sb_interval->value());
+    unsetCursor();
 }
 //--------------------------------------------------------------------------------
 void MainBox::stop(void)
 {
     timer->stop();
+    unsetCursor();
 }
 //--------------------------------------------------------------------------------
 void MainBox::update(void)
 {
+    int x = rand() % 100;
+    switch(x)
+    {
+    case 0: direction_move = UP;    break;
+    case 1: direction_move = DOWN;  break;
+    case 2: direction_move = LEFT;  break;
+    case 3: direction_move = RIGHT; break;
+    default:
+        break;
+    }
+
     switch(direction_move)
     {
     case UP:
@@ -289,7 +302,9 @@ void MainBox::player_move_up(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        messagebox_info("Победа!", "Цель достигнута!");
+        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
+        emit info(temp);
+        QMessageBox::information(this, "Победа!", temp);
         return;
     }
 
@@ -300,6 +315,7 @@ void MainBox::player_move_up(void)
         player_x--;
         put_picture(PLAYER_ID, player_x, player_y);
         direction_move = LEFT;
+        cnt_move++;
         return;
     }
 
@@ -309,6 +325,7 @@ void MainBox::player_move_up(void)
         put_picture(SPACE_ID, player_x, player_y);
         player_y--;
         put_picture(PLAYER_ID, player_x, player_y);
+        cnt_move++;
     }
     else
     {
@@ -322,7 +339,9 @@ void MainBox::player_move_down(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QMessageBox::information(this, "Победа!", "Цель достигнута!");
+        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
+        emit info(temp);
+        QMessageBox::information(this, "Победа!", temp);
         return;
     }
 
@@ -333,6 +352,7 @@ void MainBox::player_move_down(void)
         player_x++;
         put_picture(PLAYER_ID, player_x, player_y);
         direction_move = RIGHT;
+        cnt_move++;
         return;
     }
 
@@ -342,6 +362,7 @@ void MainBox::player_move_down(void)
         put_picture(SPACE_ID, player_x, player_y);
         player_y++;
         put_picture(PLAYER_ID, player_x, player_y);
+        cnt_move++;
     }
     else
     {
@@ -355,7 +376,9 @@ void MainBox::player_move_left(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QMessageBox::information(this, "Победа!", "Цель достигнута!");
+        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
+        emit info(temp);
+        QMessageBox::information(this, "Победа!", temp);
         return;
     }
 
@@ -366,6 +389,7 @@ void MainBox::player_move_left(void)
         player_y++;
         put_picture(PLAYER_ID, player_x, player_y);
         direction_move = DOWN;
+        cnt_move++;
         return;
     }
 
@@ -375,6 +399,7 @@ void MainBox::player_move_left(void)
         put_picture(SPACE_ID, player_x, player_y);
         player_x--;
         put_picture(PLAYER_ID, player_x, player_y);
+        cnt_move++;
     }
     else
     {
@@ -388,7 +413,9 @@ void MainBox::player_move_right(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QMessageBox::information(this, "Победа!", "Цель достигнута!");
+        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
+        emit info(temp);
+        QMessageBox::information(this, "Победа!", temp);
         return;
     }
 
@@ -399,6 +426,7 @@ void MainBox::player_move_right(void)
         player_y--;
         put_picture(PLAYER_ID, player_x, player_y);
         direction_move = UP;
+        cnt_move++;
         return;
     }
 
@@ -408,6 +436,7 @@ void MainBox::player_move_right(void)
         put_picture(SPACE_ID, player_x, player_y);
         player_x++;
         put_picture(PLAYER_ID, player_x, player_y);
+        cnt_move++;
     }
     else
     {

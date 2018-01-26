@@ -181,11 +181,18 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
+#include <QDebug>
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 1
+#if 0
+    qInfo() << "info";
+    qDebug() << "debug";
+    qCritical() << "critical";
+#endif
+
+#if 0
     emit info("info");
     emit debug("debug");
     emit error("error");

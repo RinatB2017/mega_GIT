@@ -79,6 +79,8 @@ private:
     int start_y = 0;
     QTimer *timer = 0;
 
+    quint64 cnt_move = 0;
+
     int id_map[MAX_WIDTH][MAX_HEIGHT];
 
     void init(void);

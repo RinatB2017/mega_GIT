@@ -57,11 +57,13 @@ public:
 private slots:
     void start(void);
     void stop(void);
-    void refresh(void);
+    void update(void);
 
     void new_map(void);
     void load_map(void);
     void save_map(void);
+
+    void set_cursor(void);
 
 private:
     MySplashScreen *splash = 0;
@@ -69,15 +71,51 @@ private:
 
     QComboBox *cb_test = 0;
 
+    int id = 0;
+    int direction_move = 0;
+    int player_x = 0;
+    int player_y = 0;
+    int start_x = 0;
+    int start_y = 0;
+    QTimer *timer = 0;
+
+    quint64 cnt_move = 0;
+
+    int id_map[MAX_WIDTH][MAX_HEIGHT];
+
     void init(void);
+    void init_id_map(void);
+
+    void new_map(int max_x, int max_y);
+    bool load_map(const QString &filename);
+    bool save_map(const QString &filename);
+
+    bool put_picture(int id, int x, int y);
+    int  get_picture_id(int x, int y);
 
     void init_widgets(void);
+    void createTimer(void);
     void createImagesDock(void);
+
+    bool find_player(void);
+    bool find_start(void);
+
+    QPixmap rotate(const QString &filename, int angle);
+
+    void player_move_up(void);
+    void player_move_down(void);
+    void player_move_left(void);
+    void player_move_right(void);
 
     QToolButton *create_button(const QString &name, int id);
 
+    void block_this_button(bool state);
+    void block_interface(bool state);
+
     void updateText(void);
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

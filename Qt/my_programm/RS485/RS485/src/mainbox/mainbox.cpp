@@ -67,6 +67,7 @@ void MainBox::init(void)
 
     ui->serial_widget->set_caption("RS-485");
     ui->serial_widget->add_menu(2);
+    ui->serial_widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));

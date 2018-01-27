@@ -32,25 +32,21 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#if 1
+
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
-        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
         if(app.sendMessage("Wake up!")) return 0;
     }
-#else
-    MyApplication app(argc, argv);
-#endif
-
-#ifdef UNDER_CONSTRUCTION
-    MyWidget::messagebox_warning("Warning", "UNDER_CONSTRUCTION");
-#endif
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+#ifdef UNDER_CONSTRUCTION
+    MyWidget::messagebox_warning("Warning", "UNDER_CONSTRUCTION");
+#endif
 
     QPixmap pixmap(":/logo/pinguin.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
@@ -61,8 +57,11 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
+    Q_CHECK_PTR(main_window);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    Q_CHECK_PTR(mainBox);
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

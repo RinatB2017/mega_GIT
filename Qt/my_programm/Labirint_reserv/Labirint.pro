@@ -2,13 +2,13 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE    = app
-TARGET      = RS485
+TEMPLATE = app
+TARGET   = Labirint
 
-FOLDER      = RS485
+FOLDER  = old_programm
 
 DEPENDPATH  += \
-    ../common \
+    $$PWD \
     $$PWD/src \
     $$PWD/src/mainbox \
     $$PWD/src/mainbox/ui
@@ -16,35 +16,27 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-#DEFINES += RS232_FIXED_SIZE
-#DEFINES += RS232_SEND
-#DEFINES += RS232_LOG
-
 DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
 
-DEFINES += UNDER_CONSTRUCTION
-
-DEFINES += DEMO
-DEFINES += "DEMO_YEAR=2018"
-DEFINES += "DEMO_MONTH=2"
-DEFINES += "DEMO_DAY=1"
+DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
-    packet.hpp
+    mainbox.hpp
 
 SOURCES += \
     mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += mainbox.ui
+
+RESOURCES   += \
+    images/buttons.qrc \
+    map/map.qrc
 
 OTHER_FILES += doc/notebook.txt
 
@@ -52,24 +44,15 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
-LIB_PATH2 = "../../../lib2"
+LIB_PATH = "../../lib"
+LIB_PATH2 = "../../lib2"
 
+include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
-include ($$LIB_PATH2/crc/crc.pri)
-
-include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
-
-include (src/pelcod/pelcod.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
-}
-
-lessThan(QT_MAJOR_VERSION, 5) {
-    error (Only Qt5)
 }
 
 VPATH = $$INCLUDEPATH

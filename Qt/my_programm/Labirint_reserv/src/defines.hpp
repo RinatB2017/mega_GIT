@@ -1,7 +1,9 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#include "version.hpp"
+#ifdef Q_OS_WIN
+//#   include <winsock2.h>
+#endif
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Labirint"
@@ -18,16 +20,11 @@
 #define START_ID    30
 #define EXIT_ID     1
 //--------------------------------------------------------------------------------
-#define MIN_INTERVAL_MS 0
-#define MAX_INTERVAL_MS 10000
-//--------------------------------------------------------------------------------
 #define MIN_WIDTH   5
 #define MAX_WIDTH   25
 
 #define MIN_HEIGHT   5
 #define MAX_HEIGHT   25
-//--------------------------------------------------------------------------------
-#define GROUP_NAME  "LABIRINT"
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM   ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------

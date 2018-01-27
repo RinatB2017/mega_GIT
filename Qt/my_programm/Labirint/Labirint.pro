@@ -50,6 +50,8 @@ LIB_PATH2 = "../../lib2"
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
+include (src/map/map.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

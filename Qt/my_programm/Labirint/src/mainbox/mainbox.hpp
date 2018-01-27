@@ -54,6 +54,8 @@ private slots:
     void load_map(void);
     void save_map(void);
 
+    void test(void);
+
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;

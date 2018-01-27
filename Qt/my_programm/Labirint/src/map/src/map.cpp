@@ -55,15 +55,7 @@ void Map::init(void)
     {
         for(int x=0; x<25; x++)
         {
-            QPixmap pixmap;
-            pixmap.load(":/images/5.png");
-
-            QLabel *label = new QLabel();
-            label->setProperty("property_id", 5);
-            label->installEventFilter(this);
-            label->setPixmap(pixmap);
-
-            grid_map->addWidget(label, y, x);
+            add_item(x, y, SPACE_ID);
         }
     }
 #endif
@@ -91,48 +83,6 @@ void Map::init_id_map(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool Map::put_picture(int id,
-                      int x,
-                      int y)
-{
-    QPixmap pixmap;
-    bool ok = pixmap.load(QString(":/images/%1.png").arg(id));
-    if(!ok)
-    {
-        return false;
-    }
-
-    QLabel *label = new QLabel();
-    label->setProperty("property_id", id);
-
-    QLayoutItem *item = grid_map->itemAtPosition(y, x);
-    if(item)
-    {
-        QLabel *w = (QLabel *)item->widget();
-        if(w)
-        {
-            w->setPixmap(pixmap);
-            w->setProperty("property_id", id);
-        }
-    }
-    return true;
-}
-//--------------------------------------------------------------------------------
-int Map::get_picture_id(int x, int y)
-{
-    int id = -1;
-    QLayoutItem *item = grid_map->itemAtPosition(y, x);
-    if(item)
-    {
-        QLabel *w = (QLabel *)item->widget();
-        if(w)
-        {
-            id = w->property("property_id").toInt();
-        }
-    }
-    return id;
-}
-//--------------------------------------------------------------------------------
 void Map::new_map(int max_x, int max_y)
 {
     if(max_x < MIN_WIDTH) max_x = MIN_WIDTH;
@@ -140,32 +90,33 @@ void Map::new_map(int max_x, int max_y)
     if(max_y < MIN_HEIGHT) max_y = MIN_HEIGHT;
     if(max_y > MAX_HEIGHT) max_y = MAX_HEIGHT;
 
+    this->max_x = max_x;
+    this->max_y = max_y;
+
     //---
+#if 1
     QLayoutItem *child;
     while ((child = grid_map->takeAt(0)) != 0)
     {
+        grid_map->removeItem(child);
         if (child->widget())
             delete child->widget();
         if (child->layout())
             delete child->layout();
         delete child;
     }
+#endif
     //---
+    //FIXME
+    //grid_map->setColumnCount(max_x);
+    //grid_map->setRowCount(max_y);
 
     // заполнение карты
     for(int y=1; y<(max_y-1); y++)
     {
         for(int x=1; x<(max_x-1); x++)
         {
-            QPixmap pixmap;
-            pixmap.load(":/images/5.png");
-
-            QLabel *label = new QLabel();
-            label->setProperty("property_id", 5);
-            label->installEventFilter(this);
-            label->setPixmap(pixmap);
-
-            grid_map->addWidget(label, y, x);
+            add_item(x, y, SPACE_ID);
         }
     }
     //заполнение бордюра карты
@@ -174,35 +125,19 @@ void Map::new_map(int max_x, int max_y)
 
     for(int x=0; x<max_x; x++)
     {
-        QLabel *l_wall = new QLabel();
-        l_wall->setProperty("property_id", 13);
-        l_wall->installEventFilter(this);
-        l_wall->setPixmap(p_wall);
-        grid_map->addWidget(l_wall, 0, x);
+        add_item(x, 0, WALL_ID);
     }
     for(int x=0; x<max_x; x++)
     {
-        QLabel *l_wall = new QLabel();
-        l_wall->setProperty("property_id", 13);
-        l_wall->installEventFilter(this);
-        l_wall->setPixmap(p_wall);
-        grid_map->addWidget(l_wall, max_y, x);
+        add_item(x, max_y, WALL_ID);
     }
     for(int y=1; y<(max_y-1); y++)
     {
-        QLabel *l_wall = new QLabel();
-        l_wall->setProperty("property_id", 13);
-        l_wall->installEventFilter(this);
-        l_wall->setPixmap(p_wall);
-        grid_map->addWidget(l_wall, y, 0);
+        add_item(0, y, WALL_ID);
     }
     for(int y=1; y<(max_y-1); y++)
     {
-        QLabel *l_wall = new QLabel();
-        l_wall->setProperty("property_id", 13);
-        l_wall->installEventFilter(this);
-        l_wall->setPixmap(p_wall);
-        grid_map->addWidget(l_wall, y, max_x-1);
+        add_item(max_x-1, y, WALL_ID);
     }
     //
 }
@@ -220,6 +155,8 @@ bool Map::load_map(const QString &filename)
     direction_move   = RIGHT;
     player_x = 1;
     player_y = 1;
+
+    init_id_map();
 
     QXmlGet *xmlGet = new QXmlGet();
     bool ok = xmlGet->load(filename);
@@ -257,8 +194,8 @@ bool Map::load_map(const QString &filename)
         return false;
     }
 
-    emit debug(QString("width %1").arg(w));
-    emit debug(QString("height %1").arg(h));
+    emit info(QString("width  %1").arg(w));
+    emit info(QString("height %1").arg(h));
 
     new_map(w, h);
 
@@ -279,17 +216,58 @@ bool Map::load_map(const QString &filename)
         emit trace(ba.toHex());
         for(int x=0; x<ba.length(); x++)
         {
-            ok = put_picture(ba.at(x), x, y);
-            if(ok)
-            {
-                id_map[x][y] = ba.at(x);
-            }
+            add_item(x, y, ba.at(x));
         }
 
         y++;
         ok = xmlGet->findNext("items");
     }
     return true;
+}
+//--------------------------------------------------------------------------------
+uint8_t Map::get_id(int x, int y)
+{
+    return id_map[x][y];
+}
+//--------------------------------------------------------------------------------
+bool Map::add_item(int x, int y, int id)
+{
+    if(x < 0)   return false;
+    if(y < 0)   return false;
+    if(x >= MAX_WIDTH)   return false;
+    if(y >= MAX_HEIGHT)  return false;
+
+    QPixmap pixmap;
+    QLabel *label = 0;
+
+    switch (id)
+    {
+    case PLAYER_ID:
+    case WALL_ID:
+    case SPACE_ID:
+    case START_ID:
+    case EXIT_ID:
+        pixmap.load(QString(":/images/%1.png").arg(id));
+
+        label = new QLabel();
+        label->setProperty("property_id", SPACE_ID);
+        label->installEventFilter(this);
+        label->setPixmap(pixmap);
+
+        id_map[x][y] = id;
+        grid_map->addWidget(label, y, x);
+        return true;
+
+    default:
+        emit error(QString("item %1 is not valid").arg(id));
+        break;
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+void Map::put_picture(int id, int x, int y)
+{
+    add_item(x, y, id);
 }
 //--------------------------------------------------------------------------------
 bool Map::save_map(const QString &filename)
@@ -300,7 +278,39 @@ bool Map::save_map(const QString &filename)
         return false;
     }
 
-    emit info(QString("save_map(%1)").arg(filename));
+    QXmlPut *xmlPut = new QXmlPut("Map");
+    Q_CHECK_PTR(xmlPut);
+
+    xmlPut->putInt("width",  grid_map->columnCount());
+    xmlPut->putInt("height", grid_map->rowCount());
+
+    for(int y=0; y<grid_map->rowCount(); y++)
+    {
+        QByteArray ba;
+        ba.clear();
+
+        QString temp;
+        temp.clear();
+        for(int x=0; x<grid_map->columnCount(); x++)
+        {
+            QLayoutItem *item = grid_map->itemAtPosition(y, x);
+            if(item)
+            {
+                QWidget *w = item->widget();
+                if(w)
+                {
+                    int id = w->property("property_id").toInt();
+                    ba.append(id);
+                    temp.append(QString("%1 ").arg(id));
+                    //sl.append(QString("%1 ").arg(id));
+                }
+            }
+        }
+        //emit debug(temp);
+        xmlPut->putString("items", ba.toHex());
+    }
+
+    xmlPut->save(filename);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -311,7 +321,7 @@ bool Map::find_start(int *x, int *y)
     {
         for(int x=0; x<grid_map->columnCount(); x++)
         {
-            int id = get_picture_id(x, y);
+            int id = get_id(x, y);
             if(id == START_ID)
             {
                 start_x = x;
@@ -335,7 +345,7 @@ bool Map::find_player(int *x, int *y)
     {
         for(int x=0; x<grid_map->columnCount(); x++)
         {
-            int id = get_picture_id(x, y);
+            int id = get_id(x, y);
             if(id == PLAYER_ID)
             {
                 player_x = x;
@@ -428,17 +438,19 @@ void Map::refresh(void)
 //--------------------------------------------------------------------------------
 int Map::rowCount(void)
 {
-    return grid_map->rowCount();
+    return max_x;
+    //return grid_map->rowCount();
 }
 //--------------------------------------------------------------------------------
 int Map::columnCount(void)
 {
-    return grid_map->columnCount();
+    return max_y;
+    //return grid_map->columnCount();
 }
 //--------------------------------------------------------------------------------
 void Map::player_move_up(void)
 {
-    int id_victory = get_picture_id(player_x, player_y-1);
+    int id_victory = get_id(player_x, player_y-1);
     if(id_victory == EXIT_ID)
     {
         timer->stop();
@@ -448,7 +460,7 @@ void Map::player_move_up(void)
         return;
     }
 
-    int id_left = get_picture_id(player_x-1, player_y);
+    int id_left = get_id(player_x-1, player_y);
     if(id_left == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);
@@ -459,7 +471,7 @@ void Map::player_move_up(void)
         return;
     }
 
-    int id_up = get_picture_id(player_x, player_y-1);
+    int id_up = get_id(player_x, player_y-1);
     if(id_up == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);
@@ -475,7 +487,7 @@ void Map::player_move_up(void)
 //--------------------------------------------------------------------------------
 void Map::player_move_down(void)
 {
-    int id_victory = get_picture_id(player_x, player_y+1);
+    int id_victory = get_id(player_x, player_y+1);
     if(id_victory == EXIT_ID)
     {
         timer->stop();
@@ -485,7 +497,7 @@ void Map::player_move_down(void)
         return;
     }
 
-    int id_right = get_picture_id(player_x+1, player_y);
+    int id_right = get_id(player_x+1, player_y);
     if(id_right == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);
@@ -496,7 +508,7 @@ void Map::player_move_down(void)
         return;
     }
 
-    int id_down = get_picture_id(player_x, player_y+1);
+    int id_down = get_id(player_x, player_y+1);
     if(id_down == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);
@@ -512,7 +524,7 @@ void Map::player_move_down(void)
 //--------------------------------------------------------------------------------
 void Map::player_move_left(void)
 {
-    int id_victory = get_picture_id(player_x-1, player_y);
+    int id_victory = get_id(player_x-1, player_y);
     if(id_victory == EXIT_ID)
     {
         timer->stop();
@@ -522,7 +534,7 @@ void Map::player_move_left(void)
         return;
     }
 
-    int id_down = get_picture_id(player_x, player_y+1);
+    int id_down = get_id(player_x, player_y+1);
     if(id_down == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);
@@ -533,7 +545,7 @@ void Map::player_move_left(void)
         return;
     }
 
-    int id_left = get_picture_id(player_x-1, player_y);
+    int id_left = get_id(player_x-1, player_y);
     if(id_left == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);
@@ -549,7 +561,7 @@ void Map::player_move_left(void)
 //--------------------------------------------------------------------------------
 void Map::player_move_right(void)
 {
-    int id_victory = get_picture_id(player_x+1, player_y);
+    int id_victory = get_id(player_x+1, player_y);
     if(id_victory == EXIT_ID)
     {
         timer->stop();
@@ -559,7 +571,7 @@ void Map::player_move_right(void)
         return;
     }
 
-    int id_up = get_picture_id(player_x, player_y-1);
+    int id_up = get_id(player_x, player_y-1);
     if(id_up == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);
@@ -570,7 +582,7 @@ void Map::player_move_right(void)
         return;
     }
 
-    int id_right = get_picture_id(player_x+1, player_y);
+    int id_right = get_id(player_x+1, player_y);
     if(id_right == SPACE_ID)
     {
         put_picture(SPACE_ID, player_x, player_y);

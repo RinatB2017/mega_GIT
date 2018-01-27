@@ -93,6 +93,8 @@ void MainBox::init_widgets(void)
     connect(ui->btn_start,      SIGNAL(clicked(bool)),  this,   SLOT(start()));
     connect(ui->btn_stop,       SIGNAL(clicked(bool)),  this,   SLOT(stop()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+
+    connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::lock_widgets(void)
@@ -103,6 +105,8 @@ void MainBox::lock_widgets(void)
     ui->btn_start->setDisabled(true);
     ui->btn_stop->setDisabled(false);
     ui->btn_refresh->setDisabled(true);
+
+    ui->sb_interval->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
 void MainBox::unlock_widgets(void)
@@ -113,6 +117,8 @@ void MainBox::unlock_widgets(void)
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setEnabled(false);
     ui->btn_refresh->setEnabled(true);
+
+    ui->sb_interval->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 QToolButton * MainBox::create_button(const QString &name,
@@ -174,6 +180,28 @@ void MainBox::stop(void)
 void MainBox::refresh(void)
 {
     ui->map_widget->refresh();
+}
+//--------------------------------------------------------------------------------
+void MainBox::test(void)
+{
+    emit info("test");
+
+#if 1
+    emit info(QString("col %1").arg(ui->map_widget->columnCount()));
+    emit info(QString("row %1").arg(ui->map_widget->rowCount()));
+#endif
+
+#if 1
+    for(int y=0; y<ui->map_widget->rowCount(); y++)
+    {
+        QString temp;
+        for(int x=0; x<ui->map_widget->columnCount(); x++)
+        {
+            temp.append(QString("%1").arg(ui->map_widget->get_id(x, y), 2, 16, QChar('0')));
+        }
+        emit info(temp);
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::new_map(void)

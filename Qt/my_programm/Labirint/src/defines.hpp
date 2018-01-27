@@ -21,6 +21,8 @@
 #define MIN_INTERVAL_MS 0
 #define MAX_INTERVAL_MS 10000
 //--------------------------------------------------------------------------------
+#define PROPERTY_ID "property_id"
+//--------------------------------------------------------------------------------
 #define MIN_WIDTH   5
 #define MAX_WIDTH   25
 

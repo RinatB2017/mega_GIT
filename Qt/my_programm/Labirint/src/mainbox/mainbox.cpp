@@ -135,7 +135,7 @@ QToolButton * MainBox::create_button(const QString &name,
     btn->setIcon(icon);
     btn->setToolTip(name);
     btn->setAutoExclusive(true);
-    btn->setProperty("property_id", id);
+    btn->setProperty(PROPERTY_ID, id);
 
     connect(btn, SIGNAL(clicked(bool)), ui->map_widget, SLOT(set_cursor()));
 
@@ -251,7 +251,7 @@ void MainBox::load_map(void)
     emit info("Load MAP");
 
 #if 0
-    load_map("map.dat");
+    ui->map_widget->load_map("map.dat");
 #else
     QFileDialog *dlg;
 
@@ -274,8 +274,8 @@ void MainBox::save_map(void)
 {
     emit info("Save MAP");
 
-#if 0
-    save_map("map.dat");
+#if 1
+    ui->map_widget->save_map("map.dat");
 #else
     QFileDialog *dlg;
 

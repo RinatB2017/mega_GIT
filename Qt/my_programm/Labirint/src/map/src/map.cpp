@@ -129,7 +129,7 @@ void Map::new_map(int max_x, int max_y)
     }
     for(int x=0; x<max_x; x++)
     {
-        add_item(x, max_y, WALL_ID);
+        add_item(x, max_y-1, WALL_ID);
     }
     for(int y=1; y<(max_y-1); y++)
     {
@@ -139,7 +139,13 @@ void Map::new_map(int max_x, int max_y)
     {
         add_item(max_x-1, y, WALL_ID);
     }
-    //
+    //TODO
+#if 0
+    add_item(0,         0,          START_ID);
+    add_item(max_x-1,   0,          START_ID);
+    add_item(0,         max_y-1,    START_ID);
+    add_item(max_x-1,   max_y-1,    START_ID);
+#endif
 }
 //--------------------------------------------------------------------------------
 bool Map::load_map(const QString &filename)
@@ -240,6 +246,7 @@ bool Map::add_item(int x, int y, int id)
     QPixmap pixmap;
     QLabel *label = 0;
 
+    bool ok = false;
     switch (id)
     {
     case PLAYER_ID:
@@ -250,19 +257,20 @@ bool Map::add_item(int x, int y, int id)
         pixmap.load(QString(":/images/%1.png").arg(id));
 
         label = new QLabel();
-        label->setProperty("property_id", SPACE_ID);
+        label->setProperty(PROPERTY_ID, id);
         label->installEventFilter(this);
         label->setPixmap(pixmap);
 
         id_map[x][y] = id;
         grid_map->addWidget(label, y, x);
-        return true;
+        ok = true;
+        break;
 
     default:
         emit error(QString("item %1 is not valid").arg(id));
         break;
     }
-    return false;
+    return ok;
 }
 //--------------------------------------------------------------------------------
 void Map::put_picture(int id, int x, int y)
@@ -294,19 +302,23 @@ bool Map::save_map(const QString &filename)
         for(int x=0; x<grid_map->columnCount(); x++)
         {
             QLayoutItem *item = grid_map->itemAtPosition(y, x);
+            Q_CHECK_PTR(item);
             if(item)
             {
                 QWidget *w = item->widget();
+                Q_CHECK_PTR(w);
                 if(w)
                 {
-                    int id = w->property("property_id").toInt();
-                    ba.append(id);
+                    int id = w->property(PROPERTY_ID).toInt();
+                    if(id == PLAYER_ID)
+                    {
+                        emit info("PLAYER FOUND");
+                    }
+                    ba.append((char)id);
                     temp.append(QString("%1 ").arg(id));
-                    //sl.append(QString("%1 ").arg(id));
                 }
             }
         }
-        //emit debug(temp);
         xmlPut->putString("items", ba.toHex());
     }
 
@@ -606,7 +618,7 @@ bool Map::eventFilter(QObject *obj, QEvent *event)
             if(label)
             {
                 label->setPixmap(cursor().pixmap());
-                label->setProperty("property_id", id);
+                label->setProperty(PROPERTY_ID, id);
             }
         }
         return true;
@@ -623,7 +635,7 @@ void Map::set_cursor(void)
         return;
     }
 
-    id = btn->property("property_id").toInt();
+    id = btn->property(PROPERTY_ID).toInt();
     setCursor(QCursor(btn->icon().pixmap(32, 32)));
 }
 //--------------------------------------------------------------------------------

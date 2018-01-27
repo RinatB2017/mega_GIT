@@ -71,6 +71,7 @@ void MainBox::init(void)
     ui->map_widget->load_map(":/map.dat");
 
     load_widgets(GROUP_NAME);
+    unlock_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
@@ -92,6 +93,26 @@ void MainBox::init_widgets(void)
     connect(ui->btn_start,      SIGNAL(clicked(bool)),  this,   SLOT(start()));
     connect(ui->btn_stop,       SIGNAL(clicked(bool)),  this,   SLOT(stop()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::lock_widgets(void)
+{
+    ui->btn_load_map->setDisabled(true);
+    ui->btn_new_game->setDisabled(true);
+    ui->btn_save_map->setDisabled(true);
+    ui->btn_start->setDisabled(true);
+    ui->btn_stop->setDisabled(false);
+    ui->btn_refresh->setDisabled(true);
+}
+//--------------------------------------------------------------------------------
+void MainBox::unlock_widgets(void)
+{
+    ui->btn_load_map->setEnabled(true);
+    ui->btn_new_game->setEnabled(true);
+    ui->btn_save_map->setEnabled(true);
+    ui->btn_start->setEnabled(true);
+    ui->btn_stop->setEnabled(false);
+    ui->btn_refresh->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 QToolButton * MainBox::create_button(const QString &name,
@@ -141,11 +162,13 @@ void MainBox::createImagesDock(void)
 void MainBox::start(void)
 {
     ui->map_widget->start(ui->sb_interval->value());
+    lock_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::stop(void)
 {
     ui->map_widget->stop();
+    unlock_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::refresh(void)

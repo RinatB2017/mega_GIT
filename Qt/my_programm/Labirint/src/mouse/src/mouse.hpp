@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,60 +18,32 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef MOUSE_HPP
+#define MOUSE_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
-#include <QList>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
 #include "defines.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class Mouse;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Mouse : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void start(void);
-    void stop(void);
-    void refresh(void);
-
-    void new_map(void);
-    void load_map(void);
-    void save_map(void);
+    Mouse(QWidget *parent = 0);
+    ~Mouse();
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
+    Ui::Mouse *ui = 0;
 
     void init(void);
-
-    void init_widgets(void);
-    void createImagesDock(void);
-
-    void lock_widgets(void);
-    void unlock_widgets(void);
-
-    QToolButton *create_button(const QString &name, int id);
-
     void updateText(void);
 
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // MOUSE_HPP

@@ -258,6 +258,8 @@ bool Map::add_item(int x, int y, int id)
 
         label = new QLabel();
         label->setProperty(PROPERTY_ID, id);
+        label->setProperty(PROPERTY_X, x);
+        label->setProperty(PROPERTY_Y, y);
         label->installEventFilter(this);
         label->setPixmap(pixmap);
 
@@ -289,48 +291,39 @@ bool Map::save_map(const QString &filename)
     QXmlPut *xmlPut = new QXmlPut("Map");
     Q_CHECK_PTR(xmlPut);
 
-    xmlPut->putInt("width",  grid_map->columnCount());
-    xmlPut->putInt("height", grid_map->rowCount());
+    int w = columnCount();
+    int h = rowCount();
 
-    for(int y=0; y<grid_map->rowCount(); y++)
+    emit info(QString("save width  %1").arg(w));
+    emit info(QString("save height %1").arg(h));
+
+    xmlPut->putInt("width",  w);
+    xmlPut->putInt("height", h);
+
+    for(int y=0; y<h; y++)
     {
         QByteArray ba;
         ba.clear();
 
         QString temp;
         temp.clear();
-        for(int x=0; x<grid_map->columnCount(); x++)
+        for(int x=0; x<w; x++)
         {
-            QLayoutItem *item = grid_map->itemAtPosition(y, x);
-            //TODO Q_CHECK_PTR(item);
-            if(item)
+            int id = get_id(x, y);
+            if(id == PLAYER_ID)
             {
-                QWidget *w = item->widget();
-                Q_CHECK_PTR(w);
-                if(w)
-                {
-                    bool ok = false;
-                    int id = w->property(PROPERTY_ID).toInt(&ok);
-                    if(ok == false)
-                    {
-                        emit error("OK is false");
-                    }
-                    if(id == PLAYER_ID)
-                    {
-                        emit info("PLAYER FOUND");
-                    }
-                    if(id == START_ID)
-                    {
-                        emit info("START FOUND");
-                    }
-                    if(id == EXIT_ID)
-                    {
-                        emit info("EXIT FOUND");
-                    }
-                    ba.append((char)id);
-                    temp.append(QString("%1 ").arg(id));
-                }
+                emit info("PLAYER FOUND");
             }
+            if(id == START_ID)
+            {
+                emit info("START FOUND");
+            }
+            if(id == EXIT_ID)
+            {
+                emit info("EXIT FOUND");
+            }
+            ba.append((char)id);
+            temp.append(QString("%1 ").arg(id));
         }
         xmlPut->putString("items", ba.toHex());
     }
@@ -342,9 +335,9 @@ bool Map::save_map(const QString &filename)
 bool Map::find_start(int *x, int *y)
 {
     int cnt = 0;
-    for(int y=0; y<grid_map->rowCount(); y++)
+    for(int y=0; y<rowCount(); y++)
     {
-        for(int x=0; x<grid_map->columnCount(); x++)
+        for(int x=0; x<columnCount(); x++)
         {
             int id = get_id(x, y);
             if(id == START_ID)
@@ -366,9 +359,9 @@ bool Map::find_start(int *x, int *y)
 bool Map::find_player(int *x, int *y)
 {
     int cnt = 0;
-    for(int y=0; y<grid_map->rowCount(); y++)
+    for(int y=0; y<rowCount(); y++)
     {
-        for(int x=0; x<grid_map->columnCount(); x++)
+        for(int x=0; x<columnCount(); x++)
         {
             int id = get_id(x, y);
             if(id == PLAYER_ID)
@@ -463,13 +456,13 @@ void Map::refresh(void)
 //--------------------------------------------------------------------------------
 int Map::rowCount(void)
 {
-    return max_x;
+    return max_y;
     //return grid_map->rowCount();
 }
 //--------------------------------------------------------------------------------
 int Map::columnCount(void)
 {
-    return max_y;
+    return max_x;
     //return grid_map->columnCount();
 }
 //--------------------------------------------------------------------------------
@@ -632,6 +625,10 @@ bool Map::eventFilter(QObject *obj, QEvent *event)
             {
                 label->setPixmap(cursor().pixmap());
                 label->setProperty(PROPERTY_ID, id);
+
+                int x = label->property(PROPERTY_X).toInt();
+                int y = label->property(PROPERTY_Y).toInt();
+                id_map[x][y] = id;
             }
         }
         return true;

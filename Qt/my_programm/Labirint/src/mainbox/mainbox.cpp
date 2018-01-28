@@ -187,11 +187,26 @@ void MainBox::test(void)
     emit info("test");
 
 #if 1
+    int x = -1;
+    int y = -1;
+    bool ok = ui->map_widget->find_player(&x, &y);
+    if(ok)
+    {
+        emit info(QString("Player: x %1").arg(x));
+        emit info(QString("Player: y %1").arg(y));
+    }
+    else
+    {
+        emit error("Player not found!");
+    }
+#endif
+
+#if 0
     emit info(QString("col %1").arg(ui->map_widget->columnCount()));
     emit info(QString("row %1").arg(ui->map_widget->rowCount()));
 #endif
 
-#if 1
+#if 0
     for(int y=0; y<ui->map_widget->rowCount(); y++)
     {
         QString temp;

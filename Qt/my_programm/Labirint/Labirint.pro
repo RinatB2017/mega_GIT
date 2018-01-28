@@ -5,8 +5,6 @@
 TEMPLATE = app
 TARGET   = Labirint
 
-FOLDER  = old_programm
-
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \

@@ -48,13 +48,6 @@ SendBox5::SendBox5(QWidget *parent) :
         connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
     }
 
-    vbox = new QVBoxLayout;
-
-    hbox_text = new QHBoxLayout;
-    hbox_text->setMargin(0);
-    hbox_bin  = new QHBoxLayout;
-    hbox_bin->setMargin(0);
-
     btn_send_text = new QToolButton(this);
     btn_send_text->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     btn_send_text->setObjectName("btn_send_text");
@@ -77,34 +70,35 @@ SendBox5::SendBox5(QWidget *parent) :
     append_comboBox = new QComboBox(this);
     append_comboBox->setObjectName("append_comboBox");
 
-    QVBoxLayout *vb_send = new QVBoxLayout();
-    vb_send->addWidget(cb_send_text);
-    vb_send->addWidget(append_comboBox);
+    append_comboBox->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);
 
-    //hbox_text->addWidget(cb_send_text);
-    //hbox_text->addWidget(append_comboBox);
-    hbox_text->addLayout(vb_send);
-    hbox_text->addWidget(btn_send_text);
+    grid = new QGridLayout;
+    grid->addWidget(cb_send_text,       0, 0);
+    grid->addWidget(append_comboBox,    0, 1);
+    grid->addWidget(btn_send_text,      0, 2);
+    grid->addWidget(cb_send_bin,        1, 0);
+    grid->addWidget(btn_send_bin,       1, 2);
 
-    hbox_bin->addWidget(cb_send_bin);
-    hbox_bin->addWidget(btn_send_bin);
-
-    vbox->addLayout(hbox_text);
-    vbox->addLayout(hbox_bin);
-    vbox->addStretch(1);
+    setLayout(grid);
 
     connect(btn_send_text, SIGNAL(clicked()), this, SLOT(send_text()));
     connect(btn_send_bin,  SIGNAL(clicked()), this, SLOT(send_bin()));
 
-    setLayout(vbox);
-
-    // setFixedWidth(300);
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
 //--------------------------------------------------------------------------------
 SendBox5::~SendBox5()
 {
+    if(cb_send_text)        cb_send_text->deleteLater();
+    if(cb_send_bin)         cb_send_bin->deleteLater();
+    if(append_comboBox)     append_comboBox->deleteLater();
 
+    if(btn_send_text)       btn_send_text->deleteLater();
+    if(btn_send_bin)        btn_send_bin->deleteLater();
+
+    if(cb_SendStenToStep)   cb_SendStenToStep->deleteLater();
+
+    if(grid)                grid->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void SendBox5::send_text(void)

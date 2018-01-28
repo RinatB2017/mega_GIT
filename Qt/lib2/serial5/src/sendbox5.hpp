@@ -24,7 +24,7 @@
 #include <QByteArray>
 #include <QFrame>
 //--------------------------------------------------------------------------------
-class QVBoxLayout;
+class QGridLayout;
 class QHBoxLayout;
 class QToolButton;
 class QLineEdit;
@@ -36,7 +36,7 @@ class SendBox5 : public QFrame
     Q_OBJECT
 
 public:
-    SendBox5(QWidget *parent = 0);
+    SendBox5(QWidget *parent);
     ~SendBox5();
 
     void updateText(void);
@@ -61,12 +61,9 @@ private:
     QToolButton *btn_send_text = 0;
     QToolButton *btn_send_bin = 0;
 
-    QHBoxLayout *hbox_text = 0;
-    QHBoxLayout *hbox_bin = 0;
-
     QCheckBox *cb_SendStenToStep = 0;
 
-    QVBoxLayout *vbox = 0;
+    QGridLayout *grid = 0;
 };
 //--------------------------------------------------------------------------------
 #endif // SENDBOX_HPP

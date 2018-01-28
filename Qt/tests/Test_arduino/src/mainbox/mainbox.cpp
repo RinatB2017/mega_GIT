@@ -18,14 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QColorDialog>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QToolBar>
-#include <QSlider>
-#include <QTimer>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QColorDialog>
+#   include <QVBoxLayout>
+#   include <QMessageBox>
+#   include <QToolButton>
+#   include <QCheckBox>
+#   include <QToolBar>
+#   include <QSlider>
+#   include <QTimer>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------

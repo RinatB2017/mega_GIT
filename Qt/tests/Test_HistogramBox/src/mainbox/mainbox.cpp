@@ -18,14 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDoubleSpinBox>
-#include <QColorDialog>
-#include <QPushButton>
-#include <QComboBox>
-#include <QDateTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QDoubleSpinBox>
+#   include <QColorDialog>
+#   include <QPushButton>
+#   include <QComboBox>
+#   include <QDateTime>
 
-#include <QToolButton>
-#include <QToolBar>
+#   include <QToolButton>
+#   include <QToolBar>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------

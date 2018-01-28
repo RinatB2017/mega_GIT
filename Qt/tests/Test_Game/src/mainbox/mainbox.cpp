@@ -18,14 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMouseEvent>
-#include <QMessageBox>
-#include <QPainter>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QMouseEvent>
+#   include <QMessageBox>
+#   include <QPainter>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QCheckBox>
+#   include <QComboBox>
+#   include <QToolBar>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------

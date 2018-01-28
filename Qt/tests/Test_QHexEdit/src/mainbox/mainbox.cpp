@@ -18,10 +18,14 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QPushButton>
-#include <QToolButton>
-#include <QToolBar>
-#include <QComboBox>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QToolBar>
+#   include <QComboBox>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------

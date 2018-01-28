@@ -18,7 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef QT_HAVE_QT5
+#ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
 #   include <QDoubleSpinBox>

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2018                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,83 +18,25 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAP_HPP
-#define MAP_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QGridLayout>
-#include <QWidget>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "defines.hpp"
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-class Map : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    Map(QWidget *parent = 0);
-    ~Map();
-
-    void new_map(int max_x, int max_y);
-    bool load_map(const QString &filename);
-    bool save_map(const QString &filename);
-
-    int rowCount(void);
-    int columnCount(void);
-
-    bool find_start(int *x, int *y);
-    bool find_player(int *x, int *y);
-
-    void player_move_up(void);
-    void player_move_down(void);
-    void player_move_left(void);
-    void player_move_right(void);
-
-    uint8_t get_id(int x, int y);
-    bool add_item(int x, int y, int id);
-    void put_picture(int id, int x, int y);
-
-signals:
-    void move_to(int x, int y);
-
-public slots:
-    void start(unsigned int interval_ms);
-    void stop(void);
-    void refresh(void);
-
-    void set_cursor(void);
+    Test();
 
 private slots:
-    void update(void);
+    void test_grapher(void);
 
 private:
-    QGridLayout *grid_map = 0;
-
-    uint8_t id_map[MAX_WIDTH][MAX_HEIGHT];
-
-    quint64 cnt_move = 0;
-
-    int max_x = 0;
-    int max_y = 0;
-
-    int id = 0;
-    int direction_move = 0;
-    int player_x = 0;
-    int player_y = 0;
-    int start_x = 0;
-    int start_y = 0;
-    QTimer *timer = 0;
-
-    void init(void);
-    void init_id_map(void);
-    void createTimer(void);
-
-    QPixmap rotate(const QString &filename, int angle);
-
-    void updateText(void);
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    MainWindow *mw = 0;
 };
 //--------------------------------------------------------------------------------
-#endif // MAP_HPP
+#endif

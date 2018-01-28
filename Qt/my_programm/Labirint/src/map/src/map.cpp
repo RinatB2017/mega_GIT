@@ -245,8 +245,8 @@ bool Map::add_item(int x, int y, int id)
 
     QPixmap pixmap;
     QLabel *label = 0;
-
     bool ok = false;
+
     switch (id)
     {
     case PLAYER_ID:
@@ -302,17 +302,30 @@ bool Map::save_map(const QString &filename)
         for(int x=0; x<grid_map->columnCount(); x++)
         {
             QLayoutItem *item = grid_map->itemAtPosition(y, x);
-            Q_CHECK_PTR(item);
+            //TODO Q_CHECK_PTR(item);
             if(item)
             {
                 QWidget *w = item->widget();
                 Q_CHECK_PTR(w);
                 if(w)
                 {
-                    int id = w->property(PROPERTY_ID).toInt();
+                    bool ok = false;
+                    int id = w->property(PROPERTY_ID).toInt(&ok);
+                    if(ok == false)
+                    {
+                        emit error("OK is false");
+                    }
                     if(id == PLAYER_ID)
                     {
                         emit info("PLAYER FOUND");
+                    }
+                    if(id == START_ID)
+                    {
+                        emit info("START FOUND");
+                    }
+                    if(id == EXIT_ID)
+                    {
+                        emit info("EXIT FOUND");
                     }
                     ba.append((char)id);
                     temp.append(QString("%1 ").arg(id));

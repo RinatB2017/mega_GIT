@@ -14,6 +14,7 @@ SUBDIRS += \
     Test_drawbuttons \
     Test_event_filter \
     Test_GrapherBox \
+    Test_GY-652 \
     Test_HistogramBox \
     Test_QHexEdit \
     Test_md5 \

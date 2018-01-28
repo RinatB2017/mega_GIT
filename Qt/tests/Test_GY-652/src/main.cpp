@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2018                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,83 +18,70 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAP_HPP
-#define MAP_HPP
+#include <QtMessageHandler>
+#include <QMessageBox>
 //--------------------------------------------------------------------------------
-#include <QGridLayout>
-#include <QWidget>
-//--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "mainbox.hpp"
 #include "defines.hpp"
-#include "mywidget.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-class Map : public MyWidget
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
+    set_codecs();
+#if 1
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        return -1;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
 
-public:
-    Map(QWidget *parent = 0);
-    ~Map();
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    void new_map(int max_x, int max_y);
-    bool load_map(const QString &filename);
-    bool save_map(const QString &filename);
+    QPixmap pixmap(":/logo/pinguin.png");
 
-    int rowCount(void);
-    int columnCount(void);
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    splash->show();
 
-    bool find_start(int *x, int *y);
-    bool find_player(int *x, int *y);
+    qApp->processEvents();
 
-    void player_move_up(void);
-    void player_move_down(void);
-    void player_move_left(void);
-    void player_move_right(void);
+    MainWindow *main_window = new MainWindow;
 
-    uint8_t get_id(int x, int y);
-    bool add_item(int x, int y, int id);
-    void put_picture(int id, int x, int y);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-signals:
-    void move_to(int x, int y);
+    splash->finish(main_window);
 
-public slots:
-    void start(unsigned int interval_ms);
-    void stop(void);
-    void refresh(void);
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 
-    void set_cursor(void);
+    //unsigned short x = 1;
+    //qDebug() << (((unsigned char *) &x) == 0 ? "big-endian" : "little-endian");
 
-private slots:
-    void update(void);
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
 
-private:
-    QGridLayout *grid_map = 0;
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
 
-    uint8_t id_map[MAX_WIDTH][MAX_HEIGHT];
-
-    quint64 cnt_move = 0;
-
-    int max_x = 0;
-    int max_y = 0;
-
-    int id = 0;
-    int direction_move = 0;
-    int player_x = 0;
-    int player_y = 0;
-    int start_x = 0;
-    int start_y = 0;
-    QTimer *timer = 0;
-
-    void init(void);
-    void init_id_map(void);
-    void createTimer(void);
-
-    QPixmap rotate(const QString &filename, int angle);
-
-    void updateText(void);
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-};
+    return app.exec();
+}
 //--------------------------------------------------------------------------------
-#endif // MAP_HPP

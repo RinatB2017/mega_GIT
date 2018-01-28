@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,43 +21,25 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
+enum CURVE {
+    DOTS = 0,
+    LINES,
+    SPLINE_LINES
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class My_class
-{
-public:
-    inline void operator =(const quint32 &value)
-    {
-        val  = value;
-        c[0] = (val >> 24) & 0xFF;
-        c[1] = (val >> 16) & 0xFF;
-        c[2] = (val >> 8)  & 0xFF;
-        c[3] = val         & 0xFF;
-    }
-    inline quint8 &operator [](int index) { return c[index]; }
-    inline quint8 operator [](int index) const { return c[index]; }
-
-    inline quint32 get_value(void) { return val; }
-
-private:
-    quint32 val = 0;
-    quint8 c[4];
-};
-//--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
-class QComboBox;
 class QToolBar;
+class PlotPicker;
+class QSplitter;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -68,54 +50,24 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
+private slots:
+    void test(void);
 
-public slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    void s_inFunc(void);
+    void data_gy652(QByteArray data);
 
 private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 
-    QComboBox *cb_test = 0;
-    QList<CMD> commands;
-
-    QLabel *label = 0;
-
-    bool split_address(const QString address, int *a, int *b, int *c, int *d, int *port);
+    int curve_temperature = 0;
+    int curve_pressure = 0;
+    int curve_atm = 0;
+    int curve_altitude = 0;
 
     void init(void);
     void createTestBar(void);
     void updateText(void);
 
-    quint32 test(const QByteArray ba);
-    bool test2(int a, int b, int *c, int *d);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -181,95 +181,21 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
-#include <QDebug>
+#define PROPERTY_ID "property_id"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 0
-    qInfo() << "info";
-    qDebug() << "debug";
-    qCritical() << "critical";
-#endif
-
-#if 0
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
-#endif
-
-#if 0
-    QByteArray packet;
-    QByteArray r_packet;
-    int cmd = 0;
+#if 1
+    int id = 666;
     bool ok = false;
-    UPacket *up = new UPacket;
+    label = new QLabel;
 
-    HEADER header;
-    header.address = 0;
-    header.cmd = 1;
-    header.len_data = 0;
-
-    packet.clear();
-    packet.append((char *)&header, sizeof(header));
-    packet.append((char)0);
-    packet.append((char)0);
-
-    ok = up->check_packet(packet, &cmd, &r_packet);
-    if(!ok)
+    ok = label->setProperty(PROPERTY_ID, id);
+    if(ok == false)
     {
-        emit error(up->get_err_str());
-        //return false;
+        emit error(QString("ERROR: setProperty %1").arg(id));
     }
-    emit info("OK");
-
-#endif
-
-#if 0
-    My_class addr;
-    addr = 0x12345678;
-    emit info(QString("0x%1").arg(addr[0], 2, 16, QChar('0')));
-    emit info(QString("0x%1").arg(addr[1], 2, 16, QChar('0')));
-    emit info(QString("0x%1").arg(addr[2], 2, 16, QChar('0')));
-    emit info(QString("0x%1").arg(addr[3], 2, 16, QChar('0')));
-
-    emit info(QString("0x%1").arg(addr.get_value(), 8, 16, QChar('0')));
-#endif
-
-#if 0
-    QString address = "1.2.3.4:5678";
-
-    int a = 0;
-    int b = 0;
-    int c = 0;
-    int d = 0;
-    int port = 0;
-    bool ok = split_address(address, &a, &b, &c, &d, &port);
-    if(ok)
-    {
-        emit info(QString("address %1.%2.%3.%4:%5")
-                  .arg(a)
-                  .arg(b)
-                  .arg(c)
-                  .arg(d)
-                  .arg(port));
-    }
-    else
-    {
-        emit error("ERROR");
-    }
-#endif
-
-#if 0
-    const QMetaObject &mo = Programmer::staticMetaObject;
-    int index = mo.indexOfEnumerator("Language");
-    QMetaEnum me = mo.enumerator(index);
-    Programmer::Language p = Programmer::CPP;
-    Programmer::Language l= static_cast<Programmer::Language>(me.keyToValue("CPP"));
-    emit info(QString("%1:%2")
-              .arg(me.valueToKey(p))
-              .arg(l));
 #endif
 
     return true;
@@ -278,6 +204,12 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    QWidget *w = label;
+    if(w)
+    {
+        emit info(QString("id %1").arg(w->property(PROPERTY_ID).toInt()));
+    }
 
     return true;
 }

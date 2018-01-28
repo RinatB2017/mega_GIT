@@ -43,10 +43,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0),
-    test_byte(0),
-    cnt(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -94,27 +91,11 @@ void MainBox::createTestBar(void)
 void MainBox::test(void)
 {
     emit debug(tr("reset"));
-    cnt=0;
-    test_byte=0;
-}
-//--------------------------------------------------------------------------------
-void MainBox::wait(int max_time_ms)
-{
-    QTime time;
-    time.start();
-    while(time.elapsed() < max_time_ms)
-    {
-        QCoreApplication::processEvents();
-        if(is_ready)
-            break;
-    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
-    emit debug(ba.data());
-    data_rs232.append(ba);
-    is_ready = true;
+    emit info(ba.data());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

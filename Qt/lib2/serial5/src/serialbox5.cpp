@@ -25,10 +25,6 @@
 #include <QMenu>
 #include <QTimer>
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
 
@@ -36,11 +32,15 @@
 #include "ui_serialbox5.h"
 //--------------------------------------------------------------------------------
 #ifdef RS232_SEND
-#include "sendbox5.hpp"
+#   include "sendbox5.hpp"
 #endif
-#include "logbox.hpp"
+#   include "logbox.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_TIME_MSEC   100
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 SerialBox5::SerialBox5(QWidget *parent) :
     MyWidget(parent),

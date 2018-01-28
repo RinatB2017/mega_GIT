@@ -90,6 +90,8 @@ private:
     SendBox4 *sendBox = 0;
 #endif
 
+    QTimer *timer = 0;
+
 #ifndef RS232_NO_FRAME
     QFrame *frame_ring = 0;
     QFrame *frame_dsr = 0;
@@ -147,6 +149,8 @@ private slots:
     void getStatus(const QString &status, QDateTime current);
 
     void get_parameter(void);
+
+    void timer_stop(void);
 
     void set_default(void);
 

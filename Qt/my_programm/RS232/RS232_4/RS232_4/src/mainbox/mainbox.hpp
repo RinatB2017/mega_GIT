@@ -55,15 +55,9 @@ private:
     Ui::MainBox *ui = 0;
     SerialBox4 *serialBox = 0;
     QByteArray data_rs232;
-    bool is_ready;
-    unsigned char test_byte;
-    unsigned int cnt;
 
     void init(void);
-    void wait(int max_time_ms);
-
     void createTestBar(void);
-
     void updateText(void);
 
 };

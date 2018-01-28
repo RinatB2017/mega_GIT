@@ -31,6 +31,8 @@
 #include "serialdeviceenumerator.h"
 #include "abstractserial.h"
 //--------------------------------------------------------------------------------
+#define MAX_TIME_MSEC   100
+//--------------------------------------------------------------------------------
 #ifdef RS232_SEND
 #   include "sendbox4.hpp"
 #endif
@@ -40,10 +42,7 @@ SerialBox4::SerialBox4(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::SerialBox4),
     parent(parent),
-    serial(0),
-    caption("no name"),
-    flag_in_hex(false),
-    flag_byte_by_byte(false)
+    caption("no name")
 {
     init();
 }
@@ -52,9 +51,7 @@ SerialBox4::SerialBox4(QWidget *parent, const QString &caption) :
     QFrame(parent),
     ui(new Ui::SerialBox4),
     parent(parent),
-    caption(caption),
-    flag_in_hex(false),
-    flag_byte_by_byte(false)
+    caption(caption)
 {
     init();
 }
@@ -209,6 +206,10 @@ void SerialBox4::procEnumerate(const QStringList &l)
 void SerialBox4::initSerial()
 {
     serial = new AbstractSerial(this);
+
+    //TODO
+    timer = new QTimer();
+    connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
 
     connect(serial, SIGNAL(readyRead()),                        this, SLOT(procSerialDataReceive()));
     connect(serial, SIGNAL(signalStatus(QString, QDateTime)),   this, SLOT(getStatus(QString, QDateTime)));
@@ -422,6 +423,15 @@ void SerialBox4::procSerialDataReceive()
     {
         return;
     }
+
+    if (!timer->isActive())
+        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
+    else
+        timer->stop();
+}
+//--------------------------------------------------------------------------------
+void SerialBox4::timer_stop(void)
+{
     emit output(serial->readAll());
 }
 //--------------------------------------------------------------------------------

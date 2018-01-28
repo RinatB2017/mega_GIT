@@ -24,7 +24,7 @@
 #include <QByteArray>
 #include <QFrame>
 //--------------------------------------------------------------------------------
-class QVBoxLayout;
+class QGridLayout;
 class QHBoxLayout;
 class QToolButton;
 class QLineEdit;
@@ -65,7 +65,7 @@ private:
 
     QCheckBox *cb_SendStenToStep = 0;
 
-    QVBoxLayout *vbox = 0;
+    QGridLayout *grid = 0;
 };
 //--------------------------------------------------------------------------------
 #endif // SENDBOX_HPP

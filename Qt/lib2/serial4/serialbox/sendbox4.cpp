@@ -47,8 +47,6 @@ SendBox4::SendBox4(QWidget *parent) :
         connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
     }
 
-    vbox = new QVBoxLayout;
-
     hbox_text = new QHBoxLayout;
     hbox_text->setMargin(0);
     hbox_bin  = new QHBoxLayout;
@@ -76,26 +74,17 @@ SendBox4::SendBox4(QWidget *parent) :
     append_comboBox = new QComboBox(this);
     append_comboBox->setObjectName("append_comboBox");
 
-    QVBoxLayout *vb_send = new QVBoxLayout();
-    vb_send->addWidget(cb_send_text);
-    vb_send->addWidget(append_comboBox);
+    grid = new QGridLayout;
+    grid->addWidget(cb_send_text,       0, 0);
+    grid->addWidget(append_comboBox,    0, 1);
+    grid->addWidget(btn_send_text,      0, 2);
+    grid->addWidget(cb_send_bin,        1, 0);
+    grid->addWidget(btn_send_bin,       1, 2);
 
-    //hbox_text->addWidget(cb_send_text);
-    //hbox_text->addWidget(append_comboBox);
-    hbox_text->addLayout(vb_send);
-    hbox_text->addWidget(btn_send_text);
+    setLayout(grid);
 
-    hbox_bin->addWidget(cb_send_bin);
-    hbox_bin->addWidget(btn_send_bin);
-
-    vbox->addLayout(hbox_text);
-    vbox->addLayout(hbox_bin);
-    vbox->addStretch(1);
-
-    connect(btn_send_text, SIGNAL(clicked()), this, SLOT(send_text()));
-    connect(btn_send_bin,  SIGNAL(clicked()), this, SLOT(send_bin()));
-
-    setLayout(vbox);
+    connect(btn_send_text,  SIGNAL(clicked()),  this,   SLOT(send_text()));
+    connect(btn_send_bin,   SIGNAL(clicked()),  this,   SLOT(send_bin()));
 
     // setFixedWidth(300);
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);

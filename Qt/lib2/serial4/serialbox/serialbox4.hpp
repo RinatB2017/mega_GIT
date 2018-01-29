@@ -51,8 +51,8 @@ public:
         E_PORT_NOT_OPEN
     };
 
-    explicit SerialBox4(QWidget *parent, const QString &caption);
-    explicit SerialBox4(QWidget *parent = 0);
+    SerialBox4(QWidget *parent, const QString &caption);
+    SerialBox4(QWidget *parent = 0);
     ~SerialBox4();
 
     bool isOpen(void);

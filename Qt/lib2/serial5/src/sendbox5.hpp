@@ -39,6 +39,7 @@ public:
     SendBox5(QWidget *parent);
     ~SendBox5();
 
+    void block_interface(bool state);
     void updateText(void);
 
 signals:

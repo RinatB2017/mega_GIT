@@ -361,6 +361,10 @@ void SerialBox5::setCloseState(void)
     ui->btn_power->setChecked(false);
 
     ui->btn_default->setEnabled(false);
+
+#if RS232_SEND
+    sendBox5->block_interface(true);
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setOpenState()
@@ -375,6 +379,10 @@ void SerialBox5::setOpenState()
     ui->btn_power->setChecked(true);
 
     ui->btn_default->setEnabled(true);
+
+#if RS232_SEND
+    sendBox5->block_interface(false);
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::btnOpenPortClicked()

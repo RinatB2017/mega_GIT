@@ -176,6 +176,16 @@ void SendBox5::send_bin(void)
     emit sendData(output_data);
 }
 //--------------------------------------------------------------------------------
+void SendBox5::block_interface(bool state)
+{
+    cb_send_text->setDisabled(state);
+    cb_send_bin->setDisabled(state);
+    append_comboBox->setDisabled(state);
+
+    btn_send_text->setDisabled(state);
+    btn_send_bin->setDisabled(state);
+}
+//--------------------------------------------------------------------------------
 void SendBox5::updateText(void)
 {
     btn_send_text->setText(tr("send"));

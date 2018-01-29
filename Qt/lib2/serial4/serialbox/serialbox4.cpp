@@ -295,6 +295,10 @@ void SerialBox4::setCloseState()
     ui->StopBitsBox->setEnabled(false);
     ui->FlowBox->setEnabled(false);
     ui->btn_power->setChecked(false);
+
+#if RS232_SEND
+    sendBox->block_interface(true);
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox4::setOpenState()
@@ -306,6 +310,10 @@ void SerialBox4::setOpenState()
     ui->StopBitsBox->setEnabled(true);
     ui->FlowBox->setEnabled(true);
     ui->btn_power->setChecked(true);
+
+#if RS232_SEND
+    sendBox->block_interface(false);
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox4::btnOpenPortClicked()

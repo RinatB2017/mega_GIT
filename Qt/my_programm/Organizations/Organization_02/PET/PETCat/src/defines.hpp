@@ -21,7 +21,7 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#define ORGNAME "НТЦ \"Вектор\""
+#define ORGNAME "Work"
 #define APPNAME "PET CAT"
 //--------------------------------------------------------------------------------
 #define ININAME "PETCat.ini"

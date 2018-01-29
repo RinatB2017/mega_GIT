@@ -100,7 +100,7 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
-    emit debug(ba.data());
+    emit info(ba.data());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

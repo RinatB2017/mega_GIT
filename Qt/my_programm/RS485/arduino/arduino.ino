@@ -6,13 +6,14 @@ int led_0 = 10;
 int led_1 = 11;
 int led_2 = 12;
 //-------------------------------------------------------
-uint8_t incomingByte = 0;
+int imcomingByte = 0;
+uint8_t buf[100];
+int index = 0;
 int flag = 0;
 //-------------------------------------------------------
 void write_RS485()
 {
   digitalWrite(pin_485, HIGH);
-  //delay(100);
 }
 //-------------------------------------------------------
 void read_RS485()
@@ -22,13 +23,17 @@ void read_RS485()
 //-------------------------------------------------------
 void serialEvent()
 {
-  while(Serial.available())
+  while (Serial.available())
   {
     // считываем байт
-    incomingByte = Serial.read();
-
-    flag = 1;
+    imcomingByte = Serial.read();;
+    buf[index] = imcomingByte;
+    if(index < 100)
+    {
+      index++;
+    }
   }
+  flag = 1;
 }
 //-------------------------------------------------------
 void blink_on()
@@ -45,10 +50,12 @@ void blink_off()
   digitalWrite(led_2, LOW);
 }
 //-------------------------------------------------------
-void setup() {
-  Serial.begin(9600);
+void setup()
+{
+  Serial.begin(57600);
 
   pinMode(pin_485,  OUTPUT);
+
   pinMode(led_0,    OUTPUT);
   pinMode(led_1,    OUTPUT);
   pinMode(led_2,    OUTPUT);
@@ -56,14 +63,22 @@ void setup() {
   read_RS485();
 }
 //-------------------------------------------------------
-void loop() {
-  if (flag != 0)
+void loop()
+{
+  if (flag == 1)
   {
     write_RS485();
-    Serial.write(incomingByte);
+    delay(1);
+    for(int n=0; n<index; n++)
+    {
+      Serial.write(buf[n]);
+      delay(1);
+    }
+    index = 0;
     read_RS485();
 
     flag = 0;
   }
+  delay(100);
 }
 //-------------------------------------------------------

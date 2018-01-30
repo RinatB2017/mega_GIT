@@ -86,6 +86,9 @@ SendBox4::SendBox4(QWidget *parent) :
     connect(btn_send_text,  SIGNAL(clicked()),  this,   SLOT(send_text()));
     connect(btn_send_bin,   SIGNAL(clicked()),  this,   SLOT(send_bin()));
 
+    connect(cb_send_text->lineEdit(),   SIGNAL(editingFinished()),  this,   SLOT(send_text()));
+    connect(cb_send_bin->lineEdit(),    SIGNAL(editingFinished()),  this,   SLOT(send_bin()));
+
     // setFixedWidth(300);
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }

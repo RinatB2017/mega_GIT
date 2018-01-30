@@ -26,6 +26,8 @@
 #include <QModbusDataUnit>
 #include <QModbusDevice>
 //--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MODBUS_client;
 }
@@ -33,7 +35,7 @@ namespace Ui {
 class QModbusClient;
 class QModbusReply;
 //--------------------------------------------------------------------------------
-class MODBUS_client : public QWidget
+class MODBUS_client : public MyWidget
 {
     Q_OBJECT
 
@@ -41,30 +43,29 @@ public:
     MODBUS_client(QWidget *parent = 0);
     ~MODBUS_client();
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
 private slots:
-    void log(QString data);
     void readReady(void);
     void errorOccurred(QModbusDevice::Error);
     void stateChanged(QModbusDevice::State state);
 
     void connect_device(void);
+    void disconnect_device(void);
     void refresh(void);
-    void test(void);
+
+    void test_write(void);
+    void test_read(void);
 
 private:
-    Ui::MODBUS_client *ui;
+    Ui::MODBUS_client *ui = 0;
 
-    QModbusReply *lastRequest;
-    QModbusClient *modbusDevice;
+    QModbusReply *lastRequest = 0;
+    QModbusClient *modbusDevice = 0;
 
     QModbusDataUnit readRequest() const;
     QModbusDataUnit writeRequest() const;
+
+    void init(void);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

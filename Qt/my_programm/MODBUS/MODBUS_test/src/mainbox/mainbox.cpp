@@ -57,16 +57,16 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
     createTestBar();
-    setMinimumHeight(sizeHint().height());
+//    setMinimumHeight(sizeHint().height());
 
-    MODBUS_client *client = new MODBUS_client(this);
-    MODBUS_server *server = new MODBUS_server(this);
+//    MODBUS_client *client = new MODBUS_client(this);
+//    MODBUS_server *server = new MODBUS_server(this);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(client);
-    vbox->addWidget(server);
-    vbox->addStretch(1);
-    setLayout(vbox);
+//    QVBoxLayout *vbox = new QVBoxLayout;
+//    vbox->addWidget(client);
+//    vbox->addWidget(server);
+//    vbox->addStretch(1);
+//    setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

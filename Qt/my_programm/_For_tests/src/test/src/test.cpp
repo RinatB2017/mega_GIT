@@ -219,3 +219,15 @@ void Test::test_safe(void)
     QCOMPARE(firstCallArgs.length(), 1);
 }
 //--------------------------------------------------------------------------------
+void Test::test_safe_gui(void)
+{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    Q_CHECK_PTR(mb);
+
+    Safe *safe = mb->findChild<Safe *>("safe");
+    QVERIFY(safe);
+
+    QLCDNumber *display = mw->findChild<QLCDNumber *>("lcdNumber");
+    QCOMPARE(display->value(),  99999);
+}
+//--------------------------------------------------------------------------------

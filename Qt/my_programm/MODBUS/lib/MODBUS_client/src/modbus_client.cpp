@@ -30,26 +30,29 @@
 #endif
 //--------------------------------------------------------------------------------
 MODBUS_client::MODBUS_client(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::MODBUS_client)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+MODBUS_client::~MODBUS_client()
+{
+    if(lastRequest)  lastRequest->deleteLater();
+
+    if(modbusDevice)
+    {
+        modbusDevice->disconnectDevice();
+        modbusDevice->deleteLater();
+    }
+
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void MODBUS_client::init(void)
 {
     ui->setupUi(this);
 
-    //---
-    if(parentWidget())
-    {
-        connect(this,   SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this,   SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this,   SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this,   SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
-    }
-    else
-    {
-        connect(this,   SIGNAL(info(QString)),  this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(debug(QString)), this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(error(QString)), this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(trace(QString)), this,   SLOT(log(QString)));
-    }
     //---
     modbusDevice = new QModbusRtuSerialMaster(this);
     connect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),    this,   SLOT(errorOccurred(QModbusDevice::Error)));
@@ -57,64 +60,88 @@ MODBUS_client::MODBUS_client(QWidget *parent) :
     //---
 
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(connect_device()));
-    connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    connect(ui->btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(disconnect_device()));
+    connect(ui->btn_test_read,  SIGNAL(clicked(bool)),  this,   SLOT(test_read()));
+    connect(ui->btn_test_write, SIGNAL(clicked(bool)),  this,   SLOT(test_write()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 
     refresh();
 }
 //--------------------------------------------------------------------------------
-MODBUS_client::~MODBUS_client()
-{
-    if(modbusDevice)
-    {
-        modbusDevice->disconnectDevice();
-    }
-    delete modbusDevice;
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void MODBUS_client::log(QString data)
-{
-#ifdef QT_DEBUG
-    qDebug() << data;
-#endif
-}
-//--------------------------------------------------------------------------------
 void MODBUS_client::errorOccurred(QModbusDevice::Error)
 {
-    emit error(QString("MODBUS_client::errorOccurred %1").arg(modbusDevice->errorString()));
+    emit error(QString("MODBUS_client::errorOccurred %1")
+               .arg(modbusDevice->errorString()));
 }
 //--------------------------------------------------------------------------------
 void MODBUS_client::stateChanged(QModbusDevice::State state)
 {
     switch(state)
     {
-    case QModbusDevice::UnconnectedState:   emit info("MODBUS_client::stateChanged UnconnectedState"); break;
-    case QModbusDevice::ConnectingState:    emit info("MODBUS_client::stateChanged ConnectingState"); break;
-    case QModbusDevice::ConnectedState:     emit info("MODBUS_client::stateChanged ConnectedState"); break;
-    case QModbusDevice::ClosingState:       emit info("MODBUS_client::stateChanged ClosingState"); break;
+    case QModbusDevice::UnconnectedState:   emit info("MODBUS_client::stateChanged UnconnectedState");  break;
+    case QModbusDevice::ConnectingState:    emit info("MODBUS_client::stateChanged ConnectingState");   break;
+    case QModbusDevice::ConnectedState:     emit info("MODBUS_client::stateChanged ConnectedState");    break;
+    case QModbusDevice::ClosingState:       emit info("MODBUS_client::stateChanged ClosingState");      break;
     default:
         break;
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test(void)
+void MODBUS_client::test_write(void)
 {
-    emit debug("MODBUS_client::test");
+    emit debug("MODBUS_client::test_write");
 
+    int serverAddress = 1;
 
-    QModbusReply *reply = modbusDevice->sendReadRequest(readRequest(), 1);
-    if(reply)
+    QVector<quint16> p(1);
+    p[0]=0x1234;
+
+    QModbusDataUnit writeUnit;
+    writeUnit.setRegisterType(QModbusDataUnit::HoldingRegisters);
+    writeUnit.setStartAddress(0xFFF0);
+    writeUnit.setValueCount(1);
+    writeUnit.setValues(p);
+
+    QModbusReply *w_reply = modbusDevice->sendWriteRequest(writeUnit, serverAddress);
+    if(w_reply)
     {
-        if (!reply->isFinished())
+        if (!w_reply->isFinished())
         {
-            connect(reply, SIGNAL(finished()), this, SLOT(readReady()));
+            connect(w_reply,    SIGNAL(finished()), this,   SLOT(readReady()));
         }
         else
         {
-            delete reply; // broadcast replies return immediately
+            delete w_reply; // broadcast replies return immediately
         }
     }
+
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void MODBUS_client::test_read(void)
+{
+    emit debug("MODBUS_client::test_read");
+
+    int serverAddress = 1;
+
+    QModbusDataUnit readUnit;
+    readUnit.setRegisterType(QModbusDataUnit::HoldingRegisters);
+    readUnit.setStartAddress(0xFFF0);
+    readUnit.setValueCount(1);
+
+    QModbusReply *r_reply = modbusDevice->sendReadRequest(readUnit, serverAddress);
+    if(r_reply)
+    {
+        if (!r_reply->isFinished())
+        {
+            connect(r_reply,    SIGNAL(finished()), this,   SLOT(readReady()));
+        }
+        else
+        {
+            delete r_reply; // broadcast replies return immediately
+        }
+    }
+
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -146,6 +173,14 @@ void MODBUS_client::connect_device(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+void MODBUS_client::disconnect_device(void)
+{
+    if (modbusDevice->connectDevice())
+    {
+        modbusDevice->disconnect();
+    }
+}
+//--------------------------------------------------------------------------------
 void MODBUS_client::readReady(void)
 {
     emit debug("MODBUS_client::readReady");
@@ -165,12 +200,6 @@ void MODBUS_client::readReady(void)
             QString entry = tr("Address: %1, Value: %2")
                     .arg(unit.startAddress())
                     .arg(QString::number(unit.value(i), unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
-#if 0
-            ui->writeTable->addItem(tr("Coils"),                QModbusDataUnit::Coils);
-            ui->writeTable->addItem(tr("Discrete Inputs"),      QModbusDataUnit::DiscreteInputs);
-            ui->writeTable->addItem(tr("Input Registers"),      QModbusDataUnit::InputRegisters);
-            ui->writeTable->addItem(tr("Holding Registers"),    QModbusDataUnit::HoldingRegisters);
-#endif
             emit info(entry);
         }
     }
@@ -212,5 +241,10 @@ void MODBUS_client::refresh(void)
         ui->cb_port->addItem(port.portName());
 #endif
     }
+}
+//--------------------------------------------------------------------------------
+void MODBUS_client::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

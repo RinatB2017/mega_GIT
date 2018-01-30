@@ -27,14 +27,17 @@
 #include <QModbusDataUnit>
 #include <QModbusDevice>
 //--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MODBUS_server;
 }
 //--------------------------------------------------------------------------------
 class QModbusServer;
 class QModbusReply;
+class QHexEdit;
 //--------------------------------------------------------------------------------
-class MODBUS_server : public QWidget
+class MODBUS_server : public MyWidget
 {
     Q_OBJECT
 
@@ -42,29 +45,42 @@ public:
     MODBUS_server(QWidget *parent = 0);
     ~MODBUS_server();
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
 private slots:
-    void log(QString data);
     void errorOccurred(QModbusDevice::Error);
     void stateChanged(QModbusDevice::State state);
-    void updateWidgets(QModbusDataUnit::RegisterType table, int address, int size);
+    void updateWidgets(QModbusDataUnit::RegisterType table,
+                       int address,
+                       int size);
 
     void connect_device(void);
+    void disconnect_device(void);
+
     void refresh(void);
-    void test(void);
 
 private:
-    Ui::MODBUS_server *ui;
+    Ui::MODBUS_server *ui = 0;
 
-    QModbusReply *lastRequest;
-    QModbusServer *modbusDevice;
+    QModbusReply  *lastRequest = 0;
+    QModbusServer *modbusDevice = 0;
 
     QHash<QString, QLineEdit *> registers;
+
+    QModbusDataUnitMap reg;
+
+    QHexEdit *he_discrete_inputs = 0;
+    QHexEdit *he_coils = 0;
+    QHexEdit *he_input_registers = 0;
+    QHexEdit *he_holding_registers = 0;
+
+    QByteArray ba_discrete_inputs;
+    QByteArray ba_coils;
+    QByteArray ba_input_registers;
+    QByteArray ba_holding_registers;
+
+    void init(void);
+    void init_modbusDevice(void);
+    void init_tab_widget(void);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif

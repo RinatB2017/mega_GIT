@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>48</height>
+    <width>565</width>
+    <height>167</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,16 +54,37 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btn_test">
+      <widget class="QPushButton" name="btn_disconnect">
        <property name="text">
-        <string>test</string>
+        <string>disconnect</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Tab 1</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Tab 2</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cb_port</tabstop>
+  <tabstop>btn_refresh</tabstop>
+  <tabstop>btn_connect</tabstop>
+  <tabstop>btn_disconnect</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -72,8 +72,11 @@ CONFIG(debug, debug|release) {
 }
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include (../lib/MODBUS_server/MODBUS_server.pri)
 include (../lib/MODBUS_client/MODBUS_client.pri)

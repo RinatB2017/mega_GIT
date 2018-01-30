@@ -13,7 +13,29 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="MODBUS_client" name="w_client" native="true"/>
+   </item>
+   <item>
+    <widget class="MODBUS_server" name="w_server" native="true"/>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MODBUS_client</class>
+   <extends>QWidget</extends>
+   <header>modbus_client.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MODBUS_server</class>
+   <extends>QWidget</extends>
+   <header>modbus_server.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

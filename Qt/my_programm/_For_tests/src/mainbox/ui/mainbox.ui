@@ -39,17 +39,7 @@
     </widget>
    </item>
    <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
+    <widget class="QHexEdit" name="hex_widget" native="true"/>
    </item>
   </layout>
  </widget>
@@ -58,6 +48,12 @@
    <class>Safe</class>
    <extends>QWidget</extends>
    <header>safe.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QHexEdit</class>
+   <extends>QWidget</extends>
+   <header>qhexedit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

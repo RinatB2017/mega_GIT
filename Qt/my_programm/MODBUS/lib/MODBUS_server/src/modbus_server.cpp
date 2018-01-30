@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include <QSerialPortInfo>
 //--------------------------------------------------------------------------------
+#include "qhexedit.h"
 #include "modbus_server.hpp"
 #include "ui_modbus_server.h"
 //--------------------------------------------------------------------------------
@@ -30,34 +31,46 @@
 #endif
 //--------------------------------------------------------------------------------
 MODBUS_server::MODBUS_server(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::MODBUS_server)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+MODBUS_server::~MODBUS_server()
+{
+    if(he_discrete_inputs)  he_discrete_inputs->deleteLater();
+    if(he_coils) he_coils->deleteLater();
+    if(he_input_registers) he_input_registers->deleteLater();
+    if(he_holding_registers) he_holding_registers->deleteLater();
+
+    if(modbusDevice)
+    {
+        modbusDevice->disconnectDevice();
+        modbusDevice->deleteLater();
+    }
+
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void MODBUS_server::init(void)
 {
     ui->setupUi(this);
 
-    //---
-    if(parentWidget())
-    {
-        connect(this,   SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
-        connect(this,   SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
-        connect(this,   SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
-        connect(this,   SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
-    }
-    else
-    {
-        connect(this,   SIGNAL(info(QString)),  this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(debug(QString)), this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(error(QString)), this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(trace(QString)), this,   SLOT(log(QString)));
-    }
-    //---
+    init_modbusDevice();
+    init_tab_widget();
+
+    refresh();
+}
+//--------------------------------------------------------------------------------
+void MODBUS_server::init_modbusDevice(void)
+{
     modbusDevice = new QModbusRtuSerialSlave(this);
     //---
-    QModbusDataUnitMap reg;
-    reg.insert(QModbusDataUnit::Coils,              { QModbusDataUnit::Coils,               0, 10 });   // однобитовый тип, доступен для чтения и записи.
-    reg.insert(QModbusDataUnit::DiscreteInputs,     { QModbusDataUnit::DiscreteInputs,      0, 10 });   // однобитовый тип, доступен только для чтения.
-    reg.insert(QModbusDataUnit::InputRegisters,     { QModbusDataUnit::InputRegisters,      0, 10 });   // 16-битовый знаковый или беззнаковый тип, доступен только для чтения.
-    reg.insert(QModbusDataUnit::HoldingRegisters,   { QModbusDataUnit::HoldingRegisters,    0, 10 });   // 16-битовый знаковый или беззнаковый тип, доступен для чтения и записи.
+    reg.insert(QModbusDataUnit::Coils,              { QModbusDataUnit::Coils,               0, 0xFFFF });   // однобитовый тип, доступен для чтения и записи.
+    reg.insert(QModbusDataUnit::DiscreteInputs,     { QModbusDataUnit::DiscreteInputs,      0, 0xFFFF });   // однобитовый тип, доступен только для чтения.
+    reg.insert(QModbusDataUnit::InputRegisters,     { QModbusDataUnit::InputRegisters,      0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен только для чтения.
+    reg.insert(QModbusDataUnit::HoldingRegisters,   { QModbusDataUnit::HoldingRegisters,    0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен для чтения и записи.
 
     modbusDevice->setMap(reg);
     //---
@@ -65,37 +78,47 @@ MODBUS_server::MODBUS_server(QWidget *parent) :
     connect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),                this,   SLOT(errorOccurred(QModbusDevice::Error)));
     connect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),                 this,   SLOT(stateChanged(QModbusDevice::State)));
     //---
-    for(int i=0; i<10; i++)
-    {
-        modbusDevice->setData(QModbusDataUnit::Coils,               i, 1);
-        modbusDevice->setData(QModbusDataUnit::DiscreteInputs,      i, 1);
-        modbusDevice->setData(QModbusDataUnit::InputRegisters,      i, i);
-        //TODO modbusDevice->setData(QModbusDataUnit::HoldingRegisters,    i, i);
-    }
-    //---
-
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(connect_device()));
-    connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    connect(ui->btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(disconnect_device()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
-
-    refresh();
 }
 //--------------------------------------------------------------------------------
-MODBUS_server::~MODBUS_server()
+void MODBUS_server::init_tab_widget(void)
 {
-    if(modbusDevice)
+    while(ui->tabWidget->count())
     {
-        modbusDevice->disconnectDevice();
+        ui->tabWidget->removeTab(0);
     }
-    delete modbusDevice;
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void MODBUS_server::log(QString data)
-{
-#ifdef QT_DEBUG
-    qDebug() << data;
-#endif
+
+    he_discrete_inputs = new QHexEdit(this);
+    he_coils = new QHexEdit(this);
+    he_input_registers = new QHexEdit(this);
+    he_holding_registers = new QHexEdit(this);
+
+    he_discrete_inputs->setReadOnly(true);
+    he_coils->setReadOnly(true);
+    he_input_registers->setReadOnly(true);
+    he_holding_registers->setReadOnly(true);
+
+    ba_discrete_inputs.resize(0xFFFF);
+    ba_coils.resize(0xFFFF);
+    ba_input_registers.resize(0xFFFF);
+    ba_holding_registers.resize(0xFFFF);
+
+    ba_discrete_inputs[0xFFFF] = 0;
+    ba_coils[0xFFFF] = 0;
+    ba_input_registers[0xFFFF] = 0;
+    ba_holding_registers[0xFFFF] = 0;
+
+    he_discrete_inputs->setData(QHexEditData::fromMemory(ba_discrete_inputs));
+    he_coils->setData(QHexEditData::fromMemory(ba_coils));
+    he_input_registers->setData(QHexEditData::fromMemory(ba_input_registers));
+    he_holding_registers->setData(QHexEditData::fromMemory(ba_holding_registers));
+
+    ui->tabWidget->addTab(he_discrete_inputs, "Discrete Inputs");
+    ui->tabWidget->addTab(he_coils, "Coils");
+    ui->tabWidget->addTab(he_input_registers, "Input Registers");
+    ui->tabWidget->addTab(he_holding_registers, "Holding Registers");
 }
 //--------------------------------------------------------------------------------
 void MODBUS_server::errorOccurred(QModbusDevice::Error)
@@ -114,11 +137,6 @@ void MODBUS_server::stateChanged(QModbusDevice::State state)
     default:
         break;
     }
-}
-//--------------------------------------------------------------------------------
-void MODBUS_server::test(void)
-{
-    emit debug("MODBUS_server::test");
 }
 //--------------------------------------------------------------------------------
 void MODBUS_server::connect_device(void)
@@ -146,36 +164,47 @@ void MODBUS_server::connect_device(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::updateWidgets(QModbusDataUnit::RegisterType table, int address, int size)
+void MODBUS_server::updateWidgets(QModbusDataUnit::RegisterType table,
+                                  int address,
+                                  int size)
 {
-    //emit debug("MODBUS_server::updateWidgets");
-
+    quint16 value = 0;
     for (int i=0; i<size; ++i)
     {
-        quint16 value;
-        QString text;
         switch (table)
         {
         case QModbusDataUnit::Coils:
             modbusDevice->data(QModbusDataUnit::Coils, address + i, &value);
-            //coilButtons.button(address + i)->setChecked(value);
+            emit info(QString("Coils %1").arg(value));
             break;
 
         case QModbusDataUnit::HoldingRegisters:
             modbusDevice->data(QModbusDataUnit::HoldingRegisters, address + i, &value);
-            registers.value(QStringLiteral("HoldingRegisters_%1").arg(address + i))->setText(text.setNum(value, 16));
+            emit info(QString("HoldingRegisters %1").arg(value));
             break;
 
         case QModbusDataUnit::DiscreteInputs:
+            modbusDevice->data(QModbusDataUnit::DiscreteInputs, address + i, &value);
+            emit info(QString("DiscreteInputs %1").arg(value));
             break;
 
         case QModbusDataUnit::InputRegisters:
+            modbusDevice->data(QModbusDataUnit::InputRegisters, address + i, &value);
+            emit info(QString("InputRegisters %1").arg(value));
             break;
 
         default:
             emit error(QString("unknown table %1").arg(table));
             break;
         }
+    }
+}
+//--------------------------------------------------------------------------------
+void MODBUS_server::disconnect_device(void)
+{
+    if (modbusDevice->connectDevice())
+    {
+        modbusDevice->disconnect();
     }
 }
 //--------------------------------------------------------------------------------
@@ -191,5 +220,10 @@ void MODBUS_server::refresh(void)
         ui->cb_port->addItem(port.portName());
 #endif
     }
+}
+//--------------------------------------------------------------------------------
+void MODBUS_server::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

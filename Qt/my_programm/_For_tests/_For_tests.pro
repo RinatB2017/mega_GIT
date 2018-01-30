@@ -77,6 +77,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include ($$LIB_PATH2/icons/digits.pri)
 
+include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
+
 include (src/mymainwindow/mymainwindow.pri)
 include (src/safe/safe.pri)
 

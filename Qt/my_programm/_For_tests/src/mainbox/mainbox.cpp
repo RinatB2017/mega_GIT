@@ -207,10 +207,32 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
-#define PROPERTY_ID "property_id"
+#include "hexspinbox.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+#if 1
+    QGridLayout *grid = new QGridLayout;
+    grid->setSpacing(0);
+    grid->setMargin(0);
+    int cnt  = 0;
+    for(int y=0; y<16; y++)
+    {
+        grid->addWidget(new QLabel(QString("%1").arg(cnt, 4, 16, QChar('0')).toUpper()));
+        cnt += 0x10;
+        for(int x=0; x<16; x++)
+        {
+            HexSpinBox *hsb = new HexSpinBox;
+            grid->addWidget(hsb, y, x+1);
+        }
+    }
+
+    QWidget *w = new QWidget;
+    w->setLayout(grid);
+
+    w->show();
+#endif
 
     return true;
 }

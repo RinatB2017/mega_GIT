@@ -56,6 +56,9 @@ private slots:
     void connect_device(void);
     void disconnect_device(void);
 
+    void connect_tcp_device(void);
+    void disconnect_tcp_device(void);
+
     void refresh(void);
 
 private:
@@ -67,16 +70,6 @@ private:
     QHash<QString, QLineEdit *> registers;
 
     QModbusDataUnitMap reg;
-
-    //    QHexEdit *he_discrete_inputs = 0;
-    //    QHexEdit *he_coils = 0;
-    //    QHexEdit *he_input_registers = 0;
-    //    QHexEdit *he_holding_registers = 0;
-
-    //    QByteArray ba_discrete_inputs;
-    //    QByteArray ba_coils;
-    //    QByteArray ba_input_registers;
-    //    QByteArray ba_holding_registers;
 
     HexView16 *he_discrete_inputs = 0;
     HexView16 *he_coils = 0;

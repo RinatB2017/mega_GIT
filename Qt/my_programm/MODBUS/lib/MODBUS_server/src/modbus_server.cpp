@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QSerialPortInfo>
+#include <QHostAddress>
 //--------------------------------------------------------------------------------
 #include "modbus_server.hpp"
 #include "ui_modbus_server.h"
@@ -26,6 +27,7 @@
 #include "qhexedit.h"
 #include "hexview16.hpp"
 //--------------------------------------------------------------------------------
+#include <QModbusTcpServer>
 #include <QModbusRtuSerialSlave>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -67,22 +69,15 @@ void MODBUS_server::init(void)
 //--------------------------------------------------------------------------------
 void MODBUS_server::init_modbusDevice(void)
 {
-    modbusDevice = new QModbusRtuSerialSlave(this);
     //---
-    reg.insert(QModbusDataUnit::Coils,              { QModbusDataUnit::Coils,               0, 0xFFFF });   // однобитовый тип, доступен для чтения и записи.
-    reg.insert(QModbusDataUnit::DiscreteInputs,     { QModbusDataUnit::DiscreteInputs,      0, 0xFFFF });   // однобитовый тип, доступен только для чтения.
-    reg.insert(QModbusDataUnit::InputRegisters,     { QModbusDataUnit::InputRegisters,      0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен только для чтения.
-    reg.insert(QModbusDataUnit::HoldingRegisters,   { QModbusDataUnit::HoldingRegisters,    0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен для чтения и записи.
-
-    modbusDevice->setMap(reg);
-    //---
-    connect(modbusDevice,   SIGNAL(dataWritten(QModbusDataUnit::RegisterType,int,int)), this,   SLOT(updateWidgets(QModbusDataUnit::RegisterType,int,int)));
-    connect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),                this,   SLOT(errorOccurred(QModbusDevice::Error)));
-    connect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),                 this,   SLOT(stateChanged(QModbusDevice::State)));
+    ui->le_server_host->setText("127.0.0.1:1500");
     //---
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(connect_device()));
     connect(ui->btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(disconnect_device()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+    //---
+    connect(ui->btn_tcp_server_connect,     SIGNAL(clicked(bool)),  this,   SLOT(connect_tcp_device()));
+    connect(ui->btn_tcp_server_disconnect,  SIGNAL(clicked(bool)),  this,   SLOT(disconnect_tcp_device()));
 }
 //--------------------------------------------------------------------------------
 void MODBUS_server::init_tab_widget(void)
@@ -96,26 +91,6 @@ void MODBUS_server::init_tab_widget(void)
     he_coils = new HexView16(this);
     he_input_registers = new HexView16(this);
     he_holding_registers = new HexView16(this);
-
-//    he_discrete_inputs->setReadOnly(true);
-//    he_coils->setReadOnly(true);
-//    he_input_registers->setReadOnly(true);
-//    he_holding_registers->setReadOnly(true);
-
-//    ba_discrete_inputs.resize(0xFFFF);
-//    ba_coils.resize(0xFFFF);
-//    ba_input_registers.resize(0xFFFF);
-//    ba_holding_registers.resize(0xFFFF);
-
-//    ba_discrete_inputs[0xFFFF] = 0;
-//    ba_coils[0xFFFF] = 0;
-//    ba_input_registers[0xFFFF] = 0;
-//    ba_holding_registers[0xFFFF] = 0;
-
-//    he_discrete_inputs->setData(QHexEditData::fromMemory(ba_discrete_inputs));
-//    he_coils->setData(QHexEditData::fromMemory(ba_coils));
-//    he_input_registers->setData(QHexEditData::fromMemory(ba_input_registers));
-//    he_holding_registers->setData(QHexEditData::fromMemory(ba_holding_registers));
 
     ui->tabWidget->addTab(he_discrete_inputs, "Discrete Inputs");
     ui->tabWidget->addTab(he_coils, "Coils");
@@ -151,6 +126,19 @@ void MODBUS_server::connect_device(void)
         emit error("port is empty!");
         return;
     }
+
+    modbusDevice = new QModbusRtuSerialSlave(this);
+    //---
+    reg.insert(QModbusDataUnit::Coils,              { QModbusDataUnit::Coils,               0, 0xFFFF });   // однобитовый тип, доступен для чтения и записи.
+    reg.insert(QModbusDataUnit::DiscreteInputs,     { QModbusDataUnit::DiscreteInputs,      0, 0xFFFF });   // однобитовый тип, доступен только для чтения.
+    reg.insert(QModbusDataUnit::InputRegisters,     { QModbusDataUnit::InputRegisters,      0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен только для чтения.
+    reg.insert(QModbusDataUnit::HoldingRegisters,   { QModbusDataUnit::HoldingRegisters,    0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен для чтения и записи.
+
+    modbusDevice->setMap(reg);
+    //---
+    connect(modbusDevice,   SIGNAL(dataWritten(QModbusDataUnit::RegisterType,int,int)), this,   SLOT(updateWidgets(QModbusDataUnit::RegisterType,int,int)));
+    connect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),                this,   SLOT(errorOccurred(QModbusDevice::Error)));
+    connect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),                 this,   SLOT(stateChanged(QModbusDevice::State)));
 
     modbusDevice->setConnectionParameter(QModbusDevice::SerialPortNameParameter,    port);
     modbusDevice->setConnectionParameter(QModbusDevice::SerialParityParameter,      "0");
@@ -207,6 +195,54 @@ void MODBUS_server::updateWidgets(QModbusDataUnit::RegisterType table,
 }
 //--------------------------------------------------------------------------------
 void MODBUS_server::disconnect_device(void)
+{
+    if (modbusDevice->connectDevice())
+    {
+        modbusDevice->disconnect();
+    }
+}
+//--------------------------------------------------------------------------------
+void MODBUS_server::connect_tcp_device(void)
+{
+    emit info("MODBUS_server::connect_device");
+
+    int serverAddress = 1;  //TODO
+
+    QString port = ui->cb_port->currentText();
+    if(port.isEmpty())
+    {
+        emit error("port is empty!");
+        return;
+    }
+
+    const QUrl url = QUrl::fromUserInput(ui->le_server_host->text());
+    emit info(QString("host: [%1:%2]")
+              .arg(url.host())
+              .arg(url.port()));
+
+    //---
+    modbusDevice = new QModbusTcpServer(this);
+    //---
+    reg.insert(QModbusDataUnit::Coils,              { QModbusDataUnit::Coils,               0, 0xFFFF });   // однобитовый тип, доступен для чтения и записи.
+    reg.insert(QModbusDataUnit::DiscreteInputs,     { QModbusDataUnit::DiscreteInputs,      0, 0xFFFF });   // однобитовый тип, доступен только для чтения.
+    reg.insert(QModbusDataUnit::InputRegisters,     { QModbusDataUnit::InputRegisters,      0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен только для чтения.
+    reg.insert(QModbusDataUnit::HoldingRegisters,   { QModbusDataUnit::HoldingRegisters,    0, 0xFFFF });   // 16-битовый знаковый или беззнаковый тип, доступен для чтения и записи.
+
+    modbusDevice->setMap(reg);
+    //---
+    modbusDevice->setConnectionParameter(QModbusDevice::NetworkAddressParameter,    url.host());
+    modbusDevice->setConnectionParameter(QModbusDevice::NetworkPortParameter,       url.port());
+    modbusDevice->setServerAddress(serverAddress);
+    //---
+    if (!modbusDevice->connectDevice())
+    {
+        emit error(modbusDevice->errorString());
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void MODBUS_server::disconnect_tcp_device(void)
 {
     if (modbusDevice->connectDevice())
     {

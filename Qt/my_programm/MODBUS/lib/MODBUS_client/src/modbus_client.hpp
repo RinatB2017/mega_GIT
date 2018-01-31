@@ -50,11 +50,13 @@ private slots:
 
     void connect_device(void);
     void disconnect_device(void);
+
+    void connect_tcp_device(void);
+    void disconnect_tcp_device(void);
+
     void refresh(void);
 
-    void test_write_discrete_inputs(void);
     void test_write_coils(void);
-    void test_write_input_registers(void);
     void test_write_holding_registers(void);
 
     void test_read_discrete_inputs(void);

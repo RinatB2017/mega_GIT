@@ -23,6 +23,7 @@
 #include "modbus_client.hpp"
 #include "ui_modbus_client.h"
 //--------------------------------------------------------------------------------
+#include <QModbusTcpClient>
 #include <QModbusRtuSerialMaster>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -53,11 +54,10 @@ void MODBUS_client::init(void)
 {
     ui->setupUi(this);
 
-    ui->sb_start_address->setRange(0, 0xFFFF);
     //---
-    modbusDevice = new QModbusRtuSerialMaster(this);
-    connect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),    this,   SLOT(errorOccurred(QModbusDevice::Error)));
-    connect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),     this,   SLOT(stateChanged(QModbusDevice::State)));
+    ui->le_client_host->setText("127.0.0.1:1500");
+    //---
+    ui->sb_start_address->setRange(0, 0xFFFF);
     //---
 
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(connect_device()));
@@ -68,12 +68,13 @@ void MODBUS_client::init(void)
     connect(ui->btn_test_read_input_registers,      SIGNAL(clicked(bool)),  this,   SLOT(test_read_input_registers()));
     connect(ui->btn_test_read_holding_registers,    SIGNAL(clicked(bool)),  this,   SLOT(test_read_holding_registers()));
 
-    connect(ui->btn_test_write_discrete_inputs,     SIGNAL(clicked(bool)),  this,   SLOT(test_write_discrete_inputs()));
     connect(ui->btn_test_write_coils,               SIGNAL(clicked(bool)),  this,   SLOT(test_write_coils()));
-    connect(ui->btn_test_write_input_registers,     SIGNAL(clicked(bool)),  this,   SLOT(test_write_input_registers()));
     connect(ui->btn_test_write_holding_registers,   SIGNAL(clicked(bool)),  this,   SLOT(test_write_holding_registers()));
 
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+
+    connect(ui->btn_tcp_client_connect,     SIGNAL(clicked(bool)),  this,   SLOT(connect_tcp_device()));
+    connect(ui->btn_tcp_client_disconnect,  SIGNAL(clicked(bool)),  this,   SLOT(disconnect_tcp_device()));
 
     refresh();
 }
@@ -97,85 +98,17 @@ void MODBUS_client::stateChanged(QModbusDevice::State state)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test_write_discrete_inputs(void)
-{
-    emit debug("MODBUS_client::test_write");
-
-    int serverAddress = 1;
-
-    QVector<quint16> p(1);
-    //p[0]=0x1234;
-    //p[0]=0xFF00;
-    p[0]=0x0000;
-
-    QModbusDataUnit writeUnit;
-    writeUnit.setRegisterType(QModbusDataUnit::DiscreteInputs);
-    writeUnit.setStartAddress(ui->sb_start_address->value());
-    writeUnit.setValueCount(1);
-    writeUnit.setValues(p);
-
-    QModbusReply *w_reply = modbusDevice->sendWriteRequest(writeUnit, serverAddress);
-    if(w_reply)
-    {
-        if (!w_reply->isFinished())
-        {
-            connect(w_reply,    SIGNAL(finished()), this,   SLOT(readReady()));
-        }
-        else
-        {
-            delete w_reply; // broadcast replies return immediately
-        }
-    }
-
-    emit info("OK");
-}
-//--------------------------------------------------------------------------------
 void MODBUS_client::test_write_coils(void)
 {
     emit debug("MODBUS_client::test_write");
 
-    int serverAddress = 1;
+    int serverAddress = 1;  //TODO
 
     QVector<quint16> p(1);
-    //p[0]=0x1234;
-    //p[0]=0xFF00;
-    p[0]=0x0000;
+    p[0]=ui->sb_write_value->value();
 
     QModbusDataUnit writeUnit;
     writeUnit.setRegisterType(QModbusDataUnit::Coils);
-    writeUnit.setStartAddress(ui->sb_start_address->value());
-    writeUnit.setValueCount(1);
-    writeUnit.setValues(p);
-
-    QModbusReply *w_reply = modbusDevice->sendWriteRequest(writeUnit, serverAddress);
-    if(w_reply)
-    {
-        if (!w_reply->isFinished())
-        {
-            connect(w_reply,    SIGNAL(finished()), this,   SLOT(readReady()));
-        }
-        else
-        {
-            delete w_reply; // broadcast replies return immediately
-        }
-    }
-
-    emit info("OK");
-}
-//--------------------------------------------------------------------------------
-void MODBUS_client::test_write_input_registers(void)
-{
-    emit debug("MODBUS_client::test_write");
-
-    int serverAddress = 1;
-
-    QVector<quint16> p(1);
-    //p[0]=0x1234;
-    //p[0]=0xFF00;
-    p[0]=0x0000;
-
-    QModbusDataUnit writeUnit;
-    writeUnit.setRegisterType(QModbusDataUnit::InputRegisters);
     writeUnit.setStartAddress(ui->sb_start_address->value());
     writeUnit.setValueCount(1);
     writeUnit.setValues(p);
@@ -200,12 +133,10 @@ void MODBUS_client::test_write_holding_registers(void)
 {
     emit debug("MODBUS_client::test_write");
 
-    int serverAddress = 1;
+    int serverAddress = 1;  //TODO
 
     QVector<quint16> p(1);
-    //p[0]=0x1234;
-    //p[0]=0xFF00;
-    p[0]=0x0000;
+    p[0]=ui->sb_write_value->value();
 
     QModbusDataUnit writeUnit;
     writeUnit.setRegisterType(QModbusDataUnit::HoldingRegisters);
@@ -233,7 +164,7 @@ void MODBUS_client::test_read_discrete_inputs(void)
 {
     emit debug("MODBUS_client::test_read");
 
-    int serverAddress = 1;
+    int serverAddress = 1;  //TODO
 
     QModbusDataUnit readUnit;
     readUnit.setRegisterType(QModbusDataUnit::DiscreteInputs);
@@ -260,7 +191,7 @@ void MODBUS_client::test_read_coils(void)
 {
     emit debug("MODBUS_client::test_read");
 
-    int serverAddress = 1;
+    int serverAddress = 1;  //TODO
 
     QModbusDataUnit readUnit;
     readUnit.setRegisterType(QModbusDataUnit::Coils);
@@ -287,7 +218,7 @@ void MODBUS_client::test_read_input_registers(void)
 {
     emit debug("MODBUS_client::test_read");
 
-    int serverAddress = 1;
+    int serverAddress = 1;  //TODO
 
     QModbusDataUnit readUnit;
     readUnit.setRegisterType(QModbusDataUnit::InputRegisters);
@@ -314,7 +245,7 @@ void MODBUS_client::test_read_holding_registers(void)
 {
     emit debug("MODBUS_client::test_read");
 
-    int serverAddress = 1;
+    int serverAddress = 1;  //TODO
 
     QModbusDataUnit readUnit;
     readUnit.setRegisterType(QModbusDataUnit::HoldingRegisters);
@@ -348,14 +279,18 @@ void MODBUS_client::connect_device(void)
         return;
     }
 
+    modbusDevice = new QModbusRtuSerialMaster(this);
+    connect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),    this,   SLOT(errorOccurred(QModbusDevice::Error)));
+    connect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),     this,   SLOT(stateChanged(QModbusDevice::State)));
+
     modbusDevice->setConnectionParameter(QModbusDevice::SerialPortNameParameter,    port);
     modbusDevice->setConnectionParameter(QModbusDevice::SerialParityParameter,      "0");
     modbusDevice->setConnectionParameter(QModbusDevice::SerialBaudRateParameter,    "9600");
     modbusDevice->setConnectionParameter(QModbusDevice::SerialDataBitsParameter,    "8");
     modbusDevice->setConnectionParameter(QModbusDevice::SerialStopBitsParameter,    "1");
     //---
-    modbusDevice->setTimeout(1000);
-    modbusDevice->setNumberOfRetries(1);
+    modbusDevice->setTimeout(1000);         //TODO
+    modbusDevice->setNumberOfRetries(3);    //TODO
     //---
     if (!modbusDevice->connectDevice())
     {
@@ -373,6 +308,48 @@ void MODBUS_client::disconnect_device(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MODBUS_client::connect_tcp_device(void)
+{
+    emit info("MODBUS_client::connect_device");
+
+    QString port = ui->cb_port->currentText();
+    if(port.isEmpty())
+    {
+        emit error("port is empty!");
+        return;
+    }
+
+    const QUrl url = QUrl::fromUserInput(ui->le_client_host->text());
+    emit info(QString("host: [%1:%2]")
+              .arg(url.host())
+              .arg(url.port()));
+
+    //---
+    modbusDevice = new QModbusTcpClient(this);
+    //---
+    modbusDevice->setConnectionParameter(QModbusDevice::NetworkAddressParameter,    url.host());
+    modbusDevice->setConnectionParameter(QModbusDevice::NetworkPortParameter,       url.port());
+    //---
+    modbusDevice->setTimeout(1000);         //TODO
+    modbusDevice->setNumberOfRetries(3);    //TODO
+    //---
+    if (!modbusDevice->connectDevice())
+    {
+        emit error(modbusDevice->errorString());
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void MODBUS_client::disconnect_tcp_device(void)
+{
+    if (modbusDevice->connectDevice())
+    {
+        modbusDevice->disconnect();
+    }
+}
+//--------------------------------------------------------------------------------
+//.arg(QString::number(unit.value(i), unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
 void MODBUS_client::readReady(void)
 {
     emit debug("MODBUS_client::readReady");
@@ -389,9 +366,9 @@ void MODBUS_client::readReady(void)
         QModbusDataUnit unit = reply->result();
         for (uint i=0; i<unit.valueCount(); i++)
         {
-            QString entry = tr("Address: %1, Value: %2")
+            QString entry = QString("Address: %1, Value: 0x%2")
                     .arg(unit.startAddress())
-                    .arg(QString::number(unit.value(i), unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
+                    .arg(QString("%1").arg(unit.value(i), 0, 16));
             emit info(entry);
         }
     }

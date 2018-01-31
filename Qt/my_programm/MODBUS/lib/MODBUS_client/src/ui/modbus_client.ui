@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>371</width>
-    <height>409</height>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,12 @@
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -23,6 +29,47 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>TCP</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="le_client_host"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Host:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="btn_tcp_client_connect">
+             <property name="text">
+              <string>connect</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_tcp_client_disconnect">
+             <property name="text">
+              <string>disconnect</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="title">
@@ -78,8 +125,8 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
             <widget class="QLabel" name="label_6">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -92,10 +139,23 @@
              </property>
             </widget>
            </item>
-           <item>
+           <item row="0" column="1">
             <widget class="QSpinBox" name="sb_start_address"/>
            </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Value</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="HexSpinBox" name="sb_write_value"/>
+           </item>
           </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2"/>
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_2">
@@ -127,13 +187,6 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="btn_test_write_discrete_inputs">
-             <property name="text">
-              <string>write</string>
-             </property>
-            </widget>
-           </item>
            <item row="4" column="1">
             <widget class="QPushButton" name="btn_test_read_holding_registers">
              <property name="text">
@@ -145,13 +198,6 @@
             <widget class="QPushButton" name="btn_test_read_input_registers">
              <property name="text">
               <string>read</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QPushButton" name="btn_test_write_input_registers">
-             <property name="text">
-              <string>write</string>
              </property>
             </widget>
            </item>
@@ -206,18 +252,27 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HexSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>hexspinbox.hpp</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
+  <tabstop>le_client_host</tabstop>
+  <tabstop>btn_tcp_client_connect</tabstop>
+  <tabstop>btn_tcp_client_disconnect</tabstop>
   <tabstop>cb_port</tabstop>
   <tabstop>btn_refresh</tabstop>
   <tabstop>btn_connect</tabstop>
   <tabstop>btn_disconnect</tabstop>
   <tabstop>sb_start_address</tabstop>
+  <tabstop>sb_write_value</tabstop>
   <tabstop>btn_test_read_discrete_inputs</tabstop>
-  <tabstop>btn_test_write_discrete_inputs</tabstop>
   <tabstop>btn_test_read_coils</tabstop>
   <tabstop>btn_test_write_coils</tabstop>
   <tabstop>btn_test_read_input_registers</tabstop>
-  <tabstop>btn_test_write_input_registers</tabstop>
   <tabstop>btn_test_read_holding_registers</tabstop>
   <tabstop>btn_test_write_holding_registers</tabstop>
  </tabstops>

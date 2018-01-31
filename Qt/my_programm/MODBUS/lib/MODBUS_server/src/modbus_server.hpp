@@ -30,12 +30,13 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MODBUS_server;
+class MODBUS_server;
 }
 //--------------------------------------------------------------------------------
 class QModbusServer;
 class QModbusReply;
-class QHexEdit;
+class HexView16;
+//class QHexEdit;
 //--------------------------------------------------------------------------------
 class MODBUS_server : public MyWidget
 {
@@ -67,15 +68,20 @@ private:
 
     QModbusDataUnitMap reg;
 
-    QHexEdit *he_discrete_inputs = 0;
-    QHexEdit *he_coils = 0;
-    QHexEdit *he_input_registers = 0;
-    QHexEdit *he_holding_registers = 0;
+    //    QHexEdit *he_discrete_inputs = 0;
+    //    QHexEdit *he_coils = 0;
+    //    QHexEdit *he_input_registers = 0;
+    //    QHexEdit *he_holding_registers = 0;
 
-    QByteArray ba_discrete_inputs;
-    QByteArray ba_coils;
-    QByteArray ba_input_registers;
-    QByteArray ba_holding_registers;
+    //    QByteArray ba_discrete_inputs;
+    //    QByteArray ba_coils;
+    //    QByteArray ba_input_registers;
+    //    QByteArray ba_holding_registers;
+
+    HexView16 *he_discrete_inputs = 0;
+    HexView16 *he_coils = 0;
+    HexView16 *he_input_registers = 0;
+    HexView16 *he_holding_registers = 0;
 
     void init(void);
     void init_modbusDevice(void);

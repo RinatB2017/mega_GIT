@@ -80,12 +80,11 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
-include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
+
+include ($$LIB_PATH2/widgets/hexview16/hexview16.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/safe/safe.pri)
-
-#include (src/upacket/upacket.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

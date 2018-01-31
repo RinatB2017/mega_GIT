@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2016                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,61 +18,36 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MODBUS_CLIENT_HPP
-#define MODBUS_CLIENT_HPP
+#ifndef HEXVIEW16_HPP
+#define HEXVIEW16_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include <QModbusDataUnit>
-#include <QModbusDevice>
+class QStandardItemModel;
+class QStandardItem;
+class QTableView;
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MODBUS_client;
-}
-//--------------------------------------------------------------------------------
-class QModbusClient;
-class QModbusReply;
-//--------------------------------------------------------------------------------
-class MODBUS_client : public MyWidget
+class HexView16 : public QWidget
 {
     Q_OBJECT
 
 public:
-    MODBUS_client(QWidget *parent = 0);
-    ~MODBUS_client();
+    HexView16(QWidget *parent = 0);
+    ~HexView16();
 
-private slots:
-    void readReady(void);
-    void errorOccurred(QModbusDevice::Error);
-    void stateChanged(QModbusDevice::State state);
+    void set(uint16_t address, uint16_t value);
+    uint16_t get(uint16_t address);
 
-    void connect_device(void);
-    void disconnect_device(void);
-    void refresh(void);
-
-    void test_write_discrete_inputs(void);
-    void test_write_coils(void);
-    void test_write_input_registers(void);
-    void test_write_holding_registers(void);
-
-    void test_read_discrete_inputs(void);
-    void test_read_coils(void);
-    void test_read_input_registers(void);
-    void test_read_holding_registers(void);
+    void test(void);
+    void test2(void);
 
 private:
-    Ui::MODBUS_client *ui = 0;
-
-    QModbusReply *lastRequest = 0;
-    QModbusClient *modbusDevice = 0;
-
-    QModbusDataUnit readRequest() const;
-    QModbusDataUnit writeRequest() const;
+    QTableView *tv = 0;
+    QStandardItemModel *model = 0;
+    uint16_t buf[0xFFFF] = { 0 };
+    QStandardItem *items[0xFFFF];
 
     void init(void);
-    void updateText(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // HEXVIEW16_HPP

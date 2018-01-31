@@ -81,6 +81,8 @@ include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 include (../lib/MODBUS_server/MODBUS_server.pri)
 include (../lib/MODBUS_client/MODBUS_client.pri)
 
+include ($$LIB_PATH2/widgets/hexview16/hexview16.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

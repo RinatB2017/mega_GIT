@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
+    <width>495</width>
     <height>176</height>
    </rect>
   </property>
@@ -41,6 +41,9 @@
    <item>
     <widget class="QHexEdit" name="hex_widget" native="true"/>
    </item>
+   <item>
+    <widget class="HexView16" name="hv_widget" native="true"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -54,6 +57,12 @@
    <class>QHexEdit</class>
    <extends>QWidget</extends>
    <header>qhexedit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HexView16</class>
+   <extends>QWidget</extends>
+   <header>hexview16.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

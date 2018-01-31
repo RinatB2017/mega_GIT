@@ -20,9 +20,11 @@
 **********************************************************************************/
 #include <QSerialPortInfo>
 //--------------------------------------------------------------------------------
-#include "qhexedit.h"
 #include "modbus_server.hpp"
 #include "ui_modbus_server.h"
+//--------------------------------------------------------------------------------
+#include "qhexedit.h"
+#include "hexview16.hpp"
 //--------------------------------------------------------------------------------
 #include <QModbusRtuSerialSlave>
 //--------------------------------------------------------------------------------
@@ -90,30 +92,30 @@ void MODBUS_server::init_tab_widget(void)
         ui->tabWidget->removeTab(0);
     }
 
-    he_discrete_inputs = new QHexEdit(this);
-    he_coils = new QHexEdit(this);
-    he_input_registers = new QHexEdit(this);
-    he_holding_registers = new QHexEdit(this);
+    he_discrete_inputs = new HexView16(this);
+    he_coils = new HexView16(this);
+    he_input_registers = new HexView16(this);
+    he_holding_registers = new HexView16(this);
 
-    he_discrete_inputs->setReadOnly(true);
-    he_coils->setReadOnly(true);
-    he_input_registers->setReadOnly(true);
-    he_holding_registers->setReadOnly(true);
+//    he_discrete_inputs->setReadOnly(true);
+//    he_coils->setReadOnly(true);
+//    he_input_registers->setReadOnly(true);
+//    he_holding_registers->setReadOnly(true);
 
-    ba_discrete_inputs.resize(0xFFFF);
-    ba_coils.resize(0xFFFF);
-    ba_input_registers.resize(0xFFFF);
-    ba_holding_registers.resize(0xFFFF);
+//    ba_discrete_inputs.resize(0xFFFF);
+//    ba_coils.resize(0xFFFF);
+//    ba_input_registers.resize(0xFFFF);
+//    ba_holding_registers.resize(0xFFFF);
 
-    ba_discrete_inputs[0xFFFF] = 0;
-    ba_coils[0xFFFF] = 0;
-    ba_input_registers[0xFFFF] = 0;
-    ba_holding_registers[0xFFFF] = 0;
+//    ba_discrete_inputs[0xFFFF] = 0;
+//    ba_coils[0xFFFF] = 0;
+//    ba_input_registers[0xFFFF] = 0;
+//    ba_holding_registers[0xFFFF] = 0;
 
-    he_discrete_inputs->setData(QHexEditData::fromMemory(ba_discrete_inputs));
-    he_coils->setData(QHexEditData::fromMemory(ba_coils));
-    he_input_registers->setData(QHexEditData::fromMemory(ba_input_registers));
-    he_holding_registers->setData(QHexEditData::fromMemory(ba_holding_registers));
+//    he_discrete_inputs->setData(QHexEditData::fromMemory(ba_discrete_inputs));
+//    he_coils->setData(QHexEditData::fromMemory(ba_coils));
+//    he_input_registers->setData(QHexEditData::fromMemory(ba_input_registers));
+//    he_holding_registers->setData(QHexEditData::fromMemory(ba_holding_registers));
 
     ui->tabWidget->addTab(he_discrete_inputs, "Discrete Inputs");
     ui->tabWidget->addTab(he_coils, "Coils");
@@ -175,22 +177,26 @@ void MODBUS_server::updateWidgets(QModbusDataUnit::RegisterType table,
         {
         case QModbusDataUnit::Coils:
             modbusDevice->data(QModbusDataUnit::Coils, address + i, &value);
+            he_coils->set(address+i, value);
             emit info(QString("Coils %1").arg(value));
             break;
 
         case QModbusDataUnit::HoldingRegisters:
             modbusDevice->data(QModbusDataUnit::HoldingRegisters, address + i, &value);
             emit info(QString("HoldingRegisters %1").arg(value));
+            he_holding_registers->set(address+i, value);
             break;
 
         case QModbusDataUnit::DiscreteInputs:
             modbusDevice->data(QModbusDataUnit::DiscreteInputs, address + i, &value);
             emit info(QString("DiscreteInputs %1").arg(value));
+            he_discrete_inputs->set(address+i, value);
             break;
 
         case QModbusDataUnit::InputRegisters:
             modbusDevice->data(QModbusDataUnit::InputRegisters, address + i, &value);
             emit info(QString("InputRegisters %1").arg(value));
+            he_input_registers->set(address+i, value);
             break;
 
         default:

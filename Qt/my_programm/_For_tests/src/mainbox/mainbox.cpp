@@ -57,6 +57,10 @@ void MainBox::init(void)
     //---
     QByteArray ba;
     ba.resize(0xFFFF);
+    for (int n=0; n<ba.size(); n++)
+    {
+        ba[n] = 0;
+    }
 
     ba[0] = 0xAB;
     ba[0x10] = 0xBA;
@@ -207,71 +211,12 @@ bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *
     return true;
 }
 //--------------------------------------------------------------------------------
-#include "hexspinbox.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-#if 0
-    QTableWidget
-#endif
-
-#if 0
-    int i = 0;
-
-    QGridLayout *grid = new QGridLayout;
-    grid->setSpacing(0);
-    grid->setMargin(0);
-    int cnt  = 0;
-    for(int y=0; y<32; y++)
-    {
-        grid->addWidget(new QLabel(QString("%1").arg(cnt, 4, 16, QChar('0')).toUpper()));
-        cnt += 0x10;
-        for(int x=0; x<16; x++)
-        {
-            EditableLabel *le = new EditableLabel;
-            le->setText(QString("%1").arg(i, 4, 16, QChar('0')).toUpper());
-            le->setReadOnly(true);
-            i++;
-
-            grid->addWidget(le, y, x+1);
-        }
-    }
-    QWidget *w = new QWidget;
-    w->setLayout(grid);
-
-    QScrollArea *sa = new QScrollArea;
-    sa->setWidget(w);
-
-    sa->show();
-#endif
-
-#if 0
-    HexLineEdit *hle = new HexLineEdit;
-    hle->show();
-#endif
-
-#if 0
-    QGridLayout *grid = new QGridLayout;
-    grid->setSpacing(0);
-    grid->setMargin(0);
-    int cnt  = 0;
-    for(int y=0; y<16; y++)
-    {
-        grid->addWidget(new QLabel(QString("%1").arg(cnt, 4, 16, QChar('0')).toUpper()));
-        cnt += 0x10;
-        for(int x=0; x<16; x++)
-        {
-            HexSpinBox *hsb = new HexSpinBox;
-            grid->addWidget(hsb, y, x+1);
-        }
-    }
-
-    QWidget *w = new QWidget;
-    w->setLayout(grid);
-
-    w->show();
-#endif
+    ui->hv_widget->set(0, 0xABBA);
+    ui->hv_widget->set(0xFFFF, 0xABBA);
 
     return true;
 }
@@ -279,6 +224,8 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    ui->hv_widget->test();
 
     return true;
 }

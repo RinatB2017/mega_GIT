@@ -50,6 +50,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("MODBUS");
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -57,16 +58,8 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
     createTestBar();
-//    setMinimumHeight(sizeHint().height());
 
-//    MODBUS_client *client = new MODBUS_client(this);
-//    MODBUS_server *server = new MODBUS_server(this);
-
-//    QVBoxLayout *vbox = new QVBoxLayout;
-//    vbox->addWidget(client);
-//    vbox->addWidget(server);
-//    vbox->addStretch(1);
-//    setLayout(vbox);
+    load_widgets("MODBUS");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

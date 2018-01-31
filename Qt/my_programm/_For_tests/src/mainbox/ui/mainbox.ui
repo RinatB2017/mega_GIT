@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
+    <width>276</width>
     <height>176</height>
    </rect>
   </property>
@@ -39,10 +39,17 @@
     </widget>
    </item>
    <item>
-    <widget class="QHexEdit" name="hex_widget" native="true"/>
-   </item>
-   <item>
-    <widget class="HexView16" name="hv_widget" native="true"/>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
@@ -51,18 +58,6 @@
    <class>Safe</class>
    <extends>QWidget</extends>
    <header>safe.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QHexEdit</class>
-   <extends>QWidget</extends>
-   <header>qhexedit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>HexView16</class>
-   <extends>QWidget</extends>
-   <header>hexview16.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

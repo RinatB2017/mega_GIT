@@ -54,36 +54,6 @@ void MainBox::init(void)
     connect(mw, SIGNAL(notifySignal()), this,   SLOT(test_1()));
 #endif
 
-    //---
-    QByteArray ba;
-    ba.resize(0xFFFF);
-    for (int n=0; n<ba.size(); n++)
-    {
-        ba[n] = 0;
-    }
-
-    ba[0] = 0xAB;
-    ba[0x10] = 0xBA;
-    ba[0xFFFF] = 0x00;
-    //---
-    QPalette palette;
-
-    palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-    palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
-    palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-    palette.setBrush(QPalette::Text,        QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-    palette.setBrush(QPalette::BrightText,  QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-    palette.setBrush(QPalette::ButtonText,  QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-    palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-    palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
-    palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040), Qt::SolidPattern));
-
-    ui->hex_widget->setPalette(palette);
-    ui->hex_widget->setReadOnly(true);
-    //---
-    ui->hex_widget->setData(QHexEditData::fromMemory(ba));
-    //---
-
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
@@ -215,17 +185,12 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    ui->hv_widget->set(0, 0xABBA);
-    ui->hv_widget->set(0xFFFF, 0xABBA);
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-    ui->hv_widget->test();
 
     return true;
 }

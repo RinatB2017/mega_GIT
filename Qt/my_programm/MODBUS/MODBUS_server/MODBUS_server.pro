@@ -62,6 +62,7 @@ LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
+include ($$LIB_PATH2/widgets/hexview16/hexview16.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 QT  += serialbus

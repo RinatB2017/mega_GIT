@@ -42,6 +42,8 @@ DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
+DEFINES += HEX16
+
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -58,8 +60,10 @@ RESOURCES += images/images.qrc
 OTHER_FILES += doc/notebook.txt
 
 LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
 
 QT  += serialbus
 

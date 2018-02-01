@@ -1,55 +1,590 @@
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
 //
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
+#pragma pack (push, 1)
+//--------------------------------------------------------------------------------
+union U_BYTE
+{
+  uint8_t value;
+  struct
+  {
+    uint8_t bit0: 1;
+    uint8_t bit1: 1;
+    uint8_t bit2: 1;
+    uint8_t bit3: 1;
+    uint8_t bit4: 1;
+    uint8_t bit5: 1;
+    uint8_t bit6: 1;
+    uint8_t bit7: 1;
+  } bites;
+};
+
+enum CMD {
+  CMD_TEST    = 0,
+  CMD_READ    = 1,
+  CMD_WRITE   = 2,
+  CMD_RESET   = 3
+};
+
+union PELCO_PACKET
+{
+  struct PELCO_BODY
+  {
+    uint8_t sync;
+    uint8_t address;
+    uint8_t cmd1;
+    uint8_t cmd2;
+    uint8_t data1;
+    uint8_t data2;
+    uint8_t crc;
+  } body;
+  uint8_t buf[sizeof(struct PELCO_BODY)];
+};
+
+typedef struct HEADER
+{
+  uint16_t    prefix_16;                  // префикс
+  uint8_t     addr_8;                     // адрес модуля
+  uint8_t     cmd_8;                      // команда
+  uint16_t    len_16;                     // длина данных
+} header;
+//--------------------------------------------------------------------------------
+union QUESTION_TEST
+{
+  struct QUESTION_TEST_BODY
+  {
+    struct HEADER   header;
+    uint16_t    data;
+    uint16_t    crc16;                  // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct QUESTION_TEST_BODY)];
+};
+
+union ANSWER_TEST
+{
+  struct ANSWER_TEST_BODY
+  {
+    struct HEADER   header;
+    uint16_t    data;
+    uint16_t    crc16;                  // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct ANSWER_TEST_BODY)];
+};
+//--------------------------------------------------------------------------------
+union QUESTION_RESET
+{
+  struct QUESTION_RESET_BODY
+  {
+    struct HEADER   header;
+    uint16_t    data;
+    uint16_t    crc16;                  // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct QUESTION_RESET_BODY)];
+};
+
+union ANSWER_RESET
+{
+  struct ANSWER_RESET_BODY
+  {
+    struct HEADER   header;
+    uint16_t    data;
+    uint16_t    crc16;                  // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct ANSWER_RESET_BODY)];
+};
+//--------------------------------------------------------------------------------
+union QUESTION_READ
+{
+  struct QUESTION_READ_BODY
+  {
+    struct HEADER      header;
+    uint16_t    crc16;                      // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct QUESTION_READ_BODY)];
+};
+
+union ANSWER_READ
+{
+  struct ANSWER_READ_BODY
+  {
+    struct HEADER      header;
+
+    uint32_t    addr_cam_32;                // адрес камеры
+    uint16_t    time_interval_16;           // интервал дворника
+    uint32_t    time_washout_32;            // время помывки
+    uint32_t    time_pause_washout_32;      // время между помывками
+    uint32_t    preset_washout_32;          // пресет помывки
+
+    uint16_t    crc16;                      // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct ANSWER_READ_BODY)];
+};
+//--------------------------------------------------------------------------------
+union QUESTION_WRITE
+{
+  struct QUESTION_WRITE_BODY
+  {
+    struct HEADER      header;
+
+    uint32_t    addr_cam_32;                // адрес камеры
+    uint16_t    time_interval_16;           // интервал дворника
+    uint32_t    time_washout_32;            // время помывки
+    uint32_t    time_pause_washout_32;      // время между помывками
+    uint32_t    preset_washout_32;          // пресет помывки
+
+    uint16_t    crc16;                      // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct QUESTION_WRITE_BODY)];
+};
+
+union ANSWER_WRITE
+{
+  struct ANSWER_WRITE_BODY
+  {
+    struct HEADER      header;
+
+    uint32_t    addr_cam_32;                // адрес камеры
+    uint16_t    time_interval_16;           // интервал дворника
+    uint32_t    time_washout_32;            // время помывки
+    uint32_t    time_pause_washout_32;      // время между помывками
+    uint32_t    preset_washout_32;          // пресет помывки
+
+    uint16_t    crc16;                      // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct ANSWER_WRITE_BODY)];
+};
+//--------------------------------------------------------------------------------
+#pragma pack(pop)
+//--------------------------------------------------------------------------------
+void blink_ON()
+{
+
+}
+//--------------------------------------------------------------------------------
+void blink_OFF()
+{
+
+}
+//--------------------------------------------------------------------------------
+void pump_ON()
+{
+
+}
+//--------------------------------------------------------------------------------
+void pump_OFF()
+{
+
+}
+//--------------------------------------------------------------------------------
+void relay_ON()
+{
+
+}
+//--------------------------------------------------------------------------------
+void relay_OFF()
+{
+
+}
+//--------------------------------------------------------------------------------
+bool check_RAIN()
+{
+  return true;
+}
+//--------------------------------------------------------------------------------
+bool check_LEVEL()
+{
+  return true;
+}
+//--------------------------------------------------------------------------------
+uint8_t get_address()
+{
+  /*
+    union U_BYTE temp;
+    temp.value = 0;
+    temp.bites.bit0 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_0);
+    temp.bites.bit1 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_1);
+    temp.bites.bit2 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_2);
+    temp.bites.bit3 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_3);
+    temp.bites.bit4 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_4);
+
+    return temp.value;
+  */
+  return 0;
+}
+//--------------------------------------------------------------------------------
+uint16_t crc16(uint8_t *pcBlock, uint8_t len)
+{
+  uint16_t a, crc = 0xFFFF;
+  while (len--)
+  {
+    a = *pcBlock++ << 8;
+    crc ^= a;
+    for (int i = 0; i < 8; i++)
+      crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
+  }
+  return crc;
+}
+//--------------------------------------------------------------------------------
+uint8_t convert_ascii_to_value(uint8_t hi, uint8_t lo)
+{
+  uint8_t b_hi = 0;
+  uint8_t b_lo = 0;
+
+  //---
+  switch (hi)
+  {
+    case '0':  b_hi = 0x0;  break;
+    case '1':  b_hi = 0x1;  break;
+    case '2':  b_hi = 0x2;  break;
+    case '3':  b_hi = 0x3;  break;
+    case '4':  b_hi = 0x4;  break;
+    case '5':  b_hi = 0x5;  break;
+    case '6':  b_hi = 0x6;  break;
+    case '7':  b_hi = 0x7;  break;
+    case '8':  b_hi = 0x8;  break;
+    case '9':  b_hi = 0x9;  break;
+    case 'A':  b_hi = 0xA;  break;
+    case 'B':  b_hi = 0xB;  break;
+    case 'C':  b_hi = 0xC;  break;
+    case 'D':  b_hi = 0xD;  break;
+    case 'E':  b_hi = 0xE;  break;
+    case 'F':  b_hi = 0xF;  break;
+    default:
+      break;
+  }
+  //---
+  switch (lo)
+  {
+    case '0':  b_lo = 0x0;  break;
+    case '1':  b_lo = 0x1;  break;
+    case '2':  b_lo = 0x2;  break;
+    case '3':  b_lo = 0x3;  break;
+    case '4':  b_lo = 0x4;  break;
+    case '5':  b_lo = 0x5;  break;
+    case '6':  b_lo = 0x6;  break;
+    case '7':  b_lo = 0x7;  break;
+    case '8':  b_lo = 0x8;  break;
+    case '9':  b_lo = 0x9;  break;
+    case 'A':  b_lo = 0xA;  break;
+    case 'B':  b_lo = 0xB;  break;
+    case 'C':  b_lo = 0xC;  break;
+    case 'D':  b_lo = 0xD;  break;
+    case 'E':  b_lo = 0xE;  break;
+    case 'F':  b_lo = 0xF;  break;
+    default:
+      break;
+  }
+  //---
+  uint8_t r_byte = (b_hi << 4) | b_lo;
+  return r_byte;
+}
+//--------------------------------------------------------------------------------
+void convert_data_to_ascii(uint8_t data, uint8_t *hi_str, uint8_t *lo_str)
+{
+  uint8_t hi = (data >> 4) & 0x0F;
+  uint8_t lo = (data & 0x0F);
+
+  switch (hi)
+  {
+    case 0x00: *hi_str = '0'; break;
+    case 0x01: *hi_str = '1'; break;
+    case 0x02: *hi_str = '2'; break;
+    case 0x03: *hi_str = '3'; break;
+    case 0x04: *hi_str = '4'; break;
+    case 0x05: *hi_str = '5'; break;
+    case 0x06: *hi_str = '6'; break;
+    case 0x07: *hi_str = '7'; break;
+    case 0x08: *hi_str = '8'; break;
+    case 0x09: *hi_str = '9'; break;
+    case 0x0A: *hi_str = 'A'; break;
+    case 0x0B: *hi_str = 'B'; break;
+    case 0x0C: *hi_str = 'C'; break;
+    case 0x0D: *hi_str = 'D'; break;
+    case 0x0E: *hi_str = 'E'; break;
+    case 0x0F: *hi_str = 'F'; break;
+    default: break;
+  }
+
+  switch (lo)
+  {
+    case 0x00: *lo_str = '0'; break;
+    case 0x01: *lo_str = '1'; break;
+    case 0x02: *lo_str = '2'; break;
+    case 0x03: *lo_str = '3'; break;
+    case 0x04: *lo_str = '4'; break;
+    case 0x05: *lo_str = '5'; break;
+    case 0x06: *lo_str = '6'; break;
+    case 0x07: *lo_str = '7'; break;
+    case 0x08: *lo_str = '8'; break;
+    case 0x09: *lo_str = '9'; break;
+    case 0x0A: *lo_str = 'A'; break;
+    case 0x0B: *lo_str = 'B'; break;
+    case 0x0C: *lo_str = 'C'; break;
+    case 0x0D: *lo_str = 'D'; break;
+    case 0x0E: *lo_str = 'E'; break;
+    case 0x0F: *lo_str = 'F'; break;
+    default: break;
+  }
+}
+//--------------------------------------------------------------------------------
 int pin_485 = 8;
 int led_0 = 10;
 int led_1 = 11;
 int led_2 = 12;
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
 int imcomingByte = 0;
-uint8_t buf[100];
-int index = 0;
-int flag = 0;
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
+#define MAX_ASCII_BUF   100
+#define MAX_MODBUS_BUF  50
+//--------------------------------------------------------------------------------
+uint8_t ascii_buf[MAX_ASCII_BUF];
+uint8_t modbus_buf[MAX_MODBUS_BUF];
+//--------------------------------------------------------------------------------
+int index_ascii_buf = 0;
+int index_modbus_buf = 0;
+//--------------------------------------------------------------------------------
+uint32_t    addr_cam_32 = 0;                // адрес камеры
+uint16_t    time_interval_16 = 0;           // интервал дворника
+uint32_t    time_washout_32 = 0;            // время помывки
+uint32_t    time_pause_washout_32 = 0;      // время между помывками
+uint32_t    preset_washout_32 = 0;          // пресет помывки
+//--------------------------------------------------------------------------------
 void write_RS485()
 {
   digitalWrite(pin_485, HIGH);
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
 void read_RS485()
 {
   digitalWrite(pin_485, LOW);
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
+void send_data(void)
+{
+    Serial.write(":");
+    for(int n=0; n<index_modbus_buf; n++)
+    {
+        uint8_t hi = 0;
+        uint8_t lo = 0;
+        convert_data_to_ascii(modbus_buf[n], &hi, &lo);
+        Serial.write(hi);
+        Serial.write(lo);
+    }
+    Serial.println();
+}
+//--------------------------------------------------------------------------------
+void f_read(void)
+{
+  union QUESTION_READ *packet = (union QUESTION_READ *)&modbus_buf;
+
+  uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_READ) - 2);
+  if (crc != packet->body.crc16)
+  {
+    return;
+  }
+
+  union ANSWER_READ answer;
+
+  answer.body.header.prefix_16 = packet->body.header.prefix_16;
+  answer.body.header.addr_8 = packet->body.header.addr_8;
+  answer.body.header.cmd_8 = packet->body.header.cmd_8;
+  answer.body.header.len_16 = packet->body.header.len_16;
+
+  answer.body.addr_cam_32 = addr_cam_32;                        // адрес камеры
+  answer.body.time_interval_16 = time_interval_16;              // интервал дворника
+  answer.body.time_washout_32 = time_washout_32;                // время помывки
+  answer.body.time_pause_washout_32 = time_pause_washout_32;    // время между помывками
+  answer.body.preset_washout_32 = preset_washout_32;            // пресет помывки
+
+  answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_READ) - 2);
+
+  for (int n = 0; n < sizeof(answer); n++)
+  {
+    modbus_buf[n] = answer.buf[n];
+  }
+  index_modbus_buf = sizeof(answer);
+  send_data();
+}
+//--------------------------------------------------------------------------------
+void f_write(void)
+{
+  union QUESTION_WRITE *packet = (union QUESTION_WRITE *)&modbus_buf;
+
+  uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_WRITE) - 2);
+  if(crc != packet->body.crc16)
+  {
+    return;
+  }
+
+  addr_cam_32 = packet->body.addr_cam_32;                       // адрес камеры
+  time_interval_16 = packet->body.time_interval_16;             // интервал дворника
+  time_washout_32 = packet->body.time_washout_32;               // время помывки
+  time_pause_washout_32 = packet->body.time_pause_washout_32;   // время между помывками
+  preset_washout_32 = packet->body.preset_washout_32;           // пресет помывки
+
+  union ANSWER_WRITE answer;
+
+  answer.body.header.prefix_16 = packet->body.header.prefix_16;
+  answer.body.header.addr_8 = packet->body.header.addr_8;
+  answer.body.header.cmd_8 = packet->body.header.cmd_8;
+  answer.body.header.len_16 = packet->body.header.len_16;
+
+  answer.body.addr_cam_32 = addr_cam_32;                        // адрес камеры
+  answer.body.time_interval_16 = time_interval_16;              // интервал дворника
+  answer.body.time_washout_32 = time_washout_32;                // время помывки
+  answer.body.time_pause_washout_32 = time_pause_washout_32;    // время между помывками
+  answer.body.preset_washout_32 = preset_washout_32;            // пресет помывки
+
+  answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_WRITE) - 2);
+
+  for(int n=0; n<sizeof(answer); n++)
+  {
+    modbus_buf[n] = answer.buf[n];
+  }
+  index_modbus_buf = sizeof(answer);
+  send_data();
+}
+//--------------------------------------------------------------------------------
+void f_reset(void)
+{
+  union QUESTION_RESET *packet = (union QUESTION_RESET *)&modbus_buf;
+
+  uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_RESET) - 2);
+  if(crc != packet->body.crc16)
+  {
+    return;
+  }
+
+  union ANSWER_RESET answer;
+
+  answer.body.header.prefix_16 = packet->body.header.prefix_16;
+  answer.body.header.addr_8 = packet->body.header.addr_8;
+  answer.body.header.cmd_8 = packet->body.header.cmd_8;
+  answer.body.header.len_16 = packet->body.header.len_16;
+  answer.body.data = packet->body.data;
+  answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_RESET) - 2);
+
+  for(int n=0; n<sizeof(answer); n++)
+  {
+    modbus_buf[n] = answer.buf[n];
+  }
+  index_modbus_buf = sizeof(answer);
+  send_data();
+}
+//--------------------------------------------------------------------------------
+void f_test(void)
+{
+  union QUESTION_TEST *packet = (union QUESTION_TEST *)&modbus_buf;
+
+  uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_TEST) - 2);
+  if(crc != packet->body.crc16)
+  {
+    return;
+  }
+
+  union ANSWER_TEST answer;
+
+  answer.body.header.prefix_16 = packet->body.header.prefix_16;
+  answer.body.header.addr_8 = packet->body.header.addr_8;
+  answer.body.header.cmd_8 = packet->body.header.cmd_8;
+  answer.body.header.len_16 = packet->body.header.len_16;
+  answer.body.data = packet->body.data;
+  answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_TEST) - 2);
+
+  for(int n=0; n<sizeof(answer); n++)
+  {
+    modbus_buf[n] = answer.buf[n];
+  }
+  index_modbus_buf = sizeof(answer);
+  send_data();
+}
+//--------------------------------------------------------------------------------
+void command(void)
+{
+  if (index_ascii_buf == 0)
+  {
+    return;
+  }
+  if (index_ascii_buf % 2)
+  {
+    return;
+  }
+
+  int index_modbus_buf = 0;
+  for (int n = 0; n < index_ascii_buf; n += 2)
+  {
+    modbus_buf[index_modbus_buf] = convert_ascii_to_value(ascii_buf[n], ascii_buf[n + 1]);
+    index_modbus_buf++;
+    if (index_modbus_buf > MAX_MODBUS_BUF)
+    {
+      return;
+    }
+  }
+
+  struct HEADER *packet = (struct HEADER *)&modbus_buf;
+  uint8_t cmd = packet->cmd_8;
+  switch (cmd)
+  {
+    case CMD_READ:
+      f_read();
+      break;
+    case CMD_WRITE:
+      f_write();
+      break;
+    case CMD_RESET:
+      f_reset();
+      break;
+    case CMD_TEST:
+      f_test();
+      break;
+    default:
+      //logging(String("unknown cmd ") + String(cmd, HEX));
+      break;
+  }
+}
+//--------------------------------------------------------------------------------
 void serialEvent()
 {
   while (Serial.available())
   {
     // считываем байт
     imcomingByte = Serial.read();;
-    buf[index] = imcomingByte;
-    if(index < 100)
+    switch (imcomingByte)
     {
-      index++;
+      case ':':
+        index_ascii_buf = 0;
+        break;
+
+      case '\n':
+        command();
+        index_ascii_buf = 0;
+        break;
+
+      default:
+        if (ascii_buf < MAX_ASCII_BUF)
+        {
+          ascii_buf[index_ascii_buf] = imcomingByte;
+          index_ascii_buf++;
+        }
+        break;
     }
   }
-  flag = 1;
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
 void blink_on()
 {
   digitalWrite(led_0, HIGH);
   digitalWrite(led_1, HIGH);
   digitalWrite(led_2, HIGH);
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
 void blink_off()
 {
   digitalWrite(led_0, LOW);
   digitalWrite(led_1, LOW);
   digitalWrite(led_2, LOW);
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
 void setup()
 {
   Serial.begin(57600);
@@ -62,23 +597,9 @@ void setup()
 
   read_RS485();
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------
 void loop()
 {
-  if (flag == 1)
-  {
-    write_RS485();
-    delay(1);
-    for(int n=0; n<index; n++)
-    {
-      Serial.write(buf[n]);
-      delay(1);
-    }
-    index = 0;
-    read_RS485();
 
-    flag = 0;
-  }
-  delay(100);
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------

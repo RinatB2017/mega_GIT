@@ -452,7 +452,7 @@ int SerialBox5::input(const QByteArray &sending_data)
     }
     else
     {
-        emit debug(QString("send [%1]").arg(sending_data.toHex().data()));
+        emit debug(QString("send [%1]").arg(sending_data.toHex().toUpper().data()));
         serial5->write(sending_data);
     }
     return E_NO_ERROR;

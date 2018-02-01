@@ -5,7 +5,7 @@
 TEMPLATE    = app
 TARGET      = Test_RGB_Matrix
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \

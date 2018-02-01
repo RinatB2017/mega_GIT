@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_digits
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \

@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_Box2D
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \

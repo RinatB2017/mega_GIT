@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_QListWidget
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD \

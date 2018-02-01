@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_PostgreSQL
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \

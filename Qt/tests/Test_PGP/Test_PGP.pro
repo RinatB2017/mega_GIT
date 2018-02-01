@@ -2,6 +2,8 @@
 TARGET      = Test_PGP
 TEMPLATE    = app
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/ui

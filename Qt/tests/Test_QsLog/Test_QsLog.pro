@@ -5,6 +5,8 @@
 TEMPLATE	= app
 TARGET		= Test_QsLog
 
+FOLDER  = tests
+
 INCLUDEPATH 	+= . 3rdparty/QsLog
 
 SOURCES += src/main.cpp

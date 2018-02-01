@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_OpenGL
 
+FOLDER  = tests
+
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH

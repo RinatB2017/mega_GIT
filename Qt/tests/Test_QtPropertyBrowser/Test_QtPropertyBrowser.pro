@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_QtPropertyBrowser
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD \

@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_QGraphicsView
 
+FOLDER  = tests
+
 PROGRAMM_PATH  += \
     $$PWD \
     $$PWD/src \

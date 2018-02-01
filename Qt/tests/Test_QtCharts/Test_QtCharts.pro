@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_QtCharts
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD \

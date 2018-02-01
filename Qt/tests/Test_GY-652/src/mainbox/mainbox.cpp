@@ -122,6 +122,11 @@ void MainBox::data_gy652(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_atm,           atm);
     ui->grapher_widget->add_curve_data(curve_altitude,      altitude);
 
+    ui->display_temperature->display(temperature);
+    ui->display_pressure->display(pressure * 0.75006375541921f / 100.0f);
+    ui->display_atm->display(atm);
+    ui->display_altitude->display(altitude);
+
     //emit info(data);
 }
 //--------------------------------------------------------------------------------

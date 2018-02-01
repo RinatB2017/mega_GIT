@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_QTreeWidget
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \

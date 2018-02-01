@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_syslog
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \

@@ -59,7 +59,7 @@ void loop()
     Serial.print(altitude, 2); //display 2 decimal places
     Serial.println();
 
-    delay(500); //wait a second and get values again.
+    delay(1000); //wait a second and get values again.
 }
 
 

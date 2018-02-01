@@ -104,6 +104,8 @@ public:
     void setCentralWidget(QWidget *widget);
     MainWindow *getThis(void);
 
+    void setWindowTitle(const QString &title);
+
 #ifndef NO_MENU
     QMenuBar *get_menubar(void);
     QMenu *get_file_menu(void);

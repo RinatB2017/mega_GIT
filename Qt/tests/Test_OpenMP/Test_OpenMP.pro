@@ -4,6 +4,8 @@
 TEMPLATE    = app
 TARGET      = Test_OpenMP
 
+FOLDER  = tests
+
 DEPENDPATH += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH

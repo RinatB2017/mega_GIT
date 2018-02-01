@@ -5,7 +5,7 @@
 TEMPLATE    = app
 TARGET      = Test_SMTP
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 PROGRAMM_PATH  += \
     $$PWD \

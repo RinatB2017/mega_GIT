@@ -138,6 +138,8 @@ void PelcoD::f_send(void)
 //--------------------------------------------------------------------------------
 void PelcoD::Camera_Move_position(void)
 {
+    emit trace("Camera_Move_position");
+
     PELCO_PACKET packet;
     packet.body.sync     = 0xFF;
     packet.body.address  = ui->sb_addr_cam_presets->value();
@@ -156,6 +158,8 @@ void PelcoD::Camera_Move_position(void)
 //--------------------------------------------------------------------------------
 void PelcoD::Camera_Wiper(void)
 {
+    emit trace("Camera_Wiper");
+
     PELCO_PACKET packet;
     packet.body.sync     = 0xFF;
     packet.body.address  = ui->sb_addr_cam_presets->value();
@@ -174,6 +178,8 @@ void PelcoD::Camera_Wiper(void)
 //--------------------------------------------------------------------------------
 void PelcoD::Camera_Run_Tur_1(void)
 {
+    emit trace("Camera_Run_Tur_1");
+
     PELCO_PACKET packet;
     packet.body.sync     = 0xFF;
     packet.body.address  = ui->sb_addr_cam_presets->value();

@@ -400,8 +400,8 @@ void MainBox::cmd_read(void)
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
-    emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
+    emit debug(QString("Длина пакета = %1").arg(ba.size()));
+    emit debug(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232_clean.clear();
@@ -409,7 +409,7 @@ void MainBox::cmd_read(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
+    emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     check_answer_read(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
@@ -438,8 +438,8 @@ void MainBox::cmd_write(void)
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
-    emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
+    emit debug(QString("Длина пакета = %1").arg(ba.size()));
+    emit debug(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232_clean.clear();
@@ -447,13 +447,22 @@ void MainBox::cmd_write(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
+    emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     check_answer_write(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_test(void)
 {
+#if 0
+    emit info("info");
+    emit debug("debug");
+    emit error("error");
+    emit trace("trace");
+    return;
+#endif
+
     emit info("Test");
+    emit trace("cmd_test");
 
     QUESTION_TEST question;
 
@@ -467,8 +476,8 @@ void MainBox::cmd_test(void)
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
-    emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
+    emit debug(QString("Длина пакета = %1").arg(ba.size()));
+    emit debug(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232_clean.clear();
@@ -476,13 +485,14 @@ void MainBox::cmd_test(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
+    emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
     check_answer_test(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_reset(void)
 {
     emit info("Reset");
+    emit trace("cmd_reset");
 
     QUESTION_RESET question;
 
@@ -496,8 +506,8 @@ void MainBox::cmd_reset(void)
     QByteArray ba;
     ba.append((char *)&question.buf, sizeof(question.buf));
 
-    emit info(QString("Длина пакета = %1").arg(ba.size()));
-    emit info(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
+    emit debug(QString("Длина пакета = %1").arg(ba.size()));
+    emit debug(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
 
     //---
     data_rs232_clean.clear();
@@ -505,7 +515,7 @@ void MainBox::cmd_reset(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit info(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
+    emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     check_answer_reset(data_rs232_clean);
 }
 //--------------------------------------------------------------------------------

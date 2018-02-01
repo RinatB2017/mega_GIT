@@ -2,6 +2,8 @@
 TEMPLATE    = app
 TARGET      = Test_event_filter
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src

@@ -15,8 +15,6 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 #QMAKE_CXXFLAGS += -fno-show-column
 
-DEFINES += HEX16
-
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 #
@@ -78,6 +76,8 @@ LIB_PATH2 = "../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include ($$LIB_PATH2/icons/digits.pri)
+
+#include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/safe/safe.pri)

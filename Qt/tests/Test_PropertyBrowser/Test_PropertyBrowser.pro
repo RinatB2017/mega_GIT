@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = TestPropertyBrowser
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \

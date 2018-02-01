@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Tester
 
+FOLDER  = tests
+
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

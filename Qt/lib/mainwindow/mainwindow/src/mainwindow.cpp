@@ -945,6 +945,18 @@ MainWindow *MainWindow::getThis(void)
     return this;
 }
 //--------------------------------------------------------------------------------
+void MainWindow::setWindowTitle(const QString &title)
+{
+    QString temp = title;
+#ifdef FAKE
+    temp += " FAKE ";
+#endif
+#ifdef QT_DEBUG
+    temp += " (DEBUG)";
+#endif
+    QMainWindow::setWindowTitle(temp);
+}
+//--------------------------------------------------------------------------------
 #ifndef NO_MENU
 QMenuBar *MainWindow::get_menubar(void)
 {

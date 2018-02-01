@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_GY-652
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/mainbox \

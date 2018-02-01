@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_wwWidgets
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \

@@ -50,6 +50,11 @@ bool MainWidget::test_0(void)
     //emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
     //emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
 
+    emit info("info");
+    emit debug("debug");
+    emit error("error");
+    emit trace("trace");
+
     return true;
 }
 //--------------------------------------------------------------------------------

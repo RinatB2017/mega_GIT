@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_curvetracker
 
-FOLDER  = old_programm
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \

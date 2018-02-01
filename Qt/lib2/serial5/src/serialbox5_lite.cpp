@@ -223,8 +223,20 @@ void SerialBox5_lite::setBaudBox(int index)
     if(value < 0) return;
 
     ok = serial5->setBaudRate(value);
-    if(!ok) emit error("error set baud");
-    else emit info(QString("set %1").arg(ui->BaudBox->currentText()));
+    if(!ok)
+    {
+        emit error("error set baud");
+        return;
+    }
+    emit info(QString("set %1").arg(ui->BaudBox->currentText()));
+
+#if 1
+    emit debug(QString("baudRate %1").arg(serial5->baudRate()));
+    emit debug(QString("dataBits %1").arg(serial5->dataBits()));
+    emit debug(QString("parity %1").arg(serial5->parity()));
+    emit debug(QString("stopBits %1").arg(serial5->stopBits()));
+    emit debug(QString("flowControl %1").arg(serial5->flowControl()));
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::setCloseState(void)
@@ -558,6 +570,12 @@ void SerialBox5_lite::get_parameter(void)
     QString temp;
     temp.clear();
 #if 1
+    emit info(QString("baudRate %1").arg(serial5->baudRate()));
+    emit info(QString("dataBits %1").arg(serial5->dataBits()));
+    emit info(QString("parity %1").arg(serial5->parity()));
+    emit info(QString("stopBits %1").arg(serial5->stopBits()));
+    emit info(QString("flowControl %1").arg(serial5->flowControl()));
+#else
     temp = QString("%1, %2, %3, %4, %5")
             .arg(serial5->baudRate())
             .arg(serial5->dataBits())

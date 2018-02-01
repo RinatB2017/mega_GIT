@@ -48,6 +48,7 @@ signals:
 
 private slots:
     void read_data(QByteArray ba);
+    void test(void);
 
     void cmd_test(void);
     void cmd_reset(void);

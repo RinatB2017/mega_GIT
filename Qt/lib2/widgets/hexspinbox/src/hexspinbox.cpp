@@ -10,9 +10,6 @@ HexSpinBox::HexSpinBox(QWidget *parent)
 #elif HEX16
     setRange(0,0xFFFF);
     validator = new QRegExpValidator(QRegExp(QLatin1String("[0-9A-Fa-f]{1,4}")), this);
-#elif HEX8
-    setRange(0,0xFF);
-    validator = new QRegExpValidator(QRegExp(QLatin1String("[0-9A-Fa-f]{1,2}")), this);
 #else
     setRange(0,0xFF);
     validator = new QRegExpValidator(QRegExp(QLatin1String("[0-9A-Fa-f]{1,2}")), this);
@@ -30,8 +27,6 @@ QString HexSpinBox::textFromValue(int value) const
     return QString("%1").arg(value, 8, 16, QChar('0')).toUpper();
 #elif HEX16
     return QString("%1").arg(value, 4, 16, QChar('0')).toUpper();
-#elif HEX8
-    return QString("%1").arg(value, 2, 16, QChar('0')).toUpper();
 #else
     return QString("%1").arg(value, 2, 16, QChar('0')).toUpper();
 #endif

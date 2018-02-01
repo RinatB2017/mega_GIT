@@ -87,7 +87,11 @@ union ANSWER_RESET
   struct ANSWER_RESET_BODY
   {
     struct HEADER   header;
-    uint16_t    data;
+    uint32_t    addr_cam_32;                // адрес камеры
+    uint16_t    time_interval_16;           // интервал дворника
+    uint32_t    time_washout_32;            // время помывки
+    uint32_t    time_pause_washout_32;      // время между помывками
+    uint32_t    preset_washout_32;          // пресет помывки
     uint16_t    crc16;                  // контрольная сумма
   } body;
   unsigned char buf[sizeof(struct ANSWER_RESET_BODY)];
@@ -156,9 +160,9 @@ union ANSWER_WRITE
 //--------------------------------------------------------------------------------
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
-int pin_485 = 8;
+int pin_485   = 8;
 int led_blink = 10;
-int led_pump = 11;
+int led_pump  = 11;
 int led_relay = 12;
 //--------------------------------------------------------------------------------
 void debug(String text)
@@ -366,15 +370,15 @@ void read_RS485()
 //--------------------------------------------------------------------------------
 void send_data(void)
 {
-  write_RS485();
-  delay(1);
-
   uint8_t hi = 0;
   uint8_t lo = 0;
 
   String temp;
-  temp += ":";
 
+  write_RS485();
+  delay(1);
+
+  temp += ":";
   for (int n = 0; n < index_modbus_buf; n++)
   {
     convert_data_to_ascii(modbus_buf[n], &hi, &lo);
@@ -382,9 +386,9 @@ void send_data(void)
     temp += (char)hi;
     temp += (char)lo;
   }
-  temp += "\n";
+  //temp += "\n";
 
-  Serial.print(temp);
+  Serial.println(temp);
 
   read_RS485();
 }
@@ -483,7 +487,12 @@ void f_reset(void)
   answer.body.header.addr_8 = packet->body.header.addr_8;
   answer.body.header.cmd_8 = packet->body.header.cmd_8;
   answer.body.header.len_16 = packet->body.header.len_16;
-  answer.body.data = packet->body.data;
+  answer.body.addr_cam_32 = addr_cam_32;                      // адрес камеры
+  answer.body.time_interval_16 = time_interval_16;            // интервал дворника
+  answer.body.time_washout_32 = time_washout_32;              // время помывки
+  answer.body.time_pause_washout_32 = time_pause_washout_32;  // время между помывками
+  answer.body.preset_washout_32 = preset_washout_32;          // пресет помывки
+
   answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_RESET) - 2);
 
   for (int n = 0; n < sizeof(answer); n++)
@@ -616,7 +625,7 @@ void blink_off()
 //--------------------------------------------------------------------------------
 void setup()
 {
-  Serial.begin(57600);
+  Serial.begin(9600);
 
   pinMode(pin_485,  OUTPUT);
 
@@ -629,9 +638,11 @@ void setup()
 //--------------------------------------------------------------------------------
 void loop()
 {
+  /*
   blink_on();
   delay(1000);
   blink_off();
   delay(1000);
+  */
 }
 //--------------------------------------------------------------------------------

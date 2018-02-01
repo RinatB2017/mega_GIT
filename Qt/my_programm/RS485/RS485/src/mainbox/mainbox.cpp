@@ -55,7 +55,6 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets("rs485");
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -110,6 +109,11 @@ void MainBox::createTestBar(void)
                                        "test");
     
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::test(void)
+{
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::wait(int max_time_ms)

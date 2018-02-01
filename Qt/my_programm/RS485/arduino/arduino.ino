@@ -627,7 +627,7 @@ void setup()
 {
   Serial.begin(9600);
 
-  pinMode(pin_485,  OUTPUT);
+  pinMode(pin_485,    OUTPUT);
 
   pinMode(led_blink,  OUTPUT);
   pinMode(led_pump,   OUTPUT);
@@ -642,6 +642,15 @@ void loop()
   blink_on();
   delay(1000);
   blink_off();
+  delay(1000);
+  */
+
+  /*
+  write_RS485();
+  delay(100);
+  Serial.println("test");
+  read_RS485();
+  
   delay(1000);
   */
 }

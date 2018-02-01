@@ -96,12 +96,9 @@ private:
 
 signals:
     void not_working(void);
-
     void output(const QByteArray &data);
-
     void readyRead(void);
     void readChannelFinished(void);
-
     void is_open(void);
     void is_close(void);
 
@@ -116,23 +113,14 @@ private slots:
     void drawData(const QByteArray &data);
     void sendData(const QByteArray &sending_data);
     void btnOpenPortClicked(void);
-
     void refresh(void);
-
     void procSerialDataReceive(void);
-
     void setBaudBox(int index);
-
     void getStatus(const QString &status, QDateTime current);
-
     void serial5_error(QSerialPort::SerialPortError err);
-
     void get_parameter(void);
-
     void set_default(void);
-
     void timer_stop(void);
-
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

@@ -156,34 +156,44 @@ union ANSWER_WRITE
 //--------------------------------------------------------------------------------
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
+int pin_485 = 8;
+int led_blink = 10;
+int led_pump = 11;
+int led_relay = 12;
+//--------------------------------------------------------------------------------
+void debug(String text)
+{
+  //Serial.println(text);
+}
+//--------------------------------------------------------------------------------
 void blink_ON()
 {
-
+  digitalWrite(led_blink, HIGH);
 }
 //--------------------------------------------------------------------------------
 void blink_OFF()
 {
-
+  digitalWrite(led_blink, LOW);
 }
 //--------------------------------------------------------------------------------
 void pump_ON()
 {
-
+  digitalWrite(led_pump, HIGH);
 }
 //--------------------------------------------------------------------------------
 void pump_OFF()
 {
-
+  digitalWrite(led_pump, LOW);
 }
 //--------------------------------------------------------------------------------
 void relay_ON()
 {
-
+  digitalWrite(led_relay, HIGH);
 }
 //--------------------------------------------------------------------------------
 void relay_OFF()
 {
-
+  digitalWrite(led_relay, LOW);
 }
 //--------------------------------------------------------------------------------
 bool check_RAIN()
@@ -327,15 +337,10 @@ void convert_data_to_ascii(uint8_t data, uint8_t *hi_str, uint8_t *lo_str)
   }
 }
 //--------------------------------------------------------------------------------
-int pin_485 = 8;
-int led_0 = 10;
-int led_1 = 11;
-int led_2 = 12;
-//--------------------------------------------------------------------------------
 int imcomingByte = 0;
 //--------------------------------------------------------------------------------
-#define MAX_ASCII_BUF   100
-#define MAX_MODBUS_BUF  50
+#define MAX_ASCII_BUF   200
+#define MAX_MODBUS_BUF  100
 //--------------------------------------------------------------------------------
 uint8_t ascii_buf[MAX_ASCII_BUF];
 uint8_t modbus_buf[MAX_MODBUS_BUF];
@@ -364,27 +369,35 @@ void send_data(void)
   write_RS485();
   delay(1);
 
-  Serial.write(":");
+  uint8_t hi = 0;
+  uint8_t lo = 0;
+
+  String temp;
+  temp += ":";
+
   for (int n = 0; n < index_modbus_buf; n++)
   {
-    uint8_t hi = 0;
-    uint8_t lo = 0;
     convert_data_to_ascii(modbus_buf[n], &hi, &lo);
-    Serial.write(hi);
-    Serial.write(lo);
+
+    temp += (char)hi;
+    temp += (char)lo;
   }
-  Serial.println();
+  temp += "\n";
+
+  Serial.print(temp);
 
   read_RS485();
 }
 //--------------------------------------------------------------------------------
 void f_read(void)
 {
+  debug("f_read");
   union QUESTION_READ *packet = (union QUESTION_READ *)&modbus_buf;
 
   uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_READ) - 2);
   if (crc != packet->body.crc16)
   {
+    debug("crc != packet->body.crc16");
     return;
   }
 
@@ -413,11 +426,13 @@ void f_read(void)
 //--------------------------------------------------------------------------------
 void f_write(void)
 {
+  debug("f_write");
   union QUESTION_WRITE *packet = (union QUESTION_WRITE *)&modbus_buf;
 
   uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_WRITE) - 2);
   if (crc != packet->body.crc16)
   {
+    debug("crc != packet->body.crc16");
     return;
   }
 
@@ -452,11 +467,13 @@ void f_write(void)
 //--------------------------------------------------------------------------------
 void f_reset(void)
 {
+  debug("f_reset");
   union QUESTION_RESET *packet = (union QUESTION_RESET *)&modbus_buf;
 
   uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_RESET) - 2);
   if (crc != packet->body.crc16)
   {
+    debug("crc != packet->body.crc16");
     return;
   }
 
@@ -479,11 +496,13 @@ void f_reset(void)
 //--------------------------------------------------------------------------------
 void f_test(void)
 {
+  debug("f_test");
   union QUESTION_TEST *packet = (union QUESTION_TEST *)&modbus_buf;
 
   uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_TEST) - 2);
   if (crc != packet->body.crc16)
   {
+    debug("crc != packet->body.crc16");
     return;
   }
 
@@ -506,12 +525,15 @@ void f_test(void)
 //--------------------------------------------------------------------------------
 void command(void)
 {
+  debug("command");
   if (index_ascii_buf == 0)
   {
+    debug("index_ascii_buf == 0");
     return;
   }
   if (index_ascii_buf % 2)
   {
+    debug("index_ascii_buf % 2");
     return;
   }
 
@@ -522,10 +544,12 @@ void command(void)
     index_modbus_buf++;
     if (index_modbus_buf > MAX_MODBUS_BUF)
     {
+      debug("index_modbus_buf > MAX_MODBUS_BUF");
       return;
     }
   }
 
+  debug("analize");
   struct HEADER *packet = (struct HEADER *)&modbus_buf;
   uint8_t cmd = packet->cmd_8;
   switch (cmd)
@@ -566,7 +590,7 @@ void serialEvent()
         break;
 
       default:
-        if (ascii_buf < MAX_ASCII_BUF)
+        if (index_ascii_buf < MAX_ASCII_BUF)
         {
           ascii_buf[index_ascii_buf] = imcomingByte;
           index_ascii_buf++;
@@ -578,33 +602,36 @@ void serialEvent()
 //--------------------------------------------------------------------------------
 void blink_on()
 {
-  digitalWrite(led_0, HIGH);
-  digitalWrite(led_1, HIGH);
-  digitalWrite(led_2, HIGH);
+  blink_ON();
+  pump_ON();
+  relay_ON();
 }
 //--------------------------------------------------------------------------------
 void blink_off()
 {
-  digitalWrite(led_0, LOW);
-  digitalWrite(led_1, LOW);
-  digitalWrite(led_2, LOW);
+  blink_OFF();
+  pump_OFF();
+  relay_OFF();
 }
 //--------------------------------------------------------------------------------
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(57600);
 
   pinMode(pin_485,  OUTPUT);
 
-  pinMode(led_0,    OUTPUT);
-  pinMode(led_1,    OUTPUT);
-  pinMode(led_2,    OUTPUT);
+  pinMode(led_blink,  OUTPUT);
+  pinMode(led_pump,   OUTPUT);
+  pinMode(led_relay,  OUTPUT);
 
   read_RS485();
 }
 //--------------------------------------------------------------------------------
 void loop()
 {
-
+  blink_on();
+  delay(1000);
+  blink_off();
+  delay(1000);
 }
 //--------------------------------------------------------------------------------

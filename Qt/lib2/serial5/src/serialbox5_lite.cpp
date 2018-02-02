@@ -190,8 +190,12 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
     case QSerialPort::ParityError:                  emit error("ParityError"); break;
     case QSerialPort::FramingError:                 emit error("FramingError"); break;
     case QSerialPort::BreakConditionError:          emit error("BreakConditionError"); break;
-    case QSerialPort::WriteError:                   emit error("WriteError"); break;
-    case QSerialPort::ReadError:                    emit error("ReadError"); break;
+    case QSerialPort::WriteError:                   emit error("WriteError");   break;
+    case QSerialPort::ReadError:
+        emit error("ReadError");
+        serial5->close();
+        setCloseState();
+        break;
     case QSerialPort::ResourceError:                emit error("ResourceError"); break;
     case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError"); break;
     case QSerialPort::UnknownError:                 emit error("UnknownError"); break;
@@ -201,6 +205,11 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
     default:
         emit error(QString("unknown error %1").arg(err));
         break;
+    }
+
+    if(err != QSerialPort::NoError)
+    {
+        serial5->close();
     }
 
     setCloseState();

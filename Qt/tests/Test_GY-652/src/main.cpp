@@ -38,16 +38,13 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#if 1
+
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
         QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
         return -1;
     }
-#else
-    QApplication app(argc, argv);
-#endif
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
@@ -69,9 +66,6 @@ int main(int argc, char *argv[])
     splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-
-    //unsigned short x = 1;
-    //qDebug() << (((unsigned char *) &x) == 0 ? "big-endian" : "little-endian");
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);

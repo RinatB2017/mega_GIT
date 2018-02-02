@@ -62,7 +62,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    createTestBar();
+    //createTestBar();
 
     ui->grapher_widget->setObjectName("GrapherBox");
 

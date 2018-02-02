@@ -1,5 +1,6 @@
 //--------------------------------------------------------------------------------
 int pin_485   = 8;
+
 int led_blink = 10;
 int led_pump  = 11;
 int led_relay = 12;
@@ -31,8 +32,11 @@ void loop()
 {
   write_RS485();
   delay(1);
-  Serial.println("test");
+  Serial.println("HIGH");
   read_RS485();
+  
+  delay(1);
+  Serial.println("LOW");
   
   delay(1000);
 }

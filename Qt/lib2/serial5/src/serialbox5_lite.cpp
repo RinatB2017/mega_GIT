@@ -106,6 +106,7 @@ void SerialBox5_lite::init(void)
     setFixedSize(sizeHint());
 #endif
 
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     updateText();
 }
 //--------------------------------------------------------------------------------

@@ -176,20 +176,15 @@ int MainBox::check_answer_test(QByteArray data)
         emit error("Ответ пуст!");
         return ERR_ANSWER_EMPTY;
     }
-    if(data.length() <=2)
-    {
-        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
-        return ERR_ANSWER_SMALL;
-    }
-
-    if(data.size() != sizeof(ANSWER_TEST))
-    {
-        emit error("Размер пакета не корректен");
-        return ERR_BAD_SIZE;
-    }
 
     ANSWER_TEST *answer = (ANSWER_TEST *)data.data();
     Q_CHECK_PTR(answer);
+    if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
+    {
+        emit error("Размер пакета не корректен");
+        return ERR_ANSWER_BAD_SIZE;
+    }
+
     uint16_t prefix = answer->body.header.prefix_16;
     if(prefix != PREFIX)
     {
@@ -201,7 +196,7 @@ int MainBox::check_answer_test(QByteArray data)
     if(cmd != CMD_TEST)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_PREFIX;
+        return ERR_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_TEST) - sizeof(answer->body.crc16));
@@ -230,18 +225,13 @@ int MainBox::check_answer_reset(QByteArray data)
         emit error("Ответ пуст!");
         return ERR_ANSWER_EMPTY;
     }
-    if(data.length() <=2)
-    {
-        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
-        return ERR_ANSWER_SMALL;
-    }
 
     ANSWER_RESET *answer = (ANSWER_RESET *)data.data();
     Q_CHECK_PTR(answer);
     if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
     {
         emit error("Размер пакета не корректен");
-        return ERR_BAD_SIZE;
+        return ERR_ANSWER_BAD_SIZE;
     }
 
     uint16_t prefix = answer->body.header.prefix_16;
@@ -255,7 +245,7 @@ int MainBox::check_answer_reset(QByteArray data)
     if(cmd != CMD_RESET)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_PREFIX;
+        return ERR_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_RESET) - sizeof(answer->body.crc16));
@@ -305,19 +295,14 @@ int MainBox::check_answer_read(QByteArray data)
         emit error("Ответ пуст!");
         return ERR_ANSWER_EMPTY;
     }
-    if(data.length() <=2)
-    {
-        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
-        return ERR_ANSWER_SMALL;
-    }
-
-    if(data.size() != sizeof(ANSWER_READ))
-    {
-        emit error("Размер пакета не корректен");
-        return ERR_BAD_SIZE;
-    }
 
     ANSWER_READ *answer = (ANSWER_READ *)data.data();
+    if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
+    {
+        emit error("Размер пакета не корректен");
+        return ERR_ANSWER_BAD_SIZE;
+    }
+
     uint16_t prefix = answer->body.header.prefix_16;
     if(prefix != PREFIX)
     {
@@ -329,7 +314,7 @@ int MainBox::check_answer_read(QByteArray data)
     if(cmd != CMD_READ)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_PREFIX;
+        return ERR_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_READ) - sizeof(answer->body.crc16));
@@ -385,19 +370,14 @@ int MainBox::check_answer_write(QByteArray data)
         emit error("Ответ пуст!");
         return ERR_ANSWER_EMPTY;
     }
-    if(data.length() <=2)
-    {
-        emit error(QString("Ответ слишком мал: принято %1 байтов").arg(data.length()));
-        return ERR_ANSWER_SMALL;
-    }
-
-    if(data.size() != sizeof(ANSWER_WRITE))
-    {
-        emit error("Размер пакета не корректен");
-        return ERR_BAD_SIZE;
-    }
 
     ANSWER_WRITE *answer = (ANSWER_WRITE *)data.data();
+    if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
+    {
+        emit error("Размер пакета не корректен");
+        return ERR_ANSWER_BAD_SIZE;
+    }
+
     uint16_t prefix = answer->body.header.prefix_16;
     if(prefix != PREFIX)
     {
@@ -409,7 +389,7 @@ int MainBox::check_answer_write(QByteArray data)
     if(cmd != CMD_WRITE)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_PREFIX;
+        return ERR_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_WRITE) - sizeof(answer->body.crc16));
@@ -604,13 +584,12 @@ void MainBox::print_err(int code)
 {
     switch(code)
     {
-    case NO_ERROR:          emit info("Нет ошибки!");                   break;
-    case ERR_ANSWER_EMPTY:  emit error("Ответ пуст!");                  break;
-    case ERR_ANSWER_SMALL:  emit error("Пакет слишком мал");            break;
-    case ERR_BAD_SIZE:      emit error("Неверный размер пакета");       break;
-    case ERR_BAD_PREFIX:    emit error("Неверный префикс");             break;
-    case ERR_BAD_CMD:       emit error("Неверная команда");             break;
-    case ERR_BAD_CRC16:     emit error("Неверная контрольная сумма");   break;
+    case NO_ERROR:              emit info("Нет ошибки!");                   break;
+    case ERR_ANSWER_EMPTY:      emit error("Ответ пуст!");                  break;
+    case ERR_ANSWER_BAD_SIZE:   emit error("Неверный размер пакета");       break;
+    case ERR_BAD_PREFIX:        emit error("Неверный префикс");             break;
+    case ERR_BAD_CMD:           emit error("Неверная команда");             break;
+    case ERR_BAD_CRC16:         emit error("Неверная контрольная сумма");   break;
     default:
         emit error(QString("unknown err code [%1]").arg(code));
         break;

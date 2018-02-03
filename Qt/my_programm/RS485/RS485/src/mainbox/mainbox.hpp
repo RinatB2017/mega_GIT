@@ -46,8 +46,7 @@ public:
     enum Errors {
         NO_ERROR = 0,
         ERR_ANSWER_EMPTY,
-        ERR_ANSWER_SMALL,
-        ERR_BAD_SIZE,
+        ERR_ANSWER_BAD_SIZE,
         ERR_BAD_PREFIX,
         ERR_BAD_CMD,
         ERR_BAD_CRC16

@@ -43,6 +43,7 @@ void Test::check_test(void)
 {
     QByteArray data;
     ANSWER_TEST test;
+
     test.body.header.prefix_16 = 0xBBAA;
     test.body.header.addr_8 = 0;
     test.body.header.cmd_8 = CMD_TEST;
@@ -53,7 +54,6 @@ void Test::check_test(void)
 
     data.clear();
     data.append((char *)&test.buf, sizeof(test));
-
     QCOMPARE(mb->check_answer_test(data),   MainBox::NO_ERROR);
 }
 //--------------------------------------------------------------------------------

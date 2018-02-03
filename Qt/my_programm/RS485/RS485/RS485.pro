@@ -54,6 +54,10 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
+
 LIB_PATH = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 

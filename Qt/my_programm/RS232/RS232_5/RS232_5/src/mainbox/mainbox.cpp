@@ -57,7 +57,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     serialBox5 = new SerialBox5(this, "RS232_5", "RS232");
     serialBox5->add_menu(2);
@@ -91,10 +93,6 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
-    serialBox5->power_off();
-    serialBox5->set_baudRate(9600);
-    serialBox5->power_on();
-
     return true;
 }
 //--------------------------------------------------------------------------------

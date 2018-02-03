@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,62 +18,31 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include "qtsingleapplication.h"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "mainbox.hpp"
-#include "defines.hpp"
-#include "version.hpp"
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "codecs.h"
+class MainWindow;
+class MainBox;
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#endif
-//--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+class Test : public QObject
 {
-    set_codecs();
+    Q_OBJECT
 
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
-        if(app.sendMessage("Wake up!")) return 0;
-    }
+public:
+    Test();
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
-    app.setApplicationVersion(VER_STR);
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
-
-    QPixmap pixmap(":/logo/pinguin.png");
-    MySplashScreen *splash = new MySplashScreen(pixmap);
-    splash->show();
-    splash->showMessage(QObject::tr("Подождите ..."));
-    qApp->processEvents();
-
-    MainWindow *main_window = new MainWindow();
-    Q_CHECK_PTR(main_window);
-
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-    Q_CHECK_PTR(mainBox);
-
-    main_window->setCentralWidget(mainBox);
-    main_window->show();
-
-    splash->finish(main_window);
-
-#ifdef QT_DEBUG
-    int test_result = QTest::qExec(new Test(), argc, argv);
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
+private slots:
+    void check_test(void);
+    void check_reset(void);
+    void check_read(void);
+    void check_write(void);
     
-    return app.exec();
-}
+private:
+    MainWindow *mw = 0;
+    MainBox *mb = 0;
+};
 //--------------------------------------------------------------------------------
+#endif

@@ -26,7 +26,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -42,6 +42,16 @@ public:
     MainBox(QWidget *parent,
             MySplashScreen *splash);
     ~MainBox();
+
+    enum Errors {
+        NO_ERROR = 0,
+        ERR_ANSWER_EMPTY,
+        ERR_ANSWER_SMALL,
+        ERR_BAD_SIZE,
+        ERR_BAD_PREFIX,
+        ERR_BAD_CMD,
+        ERR_BAD_CRC16
+    };
 
 signals:
     void send(QByteArray);
@@ -69,10 +79,12 @@ private:
     void createTestBar(void);
 
     QByteArray convert(QByteArray ba);
-    bool check_answer_test(QByteArray data);
-    bool check_answer_reset(QByteArray data);
-    bool check_answer_read(QByteArray data);
-    bool check_answer_write(QByteArray data);
+    int check_answer_test(QByteArray data);
+    int check_answer_reset(QByteArray data);
+    int check_answer_read(QByteArray data);
+    int check_answer_write(QByteArray data);
+
+    void print_err(int code);
 
     void updateText(void);
 

@@ -169,6 +169,29 @@ union ANSWER_WRITE
 //--------------------------------------------------------------------------------
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
+char Pelco[20] = { 0xFF, 0, 0, 0, 0, 0 }; //структура
+//--------------------------------------------------------------------------------
+long cnt_second = 0;
+//--------------------------------------------------------------------------------
+#define Set_Preset   3
+#define Clr_Preset  5
+#define Go_Preset   7
+#define Run_Pattern 0x23
+#define Move    59
+#define Save    58
+#define Wiper   63
+//--------------------------------------------------------------------------------
+/*
+ * если пошел дождь, то поведение такое же, как и при помывке, только не дергаем камерой
+ */
+enum {
+  STATUS_IDLE = 0,
+  STATUS_RAIN,      // дождь
+  STATUS_WASHOUT,     // моемся
+  STATUS_WASHOUT_PAUSE  // пауза
+};
+int state = STATUS_IDLE;
+//--------------------------------------------------------------------------------
 int pin_485   = 8;
 int led_blink = 10;
 int led_pump  = 11;
@@ -375,6 +398,11 @@ void write_RS485()
 void read_RS485()
 {
   digitalWrite(pin_485, LOW);
+}
+//--------------------------------------------------------------------------------
+void send_byte(uint8_t data)
+{
+  Serial.write(data);
 }
 //--------------------------------------------------------------------------------
 void send_data(void)
@@ -648,14 +676,189 @@ void setup()
   read_RS485();
 }
 //--------------------------------------------------------------------------------
-int flag = 0;
+void camera_save_position (void)
+{
+  Pelco[1] = addr_cam_32;
+  Pelco[2] = 0;
+  Pelco[3] = Go_Preset;
+  Pelco[4] = 0;
+  Pelco[5] = Save;
+
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+
+  write_RS485();
+  send_byte(0xFF);
+  send_byte(Pelco[1]);
+  send_byte(Pelco[2]);
+  send_byte(Pelco[3]);
+  send_byte(Pelco[4]);
+  send_byte(Pelco[5]);
+  send_byte(Pelco[6]);
+  read_RS485();
+}
+//--------------------------------------------------------------------------------
+void camera_move_position (void)
+{
+  // 59 пресет помывки
+  // 59 сохранить положение камеры до помывки
+
+  Pelco[1] = addr_cam_32;
+  Pelco[2] = 0;
+  Pelco[3] = Go_Preset;
+  Pelco[4] = 0;
+  Pelco[5] = Move;
+
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+
+  write_RS485();
+  send_byte(0xFF);
+  send_byte(Pelco[1]);
+  send_byte(Pelco[2]);
+  send_byte(Pelco[3]);
+  send_byte(Pelco[4]);
+  send_byte(Pelco[5]);
+  send_byte(Pelco[6]);
+  read_RS485();
+}
+//--------------------------------------------------------------------------------
+void camera_return (void)
+{
+  // 59 пресет помывки
+  // 59 сохранить положение камеры до помывки
+
+  Pelco[1] = addr_cam_32;
+  Pelco[2] = 0;
+  Pelco[3] = Go_Preset;
+  Pelco[4] = 0;
+  Pelco[5] = Save;
+
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+
+  write_RS485();
+  send_byte(0xFF);
+  send_byte(Pelco[1]);
+  send_byte(Pelco[2]);
+  send_byte(Pelco[3]);
+  send_byte(Pelco[4]);
+  send_byte(Pelco[5]);
+  send_byte(Pelco[6]);
+  read_RS485();
+}
+//--------------------------------------------------------------------------------
+void camera_wiper (void)
+{
+  Pelco[1] = addr_cam_32;
+  Pelco[2] = 0;
+  Pelco[3] = Go_Preset;
+  Pelco[4] = 0;
+  Pelco[5] = Wiper;
+
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+
+  write_RS485();
+  send_byte(0xFF);
+  send_byte(Pelco[1]);
+  send_byte(Pelco[2]);
+  send_byte(Pelco[3]);
+  send_byte(Pelco[4]);
+  send_byte(Pelco[5]);
+  send_byte(Pelco[6]);
+  read_RS485();
+}
+//--------------------------------------------------------------------------------
+void camera_Run_Tur_1 (void)
+{
+  Pelco[1] = addr_cam_32;
+  Pelco[2] = 0;
+  Pelco[3] = Run_Pattern;
+  Pelco[4] = 0;
+  Pelco[5] = 0;
+
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+
+  write_RS485();
+  send_byte(0xFF);
+  send_byte(Pelco[1]);
+  send_byte(Pelco[2]);
+  send_byte(Pelco[3]);
+  send_byte(Pelco[4]);
+  send_byte(Pelco[5]);
+  send_byte(Pelco[6]);
+  read_RS485();
+}
+//--------------------------------------------------------------------------------
 void takeReading()
 {
-  flag = !flag;
-  if (flag)
-    blink_ON();
-  else
-    blink_OFF();
+	bool flag_lvl  = check_LEVEL();
+	bool flag_rain = check_RAIN();
+
+	// мало воды
+	if(flag_lvl)
+	{
+		pump_ON();
+	}
+	else
+	{
+		pump_OFF();
+	}
+
+	if(flag_rain)
+	{
+		state = STATUS_RAIN;
+	}
+	else
+	{
+		state = STATUS_IDLE;
+	}
+
+	switch(state)
+	{
+	case STATUS_IDLE:
+		cnt_second = 0;
+		camera_move_position();
+		state = STATUS_WASHOUT;
+		break;
+
+	case STATUS_RAIN:			// дождь
+		if(cnt_second < time_interval_16)
+		{
+			cnt_second++;
+		}
+		else
+		{
+			camera_wiper();
+			cnt_second = 0;
+		}
+		break;
+
+	case STATUS_WASHOUT:		// моемся
+		if(!(cnt_second % time_interval_16))
+		{
+			camera_wiper();
+		}
+		if(cnt_second >= time_washout_32)
+		{
+			cnt_second = 0;
+			camera_return();
+			state = STATUS_WASHOUT_PAUSE;
+		}
+		cnt_second++;
+		break;
+
+	case STATUS_WASHOUT_PAUSE:	// пауза
+		if(cnt_second >= time_pause_washout_32)
+		{
+			cnt_second = 0;
+			camera_move_position();
+			state = STATUS_WASHOUT;
+		}
+		cnt_second++;
+		break;
+
+	default:
+		state = STATUS_IDLE;
+		break;
+	}
 }
 //--------------------------------------------------------------------------------
 void loop()

@@ -144,7 +144,12 @@ void MainBox::s_inFunc(void)
     QMessageBox::information(0,"","info");
 }
 //--------------------------------------------------------------------------------
-bool MainBox::split_address(const QString address, int *a, int *b, int *c, int *d, int *port)
+bool MainBox::split_address(const QString address,
+                            int *a,
+                            int *b,
+                            int *c,
+                            int *d,
+                            int *port)
 {
     QStringList sl = address.split(":");
     if(sl.count() != 2)

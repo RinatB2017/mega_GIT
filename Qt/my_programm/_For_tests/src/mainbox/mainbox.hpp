@@ -54,44 +54,6 @@ private:
     quint8 c[4];
 };
 //--------------------------------------------------------------------------------
-class EditableLabel : public QLineEdit
-{
-    Q_OBJECT
-public:
-    EditableLabel( QWidget* p = 0 )
-    : QLineEdit( p )
-    {
-        if( p )
-        {
-            QPalette pal = palette();
-            pal.setColor( backgroundRole(), p->palette().color( p->backgroundRole() ) );
-            setPalette( pal );
-        }
-        setFrame( false );
-        setFocusPolicy( Qt::ClickFocus );
-        connect( this, SIGNAL(textEdited(QString)), this, SLOT(resizeByContents()) );
-    }
-    QSize sizeHint() const
-    {
-        QRect r = fontMetrics().boundingRect( text() );
-        int lm, rm, tm, bm;
-        getTextMargins( &lm, &tm, &rm, &bm );
-        return QSize( r.width() + lm + rm + 5, QLineEdit::sizeHint().height() );
-    }
-    QSize minimumSizeHint() const
-    {
-        return sizeHint();
-    }
-
-private Q_SLOTS:
-    void resizeByContents()
-    {
-        setFixedWidth( sizeHint().width() );
-        if( QWidget* p = parentWidget() )
-            p->adjustSize();
-    }
-};
-//--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
 class QComboBox;
@@ -144,7 +106,12 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
-    bool split_address(const QString address, int *a, int *b, int *c, int *d, int *port);
+    bool split_address(const QString address,
+                       int *a,
+                       int *b,
+                       int *c,
+                       int *d,
+                       int *port);
 
     void init(void);
     void createTestBar(void);

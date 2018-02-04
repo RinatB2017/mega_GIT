@@ -64,6 +64,7 @@ void MainBox::init(void)
 
     //createTestBar();
 
+#ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
     ui->grapher_widget->set_title("тест");
@@ -77,6 +78,9 @@ void MainBox::init(void)
     curve_atm           = ui->grapher_widget->add_curve("atm");
     curve_altitude      = ui->grapher_widget->add_curve("altitude");
 
+#else
+    ui->grapher_widget->setVisible(false);
+#endif
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_gy652(QByteArray)));
 }
 //--------------------------------------------------------------------------------
@@ -117,10 +121,12 @@ void MainBox::data_gy652(QByteArray data)
     float atm = sl.at(2).toFloat();
     float altitude = sl.at(3).toFloat();
 
+#ifndef NO_GRAPHER
     ui->grapher_widget->add_curve_data(curve_temperature,   temperature);
     ui->grapher_widget->add_curve_data(curve_pressure,      pressure);
     ui->grapher_widget->add_curve_data(curve_atm,           atm);
     ui->grapher_widget->add_curve_data(curve_altitude,      altitude);
+#endif
 
     ui->display_temperature->display(temperature);
     ui->display_pressure->display(pressure * 0.75006375541921f / 100.0f);

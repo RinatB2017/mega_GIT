@@ -8,6 +8,7 @@ CONFIG   *= ordered
 SUBDIRS += \
     ADC_powersupply \
     AFC \
+    B590_imitator \
     Calibration \
     Externed_calibration \
     Factory_Calibration \

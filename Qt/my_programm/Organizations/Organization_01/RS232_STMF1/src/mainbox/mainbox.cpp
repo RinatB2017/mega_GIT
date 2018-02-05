@@ -61,6 +61,7 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     controlBox = new ControlBox(this);
+    Q_CHECK_PTR(controlBox);
 
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(controlBox);

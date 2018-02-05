@@ -57,9 +57,7 @@ private:
     ControlBox *controlBox = 0;
 
     void init(void);
-
     void createTestBar(void);
-
     void draw_progress(void);
 
     void updateText(void);

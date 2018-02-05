@@ -1,8 +1,8 @@
-#ifndef _DEFINES_H
-#define _DEFINES_H
+#ifndef _DEFINES_HPP
+#define _DEFINES_HPP
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
-#define APPNAME "RS232_STM32F0"
+#define APPNAME "RS232_STMF0"
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------

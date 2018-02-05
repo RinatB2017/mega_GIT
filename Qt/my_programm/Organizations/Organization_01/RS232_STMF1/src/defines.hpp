@@ -4,7 +4,7 @@
 #include <QtGlobal>
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
-#define APPNAME "RS232_STM32F1"
+#define APPNAME "RS232_STMF1"
 #define ID  0x12345678
 //--------------------------------------------------------------------------------
 #pragma pack(push, 1)
@@ -84,11 +84,11 @@ enum
 {
     ERR_PASS		 		= 0,
     ERR_FAIL_CRC	 		= 1,
-    ERR_WRONG_PACKET 		= 2,
-    ERR_ADC_DOWN	 		= 3,
+    ERR_WRONG_PACKET	        	= 2,
+    ERR_ADC_DOWN			= 3,
     ERR_ADC_EMPTY			= 4,
     ERR_CAL_BIGZERO			= 5,
-    ERR_CAL_BIGKOEFF		= 6,
+    ERR_CAL_BIGKOEFF	           	= 6,
     ERR_CAL_NOZERO			= 7,
     ERR_OVERLOAD			= 8,
     ERR_WILL_TAKE_TIME		= 9,

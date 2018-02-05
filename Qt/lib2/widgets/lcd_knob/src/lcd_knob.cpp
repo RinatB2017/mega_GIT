@@ -36,18 +36,15 @@ LCD_Knob::LCD_Knob(QWidget *parent) :
 //--------------------------------------------------------------------------------
 LCD_Knob::~LCD_Knob()
 {
-    delete lcd;
-    delete knob;
-    delete vbox;
+    if(lcd)  lcd->deketeLater();
+    if(knob) knob->deketeLater();
+    if(vbox) vbox->deketeLater();
 }
 //--------------------------------------------------------------------------------
 void LCD_Knob::setRange(double min, double max)
 {
     knob->setLowerBound(min);
     knob->setUpperBound(max);
-
-    Q_UNUSED(min)
-    Q_UNUSED(max)
 }
 //--------------------------------------------------------------------------------
 void LCD_Knob::setScaleMaxMajor(int ticks)

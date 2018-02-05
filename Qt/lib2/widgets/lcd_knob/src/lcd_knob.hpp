@@ -25,13 +25,14 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
     void valueChanged(double);
 
 private:
-    QwtKnob *knob;
-    QLCDNumber *lcd;
-    QVBoxLayout *vbox;
+    QwtKnob *knob = 0;
+    QLCDNumber *lcd = 0;
+    QVBoxLayout *vbox = 0;
 
 };
 //--------------------------------------------------------------------------------

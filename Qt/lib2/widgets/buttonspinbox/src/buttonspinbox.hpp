@@ -11,25 +11,25 @@ class QHBoxLayout;
 class ButtonSpinBox : public QFrame
 {
     Q_OBJECT
-    private:
-        QHBoxLayout *hbox;
-        QPushButton *button;
-        HexSpinBox *spinbox;
+private:
+    QHBoxLayout *hbox;
+    QPushButton *button;
+    HexSpinBox *spinbox;
 
-    public slots:
-        void enable(bool state);
+public slots:
+    void enable(bool state);
 
-    public:
-        ButtonSpinBox(QWidget* parent = 0);
-        void init(const QString &text, int min, int max, int value);
-        int set_name(const QString &text_button);
-        int set_value(int value);
-        int get_value(void);
+public:
+    ButtonSpinBox(QWidget* parent = 0);
+    void init(const QString &text, int min, int max, int value);
+    int set_name(const QString &text_button);
+    int set_value(int value);
+    int get_value(void);
 
-    protected:
+protected:
 
-    signals:
-        void value_changed();
+signals:
+    void value_changed();
 };
 //--------------------------------------------------------------------------------
 #endif

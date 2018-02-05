@@ -148,6 +148,7 @@ void TraderPlot::append_point(float a, float b, float c, float d)
 //--------------------------------------------------------------------------------
 void TraderPlot::append_point(const QPointF &point)
 {
+    Q_CHECK_PTR(data_curve);
     //qDebug() << point.x() << point.y();
     data_curve->append(point);
     //replot();

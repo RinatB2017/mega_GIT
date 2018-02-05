@@ -55,17 +55,17 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow;
+    Q_CHECK_PTR(main_window);
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    Q_CHECK_PTR(mainBox);
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-    
 
     return app.exec();
 }

@@ -27,7 +27,10 @@
 #include <QComboBox>
 #include <QToolBar>
 //--------------------------------------------------------------------------------
+#include <QDBusConnectionInterface>
 #include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusReply>
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -48,7 +51,6 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox)
 {
     init();
-    load_config();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -126,6 +128,7 @@ void MainBox::init(void)
     {
         setMinimumHeight(sizeHint().height());
     }
+    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::UDisks_deviceAdded(QDBusObjectPath dev)
@@ -215,8 +218,6 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-#include <QDBusConnectionInterface>
-#include <QDBusReply>
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
@@ -237,7 +238,6 @@ bool MainBox::test_0(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-#include <QDBusInterface>
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");

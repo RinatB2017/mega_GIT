@@ -66,9 +66,6 @@ private:
 
     void createTestBar(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
     QVector<QPointF> circle(float x, float y, float r);
     QVector<QLine> circle_line(float x, float y, float r);
 

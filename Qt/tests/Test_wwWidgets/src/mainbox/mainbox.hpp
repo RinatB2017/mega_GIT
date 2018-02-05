@@ -110,29 +110,29 @@ private:
     QPushButton *btn_qwwtwocolorindicator = 0;
 
     //---
-    void f_qwwcolorbutton(void);
-    void f_qwwhuesatradialpicker(void);
-    void f_qwwlongspinbox(void);
-    void f_qwwrichtextedit(void);
-    void f_qwwcolorcombobox(void);
-    void f_qwwled(void);
-    void f_qwwnavigationbar(void);
-    void f_qwwtaskpanel(void);
-    void f_qwwbreadcrumb(void);
-    void f_qwwconfigwidget(void);
-    void f_qwwlistnavigator(void);
-    void f_qwwnumpad(void);
-    void f_qwwtextspinbox(void);
-    void f_qwwbuttonlineedit(void);
-    void f_qwwfilechooser(void);
-    void f_qwwlistwidget(void);
-    void f_qwwresetlineedit(void);
-    void f_qwwtipwidget(void);
-    void f_qwwclearlineedit(void);
-    void f_qwwhuesatpicker(void);
-    void f_qwwloginbox(void);
-    void f_qwwrichtextbutton(void);
-    void f_qwwtwocolorindicator(void);
+    void f_qwwcolorbutton(int col, int row);
+    void f_qwwhuesatradialpicker(int col, int row);
+    void f_qwwlongspinbox(int col, int row);
+    void f_qwwrichtextedit(int col, int row);
+    void f_qwwcolorcombobox(int col, int row);
+    void f_qwwled(int col, int row);
+    void f_qwwnavigationbar(int col, int row);
+    void f_qwwtaskpanel(int col, int row);
+    void f_qwwbreadcrumb(int col, int row);
+    void f_qwwconfigwidget(int col, int row);
+    void f_qwwlistnavigator(int col, int row);
+    void f_qwwnumpad(int col, int row);
+    void f_qwwtextspinbox(int col, int row);
+    void f_qwwbuttonlineedit(int col, int row);
+    void f_qwwfilechooser(int col, int row);
+    void f_qwwlistwidget(int col, int row);
+    void f_qwwresetlineedit(int col, int row);
+    void f_qwwtipwidget(int col, int row);
+    void f_qwwclearlineedit(int col, int row);
+    void f_qwwhuesatpicker(int col, int row);
+    void f_qwwloginbox(int col, int row);
+    void f_qwwrichtextbutton(int col, int row);
+    void f_qwwtwocolorindicator(int col, int row);
     //---
 
     void createTestBar(void);

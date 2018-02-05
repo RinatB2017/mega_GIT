@@ -34,7 +34,6 @@
 #include <QVector>
 #include <sys/sysinfo.h>
 
-
 #include <qwt_plot_seriesitem.h>
 #include <qwt_series_data.h>
 #include <qwt_plot_curve.h>
@@ -258,15 +257,5 @@ void MainBox::test(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

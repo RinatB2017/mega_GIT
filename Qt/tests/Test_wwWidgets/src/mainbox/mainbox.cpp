@@ -70,7 +70,6 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox)
 {
     init();
-    load_config();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -86,37 +85,25 @@ void MainBox::init(void)
     createTestBar();
 
     //---
-    f_qwwcolorbutton();
-    f_qwwhuesatradialpicker();
-    f_qwwlongspinbox();
-    f_qwwrichtextedit();
-    f_qwwcolorcombobox();
-    f_qwwled();
-    f_qwwnavigationbar();
-    f_qwwtaskpanel();
-    f_qwwbreadcrumb();
-    f_qwwconfigwidget();
-    f_qwwlistnavigator();
-    f_qwwnumpad();
-    f_qwwtextspinbox();
-    f_qwwbuttonlineedit();
-    f_qwwfilechooser();
-    f_qwwlistwidget();
-    f_qwwresetlineedit();
-    f_qwwtipwidget();
-    f_qwwclearlineedit();
-    f_qwwhuesatpicker();
-    f_qwwloginbox();
-    f_qwwrichtextbutton();
-    f_qwwtwocolorindicator();
-    //---
-    ui->btn_layout->addStretch(1);
+    f_qwwcolorbutton(0, 0);     f_qwwhuesatradialpicker(1, 0);
+    f_qwwlongspinbox(0, 1);     f_qwwrichtextedit(1, 1);
+    f_qwwcolorcombobox(0, 2);   f_qwwled(1, 2);
+    f_qwwnavigationbar(0, 3);   f_qwwtaskpanel(1, 3);
+    f_qwwbreadcrumb(0, 4);      f_qwwconfigwidget(1, 4);
+    f_qwwlistnavigator(0, 5);   f_qwwnumpad(1, 5);
+    f_qwwtextspinbox(0, 6);     f_qwwbuttonlineedit(1, 6);
+    f_qwwfilechooser(0, 7);     f_qwwlistwidget(1, 7);
+    f_qwwresetlineedit(0, 8);   f_qwwtipwidget(1, 8);
+    f_qwwclearlineedit(0, 9);   f_qwwhuesatpicker(1, 9);
+    f_qwwloginbox(0, 10);       f_qwwrichtextbutton(1, 10);
+    f_qwwtwocolorindicator(0, 11);
     //---
 
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
     }
+    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -248,7 +235,7 @@ void MainBox::choice_widget(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwcolorbutton(void)
+void MainBox::f_qwwcolorbutton(int col, int row)
 {
     btn_qwwcolorbutton = new QPushButton(this);
     btn_qwwcolorbutton->setObjectName("qwwcolorbutton");
@@ -260,6 +247,7 @@ void MainBox::f_qwwcolorbutton(void)
 
     //---
     QwwColorButton *w = new QwwColorButton;
+    Q_CHECK_PTR(w);
     w->setShowName(false);
     //w->setText("test");
     //---
@@ -269,7 +257,7 @@ void MainBox::f_qwwcolorbutton(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwcolorbutton);
+    ui->btn_layout->addWidget(btn_qwwcolorbutton, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwcolorbutton->setProperty("index", index);
@@ -279,7 +267,7 @@ void MainBox::f_qwwcolorbutton(void)
     connect(btn_qwwcolorbutton, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwhuesatradialpicker(void)
+void MainBox::f_qwwhuesatradialpicker(int col, int row)
 {
     btn_qwwhuesatradialpicker = new QPushButton(this);
     btn_qwwhuesatradialpicker->setObjectName("qwwhuesatradialpicker");
@@ -291,6 +279,7 @@ void MainBox::f_qwwhuesatradialpicker(void)
 
     //---
     QwwHueSatRadialPicker *w = new QwwHueSatRadialPicker;
+    Q_CHECK_PTR(w);
     w->setValue(5);
     w->setColor(Qt::blue);
     //---
@@ -300,7 +289,7 @@ void MainBox::f_qwwhuesatradialpicker(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwhuesatradialpicker);
+    ui->btn_layout->addWidget(btn_qwwhuesatradialpicker, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwhuesatradialpicker->setProperty("index", index);
@@ -310,7 +299,7 @@ void MainBox::f_qwwhuesatradialpicker(void)
     connect(btn_qwwhuesatradialpicker, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwlongspinbox(void)
+void MainBox::f_qwwlongspinbox(int col, int row)
 {
     btn_qwwlongspinbox = new QPushButton(this);
     btn_qwwlongspinbox->setObjectName("qwwlongspinbox");
@@ -322,6 +311,7 @@ void MainBox::f_qwwlongspinbox(void)
 
     //---
     QwwLongSpinBox *w = new QwwLongSpinBox;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwlongspinbox");
@@ -329,7 +319,7 @@ void MainBox::f_qwwlongspinbox(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwlongspinbox);
+    ui->btn_layout->addWidget(btn_qwwlongspinbox, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwlongspinbox->setProperty("index", index);
@@ -339,7 +329,7 @@ void MainBox::f_qwwlongspinbox(void)
     connect(btn_qwwlongspinbox, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwrichtextedit(void)
+void MainBox::f_qwwrichtextedit(int col, int row)
 {
     btn_qwwrichtextedit = new QPushButton(this);
     btn_qwwrichtextedit->setObjectName("qwwrichtextedit");
@@ -351,6 +341,7 @@ void MainBox::f_qwwrichtextedit(void)
 
     //---
     QwwRichTextEdit *w = new QwwRichTextEdit;
+    Q_CHECK_PTR(w);
     w->setText("<B>Hello</B> <font color='red'>world</font>");
     //---
 
@@ -359,7 +350,7 @@ void MainBox::f_qwwrichtextedit(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwrichtextedit);
+    ui->btn_layout->addWidget(btn_qwwrichtextedit, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwrichtextedit->setProperty("index", index);
@@ -369,7 +360,7 @@ void MainBox::f_qwwrichtextedit(void)
     connect(btn_qwwrichtextedit, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwcolorcombobox(void)
+void MainBox::f_qwwcolorcombobox(int col, int row)
 {
     btn_qwwcolorcombobox = new QPushButton(this);
     btn_qwwcolorcombobox->setObjectName("qwwcolorcombobox");
@@ -381,6 +372,7 @@ void MainBox::f_qwwcolorcombobox(void)
 
     //---
     QwwColorComboBox *w = new QwwColorComboBox;
+    Q_CHECK_PTR(w);
     w->addColor(Qt::red, "red");
     //---
 
@@ -389,7 +381,7 @@ void MainBox::f_qwwcolorcombobox(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwcolorcombobox);
+    ui->btn_layout->addWidget(btn_qwwcolorcombobox, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwcolorcombobox->setProperty("index", index);
@@ -399,7 +391,7 @@ void MainBox::f_qwwcolorcombobox(void)
     connect(btn_qwwcolorcombobox, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwled(void)
+void MainBox::f_qwwled(int col, int row)
 {
     btn_qwwled = new QPushButton(this);
     btn_qwwled->setObjectName("qwwled");
@@ -411,6 +403,7 @@ void MainBox::f_qwwled(void)
 
     //---
     QwwLed *w = new QwwLed(this);
+    Q_CHECK_PTR(w);
     w->setAnimated(true);
     w->setColor(Qt::red);
     w->setPeriod(100);
@@ -422,7 +415,7 @@ void MainBox::f_qwwled(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwled);
+    ui->btn_layout->addWidget(btn_qwwled, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwled->setProperty("index", index);
@@ -432,7 +425,7 @@ void MainBox::f_qwwled(void)
     connect(btn_qwwled, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwnavigationbar(void)
+void MainBox::f_qwwnavigationbar(int col, int row)
 {
     btn_qwwnavigationbar = new QPushButton(this);
     btn_qwwnavigationbar->setObjectName("qwwnavigationbar");
@@ -444,6 +437,7 @@ void MainBox::f_qwwnavigationbar(void)
 
     //---
     QwwNavigationBar *w = new QwwNavigationBar;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwnavigationbar");
@@ -451,7 +445,7 @@ void MainBox::f_qwwnavigationbar(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwnavigationbar);
+    ui->btn_layout->addWidget(btn_qwwnavigationbar, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwnavigationbar->setProperty("index", index);
@@ -461,7 +455,7 @@ void MainBox::f_qwwnavigationbar(void)
     connect(btn_qwwnavigationbar, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwtaskpanel(void)
+void MainBox::f_qwwtaskpanel(int col, int row)
 {
     btn_qwwtaskpanel = new QPushButton(this);
     btn_qwwtaskpanel->setObjectName("qwwtaskpanel");
@@ -482,6 +476,7 @@ void MainBox::f_qwwtaskpanel(void)
     w1->setLayout(vbox1);
 
     QwwTaskPanel *w = new QwwTaskPanel;
+    Q_CHECK_PTR(w);
     w->addTask(w1, "test");
     w->setMaximumHeight(200);
     //---
@@ -491,7 +486,7 @@ void MainBox::f_qwwtaskpanel(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwtaskpanel);
+    ui->btn_layout->addWidget(btn_qwwtaskpanel, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwtaskpanel->setProperty("index", index);
@@ -501,7 +496,7 @@ void MainBox::f_qwwtaskpanel(void)
     connect(btn_qwwtaskpanel, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwbreadcrumb(void)
+void MainBox::f_qwwbreadcrumb(int col, int row)
 {
     btn_qwwbreadcrumb = new QPushButton(this);
     btn_qwwbreadcrumb->setObjectName("qwwbreadcrumb");
@@ -513,6 +508,7 @@ void MainBox::f_qwwbreadcrumb(void)
 
     //---
     QwwBreadCrumb *w = new QwwBreadCrumb;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwbreadcrumb");
@@ -520,7 +516,7 @@ void MainBox::f_qwwbreadcrumb(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwbreadcrumb);
+    ui->btn_layout->addWidget(btn_qwwbreadcrumb, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwbreadcrumb->setProperty("index", index);
@@ -530,7 +526,7 @@ void MainBox::f_qwwbreadcrumb(void)
     connect(btn_qwwbreadcrumb, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwconfigwidget(void)
+void MainBox::f_qwwconfigwidget(int col, int row)
 {
     btn_qwwconfigwidget = new QPushButton(this);
     btn_qwwconfigwidget->setObjectName("qwwconfigwidget");
@@ -557,8 +553,8 @@ void MainBox::f_qwwconfigwidget(void)
     vbox2->addWidget(new QLabel("7"));
     w2->setLayout(vbox2);
 
-
     QwwConfigWidget *w = new QwwConfigWidget;
+    Q_CHECK_PTR(w);
     w->addGroup(w1, qApp->style()->standardIcon(QStyle::SP_MediaPlay), "test1");
     w->addGroup(w2, qApp->style()->standardIcon(QStyle::SP_MediaStop), "test2");
     //---
@@ -568,7 +564,7 @@ void MainBox::f_qwwconfigwidget(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwconfigwidget);
+    ui->btn_layout->addWidget(btn_qwwconfigwidget, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwconfigwidget->setProperty("index", index);
@@ -578,7 +574,7 @@ void MainBox::f_qwwconfigwidget(void)
     connect(btn_qwwconfigwidget, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwlistnavigator(void)
+void MainBox::f_qwwlistnavigator(int col, int row)
 {
     btn_qwwlistnavigator = new QPushButton(this);
     btn_qwwlistnavigator->setObjectName("qwwlistnavigator");
@@ -590,6 +586,7 @@ void MainBox::f_qwwlistnavigator(void)
 
     //---
     QwwListNavigator *w = new QwwListNavigator;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwlistnavigator");
@@ -597,7 +594,7 @@ void MainBox::f_qwwlistnavigator(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwlistnavigator);
+    ui->btn_layout->addWidget(btn_qwwlistnavigator, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwlistnavigator->setProperty("index", index);
@@ -607,7 +604,7 @@ void MainBox::f_qwwlistnavigator(void)
     connect(btn_qwwlistnavigator, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwnumpad(void)
+void MainBox::f_qwwnumpad(int col, int row)
 {
     btn_qwwnumpad = new QPushButton(this);
     btn_qwwnumpad->setObjectName("qwwnumpad");
@@ -619,6 +616,7 @@ void MainBox::f_qwwnumpad(void)
 
     //---
     QwwNumPad *w = new QwwNumPad;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwnumpad");
@@ -626,7 +624,7 @@ void MainBox::f_qwwnumpad(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwnumpad);
+    ui->btn_layout->addWidget(btn_qwwnumpad, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwnumpad->setProperty("index", index);
@@ -636,7 +634,7 @@ void MainBox::f_qwwnumpad(void)
     connect(btn_qwwnumpad, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwtextspinbox(void)
+void MainBox::f_qwwtextspinbox(int col, int row)
 {
     btn_qwwtextspinbox = new QPushButton(this);
     btn_qwwtextspinbox->setObjectName("qwwtextspinbox");
@@ -648,6 +646,7 @@ void MainBox::f_qwwtextspinbox(void)
 
     //---
     QwwTextSpinBox *w = new QwwTextSpinBox;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwtextspinbox");
@@ -655,7 +654,7 @@ void MainBox::f_qwwtextspinbox(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwtextspinbox);
+    ui->btn_layout->addWidget(btn_qwwtextspinbox, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwtextspinbox->setProperty("index", index);
@@ -665,7 +664,7 @@ void MainBox::f_qwwtextspinbox(void)
     connect(btn_qwwtextspinbox, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwbuttonlineedit(void)
+void MainBox::f_qwwbuttonlineedit(int col, int row)
 {
     btn_qwwbuttonlineedit = new QPushButton(this);
     btn_qwwbuttonlineedit->setObjectName("qwwbuttonlineedit");
@@ -677,6 +676,7 @@ void MainBox::f_qwwbuttonlineedit(void)
 
     //---
     QwwButtonLineEdit *w = new QwwButtonLineEdit;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwbuttonlineedit");
@@ -684,7 +684,7 @@ void MainBox::f_qwwbuttonlineedit(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwbuttonlineedit);
+    ui->btn_layout->addWidget(btn_qwwbuttonlineedit, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwbuttonlineedit->setProperty("index", index);
@@ -694,7 +694,7 @@ void MainBox::f_qwwbuttonlineedit(void)
     connect(btn_qwwbuttonlineedit, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwfilechooser(void)
+void MainBox::f_qwwfilechooser(int col, int row)
 {
     btn_qwwfilechooser = new QPushButton(this);
     btn_qwwfilechooser->setObjectName("qwwfilechooser");
@@ -706,6 +706,7 @@ void MainBox::f_qwwfilechooser(void)
 
     //---
     QwwFileChooser *w = new QwwFileChooser;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwfilechooser");
@@ -713,7 +714,7 @@ void MainBox::f_qwwfilechooser(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwfilechooser);
+    ui->btn_layout->addWidget(btn_qwwfilechooser, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwfilechooser->setProperty("index", index);
@@ -723,7 +724,7 @@ void MainBox::f_qwwfilechooser(void)
     connect(btn_qwwfilechooser, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwlistwidget(void)
+void MainBox::f_qwwlistwidget(int col, int row)
 {
     btn_qwwlistwidget = new QPushButton(this);
     btn_qwwlistwidget->setObjectName("qwwlistwidget");
@@ -735,6 +736,7 @@ void MainBox::f_qwwlistwidget(void)
 
     //---
     QwwListWidget *w  =  new QwwListWidget;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwlistwidget");
@@ -742,7 +744,7 @@ void MainBox::f_qwwlistwidget(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwlistwidget);
+    ui->btn_layout->addWidget(btn_qwwlistwidget, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwlistwidget->setProperty("index", index);
@@ -752,7 +754,7 @@ void MainBox::f_qwwlistwidget(void)
     connect(btn_qwwlistwidget, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwresetlineedit(void)
+void MainBox::f_qwwresetlineedit(int col, int row)
 {
     btn_qwwresetlineedit = new QPushButton(this);
     btn_qwwresetlineedit->setObjectName("qwwresetlineedit");
@@ -764,6 +766,7 @@ void MainBox::f_qwwresetlineedit(void)
 
     //---
     QwwResetLineEdit *w = new QwwResetLineEdit;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwresetlineedit");
@@ -771,7 +774,7 @@ void MainBox::f_qwwresetlineedit(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwresetlineedit);
+    ui->btn_layout->addWidget(btn_qwwresetlineedit, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwresetlineedit->setProperty("index", index);
@@ -781,7 +784,7 @@ void MainBox::f_qwwresetlineedit(void)
     connect(btn_qwwresetlineedit, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwtipwidget(void)
+void MainBox::f_qwwtipwidget(int col, int row)
 {
     btn_qwwtipwidget = new QPushButton(this);
     btn_qwwtipwidget->setObjectName("qwwtipwidget");
@@ -794,7 +797,9 @@ void MainBox::f_qwwtipwidget(void)
     //---
     QStringList sl;
     sl << "one" << "two" << "three";
+    
     QwwTipWidget *w = new QwwTipWidget(sl,this);
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwtipwidget");
@@ -802,7 +807,7 @@ void MainBox::f_qwwtipwidget(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwtipwidget);
+    ui->btn_layout->addWidget(btn_qwwtipwidget, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwtipwidget->setProperty("index", index);
@@ -812,7 +817,7 @@ void MainBox::f_qwwtipwidget(void)
     connect(btn_qwwtipwidget, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwclearlineedit(void)
+void MainBox::f_qwwclearlineedit(int col, int row)
 {
     btn_qwwclearlineedit = new QPushButton(this);
     btn_qwwclearlineedit->setObjectName("qwwclearlineedit");
@@ -824,6 +829,7 @@ void MainBox::f_qwwclearlineedit(void)
 
     //---
     QwwClearLineEdit *w  =  new QwwClearLineEdit;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwclearlineedit");
@@ -831,7 +837,7 @@ void MainBox::f_qwwclearlineedit(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwclearlineedit);
+    ui->btn_layout->addWidget(btn_qwwclearlineedit, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwclearlineedit->setProperty("index", index);
@@ -841,7 +847,7 @@ void MainBox::f_qwwclearlineedit(void)
     connect(btn_qwwclearlineedit, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwhuesatpicker(void)
+void MainBox::f_qwwhuesatpicker(int col, int row)
 {
     btn_qwwhuesatpicker = new QPushButton(this);
     btn_qwwhuesatpicker->setObjectName("qwwhuesatpicker");
@@ -853,6 +859,7 @@ void MainBox::f_qwwhuesatpicker(void)
 
     //---
     QwwHueSatPicker *w = new QwwHueSatPicker;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwhuesatpicker");
@@ -860,7 +867,7 @@ void MainBox::f_qwwhuesatpicker(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwhuesatpicker);
+    ui->btn_layout->addWidget(btn_qwwhuesatpicker, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwhuesatpicker->setProperty("index", index);
@@ -870,7 +877,7 @@ void MainBox::f_qwwhuesatpicker(void)
     connect(btn_qwwhuesatpicker, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwloginbox(void)
+void MainBox::f_qwwloginbox(int col, int row)
 {
     btn_qwwloginbox = new QPushButton(this);
     btn_qwwloginbox->setObjectName("qwwloginbox");
@@ -882,6 +889,7 @@ void MainBox::f_qwwloginbox(void)
 
     //---
     QwwLoginBox *w = new QwwLoginBox;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwloginbox");
@@ -889,7 +897,7 @@ void MainBox::f_qwwloginbox(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwloginbox);
+    ui->btn_layout->addWidget(btn_qwwloginbox, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwloginbox->setProperty("index", index);
@@ -899,7 +907,7 @@ void MainBox::f_qwwloginbox(void)
     connect(btn_qwwloginbox, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwrichtextbutton(void)
+void MainBox::f_qwwrichtextbutton(int col, int row)
 {
     btn_qwwrichtextbutton = new QPushButton(this);
     btn_qwwrichtextbutton->setObjectName("qwwrichtextbutton");
@@ -911,6 +919,7 @@ void MainBox::f_qwwrichtextbutton(void)
 
     //---
     QwwRichTextButton *w = new QwwRichTextButton;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwrichtextbutton");
@@ -918,7 +927,7 @@ void MainBox::f_qwwrichtextbutton(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwrichtextbutton);
+    ui->btn_layout->addWidget(btn_qwwrichtextbutton, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwrichtextbutton->setProperty("index", index);
@@ -928,7 +937,7 @@ void MainBox::f_qwwrichtextbutton(void)
     connect(btn_qwwrichtextbutton, SIGNAL(clicked(bool)),  this,  SLOT(choice_widget()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_qwwtwocolorindicator(void)
+void MainBox::f_qwwtwocolorindicator(int col, int row)
 {
     btn_qwwtwocolorindicator = new QPushButton(this);
     btn_qwwtwocolorindicator->setObjectName("qwwtwocolorindicator");
@@ -940,6 +949,7 @@ void MainBox::f_qwwtwocolorindicator(void)
 
     //---
     QwwTwoColorIndicator *w  = new QwwTwoColorIndicator;
+    Q_CHECK_PTR(w);
     //---
 
     QLabel *lbl = new QLabel("qwwtwocolorindicator");
@@ -947,7 +957,7 @@ void MainBox::f_qwwtwocolorindicator(void)
     vbox->addWidget(w);
     vbox->addStretch(1);
 
-    ui->btn_layout->addWidget(btn_qwwtwocolorindicator);
+    ui->btn_layout->addWidget(btn_qwwtwocolorindicator, row, col);
 
     int index = ui->stackedWidget->addWidget(main_widget);
     btn_qwwtwocolorindicator->setProperty("index", index);

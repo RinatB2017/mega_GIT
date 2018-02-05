@@ -2,9 +2,15 @@
     <qresource prefix="/power_knock">
 	<file>image/red/on.png</file>
         <file>image/red/off.png</file>
+	<file>image/red/r_on.png</file>
+        <file>image/red/r_off.png</file>
 	<file>image/green/on.png</file>
         <file>image/green/off.png</file>
+	<file>image/green/r_on.png</file>
+        <file>image/green/r_off.png</file>
 	<file>image/black/on.png</file>
         <file>image/black/off.png</file>
+	<file>image/black/r_on.png</file>
+        <file>image/black/r_off.png</file>
     </qresource>
 </RCC>

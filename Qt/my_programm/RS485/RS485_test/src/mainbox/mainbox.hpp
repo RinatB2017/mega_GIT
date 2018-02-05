@@ -35,7 +35,6 @@ class MySplashScreen;
 class QToolButton;
 class QToolBar;
 class SerialPort_test;
-class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -55,8 +54,6 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-
-    SerialBox5 *serialBox5 = 0;
 
     QUESTION_WRITE memory;
 

@@ -57,10 +57,10 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    createTestBar();
+    //createTestBar();
 
-    QListWidget* lstWgt = new QListWidget;
-    QLayout* l = new QVBoxLayout;
+    QListWidget *lstWgt = new QListWidget;
+    QLayout *l = new QVBoxLayout;
     l->addWidget(lstWgt);
     setLayout(l);
 
@@ -126,10 +126,5 @@ void MainBox::test(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-int MainBox::xxx(int x)
-{
-    return x+5;
 }
 //--------------------------------------------------------------------------------

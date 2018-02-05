@@ -44,8 +44,5 @@ void Test::test_func(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
-
-    QCOMPARE(mb->xxx(5), 10);
-    QCOMPARE(mb->xxx(10), 15);
 }
 //--------------------------------------------------------------------------------

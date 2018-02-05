@@ -44,8 +44,6 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
-    int xxx(int x);
-
 private slots:
     void test(void);
     void onBtnClicked(void);
@@ -55,13 +53,10 @@ private:
     Ui::MainBox *ui = 0;
 
     void init(void);
-
     void makeItem(QListWidget* lstWgt);
-
     void createTestBar(void);
 
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

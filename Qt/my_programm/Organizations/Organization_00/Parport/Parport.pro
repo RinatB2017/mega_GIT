@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Parport
 
+FOLDER  = organizations/Organization_00
+
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH += $$PWD/src
 

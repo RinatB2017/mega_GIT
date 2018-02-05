@@ -38,8 +38,6 @@ ParportBox::ParportBox(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect_log();
-
     initKeyboard();
     initWidgets();
     initTimers();
@@ -53,24 +51,12 @@ ParportBox::ParportBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 ParportBox::~ParportBox()
 {
-    parport->close_parport();
+    if(parport)
+    {
+        parport->close_parport();
+        parport->deleteLater();
+    }
     delete ui;
-}
-//--------------------------------------------------------------------------------
-void ParportBox::connect_log(void)
-{
-    if(parent)
-    {
-        connect(this, SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
-    }
-    else
-    {
-        connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
-        connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
-        connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
-    }
 }
 //================================================================================
 void ParportBox::initTimers()

@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_r4_serial_widget
 
+FOLDER  = organizations/Organization_00
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/serial \

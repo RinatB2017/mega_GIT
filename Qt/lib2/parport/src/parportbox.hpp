@@ -91,7 +91,6 @@ private:
     Parport *parport = 0;
     QTimer *timer = 0;
     QTimer *timer2 = 0;
-    void connect_log(void);
     void message(const QString &text);
     void set_enable(bool state);
     void initKeyboard(void);

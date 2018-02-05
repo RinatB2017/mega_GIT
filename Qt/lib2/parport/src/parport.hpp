@@ -19,7 +19,6 @@
 #define BIT6  0x40
 #define BIT7  0x80
 //--------------------------------------------------------------------------------
-
 #ifdef Q_OS_WIN
 //--------------------------------------------------------------------------------
 #include <windef.h>
@@ -124,14 +123,13 @@ signals:
     void info(const QString  &);
     void debug(const QString &);
     void error(const QString &);
-
-public slots:
+    void trace(const QString &);
 
 private slots:
     void log(const QString &data);
 
 private:
-    QWidget *parent;
+    QWidget *parent = 0;
     int fd, mode;
     bool port_is_open;
     QString parport_filename;

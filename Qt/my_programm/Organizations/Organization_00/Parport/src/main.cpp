@@ -40,8 +40,10 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     MainWindow *main_window = new MainWindow();
+    Q_CHECK_PTR(main_window);
 
     ParportBox *mainBox = new ParportBox(main_window->getThis());
+    Q_CHECK_PTR(mainBox);
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

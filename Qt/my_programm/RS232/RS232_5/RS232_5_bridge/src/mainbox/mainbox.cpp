@@ -72,10 +72,10 @@ void MainBox::init(void)
 #if 1
     connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->log0,   SLOT(bappend(QByteArray)));
     connect(ui->serial1,    SIGNAL(output(QByteArray)), ui->log1,   SLOT(bappend(QByteArray)));
-#else
-    connect(ui->serial0,    SIGNAL(output(QByteArray)), this,   SLOT(send_data_1(QByteArray)));
-    connect(ui->serial1,    SIGNAL(output(QByteArray)), this,   SLOT(send_data_2(QByteArray)));
 #endif
+
+    connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->serial1,    SLOT(input(QByteArray)));
+    connect(ui->serial1,    SIGNAL(output(QByteArray)), ui->serial0,    SLOT(input(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::send_data_1(QByteArray ba)

@@ -1,65 +1,10 @@
-QwtSymbol *symbol_xp;
-QwtSymbol *symbol_xn;
-QwtSymbol *symbol_yp;
-QwtSymbol *symbol_yn;
-QwtSymbol *symbol_sum;
-int type = ui->cb_type_curve->itemData(ui->cb_type_curve->currentIndex()).toInt();
-switch(type)
-{
-case DOTS:
-    symbol_xp = new QwtSymbol();
-    symbol_xp->setStyle(QwtSymbol::Ellipse);
-    symbol_xp->setPen(COLOR_CURVE_GRAPHER);
-    symbol_xp->setSize(4);
-
-    symbol_xn = new QwtSymbol();
-    symbol_xn->setStyle(QwtSymbol::Ellipse);
-    symbol_xn->setPen(COLOR_CURVE_GRAPHER);
-    symbol_xn->setSize(4);
-
-    symbol_yp = new QwtSymbol();
-    symbol_yp->setStyle(QwtSymbol::Ellipse);
-    symbol_yp->setPen(COLOR_CURVE_GRAPHER);
-    symbol_yp->setSize(4);
-
-    symbol_yn = new QwtSymbol();
-    symbol_yn->setStyle(QwtSymbol::Ellipse);
-    symbol_yn->setPen(COLOR_CURVE_GRAPHER);
-    symbol_yn->setSize(4);
-
-    symbol_sum = new QwtSymbol();
-    symbol_sum->setStyle(QwtSymbol::Ellipse);
-    symbol_sum->setPen(COLOR_CURVE_GRAPHER);
-    symbol_sum->setSize(4);
-
-    grapher->set_curve_symbol(curve_xp, symbol_xp);
-    grapher->set_curve_symbol(curve_xn, symbol_xn);
-    grapher->set_curve_symbol(curve_yp, symbol_yp);
-    grapher->set_curve_symbol(curve_yn, symbol_yn);
-    grapher->set_curve_symbol(curve_sum, symbol_sum);
-
-    grapher->set_curve_style(curve_xp, QwtPlotCurve::Dots);
-    grapher->set_curve_style(curve_xn, QwtPlotCurve::Dots);
-    grapher->set_curve_style(curve_yp, QwtPlotCurve::Dots);
-    grapher->set_curve_style(curve_yn, QwtPlotCurve::Dots);
-    grapher->set_curve_style(curve_sum, QwtPlotCurve::Dots);
-
-    emit debug("set_curve_style(curve, QwtPlotCurve::Dots);");
-    break;
-
-case LINES:
-    grapher->set_curve_symbol(curve_xp, 0);
-    grapher->set_curve_symbol(curve_xn, 0);
-    grapher->set_curve_symbol(curve_yp, 0);
-    grapher->set_curve_symbol(curve_yn, 0);
-    grapher->set_curve_symbol(curve_sum, 0);
-
-    grapher->set_curve_style(curve_xp, QwtPlotCurve::Lines);
-    grapher->set_curve_style(curve_xn, QwtPlotCurve::Lines);
-    grapher->set_curve_style(curve_yp, QwtPlotCurve::Lines);
-    grapher->set_curve_style(curve_yn, QwtPlotCurve::Lines);
-    grapher->set_curve_style(curve_sum, QwtPlotCurve::Lines);
-
-    emit debug("set_curve_style(curve, QwtPlotCurve::Lines);");
-    break;
-}
+// AT+BAUDX where X from 1 to 8
+// 1 -> 1200 Bauds
+// 2 -> 2400 Bauds
+// 3 -> 4800 Bauds
+// 4 -> 9600 Bauds
+// 5 -> 19200 Bauds
+// 6 -> 38400 Bauds
+// 7 -> 57600 Bauds
+// 8 -> 115200 Bauds
+Serial.print("AT+BAUD8"); 

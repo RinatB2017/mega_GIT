@@ -182,8 +182,8 @@ long cnt_second = 0;
 #define Wiper   63
 //--------------------------------------------------------------------------------
 /*
- * если пошел дождь, то поведение такое же, как и при помывке, только не дергаем камерой
- */
+   если пошел дождь, то поведение такое же, как и при помывке, только не дергаем камерой
+*/
 enum {
   STATUS_IDLE = 0,
   STATUS_RAIN,      // дождь
@@ -196,6 +196,12 @@ int pin_485   = 8;
 int led_blink = 10;
 int led_pump  = 11;
 int led_relay = 12;
+
+int addr0 = A1;
+int addr1 = A2;
+int addr2 = A3;
+int addr3 = A4;
+int addr4 = A5;
 //--------------------------------------------------------------------------------
 void debug(String text)
 {
@@ -244,6 +250,13 @@ bool check_LEVEL()
 //--------------------------------------------------------------------------------
 uint8_t get_address()
 {
+  union U_BYTE temp;
+  temp.value = 0;
+  temp.bites.bit0 = digitalRead(addr0);
+  temp.bites.bit1 = digitalRead(addr1);
+  temp.bites.bit2 = digitalRead(addr2);
+  temp.bites.bit3 = digitalRead(addr3);
+  temp.bites.bit4 = digitalRead(addr4);
   /*
     union U_BYTE temp;
     temp.value = 0;
@@ -252,10 +265,8 @@ uint8_t get_address()
     temp.bites.bit2 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_2);
     temp.bites.bit3 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_3);
     temp.bites.bit4 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_4);
-
-    return temp.value;
   */
-  return 0;
+  return temp.value;
 }
 //--------------------------------------------------------------------------------
 uint16_t crc16(uint8_t *pcBlock, uint8_t len)
@@ -442,6 +453,13 @@ void f_read(void)
     return;
   }
 
+  uint8_t addr = get_address();
+  if (addr != packet->body.header.addr_8)
+  {
+    debug("addr incorrect");
+    return;
+  }
+
   union ANSWER_READ answer;
 
   answer.body.header.prefix_16 = packet->body.header.prefix_16;
@@ -474,6 +492,13 @@ void f_write(void)
   if (crc != packet->body.crc16)
   {
     debug("crc != packet->body.crc16");
+    return;
+  }
+
+  uint8_t addr = get_address();
+  if (addr != packet->body.header.addr_8)
+  {
+    debug("addr incorrect");
     return;
   }
 
@@ -518,6 +543,13 @@ void f_reset(void)
     return;
   }
 
+  uint8_t addr = get_address();
+  if (addr != packet->body.header.addr_8)
+  {
+    debug("addr incorrect");
+    return;
+  }
+
   union ANSWER_RESET answer;
 
   answer.body.header.prefix_16 = packet->body.header.prefix_16;
@@ -549,6 +581,13 @@ void f_test(void)
   if (crc != packet->body.crc16)
   {
     debug("crc != packet->body.crc16");
+    return;
+  }
+
+  uint8_t addr = get_address();
+  if (addr != packet->body.header.addr_8)
+  {
+    debug("addr incorrect");
     return;
   }
 
@@ -671,6 +710,19 @@ void setup()
   pinMode(led_pump,   OUTPUT);
   pinMode(led_relay,  OUTPUT);
 
+  pinMode(addr0,  INPUT);
+  pinMode(addr1,  INPUT);
+  pinMode(addr2,  INPUT);
+  pinMode(addr3,  INPUT);
+  pinMode(addr4,  INPUT);
+
+  //подтяжка
+  digitalWrite(addr0,  HIGH);
+  digitalWrite(addr1,  HIGH);
+  digitalWrite(addr2,  HIGH);
+  digitalWrite(addr3,  HIGH);
+  digitalWrite(addr4,  HIGH);
+
   t.every(1000, takeReading); // 1 sec
 
   read_RS485();
@@ -684,7 +736,7 @@ void camera_save_position (void)
   Pelco[4] = 0;
   Pelco[5] = Save;
 
-  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
   send_byte(0xFF);
@@ -708,7 +760,7 @@ void camera_move_position (void)
   Pelco[4] = 0;
   Pelco[5] = Move;
 
-  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
   send_byte(0xFF);
@@ -732,7 +784,7 @@ void camera_return (void)
   Pelco[4] = 0;
   Pelco[5] = Save;
 
-  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
   send_byte(0xFF);
@@ -753,7 +805,7 @@ void camera_wiper (void)
   Pelco[4] = 0;
   Pelco[5] = Wiper;
 
-  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
   send_byte(0xFF);
@@ -774,7 +826,7 @@ void camera_Run_Tur_1 (void)
   Pelco[4] = 0;
   Pelco[5] = 0;
 
-  Pelco [6] = Pelco [1] ^ Pelco [2] ^Pelco [3] ^Pelco [4] ^Pelco [5] ;  // вычисление контрольной суммы
+  Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
   send_byte(0xFF);
@@ -789,76 +841,76 @@ void camera_Run_Tur_1 (void)
 //--------------------------------------------------------------------------------
 void takeReading()
 {
-	bool flag_lvl  = check_LEVEL();
-	bool flag_rain = check_RAIN();
+  bool flag_lvl  = check_LEVEL();
+  bool flag_rain = check_RAIN();
 
-	// мало воды
-	if(flag_lvl)
-	{
-		pump_ON();
-	}
-	else
-	{
-		pump_OFF();
-	}
+  // мало воды
+  if (flag_lvl)
+  {
+    pump_ON();
+  }
+  else
+  {
+    pump_OFF();
+  }
 
-	if(flag_rain)
-	{
-		state = STATUS_RAIN;
-	}
-	else
-	{
-		state = STATUS_IDLE;
-	}
+  if (flag_rain)
+  {
+    state = STATUS_RAIN;
+  }
+  else
+  {
+    state = STATUS_IDLE;
+  }
 
-	switch(state)
-	{
-	case STATUS_IDLE:
-		cnt_second = 0;
-		camera_move_position();
-		state = STATUS_WASHOUT;
-		break;
+  switch (state)
+  {
+    case STATUS_IDLE:
+      cnt_second = 0;
+      camera_move_position();
+      state = STATUS_WASHOUT;
+      break;
 
-	case STATUS_RAIN:			// дождь
-		if(cnt_second < time_interval_16)
-		{
-			cnt_second++;
-		}
-		else
-		{
-			camera_wiper();
-			cnt_second = 0;
-		}
-		break;
+    case STATUS_RAIN:			// дождь
+      if (cnt_second < time_interval_16)
+      {
+        cnt_second++;
+      }
+      else
+      {
+        camera_wiper();
+        cnt_second = 0;
+      }
+      break;
 
-	case STATUS_WASHOUT:		// моемся
-		if(!(cnt_second % time_interval_16))
-		{
-			camera_wiper();
-		}
-		if(cnt_second >= time_washout_32)
-		{
-			cnt_second = 0;
-			camera_return();
-			state = STATUS_WASHOUT_PAUSE;
-		}
-		cnt_second++;
-		break;
+    case STATUS_WASHOUT:		// моемся
+      if (!(cnt_second % time_interval_16))
+      {
+        camera_wiper();
+      }
+      if (cnt_second >= time_washout_32)
+      {
+        cnt_second = 0;
+        camera_return();
+        state = STATUS_WASHOUT_PAUSE;
+      }
+      cnt_second++;
+      break;
 
-	case STATUS_WASHOUT_PAUSE:	// пауза
-		if(cnt_second >= time_pause_washout_32)
-		{
-			cnt_second = 0;
-			camera_move_position();
-			state = STATUS_WASHOUT;
-		}
-		cnt_second++;
-		break;
+    case STATUS_WASHOUT_PAUSE:	// пауза
+      if (cnt_second >= time_pause_washout_32)
+      {
+        cnt_second = 0;
+        camera_move_position();
+        state = STATUS_WASHOUT;
+      }
+      cnt_second++;
+      break;
 
-	default:
-		state = STATUS_IDLE;
-		break;
-	}
+    default:
+      state = STATUS_IDLE;
+      break;
+  }
 }
 //--------------------------------------------------------------------------------
 void loop()

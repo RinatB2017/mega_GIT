@@ -404,6 +404,7 @@ void Map::start(unsigned int interval_ms)
 //--------------------------------------------------------------------------------
 void Map::update(void)
 {
+#if 0
     int x = rand() % 100;
     switch(x)
     {
@@ -414,6 +415,7 @@ void Map::update(void)
     default:
         break;
     }
+#endif
 
     switch(direction_move)
     {

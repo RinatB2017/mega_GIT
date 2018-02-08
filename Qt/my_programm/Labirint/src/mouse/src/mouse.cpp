@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include <QtWidgets>
 //--------------------------------------------------------------------------------
+#include "mainbox.hpp"
 #include "defines.hpp"
 #include "mouse.hpp"
 //--------------------------------------------------------------------------------
@@ -40,6 +41,21 @@ Mouse::~Mouse()
 void Mouse::init(void)
 {
     ui->setupUi(this);
+
+    ui->w_minimap->set(0, 0, SPACE_ID);
+    ui->w_minimap->set(2, 0, SPACE_ID);
+    ui->w_minimap->set(0, 2, SPACE_ID);
+    ui->w_minimap->set(2, 2, SPACE_ID);
+}
+//--------------------------------------------------------------------------------
+bool Mouse::set(int x, int y, int id)
+{
+    return ui->w_minimap->set(x,y,id);
+}
+//--------------------------------------------------------------------------------
+bool Mouse::get(int x, int y, int *id)
+{
+    return ui->w_minimap->get(x,y,id);
 }
 //--------------------------------------------------------------------------------
 void Mouse::updateText(void)

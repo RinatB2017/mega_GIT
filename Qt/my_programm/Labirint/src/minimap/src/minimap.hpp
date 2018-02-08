@@ -18,36 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MOUSE_HPP
-#define MOUSE_HPP
+#ifndef MINIMAP_HPP
+#define MINIMAP_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include "defines.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class Mouse;
-}
+#define MAX_X 3
+#define MAX_Y 3
 //--------------------------------------------------------------------------------
 class QGridLayout;
 //--------------------------------------------------------------------------------
-class Mouse : public MyWidget
+class MiniMap : public MyWidget
 {
     Q_OBJECT
 
 public:
-    Mouse(QWidget *parent = 0);
-    ~Mouse();
+    MiniMap(QWidget *parent = 0);
+    ~MiniMap();
 
     bool set(int x, int y, int id);
     bool get(int x, int y, int *id);
 
 private:
-    Ui::Mouse *ui = 0;
+    int id_map[MAX_X][MAX_Y];
+    QGridLayout *grid_map = 0;
 
     void init(void);
+    bool add_item(int x, int y, int id);
+
     void updateText(void);
+
 };
 //--------------------------------------------------------------------------------
-#endif // MOUSE_HPP
+#endif // MINIMAP_HPP

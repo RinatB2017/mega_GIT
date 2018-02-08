@@ -48,6 +48,7 @@ LIB_PATH2 = "../../lib2"
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
+include (src/minimap/minimap.pri)
 include (src/map/map.pri)
 include (src/mouse/mouse.pri)
 

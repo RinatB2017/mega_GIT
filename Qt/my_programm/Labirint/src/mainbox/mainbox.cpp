@@ -187,6 +187,43 @@ void MainBox::test(void)
     emit info("test");
 
 #if 1
+    bool ok = false;
+    int player_x = 0;
+    int player_y = 0;
+    ok = ui->map_widget->find_player(&player_x, &player_y);
+    if(!ok)
+    {
+        emit error("Player not found!");
+        return;
+    }
+    emit info(QString("player_x %1").arg(player_x));
+    emit info(QString("player_y %1").arg(player_y));
+    for(int y=player_y-1; y<=player_y+1; y++)
+    {
+        for(int x=player_x-1; x<=player_x+1; x++)
+        {
+            int id = ui->map_widget->get_id(x, y);
+            ok = ui->mouse_widget->set(x,y,id);
+            if(!ok)
+            {
+                emit error(QString("ui->mouse_widget->set(%1,%2,%3)")
+                           .arg(x)
+                           .arg(y)
+                           .arg(id));
+            }
+        }
+    }
+#endif
+
+#if 0
+    bool ok = ui->mouse_widget->set(1,1,PLAYER_ID);
+    if(!ok)
+    {
+        emit error("ERROR: test");
+    }
+#endif
+
+#if 0
     int x = -1;
     int y = -1;
     bool ok = ui->map_widget->find_player(&x, &y);
@@ -268,7 +305,7 @@ void MainBox::load_map(void)
 #if 0
     ui->map_widget->load_map("map.dat");
 #else
-    QFileDialog *dlg;
+    QFileDialog *dlg = 0;
 
     dlg = new QFileDialog;
     dlg->setNameFilter("DAT files (*.dat)");
@@ -289,10 +326,10 @@ void MainBox::save_map(void)
 {
     emit info("Save MAP");
 
-#if 1
+#if 0
     ui->map_widget->save_map("map.dat");
 #else
-    QFileDialog *dlg;
+    QFileDialog *dlg = 0;
 
     dlg = new QFileDialog;
     dlg->setAcceptMode(QFileDialog::AcceptSave);

@@ -54,6 +54,20 @@ private:
     quint8 c[4];
 };
 //--------------------------------------------------------------------------------
+class MyMegaWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    MyMegaWidget(QWidget *parent) : QWidget(parent)
+    {
+        setStyleSheet("background:red;");
+        setFixedSize(10, 10);
+    }
+
+private:
+};
+//--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
 class QComboBox;

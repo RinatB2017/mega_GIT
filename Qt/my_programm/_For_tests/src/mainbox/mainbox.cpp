@@ -190,12 +190,35 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+#if 0
+    QWidget *mw = new QWidget();
+    mw->setMinimumSize(400, 400);
+    mw->setStyleSheet("background:white;");
+    MyMegaWidget *w = new MyMegaWidget(mw);
+    w->setFixedSize(50, 50);
+    w->move(50, 50);
+    w->show();
+    mw->show();
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+#if 0
+    QWidget *mw = new QWidget();
+    mw->setMinimumSize(400, 400);
+    mw->setStyleSheet("background:white;");
+    QWidget *w = new QWidget(mw);
+    w->setStyleSheet("background:red;");
+    w->setFixedSize(50, 50);
+    w->move(50, 50);
+    w->show();
+    mw->show();
+#endif
 
     return true;
 }

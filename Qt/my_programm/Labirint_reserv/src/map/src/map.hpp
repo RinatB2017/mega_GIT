@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,62 +18,83 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef MAP_HPP
+#define MAP_HPP
 //--------------------------------------------------------------------------------
+#include <QGridLayout>
 #include <QWidget>
-#include <QList>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
 #include "defines.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Map : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    Map(QWidget *parent = 0);
+    ~Map();
 
-private slots:
-    void start(void);
+    void new_map(int max_x, int max_y);
+    bool load_map(const QString &filename);
+    bool save_map(const QString &filename);
+
+    int rowCount(void);
+    int columnCount(void);
+
+    bool find_start(int *x, int *y);
+    bool find_player(int *x, int *y);
+
+    void player_move_up(void);
+    void player_move_down(void);
+    void player_move_left(void);
+    void player_move_right(void);
+
+    uint8_t get_id(int x, int y);
+    bool add_item(int x, int y, int id);
+    void put_picture(int id, int x, int y);
+
+signals:
+    void move_to(int x, int y);
+
+public slots:
+    void start(unsigned int interval_ms);
     void stop(void);
     void refresh(void);
 
-    void new_map(void);
-    void load_map(void);
-    void save_map(void);
+    void set_cursor(void);
 
-    void test(void);
+private slots:
+    void update(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    QGridLayout *grid_map = 0;
 
-    QComboBox *cb_test = 0;
+    uint8_t id_map[MAX_WIDTH][MAX_HEIGHT];
+
+    quint64 cnt_move = 0;
+
+    int max_x = 0;
+    int max_y = 0;
+
+    int id = 0;
+    int direction_move = 0;
+    int player_x = 0;
+    int player_y = 0;
+    int start_x = 0;
+    int start_y = 0;
+    QTimer *timer = 0;
 
     void init(void);
+    void init_id_map(void);
+    void createTimer(void);
 
-    void init_widgets(void);
-    void createImagesDock(void);
-
-    void lock_widgets(void);
-    void unlock_widgets(void);
-
-    QToolButton *create_button(const QString &name, int id);
+    QPixmap rotate(const QString &filename, int angle);
 
     void updateText(void);
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // MAP_HPP

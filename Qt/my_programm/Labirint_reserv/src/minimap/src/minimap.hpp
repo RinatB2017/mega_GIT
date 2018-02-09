@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,62 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef MINIMAP_HPP
+#define MINIMAP_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
-#include <QList>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
+#define MAX_X 3
+#define MAX_Y 3
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
+class QGridLayout;
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MiniMap : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    MiniMap(QWidget *parent = 0);
+    ~MiniMap();
 
-private slots:
-    void start(void);
-    void stop(void);
-    void refresh(void);
-
-    void new_map(void);
-    void load_map(void);
-    void save_map(void);
-
-    void test(void);
+    bool set(int x, int y, int id);
+    bool get(int x, int y, int *id);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
+    int id_map[MAX_X][MAX_Y];
+    QGridLayout *grid_map = 0;
 
     void init(void);
-
-    void init_widgets(void);
-    void createImagesDock(void);
-
-    void lock_widgets(void);
-    void unlock_widgets(void);
-
-    QToolButton *create_button(const QString &name, int id);
+    bool add_item(int x, int y, int id);
 
     void updateText(void);
 
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // MINIMAP_HPP

@@ -196,14 +196,22 @@ void MainBox::test(void)
         emit error("Player not found!");
         return;
     }
-    emit info(QString("player_x %1").arg(player_x));
-    emit info(QString("player_y %1").arg(player_y));
-    for(int y=player_y-1; y<=player_y+1; y++)
+    emit debug(QString("player_x %1").arg(player_x));
+    emit debug(QString("player_y %1").arg(player_y));
+
+    int start_x = player_x - 1;
+    int start_y = player_y - 1;
+    int end_x = player_x + 1;
+    int end_y = player_y + 1;
+
+    for(int y=start_y; y<=end_y; y++)
     {
-        for(int x=player_x-1; x<=player_x+1; x++)
+        for(int x=start_x; x<=end_x; x++)
         {
             int id = ui->map_widget->get_id(x, y);
-            ok = ui->mouse_widget->set(x,y,id);
+            ok = ui->mouse_widget->set(x - start_x,
+                                       y - start_y,
+                                       id);
             if(!ok)
             {
                 emit error(QString("ui->mouse_widget->set(%1,%2,%3)")
@@ -212,46 +220,6 @@ void MainBox::test(void)
                            .arg(id));
             }
         }
-    }
-#endif
-
-#if 0
-    bool ok = ui->mouse_widget->set(1,1,PLAYER_ID);
-    if(!ok)
-    {
-        emit error("ERROR: test");
-    }
-#endif
-
-#if 0
-    int x = -1;
-    int y = -1;
-    bool ok = ui->map_widget->find_player(&x, &y);
-    if(ok)
-    {
-        emit info(QString("Player: x %1").arg(x));
-        emit info(QString("Player: y %1").arg(y));
-    }
-    else
-    {
-        emit error("Player not found!");
-    }
-#endif
-
-#if 0
-    emit info(QString("col %1").arg(ui->map_widget->columnCount()));
-    emit info(QString("row %1").arg(ui->map_widget->rowCount()));
-#endif
-
-#if 0
-    for(int y=0; y<ui->map_widget->rowCount(); y++)
-    {
-        QString temp;
-        for(int x=0; x<ui->map_widget->columnCount(); x++)
-        {
-            temp.append(QString("%1").arg(ui->map_widget->get_id(x, y), 2, 16, QChar('0')));
-        }
-        emit info(temp);
     }
 #endif
 }

@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>map.dat</file>
+        <file>images/switch.png</file>
     </qresource>
 </RCC>

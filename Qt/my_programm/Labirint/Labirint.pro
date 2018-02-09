@@ -34,7 +34,7 @@ FORMS   += mainbox.ui
 
 RESOURCES   += \
     images/buttons.qrc \
-    map/map.qrc
+    test_map/test_map.qrc
 
 OTHER_FILES += doc/notebook.txt
 

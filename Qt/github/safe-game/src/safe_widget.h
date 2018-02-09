@@ -16,7 +16,9 @@ namespace safe
     {
         Q_OBJECT
     public:
-        SafeWidget(History* history, int size, QWidget* parent = nullptr);
+        SafeWidget(History* history,
+                   int size,
+                   QWidget* parent = nullptr);
         ~SafeWidget();
 
         void doSwitch(int row, int column);

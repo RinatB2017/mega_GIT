@@ -32,8 +32,8 @@ safe::SafeWidget::SafeWidget(History* history,
             }
 
             auto switchWidget = new SwitchWidget(image_, j, i, orient, this);
-            connect(switchWidget, &SwitchWidget::orientationChanged, this, &SafeWidget::onOrientationChanged);
-            connect(switchWidget, &SwitchWidget::clicked, this, &SafeWidget::onSwitchClicked);
+            connect(switchWidget,   &SwitchWidget::orientationChanged,  this,   &SafeWidget::onOrientationChanged);
+            connect(switchWidget,   &SwitchWidget::clicked,             this,   &SafeWidget::onSwitchClicked);
             switches_->addWidget(switchWidget, j, i);
         }
     }

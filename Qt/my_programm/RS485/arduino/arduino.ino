@@ -465,7 +465,7 @@ void f_read(void)
   answer.body.header.prefix_16 = packet->body.header.prefix_16;
   answer.body.header.addr_8 = packet->body.header.addr_8;
   answer.body.header.cmd_8 = packet->body.header.cmd_8;
-  answer.body.header.len_16 = packet->body.header.len_16;
+  answer.body.header.len_16 = sizeof(answer.body.data);
 
   answer.body.data.addr_cam_32 = addr_cam_32;                        // адрес камеры
   answer.body.data.time_interval_16 = time_interval_16;              // интервал дворника
@@ -513,7 +513,7 @@ void f_write(void)
   answer.body.header.prefix_16 = packet->body.header.prefix_16;
   answer.body.header.addr_8 = packet->body.header.addr_8;
   answer.body.header.cmd_8 = packet->body.header.cmd_8;
-  answer.body.header.len_16 = packet->body.header.len_16;
+  answer.body.header.len_16 = sizeof(answer.body.data);
 
   answer.body.data.addr_cam_32 = addr_cam_32;                        // адрес камеры
   answer.body.data.time_interval_16 = time_interval_16;              // интервал дворника
@@ -596,7 +596,7 @@ void f_test(void)
   answer.body.header.prefix_16 = packet->body.header.prefix_16;
   answer.body.header.addr_8 = packet->body.header.addr_8;
   answer.body.header.cmd_8 = packet->body.header.cmd_8;
-  answer.body.header.len_16 = packet->body.header.len_16;
+  answer.body.header.len_16 = sizeof(answer.body.data);
   answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_TEST) - 2);
 
   for (int n = 0; n < sizeof(answer); n++)
@@ -699,34 +699,6 @@ void blink_off()
 }
 //--------------------------------------------------------------------------------
 Timer t;
-//--------------------------------------------------------------------------------
-void setup()
-{
-  Serial.begin(9600);
-
-  pinMode(pin_485,    OUTPUT);
-
-  pinMode(led_blink,  OUTPUT);
-  pinMode(led_pump,   OUTPUT);
-  pinMode(led_relay,  OUTPUT);
-
-  pinMode(addr0,  INPUT);
-  pinMode(addr1,  INPUT);
-  pinMode(addr2,  INPUT);
-  pinMode(addr3,  INPUT);
-  pinMode(addr4,  INPUT);
-
-  //подтяжка
-  digitalWrite(addr0,  HIGH);
-  digitalWrite(addr1,  HIGH);
-  digitalWrite(addr2,  HIGH);
-  digitalWrite(addr3,  HIGH);
-  digitalWrite(addr4,  HIGH);
-
-  t.every(1000, takeReading); // 1 sec
-
-  read_RS485();
-}
 //--------------------------------------------------------------------------------
 void camera_save_position (void)
 {
@@ -911,6 +883,34 @@ void takeReading()
       state = STATUS_IDLE;
       break;
   }
+}
+//--------------------------------------------------------------------------------
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(pin_485,    OUTPUT);
+
+  pinMode(led_blink,  OUTPUT);
+  pinMode(led_pump,   OUTPUT);
+  pinMode(led_relay,  OUTPUT);
+
+  pinMode(addr0,  INPUT);
+  pinMode(addr1,  INPUT);
+  pinMode(addr2,  INPUT);
+  pinMode(addr3,  INPUT);
+  pinMode(addr4,  INPUT);
+
+  //подтяжка
+  digitalWrite(addr0,  HIGH);
+  digitalWrite(addr1,  HIGH);
+  digitalWrite(addr2,  HIGH);
+  digitalWrite(addr3,  HIGH);
+  digitalWrite(addr4,  HIGH);
+
+  t.every(1000, takeReading); // 1 sec
+
+  read_RS485();
 }
 //--------------------------------------------------------------------------------
 void loop()

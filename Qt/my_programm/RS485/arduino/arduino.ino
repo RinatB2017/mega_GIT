@@ -250,6 +250,8 @@ bool check_LEVEL()
 //--------------------------------------------------------------------------------
 uint8_t get_address()
 {
+  return 4;
+  
   union U_BYTE temp;
   temp.value = 0;
   temp.bites.bit0 = digitalRead(addr0);

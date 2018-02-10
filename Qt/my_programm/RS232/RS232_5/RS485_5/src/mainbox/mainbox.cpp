@@ -57,14 +57,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    // test 485
     createTestBar();
 
-#ifdef QT_DEBUG
-    createTestBar();
-#endif
-
-    serialBox5 = new SerialBox5(this, "RS232_5", "RS232");
+    serialBox5 = new SerialBox5(this, "RS485_5", "RS485");
     serialBox5->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox5);
@@ -92,8 +87,82 @@ void MainBox::createTestBar(void)
     connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 }
 //--------------------------------------------------------------------------------
+int MainBox::dev_set_reg(libusb_device_handle *device_handle, uint16_t wIndex, uint16_t 	wValue)
+{
+    uint8_t 	bmRequestType = LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_VENDOR;
+    uint8_t 	bRequest      = XR_SET_REG;
+    uint16_t 	wLength       = 0;
+    uint16_t    *data         = 0;
+    unsigned int timeout      = 5000;
+
+    return libusb_control_transfer( device_handle, bmRequestType, bRequest, wValue, wIndex, (unsigned char*)data, wLength, timeout );
+}
+//--------------------------------------------------------------------------------
+int MainBox::dev_get_reg(libusb_device_handle *device_handle, uint16_t wIndex, uint16_t *data)
+{
+    uint8_t 	bmRequestType = LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_VENDOR;
+    uint8_t 	bRequest      = XR_GETN_REG;
+    uint16_t 	wValue        = 0;
+    uint16_t 	wLength       = 2;
+    unsigned int timeout      = 5000;
+
+    return libusb_control_transfer( device_handle, bmRequestType, bRequest, wValue, wIndex, (unsigned char*)data, wLength, timeout );
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
+    emit info("test");
+
+    int vendor = 0x1A86;
+
+    libusb_context *ctx;
+    if (libusb_init(&ctx)<0)
+    {
+        emit error("Error: Initializing libusb");
+        return false;
+    }
+
+    libusb_device **device_list;
+    ssize_t device_count = libusb_get_device_list(ctx, &device_list);
+
+    for(ssize_t i = 0; i < device_count; ++i)
+    {
+        libusb_device *dev = device_list[i];
+
+        if ( libusb_get_bus_number(dev) == 3)
+        {
+            libusb_device_descriptor device_descriptor;
+
+            if ( libusb_get_device_descriptor(dev, &device_descriptor) >=0 )
+            {
+                if ( device_descriptor.idVendor == vendor )
+                {
+                    emit info(QString("FOUND %1:%2")
+                               .arg(device_descriptor.idVendor, 4, 16, QChar('0'))
+                               .arg(device_descriptor.idProduct, 4, 16, QChar('0')));
+
+                    libusb_device_handle *device_handle;
+                    if ( libusb_open(dev,&device_handle) >=0 )
+                    {
+                        libusb_free_device_list(device_list, 1);
+                        int x0 = dev_set_reg(device_handle, CDC_ACM_FLOW_CONTROL,    0);
+                        int x1 = dev_set_reg(device_handle, CDC_ACM_GPIO_MODE,      11);
+                        int x2 = dev_set_reg(device_handle, CDC_ACM_GPIO_DIRECTION, 40);
+                        int x3 = dev_set_reg(device_handle, CDC_ACM_GPIO_INT_MASK,   0);
+
+                        emit info(QString("x0 = %1").arg(x0));
+                        emit info(QString("x1 = %1").arg(x1));
+                        emit info(QString("x2 = %1").arg(x2));
+                        emit info(QString("x3 = %1").arg(x3));
+                        libusb_close(device_handle);
+                    }
+                }
+            }
+        }
+    }
+    //libusb_device_handle *device_handle;
+
+    emit info("The end!");
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,46 +18,64 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
+#include <QApplication>
+#include <QSignalSpy>
+#include <QObject>
 #include <QWidget>
+#include <QList>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#define private public
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#include "serialbox5.hpp"
+#include "mainwindow.hpp"
+#include "mainbox.hpp"
+#include "test.hpp"
+//--------------------------------------------------------------------------------
+Test::Test()
+{
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class SerialBox5;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void Test::check_serial(void)
 {
-    Q_OBJECT
+    SerialBox5 *sb1 = mw->findChild<SerialBox5 *>("RS232");
+    QVERIFY(sb1);
 
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    QPushButton *pb1 = sb1->findChild<QPushButton *>("btn_power");
+    QVERIFY(pb1);
 
-signals:
-    void send(QByteArray);
+    qint32 value = 115200;
 
-private slots:
-    bool test(void);
-    void read_data(QByteArray ba);
+    QCOMPARE(sb1->set_baudRate(value),   true);
+    QCOMPARE(sb1->set_dataBits(QSerialPort::Data8),     true);
+    QCOMPARE(sb1->set_parity(QSerialPort::NoParity),    true);
+    QCOMPARE(sb1->set_stopBits(QSerialPort::OneStop),   true);
+    QCOMPARE(sb1->set_flowControl(QSerialPort::NoFlowControl),   true);
 
-private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox5 = 0;
+    QTest::mouseClick(pb1, Qt::LeftButton);
+    QCOMPARE(sb1->isOpen(),  true);
 
-    void init(void);
-    void createTestBar(void);
-    void updateText(void);
-};
+    //QCOMPARE(sb1->get_baudRate(),   value);   //FIXME данные почему-то другие
+    QCOMPARE(sb1->get_dataBits(),   QSerialPort::Data8);
+    QCOMPARE(sb1->get_parity(),     QSerialPort::NoParity);
+    QCOMPARE(sb1->get_stopBits(),   QSerialPort::OneStop);
+    QCOMPARE(sb1->get_flowControl(),QSerialPort::NoFlowControl);
+
+    QSignalSpy spy(sb1, SIGNAL(output(QByteArray)));
+    QCOMPARE(spy.isValid(), true); // signal exists
+
+    QSignalSpy spy2(sb1, SIGNAL(not_working()));
+    QCOMPARE(spy2.isValid(), true); // signal exists
+
+    QCOMPARE(sb1->input(QString("test1")),  SerialBox5::E_NO_ERROR);
+    QTest::qWait(1000);
+
+    QCOMPARE(spy.count(), 1);                       // fired exactly once
+    QCOMPARE(spy.takeFirst().at(0).toBool(), true); // with right arguments
+
+    QTest::mouseClick(pb1, Qt::LeftButton);
+    QCOMPARE(sb1->isOpen(),  false);
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

@@ -18,46 +18,62 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include <QApplication>
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setApplicationVersion(VER_STR);
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/pinguin.png");
+    MySplashScreen *splash = new MySplashScreen(pixmap);
+    splash->show();
+    splash->showMessage(QObject::tr("Подождите ..."));
+    qApp->processEvents();
+
+    MainWindow *main_window = new MainWindow();
+    Q_CHECK_PTR(main_window);
+
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    Q_CHECK_PTR(mainBox);
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+    
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class SerialBox5;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-signals:
-    void send(QByteArray);
-
-private slots:
-    bool test(void);
-    void read_data(QByteArray ba);
-
-private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox5 = 0;
-
-    void init(void);
-    void createTestBar(void);
-    void updateText(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

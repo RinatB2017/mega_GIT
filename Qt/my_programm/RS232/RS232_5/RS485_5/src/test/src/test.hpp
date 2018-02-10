@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,46 +18,25 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class SerialBox5;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-signals:
-    void send(QByteArray);
+    Test();
 
 private slots:
-    bool test(void);
-    void read_data(QByteArray ba);
+    void check_serial(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox5 = 0;
-
-    void init(void);
-    void createTestBar(void);
-    void updateText(void);
+    MainWindow *mw = 0;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

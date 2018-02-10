@@ -192,7 +192,7 @@ enum {
 };
 int state = STATUS_IDLE;
 //--------------------------------------------------------------------------------
-int pin_485   = 8;
+int pin_485   = 13;
 int led_blink = 10;
 int led_pump  = 11;
 int led_relay = 12;

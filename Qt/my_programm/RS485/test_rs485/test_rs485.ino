@@ -1,9 +1,5 @@
 //--------------------------------------------------------------------------------
 int pin_485   = 13;
-
-int led_blink = 10;
-int led_pump  = 11;
-int led_relay = 12;
 //--------------------------------------------------------------------------------
 void write_RS485()
 {
@@ -20,11 +16,6 @@ void setup()
   Serial.begin(9600);
 
   pinMode(pin_485,    OUTPUT);
-
-  pinMode(led_blink,  OUTPUT);
-  pinMode(led_pump,   OUTPUT);
-  pinMode(led_relay,  OUTPUT);
-
   read_RS485();
 }
 //--------------------------------------------------------------------------------

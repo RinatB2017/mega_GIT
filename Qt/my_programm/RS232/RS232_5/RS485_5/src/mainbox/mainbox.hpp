@@ -23,7 +23,17 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include </usr/include/libusb-1.0/libusb.h>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+#define XR_SET_REG  0
+#define XR_GETN_REG 1
+
+#define CDC_ACM_FLOW_CONTROL    0x216
+#define CDC_ACM_GPIO_MODE       0x217
+#define CDC_ACM_GPIO_DIRECTION  0x218
+#define CDC_ACM_GPIO_INT_MASK   0x219
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -58,6 +68,10 @@ private:
     void init(void);
     void createTestBar(void);
     void updateText(void);
+
+    static int dev_set_reg(libusb_device_handle *device_handle, uint16_t wIndex, uint16_t wValue);
+    static int dev_get_reg(libusb_device_handle *device_handle, uint16_t wIndex, uint16_t *data);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -10,3 +10,5 @@ SOURCES += main.cpp
 
 LIBS    += -lgtest
 LIBS    += -lgmock
+
+VPATH = $$INCLUDEPATH

@@ -190,6 +190,11 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+#if 1
+    uint8_t x = 0x55;
+    emit info(QString("%1").arg(x, 8, 2, QChar('0')));
+#endif
+
 #if 0
     QWidget *mw = new QWidget();
     mw->setMinimumSize(400, 400);

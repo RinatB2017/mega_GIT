@@ -160,7 +160,6 @@ bool MainBox::test(void)
             }
         }
     }
-    //libusb_device_handle *device_handle;
 
     emit info("The end!");
     return true;

@@ -191,8 +191,13 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    uint8_t x = 0x55;
-    emit info(QString("%1").arg(x, 8, 2, QChar('0')));
+    uint16_t x = 0x55AA;
+    emit info(QString("%1").arg(x, 16, 2, QChar('0')));
+
+    uint8_t y = 20;
+    emit info(QString("%1").arg(y, 2, 5, QChar('0')));
+
+    //Q_ASSERT(y > 0);
 #endif
 
 #if 0

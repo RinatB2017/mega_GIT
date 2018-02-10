@@ -86,12 +86,14 @@ int main(int argc, char *argv[])
     splash->show();
 
     MyMainWindow *main_window = new MyMainWindow();
+    Q_CHECK_PTR(main_window);
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     // отключает заголовок
     // main_window->setWindowFlags(Qt::FramelessWindowHint);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    Q_CHECK_PTR(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

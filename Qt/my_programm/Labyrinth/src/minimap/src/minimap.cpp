@@ -42,7 +42,6 @@ void MiniMap::init(void)
     grid_map->setSpacing(0);
     grid_map->setMargin(0);
     setLayout(grid_map);
-    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
@@ -136,28 +135,20 @@ bool MiniMap::set(int x, int y, int id)
     if(x>max_x) return false;
     if(y>max_y) return false;
 
-    id_map[x][y] = id;
+    QLayoutItem *item = grid_map->itemAtPosition(y, x);
+    Q_CHECK_PTR(item);
+
+    QLabel *label = dynamic_cast<QLabel*>(item->widget());
+    Q_CHECK_PTR(label);
 
     QPixmap pixmap;
     pixmap.load(QString(":/images/%1.png").arg(id));
 
-    QLayoutItem *item = grid_map->itemAtPosition(y, x);
-    if(item == nullptr)
-    {
-        return false;
-    }
-    QLabel *label = dynamic_cast<QLabel*>(item->widget());
-    if(label)
-    {
-        label->setPixmap(pixmap);
-    }
-    else
-    {
-        emit error(QString("ERROR: set(%1, %2, %3)")
-                   .arg(x)
-                   .arg(y)
-                   .arg(id));
-    }
+    label->setPixmap(pixmap);
+    label->setProperty(PROPERTY_ID, id);
+    label->setProperty(PROPERTY_X, x);
+    label->setProperty(PROPERTY_Y, y);
+    id_map[x][y] = id;
 
     return true;
 }

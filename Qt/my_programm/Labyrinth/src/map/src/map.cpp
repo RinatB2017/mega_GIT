@@ -44,24 +44,11 @@ Map::~Map()
 //--------------------------------------------------------------------------------
 void Map::init(void)
 {
-    grid_map = new QGridLayout(this);
-    Q_CHECK_PTR(grid_map);
-
-    grid_map->setMargin(0);
-    grid_map->setSpacing(0);
-
-#if 1
-    for(int y=0; y<25; y++)
-    {
-        for(int x=0; x<25; x++)
-        {
-            add_item(x, y, SPACE_ID);
-        }
-    }
-#endif
-
     createTimer();
 
+    grid_map = new QGridLayout(this);
+    grid_map->setMargin(0);
+    grid_map->setSpacing(0);
     setLayout(grid_map);
     setSizePolicy(QSizePolicy::Fixed,   QSizePolicy::Fixed);
 }
@@ -197,10 +184,10 @@ bool Map::load_map(const QString &filename)
         QByteArray ta;
         ta.clear();
         ta.append(temp);
-        emit trace(ta.toHex());
+        //emit trace(ta.toHex());
 
         ba = QByteArray::fromHex(ta);
-        emit trace(ba.toHex());
+        //emit trace(ba.toHex());
         for(int x=0; x<ba.length(); x++)
         {
             add_item(x, y, ba.at(x));
@@ -221,8 +208,8 @@ bool Map::add_item(int x, int y, int id)
 {
     if(x < 0)   return false;
     if(y < 0)   return false;
-    if(x >= MAX_WIDTH)   return false;
-    if(y >= MAX_HEIGHT)  return false;
+    if(x > MAX_WIDTH)   return false;
+    if(y > MAX_HEIGHT)  return false;
 
     QPixmap pixmap;
     QLabel *label = 0;
@@ -256,9 +243,39 @@ bool Map::add_item(int x, int y, int id)
     return ok;
 }
 //--------------------------------------------------------------------------------
-void Map::put_picture(int id, int x, int y)
+bool Map::put_picture(int id, int x, int y)
 {
+    emit debug(QString("put_picture(%1, %2, %3)")
+               .arg(id)
+               .arg(x)
+               .arg(y));
+#if 1
+    QLayoutItem *item = grid_map->itemAtPosition(y, x);
+    Q_CHECK_PTR(item);
+
+    QLabel *label = dynamic_cast<QLabel*>(item->widget());
+    Q_CHECK_PTR(label);
+
+    emit info(QString("put_picture: PROPERTY_X %1 PROPERTY_Y %2 PROPERTY_ID %3")
+              .arg(label->property(PROPERTY_X).toInt())
+              .arg(label->property(PROPERTY_Y).toInt())
+              .arg(label->property(PROPERTY_ID).toInt()));
+
+    QString filename = QString(":/images/%1.png").arg(id);
+    emit debug(filename);
+
+    QPixmap pixmap;
+    pixmap.load(filename);
+
+    label->setPixmap(pixmap);
+    label->setProperty(PROPERTY_ID, id);
+    label->setProperty(PROPERTY_X, x);
+    label->setProperty(PROPERTY_Y, y);
+    id_map[x][y] = id;
+#else
     add_item(x, y, id);
+#endif
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool Map::save_map(const QString &filename)

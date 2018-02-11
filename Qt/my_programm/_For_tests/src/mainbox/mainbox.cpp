@@ -49,8 +49,21 @@ void MainBox::init(void)
     createTestBar();
 
 #if 1
+    for(int y=0; y<10; y++)
+    {
+        for(int x=0; x<5; x++)
+        {
+            QLabel *lbl = new QLabel(this);
+            lbl->setPixmap(QPixmap(":/red/0.png"));
+
+            ui->gridLayout->addWidget(lbl, y, x);
+        }
+    }
+#endif
+
+#if 1
     ui->btn_test->setCheckable(true);
-    connect(ui->btn_test,   SIGNAL(toggled(bool)),  ui->test_frame, SLOT(setHidden(bool)));
+    connect(ui->btn_test,   SIGNAL(toggled(bool)),  ui->safe, SLOT(setHidden(bool)));
 #endif
 
 #if 0
@@ -196,6 +209,23 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    int x = rand() % ui->gridLayout->columnCount();
+    int y = rand() % ui->gridLayout->rowCount();
+
+    QLayoutItem *item = ui->gridLayout->itemAtPosition(y, x);
+    Q_CHECK_PTR(item);
+
+    QLabel *label = dynamic_cast<QLabel*>(item->widget());
+    Q_CHECK_PTR(label);
+
+    QPixmap pixmap;
+    pixmap.load(":/red/1.png");
+
+    label->setPixmap(pixmap);
+
+#endif
+
+#if 0
     uint16_t x = 0x55AA;
     emit info(QString("%1").arg(x, 16, 2, QChar('0')));
 
@@ -205,35 +235,12 @@ bool MainBox::test_0(void)
     //Q_ASSERT(y > 0);
 #endif
 
-#if 0
-    QWidget *mw = new QWidget();
-    mw->setMinimumSize(400, 400);
-    mw->setStyleSheet("background:white;");
-    MyMegaWidget *w = new MyMegaWidget(mw);
-    w->setFixedSize(50, 50);
-    w->move(50, 50);
-    w->show();
-    mw->show();
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-#if 0
-    QWidget *mw = new QWidget();
-    mw->setMinimumSize(400, 400);
-    mw->setStyleSheet("background:white;");
-    QWidget *w = new QWidget(mw);
-    w->setStyleSheet("background:red;");
-    w->setFixedSize(50, 50);
-    w->move(50, 50);
-    w->show();
-    mw->show();
-#endif
 
     return true;
 }

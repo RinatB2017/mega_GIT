@@ -52,7 +52,7 @@ public:
 
     uint8_t get_id(int x, int y);
     bool add_item(int x, int y, int id);
-    void put_picture(int id, int x, int y);
+    bool put_picture(int id, int x, int y);
 
 signals:
     void move_to(int x, int y);
@@ -64,13 +64,12 @@ public slots:
 
     void set_cursor(void);
 
-private slots:
     void update(void);
 
 private:
     QGridLayout *grid_map = 0;
 
-    uint8_t id_map[MAX_WIDTH][MAX_HEIGHT];
+    int id_map[MAX_WIDTH][MAX_HEIGHT];
 
     quint64 cnt_move = 0;
 

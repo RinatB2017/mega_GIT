@@ -64,12 +64,12 @@ void Mouse::init(void)
 //--------------------------------------------------------------------------------
 bool Mouse::set(int x, int y, int id)
 {
-    return ui->w_minimap->set(x,y,id);
+    return ui->w_minimap->set(x, y, id);
 }
 //--------------------------------------------------------------------------------
 bool Mouse::get(int x, int y, int *id)
 {
-    return ui->w_minimap->get(x,y,id);
+    return ui->w_minimap->get(x, y, id);
 }
 //--------------------------------------------------------------------------------
 void Mouse::updateText(void)

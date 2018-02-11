@@ -130,8 +130,6 @@ bool Map::load_map(const QString &filename)
     player_x = 1;
     player_y = 1;
 
-    init_id_map();
-
     QXmlGet *xmlGet = new QXmlGet();
     bool ok = xmlGet->load(filename);
     if(!ok)
@@ -171,7 +169,8 @@ bool Map::load_map(const QString &filename)
     emit info(QString("width  %1").arg(w));
     emit info(QString("height %1").arg(h));
 
-    new_map(w, h);
+    max_x = w;
+    max_y = h;
 
     int y = 0;
     ok = xmlGet->find("items");
@@ -199,7 +198,7 @@ bool Map::load_map(const QString &filename)
     return true;
 }
 //--------------------------------------------------------------------------------
-uint8_t Map::get_id(int x, int y)
+int Map::get_id(int x, int y)
 {
     return id_map[x][y];
 }
@@ -214,6 +213,15 @@ bool Map::add_item(int x, int y, int id)
     QPixmap pixmap;
     QLabel *label = 0;
     bool ok = false;
+
+#ifdef QT_DEBUG
+    switch (id)
+    {
+    case PLAYER_ID: emit error("PLAYER_ID found!"); break;
+    case START_ID:  emit error("START_ID found!");  break;
+    case EXIT_ID:   emit error("EXIT_ID found!");   break;
+    }
+#endif
 
     switch (id)
     {
@@ -256,7 +264,7 @@ bool Map::put_picture(int id, int x, int y)
     QLabel *label = dynamic_cast<QLabel*>(item->widget());
     Q_CHECK_PTR(label);
 
-    emit info(QString("put_picture: PROPERTY_X %1 PROPERTY_Y %2 PROPERTY_ID %3")
+    emit debug(QString("put_picture: PROPERTY_X %1 PROPERTY_Y %2 PROPERTY_ID %3")
               .arg(label->property(PROPERTY_X).toInt())
               .arg(label->property(PROPERTY_Y).toInt())
               .arg(label->property(PROPERTY_ID).toInt()));
@@ -378,7 +386,7 @@ bool Map::find_player(int *x, int *y)
     return (cnt == 1);
 }
 //--------------------------------------------------------------------------------
-void Map::start(unsigned int interval_ms)
+bool Map::start(unsigned int interval_ms)
 {
     bool ok = false;
     int x = 0;
@@ -388,16 +396,18 @@ void Map::start(unsigned int interval_ms)
     if(!ok)
     {
         QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(START_ID));
-        return;
+        return false;
     }
     ok = find_player(&x, &y);
     if(!ok)
     {
         QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(PLAYER_ID));
-        return;
+        return false;
     }
     timer->start(interval_ms);
     unsetCursor();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void Map::update(void)

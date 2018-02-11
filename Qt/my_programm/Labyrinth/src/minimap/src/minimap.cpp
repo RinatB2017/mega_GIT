@@ -93,8 +93,8 @@ bool MiniMap::add_item(int x, int y, int id)
 {
     if(x < 0)   return false;
     if(y < 0)   return false;
-    if(x >= MAX_WIDTH)   return false;
-    if(y >= MAX_HEIGHT)  return false;
+    if(x > max_x)   return false;
+    if(y > max_y)   return false;
 
     QPixmap pixmap;
     QLabel *label = 0;
@@ -130,10 +130,10 @@ bool MiniMap::add_item(int x, int y, int id)
 //--------------------------------------------------------------------------------
 bool MiniMap::set(int x, int y, int id)
 {
-    if(x<0) return false;
-    if(y<0) return false;
-    if(x>max_x) return false;
-    if(y>max_y) return false;
+    if(x < 0)   return false;
+    if(y < 0)   return false;
+    if(x > max_x)   return false;
+    if(y > max_y)   return false;
 
     QLayoutItem *item = grid_map->itemAtPosition(y, x);
     Q_CHECK_PTR(item);
@@ -155,10 +155,10 @@ bool MiniMap::set(int x, int y, int id)
 //--------------------------------------------------------------------------------
 bool MiniMap::get(int x, int y, int *id)
 {
-    if(x<0) return false;
-    if(y<0) return false;
-    if(x>=max_x) return false;
-    if(y>=max_y) return false;
+    if(x < 0)   return false;
+    if(y < 0)   return false;
+    if(x > max_x)   return false;
+    if(y > max_y)   return false;
 
     *id = id_map[x][y];
 

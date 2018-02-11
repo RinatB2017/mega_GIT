@@ -50,7 +50,7 @@ public:
     void player_move_left(void);
     void player_move_right(void);
 
-    uint8_t get_id(int x, int y);
+    int get_id(int x, int y);
     bool add_item(int x, int y, int id);
     bool put_picture(int id, int x, int y);
 
@@ -58,7 +58,7 @@ signals:
     void move_to(int x, int y);
 
 public slots:
-    void start(unsigned int interval_ms);
+    bool start(unsigned int interval_ms);
     void stop(void);
     void refresh(void);
 

@@ -26,7 +26,7 @@
 #define PROPERTY_Y  "property_y"
 //--------------------------------------------------------------------------------
 #define MIN_WIDTH   3
-#define MAX_WIDTH   50
+#define MAX_WIDTH   25
 
 #define MIN_HEIGHT   3
 #define MAX_HEIGHT   25

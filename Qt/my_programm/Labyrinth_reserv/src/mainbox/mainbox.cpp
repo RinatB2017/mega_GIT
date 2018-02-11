@@ -95,6 +95,8 @@ void MainBox::init_widgets(void)
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 
     connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
+
+    connect(ui->btn_step,       SIGNAL(clicked(bool)),  ui->map_widget, SLOT(update()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::lock_widgets(void)
@@ -167,8 +169,11 @@ void MainBox::createImagesDock(void)
 //--------------------------------------------------------------------------------
 void MainBox::start(void)
 {
-    ui->map_widget->start(ui->sb_interval->value());
-    lock_widgets();
+    bool ok = ui->map_widget->start(ui->sb_interval->value());
+    if(ok)
+    {
+        lock_widgets();
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::stop(void)
@@ -188,14 +193,32 @@ void MainBox::test(void)
     emit info("test");
 
 #if 0
+    for(int y=0; y<5; y++)
+    {
+        for(int x=0; x<5; x++)
+        {
+            //ui->map_widget->add_item(x, y, WALL_ID);
+            ui->map_widget->put_picture(WALL_ID, x, y);
+        }
+    }
+#endif
+
+#if 0
     MiniMap *map = new MiniMap;
     connect(map,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(map,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(map,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(map,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    map->new_map(50, 25);
-    map->set(1, 1, PLAYER_ID);
+    map->new_map(25, 25);
+    for(int y=0; y<25; y++)
+    {
+        for(int x=0; x<25; x++)
+        {
+            //map->set(x, y, ui->map_widget->get_id(x,y));
+            map->set(x, y, WALL_ID);
+        }
+    }
     map->show();
 #endif
 

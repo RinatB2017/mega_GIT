@@ -169,8 +169,11 @@ void MainBox::createImagesDock(void)
 //--------------------------------------------------------------------------------
 void MainBox::start(void)
 {
-    ui->map_widget->start(ui->sb_interval->value());
-    lock_widgets();
+    bool ok = ui->map_widget->start(ui->sb_interval->value());
+    if(ok)
+    {
+        lock_widgets();
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::stop(void)
@@ -189,7 +192,7 @@ void MainBox::test(void)
 {
     emit info("test");
 
-#if 1
+#if 0
     for(int y=0; y<5; y++)
     {
         for(int x=0; x<5; x++)
@@ -219,7 +222,7 @@ void MainBox::test(void)
     map->show();
 #endif
 
-#if 0
+#if 1
     bool ok = false;
     int player_x = 0;
     int player_y = 0;

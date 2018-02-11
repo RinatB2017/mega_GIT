@@ -48,6 +48,11 @@ void MainBox::init(void)
 
     createTestBar();
 
+#if 1
+    ui->btn_test->setCheckable(true);
+    connect(ui->btn_test,   SIGNAL(toggled(bool)),  ui->test_frame, SLOT(setHidden(bool)));
+#endif
+
 #if 0
     MyMainWindow *mw = dynamic_cast<MyMainWindow *>(parent());
     Q_CHECK_PTR(mw);

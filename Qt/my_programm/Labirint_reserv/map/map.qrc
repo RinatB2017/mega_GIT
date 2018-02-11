@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>map.dat</file>
-    </qresource>
-</RCC>

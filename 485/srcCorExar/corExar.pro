@@ -5,5 +5,5 @@ CONFIG -= qt
 
 SOURCES += main.cpp
 
-LIBS += /lib/libusb-1.0.so.0
-
+#LIBS += /lib/libusb-1.0.so.0
+LIBS += -lusb-1.0

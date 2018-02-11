@@ -12,7 +12,7 @@
 *******************************************************************************/
 
 #include <iostream>
-#include <libusb-1.0/libusb.h>
+#include </usr/include/libusb-1.0/libusb.h>
 
 using namespace std;
 
@@ -48,7 +48,6 @@ static int dev_set_reg(libusb_device_handle *device_handle, uint16_t wIndex, uin
     return libusb_control_transfer( device_handle, bmRequestType, bRequest, wValue, wIndex, (unsigned char*)data, wLength, timeout );
 }
 //------------------------------------------------------------------------------
-/*
 static int dev_get_reg(libusb_device_handle *device_handle, uint16_t wIndex, uint16_t *data)
 {
     uint8_t 	bmRequestType = LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_VENDOR;
@@ -59,7 +58,6 @@ static int dev_get_reg(libusb_device_handle *device_handle, uint16_t wIndex, uin
 
     return libusb_control_transfer( device_handle, bmRequestType, bRequest, wValue, wIndex, (unsigned char*)data, wLength, timeout );
 }
-*/
 //------------------------------------------------------------------------------
 
 int main(int argc, char** argv)

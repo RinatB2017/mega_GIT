@@ -95,6 +95,7 @@ public slots:
     bool test_5(void);
 
     void s_inFunc(void);
+    //void f_frame(void);
 
 private:
     enum {

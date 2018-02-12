@@ -39,6 +39,8 @@ MainWidget::~MainWidget()
 //--------------------------------------------------------------------------------
 void MainWidget::get(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     x++;
     emit set(QString("%1").arg(x));
 }
@@ -46,14 +48,19 @@ void MainWidget::get(void)
 bool MainWidget::test_0(void)
 {
     emit info("Test_0()");
+    emit trace(Q_FUNC_INFO);
 
-    //emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
-    //emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
+#if 0
+    emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
+    emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
+#endif
 
+#if 0
     emit info("info");
     emit debug("debug");
     emit error("error");
     emit trace("trace");
+#endif
 
     return true;
 }
@@ -61,6 +68,7 @@ bool MainWidget::test_0(void)
 bool MainWidget::test_1(void)
 {
     emit info("Test_1()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -68,6 +76,7 @@ bool MainWidget::test_1(void)
 bool MainWidget::test_2(void)
 {
     emit info("Test_2()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -75,6 +84,7 @@ bool MainWidget::test_2(void)
 bool MainWidget::test_3(void)
 {
     emit info("Test_3()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -82,6 +92,7 @@ bool MainWidget::test_3(void)
 bool MainWidget::test_4(void)
 {
     emit info("Test_4()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -89,6 +100,7 @@ bool MainWidget::test_4(void)
 bool MainWidget::test_5(void)
 {
     emit info("Test_5()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }

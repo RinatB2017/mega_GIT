@@ -12,6 +12,13 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
+    <widget class="QSlider" name="verticalSlider">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="Safe" name="safe" native="true"/>

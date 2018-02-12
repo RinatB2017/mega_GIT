@@ -54,30 +54,6 @@ private:
     quint8 c[4];
 };
 //--------------------------------------------------------------------------------
-class Test_class
-{
-public:
-    float a;
-    float b;
-
-    void mul(void)
-    {
-        res = a * b;
-    }
-    void div(void)
-    {
-        res = a / b;
-    }
-
-    float get_result(void)
-    {
-        return res;
-    }
-
-private:
-    float res;
-};
-//--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
 class QComboBox;

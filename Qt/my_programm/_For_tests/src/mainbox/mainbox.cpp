@@ -207,17 +207,9 @@ bool MainBox::split_address(const QString address,
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+    emit trace(Q_FUNC_INFO);
 
 #if 1
-    Test_class *test = new Test_class;
-    test->a = 2;
-    test->b = 5;
-    test->mul();
-    emit info(QString("res = %1").arg(test->get_result()));
-    delete test;
-#endif
-
-#if 0
     int x = rand() % ui->gridLayout->columnCount();
     int y = rand() % ui->gridLayout->rowCount();
 
@@ -231,7 +223,6 @@ bool MainBox::test_0(void)
     pixmap.load(":/red/1.png");
 
     label->setPixmap(pixmap);
-
 #endif
 
 #if 0
@@ -250,6 +241,18 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+    emit trace(Q_FUNC_INFO);
+
+#if 0
+    auto *w = new QLabel;
+    w->setText("XXX");
+    w->show();
+#endif
+
+#if 0
+    emit info(__FILE__);
+    emit info(QString("line %1").arg(__LINE__));
+#endif
 
     return true;
 }
@@ -257,6 +260,7 @@ bool MainBox::test_1(void)
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -264,6 +268,7 @@ bool MainBox::test_2(void)
 bool MainBox::test_3(void)
 {
     emit info("Test_3()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -271,6 +276,7 @@ bool MainBox::test_3(void)
 bool MainBox::test_4(void)
 {
     emit info("Test_4()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -278,6 +284,7 @@ bool MainBox::test_4(void)
 bool MainBox::test_5(void)
 {
     emit info("Test_5()");
+    emit trace(Q_FUNC_INFO);
 
     return true;
 }

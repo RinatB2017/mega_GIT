@@ -1,0 +1,9 @@
+{
+    "hidden": true,
+    "id": "gammaray_qmlsupport",
+    "name": "QML Support",
+    "name[de]": "QML Unterstützung",
+    "types": [
+        "QJSEngine"
+    ]
+}

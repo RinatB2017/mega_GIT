@@ -123,15 +123,10 @@ void MainBox::create_menu(void)
     connect(save_action, SIGNAL(triggered()), this, SLOT(save_setting()));
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw)
-    {
-        QMenu *file_menu = mw->get_file_menu();
+    Q_CHECK_PTR(mw);
 
-        QList<QAction *> temp = file_menu->actions();
-        file_menu->addAction(save_action);
-        file_menu->addSeparator();
-        file_menu->addActions(temp);
-    }
+    mw->add_filemenu_action(0, save_action);
+    mw->add_filemenu_separator(1);
 #endif
 }
 //--------------------------------------------------------------------------------

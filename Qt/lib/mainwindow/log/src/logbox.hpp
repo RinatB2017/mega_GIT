@@ -18,9 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef LOGBOX_H
-#define LOGBOX_H
+#ifndef LOGBOX_HPP
+#define LOGBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QDateTime>
 #include <QFrame>
 #include <QList>
 //--------------------------------------------------------------------------------
@@ -73,6 +74,10 @@ public slots:
     void set_flag_is_shows_error(bool state);
     void set_flag_is_shows_trace(bool state);
 
+    void syslogLog(QDateTime dt,
+                   int level,
+                   int src,
+                   QString message);
     void syslogLog(int level,
                    QString src,
                    QString message);

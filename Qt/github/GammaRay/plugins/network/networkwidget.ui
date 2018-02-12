@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GammaRay::NetworkWidget</class>
+ <widget class="QWidget" name="GammaRay::NetworkWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="interfaceTab">
+      <attribute name="title">
+       <string>Interfaces</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="GammaRay::NetworkInterfaceWidget" name="widget" native="true"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Configurations</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="GammaRay::NetworkConfigurationWidget" name="configTab" native="true"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GammaRay::NetworkInterfaceWidget</class>
+   <extends>QWidget</extends>
+   <header>networkinterfacewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GammaRay::NetworkConfigurationWidget</class>
+   <extends>QWidget</extends>
+   <header>networkconfigurationwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

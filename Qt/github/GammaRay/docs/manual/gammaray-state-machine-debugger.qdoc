@@ -1,0 +1,49 @@
+/*
+    gammaray-state-machine-debugger.qdoc
+
+    This file is part of the GammaRay documentation.
+
+    Copyright (C) 2016-2018 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+    Author: Volker Krause <volker.krause@kdab.com>
+
+    Licensees holding valid commercial KDAB GammaRay licenses may use this file in
+    accordance with GammaRay Commercial License Agreement provided with the Software.
+
+    Contact info@kdab.com if any conditions of this licensing are not clear to you.
+
+    This work is also licensed under the Creative Commons Attribution-ShareAlike 4.0
+    International License. See <http://creativecommons.org/licenses/by-sa/4.0/>.
+*/
+
+/*!
+    \contentspage {Tools}
+    \nextpage {Messages}
+    \previouspage {Web Inspector}
+    \page gammaray-state-machine-debugger.html
+
+    \title State Machine Debugger
+
+    \section1 Overview
+
+    The state machine debugger allows you to graphically observe the configuration of state machines in realtime.
+
+    \image gammaray-qsm-debugger.png
+
+    The following state machine frameworks are supported:
+
+    \list
+        \li QStateMachine
+        \li Declarative State Machine
+        \li QtSCXML (depending on Qt version)
+    \endlist
+
+    If your target contains multiple state machine instances, the currently displayed one can be selected in the
+    combo box on the top left.
+
+    \section1 Examples
+
+    The following examples make use of the state machine debugger:
+    \list
+        \li \l{state-machine}
+    \endlist
+*/

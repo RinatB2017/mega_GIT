@@ -50,7 +50,6 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox)
 {
     init();
-    load_config();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -71,6 +70,7 @@ void MainBox::init(void)
     {
         setMinimumHeight(sizeHint().height());
     }
+    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -168,13 +168,7 @@ void MainBox::createSysLog_dock(void)
         return;
     }
 
-    QMenu *menu = mw->get_windows_menu();
-    if(menu == nullptr)
-    {
-        return;
-    }
-
-    menu->addAction(dock->toggleViewAction());
+    mw->add_windowsmenu_action(dock->toggleViewAction());
     connect(mw, SIGNAL(syslog(QDateTime,int,int,QString)),  dock,   SLOT(syslog(QDateTime,int,int,QString)));
     mw->addDockWidget(Qt::BottomDockWidgetArea, dock);
 }

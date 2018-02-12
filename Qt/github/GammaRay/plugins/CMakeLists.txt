@@ -1,0 +1,57 @@
+add_subdirectory(codecbrowser)
+add_subdirectory(fontbrowser)
+add_subdirectory(kjobtracker)
+add_subdirectory(localeinspector)
+add_subdirectory(modelinspector)
+add_subdirectory(quickinspector)
+add_subdirectory(signalmonitor)
+add_subdirectory(statemachineviewer)
+add_subdirectory(timertop)
+
+if(Qt5Core_FOUND)
+  add_subdirectory(mimetypes)
+  add_subdirectory(network)
+  add_subdirectory(qtivi)
+  add_subdirectory(translatorinspector)
+  add_subdirectory(webinspector)
+  add_subdirectory(wlcompositorinspector)
+else()
+  add_subdirectory(objectvisualizer)
+endif()
+
+if(Qt5Gui_FOUND OR QT_QTGUI_FOUND)
+  add_subdirectory(guisupport)
+  add_subdirectory(textdocumentinspector)
+endif()
+
+if(Qt5Widgets_FOUND OR QT_QTGUI_FOUND)
+  add_subdirectory(actioninspector)
+  add_subdirectory(widgetinspector)
+  add_subdirectory(sceneinspector)
+  add_subdirectory(styleinspector)
+endif()
+
+if(QT_QTSCRIPTTOOLS_FOUND OR Qt5ScriptTools_FOUND)
+  add_subdirectory(scriptenginedebugger)
+endif()
+
+if(Qt5Qml_FOUND)
+  add_subdirectory(qmlsupport)
+endif()
+
+if(Qt5QuickWidgets_FOUND)
+  add_subdirectory(quickwidgetsupport)
+endif()
+
+if(Qt5Bluetooth_FOUND)
+  add_subdirectory(bluetooth)
+endif()
+
+if(Qt5Positioning_FOUND)
+  add_subdirectory(positioning)
+endif()
+
+if(Qt53DRender_FOUND AND Qt53DExtras_FOUND)
+  add_subdirectory(qt3dinspector)
+endif()
+

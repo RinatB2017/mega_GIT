@@ -1,0 +1,9 @@
+{
+    "id": "gammaray_fontbrowser",
+    "name": "Font Browser",
+    "name[de]": "Schriftarten",
+    "types": [
+        "QGuiApplication",
+        "QApplication"
+    ]
+}

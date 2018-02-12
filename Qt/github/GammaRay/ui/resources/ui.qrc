@@ -1,0 +1,200 @@
+<RCC>
+    <!-- Do not use xml editors to edit this file to avoid lost of entries sorting -->
+
+    <qresource prefix="/">
+        <file>gammaray/GammaRay.icns</file>
+        <file>gammaray/GammaRay.ico</file>
+
+        <file>gammaray/GammaRay-16x16.png</file>
+        <file>gammaray/GammaRay-16x16@2x.png</file>
+        <file>gammaray/GammaRay-16x16@3x.png</file>
+
+        <file>gammaray/GammaRay-24x24.png</file>
+        <file>gammaray/GammaRay-24x24@2x.png</file>
+        <file>gammaray/GammaRay-24x24@3x.png</file>
+
+        <file>gammaray/GammaRay-32x32.png</file>
+        <file>gammaray/GammaRay-32x32@2x.png</file>
+        <file>gammaray/GammaRay-32x32@3x.png</file>
+
+        <file>gammaray/GammaRay-48x48.png</file>
+        <file>gammaray/GammaRay-48x48@2x.png</file>
+        <file>gammaray/GammaRay-48x48@3x.png</file>
+
+        <file>gammaray/GammaRay-64x64.png</file>
+        <file>gammaray/GammaRay-64x64@2x.png</file>
+        <file>gammaray/GammaRay-64x64@3x.png</file>
+
+        <file>gammaray/GammaRay-128x128.png</file>
+        <file>gammaray/GammaRay-128x128@2x.png</file>
+        <file>gammaray/GammaRay-128x128@3x.png</file>
+
+        <file>gammaray/GammaRay-256x256.png</file>
+        <file>gammaray/GammaRay-256x256@2x.png</file>
+        <file>gammaray/GammaRay-256x256@3x.png</file>
+
+        <file>gammaray/GammaRay-512x512.png</file>
+        <file>gammaray/GammaRay-512x512@2x.png</file>
+
+        <!-- Light -->
+
+        <!-- UI pixmaps -->
+        <file>gammaray/ui/light/pixmaps/watermark.png</file>
+        <file>gammaray/ui/light/pixmaps/watermark@2x.png</file>
+        <file>gammaray/ui/light/pixmaps/watermark@3x.png</file>
+
+        <file>gammaray/ui/light/pixmaps/gammaray-trademark.png</file>
+        <file>gammaray/ui/light/pixmaps/gammaray-trademark@2x.png</file>
+        <file>gammaray/ui/light/pixmaps/gammaray-trademark@3x.png</file>
+
+        <file>gammaray/ui/light/pixmaps/splashscreen.png</file>
+        <file>gammaray/ui/light/pixmaps/splashscreen@2x.png</file>
+        <file>gammaray/ui/light/pixmaps/splashscreen@3x.png</file>
+
+        <file>gammaray/ui/light/pixmaps/kdab-products.png</file>
+        <file>gammaray/ui/light/pixmaps/kdab-products@2x.png</file>
+        <file>gammaray/ui/light/pixmaps/kdab-products@3x.png</file>
+
+        <file>gammaray/ui/light/pixmaps/kdab-logo.png</file>
+        <file>gammaray/ui/light/pixmaps/kdab-logo@2x.png</file>
+        <file>gammaray/ui/light/pixmaps/kdab-logo@3x.png</file>
+
+        <file>gammaray/ui/light/pixmaps/kdab-gammaray-logo.png</file>
+        <file>gammaray/ui/light/pixmaps/kdab-gammaray-logo@2x.png</file>
+        <file>gammaray/ui/light/pixmaps/kdab-gammaray-logo@3x.png</file>
+
+        <!-- UI icons -->
+        <file>gammaray/ui/light/icons/active-focus.png</file>
+
+        <file>gammaray/ui/light/icons/focus.png</file>
+
+        <file>gammaray/ui/light/icons/grid-settings.png</file>
+        <file>gammaray/ui/light/icons/grid-settings@2x.png</file>
+        <file>gammaray/ui/light/icons/grid-settings@3x.png</file>
+
+        <file>gammaray/ui/light/icons/legend.png</file>
+        <file>gammaray/ui/light/icons/legend@2x.png</file>
+        <file>gammaray/ui/light/icons/legend@3x.png</file>
+
+        <file>gammaray/ui/light/icons/measure-pixels.png</file>
+        <file>gammaray/ui/light/icons/measure-pixels@2x.png</file>
+        <file>gammaray/ui/light/icons/measure-pixels@3x.png</file>
+
+        <file>gammaray/ui/light/icons/move-preview.png</file>
+        <file>gammaray/ui/light/icons/move-preview@2x.png</file>
+        <file>gammaray/ui/light/icons/move-preview@3x.png</file>
+
+        <file>gammaray/ui/light/icons/pick-element.png</file>
+        <file>gammaray/ui/light/icons/pick-element@2x.png</file>
+        <file>gammaray/ui/light/icons/pick-element@3x.png</file>
+
+        <file>gammaray/ui/light/icons/redirect-input.png</file>
+        <file>gammaray/ui/light/icons/redirect-input@2x.png</file>
+        <file>gammaray/ui/light/icons/redirect-input@3x.png</file>
+
+        <file>gammaray/ui/light/icons/server-decorations.png</file>
+        <file>gammaray/ui/light/icons/server-decorations@2x.png</file>
+        <file>gammaray/ui/light/icons/server-decorations@3x.png</file>
+
+        <file>gammaray/ui/light/icons/visualize-batches.png</file>
+        <file>gammaray/ui/light/icons/visualize-batches@2x.png</file>
+        <file>gammaray/ui/light/icons/visualize-batches@3x.png</file>
+
+        <file>gammaray/ui/light/icons/visualize-changes.png</file>
+        <file>gammaray/ui/light/icons/visualize-changes@2x.png</file>
+        <file>gammaray/ui/light/icons/visualize-changes@3x.png</file>
+
+        <file>gammaray/ui/light/icons/visualize-clipping.png</file>
+        <file>gammaray/ui/light/icons/visualize-clipping@2x.png</file>
+        <file>gammaray/ui/light/icons/visualize-clipping@3x.png</file>
+
+        <file>gammaray/ui/light/icons/visualize-overdraw.png</file>
+        <file>gammaray/ui/light/icons/visualize-overdraw@2x.png</file>
+        <file>gammaray/ui/light/icons/visualize-overdraw@3x.png</file>
+
+        <file>gammaray/ui/light/icons/visualize-traces.png</file>
+        <file>gammaray/ui/light/icons/visualize-traces@2x.png</file>
+        <file>gammaray/ui/light/icons/visualize-traces@3x.png</file>
+
+        <file>gammaray/ui/light/icons/warning.png</file>
+
+        <file>gammaray/ui/light/icons/zoom-in.png</file>
+        <file>gammaray/ui/light/icons/zoom-in@2x.png</file>
+        <file>gammaray/ui/light/icons/zoom-in@3x.png</file>
+
+        <file>gammaray/ui/light/icons/zoom-out.png</file>
+        <file>gammaray/ui/light/icons/zoom-out@2x.png</file>
+        <file>gammaray/ui/light/icons/zoom-out@3x.png</file>
+
+        <!-- Dark -->
+
+        <!-- UI pixmaps -->
+        <file>gammaray/ui/dark/pixmaps/watermark.png</file>
+        <file>gammaray/ui/dark/pixmaps/watermark@2x.png</file>
+        <file>gammaray/ui/dark/pixmaps/watermark@3x.png</file>
+
+        <!-- UI icons -->
+        <file>gammaray/ui/dark/icons/grid-settings.png</file>
+        <file>gammaray/ui/dark/icons/grid-settings@2x.png</file>
+        <file>gammaray/ui/dark/icons/grid-settings@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/legend.png</file>
+        <file>gammaray/ui/dark/icons/legend@2x.png</file>
+        <file>gammaray/ui/dark/icons/legend@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/measure-pixels.png</file>
+        <file>gammaray/ui/dark/icons/measure-pixels@2x.png</file>
+        <file>gammaray/ui/dark/icons/measure-pixels@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/move-preview.png</file>
+        <file>gammaray/ui/dark/icons/move-preview@2x.png</file>
+        <file>gammaray/ui/dark/icons/move-preview@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/pick-element.png</file>
+        <file>gammaray/ui/dark/icons/pick-element@2x.png</file>
+        <file>gammaray/ui/dark/icons/pick-element@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/redirect-input.png</file>
+        <file>gammaray/ui/dark/icons/redirect-input@2x.png</file>
+        <file>gammaray/ui/dark/icons/redirect-input@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/server-decorations.png</file>
+        <file>gammaray/ui/dark/icons/server-decorations@2x.png</file>
+        <file>gammaray/ui/dark/icons/server-decorations@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/visualize-batches.png</file>
+        <file>gammaray/ui/dark/icons/visualize-batches@2x.png</file>
+        <file>gammaray/ui/dark/icons/visualize-batches@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/visualize-changes.png</file>
+        <file>gammaray/ui/dark/icons/visualize-changes@2x.png</file>
+        <file>gammaray/ui/dark/icons/visualize-changes@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/visualize-clipping.png</file>
+        <file>gammaray/ui/dark/icons/visualize-clipping@2x.png</file>
+        <file>gammaray/ui/dark/icons/visualize-clipping@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/visualize-overdraw.png</file>
+        <file>gammaray/ui/dark/icons/visualize-overdraw@2x.png</file>
+        <file>gammaray/ui/dark/icons/visualize-overdraw@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/visualize-traces.png</file>
+        <file>gammaray/ui/dark/icons/visualize-traces@2x.png</file>
+        <file>gammaray/ui/dark/icons/visualize-traces@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/zoom-in.png</file>
+        <file>gammaray/ui/dark/icons/zoom-in@2x.png</file>
+        <file>gammaray/ui/dark/icons/zoom-in@3x.png</file>
+
+        <file>gammaray/ui/dark/icons/zoom-out.png</file>
+        <file>gammaray/ui/dark/icons/zoom-out@2x.png</file>
+        <file>gammaray/ui/dark/icons/zoom-out@3x.png</file>
+
+        <file>gammaray/ui/light/icons/pick-color@3x.png</file>
+        <file>gammaray/ui/light/icons/pick-color@2x.png</file>
+        <file>gammaray/ui/light/icons/pick-color.png</file>
+        <file>gammaray/ui/dark/icons/pick-color@3x.png</file>
+        <file>gammaray/ui/dark/icons/pick-color@2x.png</file>
+        <file>gammaray/ui/dark/icons/pick-color.png</file>
+    </qresource>
+</RCC>

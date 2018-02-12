@@ -247,19 +247,14 @@ void MainBox::create_menu(void)
     connect(last_film, SIGNAL(triggered()), this, SLOT(select_last_film()));
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    if(mw)
-    {
-        QMenu *file_menu = mw->get_file_menu();
+    Q_CHECK_PTR(mw);
 
-        QList<QAction *> temp = file_menu->actions();
-        file_menu->addAction(change_player_action);
-        file_menu->addSeparator();
-        file_menu->addAction(save_action);
-        file_menu->addSeparator();
-        file_menu->addAction(last_film);
-        file_menu->addSeparator();
-        file_menu->addActions(temp);
-    }
+    mw->add_filemenu_action(0, change_player_action);
+    mw->add_filemenu_separator(1);
+    mw->add_filemenu_action(2, save_action);
+    mw->add_filemenu_separator(3);
+    mw->add_filemenu_action(4, last_film);
+    mw->add_filemenu_separator(5);
 }
 //--------------------------------------------------------------------------------
 void MainBox::change_player(void)

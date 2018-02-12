@@ -1,0 +1,10 @@
+{
+    "id": "gammaray_statemachineviewer",
+    "name": "State Machines",
+    "name[de]": "Zustandsautomaten",
+    "types": [
+        "QAbstractState",
+        "QScxmlStateMachine"
+    ],
+    "selectableTypes": [ "QAbstractState" ]
+}

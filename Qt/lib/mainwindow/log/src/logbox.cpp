@@ -402,6 +402,29 @@ QString LogBox::syslog_to_str(int level)
     return temp;
 }
 //--------------------------------------------------------------------------------
+void LogBox::syslogLog(QDateTime dt,
+                       int level,
+                       int src,
+                       QString message)
+{
+    QString temp = QString("%1   %2   %3   %4")
+            .arg(dt.toString("dd-MM-yy hh:mm:ss"))
+            .arg(syslog_to_str(level))
+            .arg(src)
+            .arg(message);
+
+    flagColor ? logBox->setTextColor(QColor("blue")) : logBox->setTextColor(QColor("black"));
+
+    if(flagNoCRLF)
+        logBox->insertPlainText(temp);
+    else
+        logBox->append(temp);
+
+    logBox->moveCursor(QTextCursor::End);
+    //---
+    qApp->processEvents();
+}
+//--------------------------------------------------------------------------------
 void LogBox::syslogLog(int level,
                        QString src,
                        QString message)

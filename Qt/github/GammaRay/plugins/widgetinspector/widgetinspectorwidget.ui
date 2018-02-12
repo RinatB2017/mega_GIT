@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GammaRay::WidgetInspectorWidget</class>
+ <widget class="QWidget" name="GammaRay::WidgetInspectorWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>732</width>
+    <height>528</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <item>
+    <widget class="QSplitter" name="mainSplitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QWidget" name="mainLayoutWidget">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="widgetTreeTab">
+          <attribute name="title">
+           <string>Tree</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QSplitter" name="previewSplitter">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <widget class="QWidget" name="layoutWidget">
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QLineEdit" name="widgetSearchLine"/>
+               </item>
+               <item>
+                <widget class="GammaRay::DeferredTreeView" name="widgetTreeView">
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::CustomContextMenu</enum>
+                 </property>
+                 <property name="uniformRowHeights">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="widgetPreviewContainer" native="true"/>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="GammaRay::PropertyWidget" name="widgetPropertyWidget" native="true"/>
+    </widget>
+   </item>
+  </layout>
+  <action name="actionSaveAsImage">
+   <property name="text">
+    <string>Save as &amp;Image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save currently selected widget as image.</string>
+   </property>
+  </action>
+  <action name="actionSaveAsSvg">
+   <property name="text">
+    <string>Save as &amp;SVG...</string>
+   </property>
+   <property name="toolTip">
+    <string>Renders the currently selected image as SVG vector graphic.</string>
+   </property>
+  </action>
+  <action name="actionSaveAsPdf">
+   <property name="text">
+    <string>Save as &amp;PDF...</string>
+   </property>
+   <property name="toolTip">
+    <string>Renders the currently selected widget in to a PDF file.</string>
+   </property>
+  </action>
+  <action name="actionSaveAsUiFile">
+   <property name="text">
+    <string>Save as &amp;UI file...</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves the currently selected widget as a Qt designer UI file.</string>
+   </property>
+  </action>
+  <action name="actionAnalyzePainting">
+   <property name="text">
+    <string>&amp;Analyze Painting...</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GammaRay::DeferredTreeView</class>
+   <extends>QTreeView</extends>
+   <header location="global">ui/deferredtreeview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GammaRay::PropertyWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/propertywidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

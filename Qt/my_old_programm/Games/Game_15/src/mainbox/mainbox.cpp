@@ -75,11 +75,8 @@ void MainBox::add_menu(void)
     action->setIcon(QIcon(ICON_PROGRAMM));
     connect(action, SIGNAL(triggered(bool)), this, SLOT(new_game()));
 
-    bool ok = mw->add_action(mw->get_file_menu(), 0, action);
-    if(ok)
-    {
-        mw->add_separator(mw->get_file_menu(), 1);
-    }
+    mw->add_filemenu_action(0, action);
+    mw->add_filemenu_separator(1);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::check_bone(int number)

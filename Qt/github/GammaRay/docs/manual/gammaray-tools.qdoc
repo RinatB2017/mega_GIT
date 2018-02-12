@@ -1,0 +1,84 @@
+/*
+    gammaray-tools.qdoc
+
+    This file is part of the GammaRay documentation.
+
+    Copyright (C) 2016-2018 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+    Author: Volker Krause <volker.krause@kdab.com>
+
+    Licensees holding valid commercial KDAB GammaRay licenses may use this file in
+    accordance with GammaRay Commercial License Agreement provided with the Software.
+
+    Contact info@kdab.com if any conditions of this licensing are not clear to you.
+
+    This work is also licensed under the Creative Commons Attribution-ShareAlike 4.0
+    International License. See <http://creativecommons.org/licenses/by-sa/4.0/>.
+*/
+
+/*!
+    \contentspage {GammaRay User Manual}
+    \nextpage {Qt Quick 2 Inspector}
+    \previouspage {Command Line Interface}
+    \page gammaray-tools.html
+
+    \title Tools
+
+    \section1 Overview
+
+    GammaRay consists of a number of specialized tools to inspect various aspects of Qt. You can select these using the tool selector on the left of the GammaRay window.
+
+    \section2 User Interface Inspection
+
+    The following tools can be used for insepecting graphical user interface issues, such as layouting, rendering, or event handling.
+
+    \list
+        \li \l{Qt Quick 2 Inspector}
+        \li \l{Widget Inspector}
+        \li \l{Graphics Scene Inspector}
+        \li \l{Qt3D Inspector}
+        \li \l{Styles}
+        \li \l{Web Inspector}
+    \endlist
+
+    \section2 Application Behavior Inspection
+
+    The following tools can be used to obeserve application behavior at runtime.
+
+    \list
+        \li \l{State Machine Debugger}
+        \li \l{Messages}
+        \li \l{Signal Plotter}
+        \li \l{Timers}
+        \li \l{Wayland Compositors}
+        \li Script Enginge Debugger
+    \endlist
+
+    \section2 Model and Data Structure Inspection
+
+    The following tools allow you to inspect and manipulate models and data structures of your application at runtime.
+
+    \list
+        \li \l{Object Browser}
+        \li \l{Actions}
+        \li \l{Models}
+        \li \l{Text Documents}
+        \li \l{Resources}
+        \li \l{Translations}
+        \li \l{Meta Object Browser}
+        \li \l{Meta Type Browser}
+        \li QtIvi Inspector
+    \endlist
+
+    \section2 System Information
+
+    The following tools allow you to inspect information of the Qt installation and the system it's deployed on.
+
+    \list
+        \li \l{Font Browser}
+        \li \l{Locales}
+        \li \l{Mime Types}
+        \li \l{Network}
+        \li \l{Text Codecs}
+        \li \l{Standard Paths}
+    \endlist
+*/

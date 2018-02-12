@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QApplication>
 #include <QDockWidget>
+#include <QDateTime>
 //--------------------------------------------------------------------------------
 #include <QQueue>
 //--------------------------------------------------------------------------------
@@ -54,6 +55,10 @@ public slots:
     void errorLog(QString text);
     void traceLog(QString text);
 
+    void syslog(QDateTime dt,
+                int level,
+                int src,
+                const QString &message);
     void syslog(int level,
                 const QString &src,
                 const QString &message);

@@ -1,0 +1,15 @@
+{
+    "id": "gammaray_quickinspector",
+    "name": "Quick Scenes",
+    "name[de]": "Quick Szenen",
+    "selectableTypes": [
+        "QQuickItem",
+        "QSGNode",
+        "QQuickWindow"
+    ],
+    "types": [
+        "QQuickWindow",
+        "QQuickItem",
+        "QSGNode"
+    ]
+}

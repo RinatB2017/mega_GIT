@@ -209,6 +209,15 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    Test_class *test = new Test_class;
+    test->a = 2;
+    test->b = 5;
+    test->mul();
+    emit info(QString("res = %1").arg(test->get_result()));
+    delete test;
+#endif
+
+#if 0
     int x = rand() % ui->gridLayout->columnCount();
     int y = rand() % ui->gridLayout->rowCount();
 

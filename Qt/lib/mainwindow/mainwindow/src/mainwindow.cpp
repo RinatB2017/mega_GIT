@@ -506,9 +506,11 @@ void MainWindow::updateText(void)
     btnAbout->setToolTip(tr("About"));
     btnHelp->setToolTip(tr("Help"));
 
+#ifndef NO_MENU
     m_themes->setTitle(tr("Themes"));
     m_themes->setStatusTip(tr("Themes"));
     m_themes->setToolTip(tr("Themes"));
+#endif
 
     //    a_system_theme->setText(tr("System theme"));
     //    a_light_theme->setText(tr("Light theme"));
@@ -789,10 +791,12 @@ void MainWindow::createLog(void)
     ld = new LogDock(tr("log"), this);
     Q_CHECK_PTR(ld);
 
+#ifndef NO_MENU
     if(m_windowsMenu)
     {
         m_windowsMenu->addAction(ld->toggleViewAction());
     }
+#endif
 
     connect(this,   SIGNAL(info(QString)),  ld, SLOT(infoLog(QString)));
     connect(this,   SIGNAL(debug(QString)), ld, SLOT(debugLog(QString)));
@@ -804,13 +808,16 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
     connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
 
-    connect(this,   SIGNAL(syslog(int,QString,QString)),    ld,  SLOT(syslog(int,QString,QString)));
+    connect(this,   SIGNAL(syslog(QDateTime, int, int, QString)),   ld, SLOT(syslog(QDateTime, int, int, QString)));
+    connect(this,   SIGNAL(syslog(int,QString,QString)),            ld, SLOT(syslog(int,QString,QString)));
 
+#ifndef NO_MENU
     slot_is_shows_info(a_is_shows_info->isChecked());
     slot_is_shows_error(a_is_shows_error->isChecked());
 #ifdef QT_DEBUG
     slot_is_shows_debug(a_is_shows_debug->isChecked());
     slot_is_shows_trace(a_is_shows_trace->isChecked());
+#endif
 #endif
 
     addDockWidget(Qt::BottomDockWidgetArea, ld);
@@ -957,50 +964,6 @@ void MainWindow::setWindowTitle(const QString &title)
     QMainWindow::setWindowTitle(temp);
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_MENU
-QMenuBar *MainWindow::get_menubar(void)
-{
-    Q_CHECK_PTR(mainBar);
-    return mainBar;
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_MENU
-QMenu *MainWindow::get_file_menu(void)
-{
-    Q_CHECK_PTR(m_fileMenu);
-    return m_fileMenu;
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_MENU
-QMenu *MainWindow::get_help_menu(void)
-{
-    Q_CHECK_PTR(m_helpMenu);
-    return m_helpMenu;
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_MENU
-QMenu *MainWindow::get_options_menu(void)
-{
-    Q_CHECK_PTR(m_optionsMenu);
-    return m_optionsMenu;
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_MENU
-QMenu *MainWindow::get_windows_menu(void)
-{
-#ifndef NO_LOG
-    Q_CHECK_PTR(m_windowsMenu);
-    return m_windowsMenu;
-#else
-    return 0;
-#endif
-}
-#endif
-//--------------------------------------------------------------------------------
 #ifndef NO_TRAYICON
 void MainWindow::createTrayIcon(void)
 {
@@ -1062,12 +1025,12 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 #endif
 //--------------------------------------------------------------------------------
+#ifndef NO_MENU
 bool MainWindow::add_menu(int pos_x,
                           QMenu *menu)
 {
     Q_CHECK_PTR(menu);
 
-#ifndef NO_MENU
     QList<QAction *> menus = mainBar->actions();
     if(menus.count() == 0)
     {
@@ -1091,28 +1054,18 @@ bool MainWindow::add_menu(int pos_x,
         }
         pos++;
     }
-#else
-    Q_UNUSED(pos_x)
-#endif
 
     return false;
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_MENU
 bool MainWindow::add_action(QMenu *menu,
                             int pos_y,
                             QAction *action)
 {
-    if(!menu)
-    {
-        emit error("add_action: menu is empty!");
-        return false;
-    }
-
-    if(!action)
-    {
-        emit error("add_action: action is empty!");
-        return false;
-    }
+    Q_CHECK_PTR(menu);
+    Q_CHECK_PTR(action);
 
     QList<QAction *> actions = menu->actions();
     if(actions.count() == 0)
@@ -1134,7 +1087,110 @@ bool MainWindow::add_action(QMenu *menu,
 
     return false;
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_filemenu_action(int pos_y,
+                                     QAction *action)
+{
+    Q_CHECK_PTR(m_fileMenu);
+    Q_CHECK_PTR(action);
+
+    QList<QAction *> actions = m_fileMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_filemenu_action: actions.count() == 0!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_fileMenu->insertAction(current_action, action);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_optionsmenu_action(int pos_y,
+                                        QAction *action)
+{
+    Q_CHECK_PTR(m_optionsMenu);
+    Q_CHECK_PTR(action);
+
+    QList<QAction *> actions = m_optionsMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_optionsmenu_action: actions.count() == 0!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_optionsMenu->insertAction(current_action, action);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_windowsmenu_action(QAction *action)
+{
+    Q_CHECK_PTR(action);
+
+#ifndef NO_LOG
+    Q_CHECK_PTR(m_windowsMenu);
+    m_windowsMenu->addAction(action);
+    return false;
+#endif
+    return true;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_helpmenu_action(int pos_y,
+                                     QAction *action)
+{
+    Q_CHECK_PTR(m_helpMenu);
+    Q_CHECK_PTR(action);
+
+    QList<QAction *> actions = m_helpMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_helpmenu_action: actions.count() == 0!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_helpMenu->insertAction(current_action, action);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
 bool MainWindow::add_separator(QMenu *menu,
                                int pos_y)
 {
@@ -1160,6 +1216,172 @@ bool MainWindow::add_separator(QMenu *menu,
 
     return false;
 }
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_filemenu_separator(int pos_y)
+{
+    QList<QAction *> actions = m_fileMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_separator: menu is empty!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_fileMenu->insertSeparator(current_action);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_optionsmenu_separator(int pos_y)
+{
+    QList<QAction *> actions = m_optionsMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_separator: menu is empty!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_optionsMenu->insertSeparator(current_action);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_helpmenu_separator(int pos_y)
+{
+    QList<QAction *> actions = m_helpMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_separator: menu is empty!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_helpMenu->insertSeparator(current_action);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_filemenu_menu(int pos_y,
+                                   QMenu *menu)
+{
+    Q_CHECK_PTR(m_fileMenu);
+    Q_CHECK_PTR(menu);
+
+    QList<QAction *> actions = m_fileMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_filemenu_menu: actions.count() == 0!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_fileMenu->insertSeparator(current_action);
+            m_fileMenu->insertMenu(current_action, menu);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_optionsmenu_menu(int pos_y,
+                                      QMenu *menu)
+{
+    Q_CHECK_PTR(m_fileMenu);
+    Q_CHECK_PTR(menu);
+
+    QList<QAction *> actions = m_optionsMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_optionsmenu_menu: actions.count() == 0!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_optionsMenu->insertSeparator(current_action);
+            m_optionsMenu->insertMenu(current_action, menu);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifndef NO_MENU
+bool MainWindow::add_helpmenu_menu(int pos_y,
+                                   QMenu *menu)
+{
+    Q_CHECK_PTR(m_fileMenu);
+    Q_CHECK_PTR(menu);
+
+    QList<QAction *> actions = m_helpMenu->actions();
+    if(actions.count() == 0)
+    {
+        emit error("add_helpmenu_menu: actions.count() == 0!");
+        return false;
+    }
+
+    int pos = 0;
+    foreach (QAction *current_action, actions)
+    {
+        if(pos == pos_y)
+        {
+            m_helpMenu->insertSeparator(current_action);
+            m_helpMenu->insertMenu(current_action, menu);
+            return true;
+        }
+        pos++;
+    }
+
+    return false;
+}
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::set_focus(const QString &)
 {

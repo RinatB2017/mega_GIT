@@ -47,8 +47,7 @@ void MyMainWindow::create_local_menus(void)
     connect(save_action,    SIGNAL(triggered()),
             this,           SLOT(save_setting()));
 
-    get_file_menu()->addSeparator();
-    get_file_menu()->addAction(save_action);
+    add_filemenu_action(0, save_action);
 }
 #endif
 //--------------------------------------------------------------------------------

@@ -136,20 +136,11 @@ void MyMainWindow::create_local_menus(void)
     connect(options_action, SIGNAL(triggered()),    this,   SLOT(options_action_click()));
     connect(help_action,    SIGNAL(triggered()),    this,   SLOT(help_action_click()));
 
-    QList<QAction *> f_temp = get_file_menu()->actions();
-    get_file_menu()->addAction(file_action);
-    get_file_menu()->addSeparator();
-    get_file_menu()->addActions(f_temp);
-
-    QList<QAction *> f_options = get_options_menu()->actions();
-    get_options_menu()->addAction(options_action);
-    get_options_menu()->addSeparator();
-    get_options_menu()->addActions(f_options);
-
-    QList<QAction *> f_help = get_help_menu()->actions();
-    get_help_menu()->addAction(help_action);
-    get_help_menu()->addSeparator();
-    get_help_menu()->addActions(f_help);
+#ifndef NO_MENU
+    add_filemenu_action(0,      file_action);
+    add_optionsmenu_action(0,   options_action);
+    add_helpmenu_action(0,      help_action);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyMainWindow::create_toolbars(void)
@@ -267,6 +258,16 @@ void MyMainWindow::setCentralWidget(QWidget *widget)
     grid->addWidget(lt_box, 0, 0);    grid->addWidget(t_widget, 0, 1);  grid->addWidget(rt_box, 0, 2);
     grid->addWidget(l_widget, 1, 0);  grid->addWidget(widget, 1, 1);    grid->addWidget(r_widget, 1, 2);
     grid->addWidget(lb_box, 2, 0);    grid->addWidget(b_widget, 2, 1);  grid->addWidget(rb_box, 2, 2);
+
+#if 1
+    QToolButton *btn = new QToolButton();
+    btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    btn->setCheckable(true);
+    connect(btn,    SIGNAL(toggled(bool)),  widget, SLOT(setHidden(bool)));
+    btn->setText("#");
+    grid->addWidget(btn, 1, 3);
+#endif
+
     w->setLayout(grid);
 
     MainWindow::setCentralWidget(w);

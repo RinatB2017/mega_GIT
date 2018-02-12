@@ -54,18 +54,28 @@ private:
     quint8 c[4];
 };
 //--------------------------------------------------------------------------------
-class MyMegaWidget : public QWidget
+class Test_class
 {
-    Q_OBJECT
-
 public:
-    MyMegaWidget(QWidget *parent) : QWidget(parent)
+    float a;
+    float b;
+
+    void mul(void)
     {
-        setStyleSheet("background:red;");
-        setFixedSize(10, 10);
+        res = a * b;
+    }
+    void div(void)
+    {
+        res = a / b;
+    }
+
+    float get_result(void)
+    {
+        return res;
     }
 
 private:
+    float res;
 };
 //--------------------------------------------------------------------------------
 class MySplashScreen;

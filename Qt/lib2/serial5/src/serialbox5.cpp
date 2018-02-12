@@ -615,22 +615,7 @@ bool SerialBox5::add_menu(int index)
     connect(action_flag_in_hex,         SIGNAL(triggered(bool)),    this,   SLOT(set_flag_in_hex(bool)));
     connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
 
-    //---
-    QMenu *o_menu = mw->get_options_menu();
-    QList<QAction *> menus = o_menu->actions();
-
-    int pos = 0;
-    foreach (QAction *current_menu, menus)
-    {
-        if(pos == index)
-        {
-            o_menu->insertSeparator(current_menu);
-            o_menu->insertMenu(current_menu, menu);
-            return true;
-        }
-        pos++;
-    }
-    //---
+    mw->add_optionsmenu_menu(index, menu);
 
     return false;
 }

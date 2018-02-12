@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GammaRay::SceneInspectorWidget</class>
+ <widget class="QWidget" name="GammaRay::SceneInspectorWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_6">
+   <item>
+    <widget class="QComboBox" name="sceneComboBox"/>
+   </item>
+   <item>
+    <widget class="QSplitter" name="mainSplitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QSplitter" name="previewSplitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QWidget" name="layoutWidget_6">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLineEdit" name="sceneTreeSearchLine"/>
+        </item>
+        <item>
+         <widget class="GammaRay::DeferredTreeView" name="sceneTreeView">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="GammaRay::GraphicsSceneView" name="graphicsSceneView" native="true"/>
+     </widget>
+     <widget class="GammaRay::PropertyWidget" name="scenePropertyWidget" native="true"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GammaRay::DeferredTreeView</class>
+   <extends>QTreeView</extends>
+   <header location="global">ui/deferredtreeview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GammaRay::PropertyWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/propertywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GammaRay::GraphicsSceneView</class>
+   <extends>QWidget</extends>
+   <header>graphicssceneview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

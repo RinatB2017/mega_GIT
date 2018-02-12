@@ -107,19 +107,33 @@ public:
     void setWindowTitle(const QString &title);
 
 #ifndef NO_MENU
-    QMenuBar *get_menubar(void);
-    QMenu *get_file_menu(void);
-    QMenu *get_help_menu(void);
-    QMenu *get_options_menu(void);
-    QMenu *get_windows_menu(void);
-#endif
-
     bool add_menu(int pos_x, QMenu *menu);
+
+    bool add_filemenu_menu(int pos_y,
+                           QMenu *menu);
+    bool add_optionsmenu_menu(int pos_y,
+                           QMenu *menu);
+    bool add_helpmenu_menu(int pos_y,
+                           QMenu *menu);
+
     bool add_action(QMenu *menu,
                     int pos_y,
                     QAction *action);
+    bool add_filemenu_action(int pos_y,
+                             QAction *action);
+    bool add_optionsmenu_action(int pos_y,
+                                QAction *action);
+    bool add_windowsmenu_action(QAction *action);
+    bool add_helpmenu_action(int pos_y,
+                             QAction *action);
+
     bool add_separator(QMenu *menu,
                        int pos_y);
+
+    bool add_filemenu_separator(int pos_y);
+    bool add_optionsmenu_separator(int pos_y);
+    bool add_helpmenu_separator(int pos_y);
+#endif
 
 signals:
     void updateLanguage(void);
@@ -134,6 +148,7 @@ signals:
     void signal_is_shows_error(bool);
     void signal_is_shows_trace(bool);
 
+    void syslog(QDateTime, int, int, QString);
     void syslog(int level,
                 QString src,
                 QString message);

@@ -1,0 +1,14 @@
+{
+    "id": "gammaray_timertop",
+    "name": "Timers",
+    "name[de]": "Timer",
+    "types": [
+        "QTimer",
+        "QQmlTimer",
+        "QUnifiedTimer",
+        "QObject"
+    ],
+    "selectableTypes": [
+        "QTimer"
+    ]
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GammaRay::LocaleInspectorWidget</class>
+ <widget class="QWidget" name="GammaRay::LocaleInspectorWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>654</width>
+    <height>506</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="GammaRay::LocaleTab" name="localeTab">
+      <attribute name="title">
+       <string>Locales</string>
+      </attribute>
+     </widget>
+     <widget class="GammaRay::TimezoneTab" name="timezoneTab">
+      <attribute name="title">
+       <string>Timezones</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GammaRay::LocaleTab</class>
+   <extends>QWidget</extends>
+   <header>localetab.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GammaRay::TimezoneTab</class>
+   <extends>QWidget</extends>
+   <header>timezonetab.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

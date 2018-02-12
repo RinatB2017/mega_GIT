@@ -40,6 +40,8 @@ private slots:
     void test_safe(void);
     void test_safe_gui();
 
+    void simple_test(void);
+
 private:
     MyMainWindow *mw = 0;
 

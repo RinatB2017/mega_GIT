@@ -41,11 +41,13 @@ signals:
     void trace(const QString &);
 
 private slots:
-    void allowedAreasChanged ( Qt::DockWidgetAreas allowedAreas );
+    void click_btn(void);
+
+    //void allowedAreasChanged ( Qt::DockWidgetAreas allowedAreas );
     void dockLocationChanged ( Qt::DockWidgetArea area );
-    void featuresChanged ( QDockWidget::DockWidgetFeatures features );
-    void topLevelChanged ( bool topLevel );
-    void visibilityChanged ( bool visible );
+    //void featuresChanged ( QDockWidget::DockWidgetFeatures features );
+    //void topLevelChanged ( bool topLevel );
+    //void visibilityChanged ( bool visible );
 
 private:
     QList<QToolButton *> widgets;

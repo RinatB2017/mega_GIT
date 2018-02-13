@@ -39,8 +39,12 @@ Test_QDockWidget::Test_QDockWidget(const QString &title,
     for(int n=0; n<9; n++)
     {
         QToolButton *btn = new QToolButton(this);
-        btn->setText(QString("%1").arg(index++));
+        btn->setProperty("value", index);
+        btn->setText(QString("%1").arg(index));
+        connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click_btn()));
         widgets.append(btn);
+
+        index++;
     }
 
     QWidget *w = new QWidget;
@@ -56,11 +60,22 @@ Test_QDockWidget::Test_QDockWidget(const QString &title,
     w->setLayout(vbox);
     setWidget(w);
 
-    connect(this,   SIGNAL(allowedAreasChanged( Qt::DockWidgetAreas)),          this,   SLOT(allowedAreasChanged(Qt::DockWidgetAreas)));
+    //connect(this,   SIGNAL(allowedAreasChanged( Qt::DockWidgetAreas)),          this,   SLOT(allowedAreasChanged(Qt::DockWidgetAreas)));
     connect(this,   SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),            this,   SLOT(dockLocationChanged(Qt::DockWidgetArea)));;
-    connect(this,   SIGNAL(featuresChanged(QDockWidget::DockWidgetFeatures)),   this,   SLOT(featuresChanged(QDockWidget::DockWidgetFeatures)));
-    connect(this,   SIGNAL(topLevelChanged(bool)),                              this,   SLOT(topLevelChanged(bool)));
-    connect(this,   SIGNAL(visibilityChanged(bool)),                            this,   SLOT(visibilityChanged(bool)));
+    //connect(this,   SIGNAL(featuresChanged(QDockWidget::DockWidgetFeatures)),   this,   SLOT(featuresChanged(QDockWidget::DockWidgetFeatures)));
+    //connect(this,   SIGNAL(topLevelChanged(bool)),                              this,   SLOT(topLevelChanged(bool)));
+    //connect(this,   SIGNAL(visibilityChanged(bool)),                            this,   SLOT(visibilityChanged(bool)));
+}
+//--------------------------------------------------------------------------------
+void Test_QDockWidget::click_btn(void)
+{
+    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
+    if(btn == nullptr)
+    {
+        return;
+    }
+    emit info(QString("%1").arg(btn->property("value").toInt()));
+
 }
 //--------------------------------------------------------------------------------
 void Test_QDockWidget::create_left_dock(void)
@@ -90,6 +105,7 @@ void Test_QDockWidget::create_left_dock(void)
             x=0;
         }
     }
+    widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 }
 //--------------------------------------------------------------------------------
 void Test_QDockWidget::create_top_dock(void)
@@ -113,8 +129,10 @@ void Test_QDockWidget::create_top_dock(void)
         grid_map->addWidget(btn, 0, x);
         x++;
     }
+    widget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
+#if 0
 void Test_QDockWidget::allowedAreasChanged ( Qt::DockWidgetAreas allowedAreas )
 {
     emit trace(Q_FUNC_INFO);
@@ -143,6 +161,7 @@ void Test_QDockWidget::allowedAreasChanged ( Qt::DockWidgetAreas allowedAreas )
         break;
     }
 }
+#endif
 //--------------------------------------------------------------------------------
 void Test_QDockWidget::dockLocationChanged ( Qt::DockWidgetArea area )
 {
@@ -173,6 +192,7 @@ void Test_QDockWidget::dockLocationChanged ( Qt::DockWidgetArea area )
     }
 }
 //--------------------------------------------------------------------------------
+#if 0
 void Test_QDockWidget::featuresChanged ( QDockWidget::DockWidgetFeatures features )
 {
     emit trace(Q_FUNC_INFO);
@@ -193,16 +213,21 @@ void Test_QDockWidget::featuresChanged ( QDockWidget::DockWidgetFeatures feature
         break;
     }
 }
+#endif
 //--------------------------------------------------------------------------------
+#if 0
 void Test_QDockWidget::topLevelChanged ( bool topLevel )
 {
     emit trace(Q_FUNC_INFO);
     emit debug(QString("topLevel is %1").arg(topLevel ? "true" : "false"));
 }
+#endif
 //--------------------------------------------------------------------------------
+#if 0
 void Test_QDockWidget::visibilityChanged ( bool visible )
 {
     emit trace(Q_FUNC_INFO);
     emit debug(QString("visible is %1").arg(visible ? "true" : "false"));
 }
+#endif
 //--------------------------------------------------------------------------------

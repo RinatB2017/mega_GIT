@@ -44,11 +44,29 @@ MyMainWindow::MyMainWindow(MainWindow *parent) :
 
     create_local_menus();
     create_toolbars();
+
+    add_test_qdockwidget();
 }
 //--------------------------------------------------------------------------------
 MyMainWindow::~MyMainWindow()
 {
     qDebug() << "~NyMainWindow()";
+}
+//--------------------------------------------------------------------------------
+#include "test_qdockwidget.hpp"
+void MyMainWindow::add_test_qdockwidget(void)
+{
+    Test_QDockWidget *tw = new Test_QDockWidget("test_dock", this);
+    Q_CHECK_PTR(tw);
+
+    connect(tw, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(tw, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(tw, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(tw, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    add_windowsmenu_action(tw->toggleViewAction());
+
+    addDockWidget(Qt::LeftDockWidgetArea, tw);
 }
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5

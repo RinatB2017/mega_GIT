@@ -77,6 +77,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
+
+include (src/test_qdockwidget/test_qdockwidget.pri)
 include (src/safe/safe.pri)
 
 !exists(OBJECTS_DIR) {

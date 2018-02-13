@@ -103,7 +103,6 @@ bool Log_options::get_flag_TextIsWindows(void)
     return ui->cb_Text_Is_Windows->isChecked();
 }
 //--------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------
 void Log_options::set_flag_ReadOnly(bool value)
 {
     ui->cb_readOnly->setChecked(value);

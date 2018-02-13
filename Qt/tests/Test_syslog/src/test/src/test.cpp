@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,74 +18,46 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SENDER_SYSLOG_HPP
-#define SENDER_SYSLOG_HPP
+#include <QApplication>
+#include <QObject>
+#include <QWidget>
+#include <QList>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include <QDateTime>
-#include <QToolBar>
-#include <QTimer>
+#define private public
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include </usr/include/syslog.h>
-#endif
+#include "mainwindow.hpp"
+#include "mainbox.hpp"
+#include "test.hpp"
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_WIN
-enum SYSLOG_LEVELS
+Test::Test()
 {
-    LOG_EMERG   = 0,       /* system is unusable */
-    LOG_ALERT   = 1,       /* action must be taken immediately */
-    LOG_CRIT    = 2,       /* critical conditions */
-    LOG_ERR     = 3,       /* error conditions */
-    LOG_WARNING = 4,       /* warning conditions */
-    LOG_NOTICE  = 5,       /* normal but significant condition */
-    LOG_INFO    = 6,       /* informational */
-    LOG_DEBUG   = 7        /* debug-level messages */
-};
-#endif
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
+}
 //--------------------------------------------------------------------------------
-class QPushButton;
-class QLineEdit;
-class QSpinBox;
-class QComboBox;
-//--------------------------------------------------------------------------------
-class Sender_syslog : public QToolBar
+void Test::test_GUI(void)
 {
-    Q_OBJECT
+    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
+    QVERIFY(cb);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
 
-public:
-    Sender_syslog(const QString &title,
-                  int default_src,
-                  int default_level,
-                  QWidget *parent = Q_NULLPTR);
-    ~Sender_syslog();
-
-signals:
-    void syslog(QDateTime, int, int, QString);
-
-private slots:
-    void start(void);
-    void stop(void);
-    void update(void);
-
-private:
-    int def_src = 0;
-    int def_level = 0;
-
-    QComboBox *cb_level = 0;
-
-    QSpinBox *sb_src = 0;
-
-    QSpinBox *sb_interval = 0;
-
-    QLineEdit *le_message = 0;
-
-    QPushButton *btn_start = 0;
-    QPushButton *btn_stop = 0;
-
-    QTimer *timer = 0;
-
-    void init(void);
-    void init_timer(void);
-};
+    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
+    QVERIFY(tb);
+    QTest::mouseClick(tb, Qt::LeftButton);
+}
 //--------------------------------------------------------------------------------
-#endif // SENDER_SYSLOG_HPP
+void Test::test_func(void)
+{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
+
+    QCOMPARE(mb->test_0(), true);
+    QCOMPARE(mb->test_1(), true);
+    QCOMPARE(mb->test_2(), true);
+    QCOMPARE(mb->test_3(), true);
+    QCOMPARE(mb->test_4(), true);
+    QCOMPARE(mb->test_5(), true);
+}
+//--------------------------------------------------------------------------------

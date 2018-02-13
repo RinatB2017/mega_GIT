@@ -18,21 +18,25 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QAbstractButton>
-#include <QDoubleSpinBox>
-#include <QMouseEvent>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QTextEdit>
-#include <QCheckBox>
-#include <QSettings>
-#include <QComboBox>
-#include <QSplitter>
-#include <QSpinBox>
-#include <QVariant>
-#include <QTimer>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QAbstractButton>
+#   include <QDoubleSpinBox>
+#   include <QMouseEvent>
+#   include <QMessageBox>
+#   include <QToolButton>
+#   include <QPushButton>
+#   include <QLineEdit>
+#   include <QTextEdit>
+#   include <QCheckBox>
+#   include <QSettings>
+#   include <QComboBox>
+#   include <QSplitter>
+#   include <QSpinBox>
+#   include <QVariant>
+#   include <QTimer>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

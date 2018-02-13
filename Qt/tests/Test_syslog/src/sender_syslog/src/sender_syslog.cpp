@@ -36,7 +36,7 @@ Sender_syslog::Sender_syslog(const QString &title,
                              QWidget *parent)
     : QToolBar(title, parent),
       def_src(default_src),
-    def_level(default_level)
+      def_level(default_level)
 {
     setObjectName(title);
     init();

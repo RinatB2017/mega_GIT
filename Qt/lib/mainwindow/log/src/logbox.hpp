@@ -95,7 +95,7 @@ private:
 
     bool flagNoCRLF = false;
     bool flagAddDateTime = false;
-    bool flagColor = false;
+    bool flagColor = true;
     bool flagErrorAsMessage = false;
     bool flagTextIsWindows = false;
 

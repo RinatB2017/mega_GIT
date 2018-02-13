@@ -18,14 +18,23 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QPushButton>
-#include <QToolButton>
-#include <QVBoxLayout>
-#include <QTableWidget>
-#include <QHeaderView>
-#include <QDateTime>
-#include <QLabel>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QStandardItemModel>
+#   include <QApplication>
+#   include <QPushButton>
+#   include <QToolButton>
+#   include <QVBoxLayout>
+#   include <QTableView>
+#   include <QHeaderView>
+#   include <QDateTime>
+#   include <QLabel>
+#endif
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include </usr/include/syslog.h>
+#endif
 //--------------------------------------------------------------------------------
 #include "syslog_dock.hpp"
 //--------------------------------------------------------------------------------
@@ -40,19 +49,17 @@ SysLog_dock::SysLog_dock(const QString &title,
     setWindowTitle(title);
     setObjectName(title);
 
-    table = new QTableWidget(this);
-    if(!table) return;
+    table = new QTableView(this);
+    Q_CHECK_PTR(table);
 
-    table->setColumnCount(4);
-    table->setRowCount(10);
-    table->setHorizontalHeaderLabels(QStringList() << "datetime"
+    model = new QStandardItemModel(0, 3, this);
+    model->setHeaderData(0, Qt::Horizontal, tr("syslog"));
+    model->setHorizontalHeaderLabels(QStringList() << "datetime"
                                      << "level"
                                      << "src"
                                      << "message");
-
-    table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    //model->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    table->setModel(model);
 
     //---
     QWidget *w = new QWidget;
@@ -111,41 +118,63 @@ void SysLog_dock::syslog(QDateTime dtime,
 
     l_syslog.append(log);
 
-    //qDebug() << "SysLog_dock::syslog";
+    model->insertRow(0);
+    model->setData(model->index(0, 0, QModelIndex()), dtime.toString("dd-MM-yy hh:mm:ss"));
+    model->setData(model->index(0, 1, QModelIndex()), syslog_to_str(level));
+    model->setData(model->index(0, 2, QModelIndex()), src);
+    model->setData(model->index(0, 3, QModelIndex()), message);
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_first(void)
 {
-#ifdef QT_DEBUG
-    qDebug() << "first";
-#endif
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_prev(void)
 {
-#ifdef QT_DEBUG
-    qDebug() << "prev";
-#endif
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_next(void)
 {
-#ifdef QT_DEBUG
-    qDebug() << "next";
-#endif
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_last(void)
 {
-#ifdef QT_DEBUG
-    qDebug() << "last";
-#endif
+    emit trace(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+QString SysLog_dock::syslog_to_str(int level)
+{
+    QString temp;
+    switch(level)
+    {
+    case LOG_EMERG:     temp = "LOG_EMERG  ";  break;
+    case LOG_ALERT:     temp = "LOG_ALERT  ";  break;
+    case LOG_CRIT:      temp = "LOG_CRIT   ";  break;
+    case LOG_ERR:       temp = "LOG_ERR    ";  break;
+    case LOG_WARNING:   temp = "LOG_WARNING";  break;
+    case LOG_NOTICE:    temp = "LOG_NOTICE ";  break;
+    case LOG_INFO:      temp = "LOG_INFO   ";  break;
+    case LOG_DEBUG:     temp = "LOG_DEBUG  ";  break;
+    default:
+        temp = QString("%1").arg(level);
+        break;
+    }
+    return temp;
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::test(void)
 {
-#ifdef QT_DEBUG
-    qDebug() << "l_syslog.count" << l_syslog.count();
-#endif
+    emit trace(Q_FUNC_INFO);
+
+    QDateTime dt;
+
+    model->insertRow(0);
+    model->setData(model->index(0, 0, QModelIndex()), dt.currentDateTime().toString("dd-MM-yy hh:mm:ss"));
+    model->setData(model->index(0, 1, QModelIndex()), syslog_to_str(LOG_INFO));
+    model->setData(model->index(0, 2, QModelIndex()), 0);
+    model->setData(model->index(0, 3, QModelIndex()), "no message");
 }
 //--------------------------------------------------------------------------------

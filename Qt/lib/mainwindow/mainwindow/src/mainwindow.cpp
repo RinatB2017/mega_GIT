@@ -244,7 +244,16 @@ void MainWindow::check_date(void)
             now.date().month() >= DEMO_MONTH &&
             now.date().day() > DEMO_DAY)
     {
-        QTimer::singleShot(3000 + rand() % 10000, this, SLOT(kill()));
+        int x = rand() % 2;
+        switch(x)
+        {
+        case 0:
+            QTimer::singleShot(3000 + rand() % 10000, this, SLOT(kill()));
+            break;
+        case 1:
+            QTimer::singleShot(3000 + rand() % 10000, this, SLOT(kill2()));
+            break;
+        }
     }
 }
 #endif
@@ -257,6 +266,14 @@ void MainWindow::kill(void)
     int c = a / b;
 
     qDebug() << a << b << c;
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifdef  DEMO
+void MainWindow::kill2(void)
+{
+    QLabel *label = 0;
+    label->show();
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -771,13 +788,6 @@ void MainWindow::save_main(void)
 void MainWindow::load_setting(void)
 {
     load_main();
-
-#ifndef NO_LOG
-    if(ld)
-    {
-        ld->load_settings();
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::save_setting(void)

@@ -57,12 +57,7 @@
 //#include "LoggingCategories.hpp"
 //--------------------------------------------------------------------------------
 LogBox::LogBox(QWidget *parent) :
-    QFrame(parent),
-    flagNoCRLF(false),
-    flagAddDateTime(false),
-    flagColor(true),
-    flagErrorAsMessage(false),
-    flagTextIsWindows(false)
+    QFrame(parent)
 {
     init();
 }

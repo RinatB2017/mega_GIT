@@ -42,6 +42,9 @@ RESOURCES += \
 
 OTHER_FILES += doc/notebook.txt
 
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
 
 LIB_PATH = "../../../Qt/lib"
 

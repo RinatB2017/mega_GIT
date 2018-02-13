@@ -37,41 +37,35 @@ void Safe::init(void)
 {
     ui->setupUi(this);
 
-    ui->btn_0->setProperty("value", 0);
-    ui->btn_1->setProperty("value", 1);
-    ui->btn_2->setProperty("value", 2);
-    ui->btn_3->setProperty("value", 3);
-    ui->btn_4->setProperty("value", 4);
-    ui->btn_5->setProperty("value", 5);
-    ui->btn_6->setProperty("value", 6);
-    ui->btn_7->setProperty("value", 7);
-    ui->btn_8->setProperty("value", 8);
-    ui->btn_9->setProperty("value", 9);
+    widgets.append(ui->btn_0);
+    widgets.append(ui->btn_1);
+    widgets.append(ui->btn_2);
+    widgets.append(ui->btn_3);
+    widgets.append(ui->btn_4);
+    widgets.append(ui->btn_5);
+    widgets.append(ui->btn_6);
+    widgets.append(ui->btn_7);
+    widgets.append(ui->btn_8);
+    widgets.append(ui->btn_9);
 
-    connect(ui->btn_0,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_1,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_2,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_3,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_4,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_5,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_6,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_7,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_8,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
-    connect(ui->btn_9,  SIGNAL(clicked(bool)),  this,   SLOT(click()));
+    int index = 0;
+    foreach (QAbstractButton *btn, widgets)
+    {
+        btn->setProperty("value", index++);
+        connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click()));
+    }
 
     connect(ui->btn_back,   SIGNAL(clicked(bool)),  this,   SLOT(s_back()));
     connect(ui->btn_clear,  SIGNAL(clicked(bool)),  this,   SLOT(s_clear()));
 
-    ui->lcdNumber->display(0);
+    s_clear();
 }
 //--------------------------------------------------------------------------------
 void Safe::click(void)
 {
     QToolButton *btn = dynamic_cast<QToolButton *>(sender());
-    if(btn == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(btn);
+
     bool ok = false;
     int x = btn->property("value").toInt(&ok);
     if(ok)

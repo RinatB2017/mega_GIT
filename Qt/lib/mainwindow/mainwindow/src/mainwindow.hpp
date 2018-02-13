@@ -148,7 +148,10 @@ signals:
     void signal_is_shows_error(bool);
     void signal_is_shows_trace(bool);
 
-    void syslog(QDateTime, int, int, QString);
+    void syslog(QDateTime,
+                int,
+                int,
+                QString);
     void syslog(int level,
                 QString src,
                 QString message);
@@ -200,6 +203,7 @@ private slots:
 
 #ifdef  DEMO
     void kill(void);
+    void kill2(void);
 #endif
 
 #ifndef NO_TRAYICON

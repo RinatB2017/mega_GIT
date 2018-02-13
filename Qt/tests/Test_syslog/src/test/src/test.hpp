@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,74 +18,27 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SENDER_SYSLOG_HPP
-#define SENDER_SYSLOG_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QDateTime>
-#include <QToolBar>
-#include <QTimer>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include </usr/include/syslog.h>
-#endif
+class MainWindow;
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_WIN
-enum SYSLOG_LEVELS
-{
-    LOG_EMERG   = 0,       /* system is unusable */
-    LOG_ALERT   = 1,       /* action must be taken immediately */
-    LOG_CRIT    = 2,       /* critical conditions */
-    LOG_ERR     = 3,       /* error conditions */
-    LOG_WARNING = 4,       /* warning conditions */
-    LOG_NOTICE  = 5,       /* normal but significant condition */
-    LOG_INFO    = 6,       /* informational */
-    LOG_DEBUG   = 7        /* debug-level messages */
-};
-#endif
-//--------------------------------------------------------------------------------
-class QPushButton;
-class QLineEdit;
-class QSpinBox;
-class QComboBox;
-//--------------------------------------------------------------------------------
-class Sender_syslog : public QToolBar
+class Test : public QObject
 {
     Q_OBJECT
 
 public:
-    Sender_syslog(const QString &title,
-                  int default_src,
-                  int default_level,
-                  QWidget *parent = Q_NULLPTR);
-    ~Sender_syslog();
-
-signals:
-    void syslog(QDateTime, int, int, QString);
+    Test();
 
 private slots:
-    void start(void);
-    void stop(void);
-    void update(void);
-
+    void test_GUI(void);
+    void test_func(void);
+    
 private:
-    int def_src = 0;
-    int def_level = 0;
-
-    QComboBox *cb_level = 0;
-
-    QSpinBox *sb_src = 0;
-
-    QSpinBox *sb_interval = 0;
-
-    QLineEdit *le_message = 0;
-
-    QPushButton *btn_start = 0;
-    QPushButton *btn_stop = 0;
-
-    QTimer *timer = 0;
-
-    void init(void);
-    void init_timer(void);
+    MainWindow *mw = 0;
 };
 //--------------------------------------------------------------------------------
-#endif // SENDER_SYSLOG_HPP
+#endif

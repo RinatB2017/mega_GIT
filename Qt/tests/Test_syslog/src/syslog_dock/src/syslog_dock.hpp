@@ -32,7 +32,8 @@ typedef struct SYSLOG
     QString message;
 } syslog_t;
 //--------------------------------------------------------------------------------
-class QTableWidget;
+class QStandardItemModel;
+class QTableView;
 class QPushButton;
 class QToolButton;
 //--------------------------------------------------------------------------------
@@ -44,12 +45,19 @@ public:
     SysLog_dock(const QString &title,
                 QWidget *parent = 0);
 
-private slots:
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+public slots:
     void syslog(QDateTime dtime,
                 int level,
                 int src,
                 QString message);
 
+private slots:
     void seek_first(void);
     void seek_prev(void);
     void seek_next(void);
@@ -67,7 +75,10 @@ private:
 
     QPushButton *btn_test = 0;
 
-    QTableWidget *table;
+    QStandardItemModel *model = 0;
+    QTableView *table = 0;
+
+    QString syslog_to_str(int level);
 };
 //--------------------------------------------------------------------------------
 #endif // SYSLOG_DOCK_HPP

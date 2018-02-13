@@ -45,6 +45,7 @@ private slots:
 private:
     Ui::Safe *ui = 0;
     int value = 0;
+    QList<QAbstractButton *> widgets;
 
     void init(void);
     void updateText(void);

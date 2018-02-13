@@ -37,9 +37,6 @@ public:
             QWidget *parent = 0);
     ~LogDock();
 
-    void load_settings(void);
-    void save_settings(void);
-
     void  set_font(QFont font);
     QFont get_font(void);
 

@@ -103,17 +103,17 @@ void MainBox::createTestBar(void)
     }
 
     testbar->addWidget(cb_test);
-    QToolButton *frm_choice_test = add_button(testbar,
+    QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
-    frm_choice_test->setObjectName("frm_choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
 
-    connect(frm_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), frm_choice_test,   SLOT(setDisabled(bool)));
+    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createSenderBar(void)
@@ -163,10 +163,14 @@ void MainBox::createSysLog_dock(void)
     Q_CHECK_PTR(mw);
 
     SysLog_dock *dock = new SysLog_dock("syslog", this);
-    if(dock == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(dock);
+
+    connect(dock,   SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(dock,   SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(dock,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(dock,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    connect(this,   SIGNAL(syslog(int,QString,QString)),    dock,   SLOT(syslog(QDateTime,int,int,QString)));
 
     mw->add_windowsmenu_action(dock->toggleViewAction());
     connect(mw, SIGNAL(syslog(QDateTime,int,int,QString)),  dock,   SLOT(syslog(QDateTime,int,int,QString)));
@@ -182,7 +186,7 @@ void MainBox::choice_test(void)
     {
         if(command.cmd == cmd)
         {
-            typedef void (MainBox::*my_mega_function)(void);
+            typedef bool (MainBox::*my_mega_function)(void);
             my_mega_function x;
             x = command.func;
             if(x)
@@ -199,7 +203,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
@@ -207,9 +211,11 @@ void MainBox::test_0(void)
     emit debug("debug");
     emit error("error");
     emit trace("trace");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+bool MainBox::test_1(void)
 {
     emit info("Test_1()");
 
@@ -236,26 +242,36 @@ void MainBox::test_1(void)
         s1 = lvl;
         emit info(QString("%1\t%2\t%3").arg(s0).arg(s1).arg(s2));
     }
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+bool MainBox::test_2(void)
 {
     emit info("Test_2()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_3(void)
+bool MainBox::test_3(void)
 {
     emit info("Test_3()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_4(void)
+bool MainBox::test_4(void)
 {
     emit info("Test_4()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_5(void)
+bool MainBox::test_5(void)
 {
     emit info("Test_5()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

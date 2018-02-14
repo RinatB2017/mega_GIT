@@ -64,6 +64,7 @@ void Notebook::init(void)
         QToolButton *btn = new QToolButton(this);
         btn->setText(text);
         btn->setProperty("ID", text);
+        btn->setFixedWidth(30);
         btn->setFixedHeight(20);
         btns->addWidget(btn);
 
@@ -145,7 +146,7 @@ void Notebook::check_modified(void)
         {
             if(te->document()->isModified())
             {
-                qDebug() << n;
+                //qDebug() << n;
                 not_saved = true;
             }
         }
@@ -163,10 +164,7 @@ void Notebook::check_modified(void)
 void Notebook::btn_click(void)
 {
     QToolButton *btn = dynamic_cast<QToolButton *>(sender());
-    if(btn == nullptr)
-    {
-        return;
-    }
+    Q_CHECK_PTR(btn);
 
     QString name = btn->property("ID").toString();
     if(name.isEmpty()) return;

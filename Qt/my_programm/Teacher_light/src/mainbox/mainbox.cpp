@@ -79,6 +79,7 @@ void MainBox::prepare_notebook(void)
 {
     note = new Notebook(this);
 
+#ifndef USE_DOCKS
     QVBoxLayout *vbox_other = new QVBoxLayout();
     vbox_other->setMargin(0);
     vbox_other->setSpacing(0);
@@ -88,6 +89,7 @@ void MainBox::prepare_notebook(void)
     notebook_frame = new QFrame(this);
     notebook_frame->setLayout(vbox_other);
     notebook_frame->setFixedWidth(notebook_frame->sizeHint().width());
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::prepare_grids(void)
@@ -201,15 +203,41 @@ void MainBox::create_widgets(void)
     prepare_tab();
     prepare_notebook();
 
+    //---
+#ifdef USE_DOCKS
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+
+    QDockWidget *dock_note = new QDockWidget(tr("notebook"), this);
+    Q_CHECK_PTR(dock_note);
+
+    QDockWidget *dock_tab = new QDockWidget(tr("tab"), this);
+    Q_CHECK_PTR(dock_tab);
+
+    dock_note->setObjectName("dock_note");
+    dock_tab->setObjectName("dock_tab");
+
+    dock_note->setWidget(note);
+    dock_tab->setWidget(tab);
+
+    mw->add_windowsmenu_action(dock_note->toggleViewAction());
+    mw->add_windowsmenu_action(dock_tab->toggleViewAction());
+
+    mw->addDockWidget(Qt::TopDockWidgetArea,   dock_tab);
+    mw->addDockWidget(Qt::BottomDockWidgetArea,  dock_note);
+
+    setHidden(true);    //TODO а так можно, интересно?
+    //---
+#else
     QHBoxLayout *main_box = new QHBoxLayout();
     main_box->addWidget(notebook_frame);
     setLayout(main_box);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);
-
     create_widgets();
 }
 //--------------------------------------------------------------------------------

@@ -253,9 +253,7 @@ private:
 
     QMenu *m_fileMenu = 0;
     QMenu *m_optionsMenu = 0;
-#ifndef NO_LOG
     QMenu *m_windowsMenu = 0;
-#endif
     QMenu *m_helpMenu = 0;
 
     QAction *a_AskExit = 0;

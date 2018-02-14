@@ -58,9 +58,10 @@ private:
     QGridLayout *grid3 = 0;
     QGridLayout *grid4 = 0;
 
+#ifndef USE_DOCKS
     QFrame *notebook_frame = 0;
+#endif
     QTabWidget *tab = 0;
-
     Notebook *note = 0;
 
     void init(void);

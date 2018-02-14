@@ -67,12 +67,9 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-    //main_window->setFixedSize(main_window->sizeHint());
-
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-    
 
     return app.exec();
 }

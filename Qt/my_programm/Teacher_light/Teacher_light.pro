@@ -33,6 +33,8 @@ DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += NO_RESIZE
 
+DEFINES += USE_DOCKS
+
 HEADERS += \
     defines.hpp \
     version.hpp \

@@ -72,6 +72,8 @@ void MainBox::init(void)
 
     load_widgets(GROUP_NAME);
     unlock_widgets();
+
+    setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)

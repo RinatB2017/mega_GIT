@@ -335,9 +335,7 @@ void MainWindow::createMenus(void)
     m_fileMenu = new QMenu(mainBar);
 
     m_optionsMenu = new QMenu(mainBar);
-#ifndef NO_LOG
     m_windowsMenu = new QMenu(mainBar);
-#endif
     m_helpMenu = new QMenu(mainBar);
 
     m_styleMenu = new QMenu(m_optionsMenu);
@@ -360,9 +358,7 @@ void MainWindow::createMenus(void)
 
     mainBar->addMenu(m_fileMenu);
     mainBar->addMenu(m_optionsMenu);
-#ifndef NO_LOG
     mainBar->addMenu(m_windowsMenu);
-#endif
     mainBar->addMenu(m_helpMenu);
 
     sl.append(QStyleFactory::keys());
@@ -484,11 +480,9 @@ void MainWindow::updateText(void)
     m_fileMenu->setStatusTip(tr("File"));
     m_fileMenu->setToolTip(tr("File"));
 
-#ifndef NO_LOG
     m_windowsMenu->setTitle((tr("Windows")));
     m_windowsMenu->setStatusTip((tr("Windows")));
     m_windowsMenu->setToolTip((tr("Windows")));
-#endif
 
     m_optionsMenu->setTitle(tr("&Settings"));
     m_optionsMenu->setStatusTip(tr("&Settings"));
@@ -1161,12 +1155,9 @@ bool MainWindow::add_optionsmenu_action(int pos_y,
 bool MainWindow::add_windowsmenu_action(QAction *action)
 {
     Q_CHECK_PTR(action);
-
-#ifndef NO_LOG
     Q_CHECK_PTR(m_windowsMenu);
+
     m_windowsMenu->addAction(action);
-    return false;
-#endif
     return true;
 }
 #endif

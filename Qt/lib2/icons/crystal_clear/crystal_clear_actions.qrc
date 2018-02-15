@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/crystal_clear/actions">
+        <file>actions/1day.png</file>
         <file>actions/1downarrow.png</file>
         <file>actions/1leftarrow.png</file>
         <file>actions/1rightarrow.png</file>

@@ -44,6 +44,7 @@ enum SYSLOG_LEVELS
 #endif
 //--------------------------------------------------------------------------------
 class QPushButton;
+class QDateTime;
 class QLineEdit;
 class QSpinBox;
 class QComboBox;
@@ -60,7 +61,10 @@ public:
     ~Sender_syslog();
 
 signals:
-    void syslog(QDateTime, int, int, QString);
+    void syslog(QDateTime,
+                int,
+                int,
+                QString);
 
 private slots:
     void start(void);

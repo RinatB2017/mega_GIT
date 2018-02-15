@@ -72,6 +72,16 @@ SysLog_dock::SysLog_dock(const QString &title,
     btn_test = new QPushButton;
     btn_test->setText("test");
 
+    for(int n=0; n<8; n++)
+    {
+        QToolButton *btn = new QToolButton;
+        btn->setObjectName(QString("btn_%1").arg(n));
+        btn->setText(QString("%1").arg(n));
+        btn->setProperty("value", n);
+        connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click()));
+        buttons.append(btn);
+    }
+
     btn_first->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward));
     btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
     btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
@@ -89,6 +99,11 @@ SysLog_dock::SysLog_dock(const QString &title,
     hbox->setMargin(0);
 
     hbox->addWidget(btn_test);
+    hbox->addStretch(1);
+    foreach (QToolButton *btn, buttons)
+    {
+        hbox->addWidget(btn);
+    }
     hbox->addStretch(1);
     hbox->addWidget(btn_first);
     hbox->addWidget(btn_prev);
@@ -165,16 +180,37 @@ QString SysLog_dock::syslog_to_str(int level)
     return temp;
 }
 //--------------------------------------------------------------------------------
-void SysLog_dock::test(void)
+void SysLog_dock::add_test_data(int level)
 {
     emit trace(Q_FUNC_INFO);
-
     QDateTime dt;
 
     model->insertRow(0);
     model->setData(model->index(0, 0, QModelIndex()), dt.currentDateTime().toString("dd-MM-yy hh:mm:ss"));
-    model->setData(model->index(0, 1, QModelIndex()), syslog_to_str(LOG_INFO));
+    model->setData(model->index(0, 1, QModelIndex()), syslog_to_str(level));
     model->setData(model->index(0, 2, QModelIndex()), 0);
     model->setData(model->index(0, 3, QModelIndex()), "no message");
+}
+//--------------------------------------------------------------------------------
+void SysLog_dock::click(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
+    Q_CHECK_PTR(btn);
+
+    emit info(QString("%1").arg(btn->property("value").toInt()));
+}
+//--------------------------------------------------------------------------------
+void SysLog_dock::test(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    for(int n=0; n<8; n++)
+    {
+        add_test_data(n);
+        add_test_data(n);
+        add_test_data(n);
+    }
 }
 //--------------------------------------------------------------------------------

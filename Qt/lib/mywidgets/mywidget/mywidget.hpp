@@ -22,6 +22,7 @@
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
 #include <QFileDialog>
+#include <QDateTime>
 #include <QComboBox>
 #include <QCheckBox>
 #include <QSpinBox>
@@ -165,6 +166,10 @@ signals:
 
     void syslog(int level,
                 QString src,
+                QString message);
+    void syslog(QDateTime dt,
+                int level,
+                int src,
                 QString message);
 
 public slots:

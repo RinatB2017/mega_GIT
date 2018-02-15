@@ -54,6 +54,12 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
+#ifndef QT_DEBUG
+#ifdef UNDER_CONSTRUCTION
+    MyWidget::messagebox_warning("Warning", "UNDER_CONSTRUCTION");
+#endif
+#endif
+
     QPixmap pixmap(":/logo/pinguin.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);

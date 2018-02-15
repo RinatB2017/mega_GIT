@@ -21,6 +21,8 @@ DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
+DEFINES += UNDER_CONSTRUCTION
+
 HEADERS += \
     defines.hpp \
     version.hpp \

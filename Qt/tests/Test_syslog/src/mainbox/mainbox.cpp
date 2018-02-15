@@ -175,7 +175,7 @@ void MainBox::createSysLog_dock(void)
     connect(dock,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(dock,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    connect(this,   SIGNAL(syslog(int,QString,QString)),    dock,   SLOT(syslog(QDateTime,int,int,QString)));
+    connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  dock,   SLOT(syslog(QDateTime,int,int,QString)));
 
     mw->add_windowsmenu_action(dock->toggleViewAction());
     connect(mw, SIGNAL(syslog(QDateTime,int,int,QString)),  dock,   SLOT(syslog(QDateTime,int,int,QString)));

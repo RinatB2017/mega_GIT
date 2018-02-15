@@ -63,6 +63,8 @@ private slots:
     void seek_next(void);
     void seek_last(void);
 
+
+    void click(void);
     void test(void);
 
 private:
@@ -73,12 +75,16 @@ private:
     QToolButton *btn_next = 0;
     QToolButton *btn_last = 0;
 
+    QList<QToolButton *> buttons;
+
     QPushButton *btn_test = 0;
 
     QStandardItemModel *model = 0;
     QTableView *table = 0;
 
     QString syslog_to_str(int level);
+
+    void add_test_data(int level);
 };
 //--------------------------------------------------------------------------------
 #endif // SYSLOG_DOCK_HPP

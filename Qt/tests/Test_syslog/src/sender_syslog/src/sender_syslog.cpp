@@ -18,11 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QPushButton>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QSpinBox>
-#include <QLabel>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QPushButton>
+#   include <QLineEdit>
+#   include <QComboBox>
+#   include <QSpinBox>
+#   include <QLabel>
+#endif
 //--------------------------------------------------------------------------------
 #include "sender_syslog.hpp"
 //--------------------------------------------------------------------------------
@@ -40,8 +44,6 @@ Sender_syslog::Sender_syslog(const QString &title,
 {
     setObjectName(title);
     init();
-
-    //setFixedWidth(sizeHint().width());
 }
 //--------------------------------------------------------------------------------
 Sender_syslog::~Sender_syslog()

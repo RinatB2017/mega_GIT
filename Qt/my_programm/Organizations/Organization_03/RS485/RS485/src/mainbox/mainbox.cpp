@@ -89,6 +89,15 @@ void MainBox::init(void)
     connect(ui->pelco_d,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(ui->pelco_d,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
+#if 1
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+#else
+    if(sizeHint().height() > 0)
+    {
+        setMinimumHeight(sizeHint().height());
+    }
+#endif
+
     load_widgets("rs485");
 }
 //--------------------------------------------------------------------------------

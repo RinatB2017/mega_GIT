@@ -17,7 +17,6 @@ SUBDIRS += \
     NewMoonLight \
     Organizations \
     MODBUS \
-    RS485 \
     show_films \
     Templates \
     WiFi \

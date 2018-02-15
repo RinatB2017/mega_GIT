@@ -55,6 +55,10 @@ message ($$OPTIMIZE)
 #}
 #QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
 ###############################################################################
+unix:!macx {
+    QMAKE_CXX      = ccache g++
+}
+###############################################################################
 QMAKE_CFLAGS   += $${OPTIMIZE}
 QMAKE_CXXFLAGS += $${OPTIMIZE}
 QMAKE_LFLAGS   += $${OPTIMIZE}

@@ -42,7 +42,7 @@
 #endif
 //--------------------------------------------------------------------------------
 MainWidget_GUI::MainWidget_GUI(QWidget *parent,
-                 MySplashScreen *splash) :
+                               MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
     ui(new Ui::MainWidget_GUI)
@@ -68,22 +68,24 @@ void MainWidget_GUI::init(void)
 
     //---
     w = new MainWidget(this);
-    if(w)
-    {
-        connect(w,          SIGNAL(info(QString)),  this,       SIGNAL(info(QString)));
-        connect(w,          SIGNAL(debug(QString)), this,       SIGNAL(debug(QString)));
-        connect(w,          SIGNAL(error(QString)), this,       SIGNAL(error(QString)));
-        connect(w,          SIGNAL(trace(QString)), this,       SIGNAL(trace(QString)));
+    Q_CHECK_PTR(w);
 
-        connect(ui->btn_0,  SIGNAL(clicked(bool)),  w,          SLOT(get()));
-        connect(w,          SIGNAL(set(QString)),   ui->le_0,   SLOT(setText(QString)));
-    }
+    connect(w,          SIGNAL(info(QString)),  this,       SIGNAL(info(QString)));
+    connect(w,          SIGNAL(debug(QString)), this,       SIGNAL(debug(QString)));
+    connect(w,          SIGNAL(error(QString)), this,       SIGNAL(error(QString)));
+    connect(w,          SIGNAL(trace(QString)), this,       SIGNAL(trace(QString)));
+
+    connect(ui->btn_0,  SIGNAL(clicked(bool)),  w,          SLOT(get()));
+    connect(w,          SIGNAL(set(QString)),   ui->le_0,   SLOT(setText(QString)));
     //---
-
+#if 1
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+#else
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
     }
+#endif
 
     load_config();
 }

@@ -63,10 +63,15 @@ void MainBox::init(void)
 
     connect(ui->treeWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(click(QModelIndex)));
 
+#if 1
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+#else
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
     }
+#endif
+
     load_config();
 }
 //--------------------------------------------------------------------------------

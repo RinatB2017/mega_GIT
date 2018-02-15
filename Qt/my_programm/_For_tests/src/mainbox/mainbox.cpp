@@ -72,10 +72,14 @@ void MainBox::init(void)
     connect(mw, SIGNAL(notifySignal()), this,   SLOT(test_1()));
 #endif
 
+#if 1
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+#else
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
     }
+#endif
     load_config();
 }
 //--------------------------------------------------------------------------------

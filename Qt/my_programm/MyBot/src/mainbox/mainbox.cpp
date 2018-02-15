@@ -80,10 +80,15 @@ void MainBox::init(void)
     camera->show();
     ui->camera_layout->addWidget(camera);
 
+#if 1
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+#else
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
     }
+#endif
+
     load_config();
 }
 //--------------------------------------------------------------------------------

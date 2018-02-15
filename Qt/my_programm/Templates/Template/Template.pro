@@ -9,9 +9,7 @@ FOLDER  = _Templates
 
 PROGRAMM_PATH  += \
     $$PWD \
-    $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
@@ -20,7 +18,6 @@ QMAKE_CXXFLAGS += -fno-show-column
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 
-#
 #DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
 #DEFINES += NO_TRAYICON

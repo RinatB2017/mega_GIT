@@ -56,6 +56,10 @@ else {
 #CONFIG	 += precompile_header
 #PRECOMPILED_HEADER  = stable.h
 ###############################################################################
+unix:!macx {
+    QMAKE_CXX      = ccache g++
+}
+###############################################################################
 QMAKE_CFLAGS   += $${OPTIMIZE}
 QMAKE_CXXFLAGS += $${OPTIMIZE}
 QMAKE_LFLAGS   += $${OPTIMIZE}

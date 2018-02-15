@@ -1,0 +1,89 @@
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2017                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+#include <QApplication>
+#include <QMessageBox>
+#include <QLibraryInfo>
+//--------------------------------------------------------------------------------
+#if QT_VERSION >= 0x050000
+#   include <QtMessageHandler>
+#endif
+//--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mymainwindow.hpp"
+#include "mainwidget_gui.hpp"
+#include "defines.hpp"
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include "posix.hpp"
+#endif
+//--------------------------------------------------------------------------------
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+#ifdef Q_OS_LINUX
+    //set_signals();
+#endif
+
+    set_codecs();
+#if 1
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    MyApplication app(argc, argv);
+#endif
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setApplicationVersion(VER_STR);
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/pinguin.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    splash->show();
+
+    MyMainWindow *main_window = new MyMainWindow();
+    Q_CHECK_PTR(main_window);
+    main_window->setAttribute(Qt::WA_DeleteOnClose);
+
+    MainWidget_GUI *mainBox = new MainWidget_GUI(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+
+    return app.exec();
+}
+//--------------------------------------------------------------------------------

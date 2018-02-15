@@ -80,17 +80,21 @@ void MainBox::init(void)
 
     createTestBar();
 
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-
 #if 0
     unsigned short x = 1;
     emit info(QString("%1").arg(((unsigned char *) &x) == 0 ? "big-endian" : "little-endian"));
 #endif
 
     init_widgets();
+#if 1
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+#else
+    if(sizeHint().height() > 0)
+    {
+        setMinimumHeight(sizeHint().height());
+    }
+#endif
+
     load_config();
 }
 //--------------------------------------------------------------------------------

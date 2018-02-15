@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/crystal_clear/actions">
-        <file>actions/1day.png</file>
         <file>actions/1downarrow.png</file>
         <file>actions/1leftarrow.png</file>
         <file>actions/1rightarrow.png</file>
@@ -44,11 +43,11 @@
         <file>actions/agt_stop.png</file>
         <file>actions/agt_support.png</file>
         <file>actions/agt_uninstall-product.png</file>
-        <file>actions/agt_update-product.png</file>
         <file>actions/agt_update_critical.png</file>
         <file>actions/agt_update_drivers.png</file>
         <file>actions/agt_update_misc.png</file>
         <file>actions/agt_update_recommended.png</file>
+        <file>actions/agt_update-product.png</file>
         <file>actions/agt_Utilities.png</file>
         <file>actions/agt_virus-off.png</file>
         <file>actions/agt_virus.png</file>
@@ -60,9 +59,9 @@
         <file>actions/attach.png</file>
         <file>actions/autostart.png</file>
         <file>actions/back.png</file>
-        <file>actions/bookmark.png</file>
         <file>actions/bookmark_add.png</file>
         <file>actions/bookmark_folder.png</file>
+        <file>actions/bookmark.png</file>
         <file>actions/bookmarks_list_add.png</file>
         <file>actions/build.png</file>
         <file>actions/button_cancel.png</file>
@@ -96,11 +95,11 @@
         <file>actions/demo.png</file>
         <file>actions/down.png</file>
         <file>actions/easymoblog.png</file>
-        <file>actions/edit.png</file>
         <file>actions/edit_add.png</file>
         <file>actions/edit_group.png</file>
         <file>actions/edit_remove.png</file>
         <file>actions/edit_user.png</file>
+        <file>actions/edit.png</file>
         <file>actions/editclear.png</file>
         <file>actions/editcopy.png</file>
         <file>actions/editcut.png</file>
@@ -182,7 +181,6 @@
         <file>actions/next.png</file>
         <file>actions/openterm.png</file>
         <file>actions/outbox.png</file>
-        <file>actions/player-end.png</file>
         <file>actions/player_eject.png</file>
         <file>actions/player_end.png</file>
         <file>actions/player_fwd.png</file>
@@ -190,14 +188,15 @@
         <file>actions/player_play.png</file>
         <file>actions/player_rew.png</file>
         <file>actions/player_start.png</file>
+        <file>actions/player-end.png</file>
         <file>actions/playlist.png</file>
         <file>actions/power.png</file>
         <file>actions/project_open.png</file>
         <file>actions/queue.png</file>
         <file>actions/rebuild.png</file>
         <file>actions/redo.png</file>
-        <file>actions/reload.png</file>
         <file>actions/reload_page.png</file>
+        <file>actions/reload.png</file>
         <file>actions/revert.png</file>
         <file>actions/run.png</file>
         <file>actions/save_all.png</file>
@@ -209,9 +208,9 @@
         <file>actions/spellcheck.png</file>
         <file>actions/start.png</file>
         <file>actions/stop.png</file>
-        <file>actions/tab.png</file>
         <file>actions/tab_new.png</file>
         <file>actions/tab_remove.png</file>
+        <file>actions/tab.png</file>
         <file>actions/todo.png</file>
         <file>actions/toggle_log.png</file>
         <file>actions/top.png</file>
@@ -233,8 +232,8 @@
         <file>actions/view_tree.png</file>
         <file>actions/viewmag-.png</file>
         <file>actions/viewmag.png</file>
-        <file>actions/viewmag1.png</file>
         <file>actions/viewmag+.png</file>
+        <file>actions/viewmag1.png</file>
         <file>actions/viewmagfit.png</file>
         <file>actions/window_fullscreen.png</file>
         <file>actions/window_new.png</file>

@@ -213,7 +213,12 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    int x = 5;
+    Q_ASSERT(x == 0);
+#endif
+
+#if 0
     int x = rand() % ui->gridLayout->columnCount();
     int y = rand() % ui->gridLayout->rowCount();
 

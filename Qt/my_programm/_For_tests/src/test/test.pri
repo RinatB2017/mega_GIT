@@ -7,8 +7,9 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT      += testlib
 
-HEADERS += test.hpp
-SOURCES += test.cpp
-
-HEADERS += test_function.hpp
-SOURCES += test_function.cpp
+HEADERS += \
+    test_function.hpp \
+    test.hpp
+SOURCES += \
+    test_function.cpp \
+    test.cpp

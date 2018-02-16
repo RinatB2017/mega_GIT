@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,51 +18,57 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
-//--------------------------------------------------------------------------------
-#include <QtWidgets>
-#include <QObject>
 #include <QTest>
+//--------------------------------------------------------------------------------
+#include "test_function.hpp"
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
 //--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
-//--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-struct TEST
+Test_function::Test_function(void)
 {
-    uint8_t  addr;
-    uint16_t cmd;
-    uint8_t  reserved;
-    uint8_t  data;
-};
-#pragma pack(pop)
+    mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
+}
 //--------------------------------------------------------------------------------
-class Test : public QObject
+void Test_function::lineedit_set(QString name, QString value)
 {
-    Q_OBJECT
+    QLineEdit *le = mw->findChild<QLineEdit *>(name);
+    QVERIFY(le);
 
-public:
-    Test();
-    ~Test();
-
-private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void test_safe(void);
-    void test_safe_gui();
-
-    void simple_test(void);
-
-private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
-
-    void test_slider(void);
-    void test_mainbox(void);
-};
+    le->setText(value);
+}
 //--------------------------------------------------------------------------------
-#endif
+QString Test_function::lineedit_get(QString name)
+{
+    QLineEdit *le = mw->findChild<QLineEdit *>(name);
+    Q_CHECK_PTR(le);
+
+    return le->text();
+}
+//--------------------------------------------------------------------------------
+void Test_function::pushbutton_click(QString name)
+{
+    QPushButton *btn = mw->findChild<QPushButton *>(name);
+    QVERIFY(btn);
+
+    QTest::mouseClick(btn, Qt::LeftButton);
+}
+//--------------------------------------------------------------------------------
+void Test_function::toolbutton_click(QString name)
+{
+    QToolButton *btn = mw->findChild<QToolButton *>(name);
+    QVERIFY(btn);
+
+    QTest::mouseClick(btn, Qt::LeftButton);
+}
+//--------------------------------------------------------------------------------
+void Test_function::combobox_key_down_and_check_value(QString name, QString value)
+{
+    QComboBox *cb = mw->findChild<QComboBox *>(name);
+    QVERIFY(cb);
+
+    QTest::keyClick(cb, Qt::Key_Down);
+
+    QCOMPARE(cb->currentText(), value);
+}
+//--------------------------------------------------------------------------------

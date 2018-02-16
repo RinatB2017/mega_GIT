@@ -40,6 +40,7 @@ Test_QDockWidget::Test_QDockWidget(const QString &title,
     {
         QToolButton *btn = new QToolButton(this);
         btn->setProperty("value", index);
+        btn->setObjectName(QString("btn_dock_%1").arg(index));
         btn->setText(QString("%1").arg(index));
         connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click_btn()));
         widgets.append(btn);

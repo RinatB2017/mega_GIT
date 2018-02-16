@@ -25,6 +25,8 @@
 //--------------------------------------------------------------------------------
 #include <QSignalSpy>
 #include <QTest>
+//--------------------------------------------------------------------------------
+#include "test_function.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #define private public
@@ -37,6 +39,17 @@ Test::Test()
 {
     mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
+
+    tf = new Test_function;
+    QVERIFY(tf);
+}
+//--------------------------------------------------------------------------------
+Test::~Test()
+{
+    if(tf)
+    {
+        tf->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_slider(void)
@@ -55,22 +68,33 @@ void Test::test_slider(void)
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
+    for(int n=1; n<7; n++)
+    {
+        tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
+    }
 
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
+    tf->lineedit_set("le_0", "Text 0");
+    tf->lineedit_set("le_1", "Text 1");
 
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
+    QCOMPARE(tf->lineedit_get("le_0"), "Text 0");
+    QCOMPARE(tf->lineedit_get("le_1"), "Text 1");
 
-    QTest::mouseClick(tb, Qt::LeftButton);
+    tf->pushbutton_click("btn_0");
+    tf->pushbutton_click("btn_0");
+    tf->pushbutton_click("btn_0");
+    tf->pushbutton_click("btn_0");
+    tf->pushbutton_click("btn_0");
+
+    for(int n=1; n<10; n++)
+    {
+        tf->toolbutton_click(QString("btn_dock_%1").arg(n));
+    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_mainbox(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    Q_CHECK_PTR(mb);
+    QVERIFY(mb);
 
     QCOMPARE(mb->test_0(), true);
     QCOMPARE(mb->test_1(), true);
@@ -80,25 +104,13 @@ void Test::test_mainbox(void)
     QCOMPARE(mb->test_5(), true);
 }
 //--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-
-struct TEST
-{
-    uint8_t  addr;
-    uint16_t cmd;
-    uint8_t  reserved;
-    uint8_t  data;
-};
-
-#pragma pack(pop)
-//--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
     test_mainbox();
     test_slider();
 
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    Q_CHECK_PTR(mb);
+    QVERIFY(mb);
 
     QCOMPARE(mb->test(QByteArray::fromHex("000102030405")), 15);
     QCOMPARE(mb->test(QByteArray::fromHex("1F1F1F1F1F1F")), 6*0x1F);
@@ -127,90 +139,38 @@ void Test::test_func(void)
 void Test::test_safe(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    Q_CHECK_PTR(mb);
+    QVERIFY(mb);
 
     Safe *safe = mb->findChild<Safe *>("safe");
     QVERIFY(safe);
 
-    QToolButton *tb0 = mw->findChild<QToolButton *>("btn_0");
-    QToolButton *tb1 = mw->findChild<QToolButton *>("btn_1");
-    QToolButton *tb2 = mw->findChild<QToolButton *>("btn_2");
-    QToolButton *tb3 = mw->findChild<QToolButton *>("btn_3");
-    QToolButton *tb4 = mw->findChild<QToolButton *>("btn_4");
-    QToolButton *tb5 = mw->findChild<QToolButton *>("btn_5");
-    QToolButton *tb6 = mw->findChild<QToolButton *>("btn_6");
-    QToolButton *tb7 = mw->findChild<QToolButton *>("btn_7");
-    QToolButton *tb8 = mw->findChild<QToolButton *>("btn_8");
-    QToolButton *tb9 = mw->findChild<QToolButton *>("btn_9");
+    for(int n=0; n<10; n++)
+    {
+        safe->s_clear();
+        tf->toolbutton_click(QString("btn_%1").arg(n));
+        QCOMPARE(safe->get_value(), n);
+    }
 
-    QToolButton *tb_back = mw->findChild<QToolButton *>("btn_back");
-    QToolButton *tb_clear = mw->findChild<QToolButton *>("btn_clear");
-
-    QVERIFY(tb0);
-    QVERIFY(tb1);
-    QVERIFY(tb2);
-    QVERIFY(tb3);
-    QVERIFY(tb4);
-    QVERIFY(tb5);
-    QVERIFY(tb6);
-    QVERIFY(tb7);
-    QVERIFY(tb8);
-    QVERIFY(tb9);
-
-    QVERIFY(tb_back);
-    QVERIFY(tb_clear);
-
-    safe->s_clear();
-    QTest::mouseClick(tb0, Qt::LeftButton);
+    tf->toolbutton_click("btn_back");
     QCOMPARE(safe->get_value(), 0);
-    safe->s_clear();
-    QTest::mouseClick(tb1, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 1);
-    safe->s_clear();
-    QTest::mouseClick(tb2, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 2);
-    safe->s_clear();
-    QTest::mouseClick(tb3, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 3);
-    safe->s_clear();
-    QTest::mouseClick(tb4, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 4);
-    safe->s_clear();
-    QTest::mouseClick(tb5, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 5);
-    safe->s_clear();
-    QTest::mouseClick(tb6, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 6);
-    safe->s_clear();
-    QTest::mouseClick(tb7, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 7);
-    safe->s_clear();
-    QTest::mouseClick(tb8, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 8);
-    safe->s_clear();
-    QTest::mouseClick(tb9, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 9);
-
-    QTest::mouseClick(tb_back, Qt::LeftButton);
-    QCOMPARE(safe->get_value(), 0);
-    QTest::mouseClick(tb_clear, Qt::LeftButton);
+    tf->toolbutton_click("btn_clear");
     QCOMPARE(safe->get_value(), 0);
 
-    QTest::mouseClick(tb1,  Qt::LeftButton);
-    QTest::mouseClick(tb2,  Qt::LeftButton);
-    QTest::mouseClick(tb3,  Qt::LeftButton);
-    QTest::mouseClick(tb4,  Qt::LeftButton);
-    QTest::mouseClick(tb5,  Qt::LeftButton);
+    tf->toolbutton_click("btn_1");
+    tf->toolbutton_click("btn_2");
+    tf->toolbutton_click("btn_3");
+    tf->toolbutton_click("btn_4");
+    tf->toolbutton_click("btn_5");
     QCOMPARE(safe->get_value(), 12345);
 
-    QTest::mouseClick(tb_clear, Qt::LeftButton);
+    tf->toolbutton_click("btn_clear");
     QCOMPARE(safe->get_value(), 0);
 
-    QTest::mouseClick(tb9,  Qt::LeftButton);
-    QTest::mouseClick(tb9,  Qt::LeftButton);
-    QTest::mouseClick(tb9,  Qt::LeftButton);
-    QTest::mouseClick(tb9,  Qt::LeftButton);
-    QTest::mouseClick(tb9,  Qt::LeftButton);
+    tf->toolbutton_click("btn_9");
+    tf->toolbutton_click("btn_9");
+    tf->toolbutton_click("btn_9");
+    tf->toolbutton_click("btn_9");
+    tf->toolbutton_click("btn_9");
     QCOMPARE(safe->get_value(), 99999);
 
     QSignalSpy spy(safe, SIGNAL(info(QString)));
@@ -222,7 +182,7 @@ void Test::test_safe(void)
 void Test::test_safe_gui(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    Q_CHECK_PTR(mb);
+    QVERIFY(mb);
 
     Safe *safe = mb->findChild<Safe *>("safe");
     QVERIFY(safe);

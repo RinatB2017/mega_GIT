@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,51 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef TEST_FUNCTION_HPP
+#define TEST_FUNCTION_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
 #include <QObject>
-#include <QTest>
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
 //--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
-//--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-struct TEST
-{
-    uint8_t  addr;
-    uint16_t cmd;
-    uint8_t  reserved;
-    uint8_t  data;
-};
-#pragma pack(pop)
-//--------------------------------------------------------------------------------
-class Test : public QObject
+class Test_function : public QObject
 {
     Q_OBJECT
 
 public:
-    Test();
-    ~Test();
+    Test_function(void);
 
-private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void test_safe(void);
-    void test_safe_gui();
-
-    void simple_test(void);
+    void lineedit_set(QString name, QString value);
+    QString lineedit_get(QString name);
+    void pushbutton_click(QString name);
+    void toolbutton_click(QString name);
+    void combobox_key_down_and_check_value(QString name, QString value);
 
 private:
     MyMainWindow *mw = 0;
-    Test_function *tf = 0;
-
-    void test_slider(void);
-    void test_mainbox(void);
 };
 //--------------------------------------------------------------------------------
 #endif

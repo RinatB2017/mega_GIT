@@ -49,6 +49,10 @@ void MainBox::init(void)
     createTestBar();
 
 #if 1
+    connect(ui->btn_0,  SIGNAL(clicked(bool)),  this,   SLOT(new_test()));
+#endif
+
+#if 1
     for(int y=0; y<10; y++)
     {
         for(int x=0; x<5; x++)
@@ -163,7 +167,13 @@ void MainBox::inFunc(QPushButton *btn, saveSlot slot)
 //--------------------------------------------------------------------------------
 void MainBox::s_inFunc(void)
 {
+    emit trace(Q_FUNC_INFO);
     QMessageBox::information(0,"","info");
+}
+//--------------------------------------------------------------------------------
+void MainBox::new_test(void)
+{
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::split_address(const QString address,
@@ -213,12 +223,7 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    int x = 5;
-    Q_ASSERT(x == 0);
-#endif
-
-#if 0
+#if 1
     int x = rand() % ui->gridLayout->columnCount();
     int y = rand() % ui->gridLayout->rowCount();
 
@@ -232,6 +237,11 @@ bool MainBox::test_0(void)
     pixmap.load(":/red/1.png");
 
     label->setPixmap(pixmap);
+#endif
+
+#if 0
+    int x = 5;
+    Q_ASSERT(x == 0);
 #endif
 
 #if 0

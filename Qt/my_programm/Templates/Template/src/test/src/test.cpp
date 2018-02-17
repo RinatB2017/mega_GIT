@@ -18,10 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
+#include <QtWidgets>
 #include <QTest>
 //--------------------------------------------------------------------------------
 #define private public
@@ -55,6 +52,7 @@ void Test::test_GUI(void)
     for(int n=1; n<7; n++)
     {
         tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
+        tf->button_click("btn_choice_test");
     }
 }
 //--------------------------------------------------------------------------------

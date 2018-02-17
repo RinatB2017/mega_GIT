@@ -52,9 +52,6 @@ private slots:
     void test_GUI(void);
     void test_func(void);
 
-    void test_safe(void);
-    void test_safe_gui();
-
     void simple_test(void);
 
 private:

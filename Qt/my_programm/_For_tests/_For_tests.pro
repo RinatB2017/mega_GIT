@@ -66,20 +66,18 @@ RESOURCES += \
 
 OTHER_FILES += doc/notebook.txt
 
-CONFIG(debug, debug|release) {
-    include (src/test/test.pri)
-}
-
 LIB_PATH = "../../lib"
 LIB_PATH2 = "../../lib2"
+
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+    include ($$LIB_PATH/test_function/test_function.pri)
+}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
-
-include (src/test_qdockwidget/test_qdockwidget.pri)
-include (src/safe/safe.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

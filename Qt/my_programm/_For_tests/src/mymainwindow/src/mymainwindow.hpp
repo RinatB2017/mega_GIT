@@ -154,8 +154,6 @@ private:
     void create_local_menus(void);
     void create_toolbars(void);
 
-    void add_test_qdockwidget(void);
-
 protected:
     //void closeEvent(QCloseEvent *event);
 

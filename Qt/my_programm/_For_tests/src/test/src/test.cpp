@@ -33,7 +33,6 @@
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
 #include "mainbox.hpp"
-#include "safe.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -72,23 +71,6 @@ void Test::test_GUI(void)
     {
         tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
     }
-
-    tf->lineedit_set("le_0", "Text 0");
-    tf->lineedit_set("le_1", "Text 1");
-
-    QCOMPARE(tf->lineedit_get("le_0"), "Text 0");
-    QCOMPARE(tf->lineedit_get("le_1"), "Text 1");
-
-    tf->pushbutton_click("btn_0");
-    tf->pushbutton_click("btn_0");
-    tf->pushbutton_click("btn_0");
-    tf->pushbutton_click("btn_0");
-    tf->pushbutton_click("btn_0");
-
-    for(int n=1; n<10; n++)
-    {
-        tf->toolbutton_click(QString("btn_dock_%1").arg(n));
-    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_mainbox(void)
@@ -107,7 +89,6 @@ void Test::test_mainbox(void)
 void Test::test_func(void)
 {
     test_mainbox();
-    test_slider();
 
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
@@ -134,61 +115,6 @@ void Test::test_func(void)
     QCOMPARE(mb->test2(a, b, &c, &d), true);
     QCOMPARE(a, c);
     QCOMPARE(b, d);
-}
-//--------------------------------------------------------------------------------
-void Test::test_safe(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
-
-    Safe *safe = mb->findChild<Safe *>("safe");
-    QVERIFY(safe);
-
-    for(int n=0; n<10; n++)
-    {
-        safe->s_clear();
-        tf->toolbutton_click(QString("btn_%1").arg(n));
-        QCOMPARE(safe->get_value(), n);
-    }
-
-    tf->toolbutton_click("btn_back");
-    QCOMPARE(safe->get_value(), 0);
-    tf->toolbutton_click("btn_clear");
-    QCOMPARE(safe->get_value(), 0);
-
-    tf->toolbutton_click("btn_1");
-    tf->toolbutton_click("btn_2");
-    tf->toolbutton_click("btn_3");
-    tf->toolbutton_click("btn_4");
-    tf->toolbutton_click("btn_5");
-    QCOMPARE(safe->get_value(), 12345);
-
-    tf->toolbutton_click("btn_clear");
-    QCOMPARE(safe->get_value(), 0);
-
-    tf->toolbutton_click("btn_9");
-    tf->toolbutton_click("btn_9");
-    tf->toolbutton_click("btn_9");
-    tf->toolbutton_click("btn_9");
-    tf->toolbutton_click("btn_9");
-    QCOMPARE(safe->get_value(), 99999);
-
-    QSignalSpy spy(safe, SIGNAL(info(QString)));
-    emit safe->info("test info");
-    QList<QVariant> firstCallArgs = spy.at(0);
-    QCOMPARE(firstCallArgs.length(), 1);
-}
-//--------------------------------------------------------------------------------
-void Test::test_safe_gui(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
-
-    Safe *safe = mb->findChild<Safe *>("safe");
-    QVERIFY(safe);
-
-    QLCDNumber *display = mw->findChild<QLCDNumber *>("lcdNumber");
-    QCOMPARE(display->value(),  99999);
 }
 //--------------------------------------------------------------------------------
 void Test::simple_test(void)

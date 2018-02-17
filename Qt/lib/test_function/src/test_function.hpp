@@ -33,10 +33,16 @@ public:
     Test_function(void);
 
     void lineedit_set(QString name, QString value);
+    void lineedit_set(QWidget *widget, QString name, QString value);
+
     QString lineedit_get(QString name);
-    void pushbutton_click(QString name);
-    void toolbutton_click(QString name);
+    QString lineedit_get(QWidget *widget, QString name);
+
+    void button_click(QString name);
+    void button_click(QWidget *widget, QString name);
+
     void combobox_key_down_and_check_value(QString name, QString value);
+    void combobox_key_down_and_check_value(QWidget *widget, QString name, QString value);
 
 private:
     MyMainWindow *mw = 0;

@@ -48,28 +48,6 @@ void MainBox::init(void)
 
     createTestBar();
 
-#if 1
-    connect(ui->btn_0,  SIGNAL(clicked(bool)),  this,   SLOT(new_test()));
-#endif
-
-#if 1
-    for(int y=0; y<10; y++)
-    {
-        for(int x=0; x<5; x++)
-        {
-            QLabel *lbl = new QLabel(this);
-            lbl->setPixmap(QPixmap(":/red/0.png"));
-
-            ui->gridLayout->addWidget(lbl, y, x);
-        }
-    }
-#endif
-
-#if 1
-    ui->btn_test->setCheckable(true);
-    connect(ui->btn_test,   SIGNAL(toggled(bool)),  ui->safe, SLOT(setHidden(bool)));
-#endif
-
 #if 0
     MyMainWindow *mw = dynamic_cast<MyMainWindow *>(parent());
     Q_CHECK_PTR(mw);
@@ -222,22 +200,6 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
-
-#if 1
-    int x = rand() % ui->gridLayout->columnCount();
-    int y = rand() % ui->gridLayout->rowCount();
-
-    QLayoutItem *item = ui->gridLayout->itemAtPosition(y, x);
-    Q_CHECK_PTR(item);
-
-    QLabel *label = dynamic_cast<QLabel*>(item->widget());
-    Q_CHECK_PTR(label);
-
-    QPixmap pixmap;
-    pixmap.load(":/red/1.png");
-
-    label->setPixmap(pixmap);
-#endif
 
 #if 0
     int x = 5;

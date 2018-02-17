@@ -63,12 +63,14 @@ RESOURCES += \
 
 OTHER_FILES += doc/notebook.txt
 
-CONFIG(debug, debug|release) {
-    include (src/test/test.pri)
-}
-
 #----------------------------------------------
 LIB_PATH = "../../../lib"
+
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+    include ($$LIB_PATH/test_function/test_function.pri)
+}
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/mymainwindow/mymainwindow.pri)

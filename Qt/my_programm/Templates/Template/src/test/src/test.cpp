@@ -29,24 +29,33 @@
 #include "mainwidget_gui.hpp"
 #include "mainwindow.hpp"
 #include "mainwidget.hpp"
+//--------------------------------------------------------------------------------
+#include "test_function.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
     mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
+
+    tf = new Test_function;
+    QVERIFY(tf);
+}
+//--------------------------------------------------------------------------------
+Test::~Test()
+{
+    if(tf)
+    {
+        tf->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
-
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
+    for(int n=1; n<7; n++)
+    {
+        tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
+    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)

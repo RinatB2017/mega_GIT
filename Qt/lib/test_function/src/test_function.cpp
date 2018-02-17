@@ -38,6 +38,16 @@ void Test_function::lineedit_set(QString name, QString value)
     le->setText(value);
 }
 //--------------------------------------------------------------------------------
+void Test_function::lineedit_set(QWidget *widget, QString name, QString value)
+{
+    QVERIFY(widget);
+
+    QLineEdit *le = widget->findChild<QLineEdit *>(name);
+    QVERIFY(le);
+
+    le->setText(value);
+}
+//--------------------------------------------------------------------------------
 QString Test_function::lineedit_get(QString name)
 {
     QLineEdit *le = mw->findChild<QLineEdit *>(name);
@@ -46,17 +56,29 @@ QString Test_function::lineedit_get(QString name)
     return le->text();
 }
 //--------------------------------------------------------------------------------
-void Test_function::pushbutton_click(QString name)
+QString Test_function::lineedit_get(QWidget *widget, QString name)
 {
-    QPushButton *btn = mw->findChild<QPushButton *>(name);
+    Q_CHECK_PTR(widget);
+
+    QLineEdit *le = widget->findChild<QLineEdit *>(name);
+    Q_CHECK_PTR(le);
+
+    return le->text();
+}
+//--------------------------------------------------------------------------------
+void Test_function::button_click(QString name)
+{
+    QAbstractButton *btn = mw->findChild<QAbstractButton *>(name);
     QVERIFY(btn);
 
     QTest::mouseClick(btn, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Test_function::toolbutton_click(QString name)
+void Test_function::button_click(QWidget *widget, QString name)
 {
-    QToolButton *btn = mw->findChild<QToolButton *>(name);
+    QVERIFY(widget);
+
+    QAbstractButton *btn = widget->findChild<QAbstractButton *>(name);
     QVERIFY(btn);
 
     QTest::mouseClick(btn, Qt::LeftButton);
@@ -65,6 +87,18 @@ void Test_function::toolbutton_click(QString name)
 void Test_function::combobox_key_down_and_check_value(QString name, QString value)
 {
     QComboBox *cb = mw->findChild<QComboBox *>(name);
+    QVERIFY(cb);
+
+    QTest::keyClick(cb, Qt::Key_Down);
+
+    QCOMPARE(cb->currentText(), value);
+}
+//--------------------------------------------------------------------------------
+void Test_function::combobox_key_down_and_check_value(QWidget *widget, QString name, QString value)
+{
+    QVERIFY(widget);
+
+    QComboBox *cb = widget->findChild<QComboBox *>(name);
     QVERIFY(cb);
 
     QTest::keyClick(cb, Qt::Key_Down);

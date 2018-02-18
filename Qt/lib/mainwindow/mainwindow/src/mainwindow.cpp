@@ -376,11 +376,13 @@ void MainWindow::createMenus(void)
     a_is_shows_trace = new QAction(m_optionsMenu);
 #endif
 
+#ifndef NO_LOG
     connect(a_is_shows_info,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_info(bool)));
     connect(a_is_shows_error,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_error(bool)));
 #ifdef QT_DEBUG
     connect(a_is_shows_debug,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_debug(bool)));
     connect(a_is_shows_trace,   SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_trace(bool)));
+#endif
 #endif
 
     QVariant flag_show_info  = true;

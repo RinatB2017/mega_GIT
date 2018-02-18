@@ -181,6 +181,7 @@ void MainBox::f_connect(void)
                                     .arg(ui->sb_src_b->value())
                                     .arg(ui->sb_src_c->value())
                                     .arg(ui->sb_src_d->value()));
+    strHost = src.toString();
     m_pTcpSocket->connectToHost(QHostAddress(src.toIPv4Address()), nPort);
     bool ok = m_pTcpSocket->waitForConnected(max_wait);
     if(ok)

@@ -1,0 +1,6 @@
+executing config test boost
++ cd /dev/shm/0/fritzing-app/config.tests/boost && /usr/lib64/qt5/bin/qmake  -spec /usr/lib64/qt5/mkspecs/linux-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /dev/shm/0/fritzing-app/config.tests/boost
++ cd /dev/shm/0/fritzing-app/config.tests/boost && MAKEFLAGS= make
+g++ -c -pipe -O2 -Wall -W -fPIC  -I. -I/usr/lib64/qt5/mkspecs/linux-g++ -o main.o main.cpp
+g++ -Wl,-O1 -o boost main.o    
+test boost succeeded

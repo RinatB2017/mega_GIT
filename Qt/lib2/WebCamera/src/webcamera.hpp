@@ -62,7 +62,7 @@ private slots:
 private:
     Ui::WebCamera *ui = 0;
 
-    int mCameraEventId;
+    int mCameraEventId = 0;
 
     cv::Mat mOrigImage;
     cv::Mat mElabImage;

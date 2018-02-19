@@ -44,10 +44,10 @@ CONFIG  += c++11
 LIBS    += -lX11 -lXtst -lOpenCL
 
 LIB_PATH = "../../lib"
+LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
-include (src/WebCamera/WebCamera.pri)
+include ($$LIB_PATH2/WebCamera/WebCamera.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -81,22 +81,39 @@ void MainBox::init(void)
 
     ui->sb_max_wait->setRange(100, 30000);
 
+    model = new QStandardItemModel(0, 2, this);
+    model->setHeaderData(0, Qt::Horizontal, tr("scan log"));
+    model->setHorizontalHeaderLabels(QStringList() << "IP" << "Port");
+    ui->tv_scan->setModel(model);
+
+    // выделение строки целиком и запрет редактирования
+    ui->tv_scan->setSelectionBehavior( QAbstractItemView::SelectRows );
+    ui->tv_scan->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //---
+    ui->tv_scan->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    //ui->tv_scan->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+
     m_pTcpSocket = new QTcpSocket(this);
     connect(m_pTcpSocket, SIGNAL(connected()), SLOT(slotConnected()));
     connect(m_pTcpSocket, SIGNAL(readyRead()), SLOT(slotReadyRead()));
     connect(m_pTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slotError(QAbstractSocket::SocketError)));
 
-    connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    connect(ui->btn_scan,       SIGNAL(clicked(bool)),  this,   SLOT(scan()));
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(f_connect()));
     connect(ui->btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(f_disconnect()));
 
-    setFixedSize(sizeHint());
+    //setFixedSize(sizeHint());
+
+    //ui->webEngineView->load(QUrl("https://www.google.ru/"));
+    //ui->webEngineView->load(QUrl("https://www.youtube.com/"));
 
     load_config();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::scan(void)
 {
+    //554
+
     emit trace(Q_FUNC_INFO);
     Q_CHECK_PTR(m_pTcpSocket);
 
@@ -138,6 +155,13 @@ void MainBox::test(void)
     dlg->setWindowModality(Qt::ApplicationModal);
     dlg->show();
 
+    //---
+    model->clear();
+    model->setHorizontalHeaderLabels(QStringList() << "IP" << "Port");
+    ui->tv_scan->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    //ui->tv_scan->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    //---
+
     for(quint32 address = min_address; address<max_address; address++)
     {
         dlg->setValue(address);
@@ -154,6 +178,11 @@ void MainBox::test(void)
             emit info(QString("%1:%2 OK")
                       .arg(strHost)
                       .arg(nPort));
+
+            model->insertRow(0);
+            model->setData(model->index(0, 0, QModelIndex()), strHost);
+            model->setData(model->index(0, 1, QModelIndex()), nPort);
+
             m_pTcpSocket->close();
         }
     }
@@ -170,26 +199,33 @@ void MainBox::f_connect(void)
     emit trace(Q_FUNC_INFO);
     Q_CHECK_PTR(m_pTcpSocket);
 
-    block_this_button(true);
+    auto index = ui->tv_scan->currentIndex();
+    if(index.row() == -1)
+    {
+        emit error("Ничего не выбрано");
+        return;
+    }
+    emit info(QString("%1:%2")
+              .arg(model->item(index.row(), 0)->text())
+              .arg(model->item(index.row(), 1)->text()));
 
-    nPort = ui->sb_port->value();
+    block_this_button(true);
     int max_wait = ui->sb_max_wait->value();
 
     emit info("Connect");
-    QHostAddress src = QHostAddress(QString("%1.%2.%3.%4")
-                                    .arg(ui->sb_src_a->value())
-                                    .arg(ui->sb_src_b->value())
-                                    .arg(ui->sb_src_c->value())
-                                    .arg(ui->sb_src_d->value()));
-    strHost = src.toString();
-    m_pTcpSocket->connectToHost(QHostAddress(src.toIPv4Address()), nPort);
+    strHost = model->item(index.row(), 0)->text();
+    nPort = model->item(index.row(), 1)->text().toInt();
+    m_pTcpSocket->connectToHost(strHost, nPort);
     bool ok = m_pTcpSocket->waitForConnected(max_wait);
     if(ok)
     {
-        emit info(QString("%1:%2 OK")
-                  .arg(strHost)
-                  .arg(nPort));
+        QString address = QString("http://%1:%2")
+                .arg(strHost)
+                .arg(nPort);
+        emit info(address);
         m_pTcpSocket->close();
+
+        ui->webEngineView->load(QUrl(address));
     }
 
     block_this_button(false);
@@ -220,21 +256,6 @@ void MainBox::slotError (QAbstractSocket::SocketError)
                .arg(strHost)
                .arg(nPort)
                .arg(m_pTcpSocket->errorString()));
-
-#if 0
-    switch(err)
-    {
-    case QAbstractSocket::UnconnectedState:
-    case QAbstractSocket::HostLookupState:
-    case QAbstractSocket::ConnectingState:
-    case QAbstractSocket::ConnectedState:
-    case QAbstractSocket::BoundState:
-    case QAbstractSocket::ListeningState:
-    case QAbstractSocket::ClosingState:
-    default:
-        break;
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::slotSendToServer(void)

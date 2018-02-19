@@ -29,6 +29,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include <QAbstractSocket>
 //--------------------------------------------------------------------------------
+class QStandardItemModel;
 class MySplashScreen;
 class QToolButton;
 class QComboBox;
@@ -45,7 +46,7 @@ public:
     ~MainBox();
 
 private slots:
-    void test(void);
+    void scan(void);
 
     void f_connect(void);
     void f_disconnect(void);
@@ -62,6 +63,8 @@ private:
     QString strHost;
     int nPort = 0;
     QTcpSocket* m_pTcpSocket;
+
+    QStandardItemModel *model = 0;
 
     void init(void);
     void updateText(void);

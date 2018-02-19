@@ -6,99 +6,197 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>190</height>
+    <width>742</width>
+    <height>430</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="sb_max_wait"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="QSpinBox" name="sb_src_b"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>End</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QSpinBox" name="sb_dst_a"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Max wait, ms</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Begin</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QSpinBox" name="sb_src_c"/>
-     </item>
-     <item row="0" column="4">
-      <widget class="QSpinBox" name="sb_src_d"/>
-     </item>
-     <item row="1" column="2">
-      <widget class="QSpinBox" name="sb_dst_b"/>
-     </item>
-     <item row="0" column="1">
-      <widget class="QSpinBox" name="sb_src_a"/>
-     </item>
-     <item row="1" column="4">
-      <widget class="QSpinBox" name="sb_dst_d"/>
-     </item>
-     <item row="1" column="3">
-      <widget class="QSpinBox" name="sb_dst_c"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Port</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QPushButton" name="btn_connect">
-       <property name="text">
-        <string>connect</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QSpinBox" name="sb_port"/>
-     </item>
-     <item row="0" column="6">
-      <widget class="QPushButton" name="btn_disconnect">
-       <property name="text">
-        <string>disconnect</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="6">
-      <widget class="QPushButton" name="btn_test">
-       <property name="text">
-        <string>test</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>scan</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="sb_max_wait"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QSpinBox" name="sb_src_b"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>End</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="sb_dst_a"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Max wait, ms</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Begin</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QSpinBox" name="sb_src_c"/>
+           </item>
+           <item row="0" column="4">
+            <widget class="QSpinBox" name="sb_src_d"/>
+           </item>
+           <item row="1" column="2">
+            <widget class="QSpinBox" name="sb_dst_b"/>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="sb_src_a"/>
+           </item>
+           <item row="1" column="4">
+            <widget class="QSpinBox" name="sb_dst_d"/>
+           </item>
+           <item row="1" column="3">
+            <widget class="QSpinBox" name="sb_dst_c"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Port</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="sb_port"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_scan">
+           <property name="text">
+            <string>GO</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTableView" name="tv_scan"/>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_2">
+           <property name="title">
+            <string>other</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="btn_connect">
+              <property name="text">
+               <string>connect</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_disconnect">
+              <property name="text">
+               <string>disconnect</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>140</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_web">
+      <attribute name="title">
+       <string>web</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QWebEngineView" name="webEngineView">
+         <property name="url">
+          <url>
+           <string>about:blank</string>
+          </url>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_camera">
+      <attribute name="title">
+       <string>camera</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="WebCamera" name="widget_camera" native="true"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
+  </customwidget>
+  <customwidget>
+   <class>WebCamera</class>
+   <extends>QWidget</extends>
+   <header>webcamera.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

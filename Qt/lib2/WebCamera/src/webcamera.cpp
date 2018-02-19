@@ -52,6 +52,10 @@ WebCamera::WebCamera(QWidget *parent) :
 //--------------------------------------------------------------------------------
 WebCamera::~WebCamera()
 {
+    if(mCameraEventId)
+    {
+        killTimer(mCameraEventId);
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------

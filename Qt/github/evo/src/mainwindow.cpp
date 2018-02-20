@@ -9,7 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     qsrand(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch());
     //init
-    for (int i=0; i < 150; i++){
+    for (int i=0; i < 150; i++)
+    {
         w.addAnimal(generateAnimal());
     }
     //createAndSaveTestAnimals();
@@ -54,8 +55,8 @@ void MainWindow::onTmrRunTimeout()
         ui->lblCount->setText(QString::number(w.getAnimalCount()));
         ui->lblFitness->setText(
                     QString("Best (%1) with fitness (%2)"   ).arg(
-                            w.getBestAnimalID()             ).arg(
-                            w.getBestAnimalFitness()        ));
+                        w.getBestAnimalID()             ).arg(
+                        w.getBestAnimalFitness()        ));
         ui->lblCurAniID->setText(QString::number(w.getCurrentID()));
         if (!QDir().exists(PICS_DIR))
             QDir().mkdir(PICS_DIR);
@@ -70,14 +71,16 @@ void MainWindow::onTmrRunTimeout()
     if (w.getAnimalCount() > config.high_animal_count) // if we have too many animals then kill weak animals!
         w.killWeakAnimals();
 
-    if (!timer_stop){
+    if (!timer_stop)
+    {
         tmr_run.start();
     }
 }
 
 void MainWindow::appendNewAnimals()
 {
-    for (int i=0; i < 150; i++){
+    for (int i=0; i < 150; i++)
+    {
         w.addAnimal(generateAnimal());
     }
 }
@@ -109,12 +112,12 @@ void MainWindow::createAndSaveTestAnimals()
       << action_split
       << end;
     c2 << start
-      << action_eat_left
-      << action_move_left
-      << action_eat_down
-      << action_move_down
-      << action_split
-      << end;
+       << action_eat_left
+       << action_move_left
+       << action_eat_down
+       << action_move_down
+       << action_split
+       << end;
     c3 << start // spiral
        << action_split
        << load_from_mem //load from var1
@@ -125,44 +128,44 @@ void MainWindow::createAndSaveTestAnimals()
        << move_mem_right //save to var3
        << data_dec
        << save_to_mem
-           //right
-               << action_move_right
-               << data_dec
-           << jump_to_ifnz
-           << AnimalCommand(-3)
-           //up
-           << load_from_mem
-           << data_dec
-           << save_to_mem
-               << action_move_up
-               << data_dec
-           << jump_to_ifnz
-           << AnimalCommand(-3)
-           //left
-           << load_from_mem
-           << data_dec
-           << save_to_mem
-               << action_move_left
-               << data_dec
-           << jump_to_ifnz
-           << AnimalCommand(-3)
-           //down
-           << load_from_mem
-           << data_dec
-           << save_to_mem
-               << action_move_down
-               << data_dec
-           << jump_to_ifnz
-           << AnimalCommand(-3)
-           //dec var2
-           << move_mem_left
-           << load_from_mem
-           << data_dec
-           << save_to_mem
-           << jump_to_ifnz
-           << AnimalCommand(-33)
-           << move_mem_left // restore var1
-//           << load_from_mem
+          //right
+       << action_move_right
+       << data_dec
+       << jump_to_ifnz
+       << AnimalCommand(-3)
+          //up
+       << load_from_mem
+       << data_dec
+       << save_to_mem
+       << action_move_up
+       << data_dec
+       << jump_to_ifnz
+       << AnimalCommand(-3)
+          //left
+       << load_from_mem
+       << data_dec
+       << save_to_mem
+       << action_move_left
+       << data_dec
+       << jump_to_ifnz
+       << AnimalCommand(-3)
+          //down
+       << load_from_mem
+       << data_dec
+       << save_to_mem
+       << action_move_down
+       << data_dec
+       << jump_to_ifnz
+       << AnimalCommand(-3)
+          //dec var2
+       << move_mem_left
+       << load_from_mem
+       << data_dec
+       << save_to_mem
+       << jump_to_ifnz
+       << AnimalCommand(-33)
+       << move_mem_left // restore var1
+          //           << load_from_mem
        << end;
     QList<quint8> cmds = Animal::compile(c);
     QList<quint8> cmds2 = Animal::compile(c2);
@@ -176,7 +179,8 @@ void MainWindow::createAndSaveTestAnimals()
 
 void MainWindow::loadAnimals()
 {
-    for (int i=0; i < 50; i++){
+    for (int i=0; i < 50; i++)
+    {
         w.addAnimal(Animal::loadAnimal("c1.ani"));
         w.addAnimal(Animal::loadAnimal("c2.ani"));
         w.addAnimal(Animal::loadAnimal("c3.ani"));
@@ -190,7 +194,8 @@ void MainWindow::generateAndSaveAnimal()
     maxCmd = qrand()%1500 + 1;
     maxMem = qrand()%1500 + 1;
     QList<quint8> mems;
-    for (i=0; i< maxCmd; i++){
+    for (i=0; i< maxCmd; i++)
+    {
         cmd << AnimalCommand(qrand() % MAX_ANIMAL_COMMAND);
         cmd << AnimalCommand(qrand() % (2 << sizeof(quint8)));
     }
@@ -207,7 +212,8 @@ Animal *MainWindow::generateAnimal()
     maxCmd = qrand()%1500 + 1;
     maxMem = qrand()%1500 + 1;
     QList<quint8> mems;
-    for (i=0; i< maxCmd; i++){
+    for (i=0; i< maxCmd; i++)
+    {
         cmd << AnimalCommand(qrand() % MAX_ANIMAL_COMMAND);
         //cmd << AnimalCommand(qrand() % (2<<sizeof(quint8)));
     }
@@ -239,10 +245,13 @@ void MainWindow::on_cbxSaveOnQuit_toggled(bool checked)
 
 void MainWindow::on_btnStart_toggled(bool checked)
 {
-    if (checked){
+    if (checked)
+    {
         tmr_run.start();
         timer_stop = false;
-    }else{
+    }
+    else
+    {
         timer_stop = true;
 #ifdef DEBUG
         qDebug("MainWindow: timer is stopped.");
@@ -267,12 +276,13 @@ void MainWindow::on_sbFood_valueChanged(int arg1)
 
 void MainWindow::on_btnSavePic_clicked()
 {
-    if (ui->lblMap->pixmap() != NULL){
+    if (ui->lblMap->pixmap() != NULL)
+    {
         QPixmap px = ui->lblMap->pixmap()->copy();
         //TODO: open save-dialog box
         QString fileName = QFileDialog::getSaveFileName(this,
-                                        "Save current picture",
-                                        "", tr("Png Files (*.png)"));
+                                                        "Save current picture",
+                                                        "", tr("Png Files (*.png)"));
         if (fileName.isEmpty()) return;
         px.save(fileName);
     }

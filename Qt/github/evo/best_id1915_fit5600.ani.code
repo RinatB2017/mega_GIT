@@ -1,0 +1,112 @@
+eye_up_distance
+action_eat_up
+unknown opcode
+action_move_right
+data_clear
+touch_right
+eye_right_distance
+jump 7
+data_dec
+action_move_up
+sub_mem
+load_from_mem
+restart
+touch_left
+touch_left
+move_cmd_right
+action_eat_down
+unknown opcode
+action_eat_left
+action_eat_left
+save_to_mem
+end
+action_eat_up
+eye_down_distance
+jump 16 if not zero
+action_suicide
+unknown opcode
+save_to_mem
+eye_down_distance
+load_from_mem
+jump 14 if not zero
+set_mem_ptr
+eye_left_distance
+touch_right
+touch_down
+touch_down
+data_inc
+action_move_right
+data_inc
+move_mem_right
+touch_right
+move_mem_right
+jump 28 if zero
+data_inc
+action_eat_down
+start
+data_clear
+data_clear
+action_split_mutate
+action_eat_down
+sub_mem
+move_mem_left
+move_mem_left
+save_to_mem
+data_dec
+eye_up_distance
+restart
+data_dec
+sub_mem
+touch_down
+action_split_mutate
+touch_down
+touch_right
+action_eat_right
+data_clear
+action_move_right
+move_cmd_left
+move_mem_left
+move_cmd_right
+action_eat_left
+move_mem_left
+jump 33 if not zero
+jump 25
+eye_down_distance
+add_mem
+unknown opcode
+data_inc
+action_split
+action_move_up
+action_eat_up
+set_mem_ptr
+move_mem_left
+data_clear
+data_inc
+jump 11 if not zero
+action_eat_right
+start
+restart
+action_move_right
+eye_left_distance
+action_move_right
+nop
+add_mem
+data_inc
+touch_right
+jump 25
+touch_right
+action_split_mutate
+move_cmd_right
+unknown opcode
+touch_up
+action_move_right
+data_inc
+data_clear
+add_mem
+action_eat_left
+action_eat_left
+action_wait
+unknown opcode
+unknown opcode
+unknown opcode
+unknown opcode

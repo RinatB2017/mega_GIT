@@ -16,12 +16,15 @@ struct EyeData{
     ObjectType type;
 };
 
-struct ObjectCoord {
+struct ObjectCoord
+{
     qint32 x,y;
     ObjectCoord(){x=0; y=0;}
     ObjectCoord(qint32 _x, quint32 _y){x=_x; y=_y;}
-    ObjectCoord addDist(int distance, Direction dir){
-        switch (dir){
+    ObjectCoord addDist(int distance, Direction dir)
+    {
+        switch (dir)
+        {
         case Left: x -= distance; break;
         case Right: x += distance; break;
         case Up: y += distance; break;
@@ -36,16 +39,19 @@ struct ObjectCoord {
         //if (x ) x = 0;
         return *this;
     }
-    bool operator==(ObjectCoord oc){
+    bool operator==(ObjectCoord oc)
+    {
         return (x == oc.x && y == oc.y);
     }
-    bool operator!=(ObjectCoord oc){
+    bool operator!=(ObjectCoord oc)
+    {
         return !(operator==(oc));
     }
 };
 
 //todo union: char/enum
-enum AnimalCommand {
+enum AnimalCommand
+{
     //cmd group
     nop,            // no op
     move_cmd_left,  // move carret on cmd left

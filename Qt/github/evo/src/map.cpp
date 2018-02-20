@@ -7,7 +7,8 @@ Map::Map(QObject *parent) :
     //todo random seed in main
     //qsrand(1);
     for (int i=0; i < MAP_X_SIZE; i++)
-        for (int j=0; j < MAP_Y_SIZE; j++){
+        for (int j=0; j < MAP_Y_SIZE; j++)
+        {
             quint32 r = qrand();
             if (r % 50 == 0) map[i][j] = quint8(otStone);
             else if (r % 49 == 0) map[i][j] = quint8(otFood);

@@ -5,13 +5,16 @@
 World::World(QObject *parent):
     QObject(parent), best_animal(NULL), best_fitness(0), save_best_on_destroy(false), current_ID(1)
 {
+
 }
 
 World::~World()
 {
-    if (save_best_on_destroy){
+    if (save_best_on_destroy)
+    {
         Animal* ani;
-        foreach (ani,anis){
+        foreach (ani,anis)
+        {
             if (ani->getFitness() > best_fitness){ // store best animal
                 if (best_animal != NULL) delete best_animal;
                 best_fitness = ani->getFitness();
@@ -19,7 +22,8 @@ World::~World()
                 best_animal->setID(ani->getID());
             }
         }
-        if (best_animal != NULL){
+        if (best_animal != NULL)
+        {
 #ifdef DEBUG
             qDebug(QString("Best animal (%1) stored with fitness (%2)").arg(best_animal->getID()).arg(best_fitness).toAscii().data());
 #endif
@@ -41,7 +45,8 @@ World::~World()
 
 void World::addAnimal(Animal *ani, ObjectCoord coord_start)
 {
-    if (ani != NULL){
+    if (ani != NULL)
+    {
         ani->setParent(this);
         ani->setMap(&map);
         ani->setID(current_ID++);
@@ -52,10 +57,13 @@ void World::addAnimal(Animal *ani, ObjectCoord coord_start)
         connect(ani,SIGNAL(split(Direction)),SLOT(onSplit(Direction)));
         connect(ani,SIGNAL(splitMutate(Direction)),SLOT(onSplit_Mutate(Direction)));
         connect(this,SIGNAL(tick()),ani,SLOT(onTick()));
-        if ((coord_start.x != -1) && (coord_start.y != -1)){
+        if ((coord_start.x != -1) && (coord_start.y != -1))
+        {
             ani->coord.x = coord_start.x;
             ani->coord.y = coord_start.y;
-        }else{
+        }
+        else
+        {
             do {
                 ani->coord.x = qrand() % MAP_X_SIZE;
                 ani->coord.y = qrand() % MAP_Y_SIZE;
@@ -87,8 +95,10 @@ void World::makeStep()
 
 void World::saveBestAnimal(QString filename)
 {
-    if (best_animal != NULL){
-        if (filename.isEmpty()){
+    if (best_animal != NULL)
+    {
+        if (filename.isEmpty())
+        {
             filename = QString("best_id%1_fit%2.ani").arg(best_animal->getID()).arg(best_fitness);
         }
         best_animal->saveAnimal(filename);
@@ -97,18 +107,21 @@ void World::saveBestAnimal(QString filename)
 
 void World::onMove(Direction direction)
 {
-    if (QString("Animal").compare(sender()->metaObject()->className()) == 0){
+    if (QString("Animal").compare(sender()->metaObject()->className()) == 0)
+    {
         Animal* ani = (Animal*) sender();
         if (ani == NULL) return;
         ani->food--;
-        if (ani->food < 0){
+        if (ani->food < 0)
+        {
             onSuicide();
             return;
         }
         ObjectCoord oc = ani->coord;
         oc.addDist(1,direction);
         if (map.coordIsValid(oc)) oc = map.correctCoord(oc);
-        switch (map.getType(oc)){
+        switch (map.getType(oc))
+        {
         case otNone:
         case otFood: //food will be destroyed
             map.moveObj(ani->coord, direction);
@@ -124,7 +137,8 @@ void World::onMove(Direction direction)
 
 void World::onEat(Direction direction)
 {
-    if (QString("Animal").compare(sender()->metaObject()->className()) == 0){
+    if (QString("Animal").compare(sender()->metaObject()->className()) == 0)
+    {
         Animal* ani = (Animal*) sender();
         if (ani == NULL) return;
         ani->food--;
@@ -132,7 +146,8 @@ void World::onEat(Direction direction)
         ObjectCoord oc = ani->coord;
         oc.addDist(1,direction);
         if (map.coordIsValid(oc)) oc = map.correctCoord(oc);
-        switch (map.getType(oc)){
+        switch (map.getType(oc))
+        {
         case otFood: //food will be destroyed
             ani->fitnessUp();
             ani->food += 100;
@@ -144,7 +159,8 @@ void World::onEat(Direction direction)
             //delete animal
             {
                 Animal* ani2=findAnimalByCoord(oc);
-                if (ani2 != NULL){
+                if (ani2 != NULL)
+                {
 #ifdef DEBUG
                     qDebug(QString("(%1) kill (%2)").arg(ani->getID()).arg(ani2->getID()).toAscii().data());
 #endif
@@ -169,7 +185,8 @@ void World::onEat(Direction direction)
 
 void World::onWait()
 {
-    if (QString("Animal").compare(sender()->metaObject()->className()) == 0){
+    if (QString("Animal").compare(sender()->metaObject()->className()) == 0)
+    {
         Animal* ani = (Animal*) sender();
         if (ani != NULL)
             ani->food--;
@@ -178,9 +195,11 @@ void World::onWait()
 
 void World::onSuicide()
 {
-    if (QString("Animal").compare(sender()->metaObject()->className()) == 0){
+    if (QString("Animal").compare(sender()->metaObject()->className()) == 0)
+    {
         Animal* ani = (Animal*) sender();
-        if (ani != NULL){
+        if (ani != NULL)
+        {
             //TODO: add stats
 #ifdef DEBUG
             qDebug(QString("(%1) suicide with fitness(%2), food(%3)").arg(ani->getID()).arg(ani->getFitness()).arg(ani->food).toAscii().data());
@@ -192,18 +211,21 @@ void World::onSuicide()
 
 void World::onSplit(Direction direction)
 {
-    if (QString("Animal").compare(sender()->metaObject()->className()) == 0){
+    if (QString("Animal").compare(sender()->metaObject()->className()) == 0)
+    {
         Animal* ani = (Animal*) sender();
         if (ani == NULL) return;
         ani->food--;
-        if (ani->food < 0){
+        if (ani->food < 0)
+        {
             onSuicide();
             return;
         }
         ObjectCoord oc = ani->coord;
         oc.addDist(1,direction);
         if (map.coordIsValid(oc)) oc = map.correctCoord(oc);
-        switch (map.getType(oc)){
+        switch (map.getType(oc))
+        {
         case otNone:
         case otFood: //food will be destroyed
             if (ani->food > 1000){
@@ -227,28 +249,34 @@ void World::onSplit(Direction direction)
 
 void World::onSplit_Mutate(Direction direction)
 {
-    if (QString("Animal").compare(sender()->metaObject()->className()) == 0){
+    if (QString("Animal").compare(sender()->metaObject()->className()) == 0)
+    {
         Animal* ani = (Animal*) sender();
         if (ani == NULL) return;
         ani->food--;
-        if (ani->food < 0){
+        if (ani->food < 0)
+        {
             onSuicide();
             return;
         }
         ObjectCoord oc = ani->coord;
         oc.addDist(1,direction);
         if (map.coordIsValid(oc)) oc = map.correctCoord(oc);
-        switch (map.getType(oc)){
+        switch (map.getType(oc))
+        {
         case otNone:
         case otFood: //food will be destroyed
-            if (ani->food > 1000){
+            if (ani->food > 1000)
+            {
                 map.deleteObj(oc);
                 ani->fitnessUp(50);
                 //Animal *new_ani = ani->cloneAnimal();
                 QList<quint8> cmds = ani->getCommands();
                 QList<quint8> mems = ani->getMemory();
-                for (int i=0; i < (qrand() % 10); i++){
-                    switch(qrand() % 4){
+                for (int i=0; i < (qrand() % 10); i++)
+                {
+                    switch(qrand() % 4)
+                    {
                     case 0:
                         cmds[qrand() % cmds.size()] = qrand() % (256);
                         break;
@@ -283,7 +311,8 @@ void World::onSplit_Mutate(Direction direction)
 Animal *World::findAnimalByCoord(ObjectCoord oc)
 {
     Animal* ani;
-    foreach (ani, anis){
+    foreach (ani, anis)
+    {
         if (ani->coord == oc) return ani;
     }
     return NULL;
@@ -291,7 +320,8 @@ Animal *World::findAnimalByCoord(ObjectCoord oc)
 
 void World::killAnimal(Animal *ani)
 {
-    if (ani != NULL){
+    if (ani != NULL)
+    {
         if (ani->getFitness() > best_fitness){ // store best animal
             if (best_animal != NULL) delete best_animal;
             best_fitness = ani->getFitness();

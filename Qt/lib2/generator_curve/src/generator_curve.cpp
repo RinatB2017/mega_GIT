@@ -6,15 +6,11 @@
 #   include <QPushButton>
 #   include <QVBoxLayout>
 #   include <QHBoxLayout>
-#   include <QStringList>
 #   include <QGroupBox>
 #   include <QSettings>
 #   include <QSlider>
-#   include <qmath.h>
-#   include <QEvent>
+#   include <QtMath>
 #   include <QFrame>
-#   include <QTimer>
-#   include <QIcon>
 #endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -24,28 +20,6 @@
 #include "generator_curve.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "qwt_knob.h"
-//--------------------------------------------------------------------------------
-union INT_TO_BYTES
-{
-    unsigned int value;
-    struct
-    {
-        unsigned char d;
-        unsigned char c;
-        unsigned char b;
-        unsigned char a;
-    } bytes;
-};
-union SHORT_TO_BYTES
-{
-    unsigned short value;
-    struct
-    {
-        unsigned char b;
-        unsigned char a;
-    } bytes;
-};
 //--------------------------------------------------------------------------------
 Generator_Curve::Generator_Curve(QWidget *parent) :
     MyWidget(parent)
@@ -59,7 +33,6 @@ Generator_Curve::Generator_Curve(QWidget *parent) :
     setLayout(hbox);
 
     load_setting();
-    init_timer();
     updateText();
 }
 //--------------------------------------------------------------------------------
@@ -73,8 +46,7 @@ QWidget *Generator_Curve::add_frame(void)
     QFrame *frame = new QFrame(this);
 
     btnPower = new QPushButton(this);
-    btnPower->setCheckable(true);
-    connect(btnPower, SIGNAL(toggled(bool)), this, SLOT(start(bool)));
+    connect(btnPower,   SIGNAL(clicked(bool)),  this,   SLOT(start()));
 
     btnSinus    = new QPushButton(this);
     btnTriangle = new QPushButton(this);
@@ -94,16 +66,10 @@ QWidget *Generator_Curve::add_frame(void)
     group_vbox->addWidget(btn_2bytes);
     group->setLayout(group_vbox);
 
-    knob_Interval = new QwtKnob(this);
-    knob_Interval->setUpperBound(1000);
-    knob_Interval->setScaleMaxMajor(10);
-    knob_Interval->setScaleMaxMinor(10);
-    knob_Interval->setValue(1000);
-
-    connect(btnSinus, SIGNAL(clicked()), this, SLOT(gen_sinus()));
-    connect(btnTriangle, SIGNAL(clicked()), this, SLOT(gen_triangle()));
-    connect(btnSaw, SIGNAL(clicked()), this, SLOT(gen_saw()));
-    connect(btnMeandr, SIGNAL(clicked()), this, SLOT(gen_meandr()));
+    connect(btnSinus,       SIGNAL(clicked()),  this,   SLOT(gen_sinus()));
+    connect(btnTriangle,    SIGNAL(clicked()),  this,   SLOT(gen_triangle()));
+    connect(btnSaw,         SIGNAL(clicked()),  this,   SLOT(gen_saw()));
+    connect(btnMeandr,      SIGNAL(clicked()),  this,   SLOT(gen_meandr()));
 
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(btnPower);
@@ -112,13 +78,11 @@ QWidget *Generator_Curve::add_frame(void)
     vbox->addWidget(btnSaw);
     vbox->addWidget(btnMeandr);
     vbox->addWidget(group);
-    vbox->addWidget(knob_Interval);
+    vbox->addStretch(1);
 
     frame->setLayout(vbox);
-    frame->setFixedSize(frame->sizeHint());
 
     frame->setFrameStyle(QFrame::Box | QFrame::Raised);
-
     Q_CHECK_PTR(frame);
 
     return frame;
@@ -164,19 +128,31 @@ QWidget *Generator_Curve::add_grapher(void)
     return area;
 }
 //--------------------------------------------------------------------------------
-void Generator_Curve::start(bool state)
+void Generator_Curve::start(void)
 {
-    QPushButton *button = (QPushButton *)sender();
-    if(state)
+    emit info("Start");
+    emit trace(Q_FUNC_INFO);
+
+    QString temp;
+
+    temp = ":";
+    foreach (QSlider *slider, sliders)
     {
-        timer->start(knob_Interval->value());
-        button->setText(tr("stop"));
+        QString data = QString("%1").arg(slider->value(), 4, 16, QChar('0')).toUpper();
+        temp.append(data);
     }
-    else
+    temp.append("\n");
+
+    if(temp.length() != (1 + (MAX_SLIDER * 4) + 1))
     {
-        timer->stop();
-        button->setText(tr("start"));
+        emit error(QString("ERROR: len=%1").arg(temp.length()));
+        return;
     }
+
+    emit debug(temp);
+    emit debug(QString("send len=%1").arg(temp.length()));
+
+    emit send(temp);
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::gen_sinus(void)
@@ -239,54 +215,6 @@ void Generator_Curve::gen_meandr(void)
         slider->setValue(y);
         n++;
     }
-}
-//--------------------------------------------------------------------------------
-void Generator_Curve::init_timer(void)
-{
-    timer = new QTimer(this);
-    connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
-}
-//--------------------------------------------------------------------------------
-void Generator_Curve::update(void)
-{
-    if(btn_1bytes->isChecked())
-    {
-        send_1_bytes();
-        return;
-    }
-    if(btn_2bytes->isChecked())
-    {
-        send_2_bytes();
-        return;
-    }
-}
-//--------------------------------------------------------------------------------
-void Generator_Curve::send_1_bytes(void)
-{
-    QByteArray ba;
-    ba.clear();
-    foreach (QSlider *slider, sliders)
-    {
-        ba.append((char)slider->value());
-    }
-    QString temp = QString(":%1\n").arg(ba.toHex().toUpper().data());
-    emit send(temp);
-}
-//--------------------------------------------------------------------------------
-void Generator_Curve::send_2_bytes(void)
-{
-    union SHORT_TO_BYTES data;
-
-    QByteArray ba;
-    ba.clear();
-    foreach (QSlider *slider, sliders)
-    {
-        data.value = slider->value();
-        ba.append((char)data.bytes.b);
-        ba.append((char)data.bytes.a);
-    }
-    QString temp = QString(":%1\n").arg(ba.toHex().toUpper().data());
-    emit send(temp);
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::close_gen(void)

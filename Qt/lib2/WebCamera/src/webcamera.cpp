@@ -106,6 +106,7 @@ void WebCamera::init(void)
 //--------------------------------------------------------------------------------
 bool WebCamera::create_detectors(void)
 {
+    emit trace(Q_FUNC_INFO);
     QString file;
 
     if(mFaceDetector.empty())
@@ -152,6 +153,7 @@ bool WebCamera::create_detectors(void)
 //--------------------------------------------------------------------------------
 void WebCamera::start(void)
 {
+    emit trace(Q_FUNC_INFO);
     bool ok = create_detectors();
     if(ok == false)
     {
@@ -216,6 +218,7 @@ void WebCamera::start(void)
 //--------------------------------------------------------------------------------
 void WebCamera::set_brightness(int value)
 {
+    emit trace(Q_FUNC_INFO);
     if(value < 1)   return;
     if(value > 100) return;
 
@@ -228,6 +231,7 @@ void WebCamera::set_brightness(int value)
 //--------------------------------------------------------------------------------
 void WebCamera::set_contrast(int value)
 {
+    emit trace(Q_FUNC_INFO);
     if(value < 1)   return;
     if(value > 100) return;
 
@@ -240,6 +244,7 @@ void WebCamera::set_contrast(int value)
 //--------------------------------------------------------------------------------
 void WebCamera::set_saturation(int value)
 {
+    emit trace(Q_FUNC_INFO);
     if(value < 1)   return;
     if(value > 100) return;
 
@@ -252,6 +257,7 @@ void WebCamera::set_saturation(int value)
 //--------------------------------------------------------------------------------
 void WebCamera::set_hue(int value)
 {
+    emit trace(Q_FUNC_INFO);
     if(value < 1)   return;
     if(value > 100) return;
 
@@ -264,6 +270,7 @@ void WebCamera::set_hue(int value)
 //--------------------------------------------------------------------------------
 void WebCamera::set_autofocus(bool state)
 {
+    emit trace(Q_FUNC_INFO);
     //ui->cb_autofocus->setChecked(state);
     if(mCapture.isOpened())
     {
@@ -276,6 +283,7 @@ void WebCamera::set_autofocus(bool state)
 //--------------------------------------------------------------------------------
 void WebCamera::stop(void)
 {
+    emit trace(Q_FUNC_INFO);
     killTimer(mCameraEventId);
 
     mCapture.release();
@@ -385,6 +393,7 @@ void WebCamera::timerEvent(QTimerEvent *event)
 //--------------------------------------------------------------------------------
 void WebCamera::show_image_cv(void)
 {
+    emit trace(Q_FUNC_INFO);
     CvMat *cv = cvLoadImageM("test_photo.jpg");
 
     // создаём окошко
@@ -401,6 +410,7 @@ void WebCamera::show_image_cv(void)
 //--------------------------------------------------------------------------------
 void WebCamera::show_image_hw(void)
 {
+    emit trace(Q_FUNC_INFO);
     IplImage *hw = cvLoadImage("test_photo.jpg");
 
     // создаём окошко
@@ -418,6 +428,7 @@ void WebCamera::show_image_hw(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test(void)
 {
+    emit trace(Q_FUNC_INFO);
     vector< cv::Rect > faceVec;
     vector< cv::Rect > eyeVec;
     vector< cv::Rect > noseVec;
@@ -494,6 +505,7 @@ void WebCamera::test(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test2(void)
 {
+    emit trace(Q_FUNC_INFO);
     IplImage *src, *templ, *result;
     double min, max;
     CvPoint minpos, maxpos;
@@ -534,6 +546,7 @@ void WebCamera::test2(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test3(void)
 {
+    emit trace(Q_FUNC_INFO);
     QStringList sl;
     sl << "cards/0_2.png";
     sl << "cards/0_3.png";
@@ -614,6 +627,7 @@ void WebCamera::test3(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test4(void)
 {
+    emit trace(Q_FUNC_INFO);
     block_this_button(true);
 
     QRect rect;
@@ -649,6 +663,7 @@ void WebCamera::test4(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test5(void)
 {
+    emit trace(Q_FUNC_INFO);
     IplImage* image = 0;
     IplImage* templ = 0;
 
@@ -700,7 +715,8 @@ void WebCamera::test5(void)
 //--------------------------------------------------------------------------------
 bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName, QRect *rect)
 {
-    //QRect resultRect = QRect(-1, -1, -1, -1);
+    emit trace(Q_FUNC_INFO);
+
     QRect CCORR_result;
     QRect SQDIFF_result;
     QPair <QRect, QRect> resultPair;

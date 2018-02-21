@@ -197,6 +197,23 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>sb_src_a</tabstop>
+  <tabstop>sb_src_b</tabstop>
+  <tabstop>sb_src_c</tabstop>
+  <tabstop>sb_src_d</tabstop>
+  <tabstop>sb_dst_a</tabstop>
+  <tabstop>sb_dst_b</tabstop>
+  <tabstop>sb_dst_c</tabstop>
+  <tabstop>sb_dst_d</tabstop>
+  <tabstop>sb_port</tabstop>
+  <tabstop>sb_max_wait</tabstop>
+  <tabstop>btn_scan</tabstop>
+  <tabstop>tv_scan</tabstop>
+  <tabstop>btn_connect</tabstop>
+  <tabstop>btn_disconnect</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

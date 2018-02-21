@@ -40,7 +40,7 @@ class WebCamera : public MyWidget
     Q_OBJECT
 
 public:
-    WebCamera(QWidget *parent = 0);
+    WebCamera(QWidget *parent);
     ~WebCamera();
 
 private slots:

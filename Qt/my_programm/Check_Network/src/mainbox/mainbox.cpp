@@ -102,6 +102,13 @@ void MainBox::init(void)
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(f_connect()));
     connect(ui->btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(f_disconnect()));
 
+#if 1
+    connect(ui->widget_camera,  SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(ui->widget_camera,  SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(ui->widget_camera,  SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(ui->widget_camera,  SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+#endif
+
     //setFixedSize(sizeHint());
 
     //ui->webEngineView->load(QUrl("https://www.google.ru/"));
@@ -146,10 +153,12 @@ void MainBox::scan(void)
 
     nPort = ui->sb_port->value();
 
+    quint32 cnt = max_address - min_address;
+
     QProgressDialog *dlg = new QProgressDialog(this);
-    dlg->setWindowTitle("Сканирование");
+    dlg->setWindowTitle(QString("Сканирование (адресов: %1)").arg(cnt));
     dlg->setLabelText("Пожалуйста, ждите!");
-    dlg->setFixedSize(400, 100);
+    dlg->setMinimumSize(500, 100);
     dlg->setMinimum(min_address);
     dlg->setMaximum(max_address);
     dlg->setWindowModality(Qt::ApplicationModal);

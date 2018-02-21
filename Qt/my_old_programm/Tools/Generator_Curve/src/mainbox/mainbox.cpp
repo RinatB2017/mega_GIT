@@ -71,8 +71,14 @@ void MainBox::init(void)
     ui->layout_serial->addWidget(serial);
 
     //TODO
-    connect(generator,  SIGNAL(send(QByteArray)),   serial, SLOT(input(QByteArray)));
-    //connect(generator,  SIGNAL(send(QString)),  this,   SIGNAL(info(QString)));
+    connect(generator,  SIGNAL(send(QString)),  serial, SLOT(input(QString)));
+
+    connect(serial, SIGNAL(output(QByteArray)), this, SLOT(temp(QByteArray)));
+}
+//--------------------------------------------------------------------------------
+void MainBox::temp(QByteArray data)
+{
+    emit debug(data.data());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

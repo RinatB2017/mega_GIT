@@ -40,6 +40,9 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
+private slots:
+    void temp(QByteArray data);
+
 private:
     Ui::MainBox *ui = 0;
 

@@ -22,6 +22,7 @@
 #include <QString>
 #include <QTime>
 //--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
 #include "mainwindow.hpp"
 #include "mainbox.hpp"
 #include "defines.hpp"
@@ -43,8 +44,13 @@ int main(int argc, char *argv[])
     set_signals();
 #endif
 
-    QApplication app(argc, argv);
     set_codecs();
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));

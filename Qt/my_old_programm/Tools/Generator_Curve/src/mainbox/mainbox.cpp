@@ -78,7 +78,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::temp(QByteArray data)
 {
-    emit debug(data.data());
+    emit error(data.data());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

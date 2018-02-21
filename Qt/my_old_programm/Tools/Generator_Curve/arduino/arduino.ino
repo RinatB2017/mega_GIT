@@ -3,9 +3,6 @@
 #include <Adafruit_MCP4725.h>
 
 Adafruit_MCP4725 dac;
-
-// Set this value to 9, 8, 7, 6 or 5 to adjust the resolution
-#define DAC_RESOLUTION    (8)
 //---------------------------------------------------------------
 #define MAX_SLIDER  32
 //---------------------------------------------------------------
@@ -15,7 +12,6 @@ int index = 0;
 int buf[MAX_SLIDER] = { 0 };
 //---------------------------------------------------------------
 #define MAX_LEN_ASCII   (MAX_SLIDER * 2)
-#define MAX_LEN_MODBUS  MAX_SLIDER
 //---------------------------------------------------------------
 int buf_ascii[MAX_LEN_ASCII];
 int len_ascii = 0;
@@ -69,18 +65,18 @@ void analize(void)
 {
   if (len_ascii % 2)
   {
-    Serial.print("ERROR: 0 ");
+    Serial.print("ERROR: 0 len_ascii=");
     Serial.println(len_ascii);
     return;
   }
   if (len_ascii != MAX_LEN_ASCII)
   {
-    Serial.print("ERROR: 1 ");
+    Serial.print("ERROR: 1 len_ascii=");
     Serial.println(len_ascii);
     return;
   }
 
-  Serial.println("Work");
+  Serial.println("Save data");
   //---
   for (int n = 0; n < len_ascii; n += 4)
   {

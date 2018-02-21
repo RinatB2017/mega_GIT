@@ -24,6 +24,16 @@
 Generator_Curve::Generator_Curve(QWidget *parent) :
     MyWidget(parent)
 {
+    init();
+}
+//--------------------------------------------------------------------------------
+Generator_Curve::~Generator_Curve(void)
+{
+    save_setting();
+}
+//--------------------------------------------------------------------------------
+void Generator_Curve::init(void)
+{
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);
     hbox->setSpacing(0);
@@ -34,11 +44,6 @@ Generator_Curve::Generator_Curve(QWidget *parent) :
 
     load_setting();
     updateText();
-}
-//--------------------------------------------------------------------------------
-Generator_Curve::~Generator_Curve(void)
-{
-    save_setting();
 }
 //--------------------------------------------------------------------------------
 QWidget *Generator_Curve::add_frame(void)
@@ -110,6 +115,7 @@ QWidget *Generator_Curve::add_grapher(void)
     for(int n=0; n<MAX_SLIDER; n++)
     {
         QSlider *slider = new QSlider(Qt::Vertical);
+        connect(slider, SIGNAL(valueChanged(int)),  this, SLOT(set_slider_tooltip(int)));
         if(btn_1bytes->isChecked()) slider->setRange(0, 0xFF);
         if(btn_2bytes->isChecked()) slider->setRange(0, 0xFFFF);
         sl->addWidget(slider);
@@ -126,6 +132,15 @@ QWidget *Generator_Curve::add_grapher(void)
     Q_CHECK_PTR(area);
 
     return area;
+}
+//--------------------------------------------------------------------------------
+void Generator_Curve::set_slider_tooltip(int value)
+{
+    QSlider *slider = (QSlider *)sender();
+    if(slider)
+    {
+        slider->setToolTip(QString("%1").arg(value));
+    }
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::start(void)
@@ -256,6 +271,8 @@ void Generator_Curve::save_setting(void)
     }
 
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
+
     settings->setValue("SlidersValue", QVariant(temp));
     settings->deleteLater();
 }

@@ -7,16 +7,13 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Settings;
-class QTimer;
-//--------------------------------------------------------------------------------
 #define MAX_SLIDER  32
 //--------------------------------------------------------------------------------
 class QRadioButton;
 class QPushButton;
 class QGroupBox;
 class QSlider;
-class QwtKnob;
+class QTimer;
 //--------------------------------------------------------------------------------
 class Generator_Curve : public MyWidget
 {
@@ -37,6 +34,8 @@ private slots:
     void gen_saw(void);
     void gen_meandr(void);
 
+    void set_slider_tooltip(int value);
+
     void start(void);
 
     void update_sliders(void);
@@ -54,12 +53,10 @@ private:
     QRadioButton *btn_1bytes = 0;
     QRadioButton *btn_2bytes = 0;
 
-    void init_timer(void);
-
     QWidget *add_frame(void);
     QWidget *add_grapher(void);
 
-
+    void init(void);
     void load_setting(void);
     void save_setting(void);
 

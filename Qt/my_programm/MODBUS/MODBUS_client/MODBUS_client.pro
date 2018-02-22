@@ -59,6 +59,10 @@ RESOURCES += images/images.qrc
 
 OTHER_FILES += doc/notebook.txt
 
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
+
 LIB_PATH = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 

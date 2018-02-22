@@ -4,14 +4,14 @@
 //      A simple example which shows how to use GridPlot
 //-----------------------------------------------------------------
 
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-
 #include <math.h>
 #include <qapplication.h>
 #include <qwt3d_gridplot.h>
 #include <qwt3d_function.h>
+
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 
 using namespace Qwt3D;

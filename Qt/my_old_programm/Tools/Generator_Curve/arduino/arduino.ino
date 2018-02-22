@@ -11,9 +11,10 @@ int incomingByte = 0;
 int index = 0;
 int buf[MAX_SLIDER] = { 0 };
 //---------------------------------------------------------------
-#define MAX_LEN_ASCII   (MAX_SLIDER * 2)
+#define MAX_BUF   200
+#define SIZE_PACHET   (4 * MAX_SLIDER)
 //---------------------------------------------------------------
-int buf_ascii[MAX_LEN_ASCII];
+int buf_ascii[MAX_BUF];
 int len_ascii = 0;
 //---------------------------------------------------------------
 char convert(char a)
@@ -58,7 +59,26 @@ uint16_t convert_ascii_to_uint16(char a, char b, char c, char d)
   char b_c = convert(c);
   char b_d = convert(d);
 
-  return ((b_a << 12) | (b_b << 8) | (b_c << 4) | b_d);
+  union DATA_INT16 {
+    uint16_t value;
+    struct {
+      uint16_t c: 4;
+      uint16_t d: 4;
+      uint16_t a: 4;
+      uint16_t b: 4;
+    } bites;
+  };
+
+  DATA_INT16 data;
+  data.bites.a = b_a;
+  data.bites.b = b_b;
+  data.bites.c = b_c;
+  data.bites.d = b_d;
+
+  return data.value;
+
+  //return ((b_a << 12 | 0x0F) | (b_b << 8 | 0x0F) | (b_c << 4 | 0x0F) | (b_d | 0x0F));
+  //return ((b_a << 12) | (b_b << 8) | (b_c << 4) | b_d);
 }
 //---------------------------------------------------------------
 void analize(void)
@@ -69,22 +89,25 @@ void analize(void)
     Serial.println(len_ascii);
     return;
   }
-  if (len_ascii != MAX_LEN_ASCII)
+  if (len_ascii != SIZE_PACHET)
   {
     Serial.print("ERROR: 1 len_ascii=");
     Serial.println(len_ascii);
     return;
   }
 
-  Serial.println("Save data");
   //---
+  int index = 0;
   for (int n = 0; n < len_ascii; n += 4)
   {
-    buf[n] = convert_ascii_to_uint16(buf_ascii[n],
-                                     buf_ascii[n + 1],
-                                     buf_ascii[n + 2],
-                                     buf_ascii[n + 3]);
+    uint16_t value = convert_ascii_to_uint16(buf_ascii[n],
+                     buf_ascii[n + 1],
+                     buf_ascii[n + 2],
+                     buf_ascii[n + 3]);
+    buf[index++] = value;
   }
+  //---
+  Serial.println("OK");
 }
 //---------------------------------------------------------------
 void serialEvent()
@@ -102,10 +125,11 @@ void serialEvent()
       case '\r':
       case '\n':
         analize();
+        len_ascii = 0;
         break;
 
       default:
-        if (len_ascii < MAX_LEN_ASCII)
+        if (len_ascii < MAX_BUF)
         {
           buf_ascii[len_ascii] = incomingByte;
           len_ascii++;

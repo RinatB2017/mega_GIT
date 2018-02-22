@@ -38,8 +38,6 @@ private slots:
 
     void start(void);
 
-    void update_sliders(void);
-
 private:
     QPushButton *btnPower = 0;
     QPushButton *btnSinus = 0;
@@ -48,10 +46,6 @@ private:
     QPushButton *btnMeandr = 0;
 
     QList<QSlider *> sliders;
-
-    QGroupBox *group = 0;
-    QRadioButton *btn_1bytes = 0;
-    QRadioButton *btn_2bytes = 0;
 
     QWidget *add_frame(void);
     QWidget *add_grapher(void);

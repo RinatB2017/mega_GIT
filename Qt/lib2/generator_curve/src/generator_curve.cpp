@@ -58,19 +58,6 @@ QWidget *Generator_Curve::add_frame(void)
     btnSaw      = new QPushButton(this);
     btnMeandr   = new QPushButton(this);
 
-    group = new QGroupBox(this);
-    btn_1bytes  = new QRadioButton(this);
-    btn_2bytes  = new QRadioButton(this);
-    btn_2bytes->setChecked(true);
-
-    connect(btn_1bytes, SIGNAL(toggled(bool)),  this,   SLOT(update_sliders()));
-    connect(btn_2bytes, SIGNAL(toggled(bool)),  this,   SLOT(update_sliders()));
-
-    QVBoxLayout *group_vbox = new QVBoxLayout;
-    group_vbox->addWidget(btn_1bytes);
-    group_vbox->addWidget(btn_2bytes);
-    group->setLayout(group_vbox);
-
     connect(btnSinus,       SIGNAL(clicked()),  this,   SLOT(gen_sinus()));
     connect(btnTriangle,    SIGNAL(clicked()),  this,   SLOT(gen_triangle()));
     connect(btnSaw,         SIGNAL(clicked()),  this,   SLOT(gen_saw()));
@@ -82,7 +69,6 @@ QWidget *Generator_Curve::add_frame(void)
     vbox->addWidget(btnTriangle);
     vbox->addWidget(btnSaw);
     vbox->addWidget(btnMeandr);
-    vbox->addWidget(group);
     vbox->addStretch(1);
 
     frame->setLayout(vbox);
@@ -93,21 +79,6 @@ QWidget *Generator_Curve::add_frame(void)
     return frame;
 }
 //--------------------------------------------------------------------------------
-void Generator_Curve::update_sliders(void)
-{
-    foreach (QSlider *slider, sliders)
-    {
-        if(btn_1bytes->isChecked())
-        {
-            slider->setRange(0, 0xFF);
-        }
-        if(btn_2bytes->isChecked())
-        {
-            slider->setRange(0, 0xFFFF);
-        }
-    }
-}
-//--------------------------------------------------------------------------------
 QWidget *Generator_Curve::add_grapher(void)
 {
     QWidget *w = new QWidget(this);
@@ -115,9 +86,8 @@ QWidget *Generator_Curve::add_grapher(void)
     for(int n=0; n<MAX_SLIDER; n++)
     {
         QSlider *slider = new QSlider(Qt::Vertical);
+        slider->setRange(0, 0xFFFF);
         connect(slider, SIGNAL(valueChanged(int)),  this, SLOT(set_slider_tooltip(int)));
-        if(btn_1bytes->isChecked()) slider->setRange(0, 0xFF);
-        if(btn_2bytes->isChecked()) slider->setRange(0, 0xFFFF);
         sl->addWidget(slider);
 
         sliders.append(slider);
@@ -140,12 +110,13 @@ void Generator_Curve::set_slider_tooltip(int value)
     if(slider)
     {
         slider->setToolTip(QString("%1").arg(value));
+        start();
     }
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::start(void)
 {
-    emit info("Start");
+    //emit info("Start");
     emit trace(Q_FUNC_INFO);
 
     QString temp;
@@ -153,7 +124,8 @@ void Generator_Curve::start(void)
     temp = ":";
     foreach (QSlider *slider, sliders)
     {
-        QString data = QString("%1").arg(slider->value(), 4, 16, QChar('0')).toUpper();
+        uint16_t value = slider->value();
+        QString data = QString("%1").arg(value, 4, 16, QChar('0')).toUpper();
         temp.append(data);
     }
     temp.append("\n");
@@ -279,13 +251,10 @@ void Generator_Curve::save_setting(void)
 //--------------------------------------------------------------------------------
 void Generator_Curve::updateText()
 {
-    btnPower->setText(btnPower->isChecked() ? tr("stop") : tr("start"));
-    btnSinus->setText(tr("sinus"));
-    btnTriangle->setText(tr("triangle"));
-    btnSaw->setText(tr("saw"));
-    btnMeandr->setText(tr("meandr"));
-
-    btn_1bytes->setText(tr("1 byte"));
-    btn_2bytes->setText(tr("2 byte"));
+    btnPower->setText(tr("Start"));
+    btnSinus->setText(tr("Sinus"));
+    btnTriangle->setText(tr("Triangle"));
+    btnSaw->setText(tr("Saw"));
+    btnMeandr->setText(tr("Meandr"));
 }
 //--------------------------------------------------------------------------------

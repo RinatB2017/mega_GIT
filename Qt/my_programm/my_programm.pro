@@ -14,9 +14,10 @@ SUBDIRS += \
     GP2Y0A02Y \
     imageviewer \
     Icons \
+    Organizations \
+    neural/QNeuralNet \
     Labyrinth \
     NewMoonLight \
-    Organizations \
     MODBUS \
     show_films \
     Templates \
@@ -35,6 +36,5 @@ SUBDIRS += \
     RS232/RS232_4
 } else {
 SUBDIRS += \
-    neural/QNeuralNet \
     RS232/RS232_5
 }

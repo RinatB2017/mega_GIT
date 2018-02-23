@@ -32,9 +32,9 @@ SUBDIRS += \
     
 lessThan(QT_MAJOR_VERSION, 5) {
 SUBDIRS += \
-    neural/QNeuralNet \
     RS232/RS232_4
 } else {
 SUBDIRS += \
+    neural/QNeuralNet \
     RS232/RS232_5
 }

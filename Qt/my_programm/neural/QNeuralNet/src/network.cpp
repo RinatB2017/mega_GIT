@@ -25,9 +25,7 @@
 
 #include <QList>
 
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
+#include <QDebug>
 
 Layer::Layer(int neuronCount)
 {

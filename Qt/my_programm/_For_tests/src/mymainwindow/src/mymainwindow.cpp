@@ -48,7 +48,9 @@ MyMainWindow::MyMainWindow(MainWindow *parent) :
 //--------------------------------------------------------------------------------
 MyMainWindow::~MyMainWindow()
 {
+#ifdef QT_DEBUG
     qDebug() << "~NyMainWindow()";
+#endif
 }
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5

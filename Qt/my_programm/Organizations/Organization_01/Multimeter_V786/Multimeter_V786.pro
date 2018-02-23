@@ -59,8 +59,8 @@ LIB_PATH2 = "../../../../lib2"
 include (../common/batteryprogressbar/batteryprogressbar.pri)
 include (../common/handcontrol/handcontrol.pri)
 
-include ($$LIB_PATH/power_knock/power_knock.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/power_knock/power_knock.pri)
 include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)

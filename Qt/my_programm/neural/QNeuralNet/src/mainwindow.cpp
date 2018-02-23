@@ -35,9 +35,7 @@
 
 #include <math.h>
 
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -138,7 +136,7 @@ void MainWindow::train()
     while (!trained && i < ui->iterationsEdit->text().toInt())
     {
         qDebug() << "Epoch" << i;
-        trained = m_network.data()->trainSet(m_normTrainingSet, m_expectedOutputs);
+        trained = m_network->trainSet(m_normTrainingSet, m_expectedOutputs);
         i++;
         ui->iterationsCountEdit->setText(QString::number(i));
 
@@ -146,7 +144,7 @@ void MainWindow::train()
         {
             for (int k = 0; k < m_normTrainingSet.size(); k++)
             {
-                netOutputs = m_network.data()->run(m_normTrainingSet.at(k));
+                netOutputs = m_network->run(m_normTrainingSet.at(k));
                 QString nout;
                 for (int j = 0; j < netOutputs->size(); j++)
                 {
@@ -175,10 +173,10 @@ void MainWindow::reset()
     m_runSet.clear();
     m_normRunSet.clear();
     m_inputsList.clear();
-    if (!m_network.isNull())
+    if (m_network)
     {
-        delete m_network.data();
-        //     m_network = 0;
+        delete m_network;
+        m_network = 0;
     }
     m_neuronsInLayersList.clear();
     m_outputsList.clear();
@@ -550,7 +548,7 @@ void MainWindow::run()
     QList<float> *result;
     for (int i = 0; i < m_normRunSet.size(); i++)
     {
-        result = m_network.data()->run(m_normRunSet.at(i));
+        result = m_network->run(m_normRunSet.at(i));
         qDebug() << "Net output for" << m_normRunSet.at(i) << ":" << *result;
         QString rout;
         for (int j = 0; j < result->size(); j++)
@@ -570,11 +568,11 @@ void MainWindow::run()
 
 void MainWindow::netParamsChanged()
 {
-    if (!m_network.isNull())
+    if (m_network)
     {
-        m_network.data()->setLearningRate(ui->lrEdit->text().toFloat());
-        m_network.data()->setMomentum(ui->momentumEdit->text().toFloat());
-        m_network.data()->setMaxError(ui->maxErrorEdit->text().toFloat());
+        m_network->setLearningRate(ui->lrEdit->text().toFloat());
+        m_network->setMomentum(ui->momentumEdit->text().toFloat());
+        m_network->setMaxError(ui->maxErrorEdit->text().toFloat());
     }
 }
 
@@ -643,9 +641,10 @@ void MainWindow::recognizeNumber()
 {
     if (!m_netForRecognition)
     {
-        if (!m_network.isNull())
+        if (m_network)
         {
-            delete m_network.data();
+            delete m_network;
+            m_network = 0;
         }
 
         //init network with 4 layers, alpha=0.8, learningRate=0.1 and maxError=0.05
@@ -740,15 +739,15 @@ void MainWindow::recognizeNumber()
         while (!trained && i < 1000000)
         {
             qDebug() << "Epoch" << i;
-            trained = m_network.data()->trainSet(trainSet, outputs);
+            trained = m_network->trainSet(trainSet, outputs);
             i++;
         }
         qDebug() << "Trained after" << i;
 
-        m_network.data()->printWeights();
+        m_network->printWeights();
 
     }
-    else if (!m_network.data()->isTrained())
+    else if (!m_network->isTrained())
     {
         QList<QList<QList<float> > > weights;
         //these are already learnt weights,
@@ -1477,7 +1476,7 @@ void MainWindow::recognizeNumber()
                     )
                    ;
 
-        m_network.data()->setNetWeights(weights);
+        m_network->setNetWeights(weights);
     }
 
     QList<float> runset;
@@ -1492,7 +1491,7 @@ void MainWindow::recognizeNumber()
 
     qDebug() << runset;
 
-    QList<float> *netOutputs = m_network.data()->run(runset);
+    QList<float> *netOutputs = m_network->run(runset);
     QString realNetOut;
 
     unsigned int n = 0;

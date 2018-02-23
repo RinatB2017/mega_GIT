@@ -71,7 +71,8 @@ private:
     QList<QList<float> > m_runSet;          ///Run set loaded from file
     QList<QList<float> > m_normRunSet;      ///Normalized run set
 
-    QWeakPointer<Network> m_network;        ///The net itself
+    //QWeakPointer<Network> m_network;        ///The net itself
+    Network *m_network;        ///The net itself
 
     RaceClient *m_raceClient = 0;           ///Race client
 

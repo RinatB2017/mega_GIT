@@ -2,6 +2,10 @@
 #include <QMessageBox>
 #include <signal.h>
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QtDebug>
+#endif
+//--------------------------------------------------------------------------------
 QString get_signame(int signum)
 {
     QString temp;
@@ -41,7 +45,9 @@ QString get_signame(int signum)
     default:        temp  = QString("unknown signum: %1").arg(signum);break;
     }
 
+#ifdef QT_DEBUG
     qDebug() << __FILE__ << __LINE__;
+#endif
 
     return temp;
 }

@@ -201,6 +201,33 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QList<int> list;
+    for(int n=0; n<10; n++)
+    {
+        list.append(n);
+    }
+    foreach (auto obj, list)
+    {
+        emit info(QString("%1").arg(obj));
+    }
+
+    int xxx[6] = { 0,1,2,3,4,5 };
+    for (auto a: xxx)
+    {
+        emit error(QString("%1").arg(a));
+    }
+#endif
+
+#if 0
+    int x = 3;
+
+    auto a = 1;
+    auto b = x;
+    auto c = a / b;
+    emit info(QString("%1 %2 %3").arg(a).arg(b).arg(c));
+#endif
+
 #if 0
     int x = 5;
     Q_ASSERT(x == 0);
@@ -216,6 +243,11 @@ bool MainBox::test_0(void)
     //Q_ASSERT(y > 0);
 #endif
 
+#if 0
+    emit info(__FILE__);
+    emit info(QString("line %1").arg(__LINE__));
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -223,17 +255,6 @@ bool MainBox::test_1(void)
 {
     emit info("Test_1()");
     emit trace(Q_FUNC_INFO);
-
-#if 0
-    auto *w = new QLabel;
-    w->setText("XXX");
-    w->show();
-#endif
-
-#if 0
-    emit info(__FILE__);
-    emit info(QString("line %1").arg(__LINE__));
-#endif
 
     return true;
 }

@@ -153,10 +153,8 @@ void MainBox::scan(void)
 
     nPort = ui->sb_port->value();
 
-    quint32 cnt = max_address - min_address;
-
     QProgressDialog *dlg = new QProgressDialog(this);
-    dlg->setWindowTitle(QString("Сканирование (адресов: %1)").arg(cnt));
+    dlg->setWindowTitle("Сканирование");
     dlg->setLabelText("Пожалуйста, ждите!");
     dlg->setMinimumSize(500, 100);
     dlg->setMinimum(min_address);
@@ -173,7 +171,9 @@ void MainBox::scan(void)
 
     for(quint32 address = min_address; address<max_address; address++)
     {
+        dlg->setLabelText(QString("Пожалуйста, ждите! (осталось %1 хостов)").arg(max_address - address));
         dlg->setValue(address);
+
         if(dlg->wasCanceled())
         {
             break;

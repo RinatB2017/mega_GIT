@@ -59,19 +59,13 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+    ui->serial_widget->set_caption("RS485");
     ui->serial_widget->add_menu(2);
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 
-#if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
@@ -80,7 +74,7 @@ void MainBox::read_data(QByteArray ba)
 
     if(ba.isEmpty())
     {
-        //emit error("ba is empty!");
+        emit debug("ba is empty!");
         return;
     }
     if(ba.size() != 32)

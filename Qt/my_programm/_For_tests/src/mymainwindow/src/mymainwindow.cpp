@@ -142,6 +142,10 @@ void MyMainWindow::create_local_menus(void)
     add_filemenu_action(0,      file_action);
     add_optionsmenu_action(0,   options_action);
     add_helpmenu_action(0,      help_action);
+
+    add_filemenu_separator(1);
+    add_optionsmenu_separator(1);
+    add_helpmenu_separator(1);
 #endif
 }
 //--------------------------------------------------------------------------------

@@ -25,6 +25,9 @@ private slots:
 
 private:
     Ui::AboutBox *ui = 0;
+
+protected:
+    void changeEvent(QEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // ABOUTBOX_HPP

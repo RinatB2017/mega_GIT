@@ -186,8 +186,8 @@ long cnt_second = 0;
 */
 enum {
   STATUS_IDLE = 0,
-  STATUS_RAIN,      // дождь
-  STATUS_WASHOUT,     // моемся
+  STATUS_RAIN,          // дождь
+  STATUS_WASHOUT,       // моемся
   STATUS_WASHOUT_PAUSE  // пауза
 };
 int state = STATUS_IDLE;
@@ -426,7 +426,6 @@ void send_data(void)
   String temp;
 
   write_RS485();
-  delay(1);
 
   temp += ":";
   for (int n = 0; n < index_modbus_buf; n++)
@@ -438,7 +437,9 @@ void send_data(void)
   }
   //temp += "\n";
 
+  delay(10);
   Serial.println(temp);
+  delay(10);
 
   read_RS485();
 }

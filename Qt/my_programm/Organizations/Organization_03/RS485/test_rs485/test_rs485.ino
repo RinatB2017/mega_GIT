@@ -22,8 +22,9 @@ void setup()
 void loop()
 {
   write_RS485();
-  delay(1);
+  delay(10);
   Serial.println("HIGH");
+  delay(10);
   read_RS485();
   
   delay(1);

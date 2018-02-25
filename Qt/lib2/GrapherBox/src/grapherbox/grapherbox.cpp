@@ -21,24 +21,7 @@
 #ifdef HAVE_QT5
 #   include<QtWidgets>
 #else
-#   include <QDialogButtonBox>
-#   include <QFileDialog>
-#   include <QMessageBox>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QPointF>
-#   include <QToolBar>
-#   include <QDialog>
-#   include <QLabel>
-#   include <QDateTime>
-#   include <QDate>
-#   include <QTime>
-#   include <QFile>
-#   include <QMenu>
-
-#   include <QWidget>
-#   include <QVector>
-#   include <QPointF>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"

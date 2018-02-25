@@ -21,27 +21,7 @@
 #ifdef HAVE_QT5
 #   include<QtWidgets>
 #else
-#   include <QApplication>
-#   include <QProgressBar>
-#   include <QMessageBox>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QHBoxLayout>
-#   include <QVBoxLayout>
-#   include <QFileDialog>
-#   include <QDateTime>
-#   include <QCheckBox>
-#   include <QTextEdit>
-#   include <QSettings>
-#   include <QWidget>
-#   include <QLocale>
-#   include <QEvent>
-#   include <QFrame>
-#   include <QFile>
-#   include <QFont>
-#   include <QStyle>
-#   include <QMenu>
-#   include <QMap>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG

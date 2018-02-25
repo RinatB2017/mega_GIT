@@ -19,8 +19,8 @@ HelpBrowser::HelpBrowser(QString &page,
     : QWidget(parent)
 {
     textBrowser = new QTextBrowser(this);
-    homeButton  = new QPushButton(QObject::tr("&Home"), this);
-    backButton  = new QPushButton(QObject::tr("&Back"), this);
+    homeButton  = new QPushButton(QObject::tr("Home"), this);
+    backButton  = new QPushButton(QObject::tr("Back"), this);
     closeButton = new QPushButton(QObject::tr("Close"), this);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -66,5 +66,20 @@ void HelpBrowser::showPage(QString page, bool is_maximized)
         browser->showMaximized();
     else
         browser->show();
+}
+//--------------------------------------------------------------------------------
+void HelpBrowser::changeEvent(QEvent *event)
+{
+    switch (event->type())
+    {
+    case QEvent::LanguageChange:
+        homeButton->setText(QObject::tr("Home"));
+        backButton->setText(QObject::tr("Back"));
+        closeButton->setText(QObject::tr("Close"));
+        break;
+
+    default:
+        break;
+    }
 }
 //--------------------------------------------------------------------------------

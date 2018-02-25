@@ -121,8 +121,8 @@
         <translation>Файл</translation>
     </message>
     <message>
-        <source>&amp;Settings</source>
-        <translation>&amp;Настройки</translation>
+        <source>Settings</source>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Select the font program</source>
@@ -141,11 +141,11 @@
         <translation>Не спрашивать при выходе</translation>
     </message>
     <message>
-        <source>&amp;Help</source>
-        <translation>&amp;Помощь</translation>
+        <source>Help</source>
+        <translation>Помощь</translation>
     </message>
     <message>
-        <source>&amp;About</source>
+        <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
@@ -197,10 +197,6 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>Template</source>
-        <translation>Шаблон</translation>
-    </message>
-    <message>
         <source>Starting application %1</source>
         <translation>Программа %1 запущена</translation>
     </message>
@@ -209,12 +205,12 @@
         <translation>Файл %1 не найден</translation>
     </message>
     <message>
-        <source>&amp;Home</source>
-        <translation>&amp;Домой</translation>
+        <source>Home</source>
+        <translation>Домой</translation>
     </message>
     <message>
-        <source>&amp;Back</source>
-        <translation>&amp;Назад</translation>
+        <source>Back</source>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Close</source>

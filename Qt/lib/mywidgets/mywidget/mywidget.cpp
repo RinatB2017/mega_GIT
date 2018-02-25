@@ -21,21 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QAbstractButton>
-#   include <QDoubleSpinBox>
-#   include <QMouseEvent>
-#   include <QMessageBox>
-#   include <QToolButton>
-#   include <QPushButton>
-#   include <QLineEdit>
-#   include <QTextEdit>
-#   include <QCheckBox>
-#   include <QSettings>
-#   include <QComboBox>
-#   include <QSplitter>
-#   include <QSpinBox>
-#   include <QVariant>
-#   include <QTimer>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG

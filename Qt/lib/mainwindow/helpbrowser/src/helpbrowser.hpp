@@ -49,6 +49,9 @@ private:
     QPushButton *closeButton = 0;
 
     void setCaption(const QString &caption);
+
+protected:
+    void changeEvent(QEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif //HELPBROWSER_HPP

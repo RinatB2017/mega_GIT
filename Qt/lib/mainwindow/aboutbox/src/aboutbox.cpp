@@ -89,4 +89,16 @@ AboutBox::~AboutBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+void AboutBox::changeEvent(QEvent *event)
+{
+    switch (event->type())
+    {
+    case QEvent::LanguageChange:
+        break;
+
+    default:
+        break;
+    }
+}
+//--------------------------------------------------------------------------------
 

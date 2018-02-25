@@ -21,26 +21,7 @@
 #ifdef HAVE_QT5
 #   include<QtWidgets>
 #else
-#   include <QDialogButtonBox>
-#   include <QFileDialog>
-#   include <QMessageBox>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QToolBar>
-#   include <QDialog>
-#   include <QLabel>
-
-#   include <QDateTime>
-#   include <QDate>
-#   include <QTime>
-
-#   include <QFile>
-#   include <QMenu>
-
-#   include <QWidget>
-#   include <QVector>
-
-#   include <limits.h>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include <qwt_plot_histogram.h>

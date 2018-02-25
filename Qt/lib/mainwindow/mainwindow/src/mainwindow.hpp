@@ -193,7 +193,6 @@ private:
         BLUE_THEME
     };
 
-
     QMenu* add_new_menu(QMenu   *parent,
                         QString text,
                         QIcon   *icon);
@@ -216,8 +215,6 @@ private:
     QString appName;
     QString appVersion;
     QString style_name;
-
-    QMenuBar *mainBar = 0;
 
     QLabel *statusLabel1 = 0;
     QLabel *statusLabel2 = 0;
@@ -242,8 +239,10 @@ private:
     QToolButton *btnExit = 0;
     QToolButton *btnFont = 0;
 
+#ifndef ONLY_ENGLISH
     QToolButton *btnRus = 0;
     QToolButton *btnEng = 0;
+#endif
 
     QToolButton *btnStyle = 0;
     QToolButton *btnHelp = 0;

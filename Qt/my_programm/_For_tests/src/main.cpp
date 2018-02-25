@@ -101,7 +101,9 @@ int main(int argc, char *argv[])
     splash->finish(main_window);
 
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#ifdef QT_DEBUG
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+#endif
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);

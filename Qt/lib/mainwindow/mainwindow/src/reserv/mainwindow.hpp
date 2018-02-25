@@ -66,6 +66,21 @@
 #define LOG_DEBUG       7       /* debug-level messages */
 #endif
 //--------------------------------------------------------------------------------
+typedef struct
+{
+    QMenu   *parent;
+    QMenu   *obj;
+    QString text;
+    QIcon   *icon;
+} s_menu;
+typedef struct
+{
+    QMenu   *parent;
+    QAction *obj;
+    QString text;
+    QIcon   *icon;
+} s_action;
+//--------------------------------------------------------------------------------
 #define ICON_HELP       ":/mainwindow/system-help.png"
 #define ICON_ABOUT      ":/mainwindow/computer.png"
 #define ICON_RU         ":/mainwindow/ru.png"
@@ -74,8 +89,6 @@
 #define ICON_EXIT       ":/mainwindow/system-shutdown.png"
 #define ICON_FONT       ":/mainwindow/kfontview.png"
 #define ICON_LANG       ":/mainwindow/applications-education-language.png"
-//--------------------------------------------------------------------------------
-#define APP_PROPERTY_ENG_TEXT   "app_property_eng_text"
 //--------------------------------------------------------------------------------
 class LogBox;
 class LogDock;
@@ -93,6 +106,7 @@ public:
 
     void setWindowTitle(const QString &title);
 
+#ifndef NO_MENU
     bool add_menu(int pos_x, QMenu *menu);
 
     bool add_filemenu_menu(int pos_y,
@@ -119,6 +133,7 @@ public:
     bool add_filemenu_separator(int pos_y);
     bool add_optionsmenu_separator(int pos_y);
     bool add_helpmenu_separator(int pos_y);
+#endif
 
 signals:
     void updateLanguage(void);
@@ -142,47 +157,60 @@ signals:
                 QString message);
 
 public slots:
+#ifndef NO_STATUSBAR
     void set_status1_text(const QString &data);
     void set_status2_text(const QString &data);
+#endif
 
     void set_focus(const QString &);
+#ifndef NO_LOG
     void set_log_font(void);
-
-    void showMinimized(void);
-    void showMaximized(void);
-    void showNormal(void);
-    void quit(void);
+#endif
 
 private slots:
     void log(const QString &data);
     void set_app_font(void);
     void setStyles(void);
-    void closeOnExit(bool state);
+    void closeOnExit(void);
     void about(void);
     void setMenuLanguage(void);
     void setToolBarLanguage(void);
     void help(void);
+    void updateText(void);
 
     void load_setting(void);
     void save_setting(void);
 
+#ifndef NO_LOG
     void slot_is_shows_info(bool state);
     void slot_is_shows_debug(bool state);
     void slot_is_shows_error(bool state);
     void slot_is_shows_trace(bool state);
+#endif
 
     void set_system_palette(void);
     void set_blue_palette(void);
     void set_dark_palette(void);
     void set_light_palette(void);
 
+#ifndef NO_TRAYICON
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
+#endif
 
+#ifndef NO_STYLETOOLBAR
     void setToolBarStyles(void);
+#endif
 
 #ifdef  DEMO
     void kill(void);
     void kill2(void);
+#endif
+
+#ifndef NO_TRAYICON
+    void showMinimized(void);
+    void showMaximized(void);
+    void showNormal(void);
+    void quit(void);
 #endif
 
 private:
@@ -193,6 +221,8 @@ private:
         BLUE_THEME
     };
 
+    QList<s_menu *> menus;
+    QList<s_action *> actions;
 
     QMenu* add_new_menu(QMenu   *parent,
                         QString text,
@@ -208,24 +238,44 @@ private:
                         QIcon   *icon,
                         b_saveSlot slot);
 
+#ifndef ONLY_ENGLISH
     QTranslator *translator_system = 0;
     QTranslator *translator_common = 0;
     QTranslator *translator_programm = 0;
-
+#endif
     QString orgName;
     QString appName;
     QString appVersion;
     QString style_name;
 
+#ifndef NO_MENU
     QMenuBar *mainBar = 0;
 
+    QMenu *m_fileMenu = 0;
+    QMenu *m_optionsMenu = 0;
+    QMenu *m_windowsMenu = 0;
+    QMenu *m_helpMenu = 0;
+
+    QAction *a_AskExit = 0;
+
+    QMenu *m_styleMenu = 0;
+
+#ifndef ONLY_ENGLISH
+    QMenu *m_langMenu = 0;
+#endif
+#endif
+
+#ifndef NO_STATUSBAR
     QLabel *statusLabel1 = 0;
     QLabel *statusLabel2 = 0;
+#endif
 
     QWidget *mainWidget = 0;
 
+#ifndef NO_TRAYICON
     QSystemTrayIcon *trayIcon = 0;
     QMenu *trayIconMenu = 0;
+#endif
 
     void load_main(void);
     void save_main(void);
@@ -233,67 +283,63 @@ private:
     void init(void);
 
     void load_translations(void);
-
+#ifndef NO_MENU
     void createMenus(void);
-
+#endif
+#ifndef NO_STATUSBAR
     void createStatusBar(void);
+#endif
+#ifndef NO_TRAYICON
     void createTrayIcon(void);
+#endif
 
+#ifndef NO_TOOLBAR
     QToolButton *btnExit = 0;
     QToolButton *btnFont = 0;
-
+#ifndef ONLY_ENGLISH
     QToolButton *btnRus = 0;
     QToolButton *btnEng = 0;
-
+#endif
     QToolButton *btnStyle = 0;
     QToolButton *btnHelp = 0;
     QToolButton *btnAbout = 0;
     void createToolBar(void);
+#endif
 
+#ifndef NO_TOOLBAR
     QToolBar *toolbar = 0;
+#endif
 
+#ifndef NO_STYLETOOLBAR
     QToolBar *styletoolbar = 0;
     QDockWidget *sd = 0;
     void createStyleToolBar(void);
+#endif
 
+#ifndef NO_LOG
     LogDock *ld = 0;
     void createLog(void);
+#endif
 
     int state_theme = DARK_THEME;
 
+#ifndef NO_LOG
+    QAction *a_is_shows_info  = 0;
+    QAction *a_is_shows_error = 0;
+#ifdef QT_DEBUG
+    QAction *a_is_shows_debug = 0;
+    QAction *a_is_shows_trace = 0;
+#endif
+#endif
+
+    QMenu *m_themes = 0;
+
+#ifdef  DEMO
     void check_date(void);
-
-    QMenuBar *app_mainBar = 0;
-
-    QList<QMenu   *> app_menus;
-    QList<QAction *> app_actions;
-    QList<QAbstractButton *> app_buttons;
-
-    QMenu *m_app_filemenu    = 0;
-    QMenu *m_app_optionsmenu = 0;
-    QMenu *m_app_windowsmenu    = 0;
-    QMenu *m_app_helpmenu    = 0;
-
-    void app_create_menus(void);
-    void app_updateText(void);
-    void app_menu_add_separator(QMenu *menu);
-    void app_menu_add_exit(QMenu *menu);
-    void app_menu_add_font_programm(QMenu *menu);
-    void app_menu_add_font_log(QMenu *menu);
-    void app_menu_add_log_filter(QMenu *menu);
-    void app_menu_add_theme(QMenu *menu);
-    void app_menu_add_lang(QMenu *menu);
-    void app_menu_add_style(QMenu *menu);
-    void app_menu_add_confirm_exit(QMenu *menu);
-    void app_menu_add_about(QMenu *menu);
-    void app_menu_add_help(QMenu *menu);
+#endif
 
 protected:
     bool flag_close = false;
-    bool flag_show_info = false;
-    bool flag_show_debug = false;
-    bool flag_show_error = false;
-    bool flag_show_trace = false;
 
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);

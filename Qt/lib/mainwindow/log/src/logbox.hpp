@@ -59,10 +59,9 @@ public slots:
     void clearProgress(void);
     void setVisibleProgressBar(bool);
     void setColorLog(bool state);
-#ifndef NO_LOG
+
     void  set_font(QFont font);
     QFont get_font(void);
-#endif
 
     void infoLog(const QString &text);
     void debugLog(const QString &text);
@@ -126,4 +125,4 @@ protected:
 
 };
 //--------------------------------------------------------------------------------
-#endif // LOGBOX_H
+#endif // LOGBOX_HPP

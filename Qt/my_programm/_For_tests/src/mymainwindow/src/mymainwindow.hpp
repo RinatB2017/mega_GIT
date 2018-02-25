@@ -112,21 +112,11 @@ protected:
 class MyMainWindow : public MainWindow
 {
     Q_OBJECT
-    Q_PROPERTY(int normalProperty READ get WRITE set NOTIFY notifySignal)
 
 public:
     MyMainWindow(MainWindow *parent = 0);
     ~MyMainWindow();
 
-    int get(void)
-    {
-        return normalProperty;
-    }
-    void set(int value)
-    {
-        normalProperty = value * 2;
-        emit notifySignal();
-    }
     void setCentralWidget(QWidget *widget);
 
 #ifdef HAVE_QT5
@@ -150,7 +140,6 @@ private slots:
 
 private:
     static QFile *m_logFile;
-    int normalProperty = 0;
     void create_local_menus(void);
     void create_toolbars(void);
 

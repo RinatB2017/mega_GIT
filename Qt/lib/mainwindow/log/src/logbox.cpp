@@ -127,19 +127,15 @@ void LogBox::popup(QPoint)
     popup_menu->exec(QCursor::pos());
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_LOG
 void LogBox::set_font(QFont font)
 {
     logBox->setFont(font);
 }
-#endif
 //--------------------------------------------------------------------------------
-#ifndef NO_LOG
 QFont LogBox::get_font(void)
 {
     return logBox->font();
 }
-#endif
 //--------------------------------------------------------------------------------
 void LogBox::create_widgets(void)
 {
@@ -256,10 +252,6 @@ void LogBox::infoLog(const QString &text)
 //--------------------------------------------------------------------------------
 void LogBox::debugLog(const QString &text)
 {
-#ifndef QT_DEBUG
-    return;
-#endif
-
     if(flag_is_shows_debug == false)
     {
         return;
@@ -340,10 +332,6 @@ void LogBox::errorLog(const QString &text)
 //--------------------------------------------------------------------------------
 void LogBox::traceLog(const QString &text)
 {
-#ifndef QT_DEBUG
-    return;
-#endif
-
     if(flag_is_shows_trace == false)
     {
         return;

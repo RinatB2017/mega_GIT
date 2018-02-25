@@ -202,6 +202,13 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    emit info("info");
+    emit debug("debug");
+    emit error("error");
+    emit trace("trace");
+#endif
+
+#if 0
     QList<int> list;
     for(int n=0; n<10; n++)
     {

@@ -21,16 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QVBoxLayout>
-#   include <QMessageBox>
-#   include <QTime>
-
-#   include <QAction>
-#   include <QMenu>
-
-#   include <QToolButton>
-#   include <QToolBar>
-#   include <QDebug>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
@@ -54,7 +45,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("rs485");
+    save_widgets("w_rs485");
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -62,7 +53,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+    createTestBar();
 
     ui->serial_widget->set_caption("RS-485");
     ui->serial_widget->add_menu(2);
@@ -98,7 +89,8 @@ void MainBox::init(void)
     }
 #endif
 
-    load_widgets("rs485");
+    load_widgets("w_rs485");
+    //ui->sb_addr_upu->setValue(33);  //TODO
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -122,7 +114,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-
+    emit info("test");
 }
 //--------------------------------------------------------------------------------
 void MainBox::wait(int max_time_ms)
@@ -546,7 +538,8 @@ void MainBox::cmd_test(void)
     emit send(convert(ba));
     wait(1000);
 
-    emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
+    emit debug(QString("Получено [%1]").arg(data_rs232_clean.data()));
+    emit debug(QString("Получено (hex) [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
     int err = check_answer_test(data_rs232_clean);
     if(err != MainBox::NO_ERROR)
     {

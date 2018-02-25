@@ -202,6 +202,8 @@ int addr1 = A2;
 int addr2 = A3;
 int addr3 = A4;
 int addr4 = A5;
+
+int delay_485_ms = 10;
 //--------------------------------------------------------------------------------
 void debug(String text)
 {
@@ -284,56 +286,38 @@ uint16_t crc16(uint8_t *pcBlock, uint8_t len)
   return crc;
 }
 //--------------------------------------------------------------------------------
+uint8_t convert(uint8_t x)
+{
+  uint8_t res = 0;
+  switch (x)
+  {
+    case '0':  res = 0x0;  break;
+    case '1':  res = 0x1;  break;
+    case '2':  res = 0x2;  break;
+    case '3':  res = 0x3;  break;
+    case '4':  res = 0x4;  break;
+    case '5':  res = 0x5;  break;
+    case '6':  res = 0x6;  break;
+    case '7':  res = 0x7;  break;
+    case '8':  res = 0x8;  break;
+    case '9':  res = 0x9;  break;
+    case 'A':  res = 0xA;  break;
+    case 'B':  res = 0xB;  break;
+    case 'C':  res = 0xC;  break;
+    case 'D':  res = 0xD;  break;
+    case 'E':  res = 0xE;  break;
+    case 'F':  res = 0xF;  break;
+    default:
+      break;
+  }
+  return res;
+}
+//--------------------------------------------------------------------------------
 uint8_t convert_ascii_to_value(uint8_t hi, uint8_t lo)
 {
-  uint8_t b_hi = 0;
-  uint8_t b_lo = 0;
+  uint8_t b_hi = convert(hi);
+  uint8_t b_lo = convert(lo);
 
-  //---
-  switch (hi)
-  {
-    case '0':  b_hi = 0x0;  break;
-    case '1':  b_hi = 0x1;  break;
-    case '2':  b_hi = 0x2;  break;
-    case '3':  b_hi = 0x3;  break;
-    case '4':  b_hi = 0x4;  break;
-    case '5':  b_hi = 0x5;  break;
-    case '6':  b_hi = 0x6;  break;
-    case '7':  b_hi = 0x7;  break;
-    case '8':  b_hi = 0x8;  break;
-    case '9':  b_hi = 0x9;  break;
-    case 'A':  b_hi = 0xA;  break;
-    case 'B':  b_hi = 0xB;  break;
-    case 'C':  b_hi = 0xC;  break;
-    case 'D':  b_hi = 0xD;  break;
-    case 'E':  b_hi = 0xE;  break;
-    case 'F':  b_hi = 0xF;  break;
-    default:
-      break;
-  }
-  //---
-  switch (lo)
-  {
-    case '0':  b_lo = 0x0;  break;
-    case '1':  b_lo = 0x1;  break;
-    case '2':  b_lo = 0x2;  break;
-    case '3':  b_lo = 0x3;  break;
-    case '4':  b_lo = 0x4;  break;
-    case '5':  b_lo = 0x5;  break;
-    case '6':  b_lo = 0x6;  break;
-    case '7':  b_lo = 0x7;  break;
-    case '8':  b_lo = 0x8;  break;
-    case '9':  b_lo = 0x9;  break;
-    case 'A':  b_lo = 0xA;  break;
-    case 'B':  b_lo = 0xB;  break;
-    case 'C':  b_lo = 0xC;  break;
-    case 'D':  b_lo = 0xD;  break;
-    case 'E':  b_lo = 0xE;  break;
-    case 'F':  b_lo = 0xF;  break;
-    default:
-      break;
-  }
-  //---
   uint8_t r_byte = (b_hi << 4) | b_lo;
   return r_byte;
 }
@@ -425,8 +409,6 @@ void send_data(void)
 
   String temp;
 
-  write_RS485();
-
   temp += ":";
   for (int n = 0; n < index_modbus_buf; n++)
   {
@@ -437,9 +419,11 @@ void send_data(void)
   }
   //temp += "\n";
 
-  delay(10);
+  write_RS485();
+
+  delay(delay_485_ms);
   Serial.println(temp);
-  delay(10);
+  delay(delay_485_ms);
 
   read_RS485();
 }
@@ -714,6 +698,7 @@ void camera_save_position (void)
   Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
+  delay(delay_485_ms);
   send_byte(0xFF);
   send_byte(Pelco[1]);
   send_byte(Pelco[2]);
@@ -721,6 +706,7 @@ void camera_save_position (void)
   send_byte(Pelco[4]);
   send_byte(Pelco[5]);
   send_byte(Pelco[6]);
+  delay(delay_485_ms);
   read_RS485();
 }
 //--------------------------------------------------------------------------------
@@ -738,6 +724,7 @@ void camera_move_position (void)
   Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
+  delay(delay_485_ms);
   send_byte(0xFF);
   send_byte(Pelco[1]);
   send_byte(Pelco[2]);
@@ -745,6 +732,7 @@ void camera_move_position (void)
   send_byte(Pelco[4]);
   send_byte(Pelco[5]);
   send_byte(Pelco[6]);
+  delay(delay_485_ms);
   read_RS485();
 }
 //--------------------------------------------------------------------------------
@@ -762,6 +750,7 @@ void camera_return (void)
   Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
+  delay(delay_485_ms);
   send_byte(0xFF);
   send_byte(Pelco[1]);
   send_byte(Pelco[2]);
@@ -769,6 +758,7 @@ void camera_return (void)
   send_byte(Pelco[4]);
   send_byte(Pelco[5]);
   send_byte(Pelco[6]);
+  delay(delay_485_ms);
   read_RS485();
 }
 //--------------------------------------------------------------------------------
@@ -783,6 +773,7 @@ void camera_wiper (void)
   Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
+  delay(delay_485_ms);
   send_byte(0xFF);
   send_byte(Pelco[1]);
   send_byte(Pelco[2]);
@@ -790,6 +781,7 @@ void camera_wiper (void)
   send_byte(Pelco[4]);
   send_byte(Pelco[5]);
   send_byte(Pelco[6]);
+  delay(delay_485_ms);
   read_RS485();
 }
 //--------------------------------------------------------------------------------
@@ -804,6 +796,7 @@ void camera_Run_Tur_1 (void)
   Pelco [6] = Pelco [1] ^ Pelco [2] ^ Pelco [3] ^ Pelco [4] ^ Pelco [5] ; // вычисление контрольной суммы
 
   write_RS485();
+  delay(delay_485_ms);
   send_byte(0xFF);
   send_byte(Pelco[1]);
   send_byte(Pelco[2]);
@@ -811,6 +804,7 @@ void camera_Run_Tur_1 (void)
   send_byte(Pelco[4]);
   send_byte(Pelco[5]);
   send_byte(Pelco[6]);
+  delay(delay_485_ms);
   read_RS485();
 }
 //--------------------------------------------------------------------------------
@@ -890,7 +884,7 @@ void takeReading()
 //--------------------------------------------------------------------------------
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(57600);
 
   pinMode(pin_485,    OUTPUT);
 

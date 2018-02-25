@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>385</height>
+    <height>419</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,16 +29,17 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="SerialBox5_lite" name="serial_widget" native="true"/>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBox_2">
+      <widget class="SerialBox5_lite" name="serial_widget" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
         <string>Данные</string>
        </property>

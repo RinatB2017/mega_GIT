@@ -59,7 +59,9 @@ void MainBox::init(void)
 
     createTestBar();
 
+    ui->serialWidget->set_caption("RS232");
     ui->serialWidget->add_menu(2);
+    ui->serialWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
     connect(ui->btn_GCA,    SIGNAL(clicked(bool)),  this,   SLOT(test_GGA()));
     connect(ui->btn_GSA,    SIGNAL(clicked(bool)),  this,   SLOT(test_GSA()));
@@ -73,7 +75,6 @@ void MainBox::init(void)
     connect(ui->btn_PIRFV,  SIGNAL(clicked(bool)),  this,   SLOT(test_PIRFV()));
     connect(ui->btn_PIRGK,  SIGNAL(clicked(bool)),  this,   SLOT(test_PIRGK()));
     connect(ui->btn_PIRRA,  SIGNAL(clicked(bool)),  this,   SLOT(test_PIRRA()));
-
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serialWidget,   SLOT(input(QByteArray)));
     connect(ui->serialWidget,   SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));

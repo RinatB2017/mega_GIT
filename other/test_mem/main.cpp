@@ -3,8 +3,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include <QCoreApplication>
-#include <QFileInfo>
 #include <QDebug>
 
 int32_t open_memdev()
@@ -18,13 +16,12 @@ int32_t open_memdev()
                 return -EINVAL;
         }
 
+        printf("OK\n");
         return fd;
 }
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-
 #if 0
     QFileInfo info1("/dev/kmem");
     qDebug() << info1.size();
@@ -32,5 +29,7 @@ int main(int argc, char *argv[])
     qDebug() << open_memdev();
 #endif
 
-    return a.exec();
+    Q_UNUSED(argc);
+    Q_UNUSED(argv);
+    return 0;
 }

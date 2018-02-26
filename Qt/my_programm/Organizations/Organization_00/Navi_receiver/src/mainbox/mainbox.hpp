@@ -31,7 +31,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class Proto_NMEA_0183;
 class MySplashScreen;
-class SerialBox5;
 class QToolButton;
 class QToolBar;
 //--------------------------------------------------------------------------------
@@ -60,7 +59,6 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
     QByteArray data_rs232;
 
     Proto_NMEA_0183 *proto = 0;

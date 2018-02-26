@@ -63,20 +63,15 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox5(this, "RS232", "RS232");
-    serialBox->add_menu(2);
-
-    ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
-
-    connect(this, SIGNAL(send(QByteArray)), serialBox, SLOT(input(QByteArray)));
-    connect(serialBox, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_protocol(void)
 {
     emit info("init protocol NMEA-0183");
     proto = new Proto_NMEA_0183();
+    Q_CHECK_PTR(proto);
 
     connect(proto, SIGNAL(info(QString)),   this,   SIGNAL(info(QString)));
     connect(proto, SIGNAL(debug(QString)),  this,   SIGNAL(debug(QString)));
@@ -86,10 +81,6 @@ void MainBox::init_protocol(void)
     connect(proto,  SIGNAL(output_latitude_string(QString)),    this,   SIGNAL(output_latitude_string(QString)));
     connect(proto,  SIGNAL(output_longitude_string(QString)),   this,   SIGNAL(output_longitude_string(QString)));
     connect(proto,  SIGNAL(output_observation(QString)),        this,   SIGNAL(output_observation(QString)));
-
-    connect(this,   SIGNAL(output_latitude_string(QString)),    this,   SIGNAL(message(QString)));
-    connect(this,   SIGNAL(output_longitude_string(QString)),   this,   SIGNAL(message(QString)));
-    connect(this,   SIGNAL(output_observation(QString)),        this,   SIGNAL(message(QString)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -113,7 +104,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    emit error(tr("test"));
+    emit info(tr("test"));
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
@@ -153,21 +144,25 @@ void MainBox::analize(void)
     proto->print_variable();
     proto->test_cheksum();
 #endif
-#if 1
-    emit info(QString("latitude %1").arg(proto->get_latitude_string()));
-#endif
-#if 1
-    emit info(QString("longitude %1").arg(proto->get_longitude_string()));
-#endif
-#if 1
+
     int hour = proto->get_observation_hour();
     int min  = proto->get_observation_min();
     int sec  = proto->get_observation_sec();
-    emit info(QString("%1:%2:%3")
-              .arg(hour)
-              .arg(min)
-              .arg(sec));
-#endif
+
+    QString str_latitude = proto->get_latitude_string();
+    QString str_longitude = proto->get_longitude_string();
+    QString str_time = QString("%1:%2:%3")
+            .arg(hour)
+            .arg(min)
+            .arg(sec);
+
+    emit info(QString("latitude %1").arg(str_latitude));
+    emit info(QString("longitude %1").arg(str_longitude));
+    emit info(QString("time %1").arg(str_time));
+
+    ui->le_latitude->setText(str_latitude);
+    ui->le_longitude->setText(str_longitude);
+    ui->le_time->setText(str_time);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

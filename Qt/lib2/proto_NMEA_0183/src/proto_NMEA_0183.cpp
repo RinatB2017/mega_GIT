@@ -1439,7 +1439,7 @@ QString Proto_NMEA_0183::get_longitude_string(void)
     if(get_longitude_dir() == "W") temp = "з.д.";
     if(get_longitude_dir() == "E") temp = "в.д.";
 
-    return QString("%1%2%3' %4")
+    return QString("%1 %2 %3' %4")
             .arg((int)get_longitude_grad(),  2, 10, QLatin1Char('0'))
             .arg(dg)
             .arg((int)get_longitude_min(),  2, 10, QLatin1Char('0'))

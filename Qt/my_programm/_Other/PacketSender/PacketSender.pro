@@ -76,9 +76,7 @@ FORMS    += \
     about.ui \
     subnetcalc.ui
 
-
 macx:CONFIG += app_bundle
-
 
 OTHER_FILES += \
     packetsender.css \

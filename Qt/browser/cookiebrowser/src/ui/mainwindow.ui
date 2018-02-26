@@ -48,7 +48,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../cookiebrowser.qrc">
+             <iconset resource="../../images/cookiebrowser.qrc">
               <normaloff>:/view-refresh.png</normaloff>:/view-refresh.png</iconset>
             </property>
            </widget>
@@ -177,7 +177,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../cookiebrowser.qrc"/>
+  <include location="../../images/cookiebrowser.qrc"/>
  </resources>
  <connections>
   <connection>

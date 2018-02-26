@@ -61,6 +61,6 @@ FORMS += \
     cookiewidget.ui
 
 RESOURCES += \
-    cookiebrowser.qrc
+    images/cookiebrowser.qrc
 
 VPATH = $$INCLUDEPATH

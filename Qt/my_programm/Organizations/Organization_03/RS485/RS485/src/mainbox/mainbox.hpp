@@ -33,6 +33,7 @@ class MySplashScreen;
 class QToolButton;
 class QToolBar;
 class SerialPort_test;
+class PelcoD;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -71,6 +72,8 @@ private:
     QByteArray data_rs232_dirty;
     QByteArray data_rs232_clean;
     bool is_ready = false;
+
+    PelcoD *pelco_d = 0;
 
     void init(void);
     void wait(int max_time_ms);

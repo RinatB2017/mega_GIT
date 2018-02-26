@@ -32,6 +32,7 @@
 #include "defines.hpp"
 #include "mainbox.hpp"
 #include "packet.hpp"
+#include "pelcod.hpp"
 #include "crc.h"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -62,7 +63,16 @@ void MainBox::init(void)
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 
-    connect(ui->pelco_d,    SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+#ifdef UNDER_CONSTRUCTION
+    pelco_d = new PelcoD(this);
+    connect(pelco_d,    SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(pelco_d,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(pelco_d,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(pelco_d,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(pelco_d,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    layout()->addWidget(pelco_d);
+#endif
 
     ui->sb_addr_cam->setRange(0, 0xFFFF);
     ui->sb_addr_upu->setRange(0, 0xFFFF);
@@ -74,11 +84,6 @@ void MainBox::init(void)
     connect(ui->btn_write,  SIGNAL(clicked(bool)),  this,   SLOT(cmd_write()));
     connect(ui->btn_reset,  SIGNAL(clicked(bool)),  this,   SLOT(cmd_reset()));
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(cmd_test()));
-
-    connect(ui->pelco_d,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(ui->pelco_d,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(ui->pelco_d,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(ui->pelco_d,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 

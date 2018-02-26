@@ -221,7 +221,6 @@ void MyMainWindow::help_action_click(void)
     MyWidget::messagebox_info(title, text);
 }
 //--------------------------------------------------------------------------------
-#define W_SIZE 50
 void MyMainWindow::setCentralWidget(QWidget *widget)
 {
     QWidget *w = new QWidget;

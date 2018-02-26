@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>909</width>
+    <width>907</width>
     <height>690</height>
    </rect>
   </property>
@@ -144,7 +144,7 @@
                <string>TCP</string>
               </property>
               <property name="icon">
-               <iconset resource="packetsender.qrc">
+               <iconset resource="../../images/packetsender.qrc">
                 <normaloff>:/icons/tx_tcp.png</normaloff>:/icons/tx_tcp.png</iconset>
               </property>
              </item>
@@ -153,7 +153,7 @@
                <string>UDP</string>
               </property>
               <property name="icon">
-               <iconset resource="packetsender.qrc">
+               <iconset resource="../../images/packetsender.qrc">
                 <normaloff>:/icons/tx_udp.png</normaloff>:/icons/tx_udp.png</iconset>
               </property>
              </item>
@@ -351,13 +351,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>909</width>
-     <height>22</height>
+     <width>907</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionSettings"/>
     <addaction name="actionImport_Packets"/>
@@ -366,13 +366,13 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="actionSubnet_Calculator"/>
    </widget>
@@ -383,27 +383,27 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>E&amp;xit</string>
    </property>
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>&amp;Settings</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="actionImport_Packets">
    <property name="text">
-    <string>Import Packets</string>
+    <string>&amp;Import Packets</string>
    </property>
   </action>
   <action name="actionExport_Packets">
    <property name="text">
-    <string>Export Packets</string>
+    <string>&amp;Export Packets</string>
    </property>
   </action>
   <action name="actionPersistent_Connection">
@@ -413,13 +413,13 @@
   </action>
   <action name="actionSubnet_Calculator">
    <property name="text">
-    <string>Subnet Calculator</string>
+    <string>&amp;Subnet Calculator</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="packetsender.qrc"/>
+  <include location="../../images/packetsender.qrc"/>
  </resources>
  <connections/>
 </ui>

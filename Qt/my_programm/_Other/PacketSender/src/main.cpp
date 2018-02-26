@@ -393,7 +393,7 @@ int main(int argc, char *argv[])
                 sock.waitForBytesWritten(1000);
                 //OUTIF() << "Sent:" << Packet::byteArrayToHex(sendData);
                 OUTPUT();
-                while(now.elapsed() <= wait && (sock.state() == QAbstractSocket::ConnectedState))
+                while(now.elapsed() <= (int)wait && (sock.state() == QAbstractSocket::ConnectedState))
                 {
                     sock.waitForReadyRead(wait - now.elapsed());
                     recvData = sock.readAll();
@@ -463,7 +463,7 @@ int main(int argc, char *argv[])
             sock.waitForBytesWritten(1000);
 
             OUTPUT();
-            while(now.elapsed() <= wait)
+            while(now.elapsed() <= (int)wait)
             {
                 sock.waitForReadyRead(wait - now.elapsed());
 

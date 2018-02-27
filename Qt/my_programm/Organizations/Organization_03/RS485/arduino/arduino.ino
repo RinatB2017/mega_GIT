@@ -192,16 +192,19 @@ enum {
 };
 int state = STATUS_IDLE;
 //--------------------------------------------------------------------------------
-int pin_485   = 13;
-int led_blink = 10;
-int led_pump  = 11;
-int led_relay = 12;
+int pin_485   = 2;
+int led_blink = 3;
+int led_pump  = A0;
+int led_relay = 5;
 
-int addr0 = A1;
-int addr1 = A2;
+int pin_rain = 6;
+int pin_level = 7;
+
+int addr0 = A5;
+int addr1 = A4;
 int addr2 = A3;
-int addr3 = A4;
-int addr4 = A5;
+int addr3 = A2;
+int addr4 = A1;
 
 int delay_485_ms = 10;
 //--------------------------------------------------------------------------------
@@ -242,12 +245,12 @@ void relay_OFF()
 //--------------------------------------------------------------------------------
 bool check_RAIN()
 {
-  return true;
+  return digitalRead(pin_rain);
 }
 //--------------------------------------------------------------------------------
 bool check_LEVEL()
 {
-  return true;
+  return digitalRead(pin_level);
 }
 //--------------------------------------------------------------------------------
 uint8_t get_address()
@@ -891,6 +894,9 @@ void setup()
   pinMode(led_blink,  OUTPUT);
   pinMode(led_pump,   OUTPUT);
   pinMode(led_relay,  OUTPUT);
+
+  pinMode(pin_rain,   INPUT);
+  pinMode(pin_level,  INPUT);
 
   pinMode(addr0,  INPUT);
   pinMode(addr1,  INPUT);

@@ -207,6 +207,8 @@ int addr3 = A2;
 int addr4 = A1;
 
 int delay_485_ms = 10;
+
+bool flag_blink = false;
 //--------------------------------------------------------------------------------
 void debug(String text)
 {
@@ -245,34 +247,25 @@ void relay_OFF()
 //--------------------------------------------------------------------------------
 bool check_RAIN()
 {
-  return digitalRead(pin_rain);
+  return (digitalRead(pin_rain) == HIGH);
 }
 //--------------------------------------------------------------------------------
 bool check_LEVEL()
 {
-  return digitalRead(pin_level);
+  return (digitalRead(pin_level) == HIGH);
 }
 //--------------------------------------------------------------------------------
 uint8_t get_address()
 {
-  return 4;
+  //return 4;
   
   union U_BYTE temp;
   temp.value = 0;
-  temp.bites.bit0 = digitalRead(addr0);
-  temp.bites.bit1 = digitalRead(addr1);
-  temp.bites.bit2 = digitalRead(addr2);
-  temp.bites.bit3 = digitalRead(addr3);
-  temp.bites.bit4 = digitalRead(addr4);
-  /*
-    union U_BYTE temp;
-    temp.value = 0;
-    temp.bites.bit0 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_0);
-    temp.bites.bit1 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_1);
-    temp.bites.bit2 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_2);
-    temp.bites.bit3 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_3);
-    temp.bites.bit4 = (GPIO_ReadInputData(GPIOA) && GPIO_Pin_4);
-  */
+  temp.bites.bit0 = (digitalRead(addr0) == LOW);
+  temp.bites.bit1 = (digitalRead(addr1) == LOW);
+  temp.bites.bit2 = (digitalRead(addr2) == LOW);
+  temp.bites.bit3 = (digitalRead(addr3) == LOW);
+  temp.bites.bit4 = (digitalRead(addr4) == LOW);
   return temp.value;
 }
 //--------------------------------------------------------------------------------
@@ -674,19 +667,19 @@ void serialEvent()
   }
 }
 //--------------------------------------------------------------------------------
-void blink_on()
-{
-  blink_ON();
-  pump_ON();
-  relay_ON();
-}
+//void blink_on()
+//{
+//  blink_ON();
+//  pump_ON();
+//  relay_ON();
+//}
 //--------------------------------------------------------------------------------
-void blink_off()
-{
-  blink_OFF();
-  pump_OFF();
-  relay_OFF();
-}
+//void blink_off()
+//{
+//  blink_OFF();
+//  pump_OFF();
+//  relay_OFF();
+//}
 //--------------------------------------------------------------------------------
 Timer t;
 //--------------------------------------------------------------------------------
@@ -816,6 +809,18 @@ void takeReading()
   bool flag_lvl  = check_LEVEL();
   bool flag_rain = check_RAIN();
 
+  flag_blink = !flag_blink;
+  if (flag_blink)
+  {
+    blink_ON();
+  }
+  else
+  {
+    blink_OFF();
+  }
+  //---
+  //relay_ON(); //TODO
+
   // мало воды
   if (flag_lvl)
   {
@@ -910,6 +915,10 @@ void setup()
   digitalWrite(addr2,  HIGH);
   digitalWrite(addr3,  HIGH);
   digitalWrite(addr4,  HIGH);
+
+  digitalWrite(pin_rain,  HIGH);
+  digitalWrite(pin_level,  HIGH);
+  //---
 
   t.every(1000, takeReading); // 1 sec
 

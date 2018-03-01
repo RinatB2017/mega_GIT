@@ -168,6 +168,10 @@
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
+    <message>
+        <source>English</source>
+        <translation>Английский</translation>
+    </message>
 </context>
 
 <context>

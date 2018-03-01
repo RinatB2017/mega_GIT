@@ -643,93 +643,18 @@ void MainWindow::createToolBar(void)
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
-    btnExit    = new QToolButton(this);
-    btnFont    = new QToolButton(this);
-
+    app_toolbar_add_exit();
+    app_toolbar_add_separator();
+    app_toolbar_add_font();
+    app_toolbar_add_separator();
 #ifndef ONLY_ENGLISH
-    btnRus     = new QToolButton(this);
-    btnEng     = new QToolButton(this);
+    app_toolbar_add_lang();
+    app_toolbar_add_separator();
 #endif
-
-    btnStyle   = new QToolButton(this);
-    btnHelp    = new QToolButton(this);
-    btnAbout   = new QToolButton(this);
-
-    btnExit->setObjectName("btnExit");
-    btnFont->setObjectName("btnFont");
-
-#ifndef ONLY_ENGLISH
-    btnRus->setObjectName("btnRus");
-    btnEng->setObjectName("btnEng");
-#endif
-
-    btnHelp->setObjectName("btnHelp");
-    btnAbout->setObjectName("btnAbout");
-
-#ifndef ONLY_ENGLISH
-    btnRus->setObjectName("btnRus");
-    btnEng->setObjectName("btnEng");
-
-    btnRus->setText("Russian");
-    btnEng->setText("English");
-#endif
-
-    btnStyle->setText("Style");
-
-    btnExit->setIcon(QPixmap(QLatin1String(ICON_EXIT)));
-    btnFont->setIcon(QPixmap(QLatin1String(ICON_FONT)));
-
-#ifndef ONLY_ENGLISH
-    btnRus->setIcon(QPixmap(QLatin1String(ICON_RU)));
-    btnEng->setIcon(QPixmap(QLatin1String(ICON_US)));
-#endif
-
-    btnStyle->setIcon(QPixmap(QLatin1String(ICON_STYLE)));
-    btnHelp->setIcon(QPixmap(QLatin1String(ICON_HELP)));
-    btnAbout->setIcon(QPixmap(QLatin1String(ICON_ABOUT)));
-
-    btnHelp->setShortcut(Qt::Key_F1);
-
-    toolbar->addWidget(btnExit);
-    toolbar->addSeparator();
-    toolbar->addWidget(btnFont);
-
-#ifndef ONLY_ENGLISH
-    toolbar->addSeparator();
-    toolbar->addWidget(btnRus);
-    toolbar->addWidget(btnEng);
-#endif
-
-    toolbar->addSeparator();
-    toolbar->addWidget(btnStyle);
-    toolbar->addSeparator();
-    toolbar->addWidget(btnHelp);
-    toolbar->addWidget(btnAbout);
-
-    QMenu *menu = new QMenu(this);
-
-    QStringList sl;
-    sl.clear();
-    sl.append(QStyleFactory::keys());
-    foreach (QString style, sl)
-    {
-        QAction *temp = new QAction(style, menu);
-        menu->addAction(temp);
-        connect(temp, SIGNAL(triggered()), this, SLOT(setStyles()));
-    }
-    btnStyle->setMenu(menu);
-    btnStyle->setPopupMode(QToolButton::InstantPopup);
-
-    connect(btnExit,    SIGNAL(clicked(bool)),    this, SLOT(close()));
-    connect(btnFont,    SIGNAL(clicked(bool)),    this, SLOT(set_app_font()));
-
-#ifndef ONLY_ENGLISH
-    connect(btnRus,     SIGNAL(clicked(bool)),    this, SLOT(setToolBarLanguage()));
-    connect(btnEng,     SIGNAL(clicked(bool)),    this, SLOT(setToolBarLanguage()));
-#endif
-
-    connect(btnHelp,    SIGNAL(clicked(bool)),    this, SLOT(help()));
-    connect(btnAbout,   SIGNAL(clicked(bool)),    this, SLOT(about()));
+    app_toolbar_add_style();
+    app_toolbar_add_separator();
+    app_toolbar_add_about();
+    app_toolbar_add_help();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::createStyleToolBar(void)
@@ -1717,6 +1642,135 @@ void MainWindow::app_menu_add_help(QMenu *menu)
     app_actions.append(help);
 
     menu->addAction(help);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_toolbar_add_separator(void)
+{
+    Q_CHECK_PTR(toolbar);
+    toolbar->addSeparator();
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_toolbar_add_exit(void)
+{
+    QToolButton *btnExit = new QToolButton(this);
+    btnExit->setObjectName("btnExit");
+    btnExit->setIcon(QPixmap(ICON_EXIT));
+    btnExit->setToolTip("Exit");
+    btnExit->setStatusTip("Exit");
+    btnExit->setProperty(APP_PROPERTY_ENG_TEXT, "Exit");
+    connect(btnExit,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
+
+    toolbar->addWidget(btnExit);
+    app_buttons.append(btnExit);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_toolbar_add_font(void)
+{
+    QToolButton *btnAppFont = new QToolButton(this);
+    QToolButton *btnLogFont = new QToolButton(this);
+
+    btnAppFont->setObjectName("btnAppFont");
+    btnAppFont->setIcon(QPixmap(ICON_FONT));
+    btnAppFont->setToolTip("Select the font program");
+    btnAppFont->setStatusTip("Select the font program");
+    btnAppFont->setProperty(APP_PROPERTY_ENG_TEXT, "Select the font program");
+    connect(btnAppFont,    SIGNAL(clicked(bool)),  this,   SLOT(set_app_font()));
+
+    btnLogFont->setObjectName("btnLogFont");
+    btnLogFont->setIcon(QPixmap(ICON_FONT));
+    btnLogFont->setToolTip("Select the font logging");
+    btnLogFont->setStatusTip("Select the font logging");
+    btnLogFont->setProperty(APP_PROPERTY_ENG_TEXT, "Select the font logging");
+    connect(btnLogFont,    SIGNAL(clicked(bool)),  this,   SLOT(set_log_font()));
+
+    toolbar->addWidget(btnAppFont);
+    toolbar->addWidget(btnLogFont);
+
+    app_buttons.append(btnAppFont);
+    app_buttons.append(btnLogFont);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_toolbar_add_lang(void)
+{
+    QToolButton *btnRus = new QToolButton(this);
+    QToolButton *btnEng = new QToolButton(this);
+
+    btnRus->setObjectName("btnRus");
+    btnRus->setIcon(QPixmap(ICON_RU));
+    btnRus->setToolTip("Russian");
+    btnRus->setStatusTip("Russian");
+    btnRus->setProperty(APP_PROPERTY_ENG_TEXT, "Russian");
+    connect(btnRus,    SIGNAL(clicked(bool)),  this,   SLOT(setToolBarLanguage()));
+
+    btnEng->setObjectName("btnEng");
+    btnEng->setIcon(QPixmap(ICON_US));
+    btnEng->setToolTip("English");
+    btnEng->setStatusTip("English");
+    btnEng->setProperty(APP_PROPERTY_ENG_TEXT, "English");
+    connect(btnEng,    SIGNAL(clicked(bool)),  this,   SLOT(setToolBarLanguage()));
+
+    toolbar->addWidget(btnRus);
+    toolbar->addWidget(btnEng);
+
+    app_buttons.append(btnRus);
+    app_buttons.append(btnEng);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_toolbar_add_style(void)
+{
+    QMenu *menu = new QMenu(this);
+
+    QStringList sl;
+    sl.clear();
+    sl.append(QStyleFactory::keys());
+    foreach (QString style, sl)
+    {
+        QAction *temp = new QAction(style, menu);
+        menu->addAction(temp);
+        connect(temp, SIGNAL(triggered()), this, SLOT(setStyles()));
+    }
+
+    QToolButton *btnStyle = new QToolButton(this);
+    btnStyle->setObjectName("btnStyle");
+    btnStyle->setIcon(QPixmap(ICON_STYLE));
+    btnStyle->setToolTip("Style");
+    btnStyle->setStatusTip("Style");
+    btnStyle->setProperty(APP_PROPERTY_ENG_TEXT, "Style");
+    btnStyle->setMenu(menu);
+    btnStyle->setPopupMode(QToolButton::InstantPopup);
+    connect(btnStyle,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
+
+    toolbar->addWidget(btnStyle);
+    app_buttons.append(btnStyle);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_toolbar_add_about(void)
+{
+    QToolButton *btnAbout = new QToolButton(this);
+    btnAbout->setObjectName("btnExit");
+    btnAbout->setIcon(QPixmap(ICON_ABOUT));
+    btnAbout->setToolTip("About");
+    btnAbout->setStatusTip("About");
+    btnAbout->setProperty(APP_PROPERTY_ENG_TEXT, "About");
+    connect(btnAbout,    SIGNAL(clicked(bool)),  this,   SLOT(about()));
+
+    toolbar->addWidget(btnAbout);
+    app_buttons.append(btnAbout);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_toolbar_add_help(void)
+{
+    QToolButton *btnHelp = new QToolButton(this);
+    btnHelp->setObjectName("btnHelp");
+    btnHelp->setIcon(QPixmap(ICON_HELP));
+    btnHelp->setToolTip("Help");
+    btnHelp->setStatusTip("Help");
+    btnHelp->setProperty(APP_PROPERTY_ENG_TEXT, "Help");
+    btnHelp->setShortcut(Qt::Key_F1);
+    connect(btnHelp,    SIGNAL(clicked(bool)),  this,   SLOT(help()));
+
+    toolbar->addWidget(btnHelp);
+    app_buttons.append(btnHelp);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_updateText(void)

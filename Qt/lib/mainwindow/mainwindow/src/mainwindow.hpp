@@ -236,17 +236,6 @@ private:
     void createStatusBar(void);
     void createTrayIcon(void);
 
-    QToolButton *btnExit = 0;
-    QToolButton *btnFont = 0;
-
-#ifndef ONLY_ENGLISH
-    QToolButton *btnRus = 0;
-    QToolButton *btnEng = 0;
-#endif
-
-    QToolButton *btnStyle = 0;
-    QToolButton *btnHelp = 0;
-    QToolButton *btnAbout = 0;
     void createToolBar(void);
 
     QToolBar *toolbar = 0;
@@ -273,8 +262,6 @@ private:
     QMenu *m_app_windowsmenu    = 0;
     QMenu *m_app_helpmenu    = 0;
 
-    void app_create_menus(void);
-    void app_updateText(void);
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
     void app_menu_add_font_programm(QMenu *menu);
@@ -286,6 +273,16 @@ private:
     void app_menu_add_confirm_exit(QMenu *menu);
     void app_menu_add_about(QMenu *menu);
     void app_menu_add_help(QMenu *menu);
+
+    void app_toolbar_add_separator(void);
+    void app_toolbar_add_exit(void);
+    void app_toolbar_add_font(void);
+    void app_toolbar_add_lang(void);
+    void app_toolbar_add_style(void);
+    void app_toolbar_add_about(void);
+    void app_toolbar_add_help(void);
+
+    void app_updateText(void);
 
 protected:
     bool flag_close = false;

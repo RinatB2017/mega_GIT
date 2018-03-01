@@ -113,10 +113,71 @@ void MainBox::test(void)
 {
     emit info("test");
 
+    QUESTION_TEST question;
+
+    block_this_button(true);
+
+    QProgressDialog *dlg = new QProgressDialog(this);
+    dlg->setWindowTitle("Поиск");
+    dlg->setLabelText("Пожалуйста, ждите!");
+    dlg->setMinimumSize(500, 100);
+    dlg->setMinimum(0);
+    dlg->setMaximum(0xFF);
+    dlg->setWindowModality(Qt::ApplicationModal);
+    dlg->show();
+
+    for(uint8_t addr=0; addr<0xFF; addr++)
+    {
+        emit info(QString("Проверяем адрес 0x%1").arg(addr, 2, 16, QChar('0')));
+        dlg->setValue(addr);
+        if(dlg->wasCanceled())
+        {
+            break;
+        }
+
+        question.body.header.prefix_16 = 0xBBAA;                // префикс
+        question.body.header.len_16 = sizeof(question);         // длина пакета
+        question.body.header.addr_8 = addr;                     // адрес модуля
+        question.body.header.cmd_8 = CMD_TEST;                  // команда
+        question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
+
+        QByteArray ba;
+        ba.append((char *)&question.buf, sizeof(question.buf));
+
+        emit debug(QString("Длина пакета = %1").arg(ba.size()));
+        emit debug(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
+
+        //---
+        data_rs232_clean.clear();
+        is_ready = false;
+        emit send(convert(ba));
+        wait(1000);
+
+        emit debug(QString("Получено [%1]").arg(data_rs232_clean.data()));
+        emit debug(QString("Получено (hex) [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
+        int err = check_answer_test(data_rs232_clean);
+        if(err == MainBox::NO_ERROR)
+        {
+            emit info(QString("FOUND: addr = %1").arg(addr));
+            dlg->close();
+            dlg->deleteLater();
+
+            block_this_button(false);
+            return;
+        }
+    }
+    dlg->close();
+    dlg->deleteLater();
+
+    block_this_button(false);
+    emit error("Address not found!");
+}
+//--------------------------------------------------------------------------------
+/*
     ui->serial_widget->setProperty("p_test", true);
     bool ok = ui->serial_widget->property("p_test").toBool();
     emit error(QString("%1").arg(ok ? "true" : "false"));
-}
+*/
 //--------------------------------------------------------------------------------
 void MainBox::wait(int max_time_ms)
 {

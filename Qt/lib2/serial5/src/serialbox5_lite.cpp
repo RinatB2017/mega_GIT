@@ -588,6 +588,17 @@ QByteArray SerialBox5_lite::readAll(void)
     return serial5->readAll();
 }
 //--------------------------------------------------------------------------------
+void SerialBox5_lite::set_test(bool value)
+{
+    p_test = value;
+}
+//--------------------------------------------------------------------------------
+bool SerialBox5_lite::get_test(void)
+{
+    emit error("Зачем жать куда попало?");
+    return p_test;
+}
+//--------------------------------------------------------------------------------
 void SerialBox5_lite::updateText(void)
 {
     ui->retranslateUi(this);

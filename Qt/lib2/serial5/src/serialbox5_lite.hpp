@@ -50,6 +50,8 @@ class SerialBox5_lite : public MyWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool p_test      READ get_test       WRITE set_test)
+
 public:
     SerialBox5_lite(QWidget *parent,
                     const QString &caption,
@@ -80,6 +82,11 @@ private:
     bool flag_byte_by_byte = false;
 
     QTimer *timer = 0;
+
+    //TODO
+    bool p_test = false;
+    void set_test(bool value);
+    bool get_test(void);
 
 #ifndef RS232_NO_FRAME
     void add_frame_text(QFrame *parent,

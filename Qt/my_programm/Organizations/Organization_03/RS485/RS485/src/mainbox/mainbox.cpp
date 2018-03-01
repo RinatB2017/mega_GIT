@@ -112,6 +112,10 @@ void MainBox::createTestBar(void)
 void MainBox::test(void)
 {
     emit info("test");
+
+    ui->serial_widget->setProperty("p_test", true);
+    bool ok = ui->serial_widget->property("p_test").toBool();
+    emit error(QString("%1").arg(ok ? "true" : "false"));
 }
 //--------------------------------------------------------------------------------
 void MainBox::wait(int max_time_ms)

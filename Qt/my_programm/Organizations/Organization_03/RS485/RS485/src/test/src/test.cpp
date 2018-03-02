@@ -54,7 +54,7 @@ void Test::check_test(void)
 
     data.clear();
     data.append((char *)&test.buf, sizeof(test));
-    QCOMPARE(mb->check_answer_test(data),   MainBox::NO_ERROR);
+    QCOMPARE(mb->check_answer_test(data),   MainBox::E_NO_ERROR);
 }
 //--------------------------------------------------------------------------------
 void Test::check_reset(void)
@@ -77,7 +77,7 @@ void Test::check_reset(void)
     data.clear();
     data.append((char *)&test.buf, sizeof(test));
 
-    QCOMPARE(mb->check_answer_reset(data),  MainBox::NO_ERROR);
+    QCOMPARE(mb->check_answer_reset(data),  MainBox::E_NO_ERROR);
 }
 //--------------------------------------------------------------------------------
 void Test::check_read(void)
@@ -100,7 +100,7 @@ void Test::check_read(void)
     data.clear();
     data.append((char *)&test.buf, sizeof(test));
 
-    QCOMPARE(mb->check_answer_read(data),   MainBox::NO_ERROR);
+    QCOMPARE(mb->check_answer_read(data),   MainBox::E_NO_ERROR);
 }
 //--------------------------------------------------------------------------------
 void Test::check_write(void)
@@ -123,6 +123,6 @@ void Test::check_write(void)
     data.clear();
     data.append((char *)&test.buf, sizeof(test));
 
-    QCOMPARE(mb->check_answer_write(data),  MainBox::NO_ERROR);
+    QCOMPARE(mb->check_answer_write(data),  MainBox::E_NO_ERROR);
 }
 //--------------------------------------------------------------------------------

@@ -156,7 +156,7 @@ void MainBox::test(void)
         emit debug(QString("Получено [%1]").arg(data_rs232_clean.data()));
         emit debug(QString("Получено (hex) [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
         int err = check_answer_test(data_rs232_clean);
-        if(err == MainBox::NO_ERROR)
+        if(err == MainBox::E_NO_ERROR)
         {
             emit info(QString("FOUND: addr = %1").arg(addr));
             dlg->close();
@@ -237,7 +237,7 @@ int MainBox::check_answer_test(QByteArray data)
     if(data.isEmpty())
     {
         emit error("Ответ пуст!");
-        return ERR_ANSWER_EMPTY;
+        return E_ANSWER_EMPTY;
     }
 
     ANSWER_TEST *answer = (ANSWER_TEST *)data.data();
@@ -245,21 +245,21 @@ int MainBox::check_answer_test(QByteArray data)
     if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
     {
         emit error("Размер пакета не корректен");
-        return ERR_ANSWER_BAD_SIZE;
+        return E_ANSWER_BAD_SIZE;
     }
 
     uint16_t prefix = answer->body.header.prefix_16;
     if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
-        return ERR_BAD_PREFIX;
+        return E_BAD_PREFIX;
     }
 
     uint8_t cmd = answer->body.header.cmd_8;
     if(cmd != CMD_TEST)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_CMD;
+        return E_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_TEST) - sizeof(answer->body.crc16));
@@ -268,7 +268,7 @@ int MainBox::check_answer_test(QByteArray data)
         emit error(QString("Контрольная сумма не корректнa! 0x%1 != 0x%2")
                    .arg(answer->body.crc16, 2, 16, QChar('0'))
                    .arg(crc16, 2, 16, QChar('0')));
-        return ERR_BAD_CRC16;
+        return E_BAD_CRC16;
     }
 
     emit debug(QString("prefix_16 %1").arg(prefix, 0, 16));
@@ -278,7 +278,7 @@ int MainBox::check_answer_test(QByteArray data)
 
     emit debug(QString("data %1").arg(answer->body.data.result));
 
-    return NO_ERROR;
+    return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 int MainBox::check_answer_reset(QByteArray data)
@@ -286,7 +286,7 @@ int MainBox::check_answer_reset(QByteArray data)
     if(data.isEmpty())
     {
         emit error("Ответ пуст!");
-        return ERR_ANSWER_EMPTY;
+        return E_ANSWER_EMPTY;
     }
 
     ANSWER_RESET *answer = (ANSWER_RESET *)data.data();
@@ -294,21 +294,21 @@ int MainBox::check_answer_reset(QByteArray data)
     if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
     {
         emit error("Размер пакета не корректен");
-        return ERR_ANSWER_BAD_SIZE;
+        return E_ANSWER_BAD_SIZE;
     }
 
     uint16_t prefix = answer->body.header.prefix_16;
     if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
-        return ERR_BAD_PREFIX;
+        return E_BAD_PREFIX;
     }
 
     uint8_t cmd = answer->body.header.cmd_8;
     if(cmd != CMD_RESET)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_CMD;
+        return E_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_RESET) - sizeof(answer->body.crc16));
@@ -317,7 +317,7 @@ int MainBox::check_answer_reset(QByteArray data)
         emit error(QString("Контрольная сумма не корректнa! 0x%1 != 0x%2")
                    .arg(answer->body.crc16, 2, 16, QChar('0'))
                    .arg(crc16, 2, 16, QChar('0')));
-        return ERR_BAD_CRC16;
+        return E_BAD_CRC16;
     }
 
     uint32_t    addr_upu = answer->body.header.addr_8;                              // адрес upu
@@ -348,7 +348,7 @@ int MainBox::check_answer_reset(QByteArray data)
     emit debug(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
     emit debug(QString("len_16 %1").arg(answer->body.header.len_16));
 
-    return NO_ERROR;
+    return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 int MainBox::check_answer_read(QByteArray data)
@@ -356,28 +356,28 @@ int MainBox::check_answer_read(QByteArray data)
     if(data.isEmpty())
     {
         emit error("Ответ пуст!");
-        return ERR_ANSWER_EMPTY;
+        return E_ANSWER_EMPTY;
     }
 
     ANSWER_READ *answer = (ANSWER_READ *)data.data();
     if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
     {
         emit error("Размер пакета не корректен");
-        return ERR_ANSWER_BAD_SIZE;
+        return E_ANSWER_BAD_SIZE;
     }
 
     uint16_t prefix = answer->body.header.prefix_16;
     if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
-        return ERR_BAD_PREFIX;
+        return E_BAD_PREFIX;
     }
 
     uint8_t cmd = answer->body.header.cmd_8;
     if(cmd != CMD_READ)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_CMD;
+        return E_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_READ) - sizeof(answer->body.crc16));
@@ -386,7 +386,7 @@ int MainBox::check_answer_read(QByteArray data)
         emit error(QString("Контрольная сумма не корректнa! 0x%1 != 0x%2")
                    .arg(answer->body.crc16, 2, 16, QChar('0'))
                    .arg(crc16, 2, 16, QChar('0')));
-        return ERR_BAD_CRC16;
+        return E_BAD_CRC16;
     }
 
     uint32_t    addr_upu = answer->body.header.addr_8;                              // адрес upu
@@ -423,7 +423,7 @@ int MainBox::check_answer_read(QByteArray data)
     emit debug(QString("time_pause_washout_32 %1").arg(time_pause_washout_32));
     emit debug(QString("preset_washout_32 %1").arg(preset_washout_32));
 
-    return NO_ERROR;
+    return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 int MainBox::check_answer_write(QByteArray data)
@@ -431,28 +431,28 @@ int MainBox::check_answer_write(QByteArray data)
     if(data.isEmpty())
     {
         emit error("Ответ пуст!");
-        return ERR_ANSWER_EMPTY;
+        return E_ANSWER_EMPTY;
     }
 
     ANSWER_WRITE *answer = (ANSWER_WRITE *)data.data();
     if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
     {
         emit error("Размер пакета не корректен");
-        return ERR_ANSWER_BAD_SIZE;
+        return E_ANSWER_BAD_SIZE;
     }
 
     uint16_t prefix = answer->body.header.prefix_16;
     if(prefix != PREFIX)
     {
         emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
-        return ERR_BAD_PREFIX;
+        return E_BAD_PREFIX;
     }
 
     uint8_t cmd = answer->body.header.cmd_8;
     if(cmd != CMD_WRITE)
     {
         emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
-        return ERR_BAD_CMD;
+        return E_BAD_CMD;
     }
 
     uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_WRITE) - sizeof(answer->body.crc16));
@@ -461,7 +461,7 @@ int MainBox::check_answer_write(QByteArray data)
         emit error(QString("Контрольная сумма не корректнa! 0x%1 != 0x%2")
                    .arg(answer->body.crc16, 2, 16, QChar('0'))
                    .arg(crc16, 2, 16, QChar('0')));
-        return ERR_BAD_CRC16;
+        return E_BAD_CRC16;
     }
 
     uint32_t    addr_cam_32 = answer->body.data.addr_cam_32;                         // адрес камеры
@@ -496,7 +496,7 @@ int MainBox::check_answer_write(QByteArray data)
     emit debug(QString("time_pause_washout_32 %1").arg(time_pause_washout_32));
     emit debug(QString("preset_washout_32 %1").arg(preset_washout_32));
 
-    return NO_ERROR;
+    return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_read(void)
@@ -525,7 +525,7 @@ void MainBox::cmd_read(void)
 
     emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     int err = check_answer_read(data_rs232_clean);
-    if(err != MainBox::NO_ERROR)
+    if(err != MainBox::E_NO_ERROR)
     {
         return;
     }
@@ -568,7 +568,7 @@ void MainBox::cmd_write(void)
 
     emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     int err = check_answer_write(data_rs232_clean);
-    if(err != MainBox::NO_ERROR)
+    if(err != MainBox::E_NO_ERROR)
     {
         return;
     }
@@ -603,7 +603,7 @@ void MainBox::cmd_test(void)
     emit debug(QString("Получено [%1]").arg(data_rs232_clean.data()));
     emit debug(QString("Получено (hex) [%1]").arg(data_rs232_clean.toHex().toUpper().data()));
     int err = check_answer_test(data_rs232_clean);
-    if(err != MainBox::NO_ERROR)
+    if(err != MainBox::E_NO_ERROR)
     {
         return;
     }
@@ -637,7 +637,7 @@ void MainBox::cmd_reset(void)
 
     emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
     int err = check_answer_reset(data_rs232_clean);
-    if(err != MainBox::NO_ERROR)
+    if(err != MainBox::E_NO_ERROR)
     {
         return;
     }
@@ -648,12 +648,12 @@ void MainBox::print_err(int code)
 {
     switch(code)
     {
-    case NO_ERROR:              emit info("Нет ошибки!");                   break;
-    case ERR_ANSWER_EMPTY:      emit error("Ответ пуст!");                  break;
-    case ERR_ANSWER_BAD_SIZE:   emit error("Неверный размер пакета");       break;
-    case ERR_BAD_PREFIX:        emit error("Неверный префикс");             break;
-    case ERR_BAD_CMD:           emit error("Неверная команда");             break;
-    case ERR_BAD_CRC16:         emit error("Неверная контрольная сумма");   break;
+    case E_NO_ERROR:              emit info("Нет ошибки!");                   break;
+    case E_ANSWER_EMPTY:      emit error("Ответ пуст!");                  break;
+    case E_ANSWER_BAD_SIZE:   emit error("Неверный размер пакета");       break;
+    case E_BAD_PREFIX:        emit error("Неверный префикс");             break;
+    case E_BAD_CMD:           emit error("Неверная команда");             break;
+    case E_BAD_CRC16:         emit error("Неверная контрольная сумма");   break;
     default:
         emit error(QString("unknown err code [%1]").arg(code));
         break;

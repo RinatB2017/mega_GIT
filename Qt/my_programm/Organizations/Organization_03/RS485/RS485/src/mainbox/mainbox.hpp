@@ -45,12 +45,12 @@ public:
     ~MainBox();
 
     enum Errors {
-        NO_ERROR = 0,
-        ERR_ANSWER_EMPTY,
-        ERR_ANSWER_BAD_SIZE,
-        ERR_BAD_PREFIX,
-        ERR_BAD_CMD,
-        ERR_BAD_CRC16
+        E_NO_ERROR = 0,
+        E_ANSWER_EMPTY,
+        E_ANSWER_BAD_SIZE,
+        E_BAD_PREFIX,
+        E_BAD_CMD,
+        E_BAD_CRC16
     };
 
 signals:

@@ -192,7 +192,7 @@ enum {
 };
 int state = STATUS_IDLE;
 //--------------------------------------------------------------------------------
-int pin_485   = 2;
+int pin_485   = 13; //2;
 int led_blink = 3;
 int led_pump  = A0;
 int led_relay = 5;
@@ -917,7 +917,7 @@ void setup()
   digitalWrite(addr4,  HIGH);
 
   digitalWrite(pin_rain,  HIGH);
-  digitalWrite(pin_level,  HIGH);
+  digitalWrite(pin_level, HIGH);
   //---
 
   t.every(1000, takeReading); // 1 sec

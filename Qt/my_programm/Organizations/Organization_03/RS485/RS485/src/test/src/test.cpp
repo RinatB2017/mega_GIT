@@ -24,7 +24,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "rs485_mainbox.hpp"
 #include "test.hpp"
 
 #include "packet.hpp"

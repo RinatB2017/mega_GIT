@@ -29,7 +29,7 @@
 //--------------------------------------------------------------------------------
 #include "serialbox5.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "rs232_5_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

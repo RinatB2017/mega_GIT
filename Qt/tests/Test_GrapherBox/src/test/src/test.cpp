@@ -28,7 +28,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "grapherbox.hpp"
-#include "mainbox.hpp"
+#include "Test_GrapherBox_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

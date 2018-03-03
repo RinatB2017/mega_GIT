@@ -28,7 +28,7 @@
 //--------------------------------------------------------------------------------
 #include "histogrambox.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_HistogramBox_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

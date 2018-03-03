@@ -29,7 +29,7 @@
 #define private public
 
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_QGraphicsView_mainbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test(void)
 {

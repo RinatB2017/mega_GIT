@@ -27,7 +27,7 @@
 #define private public
 
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_QDBus_mainbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test(void)
 {

@@ -15,7 +15,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-
 DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += NO_LOG
@@ -28,7 +27,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     QT += webkit
 }
 
-QT += network testlib
+QT += network
 
 HEADERS += \
     defines.hpp \

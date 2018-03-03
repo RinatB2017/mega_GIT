@@ -22,7 +22,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "sim900_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

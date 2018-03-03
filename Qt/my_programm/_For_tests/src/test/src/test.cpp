@@ -32,7 +32,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
-#include "mainbox.hpp"
+#include "for_tests_mainbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {

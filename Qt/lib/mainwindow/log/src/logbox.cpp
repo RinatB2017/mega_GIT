@@ -126,6 +126,7 @@ void LogBox::create_widgets(void)
 #ifdef Q_OS_LINUX
     //TODO белый цвет, если тема темная
     logBox->setStyleSheet("background:white;");
+    //logBox->setTextBackgroundColor(QColor(Qt::white));
 #endif
 
     progressBar = new QProgressBar;
@@ -336,6 +337,54 @@ void LogBox::traceLog(const QString &text)
     }
 
     flagColor ? logBox->setTextColor(QColor(Qt::gray)) : logBox->setTextColor(QColor(Qt::black));
+
+    if(flagNoCRLF)
+        logBox->insertPlainText(temp);
+    else
+        logBox->append(temp);
+
+    logBox->moveCursor(QTextCursor::End);
+}
+//--------------------------------------------------------------------------------
+void LogBox::colorLog(const QString &text,
+                      const QColor text_color,
+                      const QColor background_color)
+{
+    if(flag_is_shows_trace == false)
+    {
+        return;
+    }
+
+    QString temp;
+
+    if(text.isEmpty())
+    {
+        return;
+    }
+
+    if(flagAddDateTime)
+    {
+        temp = QString("%1 MESSAGE %2")
+                .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
+                .arg(text);
+    }
+    else
+    {
+        temp = text;
+    }
+
+//#ifdef Q_OS_LINUX
+//    //TODO белый цвет, если тема темная
+//    QColor cb = QColor(Qt::white);
+//#else
+//    QColor cb = logBox->textBackgroundColor();
+//#endif
+
+    flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
+    flagColor ? logBox->setTextColor(text_color) : logBox->setTextColor(QColor(Qt::black));
+
+    // восстанавливаем цвет фона
+//    logBox->setTextBackgroundColor(cb);
 
     if(flagNoCRLF)
         logBox->insertPlainText(temp);

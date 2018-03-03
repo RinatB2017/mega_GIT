@@ -8,8 +8,8 @@ TARGET   = _For_tests
 PROGRAMM_PATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/for_tests_mainbox \
+    $$PWD/src/for_tests_mainbox/ui
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
@@ -49,13 +49,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    for_tests_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    for_tests_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += for_tests_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

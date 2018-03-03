@@ -9,8 +9,8 @@ FOLDER  = organizations/Organization_01
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/rs232_stmf0_mainbox \
+    $$PWD/src/rs232_stmf0_mainbox/ui \
     $$PWD/src/controlbox \
     $$PWD/src/controlbox/ui
 INCLUDEPATH = $$DEPENDPATH
@@ -30,16 +30,16 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    rs232_stmf0_mainbox.hpp \
     controlbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    rs232_stmf0_mainbox.cpp \
     main.cpp \
     controlbox.cpp
 
-FORMS += \
-    mainbox.ui \
+FORMS   += \
+    rs232_stmf0_mainbox.ui \
     controlbox.ui
 
 OTHER_FILES	+= notebook.txt

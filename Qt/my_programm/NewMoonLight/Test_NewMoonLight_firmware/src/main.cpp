@@ -18,13 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QLocale>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "test_newmoonlight_firmware_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

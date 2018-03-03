@@ -7,8 +7,8 @@ TARGET   = show_films
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/show_films_mainbox \
+    $$PWD/src/show_films_mainbox/ui \
     $$PWD/src/treefilms \
     $$PWD/src/basedrag
 
@@ -26,15 +26,15 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    show_films_mainbox.hpp \
     treefilms.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    show_films_mainbox.cpp \
     treefilms.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += show_films_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

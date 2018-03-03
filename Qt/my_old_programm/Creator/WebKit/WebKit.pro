@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/webkit_mainbox \
+    $$PWD/src/webkit_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -32,13 +32,13 @@ QT += network testlib
 
 HEADERS += \
     defines.hpp \
-    mainbox.hpp
+    webkit_mainbox.hpp
 
 SOURCES += \
     main.cpp \
-    mainbox.cpp
+    webkit_mainbox.cpp
 
-FORMS += mainbox.ui
+FORMS   += webkit_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

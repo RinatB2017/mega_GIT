@@ -22,7 +22,7 @@
 #include <QString>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_Box2D_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

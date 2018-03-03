@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/Test_curvetracker_mainbox \
+    $$PWD/src/Test_curvetracker_mainbox/ui \
     $$PWD/src/curvetracker \
     $$PWD/src/plot
 INCLUDEPATH = $$DEPENDPATH
@@ -45,13 +45,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_curvetracker_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_curvetracker_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_curvetracker_mainbox.ui
 
 HEADERS	+= curvetracker.h
 SOURCES	+= curvetracker.cpp

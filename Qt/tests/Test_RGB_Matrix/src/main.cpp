@@ -18,12 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QLocale>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_RGB_Matrix_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

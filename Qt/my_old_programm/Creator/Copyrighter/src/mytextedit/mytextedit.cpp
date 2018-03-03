@@ -78,12 +78,14 @@ void MyTextEdit::log(const QString &data)
 {
 #ifdef QT_DEBUG
     qDebug() << data;
+#else
+    Q_UNUSED(data);
 #endif
 }
 //--------------------------------------------------------------------------------
 void MyTextEdit::open_file(void)
 {
-    QFileDialog *dlg;
+    QFileDialog *dlg = 0;
 
     dlg = new QFileDialog;
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);

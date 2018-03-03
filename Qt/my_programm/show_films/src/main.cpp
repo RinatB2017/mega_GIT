@@ -18,13 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QString>
-#include <QIcon>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "show_films_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

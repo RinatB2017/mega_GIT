@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/aggregator_mainbox \
+    $$PWD/src/aggregator_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -30,13 +30,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    aggregator_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    aggregator_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS += aggregator_mainbox.ui
 
 #RESOURCES += icons/temp.qrc
 

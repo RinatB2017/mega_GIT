@@ -23,7 +23,7 @@
 #include <QTime>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "aggregator_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

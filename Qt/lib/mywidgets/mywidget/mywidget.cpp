@@ -76,6 +76,8 @@ void MyWidget::connect_log(QWidget *parent)
         connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
         connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
+        connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
+
         connect(this,   SIGNAL(syslog(int,QString,QString)),
                 parent, SIGNAL(syslog(int,QString,QString)));
     }
@@ -85,6 +87,8 @@ void MyWidget::connect_log(QWidget *parent)
         connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
         connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
+
+        connect(this,   SIGNAL(colorLog(QColor,QString)),   this, SLOT(log(QString)));
     }
 #endif
 }

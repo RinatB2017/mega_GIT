@@ -18,12 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMessageBox>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_QGraphicsScene_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

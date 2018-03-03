@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/chess_mainbox \
+    $$PWD/src/chess_mainbox/ui \
     $$PWD/src/new_chessboard
 #    $$PWD/src/chessboard
 INCLUDEPATH = $$DEPENDPATH
@@ -27,14 +27,14 @@ HEADERS += \
     chessboard.hpp \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    chess_mainbox.hpp
 
 SOURCES += \
     chessboard.cpp \
-    mainbox.cpp \
+    chess_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += chess_mainbox.ui
 
 RESOURCES   += images/chess.qrc
 

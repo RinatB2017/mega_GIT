@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/Test_GY-652_mainbox \
+    $$PWD/src/Test_GY-652_mainbox/ui \
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -25,13 +25,13 @@ DEFINES += NO_LOG
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_GY-652_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_GY-652_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_GY-652_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

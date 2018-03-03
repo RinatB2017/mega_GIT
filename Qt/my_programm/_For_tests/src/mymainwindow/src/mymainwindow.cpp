@@ -22,7 +22,7 @@
 #include "mywidget.hpp"
 
 #include "defines.hpp"
-#include "mainbox.hpp"
+#include "for_tests_mainbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

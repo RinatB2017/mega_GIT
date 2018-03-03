@@ -84,6 +84,9 @@ void LogDock::update(void)
         case L_DEBUG:   le->debugLog(log.text);   break;
         case L_ERROR:   le->errorLog(log.text);   break;
         case L_TRACE:   le->traceLog(log.text);   break;
+        case L_COLOR:   le->colorLog(log.text,
+                                     log.text_color,
+                                     log.background_color);   break;
         }
     }
 
@@ -96,6 +99,7 @@ void LogDock::infoLog(QString text)
     LOG log;
     log.level = L_INFO;
     log.text = text;
+    log.text_color = QColor(Qt::blue);
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
@@ -104,6 +108,7 @@ void LogDock::debugLog(QString text)
     LOG log;
     log.level = L_DEBUG;
     log.text = text;
+    log.text_color = QColor(Qt::darkGreen);
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
@@ -112,6 +117,7 @@ void LogDock::errorLog(QString text)
     LOG log;
     log.level = L_ERROR;
     log.text = text;
+    log.text_color = QColor(Qt::red);
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
@@ -120,6 +126,19 @@ void LogDock::traceLog(QString text)
     LOG log;
     log.level = L_TRACE;
     log.text = text;
+    log.text_color = QColor(Qt::gray);
+    queue_log.enqueue(log);
+}
+//--------------------------------------------------------------------------------
+void LogDock::colorLog(const QString &text,
+                       const QColor text_color,
+                       const QColor background_color)
+{
+    LOG log;
+    log.level = L_COLOR;
+    log.text = text;
+    log.text_color = text_color;
+    log.background_color = background_color;
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------

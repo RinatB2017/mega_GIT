@@ -10,8 +10,8 @@ FOLDER  = old_programm
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/mtc_runner_mainbox \
+    $$PWD/src/mtc_runner_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -27,13 +27,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    mtc_runner_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    mtc_runner_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += mtc_runner_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

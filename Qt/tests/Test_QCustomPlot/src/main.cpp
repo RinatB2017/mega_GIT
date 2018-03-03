@@ -18,12 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QString>
-#include <QTime>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_QCustomPlot_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

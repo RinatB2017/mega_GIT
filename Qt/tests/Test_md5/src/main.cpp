@@ -18,11 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QString>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_md5_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

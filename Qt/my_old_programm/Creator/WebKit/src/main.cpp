@@ -21,7 +21,7 @@
 #include <QApplication>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "webkit_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

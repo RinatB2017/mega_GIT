@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/adc_arduino_ad7799_mainbox \
+    $$PWD/src/adc_arduino_ad7799_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -23,13 +23,13 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    adc_arduino_ad7799_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    adc_arduino_ad7799_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += adc_arduino_ad7799_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

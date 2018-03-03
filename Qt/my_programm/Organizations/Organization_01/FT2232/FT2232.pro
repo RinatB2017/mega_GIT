@@ -11,8 +11,8 @@ unix {
 }
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/ft2232_mainbox \
+    $$PWD/src/ft2232_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -29,14 +29,14 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    ft2232_mainbox.hpp \
     sleeper.h
 
 SOURCES += \
     main.cpp \
-    mainbox.cpp
+    ft2232_mainbox.cpp
 
-FORMS += mainbox.ui
+FORMS   += ft2232_mainbox.ui
 
 unix {
     LIBS    += -lftdi1

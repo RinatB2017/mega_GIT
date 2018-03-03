@@ -53,6 +53,8 @@ void TableView::log(const QString &text)
 {
 #ifdef QT_DEBUG
     qDebug() << text;
+#else
+    Q_UNUSED(text);
 #endif
 }
 //--------------------------------------------------------------------------------

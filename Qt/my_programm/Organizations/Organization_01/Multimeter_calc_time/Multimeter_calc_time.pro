@@ -10,8 +10,8 @@ FOLDER  = organizations/Organization_01
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/multimeter_calc_time_mainbox \
+    $$PWD/src/multimeter_calc_time_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -35,13 +35,13 @@ DEFINES += FAKE
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    multimeter_calc_time_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    multimeter_calc_time_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += multimeter_calc_time_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

@@ -12,8 +12,8 @@ DEPENDPATH  += \
     $$PWD/src/diod \
     $$PWD/src/display \
     $$PWD/src/palette \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_RGB_Matrix_mainbox \
+    $$PWD/src/Test_RGB_Matrix_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -33,15 +33,15 @@ DEFINES += MODBUS
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    Test_RGB_Matrix_mainbox.hpp \
     palette.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_RGB_Matrix_mainbox.cpp \
     palette.cpp \
     main.cpp \
 
-FORMS += mainbox.ui
+FORMS   += Test_RGB_Matrix_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

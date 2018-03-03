@@ -18,16 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTreeWidgetItem>
-#include <QProgressDialog>
-#include <QDragMoveEvent>
-#include <QApplication>
-#include <QInputDialog>
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QPainter>
-#include <QFile>
-#include <QMenu>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "treefilms.hpp"
 #include "selectbox.hpp"

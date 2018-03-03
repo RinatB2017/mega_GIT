@@ -23,7 +23,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "bluetooth_6x8_matrix_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

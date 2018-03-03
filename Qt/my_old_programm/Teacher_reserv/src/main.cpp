@@ -25,7 +25,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "teacher_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -74,7 +74,6 @@ int main(int argc, char *argv[])
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
     
-
     return app.exec();
 }
 //--------------------------------------------------------------------------------

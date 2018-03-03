@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_QGraphicsScene_mainbox \
+    $$PWD/src/Test_QGraphicsScene_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -23,20 +23,19 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_QGraphicsScene_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_QGraphicsScene_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += Test_QGraphicsScene_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
 win32 {
     RC_FILE = ico/myapp.rc
 }
-
 
 LIB_PATH = "../../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)

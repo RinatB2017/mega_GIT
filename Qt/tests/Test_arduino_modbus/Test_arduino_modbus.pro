@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_arduino_modbus_mainbox \
+    $$PWD/src/Test_arduino_modbus_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -28,13 +28,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_arduino_modbus_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_arduino_modbus_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_arduino_modbus_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

@@ -10,8 +10,8 @@ FOLDER  = organizations/Organization_03
 DEPENDPATH  += \
     ../common \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/rs485_mainbox \
+    $$PWD/src/rs485_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -39,14 +39,14 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    rs485_mainbox.hpp \
     packet.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    rs485_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += rs485_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

@@ -68,6 +68,8 @@ void Indicator_thread::log(const QString &data)
 {
 #ifdef QT_DEBUG
     qDebug() << data;
+#else
+    Q_UNUSED(data);
 #endif
 }
 //--------------------------------------------------------------------------------

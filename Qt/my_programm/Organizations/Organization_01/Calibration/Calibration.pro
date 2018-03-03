@@ -43,8 +43,8 @@ FOLDER  = organizations/Organization_01
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/calibration_mainbox \
+    $$PWD/src/calibration_mainbox/ui \
     $$PWD/src/reportstring \
     $$PWD/src/myreport
 INCLUDEPATH = $$DEPENDPATH
@@ -81,21 +81,21 @@ DEFINES += FAST_COMMAND
 DEFINES += FAKE
 
 HEADERS += \
-    src/mainbox/mainbox.hpp \
-    src/defines.hpp \
-    src/version.hpp \
-    src/reportstring/reportstring.hpp \
-    src/myreport/myreport.hpp
+    calibration_mainbox.hpp \
+    defines.hpp \
+    version.hpp \
+    reportstring.hpp \
+    myreport.hpp
 
 SOURCES += \
-    src/mainbox/mainbox.cpp \
-    src/main.cpp \
-    src/reportstring/reportstring.cpp \
-    src/myreport/myreport.cpp
+    calibration_mainbox.cpp \
+    main.cpp \
+    reportstring.cpp \
+    myreport.cpp
 
 #DEFINES += CALIBRATION_WIRED
-#FORMS   += mainbox_wired.ui
-FORMS  += mainbox.ui
+#FORMS   += calibration_mainbox_wired.ui
+FORMS   += calibration_mainbox.ui
 
 RESOURCES   += \
     images/calibration.qrc \

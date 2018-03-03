@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/generator_curve_mainbox \
+    $$PWD/src/generator_curve_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -23,13 +23,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    generator_curve_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    generator_curve_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += generator_curve_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

@@ -18,12 +18,9 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QVariant>
-#include <QEvent>
-#include <QLabel>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
-#include "mainbox.hpp"
+#include "game_15_mainbox.hpp"
 #include "defines.hpp"
 #include "bone.hpp"
 //--------------------------------------------------------------------------------

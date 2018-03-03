@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/oscilloscope_mainbox \
+    $$PWD/src/oscilloscope_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -22,13 +22,13 @@ DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \
-    mainbox.hpp
+    oscilloscope_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    oscilloscope_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += oscilloscope_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

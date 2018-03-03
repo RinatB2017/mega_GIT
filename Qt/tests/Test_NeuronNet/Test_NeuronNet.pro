@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_NeuronNet_mainbox \
+    $$PWD/src/Test_NeuronNet_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -24,13 +24,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_NeuronNet_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_NeuronNet_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += Test_NeuronNet_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

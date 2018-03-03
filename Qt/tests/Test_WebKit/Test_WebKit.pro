@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_WebKit_mainbox \
+    $$PWD/src/Test_WebKit_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -32,18 +32,17 @@ QT += network testlib
 
 HEADERS += \
     defines.hpp \
-    mainbox.hpp
+    Test_WebKit_mainbox.hpp
 
 SOURCES += \
     main.cpp \
-    mainbox.cpp
+    Test_WebKit_mainbox.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_WebKit_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
 }
-
 
 LIB_PATH = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"

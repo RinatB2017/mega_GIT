@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/Test_GrapherBox_mainbox \
+    $$PWD/src/Test_GrapherBox_mainbox/ui \
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -28,13 +28,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_GrapherBox_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_GrapherBox_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_GrapherBox_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

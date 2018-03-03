@@ -9,7 +9,7 @@ SUBDIRS += \
     Aggregator \
     CalcMd5 \
     Double_browser \
-    Platanov_blowser \
+    Platanov_browser \
     ProxyWalker \
     ProxyWalker_M \
     WebKit \

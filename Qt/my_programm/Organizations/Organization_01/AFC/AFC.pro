@@ -9,8 +9,8 @@ FOLDER  = organizations/Organization_01
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/afc_mainbox \
+    $$PWD/src/afc_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -30,13 +30,13 @@ DEFINES += RS232_NO_FRAME
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    afc_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    afc_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += afc_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

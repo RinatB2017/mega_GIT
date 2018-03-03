@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/test_newmoonlight_firmware_mainbox \
+    $$PWD/src/test_newmoonlight_firmware_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -32,13 +32,13 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    test_newmoonlight_firmware_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    test_newmoonlight_firmware_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += test_newmoonlight_firmware_mainbox.ui
 
 RESOURCES   += pic/pic.qrc
 

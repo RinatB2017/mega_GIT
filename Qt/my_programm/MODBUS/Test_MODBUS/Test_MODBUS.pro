@@ -10,8 +10,8 @@ FOLDER  = modbus
 DEPENDPATH  += \
     /usr/include/modbus \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/test_modbus_mainbox \
+    $$PWD/src/test_modbus_mainbox/ui \
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport
@@ -25,13 +25,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    test_modbus_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    test_modbus_mainbox.cpp \
     main.cpp \
 
-FORMS += mainbox.ui
+FORMS   += test_modbus_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

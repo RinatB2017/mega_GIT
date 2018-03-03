@@ -164,6 +164,8 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
+    void colorLog(const QString &, const QColor, const QColor);
+
     void syslog(int level,
                 QString src,
                 QString message);

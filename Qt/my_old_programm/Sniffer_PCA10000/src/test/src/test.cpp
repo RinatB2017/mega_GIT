@@ -26,7 +26,7 @@
 #include <QTest>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "sniffer_pca10000_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

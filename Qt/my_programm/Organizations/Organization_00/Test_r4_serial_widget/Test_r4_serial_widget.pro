@@ -10,8 +10,8 @@ FOLDER  = organizations/Organization_00
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/serial \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/test_r4_serial_widget_mainbox \
+    $$PWD/src/test_r4_serial_widget_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -24,17 +24,17 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    test_r4_serial_widget_mainbox.hpp \
     delegates.h \
     angle_line_edit.h \
     worker.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    test_r4_serial_widget_mainbox.cpp \
     worker.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += test_r4_serial_widget_mainbox.ui
 
 LIB_PATH = "../../../../lib"
 

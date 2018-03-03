@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_draw_line_mainbox \
+    $$PWD/src/Test_draw_line_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -29,13 +29,13 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_draw_line_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_draw_line_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_draw_line_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

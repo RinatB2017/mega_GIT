@@ -24,16 +24,15 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_Widgets_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
-#include "test.hpp"
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
+#   include "test.hpp"
 #endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])

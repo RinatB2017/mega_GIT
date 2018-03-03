@@ -9,8 +9,8 @@ FOLDER  = modbus
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/emulator_modbus_mainbox \
+    $$PWD/src/emulator_modbus_mainbox/ui \
     $$PWD/src/settingsdialog \
     $$PWD/src/settingsdialog/ui \
 INCLUDEPATH = $$DEPENDPATH
@@ -31,13 +31,13 @@ DEFINES += TEST
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    emulator_modbus_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    emulator_modbus_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += emulator_modbus_mainbox.ui
 
 QT      += serialport
 HEADERS += settingsdialog.h

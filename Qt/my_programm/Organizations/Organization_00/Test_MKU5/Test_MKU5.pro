@@ -9,8 +9,8 @@ FOLDER  = organizations/Organization_00
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/test_mku5_mainbox \
+    $$PWD/src/test_mku5_mainbox/ui \
     $$PWD/src/debug_frame
 INCLUDEPATH = $$DEPENDPATH
 
@@ -25,25 +25,23 @@ DEFINES += RS232_LOG
 #DEFINES += RS232_SEND
 
 DEFINES += DEBUG
-
-
 DEFINES += NO_LOG
 
 HEADERS += \
-    src/defines.hpp \
-    src/version.hpp \
-    src/mainbox/mainbox.hpp
+    defines.hpp \
+    version.hpp \
+    test_mku5_mainbox.hpp
 
 SOURCES += \
-    src/mainbox/mainbox.cpp \
-    src/main.cpp
+    test_mku5_mainbox.cpp \
+    main.cpp
 
 contains(DEFINES, DEBUG_FRAME) {
     HEADERS += src/debug_frame/debugframe.hpp
     SOURCES += src/debug_frame/debugframe.cpp
 }
 
-FORMS += src/mainbox/ui/mainbox.ui
+FORMS   +=test_mku5_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

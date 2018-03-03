@@ -10,8 +10,8 @@ FOLDER  = modbus
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui 
+    $$PWD/src/modbus_test_mainbox \
+    $$PWD/src/modbus_test_mainbox/ui 
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += \
@@ -33,13 +33,13 @@ DEFINES += HEX16
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    modbus_test_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    modbus_test_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui \
+FORMS   += modbus_test_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

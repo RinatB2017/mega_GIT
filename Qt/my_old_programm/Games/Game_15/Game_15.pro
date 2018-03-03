@@ -10,8 +10,8 @@ FOLDER  = old_programm
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/game_15_mainbox \
+    $$PWD/src/game_15_mainbox/ui \
     $$PWD/src/bone
 INCLUDEPATH = $$DEPENDPATH
 
@@ -27,16 +27,16 @@ DEFINES += NO_LOG
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    game_15_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    game_15_mainbox.cpp \
     main.cpp
 
 HEADERS += bone.hpp
 SOURCES += bone.cpp
 
-FORMS   += mainbox.ui
+FORMS   += game_15_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

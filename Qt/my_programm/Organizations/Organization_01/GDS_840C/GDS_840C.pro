@@ -10,8 +10,8 @@ FOLDER  = organizations/Organization_01
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/gds_840c_mainbox \
+    $$PWD/src/gds_840c_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -30,13 +30,13 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    gds_840c_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    gds_840c_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += gds_840c_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

@@ -9,8 +9,8 @@ FOLDER  = organizations/Organization_00
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/navi_transmitter_mainbox \
+    $$PWD/src/navi_transmitter_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -29,13 +29,13 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    navi_transmitter_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    navi_transmitter_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += navi_transmitter_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

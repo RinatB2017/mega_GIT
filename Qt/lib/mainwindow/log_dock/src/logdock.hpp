@@ -52,6 +52,10 @@ public slots:
     void errorLog(QString text);
     void traceLog(QString text);
 
+    void colorLog(const QString &text,
+                  const QColor text_color,
+                  const QColor background_color);
+
     void syslog(QDateTime dt,
                 int level,
                 int src,
@@ -73,13 +77,16 @@ private:
         L_INFO = 0,
         L_DEBUG,
         L_ERROR,
-        L_TRACE
+        L_TRACE,
+        L_COLOR
     };
 
     struct LOG
     {
         int level;
         QString text;
+        QColor text_color;
+        QColor background_color;
     };
     QQueue<LOG> queue_log;
 

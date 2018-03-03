@@ -26,7 +26,7 @@
 #include <QTest>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "mtc_runner_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

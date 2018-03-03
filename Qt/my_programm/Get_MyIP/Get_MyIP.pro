@@ -8,8 +8,8 @@ TARGET   = Get_MyIP
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/get_myip_mainbox \
+    $$PWD/src/get_myip_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -25,13 +25,13 @@ DEFINES += NO_RESIZE
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    get_myip_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    get_myip_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += get_myip_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

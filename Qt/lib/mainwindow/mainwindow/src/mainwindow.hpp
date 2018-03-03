@@ -128,6 +128,8 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
+    void colorLog(const QString &, const QColor, const QColor);
+
     void signal_is_shows_info(bool);
     void signal_is_shows_debug(bool);
     void signal_is_shows_error(bool);

@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/hc_06_mainbox \
+    $$PWD/src/hc_06_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -27,15 +27,15 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    hc_06_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    hc_06_mainbox.cpp \
     main.cpp
 
 OTHER_FILES += notebook.txt
 
-FORMS += mainbox.ui
+FORMS += hc_06_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

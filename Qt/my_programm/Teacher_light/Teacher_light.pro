@@ -8,8 +8,8 @@ TARGET   = Teacher_light
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/teacher_light_mainbox \
+    $$PWD/src/teacher_light_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -38,13 +38,13 @@ DEFINES += USE_DOCKS
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    teacher_light_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    teacher_light_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += teacher_light_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

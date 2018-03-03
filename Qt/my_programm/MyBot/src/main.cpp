@@ -18,8 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMessageBox>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -28,7 +27,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "mybot_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

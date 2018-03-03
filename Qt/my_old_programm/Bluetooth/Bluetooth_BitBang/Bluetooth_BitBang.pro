@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/bluetooth_bitbang_mainbox \
+    $$PWD/src/bluetooth_bitbang_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -28,13 +28,13 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    bluetooth_bitbang_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    bluetooth_bitbang_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS += bluetooth_bitbang_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

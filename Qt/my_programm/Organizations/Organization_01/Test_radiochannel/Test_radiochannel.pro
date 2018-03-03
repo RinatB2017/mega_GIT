@@ -9,8 +9,8 @@ FOLDER  = organizations/Organization_01
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/test_radiochannel_mainbox \
+    $$PWD/src/test_radiochannel_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -29,13 +29,13 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    test_radiochannel_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    test_radiochannel_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += test_radiochannel_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

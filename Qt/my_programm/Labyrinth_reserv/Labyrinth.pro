@@ -8,8 +8,8 @@ TARGET   = Labyrinth
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/labyrinth_mainbox \
+    $$PWD/src/labyrinth_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -24,13 +24,13 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    labyrinth_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    labyrinth_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += labyrinth_mainbox.ui
 
 RESOURCES   += \
     images/buttons.qrc \

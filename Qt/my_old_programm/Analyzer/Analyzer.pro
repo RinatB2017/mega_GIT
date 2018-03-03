@@ -10,8 +10,8 @@ FOLDER  = old_programm
 DEPENDPATH  += \
     /usr/include/libftdi1 \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/analizer_mainbox \
+    $$PWD/src/analizer_mainbox/ui \
     $$PWD/src/ft2232h_thread \
 INCLUDEPATH = $$DEPENDPATH
 
@@ -24,15 +24,15 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    analizer_mainbox.hpp \
     ft2232h_thread.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    analizer_mainbox.cpp \
     main.cpp \
     ft2232h_thread.cpp
 
-FORMS += mainbox.ui
+FORMS += analizer_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

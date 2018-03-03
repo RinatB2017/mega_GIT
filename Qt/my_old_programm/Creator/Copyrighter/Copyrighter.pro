@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/copyrighter_mainbox \
+    $$PWD/src/copyrighter_mainbox/ui \
     $$PWD/src/mytextedit
 INCLUDEPATH = $$DEPENDPATH
 
@@ -26,15 +26,15 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    copyrighter_mainbox.hpp \
     mytextedit.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    copyrighter_mainbox.cpp \
     main.cpp \
     mytextedit.cpp
 
-FORMS += mainbox.ui
+FORMS += copyrighter_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

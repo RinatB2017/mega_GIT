@@ -23,7 +23,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_digits_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -68,7 +68,6 @@ int main(int argc, char *argv[])
     splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-    
 
     return app.exec();
 }

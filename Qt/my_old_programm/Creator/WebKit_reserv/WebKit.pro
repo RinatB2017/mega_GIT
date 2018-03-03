@@ -3,12 +3,12 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   =
+TARGET   = WebKit
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/webkit_mainbox \
+    $$PWD/src/webkit_mainbox/ui \
     $$PWD/src/findlinks \
     $$PWD/src/websettingbox \
     $$PWD/src/persistentcookiejar \
@@ -34,7 +34,7 @@ QT += network sql
 
 HEADERS += \
     defines.hpp \
-    mainbox.hpp \
+    webkit_mainbox.hpp \
     persistentcookiejar.hpp \
     websettingbox.hpp \
     findlinks.hpp \
@@ -44,7 +44,7 @@ HEADERS += \
 
 SOURCES += \
     main.cpp \
-    mainbox.cpp \
+    webkit_mainbox.cpp \
     persistentcookiejar.cpp \
     websettingbox.cpp \
     findlinks.cpp \
@@ -52,7 +52,7 @@ SOURCES += \
     listwidget_link.cpp \
     database.cpp
 
-FORMS += mainbox.ui
+FORMS   += webkit_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
@@ -60,12 +60,14 @@ win32 {
 
 RESOURCES += data/names.qrc
 
-LIB_PATH = "../../lib"
+LIB_PATH = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/webview/webview.pri)
+
+include ($$LIB_PATH2/web/webview/webview.pri)
 
 VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)

@@ -10,8 +10,8 @@ FOLDER  = old_programm
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/test_pixmap_mainbox \
+    $$PWD/src/test_pixmap_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -34,13 +34,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    test_pixmap_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    test_pixmap_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += test_pixmap_mainbox.ui
 
 RESOURCES   += \
     pictures/pictures.qrc \

@@ -8,8 +8,8 @@ TARGET   = Teacher
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/teacher_mainbox \
+    $$PWD/src/teacher_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -36,13 +36,13 @@ DEFINES += ULTRAWIDE
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    teacher_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    teacher_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += teacher_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

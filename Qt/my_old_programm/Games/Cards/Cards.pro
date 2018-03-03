@@ -10,8 +10,8 @@ FOLDER  = old_programm
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/cards_mainbox \
+    $$PWD/src/cards_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -29,13 +29,13 @@ DEFINES += SAVE_CARD
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    cards_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    cards_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += cards_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

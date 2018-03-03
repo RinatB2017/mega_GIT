@@ -9,9 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
-    $$PWD/src/csvreader
+    $$PWD/src/Test_drawbuttons_mainbox \
+    $$PWD/src/Test_drawbuttons_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -30,13 +29,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_drawbuttons_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_drawbuttons_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_drawbuttons_mainbox.ui
 
 RESOURCES += icons/temp.qrc
 

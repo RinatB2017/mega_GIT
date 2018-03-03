@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/adns_2610_mainbox \
+    $$PWD/src/adns_2610_mainbox/ui \
     $$PWD/src/screen
 INCLUDEPATH = $$DEPENDPATH
 
@@ -27,15 +27,15 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    adns_2610_mainbox.hpp \
     screen.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    adns_2610_mainbox.cpp \
     main.cpp \
     screen.cpp
 
-FORMS += mainbox.ui
+FORMS += adns_2610_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

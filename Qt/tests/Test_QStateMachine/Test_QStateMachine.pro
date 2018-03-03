@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_QStateMachine_mainbox \
+    $$PWD/src/Test_QStateMachine_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -23,13 +23,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_QStateMachine_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_QStateMachine_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += Test_QStateMachine_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
@@ -45,7 +45,6 @@ OTHER_FILES += doc/notebook.txt
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
-
 
 LIB_PATH = "../../../Qt/lib"
 

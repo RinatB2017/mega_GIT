@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/double_browser_mainbox \
+    $$PWD/src/double_browser_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -32,13 +32,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    double_browser_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    double_browser_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS += double_browser_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

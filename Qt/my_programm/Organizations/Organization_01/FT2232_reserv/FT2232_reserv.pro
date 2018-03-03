@@ -10,8 +10,8 @@ DEPENDPATH  += /usr/include/libftdi1
 }
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/ft2232_mainbox \
+    $$PWD/src/ft2232_mainbox/ui \
     $$PWD/src/i2c \
     $$PWD/src/spi \
     $$PWD/src/mcp4922 \
@@ -33,7 +33,7 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    ft2232_mainbox.hpp \
     sleeper.h \
     i2c.hpp \
     spi.hpp \
@@ -44,7 +44,7 @@ HEADERS += \
 
 SOURCES += \
     main.cpp \
-    mainbox.cpp \
+    ft2232_mainbox.cpp \
     i2c.cpp \
     spi.cpp \
     mcp4922.cpp \
@@ -52,7 +52,7 @@ SOURCES += \
     bitbang.cpp \
     ad8400.cpp
 
-FORMS += mainbox.ui
+FORMS   += ft2232_mainbox.ui
 
 unix {
     LIBS    += -lftdi1

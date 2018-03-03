@@ -8,8 +8,8 @@ TARGET   = GP2Y0A02Y
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/gp2y0a02y_mainbox \
+    $$PWD/src/gp2y0a02y_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -27,13 +27,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    gp2y0a02y_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    gp2y0a02y_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += gp2y0a02y_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

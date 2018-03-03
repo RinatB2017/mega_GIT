@@ -9,8 +9,8 @@ CONFIG      += c++11
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/check_network_mainbox \
+    $$PWD/src/check_network_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -29,13 +29,13 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    check_network_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    check_network_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += check_network_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

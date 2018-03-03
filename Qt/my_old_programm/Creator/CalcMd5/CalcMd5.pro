@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/calcmd5_mainbox \
+    $$PWD/src/calcmd5_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -29,13 +29,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    calcmd5_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    calcmd5_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += calcmd5_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

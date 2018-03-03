@@ -9,9 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
-    $$PWD/src/mainbox/
+    $$PWD/src/Test_arduino_mainbox \
+    $$PWD/src/Test_arduino_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -26,13 +25,13 @@ DEFINES += SAVE_WIDGETS_SLIDER
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_arduino_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_arduino_mainbox.cpp \
     main.cpp \
 
-FORMS += mainbox.ui
+FORMS   += Test_arduino_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

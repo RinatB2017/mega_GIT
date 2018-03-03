@@ -18,23 +18,16 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMessageBox>
-#include <QVBoxLayout>
-#include <QString>
-#include <QFrame>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "Test_drawbuttons_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
-
-#include <QPushButton>
-#include <QMdiSubWindow>
-#include <QMdiArea>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

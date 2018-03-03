@@ -18,9 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMessageBox>
-#include <QLibraryInfo>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= 0x050000
 #   include <QtMessageHandler>
@@ -29,7 +27,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "template_old_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

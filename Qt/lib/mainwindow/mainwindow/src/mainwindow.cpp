@@ -622,6 +622,8 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(error(QString)), ld, SLOT(errorLog(QString)));
     connect(this,   SIGNAL(trace(QString)), ld, SLOT(traceLog(QString)));
 
+    connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   ld, SLOT(colorLog(QString,QColor,QColor)));
+
     connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));
     connect(this,   SIGNAL(signal_is_shows_debug(bool)),    ld, SIGNAL(signal_is_shows_debug(bool)));
     connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));

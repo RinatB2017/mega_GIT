@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/Test_HLK_RM04_mainbox \
+    $$PWD/src/Test_HLK_RM04_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -27,13 +27,13 @@ QT      += serialport
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    Test_HLK_RM04_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_HLK_RM04_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_HLK_RM04_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

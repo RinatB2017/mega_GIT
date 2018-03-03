@@ -9,8 +9,8 @@ FOLDER      = RS232
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/rs232_5_mainbox \
+    $$PWD/src/rs232_5_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -27,13 +27,13 @@ DEFINES += NO_LOG
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    rs232_5_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    rs232_5_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += rs232_5_mainbox.ui
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

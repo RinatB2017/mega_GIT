@@ -9,8 +9,8 @@ FOLDER      = RS232
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/rs232_4_mainbox \
+    $$PWD/src/rs232_4_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -28,13 +28,13 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    rs232_4_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    rs232_4_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += rs232_4_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

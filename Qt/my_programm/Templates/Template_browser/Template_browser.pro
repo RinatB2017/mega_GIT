@@ -9,8 +9,8 @@ FOLDER  = _Templates
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/template_browser_mainbox \
+    $$PWD/src/template_browser_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -34,13 +34,13 @@ HEADERS += \
     defines.hpp \
     version.hpp \
     posix.hpp \
-    mainbox.hpp
+    template_browser_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    template_browser_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += template_browser_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

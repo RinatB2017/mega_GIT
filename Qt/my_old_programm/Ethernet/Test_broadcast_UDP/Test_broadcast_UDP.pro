@@ -7,9 +7,8 @@ TARGET   = Test_broadcast_UDP
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
-    $$PWD/src/mainbox \
+    $$PWD/src/test_broadcast_udp_mainbox \
+    $$PWD/src/test_broadcast_udp_mainbox/ui \
     $$PWD/src/worker
 INCLUDEPATH = $$DEPENDPATH
 
@@ -22,19 +21,19 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_broadcast_udp_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
     server.hpp \
     client.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    test_broadcast_udp_mainbox.cpp \
     main.cpp \
     server.cpp \
     client.cpp
 
-FORMS += mainbox.ui
+FORMS   += test_broadcast_udp_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

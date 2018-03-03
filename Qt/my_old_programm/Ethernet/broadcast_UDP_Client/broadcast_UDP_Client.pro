@@ -7,8 +7,8 @@ TARGET   = broadcast_UDP_Client
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/broadcast_udp_client_mainbox \
+    $$PWD/src/broadcast_udp_client_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -19,13 +19,13 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    broadcast_udp_client_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    broadcast_udp_client_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += broadcast_udp_client_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

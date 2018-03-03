@@ -68,6 +68,10 @@ public slots:
     void errorLog(const QString &text);
     void traceLog(const QString &text);
 
+    void colorLog(const QString &text,
+                  const QColor text_color = QColor(Qt::black),
+                  const QColor background_color = QColor(Qt::white));
+
     void set_flag_is_shows_info(bool state);
     void set_flag_is_shows_debug(bool state);
     void set_flag_is_shows_error(bool state);

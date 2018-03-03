@@ -24,7 +24,7 @@
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "generator_curve_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

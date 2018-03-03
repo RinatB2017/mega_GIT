@@ -10,8 +10,8 @@ FOLDER  = organizations/Organization_01
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/multimeter_v7xx_mainbox \
+    $$PWD/src/multimeter_v7xx_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -41,13 +41,13 @@ CONFIG  += use_v7642
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    multimeter_v7xx_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    multimeter_v7xx_mainbox.cpp \
     main.cpp
 
-FORMS   += mainbox.ui
+FORMS   += multimeter_v7xx_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

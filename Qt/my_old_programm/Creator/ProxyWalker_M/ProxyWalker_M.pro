@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
+    $$PWD/src/proxy_walker_m_mainbox \
+    $$PWD/src/proxy_walker_m_mainbox/ui \
     $$PWD/src/waiting \
     $$PWD/src/tester
 INCLUDEPATH = $$DEPENDPATH
@@ -34,13 +34,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    proxy_walker_m_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    proxy_walker_m_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += proxy_walker_m_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

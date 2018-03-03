@@ -9,8 +9,8 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui
+    $$PWD/src/udp_server_mainbox \
+    $$PWD/src/udp_server_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
@@ -23,13 +23,13 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp
+    udp_server_mainbox.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    udp_server_mainbox.cpp \
     main.cpp
 
-FORMS += mainbox.ui
+FORMS   += udp_server_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

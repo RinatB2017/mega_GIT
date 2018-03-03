@@ -27,6 +27,7 @@ SUBDIRS += \
     Test_QGraphicsScene \
     Test_QListWidget \
     Test_QsLog \
+    Test_libUSB \
     Test_model \
     Test_SQL \
     Test_SMTP \

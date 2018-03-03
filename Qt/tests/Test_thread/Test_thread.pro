@@ -9,9 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/mainbox \
-    $$PWD/src/mainbox/ui \
-    $$PWD/src/mainbox \
+    $$PWD/src/Test_thread_mainbox \
+    $$PWD/src/Test_thread_mainbox/ui \
     $$PWD/src/worker
 INCLUDEPATH = $$DEPENDPATH
 
@@ -24,15 +23,15 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
+    Test_thread_mainbox.hpp \
     mythread.hpp
 
 SOURCES += \
-    mainbox.cpp \
+    Test_thread_mainbox.cpp \
     main.cpp \
     mythread.cpp
 
-FORMS += mainbox.ui
+FORMS   += Test_thread_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

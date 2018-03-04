@@ -73,6 +73,14 @@ public:
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
 
+    //---
+    // for Ascii_data
+signals:
+    void dirty_data(QByteArray);
+public slots:
+    void clean_data(QByteArray data);
+    //---
+
 public slots:
     void choice_test(void);
     bool test_0(void);

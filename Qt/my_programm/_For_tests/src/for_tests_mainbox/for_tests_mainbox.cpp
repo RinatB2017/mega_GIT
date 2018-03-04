@@ -196,12 +196,43 @@ bool MainBox::split_address(const QString address,
     return true;
 }
 //--------------------------------------------------------------------------------
+void MainBox::clean_data(QByteArray data)
+{
+    emit info(QString("Получено %1 байт").arg(data.length()));
+    emit info(data.toHex());
+}
+//--------------------------------------------------------------------------------
+#include "ascii_data.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    Ascii_data *temp = new Ascii_data();
+    connect(this,   SIGNAL(dirty_data(QByteArray)), temp,   SLOT(append(QByteArray)));
+    connect(temp,   SIGNAL(result(QByteArray)),     this,   SLOT(clean_data(QByteArray)));
+
+    emit dirty_data(QByteArray("888:AABBCC"));
+
+    QByteArray ba;
+    for(int n=0; n<0xFF; n++)
+    {
+        if(n != '\r' && n != '\n')
+        {
+            ba.append((char)n);
+        }
+    }
+    emit error(ba.toHex());
+    emit dirty_data(ba);
+
+    emit dirty_data(QByteArray("DDEEFF"));
+    emit dirty_data(QByteArray("01020304\n"));
+
+    temp->deleteLater();
+#endif
+
+#if 0
     emit info("info");
     emit debug("debug");
     emit error("error");

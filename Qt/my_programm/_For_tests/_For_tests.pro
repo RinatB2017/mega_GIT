@@ -49,7 +49,8 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    for_tests_mainbox.hpp
+    for_tests_mainbox.hpp \
+    ascii_data.hpp
 
 SOURCES += \
     for_tests_mainbox.cpp \

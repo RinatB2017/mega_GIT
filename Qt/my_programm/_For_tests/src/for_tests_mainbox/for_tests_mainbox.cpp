@@ -213,6 +213,8 @@ bool MainBox::test_0(void)
     connect(this,   SIGNAL(dirty_data(QByteArray)), temp,   SLOT(append(QByteArray)));
     connect(temp,   SIGNAL(result(QByteArray)),     this,   SLOT(clean_data(QByteArray)));
 
+    emit info(QString("Размер %1 байт").arg(sizeof(Ascii_data)));
+
     emit dirty_data(QByteArray("888:AABBCC"));
 
     QByteArray ba;

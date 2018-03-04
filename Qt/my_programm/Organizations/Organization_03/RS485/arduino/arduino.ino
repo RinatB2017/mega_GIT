@@ -274,12 +274,12 @@ void relay_OFF()
 //--------------------------------------------------------------------------------
 bool check_RAIN()
 {
-  return (digitalRead(pin_rain) == HIGH);
+  return (digitalRead(pin_rain) == LOW);
 }
 //--------------------------------------------------------------------------------
 bool check_LEVEL()
 {
-  return (digitalRead(pin_level) == HIGH);
+  return (digitalRead(pin_level) == LOW);
 }
 //--------------------------------------------------------------------------------
 uint8_t get_address()

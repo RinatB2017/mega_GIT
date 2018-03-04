@@ -56,11 +56,18 @@ uint8_t modbus_buf[MAX_MODBUS_BUF];
 int index_ascii_buf = 0;
 int index_modbus_buf = 0;
 //--------------------------------------------------------------------------------
-uint32_t    addr_cam_32 = 0;                // адрес камеры
-uint16_t    time_interval_16 = 0;           // интервал дворника
-uint32_t    time_washout_32 = 0;            // время помывки
-uint32_t    time_pause_washout_32 = 0;      // время между помывками
-uint32_t    preset_washout_32 = 0;          // пресет помывки
+union DATA
+{
+  struct MEMORY
+  {
+    uint32_t    addr_cam_32;                // адрес камеры
+    uint16_t    time_interval_16;           // интервал дворника
+    uint32_t    time_washout_32;            // время помывки
+    uint32_t    time_pause_washout_32;      // время между помывками
+    uint32_t    preset_washout_32;          // пресет помывки
+  } memory_t;
+  char buf[sizeof(memory_t)];
+} data_t;
 //--------------------------------------------------------------------------------
 Timer t;
 //--------------------------------------------------------------------------------
@@ -451,11 +458,11 @@ void f_read(void)
   answer.body.header.cmd_8 = packet->body.header.cmd_8;
   answer.body.header.len_16 = sizeof(answer.body.data);
 
-  answer.body.data.addr_cam_32 = addr_cam_32;                        // адрес камеры
-  answer.body.data.time_interval_16 = time_interval_16;              // интервал дворника
-  answer.body.data.time_washout_32 = time_washout_32;                // время помывки
-  answer.body.data.time_pause_washout_32 = time_pause_washout_32;    // время между помывками
-  answer.body.data.preset_washout_32 = preset_washout_32;            // пресет помывки
+  answer.body.data.addr_cam_32 = data_t.memory_t.addr_cam_32;                        // адрес камеры
+  answer.body.data.time_interval_16 = data_t.memory_t.time_interval_16;              // интервал дворника
+  answer.body.data.time_washout_32 = data_t.memory_t.time_washout_32;                // время помывки
+  answer.body.data.time_pause_washout_32 = data_t.memory_t.time_pause_washout_32;    // время между помывками
+  answer.body.data.preset_washout_32 = data_t.memory_t.preset_washout_32;            // пресет помывки
 
   answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_READ) - 2);
 
@@ -486,11 +493,13 @@ void f_write(void)
     return;
   }
 
-  addr_cam_32 = packet->body.data.addr_cam_32;                       // адрес камеры
-  time_interval_16 = packet->body.data.time_interval_16;             // интервал дворника
-  time_washout_32 = packet->body.data.time_washout_32;               // время помывки
-  time_pause_washout_32 = packet->body.data.time_pause_washout_32;   // время между помывками
-  preset_washout_32 = packet->body.data.preset_washout_32;           // пресет помывки
+  data_t.memory_t.addr_cam_32 = packet->body.data.addr_cam_32;                       // адрес камеры
+  data_t.memory_t.time_interval_16 = packet->body.data.time_interval_16;             // интервал дворника
+  data_t.memory_t.time_washout_32 = packet->body.data.time_washout_32;               // время помывки
+  data_t.memory_t.time_pause_washout_32 = packet->body.data.time_pause_washout_32;   // время между помывками
+  data_t.memory_t.preset_washout_32 = packet->body.data.preset_washout_32;           // пресет помывки
+
+  save_eeprom();
 
   union ANSWER_WRITE answer;
 
@@ -499,11 +508,11 @@ void f_write(void)
   answer.body.header.cmd_8 = packet->body.header.cmd_8;
   answer.body.header.len_16 = sizeof(answer.body.data);
 
-  answer.body.data.addr_cam_32 = addr_cam_32;                        // адрес камеры
-  answer.body.data.time_interval_16 = time_interval_16;              // интервал дворника
-  answer.body.data.time_washout_32 = time_washout_32;                // время помывки
-  answer.body.data.time_pause_washout_32 = time_pause_washout_32;    // время между помывками
-  answer.body.data.preset_washout_32 = preset_washout_32;            // пресет помывки
+  answer.body.data.addr_cam_32 = data_t.memory_t.addr_cam_32;                        // адрес камеры
+  answer.body.data.time_interval_16 = data_t.memory_t.time_interval_16;              // интервал дворника
+  answer.body.data.time_washout_32 = data_t.memory_t.time_washout_32;                // время помывки
+  answer.body.data.time_pause_washout_32 = data_t.memory_t.time_pause_washout_32;    // время между помывками
+  answer.body.data.preset_washout_32 = data_t.memory_t.preset_washout_32;            // пресет помывки
 
   answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_WRITE) - 2);
 
@@ -540,11 +549,11 @@ void f_reset(void)
   answer.body.header.addr_8 = packet->body.header.addr_8;
   answer.body.header.cmd_8 = packet->body.header.cmd_8;
   answer.body.header.len_16 = sizeof(answer.body.data);
-  answer.body.data.addr_cam_32 = addr_cam_32;                      // адрес камеры
-  answer.body.data.time_interval_16 = time_interval_16;            // интервал дворника
-  answer.body.data.time_washout_32 = time_washout_32;              // время помывки
-  answer.body.data.time_pause_washout_32 = time_pause_washout_32;  // время между помывками
-  answer.body.data.preset_washout_32 = preset_washout_32;          // пресет помывки
+  answer.body.data.addr_cam_32 = data_t.memory_t.addr_cam_32;                     // адрес камеры
+  answer.body.data.time_interval_16 = data_t.memory_t.time_interval_16;           // интервал дворника
+  answer.body.data.time_washout_32 = data_t.memory_t.time_washout_32;             // время помывки
+  answer.body.data.time_pause_washout_32 = data_t.memory_t.time_pause_washout_32; // время между помывками
+  answer.body.data.preset_washout_32 = data_t.memory_t.preset_washout_32;         // пресет помывки
 
   answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_RESET) - 2);
 
@@ -670,7 +679,7 @@ void serialEvent()
 //--------------------------------------------------------------------------------
 void camera_save_position (void)
 {
-  Pelco[1] = addr_cam_32;
+  Pelco[1] = data_t.memory_t.addr_cam_32;
   Pelco[2] = 0;
   Pelco[3] = Go_Preset;
   Pelco[4] = 0;
@@ -696,7 +705,7 @@ void camera_move_position (void)
   // 59 пресет помывки
   // 59 сохранить положение камеры до помывки
 
-  Pelco[1] = addr_cam_32;
+  Pelco[1] = data_t.memory_t.addr_cam_32;
   Pelco[2] = 0;
   Pelco[3] = Go_Preset;
   Pelco[4] = 0;
@@ -722,7 +731,7 @@ void camera_return (void)
   // 59 пресет помывки
   // 59 сохранить положение камеры до помывки
 
-  Pelco[1] = addr_cam_32;
+  Pelco[1] = data_t.memory_t.addr_cam_32;
   Pelco[2] = 0;
   Pelco[3] = Go_Preset;
   Pelco[4] = 0;
@@ -745,7 +754,7 @@ void camera_return (void)
 //--------------------------------------------------------------------------------
 void camera_wiper (void)
 {
-  Pelco[1] = addr_cam_32;
+  Pelco[1] = data_t.memory_t.addr_cam_32;
   Pelco[2] = 0;
   Pelco[3] = Go_Preset;
   Pelco[4] = 0;
@@ -768,7 +777,7 @@ void camera_wiper (void)
 //--------------------------------------------------------------------------------
 void camera_Run_Tur_1 (void)
 {
-  Pelco[1] = addr_cam_32;
+  Pelco[1] = data_t.memory_t.addr_cam_32;
   Pelco[2] = 0;
   Pelco[3] = Run_Pattern;
   Pelco[4] = 0;
@@ -834,7 +843,7 @@ void takeReading()
       break;
 
     case STATUS_RAIN:			// дождь
-      if (cnt_second < time_interval_16)
+      if (cnt_second < data_t.memory_t.time_interval_16)
       {
         cnt_second++;
       }
@@ -846,11 +855,11 @@ void takeReading()
       break;
 
     case STATUS_WASHOUT:		// моемся
-      if (!(cnt_second % time_interval_16))
+      if (!(cnt_second % data_t.memory_t.time_interval_16))
       {
         camera_wiper();
       }
-      if (cnt_second >= time_washout_32)
+      if (cnt_second >= data_t.memory_t.time_washout_32)
       {
         cnt_second = 0;
         camera_return();
@@ -860,7 +869,7 @@ void takeReading()
       break;
 
     case STATUS_WASHOUT_PAUSE:	// пауза
-      if (cnt_second >= time_pause_washout_32)
+      if (cnt_second >= data_t.memory_t.time_pause_washout_32)
       {
         cnt_second = 0;
         camera_move_position();
@@ -875,14 +884,35 @@ void takeReading()
   }
 }
 //--------------------------------------------------------------------------------
+#if 0
+union DATA
+{
+  struct MEMORY
+  {
+    uint32_t    addr_cam_32;                // адрес камеры
+    uint16_t    time_interval_16;           // интервал дворника
+    uint32_t    time_washout_32;            // время помывки
+    uint32_t    time_pause_washout_32;      // время между помывками
+    uint32_t    preset_washout_32;          // пресет помывки
+  } memory_t;
+  char buf[sizeof(memory_t)];
+} data_t;
+#endif
+//--------------------------------------------------------------------------------
 void load_eeprom(void)
 {
-  
+  for (unsigned int n = 0; n < sizeof(data_t.memory_t); n++)
+  {
+    data_t.buf[n] = EEPROM.read(n);
+  }
 }
 //--------------------------------------------------------------------------------
 void save_eeprom(void)
 {
-  
+  for (unsigned int n = 0; n < sizeof(data_t.memory_t); n++)
+  {
+    EEPROM.write(n, data_t.buf[n]);
+  }
 }
 //--------------------------------------------------------------------------------
 void setup()
@@ -916,6 +946,7 @@ void setup()
   //---
 
   load_eeprom();
+  
   t.every(1000, takeReading); // 1 sec
   read_RS485();
 }

@@ -48,12 +48,6 @@ void MainBox::init(void)
 
     createTestBar();
 
-#if 0
-    MyMainWindow *mw = dynamic_cast<MyMainWindow *>(parent());
-    Q_CHECK_PTR(mw);
-    connect(mw, SIGNAL(notifySignal()), this,   SLOT(test_1()));
-#endif
-
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
@@ -196,29 +190,16 @@ bool MainBox::split_address(const QString address,
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::clean_data(QByteArray data)
-{
-    emit info(QString("Получено %1 байт").arg(data.length()));
-    emit info(data.toHex());
-}
-//--------------------------------------------------------------------------------
 int MainBox::get_cnt(void)
 {
     emit trace(Q_FUNC_INFO);
     return qrand() % 10;
 }
 //--------------------------------------------------------------------------------
-#include "ascii_data.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
-
-#if 0
-    QElapsedTimer timer;
-    timer.start();
-    emit info(QString("time = %1").arg(timer.nsecsElapsed()));
-#endif
 
 #if 1
     for(int n=0; n<get_cnt(); n++)
@@ -247,32 +228,6 @@ bool MainBox::test_0(void)
 #endif
 
 #if 0
-    Ascii_data *temp = new Ascii_data();
-    connect(this,   SIGNAL(dirty_data(QByteArray)), temp,   SLOT(append(QByteArray)));
-    connect(temp,   SIGNAL(result(QByteArray)),     this,   SLOT(clean_data(QByteArray)));
-
-    emit info(QString("Размер %1 байт").arg(sizeof(Ascii_data)));
-
-    emit dirty_data(QByteArray("888:AABBCC"));
-
-    QByteArray ba;
-    for(int n=0; n<0xFF; n++)
-    {
-        if(n != '\r' && n != '\n')
-        {
-            ba.append((char)n);
-        }
-    }
-    emit error(ba.toHex());
-    emit dirty_data(ba);
-
-    emit dirty_data(QByteArray("DDEEFF"));
-    emit dirty_data(QByteArray("01020304\n"));
-
-    temp->deleteLater();
-#endif
-
-#if 0
     emit info("info");
     emit debug("debug");
     emit error("error");
@@ -280,48 +235,6 @@ bool MainBox::test_0(void)
 
     emit colorLog("Cyan", QColor(Qt::cyan), QColor(Qt::black));
     emit colorLog("Yellow", QColor(Qt::yellow), QColor(Qt::white));
-#endif
-
-#if 0
-    QList<int> list;
-    for(int n=0; n<10; n++)
-    {
-        list.append(n);
-    }
-    foreach (auto obj, list)
-    {
-        emit info(QString("%1").arg(obj));
-    }
-
-    int xxx[6] = { 0,1,2,3,4,5 };
-    for (auto a: xxx)
-    {
-        emit error(QString("%1").arg(a));
-    }
-#endif
-
-#if 0
-    int x = 3;
-
-    auto a = 1;
-    auto b = x;
-    auto c = a / b;
-    emit info(QString("%1 %2 %3").arg(a).arg(b).arg(c));
-#endif
-
-#if 0
-    int x = 5;
-    Q_ASSERT(x == 0);
-#endif
-
-#if 0
-    uint16_t x = 0x55AA;
-    emit info(QString("%1").arg(x, 16, 2, QChar('0')));
-
-    uint8_t y = 20;
-    emit info(QString("%1").arg(y, 2, 5, QChar('0')));
-
-    //Q_ASSERT(y > 0);
 #endif
 
 #if 0
@@ -382,15 +295,5 @@ quint32 MainBox::test(const QByteArray ba)
     }
 
     return temp;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test2(int a,
-                    int b,
-                    int *c,
-                    int *d)
-{
-    *c = a;
-    *d = b;
-    return true;
 }
 //--------------------------------------------------------------------------------

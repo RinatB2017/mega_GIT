@@ -35,27 +35,6 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class My_class
-{
-public:
-    inline void operator =(const quint32 &value)
-    {
-        val  = value;
-        c[0] = (val >> 24) & 0xFF;
-        c[1] = (val >> 16) & 0xFF;
-        c[2] = (val >> 8)  & 0xFF;
-        c[3] = val         & 0xFF;
-    }
-    inline quint8 &operator [](int index) { return c[index]; }
-    inline quint8 operator [](int index) const { return c[index]; }
-
-    inline quint32 get_value(void) { return val; }
-
-private:
-    quint32 val = 0;
-    quint8 c[4];
-};
-//--------------------------------------------------------------------------------
 class MySplashScreen;
 class QToolButton;
 class QComboBox;
@@ -72,16 +51,6 @@ public:
 
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
-
-    //---
-    // for tests
-signals:
-    void dirty_data(QByteArray);
-public slots:
-    void clean_data(QByteArray data);
-
-    int get_cnt(void);
-    //---
 
 public slots:
     void choice_test(void);
@@ -131,7 +100,7 @@ private:
     void updateText(void);
 
     quint32 test(const QByteArray ba);
-    bool test2(int a, int b, int *c, int *d);
+    int get_cnt(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -63,6 +63,9 @@ CONFIG(debug, debug|release) {
 
 #----------------------------------------------
 unix {
+    #CONFIG += link_pkgconfig
+    #PKGCONFIG += libusb-1.0
+
     LIBS    += -lhidapi-libusb
     LIBS    += -lusb-1.0
 }

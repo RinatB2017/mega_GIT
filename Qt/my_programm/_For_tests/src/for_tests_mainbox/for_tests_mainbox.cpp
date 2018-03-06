@@ -202,13 +202,51 @@ void MainBox::clean_data(QByteArray data)
     emit info(data.toHex());
 }
 //--------------------------------------------------------------------------------
+int MainBox::get_cnt(void)
+{
+    emit trace(Q_FUNC_INFO);
+    return qrand() % 10;
+}
+//--------------------------------------------------------------------------------
 #include "ascii_data.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    QElapsedTimer timer;
+    timer.start();
+    emit info(QString("time = %1").arg(timer.nsecsElapsed()));
+#endif
+
 #if 1
+    for(int n=0; n<get_cnt(); n++)
+    {
+        emit info(QString("n=%1").arg(n));
+    }
+#endif
+
+#if 0
+    QList<int> test;
+    for(int n=0; n<5; n++)
+    {
+        test.append(n);
+    }
+    foreach (auto x, test)
+    {
+        if(x == 0)
+        {
+            emit info("append data");
+            test.append(10);
+            test.append(11);
+            test.append(12);
+        }
+        emit info(QString("x=%1").arg(x));
+    }
+#endif
+
+#if 0
     Ascii_data *temp = new Ascii_data();
     connect(this,   SIGNAL(dirty_data(QByteArray)), temp,   SLOT(append(QByteArray)));
     connect(temp,   SIGNAL(result(QByteArray)),     this,   SLOT(clean_data(QByteArray)));

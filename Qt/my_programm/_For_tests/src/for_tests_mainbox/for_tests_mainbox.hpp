@@ -74,11 +74,13 @@ public:
     void inFunc(QPushButton *btn, saveSlot slot);
 
     //---
-    // for Ascii_data
+    // for tests
 signals:
     void dirty_data(QByteArray);
 public slots:
     void clean_data(QByteArray data);
+
+    int get_cnt(void);
     //---
 
 public slots:

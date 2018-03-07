@@ -73,7 +73,9 @@ signals:
 private slots:
     void read_data(QByteArray ba);
 
-    //---
+    //---    
+    void command(uint8_t cmd, uint16_t data);
+
     void set_delay_ms(void);
     void set_brightness(void);
 
@@ -96,6 +98,7 @@ private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
     QByteArray data_rs232;
+    QByteArray clean_data;
 
     enum {
         ID_TEST_0 = 1000,
@@ -116,6 +119,9 @@ private:
     QList<CMD> commands;
 
     QComboBox *cb_test = 0;
+
+    bool is_ready = false;
+    void wait(int max_time_ms);
 
     void init(void);
     void init_widgets(void);

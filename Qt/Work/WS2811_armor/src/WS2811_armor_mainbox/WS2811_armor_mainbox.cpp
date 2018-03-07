@@ -121,6 +121,7 @@ void MainBox::createSerialBox(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
+    emit debug(QString("read_data [%1]").arg(ba.data()));
     for(int n=0; n<ba.size(); n++)
     {
         char s = ba.at(n);
@@ -144,7 +145,8 @@ void MainBox::read_data(QByteArray ba)
 //--------------------------------------------------------------------------------
 void MainBox::analize(void)
 {
-    QByteArray clean_data = QByteArray::fromHex(data_rs232);
+    clean_data = QByteArray::fromHex(data_rs232);
+    is_ready = true;
 }
 //--------------------------------------------------------------------------------
 QString MainBox::convert_data_to_ascii(uint8_t data)
@@ -318,11 +320,28 @@ void MainBox::test_5(void)
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void MainBox::set_delay_ms(void)
+void MainBox::wait(int max_time_ms)
 {
+    QTime time;
+    time.start();
+    while(time.elapsed() < max_time_ms)
+    {
+        QCoreApplication::processEvents();
+        if(is_ready)
+            break;
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::command(uint8_t cmd, uint16_t data)
+{
+    clean_data.clear();
+    data_rs232.clear();
+    is_ready = false;
+
+    //---
     PACKET packet;
-    packet.cmd_8 = CMD_SET_DELAY_MS;
-    packet.data = ui->sb_delay_ms->value();
+    packet.cmd_8 = cmd;
+    packet.data = data;
 
     QByteArray temp;
     temp.clear();
@@ -333,129 +352,59 @@ void MainBox::set_delay_ms(void)
     ba.append(":");
     ba.append(temp.toHex().toUpper());
     ba.append("\n");
+    //---
 
     emit debug(ba.data());
     emit send(ba);
+
+    wait(1000);
+    if(is_ready == false)
+    {
+        emit error("No data!");
+        return;
+    }
+
+    if(clean_data.length() != 3)
+    {
+        emit error(QString("receive [%1]").arg(clean_data.toHex().data()));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_delay_ms(void)
+{
+    command(CMD_SET_DELAY_MS, ui->sb_delay_ms->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_brightness(void)
 {
-    PACKET packet;
-    packet.cmd_8 = CMD_SET_BRIGHTNESS;
-    packet.data = ui->sb_brightness->value();
-
-    QByteArray temp;
-    temp.clear();
-    temp.append((char *)&packet, sizeof(PACKET));
-
-    QByteArray ba;
-    ba.clear();
-    ba.append(":");
-    ba.append(temp.toHex().toUpper());
-    ba.append("\n");
-
-    emit debug(ba.data());
-    emit send(ba);
+    command(CMD_SET_BRIGHTNESS, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_1(void)
 {
-    PACKET packet;
-    packet.cmd_8 = CMD_01;
-    packet.data = 0;
-
-    QByteArray temp;
-    temp.clear();
-    temp.append((char *)&packet, sizeof(PACKET));
-
-    QByteArray ba;
-    ba.clear();
-    ba.append(":");
-    ba.append(temp.toHex().toUpper());
-    ba.append("\n");
-
-    emit debug(ba.data());
-    emit send(ba);
+    command(CMD_01, 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_2(void)
 {
-    PACKET packet;
-    packet.cmd_8 = CMD_03;
-    packet.data = 0;
-
-    QByteArray temp;
-    temp.clear();
-    temp.append((char *)&packet, sizeof(PACKET));
-
-    QByteArray ba;
-    ba.clear();
-    ba.append(":");
-    ba.append(temp.toHex().toUpper());
-    ba.append("\n");
-
-    emit debug(ba.data());
-    emit send(ba);
+    command(CMD_02, 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_3(void)
 {
-    PACKET packet;
-    packet.cmd_8 = CMD_03;
-    packet.data = 0;
-
-    QByteArray temp;
-    temp.clear();
-    temp.append((char *)&packet, sizeof(PACKET));
-
-    QByteArray ba;
-    ba.clear();
-    ba.append(":");
-    ba.append(temp.toHex().toUpper());
-    ba.append("\n");
-
-    emit debug(ba.data());
-    emit send(ba);
+    command(CMD_03, 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_4(void)
 {
-    PACKET packet;
-    packet.cmd_8 = CMD_04;
-    packet.data = 0;
-
-    QByteArray temp;
-    temp.clear();
-    temp.append((char *)&packet, sizeof(PACKET));
-
-    QByteArray ba;
-    ba.clear();
-    ba.append(":");
-    ba.append(temp.toHex().toUpper());
-    ba.append("\n");
-
-    emit debug(ba.data());
-    emit send(ba);
+    command(CMD_04, 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::cmd_5(void)
 {
-    PACKET packet;
-    packet.cmd_8 = CMD_05;
-    packet.data = 0;
-
-    QByteArray temp;
-    temp.clear();
-    temp.append((char *)&packet, sizeof(PACKET));
-
-    QByteArray ba;
-    ba.clear();
-    ba.append(":");
-    ba.append(temp.toHex().toUpper());
-    ba.append("\n");
-
-    emit debug(ba.data());
-    emit send(ba);
+    command(CMD_05, 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

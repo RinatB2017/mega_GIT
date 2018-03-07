@@ -225,18 +225,11 @@ void command(void)
   }
 }
 //--------------------------------------------------------------------------------
-void send_answer(int cmd)
+void send_answer(uint8_t cmd)
 {
-  uint8_t hi = 0;
-  uint8_t lo = 0;
-  convert_data_to_ascii(cmd, &hi, &lo);
-  
   String answer;
   answer += ":";
-  answer += hi;
-  answer += lo;
-  answer += "FF";
-  answer += "FF";
+  answer += convert_data_to_ascii(cmd);
   answer += "FF";
   answer += "FF";
 
@@ -279,52 +272,56 @@ uint8_t convert_ascii_to_value(uint8_t hi, uint8_t lo)
   return r_byte;
 }
 //--------------------------------------------------------------------------------
-void convert_data_to_ascii(uint8_t data, uint8_t *hi_str, uint8_t *lo_str)
+String convert_data_to_ascii(uint8_t data)
 {
-  uint8_t hi = (data >> 4) & 0x0F;
-  uint8_t lo = (data & 0x0F);
+    uint8_t hi = (data >> 4) & 0x0F;
+    uint8_t lo = (data & 0x0F);
 
-  switch (hi)
-  {
-    case 0x00: *hi_str = '0'; break;
-    case 0x01: *hi_str = '1'; break;
-    case 0x02: *hi_str = '2'; break;
-    case 0x03: *hi_str = '3'; break;
-    case 0x04: *hi_str = '4'; break;
-    case 0x05: *hi_str = '5'; break;
-    case 0x06: *hi_str = '6'; break;
-    case 0x07: *hi_str = '7'; break;
-    case 0x08: *hi_str = '8'; break;
-    case 0x09: *hi_str = '9'; break;
-    case 0x0A: *hi_str = 'A'; break;
-    case 0x0B: *hi_str = 'B'; break;
-    case 0x0C: *hi_str = 'C'; break;
-    case 0x0D: *hi_str = 'D'; break;
-    case 0x0E: *hi_str = 'E'; break;
-    case 0x0F: *hi_str = 'F'; break;
+    String hi_str;
+    switch(hi)
+    {
+    case 0x00: hi_str="0"; break;
+    case 0x01: hi_str="1"; break;
+    case 0x02: hi_str="2"; break;
+    case 0x03: hi_str="3"; break;
+    case 0x04: hi_str="4"; break;
+    case 0x05: hi_str="5"; break;
+    case 0x06: hi_str="6"; break;
+    case 0x07: hi_str="7"; break;
+    case 0x08: hi_str="8"; break;
+    case 0x09: hi_str="9"; break;
+    case 0x0A: hi_str="A"; break;
+    case 0x0B: hi_str="B"; break;
+    case 0x0C: hi_str="C"; break;
+    case 0x0D: hi_str="D"; break;
+    case 0x0E: hi_str="E"; break;
+    case 0x0F: hi_str="F"; break;
     default: break;
-  }
+    }
 
-  switch (lo)
-  {
-    case 0x00: *lo_str = '0'; break;
-    case 0x01: *lo_str = '1'; break;
-    case 0x02: *lo_str = '2'; break;
-    case 0x03: *lo_str = '3'; break;
-    case 0x04: *lo_str = '4'; break;
-    case 0x05: *lo_str = '5'; break;
-    case 0x06: *lo_str = '6'; break;
-    case 0x07: *lo_str = '7'; break;
-    case 0x08: *lo_str = '8'; break;
-    case 0x09: *lo_str = '9'; break;
-    case 0x0A: *lo_str = 'A'; break;
-    case 0x0B: *lo_str = 'B'; break;
-    case 0x0C: *lo_str = 'C'; break;
-    case 0x0D: *lo_str = 'D'; break;
-    case 0x0E: *lo_str = 'E'; break;
-    case 0x0F: *lo_str = 'F'; break;
+    String lo_str;
+    switch(lo)
+    {
+    case 0x00: lo_str="0"; break;
+    case 0x01: lo_str="1"; break;
+    case 0x02: lo_str="2"; break;
+    case 0x03: lo_str="3"; break;
+    case 0x04: lo_str="4"; break;
+    case 0x05: lo_str="5"; break;
+    case 0x06: lo_str="6"; break;
+    case 0x07: lo_str="7"; break;
+    case 0x08: lo_str="8"; break;
+    case 0x09: lo_str="9"; break;
+    case 0x0A: lo_str="A"; break;
+    case 0x0B: lo_str="B"; break;
+    case 0x0C: lo_str="C"; break;
+    case 0x0D: lo_str="D"; break;
+    case 0x0E: lo_str="E"; break;
+    case 0x0F: lo_str="F"; break;
     default: break;
-  }
+    }
+
+    return (hi_str+lo_str);
 }
 //---------------------------------------------------------------
 void f_01(void)

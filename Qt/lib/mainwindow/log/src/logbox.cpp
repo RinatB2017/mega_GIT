@@ -611,7 +611,11 @@ void LogBox::load_settings(void)
     QString text = o_name;
     if(text.isEmpty())  text = "noname";
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(text);
@@ -654,7 +658,11 @@ void LogBox::save_settings(void)
     QString text = o_name;
     if(text.isEmpty())  text = "RS-232";
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     if(settings)
     {
         settings->beginGroup(text);

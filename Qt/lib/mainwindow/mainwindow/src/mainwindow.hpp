@@ -226,6 +226,8 @@ private:
     QSystemTrayIcon *trayIcon = 0;
     QMenu *trayIconMenu = 0;
 
+    QSettings *settings = 0;
+
     void load_main(void);
     void save_main(void);
 

@@ -38,6 +38,12 @@
 MyWidget::MyWidget(QWidget *parent) :
     QWidget(parent)
 {
+#ifndef SAVE_INI
+    settings = new QSettings(ORGNAME, APPNAME);
+#else
+    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+
 #ifndef RS232_LOG
     if(parent)
         connect_log(parent);
@@ -55,6 +61,10 @@ MyWidget::~MyWidget()
 #ifdef QT_DEBUG
     qDebug() << "~MyWidget()";
 #endif
+    if(settings)
+    {
+        settings->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 // основная функция
@@ -293,7 +303,11 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
 {
     if(name.isEmpty())  return false;
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -314,7 +328,11 @@ bool MyWidget::get_param(QString group_name,
         return false;
     }
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -328,7 +346,11 @@ bool MyWidget::get_param(QString group_name,
 //--------------------------------------------------------------------------------
 QStringList MyWidget::get_all_param_name(void)
 {
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(PARAMS_GROUP_NAME);
@@ -342,7 +364,6 @@ QStringList MyWidget::get_all_param_name(void)
 void MyWidget::load_QCheckBox(QString group_name)
 {
     QList<QCheckBox *> widgets = findChildren<QCheckBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -356,14 +377,11 @@ void MyWidget::load_QCheckBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QCheckBox(QString group_name)
 {
     QList<QCheckBox *> allobj = findChildren<QCheckBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -377,14 +395,11 @@ void MyWidget::save_QCheckBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QComboBox(QString group_name)
 {
     QList<QComboBox *> allobj = findChildren<QComboBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -398,14 +413,11 @@ void MyWidget::load_QComboBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QComboBox(QString group_name)
 {
     QList<QComboBox *> allobj = findChildren<QComboBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -419,14 +431,11 @@ void MyWidget::save_QComboBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QPushButton(QString group_name)
 {
     QList<QPushButton *> allobj = findChildren<QPushButton *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -440,14 +449,11 @@ void MyWidget::load_QPushButton(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QPushButton(QString group_name)
 {
     QList<QPushButton *> allobj = findChildren<QPushButton *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -461,14 +467,11 @@ void MyWidget::save_QPushButton(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QToolButton(QString group_name)
 {
     QList<QToolButton *> allobj = findChildren<QToolButton *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -482,14 +485,11 @@ void MyWidget::load_QToolButton(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QToolButton(QString group_name)
 {
     QList<QToolButton *> allobj = findChildren<QToolButton *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -503,14 +503,11 @@ void MyWidget::save_QToolButton(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QTextEdit(QString group_name)
 {
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -524,14 +521,11 @@ void MyWidget::load_QTextEdit(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QTextEdit(QString group_name)
 {
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -545,14 +539,11 @@ void MyWidget::save_QTextEdit(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QLineEdit(QString group_name)
 {
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -566,14 +557,11 @@ void MyWidget::load_QLineEdit(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QLineEdit(QString group_name)
 {
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -587,14 +575,11 @@ void MyWidget::save_QLineEdit(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSpinBox(QString group_name)
 {
     QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -611,14 +596,11 @@ void MyWidget::load_QSpinBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSpinBox(QString group_name)
 {
     QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -632,14 +614,11 @@ void MyWidget::save_QSpinBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QDoubleSpinBox(QString group_name)
 {
     QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -653,14 +632,11 @@ void MyWidget::load_QDoubleSpinBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QDoubleSpinBox(QString group_name)
 {
     QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -674,14 +650,11 @@ void MyWidget::save_QDoubleSpinBox(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSlider(QString group_name)
 {
     QList<QSlider *> allobj = findChildren<QSlider *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -695,14 +668,11 @@ void MyWidget::load_QSlider(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSlider(QString group_name)
 {
     QList<QSlider *> allobj = findChildren<QSlider *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -716,14 +686,11 @@ void MyWidget::save_QSlider(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSplitter(QString group_name)
 {
     QList<QSplitter *> allobj = findChildren<QSplitter *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -737,14 +704,11 @@ void MyWidget::load_QSplitter(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSplitter(QString group_name)
 {
     QList<QSplitter *> allobj = findChildren<QSplitter *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -758,8 +722,6 @@ void MyWidget::save_QSplitter(QString group_name)
         }
     }
     settings->endGroup();
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::load_widgets(QString group_name)
@@ -1066,7 +1028,7 @@ void MyWidget::load_d_spinBox(QList<d_spin_box> data)
 void MyWidget::save_checkBox(QString group_name, QList<QCheckBox *> data)
 {
     QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
 
@@ -1086,7 +1048,7 @@ void MyWidget::save_checkBox(QString group_name, QList<QCheckBox *> data)
 void MyWidget::save_comboBox(QString group_name, QList<QComboBox *> data)
 {
     QList<QComboBox *> all_chb = findChildren<QComboBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
 
@@ -1106,7 +1068,7 @@ void MyWidget::save_comboBox(QString group_name, QList<QComboBox *> data)
 void MyWidget::save_spinBox(QString group_name, QList<QSpinBox *> data)
 {
     QList<QSpinBox *> all_chb = findChildren<QSpinBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
 
@@ -1126,7 +1088,7 @@ void MyWidget::save_spinBox(QString group_name, QList<QSpinBox *> data)
 void MyWidget::save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data)
 {
     QList<QDoubleSpinBox *> all_chb = findChildren<QDoubleSpinBox *>();
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
 
@@ -1142,7 +1104,6 @@ void MyWidget::save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data)
         }
     }
     settings->endGroup();
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 #include <QStringList>

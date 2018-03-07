@@ -33,13 +33,13 @@ QFile *MyMainWindow::m_logFile = 0;
 MyMainWindow::MyMainWindow(MainWindow *parent) :
     MainWindow(parent)
 {
-    m_logFile = new QFile(QString("%1.log").arg(qAppName()));
-    m_logFile->open(QFile::Append | QFile::Text);
+    //m_logFile = new QFile(QString("%1.log").arg(qAppName()));
+    //m_logFile->open(QFile::Append | QFile::Text);
 
 #ifdef HAVE_QT5
-    qInstallMessageHandler(messageHandler);
+    //qInstallMessageHandler(messageHandler);
 #else
-    qInstallMsgHandler(messageHandler);
+    //qInstallMsgHandler(messageHandler);
 #endif
 
     create_local_menus();

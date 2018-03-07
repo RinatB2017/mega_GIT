@@ -79,6 +79,7 @@ typedef struct d_spin_box
 } d_spin_box_t;
 //--------------------------------------------------------------------------------
 class QToolButton;
+class QSettings;
 class QToolBar;
 //--------------------------------------------------------------------------------
 class MyWidget : public QWidget
@@ -186,6 +187,8 @@ private slots:
 
 private:
     void connect_log(QWidget *parent);
+
+    QSettings *settings = 0;
 
     void load_QCheckBox(QString group_name);
     void load_QComboBox(QString group_name);

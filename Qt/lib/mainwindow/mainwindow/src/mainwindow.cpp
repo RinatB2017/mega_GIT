@@ -57,6 +57,11 @@ MainWindow::~MainWindow()
     {
         ld->deleteLater();
     }
+
+    if(settings)
+    {
+        settings->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(QWidget *widget)
@@ -180,6 +185,12 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::init(void)
 {
     flag_close = true;
+
+#ifndef SAVE_INI
+    settings = new QSettings(ORGNAME, APPNAME);
+#else
+    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
 
     load_translations();
     setWindowTitle(QString("%1 (ver. %2)")
@@ -522,7 +533,6 @@ void MainWindow::load_main(void)
     int font_weight;
     int font_size;
 
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup("Main");
@@ -571,13 +581,10 @@ void MainWindow::load_main(void)
 
     restoreState(settings->value("windowState").toByteArray());
     restoreGeometry(settings->value("geometry").toByteArray());
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::save_main(void)
 {
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
     Q_CHECK_PTR(settings);
 
     settings->beginGroup("Main");
@@ -598,8 +605,6 @@ void MainWindow::save_main(void)
 
     settings->setValue("geometry",      saveGeometry());
     settings->setValue("windowState",   saveState());
-
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)

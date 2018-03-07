@@ -81,7 +81,7 @@ int addr4 = addr3 + SIZE_MATRIX_4;
 
 bool flag = false;
 //---------------------------------------------------------------
-#define MAX_ASCII_BUF 100
+#define MAX_ASCII_BUF 50
 uint8_t ascii_buf[MAX_ASCII_BUF];
 int index_ascii_buf = 0;
 
@@ -181,6 +181,7 @@ void command(void)
       {
         data_t.memory_t.delay_ms = MAX_DELAY_MS;
       }
+      send_answer(cmd);
       break;
 
     case CMD_SET_BRIGHTNESS:
@@ -189,33 +190,57 @@ void command(void)
       {
         data_t.memory_t.gBrightness = MAX_BRIGHTNESS;
       }
+      send_answer(cmd);
       break;
 
     case CMD_01:
       data_t.memory_t.current_state = CMD_01;
       save_eeprom();
+      send_answer(cmd);
       break;
 
     case CMD_02:
       data_t.memory_t.current_state = CMD_02;
       save_eeprom();
+      send_answer(cmd);
       break;
 
     case CMD_03:
       data_t.memory_t.current_state = CMD_03;
       save_eeprom();
+      send_answer(cmd);
       break;
 
     case CMD_04:
       data_t.memory_t.current_state = CMD_04;
       save_eeprom();
+      send_answer(cmd);
       break;
 
     case CMD_05:
       data_t.memory_t.current_state = CMD_05;
       save_eeprom();
+      send_answer(cmd);
       break;
   }
+}
+//--------------------------------------------------------------------------------
+void send_answer(int cmd)
+{
+  uint8_t hi = 0;
+  uint8_t lo = 0;
+  convert_data_to_ascii(cmd, &hi, &lo);
+  
+  String answer;
+  answer += ":";
+  answer += hi;
+  answer += lo;
+  answer += "FF";
+  answer += "FF";
+  answer += "FF";
+  answer += "FF";
+
+  Serial.println(answer);
 }
 //--------------------------------------------------------------------------------
 uint8_t convert(uint8_t x)
@@ -601,7 +626,7 @@ void load_eeprom(void)
     needed_write_eeprom = true;
   }
 
-  if( needed_write_eeprom)
+  if ( needed_write_eeprom)
   {
     data_t.memory_t.current_state = CMD_01;
     save_eeprom();

@@ -201,7 +201,7 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     QStringList sl = QProcessEnvironment::systemEnvironment().toStringList();
     foreach (auto text, sl)
     {
@@ -209,8 +209,11 @@ bool MainBox::test_0(void)
     }
 #endif
 
-#if 0
+#if 1
     emit info(QString("PATH = %1").arg(QProcessEnvironment::systemEnvironment().value("PATH")));
+#endif
+
+#if 0
     foreach (QString key, QProcessEnvironment::systemEnvironment().keys())
     {
         emit error(key);

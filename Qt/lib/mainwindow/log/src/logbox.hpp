@@ -21,18 +21,7 @@
 #ifndef LOGBOX_HPP
 #define LOGBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QDateTime>
-#include <QFrame>
-#include <QList>
-//--------------------------------------------------------------------------------
-class QProgressBar;
-class QPushButton;
-class QToolButton;
-class QHBoxLayout;
-class QVBoxLayout;
-class QTextEdit;
-class QCheckBox;
-class QString;
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 class LogBox : public QFrame
 {

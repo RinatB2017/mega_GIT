@@ -10,7 +10,24 @@
     <height>193</height>
    </rect>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QSpinBox" name="spinBox"/>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

@@ -21,12 +21,7 @@
 #ifndef MYWIDGET_HPP
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QFileDialog>
-#include <QDateTime>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QSpinBox>
-#include <QWidget>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #define PARAMS_GROUP_NAME   "Params"
 //--------------------------------------------------------------------------------
@@ -79,12 +74,13 @@ typedef struct d_spin_box
 } d_spin_box_t;
 //--------------------------------------------------------------------------------
 class QToolButton;
-class QSettings;
+//class QSettings;
 class QToolBar;
 //--------------------------------------------------------------------------------
 class MyWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     MyWidget(QWidget *parent = 0);
     ~MyWidget();

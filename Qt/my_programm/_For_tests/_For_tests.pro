@@ -33,7 +33,7 @@ QMAKE_CXXFLAGS += -fno-show-column
 #DEFINES += SAVE_WIDGETS_COMBOBOX
 #DEFINES += SAVE_WIDGETS_PUSHBUTTON
 #DEFINES += SAVE_WIDGETS_TOOLBUTTON
-#DEFINES += SAVE_WIDGETS_SPINBOX
+DEFINES += SAVE_WIDGETS_SPINBOX
 #DEFINES += SAVE_WIDGETS_DOUBLESPINBOX
 #DEFINES += SAVE_WIDGETS_SLIDER
 #DEFINES += SAVE_WIDGETS_TEXTEDIT
@@ -49,8 +49,7 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    for_tests_mainbox.hpp \
-    ascii_data.hpp
+    for_tests_mainbox.hpp
 
 SOURCES += \
     for_tests_mainbox.cpp \

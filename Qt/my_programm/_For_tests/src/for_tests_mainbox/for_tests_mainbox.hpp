@@ -36,9 +36,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QComboBox;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {

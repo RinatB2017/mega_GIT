@@ -202,6 +202,22 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QStringList sl = QProcessEnvironment::systemEnvironment().toStringList();
+    foreach (auto text, sl)
+    {
+        emit info(text);
+    }
+#endif
+
+#if 0
+    emit info(QString("PATH = %1").arg(QProcessEnvironment::systemEnvironment().value("PATH")));
+    foreach (QString key, QProcessEnvironment::systemEnvironment().keys())
+    {
+        emit error(key);
+    }
+#endif
+
+#if 0
     for(int n=0; n<get_cnt(); n++)
     {
         emit info(QString("n=%1").arg(n));

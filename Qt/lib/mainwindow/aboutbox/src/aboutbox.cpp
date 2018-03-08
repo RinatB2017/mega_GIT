@@ -18,13 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDesktopServices>
-#include <QLabel>
-#include <QRect>
-#include <QUrl>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "aboutbox.hpp"
 #include "ui_aboutbox.h"
+//--------------------------------------------------------------------------------
 #ifdef LOGO_GL
 #   include "glwidget.h"
 #endif
@@ -77,6 +75,25 @@ AboutBox::AboutBox(const QString &orgName,
     connect(ui->btn_about_qt, SIGNAL(clicked()),    qApp, SLOT(aboutQt()));
 
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+
+    ui->btn_env->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MessageBoxInformation)));
+    ui->btn_env->setToolTip(tr("Get ENV"));
+    ui->btn_env->setStatusTip(tr("Get ENV"));
+    connect(ui->btn_env,    SIGNAL(clicked(bool)),  this,   SLOT(show_env()));
+}
+//--------------------------------------------------------------------------------
+void AboutBox::show_env(void)
+{
+    QStringList sl = QProcessEnvironment::systemEnvironment().toStringList();
+    QTextEdit *te = new QTextEdit();
+    te->setWindowModality(Qt::WindowModal);
+    te->setMinimumSize(800, 600);
+    te->setReadOnly(true);
+    foreach (auto text, sl)
+    {
+        te->append(text);
+    }
+    te->show();
 }
 //--------------------------------------------------------------------------------
 void AboutBox::send_mail(QString link)

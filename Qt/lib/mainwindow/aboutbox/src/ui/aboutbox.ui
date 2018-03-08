@@ -59,6 +59,13 @@
       <widget class="QToolButton" name="btn_about_qt"/>
      </item>
      <item>
+      <widget class="QToolButton" name="btn_env">
+       <property name="text">
+        <string>env</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QDialogButtonBox" name="buttonBox">
        <property name="standardButtons">
         <set>QDialogButtonBox::Close</set>

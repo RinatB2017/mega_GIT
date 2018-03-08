@@ -201,23 +201,21 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    QStringList sl = QProcessEnvironment::systemEnvironment().toStringList();
-    foreach (auto text, sl)
-    {
-        emit info(text);
-    }
-#endif
-
 #if 1
-    emit info(QString("PATH = %1").arg(QProcessEnvironment::systemEnvironment().value("PATH")));
+    QSysInfo i;
+    emit info(i.buildAbi());
+    emit info(i.buildCpuArchitecture());
+    emit info(i.currentCpuArchitecture());
+    emit info(i.kernelType());
+    emit info(i.kernelVersion());
+    emit info(i.machineHostName());
+    emit info(i.prettyProductName());
+    emit info(i.productType());
+    emit info(i.productVersion());
 #endif
 
 #if 0
-    foreach (QString key, QProcessEnvironment::systemEnvironment().keys())
-    {
-        emit error(key);
-    }
+    emit info(QString("PATH = %1").arg(QProcessEnvironment::systemEnvironment().value("PATH")));
 #endif
 
 #if 0
@@ -246,6 +244,14 @@ bool MainBox::test_0(void)
     }
 #endif
 
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
+    emit info("Test_1()");
+    emit trace(Q_FUNC_INFO);
+
 #if 0
     emit info("info");
     emit debug("debug");
@@ -260,14 +266,6 @@ bool MainBox::test_0(void)
     emit info(__FILE__);
     emit info(QString("line %1").arg(__LINE__));
 #endif
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-    emit trace(Q_FUNC_INFO);
 
     return true;
 }

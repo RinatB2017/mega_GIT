@@ -21,14 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QColorDialog>
-#   include <QVBoxLayout>
-#   include <QMessageBox>
-#   include <QToolButton>
-#   include <QCheckBox>
-#   include <QToolBar>
-#   include <QSlider>
-#   include <QTimer>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_Test_arduino_mainbox.h"

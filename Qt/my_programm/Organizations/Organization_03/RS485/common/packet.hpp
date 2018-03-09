@@ -25,9 +25,11 @@
 
 enum CMD {
     CMD_TEST    = 0,
-    CMD_READ    = 1,
-    CMD_WRITE   = 2,
-    CMD_RESET   = 3
+    CMD_READ,
+    CMD_WRITE,
+    CMD_RESET,
+    CMD_PUMP_ON,
+    CMD_PUMP_OFF
 };
 
 struct HEADER
@@ -50,6 +52,31 @@ union QUESTION_TEST
 };
 
 union ANSWER_TEST
+{
+    struct BODY
+    {
+        HEADER      header;
+        struct DATA
+        {
+            uint16_t result;
+        } data;
+        uint16_t    crc16;                  // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+//--------------------------------------------
+union QUESTION_PUMP
+{
+    struct BODY
+    {
+        HEADER      header;
+        uint8_t     state;
+        uint16_t    crc16;                  // контрольная сумма
+    } body;
+    unsigned char buf[sizeof(BODY)];
+};
+
+union ANSWER_PUMP
 {
     struct BODY
     {

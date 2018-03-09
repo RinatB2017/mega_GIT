@@ -85,6 +85,9 @@ void MainBox::init(void)
     connect(ui->btn_reset,  SIGNAL(clicked(bool)),  this,   SLOT(cmd_reset()));
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(cmd_test()));
 
+    connect(ui->btn_pump_on,    SIGNAL(clicked(bool)),  this,   SLOT(cmd_pump_on()));
+    connect(ui->btn_pump_off,   SIGNAL(clicked(bool)),  this,   SLOT(cmd_pump_off()));
+
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     load_widgets("w_rs485");
@@ -644,16 +647,80 @@ void MainBox::cmd_reset(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+void MainBox::cmd_pump_on(void)
+{
+    emit info("cmd_pump_on");
+    QUESTION_PUMP question;
+
+    question.body.header.prefix_16 = 0xBBAA;                // префикс
+    question.body.header.len_16 = sizeof(question);         // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu->value(); // адрес модуля
+    question.body.header.cmd_8 = CMD_PUMP_ON;               // команда
+    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
+
+    QByteArray ba;
+    ba.append((char *)&question.buf, sizeof(question.buf));
+
+    emit debug(QString("Длина пакета = %1").arg(ba.size()));
+    emit debug(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
+
+    //---
+    data_rs232_clean.clear();
+    is_ready = false;
+    emit send(convert(ba));
+    wait(1000);
+
+    emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
+    int err = check_answer_reset(data_rs232_clean);
+    if(err != MainBox::E_NO_ERROR)
+    {
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void MainBox::cmd_pump_off(void)
+{
+    emit info("cmd_pump_off");
+    QUESTION_PUMP question;
+
+    question.body.header.prefix_16 = 0xBBAA;                // префикс
+    question.body.header.len_16 = sizeof(question);         // длина пакета
+    question.body.header.addr_8 = ui->sb_addr_upu->value(); // адрес модуля
+    question.body.header.cmd_8 = CMD_PUMP_OFF;              // команда
+    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
+
+    QByteArray ba;
+    ba.append((char *)&question.buf, sizeof(question.buf));
+
+    emit debug(QString("Длина пакета = %1").arg(ba.size()));
+    emit debug(QString("Отправляем %1").arg(convert(ba).replace("\n", "").data()));
+
+    //---
+    data_rs232_clean.clear();
+    is_ready = false;
+    emit send(convert(ba));
+    wait(1000);
+
+    emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
+    int err = check_answer_reset(data_rs232_clean);
+    if(err != MainBox::E_NO_ERROR)
+    {
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
 void MainBox::print_err(int code)
 {
     switch(code)
     {
-    case E_NO_ERROR:              emit info("Нет ошибки!");                   break;
-    case E_ANSWER_EMPTY:      emit error("Ответ пуст!");                  break;
-    case E_ANSWER_BAD_SIZE:   emit error("Неверный размер пакета");       break;
-    case E_BAD_PREFIX:        emit error("Неверный префикс");             break;
-    case E_BAD_CMD:           emit error("Неверная команда");             break;
-    case E_BAD_CRC16:         emit error("Неверная контрольная сумма");   break;
+    case E_NO_ERROR:            emit info("Нет ошибки!");                   break;
+    case E_ANSWER_EMPTY:        emit error("Ответ пуст!");                  break;
+    case E_ANSWER_BAD_SIZE:     emit error("Неверный размер пакета");       break;
+    case E_BAD_PREFIX:          emit error("Неверный префикс");             break;
+    case E_BAD_CMD:             emit error("Неверная команда");             break;
+    case E_BAD_CRC16:           emit error("Неверная контрольная сумма");   break;
     default:
         emit error(QString("unknown err code [%1]").arg(code));
         break;

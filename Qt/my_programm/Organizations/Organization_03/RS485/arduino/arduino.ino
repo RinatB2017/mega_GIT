@@ -143,6 +143,31 @@ union ANSWER_TEST
   unsigned char buf[sizeof(struct ANSWER_TEST_BODY)];
 };
 //--------------------------------------------------------------------------------
+union QUESTION_PUMP
+{
+  struct QUESTION_TEST_BODY
+  {
+    struct HEADER   header;
+    uint8_t     state;
+    uint16_t    crc16;                  // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct QUESTION_TEST_BODY)];
+};
+
+union ANSWER_PUMP
+{
+  struct ANSWER_TEST_BODY
+  {
+    struct HEADER   header;
+    struct DATA
+    {
+      uint16_t result;
+    } data;
+    uint16_t    crc16;                  // контрольная сумма
+  } body;
+  unsigned char buf[sizeof(struct ANSWER_TEST_BODY)];
+};
+//--------------------------------------------------------------------------------
 union QUESTION_RESET
 {
   struct QUESTION_RESET_BODY

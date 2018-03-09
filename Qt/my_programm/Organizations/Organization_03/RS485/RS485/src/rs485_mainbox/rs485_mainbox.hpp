@@ -65,6 +65,9 @@ private slots:
     void cmd_read(void);
     void cmd_write(void);
 
+    void cmd_pump_on(void);
+    void cmd_pump_off(void);
+
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;

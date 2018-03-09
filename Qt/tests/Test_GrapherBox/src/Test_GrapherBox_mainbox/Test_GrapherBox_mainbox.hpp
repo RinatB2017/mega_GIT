@@ -40,6 +40,7 @@ class QToolButton;
 class QToolBar;
 class PlotPicker;
 class QSplitter;
+class GrapherBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -66,6 +67,8 @@ private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
     bool all_break = false;
+
+    GrapherBox *grapher_widget = 0;
 
     void init(void);
     void createTestBar(void);

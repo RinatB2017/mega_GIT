@@ -102,9 +102,6 @@ public:
                          Qt::DockWidgetArea area,
                          QWidget *widget);
 
-    void load_setting(void);
-    void save_setting(void);
-
 signals:
     void updateLanguage(void);
 
@@ -149,6 +146,9 @@ private slots:
     void setMenuLanguage(void);
     void setToolBarLanguage(void);
     void help(void);
+
+    void load_setting(void);
+    void save_setting(void);
 
     void slot_is_shows_info(bool state);
     void slot_is_shows_debug(bool state);
@@ -202,6 +202,8 @@ private:
 
     QLabel *statusLabel1 = 0;
     QLabel *statusLabel2 = 0;
+
+    QWidget *mainWidget = 0;
 
     QSystemTrayIcon *trayIcon = 0;
     QMenu *trayIconMenu = 0;

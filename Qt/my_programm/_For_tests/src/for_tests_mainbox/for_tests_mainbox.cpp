@@ -202,6 +202,12 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+    mw->add_dock_widget("тест", "test", Qt::RightDockWidgetArea, new QSpinBox);
+#endif
+
+#if 0
     QSysInfo i;
     emit info(i.buildAbi());
     emit info(i.buildCpuArchitecture());

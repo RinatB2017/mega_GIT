@@ -46,7 +46,6 @@ MainWindow::~MainWindow()
 #ifdef QT_DEBUG
     qDebug() << "~MainWindow()";
 #endif
-    save_setting();
 
     MyWidget::set_param("Main", "flag_show_info",   flag_show_info);
     MyWidget::set_param("Main", "flag_show_error",  flag_show_error);
@@ -68,7 +67,10 @@ MainWindow::~MainWindow()
 void MainWindow::setCentralWidget(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
-    QMainWindow::setCentralWidget(widget);
+
+    mainWidget = widget;
+
+    QMainWindow::setCentralWidget(mainWidget);
 
     load_setting();
 
@@ -110,11 +112,39 @@ void MainWindow::changeEvent(QEvent *event)
 //--------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    Q_CHECK_PTR(mainWidget);
+
     QMessageBox msgBox;
 
     if(flag_close)
     {
-        save_setting();
+        if(mainWidget)
+        {
+            bool flag_no_close = mainWidget->property("flag_no_close").toBool();
+            if(flag_no_close)
+            {
+                emit error("flag_no_close is true");
+                event->ignore();
+                return;
+            }
+
+            //---
+            MyWidget *w = dynamic_cast<MyWidget *>(mainWidget);
+            if(w)
+            {
+                bool ok = w->close();
+                if(!ok)
+                {
+                    emit error("mainWidget is busy");
+                    event->ignore();
+                    return;
+                }
+            }
+            //---
+
+            save_setting();
+            mainWidget->deleteLater();
+        }
         event->accept();
         return;
     }
@@ -128,7 +158,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
     if(btn == QMessageBox::Yes)
     {
-        save_setting();
+        if(mainWidget)
+        {
+            save_setting();
+            mainWidget->deleteLater();
+        }
         event->accept();
     }
     else
@@ -178,7 +212,6 @@ void MainWindow::init(void)
 
 #ifndef NO_LOG
     //FIXME костыль, надо убрать
-    // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
     if(m_app_windowsmenu)
     {
         m_app_windowsmenu->addAction(ld->toggleViewAction());
@@ -203,7 +236,6 @@ void MainWindow::init(void)
 #endif
 
     setAttribute(Qt::WA_DeleteOnClose);
-    load_setting();
 }
 //--------------------------------------------------------------------------------
 #ifdef  DEMO
@@ -571,8 +603,8 @@ void MainWindow::save_main(void)
 
     settings->endGroup();
 
-    settings->setValue("windowState",   saveState());
     settings->setValue("geometry",      saveGeometry());
+    settings->setValue("windowState",   saveState());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)

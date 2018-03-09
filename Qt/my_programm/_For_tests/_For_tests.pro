@@ -79,6 +79,13 @@ include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 
+###
+include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
+include ($$LIB_PATH2/csvreader/csvreader.pri)
+include ($$LIB_PATH2/qwt/qwt.pri)
+###
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

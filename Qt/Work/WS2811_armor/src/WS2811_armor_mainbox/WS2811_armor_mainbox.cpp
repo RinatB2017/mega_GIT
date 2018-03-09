@@ -64,7 +64,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
 {
-    ui->sb_brightness->setRange(0, 150);
+    ui->sb_brightness->setRange(1, 150);
     ui->sb_delay_ms->setRange(0, 1000);
 
     connect(ui->btn_set_brightness, SIGNAL(clicked(bool)),  this,   SLOT(set_brightness()));
@@ -364,6 +364,11 @@ void MainBox::command(uint8_t cmd, uint16_t data)
         return;
     }
 
+    if(clean_data.isEmpty())
+    {
+        emit error("clean_data is empty!");
+        return;
+    }
     if(clean_data.length() != 3)
     {
         emit error(QString("receive [%1]").arg(clean_data.toHex().data()));

@@ -23,6 +23,7 @@
 #define CMD_05 50
 
 #define MAX_BRIGHTNESS  150 // 150 выше моргает
+#define MIN_BRIGHTNESS  1   //
 #define MAX_DELAY_MS  1000
 
 enum {
@@ -111,6 +112,14 @@ typedef struct PACKET
 
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
+void pause(int delay_ms)
+{
+  if (delay_ms > 0)
+  {
+    delay(delay_ms);
+  }
+}
+//--------------------------------------------------------------------------------
 void serialEvent()
 {
   while (Serial.available())
@@ -181,6 +190,7 @@ void command(void)
       {
         data_t.memory_t.delay_ms = MAX_DELAY_MS;
       }
+      save_eeprom();
       send_answer(cmd);
       break;
 
@@ -190,6 +200,11 @@ void command(void)
       {
         data_t.memory_t.gBrightness = MAX_BRIGHTNESS;
       }
+      if (data_t.memory_t.gBrightness < MIN_BRIGHTNESS)
+      {
+        data_t.memory_t.gBrightness = MIN_BRIGHTNESS;
+      }
+      save_eeprom();
       send_answer(cmd);
       break;
 
@@ -223,17 +238,6 @@ void command(void)
       send_answer(cmd);
       break;
   }
-}
-//--------------------------------------------------------------------------------
-void send_answer(uint8_t cmd)
-{
-  String answer;
-  answer += ":";
-  answer += convert_data_to_ascii(cmd);
-  answer += "FF";
-  answer += "FF";
-
-  Serial.println(answer);
 }
 //--------------------------------------------------------------------------------
 uint8_t convert(uint8_t x)
@@ -274,54 +278,56 @@ uint8_t convert_ascii_to_value(uint8_t hi, uint8_t lo)
 //--------------------------------------------------------------------------------
 String convert_data_to_ascii(uint8_t data)
 {
-    uint8_t hi = (data >> 4) & 0x0F;
-    uint8_t lo = (data & 0x0F);
+  uint8_t hi = (data >> 4) & 0x0F;
+  uint8_t lo = (data & 0x0F);
 
-    String hi_str;
-    switch(hi)
-    {
-    case 0x00: hi_str="0"; break;
-    case 0x01: hi_str="1"; break;
-    case 0x02: hi_str="2"; break;
-    case 0x03: hi_str="3"; break;
-    case 0x04: hi_str="4"; break;
-    case 0x05: hi_str="5"; break;
-    case 0x06: hi_str="6"; break;
-    case 0x07: hi_str="7"; break;
-    case 0x08: hi_str="8"; break;
-    case 0x09: hi_str="9"; break;
-    case 0x0A: hi_str="A"; break;
-    case 0x0B: hi_str="B"; break;
-    case 0x0C: hi_str="C"; break;
-    case 0x0D: hi_str="D"; break;
-    case 0x0E: hi_str="E"; break;
-    case 0x0F: hi_str="F"; break;
-    default: break;
-    }
+  String hi_str;
+  switch (hi)
+  {
+    case 0x00: hi_str = "0"; break;
+    case 0x01: hi_str = "1"; break;
+    case 0x02: hi_str = "2"; break;
+    case 0x03: hi_str = "3"; break;
+    case 0x04: hi_str = "4"; break;
+    case 0x05: hi_str = "5"; break;
+    case 0x06: hi_str = "6"; break;
+    case 0x07: hi_str = "7"; break;
+    case 0x08: hi_str = "8"; break;
+    case 0x09: hi_str = "9"; break;
+    case 0x0A: hi_str = "A"; break;
+    case 0x0B: hi_str = "B"; break;
+    case 0x0C: hi_str = "C"; break;
+    case 0x0D: hi_str = "D"; break;
+    case 0x0E: hi_str = "E"; break;
+    case 0x0F: hi_str = "F"; break;
+    default:
+      break;
+  }
 
-    String lo_str;
-    switch(lo)
-    {
-    case 0x00: lo_str="0"; break;
-    case 0x01: lo_str="1"; break;
-    case 0x02: lo_str="2"; break;
-    case 0x03: lo_str="3"; break;
-    case 0x04: lo_str="4"; break;
-    case 0x05: lo_str="5"; break;
-    case 0x06: lo_str="6"; break;
-    case 0x07: lo_str="7"; break;
-    case 0x08: lo_str="8"; break;
-    case 0x09: lo_str="9"; break;
-    case 0x0A: lo_str="A"; break;
-    case 0x0B: lo_str="B"; break;
-    case 0x0C: lo_str="C"; break;
-    case 0x0D: lo_str="D"; break;
-    case 0x0E: lo_str="E"; break;
-    case 0x0F: lo_str="F"; break;
-    default: break;
-    }
+  String lo_str;
+  switch (lo)
+  {
+    case 0x00: lo_str = "0"; break;
+    case 0x01: lo_str = "1"; break;
+    case 0x02: lo_str = "2"; break;
+    case 0x03: lo_str = "3"; break;
+    case 0x04: lo_str = "4"; break;
+    case 0x05: lo_str = "5"; break;
+    case 0x06: lo_str = "6"; break;
+    case 0x07: lo_str = "7"; break;
+    case 0x08: lo_str = "8"; break;
+    case 0x09: lo_str = "9"; break;
+    case 0x0A: lo_str = "A"; break;
+    case 0x0B: lo_str = "B"; break;
+    case 0x0C: lo_str = "C"; break;
+    case 0x0D: lo_str = "D"; break;
+    case 0x0E: lo_str = "E"; break;
+    case 0x0F: lo_str = "F"; break;
+    default: 
+      break;
+  }
 
-    return (hi_str+lo_str);
+  return (hi_str + lo_str);
 }
 //---------------------------------------------------------------
 void f_01(void)
@@ -352,7 +358,7 @@ void f_01(void)
     switch_color();
   }
 
-  delay(data_t.memory_t.delay_ms);
+  pause(data_t.memory_t.delay_ms);
 }
 //---------------------------------------------------------------
 void f_02(void)
@@ -375,19 +381,19 @@ void f_02(void)
   {
     set_left_pixel(current_led, CRGB::Black);
     set_right_pixel(current_led, CRGB::Black);
-    delay(data_t.memory_t.delay_ms * 8);
+    pause(data_t.memory_t.delay_ms * 8);
   }
   if (current_led == addr2)
   {
     set_left_pixel(current_led, CRGB::Black);
     set_right_pixel(current_led, CRGB::Black);
-    delay(data_t.memory_t.delay_ms * 20);
+    pause(data_t.memory_t.delay_ms * 20);
   }
   if (current_led == addr3)
   {
     set_left_pixel(current_led, CRGB::Black);
     set_right_pixel(current_led, CRGB::Black);
-    delay(data_t.memory_t.delay_ms * 36);
+    pause(data_t.memory_t.delay_ms * 36);
   }
 
   show_leds();
@@ -402,47 +408,66 @@ void f_02(void)
     switch_color();
   }
 
-  delay(data_t.memory_t.delay_ms);
+  pause(data_t.memory_t.delay_ms);
 }
 //---------------------------------------------------------------
 void f_03(void)
 {
   for (int n = 0; n < max_address; n += 2)
   {
-    set_left_pixel(n,     CRGB::Red);
+    set_left_pixel(n,       CRGB::Red);
     set_left_pixel(n + 1,   CRGB::Blue);
-    set_right_pixel(n,    CRGB::Red);
+    set_right_pixel(n,      CRGB::Red);
     set_right_pixel(n + 1,  CRGB::Blue);
     set_horizont(CRGB::Red);
   }
   show_leds();
-  delay(data_t.memory_t.delay_ms);
+  pause(data_t.memory_t.delay_ms);
 
   for (int n = 0; n < max_address; n += 2)
   {
-    set_left_pixel(n,     CRGB::Blue);
+    set_left_pixel(n,       CRGB::Blue);
     set_left_pixel(n + 1,   CRGB::Red);
-    set_right_pixel(n,    CRGB::Blue);
+    set_right_pixel(n,      CRGB::Blue);
     set_right_pixel(n + 1,  CRGB::Red);
     set_horizont(CRGB::Blue);
   }
   show_leds();
-  delay(data_t.memory_t.delay_ms);
+  pause(data_t.memory_t.delay_ms);
 }
 //---------------------------------------------------------------
 void f_04(void)
 {
+  for (int n = 0; n < max_address; n++)
+  {
+    set_left_pixel(n,       CRGB::Red);
+    set_right_pixel(n,      CRGB::Blue);
+    for (int n = 0; n < (SIZE_MATRIX_3 / 2); n++)
+    {
+      set_horizont_pixel(n, CRGB::Red);
+      set_horizont_pixel(n+(SIZE_MATRIX_3 / 2), CRGB::Blue);
+    }
+  }
+  show_leds();
+  pause(data_t.memory_t.delay_ms);
 
+  for (int n = 0; n < max_address; n++)
+  {
+    set_left_pixel(n,       CRGB::Blue);
+    set_right_pixel(n,      CRGB::Red);
+    for (int n = 0; n < (SIZE_MATRIX_3 / 2); n++)
+    {
+      set_horizont_pixel(n, CRGB::Blue);
+      set_horizont_pixel(n+(SIZE_MATRIX_3 / 2), CRGB::Red);
+    }
+  }
+  show_leds();
+  pause(data_t.memory_t.delay_ms);
 }
 //---------------------------------------------------------------
 void f_05(void)
 {
 
-}
-//---------------------------------------------------------------
-void debug(String text)
-{
-  //Serial.println(text);
 }
 //---------------------------------------------------------------
 void init_leds(void)
@@ -514,7 +539,7 @@ bool set_left_pixel(unsigned int addr, CRGB color)
   }
   if (addr < max_address)
   {
-    delay(data_t.memory_t.delay_ms);
+    pause(data_t.memory_t.delay_ms);
     //??? matrix3[addr - addr4] = color;
     //matrix3[abs(max_address - addr - addr4)] = color;
     return true;
@@ -547,13 +572,23 @@ bool set_right_pixel(unsigned int addr, CRGB color)
   }
   if (addr < max_address)
   {
-    delay(data_t.memory_t.delay_ms);
+    pause(data_t.memory_t.delay_ms);
     //matrix3[addr - addr4] = color;
     //??? matrix3[max_address + (addr - addr4)] = color;
     return true;
   }
 
   return false;
+}
+//---------------------------------------------------------------
+bool set_horizont_pixel(unsigned int addr, CRGB color)
+{
+  if (addr > SIZE_MATRIX_3)
+  {
+    return false;
+  }
+  matrix3[addr] = color;
+  return true;
 }
 //---------------------------------------------------------------
 void set_horizont(CRGB color)
@@ -617,6 +652,11 @@ void load_eeprom(void)
     data_t.memory_t.gBrightness = MAX_BRIGHTNESS;
     needed_write_eeprom = true;
   }
+  if (data_t.memory_t.gBrightness < MIN_BRIGHTNESS)
+  {
+    data_t.memory_t.gBrightness = MIN_BRIGHTNESS;
+    needed_write_eeprom = true;
+  }
   if (data_t.memory_t.delay_ms > MAX_DELAY_MS)
   {
     data_t.memory_t.delay_ms = MAX_DELAY_MS;
@@ -638,6 +678,25 @@ void save_eeprom(void)
   }
 }
 //---------------------------------------------------------------
+void debug(String text)
+{
+  //Serial.println(text);
+}
+//---------------------------------------------------------------
+void send_answer(uint8_t cmd)
+{
+  delay(10);
+  
+  String x = convert_data_to_ascii(cmd);
+  String answer;
+  answer += ":";
+  answer += x;
+  answer += "FF";
+  answer += "FF";
+
+  Serial.println(answer);
+}
+//---------------------------------------------------------------
 void setup()
 {
   Serial.begin(57600);
@@ -646,10 +705,16 @@ void setup()
   debug("addr2 = " + String(addr2));
   debug("addr3 = " + String(addr3));
   debug("addr4 = " + String(addr4));
+  debug("gBrightness = " + String(data_t.memory_t.gBrightness));
+  debug("delay_ms = " + String(data_t.memory_t.delay_ms));
+
+  send_answer(CMD_SET_DELAY_MS);
+  
   init_leds();
 
   load_eeprom();
-  data_t.memory_t.delay_ms = 10;
+  //data_t.memory_t.gBrightness = 1;
+  //data_t.memory_t.delay_ms = 0;
 }
 //---------------------------------------------------------------
 void loop(void)

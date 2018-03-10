@@ -18,7 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QAction>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "helpbrowser.hpp"
 #include "mainwindow.hpp"
@@ -605,6 +605,10 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(syslog(QDateTime, int, int, QString)),   ld, SLOT(syslog(QDateTime, int, int, QString)));
     connect(this,   SIGNAL(syslog(int,QString,QString)),            ld, SLOT(syslog(int,QString,QString)));
 
+    ld->setAllowedAreas(Qt::LeftDockWidgetArea |
+                        Qt::RightDockWidgetArea |
+                        Qt::TopDockWidgetArea |
+                        Qt::BottomDockWidgetArea);
     addDockWidget(Qt::BottomDockWidgetArea, ld);
 }
 //--------------------------------------------------------------------------------
@@ -983,6 +987,10 @@ bool MainWindow::add_dock_widget(QString title,
     dw->setObjectName(objectname);
     dw->setWindowTitle(title);
     dw->setWidget(widget);
+    dw->setAllowedAreas(Qt::LeftDockWidgetArea |
+                        Qt::RightDockWidgetArea |
+                        Qt::TopDockWidgetArea |
+                        Qt::BottomDockWidgetArea);
 
     addDockWidget(area, dw);
     m_app_windowsmenu->addAction(dw->toggleViewAction());

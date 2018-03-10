@@ -27,9 +27,20 @@
 NewMainWindow::NewMainWindow(MainWindow *parent)
     : MainWindow(parent)
 {
-    add_dock_widget("RS232",  "serial",  Qt::LeftDockWidgetArea,  new SerialBox5(this));
-    add_dock_widget("График", "grapher", Qt::RightDockWidgetArea, new GrapherBox(this));
+    add_dock_widget("RS232",  "serial",   Qt::LeftDockWidgetArea,  new SerialBox5(this));
+    add_dock_widget("График", "grapher",  Qt::RightDockWidgetArea, new GrapherBox(this));
     add_dock_widget("SpinBox", "spinbox", Qt::RightDockWidgetArea, new QSpinBox(this));
+
+    QPushButton *btn = new QPushButton(this);
+    btn->setText("PUSH");
+    connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(push()));
+    add_dock_widget("PushButton", "pushbutton", Qt::RightDockWidgetArea,  btn);
+
     load_setting();
+}
+//--------------------------------------------------------------------------------
+void NewMainWindow::push(void)
+{
+    emit info("push");
 }
 //--------------------------------------------------------------------------------

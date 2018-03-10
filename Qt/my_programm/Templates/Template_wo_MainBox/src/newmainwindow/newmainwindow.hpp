@@ -29,6 +29,9 @@ class NewMainWindow : public MainWindow
 
 public:
     NewMainWindow(MainWindow *parent = 0);
+
+private slots:
+    void push(void);
 };
 //--------------------------------------------------------------------------------
 #endif

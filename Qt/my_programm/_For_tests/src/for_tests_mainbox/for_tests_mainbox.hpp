@@ -25,6 +25,9 @@
 #   include <QtWidgets>
 #endif
 //--------------------------------------------------------------------------------
+#include "for_tests_mainbox.hpp"
+#include "ui_for_tests_mainbox.h"
+
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -40,6 +43,8 @@ class MySplashScreen;
 class MainBox : public MyWidget
 {
     Q_OBJECT
+
+    Q_PROPERTY(int xxx READ getValue WRITE setValue)
 
 public:
     MainBox(QWidget *parent,
@@ -95,6 +100,15 @@ private:
     void init(void);
     void createTestBar(void);
     void updateText(void);
+
+    int getValue(void)
+    {
+        return ui->spinBox->value();
+    }
+    void setValue(int value)
+    {
+        ui->spinBox->setValue(value);
+    }
 
     quint32 test(const QByteArray ba);
     int get_cnt(void);

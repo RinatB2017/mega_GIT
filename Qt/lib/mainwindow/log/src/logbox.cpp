@@ -520,24 +520,26 @@ void LogBox::save_log(const QString &filename)
 void LogBox::changeOptions(void)
 {
     Log_options *optionsBox = new Log_options();
-    optionsBox->set_flag_ReadOnly(logBox->isReadOnly());
-    optionsBox->set_flag_AcceptRichText(logBox->acceptRichText());
-    optionsBox->set_flag_NoCRLF(flagNoCRLF);
-    optionsBox->set_flag_AddDateTime(flagAddDateTime);
-    optionsBox->set_flag_Color(flagColor);
-    optionsBox->set_flag_ErrorAsMessage(flagErrorAsMessage);
-    optionsBox->set_flag_TextIsWindows(flagTextIsWindows);
+    Q_CHECK_PTR(optionsBox);
+
+    optionsBox->setProperty("flag_ReadOnly",        logBox->isReadOnly());
+    optionsBox->setProperty("flag_AcceptRichText",  logBox->acceptRichText());
+    optionsBox->setProperty("flag_NoCRLF",          flagNoCRLF);
+    optionsBox->setProperty("flag_AddDateTime",     flagAddDateTime);
+    optionsBox->setProperty("flag_Color",           flagColor);
+    optionsBox->setProperty("flag_ErrorAsMessage",  flagErrorAsMessage);
+    optionsBox->setProperty("flag_TextIsWindows",   flagTextIsWindows);
 
     int res = optionsBox->exec();
     if(res == QDialog::Accepted)
     {
-        logBox->setReadOnly(optionsBox->get_flag_ReadOnly());
-        logBox->setAcceptRichText(optionsBox->get_flag_AcceptRichText());
-        flagNoCRLF          = optionsBox->get_flag_NoCRLF();
-        flagAddDateTime     = optionsBox->get_flag_AddDateTime();
-        flagColor           = optionsBox->get_flag_Color();
-        flagErrorAsMessage  = optionsBox->get_flag_ErrorAsMessage();
-        flagTextIsWindows   = optionsBox->get_flag_TextIsWindows();
+        logBox->setReadOnly(optionsBox->property("flag_ReadOnly").toBool());
+        logBox->setAcceptRichText(optionsBox->property("flag_AcceptRichText").toBool());
+        flagNoCRLF          = optionsBox->property("flag_NoCRLF").toBool();
+        flagAddDateTime     = optionsBox->property("flag_AddDateTime").toBool();
+        flagColor           = optionsBox->property("flag_Color").toBool();
+        flagErrorAsMessage  = optionsBox->property("flag_ErrorAsMessage").toBool();
+        flagTextIsWindows   = optionsBox->property("flag_TextIsWindows").toBool();
         save_settings();
     }
     optionsBox->deleteLater();

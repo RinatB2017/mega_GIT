@@ -25,7 +25,7 @@
 #include <QList>
 //--------------------------------------------------------------------------------
 namespace Ui {
-class Log_options;
+    class Log_options;
 }
 //--------------------------------------------------------------------------------
 class QTextEdit;
@@ -33,10 +33,6 @@ class QTextEdit;
 class Log_options : public QDialog
 {
     Q_OBJECT
-    
-public:
-    Log_options(QWidget *parent = 0);
-    ~Log_options();
 
     Q_PROPERTY(bool flag_ReadOnly       READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)
     Q_PROPERTY(bool flag_AcceptRichText READ get_flag_AcceptRichText    WRITE set_flag_AcceptRichText)
@@ -46,6 +42,17 @@ public:
     Q_PROPERTY(bool flag_Color          READ get_flag_Color             WRITE set_flag_Color)
     Q_PROPERTY(bool flag_ErrorAsMessage READ get_flag_ErrorAsMessage    WRITE set_flag_ErrorAsMessage)
     Q_PROPERTY(bool flag_TextIsWindows  READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
+
+public:
+    Log_options(QWidget *parent = 0);
+    ~Log_options();
+
+private:
+    Ui::Log_options *ui = 0;
+    QList<QString> codecs;
+    QTextEdit *logEdit = 0;
+
+    void findCodecs(void);
 
     bool get_flag_ReadOnly(void);
     bool get_flag_AcceptRichText(void);
@@ -64,13 +71,6 @@ public:
     void set_flag_Color(bool value);
     void set_flag_ErrorAsMessage(bool value);
     void set_flag_TextIsWindows(bool value);
-
-private:
-    Ui::Log_options *ui = 0;
-    QList<QString> codecs;
-    QTextEdit *logEdit = 0;
-
-    void findCodecs(void);
 };
 //--------------------------------------------------------------------------------
 #endif // OPTIONS_BOX_HPP

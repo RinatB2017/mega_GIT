@@ -48,6 +48,8 @@ void MainBox::init(void)
 
     createTestBar();
 
+    ui->spinBox->setRange(0, 1e6);
+
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
@@ -202,6 +204,10 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    setProperty("xxx", 666);
+#endif
+
+#if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
     mw->add_dock_widget("тест", "test", Qt::RightDockWidgetArea, new QSpinBox);

@@ -1,11 +1,42 @@
-CMD command;
-command.cmd = ID_TEST_0; command.cmd_text = "test 0";   command.func = &MainBox::test_0;  commands.append(command);
-command.cmd = ID_TEST_1; command.cmd_text = "test 1";   command.func = &MainBox::test_1;  commands.append(command);
-command.cmd = ID_TEST_2; command.cmd_text = "test 2";   command.func = &MainBox::test_2;  commands.append(command);
-command.cmd = ID_TEST_3; command.cmd_text = "test 3";   command.func = &MainBox::test_3;  commands.append(command);
-command.cmd = ID_TEST_4; command.cmd_text = "test 4";   command.func = &MainBox::test_4;  commands.append(command);
-command.cmd = ID_TEST_5; command.cmd_text = "test 5";   command.func = &MainBox::test_5;  commands.append(command);
-command.cmd = ID_TEST_6; command.cmd_text = "test 6";   command.func = 0;    commands.append(command);
+QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
+foreach (auto dw, dockWidgets)
+{
+    emit info(dw->windowTitle());
+
+    emit info("allowedAreas");
+    auto x = dw->allowedAreas();
+    if(x == Qt::LeftDockWidgetArea)
+        emit info("\t left");
+    if(x == Qt::RightDockWidgetArea)
+        emit info("\t right");
+    if(x == Qt::TopDockWidgetArea)
+        emit info("\t top");
+    if(x == Qt::BottomDockWidgetArea)
+        emit info("\t bottom");
+
+    if(x == Qt::DockWidgetArea_Mask)
+        emit info("\t mask");
+    if(x == Qt::NoDockWidgetArea)
+        emit info("\t no");
+
+    emit info("features");
+    auto f = dw->features();
+    if(f == QDockWidget::DockWidgetClosable)
+        emit info("\t DockWidgetClosable");
+    if(f == QDockWidget::DockWidgetMovable)
+        emit info("\t DockWidgetMovable");
+    if(f == QDockWidget::DockWidgetFloatable)
+        emit info("\t DockWidgetFloatable");
+    if(f == QDockWidget::DockWidgetVerticalTitleBar)
+        emit info("\t DockWidgetVerticalTitleBar");
+
+    if(f == QDockWidget::DockWidgetFeatureMask)
+        emit info("\t DockWidgetFeatureMask");
+    if(f == QDockWidget::AllDockWidgetFeatures)
+        emit info("\t AllDockWidgetFeatures");
+    if(f == QDockWidget::NoDockWidgetFeatures)
+        emit info("\t NoDockWidgetFeatures");
+}
 //---
 
 #include <windows.h>

@@ -14,6 +14,18 @@
    <string>Dialog</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="SerialBox5" name="serial_widget" native="true"/>
    </item>
@@ -73,35 +85,35 @@
       <item>
        <widget class="QPushButton" name="btn_cmd_1">
         <property name="text">
-         <string>CMD 1</string>
+         <string>MODE 1</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_cmd_2">
         <property name="text">
-         <string>CMD 2</string>
+         <string>MODE 2</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_cmd_3">
         <property name="text">
-         <string>CMD 3</string>
+         <string>MODE 3</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_cmd_4">
         <property name="text">
-         <string>CMD 4</string>
+         <string>MODE 4</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_cmd_5">
         <property name="text">
-         <string>CMD 5</string>
+         <string>MODE 5</string>
         </property>
        </widget>
       </item>

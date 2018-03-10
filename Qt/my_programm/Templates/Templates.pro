@@ -9,6 +9,7 @@ SUBDIRS += \
     Template \
     Template_main \
     Template_old \
+    Template_wo_MainBox \
 
 unix {
 SUBDIRS += \

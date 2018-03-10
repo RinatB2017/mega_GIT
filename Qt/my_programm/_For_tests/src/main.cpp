@@ -50,9 +50,6 @@
 //--------------------------------------------------------------------------------
 //  rm /usr/lib/libGL.so.1
 //--------------------------------------------------------------------------------
-#include "serialbox5.hpp"
-#include "grapherbox.hpp"
-//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
@@ -95,16 +92,10 @@ int main(int argc, char *argv[])
     // отключает заголовок
     // main_window->setWindowFlags(Qt::FramelessWindowHint);
 
-#if 0
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     Q_CHECK_PTR(mainBox);
 
     main_window->setCentralWidget(mainBox);
-#else
-    main_window->add_dock_widget("RS232",  "serial",  Qt::LeftDockWidgetArea,  new SerialBox5(main_window->getThis()));
-    main_window->add_dock_widget("График", "grapher", Qt::RightDockWidgetArea, new GrapherBox(main_window->getThis()));
-    main_window->load_setting();
-#endif
     main_window->show();
 
     splash->finish(main_window);

@@ -50,7 +50,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    createTestBar();
+    //createTestBar();
 
     QHBoxLayout *red_hbox = new QHBoxLayout();
     for(int n=0; n<10; n++)
@@ -83,6 +83,9 @@ void MainBox::init(void)
     ui->digits_layout->addLayout(white_hbox);
     ui->digits_layout->addLayout(black_hbox);
     ui->digits_layout->addStretch(1);
+
+    setFixedSize(sizeHint());
+    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -109,6 +112,7 @@ void MainBox::test(void)
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
+    emit trace("Trace");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

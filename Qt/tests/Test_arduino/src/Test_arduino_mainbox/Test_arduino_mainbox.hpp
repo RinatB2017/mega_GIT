@@ -21,8 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <stdint.h>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -81,10 +80,7 @@ union MODBUS_FULL
 };
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class SerialBox5;
 class QHexEdit;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -122,8 +118,6 @@ private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
     QWidget *parent = 0;
-
-    SerialBox5 *serial = 0;
 
     char eeprom_buffer[MAX_EEPROM_BYTES+1];
     QByteArray sending_array;

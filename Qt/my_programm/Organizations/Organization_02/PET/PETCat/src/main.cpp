@@ -18,10 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QCommandLineParser>
-#include <QCommandLineOption>
-#include <QIcon>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mainwindow.hpp"
@@ -106,7 +103,6 @@ int main(int argc, char *argv[])
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

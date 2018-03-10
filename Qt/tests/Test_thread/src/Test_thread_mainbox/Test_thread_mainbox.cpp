@@ -91,7 +91,7 @@ void MainBox::thread_start(void)
     connect(worker, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
     connect(worker, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
     connect(worker, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(worker, SIGNAL(message(QString)),   this, SIGNAL(message(QString)));
+    connect(worker, SIGNAL(trace(QString)),     this, SIGNAL(trace(QString)));
 
     connect(worker, SIGNAL(set_hour(unsigned char)),    this,   SLOT(set_hour(unsigned char)));
     connect(worker, SIGNAL(set_min(unsigned char)),     this,   SLOT(set_min(unsigned char)));

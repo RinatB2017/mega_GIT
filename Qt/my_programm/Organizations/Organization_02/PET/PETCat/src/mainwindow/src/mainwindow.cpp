@@ -18,16 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtPrintSupport/QPrintDialog>
-#include <QDesktopWidget>
-#include <QApplication>
-#include <QtNetwork>
-#include <QtWidgets>
-#include <QSplitter>
-#include <QFont>
-#include <QList>
-#include <QRect>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 #include "logdock.hpp"

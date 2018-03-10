@@ -18,10 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMouseEvent>
-#include <QSpinBox>
-#include <QLineEdit>
-#include <QtMath>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "ui_pet_brg_ch_page.h"
 #include "pet_brg_ch_calibration_page.hpp"

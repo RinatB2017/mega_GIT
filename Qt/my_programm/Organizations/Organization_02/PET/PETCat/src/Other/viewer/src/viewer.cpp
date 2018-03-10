@@ -18,17 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QCoreApplication>
-#include <QProgressDialog>
-#include <QFileInfo>
-#include <QPainter>
-#include <QPicture>
-#include <QBitmap>
-#include <QWidget>
-#include <QtMath>
-#include <QFile>
-#include <QIcon>
-#include <QRgb>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include <stdint.h>
 //--------------------------------------------------------------------------------

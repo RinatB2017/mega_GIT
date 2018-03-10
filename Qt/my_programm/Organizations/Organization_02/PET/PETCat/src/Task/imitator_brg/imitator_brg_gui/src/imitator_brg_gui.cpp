@@ -18,13 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTableWidget>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QToolButton>
-#include <QUdpSocket>
-#include <QTimer>
-#include <QTime>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "imitator_brg_gui.hpp"
 #include "ui_imitator_brg_gui.h"

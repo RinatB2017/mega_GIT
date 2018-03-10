@@ -18,11 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTreeWidgetItem>
-#include <QProgressBar>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "update_firmware.hpp"
 #include "ui_update_firmware.h"

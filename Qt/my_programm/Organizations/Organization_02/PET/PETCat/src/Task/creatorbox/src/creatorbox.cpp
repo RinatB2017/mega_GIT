@@ -18,28 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QProgressDialog>
-#include <QInputDialog>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
-
-#include <QPicture>
-#include <QPixmap>
-#include <QImage>
-
-#include <QtMath>
-
-#include <QFileInfo>
-#include <QSpinBox>
-#include <QLabel>
-#include <QFile>
-
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QTableView>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "ui_creatorbox.h"
 //--------------------------------------------------------------------------------

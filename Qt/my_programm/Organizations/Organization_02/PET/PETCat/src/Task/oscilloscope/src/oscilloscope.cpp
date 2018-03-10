@@ -18,13 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QToolButton>
-#include <QSplitter>
-#include <QSettings>
-#include <QTextEdit>
-#include <QTimer>
-#include <QTime>
-#include <QFile>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "grapherbox.hpp"
 #include "ui_oscilloscope.h"
@@ -268,6 +262,8 @@ void OscilloscopeBox::init(void)
     grapher->setParent(main_splitter);
     main_splitter->addWidget(ui->frame_main);
     main_splitter->addWidget(grapher);
+    main_splitter->setStretchFactor(0, 0);
+    main_splitter->setStretchFactor(1, 1);
 
     QSettings *settings = new QSettings(ININAME, QSettings::IniFormat);
     settings->beginGroup(PETCAT_OPTIONS_OSCILLOSCOPE_GROUP);

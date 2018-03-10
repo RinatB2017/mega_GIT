@@ -18,20 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDialogButtonBox>
-#include <QDialog>
-#include <QtNetwork>
-#include <QMouseEvent>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QSplitter>
-#include <QComboBox>
-#include <QSpinBox>
-#include <QToolBar>
-#include <QThread>
-#include <QList>
-#include <QMenu>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include <QMessageBox>
 //--------------------------------------------------------------------------------

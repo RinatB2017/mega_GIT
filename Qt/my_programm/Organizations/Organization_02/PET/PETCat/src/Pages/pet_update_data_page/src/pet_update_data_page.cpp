@@ -18,9 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMouseEvent>
-#include <QSpinBox>
-#include <QLineEdit>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "pet_update_data_page.hpp"
 #include "ui_pet_update_data_page.h"

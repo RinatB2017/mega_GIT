@@ -18,22 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QStandardItemModel>
-#include <QDialogButtonBox>
-#include <QGraphicsItem>
-#include <QTableWidget>
-#include <QResizeEvent>
-#include <QClipboard>
-#include <QSplitter>
-#include <QComboBox>
-#include <QSettings>
-#include <QTextEdit>
-#include <QPainter>
-#include <QBitmap>
-#include <QPixmap>
-#include <QLabel>
-#include <QtMath>
-#include <QTime>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include <qwt_color_map.h>
 //--------------------------------------------------------------------------------
@@ -64,38 +49,6 @@ FloodMapBox::FloodMapBox(QString file_auto_open,
     ui(new Ui::FloodMapBox)
 {
     init();
-
-    QVariant sb_min_energy = 0;
-    QVariant sb_max_energy = 0;
-    QVariant flag_min_energy = 0;
-    QVariant flag_max_energy = 0;
-
-    QVariant flag_floodmap_source_expanded = 0;
-    QVariant flag_floodmap_energy_expanded = 0;
-    QVariant flag_floodmap_event_flag_expanded = 0;
-    QVariant flag_floodmap_picture_expanded = 0;
-
-    PETCat_options *o = new PETCat_options();
-    o->get_floodmap_option(PARAM_floodmap_sb_min_energy,        &sb_min_energy);
-    o->get_floodmap_option(PARAM_floodmap_sb_max_energy,        &sb_max_energy);
-    o->get_floodmap_option(PARAM_floodmap_flag_min_energy,      &flag_min_energy);
-    o->get_floodmap_option(PARAM_floodmap_flag_max_energy,      &flag_max_energy);
-    o->get_floodmap_option(PARAM_floodmap_source_expanded,      &flag_floodmap_source_expanded);
-    o->get_floodmap_option(PARAM_floodmap_energy_expanded,      &flag_floodmap_energy_expanded);
-    o->get_floodmap_option(PARAM_floodmap_events_flag_expanded, &flag_floodmap_event_flag_expanded);
-    o->get_floodmap_option(PARAM_floodmap_picture_expanded,     &flag_floodmap_picture_expanded);
-    o->deleteLater();
-
-    ui->sb_min_energy->setValue(sb_min_energy.toInt());
-    ui->sb_max_energy->setValue(sb_max_energy.toInt());
-
-    ui->cb_enable_filter_min_energy->setChecked(flag_min_energy.toBool());
-    ui->cb_enable_filter_max_energy->setChecked(flag_max_energy.toBool());
-
-    ui->btn_source_expanded->setChecked(flag_floodmap_source_expanded.toBool());
-    ui->btn_energy_expanded->setChecked(flag_floodmap_energy_expanded.toBool());
-    ui->btn_event_flag_expanded->setChecked(flag_floodmap_event_flag_expanded.toBool());
-    ui->btn_picture_expanded->setChecked(flag_floodmap_picture_expanded.toBool());
 
     //TODO
     if(file_auto_open.isEmpty() == false)
@@ -144,6 +97,8 @@ void FloodMapBox::init(void)
     ui->scrollArea->setParent(main_splitter);
     main_splitter->addWidget(ui->frame_main);
     main_splitter->addWidget(ui->scrollArea);
+    main_splitter->setStretchFactor(0, 0);
+    main_splitter->setStretchFactor(1, 1);
 
     QSettings *settings = new QSettings(ININAME, QSettings::IniFormat);
     settings->beginGroup(PETCAT_OPTIONS_FLOODMAP_GROUP);
@@ -161,6 +116,38 @@ void FloodMapBox::init(void)
     connect(ui->cb_palette,         SIGNAL(currentIndexChanged(int)),   this,   SLOT(block_btn_save_picture_to_file()));
     connect(ui->btn_save_picture_to_clipboard,  SIGNAL(clicked(bool)),  this,   SLOT(save_picture_to_clipboard()));
     //---
+
+    QVariant sb_min_energy = 0;
+    QVariant sb_max_energy = 0;
+    QVariant flag_min_energy = 0;
+    QVariant flag_max_energy = 0;
+
+    QVariant flag_floodmap_source_expanded = 0;
+    QVariant flag_floodmap_energy_expanded = 0;
+    QVariant flag_floodmap_event_flag_expanded = 0;
+    QVariant flag_floodmap_picture_expanded = 0;
+
+    PETCat_options *o = new PETCat_options();
+    o->get_floodmap_option(PARAM_floodmap_sb_min_energy,        &sb_min_energy);
+    o->get_floodmap_option(PARAM_floodmap_sb_max_energy,        &sb_max_energy);
+    o->get_floodmap_option(PARAM_floodmap_flag_min_energy,      &flag_min_energy);
+    o->get_floodmap_option(PARAM_floodmap_flag_max_energy,      &flag_max_energy);
+    o->get_floodmap_option(PARAM_floodmap_source_expanded,      &flag_floodmap_source_expanded);
+    o->get_floodmap_option(PARAM_floodmap_energy_expanded,      &flag_floodmap_energy_expanded);
+    o->get_floodmap_option(PARAM_floodmap_events_flag_expanded, &flag_floodmap_event_flag_expanded);
+    o->get_floodmap_option(PARAM_floodmap_picture_expanded,     &flag_floodmap_picture_expanded);
+    o->deleteLater();
+
+    ui->sb_min_energy->setValue(sb_min_energy.toInt());
+    ui->sb_max_energy->setValue(sb_max_energy.toInt());
+
+    ui->cb_enable_filter_min_energy->setChecked(flag_min_energy.toBool());
+    ui->cb_enable_filter_max_energy->setChecked(flag_max_energy.toBool());
+
+    ui->btn_source_expanded->setChecked(flag_floodmap_source_expanded.toBool());
+    ui->btn_energy_expanded->setChecked(flag_floodmap_energy_expanded.toBool());
+    ui->btn_event_flag_expanded->setChecked(flag_floodmap_event_flag_expanded.toBool());
+    ui->btn_picture_expanded->setChecked(flag_floodmap_picture_expanded.toBool());
 }
 //--------------------------------------------------------------------------------
 void FloodMapBox::block_btn_save_picture_to_file(void)

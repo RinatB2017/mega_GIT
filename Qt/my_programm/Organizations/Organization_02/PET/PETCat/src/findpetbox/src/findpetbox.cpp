@@ -18,17 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QProgressDialog>
-#include <QProgressBar>
-#include <QStyleFactory>
-
-#include <QDoubleSpinBox>
-#include <QCloseEvent>
-#include <QComboBox>
-#include <QToolButton>
-#include <QStringList>
-#include <QtGlobal>
-#include <QTimer>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "findpetbox.hpp"
 //--------------------------------------------------------------------------------

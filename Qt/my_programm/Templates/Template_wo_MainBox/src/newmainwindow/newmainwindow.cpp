@@ -41,8 +41,9 @@ NewMainWindow::NewMainWindow(MainWindow *parent)
     //FIXME явный костыль
     // без centralwidget нельзя нормально расставить доки позже мышкой
     // cw->setVisible(false) не работает
+    // cw->hide() не работает
     QWidget *cw = new QWidget(this);
-    cw->setFixedSize(0,0);
+    cw->setFixedSize(0, 0);
     setCentralWidget(cw);
     //---
 

@@ -15,7 +15,16 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
+    <widget class="SerialBox5" name="serial_widget" native="true"/>
+   </item>
+   <item>
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -65,9 +74,6 @@
    <item>
     <widget class="QListWidget" name="listWidget"/>
    </item>
-   <item>
-    <layout class="QVBoxLayout" name="layout_serial"/>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -75,6 +81,12 @@
    <class>QwtKnob</class>
    <extends>QWidget</extends>
    <header>qwt_knob.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SerialBox5</class>
+   <extends>QWidget</extends>
+   <header>serialbox5.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

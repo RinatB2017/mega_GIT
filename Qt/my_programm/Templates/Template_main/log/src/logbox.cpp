@@ -558,7 +558,12 @@ void LogBox::load_settings(void)
     qDebug() << "LogBox::load_settings(void)";
 #endif
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup("LogEdit");
     logBox->setReadOnly(settings->value("readOnly", true).toBool());
@@ -599,7 +604,13 @@ void LogBox::save_settings(void)
     qDebug() << "LogBox::save_settings(void)";
 #endif
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup("LogEdit");
     settings->setValue("readOnly",      (bool)logBox->isReadOnly());
     settings->setValue("acceptRichText",(bool)logBox->acceptRichText());

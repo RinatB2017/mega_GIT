@@ -85,6 +85,7 @@ private:
     void createTestBar(void);
     void createSerialBox(void);
     void createDisplayBox(void);
+    void createDockWidgets(void);
     void createTimer(void);
 
     void updateText(void);

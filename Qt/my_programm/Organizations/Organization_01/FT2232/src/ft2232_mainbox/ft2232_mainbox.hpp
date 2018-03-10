@@ -93,7 +93,6 @@ private:
 
     GrapherBox *grapher = 0;
 #ifdef SERIAL
-    SerialBox5 *serial = 0;
     QByteArray *serial_data = 0;
 #endif
 

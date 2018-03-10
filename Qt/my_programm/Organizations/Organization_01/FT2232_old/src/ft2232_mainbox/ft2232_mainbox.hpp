@@ -36,9 +36,6 @@ namespace Ui {
 class MySplashScreen;
 class QToolButton;
 class QToolBar;
-
-class GrapherBox;
-class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -94,23 +91,14 @@ private:
     Ui::MainBox *ui;
     bool test_flag;
 
-    GrapherBox *grapher = 0;
-    SerialBox5 *serial = 0;
     QByteArray *serial_data = 0;
 
     ftdi_context ftdi;
 
     void init(void);
-
     void createTestBar(void);
-
-    void load_setting(void);
-    void save_setting(void);
-
     I2C_Freq get_i2c_freq(void);
-
     bool erase_eerpom(int VID, int PID);
-
     void updateText(void);
 
 };

@@ -18,15 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QToolBar>
-#include <QAction>
-#include <QStyle>
-#include <QMenu>
-#include <QTime>
-
+#include <QtWidgets>
+//--------------------------------------------------------------------------------
 #include <time.h>
 #include <ftdi/src/ftdi_i.h>
 #include <ftdi.h>
@@ -80,26 +73,15 @@ void MainBox::init(void)
 
     createTestBar();
 
-    grapher = new GrapherBox(this);
-    grapher->set_axis_scale_x(0, 1000);
-    grapher->set_axis_scale_y(-100, 100);
-    grapher->set_title("График");
-    grapher->set_title_axis_X("Время");
-    grapher->set_title_axis_Y("Напряжение");
+    ui->grapher_widget->set_axis_scale_x(0, 1000);
+    ui->grapher_widget->set_axis_scale_y(-100, 100);
+    ui->grapher_widget->set_title("График");
+    ui->grapher_widget->set_title_axis_X("Время");
+    ui->grapher_widget->set_title_axis_Y("Напряжение");
 
     serial_data = new QByteArray;
-    serial = new SerialBox5(this, "Arduino", "Arduino");
-    connect(serial, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
-
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addStretch();
-    hbox->addWidget(serial);
-    hbox->addStretch();
-
-    ui->graph_layout->addLayout(hbox);
-    ui->graph_layout->addWidget(grapher);
-    ui->graph_layout->setStretch(0, 1);
-    ui->graph_layout->setStretch(1, 100);
+    ui->serial_widget->set_caption("Arduino");
+    connect(ui->serial_widget, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
 
     ui->sbAddress->setMinimum(0);
     ui->sbAddress->setMaximum(MAX_ADDRESS);
@@ -704,16 +686,6 @@ I2C_Freq MainBox::get_i2c_freq(void)
     if(ui->rb_200->isChecked()) return I2C_200kHz;
     if(ui->rb_100->isChecked()) return I2C_100kHz;
     return I2C_100kHz;
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

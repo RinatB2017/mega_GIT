@@ -77,31 +77,16 @@ void MainBox::init(void)
     createMenu();
     createTestBar();
 
-    grapher = new GrapherBox(this);
-    grapher->set_axis_scale_x(0, 1000);
-    grapher->set_axis_scale_y(-100, 100);
-    grapher->set_title("График");
-    grapher->set_title_axis_X("Время");
-    grapher->set_title_axis_Y("Напряжение");
+    ui->grapher_widget->set_axis_scale_x(0, 1000);
+    ui->grapher_widget->set_axis_scale_y(-100, 100);
+    ui->grapher_widget->set_title("График");
+    ui->grapher_widget->set_title_axis_X("Время");
+    ui->grapher_widget->set_title_axis_Y("Напряжение");
 
 #ifdef SERIAL
     serial_data = new QByteArray;
-    serial = new SerialBox5(this, "Arduido", "Arduido");
-    connect(serial, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
-
-    ui->serial_layout->addWidget(serial);
-#endif
-
-    ui->graph_layout->addWidget(grapher);
-
-#if 0
-    MainWindow *mw = (MainWindow *)parentWidget();
-    if(mw)
-    {
-        qDebug() << "ccccccccccccc";
-        LogBox *le = mw->get_logbox();
-        ui->graph_layout->addWidget((QWidget *)le);
-    }
+    ui->serial_widget->set_caption("Arduino");
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
 #endif
 
     ui->sbWriteAddress->setMinimum(0);

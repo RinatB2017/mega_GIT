@@ -288,6 +288,16 @@ void MainBox::test_0(void)
 {
     emit info("test_0");
     emit trace(Q_FUNC_INFO);
+
+    QString x = convert_data_to_ascii(CMD_SET_DELAY_MS);
+
+    QString answer = "";
+    answer += ":";
+    answer += x;
+    answer += "FF";
+    answer += "FF";
+
+    emit info(answer);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)

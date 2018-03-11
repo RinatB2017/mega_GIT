@@ -91,6 +91,9 @@ uint8_t modbus_buf[MAX_MODBUS_BUF];
 int index_modbus_buf = 0;
 
 int imcomingByte = 0;
+
+String answer;
+char answer_is_ready = 0;
 //---------------------------------------------------------------
 #define LED_PIN_1 2
 #define LED_PIN_2 3
@@ -112,11 +115,19 @@ typedef struct PACKET
 
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
-void pause(int delay_ms)
+void pause(unsigned int delay_ms)
 {
-  if (delay_ms > 0)
+  if (delay_ms == 0)
   {
-    delay(delay_ms);
+    return;
+  }
+
+  unsigned long current_time = millis();
+  unsigned long target_time = current_time + delay_ms;
+  
+  while(current_time < target_time)
+  {
+    current_time = millis();
   }
 }
 //--------------------------------------------------------------------------------
@@ -282,6 +293,9 @@ String convert_data_to_ascii(uint8_t data)
   uint8_t lo = (data & 0x0F);
 
   String hi_str;
+  String lo_str;
+  String temp;
+
   switch (hi)
   {
     case 0x00: hi_str = "0"; break;
@@ -304,7 +318,6 @@ String convert_data_to_ascii(uint8_t data)
       break;
   }
 
-  String lo_str;
   switch (lo)
   {
     case 0x00: lo_str = "0"; break;
@@ -323,11 +336,15 @@ String convert_data_to_ascii(uint8_t data)
     case 0x0D: lo_str = "D"; break;
     case 0x0E: lo_str = "E"; break;
     case 0x0F: lo_str = "F"; break;
-    default: 
+    default:
       break;
   }
 
-  return (hi_str + lo_str);
+  temp += hi_str;
+  temp += lo_str;
+
+  return temp;
+  //return (hi_str + lo_str);
 }
 //---------------------------------------------------------------
 void f_01(void)
@@ -445,7 +462,7 @@ void f_04(void)
     for (int n = 0; n < (SIZE_MATRIX_3 / 2); n++)
     {
       set_horizont_pixel(n, CRGB::Red);
-      set_horizont_pixel(n+(SIZE_MATRIX_3 / 2), CRGB::Blue);
+      set_horizont_pixel(n + (SIZE_MATRIX_3 / 2), CRGB::Blue);
     }
   }
   show_leds();
@@ -458,7 +475,7 @@ void f_04(void)
     for (int n = 0; n < (SIZE_MATRIX_3 / 2); n++)
     {
       set_horizont_pixel(n, CRGB::Blue);
-      set_horizont_pixel(n+(SIZE_MATRIX_3 / 2), CRGB::Red);
+      set_horizont_pixel(n + (SIZE_MATRIX_3 / 2), CRGB::Red);
     }
   }
   show_leds();
@@ -467,7 +484,31 @@ void f_04(void)
 //---------------------------------------------------------------
 void f_05(void)
 {
+  for (int n = 0; n < max_address; n++)
+  {
+    set_left_pixel(n,       CRGB::Red);
+    set_right_pixel(n,      CRGB::Blue);
+    for (int n = 0; n < (SIZE_MATRIX_3 / 2); n++)
+    {
+      set_horizont_pixel(n, CRGB::Red);
+      set_horizont_pixel(n + (SIZE_MATRIX_3 / 2), CRGB::Blue);
+    }
+  }
+  show_leds();
+  pause(data_t.memory_t.delay_ms);
 
+  for (int n = 0; n < max_address; n++)
+  {
+    set_left_pixel(n,       CRGB::Blue);
+    set_right_pixel(n,      CRGB::Red);
+    for (int n = 0; n < (SIZE_MATRIX_3 / 2); n++)
+    {
+      set_horizont_pixel(n, CRGB::Blue);
+      set_horizont_pixel(n + (SIZE_MATRIX_3 / 2), CRGB::Red);
+    }
+  }
+  show_leds();
+  pause(data_t.memory_t.delay_ms);
 }
 //---------------------------------------------------------------
 void init_leds(void)
@@ -685,16 +726,15 @@ void debug(String text)
 //---------------------------------------------------------------
 void send_answer(uint8_t cmd)
 {
-  delay(10);
-  
   String x = convert_data_to_ascii(cmd);
-  String answer;
+
+  answer = "";
   answer += ":";
   answer += x;
   answer += "FF";
   answer += "FF";
 
-  Serial.println(answer);
+  answer_is_ready = 1;
 }
 //---------------------------------------------------------------
 void setup()
@@ -709,12 +749,10 @@ void setup()
   debug("delay_ms = " + String(data_t.memory_t.delay_ms));
 
   send_answer(CMD_SET_DELAY_MS);
-  
+
   init_leds();
 
   load_eeprom();
-  //data_t.memory_t.gBrightness = 1;
-  //data_t.memory_t.delay_ms = 0;
 }
 //---------------------------------------------------------------
 void loop(void)
@@ -740,6 +778,11 @@ void loop(void)
     default:
       data_t.memory_t.current_state = CMD_01;
       break;
+  }
+  if (answer_is_ready)
+  {
+    Serial.println(answer);
+    answer_is_ready = 0;
   }
 }
 //---------------------------------------------------------------

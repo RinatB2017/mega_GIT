@@ -30,6 +30,7 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#include "syslog_dock.hpp"
 #include "logdock.hpp"
 //--------------------------------------------------------------------------------
 MainWindow::MainWindow(QMainWindow *parent)
@@ -172,6 +173,10 @@ void MainWindow::init(void)
     connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 #endif
 
+#ifdef SYSLOG_LOG
+    createSysLog_dock();
+#endif
+
 #ifndef NO_MENU
     createMenus();
 #endif
@@ -182,6 +187,14 @@ void MainWindow::init(void)
     if(m_app_windowsmenu)
     {
         m_app_windowsmenu->addAction(ld->toggleViewAction());
+    }
+#endif
+#ifdef SYSLOG_LOG
+    //FIXME костыль, надо убрать
+    // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
+    if(m_app_windowsmenu)
+    {
+        m_app_windowsmenu->addAction(syslog_dock->toggleViewAction());
     }
 #endif
 
@@ -602,14 +615,51 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
     connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
 
-    connect(this,   SIGNAL(syslog(QDateTime, int, int, QString)),   ld, SLOT(syslog(QDateTime, int, int, QString)));
-    connect(this,   SIGNAL(syslog(int,QString,QString)),            ld, SLOT(syslog(int,QString,QString)));
-
     ld->setAllowedAreas(Qt::LeftDockWidgetArea |
                         Qt::RightDockWidgetArea |
                         Qt::TopDockWidgetArea |
                         Qt::BottomDockWidgetArea);
     addDockWidget(Qt::BottomDockWidgetArea, ld);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::createSysLog_dock(void)
+{
+    syslog_dock = new SysLog_dock("syslog", this);
+    Q_CHECK_PTR(syslog_dock);
+
+    connect(syslog_dock,   SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(syslog_dock,   SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(syslog_dock,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(syslog_dock,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    connect(this,   SIGNAL(info(QString)),  this,   SLOT(syslog_info(QString)));
+    connect(this,   SIGNAL(debug(QString)), this,   SLOT(syslog_debug(QString)));
+    connect(this,   SIGNAL(error(QString)), this,   SLOT(syslog_error(QString)));
+    connect(this,   SIGNAL(trace(QString)), this,   SLOT(syslog_trace(QString)));
+
+    connect(this,   SIGNAL(syslog(int,int,QString)),            syslog_dock,   SLOT(syslog(int,int,QString)));
+    connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  syslog_dock,   SLOT(syslog(QDateTime,int,int,QString)));
+    addDockWidget(Qt::BottomDockWidgetArea, syslog_dock);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::syslog_info(const QString &text)
+{
+    emit syslog(QDateTime::currentDateTime(), LOG_INFO, 0, text);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::syslog_debug(const QString &text)
+{
+    emit syslog(QDateTime::currentDateTime(), LOG_DEBUG, 0, text);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::syslog_error(const QString &text)
+{
+    emit syslog(QDateTime::currentDateTime(), LOG_ERR, 0, text);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::syslog_trace(const QString &text)
+{
+    emit syslog(QDateTime::currentDateTime(), LOG_NOTICE, 0, text);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::createToolBar(void)

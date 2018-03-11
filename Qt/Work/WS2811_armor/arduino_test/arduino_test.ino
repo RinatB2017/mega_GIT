@@ -32,8 +32,6 @@ enum {
   BLUE
 };
 
-#define NUM_STRIPS 9
-
 #define SIZE_MATRIX_0 20
 #define SIZE_MATRIX_1 30
 #define SIZE_MATRIX_2 36
@@ -55,8 +53,6 @@ CRGB matrix7[SIZE_MATRIX_7];
 CRGB matrix8[SIZE_MATRIX_8];
 //---------------------------------------------------------------
 const int max_address = SIZE_MATRIX_0 + SIZE_MATRIX_5 + SIZE_MATRIX_8 + SIZE_MATRIX_4 + (SIZE_MATRIX_3 / 2);
-//---------------------------------------------------------------
-CLEDController *controllers[NUM_STRIPS];
 //---------------------------------------------------------------
 int current_led = 0;    // текущий светодиод
 //---------------------------------------------------------------
@@ -124,8 +120,8 @@ void pause(unsigned int delay_ms)
 
   unsigned long current_time = millis();
   unsigned long target_time = current_time + delay_ms;
-  
-  while(current_time < target_time)
+
+  while (current_time < target_time)
   {
     current_time = millis();
   }
@@ -294,7 +290,6 @@ String convert_data_to_ascii(uint8_t data)
 
   String hi_str;
   String lo_str;
-  String temp;
 
   switch (hi)
   {
@@ -340,11 +335,7 @@ String convert_data_to_ascii(uint8_t data)
       break;
   }
 
-  temp += hi_str;
-  temp += lo_str;
-
-  return temp;
-  //return (hi_str + lo_str);
+  return (hi_str + lo_str);
 }
 //---------------------------------------------------------------
 void f_01(void)
@@ -513,35 +504,91 @@ void f_05(void)
 //---------------------------------------------------------------
 void init_leds(void)
 {
-  unsigned long begin_time = millis(); 
-  
-  debug("init_leds");
-  controllers[0] = &FastLED.addLeds<WS2812, LED_PIN_1, GRB>(matrix0, SIZE_MATRIX_0);
-  controllers[1] = &FastLED.addLeds<WS2812, LED_PIN_2, GRB>(matrix1, SIZE_MATRIX_1);
-  controllers[2] = &FastLED.addLeds<WS2812, LED_PIN_3, GRB>(matrix2, SIZE_MATRIX_2);
-  controllers[3] = &FastLED.addLeds<WS2812, LED_PIN_4, GRB>(matrix3, SIZE_MATRIX_3);
-  controllers[4] = &FastLED.addLeds<WS2812, LED_PIN_5, GRB>(matrix4, SIZE_MATRIX_4);
-  controllers[5] = &FastLED.addLeds<WS2812, LED_PIN_6, GRB>(matrix5, SIZE_MATRIX_5);
-  controllers[6] = &FastLED.addLeds<WS2812, LED_PIN_7, GRB>(matrix6, SIZE_MATRIX_6);
-  controllers[7] = &FastLED.addLeds<WS2812, LED_PIN_8, GRB>(matrix7, SIZE_MATRIX_7);
-  controllers[8] = &FastLED.addLeds<WS2812, LED_PIN_9, GRB>(matrix8, SIZE_MATRIX_8);
-
-  unsigned long end_time = millis(); 
-  Serial.print("time elapsed = ");
-  Serial.println(end_time - begin_time);
+  //  unsigned long begin_time = millis();
+  //
+  //  debug("init_leds");
+  //  controllers[0] = &FastLED.addLeds<WS2812, LED_PIN_1, GRB>(matrix0, SIZE_MATRIX_0);
+  //  controllers[1] = &FastLED.addLeds<WS2812, LED_PIN_2, GRB>(matrix1, SIZE_MATRIX_1);
+  //  controllers[2] = &FastLED.addLeds<WS2812, LED_PIN_3, GRB>(matrix2, SIZE_MATRIX_2);
+  //  controllers[3] = &FastLED.addLeds<WS2812, LED_PIN_4, GRB>(matrix3, SIZE_MATRIX_3);
+  //  controllers[4] = &FastLED.addLeds<WS2812, LED_PIN_5, GRB>(matrix4, SIZE_MATRIX_4);
+  //  controllers[5] = &FastLED.addLeds<WS2812, LED_PIN_6, GRB>(matrix5, SIZE_MATRIX_5);
+  //  controllers[6] = &FastLED.addLeds<WS2812, LED_PIN_7, GRB>(matrix6, SIZE_MATRIX_6);
+  //  controllers[7] = &FastLED.addLeds<WS2812, LED_PIN_8, GRB>(matrix7, SIZE_MATRIX_7);
+  //  controllers[8] = &FastLED.addLeds<WS2812, LED_PIN_9, GRB>(matrix8, SIZE_MATRIX_8);
+  //
+  //  unsigned long end_time = millis();
+  //  Serial.print("time elapsed = ");
+  //  Serial.println(end_time - begin_time);
+}
+//---------------------------------------------------------------
+void show_matrix(int num)
+{
+    switch (num)
+    {
+      case 0:
+        FastLED.addLeds<WS2812, LED_PIN_1, GRB>(matrix0, SIZE_MATRIX_0);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 1:
+        FastLED.addLeds<WS2812, LED_PIN_2, GRB>(matrix1, SIZE_MATRIX_1);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 2:
+        FastLED.addLeds<WS2812, LED_PIN_3, GRB>(matrix2, SIZE_MATRIX_2);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 3:
+        FastLED.addLeds<WS2812, LED_PIN_4, GRB>(matrix3, SIZE_MATRIX_3);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 4:
+        FastLED.addLeds<WS2812, LED_PIN_5, GRB>(matrix4, SIZE_MATRIX_4);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 5:
+        FastLED.addLeds<WS2812, LED_PIN_6, GRB>(matrix5, SIZE_MATRIX_5);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 6:
+        FastLED.addLeds<WS2812, LED_PIN_7, GRB>(matrix6, SIZE_MATRIX_6);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 7:
+        FastLED.addLeds<WS2812, LED_PIN_8, GRB>(matrix7, SIZE_MATRIX_7);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+      case 8:
+        FastLED.addLeds<WS2812, LED_PIN_9, GRB>(matrix8, SIZE_MATRIX_8);
+        FastLED.setBrightness(data_t.memory_t.gBrightness);
+        FastLED.show();
+        break;
+    }
 }
 //---------------------------------------------------------------
 void show_leds(void)
 {
-  controllers[0]->show(matrix0, SIZE_MATRIX_0, data_t.memory_t.gBrightness);
-  controllers[1]->show(matrix1, SIZE_MATRIX_1, data_t.memory_t.gBrightness);
-  controllers[2]->show(matrix2, SIZE_MATRIX_2, data_t.memory_t.gBrightness);
-  controllers[3]->show(matrix3, SIZE_MATRIX_3, data_t.memory_t.gBrightness);
-  controllers[4]->show(matrix4, SIZE_MATRIX_4, data_t.memory_t.gBrightness);
-  controllers[5]->show(matrix5, SIZE_MATRIX_5, data_t.memory_t.gBrightness);
-  controllers[6]->show(matrix6, SIZE_MATRIX_6, data_t.memory_t.gBrightness);
-  controllers[7]->show(matrix7, SIZE_MATRIX_7, data_t.memory_t.gBrightness);
-  controllers[8]->show(matrix8, SIZE_MATRIX_8, data_t.memory_t.gBrightness);
+  for (int n = 0; n < 9; n++)
+  {
+    show_matrix(n);
+  }
+  //  controllers[0]->show(matrix0, SIZE_MATRIX_0, data_t.memory_t.gBrightness);
+  //  controllers[1]->show(matrix1, SIZE_MATRIX_1, data_t.memory_t.gBrightness);
+  //  controllers[2]->show(matrix2, SIZE_MATRIX_2, data_t.memory_t.gBrightness);
+  //  controllers[3]->show(matrix3, SIZE_MATRIX_3, data_t.memory_t.gBrightness);
+  //  controllers[4]->show(matrix4, SIZE_MATRIX_4, data_t.memory_t.gBrightness);
+  //  controllers[5]->show(matrix5, SIZE_MATRIX_5, data_t.memory_t.gBrightness);
+  //  controllers[6]->show(matrix6, SIZE_MATRIX_6, data_t.memory_t.gBrightness);
+  //  controllers[7]->show(matrix7, SIZE_MATRIX_7, data_t.memory_t.gBrightness);
+  //  controllers[8]->show(matrix8, SIZE_MATRIX_8, data_t.memory_t.gBrightness);
 }
 //---------------------------------------------------------------
 void clear_leds(void)
@@ -587,8 +634,6 @@ bool set_left_pixel(unsigned int addr, CRGB color)
   if (addr < max_address)
   {
     pause(data_t.memory_t.delay_ms);
-    //??? matrix3[addr - addr4] = color;
-    //matrix3[abs(max_address - addr - addr4)] = color;
     return true;
   }
 
@@ -620,8 +665,6 @@ bool set_right_pixel(unsigned int addr, CRGB color)
   if (addr < max_address)
   {
     pause(data_t.memory_t.delay_ms);
-    //matrix3[addr - addr4] = color;
-    //??? matrix3[max_address + (addr - addr4)] = color;
     return true;
   }
 
@@ -672,19 +715,6 @@ void switch_color(void)
       break;
   }
 }
-//---------------------------------------------------------------
-/*
-  union DATA
-  {
-    struct MEMORY
-    {
-      uint8_t gBrightness;
-      unsigned int current_state;
-      unsigned int delay_ms;
-    } memory_t;
-    char buf[sizeof(memory_t)];
-  } data_t;
-*/
 //---------------------------------------------------------------
 void load_eeprom(void)
 {
@@ -754,7 +784,7 @@ void setup()
   debug("gBrightness = " + String(data_t.memory_t.gBrightness));
   debug("delay_ms = " + String(data_t.memory_t.delay_ms));
 
-  //send_answer(CMD_SET_DELAY_MS);
+  send_answer(CMD_SET_DELAY_MS);
 
   init_leds();
 

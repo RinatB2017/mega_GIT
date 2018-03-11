@@ -66,16 +66,11 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow;
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
-
-    //---
-    //qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    //QGLFormat format;
-    //format.setVersion(4, 3);
-    //QGLFormat::setDefaultFormat(format);
-    //---
+    Q_CHECK_PTR(main_window);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    Q_CHECK_PTR(mainBox);
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 
@@ -86,7 +81,6 @@ int main(int argc, char *argv[])
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

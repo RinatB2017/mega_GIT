@@ -52,6 +52,9 @@ signals:
     void trace(const QString &);
 
 public slots:
+    void syslog(int level,
+                int src,
+                QString message);
     void syslog(QDateTime dtime,
                 int level,
                 int src,

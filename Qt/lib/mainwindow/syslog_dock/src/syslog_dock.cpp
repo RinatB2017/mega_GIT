@@ -21,15 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QStandardItemModel>
-#   include <QApplication>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QVBoxLayout>
-#   include <QTableView>
-#   include <QHeaderView>
-#   include <QDateTime>
-#   include <QLabel>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
@@ -60,6 +52,13 @@ SysLog_dock::SysLog_dock(const QString &title,
                                      << "message");
     //model->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     table->setModel(model);
+
+    table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     //---
     QWidget *w = new QWidget;
@@ -103,6 +102,9 @@ SysLog_dock::SysLog_dock(const QString &title,
     foreach (QToolButton *btn, buttons)
     {
         hbox->addWidget(btn);
+#ifndef QT_DEBUG
+        btn->setEnabled(false);
+#endif
     }
     hbox->addStretch(1);
     hbox->addWidget(btn_first);
@@ -116,8 +118,37 @@ SysLog_dock::SysLog_dock(const QString &title,
 
     w->setLayout(vbox);
     //---
-
+#ifndef QT_DEBUG
+    btn_first->setEnabled(false);
+    btn_prev->setEnabled(false);
+    btn_next->setEnabled(false);
+    btn_last->setEnabled(false);
+    btn_test->setEnabled(false);
+#endif
+    //---
     setWidget(w);
+}
+//--------------------------------------------------------------------------------
+void SysLog_dock::syslog(int level,
+                         int src,
+                         QString message)
+{
+    syslog_t log;
+    log.dtime = QDateTime::currentDateTime();
+    log.level = level;
+    log.src = src;
+    log.message = message;
+
+    l_syslog.append(log);
+
+    int index = model->rowCount();
+    model->insertRow(index);
+    model->setData(model->index(index, 0, QModelIndex()), QDateTime::currentDateTime().toString("dd-MM-yy hh:mm:ss"));
+    model->setData(model->index(index, 1, QModelIndex()), syslog_to_str(level));
+    model->setData(model->index(index, 2, QModelIndex()), src);
+    model->setData(model->index(index, 3, QModelIndex()), message);
+
+    table->scrollToBottom();
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::syslog(QDateTime dtime,
@@ -133,11 +164,14 @@ void SysLog_dock::syslog(QDateTime dtime,
 
     l_syslog.append(log);
 
-    model->insertRow(0);
-    model->setData(model->index(0, 0, QModelIndex()), dtime.toString("dd-MM-yy hh:mm:ss"));
-    model->setData(model->index(0, 1, QModelIndex()), syslog_to_str(level));
-    model->setData(model->index(0, 2, QModelIndex()), src);
-    model->setData(model->index(0, 3, QModelIndex()), message);
+    int index = model->rowCount();
+    model->insertRow(index);
+    model->setData(model->index(index, 0, QModelIndex()), dtime.toString("dd-MM-yy hh:mm:ss"));
+    model->setData(model->index(index, 1, QModelIndex()), syslog_to_str(level));
+    model->setData(model->index(index, 2, QModelIndex()), src);
+    model->setData(model->index(index, 3, QModelIndex()), message);
+
+    table->scrollToBottom();
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::seek_first(void)
@@ -185,11 +219,12 @@ void SysLog_dock::add_test_data(int level)
     emit trace(Q_FUNC_INFO);
     QDateTime dt;
 
-    model->insertRow(0);
-    model->setData(model->index(0, 0, QModelIndex()), dt.currentDateTime().toString("dd-MM-yy hh:mm:ss"));
-    model->setData(model->index(0, 1, QModelIndex()), syslog_to_str(level));
-    model->setData(model->index(0, 2, QModelIndex()), 0);
-    model->setData(model->index(0, 3, QModelIndex()), "no message");
+    int index = model->rowCount();
+    model->insertRow(index);
+    model->setData(model->index(index, 0, QModelIndex()), dt.currentDateTime().toString("dd-MM-yy hh:mm:ss"));
+    model->setData(model->index(index, 1, QModelIndex()), syslog_to_str(level));
+    model->setData(model->index(index, 2, QModelIndex()), 0);
+    model->setData(model->index(index, 3, QModelIndex()), "no message");
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::click(void)

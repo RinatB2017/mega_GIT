@@ -164,7 +164,7 @@ signals:
     void colorLog(const QString &, const QColor, const QColor);
 
     void syslog(int level,
-                QString src,
+                int src,
                 QString message);
     void syslog(QDateTime dt,
                 int level,

@@ -83,7 +83,6 @@ private:
 
     void createTestBar(void);
     void createSenderBar(void);
-    void createSysLog_dock(void);
 
     void updateText(void);
 

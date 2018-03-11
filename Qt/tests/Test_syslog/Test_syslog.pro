@@ -18,8 +18,8 @@ QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-
 DEFINES += PROGRAMM_IN_UTF8
+DEFINES += SYSLOG_LOG
 
 DEFINES += UNDER_CONSTRUCTION
 
@@ -53,7 +53,6 @@ LIB_PATH = "../../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/sender_syslog/sender_syslog.pri)
-include (src/syslog_dock/syslog_dock.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

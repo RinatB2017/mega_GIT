@@ -66,8 +66,6 @@ MainWindow::MainWindow(QMainWindow *parent)
 {
     load_translations();
 
-    mainToolBar = 0;
-
 #ifdef STYLE_FUSION
     QStyle *style = QStyleFactory::create("Fusion");
     if(style)

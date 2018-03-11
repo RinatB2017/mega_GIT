@@ -18,9 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QLibraryInfo>
-#include <QMessageBox>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
@@ -31,14 +29,19 @@
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include "posix.hpp"
+#endif
+//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-MainWindow *main_window = 0;
-//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+    set_signals();
+#endif
     set_codecs();
 
     QtSingleApplication app(argc, argv);
@@ -57,7 +60,7 @@ int main(int argc, char *argv[])
     Q_CHECK_PTR(splash);
     splash->show();
 
-    main_window = new MainWindow();
+    MainWindow *main_window = new MainWindow();
     Q_CHECK_PTR(main_window);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);

@@ -29,7 +29,6 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "sender_syslog.hpp"
-#include "syslog_dock.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -56,16 +55,6 @@ void MainBox::init(void)
 
     createTestBar();
     createSenderBar();
-    createSysLog_dock();
-
-#if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
 
     load_config();
 }
@@ -154,26 +143,6 @@ void MainBox::createSenderBar(void)
     mw->addToolBar(Qt::TopToolBarArea, syslogBar_7);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createSysLog_dock(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
-
-    SysLog_dock *dock = new SysLog_dock("syslog", this);
-    Q_CHECK_PTR(dock);
-
-    connect(dock,   SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(dock,   SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(dock,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(dock,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-
-    connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  dock,   SLOT(syslog(QDateTime,int,int,QString)));
-
-    mw->add_windowsmenu_action(dock->toggleViewAction());
-    connect(mw, SIGNAL(syslog(QDateTime,int,int,QString)),  dock,   SLOT(syslog(QDateTime,int,int,QString)));
-    mw->addDockWidget(Qt::BottomDockWidgetArea, dock);
-}
-//--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
 {
     bool ok = false;
@@ -215,30 +184,6 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-    QDateTime dtime = QDateTime::currentDateTime();
-
-    QString s0 = dtime.toString("dd-MM-yy hh:mm:ss");
-    QString s1 = "LOG_WARNING";
-    QString s2 = "message";
-
-    QStringList sl;
-
-    sl << "LOG_EMERG  "
-       << "LOG_ALERT  "
-       << "LOG_CRIT   "
-       << "LOG_ERR    "
-       << "LOG_WARNING"
-       << "LOG_NOTICE "
-       << "LOG_INFO   "
-       << "LOG_DEBUG  ";
-
-    foreach (QString lvl, sl)
-    {
-        s0 = dtime.toString("dd-MM-yy hh:mm:ss");
-        s1 = lvl;
-        emit info(QString("%1\t%2\t%3").arg(s0).arg(s1).arg(s2));
-    }
 
     return true;
 }

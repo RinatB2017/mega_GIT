@@ -203,7 +203,7 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     setProperty("xxx", 666);
 #endif
 

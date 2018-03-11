@@ -76,9 +76,13 @@ void MyWidget::connect_log(QWidget *parent)
     connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
     connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 
+    connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
+    connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
+    connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
+    connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
+
     Q_UNUSED(parent);
 #else
-
     if(parent)
     {
         connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
@@ -86,10 +90,10 @@ void MyWidget::connect_log(QWidget *parent)
         connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
         connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
-        connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
+        connect(this,   SIGNAL(syslog(int,int,QString)),            parent, SIGNAL(syslog(int,int,QString)));
+        connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  parent, SIGNAL(syslog(QDateTime,int,int,QString)));
 
-        connect(this,   SIGNAL(syslog(int,QString,QString)),
-                parent, SIGNAL(syslog(int,QString,QString)));
+        connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
     }
     else
     {

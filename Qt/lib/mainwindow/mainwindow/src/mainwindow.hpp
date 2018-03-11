@@ -56,6 +56,7 @@
 //--------------------------------------------------------------------------------
 class LogBox;
 class LogDock;
+class SysLog_dock;
 //--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow
 {
@@ -117,12 +118,12 @@ signals:
     void signal_is_shows_error(bool);
     void signal_is_shows_trace(bool);
 
-    void syslog(QDateTime,
-                int,
-                int,
-                QString);
+    void syslog(QDateTime dt,
+                int level,
+                int src,
+                QString message);
     void syslog(int level,
-                QString src,
+                int src,
                 QString message);
 
 public slots:
@@ -136,6 +137,11 @@ public slots:
     void showMaximized(void);
     void showNormal(void);
     void quit(void);
+
+    void syslog_info(const QString &text);
+    void syslog_debug(const QString &text);
+    void syslog_error(const QString &text);
+    void syslog_trace(const QString &text);
 
 private slots:
     void log(const QString &data);
@@ -226,7 +232,10 @@ private:
     void createStyleToolBar(void);
 
     LogDock *ld = 0;
+    SysLog_dock *syslog_dock = 0;
+
     void createLog(void);
+    void createSysLog_dock(void);
 
     int state_theme = DARK_THEME;
 

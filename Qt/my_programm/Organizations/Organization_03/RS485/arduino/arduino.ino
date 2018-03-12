@@ -27,7 +27,9 @@ enum {
 };
 int state = STATUS_IDLE;
 //--------------------------------------------------------------------------------
-int pin_485   = 2;
+//int pin_485   = 2;
+int pin_485   = 13;
+
 int led_blink = 3;
 int led_pump  = A0;
 int led_relay = 5;
@@ -41,7 +43,7 @@ int addr2 = A3;
 int addr3 = A2;
 int addr4 = A1;
 
-int delay_485_ms = 10;
+int delay_485_ms = 50;
 
 bool flag_blink = false;
 //--------------------------------------------------------------------------------
@@ -1026,7 +1028,8 @@ void save_eeprom(void)
 //--------------------------------------------------------------------------------
 void setup()
 {
-  Serial.begin(57600);
+  //Serial.begin(57600);
+  Serial.begin(9600);
 
   pinMode(pin_485,    OUTPUT);
 

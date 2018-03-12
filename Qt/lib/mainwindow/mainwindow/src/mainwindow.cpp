@@ -632,34 +632,9 @@ void MainWindow::createSysLog_dock(void)
     connect(syslog_dock,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(syslog_dock,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    connect(this,   SIGNAL(info(QString)),  this,   SLOT(syslog_info(QString)));
-    connect(this,   SIGNAL(debug(QString)), this,   SLOT(syslog_debug(QString)));
-    connect(this,   SIGNAL(error(QString)), this,   SLOT(syslog_error(QString)));
-    connect(this,   SIGNAL(trace(QString)), this,   SLOT(syslog_trace(QString)));
-
     connect(this,   SIGNAL(syslog(int,int,QString)),            syslog_dock,   SLOT(syslog(int,int,QString)));
     connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  syslog_dock,   SLOT(syslog(QDateTime,int,int,QString)));
     addDockWidget(Qt::BottomDockWidgetArea, syslog_dock);
-}
-//--------------------------------------------------------------------------------
-void MainWindow::syslog_info(const QString &text)
-{
-    emit syslog(QDateTime::currentDateTime(), LOG_INFO, 0, text);
-}
-//--------------------------------------------------------------------------------
-void MainWindow::syslog_debug(const QString &text)
-{
-    emit syslog(QDateTime::currentDateTime(), LOG_DEBUG, 0, text);
-}
-//--------------------------------------------------------------------------------
-void MainWindow::syslog_error(const QString &text)
-{
-    emit syslog(QDateTime::currentDateTime(), LOG_ERR, 0, text);
-}
-//--------------------------------------------------------------------------------
-void MainWindow::syslog_trace(const QString &text)
-{
-    emit syslog(QDateTime::currentDateTime(), LOG_NOTICE, 0, text);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::createToolBar(void)

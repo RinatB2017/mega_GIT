@@ -138,11 +138,6 @@ public slots:
     void showNormal(void);
     void quit(void);
 
-    void syslog_info(const QString &text);
-    void syslog_debug(const QString &text);
-    void syslog_error(const QString &text);
-    void syslog_trace(const QString &text);
-
 private slots:
     void log(const QString &data);
     void set_app_font(void);

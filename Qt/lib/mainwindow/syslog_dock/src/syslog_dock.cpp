@@ -93,6 +93,14 @@ SysLog_dock::SysLog_dock(const QString &title,
 
     connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
+    if(topLevelWidget())
+    {
+        connect(topLevelWidget(),   SIGNAL(info(QString)),  this,   SLOT(syslog_info(QString)));
+        connect(topLevelWidget(),   SIGNAL(debug(QString)), this,   SLOT(syslog_debug(QString)));
+        connect(topLevelWidget(),   SIGNAL(error(QString)), this,   SLOT(syslog_error(QString)));
+        connect(topLevelWidget(),   SIGNAL(trace(QString)), this,   SLOT(syslog_trace(QString)));
+    }
+
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setSpacing(0);
     hbox->setMargin(0);
@@ -127,6 +135,26 @@ SysLog_dock::SysLog_dock(const QString &title,
 #endif
     //---
     setWidget(w);
+}
+//--------------------------------------------------------------------------------
+void SysLog_dock::syslog_info(const QString &text)
+{
+    syslog(QDateTime::currentDateTime(), LOG_INFO, 0, text);
+}
+//--------------------------------------------------------------------------------
+void SysLog_dock::syslog_debug(const QString &text)
+{
+    syslog(QDateTime::currentDateTime(), LOG_DEBUG, 0, text);
+}
+//--------------------------------------------------------------------------------
+void SysLog_dock::syslog_error(const QString &text)
+{
+    syslog(QDateTime::currentDateTime(), LOG_ERR, 0, text);
+}
+//--------------------------------------------------------------------------------
+void SysLog_dock::syslog_trace(const QString &text)
+{
+    syslog(QDateTime::currentDateTime(), LOG_NOTICE, 0, text);
 }
 //--------------------------------------------------------------------------------
 void SysLog_dock::syslog(int level,

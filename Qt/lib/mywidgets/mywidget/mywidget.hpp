@@ -163,14 +163,6 @@ signals:
 
     void colorLog(const QString &, const QColor, const QColor);
 
-    void syslog(int level,
-                int src,
-                QString message);
-    void syslog(QDateTime dt,
-                int level,
-                int src,
-                QString message);
-
 public slots:
     bool close(void);
 

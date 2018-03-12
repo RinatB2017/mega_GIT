@@ -56,14 +56,6 @@ public slots:
                   const QColor text_color,
                   const QColor background_color);
 
-    void syslog(QDateTime dt,
-                int level,
-                int src,
-                const QString &message);
-    void syslog(int level,
-                const QString &src,
-                const QString &message);
-
 private slots:
     void update(void);
 

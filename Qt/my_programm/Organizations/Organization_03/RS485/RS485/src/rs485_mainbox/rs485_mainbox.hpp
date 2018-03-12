@@ -88,6 +88,8 @@ private:
     int check_answer_reset(QByteArray data);
     int check_answer_read(QByteArray data);
     int check_answer_write(QByteArray data);
+    int check_answer_pump_on(QByteArray data);
+    int check_answer_pump_off(QByteArray data);
 
     void print_err(int code);
 

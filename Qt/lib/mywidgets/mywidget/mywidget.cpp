@@ -90,9 +90,6 @@ void MyWidget::connect_log(QWidget *parent)
         connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
         connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
-        connect(this,   SIGNAL(syslog(int,int,QString)),            parent, SIGNAL(syslog(int,int,QString)));
-        connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  parent, SIGNAL(syslog(QDateTime,int,int,QString)));
-
         connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
     }
     else

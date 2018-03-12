@@ -502,6 +502,104 @@ int MainBox::check_answer_write(QByteArray data)
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
+int MainBox::check_answer_pump_on(QByteArray data)
+{
+    if(data.isEmpty())
+    {
+        emit error("Ответ пуст!");
+        return E_ANSWER_EMPTY;
+    }
+
+    ANSWER_PUMP *answer = (ANSWER_PUMP *)data.data();
+    Q_CHECK_PTR(answer);
+    if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
+    {
+        emit error("Размер пакета не корректен");
+        return E_ANSWER_BAD_SIZE;
+    }
+
+    uint16_t prefix = answer->body.header.prefix_16;
+    if(prefix != PREFIX)
+    {
+        emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
+        return E_BAD_PREFIX;
+    }
+
+    uint8_t cmd = answer->body.header.cmd_8;
+    if(cmd != CMD_PUMP_ON)
+    {
+        emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
+        return E_BAD_CMD;
+    }
+
+    uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_PUMP) - sizeof(answer->body.crc16));
+    if(crc16 != answer->body.crc16)
+    {
+        emit error(QString("Контрольная сумма не корректнa! 0x%1 != 0x%2")
+                   .arg(answer->body.crc16, 2, 16, QChar('0'))
+                   .arg(crc16, 2, 16, QChar('0')));
+        return E_BAD_CRC16;
+    }
+
+    emit debug(QString("prefix_16 %1").arg(prefix, 0, 16));
+    emit debug(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit debug(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit debug(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit debug(QString("data %1").arg(answer->body.data.result));
+
+    return E_NO_ERROR;
+}
+//--------------------------------------------------------------------------------
+int MainBox::check_answer_pump_off(QByteArray data)
+{
+    if(data.isEmpty())
+    {
+        emit error("Ответ пуст!");
+        return E_ANSWER_EMPTY;
+    }
+
+    ANSWER_PUMP *answer = (ANSWER_PUMP *)data.data();
+    Q_CHECK_PTR(answer);
+    if(data.size() != (int)(sizeof(HEADER) + answer->body.header.len_16 + sizeof(answer->body.crc16)))
+    {
+        emit error("Размер пакета не корректен");
+        return E_ANSWER_BAD_SIZE;
+    }
+
+    uint16_t prefix = answer->body.header.prefix_16;
+    if(prefix != PREFIX)
+    {
+        emit error(QString("Префикс не корректен! [0x%1]").arg(prefix, 0, 16));
+        return E_BAD_PREFIX;
+    }
+
+    uint8_t cmd = answer->body.header.cmd_8;
+    if(cmd != CMD_PUMP_OFF)
+    {
+        emit error(QString("Неверная команда! [0x%1]").arg(cmd, 0, 16));
+        return E_BAD_CMD;
+    }
+
+    uint16_t crc16 = CRC::crc16((uint8_t *)&answer->buf, sizeof(ANSWER_PUMP) - sizeof(answer->body.crc16));
+    if(crc16 != answer->body.crc16)
+    {
+        emit error(QString("Контрольная сумма не корректнa! 0x%1 != 0x%2")
+                   .arg(answer->body.crc16, 2, 16, QChar('0'))
+                   .arg(crc16, 2, 16, QChar('0')));
+        return E_BAD_CRC16;
+    }
+
+    emit debug(QString("prefix_16 %1").arg(prefix, 0, 16));
+    emit debug(QString("addr_8 %1").arg(answer->body.header.addr_8));
+    emit debug(QString("cmd_8 %1").arg(answer->body.header.cmd_8));
+    emit debug(QString("len_16 %1").arg(answer->body.header.len_16));
+
+    emit debug(QString("data %1").arg(answer->body.data.result));
+
+    return E_NO_ERROR;
+}
+//--------------------------------------------------------------------------------
 void MainBox::cmd_read(void)
 {
     emit info("Чтение");
@@ -671,7 +769,7 @@ void MainBox::cmd_pump_on(void)
     wait(1000);
 
     emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
-    int err = check_answer_reset(data_rs232_clean);
+    int err = check_answer_pump_on(data_rs232_clean);
     if(err != MainBox::E_NO_ERROR)
     {
         return;
@@ -703,7 +801,7 @@ void MainBox::cmd_pump_off(void)
     wait(1000);
 
     emit debug(QString("Получено [%1]").arg(data_rs232_clean.toHex().data()));
-    int err = check_answer_reset(data_rs232_clean);
+    int err = check_answer_pump_off(data_rs232_clean);
     if(err != MainBox::E_NO_ERROR)
     {
         return;

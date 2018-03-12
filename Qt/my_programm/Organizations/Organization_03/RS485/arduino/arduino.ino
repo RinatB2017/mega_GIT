@@ -93,7 +93,9 @@ enum CMD {
   CMD_TEST    = 0,
   CMD_READ    = 1,
   CMD_WRITE   = 2,
-  CMD_RESET   = 3
+  CMD_RESET   = 3,
+  CMD_PUMP_ON = 4,
+  CMD_PUMP_OFF = 5
 };
 
 union PELCO_PACKET
@@ -625,6 +627,80 @@ void f_test(void)
   send_data();
 }
 //--------------------------------------------------------------------------------
+void f_pump_on(void)
+{
+  debug("f_pump_on");
+  union QUESTION_PUMP *packet = (union QUESTION_PUMP *)&modbus_buf;
+
+  uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_PUMP) - 2);
+  if (crc != packet->body.crc16)
+  {
+    debug("crc != packet->body.crc16");
+    return;
+  }
+
+  uint8_t addr = get_address();
+  if (addr != packet->body.header.addr_8)
+  {
+    debug("addr incorrect");
+    return;
+  }
+
+  pump_ON();
+
+  union ANSWER_PUMP answer;
+
+  answer.body.header.prefix_16 = packet->body.header.prefix_16;
+  answer.body.header.addr_8 = packet->body.header.addr_8;
+  answer.body.header.cmd_8 = packet->body.header.cmd_8;
+  answer.body.header.len_16 = sizeof(answer.body.data);
+  answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_PUMP) - 2);
+
+  for (int n = 0; n < sizeof(answer); n++)
+  {
+    modbus_buf[n] = answer.buf[n];
+  }
+  index_modbus_buf = sizeof(answer);
+  send_data();
+}
+//--------------------------------------------------------------------------------
+void f_pump_off(void)
+{
+  debug("f_pump_off");
+  union QUESTION_PUMP *packet = (union QUESTION_PUMP *)&modbus_buf;
+
+  uint16_t crc = crc16((uint8_t *)&modbus_buf, sizeof(union QUESTION_PUMP) - 2);
+  if (crc != packet->body.crc16)
+  {
+    debug("crc != packet->body.crc16");
+    return;
+  }
+
+  uint8_t addr = get_address();
+  if (addr != packet->body.header.addr_8)
+  {
+    debug("addr incorrect");
+    return;
+  }
+
+  pump_OFF();
+
+  union ANSWER_PUMP answer;
+
+  answer.body.header.prefix_16 = packet->body.header.prefix_16;
+  answer.body.header.addr_8 = packet->body.header.addr_8;
+  answer.body.header.cmd_8 = packet->body.header.cmd_8;
+  answer.body.header.len_16 = sizeof(answer.body.data);
+  answer.body.crc16 = crc16((uint8_t *)&answer.buf, sizeof(union ANSWER_PUMP) - 2);
+
+  for (int n = 0; n < sizeof(answer); n++)
+  {
+    modbus_buf[n] = answer.buf[n];
+  }
+  index_modbus_buf = sizeof(answer);
+  send_data();
+}
+//--------------------------------------------------------------------------------
 void command(void)
 {
   debug("command");
@@ -667,6 +743,12 @@ void command(void)
       break;
     case CMD_TEST:
       f_test();
+      break;
+    case CMD_PUMP_ON:
+      f_pump_on();
+      break;
+    case CMD_PUMP_OFF:
+      f_pump_off();
       break;
     default:
       //logging(String("unknown cmd ") + String(cmd, HEX));
@@ -840,6 +922,7 @@ void takeReading()
   //---
   //relay_ON(); //TODO
 
+#if 0
   // мало воды
   if (flag_lvl)
   {
@@ -858,6 +941,7 @@ void takeReading()
   {
     state = STATUS_IDLE;
   }
+#endif
 
   switch (state)
   {

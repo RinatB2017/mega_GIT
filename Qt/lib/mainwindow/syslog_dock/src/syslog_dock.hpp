@@ -66,6 +66,10 @@ private slots:
     void seek_next(void);
     void seek_last(void);
 
+    void syslog_info(const QString &text);
+    void syslog_debug(const QString &text);
+    void syslog_error(const QString &text);
+    void syslog_trace(const QString &text);
 
     void click(void);
     void test(void);

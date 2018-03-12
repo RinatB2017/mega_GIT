@@ -142,22 +142,6 @@ void LogDock::colorLog(const QString &text,
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
-void LogDock::syslog(QDateTime dt,
-                     int level,
-                     int src,
-                     const QString &message)
-{
-    le->syslogLog(dt, level, src, message);
-}
-//--------------------------------------------------------------------------------
-void LogDock::syslog(int level,
-                     const QString &src,
-                     const QString &message)
-{
-    le->syslogLog(level, src, message);
-}
-//--------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------
 void  LogDock::set_font(QFont font)
 {
 #ifndef NO_LOG

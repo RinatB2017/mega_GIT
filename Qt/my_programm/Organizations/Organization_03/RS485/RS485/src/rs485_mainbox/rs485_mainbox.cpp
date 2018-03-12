@@ -71,7 +71,13 @@ void MainBox::init(void)
     connect(pelco_d,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(pelco_d,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
+#if 1
     layout()->addWidget(pelco_d);
+#else
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+    mw->add_dock_widget("PelcoD", "pelcod", Qt::LeftDockWidgetArea, pelco_d);
+#endif
 #endif
 
     ui->sb_addr_cam->setRange(0, 0xFFFF);
@@ -88,7 +94,7 @@ void MainBox::init(void)
     connect(ui->btn_pump_on,    SIGNAL(clicked(bool)),  this,   SLOT(cmd_pump_on()));
     connect(ui->btn_pump_off,   SIGNAL(clicked(bool)),  this,   SLOT(cmd_pump_off()));
 
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     load_widgets("w_rs485");
 }

@@ -159,17 +159,38 @@ bool MainBox::test_1(void)
 {
     emit info("Test_1()");
 
-#if 1
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
-#else
-    emit info("info", QColor(Qt::red));
-    emit debug("debug", QColor(Qt::red));
-    emit error("error", QColor(Qt::red));
-    emit trace("trace", QColor(Qt::red));
-#endif
+    libusb_init(NULL);   // инициализация
+
+    libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+
+    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
+    if (handle == NULL)
+    {
+        emit error("Устройство не подключено");
+        return false;
+    }
+    else
+    {
+        emit info("Устройство найдено");
+    }
+
+    if (libusb_kernel_driver_active(handle,DEV_INTF))
+    {
+        libusb_detach_kernel_driver(handle, DEV_INTF);
+    }
+
+    if (libusb_claim_interface(handle,  DEV_INTF) < 0)
+    {
+        emit error("Ошибка захвата интерфейса");
+        return false;
+    }
+
+    interrupt_transfer_loop(handle);
+    bulk_transfer_loop(handle);
+
+    libusb_attach_kernel_driver(handle, DEV_INTF);
+    libusb_close(handle);
+    libusb_exit(NULL);
 
     return true;
 }
@@ -264,13 +285,13 @@ void MainBox::dev_open(void)
 
     int res;
     wchar_t wstr[MAX_STR];
-    int VID = 0x0a12;
-    int PID = 0x0042;
+    int iVID = 0x0a12;
+    int iPID = 0x0042;
 
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;
 
-    devs = hid_enumerate(VID, PID);
+    devs = hid_enumerate(iVID, iPID);
     cur_dev = devs;
     if(cur_dev == NULL)
     {
@@ -349,6 +370,97 @@ void MainBox::dev_close(void)
         hid_close(dev);
         dev = 0;
     }
+}
+//--------------------------------------------------------------------------------
+void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
+{
+    emit info("Цикл считывания (interrupt).");
+    unsigned char buf[DATA_SIZE];
+    int ret;
+    int i=0xFF;
+
+    int cc=0;
+
+    struct timeval start, end;
+    long mtime, seconds, useconds;
+    gettimeofday(&start, NULL);
+
+    while (i--)
+    {
+        int returned = libusb_interrupt_transfer(handle, EP_IN, buf, DATA_SIZE, &ret, TIMEOUT);
+
+        if (returned >= 0)
+        {
+            for (short i=0; i < DATA_SIZE; i++)
+            {
+                emit info(QString("buf[%1] = %2").arg(i).arg((int)buf[i]));
+            }
+        }
+        else
+        {
+            emit error(QString("interrupt_transfer_loop: %1").arg(libusb_error_name(returned)));
+        }
+        cc++;
+    }
+
+    emit info(QString("Считано: %1").arg(cc));
+
+    gettimeofday(&end, NULL);
+
+    seconds  = end.tv_sec  - start.tv_sec;
+    useconds = end.tv_usec - start.tv_usec;
+
+    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+
+    emit info(QString("Прошло: %1 мс").arg(mtime));
+}
+//--------------------------------------------------------------------------------
+void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
+{
+    /// TODO:
+    /// write bulk transfer code for ucontroller & this section
+    emit info("Цикл считывания (bulk).");
+
+    unsigned char buf[DATA_SIZE];
+    int act_len = 0;
+
+    int cc=0;
+    int i=0xff;
+
+    struct timeval start, end;
+    long mtime, seconds, useconds;
+    gettimeofday(&start, NULL);
+
+    while(i--)
+    {
+        int returned = libusb_bulk_transfer(handle, EP_IN, buf, DATA_SIZE,&act_len, TIMEOUT);
+
+        // parce transfer errors
+        if (returned >= 0)
+        {
+            for (short i=0; i < DATA_SIZE; i++)
+            {
+                //cout << "buf["<< i << "] = " << (int)buf[i] << endl;
+                emit info(QString("buf[%1] = %2").arg(i).arg((int)buf[i]));
+            }
+        }
+        else
+        {
+            emit error(QString("bulk_transfer_loop: %1").arg(libusb_error_name(returned)));
+        }
+        cc++;
+    }
+
+    emit info(QString("Считано: %1").arg(cc));
+
+    gettimeofday(&end, NULL);
+
+    seconds  = end.tv_sec  - start.tv_sec;
+    useconds = end.tv_usec - start.tv_usec;
+
+    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+
+    emit info(QString("Прошло: %1 мс").arg(mtime));
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

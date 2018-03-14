@@ -18,4 +18,8 @@ HEADERS += serialbox5_lite.hpp
 SOURCES += serialbox5_lite.cpp
 FORMS	+= serialbox5_lite.ui
 
+HEADERS += serialbox5_fix_baudrate.hpp
+SOURCES += serialbox5_fix_baudrate.cpp
+FORMS	+= serialbox5_fix_baudrate.ui
+
 include (../power_knock/power_knock.pri)

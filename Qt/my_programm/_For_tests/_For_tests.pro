@@ -20,7 +20,7 @@ QMAKE_CXXFLAGS += -fno-show-column
 #
 #DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
-#DEFINES += NO_TRAYICON
+DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_MENU
 
@@ -78,6 +78,8 @@ CONFIG(debug, debug|release) {
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
+
+include ($$LIB_PATH2/widgets/dip_widget/dip_widget.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 

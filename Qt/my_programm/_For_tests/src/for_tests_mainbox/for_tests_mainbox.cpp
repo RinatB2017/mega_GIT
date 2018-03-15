@@ -50,6 +50,12 @@ void MainBox::init(void)
 
     ui->spinBox->setRange(0, 1e6);
 
+    //---
+    connect(this,           SIGNAL(dpi_set(int)),       ui->DPI_widget, SLOT(set_value(int)));
+    connect(ui->DPI_widget, SIGNAL(value(int)),         ui->spinBox,    SLOT(setValue(int)));
+    connect(ui->spinBox,    SIGNAL(valueChanged(int)),  ui->DPI_widget, SLOT(set_value(int)));
+    //---
+
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else

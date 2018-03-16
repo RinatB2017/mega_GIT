@@ -15,8 +15,6 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-LIBS    += -lqscintilla2_qt5
-
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 #

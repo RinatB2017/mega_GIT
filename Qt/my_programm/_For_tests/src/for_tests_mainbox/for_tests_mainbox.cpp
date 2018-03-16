@@ -42,8 +42,6 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-#include <Qsci/qsciscintilla.h>
-#include <Qsci/qscilexercpp.h>
 void MainBox::init(void)
 {
     ui->setupUi(this);
@@ -56,9 +54,6 @@ void MainBox::init(void)
     connect(this,           SIGNAL(dpi_set(int)),       ui->DPI_widget, SLOT(set_value(int)));
     connect(ui->DPI_widget, SIGNAL(value(int)),         ui->spinBox,    SLOT(setValue(int)));
     connect(ui->spinBox,    SIGNAL(valueChanged(int)),  ui->DPI_widget, SLOT(set_value(int)));
-    //---
-    QsciLexerCPP * lexCpp = new QsciLexerCPP(this);
-    ui->textEdit->setLexer(lexCpp);
     //---
 
 #if 1

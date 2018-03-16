@@ -52,23 +52,21 @@
     </layout>
    </item>
    <item>
-    <widget class="QsciScintilla" name="textEdit">
-     <property name="toolTip">
-      <string/>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="whatsThis">
-      <string/>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
      </property>
-    </widget>
+    </spacer>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>QsciScintilla</class>
-   <extends>QFrame</extends>
-   <header>Qsci/qsciscintilla.h</header>
-  </customwidget>
   <customwidget>
    <class>DIP_widget</class>
    <extends>QWidget</extends>

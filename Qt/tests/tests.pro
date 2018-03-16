@@ -26,7 +26,6 @@ SUBDIRS += \
     Test_QCustomPlot \
     Test_QGraphicsScene \
     Test_QListWidget \
-    Test_QScintilla \
     Test_QsLog \
     Test_libUSB \
     Test_model \
@@ -55,6 +54,7 @@ SUBDIRS += \
     Test_Box2D \
     Test_Qt3D \
     Tests_QtPlot3D \
+    Test_QScintilla \
     Test_LibVLC \
     Test_NeuronNet \
     Test_PGP \

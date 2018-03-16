@@ -18,14 +18,22 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_for_tests_mainbox.h"
+#include <QtWidgets>
+//--------------------------------------------------------------------------------
+#include <Qsci/qsciscintilla.h>
+#include <Qsci/qscilexercpp.h>
+//--------------------------------------------------------------------------------
+#include "ui_qscintilla_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
-#include "mymainwindow.hpp"
 #include "mainwindow.hpp"
-#include "for_tests_mainbox.hpp"
+#include "qscintilla_mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -42,39 +50,27 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-#include <Qsci/qsciscintilla.h>
-#include <Qsci/qscilexercpp.h>
 void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifndef QT_DEBUG
+    Q_CHECK_PTR(parentWidget());
+#endif
+
     createTestBar();
+    init_w_lists();
+    installEventFilter(this);
 
-    ui->spinBox->setRange(0, 1e6);
-
-    //---
-    connect(this,           SIGNAL(dpi_set(int)),       ui->DPI_widget, SLOT(set_value(int)));
-    connect(ui->DPI_widget, SIGNAL(value(int)),         ui->spinBox,    SLOT(setValue(int)));
-    connect(ui->spinBox,    SIGNAL(valueChanged(int)),  ui->DPI_widget, SLOT(set_value(int)));
-    //---
     QsciLexerCPP * lexCpp = new QsciLexerCPP(this);
     ui->textEdit->setLexer(lexCpp);
-    //---
 
-#if 1
-    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
     load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
     commands.clear();
@@ -90,7 +86,7 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QCheckBox *cb_block = new QCheckBox("block");
+    cb_block = new QCheckBox("block", this);
     testbar->addWidget(cb_block);
 
     cb_test = new QComboBox(this);
@@ -112,24 +108,24 @@ void MainBox::createTestBar(void)
 
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
-}
-//--------------------------------------------------------------------------------
-void MainBox::updateText(void)
-{
-    ui->retranslateUi(this);
+
+    //testbar->setFixedWidth(toolBar->sizeHint().width());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
-    if(!ok) return;
+    if(!ok)
+    {
+        return;
+    }
     foreach (CMD command, commands)
     {
         if(command.cmd == cmd)
         {
-            typedef bool (MainBox::*function)(void);
-            function x;
+            typedef bool (MainBox::*my_mega_function)(void);
+            my_mega_function x;
             x = command.func;
             if(x)
             {
@@ -145,125 +141,18 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::inFunc(QPushButton *btn, saveSlot slot)
-{
-    connect(btn,    &QPushButton::clicked,  this,   slot);
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_inFunc(void)
-{
-    emit trace(Q_FUNC_INFO);
-    QMessageBox::information(0,"","info");
-}
-//--------------------------------------------------------------------------------
-void MainBox::new_test(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::split_address(const QString address,
-                            int *a,
-                            int *b,
-                            int *c,
-                            int *d,
-                            int *port)
-{
-    QStringList sl = address.split(":");
-    if(sl.count() != 2)
-    {
-        //emit error(QString("count %1").arg(sl.count()));
-        return false;
-    }
-    QString host = sl.at(0);
-    QStringList sl_address = host.split(".");
-    if(sl_address.count() != 4)
-    {
-        //emit error(QString("count %1").arg(sl_address.count()));
-        return false;
-    }
-    bool ok = false;
-    int t_a = sl_address.at(0).toInt(&ok);
-    if(!ok) return false;
-    int t_b = sl_address.at(1).toInt(&ok);
-    if(!ok) return false;
-    int t_c = sl_address.at(2).toInt(&ok);
-    if(!ok) return false;
-    int t_d = sl_address.at(3).toInt(&ok);
-    if(!ok) return false;
-    *a = t_a;
-    *b = t_b;
-    *c = t_c;
-    *d = t_d;
-
-    QString port_str = sl.at(1);
-    int t_port = port_str.toInt(&ok);
-    if(!ok) return false;
-    *port = t_port;
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-int MainBox::get_cnt(void)
-{
-    emit trace(Q_FUNC_INFO);
-    return qrand() % 10;
-}
-//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-    emit trace(Q_FUNC_INFO);
 
-#if 0
-    setProperty("xxx", 666);
-#endif
+    lock_interface();
 
 #if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
-    mw->add_dock_widget("тест", "test", Qt::RightDockWidgetArea, new QSpinBox);
-#endif
-
-#if 0
-    QSysInfo i;
-    emit info(i.buildAbi());
-    emit info(i.buildCpuArchitecture());
-    emit info(i.currentCpuArchitecture());
-    emit info(i.kernelType());
-    emit info(i.kernelVersion());
-    emit info(i.machineHostName());
-    emit info(i.prettyProductName());
-    emit info(i.productType());
-    emit info(i.productVersion());
-#endif
-
-#if 0
-    emit info(QString("PATH = %1").arg(QProcessEnvironment::systemEnvironment().value("PATH")));
-#endif
-
-#if 0
-    for(int n=0; n<get_cnt(); n++)
+    if(mw)
     {
-        emit info(QString("n=%1").arg(n));
-    }
-#endif
-
-#if 0
-    QList<int> test;
-    for(int n=0; n<5; n++)
-    {
-        test.append(n);
-    }
-    foreach (auto x, test)
-    {
-        if(x == 0)
-        {
-            emit info("append data");
-            test.append(10);
-            test.append(11);
-            test.append(12);
-        }
-        emit info(QString("x=%1").arg(x));
+        emit info(QString("w %1").arg(mw->centralWidget()->width()));
+        emit info(QString("h %1").arg(mw->centralWidget()->height()));
     }
 #endif
 
@@ -273,21 +162,31 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-    emit trace(Q_FUNC_INFO);
+
+    unlock_interface();
 
 #if 0
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
+    qApp->setStyle(QStyleFactory::create("Fusion"));
 
-    emit colorLog("Cyan", QColor(Qt::cyan), QColor(Qt::black));
-    emit colorLog("Yellow", QColor(Qt::yellow), QColor(Qt::white));
-#endif
+    QPalette darkPalette;
+    darkPalette.setColor(QPalette::Window, QColor(53,53,53));
+    darkPalette.setColor(QPalette::WindowText, Qt::white);
+    darkPalette.setColor(QPalette::Base, QColor(25,25,25));
+    darkPalette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+    darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+    darkPalette.setColor(QPalette::Text, Qt::white);
+    darkPalette.setColor(QPalette::Button, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ButtonText, Qt::white);
+    darkPalette.setColor(QPalette::BrightText, Qt::red);
+    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
 
-#if 0
-    emit info(__FILE__);
-    emit info(QString("line %1").arg(__LINE__));
+    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+
+    qApp->setPalette(darkPalette);
+
+    qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
 #endif
 
     return true;
@@ -296,7 +195,6 @@ bool MainBox::test_1(void)
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
-    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -304,7 +202,6 @@ bool MainBox::test_2(void)
 bool MainBox::test_3(void)
 {
     emit info("Test_3()");
-    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -312,7 +209,6 @@ bool MainBox::test_3(void)
 bool MainBox::test_4(void)
 {
     emit info("Test_4()");
-    emit trace(Q_FUNC_INFO);
 
     return true;
 }
@@ -320,20 +216,35 @@ bool MainBox::test_4(void)
 bool MainBox::test_5(void)
 {
     emit info("Test_5()");
-    emit trace(Q_FUNC_INFO);
 
     return true;
 }
 //--------------------------------------------------------------------------------
-quint32 MainBox::test(const QByteArray ba)
+void MainBox::updateText(void)
 {
-    quint32 temp = 0;
-
-    for(int n=0; n<ba.length(); n++)
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::eventFilter(QObject*, QEvent* event)
+{
+    QMouseEvent *mouseEvent = (QMouseEvent *) event;
+    if(mouseEvent == nullptr)
     {
-        temp += (char)ba.at(n);
+        return false;
     }
-
-    return temp;
+    //---
+    if(mouseEvent->type() == QMouseEvent::MouseButtonPress)
+    {
+        emit info(QString("%1 %2")
+                  .arg(mouseEvent->pos().x())
+                  .arg(mouseEvent->pos().y()));
+        return true;
+    }
+    //---
+    if(mouseEvent->type() == QMouseEvent::Wheel)
+    {
+        return true;
+    }
+    return false;
 }
 //--------------------------------------------------------------------------------

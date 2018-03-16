@@ -3,15 +3,16 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = _For_tests
+TARGET   = Test_QScintilla
 
-PROGRAMM_PATH  += \
+FOLDER  = tests
+
+DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/for_tests_mainbox \
-    $$PWD/src/for_tests_mainbox/ui
-INCLUDEPATH += $$PROGRAMM_PATH
-DEPENDPATH  += $$PROGRAMM_PATH
+    $$PWD/src/qscintilla_mainbox \
+    $$PWD/src/qscintilla_mainbox/ui
+INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
@@ -24,7 +25,9 @@ LIBS    += -lqscintilla2_qt5
 #DEFINES += NO_STATUSBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
+DEFINES += NO_RESIZE
 #DEFINES += NO_MENU
+#DEFINES += NO_LOG
 
 #DEFINES += ONLY_ENGLISH
 
@@ -34,60 +37,54 @@ DEFINES += NO_TRAYICON
 #DEFINES += SAVE_WIDGETS_COMBOBOX
 #DEFINES += SAVE_WIDGETS_PUSHBUTTON
 #DEFINES += SAVE_WIDGETS_TOOLBUTTON
-DEFINES += SAVE_WIDGETS_SPINBOX
+#DEFINES += SAVE_WIDGETS_SPINBOX
 #DEFINES += SAVE_WIDGETS_DOUBLESPINBOX
 #DEFINES += SAVE_WIDGETS_SLIDER
 #DEFINES += SAVE_WIDGETS_TEXTEDIT
 #DEFINES += SAVE_WIDGETS_LINEEDIT
+#DEFINES += SAVE_WIDGETS_SPLITTER
 
 #DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2018"
-#DEFINES += "DEMO_MONTH=2"
-#DEFINES += "DEMO_DAY=1"
-
-#DEFINES += NO_LOG
-#DEFINES += SYSLOG_LOG
+#DEFINES += "DEMO_YEAR=2017"
+#DEFINES += "DEMO_MONTH=9"
+#DEFINES += "DEMO_DAY=9"
 
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
     version.hpp \
-    for_tests_mainbox.hpp
+    qscintilla_mainbox.hpp
 
 SOURCES += \
-    for_tests_mainbox.cpp \
+    qscintilla_mainbox.cpp \
     main.cpp
 
-FORMS   += for_tests_mainbox.ui
+FORMS   += qscintilla_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
 }
 
+# не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    images/images.qrc
+    images/images.qrc \
+    doc/doc.qrc
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH = "../../lib"
-LIB_PATH2 = "../../lib2"
-
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
-    include ($$LIB_PATH/test_function/test_function.pri)
 }
 
+#----------------------------------------------
+LIB_PATH = "../../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/icons/digits.pri)
-
-include ($$LIB_PATH2/widgets/dip_widget/dip_widget.pri)
-
-include (src/mymainwindow/mymainwindow.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+#----------------------------------------------
 
 VPATH = $$INCLUDEPATH

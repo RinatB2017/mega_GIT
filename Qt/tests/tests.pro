@@ -26,6 +26,7 @@ SUBDIRS += \
     Test_QCustomPlot \
     Test_QGraphicsScene \
     Test_QListWidget \
+    Test_QScintilla \
     Test_QsLog \
     Test_libUSB \
     Test_model \

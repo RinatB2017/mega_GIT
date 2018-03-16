@@ -83,13 +83,8 @@ private:
     int timerId = 0;
 
     void init(void);
-
     void createTestBar(void);
-
     void updateText(void);
-
-protected:
-    bool eventFilter(QObject*, QEvent* event);
 
 };
 //--------------------------------------------------------------------------------

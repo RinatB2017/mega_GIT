@@ -21,7 +21,11 @@
 #ifndef MYWIDGET_HPP
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #define PARAMS_GROUP_NAME   "Params"
 //--------------------------------------------------------------------------------

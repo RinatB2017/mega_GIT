@@ -18,13 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QSerialPortInfo>
-#include <QSerialPort>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QComboBox>
-#include <QLabel>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "modbusasciiwidget.hpp"
 //--------------------------------------------------------------------------------

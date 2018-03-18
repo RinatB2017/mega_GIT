@@ -18,9 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QString>
-#include <QTime>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "platanov_browser_mainbox.hpp"

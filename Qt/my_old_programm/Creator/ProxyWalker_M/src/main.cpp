@@ -18,9 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QString>
-#include <QTime>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "proxy_walker_m_mainbox.hpp"

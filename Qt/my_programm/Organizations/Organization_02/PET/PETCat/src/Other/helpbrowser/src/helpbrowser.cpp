@@ -1,11 +1,5 @@
 //--------------------------------------------------------------------------------
-#include <QDesktopWidget>
-#include <QApplication>
-#include <QTextBrowser>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QStyle>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "helpbrowser.hpp" 
 #include "defines.hpp"

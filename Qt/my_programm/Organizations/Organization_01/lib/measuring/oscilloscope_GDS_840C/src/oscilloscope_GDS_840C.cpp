@@ -18,14 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QSpinBox>
-#include <QStyle>
-#include <QLabel>
-#include <QTime>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>

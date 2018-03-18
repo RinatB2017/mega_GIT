@@ -18,17 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QMessageBox>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QPixmap>
-#include <QStyle>
-#include <QFrame>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

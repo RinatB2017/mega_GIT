@@ -2,14 +2,14 @@
 #ifndef _TEST_THREAD_H
 #define _TEST_THREAD_H
 //--------------------------------------------------------------------------------
-#include <QApplication>
+#include <QtWidgets>
+//--------------------------------------------------------------------------------
 #include <QHostAddress>
 #include <QtNetwork>
-#include <QtDebug>
-#include <QString>
-#include <QThread>
-#include <QMutex>
-#include <QEvent>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QtDebug>
+#endif
 //--------------------------------------------------------------------------------
 #include "proto.hpp"
 //--------------------------------------------------------------------------------

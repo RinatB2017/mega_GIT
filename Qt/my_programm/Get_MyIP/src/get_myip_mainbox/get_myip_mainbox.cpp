@@ -21,18 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QApplication>
-#   include <QMouseEvent>
-#   include <QPainter>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QSplitter>
-#   include <QCheckBox>
-#   include <QComboBox>
-#   include <QToolBar>
-#   include <QDebug>
-
-#   include <qmath.h>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include <QHostAddress>

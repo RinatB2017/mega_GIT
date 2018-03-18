@@ -18,14 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QtWidgets>
 #include <QStyleOptionProgressBarV2>
-#include <QDesktopWidget>
-#include <QSplashScreen>
-#include <QApplication>
-#include <QProgressBar>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QRect>
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 //--------------------------------------------------------------------------------

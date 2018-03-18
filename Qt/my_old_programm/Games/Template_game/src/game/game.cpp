@@ -18,13 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QAbstractEventDispatcher>
-#include <QApplication>
-#include <QPaintEvent>
-#include <QGLWidget>
-#include <QPainter>
-#include <QTimer>
-#include <QBrush>
+#include <QtWidgets>
+//#include <QAbstractEventDispatcher>
 //--------------------------------------------------------------------------------
 #include "player.hpp"
 #include "map.hpp"

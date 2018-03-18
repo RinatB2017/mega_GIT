@@ -54,12 +54,14 @@ SysLog_dock::SysLog_dock(const QString &title,
     //model->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     table->setModel(model);
 
+#ifdef HAVE_QT5
     table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
 
     table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#endif
 
     //---
     QWidget *w = new QWidget;

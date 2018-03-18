@@ -103,6 +103,9 @@ public:
                          Qt::DockWidgetArea area,
                          QWidget *widget);
 
+    void load_setting(void);
+    void save_setting(void);
+
 signals:
     void updateLanguage(void);
 
@@ -275,9 +278,6 @@ protected:
     bool flag_show_debug = false;
     bool flag_show_error = false;
     bool flag_show_trace = false;
-
-    void load_setting(void);
-    void save_setting(void);
 
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);

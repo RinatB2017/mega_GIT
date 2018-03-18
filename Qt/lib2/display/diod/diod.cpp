@@ -18,13 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QColorDialog>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QCursor>
-#include <QPixmap>
-#include <QImage>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "diod.hpp"

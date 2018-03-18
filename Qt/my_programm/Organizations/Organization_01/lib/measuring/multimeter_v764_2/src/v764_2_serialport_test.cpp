@@ -18,15 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QPushButton>
-#include <QCheckBox>
-#include <QToolBar>
-#include <QSpinBox>
-#include <QVariant>
-#include <QLabel>
-#include <QTimer>
-#include <limits.h>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include <QtMath>
 //--------------------------------------------------------------------------------

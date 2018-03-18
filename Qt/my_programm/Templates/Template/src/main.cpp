@@ -18,9 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMessageBox>
-#include <QLibraryInfo>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= 0x050000
 #   include <QtMessageHandler>

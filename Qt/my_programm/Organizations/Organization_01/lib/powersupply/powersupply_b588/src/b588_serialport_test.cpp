@@ -18,20 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVariant>
-#include <QTimer>
-//--------------------------------------------------------------------------------
-#include <QApplication>
-#include <QPushButton>
-#include <QToolBar>
-#include <QDoubleSpinBox>
-#include <QCheckBox>
-#include <QSpinBox>
-#include <QWidget>
-#include <QLabel>
-#include <QTimer>
-//--------------------------------------------------------------------------------
-#include <QtMath>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

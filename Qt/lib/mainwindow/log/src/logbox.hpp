@@ -21,7 +21,11 @@
 #ifndef LOGBOX_HPP
 #define LOGBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class LogBox : public QFrame
 {

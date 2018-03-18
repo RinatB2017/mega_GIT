@@ -18,17 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
+#include <QtWidgets>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QSqlError>
-//--------------------------------------------------------------------------------
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QTreeWidgetItem>
-#include <QHeaderView>
-#include <QTableView>
-#include <QAction>
 //--------------------------------------------------------------------------------
 #include "metadata.hpp"
 //--------------------------------------------------------------------------------

@@ -19,18 +19,11 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #ifdef HAVE_QT5
-#   include <QWidget>
+#   include <QtWidgets>
 #else
-#   include <QVBoxLayout>
-#   include <QMessageBox>
-#   include <QTime>
-
-#   include <QAction>
-#   include <QMenu>
-
-#   include <QToolButton>
-#   include <QToolBar>
+#   include <QtGui>
 #endif
+//--------------------------------------------------------------------------------
 #ifdef Q_DEBUG
 #   include <QDebug>
 #endif

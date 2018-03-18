@@ -18,16 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QtWidgets>
+//--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkRequest>
-
-#include <QContextMenuEvent>
-#include <QApplication>
-#include <QInputDialog>
-#include <QInputEvent>
-#include <QStyle>
-#include <QMenu>
 //--------------------------------------------------------------------------------
 #include "persistentcookiejar.hpp"
 #include "websettingbox.hpp"

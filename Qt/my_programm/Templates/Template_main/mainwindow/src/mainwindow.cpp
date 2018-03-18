@@ -18,12 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMessageBox>
-#include <QCloseEvent>
-#include <QToolButton>
-#include <QToolBar>
-#include <QMenuBar>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mainwidget.hpp"

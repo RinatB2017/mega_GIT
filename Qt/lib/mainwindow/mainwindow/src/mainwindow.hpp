@@ -24,7 +24,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#include <QtGui>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"

@@ -2,7 +2,11 @@
 #ifndef _TEST_THREAD_H
 #define _TEST_THREAD_H
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include <QHostAddress>
 #include <QtNetwork>

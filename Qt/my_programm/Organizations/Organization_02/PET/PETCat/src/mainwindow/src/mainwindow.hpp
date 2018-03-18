@@ -21,7 +21,11 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"

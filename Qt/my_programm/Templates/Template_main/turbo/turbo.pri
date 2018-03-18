@@ -9,26 +9,34 @@ unix:!macx {
     RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
 }
 
+macx {
+    OBJECTS_DIR = build/obj
+    MOC_DIR     = build/moc
+    UI_DIR      = build/ui
+    RCC_DIR     = build/rc
+}
+
 win32 {
     TEMP_PATH = "C:\\shm"
+    #TEMP_PATH = "K:"
     OBJECTS_DIR = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\moc
     UI_DIR      = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\ui
     RCC_DIR     = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\rc
-}
 
-win32 {
     CONFIG -= debug_and_release #debug_and_release_target
     CONFIG += no_fixpath
 }
-
-unix {
+###############################################################################
+unix:!macx {
     DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
+}
+macx {
+    DESTDIR = bin
 }
 win32 {
     DESTDIR = C:/Programming/my_programm_bin/$$FOLDER/$$TARGET
 }
-
 ###############################################################################
 #управление оптимизацией компилятора
 #OPTIMIZE = -pipe -O0 #no optimization
@@ -44,16 +52,9 @@ CONFIG(debug, debug|release) {
 else {
     OPTIMIZE = -pipe -O2
 }
-message ($$OPTIMIZE)
 ###############################################################################
-#DEFINES += QT_STATIC_BUILD
-#win32 {
-#    CONFIG      += static
-#    OPTIMIZE    += -static
-#    OPTIMIZE    += -static-libgcc
-#    OPTIMIZE    += -static-libstdc++
-#}
-#QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
+#CONFIG	 += precompile_header
+#PRECOMPILED_HEADER  = stable.h
 ###############################################################################
 unix:!macx {
     QMAKE_CXX      = ccache g++
@@ -68,8 +69,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += HAVE_QT5
     message(Qt5 = $$QT)
-}
-else {
+} else {
     DEFINES += HAVE_QT4
     message(Qt4 = $$QT)
 }

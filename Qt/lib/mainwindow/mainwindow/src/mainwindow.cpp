@@ -652,15 +652,15 @@ void MainWindow::createToolBar(void)
     addToolBar(Qt::TopToolBarArea, toolbar);
 
     app_toolbar_add_exit();
-    app_toolbar_add_separator();
+    //app_toolbar_add_separator();
     app_toolbar_add_font();
-    app_toolbar_add_separator();
+    //app_toolbar_add_separator();
 #ifndef ONLY_ENGLISH
     app_toolbar_add_lang();
-    app_toolbar_add_separator();
+    //app_toolbar_add_separator();
 #endif
     app_toolbar_add_style();
-    app_toolbar_add_separator();
+    //app_toolbar_add_separator();
     app_toolbar_add_about();
     app_toolbar_add_help();
 }
@@ -1693,6 +1693,7 @@ void MainWindow::app_toolbar_add_separator(void)
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_exit(void)
 {
+#ifndef NO_TOOLBAR_BUTTON_EXIT
     QToolButton *btnExit = new QToolButton(this);
     btnExit->setObjectName("btnExit");
     btnExit->setIcon(QPixmap(ICON_EXIT));
@@ -1702,11 +1703,15 @@ void MainWindow::app_toolbar_add_exit(void)
     connect(btnExit,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
     toolbar->addWidget(btnExit);
+    toolbar->addSeparator();
+
     app_buttons.append(btnExit);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_font(void)
 {
+#ifndef NO_TOOLBAR_BUTTON_FONT
     QToolButton *btnAppFont = new QToolButton(this);
     QToolButton *btnLogFont = new QToolButton(this);
 
@@ -1727,12 +1732,16 @@ void MainWindow::app_toolbar_add_font(void)
     toolbar->addWidget(btnAppFont);
     toolbar->addWidget(btnLogFont);
 
+    toolbar->addSeparator();
+
     app_buttons.append(btnAppFont);
     app_buttons.append(btnLogFont);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_lang(void)
 {
+#ifndef NO_TOOLBAR_BUTTON_LANG
     QToolButton *btnRus = new QToolButton(this);
     QToolButton *btnEng = new QToolButton(this);
 
@@ -1753,12 +1762,16 @@ void MainWindow::app_toolbar_add_lang(void)
     toolbar->addWidget(btnRus);
     toolbar->addWidget(btnEng);
 
+    toolbar->addSeparator();
+
     app_buttons.append(btnRus);
     app_buttons.append(btnEng);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_style(void)
 {
+#ifndef NO_TOOLBAR_BUTTON_STYLE
     QMenu *menu = new QMenu(this);
 
     QStringList sl;
@@ -1782,11 +1795,15 @@ void MainWindow::app_toolbar_add_style(void)
     connect(btnStyle,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
     toolbar->addWidget(btnStyle);
+    toolbar->addSeparator();
+
     app_buttons.append(btnStyle);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_about(void)
 {
+#ifndef NO_TOOLBAR_BUTTON_ABOUT
     QToolButton *btnAbout = new QToolButton(this);
     btnAbout->setObjectName("btnExit");
     btnAbout->setIcon(QPixmap(ICON_ABOUT));
@@ -1797,10 +1814,12 @@ void MainWindow::app_toolbar_add_about(void)
 
     toolbar->addWidget(btnAbout);
     app_buttons.append(btnAbout);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_help(void)
 {
+#ifndef NO_TOOLBAR_BUTTON_HELP
     QToolButton *btnHelp = new QToolButton(this);
     btnHelp->setObjectName("btnHelp");
     btnHelp->setIcon(QPixmap(ICON_HELP));
@@ -1812,6 +1831,7 @@ void MainWindow::app_toolbar_add_help(void)
 
     toolbar->addWidget(btnHelp);
     app_buttons.append(btnHelp);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_updateText(void)

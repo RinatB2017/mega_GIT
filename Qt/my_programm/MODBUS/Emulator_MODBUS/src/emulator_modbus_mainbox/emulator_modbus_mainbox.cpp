@@ -18,13 +18,14 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include <QModbusRtuSerialSlave>
 #include <QModbusTcpServer>
-#include <QRegularExpression>
-#include <QStatusBar>
-#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "settingsdialog.h"
 #include "ui_emulator_modbus_mainbox.h"

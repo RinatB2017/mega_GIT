@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/logo">
+        <file alias="logo.png">images/Tux.png</file>
+        <file alias="pinguin.png">images/pinguin_os-tux-gentoo.png</file>
+    </qresource>
+</RCC>

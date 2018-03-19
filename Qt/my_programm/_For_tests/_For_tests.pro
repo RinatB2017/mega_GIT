@@ -74,7 +74,7 @@ win32 {
 RESOURCES += images/images.qrc
 
 #можно поставить новое logo
-#RESOURCES += about/about.qrc \
+RESOURCES += about/about.qrc \
 
 OTHER_FILES += doc/notebook.txt
 

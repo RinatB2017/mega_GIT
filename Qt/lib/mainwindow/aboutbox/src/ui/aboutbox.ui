@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>438</width>
-    <height>371</height>
+    <height>307</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,14 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="labelLogo">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="pixmap">
-        <pixmap resource="../../../../../my_programm/_For_tests/about/about.qrc">:/logo/logo.png</pixmap>
+        <pixmap resource="../../aboutbox.qrc">:/logo/logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -74,7 +80,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../../../my_programm/_For_tests/about/about.qrc"/>
+  <include location="../../aboutbox.qrc"/>
  </resources>
  <connections/>
 </ui>

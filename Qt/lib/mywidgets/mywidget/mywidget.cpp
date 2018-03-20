@@ -1168,8 +1168,8 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
     Q_CHECK_PTR(tool_button);
 
     tool_button->setIcon(icon);
-    tool_button->setText(text);
-    tool_button->setToolTip(tool_tip);
+    tool_button->setText(QObject::tr(text.toLocal8Bit()));
+    tool_button->setToolTip(QObject::tr(tool_tip.toLocal8Bit()));
     tool_bar->addWidget(tool_button);
 
     return tool_button;

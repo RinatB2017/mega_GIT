@@ -61,6 +61,8 @@ public slots:
     void set_value(int value);
     int  get_value(void);
 
+    void block_interface(bool state);
+
 private:
     struct DIP_button {
         QRect   rect;
@@ -68,8 +70,10 @@ private:
         bool    state;
     };
 
+    bool is_blocked = false;
     int dip_value = 0;
     QList<DIP_button> buttons;
+    QColor color = Qt::blue;
 
     void init(void);
     bool check_pos(QRect rect, QPoint pos);

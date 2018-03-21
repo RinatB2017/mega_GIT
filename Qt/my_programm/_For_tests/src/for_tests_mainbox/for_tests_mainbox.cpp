@@ -156,48 +156,6 @@ void MainBox::new_test(void)
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::split_address(const QString address,
-                            int *a,
-                            int *b,
-                            int *c,
-                            int *d,
-                            int *port)
-{
-    QStringList sl = address.split(":");
-    if(sl.count() != 2)
-    {
-        //emit error(QString("count %1").arg(sl.count()));
-        return false;
-    }
-    QString host = sl.at(0);
-    QStringList sl_address = host.split(".");
-    if(sl_address.count() != 4)
-    {
-        //emit error(QString("count %1").arg(sl_address.count()));
-        return false;
-    }
-    bool ok = false;
-    int t_a = sl_address.at(0).toInt(&ok);
-    if(!ok) return false;
-    int t_b = sl_address.at(1).toInt(&ok);
-    if(!ok) return false;
-    int t_c = sl_address.at(2).toInt(&ok);
-    if(!ok) return false;
-    int t_d = sl_address.at(3).toInt(&ok);
-    if(!ok) return false;
-    *a = t_a;
-    *b = t_b;
-    *c = t_c;
-    *d = t_d;
-
-    QString port_str = sl.at(1);
-    int t_port = port_str.toInt(&ok);
-    if(!ok) return false;
-    *port = t_port;
-
-    return true;
-}
-//--------------------------------------------------------------------------------
 int MainBox::get_cnt(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -206,8 +164,15 @@ int MainBox::get_cnt(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
-    emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_0()");
+
+#if 1
+    uint32_t xxx = -1;  //4294967295
+    emit info(QString("xxx = %1").arg(xxx));
+
+    ui->DPI_widget->block_interface(true);
+#endif
 
 #if 0
     setProperty("xxx", 666);
@@ -269,6 +234,10 @@ bool MainBox::test_1(void)
 {
     emit info("Test_1()");
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    ui->DPI_widget->block_interface(false);
+#endif
 
 #if 0
     emit info("info");

@@ -109,12 +109,26 @@ bool DIP_widget::check_pos(QRect rect, QPoint pos)
     return true;
 }
 //--------------------------------------------------------------------------------
+void DIP_widget::block_interface(bool state)
+{
+    is_blocked = state;
+    if(state)
+    {
+        color = Qt::gray;
+    }
+    else
+    {
+        color = Qt::blue;
+    }
+    repaint();
+}
+//--------------------------------------------------------------------------------
 void DIP_widget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
 
     //painter.setPen(QPen(Qt::blue));
-    painter.setBrush(QBrush(Qt::blue));
+    painter.setBrush(QBrush(color));
     painter.drawRect(0, 0, width()-1, height()-1);
 
     QFont font("Courier", 6);
@@ -172,6 +186,10 @@ void DIP_widget::paintEvent(QPaintEvent *event)
 //--------------------------------------------------------------------------------
 void DIP_widget::mousePressEvent(QMouseEvent *event)
 {
+    if(is_blocked)
+    {
+        return;
+    }
     if(event->button()==Qt::LeftButton)
     {
         int x = event->x();

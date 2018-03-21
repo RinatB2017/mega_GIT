@@ -74,7 +74,7 @@ win32 {
 RESOURCES += images/images.qrc
 
 #можно поставить новое logo
-RESOURCES += about/about.qrc \
+RESOURCES += about/about.qrc
 
 OTHER_FILES += doc/notebook.txt
 
@@ -82,8 +82,8 @@ LIB_PATH = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 CONFIG(debug, debug|release) {
-    include (src/test/test.pri)
     include ($$LIB_PATH/test_function/test_function.pri)
+    include (src/test/test.pri)
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)

@@ -93,13 +93,6 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
-    bool split_address(const QString address,
-                       int *a,
-                       int *b,
-                       int *c,
-                       int *d,
-                       int *port);
-
     void init(void);
     void createTestBar(void);
     void updateText(void);

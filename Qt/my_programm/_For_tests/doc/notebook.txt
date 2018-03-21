@@ -1,4 +1,46 @@
 //--------------------------------------------------------------------------------
+bool MainBox::split_address(const QString address,
+                            int *a,
+                            int *b,
+                            int *c,
+                            int *d,
+                            int *port)
+{
+    QStringList sl = address.split(":");
+    if(sl.count() != 2)
+    {
+        //emit error(QString("count %1").arg(sl.count()));
+        return false;
+    }
+    QString host = sl.at(0);
+    QStringList sl_address = host.split(".");
+    if(sl_address.count() != 4)
+    {
+        //emit error(QString("count %1").arg(sl_address.count()));
+        return false;
+    }
+    bool ok = false;
+    int t_a = sl_address.at(0).toInt(&ok);
+    if(!ok) return false;
+    int t_b = sl_address.at(1).toInt(&ok);
+    if(!ok) return false;
+    int t_c = sl_address.at(2).toInt(&ok);
+    if(!ok) return false;
+    int t_d = sl_address.at(3).toInt(&ok);
+    if(!ok) return false;
+    *a = t_a;
+    *b = t_b;
+    *c = t_c;
+    *d = t_d;
+
+    QString port_str = sl.at(1);
+    int t_port = port_str.toInt(&ok);
+    if(!ok) return false;
+    *port = t_port;
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 //---
 QByteArray ba;
 ba.resize(0xFFFF);

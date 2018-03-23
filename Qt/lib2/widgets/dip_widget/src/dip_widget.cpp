@@ -211,6 +211,7 @@ void DIP_widget::mousePressEvent(QMouseEvent *event)
                         val |= (1 << btn.num);
                     }
                 }
+                dip_value = val;
                 emit value(val);
                 repaint();
             }

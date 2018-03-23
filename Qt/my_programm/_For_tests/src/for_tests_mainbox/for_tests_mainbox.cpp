@@ -56,6 +56,12 @@ void MainBox::init(void)
     connect(ui->spinBox,    SIGNAL(valueChanged(int)),  ui->DPI_widget, SLOT(set_value(int)));
     //---
 
+    connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
+    connect(ui->sb_2,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
+    connect(ui->sb_res, SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
+    connect(ui->btn_ok, SIGNAL(clicked(bool)),  this,   SLOT(victory()));
+    check_in();
+
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
@@ -65,6 +71,25 @@ void MainBox::init(void)
     }
 #endif
     load_config();
+}
+//--------------------------------------------------------------------------------
+void MainBox::check_in(void)
+{
+    emit debug("check_in");
+    int a = ui->sb_1->value();
+    int b = ui->sb_2->value();
+    int c = ui->sb_res->value();
+    emit debug(QString("a %1").arg(a));
+    emit debug(QString("b %1").arg(b));
+    emit debug(QString("c %1").arg(c));
+
+    bool res = ((a + b) == c);
+    ui->btn_ok->setEnabled(res);
+}
+//--------------------------------------------------------------------------------
+void MainBox::victory(void)
+{
+    messagebox_info("Info", "Victory!");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -168,6 +193,11 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    ui->sb_1->setValue(10);
+    ui->btn_ok->click();
+#endif
+
+#if 0
     uint32_t xxx = -1;  //4294967295
     emit info(QString("xxx = %1").arg(xxx));
 

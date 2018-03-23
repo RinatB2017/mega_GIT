@@ -69,6 +69,9 @@ public slots:
     void s_inFunc(void);
     void new_test(void);
 
+    void check_in(void);
+    void victory(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,

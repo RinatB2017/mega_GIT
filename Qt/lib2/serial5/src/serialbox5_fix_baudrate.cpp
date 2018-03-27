@@ -110,6 +110,8 @@ void SerialBox5_fix_baudrate::init(void)
     setFixedSize(sizeHint());
 #endif
 
+    ui->PortBox->setMinimumWidth(150);
+
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -121,6 +123,10 @@ void SerialBox5_fix_baudrate::createWidgets(void)
 {
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
+
+    ui->btn_power->setProperty("no_block", true);
+    ui->btn_refresh->setProperty("no_block", true);
+    ui->PortBox->setProperty("no_block", true);
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
@@ -166,7 +172,21 @@ void SerialBox5_fix_baudrate::initSerial(void)
     connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
     connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
 
+    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
+
     refresh();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate::change_icon(bool state)
+{
+    if(state)
+    {
+        ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop)));
+    }
+    else
+    {
+        ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::serial5_error(QSerialPort::SerialPortError err)
@@ -220,12 +240,14 @@ void SerialBox5_fix_baudrate::setCloseState(void)
 {
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
+    emit port_is_active(true);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::setOpenState()
 {
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
+    emit port_is_active(false);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::btnOpenPortClicked()
@@ -273,13 +295,13 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit not_working();
+        emit port_is_active(false);
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit not_working();
+        emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -302,13 +324,13 @@ int SerialBox5_fix_baudrate::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit not_working();
+        emit port_is_active(false);
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit not_working();
+        emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;

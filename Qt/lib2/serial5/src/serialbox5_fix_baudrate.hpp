@@ -100,7 +100,7 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
-    void not_working(void);
+    void port_is_active(bool);
     void output(const QByteArray &data);
     void readyRead(void);
     void readChannelFinished(void);
@@ -124,6 +124,9 @@ private slots:
     void serial5_error(QSerialPort::SerialPortError err);
     void get_parameter(void);
     void timer_stop(void);
+
+    void change_icon(bool state);
+
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

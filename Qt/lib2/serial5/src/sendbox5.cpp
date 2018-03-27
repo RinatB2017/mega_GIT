@@ -18,11 +18,17 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QToolButton>
+#include <QMessageBox>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QCheckBox>
+#include <QPixmap>
+#include <QStyle>
+#include <QFrame>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

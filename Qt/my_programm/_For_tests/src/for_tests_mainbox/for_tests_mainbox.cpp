@@ -59,7 +59,7 @@ void MainBox::init(void)
     connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
     connect(ui->sb_2,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
     connect(ui->sb_res, SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
-    connect(ui->btn_ok, SIGNAL(clicked(bool)),  this,   SLOT(victory()));
+    connect(ui->btn_ok, SIGNAL(clicked(bool)),      this,   SLOT(victory()));
     check_in();
 
 #if 1
@@ -193,68 +193,14 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    LockButton *lb = new LockButton;
+    lb->setText("проба");
+    lb->show();
+#endif
+
+#if 1
     ui->sb_1->setValue(10);
     ui->btn_ok->click();
-#endif
-
-#if 0
-    uint32_t xxx = -1;  //4294967295
-    emit info(QString("xxx = %1").arg(xxx));
-
-    ui->DPI_widget->block_interface(true);
-#endif
-
-#if 0
-    setProperty("xxx", 666);
-#endif
-
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
-    mw->add_dock_widget("тест", "test", Qt::RightDockWidgetArea, new QSpinBox);
-#endif
-
-#if 0
-    QSysInfo i;
-    emit info(i.buildAbi());
-    emit info(i.buildCpuArchitecture());
-    emit info(i.currentCpuArchitecture());
-    emit info(i.kernelType());
-    emit info(i.kernelVersion());
-    emit info(i.machineHostName());
-    emit info(i.prettyProductName());
-    emit info(i.productType());
-    emit info(i.productVersion());
-#endif
-
-#if 0
-    emit info(QString("PATH = %1").arg(QProcessEnvironment::systemEnvironment().value("PATH")));
-#endif
-
-#if 0
-    for(int n=0; n<get_cnt(); n++)
-    {
-        emit info(QString("n=%1").arg(n));
-    }
-#endif
-
-#if 0
-    QList<int> test;
-    for(int n=0; n<5; n++)
-    {
-        test.append(n);
-    }
-    foreach (auto x, test)
-    {
-        if(x == 0)
-        {
-            emit info("append data");
-            test.append(10);
-            test.append(11);
-            test.append(12);
-        }
-        emit info(QString("x=%1").arg(x));
-    }
 #endif
 
     return true;

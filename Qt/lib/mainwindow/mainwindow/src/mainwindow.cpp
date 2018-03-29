@@ -53,10 +53,16 @@ MainWindow::~MainWindow()
 #endif
     save_setting();
 
+#ifndef NO_LOG_INFO
     MyWidget::set_param("Main", "flag_show_info",   flag_show_info);
+#endif
+#ifndef NO_LOG_ERROR
     MyWidget::set_param("Main", "flag_show_error",  flag_show_error);
-#ifdef QT_DEBUG
+#endif
+#ifndef NO_LOG_DEBUG
     MyWidget::set_param("Main", "flag_show_debug",  flag_show_debug);
+#endif
+#ifndef NO_LOG_TRACE
     MyWidget::set_param("Main", "flag_show_trace",  flag_show_trace);
 #endif
     if(ld)
@@ -581,10 +587,18 @@ void MainWindow::save_main(void)
     settings->setValue("StyleName",     style_name);
 
     settings->setValue("NoAnswerFromExit", flag_close);
+#ifndef NO_LOG_INFO
     settings->setValue("flag_show_info",  flag_show_info);
+#endif
+#ifndef NO_LOG_DEBUG
     settings->setValue("flag_show_debug", flag_show_debug);
+#endif
+#ifndef NO_LOG_ERROR
     settings->setValue("flag_show_error", flag_show_error);
+#endif
+#ifndef NO_LOG_TRACE
     settings->setValue("flag_show_trace", flag_show_trace);
+#endif
 
     settings->setValue("Theme",         state_theme);
 
@@ -609,17 +623,24 @@ void MainWindow::createLog(void)
     ld = new LogDock(tr("log"), this);
     Q_CHECK_PTR(ld);
 
+#ifndef NO_LOG_INFO
     connect(this,   SIGNAL(info(QString)),  ld, SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));
+#endif
+#ifndef NO_LOG_DEBUG
     connect(this,   SIGNAL(debug(QString)), ld, SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_debug(bool)),    ld, SIGNAL(signal_is_shows_debug(bool)));
+#endif
+#ifndef NO_LOG_ERROR
     connect(this,   SIGNAL(error(QString)), ld, SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
+#endif
+#ifndef NO_LOG_TRACE
     connect(this,   SIGNAL(trace(QString)), ld, SLOT(traceLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
+#endif
 
     connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   ld, SLOT(colorLog(QString,QColor,QColor)));
-
-    connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));
-    connect(this,   SIGNAL(signal_is_shows_debug(bool)),    ld, SIGNAL(signal_is_shows_debug(bool)));
-    connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
-    connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
 
     ld->setAllowedAreas(Qt::LeftDockWidgetArea |
                         Qt::RightDockWidgetArea |
@@ -1169,29 +1190,37 @@ void MainWindow::set_log_font(void)
     }
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_INFO
 void MainWindow::slot_is_shows_info(bool state)
 {
     flag_show_info = state;
     emit signal_is_shows_info(state);
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_DEBUG
 void MainWindow::slot_is_shows_debug(bool state)
 {
     flag_show_debug = state;
     emit signal_is_shows_debug(state);
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_ERROR
 void MainWindow::slot_is_shows_error(bool state)
 {
     flag_show_error = state;
     emit signal_is_shows_error(state);
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_TRACE
 void MainWindow::slot_is_shows_trace(bool state)
 {
     flag_show_trace = state;
     emit signal_is_shows_trace(state);
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::set_system_palette(void)
 {
@@ -1477,7 +1506,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
 {
     Q_CHECK_PTR(menu);
 
-    QVariant v_flag_show_info  = true;
+    QVariant v_flag_show_info   = true;
     QVariant v_flag_show_debug  = true;
     QVariant v_flag_show_error  = true;
     QVariant v_flag_show_trace  = true;
@@ -1487,13 +1516,20 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     MyWidget::get_param("Main", "flag_show_error",  true,   &v_flag_show_error);
     MyWidget::get_param("Main", "flag_show_trace",  true,   &v_flag_show_trace);
 
+#ifndef NO_LOG_INFO
     QAction *show_info  = new QAction(menu);
-    QAction *show_error = new QAction(menu);
-#ifdef QT_DEBUG
+#endif
+#ifndef NO_LOG_DEBUG
     QAction *show_debug = new QAction(menu);
+#endif
+#ifndef NO_LOG_ERROR
+    QAction *show_error = new QAction(menu);
+#endif
+#ifndef NO_LOG_TRACE
     QAction *show_trace = new QAction(menu);
 #endif
 
+#ifndef NO_LOG_INFO
     show_info->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_info");
     show_info->setText("is_shows_info");
     show_info->setToolTip("is_shows_info");
@@ -1504,8 +1540,9 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_info(v_flag_show_info.toBool());
     app_actions.append(show_info);
     menu->addAction(show_info);
+#endif
 
-#ifdef QT_DEBUG
+#ifndef NO_LOG_DEBUG
     show_debug->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_debug");
     show_debug->setText("is_shows_debug");
     show_debug->setToolTip("is_shows_debug");
@@ -1516,10 +1553,9 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_debug(v_flag_show_debug.toBool());
     app_actions.append(show_debug);
     menu->addAction(show_debug);
-#else
-    slot_is_shows_debug(flag_show_debug);
 #endif
 
+#ifndef NO_LOG_ERROR
     show_error->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_error");
     show_error->setText("is_shows_error");
     show_error->setToolTip("is_shows_error");
@@ -1530,8 +1566,9 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_error(v_flag_show_error.toBool());
     app_actions.append(show_error);
     menu->addAction(show_error);
+#endif
 
-#ifdef QT_DEBUG
+#ifndef NO_LOG_TRACE
     show_trace->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_trace");
     show_trace->setText("is_shows_trace");
     show_trace->setToolTip("is_shows_trace");
@@ -1542,8 +1579,6 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_trace(v_flag_show_trace.toBool());
     app_actions.append(show_trace);
     menu->addAction(show_trace);
-#else
-    slot_is_shows_trace(flag_show_trace);
 #endif
 }
 //--------------------------------------------------------------------------------

@@ -193,12 +193,19 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    emit info("info");
+    emit debug("debug");
+    emit error("error");
+    emit trace("trace");
+#endif
+
+#if 0
     LockButton *lb = new LockButton;
     lb->setText("проба");
     lb->show();
 #endif
 
-#if 1
+#if 0
     ui->sb_1->setValue(10);
     ui->btn_ok->click();
 #endif

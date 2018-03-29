@@ -151,10 +151,18 @@ private slots:
     void setToolBarLanguage(void);
     void help(void);
 
+#ifndef NO_LOG_INFO
     void slot_is_shows_info(bool state);
+#endif
+#ifndef NO_LOG_DEBUG
     void slot_is_shows_debug(bool state);
+#endif
+#ifndef NO_LOG_ERROR
     void slot_is_shows_error(bool state);
+#endif
+#ifndef NO_LOG_TRACE
     void slot_is_shows_trace(bool state);
+#endif
 
     void set_system_palette(void);
     void set_blue_palette(void);
@@ -274,10 +282,18 @@ private:
 
 protected:
     bool flag_close = false;
+#ifndef NO_LOG_INFO
     bool flag_show_info = false;
+#endif
+#ifndef NO_LOG_DEBUG
     bool flag_show_debug = false;
+#endif
+#ifndef NO_LOG_ERROR
     bool flag_show_error = false;
+#endif
+#ifndef NO_LOG_TRACE
     bool flag_show_trace = false;
+#endif
 
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);

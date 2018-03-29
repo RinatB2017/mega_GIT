@@ -53,20 +53,15 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    // test 485
-    createTestBar();
-
 #ifdef QT_DEBUG
     createTestBar();
 #endif
 
-    serialBox5 = new SerialBox5(this, "RS232_5", "RS232");
-    serialBox5->add_menu(2);
+    ui->serial_widget->set_caption("RS232_5");
+    ui->serial_widget->add_menu(2);
 
-    ui->serial_layout->addWidget(serialBox5);
-
-    connect(this,       SIGNAL(send(QByteArray)),   serialBox5, SLOT(input(QByteArray)));
-    connect(serialBox5, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

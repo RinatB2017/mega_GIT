@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
     app.setApplicationName(APPNAME);
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
+    app.setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QPixmap pixmap(":/logo/pinguin.png");
 

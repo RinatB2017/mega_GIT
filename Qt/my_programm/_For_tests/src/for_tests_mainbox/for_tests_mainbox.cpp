@@ -73,13 +73,16 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::check_in(void)
 {
-    emit debug("check_in");
     int a = ui->sb_1->value();
     int b = ui->sb_2->value();
     int c = ui->sb_res->value();
+
+#if 0
+    emit debug("check_in");
     emit debug(QString("a %1").arg(a));
     emit debug(QString("b %1").arg(b));
     emit debug(QString("c %1").arg(c));
+#endif
 
     bool res = ((a + b) == c);
     ui->btn_ok->setEnabled(res);

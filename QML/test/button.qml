@@ -25,7 +25,6 @@ ApplicationWindow {
         anchors.centerIn: parent
         text: "Button"
         onClicked: {
-            messageDialog.setText("0")
             messageDialog.visible = true
         }
 

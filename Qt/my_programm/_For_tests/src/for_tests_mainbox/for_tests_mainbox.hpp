@@ -115,7 +115,7 @@ class MainBox : public MyWidget
     Q_PROPERTY(int xxx READ getValue WRITE setValue)
 
 public:
-    MainBox(QWidget *parent,
+    explicit MainBox(QWidget *parent,
             MySplashScreen *splash);
     ~MainBox();
 

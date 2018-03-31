@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
-#define COLOR   Qt::yellow
+#define COLOR   Qt::black
 #define PEN     QPen(COLOR, 2, Qt::SolidLine)
 #define ELLIPSE QPointF(width()/2, height()/2), width()/8, height()/8
 
@@ -116,7 +116,7 @@ class MyMainWindow : public MainWindow
     Q_OBJECT
 
 public:
-    MyMainWindow(MainWindow *parent = 0);
+    explicit MyMainWindow(MainWindow *parent = 0);
     ~MyMainWindow();
 
     void setCentralWidget(QWidget *widget);

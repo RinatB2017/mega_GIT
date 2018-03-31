@@ -20,10 +20,8 @@
 **********************************************************************************/
 #include "ui_for_tests_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
-#include "mainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -193,17 +191,17 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    A *a = new A;
-    a->test();
-
-    delete a;
-#endif
-
-#if 0
     emit info("info");
     emit debug("debug");
     emit error("error");
     emit trace("trace");
+#endif
+
+#if 0
+    A *a = new A;
+    a->test();
+
+    delete a;
 #endif
 
 #if 0
@@ -222,8 +220,8 @@ bool MainBox::test_0(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
-    emit info("Test_1()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_1()");
 
 #if 1
     ui->DPI_widget->block_interface(false);
@@ -249,38 +247,39 @@ bool MainBox::test_1(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_2(void)
 {
-    emit info("Test_2()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_2()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
-    emit info("Test_3()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_3()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_4(void)
 {
-    emit info("Test_4()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_4()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_5(void)
 {
-    emit info("Test_5()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_5()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 quint32 MainBox::test(const QByteArray ba)
 {
+    emit trace(Q_FUNC_INFO);
     quint32 temp = 0;
 
     for(int n=0; n<ba.length(); n++)

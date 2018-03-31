@@ -70,10 +70,6 @@ MainWindow::MainWindow(const QString cfgfile,
     ui->setupUi(this);
     Bookmarks::create();
 
-    //---
-    createTestBar();
-    //---
-
     /* Initialise default configuration directory */
     QByteArray xdg_dir = qgetenv("XDG_CONFIG_HOME");
     if (xdg_dir.isEmpty())
@@ -324,28 +320,6 @@ MainWindow::MainWindow(const QString cfgfile,
         }
    }
 }
-
-//--------------------------------------------------------------------------------
-//#include "src/scan_toolbar/src/scan_toolbar.hpp"
-#include "src/scan_toolbar/src/scan_tooldock.hpp"
-void MainWindow::createTestBar(void)
-{
-#if 0
-    Scan_ToolBar *toolBar = new Scan_ToolBar(this);
-    toolBar->setObjectName("toolBar");
-    addToolBar(Qt::TopToolBarArea, toolBar);
-    //addToolBar(Qt::LeftToolBarArea, toolBar);
-#else
-    Scan_ToolDock *md = new Scan_ToolDock(this);
-    md->setWindowTitle("scan");
-    md->setObjectName("md");
-    md->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    addDockWidget(Qt::LeftDockWidgetArea, md);
-
-    ui->menu_View->addAction(md->toggleViewAction());
-#endif
-}
-//--------------------------------------------------------------------------------
 
 MainWindow::~MainWindow()
 {

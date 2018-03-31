@@ -17,6 +17,9 @@ INCLUDEPATH += \
 HEADERS += scan_tooldock.hpp
 SOURCES += scan_tooldock.cpp
 
+HEADERS += mymainwindow.hpp
+SOURCES += mymainwindow.cpp
+
 include (log_options/log_options.pri)
 include (log/log.pri)
 

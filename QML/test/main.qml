@@ -10,6 +10,8 @@ Window {
     height: 480
     title: qsTr("Hello World")
 
+    signal qmlSignal(string msg)
+
     MessageDialog {
         id: messageDialog
         title: "MessageDialog"
@@ -17,10 +19,18 @@ Window {
     }
 
     Button {
+        id: item
         x: 100
         y: 100
         width: 200
         text: "YES"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: qmlSignal("Hello from QML")
+        }
+
+        /*
         onClicked: {
             messageDialog.setText("YES")
             messageDialog.visible = true
@@ -35,6 +45,7 @@ Window {
                 color: "yellow"
             }
         }
+        */
     }
 
     Grid {

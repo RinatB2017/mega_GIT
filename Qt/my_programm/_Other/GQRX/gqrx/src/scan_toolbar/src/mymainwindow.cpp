@@ -25,6 +25,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "../src/applications/gqrx/mainwindow.h"
+#include "scan_toolbar.hpp"
 #include "scan_tooldock.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -39,8 +40,7 @@ MyMainWindow::MyMainWindow(const QString cfgfile,
 #if 0
     Scan_ToolBar *toolBar = new Scan_ToolBar(this);
     toolBar->setObjectName("toolBar");
-    addToolBar(Qt::TopToolBarArea, toolBar);
-    //addToolBar(Qt::LeftToolBarArea, toolBar);
+    addToolBar(Qt::LeftToolBarArea, toolBar);
 #else
     Scan_ToolDock *md = new Scan_ToolDock(this);
     md->setWindowTitle("scan");
@@ -49,11 +49,8 @@ MyMainWindow::MyMainWindow(const QString cfgfile,
     addDockWidget(Qt::LeftDockWidgetArea, md);
 
     QMenuBar *mb = menuBar();
-    if(mb)
-    {
-        mb->addAction("XXX");
-        mb->addAction(md->toggleViewAction());
-    }
+    Q_CHECK_PTR(mb);
+    mb->addAction(md->toggleViewAction());
     //ui->menu_View->addAction(md->toggleViewAction());
 #endif
 }

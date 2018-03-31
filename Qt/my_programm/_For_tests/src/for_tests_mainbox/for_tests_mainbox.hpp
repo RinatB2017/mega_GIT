@@ -75,6 +75,37 @@ private:
     QPushButton *btn = 0;
 };
 //--------------------------------------------------------------------------------
+class C
+{
+public:
+  C()
+  {
+      qDebug() << "C";
+  }
+  void test()
+  {
+      qDebug() << "test";
+  }
+};
+
+class B : public C
+{
+public:
+    B()
+    {
+        qDebug() << "B";
+    }
+};
+
+class A : public B
+{
+public:
+    A()
+    {
+        qDebug() << "A";
+    }
+};
+//--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget

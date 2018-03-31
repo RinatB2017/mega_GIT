@@ -193,6 +193,13 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    A *a = new A;
+    a->test();
+
+    delete a;
+#endif
+
+#if 0
     emit info("info");
     emit debug("debug");
     emit error("error");

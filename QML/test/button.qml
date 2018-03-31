@@ -1,14 +1,22 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
+import QtQuick.Dialogs 1.1
 
 //  http://qaru.site/questions/974107/creating-a-scalable-glossyshiny-button-with-qt-quick
 
 ApplicationWindow {
+    visible: true
     id: window
     color: "#cccccc"
     width: 200
     height: 200
+
+    MessageDialog {
+        id: messageDialog
+        title: "MessageDialog"
+        text: "Info"
+    }
 
     Button {
         id: button
@@ -16,6 +24,10 @@ ApplicationWindow {
         height: width * 0.3
         anchors.centerIn: parent
         text: "Button"
+        onClicked: {
+            messageDialog.setText("0")
+            messageDialog.visible = true
+        }
 
         readonly property real radius: height / 5
 
@@ -75,7 +87,6 @@ ApplicationWindow {
                     }
                 }
             }
-
             label: null
         }
     }

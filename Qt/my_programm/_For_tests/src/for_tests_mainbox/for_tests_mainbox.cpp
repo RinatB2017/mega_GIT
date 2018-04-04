@@ -194,6 +194,24 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QLabel *label = new QLabel;
+    label->setText("test");
+    label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    label->setLineWidth(2);
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(new QSpinBox);
+    vbox->addWidget(new QSpinBox);
+    vbox->addWidget(new QSpinBox);
+    vbox->addWidget(label);
+    vbox->addStretch(1);
+
+    QFrame *frame = new QFrame;
+    frame->setLayout(vbox);
+    frame->show();
+#endif
+
+#if 0
     emit info("info");
     emit debug("debug");
     emit error("error");

@@ -65,12 +65,8 @@ LogBox::LogBox(const QString &o_name,
 LogBox::~LogBox()
 {
     Q_CHECK_PTR(logBox);
-    Q_CHECK_PTR(progressBar);
-
     save_settings();
-
     logBox->deleteLater();
-    progressBar->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void LogBox::init(void)
@@ -129,39 +125,18 @@ void LogBox::create_widgets(void)
     //logBox->setTextBackgroundColor(QColor(Qt::white));
 #endif
 
-    progressBar = new QProgressBar;
-    progressBar->setVisible(false);
-
-    hbox = new QHBoxLayout;
     vbox = new QVBoxLayout;
     mainbox = new QHBoxLayout;
 
-#ifndef LOG_READ_ONLY
-    hbox->setMargin(0);
-#endif
     vbox->setMargin(0);
     mainbox->setMargin(0);
 
-#ifndef LOG_READ_ONLY
-    hbox->setSpacing(0);
-#endif
     vbox->setSpacing(0);
     mainbox->setSpacing(0);
 
-    progressBar->setRange(0, 100);
-
     logBox->setTextInteractionFlags(Qt::NoTextInteraction);
 
-#ifndef LOG_READ_ONLY
-    hbox = new QHBoxLayout;
-    hbox->addStretch(1);
-    hbox->addWidget(progressBar);
-#endif
-
     vbox->addWidget(logBox);
-#ifndef LOG_READ_ONLY
-    vbox->addLayout(hbox);
-#endif
 
     mainbox->addLayout(vbox);
 
@@ -545,11 +520,6 @@ void LogBox::changeOptions(void)
     optionsBox->deleteLater();
 }
 //--------------------------------------------------------------------------------
-void LogBox::clearProgress()
-{
-    progress(0);
-}
-//--------------------------------------------------------------------------------
 void LogBox::append(const QString &data)
 {
     if(data.isEmpty()) return;
@@ -573,16 +543,6 @@ void LogBox::bappend(const QByteArray &data)
 void LogBox::clear()
 {
     logBox->clear();
-}
-//--------------------------------------------------------------------------------
-void LogBox::progress(int value)
-{
-    progressBar->setValue(value);
-}
-//--------------------------------------------------------------------------------
-void LogBox::setVisibleProgressBar(bool state)
-{
-    progressBar->setVisible(state);
 }
 //--------------------------------------------------------------------------------
 void LogBox::updateText(void)

@@ -95,7 +95,7 @@ void MainBox::victory(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
     commands.clear();
@@ -194,6 +194,14 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+
+    mw->set_status1_text("state 1");
+    mw->set_status2_text("state 2");
+#endif
+
+#if 0
     QLabel *label = new QLabel;
     label->setText("test");
     label->setFrameStyle(QFrame::Panel | QFrame::Sunken);

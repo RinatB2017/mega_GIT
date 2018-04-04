@@ -81,7 +81,7 @@ RESOURCES += about/about.qrc
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 CONFIG(debug, debug|release) {

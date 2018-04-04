@@ -70,6 +70,7 @@ protected:
         p.drawEllipse(ELLIPSE);
     }
 };
+
 class RightTopWidget : public QWidget
 {
 protected:
@@ -97,6 +98,7 @@ protected:
         p.drawEllipse(ELLIPSE);
     }
 };
+
 class RightBottomWidget : public QWidget
 {
 protected:
@@ -129,9 +131,6 @@ public:
     static void messageHandler(QtMsgType type,
                                const char *msg);
 #endif
-
-signals:
-    void notifySignal(void);
 
 private slots:
     void file_action_click(void);

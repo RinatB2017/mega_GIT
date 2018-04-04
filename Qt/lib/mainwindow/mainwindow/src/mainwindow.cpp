@@ -439,11 +439,13 @@ void MainWindow::closeOnExit(bool state)
 //--------------------------------------------------------------------------------
 void MainWindow::set_status1_text(const QString &data)
 {
+    Q_CHECK_PTR(statusLabel1);
     statusLabel1->setText(data);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::set_status2_text(const QString &data)
 {
+    Q_CHECK_PTR(statusLabel2);
     statusLabel2->setText(data);
 }
 //--------------------------------------------------------------------------------

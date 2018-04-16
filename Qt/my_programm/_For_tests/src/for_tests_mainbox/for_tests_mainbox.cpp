@@ -188,12 +188,84 @@ int MainBox::get_cnt(void)
     return qrand() % 10;
 }
 //--------------------------------------------------------------------------------
+void MainBox::pressed(void)
+{
+    QToolButton *btn = (QToolButton *)sender();
+    if(btn)
+    {
+        emit info(QString("%1 pressed").arg(btn->property("button").toString()));
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::released(void)
+{
+    QToolButton *btn = (QToolButton *)sender();
+    if(btn)
+    {
+        emit info(QString("%1 released").arg(btn->property("button").toString()));
+    }
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QWidget *w = new QWidget();
+    QToolButton *btn_up_left    = new QToolButton(w);
+    QToolButton *btn_up         = new QToolButton(w);
+    QToolButton *btn_up_right   = new QToolButton(w);
+    QToolButton *btn_left       = new QToolButton(w);
+    QToolButton *btn_right      = new QToolButton(w);
+    QToolButton *btn_down_left  = new QToolButton(w);
+    QToolButton *btn_down       = new QToolButton(w);
+    QToolButton *btn_down_right = new QToolButton(w);
+
+    btn_up_left->setProperty("button", "up_left");
+    btn_up->setProperty("button", "up");
+    btn_up_right->setProperty("button", "up_right");
+    btn_left->setProperty("button", "left");
+    btn_right->setProperty("button", "roght");
+    btn_down_left->setProperty("button", "down_left");
+    btn_down->setProperty("button", "down");
+    btn_down_right->setProperty("button", "down_right");
+
+    connect(btn_up_left,    SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_up_left,    SIGNAL(released()), this,   SLOT(released()));
+    connect(btn_up,         SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_up,         SIGNAL(released()), this,   SLOT(released()));
+    connect(btn_up_right,   SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_up_right,   SIGNAL(released()), this,   SLOT(released()));
+    connect(btn_left,       SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_left,       SIGNAL(released()), this,   SLOT(released()));
+    connect(btn_right,      SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_right,      SIGNAL(released()), this,   SLOT(released()));
+    connect(btn_down_left,  SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_down_left,  SIGNAL(released()), this,   SLOT(released()));
+    connect(btn_down,       SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_down,       SIGNAL(released()), this,   SLOT(released()));
+    connect(btn_down_right, SIGNAL(pressed()),  this,   SLOT(pressed()));
+    connect(btn_down_right, SIGNAL(released()), this,   SLOT(released()));
+
+    QGridLayout *grid = new QGridLayout();
+
+    grid->addWidget(btn_up_left,    0,  0);
+    grid->addWidget(btn_up,         0,  1);
+    grid->addWidget(btn_up_right,   0,  2);
+
+    grid->addWidget(btn_left,       1,  0);
+    grid->addWidget(btn_right,      1,  2);
+
+    grid->addWidget(btn_down_left,  2,  0);
+    grid->addWidget(btn_down,       2,  1);
+    grid->addWidget(btn_down_right, 2,  2);
+
+    w->setLayout(grid);
+    w->show();
+#endif
+
+#if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 

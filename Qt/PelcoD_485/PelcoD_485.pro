@@ -24,7 +24,6 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
-#DEFINES += SAVE_WIDGETS_DOUBLESPINBOX
 DEFINES += SAVE_WIDGETS_SPINBOX
 DEFINES += SAVE_WIDGETS_SLIDER
 
@@ -36,6 +35,9 @@ HEADERS += \
 SOURCES += \
     rs232_5_mainbox.cpp \
     main.cpp
+
+RESOURCES   += \
+    arrows/arrows.qrc
 
 FORMS   += rs232_5_mainbox.ui
 

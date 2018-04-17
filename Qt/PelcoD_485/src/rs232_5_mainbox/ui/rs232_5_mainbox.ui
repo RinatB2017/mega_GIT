@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>478</width>
-    <height>388</height>
+    <height>372</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -210,43 +210,71 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <property name="leftMargin">
-         <number>8</number>
-        </property>
-        <property name="topMargin">
-         <number>8</number>
-        </property>
-        <property name="rightMargin">
-         <number>8</number>
-        </property>
-        <property name="bottomMargin">
-         <number>8</number>
-        </property>
         <item>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="1" column="0">
-           <widget class="QToolButton" name="btn_left"/>
+           <widget class="QToolButton" name="btn_left">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/left.png</normaloff>:/arrows/left.png</iconset>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QToolButton" name="btn_up"/>
+           <widget class="QToolButton" name="btn_up">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/up.png</normaloff>:/arrows/up.png</iconset>
+            </property>
+           </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QToolButton" name="btn_up_right"/>
+           <widget class="QToolButton" name="btn_up_right">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/up_right.png</normaloff>:/arrows/up_right.png</iconset>
+            </property>
+           </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QToolButton" name="btn_up_left"/>
+           <widget class="QToolButton" name="btn_up_left">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/up_left.png</normaloff>:/arrows/up_left.png</iconset>
+            </property>
+           </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QToolButton" name="btn_right"/>
+           <widget class="QToolButton" name="btn_right">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/right.png</normaloff>:/arrows/right.png</iconset>
+            </property>
+           </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QToolButton" name="btn_down_left"/>
+           <widget class="QToolButton" name="btn_down_left">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/down_left.png</normaloff>:/arrows/down_left.png</iconset>
+            </property>
+           </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QToolButton" name="btn_down"/>
+           <widget class="QToolButton" name="btn_down">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/down.png</normaloff>:/arrows/down.png</iconset>
+            </property>
+           </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QToolButton" name="btn_down_right"/>
+           <widget class="QToolButton" name="btn_down_right">
+            <property name="icon">
+             <iconset resource="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc">
+              <normaloff>:/arrows/down_right.png</normaloff>:/arrows/down_right.png</iconset>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -267,18 +295,6 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <property name="leftMargin">
-         <number>8</number>
-        </property>
-        <property name="topMargin">
-         <number>8</number>
-        </property>
-        <property name="rightMargin">
-         <number>8</number>
-        </property>
-        <property name="bottomMargin">
-         <number>8</number>
-        </property>
         <item>
          <widget class="QLabel" name="label_9">
           <property name="sizePolicy">
@@ -365,6 +381,8 @@
    <header>hexspinbox.hpp</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../../../../mega_GIT/Qt/PelcoD_485/arrows/arrows.qrc"/>
+ </resources>
  <connections/>
 </ui>

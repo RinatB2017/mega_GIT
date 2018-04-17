@@ -25,6 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include <vlc/vlc.h>
+//#include "c:\Users\User\qt-everywhere-src-5.10.0\qtwebengine\src\3rdparty\chromium\third_party\ffmpeg\libavcodec\vlc.h"
 //--------------------------------------------------------------------------------
 #include "ui_Test_LibVLC_mainbox.h"
 //--------------------------------------------------------------------------------

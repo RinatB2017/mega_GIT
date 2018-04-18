@@ -84,6 +84,13 @@ void MainBox::init(void)
     ui->serial_widget->add_menu(2);
     ui->serial_widget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
+    //connect(ui->sb_sync,    SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+    connect(ui->sb_address, SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+    connect(ui->sb_cmd1,    SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+    connect(ui->sb_cmd2,    SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+    connect(ui->sb_data1,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+    connect(ui->sb_data2,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+
     //---
     ui->btn_up_left->setProperty("button",      "up_left");
     ui->btn_up->setProperty("button",           "up");
@@ -395,6 +402,19 @@ void MainBox::f_send(void)
     emit debug(QString("%1: send [%2]")
                .arg(Q_FUNC_INFO)
                .arg(ba.toHex().data()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::refresh(void)
+{
+    PELCO_PACKET packet;
+    packet.body.sync     = SYNC_BYTE;
+    packet.body.address  = ui->sb_address->value();
+    packet.body.cmd1     = ui->sb_cmd1->value();
+    packet.body.cmd2     = ui->sb_cmd2->value();
+    packet.body.data1    = ui->sb_data1->value();
+    packet.body.data2    = ui->sb_data2->value();
+
+    ui->sb_chk_sum->setValue(CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5));
 }
 //--------------------------------------------------------------------------------
 void MainBox::pressed(void)

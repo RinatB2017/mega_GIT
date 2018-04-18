@@ -70,6 +70,7 @@ private slots:
     void released(void);
 
     void f_send(void);
+    void refresh(void);
 
 private:
     MySplashScreen *splash = 0;

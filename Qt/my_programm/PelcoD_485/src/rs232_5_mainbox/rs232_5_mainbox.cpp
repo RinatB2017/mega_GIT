@@ -488,6 +488,7 @@ void MainBox::f_error(QMediaPlayer::Error err)
         emit error(QString("unknown error %1").arg(err));
         break;
     }
+    emit error(player->errorString());
 }
 //--------------------------------------------------------------------------------
 void MainBox::released(void)

@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
     Q_CHECK_PTR(splash);
 

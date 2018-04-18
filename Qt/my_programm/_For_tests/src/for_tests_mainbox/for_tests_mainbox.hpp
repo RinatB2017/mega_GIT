@@ -138,9 +138,6 @@ public slots:
     bool test_4(void);
     bool test_5(void);
 
-    void pressed(void);
-    void released(void);
-
     void s_inFunc(void);
     void new_test(void);
 

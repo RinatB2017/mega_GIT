@@ -36,9 +36,6 @@ SOURCES += \
     rs232_5_mainbox.cpp \
     main.cpp
 
-RESOURCES   += \
-    arrows/arrows.qrc
-
 FORMS   += rs232_5_mainbox.ui
 
 CONFIG(debug, debug|release) {
@@ -57,6 +54,7 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH2/crc/crc.pri)
 
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
+include ($$LIB_PATH2/icons/arrows.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

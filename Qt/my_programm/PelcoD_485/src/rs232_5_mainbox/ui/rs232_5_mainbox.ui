@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
+    <width>649</width>
     <height>372</height>
    </rect>
   </property>
@@ -354,17 +354,33 @@
     </widget>
    </item>
    <item>
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-    </spacer>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLineEdit" name="le_address"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_run">
+          <property name="text">
+           <string>run</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QVideoWidget" name="video_widget" native="true"/>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -379,6 +395,12 @@
    <class>HexSpinBox</class>
    <extends>QSpinBox</extends>
    <header>hexspinbox.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>QVideoWidget</class>
+   <extends>QWidget</extends>
+   <header>qvideowidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

@@ -24,6 +24,10 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include <QMediaPlayer>
+#include <QNetworkRequest>
+#include <QVideoWidget>
+//--------------------------------------------------------------------------------
 #include "ui_rs232_5_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -76,9 +80,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
     createTestBar();
-#endif
 
     ui->serial_widget->set_caption("RS485");
     ui->serial_widget->add_menu(2);
@@ -91,6 +93,14 @@ void MainBox::init(void)
     connect(ui->sb_data1,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
     connect(ui->sb_data2,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
 
+    //---
+    player = new QMediaPlayer;
+    player->setVideoOutput(ui->video_widget);
+
+    //ui->le_address->setText("rtsp://192.168.1.88/HD");
+    ui->le_address->setText("rtsp://192.168.0.66/av0_0");
+
+    connect(ui->btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(f_video()));
     //---
     ui->btn_up_left->setProperty("button",      "up_left");
     ui->btn_up->setProperty("button",           "up");
@@ -440,6 +450,25 @@ void MainBox::pressed(void)
         if(str == "zoom_in")    f_zoom_in();
         if(str == "zoom_out")   f_zoom_out();
     }
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_video(void)
+{
+    emit trace(Q_FUNC_INFO);
+    if(ui->le_address->text().isEmpty())
+    {
+        emit error("Address is emnpty!");
+        return;
+    }
+
+    emit info("Run");
+    const QUrl url1 = QUrl(ui->le_address->text());
+    //const QUrl url1 = QUrl("rtsp://192.168.0.66/av0_0");
+    //const QUrl url1 = QUrl("rtsp://192.168.1.88/HD");
+
+    const QNetworkRequest requestRtsp1(url1);
+    player->setMedia(requestRtsp1);
+    player->play();
 }
 //--------------------------------------------------------------------------------
 void MainBox::released(void)

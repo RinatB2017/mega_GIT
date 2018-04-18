@@ -15,6 +15,9 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
+QT  += network
+QT  += multimediawidgets
+
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG

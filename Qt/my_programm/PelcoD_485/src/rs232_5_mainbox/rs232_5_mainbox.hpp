@@ -36,6 +36,8 @@ namespace Ui {
 class MySplashScreen;
 class QToolButton;
 class QToolBar;
+
+class QMediaPlayer;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -62,6 +64,8 @@ public slots:
     void f_zoom_out(void);
     void f_move_stop(void);
 
+    void f_video(void);
+
 private slots:
     bool test(void);
     void read_data(QByteArray ba);
@@ -75,6 +79,8 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
+
+    QMediaPlayer *player = 0;
 
     void init(void);
     void createTestBar(void);

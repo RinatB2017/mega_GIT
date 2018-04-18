@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     QWebSettings::globalSettings()->setAttribute(QWebSettings::AutoLoadImages, true);
 #endif
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();

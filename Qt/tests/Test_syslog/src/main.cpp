@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 #endif
 #endif
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();

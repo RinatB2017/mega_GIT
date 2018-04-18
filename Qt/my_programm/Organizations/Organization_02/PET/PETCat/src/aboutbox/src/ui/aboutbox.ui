@@ -32,7 +32,7 @@
         </size>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../aboutbox.qrc">:/logo/pinguin.png</pixmap>
+        <pixmap resource="../../aboutbox.qrc">:/logo/logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

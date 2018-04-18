@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
     app.setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_CHECK_PTR(splash);

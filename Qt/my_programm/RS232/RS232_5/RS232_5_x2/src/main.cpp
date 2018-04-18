@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
     Q_CHECK_PTR(splash);
 

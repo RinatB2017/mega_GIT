@@ -18,7 +18,6 @@ macx {
 
 win32 {
     #TEMP_PATH = "C:\\shm"
-    #TEMP_PATH = "K:"
     TEMP_PATH = "E:"
     OBJECTS_DIR = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\moc

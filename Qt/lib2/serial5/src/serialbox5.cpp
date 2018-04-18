@@ -236,13 +236,13 @@ void SerialBox5::initSerial(void)
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
 
     connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
+    //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
 
     connect(serial5, SIGNAL(baudRateChanged(qint32,QSerialPort::Directions)),   this,   SLOT(baudRateChanged(qint32,QSerialPort::Directions)));
     connect(serial5, SIGNAL(breakEnabledChanged(bool)),                         this,   SLOT(breakEnabledChanged(bool)));
     connect(serial5, SIGNAL(dataBitsChanged(QSerialPort::DataBits)),            this,   SLOT(dataBitsChanged(QSerialPort::DataBits)));
     connect(serial5, SIGNAL(dataTerminalReadyChanged(bool)),                    this,   SLOT(dataTerminalReadyChanged(bool)));
-    connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)),       this,   SLOT(errorOccurred(QSerialPort::SerialPortError)));
+    //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)),       this,   SLOT(errorOccurred(QSerialPort::SerialPortError)));
     connect(serial5, SIGNAL(flowControlChanged(QSerialPort::FlowControl)),      this,   SLOT(flowControlChanged(QSerialPort::FlowControl)));
     connect(serial5, SIGNAL(parityChanged(QSerialPort::Parity)),                this,   SLOT(parityChanged(QSerialPort::Parity)));
     connect(serial5, SIGNAL(requestToSendChanged(bool)),                        this,   SLOT(requestToSendChanged(bool)));

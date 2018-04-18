@@ -1,10 +1,17 @@
 @Echo Off
 
-Set FDir="С:\"
-Set Maska="sk*"
+set FDir="."
+set Mask="*.txt"
 
-FOR /R %FDir% %%i IN (%Maska%) DO Call :Obrabotka "%%i"
-GoTo :EOF 
+FOR /R %FDir% %%i IN ("Makefile.*") DO Call :Obrabotka "%%i"
+FOR /R %FDir% %%i IN ("*.user") DO Call :Obrabotka "%%i"
+rem FOR /R %FDir% %%i IN ("*.exe") DO Call :Obrabotka "%%i"
+FOR /R %FDir% %%i IN ("*.o") DO Call :Obrabotka "%%i"
+goto Exit
 
 :Obrabotka
-Echo %1
+del %1
+goto :EOF
+
+:Exit
+pause

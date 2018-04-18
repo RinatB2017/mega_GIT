@@ -25,6 +25,8 @@
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
+#include <QNetworkReply>
+//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
@@ -194,6 +196,25 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    //request.setUrl(QUrl("https://2ip.ru/"));
+    //request.setUrl(QUrl("rtsp://192.168.0.66/av0_0 RTSP/1.0"));
+    request.setUrl(QUrl("rtsp://192.168.0.66:554/av0_0 RTSP/1.0"));
+    QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
+    while (!reply->isFinished())
+    {
+        QCoreApplication::processEvents();
+    }
+    QByteArray ba;
+    do
+    {
+        ba = reply->readLine();
+        emit info(ba);
+    } while(ba.isEmpty() == false);
+
+    emit info("OK");
+#endif
+
+#if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 

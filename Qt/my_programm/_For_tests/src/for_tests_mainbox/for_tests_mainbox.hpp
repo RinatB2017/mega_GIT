@@ -25,6 +25,9 @@
 #   include <QtWidgets>
 #endif
 //--------------------------------------------------------------------------------
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+//--------------------------------------------------------------------------------
 #include "for_tests_mainbox.hpp"
 #include "ui_for_tests_mainbox.h"
 
@@ -164,6 +167,11 @@ private:
 
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
+
+    //TODO
+    QNetworkRequest request;
+    QNetworkAccessManager networkManager;
+    //---
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;

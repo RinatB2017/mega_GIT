@@ -403,6 +403,28 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>sb_address</tabstop>
+  <tabstop>sb_cmd1</tabstop>
+  <tabstop>sb_cmd2</tabstop>
+  <tabstop>sb_data1</tabstop>
+  <tabstop>sb_data2</tabstop>
+  <tabstop>sb_chk_sum</tabstop>
+  <tabstop>btn_send</tabstop>
+  <tabstop>sl_speed</tabstop>
+  <tabstop>btn_up_left</tabstop>
+  <tabstop>btn_up</tabstop>
+  <tabstop>btn_up_right</tabstop>
+  <tabstop>btn_left</tabstop>
+  <tabstop>btn_right</tabstop>
+  <tabstop>btn_down_left</tabstop>
+  <tabstop>btn_down</tabstop>
+  <tabstop>btn_down_right</tabstop>
+  <tabstop>btn_zoom_in</tabstop>
+  <tabstop>btn_zoom_out</tabstop>
+  <tabstop>le_address</tabstop>
+  <tabstop>btn_run</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../../../lib2/icons/arrows/arrows.qrc"/>
  </resources>

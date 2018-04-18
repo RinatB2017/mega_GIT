@@ -95,6 +95,7 @@ void MainBox::init(void)
 
     //---
     player = new QMediaPlayer;
+    connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
     player->setVideoOutput(ui->video_widget);
 
     //ui->le_address->setText("rtsp://192.168.1.88/HD");
@@ -469,6 +470,24 @@ void MainBox::f_video(void)
     const QNetworkRequest requestRtsp1(url1);
     player->setMedia(requestRtsp1);
     player->play();
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_error(QMediaPlayer::Error err)
+{
+    switch (err)
+    {
+    case QMediaPlayer::NoError:             emit error("NoError");              break;
+    case QMediaPlayer::ResourceError:       emit error("ResourceError");        break;
+    case QMediaPlayer::FormatError:         emit error("FormatError");          break;
+    case QMediaPlayer::NetworkError:        emit error("NetworkError");         break;
+    case QMediaPlayer::AccessDeniedError:   emit error("AccessDeniedError");    break;
+    case QMediaPlayer::ServiceMissingError: emit error("ServiceMissingError");  break;
+    case QMediaPlayer::MediaIsPlaylist:     emit error("MediaIsPlaylist");      break;
+
+    default:
+        emit error(QString("unknown error %1").arg(err));
+        break;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::released(void)

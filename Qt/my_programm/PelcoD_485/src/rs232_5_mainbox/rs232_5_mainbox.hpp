@@ -26,6 +26,7 @@
 #else
 #   include <QtGui>
 #endif
+#include <QMediaPlayer>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -36,8 +37,6 @@ namespace Ui {
 class MySplashScreen;
 class QToolButton;
 class QToolBar;
-
-class QMediaPlayer;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -75,6 +74,8 @@ private slots:
 
     void f_send(void);
     void refresh(void);
+
+    void f_error(QMediaPlayer::Error err);
 
 private:
     MySplashScreen *splash = 0;

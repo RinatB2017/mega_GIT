@@ -98,8 +98,8 @@ void MainBox::init(void)
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
     player->setVideoOutput(ui->video_widget);
 
-    //ui->le_address->setText("rtsp://192.168.1.88/HD");
-    ui->le_address->setText("rtsp://192.168.0.66/av0_0");
+    ui->cb_address->addItem("rtsp://192.168.0.66/av0_0");
+    ui->cb_address->addItem("rtsp://192.168.1.88:554/HD");
 
     connect(ui->btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(f_video()));
     //---
@@ -456,14 +456,14 @@ void MainBox::pressed(void)
 void MainBox::f_video(void)
 {
     emit trace(Q_FUNC_INFO);
-    if(ui->le_address->text().isEmpty())
+    if(ui->cb_address->currentText().isEmpty())
     {
         emit error("Address is emnpty!");
         return;
     }
 
     emit info("Run");
-    const QUrl url1 = QUrl(ui->le_address->text());
+    const QUrl url1 = QUrl(ui->cb_address->currentText());
     //const QUrl url1 = QUrl("rtsp://192.168.0.66/av0_0");
     //const QUrl url1 = QUrl("rtsp://192.168.1.88/HD");
 

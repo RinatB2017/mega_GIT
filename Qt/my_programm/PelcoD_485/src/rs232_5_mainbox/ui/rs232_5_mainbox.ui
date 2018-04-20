@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>649</width>
+    <width>532</width>
     <height>372</height>
    </rect>
   </property>
@@ -365,7 +365,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QLineEdit" name="le_address"/>
+         <widget class="QComboBox" name="cb_address"/>
         </item>
         <item>
          <widget class="QToolButton" name="btn_run">
@@ -422,7 +422,6 @@
   <tabstop>btn_down_right</tabstop>
   <tabstop>btn_zoom_in</tabstop>
   <tabstop>btn_zoom_out</tabstop>
-  <tabstop>le_address</tabstop>
   <tabstop>btn_run</tabstop>
  </tabstops>
  <resources>

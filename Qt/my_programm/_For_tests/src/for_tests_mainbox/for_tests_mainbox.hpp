@@ -25,6 +25,12 @@
 #   include <QtWidgets>
 #endif
 //--------------------------------------------------------------------------------
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+//--------------------------------------------------------------------------------
+#include "for_tests_mainbox.hpp"
+#include "ui_for_tests_mainbox.h"
+
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -35,19 +41,96 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
+class LockButton : public QWidget
+{
+    Q_OBJECT
+
+public:
+    LockButton(QWidget *parent = 0) : QWidget(parent)
+    {
+        box = new QCheckBox(this);
+        box->setToolTip("lock");
+
+        btn = new QPushButton(this);
+        btn->setText("Test");
+        btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+        connect(box,    SIGNAL(toggled(bool)),  btn,    SLOT(setDisabled(bool)));
+
+        QHBoxLayout *hbox = new QHBoxLayout;
+        hbox->setSpacing(0);
+        hbox->setMargin(0);
+        hbox->addWidget(box);
+        hbox->addWidget(btn);
+        hbox->setStretchFactor(box, 0);
+        hbox->setStretchFactor(btn, 1);
+
+        setLayout(hbox);
+    }
+
+    void setText(QString text)
+    {
+        btn->setText(text);
+    }
+
+private:
+    QCheckBox *box   = 0;
+    QPushButton *btn = 0;
+};
+//--------------------------------------------------------------------------------
+class C
+{
+public:
+  C()
+  {
+      qDebug() << "C";
+  }
+  void test()
+  {
+      qDebug() << "test";
+  }
+};
+
+class B : public C
+{
+public:
+    B()
+    {
+        qDebug() << "B";
+    }
+};
+
+class A : public B
+{
+public:
+    A()
+    {
+        qDebug() << "A";
+    }
+    void test()
+    {
+        qDebug() << "test_A";
+    }
+};
+//--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(int xxx READ getValue WRITE setValue)
+
 public:
-    MainBox(QWidget *parent,
+    explicit MainBox(QWidget *parent,
             MySplashScreen *splash);
     ~MainBox();
 
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
+
+signals:
+    void dpi_set(int);
 
 public slots:
     void choice_test(void);
@@ -60,6 +143,9 @@ public slots:
 
     void s_inFunc(void);
     void new_test(void);
+
+    void check_in(void);
+    void victory(void);
 
 private:
     enum {
@@ -82,19 +168,26 @@ private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 
+    //TODO
+    QNetworkRequest request;
+    QNetworkAccessManager networkManager;
+    //---
+
     QComboBox *cb_test = 0;
     QList<CMD> commands;
-
-    bool split_address(const QString address,
-                       int *a,
-                       int *b,
-                       int *c,
-                       int *d,
-                       int *port);
 
     void init(void);
     void createTestBar(void);
     void updateText(void);
+
+    int getValue(void)
+    {
+        return ui->spinBox->value();
+    }
+    void setValue(int value)
+    {
+        ui->spinBox->setValue(value);
+    }
 
     quint32 test(const QByteArray ba);
     int get_cnt(void);

@@ -18,12 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMessageBox>
-#include <QCloseEvent>
-#include <QToolButton>
-#include <QToolBar>
-#include <QMenuBar>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mainwidget.hpp"

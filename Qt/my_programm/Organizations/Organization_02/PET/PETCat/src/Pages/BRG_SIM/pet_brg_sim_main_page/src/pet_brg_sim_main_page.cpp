@@ -18,15 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QStackedWidget>
-#include <QRadioButton>
-#include <QToolButton>
-#include <QScrollArea>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QDateTime>
-#include <QLineEdit>
-#include <QSpinBox>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "pet_brg_sim_main_page.hpp"
 #include "ui_pet_brg_sim_main_page.h"

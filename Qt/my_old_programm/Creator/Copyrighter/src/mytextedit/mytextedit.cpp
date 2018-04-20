@@ -18,11 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QContextMenuEvent>
-#include <QApplication>
-#include <QFileDialog>
-#include <QStyle>
-#include <QMenu>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mytextedit.hpp"
 //--------------------------------------------------------------------------------

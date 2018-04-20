@@ -293,7 +293,11 @@ void Display::clear(void)
 //--------------------------------------------------------------------------------
 void Display::load_setting(void)
 {
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(objectName());
@@ -305,7 +309,11 @@ void Display::load_setting(void)
 //--------------------------------------------------------------------------------
 void Display::save_setting(void)
 {
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(objectName());

@@ -44,6 +44,8 @@ namespace po = boost::program_options;
 static void reset_conf(const QString &file_name);
 static void list_conf(void);
 
+#include "mymainwindow.hpp"
+
 int main(int argc, char *argv[])
 {
     QString         cfg_file;
@@ -139,7 +141,8 @@ int main(int argc, char *argv[])
     // Mainwindow will check whether we have a configuration
     // and open the config dialog if there is none or the specified
     // file does not exist.
-    MainWindow w(cfg_file, edit_conf);
+    //MainWindow w(cfg_file, edit_conf);
+    MyMainWindow w(cfg_file, edit_conf);
 
     if (w.configOk)
     {

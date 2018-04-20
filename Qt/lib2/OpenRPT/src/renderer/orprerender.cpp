@@ -744,7 +744,7 @@ qreal ORPreRenderPrivate::renderSection(const ORSectionData & sectionData)
             tb->setPosition(pos);
             tb->setSize(size);
             tb->setFont(l->font);
-            tb->setText(qApp->translate(_reportData->name.toUtf8().data(), l->string.toUtf8().data(), 0));;
+            tb->setText(qApp->translate(_reportData->name.toUtf8().data(), l->string.toUtf8().data(), 0));
             tb->setFlags(l->align);
             tb->setRotation(l->rotation());
             _page->addPrimitive(tb);

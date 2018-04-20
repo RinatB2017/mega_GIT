@@ -89,7 +89,13 @@ bool B590::get_value_setting(const QString &name,
                              QVariant *begin_DAC,
                              QVariant *end_DAC)
 {
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+    Q_CHECK_PTR(settings);
+
     QVariant temp;
     bool ok = true;
 
@@ -131,7 +137,12 @@ bool B590::create_setting(const QString  &name,
                           const QVariant &begin_DAC,
                           const QVariant &end_DAC)
 {
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup(name);
     settings->setValue("value", value);

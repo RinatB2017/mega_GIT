@@ -18,7 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
@@ -51,7 +55,7 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
@@ -63,12 +67,12 @@ int main(int argc, char *argv[])
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
+    main_window->setFixedSize(main_window->sizeHint());
     main_window->show();
 
     splash->finish(main_window);
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-    
 
     return app.exec();
 }

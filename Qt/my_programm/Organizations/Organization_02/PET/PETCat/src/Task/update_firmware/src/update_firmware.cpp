@@ -18,11 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTreeWidgetItem>
-#include <QProgressBar>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "update_firmware.hpp"
 #include "ui_update_firmware.h"

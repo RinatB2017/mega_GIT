@@ -57,7 +57,7 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init()
 {
-    //y[n] = double(308.0)*qSin(double(n)*double(M_PI)/double(180.0));;
+    //y[n] = double(308.0)*qSin(double(n)*double(M_PI)/double(180.0));
     ui->setupUi(this);
 
     serial = new SerialBox5(this, tr("RS-232"));

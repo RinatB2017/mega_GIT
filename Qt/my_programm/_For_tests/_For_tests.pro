@@ -13,6 +13,8 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
+QT  += network
+
 QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += LOGO_GL
@@ -23,11 +25,8 @@ QMAKE_CXXFLAGS += -fno-show-column
 #DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_MENU
-#DEFINES += NO_LOG
 
 #DEFINES += ONLY_ENGLISH
-
-#DEFINES += LOG_READ_ONLY
 
 #DEFINES += SAVE_WIDGETS_CHECKBOX
 #DEFINES += SAVE_WIDGETS_COMBOBOX
@@ -39,10 +38,26 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 #DEFINES += SAVE_WIDGETS_TEXTEDIT
 #DEFINES += SAVE_WIDGETS_LINEEDIT
 
+#DEFINES += NO_TOOLBAR_BUTTON_EXIT
+#DEFINES += NO_TOOLBAR_BUTTON_FONT
+#DEFINES += NO_TOOLBAR_BUTTON_LANG
+#DEFINES += NO_TOOLBAR_BUTTON_STYLE
+#DEFINES += NO_TOOLBAR_BUTTON_ABOUT
+#DEFINES += NO_TOOLBAR_BUTTON_HELP
+#DEFINES += NO_TOOLBAR_SEPARATORS
+
+#DEFINES += NO_LOG_INFO
+#DEFINES += NO_LOG_DEBUG
+#DEFINES += NO_LOG_ERROR
+#DEFINES += NO_LOG_TRACE
+
 #DEFINES += DEMO
 #DEFINES += "DEMO_YEAR=2018"
 #DEFINES += "DEMO_MONTH=2"
 #DEFINES += "DEMO_DAY=1"
+
+#DEFINES += NO_LOG
+#DEFINES += SYSLOG_LOG
 
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -61,21 +76,25 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-RESOURCES += \
-    images/images.qrc
+RESOURCES += images/images.qrc
+
+#можно поставить новое logo
+RESOURCES += about/about.qrc
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 CONFIG(debug, debug|release) {
-    include (src/test/test.pri)
     include ($$LIB_PATH/test_function/test_function.pri)
+    include (src/test/test.pri)
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
+
+include ($$LIB_PATH2/widgets/dip_widget/dip_widget.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 

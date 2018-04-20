@@ -18,13 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTableWidget>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QToolButton>
-#include <QUdpSocket>
-#include <QTimer>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "imitator_brg_gui.hpp"
 #include "ui_imitator_brg_gui.h"

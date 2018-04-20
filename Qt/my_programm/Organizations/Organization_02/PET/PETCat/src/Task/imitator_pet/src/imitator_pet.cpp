@@ -18,18 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMouseEvent>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
-#include <QtMath>
-//--------------------------------------------------------------------------------
-#include <QFile>
-//--------------------------------------------------------------------------------
-#include <QPainter>
-#include <QPixmap>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_imitator_pet.h"
 //--------------------------------------------------------------------------------

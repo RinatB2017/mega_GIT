@@ -18,14 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMessageBox>
-#include <QTableWidget>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QToolButton>
-#include <QScrollArea>
-#include <QUdpSocket>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "sleeper.h"
 //--------------------------------------------------------------------------------

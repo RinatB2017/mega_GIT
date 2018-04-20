@@ -18,7 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "helpbrowser.hpp"
 #include "mainwindow.hpp"
@@ -30,6 +34,7 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#include "syslog_dock.hpp"
 #include "logdock.hpp"
 //--------------------------------------------------------------------------------
 MainWindow::MainWindow(QMainWindow *parent)
@@ -48,10 +53,16 @@ MainWindow::~MainWindow()
 #endif
     save_setting();
 
+#ifndef NO_LOG_INFO
     MyWidget::set_param("Main", "flag_show_info",   flag_show_info);
+#endif
+#ifndef NO_LOG_ERROR
     MyWidget::set_param("Main", "flag_show_error",  flag_show_error);
-#ifdef QT_DEBUG
+#endif
+#ifndef NO_LOG_DEBUG
     MyWidget::set_param("Main", "flag_show_debug",  flag_show_debug);
+#endif
+#ifndef NO_LOG_TRACE
     MyWidget::set_param("Main", "flag_show_trace",  flag_show_trace);
 #endif
     if(ld)
@@ -172,6 +183,10 @@ void MainWindow::init(void)
     connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 #endif
 
+#ifdef SYSLOG_LOG
+    createSysLog_dock();
+#endif
+
 #ifndef NO_MENU
     createMenus();
 #endif
@@ -182,6 +197,14 @@ void MainWindow::init(void)
     if(m_app_windowsmenu)
     {
         m_app_windowsmenu->addAction(ld->toggleViewAction());
+    }
+#endif
+#ifdef SYSLOG_LOG
+    //FIXME костыль, надо убрать
+    // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
+    if(m_app_windowsmenu)
+    {
+        m_app_windowsmenu->addAction(syslog_dock->toggleViewAction());
     }
 #endif
 
@@ -206,13 +229,15 @@ void MainWindow::init(void)
     load_setting();
 }
 //--------------------------------------------------------------------------------
-#ifdef  DEMO
+//    if(now.date().year()        >= DEMO_YEAR &&
+//            now.date().month()  >= DEMO_MONTH &&
+//            now.date().day()    >  DEMO_DAY)
+#ifdef DEMO
 void MainWindow::check_date(void)
 {
     QDateTime now = QDateTime::currentDateTime();
-    if(now.date().year() >= DEMO_YEAR &&
-            now.date().month() >= DEMO_MONTH &&
-            now.date().day() > DEMO_DAY)
+    QDateTime xxx = QDateTime(QDate(DEMO_YEAR, DEMO_MONTH, DEMO_DAY));
+    if(now > xxx)
     {
         int x = rand() % 2;
         switch(x)
@@ -228,7 +253,7 @@ void MainWindow::check_date(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifdef  DEMO
+#ifdef DEMO
 void MainWindow::kill(void)
 {
     int a = 5;
@@ -239,7 +264,7 @@ void MainWindow::kill(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifdef  DEMO
+#ifdef DEMO
 void MainWindow::kill2(void)
 {
     QLabel *label = 0;
@@ -414,11 +439,13 @@ void MainWindow::closeOnExit(bool state)
 //--------------------------------------------------------------------------------
 void MainWindow::set_status1_text(const QString &data)
 {
+    Q_CHECK_PTR(statusLabel1);
     statusLabel1->setText(data);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::set_status2_text(const QString &data)
 {
+    Q_CHECK_PTR(statusLabel2);
     statusLabel2->setText(data);
 }
 //--------------------------------------------------------------------------------
@@ -562,10 +589,18 @@ void MainWindow::save_main(void)
     settings->setValue("StyleName",     style_name);
 
     settings->setValue("NoAnswerFromExit", flag_close);
+#ifndef NO_LOG_INFO
     settings->setValue("flag_show_info",  flag_show_info);
+#endif
+#ifndef NO_LOG_DEBUG
     settings->setValue("flag_show_debug", flag_show_debug);
+#endif
+#ifndef NO_LOG_ERROR
     settings->setValue("flag_show_error", flag_show_error);
+#endif
+#ifndef NO_LOG_TRACE
     settings->setValue("flag_show_trace", flag_show_trace);
+#endif
 
     settings->setValue("Theme",         state_theme);
 
@@ -590,26 +625,45 @@ void MainWindow::createLog(void)
     ld = new LogDock(tr("log"), this);
     Q_CHECK_PTR(ld);
 
+#ifndef NO_LOG_INFO
     connect(this,   SIGNAL(info(QString)),  ld, SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));
+#endif
+#ifndef NO_LOG_DEBUG
     connect(this,   SIGNAL(debug(QString)), ld, SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_debug(bool)),    ld, SIGNAL(signal_is_shows_debug(bool)));
+#endif
+#ifndef NO_LOG_ERROR
     connect(this,   SIGNAL(error(QString)), ld, SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
+#endif
+#ifndef NO_LOG_TRACE
     connect(this,   SIGNAL(trace(QString)), ld, SLOT(traceLog(QString)));
+    connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
+#endif
 
     connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   ld, SLOT(colorLog(QString,QColor,QColor)));
-
-    connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));
-    connect(this,   SIGNAL(signal_is_shows_debug(bool)),    ld, SIGNAL(signal_is_shows_debug(bool)));
-    connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
-    connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
-
-    connect(this,   SIGNAL(syslog(QDateTime, int, int, QString)),   ld, SLOT(syslog(QDateTime, int, int, QString)));
-    connect(this,   SIGNAL(syslog(int,QString,QString)),            ld, SLOT(syslog(int,QString,QString)));
 
     ld->setAllowedAreas(Qt::LeftDockWidgetArea |
                         Qt::RightDockWidgetArea |
                         Qt::TopDockWidgetArea |
                         Qt::BottomDockWidgetArea);
     addDockWidget(Qt::BottomDockWidgetArea, ld);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::createSysLog_dock(void)
+{
+    syslog_dock = new SysLog_dock("syslog", this);
+    Q_CHECK_PTR(syslog_dock);
+
+    connect(syslog_dock,   SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(syslog_dock,   SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(syslog_dock,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(syslog_dock,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    connect(this,   SIGNAL(syslog(int,int,QString)),            syslog_dock,   SLOT(syslog(int,int,QString)));
+    connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  syslog_dock,   SLOT(syslog(QDateTime,int,int,QString)));
+    addDockWidget(Qt::BottomDockWidgetArea, syslog_dock);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::createToolBar(void)
@@ -622,18 +676,38 @@ void MainWindow::createToolBar(void)
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
+#ifndef NO_TOOLBAR_BUTTON_EXIT
     app_toolbar_add_exit();
-    app_toolbar_add_separator();
-    app_toolbar_add_font();
-    app_toolbar_add_separator();
-#ifndef ONLY_ENGLISH
-    app_toolbar_add_lang();
+#ifndef NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
-    app_toolbar_add_style();
+#endif
+#ifndef NO_TOOLBAR_BUTTON_FONT
+    app_toolbar_add_font();
+#ifndef NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
+#endif
+#endif
+#ifndef ONLY_ENGLISH
+#ifndef NO_TOOLBAR_BUTTON_LANG
+    app_toolbar_add_lang();
+#ifndef NO_TOOLBAR_SEPARATORS
+    app_toolbar_add_separator();
+#endif
+#endif
+#endif
+#ifndef NO_TOOLBAR_BUTTON_STYLE
+    app_toolbar_add_style();
+#ifndef NO_TOOLBAR_SEPARATORS
+    app_toolbar_add_separator();
+#endif
+#endif
+#ifndef NO_TOOLBAR_BUTTON_ABOUT
     app_toolbar_add_about();
+#endif
+#ifndef NO_TOOLBAR_BUTTON_HELP
     app_toolbar_add_help();
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::createStyleToolBar(void)
@@ -1118,29 +1192,37 @@ void MainWindow::set_log_font(void)
     }
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_INFO
 void MainWindow::slot_is_shows_info(bool state)
 {
     flag_show_info = state;
     emit signal_is_shows_info(state);
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_DEBUG
 void MainWindow::slot_is_shows_debug(bool state)
 {
     flag_show_debug = state;
     emit signal_is_shows_debug(state);
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_ERROR
 void MainWindow::slot_is_shows_error(bool state)
 {
     flag_show_error = state;
     emit signal_is_shows_error(state);
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG_TRACE
 void MainWindow::slot_is_shows_trace(bool state)
 {
     flag_show_trace = state;
     emit signal_is_shows_trace(state);
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::set_system_palette(void)
 {
@@ -1426,7 +1508,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
 {
     Q_CHECK_PTR(menu);
 
-    QVariant v_flag_show_info  = true;
+    QVariant v_flag_show_info   = true;
     QVariant v_flag_show_debug  = true;
     QVariant v_flag_show_error  = true;
     QVariant v_flag_show_trace  = true;
@@ -1436,13 +1518,20 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     MyWidget::get_param("Main", "flag_show_error",  true,   &v_flag_show_error);
     MyWidget::get_param("Main", "flag_show_trace",  true,   &v_flag_show_trace);
 
+#ifndef NO_LOG_INFO
     QAction *show_info  = new QAction(menu);
-    QAction *show_error = new QAction(menu);
-#ifdef QT_DEBUG
+#endif
+#ifndef NO_LOG_DEBUG
     QAction *show_debug = new QAction(menu);
+#endif
+#ifndef NO_LOG_ERROR
+    QAction *show_error = new QAction(menu);
+#endif
+#ifndef NO_LOG_TRACE
     QAction *show_trace = new QAction(menu);
 #endif
 
+#ifndef NO_LOG_INFO
     show_info->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_info");
     show_info->setText("is_shows_info");
     show_info->setToolTip("is_shows_info");
@@ -1453,8 +1542,9 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_info(v_flag_show_info.toBool());
     app_actions.append(show_info);
     menu->addAction(show_info);
+#endif
 
-#ifdef QT_DEBUG
+#ifndef NO_LOG_DEBUG
     show_debug->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_debug");
     show_debug->setText("is_shows_debug");
     show_debug->setToolTip("is_shows_debug");
@@ -1465,10 +1555,9 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_debug(v_flag_show_debug.toBool());
     app_actions.append(show_debug);
     menu->addAction(show_debug);
-#else
-    slot_is_shows_debug(flag_show_debug);
 #endif
 
+#ifndef NO_LOG_ERROR
     show_error->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_error");
     show_error->setText("is_shows_error");
     show_error->setToolTip("is_shows_error");
@@ -1479,8 +1568,9 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_error(v_flag_show_error.toBool());
     app_actions.append(show_error);
     menu->addAction(show_error);
+#endif
 
-#ifdef QT_DEBUG
+#ifndef NO_LOG_TRACE
     show_trace->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_trace");
     show_trace->setText("is_shows_trace");
     show_trace->setToolTip("is_shows_trace");
@@ -1491,8 +1581,6 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     slot_is_shows_trace(v_flag_show_trace.toBool());
     app_actions.append(show_trace);
     menu->addAction(show_trace);
-#else
-    slot_is_shows_trace(flag_show_trace);
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -1673,6 +1761,7 @@ void MainWindow::app_toolbar_add_exit(void)
     connect(btnExit,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
     toolbar->addWidget(btnExit);
+
     app_buttons.append(btnExit);
 }
 //--------------------------------------------------------------------------------
@@ -1753,6 +1842,7 @@ void MainWindow::app_toolbar_add_style(void)
     connect(btnStyle,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
     toolbar->addWidget(btnStyle);
+
     app_buttons.append(btnStyle);
 }
 //--------------------------------------------------------------------------------

@@ -21,8 +21,12 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
-#include <QObject>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QTest>
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"

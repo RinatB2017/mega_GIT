@@ -20,12 +20,12 @@
 **********************************************************************************/
 #include "ui_for_tests_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
-#include "mainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#include <QNetworkReply>
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -48,8 +48,22 @@ void MainBox::init(void)
 
     createTestBar();
 
+    ui->spinBox->setRange(0, 1e6);
+
+    //---
+    connect(this,           SIGNAL(dpi_set(int)),       ui->DPI_widget, SLOT(set_value(int)));
+    connect(ui->DPI_widget, SIGNAL(value(int)),         ui->spinBox,    SLOT(setValue(int)));
+    connect(ui->spinBox,    SIGNAL(valueChanged(int)),  ui->DPI_widget, SLOT(set_value(int)));
+    //---
+
+    connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
+    connect(ui->sb_2,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
+    connect(ui->sb_res, SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
+    connect(ui->btn_ok, SIGNAL(clicked(bool)),      this,   SLOT(victory()));
+    check_in();
+
 #if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
     if(sizeHint().height() > 0)
     {
@@ -59,9 +73,31 @@ void MainBox::init(void)
     load_config();
 }
 //--------------------------------------------------------------------------------
+void MainBox::check_in(void)
+{
+    int a = ui->sb_1->value();
+    int b = ui->sb_2->value();
+    int c = ui->sb_res->value();
+
+#if 0
+    emit debug("check_in");
+    emit debug(QString("a %1").arg(a));
+    emit debug(QString("b %1").arg(b));
+    emit debug(QString("c %1").arg(c));
+#endif
+
+    bool res = ((a + b) == c);
+    ui->btn_ok->setEnabled(res);
+}
+//--------------------------------------------------------------------------------
+void MainBox::victory(void)
+{
+    messagebox_info("Info", "Victory!");
+}
+//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
     commands.clear();
@@ -148,48 +184,6 @@ void MainBox::new_test(void)
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::split_address(const QString address,
-                            int *a,
-                            int *b,
-                            int *c,
-                            int *d,
-                            int *port)
-{
-    QStringList sl = address.split(":");
-    if(sl.count() != 2)
-    {
-        //emit error(QString("count %1").arg(sl.count()));
-        return false;
-    }
-    QString host = sl.at(0);
-    QStringList sl_address = host.split(".");
-    if(sl_address.count() != 4)
-    {
-        //emit error(QString("count %1").arg(sl_address.count()));
-        return false;
-    }
-    bool ok = false;
-    int t_a = sl_address.at(0).toInt(&ok);
-    if(!ok) return false;
-    int t_b = sl_address.at(1).toInt(&ok);
-    if(!ok) return false;
-    int t_c = sl_address.at(2).toInt(&ok);
-    if(!ok) return false;
-    int t_d = sl_address.at(3).toInt(&ok);
-    if(!ok) return false;
-    *a = t_a;
-    *b = t_b;
-    *c = t_c;
-    *d = t_d;
-
-    QString port_str = sl.at(1);
-    int t_port = port_str.toInt(&ok);
-    if(!ok) return false;
-    *port = t_port;
-
-    return true;
-}
-//--------------------------------------------------------------------------------
 int MainBox::get_cnt(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -198,56 +192,77 @@ int MainBox::get_cnt(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
-    emit info("Test_0()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_0()");
 
 #if 1
+    //request.setUrl(QUrl("https://2ip.ru/"));
+    //request.setUrl(QUrl("rtsp://192.168.0.66/av0_0 RTSP/1.0"));
+    request.setUrl(QUrl("rtsp://192.168.0.66:554/av0_0 RTSP/1.0"));
+    QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
+    while (!reply->isFinished())
+    {
+        QCoreApplication::processEvents();
+    }
+    QByteArray ba;
+    do
+    {
+        ba = reply->readLine();
+        emit info(ba);
+    } while(ba.isEmpty() == false);
+
+    emit info("OK");
+#endif
+
+#if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
-    mw->add_dock_widget("тест", "test", Qt::RightDockWidgetArea, new QSpinBox);
+
+    mw->set_status1_text("state 1");
+    mw->set_status2_text("state 2");
 #endif
 
 #if 0
-    QSysInfo i;
-    emit info(i.buildAbi());
-    emit info(i.buildCpuArchitecture());
-    emit info(i.currentCpuArchitecture());
-    emit info(i.kernelType());
-    emit info(i.kernelVersion());
-    emit info(i.machineHostName());
-    emit info(i.prettyProductName());
-    emit info(i.productType());
-    emit info(i.productVersion());
+    QLabel *label = new QLabel;
+    label->setText("test");
+    label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    label->setLineWidth(2);
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(new QSpinBox);
+    vbox->addWidget(new QSpinBox);
+    vbox->addWidget(new QSpinBox);
+    vbox->addWidget(label);
+    vbox->addStretch(1);
+
+    QFrame *frame = new QFrame;
+    frame->setLayout(vbox);
+    frame->show();
 #endif
 
 #if 0
-    emit info(QString("PATH = %1").arg(QProcessEnvironment::systemEnvironment().value("PATH")));
+    emit info("info");
+    emit debug("debug");
+    emit error("error");
+    emit trace("trace");
 #endif
 
 #if 0
-    for(int n=0; n<get_cnt(); n++)
-    {
-        emit info(QString("n=%1").arg(n));
-    }
+    A *a = new A;
+    a->test();
+
+    delete a;
 #endif
 
 #if 0
-    QList<int> test;
-    for(int n=0; n<5; n++)
-    {
-        test.append(n);
-    }
-    foreach (auto x, test)
-    {
-        if(x == 0)
-        {
-            emit info("append data");
-            test.append(10);
-            test.append(11);
-            test.append(12);
-        }
-        emit info(QString("x=%1").arg(x));
-    }
+    LockButton *lb = new LockButton;
+    lb->setText("проба");
+    lb->show();
+#endif
+
+#if 0
+    ui->sb_1->setValue(10);
+    ui->btn_ok->click();
 #endif
 
     return true;
@@ -255,8 +270,12 @@ bool MainBox::test_0(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
-    emit info("Test_1()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_1()");
+
+#if 1
+    ui->DPI_widget->block_interface(false);
+#endif
 
 #if 0
     emit info("info");
@@ -278,38 +297,39 @@ bool MainBox::test_1(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_2(void)
 {
-    emit info("Test_2()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_2()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
-    emit info("Test_3()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_3()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_4(void)
 {
-    emit info("Test_4()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_4()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_5(void)
 {
-    emit info("Test_5()");
     emit trace(Q_FUNC_INFO);
+    emit info("Test_5()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
 quint32 MainBox::test(const QByteArray ba)
 {
+    emit trace(Q_FUNC_INFO);
     quint32 temp = 0;
 
     for(int n=0; n<ba.length(); n++)

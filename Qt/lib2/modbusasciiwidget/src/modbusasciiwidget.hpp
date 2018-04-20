@@ -21,6 +21,7 @@
 #ifndef MODBUSASCIIWIDGET_HPP
 #define MODBUSASCIIWIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QSerialPortInfo>
 #include <QSerialPort>
 #include <QWidget>
 //--------------------------------------------------------------------------------

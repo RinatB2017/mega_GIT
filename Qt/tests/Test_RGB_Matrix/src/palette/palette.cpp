@@ -59,6 +59,7 @@ MyPalette::MyPalette(int max_x,
     box->addLayout(grid);
     box->addStretch(1);
 
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     setLayout(box);
 }
 //--------------------------------------------------------------------------------
@@ -130,7 +131,11 @@ QByteArray MyPalette::get_data(void)
 //--------------------------------------------------------------------------------
 void MyPalette::load_setting(void)
 {
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(objectName());
@@ -142,7 +147,11 @@ void MyPalette::load_setting(void)
 //--------------------------------------------------------------------------------
 void MyPalette::save_setting(void)
 {
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(objectName());

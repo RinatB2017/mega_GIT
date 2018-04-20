@@ -21,11 +21,13 @@
 #ifndef LOGDOCK_HPP
 #define LOGDOCK_HPP
 //--------------------------------------------------------------------------------
-#include <QApplication>
-#include <QDockWidget>
-#include <QDateTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#include <QQueue>
+//#include <QQueue>
 //--------------------------------------------------------------------------------
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
@@ -55,14 +57,6 @@ public slots:
     void colorLog(const QString &text,
                   const QColor text_color,
                   const QColor background_color);
-
-    void syslog(QDateTime dt,
-                int level,
-                int src,
-                const QString &message);
-    void syslog(int level,
-                const QString &src,
-                const QString &message);
 
 private slots:
     void update(void);

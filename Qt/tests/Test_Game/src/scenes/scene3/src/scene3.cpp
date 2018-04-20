@@ -18,11 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QGraphicsPixmapItem>
-#include <QPixmap>
-#include <QtMath>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "scene3.hpp"
 //--------------------------------------------------------------------------------

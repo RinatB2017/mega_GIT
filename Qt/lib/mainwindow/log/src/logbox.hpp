@@ -21,7 +21,11 @@
 #ifndef LOGBOX_HPP
 #define LOGBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class LogBox : public QFrame
 {
@@ -44,9 +48,6 @@ public slots:
     void append(const QString &);
     void bappend(const QByteArray &);
     void clear(void);
-    void progress(int);
-    void clearProgress(void);
-    void setVisibleProgressBar(bool);
     void setColorLog(bool state);
 
     void  set_font(QFont font);
@@ -96,8 +97,6 @@ private:
     bool flag_is_shows_error = true;
     bool flag_is_shows_trace = true;
 
-    QProgressBar *progressBar = 0;
-    QHBoxLayout *hbox = 0;
     QVBoxLayout *vbox = 0;
     QHBoxLayout *mainbox = 0;
 

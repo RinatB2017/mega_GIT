@@ -231,9 +231,6 @@ private slots:
     void iqFftTimeout();
     void audioFftTimeout();
     void rdsTimeout();
-
-    //---
-    void createTestBar(void);
 };
 
 #endif // MAINWINDOW_H

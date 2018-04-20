@@ -18,11 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QSplitter>
-#include <QSettings>
-#include <QTextEdit>
-#include <QTime>
-#include <QFile>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "histogram_energy.hpp"
 #include "ui_histogram_energy.h"
@@ -138,6 +138,8 @@ void Histogram_energy::init(void)
     grapher->setParent(main_splitter);
     main_splitter->addWidget(ui->frame_main);
     main_splitter->addWidget(grapher);
+    main_splitter->setStretchFactor(0, 0);
+    main_splitter->setStretchFactor(1, 1);
 
     QSettings *settings = new QSettings(ININAME, QSettings::IniFormat);
     settings->beginGroup(PETCAT_OPTIONS_HISTOGRAM_ENERGY_GROUP);

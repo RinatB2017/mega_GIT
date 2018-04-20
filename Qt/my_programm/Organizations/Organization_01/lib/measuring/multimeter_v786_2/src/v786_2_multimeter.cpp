@@ -18,17 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QPushButton>
-#include <QMessageBox>
-#include <QByteArray>
-#include <QSpinBox>
-#include <QDialog>
-#include <QStyle>
-#include <QLabel>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

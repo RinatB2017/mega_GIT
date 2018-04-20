@@ -18,16 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtPrintSupport/QPrintDialog>
-#include <QDesktopWidget>
-#include <QApplication>
-#include <QtNetwork>
-#include <QtWidgets>
-#include <QSplitter>
-#include <QFont>
-#include <QList>
-#include <QRect>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 #include "logdock.hpp"
@@ -75,8 +65,6 @@ MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent)
 {
     load_translations();
-
-    mainToolBar = 0;
 
 #ifdef STYLE_FUSION
     QStyle *style = QStyleFactory::create("Fusion");

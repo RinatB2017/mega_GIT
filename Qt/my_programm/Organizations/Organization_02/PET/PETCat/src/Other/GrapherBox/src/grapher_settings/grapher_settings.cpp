@@ -18,15 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDialogButtonBox>
-#include <QColorDialog>
-#include <QApplication>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QVector>
-#include <QLabel>
-#include <QStyle>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "qwt_plot_picker.h"
 //--------------------------------------------------------------------------------

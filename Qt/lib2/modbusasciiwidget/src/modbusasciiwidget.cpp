@@ -18,13 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QSerialPortInfo>
-#include <QSerialPort>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QComboBox>
-#include <QLabel>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "modbusasciiwidget.hpp"
 //--------------------------------------------------------------------------------

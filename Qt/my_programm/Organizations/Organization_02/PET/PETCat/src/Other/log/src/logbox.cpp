@@ -18,25 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QProgressBar>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QToolButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QFileDialog>
-#include <QDateTime>
-#include <QCheckBox>
-#include <QTextEdit>
-#include <QSettings>
-#include <QWidget>
-#include <QLocale>
-#include <QEvent>
-#include <QStyle>
-#include <QMenu>
-#include <QFile>
-#include <QFont>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "mywidget.hpp"
@@ -625,7 +611,12 @@ void LogBox::load_settings(void)
     qDebug() << "LogBox::load_settings(void)";
 #endif
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+    Q_CHECK_PTR(settings);
 
     settings->beginGroup("LogEdit");
     logBox->setReadOnly(settings->value("readOnly", true).toBool());
@@ -666,7 +657,13 @@ void LogBox::save_settings(void)
     qDebug() << "LogBox::save_settings(void)";
 #endif
 
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+    Q_CHECK_PTR(settings);
+
     settings->beginGroup("LogEdit");
     settings->setValue("readOnly",      (bool)logBox->isReadOnly());
     settings->setValue("acceptRichText",(bool)logBox->acceptRichText());

@@ -15,6 +15,7 @@ SUBDIRS += \
     imageviewer \
     Icons \
     Organizations \
+    PelcoD_485 \
     neural/QNeuralNet \
     Labyrinth \
     NewMoonLight \

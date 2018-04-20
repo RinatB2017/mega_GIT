@@ -71,10 +71,14 @@ void MainBox::init(void)
     pos_x = 0;
 
     createTestBar();
+
     createSerialBox();
     createDisplayBox();
+    createDockWidgets();
+
     createTimer();
 
+    setFixedSize(0, 0);
     //setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
@@ -122,20 +126,12 @@ void MainBox::createTestBar(void)
 void MainBox::createSerialBox(void)
 {
     main_serialBox = new SerialBox5_lite(this);
+    main_serialBox->set_caption("RS232(1)");
     main_serialBox->add_menu(2);
 
     control_serialBox = new SerialBox5_lite(this);
-
-    QVBoxLayout *vbox1 = new QVBoxLayout;
-    vbox1->addWidget(main_serialBox);
-    vbox1->addStretch(1);
-
-    QVBoxLayout *vbox2 = new QVBoxLayout;
-    vbox2->addWidget(control_serialBox);
-    vbox2->addStretch(1);
-
-    ui->gridLayout->addLayout(vbox1,    0, 0);
-    ui->gridLayout->addLayout(vbox2,    1, 0);
+    control_serialBox->set_caption("RS232(2)");
+    control_serialBox->add_menu(3);
 
     connect(this,           SIGNAL(send(QByteArray)),   main_serialBox, SLOT(input(QByteArray)));
     connect(main_serialBox, SIGNAL(output(QByteArray)), this,           SLOT(read_data(QByteArray)));
@@ -171,14 +167,41 @@ void MainBox::createDisplayBox(void)
     connect(palette,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(palette,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(palette,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+}
+//--------------------------------------------------------------------------------
+void MainBox::createDockWidgets(void)
+{
+    QHBoxLayout *hbox_serial1 = new QHBoxLayout;
+    hbox_serial1->addWidget(main_serialBox);
+    hbox_serial1->addStretch(1);
 
-    QScrollArea *area = new QScrollArea(this);
-    area->setWidget(display);
-    area->setWidgetResizable(true);
+    QHBoxLayout *hbox_serial2 = new QHBoxLayout;
+    hbox_serial2->addWidget(control_serialBox);
+    hbox_serial2->addStretch(1);
 
-    ui->gridLayout->addWidget(palette,          0,  1);
-    ui->gridLayout->addWidget(area,             0,  2);
-    ui->gridLayout->addWidget(control_display,  1,  2);
+    QHBoxLayout *hbox_display = new QHBoxLayout;
+    hbox_display->addWidget(palette);
+    hbox_display->addWidget(display);
+    hbox_display->addStretch(1);
+
+    QVBoxLayout *vbox1 = new QVBoxLayout;
+    vbox1->addLayout(hbox_serial1);
+    vbox1->addLayout(hbox_display);
+
+    QVBoxLayout *vbox2 = new QVBoxLayout;
+    vbox2->addLayout(hbox_serial2);
+    vbox2->addWidget(control_display);
+
+    QWidget *w1 = new QWidget(this);
+    w1->setLayout(vbox1);
+
+    QWidget *w2 = new QWidget(this);
+    w2->setLayout(vbox2);
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    mw->add_dock_widget("Main",     "main_control",     Qt::LeftDockWidgetArea, w1);
+    mw->add_dock_widget("Control",  "control_control",  Qt::RightDockWidgetArea, w2);
 }
 //--------------------------------------------------------------------------------
 #if 0

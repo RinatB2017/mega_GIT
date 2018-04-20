@@ -21,11 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QPushButton>
-#   include <QLineEdit>
-#   include <QComboBox>
-#   include <QSpinBox>
-#   include <QLabel>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "sender_syslog.hpp"

@@ -44,6 +44,7 @@ RESOURCES += \
 include (mainwindow/mainwindow.pri)
 include (mainwidget/mainwidget.pri)
 include (menudock/menudock.pri)
+include (turbo/turbo.pri)
 
 include (logdock/logdock.pri)
 include (log_options/log_options.pri)

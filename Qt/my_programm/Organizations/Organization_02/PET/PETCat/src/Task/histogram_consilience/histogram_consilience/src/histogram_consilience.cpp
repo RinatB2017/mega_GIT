@@ -18,16 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QSplitter>
-#include <QRadioButton>
-#include <QPushButton>
-#include <QToolButton>
-#include <QTextEdit>
-#include <QSettings>
-#include <QSpinBox>
-#include <QPicture>
-#include <QtMath>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include <qwt_picker_machine.h>
 #include <qwt_plot_picker.h>
@@ -292,6 +287,8 @@ void Histogram_consilience::init(void)
     grapher->setParent(main_splitter);
     main_splitter->addWidget(ui->frame_main);
     main_splitter->addWidget(grapher);
+    main_splitter->setStretchFactor(0, 0);
+    main_splitter->setStretchFactor(1, 1);
 
     QSettings *settings = new QSettings(ININAME, QSettings::IniFormat);
     settings->beginGroup(PETCAT_OPTIONS_HISTOGRAM_CONSULIENCE_GROUP);

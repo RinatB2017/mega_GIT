@@ -58,13 +58,10 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serial = new SerialBox5(this, "Arduino");
+    ui->serial_widget->set_caption("Arduino");
 
-    connect(this, SIGNAL(send(QByteArray)), serial, SLOT(input(QByteArray)));
-    connect(serial, SIGNAL(output(QByteArray)), this, SLOT(read_data(QByteArray)));
-
-    ui->serial_layout->addWidget(serial, 1);
-    ui->serial_layout->addStretch(100);
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 
     ui->Slider_R->setMaximum(LED_MAX_VALUE);
     ui->Slider_G->setMaximum(LED_MAX_VALUE);
@@ -114,7 +111,6 @@ void MainBox::init(void)
 
     connect(ui->btnRunMotors,   SIGNAL(clicked()), this, SLOT(command_run_motors()));
 
-#if 1
     connect(ui->Slider_motor_1, SIGNAL(sliderReleased()), this, SLOT(command_run_motor_1()));
     connect(ui->Slider_motor_2, SIGNAL(sliderReleased()), this, SLOT(command_run_motor_2()));
 
@@ -122,7 +118,6 @@ void MainBox::init(void)
     connect(ui->Slider_G,       SIGNAL(sliderReleased()), this, SLOT(command_set_color_G()));
     connect(ui->Slider_B,       SIGNAL(sliderReleased()), this, SLOT(command_set_color_B()));
     connect(ui->Slider_W,       SIGNAL(sliderReleased()), this, SLOT(command_set_color_W()));
-#endif
 
     connect(ui->Slider_R,       SIGNAL(sliderMoved(int)), this, SLOT(color_changed(int)));
     connect(ui->Slider_G,       SIGNAL(sliderMoved(int)), this, SLOT(color_changed(int)));
@@ -136,7 +131,6 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::update_frame_color(void)
 {
-    //qDebug() << ui->Slider_R->value() << ui->Slider_G->value() << ui->Slider_B->value();
     set_color_frame(ui->Slider_R->value(),
                     ui->Slider_G->value(),
                     ui->Slider_B->value());
@@ -239,7 +233,7 @@ void MainBox::wait_msec(int timeout_msec)
 //--------------------------------------------------------------------------------
 void MainBox::send_data(void)
 {
-    if(serial->isOpen() == false)
+    if(ui->serial_widget->isOpen() == false)
     {
         QMessageBox::critical(this, tr("Ошибка"), tr("Порт не открыт!"));
         return;

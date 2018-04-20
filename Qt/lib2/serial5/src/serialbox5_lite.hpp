@@ -102,6 +102,7 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
+    void port_is_active(bool);
     void not_working(void);
     void output(const QByteArray &data);
     void readyRead(void);
@@ -128,6 +129,9 @@ private slots:
     void get_parameter(void);
     void set_default(void);
     void timer_stop(void);
+
+    void change_icon(bool state);
+
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

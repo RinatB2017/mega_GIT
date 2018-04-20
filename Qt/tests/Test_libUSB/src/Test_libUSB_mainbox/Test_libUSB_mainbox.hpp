@@ -33,6 +33,18 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+#define VID 0x08bb
+#define PID 0x2704
+
+#define DEV_INTF 0    // номер интерфейса
+
+#define USB_DEBUG_LEVEL 3
+
+#define DATA_SIZE 4
+
+#define EP_IN 0x81
+#define TIMEOUT 1000
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
@@ -96,6 +108,9 @@ private:
     void dev_close(void);
 
     void print_devs(libusb_device **devs);
+    //---
+    void interrupt_transfer_loop(libusb_device_handle *handle);
+    void bulk_transfer_loop(libusb_device_handle *handle);
     //---
 };
 //--------------------------------------------------------------------------------

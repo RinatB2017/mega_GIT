@@ -18,20 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVariant>
-#include <QTimer>
-//--------------------------------------------------------------------------------
-#include <QApplication>
-#include <QPushButton>
-#include <QToolBar>
-#include <QDoubleSpinBox>
-#include <QCheckBox>
-#include <QSpinBox>
-#include <QWidget>
-#include <QLabel>
-#include <QTimer>
-//--------------------------------------------------------------------------------
-#include <QtMath>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

@@ -66,9 +66,11 @@ QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 ###############################################################################
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
+    DEFINES += HAVE_QT5
     message(Qt5 = $$QT)
 }
 else {
+    DEFINES += HAVE_QT4
     message(Qt4 = $$QT)
 }
 ###############################################################################

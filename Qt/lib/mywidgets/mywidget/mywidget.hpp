@@ -21,7 +21,11 @@
 #ifndef MYWIDGET_HPP
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #define PARAMS_GROUP_NAME   "Params"
 //--------------------------------------------------------------------------------
@@ -162,14 +166,6 @@ signals:
     void trace(const QString &);
 
     void colorLog(const QString &, const QColor, const QColor);
-
-    void syslog(int level,
-                QString src,
-                QString message);
-    void syslog(QDateTime dt,
-                int level,
-                int src,
-                QString message);
 
 public slots:
     bool close(void);

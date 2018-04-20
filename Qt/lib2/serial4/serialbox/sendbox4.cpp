@@ -18,17 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QMessageBox>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QPixmap>
-#include <QStyle>
-#include <QFrame>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "sendbox4.hpp"
 #include "defines.hpp"

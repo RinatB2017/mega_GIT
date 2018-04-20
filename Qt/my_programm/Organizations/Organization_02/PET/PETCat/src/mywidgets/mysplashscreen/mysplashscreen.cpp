@@ -18,14 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QStyleOptionProgressBarV2>
-#include <QDesktopWidget>
-#include <QSplashScreen>
-#include <QApplication>
-#include <QProgressBar>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QRect>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 //--------------------------------------------------------------------------------

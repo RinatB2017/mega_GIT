@@ -33,6 +33,19 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
+       <widget class="QPushButton" name="btn_power">
+        <property name="maximumSize">
+         <size>
+          <width>33</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -56,37 +69,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="layout_power">
-          <item>
-           <widget class="QPushButton" name="btn_power">
-            <property name="minimumSize">
-             <size>
-              <width>70</width>
-              <height>33</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>33</width>
-              <height>70</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton#btn_power {
-	image: url(:/power_knock/image/black/r_off.png);
-	border-style: inset;
-}
-QPushButton#btn_power:checked {
-	image: url(:/power_knock/image/green/r_on.png);
-	border-style: inset;
-}</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QVBoxLayout" name="layout_power"/>
         </item>
         <item>
          <layout class="QVBoxLayout" name="layout_right_LOG"/>

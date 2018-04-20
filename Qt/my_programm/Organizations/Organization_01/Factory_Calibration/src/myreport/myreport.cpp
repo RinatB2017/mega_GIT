@@ -301,7 +301,7 @@ void MyReport::view(int serno, int year)
 //--------------------------------------------------------------------------------
 void MyReport::clean_database_report(void)
 {
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
     MyWaitSplashScreen *wait_splash = new MyWaitSplashScreen(pixmap, 4);
     wait_splash->show();
     wait_splash->showMessage(QObject::tr("Подождите ..."));

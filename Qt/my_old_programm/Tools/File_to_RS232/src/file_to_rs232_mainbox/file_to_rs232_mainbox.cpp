@@ -18,15 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QFileDialog>
-#include <QToolButton>
-#include <QStringList>
-#include <QByteArray>
-#include <QToolBar>
-#include <QWidget>
-#include <QTimer>
-#include <QList>
-#include <QFile>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "qwt_knob.h"
 #include "ui_file_to_rs232_mainbox.h"
@@ -42,17 +38,13 @@
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MainBox),
-    parent(parent),
-    serial(0),
-    timer(0),
-    index(0)
+    parent(parent)
 {
     init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    if(serial) delete serial;
     if(timer) delete timer;
 
     delete ui;
@@ -119,10 +111,8 @@ void MainBox::createTimer(void)
 //--------------------------------------------------------------------------------
 void MainBox::createSerial(void)
 {
-    serial = new SerialBox5(this, tr("RS-232"));
-    ui->layout_serial->addWidget(serial);
-
-    connect(this, SIGNAL(send_data(QString)), serial, SLOT(input(QString)));
+    ui->serial_widget->set_caption("RS-232");
+    connect(this,   SIGNAL(send_data(QString)), ui->serial_widget,  SLOT(input(QString)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::tick(void)

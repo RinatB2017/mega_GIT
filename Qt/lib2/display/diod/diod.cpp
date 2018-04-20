@@ -18,13 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QColorDialog>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QCursor>
-#include <QPixmap>
-#include <QImage>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "diod.hpp"

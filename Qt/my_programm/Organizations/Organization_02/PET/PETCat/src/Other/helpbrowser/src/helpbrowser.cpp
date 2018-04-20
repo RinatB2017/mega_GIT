@@ -1,11 +1,9 @@
 //--------------------------------------------------------------------------------
-#include <QDesktopWidget>
-#include <QApplication>
-#include <QTextBrowser>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QStyle>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "helpbrowser.hpp" 
 #include "defines.hpp"

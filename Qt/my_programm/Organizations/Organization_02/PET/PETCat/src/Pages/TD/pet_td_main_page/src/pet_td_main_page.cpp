@@ -18,16 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QScrollArea>
-#include <QRadioButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QDateTime>
-#include <QLineEdit>
-#include <QSpinBox>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "pet_td_main_page.hpp"
 #include "ui_pet_td_main_page.h"

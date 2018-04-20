@@ -21,9 +21,11 @@
 #ifndef SENDER_SYSLOG_HPP
 #define SENDER_SYSLOG_HPP
 //--------------------------------------------------------------------------------
-#include <QDateTime>
-#include <QToolBar>
-#include <QTimer>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include </usr/include/syslog.h>

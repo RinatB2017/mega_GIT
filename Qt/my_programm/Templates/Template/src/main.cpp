@@ -18,9 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMessageBox>
-#include <QLibraryInfo>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= 0x050000
 #   include <QtMessageHandler>
@@ -67,7 +69,7 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();

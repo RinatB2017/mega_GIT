@@ -2,15 +2,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QRadioButton>
-#   include <QPushButton>
-#   include <QVBoxLayout>
-#   include <QHBoxLayout>
-#   include <QGroupBox>
-#   include <QSettings>
-#   include <QSlider>
-#   include <QtMath>
-#   include <QFrame>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -29,7 +21,7 @@ Generator_Curve::Generator_Curve(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Generator_Curve::~Generator_Curve(void)
 {
-    save_setting();
+    save_widgets("Generator_curve");
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::init(void)
@@ -42,7 +34,7 @@ void Generator_Curve::init(void)
     hbox->addWidget(add_grapher());
     setLayout(hbox);
 
-    load_setting();
+    load_widgets("Generator_curve");
     updateText();
 }
 //--------------------------------------------------------------------------------
@@ -86,8 +78,9 @@ QWidget *Generator_Curve::add_grapher(void)
     for(int n=0; n<MAX_SLIDER; n++)
     {
         QSlider *slider = new QSlider(Qt::Vertical);
+        slider->setObjectName(QString("slider_%1").arg(n));
         slider->setRange(0, 0xFFFF);
-        connect(slider, SIGNAL(valueChanged(int)),  this, SLOT(set_slider_tooltip(int)));
+        connect(slider, SIGNAL(valueChanged(int)),  this,   SLOT(set_slider_tooltip(int)));
         sl->addWidget(slider);
 
         sliders.append(slider);
@@ -207,46 +200,6 @@ void Generator_Curve::gen_meandr(void)
 void Generator_Curve::close_gen(void)
 {
     close();
-}
-//--------------------------------------------------------------------------------
-void Generator_Curve::load_setting(void)
-{
-    QStringList sl;
-    QString temp;
-    int n = 0;
-    int y = 0;
-
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-
-    temp = settings->value("SlidersValue").toString();
-    sl = temp.split(',');
-
-    n = 0;
-    foreach (QSlider *slider, sliders)
-    {
-        y = sl.at(n).toInt(); //1024 / MAX_SLIDER) * n;
-        slider->setValue(y);
-        n++;
-    }
-
-    settings->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void Generator_Curve::save_setting(void)
-{
-    QString temp;
-
-    temp.clear();
-    foreach (QSlider *slider, sliders)
-    {
-        temp.append(QString("%1,").arg(slider->value()));
-    }
-
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-    Q_CHECK_PTR(settings);
-
-    settings->setValue("SlidersValue", QVariant(temp));
-    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::updateText()

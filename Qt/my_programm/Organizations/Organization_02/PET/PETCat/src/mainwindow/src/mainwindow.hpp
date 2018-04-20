@@ -21,27 +21,15 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
-#include <QHostAddress>
-#include <QMainWindow>
-#include <QModelIndex>
-#include <QFile>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "pet_defines.hpp"
 #include "pet.h"
 //--------------------------------------------------------------------------------
-class QAction;
-class QMenu;
-class QUdpSocket;
-class QSpinBox;
-class QComboBox;
-class QToolButton;
-class QToolBar;
-class OptionBox;
-class QTextEdit;
-class QLineEdit;
-class QTranslator;
-class QTreeWidgetItem;
-class QTreeWidget;
 class MetaData;
 class LogDock;
 //--------------------------------------------------------------------------------

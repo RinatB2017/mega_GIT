@@ -193,11 +193,10 @@ void MyMainWindow::create_toolbars(void)
 void MyMainWindow::click_btn(void)
 {
     QToolButton *btn = dynamic_cast<QToolButton *>(sender());
-    if(btn == nullptr)
+    if(btn)
     {
-        return;
+        emit info(QString("%1").arg(btn->property("value").toInt()));
     }
-    emit info(QString("%1").arg(btn->property("value").toInt()));
 }
 //--------------------------------------------------------------------------------
 void MyMainWindow::file_action_click(void)

@@ -18,19 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTreeWidgetItem>
-#include <QProgressDialog>
-#include <QStyleFactory>
-#include <QProgressBar>
-#include <QPushButton>
-#include <QToolButton>
-#include <QGridLayout>
-#include <QSettings>
-#include <QSplitter>
-#include <QSpinBox>
-#include <QWidget>
-#include <QLabel>
-#include <QTimer>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "petcat_options.hpp"
 //--------------------------------------------------------------------------------
@@ -137,6 +129,9 @@ void OptionBox::init(void)
     ui->sw_main->setParent(main_splitter);
     main_splitter->addWidget(ui->left_frame);
     main_splitter->addWidget(ui->sw_main);
+    main_splitter->setStretchFactor(0, 0);
+    main_splitter->setStretchFactor(1, 1);
+
     ui->layout_main->addWidget(main_splitter);
 
     QSettings *settings = new QSettings(ININAME, QSettings::IniFormat);

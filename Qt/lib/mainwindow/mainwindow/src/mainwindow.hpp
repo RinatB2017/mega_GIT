@@ -24,7 +24,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#include <QtGui>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -56,6 +56,7 @@
 //--------------------------------------------------------------------------------
 class LogBox;
 class LogDock;
+class SysLog_dock;
 //--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow
 {
@@ -102,6 +103,9 @@ public:
                          Qt::DockWidgetArea area,
                          QWidget *widget);
 
+    void load_setting(void);
+    void save_setting(void);
+
 signals:
     void updateLanguage(void);
 
@@ -117,12 +121,12 @@ signals:
     void signal_is_shows_error(bool);
     void signal_is_shows_trace(bool);
 
-    void syslog(QDateTime,
-                int,
-                int,
-                QString);
+    void syslog(QDateTime dt,
+                int level,
+                int src,
+                QString message);
     void syslog(int level,
-                QString src,
+                int src,
                 QString message);
 
 public slots:
@@ -147,10 +151,18 @@ private slots:
     void setToolBarLanguage(void);
     void help(void);
 
+#ifndef NO_LOG_INFO
     void slot_is_shows_info(bool state);
+#endif
+#ifndef NO_LOG_DEBUG
     void slot_is_shows_debug(bool state);
+#endif
+#ifndef NO_LOG_ERROR
     void slot_is_shows_error(bool state);
+#endif
+#ifndef NO_LOG_TRACE
     void slot_is_shows_trace(bool state);
+#endif
 
     void set_system_palette(void);
     void set_blue_palette(void);
@@ -226,7 +238,10 @@ private:
     void createStyleToolBar(void);
 
     LogDock *ld = 0;
+    SysLog_dock *syslog_dock = 0;
+
     void createLog(void);
+    void createSysLog_dock(void);
 
     int state_theme = DARK_THEME;
 
@@ -238,10 +253,10 @@ private:
     QList<QAction *> app_actions;
     QList<QAbstractButton *> app_buttons;
 
-    QMenu *m_app_filemenu    = 0;
-    QMenu *m_app_optionsmenu = 0;
+    QMenu *m_app_filemenu       = 0;
+    QMenu *m_app_optionsmenu    = 0;
     QMenu *m_app_windowsmenu    = 0;
-    QMenu *m_app_helpmenu    = 0;
+    QMenu *m_app_helpmenu       = 0;
 
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
@@ -267,13 +282,18 @@ private:
 
 protected:
     bool flag_close = false;
+#ifndef NO_LOG_INFO
     bool flag_show_info = false;
+#endif
+#ifndef NO_LOG_DEBUG
     bool flag_show_debug = false;
+#endif
+#ifndef NO_LOG_ERROR
     bool flag_show_error = false;
+#endif
+#ifndef NO_LOG_TRACE
     bool flag_show_trace = false;
-
-    void load_setting(void);
-    void save_setting(void);
+#endif
 
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);

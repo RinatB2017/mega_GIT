@@ -18,11 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QStandardItemModel>
-#include <QVBoxLayout>
-#include <QHeaderView>
-#include <QTableView>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "hexview16.hpp"
 //--------------------------------------------------------------------------------

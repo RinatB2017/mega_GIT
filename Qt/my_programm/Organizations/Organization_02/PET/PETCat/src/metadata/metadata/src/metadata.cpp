@@ -18,17 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QSqlError>
-//--------------------------------------------------------------------------------
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QTreeWidgetItem>
-#include <QHeaderView>
-#include <QTableView>
-#include <QAction>
 //--------------------------------------------------------------------------------
 #include "metadata.hpp"
 //--------------------------------------------------------------------------------

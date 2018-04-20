@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
-#define COLOR   Qt::yellow
+#define COLOR   Qt::black
 #define PEN     QPen(COLOR, 2, Qt::SolidLine)
 #define ELLIPSE QPointF(width()/2, height()/2), width()/8, height()/8
 
@@ -70,6 +70,7 @@ protected:
         p.drawEllipse(ELLIPSE);
     }
 };
+
 class RightTopWidget : public QWidget
 {
 protected:
@@ -97,6 +98,7 @@ protected:
         p.drawEllipse(ELLIPSE);
     }
 };
+
 class RightBottomWidget : public QWidget
 {
 protected:
@@ -116,7 +118,7 @@ class MyMainWindow : public MainWindow
     Q_OBJECT
 
 public:
-    MyMainWindow(MainWindow *parent = 0);
+    explicit MyMainWindow(MainWindow *parent = 0);
     ~MyMainWindow();
 
     void setCentralWidget(QWidget *widget);
@@ -129,9 +131,6 @@ public:
     static void messageHandler(QtMsgType type,
                                const char *msg);
 #endif
-
-signals:
-    void notifySignal(void);
 
 private slots:
     void file_action_click(void);

@@ -18,12 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QLocale>
-#include <QFrame>
-
-#include <QAction>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -60,16 +59,13 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
-    QPixmap pixmap(":/logo/pinguin.png");
+    QPixmap pixmap(":/logo/logo.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
     Q_CHECK_PTR(splash);
 
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();
-
-    QFrame *frame = new QFrame;
-    Q_CHECK_PTR(frame);
 
     splash->showMessage("init RS-232_5 (1)...");
     SerialBox5 *serial = new SerialBox5(main_window->getThis(), "RS-232_5 (1)", "RS-232_1");
@@ -79,23 +75,15 @@ int main(int argc, char *argv[])
     SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
     serial2->add_menu(4);
 
-#if 1
-    QBoxLayout *box = new QBoxLayout(QBoxLayout::LeftToRight);
-#else
-    QBoxLayout *box = new QBoxLayout(QBoxLayout::TopToBottom);
-#endif
-    box->addWidget(serial);
-    box->addWidget(serial2);
-    frame->setLayout(box);
-
-    main_window->setCentralWidget(frame);
+    main_window->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  serial);
+    main_window->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, serial2);
+    main_window->load_setting();
     main_window->show();
 
     splash->finish(main_window);
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

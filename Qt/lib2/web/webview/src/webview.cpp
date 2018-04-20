@@ -18,16 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QNetworkRequest>
-
-#include <QContextMenuEvent>
-#include <QApplication>
-#include <QInputDialog>
-#include <QInputEvent>
-#include <QStyle>
-#include <QMenu>
 //--------------------------------------------------------------------------------
 #include "persistentcookiejar.hpp"
 #include "websettingbox.hpp"

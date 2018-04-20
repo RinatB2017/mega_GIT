@@ -51,8 +51,6 @@ private:
     QWidget *add_grapher(void);
 
     void init(void);
-    void load_setting(void);
-    void save_setting(void);
 
     void updateText(void);
 };

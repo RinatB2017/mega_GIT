@@ -190,15 +190,79 @@ int MainBox::get_cnt(void)
     return qrand() % 10;
 }
 //--------------------------------------------------------------------------------
+void MainBox::readFortune(void)
+{
+    emit info("readFortune");
+    emit info(QString("tcpSocket->bytesAvailable() %1").arg(tcpSocket->bytesAvailable()));
+    QByteArray ba = tcpSocket->readAll();
+    emit trace(ba);
+}
+void MainBox::s_error(QAbstractSocket::SocketError err)
+{
+    emit error(QString("err: %1").arg(err));
+    emit error(QString("errorString: %1").arg(tcpSocket->errorString()));
+}
+
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    tcpSocket = new QTcpSocket(this);
+    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readFortune()));
+    connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, (SLOT(s_error(QAbstractSocket::SocketError))));
+
+    bool ok = false;
+
+    QByteArray reqStr;
+    reqStr.append("OPTIONS rtsp://192.168.0.66 RTSP/1.0\r\n");
+    //reqStr.append("GET_PARAMETER rtsp://192.168.0.66 RTSP/1.0\r\n");
+    //reqStr.append("SETUP rtsp://192.168.0.66 RTSP/1.0\r\n");
+    //reqStr.append("PLAY rtsp://192.168.0.66 RTSP/1.0\r\n");
+    //reqStr.append("http://192.168.0.66/cgi-bin/network_cgi?action=get&user=admin&pwd=admin");
+
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    tcpSocket->connectToHost("192.168.0.66", 554);
+
+    qint64 bytes = tcpSocket->write(reqStr);
+    emit info(QString("write %1 bytes").arg(bytes));
+    ok = tcpSocket->waitForBytesWritten(1000);
+    if(!ok)
+    {
+        emit error("waitForBytesWritten");
+        return false;
+    }
+    ok = tcpSocket->waitForReadyRead(1000);
+    if(!ok)
+    {
+        emit error("waitForReadyRead");
+        return false;
+    }
+    emit info("OK");
+#endif
+
+#if 0
     //request.setUrl(QUrl("https://2ip.ru/"));
     //request.setUrl(QUrl("rtsp://192.168.0.66/av0_0 RTSP/1.0"));
-    request.setUrl(QUrl("rtsp://192.168.0.66:554/av0_0 RTSP/1.0"));
+    //request.setUrl(QUrl("OPTIONS rtsp://192.168.0.66:554/av0_0 RTSP/1.0"));
+    QString reqStr;
+    reqStr.append("OPTIONS 192.168.0.66 RTSP/1.0\r\n");
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    QUrl url;
+    url.setScheme("rtsp");
+    url.setUrl(reqStr);
+    request.setUrl(url);
+
+    //request.setUrl(QUrl("OPTIONS rtsp://192.168.0.66 RTSP/1.0\r\n CSeq: 1\r\n User-Agent: Python MJPEG Client\r\n"));
+    //request.setRawHeader("User-Agent", "Python MJPEG Client");
     QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
     while (!reply->isFinished())
     {
@@ -208,7 +272,10 @@ bool MainBox::test_0(void)
     do
     {
         ba = reply->readLine();
-        emit info(ba);
+        if(ba.isEmpty() == false)
+        {
+            emit info(QString("[%1]").arg(ba.data()));
+        }
     } while(ba.isEmpty() == false);
 
     emit info("OK");

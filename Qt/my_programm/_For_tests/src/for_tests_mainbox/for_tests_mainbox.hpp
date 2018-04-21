@@ -147,6 +147,10 @@ public slots:
     void check_in(void);
     void victory(void);
 
+    //TODO
+    void readFortune(void);
+    void s_error(QAbstractSocket::SocketError err);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -169,6 +173,7 @@ private:
     Ui::MainBox *ui = 0;
 
     //TODO
+    QTcpSocket *tcpSocket = 0;
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
     //---

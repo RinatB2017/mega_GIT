@@ -22,6 +22,7 @@ SUBDIRS += \
     MODBUS \
     show_films \
     Templates \
+    Test_IPCam \
     WiFi \
 
 unix {

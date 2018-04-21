@@ -62,12 +62,14 @@ private slots:
 
     bool test(void);
 
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test_OPTIONS(void);
+    bool test_DESCRIBE(void);
+    bool test_SET_PARAMETER(void);
+    bool test_GET_PARAMETER(void);
+    bool test_SETUP(void);
+    bool test_TEARDOWN(void);
+    bool test_PLAY(void);
+    bool test_PAUSE(void);
 
     void readFortune(void);
     void s_error(QAbstractSocket::SocketError err);
@@ -79,6 +81,9 @@ private slots:
     void f_connected(void);
     void f_disconnected(void);
 
+    void testbar_lock(void);
+    void testbar_unlock(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -87,7 +92,8 @@ private:
         ID_TEST_3,
         ID_TEST_4,
         ID_TEST_5,
-        ID_TEST_6
+        ID_TEST_6,
+        ID_TEST_7
     };
 
     typedef struct CMD
@@ -97,6 +103,7 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
     QComboBox *cb_test = 0;
+    QToolButton *btn_choice_test = 0;
     QList<CMD> commands;
 
     MySplashScreen *splash = 0;

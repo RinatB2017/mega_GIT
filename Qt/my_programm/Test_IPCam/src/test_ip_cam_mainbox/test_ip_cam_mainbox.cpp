@@ -86,12 +86,14 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear();
-    commands.append({ ID_TEST_0, "OPTIONS", &MainBox::test_0 });
-    commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
-    commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
-    commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
-    commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
-    commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
+    commands.append({ ID_TEST_0, "OPTIONS",     &MainBox::test_OPTIONS });
+    commands.append({ ID_TEST_1, "DESCRIBE",    &MainBox::test_DESCRIBE });
+    commands.append({ ID_TEST_2, "GET_PARAMETER",      &MainBox::test_GET_PARAMETER });
+    commands.append({ ID_TEST_3, "SET_PARAMETER",      &MainBox::test_SET_PARAMETER });
+    commands.append({ ID_TEST_4, "SETUP",       &MainBox::test_SETUP });
+    commands.append({ ID_TEST_5, "TEARDOWN",    &MainBox::test_TEARDOWN });
+    commands.append({ ID_TEST_6, "PLAY",        &MainBox::test_PLAY });
+    commands.append({ ID_TEST_7, "PAUSE",       &MainBox::test_PAUSE});
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -117,16 +119,15 @@ void MainBox::createTestBar(void)
     testbar->addWidget(btn_connect);
     testbar->addWidget(cb_test);
 
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
+    btn_choice_test = add_button(testbar,
+                                 new QToolButton(this),
+                                 qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                 "choice_test",
+                                 "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
     testbar->addWidget(btn_disconnect);
 
-    btn_connect->setEnabled(true);
-    btn_disconnect->setEnabled(false);
+    testbar_unlock();
 
     connect(btn_choice_test, SIGNAL(clicked(bool)), this, SLOT(choice_test()));
 }
@@ -185,17 +186,31 @@ void MainBox::f_disconnect(void)
     tcpSocket->disconnectFromHost();
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_connected(void)
+void MainBox::testbar_lock(void)
 {
     btn_connect->setEnabled(false);
+    cb_test->setEnabled(true);
+    btn_choice_test->setEnabled(true);
     btn_disconnect->setEnabled(true);
+}
+//--------------------------------------------------------------------------------
+void MainBox::testbar_unlock(void)
+{
+    btn_connect->setEnabled(true);
+    cb_test->setEnabled(false);
+    btn_choice_test->setEnabled(false);
+    btn_disconnect->setEnabled(false);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_connected(void)
+{
+    testbar_lock();
     emit info("Connected");
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_disconnected(void)
 {
-    btn_connect->setEnabled(true);
-    btn_disconnect->setEnabled(false);
+    testbar_unlock();
     emit info("Disconnected");
 }
 //--------------------------------------------------------------------------------
@@ -273,7 +288,7 @@ bool MainBox::send_data(QByteArray data)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test_OPTIONS(void)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -291,35 +306,130 @@ bool MainBox::test_0(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+bool MainBox::test_DESCRIBE(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    return true;
+    QByteArray reqStr;
+    reqStr.append(QString("DESCRIBE %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+bool MainBox::test_SET_PARAMETER(void)
 {
     emit trace(Q_FUNC_INFO);
-    return true;
+
+    QByteArray reqStr;
+    reqStr.append(QString("SET_PARAMETER %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
+bool MainBox::test_GET_PARAMETER(void)
 {
     emit trace(Q_FUNC_INFO);
-    return true;
+
+    QByteArray reqStr;
+    reqStr.append(QString("GET_PARAMETER %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
+bool MainBox::test_SETUP(void)
 {
     emit trace(Q_FUNC_INFO);
-    return true;
+
+    QByteArray reqStr;
+    reqStr.append(QString("SETUP %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
+bool MainBox::test_TEARDOWN(void)
 {
     emit trace(Q_FUNC_INFO);
-    return true;
+
+    QByteArray reqStr;
+    reqStr.append(QString("TEARDOWN %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_PLAY(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QByteArray reqStr;
+    reqStr.append(QString("PLAY %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_PAUSE(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QByteArray reqStr;
+    reqStr.append(QString("PAUSE %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
+
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_error(QMediaPlayer::Error err)

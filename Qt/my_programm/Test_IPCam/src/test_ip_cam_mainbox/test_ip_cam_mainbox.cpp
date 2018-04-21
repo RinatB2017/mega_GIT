@@ -125,6 +125,16 @@ void MainBox::createTestBar(void)
                                  "choice_test",
                                  "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
+
+    //---
+    btn_test = add_button(testbar,
+                          new QToolButton(this),
+                          qApp->style()->standardIcon(QStyle::SP_CommandLink),
+                          "test",
+                          "test");
+    btn_test->setObjectName("btn_test");
+    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    //---
     testbar->addWidget(btn_disconnect);
 
     testbar_unlock();
@@ -177,6 +187,7 @@ void MainBox::f_connect(void)
     {
         port = 554;
     }
+    port = 80;  //TODO
 
     tcpSocket->connectToHost(ip, port);
 }
@@ -191,6 +202,7 @@ void MainBox::testbar_lock(void)
     btn_connect->setEnabled(false);
     cb_test->setEnabled(true);
     btn_choice_test->setEnabled(true);
+    btn_test->setEnabled(true);
     btn_disconnect->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
@@ -199,37 +211,36 @@ void MainBox::testbar_unlock(void)
     btn_connect->setEnabled(true);
     cb_test->setEnabled(false);
     btn_choice_test->setEnabled(false);
+    btn_test->setEnabled(false);
     btn_disconnect->setEnabled(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_connected(void)
 {
     testbar_lock();
-    emit info("Connected");
+    emit debug("Connected");
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_disconnected(void)
 {
     testbar_unlock();
-    emit info("Disconnected");
+    emit debug("Disconnected");
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     bool ok = false;
 
+    //reqStr.append("Host: http://192.168.0.66/cgi-bin/network_cgi?action=get&user=admin&pwd=admin\r\n");
+
     QByteArray reqStr;
-    reqStr.append("OPTIONS rtsp://192.168.0.66 RTSP/1.0\r\n");
-    //reqStr.append("GET_PARAMETER rtsp://192.168.0.66 RTSP/1.0\r\n");
-    //reqStr.append("SETUP rtsp://192.168.0.66 RTSP/1.0\r\n");
-    //reqStr.append("PLAY rtsp://192.168.0.66 RTSP/1.0\r\n");
-    //reqStr.append("http://192.168.0.66/cgi-bin/network_cgi?action=get&user=admin&pwd=admin");
-
-    reqStr.append("CSeq: 1\r\n");
-    reqStr.append("Session: 1\r\n");
+    reqStr.append("GET /cgi-bin/network_cgi?action=get&user=admin&pwd=admin HTTP/1.1\r\n");
+    //reqStr.append("GET /cgi-bin/date_cgi?action=get&user=admin&pwd=admin HTTP/1.1\r\n");
+    reqStr.append("Host: 192.168.0.66\r\n");
+    reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
+    reqStr.append("Accept: text/html\r\n");
+    reqStr.append("Connection: close\r\n");
     reqStr.append("\r\n");
-
-    //tcpSocket->connectToHost("192.168.0.66", 554);
 
     qint64 bytes = tcpSocket->write(reqStr);
     if(bytes < 0)

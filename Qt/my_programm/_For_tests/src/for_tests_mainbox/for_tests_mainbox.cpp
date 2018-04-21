@@ -195,6 +195,41 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    QWidget *w = new QWidget;
+
+    QSpinBox *a = new QSpinBox;
+    a->setRange(0, 0xFF);
+
+    QSpinBox *b = new QSpinBox;
+    b->setRange(0, 0xFF);
+
+    QSpinBox *c = new QSpinBox;
+    c->setRange(0, 0xFF);
+
+    QSpinBox *d = new QSpinBox;
+    d->setRange(0, 0xFF);
+
+    QSpinBox *port = new QSpinBox;
+    port->setRange(0, 0xFFFF);
+
+    QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->setMargin(0);
+    hbox->setSpacing(0);
+    hbox->addWidget(a);
+    hbox->addWidget(new QLabel("."));
+    hbox->addWidget(b);
+    hbox->addWidget(new QLabel("."));
+    hbox->addWidget(c);
+    hbox->addWidget(new QLabel("."));
+    hbox->addWidget(d);
+    hbox->addWidget(new QLabel(":"));
+    hbox->addWidget(port);
+    w->setLayout(hbox);
+
+    w->show();
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------

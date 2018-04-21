@@ -104,6 +104,7 @@ private:
     } CMD_t;
     QComboBox *cb_test = 0;
     QToolButton *btn_choice_test = 0;
+    QToolButton *btn_test = 0;
     QList<CMD> commands;
 
     MySplashScreen *splash = 0;

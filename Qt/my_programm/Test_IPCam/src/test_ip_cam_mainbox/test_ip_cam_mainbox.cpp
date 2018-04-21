@@ -62,14 +62,16 @@ void MainBox::init(void)
 
     //---
     tcpSocket = new QTcpSocket(this);
-    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readFortune()));
-    connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, (SLOT(s_error(QAbstractSocket::SocketError))));
+    connect(tcpSocket,  SIGNAL(readyRead()), this, SLOT(readFortune()));
+    connect(tcpSocket,  SIGNAL(error(QAbstractSocket::SocketError)), this, (SLOT(s_error(QAbstractSocket::SocketError))));
+    connect(tcpSocket,  SIGNAL(connected()),    this,   SLOT(f_connected()));
+    connect(tcpSocket,  SIGNAL(disconnected()), this,   SLOT(f_disconnected()));
     //---
     player = new QMediaPlayer;
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
     player->setVideoOutput(ui->video_widget);
 
-    ui->cb_address->addItem("rtsp://192.168.0.66/av0_0");
+    ui->cb_address->addItem("rtsp://192.168.0.66:554/av0_0");
     ui->cb_address->addItem("rtsp://192.168.1.88:554/HD");
 
     connect(ui->btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(f_video()));
@@ -84,13 +86,12 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear();
-    commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
+    commands.append({ ID_TEST_0, "OPTIONS", &MainBox::test_0 });
     commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
     commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -103,13 +104,29 @@ void MainBox::createTestBar(void)
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
     }
 
+    btn_connect = new QPushButton(this);
+    btn_connect->setObjectName("btn_connect");
+    btn_connect->setText("Connect");
+    connect(btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(f_connect()));
+
+    btn_disconnect = new QPushButton(this);
+    btn_disconnect->setObjectName("btn_disconnect");
+    btn_disconnect->setText("Disconnect");
+    connect(btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(f_disconnect()));
+
+    testbar->addWidget(btn_connect);
     testbar->addWidget(cb_test);
+
     QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
+    testbar->addWidget(btn_disconnect);
+
+    btn_connect->setEnabled(true);
+    btn_disconnect->setEnabled(false);
 
     connect(btn_choice_test, SIGNAL(clicked(bool)), this, SLOT(choice_test()));
 }
@@ -143,6 +160,45 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::f_connect(void)
+{
+    QUrl url;
+    url.setUrl(ui->cb_address->currentText());
+
+    QString ip = url.host();
+    if(ip.isEmpty())
+    {
+        emit error(QString("ip [%1] incorrect").arg(ip));
+        return;
+    }
+    int port = url.port();
+    if(port < 0)
+    {
+        port = 554;
+    }
+
+    tcpSocket->connectToHost(ip, port);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_disconnect(void)
+{
+    tcpSocket->disconnectFromHost();
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_connected(void)
+{
+    btn_connect->setEnabled(false);
+    btn_disconnect->setEnabled(true);
+    emit info("Connected");
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_disconnected(void)
+{
+    btn_connect->setEnabled(true);
+    btn_disconnect->setEnabled(false);
+    emit info("Disconnected");
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     bool ok = false;
@@ -158,7 +214,7 @@ bool MainBox::test(void)
     reqStr.append("Session: 1\r\n");
     reqStr.append("\r\n");
 
-    tcpSocket->connectToHost("192.168.0.66", 554);
+    //tcpSocket->connectToHost("192.168.0.66", 554);
 
     qint64 bytes = tcpSocket->write(reqStr);
     if(bytes < 0)
@@ -180,6 +236,40 @@ bool MainBox::test(void)
     }
     emit info("OK");
 
+#if 0
+    QUrl url;
+    //url.setUrl("rtsp://192.168.0.66:554");
+    url.setUrl(ui->cb_address->currentText());
+
+    emit info(url.scheme());
+    emit info(QString("IP: %1").arg(url.host()));
+    emit info(QString("Port: %1").arg(url.port()));
+#endif
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::send_data(QByteArray data)
+{
+    bool ok = false;
+    qint64 bytes = tcpSocket->write(data);
+    if(bytes < 0)
+    {
+        emit error(QString("write bytes %1").arg(bytes));
+        return false;
+    }
+    ok = tcpSocket->waitForBytesWritten(1000);
+    if(!ok)
+    {
+        emit error("waitForBytesWritten");
+        return false;
+    }
+    ok = tcpSocket->waitForReadyRead(1000);
+    if(!ok)
+    {
+        emit error("waitForReadyRead");
+        return false;
+    }
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -187,20 +277,23 @@ bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    QUrl url;
-    url.setUrl("rtsp://192.168.0.66:554");
-    emit info(url.scheme());
-    emit info(url.host());
-    emit info(QString("%1").arg(url.port()));
+    QByteArray reqStr;
+    reqStr.append(QString("OPTIONS %1 RTSP/1.0\r\n").arg(ui->cb_address->currentText()));
+    reqStr.append("CSeq: 1\r\n");
+    reqStr.append("Session: 1\r\n");
+    reqStr.append("\r\n");
 
-    return true;
+    bool ok = send_data(reqStr);
+    if(ok)
+    {
+        emit info("OK");
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
-
-    test();
 
     return true;
 }

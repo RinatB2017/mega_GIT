@@ -73,6 +73,12 @@ private slots:
     void s_error(QAbstractSocket::SocketError err);
     void f_error(QMediaPlayer::Error err);
 
+    void f_connect(void);
+    void f_disconnect(void);
+
+    void f_connected(void);
+    void f_disconnected(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -101,6 +107,11 @@ private:
     QTcpSocket *tcpSocket = 0;
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
+
+    QPushButton *btn_connect = 0;
+    QPushButton *btn_disconnect = 0;
+
+    bool send_data(QByteArray data);
 
     void init(void);
     void createTestBar(void);

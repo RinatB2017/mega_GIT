@@ -25,9 +25,6 @@
 #   include <QtWidgets>
 #endif
 //--------------------------------------------------------------------------------
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-//--------------------------------------------------------------------------------
 #include "for_tests_mainbox.hpp"
 #include "ui_for_tests_mainbox.h"
 
@@ -147,10 +144,6 @@ public slots:
     void check_in(void);
     void victory(void);
 
-    //TODO
-    void readFortune(void);
-    void s_error(QAbstractSocket::SocketError err);
-
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -171,12 +164,6 @@ private:
 
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-
-    //TODO
-    QTcpSocket *tcpSocket = 0;
-    QNetworkRequest request;
-    QNetworkAccessManager networkManager;
-    //---
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;

@@ -26,7 +26,11 @@
 #else
 #   include <QtGui>
 #endif
+//--------------------------------------------------------------------------------
 #include <QMediaPlayer>
+//--------------------------------------------------------------------------------
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -54,15 +58,49 @@ public slots:
     void f_video(void);
 
 private slots:
+    void choice_test(void);
+
     bool test(void);
 
+    bool test_0(void);
+    bool test_1(void);
+    bool test_2(void);
+    bool test_3(void);
+    bool test_4(void);
+    bool test_5(void);
+
+    void readFortune(void);
+    void s_error(QAbstractSocket::SocketError err);
     void f_error(QMediaPlayer::Error err);
 
 private:
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+    QComboBox *cb_test = 0;
+    QList<CMD> commands;
+
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 
     QMediaPlayer *player = 0;
+
+    QTcpSocket *tcpSocket = 0;
+    QNetworkRequest request;
+    QNetworkAccessManager networkManager;
 
     void init(void);
     void createTestBar(void);

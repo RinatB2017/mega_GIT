@@ -28,12 +28,12 @@
 #include <QNetworkRequest>
 #include <QVideoWidget>
 //--------------------------------------------------------------------------------
-#include "ui_rs232_5_mainbox.h"
+#include "ui_pelco_d_485_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
-#include "rs232_5_mainbox.hpp"
+#include "pelco_d_485_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG

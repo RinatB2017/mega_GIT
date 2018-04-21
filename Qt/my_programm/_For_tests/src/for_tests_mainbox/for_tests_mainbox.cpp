@@ -38,6 +38,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("for_test");
     save_config();
     delete ui;
 }
@@ -70,6 +71,8 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+    load_widgets("for_test");
+
     load_config();
 }
 //--------------------------------------------------------------------------------
@@ -112,6 +115,11 @@ void MainBox::createTestBar(void)
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+    //---
+    IPV4 *ipv4 = new IPV4(this);
+    testbar->addWidget(ipv4);
+    //---
 
     QCheckBox *cb_block = new QCheckBox("block");
     testbar->addWidget(cb_block);
@@ -194,41 +202,6 @@ bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
-
-#if 1
-    QWidget *w = new QWidget;
-
-    QSpinBox *a = new QSpinBox;
-    a->setRange(0, 0xFF);
-
-    QSpinBox *b = new QSpinBox;
-    b->setRange(0, 0xFF);
-
-    QSpinBox *c = new QSpinBox;
-    c->setRange(0, 0xFF);
-
-    QSpinBox *d = new QSpinBox;
-    d->setRange(0, 0xFF);
-
-    QSpinBox *port = new QSpinBox;
-    port->setRange(0, 0xFFFF);
-
-    QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->setMargin(0);
-    hbox->setSpacing(0);
-    hbox->addWidget(a);
-    hbox->addWidget(new QLabel("."));
-    hbox->addWidget(b);
-    hbox->addWidget(new QLabel("."));
-    hbox->addWidget(c);
-    hbox->addWidget(new QLabel("."));
-    hbox->addWidget(d);
-    hbox->addWidget(new QLabel(":"));
-    hbox->addWidget(port);
-    w->setLayout(hbox);
-
-    w->show();
-#endif
 
     return true;
 }

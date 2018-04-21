@@ -110,6 +110,85 @@ public:
     }
 };
 //--------------------------------------------------------------------------------
+class IPV4 : public QWidget
+{
+    Q_OBJECT
+
+public:
+    IPV4(QWidget *parent) : QWidget(parent)
+    {
+        a = new QSpinBox(this);
+        b = new QSpinBox(this);
+        c = new QSpinBox(this);
+        d = new QSpinBox(this);
+
+        a->setObjectName("ipv4_a");
+        b->setObjectName("ipv4_b");
+        c->setObjectName("ipv4_c");
+        d->setObjectName("ipv4_d");
+
+        port = new QSpinBox(this);
+
+        port->setObjectName("ipv4_port");
+
+        a->setRange(0, 0xFF);
+        b->setRange(0, 0xFF);
+        c->setRange(0, 0xFF);
+        d->setRange(0, 0xFF);
+
+        port->setRange(0, 0xFFFF);
+        port->setToolTip("Порт");
+
+        QHBoxLayout *hbox = new QHBoxLayout;
+        hbox->setMargin(0);
+        hbox->setSpacing(0);
+        hbox->addWidget(a);
+        hbox->addWidget(new QLabel("."));
+        hbox->addWidget(b);
+        hbox->addWidget(new QLabel("."));
+        hbox->addWidget(c);
+        hbox->addWidget(new QLabel("."));
+        hbox->addWidget(d);
+        hbox->addWidget(new QLabel(":"));
+        hbox->addWidget(port);
+        setLayout(hbox);
+    }
+
+    QUrl get_url(void)
+    {
+        QUrl url;
+        url.setHost(QString("%1.%2.%3.%4")
+                    .arg(a->value())
+                    .arg(b->value())
+                    .arg(c->value())
+                    .arg(d->value()));
+        url.setPort(port->value());
+
+        return url;
+    }
+    void set_url(QUrl url)
+    {
+        QString host = url.host();
+        QStringList sl = host.split(".");
+        if(sl.count() == 4)
+        {
+            a->setValue(QString(sl[0]).toInt());
+            b->setValue(QString(sl[1]).toInt());
+            c->setValue(QString(sl[2]).toInt());
+            d->setValue(QString(sl[3]).toInt());
+        }
+        port->setValue(url.port());
+    }
+
+private:
+    QSpinBox *a = 0;
+    QSpinBox *b = 0;
+    QSpinBox *c = 0;
+    QSpinBox *d = 0;
+
+    QSpinBox *port = 0;
+};
+//--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget

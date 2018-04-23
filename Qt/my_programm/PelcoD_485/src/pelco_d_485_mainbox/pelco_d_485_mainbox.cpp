@@ -100,6 +100,7 @@ void MainBox::init(void)
 
     ui->cb_address->addItem("rtsp://192.168.0.66/av0_0");
     ui->cb_address->addItem("rtsp://192.168.1.88:554/HD");
+    ui->cb_address->addItem("rtsp://192.168.1.67:554/av0_0");
 
     connect(ui->btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(f_video()));
     //---

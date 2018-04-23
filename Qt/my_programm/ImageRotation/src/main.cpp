@@ -1,7 +1,7 @@
 #include "main.h"
 
 //To switch between Camera or JPEG Image
-#define NO_CAMERA false
+#define NO_CAMERA true
 int main()
 {
     F_LOG;

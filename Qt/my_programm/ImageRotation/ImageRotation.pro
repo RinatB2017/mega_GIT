@@ -4,9 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 PROGRAMM_PATH  += \
+#    C:\OpenCV\sources\3rdparty\include\opencl\1.2 \
+#    c:\OpenCV\sources\include \
+#    c:\OpenCV\sources\modules\core\include \
+#    c:\OpenCV\build\include \
     $$PWD \
     $$PWD/src \
-	$$PWD/opencl
+    $$PWD/opencl
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 

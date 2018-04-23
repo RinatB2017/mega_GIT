@@ -40,6 +40,7 @@ MainBox::~MainBox()
 {
     save_widgets("for_test");
     save_config();
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -72,7 +73,6 @@ void MainBox::init(void)
     }
 #endif
     load_widgets("for_test");
-
     load_config();
 }
 //--------------------------------------------------------------------------------

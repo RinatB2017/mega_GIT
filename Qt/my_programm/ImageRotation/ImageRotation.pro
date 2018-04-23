@@ -8,6 +8,8 @@ PROGRAMM_PATH  += \
 #    c:\OpenCV\sources\include \
 #    c:\OpenCV\sources\modules\core\include \
 #    c:\OpenCV\build\include \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include/g++-v7 \
+    /usr/lib/OpenCL/vendors/mesa/include \
     $$PWD \
     $$PWD/src \
     $$PWD/opencl
@@ -18,12 +20,13 @@ QT_CONFIG -= no-pkg-config
 
 SOURCES += main.cpp
 
-HEADERS +=  main.h \
-            rotation.cl
+HEADERS +=  \
+    main.h \
+    rotation.cl
 
 unix {
-    CONFIG += link_pkgconfig
-    PKGCONFIG += opencv
+    CONFIG      += link_pkgconfig
+    PKGCONFIG   += opencv
     INCLUDEPATH += /usr/include/
 
     LIBS += -L/usr/local/lib/

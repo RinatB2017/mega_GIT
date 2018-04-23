@@ -25,7 +25,6 @@ void img_rotate(__global unsigned char* src_data,
    // Bounds Checking
    if((xpos>=0) && (xpos< W) && (ypos>=0) && (ypos< H))
    {
-
       // Read (ix,iy) src_data and store at (xpos,ypos) in
       // dest_data
       // In this case, because we rotating about the origin

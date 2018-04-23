@@ -2,7 +2,7 @@
 
 //To switch between Camera or JPEG Image
 #define NO_CAMERA true
-int main()
+int main(void)
 {
     F_LOG;
     cv::Mat image;
@@ -15,7 +15,8 @@ int main()
     queue = cl::CommandQueue(context, devices[0]);
     createKernel("opencl/rotation.cl");
 
-    float theta = 3.14159/6;
+    //float theta = 3.14159/6;
+    float theta = 3.14159/2;
     float cos_theta = cos(theta);
     float sin_theta = sin(theta);
 #if NO_CAMERA
@@ -27,6 +28,7 @@ int main()
         cap >> image;
 #endif
         cv::cvtColor(image, image, cv::COLOR_BGRA2GRAY);
+        //cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
         std::cout<<"===> Image channeles :\t"<< image.channels()<<std::endl;
         std::cout<<"===> Image width :\t"<< image.size().width<<std::endl;
         std::cout<<"===> Image size :\t"<< image.size()<<std::endl;

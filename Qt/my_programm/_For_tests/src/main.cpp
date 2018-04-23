@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 #endif
 
-#ifdef QT_DEBUG
+#ifdef QT_DEBUG5
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

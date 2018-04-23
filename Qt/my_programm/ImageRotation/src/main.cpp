@@ -13,7 +13,7 @@ int main()
     platforms[0].getDevices(CL_DEVICE_TYPE_GPU, &devices);
     context = cl::Context(devices);
     queue = cl::CommandQueue(context, devices[0]);
-    createKernel("../ImageRotation/rotation.cl");
+    createKernel("opencl/rotation.cl");
 
     float theta = 3.14159/6;
     float cos_theta = cos(theta);

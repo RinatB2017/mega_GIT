@@ -3,16 +3,27 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-QT_CONFIG -= no-pkg-config
-CONFIG += link_pkgconfig
-PKGCONFIG += opencv
+PROGRAMM_PATH  += \
+    $$PWD \
+    $$PWD/src \
+	$$PWD/opencl
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
 
-LIBS += -L/usr/local/lib/\
-        -lOpenCL
+QT_CONFIG -= no-pkg-config
 
 SOURCES += main.cpp
 
 HEADERS +=  main.h \
             rotation.cl
 
-INCLUDEPATH += /usr/include/
+unix {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += opencv
+    INCLUDEPATH += /usr/include/
+
+    LIBS += -L/usr/local/lib/
+    LIBS += -lOpenCL
+}
+
+VPATH = $$INCLUDEPATH

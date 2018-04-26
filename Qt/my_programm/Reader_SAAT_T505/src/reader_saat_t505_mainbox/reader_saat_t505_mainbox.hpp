@@ -121,7 +121,7 @@ private:
     int cnt_card = 0;
 
     void init(void);
-
+    void init_serial_widget(void);
     void createTestBar(void);
     void updateText(void);
 };

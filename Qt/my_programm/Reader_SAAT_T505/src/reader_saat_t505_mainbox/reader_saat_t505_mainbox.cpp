@@ -68,14 +68,7 @@ void MainBox::init(void)
     //---
     l_cards.clear();
     //---
-    ui->serial_widget->set_caption("RS232_5");
-    ui->serial_widget->add_menu(2);
-
-    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
-
-    ascii_data = new Ascii_data();
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), ascii_data, SLOT(append(QByteArray)));
-    connect(ascii_data,         SIGNAL(result(QByteArray)), this,       SLOT(read_data(QByteArray)));
+    init_serial_widget();
     //---
 
 #if 1
@@ -88,6 +81,19 @@ void MainBox::init(void)
 #endif
 
     load_config();
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_serial_widget(void)
+{
+    ui->serial_widget->set_caption("RS232");
+    ui->serial_widget->add_menu(2);
+    ui->serial_widget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+
+    ascii_data = new Ascii_data();
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), ascii_data, SLOT(append(QByteArray)));
+    connect(ascii_data,         SIGNAL(result(QByteArray)), this,       SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 bool MainBox::find_card(uint32_t card_num)

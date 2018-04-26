@@ -28,28 +28,28 @@
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
 
-union A_INT32
-{
-  uint32_t value;
-  struct
-  {
-    uint8_t b0;
-    uint8_t b1;
-    uint8_t b2;
-    uint8_t b3;
-  } bytes;
-};
-union B_INT32
-{
-  uint32_t value;
-  struct
-  {
-    uint8_t b3;
-    uint8_t b2;
-    uint8_t b1;
-    uint8_t b0;
-  } bytes;
-};
+//union A_INT32
+//{
+//  uint32_t value;
+//  struct
+//  {
+//    uint8_t b0;
+//    uint8_t b1;
+//    uint8_t b2;
+//    uint8_t b3;
+//  } bytes;
+//};
+//union B_INT32
+//{
+//  uint32_t value;
+//  struct
+//  {
+//    uint8_t b3;
+//    uint8_t b2;
+//    uint8_t b1;
+//    uint8_t b0;
+//  } bytes;
+//};
 
 struct PACKET
 {

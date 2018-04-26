@@ -72,7 +72,6 @@ void MainBox::init(void)
     ui->serial_widget->add_menu(2);
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
-    //connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 
     ascii_data = new Ascii_data();
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), ascii_data, SLOT(append(QByteArray)));
@@ -112,22 +111,13 @@ void MainBox::read_data(QByteArray data)
     }
     PACKET *packet = (PACKET *)data.data();
 
-    if(packet->id != 0xc0a9)
+    if(packet->id != 0xA9C0)
     {
         emit debug(QString("id 0x%1").arg(packet->id, 4, 16, QChar('0')));
         return;
     }
 
-    A_INT32 a;
-    B_INT32 b;
-
-    a.value = packet->num_card;
-    b.bytes.b0 = a.bytes.b0;
-    b.bytes.b1 = a.bytes.b1;
-    b.bytes.b2 = a.bytes.b2;
-    b.bytes.b3 = a.bytes.b3;
-
-    bool ok = find_card(b.value);
+    bool ok = find_card(packet->num_card);
     if(ok == false)
     {
         if(cnt_card != l_cards.count())
@@ -146,8 +136,8 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear();
-    commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
-    commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
+    commands.append({ ID_TEST_0, "Read id list", &MainBox::test_0 });
+    commands.append({ ID_TEST_1, "Clean id list", &MainBox::test_1 });
     commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
@@ -207,17 +197,22 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
-    emit info("Test_0()");
+    emit trace(Q_FUNC_INFO);
 
-    cnt_card = -1;
-    l_cards.clear();
+    foreach (uint32_t card, l_cards)
+    {
+        emit info(QString("%1").arg(card));
+    }
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
-    emit info("Test_1()");
+    emit trace(Q_FUNC_INFO);
+
+    cnt_card = -1;
+    l_cards.clear();
 
     return true;
 }

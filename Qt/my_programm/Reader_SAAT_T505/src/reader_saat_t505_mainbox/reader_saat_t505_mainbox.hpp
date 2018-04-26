@@ -116,6 +116,9 @@ private:
     QList<CMD> commands;
 
     Ascii_data *ascii_data = 0;
+    QList<uint32_t> l_cards;
+    bool find_card(uint32_t card_num);
+    int cnt_card = 0;
 
     void init(void);
 

@@ -65,6 +65,9 @@ void MainBox::init(void)
 
     createTestBar();
 
+    //---
+    l_cards.clear();
+    //---
     ui->serial_widget->set_caption("RS232_5");
     ui->serial_widget->add_menu(2);
 
@@ -74,8 +77,7 @@ void MainBox::init(void)
     ascii_data = new Ascii_data();
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), ascii_data, SLOT(append(QByteArray)));
     connect(ascii_data,         SIGNAL(result(QByteArray)), this,       SLOT(read_data(QByteArray)));
-
-    //installEventFilter(this);
+    //---
 
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -89,6 +91,19 @@ void MainBox::init(void)
     load_config();
 }
 //--------------------------------------------------------------------------------
+bool MainBox::find_card(uint32_t card_num)
+{
+    foreach (uint32_t value, l_cards)
+    {
+        if(card_num == value)
+        {
+            return true;
+        }
+    }
+    l_cards.append(card_num);
+    return false;
+}
+//--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray data)
 {
     if(data.length() != sizeof(PACKET))
@@ -96,6 +111,12 @@ void MainBox::read_data(QByteArray data)
         return;
     }
     PACKET *packet = (PACKET *)data.data();
+
+    if(packet->id != 0xc0a9)
+    {
+        emit debug(QString("id 0x%1").arg(packet->id, 4, 16, QChar('0')));
+        return;
+    }
 
     A_INT32 a;
     B_INT32 b;
@@ -106,7 +127,17 @@ void MainBox::read_data(QByteArray data)
     b.bytes.b2 = a.bytes.b2;
     b.bytes.b3 = a.bytes.b3;
 
-    emit info(QString("read card %1").arg(b.value));
+    bool ok = find_card(b.value);
+    if(ok == false)
+    {
+        if(cnt_card != l_cards.count())
+        {
+            emit info(QString("found %1 card").arg(l_cards.count()));
+            cnt_card = l_cards.count();
+        }
+    }
+
+    //emit info(QString("read card %1").arg(b.value));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -177,6 +208,9 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    cnt_card = -1;
+    l_cards.clear();
 
     return true;
 }

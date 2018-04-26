@@ -16,6 +16,7 @@ SUBDIRS += \
     Icons \
     Organizations \
     PelcoD_485 \
+	Reader_SAAT_T505 \
     neural/QNeuralNet \
     Labyrinth \
     NewMoonLight \

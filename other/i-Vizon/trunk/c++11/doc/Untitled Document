@@ -1,0 +1,1 @@
+The gist of it is that arrays decay into pointers once, it doesn't happen recursively. An array of arrays decays into a pointer to an array, not into a pointer to a pointer.

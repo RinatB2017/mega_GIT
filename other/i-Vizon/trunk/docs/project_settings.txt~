@@ -1,0 +1,10 @@
+wrapper include path should be added to the project settings.
+Filenames case used:
+--------------------
+All small case with '_' to seprate words.
+
+HeaderFiles:
+------------
+Abosulte paths are used.
+Requested to add include path in each projects.
+

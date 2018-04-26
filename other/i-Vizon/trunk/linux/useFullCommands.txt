@@ -1,0 +1,65 @@
+Date: 05/04/2014
+####################TEMPLATE FOLLOWED#####################
+######	HEADING
+###	Syntax
+$	Example
+####################TEMPLATE FOLLOWED#####################
+
+##### 	Get Help
+###	man yourDoubt
+$	man memcpy
+$	man gcc
+$	man ls
+
+##### 	List the contens in a directory
+###	ls -options
+$	ls 
+$	ls -al
+$	ls -al | more
+$	ls -al | tail
+
+#####	Redirection and pipes
+###	shell command | shell comand >> fileName.ext
+$	top | head >> topCPUProcess.txt
+
+#####	To get information about a installed program
+###	info applicationBinary
+$	info gcc
+
+#####	GCC C/C++ Compiler
+###	gcc -I /path/to/yourHeaderFile.h -o executableName yourSrcFileName.ext -L/path/to/lib -l(libraryName)
+$	gcc -I ~/helloworl.h -o helloworld helloworld.c -L/usr/ib -lm
+###	gcc -I /path/to/yourHeaderFile.h -c yourSrcFileName.ext
+$	gcc -I ~/helloworl.h -c helloworld
+###	gcc -o executableName yourSrcFileName.o
+$	gcc -o helloworld helloworld.o
+
+#####	To know shared library dependency
+###	ldd executableName
+$	ldd helloworld
+
+#####	GREP To search a string in a directory
+###	grep -sHrin "yourSearchString" path/to/directory
+$	grep -Shrin "Mageswaran" .
+
+#####	Process Status
+###	ps -formaters
+$	ps -e
+
+#####	RAM Status
+$	free
+
+##### 	Top CPU consuming process
+$	top
+
+#####	To terminate an application
+###	ps -ea | grep applicationName
+$	ps -ea | grep helloWorldLoop
+###	sudo kill -9 applicationID
+$	sudo kill -9 24523
+
+#####	Changing the fileProperties
+###	sudo chmod +a/x/r/w fileName
+###	sudo chmod u=rwx,go=rx fileName
+$	sudo chmod +x helloworld
+

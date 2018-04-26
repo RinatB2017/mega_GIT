@@ -1,0 +1,1 @@
+/opt/i-vizon/trunk/linux/memory/build/CMakeFiles/AllAboutMemoryLayout,.dir

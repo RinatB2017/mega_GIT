@@ -1,0 +1,1 @@
+/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/CMakeFiles/openni_grabber.dir

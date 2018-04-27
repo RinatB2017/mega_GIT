@@ -22,7 +22,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 IPV4::IPV4(QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
     a = new QSpinBox(this);
     b = new QSpinBox(this);
@@ -60,59 +60,14 @@ IPV4::IPV4(QWidget *parent) :
     hbox->addWidget(port);
     setLayout(hbox);
 
-#ifndef SAVE_INI
-    settings = new QSettings(ORGNAME, APPNAME);
-#else
-    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-#endif
-    load_QSpinBox("IPV4");
+    load_widgets("IPV4");
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
 IPV4::~IPV4()
 {
-    save_QSpinBox("IPV4");
-    settings->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void IPV4::load_QSpinBox(QString group_name)
-{
-    QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-    foreach (QSpinBox *obj, allobj)
-    {
-        if(!obj->objectName().isEmpty())
-        {
-            if(obj->property("no_save") != 0)
-            {
-                settings->beginGroup(obj->objectName());
-                obj->setValue(settings->value("value", 0).toInt());
-                settings->endGroup();
-            }
-        }
-    }
-    settings->endGroup();
-}
-//--------------------------------------------------------------------------------
-void IPV4::save_QSpinBox(QString group_name)
-{
-    QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-    foreach(QSpinBox *obj, allobj)
-    {
-        if(!obj->objectName().isEmpty())
-        {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("value", QVariant(obj->value()));
-            settings->endGroup();
-        }
-    }
-    settings->endGroup();
+    save_widgets("IPV4");
 }
 //--------------------------------------------------------------------------------
 QUrl IPV4::get_url(void)
@@ -140,5 +95,10 @@ void IPV4::set_url(QUrl url)
         d->setValue(QString(sl[3]).toInt());
     }
     port->setValue(url.port());
+}
+//--------------------------------------------------------------------------------
+void IPV4::updateText(void)
+{
+
 }
 //--------------------------------------------------------------------------------

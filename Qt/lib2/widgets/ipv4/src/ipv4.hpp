@@ -27,7 +27,9 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-class IPV4 : public QWidget
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+class IPV4 : public MyWidget
 {
     Q_OBJECT
 
@@ -46,10 +48,7 @@ private:
 
     QSpinBox *port = 0;
 
-    QSettings *settings = 0;
-
-    void load_QSpinBox(QString group_name);
-    void save_QSpinBox(QString group_name);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // IPV4_HPP

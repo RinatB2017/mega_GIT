@@ -33,7 +33,7 @@ class IPV4 : public QWidget
 
 public:
     explicit IPV4(QWidget *parent = 0);
-    ~IPV4();\
+    ~IPV4();
 
     QUrl get_url(void);
     void set_url(QUrl url);

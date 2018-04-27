@@ -7,6 +7,7 @@ FOR /R %FDir% %%i IN ("Makefile.*") DO Call :Obrabotka "%%i"
 FOR /R %FDir% %%i IN ("*.user") DO Call :Obrabotka "%%i"
 rem FOR /R %FDir% %%i IN ("*.exe") DO Call :Obrabotka "%%i"
 FOR /R %FDir% %%i IN ("*.o") DO Call :Obrabotka "%%i"
+rem FOR /R %FDir% %%i IN (".qmake.stash") DO Call :Obrabotka "%%i"
 goto Exit
 
 :Obrabotka

@@ -73,6 +73,7 @@ IPV4::IPV4(QWidget *parent) :
 IPV4::~IPV4()
 {
     save_QSpinBox("IPV4");
+    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void IPV4::load_QSpinBox(QString group_name)

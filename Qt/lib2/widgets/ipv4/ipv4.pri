@@ -5,7 +5,5 @@
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-QT      += testlib
-
-HEADERS += test.hpp
-SOURCES += test.cpp
+SOURCES	+= ipv4.cpp
+HEADERS += ipv4.hpp

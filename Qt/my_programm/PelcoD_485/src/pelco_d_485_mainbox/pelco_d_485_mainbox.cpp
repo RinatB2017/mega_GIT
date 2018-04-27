@@ -84,7 +84,7 @@ void MainBox::init(void)
 
     ui->serial_widget->set_caption("RS485");
     ui->serial_widget->add_menu(2);
-    ui->serial_widget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    //ui->serial_widget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
     //connect(ui->sb_sync,    SIGNAL(editingFinished()),  this,   SLOT(refresh()));
     connect(ui->sb_address, SIGNAL(editingFinished()),  this,   SLOT(refresh()));

@@ -14,7 +14,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
 
-#DEFINES += RS232_FIXED_SIZE
+DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
 
@@ -51,12 +51,7 @@ LIB_PATH = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
-greaterThan(QT_MAJOR_VERSION, 4) {
-    include ($$LIB_PATH2/serial5/serial5.pri)
-} esle {
-    include ($$LIB_PATH2/serial4/serial4.pri)
-}
+include ($$LIB_PATH2/serial5/serial5.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -28,6 +28,8 @@ DEFINES += NO_TRAYICON
 DEFINES += SAVE_WIDGETS_SPINBOX
 DEFINES += SAVE_WIDGETS_SLIDER
 
+#DEFINES += SAVE_INI
+
 HEADERS += \
     defines.hpp \
     version.hpp \
@@ -39,10 +41,6 @@ SOURCES += \
 
 FORMS   += test_ip_cam_mainbox.ui
 
-CONFIG(debug, debug|release) {
-    include (src/test/test.pri)
-}
-
 win32 {
     RC_FILE = ico/myapp.rc
 }
@@ -51,6 +49,7 @@ LIB_PATH = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

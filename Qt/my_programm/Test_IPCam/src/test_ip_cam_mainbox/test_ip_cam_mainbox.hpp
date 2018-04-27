@@ -41,6 +41,7 @@ namespace Ui {
 class MySplashScreen;
 class QToolButton;
 class QToolBar;
+class IPV4;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -111,6 +112,8 @@ private:
     Ui::MainBox *ui = 0;
 
     QMediaPlayer *player = 0;
+
+    IPV4 *ipv4_widget = 0;
 
     QTcpSocket *tcpSocket = 0;
     QNetworkRequest request;

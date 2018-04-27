@@ -80,7 +80,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    emit debug(tr("test"));
+    emit debug("test");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

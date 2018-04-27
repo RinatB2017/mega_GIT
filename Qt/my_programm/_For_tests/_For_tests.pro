@@ -93,6 +93,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include ($$LIB_PATH2/widgets/dip_widget/dip_widget.pri)
+include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 

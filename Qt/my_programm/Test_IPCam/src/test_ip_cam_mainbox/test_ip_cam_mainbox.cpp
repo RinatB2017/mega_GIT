@@ -33,6 +33,7 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_ip_cam_mainbox.hpp"
+#include "ipv4.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -73,6 +74,7 @@ void MainBox::init(void)
 
     ui->cb_address->addItem("rtsp://192.168.0.66:554/av0_0");
     ui->cb_address->addItem("rtsp://192.168.1.88:554/HD");
+    ui->cb_address->addItem("rtsp://192.168.1.67:554/av0_0");
 
     connect(ui->btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(f_video()));
     //---
@@ -105,6 +107,9 @@ void MainBox::createTestBar(void)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
     }
+
+    ipv4_widget = new IPV4(this);
+    testbar->addWidget(ipv4_widget);
 
     btn_connect = new QPushButton(this);
     btn_connect->setObjectName("btn_connect");
@@ -173,8 +178,7 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_connect(void)
 {
-    QUrl url;
-    url.setUrl(ui->cb_address->currentText());
+    QUrl url = ipv4_widget->get_url();
 
     QString ip = url.host();
     if(ip.isEmpty())
@@ -231,12 +235,12 @@ bool MainBox::test(void)
 {
     bool ok = false;
 
-    //reqStr.append("Host: http://192.168.0.66/cgi-bin/network_cgi?action=get&user=admin&pwd=admin\r\n");
+    QUrl url = ipv4_widget->get_url();
 
     QByteArray reqStr;
     reqStr.append("GET /cgi-bin/network_cgi?action=get&user=admin&pwd=admin HTTP/1.1\r\n");
     //reqStr.append("GET /cgi-bin/date_cgi?action=get&user=admin&pwd=admin HTTP/1.1\r\n");
-    reqStr.append("Host: 192.168.0.66\r\n");
+    reqStr.append(QString("Host: %1\r\n").arg(url.host()));
     reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
     reqStr.append("Accept: text/html\r\n");
     reqStr.append("Connection: close\r\n");
@@ -261,16 +265,6 @@ bool MainBox::test(void)
         return false;
     }
     emit info("OK");
-
-#if 0
-    QUrl url;
-    //url.setUrl("rtsp://192.168.0.66:554");
-    url.setUrl(ui->cb_address->currentText());
-
-    emit info(url.scheme());
-    emit info(QString("IP: %1").arg(url.host()));
-    emit info(QString("Port: %1").arg(url.port()));
-#endif
 
     return true;
 }
@@ -473,8 +467,6 @@ void MainBox::f_video(void)
 
     emit info("Run");
     const QUrl url1 = QUrl(ui->cb_address->currentText());
-    //const QUrl url1 = QUrl("rtsp://192.168.0.66/av0_0");
-    //const QUrl url1 = QUrl("rtsp://192.168.1.88/HD");
 
     const QNetworkRequest requestRtsp1(url1);
     player->setMedia(requestRtsp1);

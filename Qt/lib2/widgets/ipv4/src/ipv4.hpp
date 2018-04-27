@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,25 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef IPV4_HPP
+#define IPV4_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
-#include <QTest>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-class MainWindow;
-//--------------------------------------------------------------------------------
-class Test : public QObject {
+class IPV4 : public QWidget
+{
     Q_OBJECT
 
 public:
-    Test();
+    explicit IPV4(QWidget *parent = 0);
+    ~IPV4();\
 
-private slots:
-    void check_serial(void);
+    QUrl get_url(void);
+    void set_url(QUrl url);
 
 private:
-    MainWindow *mw = 0;
+    QSpinBox *a = 0;
+    QSpinBox *b = 0;
+    QSpinBox *c = 0;
+    QSpinBox *d = 0;
+
+    QSpinBox *port = 0;
+
+    QSettings *settings = 0;
+
+    void load_QSpinBox(QString group_name);
+    void save_QSpinBox(QString group_name);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // IPV4_HPP

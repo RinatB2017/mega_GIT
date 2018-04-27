@@ -126,6 +126,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if(flag_close)
     {
         save_setting();
+        centralWidget()->deleteLater(); //FIXME
         event->accept();
         return;
     }
@@ -580,34 +581,35 @@ void MainWindow::load_main(void)
 //--------------------------------------------------------------------------------
 void MainWindow::save_main(void)
 {
-    Q_CHECK_PTR(settings);
+    if(settings)
+    {
+        settings->beginGroup("Main");
+        settings->setValue("FontName",      QApplication::font().family());
+        settings->setValue("FontWeight",    QApplication::font().weight());
+        settings->setValue("FontSize",      QApplication::font().pointSize());
+        settings->setValue("StyleName",     style_name);
 
-    settings->beginGroup("Main");
-    settings->setValue("FontName",      QApplication::font().family());
-    settings->setValue("FontWeight",    QApplication::font().weight());
-    settings->setValue("FontSize",      QApplication::font().pointSize());
-    settings->setValue("StyleName",     style_name);
-
-    settings->setValue("NoAnswerFromExit", flag_close);
+        settings->setValue("NoAnswerFromExit", flag_close);
 #ifndef NO_LOG_INFO
-    settings->setValue("flag_show_info",  flag_show_info);
+        settings->setValue("flag_show_info",  flag_show_info);
 #endif
 #ifndef NO_LOG_DEBUG
-    settings->setValue("flag_show_debug", flag_show_debug);
+        settings->setValue("flag_show_debug", flag_show_debug);
 #endif
 #ifndef NO_LOG_ERROR
-    settings->setValue("flag_show_error", flag_show_error);
+        settings->setValue("flag_show_error", flag_show_error);
 #endif
 #ifndef NO_LOG_TRACE
-    settings->setValue("flag_show_trace", flag_show_trace);
+        settings->setValue("flag_show_trace", flag_show_trace);
 #endif
 
-    settings->setValue("Theme",         state_theme);
+        settings->setValue("Theme",         state_theme);
 
-    settings->endGroup();
+        settings->endGroup();
 
-    settings->setValue("windowState",   saveState());
-    settings->setValue("geometry",      saveGeometry());
+        settings->setValue("windowState",   saveState());
+        settings->setValue("geometry",      saveGeometry());
+    }
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)

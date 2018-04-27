@@ -87,7 +87,7 @@ void MainBox::init_serial_widget(void)
 {
     ui->serial_widget->set_caption("RS232");
     ui->serial_widget->add_menu(2);
-    ui->serial_widget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    //ui->serial_widget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
 

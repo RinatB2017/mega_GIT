@@ -102,16 +102,18 @@ void SerialBox5_lite::init(void)
     initEnumerator();
     initSerial();
     setCloseState();
-#ifdef RS232_FIXED_SIZE
-    setFixedSize(sizeHint());
-#endif
 
     ui->PortBox->setMinimumWidth(150);
-
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    setFixedWidth(sizeHint().width());
+    //setFixedWidth(sizeHint().width());
+
+#ifdef RS232_FIXED_SIZE
+    //setFixedSize(sizeHint());
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+#endif
+
     updateText();
 }
 //--------------------------------------------------------------------------------

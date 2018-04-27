@@ -24,6 +24,8 @@
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
+
+#include "ipv4.hpp"
 //--------------------------------------------------------------------------------
 #include <QNetworkReply>
 //--------------------------------------------------------------------------------

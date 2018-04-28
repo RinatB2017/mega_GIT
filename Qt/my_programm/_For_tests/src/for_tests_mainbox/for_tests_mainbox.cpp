@@ -205,6 +205,53 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    block_this_button(true);
+    QTime timer;
+
+    long num_steps = 1000000000;
+    double step = 1.0 / num_steps;
+    double x, pi, sum = 0.0;
+
+    //---
+    timer.start();
+
+    for (long i = 0; i<num_steps; i++)
+    {
+       x = (i + 0.5)*step;
+       sum += 4.0/(1.0 + x*x);
+    }
+    pi = sum*step;
+
+    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
+    emit info(QString("%1").arg(pi));
+    //---
+
+    //---
+    timer.start();
+    sum=0.0;
+    long divisor=40000;
+    long internalCnt=num_steps/divisor;
+    double partsum=0.;
+    for(long i=0; i<divisor; i++)
+      {
+       partsum=0.;
+       for(long j=i*internalCnt; j<(i+1)*internalCnt; j++)
+         {
+          x=(j+0.5)*step;
+          partsum+=4.0/(1.+x*x);
+         }
+       sum+=partsum;
+      }
+    pi=sum*step;
+
+    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
+    emit info(QString("%1").arg(pi));
+    //---
+
+    block_this_button(false);
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------

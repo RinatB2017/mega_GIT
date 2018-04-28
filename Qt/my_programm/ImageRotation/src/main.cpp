@@ -2,6 +2,7 @@
 
 //To switch between Camera or JPEG Image
 #define NO_CAMERA true
+
 int main(void)
 {
     F_LOG;
@@ -70,4 +71,3 @@ int main(void)
 #endif
     return 0;
 }
-

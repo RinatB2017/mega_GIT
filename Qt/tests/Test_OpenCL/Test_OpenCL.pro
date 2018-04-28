@@ -18,11 +18,10 @@ QT_CONFIG -= no-pkg-config
 #SOURCES     += main.cpp
 
 HEADERS     += HelloWorld.cl
-SOURCES     += main_reserv.cpp
+SOURCES     += HelloWorld.cpp
 
 unix {
     CONFIG      += link_pkgconfig
-    PKGCONFIG   += opencv
     INCLUDEPATH += /usr/include/
 
     LIBS += -L/usr/local/lib/

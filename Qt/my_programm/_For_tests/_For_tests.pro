@@ -94,6 +94,8 @@ include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 
+include ($$LIB_PATH2/widgets/lockbutton/lockbutton.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

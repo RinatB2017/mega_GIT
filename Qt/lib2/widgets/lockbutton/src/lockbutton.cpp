@@ -18,26 +18,33 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef LOCK_BUTTON
-#define LOCK_BUTTON
+#include "lockbutton.hpp"
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-class LockButton : public QWidget
+LockButton::LockButton(QWidget *parent) :
+    QWidget(parent)
 {
-    Q_OBJECT
+    box = new QCheckBox(this);
+    box->setToolTip("lock");
 
-public:
-    LockButton(QWidget *parent = 0);
-    void setText(QString text);
+    btn = new QPushButton(this);
+    btn->setText("Test");
+    btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-private:
-    QCheckBox *box   = 0;
-    QPushButton *btn = 0;
-};
+    connect(box,    SIGNAL(toggled(bool)),  btn,    SLOT(setDisabled(bool)));
+
+    QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->setSpacing(0);
+    hbox->setMargin(0);
+    hbox->addWidget(box);
+    hbox->addWidget(btn);
+    hbox->setStretchFactor(box, 0);
+    hbox->setStretchFactor(btn, 1);
+
+    setLayout(hbox);
+}
 //--------------------------------------------------------------------------------
-#endif
+void LockButton::setText(QString text)
+{
+    btn->setText(text);
+}
+//--------------------------------------------------------------------------------

@@ -24,8 +24,6 @@
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
-
-#include "ipv4.hpp"
 //--------------------------------------------------------------------------------
 #include <QNetworkReply>
 //--------------------------------------------------------------------------------
@@ -51,14 +49,6 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
-
-    ui->spinBox->setRange(0, 1e6);
-
-    //---
-    connect(this,           SIGNAL(dpi_set(int)),       ui->DPI_widget, SLOT(set_value(int)));
-    connect(ui->DPI_widget, SIGNAL(value(int)),         ui->spinBox,    SLOT(setValue(int)));
-    connect(ui->spinBox,    SIGNAL(valueChanged(int)),  ui->DPI_widget, SLOT(set_value(int)));
-    //---
 
     connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
     connect(ui->sb_2,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
@@ -117,11 +107,6 @@ void MainBox::createTestBar(void)
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    //---
-    IPV4 *ipv4 = new IPV4(this);
-    testbar->addWidget(ipv4);
-    //---
 
     QCheckBox *cb_block = new QCheckBox("block");
     testbar->addWidget(cb_block);
@@ -187,11 +172,6 @@ void MainBox::s_inFunc(void)
 {
     emit trace(Q_FUNC_INFO);
     QMessageBox::information(0,"","info");
-}
-//--------------------------------------------------------------------------------
-void MainBox::new_test(void)
-{
-    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 int MainBox::get_cnt(void)

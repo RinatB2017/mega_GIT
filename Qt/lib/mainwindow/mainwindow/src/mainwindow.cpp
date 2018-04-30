@@ -81,6 +81,9 @@ void MainWindow::setCentralWidget(QWidget *widget)
     Q_CHECK_PTR(widget);
     QMainWindow::setCentralWidget(widget);
 
+    //TODO
+    //connect(qApp,   SIGNAL(lastWindowClosed()), widget, SLOT(close()));
+
     load_setting();
 
 #ifdef FIXED_SIZE
@@ -126,7 +129,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if(flag_close)
     {
         save_setting();
-        centralWidget()->deleteLater(); //FIXME
         event->accept();
         return;
     }

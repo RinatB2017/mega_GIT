@@ -37,6 +37,7 @@ SUBDIRS += \
     Test_Widgets \
     Test_QtCharts \
 #
+    Test_OpenCL \
     Test_OpenMP \
     Test_QDBus \
     Test_QGraphicsView \

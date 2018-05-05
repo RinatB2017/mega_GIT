@@ -186,6 +186,27 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    /* Create a string for a regular expression */
+    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
+    /* Create a regular expression with a string
+     * as a repeating element
+     */
+    QRegExp ipRegex ("^" + ipRange
+                     + "\\." + ipRange
+                     + "\\." + ipRange
+                     + "\\." + ipRange + "$");
+    /* Create a validation regular expression
+     * using a regular expression
+     */
+    QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
+
+    /* Set Validator on QLineEdit */
+    QLineEdit *lineEdit = new QLineEdit;
+    lineEdit->setValidator(ipValidator);
+    lineEdit->show();
+#endif
+
+#if 0
     block_this_button(true);
     QTime timer;
 

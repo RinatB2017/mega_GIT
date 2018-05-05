@@ -9,8 +9,8 @@ FOLDER      = RS232
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/rs232_5_mainbox \
-    $$PWD/src/rs232_5_mainbox/ui
+    $$PWD/src/pelco_d_485_mainbox \
+    $$PWD/src/pelco_d_485_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -18,7 +18,7 @@ QMAKE_CXXFLAGS += -fno-show-column
 QT  += network
 QT  += multimediawidgets
 
-#DEFINES += RS232_FIXED_SIZE
+DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
 
@@ -33,13 +33,13 @@ DEFINES += SAVE_WIDGETS_SLIDER
 HEADERS += \
     defines.hpp \
     version.hpp \
-    rs232_5_mainbox.hpp
+    pelco_d_485_mainbox.hpp
 
 SOURCES += \
-    rs232_5_mainbox.cpp \
+    pelco_d_485_mainbox.cpp \
     main.cpp
 
-FORMS   += rs232_5_mainbox.ui
+FORMS   += pelco_d_485_mainbox.ui
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

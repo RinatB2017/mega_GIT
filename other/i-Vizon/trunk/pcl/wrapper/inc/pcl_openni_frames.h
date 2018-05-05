@@ -1,0 +1,4 @@
+#ifndef PCL_OPENNI_FRAMES_H
+#define PCL_OPENNI_FRAMES_H
+
+#endif // PCL_OPENNI_FRAMES_H

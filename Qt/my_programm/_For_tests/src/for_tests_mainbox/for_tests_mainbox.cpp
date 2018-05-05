@@ -38,7 +38,9 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("for_test");
     save_config();
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -47,14 +49,6 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
-
-    ui->spinBox->setRange(0, 1e6);
-
-    //---
-    connect(this,           SIGNAL(dpi_set(int)),       ui->DPI_widget, SLOT(set_value(int)));
-    connect(ui->DPI_widget, SIGNAL(value(int)),         ui->spinBox,    SLOT(setValue(int)));
-    connect(ui->spinBox,    SIGNAL(valueChanged(int)),  ui->DPI_widget, SLOT(set_value(int)));
-    //---
 
     connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
     connect(ui->sb_2,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
@@ -70,6 +64,7 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+    load_widgets("for_test");
     load_config();
 }
 //--------------------------------------------------------------------------------
@@ -179,11 +174,6 @@ void MainBox::s_inFunc(void)
     QMessageBox::information(0,"","info");
 }
 //--------------------------------------------------------------------------------
-void MainBox::new_test(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
 int MainBox::get_cnt(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -196,73 +186,50 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    //request.setUrl(QUrl("https://2ip.ru/"));
-    //request.setUrl(QUrl("rtsp://192.168.0.66/av0_0 RTSP/1.0"));
-    request.setUrl(QUrl("rtsp://192.168.0.66:554/av0_0 RTSP/1.0"));
-    QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
-    while (!reply->isFinished())
+    block_this_button(true);
+    QTime timer;
+
+    long num_steps = 1000000000;
+    double step = 1.0 / num_steps;
+    double x, pi, sum = 0.0;
+
+    //---
+    timer.start();
+
+    for (long i = 0; i<num_steps; i++)
     {
-        QCoreApplication::processEvents();
+       x = (i + 0.5)*step;
+       sum += 4.0/(1.0 + x*x);
     }
-    QByteArray ba;
-    do
-    {
-        ba = reply->readLine();
-        emit info(ba);
-    } while(ba.isEmpty() == false);
+    pi = sum*step;
 
-    emit info("OK");
-#endif
+    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
+    emit info(QString("%1").arg(pi));
+    //---
 
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    //---
+    timer.start();
+    sum=0.0;
+    long divisor=40000;
+    long internalCnt=num_steps/divisor;
+    double partsum=0.;
+    for(long i=0; i<divisor; i++)
+      {
+       partsum=0.;
+       for(long j=i*internalCnt; j<(i+1)*internalCnt; j++)
+         {
+          x=(j+0.5)*step;
+          partsum+=4.0/(1.+x*x);
+         }
+       sum+=partsum;
+      }
+    pi=sum*step;
 
-    mw->set_status1_text("state 1");
-    mw->set_status2_text("state 2");
-#endif
+    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
+    emit info(QString("%1").arg(pi));
+    //---
 
-#if 0
-    QLabel *label = new QLabel;
-    label->setText("test");
-    label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    label->setLineWidth(2);
-
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(new QSpinBox);
-    vbox->addWidget(new QSpinBox);
-    vbox->addWidget(new QSpinBox);
-    vbox->addWidget(label);
-    vbox->addStretch(1);
-
-    QFrame *frame = new QFrame;
-    frame->setLayout(vbox);
-    frame->show();
-#endif
-
-#if 0
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
-#endif
-
-#if 0
-    A *a = new A;
-    a->test();
-
-    delete a;
-#endif
-
-#if 0
-    LockButton *lb = new LockButton;
-    lb->setText("проба");
-    lb->show();
-#endif
-
-#if 0
-    ui->sb_1->setValue(10);
-    ui->btn_ok->click();
+    block_this_button(false);
 #endif
 
     return true;
@@ -272,10 +239,6 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
-
-#if 1
-    ui->DPI_widget->block_interface(false);
-#endif
 
 #if 0
     emit info("info");

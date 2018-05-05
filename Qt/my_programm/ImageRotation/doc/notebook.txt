@@ -1,0 +1,2 @@
+http://i-vizon.blogspot.ru/2014/02/integrating-opencv-and-opencl-in-qt.html
+https://forum.qt.io/topic/28620/solved-qtmultimedia-defaultserviceprovider-requestservice-no-service-found-for-org-qt-project-qt-mediaplayer/20

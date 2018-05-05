@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
@@ -54,6 +48,8 @@ MyWidget::MyWidget(QWidget *parent) :
     qDebug() << "MyWidget()";
     QTimer::singleShot(100, this, SLOT(debug()));
 #endif
+
+    //setAttribute(Qt::WA_DeleteOnClose);
 }
 //--------------------------------------------------------------------------------
 MyWidget::~MyWidget()
@@ -800,13 +796,6 @@ void MyWidget::block_close(bool state)
     setProperty("flag_no_close", state);
 }
 //--------------------------------------------------------------------------------
-void MyWidget::closeEvent(QCloseEvent *)
-{
-#ifdef QT_DEBUG
-    qDebug() << "closeEvent";
-#endif
-}
-//--------------------------------------------------------------------------------
 void MyWidget::debug(void)
 {
     show_objectname();
@@ -1202,8 +1191,15 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 }
 #endif
 //--------------------------------------------------------------------------------
-bool MyWidget::close(void)
+void MyWidget::closeEvent(QCloseEvent *event)
 {
-    return is_close;
+//    if (maybeSave()) {
+//        writeSettings();
+//        event->accept();
+//    } else {
+//        event->ignore();
+//    }
+    Q_UNUSED(event);
+    emit info("closeEvent");
 }
 //--------------------------------------------------------------------------------

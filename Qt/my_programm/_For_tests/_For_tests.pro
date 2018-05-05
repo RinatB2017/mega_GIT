@@ -13,8 +13,6 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
-QT  += network
-
 QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += LOGO_GL
@@ -94,9 +92,9 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
-include ($$LIB_PATH2/widgets/dip_widget/dip_widget.pri)
-
 include (src/mymainwindow/mymainwindow.pri)
+
+include ($$LIB_PATH2/widgets/lockbutton/lockbutton.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

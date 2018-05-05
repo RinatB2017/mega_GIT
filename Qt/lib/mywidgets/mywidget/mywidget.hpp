@@ -167,9 +167,6 @@ signals:
 
     void colorLog(const QString &, const QColor, const QColor);
 
-public slots:
-    bool close(void);
-
 private slots:
     void log(const QString data);
 
@@ -212,7 +209,7 @@ protected:
 #ifndef BLOCK_WHEEL
     bool eventFilter(QObject*, QEvent* event);
 #endif
-    void closeEvent(QCloseEvent *);
+    void closeEvent(QCloseEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif

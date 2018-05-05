@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="openni_grabber" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\..\..\..\usr\local\share\pcl-1.7\;CMake Files\..\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\;CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\CMake\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="openni_grabber">
+         <Option output="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/openni_grabber" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DDISABLE_PCAP" />
+            <Add option="-DDISABLE_PNG" />
+            <Add option="-DEIGEN_USE_NEW_STDVECTOR" />
+            <Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET" />
+            <Add option="-DFLANN_STATIC" />
+            <Add option="-Dqh_QHpointer" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/openni" />
+            <Add directory="/usr/include/qhull" />
+            <Add directory="/usr/include/vtk-5.8" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+            <Add directory="/usr/local/include/pcl-1.7" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 openni_grabber" />
+            <CompileFile command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="openni_grabber/fast">
+         <Option output="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/openni_grabber" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DDISABLE_PCAP" />
+            <Add option="-DDISABLE_PNG" />
+            <Add option="-DEIGEN_USE_NEW_STDVECTOR" />
+            <Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET" />
+            <Add option="-DFLANN_STATIC" />
+            <Add option="-Dqh_QHpointer" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/openni" />
+            <Add directory="/usr/include/qhull" />
+            <Add directory="/usr/include/vtk-5.8" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+            <Add directory="/usr/local/include/pcl-1.7" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 openni_grabber/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/main.cpp">
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/local/share/pcl-1.7/PCLConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\local\share\pcl-1.7\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/local/share/pcl-1.7/PCLConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\local\share\pcl-1.7\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKTargets.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKTargets-debug.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/opt/i-vizon/trunk/pcl/1.FirstSample/Qt/first_sample/../../../../../../../usr/lib/vtk-5.8/CMake/vtkMakeInstantiator.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\vtk-5.8\CMake\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

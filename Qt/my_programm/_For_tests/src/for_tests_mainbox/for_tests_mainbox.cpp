@@ -180,12 +180,8 @@ int MainBox::get_cnt(void)
     return qrand() % 10;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+void MainBox::test_validator(void)
 {
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_0()");
-
-#if 1
     /* Create a string for a regular expression */
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     /* Create a regular expression with a string
@@ -204,7 +200,12 @@ bool MainBox::test_0(void)
     QLineEdit *lineEdit = new QLineEdit;
     lineEdit->setValidator(ipValidator);
     lineEdit->show();
-#endif
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_0(void)
+{
+    emit trace(Q_FUNC_INFO);
+    emit info("Test_0()");
 
 #if 0
     block_this_button(true);

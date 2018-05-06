@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
+#else
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "for_tests_mainbox.hpp"
@@ -51,9 +53,6 @@ public:
 
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
-
-signals:
-    void dpi_set(int);
 
 public slots:
     void choice_test(void);
@@ -92,6 +91,8 @@ private:
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
+
+    void test_validator(void);
 
     void init(void);
     void createTestBar(void);

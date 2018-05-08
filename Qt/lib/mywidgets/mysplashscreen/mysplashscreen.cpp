@@ -18,11 +18,14 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QStyleOptionProgressBarV2>
+#include <QDesktopWidget>
+#include <QSplashScreen>
+#include <QApplication>
+#include <QProgressBar>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QRect>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

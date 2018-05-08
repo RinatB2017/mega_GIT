@@ -50,7 +50,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -58,7 +57,6 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
     createTestBar();
-    load_config();
 
     //---
     QLineSeries *series = new QLineSeries;

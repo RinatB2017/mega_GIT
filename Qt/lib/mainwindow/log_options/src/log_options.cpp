@@ -19,7 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #ifdef HAVE_QT5
-#   include <QtWidgets>
+#   include<QtWidgets>
 #else
 #   include <QtGui>
 #endif

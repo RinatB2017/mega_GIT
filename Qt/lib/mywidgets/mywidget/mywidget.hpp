@@ -22,12 +22,13 @@
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
-#   include <QtWidgets>
+#   include<QtWidgets>
 #else
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #define PARAMS_GROUP_NAME   "Params"
+#define NO_BLOCK    "no_block"
 //--------------------------------------------------------------------------------
 #define MESSAGEBOX_WIDTH    320
 //--------------------------------------------------------------------------------
@@ -97,15 +98,11 @@ public:
     void unlock_this_button(void);
 
     void block_this_button(bool state);
-    void block_interface(bool state);
     void block_widget(const QString name,
                       bool state);
 
     bool is_slot_exists(QWidget *obj,
                         const char *slot_sign);
-
-    void load_config(void);
-    void save_config(void);
 
     static bool set_param(QString group_name,
                           QString name,
@@ -157,7 +154,7 @@ public:
                             const QString &tool_tip);
 
     //---
-    bool is_close = true;
+    //virtual bool no_exit(void) = 0;
 
 signals:
     void info(const QString &);
@@ -166,6 +163,9 @@ signals:
     void trace(const QString &);
 
     void colorLog(const QString &, const QColor, const QColor);
+
+public slots:
+    void block_interface(bool state);
 
 private slots:
     void log(const QString data);
@@ -209,7 +209,7 @@ protected:
 #ifndef BLOCK_WHEEL
     bool eventFilter(QObject*, QEvent* event);
 #endif
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *);
 };
 //--------------------------------------------------------------------------------
 #endif

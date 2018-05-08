@@ -33,12 +33,22 @@ class IPV4 : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void s_get_url(QUrl);
+
 public:
     explicit IPV4(QWidget *parent = 0);
     ~IPV4();
 
+    void setObjectName(const QString &name);
+
     QUrl get_url(void);
     void set_url(QUrl url);
+
+    bool no_exit(void);
+
+private slots:
+    void work(void);
 
 private:
     QSpinBox *a = 0;

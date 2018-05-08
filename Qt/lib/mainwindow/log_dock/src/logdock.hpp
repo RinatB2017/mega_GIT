@@ -21,13 +21,11 @@
 #ifndef LOGDOCK_HPP
 #define LOGDOCK_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QApplication>
+#include <QDockWidget>
+#include <QDateTime>
 //--------------------------------------------------------------------------------
-//#include <QQueue>
+#include <QQueue>
 //--------------------------------------------------------------------------------
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------

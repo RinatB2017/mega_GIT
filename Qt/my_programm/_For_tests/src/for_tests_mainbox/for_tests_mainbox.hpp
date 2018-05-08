@@ -48,7 +48,7 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent,
-            MySplashScreen *splash);
+                     MySplashScreen *splash);
     ~MainBox();
 
     typedef void (MainBox::*saveSlot)(void);
@@ -92,10 +92,14 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
+    //---
     void test_validator(void);
+    void test_time(void);
+    //---
 
     void init(void);
     void createTestBar(void);
+    //bool no_exit(void);
     void updateText(void);
 
     quint32 test(const QByteArray ba);

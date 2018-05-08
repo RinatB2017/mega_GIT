@@ -47,7 +47,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -55,8 +54,6 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
     connect(ui->btn_get_my_ip,  SIGNAL(clicked(bool)),  this,   SLOT(show_my_IP()));
-
-    load_config();
 
     ui->lcd_0->display("---");
     ui->lcd_1->display("---");

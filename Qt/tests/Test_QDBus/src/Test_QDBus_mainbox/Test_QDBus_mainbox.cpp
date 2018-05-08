@@ -52,7 +52,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -129,8 +128,6 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
-
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::UDisks_deviceAdded(QDBusObjectPath dev)

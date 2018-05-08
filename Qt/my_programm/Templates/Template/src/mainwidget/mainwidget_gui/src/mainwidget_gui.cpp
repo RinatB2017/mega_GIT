@@ -55,7 +55,6 @@ MainWidget_GUI::~MainWidget_GUI()
 #ifdef QT_DEBUG
     qDebug() << "~MainWidget_GUI()";
 #endif
-    save_config();
     if(w) w->deleteLater();
     delete ui;
 }
@@ -86,8 +85,6 @@ void MainWidget_GUI::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
-
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::createTestBar(void)

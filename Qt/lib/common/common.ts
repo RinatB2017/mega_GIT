@@ -213,6 +213,10 @@
         <translation>Домой</translation>
     </message>
     <message>
+        <source>Work</source>
+        <translation>Домой</translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation>Назад</translation>
     </message>

@@ -19,7 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #ifdef HAVE_QT5
-#   include <QtWidgets>
+#   include<QtWidgets>
 #else
 #   include <QtGui>
 #endif
@@ -83,7 +83,9 @@ AboutBox::AboutBox(const QString &orgName,
     ui->btn_env->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MessageBoxInformation)));
     ui->btn_env->setToolTip(tr("Get ENV"));
     ui->btn_env->setStatusTip(tr("Get ENV"));
+
     connect(ui->btn_env,    SIGNAL(clicked(bool)),  this,   SLOT(show_env()));
+    ui->btn_env->setVisible(false);
 }
 //--------------------------------------------------------------------------------
 void AboutBox::show_env(void)

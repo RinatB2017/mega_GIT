@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
-#   include <QtWidgets>
+#   include<QtWidgets>
 #else
 #   include <QtGui>
 #endif
@@ -17,7 +17,7 @@ HelpBrowser::HelpBrowser(QString &page,
     : QWidget(parent)
 {
     textBrowser = new QTextBrowser(this);
-    homeButton  = new QPushButton(QObject::tr(ORGNAME), this);
+    homeButton  = new QPushButton(QObject::tr("Home"), this);
     backButton  = new QPushButton(QObject::tr("Back"), this);
     closeButton = new QPushButton(QObject::tr("Close"), this);
 
@@ -33,10 +33,10 @@ HelpBrowser::HelpBrowser(QString &page,
     mainLayout->addWidget(textBrowser);
     setLayout(mainLayout);
 
-    connect(homeButton, SIGNAL(clicked()),  textBrowser, SLOT(home()));
-    connect(backButton, SIGNAL(clicked()),  textBrowser, SLOT(backward()));
-    connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
-    connect(textBrowser, SIGNAL(sourceChanged(QUrl)), this, SLOT(updateCaption(QUrl)));
+    connect(homeButton,     SIGNAL(clicked()),              textBrowser,    SLOT(home()));
+    connect(backButton,     SIGNAL(clicked()),              textBrowser,    SLOT(backward()));
+    connect(closeButton,    SIGNAL(clicked()),              this,           SLOT(close()));
+    connect(textBrowser,    SIGNAL(sourceChanged(QUrl)),    this,           SLOT(updateCaption(QUrl)));
 
     textBrowser->setSource(QUrl(page));
 
@@ -71,7 +71,7 @@ void HelpBrowser::changeEvent(QEvent *event)
     switch (event->type())
     {
     case QEvent::LanguageChange:
-        homeButton->setText(QObject::tr(ORGNAME));
+        homeButton->setText(QObject::tr("Home"));
         backButton->setText(QObject::tr("Back"));
         closeButton->setText(QObject::tr("Close"));
         break;

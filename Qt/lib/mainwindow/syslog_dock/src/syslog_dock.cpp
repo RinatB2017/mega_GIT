@@ -54,14 +54,12 @@ SysLog_dock::SysLog_dock(const QString &title,
     //model->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     table->setModel(model);
 
-#ifdef HAVE_QT5
     table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
 
     table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#endif
 
     //---
     QWidget *w = new QWidget;
@@ -239,7 +237,7 @@ QString SysLog_dock::syslog_to_str(int level)
     case LOG_INFO:      temp = "LOG_INFO   ";  break;
     case LOG_DEBUG:     temp = "LOG_DEBUG  ";  break;
     default:
-        temp = QString("%1").arg(level);
+        temp = QString("level %1").arg(level);
         break;
     }
     return temp;

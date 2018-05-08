@@ -50,7 +50,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -67,8 +66,6 @@ void MainBox::init(void)
 
     QsciLexerCPP * lexCpp = new QsciLexerCPP(this);
     ui->textEdit->setLexer(lexCpp);
-
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

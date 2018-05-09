@@ -51,7 +51,6 @@ MainBox::~MainBox()
     {
         ascii_data->deleteLater();
     }
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -79,8 +78,6 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
-
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial_widget(void)

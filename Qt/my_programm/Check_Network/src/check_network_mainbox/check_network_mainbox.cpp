@@ -54,7 +54,6 @@ MainBox::~MainBox()
     {
         m_pTcpSocket->deleteLater();
     }
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -108,8 +107,6 @@ void MainBox::init(void)
 
     //ui->webEngineView->load(QUrl("https://www.google.ru/"));
     //ui->webEngineView->load(QUrl("https://www.youtube.com/"));
-
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::scan(void)

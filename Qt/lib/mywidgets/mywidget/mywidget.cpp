@@ -18,6 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
@@ -48,8 +54,6 @@ MyWidget::MyWidget(QWidget *parent) :
     qDebug() << "MyWidget()";
     QTimer::singleShot(100, this, SLOT(debug()));
 #endif
-
-    //setAttribute(Qt::WA_DeleteOnClose);
 }
 //--------------------------------------------------------------------------------
 MyWidget::~MyWidget()
@@ -147,7 +151,6 @@ void MyWidget::init_w_lists(void)
         obj->setProperty("state", true);
         w_lists.append(obj);
     }
-    //emit debug(QString("w_lists.count %1").arg(w_lists.count()));
 }
 //--------------------------------------------------------------------------------
 void MyWidget::lock_interface(void)
@@ -155,7 +158,6 @@ void MyWidget::lock_interface(void)
 #if 1
     foreach (QWidget *btn, w_lists)
     {
-        //emit debug(QString("%1").arg(btn->isEnabled() ? "true" : "false"));
         btn->setProperty("state", btn->isEnabled());
         btn->setDisabled(true);
     }
@@ -163,7 +165,6 @@ void MyWidget::lock_interface(void)
 #else
     for(int n=0; n<w_lists.count(); n++)
     {
-        //emit debug(QString("%1").arg(w_lists[n]->isEnabled() ? "true" : "false"));
         w_lists[n]->setProperty("state", w_lists[n]->isEnabled());
         w_lists[n]->setDisabled(true);
     }
@@ -176,14 +177,13 @@ void MyWidget::unlock_interface(void)
     foreach (QWidget *btn, w_lists)
     {
         bool ok = btn->property("state").toBool();
-        //emit debug(QString("%1").arg(ok ? "true" : "false"));
         btn->setEnabled(ok);
     }
 #else
     for(int n=0; n<w_lists.count(); n++)
     {
         bool ok = w_lists[n]->property("state").toBool();
-        emit debug(QString("%1").arg(ok ? "true" : "false"));
+        emit debug(QString("property(state) is %1").arg(ok ? "true" : "false"));
         w_lists[n]->setEnabled(ok);
     }
 #endif
@@ -218,7 +218,7 @@ void MyWidget::block_interface(bool state)
     QList<QAbstractButton *> all_obj = findChildren<QAbstractButton *>();
     foreach(QAbstractButton *obj, all_obj)
     {
-        if(obj->property("no_block").toBool() == false)
+        if(obj->property(NO_BLOCK).toBool() == false)
         {
             obj->setDisabled(state);
         }
@@ -227,7 +227,7 @@ void MyWidget::block_interface(bool state)
     QList<QComboBox *> all_cb = findChildren<QComboBox *>();
     foreach(QComboBox *obj, all_cb)
     {
-        if(obj->property("no_block").toBool() == false)
+        if(obj->property(NO_BLOCK).toBool() == false)
         {
             obj->setDisabled(state);
         }
@@ -236,7 +236,7 @@ void MyWidget::block_interface(bool state)
     QList<QDoubleSpinBox *> all_dsb = findChildren<QDoubleSpinBox *>();
     foreach(QDoubleSpinBox *obj, all_dsb)
     {
-        if(obj->property("no_block").toBool() == false)
+        if(obj->property(NO_BLOCK).toBool() == false)
         {
             obj->setDisabled(state);
         }
@@ -245,7 +245,7 @@ void MyWidget::block_interface(bool state)
     QList<QSpinBox *> all_sb = findChildren<QSpinBox *>();
     foreach(QSpinBox *obj, all_sb)
     {
-        if(obj->property("no_block").toBool() == false)
+        if(obj->property(NO_BLOCK).toBool() == false)
         {
             obj->setDisabled(state);
         }
@@ -263,7 +263,7 @@ void MyWidget::block_widget(const QString name, bool state)
     {
         if(obj->objectName() == name)
         {
-            if(obj->property("no_block").toBool() == false)
+            if(obj->property(NO_BLOCK).toBool() == false)
             {
                 obj->setDisabled(state);
             }
@@ -278,22 +278,6 @@ bool MyWidget::is_slot_exists(QWidget *obj, const char *slot_sign)
 
     if(obj->metaObject()->indexOfSlot(QMetaObject::normalizedSignature(qPrintable(slot_sign))) == -1) return false;
     return true;
-}
-//--------------------------------------------------------------------------------
-void MyWidget::load_config(void)
-{
-#ifdef QT_DEBUG
-    qDebug() << "load_config";
-#endif
-    load_widgets("MyWidget");
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_config(void)
-{
-#ifdef QT_DEBUG
-    qDebug() << "save_config";
-#endif
-    save_widgets("MyWidget");
 }
 //--------------------------------------------------------------------------------
 bool MyWidget::set_param(QString group_name, QString name, QVariant value)
@@ -546,11 +530,15 @@ void MyWidget::load_QLineEdit(QString group_name)
     settings->beginGroup(group_name);
     foreach (QLineEdit *obj, allobj)
     {
-        if(!obj->objectName().isEmpty())
+        QString o_name = obj->objectName();
+        if(!o_name.isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setText(settings->value("text", "").toString());
-            settings->endGroup();
+            if(o_name.left(3) == "le_") //TODO костыль
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setText(settings->value("text", "").toString());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -564,11 +552,15 @@ void MyWidget::save_QLineEdit(QString group_name)
     settings->beginGroup(group_name);
     foreach(QLineEdit *obj, allobj)
     {
-        if(!obj->objectName().isEmpty())
+        QString o_name = obj->objectName();
+        if(!o_name.isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("text", QVariant(obj->text()));
-            settings->endGroup();
+            if(o_name.left(3) == "le_") //TODO костыль
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("text", QVariant(obj->text()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -584,12 +576,9 @@ void MyWidget::load_QSpinBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            if(obj->property("no_save") != 0)
-            {
-                settings->beginGroup(obj->objectName());
-                obj->setValue(settings->value("value", 0).toInt());
-                settings->endGroup();
-            }
+            settings->beginGroup(obj->objectName());
+            obj->setValue(settings->value("value", 0).toInt());
+            settings->endGroup();
         }
     }
     settings->endGroup();
@@ -794,6 +783,13 @@ void MyWidget::save_widgets(QString group_name)
 void MyWidget::block_close(bool state)
 {
     setProperty("flag_no_close", state);
+}
+//--------------------------------------------------------------------------------
+void MyWidget::closeEvent(QCloseEvent *)
+{
+#ifdef QT_DEBUG
+    qDebug() << "closeEvent";
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyWidget::debug(void)
@@ -1190,16 +1186,4 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
     return false;
 }
 #endif
-//--------------------------------------------------------------------------------
-void MyWidget::closeEvent(QCloseEvent *event)
-{
-//    if (maybeSave()) {
-//        writeSettings();
-//        event->accept();
-//    } else {
-//        event->ignore();
-//    }
-    Q_UNUSED(event);
-    emit info("closeEvent");
-}
 //--------------------------------------------------------------------------------

@@ -39,7 +39,6 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets("for_test");
-    save_config();
 
     delete ui;
 }
@@ -65,7 +64,6 @@ void MainBox::init(void)
     }
 #endif
     load_widgets("for_test");
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::check_in(void)
@@ -132,6 +130,14 @@ void MainBox::createTestBar(void)
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 }
 //--------------------------------------------------------------------------------
+#if 0
+//TODO как нибудь потом
+bool MainBox::no_exit(void)
+{
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
@@ -180,12 +186,8 @@ int MainBox::get_cnt(void)
     return qrand() % 10;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+void MainBox::test_validator(void)
 {
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_0()");
-
-#if 1
     /* Create a string for a regular expression */
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     /* Create a regular expression with a string
@@ -204,10 +206,10 @@ bool MainBox::test_0(void)
     QLineEdit *lineEdit = new QLineEdit;
     lineEdit->setValidator(ipValidator);
     lineEdit->show();
-#endif
-
-#if 0
-    block_this_button(true);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_time(void)
+{
     QTime timer;
 
     long num_steps = 1000000000;
@@ -249,8 +251,58 @@ bool MainBox::test_0(void)
     emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
     emit info(QString("%1").arg(pi));
     //---
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_0(void)
+{
+    emit trace(Q_FUNC_INFO);
+    emit info("Test_0()");
 
-    block_this_button(false);
+    emit info(QString("%1").arg(ui->lineEdit->text()));
+
+#if 0
+    struct ITEM
+    {
+        QString name;
+        QWidget *widget;
+    };
+
+    QComboBox *cb = new QComboBox;
+    cb->setProperty("name", "mega");
+    cb->addItem("item 0", 0);
+    cb->addItem("item 1", 1);
+
+    QSpinBox *sb = new QSpinBox;
+    sb->setProperty("name", "mega");
+    sb->setRange(100, 1000);
+
+    QList<ITEM> l_xxx;
+    l_xxx.append( { "combo", cb});
+    l_xxx.append( { "spin",  sb});
+
+    QGridLayout *grid = new QGridLayout;
+    int y = 0;
+    foreach (ITEM xxx, l_xxx)
+    {
+        grid->addWidget(new QLabel(xxx.name), y, 0);
+        grid->addWidget(xxx.widget, y, 1);
+
+        QSpinBox  *sp_box = dynamic_cast<QSpinBox *>(xxx.widget);
+        QComboBox *cb_box = dynamic_cast<QComboBox *>(xxx.widget);
+        if(sp_box)
+        {
+            emit info("sp_box");
+        }
+        if(cb_box)
+        {
+            emit info("cb_box");
+        }
+
+        y++;
+    }
+    QWidget *widget = new QWidget;
+    widget->setLayout(grid);
+    widget->show();
 #endif
 
     return true;

@@ -29,14 +29,14 @@ IPV4::IPV4(QWidget *parent) :
     c = new QSpinBox(this);
     d = new QSpinBox(this);
 
-    a->setObjectName("ipv4_a");
-    b->setObjectName("ipv4_b");
-    c->setObjectName("ipv4_c");
-    d->setObjectName("ipv4_d");
+    a->setObjectName("IPV4_a");
+    b->setObjectName("IPV4_b");
+    c->setObjectName("IPV4_c");
+    d->setObjectName("IPV4_d");
 
     port = new QSpinBox(this);
 
-    port->setObjectName("ipv4_port");
+    port->setObjectName("IPV4_port");
 
     a->setRange(0, 0xFF);
     b->setRange(0, 0xFF);
@@ -60,14 +60,33 @@ IPV4::IPV4(QWidget *parent) :
     hbox->addWidget(port);
     setLayout(hbox);
 
-    load_widgets("IPV4");
+    connect(a,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
+    connect(b,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
+    connect(c,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
+    connect(d,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
+    connect(port,   SIGNAL(valueChanged(int)),  this,   SLOT(work()));
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
 IPV4::~IPV4()
 {
-    save_widgets("IPV4");
+
+}
+//--------------------------------------------------------------------------------
+void IPV4::setObjectName(const QString &name)
+{
+    a->setObjectName(QString("%1_IPV4_a").arg(name));
+    b->setObjectName(QString("%1_IPV4_b").arg(name));
+    c->setObjectName(QString("%1_IPV4_c").arg(name));
+    d->setObjectName(QString("%1_IPV4_d").arg(name));
+
+    MyWidget::setObjectName(name);
+}
+//--------------------------------------------------------------------------------
+void IPV4::work(void)
+{
+    emit s_get_url(get_url());
 }
 //--------------------------------------------------------------------------------
 QUrl IPV4::get_url(void)
@@ -95,6 +114,11 @@ void IPV4::set_url(QUrl url)
         d->setValue(QString(sl[3]).toInt());
     }
     port->setValue(url.port());
+}
+//--------------------------------------------------------------------------------
+bool IPV4::no_exit(void)
+{
+    return false;
 }
 //--------------------------------------------------------------------------------
 void IPV4::updateText(void)

@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
+#else
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "for_tests_mainbox.hpp"
@@ -46,14 +48,11 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent,
-            MySplashScreen *splash);
+                     MySplashScreen *splash);
     ~MainBox();
 
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
-
-signals:
-    void dpi_set(int);
 
 public slots:
     void choice_test(void);
@@ -93,8 +92,14 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
+    //---
+    void test_validator(void);
+    void test_time(void);
+    //---
+
     void init(void);
     void createTestBar(void);
+    //bool no_exit(void);
     void updateText(void);
 
     quint32 test(const QByteArray ba);

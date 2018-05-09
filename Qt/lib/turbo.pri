@@ -18,6 +18,7 @@ macx {
 
 win32 {
     #TEMP_PATH = "C:\\shm"
+    #TEMP_PATH = "K:"
     TEMP_PATH = "E:"
     OBJECTS_DIR = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\moc
@@ -35,7 +36,12 @@ macx {
     DESTDIR = bin
 }
 win32 {
-    DESTDIR = C:/Programming/my_programm_bin/$$FOLDER/$$TARGET
+    CONFIG(debug, debug|release) {
+        DESTDIR = bin/debug
+    }
+    else {
+        DESTDIR = bin/release
+    }
 }
 ###############################################################################
 #управление оптимизацией компилятора

@@ -49,7 +49,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -59,8 +58,6 @@ void MainBox::init(void)
 
     createTestBar();
     createSenderBar();
-
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

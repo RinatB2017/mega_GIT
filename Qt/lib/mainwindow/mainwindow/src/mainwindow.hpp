@@ -253,10 +253,10 @@ private:
     QList<QAction *> app_actions;
     QList<QAbstractButton *> app_buttons;
 
-    QMenu *m_app_filemenu       = 0;
-    QMenu *m_app_optionsmenu    = 0;
+    QMenu *m_app_filemenu    = 0;
+    QMenu *m_app_optionsmenu = 0;
     QMenu *m_app_windowsmenu    = 0;
-    QMenu *m_app_helpmenu       = 0;
+    QMenu *m_app_helpmenu    = 0;
 
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);

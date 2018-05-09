@@ -51,8 +51,6 @@ MainBox::~MainBox()
     {
         delete scene;
     }
-
-    save_config();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -81,6 +79,7 @@ void MainBox::init(void)
                                    HEIGHT+border);
 
     installEventFilter(this);
+
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
@@ -89,8 +88,6 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
-
-    load_config();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

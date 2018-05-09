@@ -111,7 +111,6 @@ void MainBox::thread_start(void)
     worker->moveToThread(thread);
 
     thread->start();
-    is_close = false;
 }
 //--------------------------------------------------------------------------------
 void MainBox::thread_is_finished(void)
@@ -120,8 +119,6 @@ void MainBox::thread_is_finished(void)
 
     worker = 0;
     thread = 0;
-
-    is_close = true;
 
     qApp->exit();
 }

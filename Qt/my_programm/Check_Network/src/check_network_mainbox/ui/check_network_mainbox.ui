@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>742</width>
+    <width>415</width>
     <height>430</height>
    </rect>
   </property>
@@ -149,54 +149,8 @@
      </layout>
     </widget>
    </item>
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="tab_web">
-      <attribute name="title">
-       <string>web</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QWebEngineView" name="webEngineView">
-         <property name="url">
-          <url>
-           <string>about:blank</string>
-          </url>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_camera">
-      <attribute name="title">
-       <string>camera</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="WebCamera" name="widget_camera" native="true"/>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebEngineView</class>
-   <extends>QWidget</extends>
-   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
-  </customwidget>
-  <customwidget>
-   <class>WebCamera</class>
-   <extends>QWidget</extends>
-   <header>webcamera.hpp</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>sb_src_a</tabstop>
   <tabstop>sb_src_b</tabstop>
@@ -212,7 +166,6 @@
   <tabstop>tv_scan</tabstop>
   <tabstop>btn_connect</tabstop>
   <tabstop>btn_disconnect</tabstop>
-  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -95,18 +95,6 @@ void MainBox::init(void)
     connect(ui->btn_scan,       SIGNAL(clicked(bool)),  this,   SLOT(scan()));
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(f_connect()));
     connect(ui->btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(f_disconnect()));
-
-#if 1
-    connect(ui->widget_camera,  SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(ui->widget_camera,  SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(ui->widget_camera,  SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(ui->widget_camera,  SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-#endif
-
-    //setFixedSize(sizeHint());
-
-    //ui->webEngineView->load(QUrl("https://www.google.ru/"));
-    //ui->webEngineView->load(QUrl("https://www.youtube.com/"));
 }
 //--------------------------------------------------------------------------------
 void MainBox::scan(void)
@@ -226,7 +214,7 @@ void MainBox::f_connect(void)
         emit info(address);
         m_pTcpSocket->close();
 
-        ui->webEngineView->load(QUrl(address));
+        //ui->webEngineView->load(QUrl(address));
     }
 
     block_this_button(false);

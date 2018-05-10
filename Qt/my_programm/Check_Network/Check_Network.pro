@@ -16,7 +16,6 @@ INCLUDEPATH = $$DEPENDPATH
 QMAKE_CXXFLAGS += -fno-show-column
 
 QT  += network
-QT  += webenginewidgets
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -47,11 +46,10 @@ RESOURCES += \
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/WebCamera/WebCamera.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

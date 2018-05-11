@@ -184,6 +184,7 @@ void WebCamera::start(void)
 
     //mCapture.open("rtsp://192.168.0.66:554/av0_0");
     //mCapture.open("rtsp://192.168.0.66:554/av0_1");
+    //mcapture("rtsp://USER:PASS@xxx.xxx.xxx.xxx/axis-media/media.amp?camera=2");
     //mCapture.open(0);
     if(mCapture.isOpened())
     {

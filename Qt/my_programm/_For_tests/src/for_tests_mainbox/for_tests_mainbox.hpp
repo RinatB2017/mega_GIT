@@ -42,6 +42,11 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
+struct FULL_DATA
+{
+    QWidget *widget;
+};
+//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
@@ -53,6 +58,9 @@ public:
 
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
+
+signals:
+    void send_data(FULL_DATA);
 
 public slots:
     void choice_test(void);
@@ -67,6 +75,8 @@ public slots:
 
     void check_in(void);
     void victory(void);
+
+    void get_data(FULL_DATA data);
 
 private:
     enum {

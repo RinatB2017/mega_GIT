@@ -253,12 +253,38 @@ void MainBox::test_time(void)
     //---
 }
 //--------------------------------------------------------------------------------
+#include "videoplayer.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-    emit info(QString("%1").arg(ui->lineEdit->text()));
+#if 1
+    VideoPlayer *player[9];
+    QUrl url = QUrl("rtsp://192.168.1.66/av0_0");
+    for(int n=0; n<9; n++)
+    {
+        player[n] = new VideoPlayer;
+        player[n]->setMinimumSize(320, 200);
+        connect(player[n],  SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+        player[n]->set_url(url);
+    }
+
+    QGridLayout *grid = new QGridLayout;
+    int index = 0;
+    for(int row=0; row<3; row++)
+    {
+        for(int col=0; col<3; col++)
+        {
+            grid->addWidget(player[index], row, col);
+            index++;
+        }
+    }
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(grid);
+    widget->show();
+#endif
 
 #if 0
     struct ITEM

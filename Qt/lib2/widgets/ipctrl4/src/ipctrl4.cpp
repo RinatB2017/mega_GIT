@@ -6,10 +6,11 @@
 #include <QFrame>
 #include <QLabel>
 #include <QFont>
+#include <QUrl>
 //--------------------------------------------------------------------------------
-#include "ipctrl.hpp"
+#include "ipctrl4.hpp"
 //--------------------------------------------------------------------------------
-IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
+IPCtrl4::IPCtrl4(QWidget *parent) : QFrame(parent)
 {
     setFrameShape( QFrame::StyledPanel );
     setFrameShadow( QFrame::Sunken );
@@ -24,7 +25,7 @@ IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
         if ( i != 0 )
         {
             QLabel* pDot = new QLabel( ".", this );
-            pDot->setStyleSheet( "background: white" );
+            //pDot->setStyleSheet( "background: white" );
             pLayout->addWidget( pDot );
             pLayout->setStretch( pLayout->count(), 0 );
         }
@@ -57,12 +58,12 @@ IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
              Qt::QueuedConnection );
 }
 //--------------------------------------------------------------------------------
-IPCtrl::~IPCtrl()
+IPCtrl4::~IPCtrl4()
 {
 
 }
 //--------------------------------------------------------------------------------
-void IPCtrl::slotTextChanged( QLineEdit* pEdit )
+void IPCtrl4::slotTextChanged( QLineEdit* pEdit )
 {
     for ( unsigned int i = 0; i != QTUTL_IP_SIZE; ++i )
     {
@@ -81,7 +82,7 @@ void IPCtrl::slotTextChanged( QLineEdit* pEdit )
     }
 }
 //--------------------------------------------------------------------------------
-bool IPCtrl::eventFilter(QObject *obj, QEvent *event)
+bool IPCtrl4::eventFilter(QObject *obj, QEvent *event)
 {
     bool bRes = QFrame::eventFilter(obj, event);
 
@@ -149,7 +150,7 @@ bool IPCtrl::eventFilter(QObject *obj, QEvent *event)
     return bRes;
 }
 //--------------------------------------------------------------------------------
-void IPCtrl::MoveNextLineEdit(int i)
+void IPCtrl4::MoveNextLineEdit(int i)
 {
     if ( i+1 != QTUTL_IP_SIZE )
     {
@@ -159,13 +160,36 @@ void IPCtrl::MoveNextLineEdit(int i)
     }
 }
 //--------------------------------------------------------------------------------
-void IPCtrl::MovePrevLineEdit(int i)
+void IPCtrl4::MovePrevLineEdit(int i)
 {
     if ( i != 0 )
     {
         m_pLineEdit[i-1]->setFocus();
         m_pLineEdit[i-1]->setCursorPosition( m_pLineEdit[i-1]->text().size() );
         //m_pLineEdit[i-1]->selectAll();
+    }
+}
+//--------------------------------------------------------------------------------
+#include <QDebug>
+void IPCtrl4::set_url(QUrl url)
+{
+    QString url_string;
+    if(url.host().isEmpty())
+    {
+        url_string = url.path();
+    }
+    else
+    {
+        url_string = url.host();
+    }
+    QStringList sl = url_string.split('.');
+    qDebug() << url_string << QString("sl count = %1").arg(sl.count());
+    if(sl.count() == QTUTL_IP_SIZE)
+    {
+        for(int n=0; n<QTUTL_IP_SIZE; n++)
+        {
+            m_pLineEdit[n]->setText(QString("%1").arg(sl[n]));
+        }
     }
 }
 //--------------------------------------------------------------------------------

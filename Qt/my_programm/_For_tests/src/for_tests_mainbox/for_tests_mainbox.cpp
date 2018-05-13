@@ -258,19 +258,35 @@ void MainBox::test_time(void)
 void MainBox::get_data(FULL_DATA data)
 {
     emit info(QString("className [%1]").arg(data.widget->metaObject()->className()));
+    emit info(QString("f_name [%1]").arg(data.f_name));
 }
 //--------------------------------------------------------------------------------
+#include "ipctrl6.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     FULL_DATA data;
+    data.f_name = "test_0"; //Q_FUNC_INFO;
     data.widget = this;
 
     emit send_data(data);
 
+#endif
+
+#if 0
+    IPCtrl4 *test = new IPCtrl4;
+    test->set_url(QUrl("http://192.168.1.66"));
+    //test->set_url(QUrl("192.168.1.66"));
+    test->show();
+#endif
+
+#if 1
+    IPCtrl6 *test = new IPCtrl6;
+    test->set_url("A0-B1-C2-D3-E4-F5");
+    test->show();
 #endif
 
 #if 0

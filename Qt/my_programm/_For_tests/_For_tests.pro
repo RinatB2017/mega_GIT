@@ -30,7 +30,7 @@ QMAKE_CXXFLAGS += -fno-show-column
 #DEFINES += SAVE_WIDGETS_COMBOBOX
 #DEFINES += SAVE_WIDGETS_PUSHBUTTON
 #DEFINES += SAVE_WIDGETS_TOOLBUTTON
-DEFINES += SAVE_WIDGETS_SPINBOX
+#DEFINES += SAVE_WIDGETS_SPINBOX
 #DEFINES += SAVE_WIDGETS_DOUBLESPINBOX
 #DEFINES += SAVE_WIDGETS_SLIDER
 #DEFINES += SAVE_WIDGETS_TEXTEDIT
@@ -51,7 +51,7 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 
 #DEFINES += DEMO
 #DEFINES += "DEMO_YEAR=2018"
-#DEFINES += "DEMO_MONTH=2"
+#DEFINES += "DEMO_MONTH=6"
 #DEFINES += "DEMO_DAY=1"
 
 #DEFINES += NO_LOG
@@ -92,9 +92,11 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
+###
 include ($$LIB_PATH2/widgets/ipctrl4/ipctrl4.pri)
 include ($$LIB_PATH2/widgets/ipctrl6/ipctrl6.pri)
 include ($$LIB_PATH2/widgets/rtsp_widget/rtsp_widget.pri)
+###
 
 include (src/mymainwindow/mymainwindow.pri)
 

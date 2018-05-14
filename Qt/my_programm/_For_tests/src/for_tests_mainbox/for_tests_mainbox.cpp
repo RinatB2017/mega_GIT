@@ -25,8 +25,6 @@
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-#include <QNetworkReply>
-//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
@@ -261,7 +259,6 @@ void MainBox::get_data(FULL_DATA data)
     emit info(QString("f_name [%1]").arg(data.f_name));
 }
 //--------------------------------------------------------------------------------
-//#include "ipctrl6.hpp"
 #include "rtsp_widget.hpp"
 bool MainBox::test_0(void)
 {

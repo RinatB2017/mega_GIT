@@ -261,11 +261,22 @@ void MainBox::get_data(FULL_DATA data)
     emit info(QString("f_name [%1]").arg(data.f_name));
 }
 //--------------------------------------------------------------------------------
-#include "ipctrl6.hpp"
+//#include "ipctrl6.hpp"
+#include "rtsp_widget.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    RTSP_widget *widget = new RTSP_widget;
+    connect(widget, SIGNAL(info(QString)),    this, SIGNAL(info(QString)));
+    connect(widget, SIGNAL(debug(QString)),   this, SIGNAL(debug(QString)));
+    connect(widget, SIGNAL(error(QString)),   this, SIGNAL(error(QString)));
+    connect(widget, SIGNAL(trace(QString)),   this, SIGNAL(trace(QString)));
+
+    widget->show();
+#endif
 
 #if 0
     FULL_DATA data;
@@ -283,7 +294,7 @@ bool MainBox::test_0(void)
     test->show();
 #endif
 
-#if 1
+#if 0
     IPCtrl6 *test = new IPCtrl6;
     test->set_url("A0-B1-C2-D3-E4-F5");
     test->show();

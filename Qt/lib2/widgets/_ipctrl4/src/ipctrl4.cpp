@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLineEdit>
+#include <QDebug>
 #include <QFrame>
 #include <QLabel>
 #include <QFont>
@@ -170,7 +171,6 @@ void IPCtrl4::MovePrevLineEdit(int i)
     }
 }
 //--------------------------------------------------------------------------------
-#include <QDebug>
 void IPCtrl4::set_url(QUrl url)
 {
     QString url_string;
@@ -193,7 +193,7 @@ void IPCtrl4::set_url(QUrl url)
     }
 }
 //--------------------------------------------------------------------------------
-QUrl IPCtrl4::get_url(void)
+QString IPCtrl4::get_host(void)
 {
     QString address;
     for(int n=0; n<QTUTL_IP_SIZE; n++)
@@ -204,19 +204,6 @@ QUrl IPCtrl4::get_url(void)
             address.append(".");
         }
     }
-
-    QUrl url;
-    url.setHost(address);
-
-    return url;
-}
-//--------------------------------------------------------------------------------
-void IPCtrl4::block_interface(bool state)
-{
-    QList<QLineEdit *> all_obj = findChildren<QLineEdit *>();
-    foreach(QLineEdit *obj, all_obj)
-    {
-        obj->setDisabled(state);
-    }
+    return address;
 }
 //--------------------------------------------------------------------------------

@@ -15,13 +15,12 @@ public:
     IPCtrl4(QWidget *parent = 0);
     ~IPCtrl4();
 
+    QString get_host(void);
     virtual bool eventFilter( QObject *obj, QEvent *event );
 
 public slots:
     void slotTextChanged( QLineEdit* pEdit );
     void set_url(QUrl url);
-    QUrl get_url(void);
-    void block_interface(bool state);
 
 signals:
     void signalTextChanged( QLineEdit* pEdit );

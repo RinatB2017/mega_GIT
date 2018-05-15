@@ -56,6 +56,11 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
 
     RTSP_widget *mainBox = new RTSP_widget(main_window->getThis());
+    QObject::connect(mainBox,    SIGNAL(info(QString)),     main_window->getThis(), SIGNAL(info(QString)));
+    QObject::connect(mainBox,    SIGNAL(debug(QString)),    main_window->getThis(), SIGNAL(debug(QString)));
+    QObject::connect(mainBox,    SIGNAL(error(QString)),    main_window->getThis(), SIGNAL(error(QString)));
+    QObject::connect(mainBox,    SIGNAL(trace(QString)),    main_window->getThis(), SIGNAL(trace(QString)));
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

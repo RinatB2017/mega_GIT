@@ -13,7 +13,7 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -94,7 +94,7 @@ include ($$LIB_PATH2/icons/digits.pri)
 
 ###
 include ($$LIB_PATH2/widgets/ipctrl4/ipctrl4.pri)
-include ($$LIB_PATH2/widgets/ipctrl6/ipctrl6.pri)
+#include ($$LIB_PATH2/widgets/ipctrl6/ipctrl6.pri)
 include ($$LIB_PATH2/widgets/rtsp_widget/rtsp_widget.pri)
 ###
 
@@ -104,5 +104,7 @@ include (src/mymainwindow/mymainwindow.pri)
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+
+message ($$QT)
 
 VPATH = $$INCLUDEPATH

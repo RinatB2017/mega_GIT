@@ -38,6 +38,10 @@ RTSP_widget::RTSP_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 RTSP_widget::~RTSP_widget()
 {
+    if(player)
+    {
+        player->deleteLater();
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -45,9 +49,12 @@ void RTSP_widget::init(void)
 {
     ui->setupUi(this);
 
-    player = new QMediaPlayer;
-    connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
+    player = new QMediaPlayer(this);
     player->setVideoOutput(ui->video_widget);
+
+    connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
+
+    ui->video_widget->setMinimumSize(320, 200);
 
 #ifdef Q_OS_LINUX
     ui->le_address->setText("rtsp://192.168.1.66/av0_0");
@@ -97,6 +104,34 @@ void RTSP_widget::play(void)
         player->setMedia(requestRtsp);
         player->play();
     }
+    else
+    {
+        emit error("Player is not available!");
+    }
+}
+//--------------------------------------------------------------------------------
+void RTSP_widget::pause(void)
+{
+    if(player->isAvailable())
+    {
+        player->pause();
+    }
+    else
+    {
+        emit error("Player is not available!");
+    }
+}
+//--------------------------------------------------------------------------------
+void RTSP_widget::stop(void)
+{
+    if(player->isAvailable())
+    {
+        player->stop();
+    }
+    else
+    {
+        emit error("Player is not available!");
+    }
 }
 //--------------------------------------------------------------------------------
 void RTSP_widget::choice(void)
@@ -110,16 +145,6 @@ void RTSP_widget::choice(void)
         ui->le_address->setText(dlg->get_address());
     }
     dlg->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void RTSP_widget::pause(void)
-{
-    player->pause();
-}
-//--------------------------------------------------------------------------------
-void RTSP_widget::stop(void)
-{
-    player->pause();
 }
 //--------------------------------------------------------------------------------
 void RTSP_widget::updateText(void)

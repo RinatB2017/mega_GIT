@@ -34,6 +34,7 @@ SUBDIRS += \
     Test_thread \
     Test_triangle \
     Test_RGB_Matrix \
+	Test_RTSP_widget \
     Test_Widgets \
     Test_QtCharts \
 #

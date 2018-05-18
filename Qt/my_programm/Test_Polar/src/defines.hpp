@@ -24,7 +24,7 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
-#define APPNAME "Template_old"
+#define APPNAME "Test_Polar"
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

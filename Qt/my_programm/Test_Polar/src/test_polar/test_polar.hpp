@@ -84,6 +84,7 @@ private:
 
     void init(void);
     void createTestBar(void);
+    bool create_new_image(void);
     void updateText(void);
 
 protected:

@@ -136,6 +136,15 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
+    emit info("Test_1()");
+
+    create_new_image();
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
     emit info("Test_0()");
 
     qreal len_big_circle = M_PI * (double)LEN_SIDE;
@@ -146,51 +155,6 @@ bool MainBox::test_0(void)
     emit info(QString("Отношения длин %1").arg(len_big_circle / len_small_circle));
     emit info(QString("cnt_point %1").arg(cnt_point));
 
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-
-    QPixmap pixmap = grab(QRect(0, 0, LEN_SIDE, LEN_SIDE));
-    QImage image = pixmap.toImage();
-
-    qreal min_r = SMALL_R;
-    qreal max_r = (LEN_SIDE / 2);
-
-    qreal height = max_r - min_r;
-    qreal width  = M_PI * (double)LEN_SIDE;
-
-    emit info(QString("min_r %1").arg(min_r));
-    emit info(QString("max_r %1").arg(max_r));
-    emit info(QString("width %1").arg(width));
-    emit info(QString("height %1").arg(height));
-
-    QImage *res_image = new QImage(width, height, QImage::Format_RGB32);
-    res_image->fill(Qt::white);
-
-#if 0
-    for(int x=0; x<LEN_SIDE; x++)
-    {
-        for(int y=0; y<LEN_SIDE; y++)
-        {
-             QRgb rgb = image.pixel(x, y);
-             res_image->setPixel(x, y, rgb);
-        }
-    }
-#endif
-
-    QLabel *label = new QLabel;
-    label->setFixedSize(res_image->width(),
-                        res_image->height());
-    label->setPixmap(QPixmap::fromImage(*res_image));
-    label->show();
-
-    //bool ok = res_image->save("./test_pixel.png");
-    //emit info(QString("save return %1").arg(ok ? "true" : "false"));
-
-    emit info("OK");
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -227,12 +191,73 @@ void MainBox::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::create_new_image(void)
+{
+    emit info("create_new_image()");
+
+    QPixmap pixmap = grab(QRect(0, 0, LEN_SIDE, LEN_SIDE));
+    QImage image = pixmap.toImage();
+
+    qreal min_r = SMALL_R;
+    qreal max_r = (LEN_SIDE / 2);
+
+    qreal height = max_r - min_r;
+    qreal width  = M_PI * (double)LEN_SIDE;
+
+    emit info(QString("min_r %1").arg(min_r));
+    emit info(QString("max_r %1").arg(max_r));
+    emit info(QString("width %1").arg(width));
+    emit info(QString("height %1").arg(height));
+
+    QImage *res_image = new QImage(width, height, QImage::Format_RGB32);
+    res_image->fill(Qt::white);
+
+    QPoint center;
+    center.setX(LEN_SIDE/2);
+    center.setY(LEN_SIDE/2);
+
+    for(int y=min_r; y<max_r; y++)
+    {
+        qreal small_width = M_PI * (double)y;
+        qreal k = width / small_width;
+        for(int x=0; x<small_width; x++)
+        {
+            qreal angle = qreal(k * x) * 360.0 / qreal(width);
+            int res_x = qreal(y) * qCos(qDegreesToRadians(angle));
+            int res_y = qreal(y) * qSin(qDegreesToRadians(angle));
+            QRgb rgb = image.pixel(center.x() + res_x,
+                                   center.y() + res_y);
+            res_image->setPixel(x * k, y - min_r, rgb);
+        }
+    }
+
+    QLabel *label = new QLabel;
+    label->setFixedSize(res_image->width(),
+                        res_image->height());
+    label->setPixmap(QPixmap::fromImage(*res_image));
+    label->show();
+
+#if 0
+    bool ok = res_image->save("./test_pixel.png");
+    emit info(QString("save return %1").arg(ok ? "true" : "false"));
+#endif
+
+    emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainBox::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
     QPoint center;
     center.setX(LEN_SIDE/2);
     center.setY(LEN_SIDE/2);
+
+#if 0
+    p.setBrush(QBrush(Qt::white));
+    p.fillRect(0, 0, LEN_SIDE, LEN_SIDE, Qt::SolidPattern);
+    p.setBrush(Qt::NoBrush);
+#endif
 
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
     p.drawEllipse(0, 0, LEN_SIDE, LEN_SIDE);
@@ -261,10 +286,13 @@ void MainBox::paintEvent(QPaintEvent *)
     center_circle_4.setX(LEN_SIDE / 4);
     center_circle_4.setY(LEN_SIDE / 2 + LEN_SIDE / 4);
 
-    p.drawEllipse(center_circle_1, 50, 50);
-    p.drawEllipse(center_circle_2, 60, 60);
-    p.drawEllipse(center_circle_3, 70, 70);
-    p.drawEllipse(center_circle_4, 80, 80);
+    for(int r=50; r<100; r+=10)
+    {
+        p.drawEllipse(center_circle_1, r, r);
+        p.drawEllipse(center_circle_2, r, r);
+        p.drawEllipse(center_circle_3, r, r);
+        p.drawEllipse(center_circle_4, r, r);
+    }
 
 #if 0
     cnt_point = 0;

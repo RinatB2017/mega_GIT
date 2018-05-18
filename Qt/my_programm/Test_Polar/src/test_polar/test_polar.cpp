@@ -214,11 +214,11 @@ bool MainBox::create_new_image(void)
     center.setX(LEN_SIDE/2);
     center.setY(LEN_SIDE/2);
 
-    for(int y=min_r; y<max_r; y++)
+    for(qreal y=min_r; y<max_r; y++)
     {
         qreal small_width = M_PI * (double)y;
         qreal k = width / small_width;
-        for(int x=0; x<small_width; x++)
+        for(qreal x=0; x<small_width; x++)
         {
             qreal angle = qreal(k * x) * 360.0 / qreal(width);
             int res_x = qreal(y) * qCos(qDegreesToRadians(angle));
@@ -247,7 +247,7 @@ bool MainBox::create_new_image(void)
 void MainBox::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
-    QPoint center;
+    QPointF center;
     center.setX(LEN_SIDE/2);
     center.setY(LEN_SIDE/2);
 
@@ -258,7 +258,7 @@ void MainBox::paintEvent(QPaintEvent *)
 #endif
 
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    p.drawEllipse(0, 0, LEN_SIDE, LEN_SIDE);
+    p.drawEllipse(center, LEN_SIDE / 2, LEN_SIDE / 2);
 
     p.drawEllipse(center, SMALL_R, SMALL_R);
 
@@ -271,6 +271,13 @@ void MainBox::paintEvent(QPaintEvent *)
     QPoint center_circle_2;
     QPoint center_circle_3;
     QPoint center_circle_4;
+
+//    qreal angle = 45;
+//    qreal radius = LEN_SIDE / 4;
+//    qreal x = radius * qCos(qDegreesToRadians((qreal)angle));
+//    qreal y = radius * qSin(qDegreesToRadians((qreal)angle));
+//    center_circle_1.setX(center.x() + x);
+//    center_circle_1.setY(center.y() + y);
 
     center_circle_1.setX(LEN_SIDE / 4);
     center_circle_1.setY(LEN_SIDE / 4);

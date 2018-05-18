@@ -23,9 +23,9 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_polar.hpp \
     defines.hpp \
-    version.hpp \
-    test_polar.hpp
+    version.hpp
 
 SOURCES += \
     test_polar.cpp \
@@ -48,7 +48,6 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-#----------------------------------------------
 LIB_PATH = "../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
@@ -56,6 +55,5 @@ include ($$LIB_PATH/meta/mainwindow.pri)
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
-#----------------------------------------------
 
 VPATH = $$INCLUDEPATH

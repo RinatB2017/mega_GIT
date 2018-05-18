@@ -87,6 +87,7 @@ private:
     void updateText(void);
 
 protected:
+    bool eventFilter(QObject*, QEvent* event);
     void paintEvent(QPaintEvent *);
 };
 //--------------------------------------------------------------------------------

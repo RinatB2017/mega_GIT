@@ -146,7 +146,7 @@ bool MainBox::test_1(void)
     emit info("Test_0()");
 
     qreal len_big_circle = M_PI * (double)LEN_SIDE;
-    qreal len_small_circle = M_PI * 2 * SMALL_R;
+    qreal len_small_circle = M_PI * 2.0 * SMALL_R;
 
     emit info(QString("Длина большой окружности %1 pix").arg(len_big_circle));
     emit info(QString("Длина малой окружности %1 pix").arg(len_small_circle));
@@ -189,6 +189,29 @@ void MainBox::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::eventFilter(QObject*, QEvent* event)
+{
+    QMouseEvent *mouseEvent = (QMouseEvent *) event;
+    if(mouseEvent == nullptr)
+    {
+        return false;
+    }
+    //---
+    if(mouseEvent->type() == QMouseEvent::MouseButtonPress)
+    {
+        emit info(QString("%1 %2")
+                  .arg(mouseEvent->pos().x())
+                  .arg(mouseEvent->pos().y()));
+        return true;
+    }
+    //---
+    if(mouseEvent->type() == QMouseEvent::Wheel)
+    {
+        return true;
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
 bool MainBox::create_new_image(void)
 {
     emit info("create_new_image()");
@@ -210,13 +233,13 @@ bool MainBox::create_new_image(void)
     QImage *res_image = new QImage(width, height, QImage::Format_RGB32);
     //res_image->fill(Qt::white);
 
-    QPoint center;
-    center.setX(LEN_SIDE/2);
-    center.setY(LEN_SIDE/2);
+    QPointF center;
+    center.setX(LEN_SIDE / 2);
+    center.setY(LEN_SIDE / 2);
 
     for(qreal y=min_r; y<max_r; y++)
     {
-        qreal small_width = M_PI * (double)y;
+        qreal small_width = M_PI * 2.0 * (double)y;
         qreal k = width / small_width;
         for(qreal x=0; x<small_width; x++)
         {
@@ -264,22 +287,22 @@ void MainBox::paintEvent(QPaintEvent *)
 
     p.drawEllipse(center, SMALL_R, SMALL_R);
 
+    int x1 = LEN_SIDE / 4;
+    int y1 = LEN_SIDE / 4;
+    int w = LEN_SIDE / 2;
+    int h = LEN_SIDE / 2;
+    p.drawRect(x1, y1, w, h);
+    p.drawRect(x1+10, y1+10, w-20, h-20);
+
     p.drawLine(0, 0, LEN_SIDE, LEN_SIDE);
     p.drawLine(LEN_SIDE/2, 0, LEN_SIDE/2, LEN_SIDE);
     p.drawLine(LEN_SIDE, 0, 0, LEN_SIDE);
     p.drawLine(0, LEN_SIDE/2, LEN_SIDE, LEN_SIDE/2);
 
-    QPoint center_circle_1;
-    QPoint center_circle_2;
-    QPoint center_circle_3;
-    QPoint center_circle_4;
-
-//    qreal angle = 45;
-//    qreal radius = LEN_SIDE / 4;
-//    qreal x = radius * qCos(qDegreesToRadians((qreal)angle));
-//    qreal y = radius * qSin(qDegreesToRadians((qreal)angle));
-//    center_circle_1.setX(center.x() + x);
-//    center_circle_1.setY(center.y() + y);
+    QPointF center_circle_1;
+    QPointF center_circle_2;
+    QPointF center_circle_3;
+    QPointF center_circle_4;
 
     center_circle_1.setX(LEN_SIDE / 4);
     center_circle_1.setY(LEN_SIDE / 4);

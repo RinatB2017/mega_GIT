@@ -63,8 +63,7 @@ private:
         ID_TEST_2,
         ID_TEST_3,
         ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
+        ID_TEST_5
     };
     typedef struct CMD
     {

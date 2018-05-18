@@ -221,21 +221,23 @@ bool MainBox::create_new_image(void)
         for(qreal x=0; x<small_width; x++)
         {
             qreal angle = qreal(k * x) * 360.0 / qreal(width);
-            int res_x = qreal(y) * qCos(qDegreesToRadians(angle));
-            int res_y = qreal(y) * qSin(qDegreesToRadians(angle));
+            qreal res_x = qreal(y) * qCos(qDegreesToRadians(angle));
+            qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle));
             QRgb rgb = image.pixel(center.x() + res_x,
                                    center.y() + res_y);
-            res_image->setPixel(x * k, y - min_r, rgb);
+            res_image->setPixel(x * k,
+                                y - min_r,
+                                rgb);
         }
     }
 
+#if 1
     QLabel *label = new QLabel;
     label->setFixedSize(res_image->width(),
                         res_image->height());
     label->setPixmap(QPixmap::fromImage(*res_image));
     label->show();
-
-#if 0
+#else
     bool ok = res_image->save("./test_pixel.png");
     emit info(QString("save return %1").arg(ok ? "true" : "false"));
 #endif

@@ -56,6 +56,11 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
+    bool s_create_orig_image(void);
+    bool s_create_new_image(void);
+    void s_show_orig_image(void);
+    void s_show_new_image(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -79,16 +84,13 @@ private:
     QCheckBox *cb_block = 0;
     QList<CMD> commands;
 
+    QImage *orig_image = 0;
+    QImage *new_image = 0;
     long cnt_point = 0;
 
     void init(void);
     void createTestBar(void);
-    bool create_new_image(void);
     void updateText(void);
-
-protected:
-    bool eventFilter(QObject*, QEvent* event);
-    void paintEvent(QPaintEvent *);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

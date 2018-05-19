@@ -29,6 +29,7 @@ SUBDIRS += \
     Test_QsLog \
     Test_libUSB \
     Test_model \
+    Test_Polar \
     Test_SQL \
     Test_SMTP \
     Test_thread \

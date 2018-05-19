@@ -146,6 +146,9 @@ bool MainBox::test_0(void)
     emit info(QString("Отношения длин %1").arg(len_big_circle / len_small_circle));
     emit info(QString("pict_point %1").arg(LEN_SIDE * LEN_SIDE));
     emit info(QString("cnt_point  %1").arg(cnt_point));
+    qreal big_square = M_PI * (LEN_SIDE / 2) * (LEN_SIDE / 2);
+    qreal small_square = M_PI * SMALL_R * SMALL_R;
+    emit info(QString("Эффективная площадь %1").arg(big_square - small_square));
 
     return true;
 }
@@ -211,11 +214,6 @@ void MainBox::s_show_new_image(void)
                         new_image->height());
     label->setPixmap(QPixmap::fromImage(*new_image));
     label->show();
-}
-//--------------------------------------------------------------------------------
-void MainBox::updateText(void)
-{
-    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::s_create_orig_image(void)
@@ -341,5 +339,10 @@ bool MainBox::s_create_new_image(void)
 
     emit info("OK");
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

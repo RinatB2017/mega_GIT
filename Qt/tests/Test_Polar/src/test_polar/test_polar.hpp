@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define LEN_SIDE    800
+//#define LEN_SIDE    800
 //#define LEN_SIDE    3465
 #define SMALL_R     (LEN_SIDE / 8)
 //--------------------------------------------------------------------------------
@@ -62,6 +62,8 @@ private slots:
     void s_show_orig_image(void);
     void s_show_new_image(void);
 
+    void set_len_side(int value);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -82,12 +84,13 @@ private:
     Ui::MainBox *ui = 0;
 
     QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
     QList<CMD> commands;
 
     QImage *orig_image = 0;
     QImage *new_image = 0;
     long cnt_point = 0;
+
+    qreal LEN_SIDE = 0;
 
     void init(void);
     void createTestBar(void);

@@ -49,6 +49,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("Polar");
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -58,10 +59,17 @@ void MainBox::init(void)
 
     createTestBar();
 
+    ui->sb_len_side->setRange(100, 10000);
+    ui->sb_len_side->setObjectName("sb_len_side");
+    connect(ui->sb_len_side,    SIGNAL(valueChanged(int)), this,    SLOT(set_len_side(int)));
+    set_len_side(ui->sb_len_side->value());
+
     connect(ui->btn_create_orig_image,  SIGNAL(clicked(bool)),  this,   SLOT(s_create_orig_image()));
     connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
     connect(ui->btn_show_orig_image,    SIGNAL(clicked(bool)),  this,   SLOT(s_show_orig_image()));
     connect(ui->btn_show_new_image,     SIGNAL(clicked(bool)),  this,   SLOT(s_show_new_image()));
+
+    load_widgets("Polar");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -81,9 +89,6 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -100,9 +105,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -138,15 +140,16 @@ bool MainBox::test_0(void)
 {
     emit info("Test_1()");
 
-    qreal len_big_circle = M_PI * (double)LEN_SIDE;
+    qreal len_big_circle   = M_PI * (double)LEN_SIDE;
     qreal len_small_circle = M_PI * 2.0 * SMALL_R;
 
     emit info(QString("Длина большой окружности %1 pix").arg(len_big_circle));
     emit info(QString("Длина малой окружности %1 pix").arg(len_small_circle));
     emit info(QString("Отношения длин %1").arg(len_big_circle / len_small_circle));
-    emit info(QString("pict_point %1").arg(LEN_SIDE * LEN_SIDE));
+    emit info(QString("pict_point %1").arg(LEN_SIDE * LEN_SIDE, 0, 'f', 0));
     emit info(QString("cnt_point  %1").arg(cnt_point));
-    qreal big_square = M_PI * (LEN_SIDE / 2) * (LEN_SIDE / 2);
+
+    qreal big_square   = M_PI * (LEN_SIDE / 2) * (LEN_SIDE / 2);
     qreal small_square = M_PI * SMALL_R * SMALL_R;
     emit info(QString("Эффективная площадь %1").arg(big_square - small_square));
 
@@ -186,6 +189,11 @@ bool MainBox::test_5(void)
     emit info("Test_5()");
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_len_side(int value)
+{
+    LEN_SIDE = value;
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_show_orig_image(void)

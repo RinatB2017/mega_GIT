@@ -24,6 +24,9 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QSpinBox" name="sb_len_side"/>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_create_orig_image">
         <property name="text">
          <string>Create orig_image</string>

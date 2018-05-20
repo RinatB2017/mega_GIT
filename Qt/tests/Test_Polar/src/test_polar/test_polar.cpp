@@ -138,7 +138,13 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
-    emit info("Test_1()");
+    emit info("Test_0()");
+
+    if(orig_image == nullptr)
+    {
+        emit error("orig_image not created");
+        return false;
+    }
 
     qreal len_big_circle   = M_PI * (double)LEN_SIDE;
     qreal len_small_circle = M_PI * 2.0 * SMALL_R;
@@ -151,7 +157,10 @@ bool MainBox::test_0(void)
 
     qreal big_square   = M_PI * (LEN_SIDE / 2) * (LEN_SIDE / 2);
     qreal small_square = M_PI * SMALL_R * SMALL_R;
-    emit info(QString("Эффективная площадь %1").arg(big_square - small_square));
+    emit info(QString("Эффективная площадь %1").arg(big_square - small_square, 0, 'f', 2));
+
+    int stride = orig_image->bytesPerLine();
+    emit info(QString("stride %1").arg(stride));
 
     return true;
 }
@@ -312,6 +321,29 @@ bool MainBox::s_create_orig_image(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+#if 0
+// QImage::Format_RGB32:
+// QImage::Format_ARGB32:
+// QImage::Format_ARGB32_Premultiplied:
+
+// do smth within area [left;right) x [top; bottom)
+
+quint8 const* line = img.constScanLine(r_top) + r_left *4;
+int stride = img.bytesPerLine();
+
+quint32 red = 0, green = 0, blue = 0;
+for ( int y = top; y < bottom; ++y, line += stride )
+{
+    quint8 const* pix = line;
+    for ( int x = left; x < right; ++x, pix += 4 )
+    {
+        blue  = pix[0];
+        green = pix[1];
+        red   = pix[2];
+    }
+}
+#endif
+//--------------------------------------------------------------------------------
 bool MainBox::s_create_new_image(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -334,12 +366,13 @@ bool MainBox::s_create_new_image(void)
     emit debug(QString("height %1").arg(height));
 
     new_image = new QImage(width + 1.0, height + 1.0, QImage::Format_RGB32);
-    //res_image->fill(Qt::white);
 
     QPointF center;
     center.setX(LEN_SIDE / 2);
     center.setY(LEN_SIDE / 2);
 
+    QTime timer;
+    timer.start();
     cnt_point = 0;
     for(qreal y=min_r; y<max_r; y++)
     {
@@ -358,6 +391,7 @@ bool MainBox::s_create_new_image(void)
             cnt_point++;
         }
     }
+    emit info(QString("time elapsed %1").arg(timer.elapsed()));
 
     emit info("OK");
     return true;

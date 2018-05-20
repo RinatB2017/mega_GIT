@@ -153,7 +153,9 @@ bool MainBox::test_0(void)
     emit info(QString("Длина малой окружности %1 pix").arg(len_small_circle));
     emit info(QString("Отношения длин %1").arg(len_big_circle / len_small_circle));
     emit info(QString("pict_point %1").arg(LEN_SIDE * LEN_SIDE, 0, 'f', 0));
-    emit info(QString("cnt_point  %1").arg(cnt_point));
+    emit info(QString("cnt_sin  %1").arg(cnt_sin));
+    emit info(QString("cnt_cos  %1").arg(cnt_cos));
+    emit info(QString("cnt_point  %1").arg(cnt_sin + cnt_cos));
 
     qreal big_square   = M_PI * (LEN_SIDE / 2) * (LEN_SIDE / 2);
     qreal small_square = M_PI * SMALL_R * SMALL_R;
@@ -373,7 +375,8 @@ bool MainBox::s_create_new_image(void)
 
     QTime timer;
     timer.start();
-    cnt_point = 0;
+    cnt_sin = 0;
+    cnt_cos = 0;
     for(qreal y=min_r; y<max_r; y++)
     {
         qreal small_width = M_PI * 2.0 * (double)y;
@@ -382,13 +385,15 @@ bool MainBox::s_create_new_image(void)
         {
             qreal angle = qreal(k * x) * 360.0 / qreal(width);
             qreal res_x = qreal(y) * qCos(qDegreesToRadians(angle));
+            cnt_cos++;
             qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle));
+            cnt_sin++;
+
             QRgb rgb = orig_image->pixel(center.x() + res_x,
                                          center.y() + res_y);
             new_image->setPixel(x * k,
                                 y - min_r,
                                 rgb);
-            cnt_point++;
         }
     }
     emit info(QString("time elapsed %1").arg(timer.elapsed()));

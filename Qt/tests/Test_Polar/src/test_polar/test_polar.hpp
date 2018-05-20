@@ -88,9 +88,10 @@ private:
 
     QImage *orig_image = 0;
     QImage *new_image = 0;
-    long cnt_point = 0;
+    long cnt_sin = 0;
+    long cnt_cos = 0;
 
-    qreal LEN_SIDE = 0;
+    qreal LEN_SIDE = 0; //3465
 
     void init(void);
     void createTestBar(void);

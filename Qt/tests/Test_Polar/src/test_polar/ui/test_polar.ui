@@ -31,13 +31,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_create_new_image">
-        <property name="text">
-         <string>Create new_image</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btn_show_orig_image">
         <property name="text">
          <string>Show orig_image</string>
@@ -45,9 +38,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_create_new_image">
+        <property name="text">
+         <string>Create new_image</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_show_new_image">
         <property name="text">
-         <string>Show orig_image</string>
+         <string>Show new_image</string>
         </property>
        </widget>
       </item>
@@ -82,6 +82,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>btn_create_orig_image</tabstop>
+  <tabstop>btn_show_orig_image</tabstop>
+  <tabstop>btn_create_new_image</tabstop>
+  <tabstop>btn_show_new_image</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -248,36 +248,50 @@ bool MainBox::s_create_orig_image(void)
 
     p.drawEllipse(center, SMALL_R, SMALL_R);
 
-    int x1 = LEN_SIDE / 4;
-    int y1 = LEN_SIDE / 4;
-    int w = LEN_SIDE / 2;
-    int h = LEN_SIDE / 2;
+    //---
+    qreal radius = ((LEN_SIDE / 2) - SMALL_R) / 2 + SMALL_R;
+    p.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
+    p.drawEllipse(center, radius, radius);
+    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
+    emit info(QString("radius %1").arg(radius));
+    //---
+
+    qreal x1 = (LEN_SIDE - radius * 2.0) / 2;// LEN_SIDE / 4;
+    qreal y1 = (LEN_SIDE - radius * 2.0) / 2;// LEN_SIDE / 4;
+    qreal w = radius * 2.0;
+    qreal h = radius * 2.0;
     p.drawRect(x1, y1, w, h);
     p.drawRect(x1+10, y1+10, w-20, h-20);
 
-    p.drawLine(0, 0, LEN_SIDE, LEN_SIDE);
-    p.drawLine(LEN_SIDE/2, 0, LEN_SIDE/2, LEN_SIDE);
-    p.drawLine(LEN_SIDE, 0, 0, LEN_SIDE);
-    p.drawLine(0, LEN_SIDE/2, LEN_SIDE, LEN_SIDE/2);
+    for(qreal a=0.0; a<360.0; a+=10.0)
+    {
+        qreal new_x = center.x() + (LEN_SIDE / 2) * qCos(qDegreesToRadians(a));
+        qreal new_y = center.x() + (LEN_SIDE / 2) * qSin(qDegreesToRadians(a));
+        p.drawLine(center.x(),
+                   center.y(),
+                   new_x,
+                   new_y);
+    }
 
     QPointF center_circle_1;
     QPointF center_circle_2;
     QPointF center_circle_3;
     QPointF center_circle_4;
 
-    center_circle_1.setX(LEN_SIDE / 4);
-    center_circle_1.setY(LEN_SIDE / 4);
+    qreal angle = 45.0;
+    center_circle_1.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
+    center_circle_1.setY(center.y() + radius * qSin(qDegreesToRadians(angle)));
+    angle += 90.0;
+    center_circle_2.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
+    center_circle_2.setY(center.y() - radius * qCos(qDegreesToRadians(angle)));
+    angle += 90.0;
+    center_circle_3.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
+    center_circle_3.setY(center.y() + radius * qCos(qDegreesToRadians(angle)));
+    angle = -45.0;
+    center_circle_4.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
+    center_circle_4.setY(center.y() - radius * qCos(qDegreesToRadians(angle)));
 
-    center_circle_2.setX(LEN_SIDE / 2 + LEN_SIDE / 4);
-    center_circle_2.setY(LEN_SIDE / 4);
-
-    center_circle_3.setX(LEN_SIDE / 2 + LEN_SIDE / 4);
-    center_circle_3.setY(LEN_SIDE / 2 + LEN_SIDE / 4);
-
-    center_circle_4.setX(LEN_SIDE / 4);
-    center_circle_4.setY(LEN_SIDE / 2 + LEN_SIDE / 4);
-
-    for(int r=50; r<100; r+=10)
+    for(int r=50; r<(radius - SMALL_R); r+=10)
     {
         p.drawEllipse(center_circle_1, r, r);
         p.drawEllipse(center_circle_2, r, r);
@@ -311,7 +325,7 @@ bool MainBox::s_create_new_image(void)
     emit debug(QString("width %1").arg(width));
     emit debug(QString("height %1").arg(height));
 
-    new_image = new QImage(width, height, QImage::Format_RGB32);
+    new_image = new QImage(width + 1.0, height + 1.0, QImage::Format_RGB32);
     //res_image->fill(Qt::white);
 
     QPointF center;

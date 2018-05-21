@@ -59,14 +59,21 @@ void MainBox::init(void)
 
     createTestBar();
 
-    ui->sb_len_side->setRange(100, 10000);
-    ui->sb_len_side->setObjectName("sb_len_side");
-    connect(ui->sb_len_side,    SIGNAL(valueChanged(int)), this,    SLOT(set_len_side(int)));
-    set_len_side(ui->sb_len_side->value());
+    ui->sb_width->setRange(100, 10000);
+    ui->sb_width->setObjectName("sb_width");
+    connect(ui->sb_width,   SIGNAL(valueChanged(int)),  this,   SLOT(set_pic_width(int)));
+    set_pic_width(ui->sb_width->value());
+
+    ui->sb_height->setRange(100, 10000);
+    ui->sb_height->setObjectName("sb_height");
+    connect(ui->sb_height,  SIGNAL(valueChanged(int)),  this,   SLOT(set_pic_height(int)));
+    set_pic_height(ui->sb_height->value());
 
     connect(ui->btn_create_orig_image,  SIGNAL(clicked(bool)),  this,   SLOT(s_create_orig_image()));
-    connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
+    connect(ui->btn_load_orig_image,    SIGNAL(clicked(bool)),  this,   SLOT(s_load_orig_image()));
     connect(ui->btn_show_orig_image,    SIGNAL(clicked(bool)),  this,   SLOT(s_show_orig_image()));
+
+    connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
     connect(ui->btn_show_new_image,     SIGNAL(clicked(bool)),  this,   SLOT(s_show_new_image()));
 
     load_widgets("Polar");
@@ -146,18 +153,19 @@ bool MainBox::test_0(void)
         return false;
     }
 
-    qreal len_big_circle   = M_PI * (double)LEN_SIDE;
+    qreal SMALL_R = (qreal)(pic_width / 8.0);  //FIXME
+    qreal len_big_circle   = M_PI * (qreal)pic_width;
     qreal len_small_circle = M_PI * 2.0 * SMALL_R;
 
     emit info(QString("Длина большой окружности %1 pix").arg(len_big_circle));
     emit info(QString("Длина малой окружности %1 pix").arg(len_small_circle));
     emit info(QString("Отношения длин %1").arg(len_big_circle / len_small_circle));
-    emit info(QString("pict_point %1").arg(LEN_SIDE * LEN_SIDE, 0, 'f', 0));
+    emit info(QString("pict_point %1").arg(pic_width * pic_height, 0, 'f', 0)); //FIXME
     emit info(QString("cnt_sin  %1").arg(cnt_sin));
     emit info(QString("cnt_cos  %1").arg(cnt_cos));
     emit info(QString("cnt_point  %1").arg(cnt_sin + cnt_cos));
 
-    qreal big_square   = M_PI * (LEN_SIDE / 2) * (LEN_SIDE / 2);
+    qreal big_square   = M_PI * (pic_width / 2) * (pic_width / 2);  //FIXME
     qreal small_square = M_PI * SMALL_R * SMALL_R;
     emit info(QString("Эффективная площадь %1").arg(big_square - small_square, 0, 'f', 2));
 
@@ -202,9 +210,14 @@ bool MainBox::test_5(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::set_len_side(int value)
+void MainBox::set_pic_width(int value)
 {
-    LEN_SIDE = value;
+    pic_width = value;
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_pic_height(int value)
+{
+    pic_height = value;
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_show_orig_image(void)
@@ -235,6 +248,37 @@ void MainBox::s_show_new_image(void)
     label->show();
 }
 //--------------------------------------------------------------------------------
+bool MainBox::s_load_orig_image(void)
+{
+    emit trace(Q_FUNC_INFO);
+    if(orig_image)
+    {
+        delete orig_image;
+        orig_image = 0;
+    }
+    //---
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Image"),
+                                                    ".",
+                                                    tr("Image Files (*.png *.jpg *.bmp)"));
+    if(filename.isEmpty())
+    {
+        return false;
+    }
+    emit debug(filename);
+
+    orig_image = new QImage();
+    bool ok = orig_image->load(filename);
+    if(ok == false)
+    {
+        emit error(QString("cannot load [%]").arg(filename));
+        return false;
+    }
+    //---
+    emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
 bool MainBox::s_create_orig_image(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -244,15 +288,15 @@ bool MainBox::s_create_orig_image(void)
         orig_image = 0;
     }
     //---
-    orig_image = new QImage(LEN_SIDE + 1, LEN_SIDE + 1, QImage::Format_RGB32);
+    orig_image = new QImage(pic_width + 1, pic_height + 1, QImage::Format_RGB32);
     if(orig_image == nullptr)
     {
         emit error("cannot create orig_image");
         return false;
     }
     QPointF center;
-    center.setX(LEN_SIDE / 2);
-    center.setY(LEN_SIDE / 2);
+    center.setX(pic_width / 2);
+    center.setY(pic_height / 2);
 
     QPainter p(orig_image);
 
@@ -263,29 +307,33 @@ bool MainBox::s_create_orig_image(void)
                QBrush(Qt::black));
 
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    p.drawEllipse(center, LEN_SIDE / 2, LEN_SIDE / 2);
+    p.drawEllipse(center, pic_width / 2, pic_height / 2);
 
-    p.drawEllipse(center, SMALL_R, SMALL_R);
+    p.drawEllipse(center, pic_width / 8.0, pic_height / 8.0);   //FIXME
 
     //---
-    qreal radius = ((LEN_SIDE / 2) - SMALL_R) / 2 + SMALL_R;
+    qreal radius_w = (pic_width / 2)  - (pic_width / 8.0) / 2  + (pic_width / 8.0);     //FIXME
+    qreal radius_h = (pic_height / 2) - (pic_height / 8.0) / 2 + (pic_height / 8.0);    //FIXME
     p.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
-    p.drawEllipse(center, radius, radius);
+    p.drawEllipse(center, radius_w, radius_h);
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    emit info(QString("radius %1").arg(radius));
+    emit info(QString("pic_width  %1").arg(pic_width));
+    emit info(QString("pic_height %1").arg(pic_height));
+    emit info(QString("radius_w   %1").arg(radius_w));
+    emit info(QString("radius_h   %1").arg(radius_h));
     //---
 
-    qreal x1 = (LEN_SIDE - radius * 2.0) / 2;// LEN_SIDE / 4;
-    qreal y1 = (LEN_SIDE - radius * 2.0) / 2;// LEN_SIDE / 4;
-    qreal w = radius * 2.0;
-    qreal h = radius * 2.0;
+    qreal x1 = (pic_width - radius_w * 2.0) / 2;// LEN_SIDE / 4;
+    qreal y1 = (pic_height - radius_h * 2.0) / 2;// LEN_SIDE / 4;
+    qreal w = radius_w * 2.0;
+    qreal h = radius_h * 2.0;
     p.drawRect(x1, y1, w, h);
     p.drawRect(x1+10, y1+10, w-20, h-20);
 
     for(qreal a=0.0; a<360.0; a+=10.0)
     {
-        qreal new_x = center.x() + (LEN_SIDE / 2) * qCos(qDegreesToRadians(a));
-        qreal new_y = center.x() + (LEN_SIDE / 2) * qSin(qDegreesToRadians(a));
+        qreal new_x = center.x() + (pic_width / 2) * qCos(qDegreesToRadians(a));
+        qreal new_y = center.x() + (pic_height / 2) * qSin(qDegreesToRadians(a));
         p.drawLine(center.x(),
                    center.y(),
                    new_x,
@@ -298,19 +346,19 @@ bool MainBox::s_create_orig_image(void)
     QPointF center_circle_4;
 
     qreal angle = 45.0;
-    center_circle_1.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
-    center_circle_1.setY(center.y() + radius * qSin(qDegreesToRadians(angle)));
+    center_circle_1.setX(center.x() + radius_w * qCos(qDegreesToRadians(angle)));
+    center_circle_1.setY(center.y() + radius_h * qSin(qDegreesToRadians(angle)));
     angle += 90.0;
-    center_circle_2.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
-    center_circle_2.setY(center.y() - radius * qCos(qDegreesToRadians(angle)));
+    center_circle_2.setX(center.x() + radius_w * qCos(qDegreesToRadians(angle)));
+    center_circle_2.setY(center.y() - radius_h * qCos(qDegreesToRadians(angle)));
     angle += 90.0;
-    center_circle_3.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
-    center_circle_3.setY(center.y() + radius * qCos(qDegreesToRadians(angle)));
+    center_circle_3.setX(center.x() + radius_w * qCos(qDegreesToRadians(angle)));
+    center_circle_3.setY(center.y() + radius_h * qCos(qDegreesToRadians(angle)));
     angle = -45.0;
-    center_circle_4.setX(center.x() + radius * qCos(qDegreesToRadians(angle)));
-    center_circle_4.setY(center.y() - radius * qCos(qDegreesToRadians(angle)));
+    center_circle_4.setX(center.x() + radius_w * qCos(qDegreesToRadians(angle)));
+    center_circle_4.setY(center.y() - radius_h * qCos(qDegreesToRadians(angle)));
 
-    for(int r=50; r<(radius - SMALL_R); r+=10)
+    for(int r=50; r<(radius_w - (radius_w / 4.0)); r+=10)   //FIXME
     {
         p.drawEllipse(center_circle_1, r, r);
         p.drawEllipse(center_circle_2, r, r);
@@ -356,11 +404,11 @@ bool MainBox::s_create_new_image(void)
         return false;
     }
 
-    qreal min_r = SMALL_R;
-    qreal max_r = (LEN_SIDE / 2);
+    qreal min_r = qreal(pic_width / 8.0);  //FIXME
+    qreal max_r = (pic_width / 2.0);
 
+    qreal width  = M_PI * pic_width;
     qreal height = max_r - min_r;
-    qreal width  = M_PI * (double)LEN_SIDE;
 
     emit debug(QString("min_r %1").arg(min_r));
     emit debug(QString("max_r %1").arg(max_r));
@@ -370,8 +418,8 @@ bool MainBox::s_create_new_image(void)
     new_image = new QImage(width + 1.0, height + 1.0, QImage::Format_RGB32);
 
     QPointF center;
-    center.setX(LEN_SIDE / 2);
-    center.setY(LEN_SIDE / 2);
+    center.setX(pic_width / 2.0);   //FIXME
+    center.setY(pic_width / 2.0);
 
     QTime timer;
     timer.start();
@@ -379,7 +427,7 @@ bool MainBox::s_create_new_image(void)
     cnt_cos = 0;
     for(qreal y=min_r; y<max_r; y++)
     {
-        qreal small_width = M_PI * 2.0 * (double)y;
+        qreal small_width = M_PI * 2.0 * (qreal)y;
         qreal k = width / small_width;
         for(qreal x=0; x<small_width; x++)
         {

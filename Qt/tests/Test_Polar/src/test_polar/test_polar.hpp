@@ -27,7 +27,7 @@
 //--------------------------------------------------------------------------------
 //#define LEN_SIDE    800
 //#define LEN_SIDE    3465
-#define SMALL_R     (LEN_SIDE / 8)
+//#define SMALL_R     (LEN_SIDE / 8)
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -58,11 +58,14 @@ private slots:
     bool test_5(void);
 
     bool s_create_orig_image(void);
-    bool s_create_new_image(void);
+    bool s_load_orig_image(void);
     void s_show_orig_image(void);
+
+    bool s_create_new_image(void);
     void s_show_new_image(void);
 
-    void set_len_side(int value);
+    void set_pic_width(int value);
+    void set_pic_height(int value);
 
 private:
     enum {
@@ -91,7 +94,9 @@ private:
     long cnt_sin = 0;
     long cnt_cos = 0;
 
-    qreal LEN_SIDE = 0; //3465
+    //qreal LEN_SIDE = 0; //3465
+    qreal pic_width = 0;
+    qreal pic_height = 0;
 
     void init(void);
     void createTestBar(void);

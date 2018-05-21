@@ -153,19 +153,21 @@ bool MainBox::test_0(void)
         return false;
     }
 
-    qreal SMALL_R = (qreal)(pic_width / 8.0);  //FIXME
+    qreal BIG_R = pic_width / 2.0;
+    qreal SMALL_R = (qreal)(pic_width / 8.0);
+
     qreal len_big_circle   = M_PI * (qreal)pic_width;
     qreal len_small_circle = M_PI * 2.0 * SMALL_R;
 
     emit info(QString("Длина большой окружности %1 pix").arg(len_big_circle));
     emit info(QString("Длина малой окружности %1 pix").arg(len_small_circle));
     emit info(QString("Отношения длин %1").arg(len_big_circle / len_small_circle));
-    emit info(QString("pict_point %1").arg(pic_width * pic_height, 0, 'f', 0)); //FIXME
+    emit info(QString("pict_point %1").arg(pic_width * pic_height, 0, 'f', 0));
     emit info(QString("cnt_sin  %1").arg(cnt_sin));
     emit info(QString("cnt_cos  %1").arg(cnt_cos));
     emit info(QString("cnt_point  %1").arg(cnt_sin + cnt_cos));
 
-    qreal big_square   = M_PI * (pic_width / 2) * (pic_width / 2);  //FIXME
+    qreal big_square   = M_PI * BIG_R * BIG_R;
     qreal small_square = M_PI * SMALL_R * SMALL_R;
     emit info(QString("Эффективная площадь %1").arg(big_square - small_square, 0, 'f', 2));
 
@@ -257,10 +259,24 @@ bool MainBox::s_load_orig_image(void)
         orig_image = 0;
     }
     //---
-    QString filename = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Image"),
-                                                    ".",
-                                                    tr("Image Files (*.png *.jpg *.bmp)"));
+#ifdef Q_OS_LINUX
+    QString path = "/home/boss/Programming/_GitHub/mega_GIT/Qt/tests/Test_Polar/pic";
+#else
+    QString path = ".";
+#endif
+    QString filename;
+    QFileDialog *dlg = 0;
+
+    dlg = new QFileDialog;
+    dlg->setNameFilter(tr("Image Files (*.png *.jpg *.bmp)"));
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(path);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        filename = files.at(0);
+    }
+
     if(filename.isEmpty())
     {
         return false;
@@ -275,7 +291,16 @@ bool MainBox::s_load_orig_image(void)
         return false;
     }
     //---
+    emit info(QString("width  %1").arg(orig_image->width()));
+    emit info(QString("height %1").arg(orig_image->height()));
     emit info("OK");
+
+    //---
+    if(ui->cb_auto_show_orig_image->isChecked())
+    {
+        s_show_orig_image();
+    }
+    //---
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -312,11 +337,16 @@ bool MainBox::s_create_orig_image(void)
     p.drawEllipse(center, pic_width / 8.0, pic_height / 8.0);   //FIXME
 
     //---
-    qreal radius_w = (pic_width / 2)  - (pic_width / 8.0) / 2  + (pic_width / 8.0);     //FIXME
-    qreal radius_h = (pic_height / 2) - (pic_height / 8.0) / 2 + (pic_height / 8.0);    //FIXME
+    qreal BIG_R = pic_width / 2;
+    qreal SMALL_R = pic_width / 8.0;
+    qreal radius_w = (BIG_R  - SMALL_R) / 2  + SMALL_R; //FIXME
+    qreal radius_h = (BIG_R  - SMALL_R) / 2  + SMALL_R; //FIXME
     p.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
     p.drawEllipse(center, radius_w, radius_h);
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
+
+    emit info(QString("BIG_R %1").arg(BIG_R));
+    emit info(QString("SMALL_R %1").arg(SMALL_R));
     emit info(QString("pic_width  %1").arg(pic_width));
     emit info(QString("pic_height %1").arg(pic_height));
     emit info(QString("radius_w   %1").arg(radius_w));
@@ -368,6 +398,13 @@ bool MainBox::s_create_orig_image(void)
     //---
 
     emit info("OK");
+
+    //---
+    if(ui->cb_auto_show_orig_image->isChecked())
+    {
+        s_show_orig_image();
+    }
+    //---
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -404,8 +441,9 @@ bool MainBox::s_create_new_image(void)
         return false;
     }
 
-    qreal min_r = qreal(pic_width / 8.0);  //FIXME
-    qreal max_r = (pic_width / 2.0);
+    block_this_button(true);
+    qreal min_r = pic_width / 8.0;
+    qreal max_r = pic_width / 2.0;
 
     qreal width  = M_PI * pic_width;
     qreal height = max_r - min_r;
@@ -418,8 +456,8 @@ bool MainBox::s_create_new_image(void)
     new_image = new QImage(width + 1.0, height + 1.0, QImage::Format_RGB32);
 
     QPointF center;
-    center.setX(pic_width / 2.0);   //FIXME
-    center.setY(pic_width / 2.0);
+    center.setX(pic_width  / 2.0);
+    center.setY(pic_height / 2.0);
 
     QTime timer;
     timer.start();
@@ -432,7 +470,7 @@ bool MainBox::s_create_new_image(void)
         for(qreal x=0; x<small_width; x++)
         {
             qreal angle = qreal(k * x) * 360.0 / qreal(width);
-            qreal res_x = qreal(y) * qCos(qDegreesToRadians(angle));
+            qreal res_x = qreal(x) * qCos(qDegreesToRadians(angle));
             cnt_cos++;
             qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle));
             cnt_sin++;
@@ -445,8 +483,15 @@ bool MainBox::s_create_new_image(void)
         }
     }
     emit info(QString("time elapsed %1").arg(timer.elapsed()));
-
     emit info("OK");
+
+    //---
+    if(ui->cb_auto_show_new_image->isChecked())
+    {
+        s_show_new_image();
+    }
+    //---
+    block_this_button(false);
     return true;
 }
 //--------------------------------------------------------------------------------

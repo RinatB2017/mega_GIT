@@ -32,6 +32,7 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_polar.hpp"
+#include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -258,19 +259,12 @@ bool MainBox::s_load_orig_image(void)
         delete orig_image;
         orig_image = 0;
     }
-    //---
-#ifdef Q_OS_LINUX
-    QString path = "/home/boss/Programming/_GitHub/mega_GIT/Qt/tests/Test_Polar/pic";
-#else
-    QString path = ".";
-#endif
-    QString filename;
-    QFileDialog *dlg = 0;
 
-    dlg = new QFileDialog;
+    QString filename;
+    MyFileDialog *dlg = 0;
+
+    dlg = new MyFileDialog("Image", "image_dialog");
     dlg->setNameFilter(tr("Image Files (*.png *.jpg *.bmp)"));
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(path);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();

@@ -33,9 +33,12 @@
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "grapherbox.hpp"
 #include "defines.hpp"
 #include "Test_GY-652_mainbox.hpp"
+//--------------------------------------------------------------------------------
+#ifndef NO_GRAPHER
+#   include "grapherbox.hpp"
+#endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -73,6 +76,7 @@ void MainBox::init(void)
 
 #else
     ui->grapher_widget->setVisible(false);
+    setFixedSize(sizeHint());
 #endif
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_gy652(QByteArray)));
 }

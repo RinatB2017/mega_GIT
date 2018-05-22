@@ -253,94 +253,10 @@ void MainBox::test_time(void)
     //---
 }
 //--------------------------------------------------------------------------------
-void MainBox::get_data(FULL_DATA data)
-{
-    emit info(QString("className [%1]").arg(data.widget->metaObject()->className()));
-    emit info(QString("f_name [%1]").arg(data.f_name));
-}
-//--------------------------------------------------------------------------------
-#include "rtsp_widget.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
-
-#if 1
-    RTSP_widget *widget = new RTSP_widget;
-    connect(widget, SIGNAL(info(QString)),    this, SIGNAL(info(QString)));
-    connect(widget, SIGNAL(debug(QString)),   this, SIGNAL(debug(QString)));
-    connect(widget, SIGNAL(error(QString)),   this, SIGNAL(error(QString)));
-    connect(widget, SIGNAL(trace(QString)),   this, SIGNAL(trace(QString)));
-
-    widget->show();
-#endif
-
-#if 0
-    FULL_DATA data;
-    data.f_name = "test_0"; //Q_FUNC_INFO;
-    data.widget = this;
-
-    emit send_data(data);
-
-#endif
-
-#if 0
-    IPCtrl4 *test = new IPCtrl4;
-    test->set_url(QUrl("http://192.168.1.66"));
-    //test->set_url(QUrl("192.168.1.66"));
-    test->show();
-#endif
-
-#if 0
-    IPCtrl6 *test = new IPCtrl6;
-    test->set_url("A0-B1-C2-D3-E4-F5");
-    test->show();
-#endif
-
-#if 0
-    struct ITEM
-    {
-        QString name;
-        QWidget *widget;
-    };
-
-    QComboBox *cb = new QComboBox;
-    cb->setProperty("name", "mega");
-    cb->addItem("item 0", 0);
-    cb->addItem("item 1", 1);
-
-    QSpinBox *sb = new QSpinBox;
-    sb->setProperty("name", "mega");
-    sb->setRange(100, 1000);
-
-    QList<ITEM> l_xxx;
-    l_xxx.append( { "combo", cb});
-    l_xxx.append( { "spin",  sb});
-
-    QGridLayout *grid = new QGridLayout;
-    int y = 0;
-    foreach (ITEM xxx, l_xxx)
-    {
-        grid->addWidget(new QLabel(xxx.name), y, 0);
-        grid->addWidget(xxx.widget, y, 1);
-
-        QSpinBox  *sp_box = dynamic_cast<QSpinBox *>(xxx.widget);
-        QComboBox *cb_box = dynamic_cast<QComboBox *>(xxx.widget);
-        if(sp_box)
-        {
-            emit info("sp_box");
-        }
-        if(cb_box)
-        {
-            emit info("cb_box");
-        }
-
-        y++;
-    }
-    QWidget *widget = new QWidget;
-    widget->setLayout(grid);
-    widget->show();
-#endif
 
     return true;
 }

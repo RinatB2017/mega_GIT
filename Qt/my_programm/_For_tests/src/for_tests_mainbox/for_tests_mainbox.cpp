@@ -348,11 +348,6 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 0
-    //show_circle();
-    show_flower();
-#endif
-
 #if 1
     PTZ_widget *widget = new PTZ_widget;
     connect(widget, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
@@ -370,6 +365,10 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
+
+#if 1
+    show_circle();
+#endif
 
 #if 0
     emit info("info");
@@ -393,6 +392,10 @@ bool MainBox::test_2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_2()");
+
+#if 1
+    show_flower();
+#endif
 
     return true;
 }

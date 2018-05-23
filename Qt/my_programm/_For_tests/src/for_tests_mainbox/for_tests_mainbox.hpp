@@ -96,6 +96,9 @@ private:
     void test_validator(void);
     void test_time(void);
     //---
+    void show_circle(void);
+    void show_flower(void);
+    //---
 
     void init(void);
     void createTestBar(void);

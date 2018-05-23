@@ -342,14 +342,25 @@ void MainBox::show_flower(void)
     label->show();
 }
 //--------------------------------------------------------------------------------
+#include "ptz_widget.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     //show_circle();
     show_flower();
+#endif
+
+#if 1
+    PTZ_widget *widget = new PTZ_widget;
+    connect(widget, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(widget, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(widget, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(widget, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    widget->show();
 #endif
 
     return true;

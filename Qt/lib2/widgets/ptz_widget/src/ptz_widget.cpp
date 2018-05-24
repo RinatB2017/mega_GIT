@@ -46,24 +46,32 @@ PTZ_widget::~PTZ_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void PTZ_widget::init(void)
+void PTZ_widget::create_player(void)
 {
-    ui->setupUi(this);
-
     player = new QMediaPlayer(this);
     player->setVideoOutput(ui->video_widget);
 
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
-
-    ui->video_widget->setMinimumSize(320, 200);
-
-    //---
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::create_tcp_socket(void)
+{
     tcpSocket = new QTcpSocket(this);
     connect(tcpSocket,  SIGNAL(readyRead()),    this,   SLOT(read_data()));
     connect(tcpSocket,  SIGNAL(error(QAbstractSocket::SocketError)), this, (SLOT(s_error(QAbstractSocket::SocketError))));
     connect(tcpSocket,  SIGNAL(connected()),    this,   SLOT(f_connected()));
     connect(tcpSocket,  SIGNAL(disconnected()), this,   SLOT(f_disconnected()));
-    //---
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::init(void)
+{
+    ui->setupUi(this);
+
+    create_tcp_socket();
+    create_player();
+
+    ui->video_widget->setMinimumSize(640, 480);
+
     btn_lu = new QToolButton(ui->video_widget);
     btn_ru = new QToolButton(ui->video_widget);
 
@@ -142,7 +150,18 @@ void PTZ_widget::init(void)
     connect(ui->btn_pause,  SIGNAL(clicked(bool)),  this,   SLOT(pause()));
     connect(ui->btn_stop,   SIGNAL(clicked(bool)),  this,   SLOT(stop()));
 
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(f_test()));
+
     connect(ui->btn_choice, SIGNAL(clicked(bool)),  this,   SLOT(choice()));
+
+    connect(ui->btn_wiper_on,   SIGNAL(clicked(bool)),  this,   SLOT(f_wiper_on()));
+    connect(ui->btn_wiper_off,  SIGNAL(clicked(bool)),  this,   SLOT(f_wiper_off()));
+    connect(ui->btn_light_on,   SIGNAL(clicked(bool)),  this,   SLOT(f_light_on()));
+    connect(ui->btn_light_off,  SIGNAL(clicked(bool)),  this,   SLOT(f_light_off()));
+    connect(ui->btn_diaphragm_plus,     SIGNAL(clicked(bool)),  this,   SLOT(f_diaphragm_plus()));
+    connect(ui->btn_diaphragm_minus,    SIGNAL(clicked(bool)),  this,   SLOT(f_diaphragm_minus()));
+    connect(ui->btn_zoom_plus,  SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_plus()));
+    connect(ui->btn_zoom_minus, SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_minus()));
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -162,6 +181,39 @@ void PTZ_widget::f_error(QMediaPlayer::Error err)
         break;
     }
     emit error(player->errorString());
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::s_error(QAbstractSocket::SocketError err)
+{
+    switch (err)
+    {
+    case QAbstractSocket::UnconnectedState: emit error("UnconnectedState"); break;
+    case QAbstractSocket::HostLookupState:  emit error("HostLookupState");  break;
+    case QAbstractSocket::ConnectingState:  emit error("ConnectingState");  break;
+    case QAbstractSocket::ConnectedState:   emit error("ConnectedState");   break;
+    case QAbstractSocket::BoundState:       emit error("BoundState");       break;
+    case QAbstractSocket::ListeningState:   emit error("ListeningState");   break;
+    case QAbstractSocket::ClosingState:     emit error("ClosingState");     break;
+
+    default:
+        emit error(QString("unknown error %1").arg(err));
+        break;
+    }
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::read_data(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_connected(void)
+{
+    emit info("Connected");
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_disconnected(void)
+{
+    emit info("Disconnected");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::play(void)
@@ -263,64 +315,118 @@ void PTZ_widget::resizeEvent(QResizeEvent *)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_stop(void)
 {
-    send_cmd("STOP", 0, 0);
+    send_cmd("ptz", "STOP", 0, 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_up(void)
 {
-    send_cmd("LU", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("ptz", "LU", ui->sl_speed->value(), ui->sl_speed->value());
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right_up(void)
 {
-    send_cmd("RU", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("ptz", "RU", ui->sl_speed->value(), ui->sl_speed->value());
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left(void)
 {
-    send_cmd("L", ui->sl_speed->value(), 0);
+    send_cmd("ptz", "L", ui->sl_speed->value(), 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right(void)
 {
-    send_cmd("R", ui->sl_speed->value(), 0);
+    send_cmd("ptz", "R", ui->sl_speed->value(), 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_up(void)
 {
-    send_cmd("U", 0, ui->sl_speed->value());
+    send_cmd("ptz", "U", 0, ui->sl_speed->value());
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_down(void)
 {
-    send_cmd("D", 0, ui->sl_speed->value());
+    send_cmd("ptz", "D", 0, ui->sl_speed->value());
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_down(void)
 {
-    send_cmd("LD", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("ptz", "LD", ui->sl_speed->value(), ui->sl_speed->value());
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right_down(void)
 {
-    send_cmd("RD", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("ptz", "RD", ui->sl_speed->value(), ui->sl_speed->value());
 }
 //--------------------------------------------------------------------------------
-void PTZ_widget::send_cmd(QString cmd, int speed_x, int speed_y)
+void PTZ_widget::f_test(void)
+{
+    emit info("test");
+
+    //send_cmd("ptz", "AD", "SA", "WIPER");
+    //send_cmd("ptz", "AD", "CA", "WIPER");
+
+    //send_cmd("ptz", "AD", "SA", "LIGHT");
+    //send_cmd("ptz", "AD", "CA", "LIGHT");
+
+    //send_cmd("ptz", "O", 0, 0);
+    //send_cmd("ptz", "D", 0, 0);
+
+    send_cmd("isp", "contrast", 255, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_wiper_on(void)
+{
+    send_cmd("ptz", "AD", "SA", "WIPER");
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_wiper_off(void)
+{
+    send_cmd("ptz", "AD", "CA", "WIPER");
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_light_on(void)
+{
+    send_cmd("ptz", "AD", "SA", "LIGHT");
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_light_off(void)
+{
+    send_cmd("ptz", "AD", "CA", "LIGHT");
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_diaphragm_plus(void)
+{
+    send_cmd("ptz", "O", 0, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_diaphragm_minus(void)
+{
+    send_cmd("ptz", "D", 0, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_zoom_plus(void)
+{
+    send_cmd("ptz", "T", 0, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_zoom_minus(void)
+{
+    send_cmd("ptz", "W", 0, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::send_cmd(QString cmd,
+                          QString func,
+                          int value_1,
+                          int value_2)
 {
     emit trace(Q_FUNC_INFO);
 
-    emit debug(QString("cmd %1").arg(cmd));
-    emit debug(QString("speed_x %1").arg(speed_x));
-    emit debug(QString("speed_y %1").arg(speed_y));
-
     QString param;
-    param.append("http://");
-    param.append(url.host());
-    param.append("/cgi-bin/senddata.cgi?cmd=ptz;func=");
-    param.append(cmd);
-    param.append(QString(";value1=%1;").arg(speed_x));
-    param.append(QString(";value2=%1;").arg(speed_y));
+    param.append(QString("http://%1/cgi-bin/senddata.cgi?").arg(url.host()));
+    param.append(QString("cmd=%1;").arg(cmd));
+    param.append(QString("func=%1;").arg(func));
+    param.append(QString("value1=%1;").arg(value_1));
+    param.append(QString("value2=%1;").arg(value_2));
 
     //---
     bool ok = false;
@@ -350,20 +456,93 @@ void PTZ_widget::send_cmd(QString cmd, int speed_x, int speed_y)
     if(bytes < 0)
     {
         emit error(QString("write bytes %1").arg(bytes));
+        f_disconnect();
         return;
     }
     ok = tcpSocket->waitForBytesWritten(1000);
     if(!ok)
     {
         emit error("waitForBytesWritten");
+        f_disconnect();
         return;
     }
+#if 0
     ok = tcpSocket->waitForReadyRead(1000);
     if(!ok)
     {
         emit error("waitForReadyRead");
+        f_disconnect();
         return;
     }
+#endif
+    f_disconnect();
+
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::send_cmd(QString cmd,
+                          QString func,
+                          QString param_1,
+                          QString param_2)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QString param;
+    param.append(QString("http://%1/cgi-bin/senddata.cgi?").arg(url.host()));
+    param.append(QString("cmd=%1;").arg(cmd));
+    param.append(QString("func=%1;").arg(func));
+    param.append(QString("value1=%1;").arg(param_1));
+    param.append(QString("value2=%1;").arg(param_2));
+
+    //---
+    bool ok = false;
+
+    ok = tcpSocket->isOpen();
+    if(ok == false)
+    {
+        emit debug("isOpen() return false");
+        ok = f_connect();
+        if(ok == false)
+        {
+            return;
+        }
+    }
+
+    QByteArray reqStr;
+    reqStr.append(QString("GET %1 HTTP/1.1\r\n")
+                  .arg(param));
+
+    reqStr.append(QString("Host: %1\r\n").arg(url.host()));
+    reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
+    reqStr.append("Accept: text/html\r\n");
+    reqStr.append("Connection: close\r\n");
+    reqStr.append("\r\n");
+
+    qint64 bytes = tcpSocket->write(reqStr);
+    if(bytes < 0)
+    {
+        emit error(QString("write bytes %1").arg(bytes));
+        f_disconnect();
+        return;
+    }
+    ok = tcpSocket->waitForBytesWritten(1000);
+    if(!ok)
+    {
+        emit error("waitForBytesWritten");
+        f_disconnect();
+        return;
+    }
+#if 0
+    ok = tcpSocket->waitForReadyRead(1000);
+    if(!ok)
+    {
+        emit error("waitForReadyRead");
+        f_disconnect();
+        return;
+    }
+#endif
+    f_disconnect();
+
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -383,6 +562,15 @@ bool PTZ_widget::f_connect(void)
 
     tcpSocket->connectToHost(ip, port);
     return true;
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_disconnect(void)
+{
+    if(tcpSocket->isOpen())
+    {
+        tcpSocket->close();
+    }
+    tcpSocket->disconnectFromHost();
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::updateText(void)

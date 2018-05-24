@@ -81,11 +81,6 @@ private slots:
     void f_wiper_on(void);
     void f_wiper_off(void);
     void f_light_on(void);
-    void f_light_off(void);
-    void f_diaphragm_plus(void);
-    void f_diaphragm_minus(void);
-    void f_zoom_plus(void);
-    void f_zoom_minus(void);
 
 private:
     Ui::PTZ_widget *ui;
@@ -109,18 +104,13 @@ private:
     QUrl url;
 
     void send_cmd(QString cmd,
-                  QString func,
-                  int value_1,
-                  int value_2);
+                  int speed_x,
+                  int speed_y);
     void send_cmd(QString cmd,
-                  QString func,
                   QString param_1,
                   QString param_2);
     bool f_connect(void);
     void f_disconnect(void);
-
-    void create_player(void);
-    void create_tcp_socket(void);
 
     void init(void);
     void updateText(void);

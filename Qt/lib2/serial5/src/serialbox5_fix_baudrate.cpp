@@ -270,9 +270,9 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
             if(result)
             {
                 bool ok = serial5->setBaudRate(fix_baudrate);
-                if(!ok)
+                if(ok == false)
                 {
-                    emit error(QString("Не удалось уставновить baudrate %1").arg(fix_baudrate));
+                    emit error(QString("Не удалось установить baudrate %1").arg(fix_baudrate));
                 }
                 get_parameter();
                 emit is_open();
@@ -286,7 +286,7 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
             }
         }
 
-        (result) ? setOpenState() : setCloseState();
+        result ? setOpenState() : setCloseState();
     }
 }
 //--------------------------------------------------------------------------------

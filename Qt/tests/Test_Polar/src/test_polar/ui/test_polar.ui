@@ -90,7 +90,7 @@
         <item row="1" column="0">
          <widget class="QPushButton" name="btn_load_orig_image">
           <property name="text">
-           <string>:Load orig_image</string>
+           <string>Load orig_image</string>
           </property>
          </widget>
         </item>

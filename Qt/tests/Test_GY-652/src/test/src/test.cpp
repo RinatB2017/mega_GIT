@@ -41,6 +41,10 @@ Test::Test()
 //--------------------------------------------------------------------------------
 void Test::test_grapher(void)
 {
+#ifdef NO_GRAPHER
+    return;
+#endif
+
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
 

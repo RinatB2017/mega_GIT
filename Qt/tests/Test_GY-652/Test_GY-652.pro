@@ -17,6 +17,8 @@ QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
+DEFINES += NO_TOOLBAR
+DEFINES += NO_MENU
 DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += NO_GRAPHER
@@ -33,7 +35,9 @@ SOURCES += \
 
 FORMS   += Test_GY-652_mainbox.ui
 
-OTHER_FILES += doc/notebook.txt
+OTHER_FILES += \
+    doc/notebook.txt \
+    arduino/Barometer_Sensor/Barometer_Sensor.ino
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

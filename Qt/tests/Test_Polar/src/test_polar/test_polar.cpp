@@ -275,13 +275,17 @@ bool MainBox::s_load_orig_image(void)
     {
         return false;
     }
+#ifndef Q_OS_LINUX
+    filename.replace('/', '\\');
+#endif
+
     emit debug(filename);
 
     orig_image = new QImage();
     bool ok = orig_image->load(filename);
     if(ok == false)
     {
-        emit error(QString("cannot load [%]").arg(filename));
+        emit error(QString("cannot load [%1]").arg(filename));
         return false;
     }
     //---

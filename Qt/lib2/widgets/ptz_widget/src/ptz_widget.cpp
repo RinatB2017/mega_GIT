@@ -438,8 +438,8 @@ void PTZ_widget::f_zoom_minus(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::send_cmd(QString cmd,
                           QString func,
-                          int value_1,
-                          int value_2)
+                          QVariant param_1,
+                          QVariant param_2)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -447,78 +447,26 @@ void PTZ_widget::send_cmd(QString cmd,
     param.append(QString("http://%1/cgi-bin/senddata.cgi?").arg(url.host()));
     param.append(QString("cmd=%1;").arg(cmd));
     param.append(QString("func=%1;").arg(func));
-    param.append(QString("value1=%1;").arg(value_1));
-    param.append(QString("value2=%1;").arg(value_2));
 
-    //---
+    if(param_1.type() == QVariant::Int)
+    {
+        param.append(QString("value1=%1;").arg(param_1.toInt()));
+    }
+    if(param_1.type() == QVariant::String)
+    {
+        param.append(QString("value1=%1;").arg(param_1.toString()));
+    }
+
+    if(param_2.type() == QVariant::Int)
+    {
+        param.append(QString("value2=%1;").arg(param_2.toInt()));
+    }
+    if(param_2.type() == QVariant::String)
+    {
+        param.append(QString("value2=%1;").arg(param_2.toString()));
+    }
+
     bool ok = false;
-
-    ok = tcpSocket->isOpen();
-    if(ok == false)
-    {
-        emit debug("isOpen() return false");
-        ok = f_connect();
-        if(ok == false)
-        {
-            return;
-        }
-    }
-
-    QByteArray reqStr;
-    reqStr.append(QString("GET %1 HTTP/1.1\r\n")
-                  .arg(param));
-
-    reqStr.append(QString("Host: %1\r\n").arg(url.host()));
-    reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
-    reqStr.append("Accept: text/html\r\n");
-    reqStr.append("Connection: close\r\n");
-    reqStr.append("\r\n");
-
-    qint64 bytes = tcpSocket->write(reqStr);
-    if(bytes < 0)
-    {
-        emit error(QString("write bytes %1").arg(bytes));
-        f_disconnect();
-        return;
-    }
-    ok = tcpSocket->waitForBytesWritten(1000);
-    if(!ok)
-    {
-        emit error("waitForBytesWritten");
-        f_disconnect();
-        return;
-    }
-#if 0
-    ok = tcpSocket->waitForReadyRead(1000);
-    if(!ok)
-    {
-        emit error("waitForReadyRead");
-        f_disconnect();
-        return;
-    }
-#endif
-    f_disconnect();
-
-    emit info("OK");
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::send_cmd(QString cmd,
-                          QString func,
-                          QString param_1,
-                          QString param_2)
-{
-    emit trace(Q_FUNC_INFO);
-
-    QString param;
-    param.append(QString("http://%1/cgi-bin/senddata.cgi?").arg(url.host()));
-    param.append(QString("cmd=%1;").arg(cmd));
-    param.append(QString("func=%1;").arg(func));
-    param.append(QString("value1=%1;").arg(param_1));
-    param.append(QString("value2=%1;").arg(param_2));
-
-    //---
-    bool ok = false;
-
     ok = tcpSocket->isOpen();
     if(ok == false)
     {

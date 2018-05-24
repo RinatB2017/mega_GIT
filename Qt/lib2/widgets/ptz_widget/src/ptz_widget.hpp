@@ -113,12 +113,8 @@ private:
 
     void send_cmd(QString cmd,
                   QString func,
-                  int value_1,
-                  int value_2);
-    void send_cmd(QString cmd,
-                  QString func,
-                  QString param_1,
-                  QString param_2);
+                  QVariant param_1,
+                  QVariant param_2);
     bool f_connect(void);
     void f_disconnect(void);
 

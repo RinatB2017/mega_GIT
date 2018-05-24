@@ -20,6 +20,7 @@ DEFINES += NO_TRAYICON
 DEFINES += NO_TOOLBAR
 DEFINES += NO_RESIZE
 DEFINES += NO_MENU
+
 DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += NO_GRAPHER
@@ -49,7 +50,7 @@ win32 {
 }
 
 #----------------------------------------------
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

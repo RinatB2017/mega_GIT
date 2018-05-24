@@ -86,6 +86,9 @@ private slots:
     void f_diaphragm_minus(void);
     void f_zoom_plus(void);
     void f_zoom_minus(void);
+    void f_set_brightness(int value);
+    void f_set_contrast(int value);
+    void f_set_tone(int value);
 
 private:
     Ui::PTZ_widget *ui;

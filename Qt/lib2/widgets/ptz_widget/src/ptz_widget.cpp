@@ -106,6 +106,9 @@ void PTZ_widget::init(void)
     //---
     ui->sl_speed->setRange(0, 100);
     ui->sl_speed->setValue(50);
+    ui->sl_brightness->setRange(0, 255);
+    ui->sl_contrast->setRange(0, 255);
+    ui->sl_tone->setRange(0, 255);
     //---
 
     connect(btn_lu, SIGNAL(pressed()),  this,   SLOT(f_left_up()));
@@ -162,6 +165,10 @@ void PTZ_widget::init(void)
     connect(ui->btn_diaphragm_minus,    SIGNAL(clicked(bool)),  this,   SLOT(f_diaphragm_minus()));
     connect(ui->btn_zoom_plus,  SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_plus()));
     connect(ui->btn_zoom_minus, SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_minus()));
+
+    connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  this,   SLOT(f_set_brightness(int)));
+    connect(ui->sl_contrast,    SIGNAL(valueChanged(int)),  this,   SLOT(f_set_contrast(int)));
+    connect(ui->sl_tone,        SIGNAL(valueChanged(int)),  this,   SLOT(f_set_tone(int)));
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -371,7 +378,22 @@ void PTZ_widget::f_test(void)
     //send_cmd("ptz", "O", 0, 0);
     //send_cmd("ptz", "D", 0, 0);
 
-    send_cmd("isp", "contrast", 255, 0);
+    send_cmd("isp", "contrast", 128, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_brightness(int value)
+{
+    send_cmd("isp", "brightness", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_contrast(int value)
+{
+    send_cmd("isp", "contrast", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_tone(int value)
+{
+    send_cmd("isp", "tone", value, 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_wiper_on(void)

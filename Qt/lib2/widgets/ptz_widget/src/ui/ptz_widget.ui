@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>228</height>
+    <height>346</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -208,6 +208,69 @@
      </item>
     </layout>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>brightness；</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>contrast</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSlider" name="sl_brightness">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSlider" name="sl_contrast">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>tone</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSlider" name="sl_tone">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -218,6 +281,25 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>le_address</tabstop>
+  <tabstop>btn_choice</tabstop>
+  <tabstop>btn_play</tabstop>
+  <tabstop>btn_pause</tabstop>
+  <tabstop>btn_stop</tabstop>
+  <tabstop>btn_test</tabstop>
+  <tabstop>sl_speed</tabstop>
+  <tabstop>btn_wiper_on</tabstop>
+  <tabstop>btn_wiper_off</tabstop>
+  <tabstop>btn_diaphragm_plus</tabstop>
+  <tabstop>btn_diaphragm_minus</tabstop>
+  <tabstop>btn_light_on</tabstop>
+  <tabstop>btn_light_off</tabstop>
+  <tabstop>btn_zoom_plus</tabstop>
+  <tabstop>btn_zoom_minus</tabstop>
+  <tabstop>sl_brightness</tabstop>
+  <tabstop>sl_contrast</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

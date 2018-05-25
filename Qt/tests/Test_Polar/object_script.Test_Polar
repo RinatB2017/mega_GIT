@@ -1,6 +1,7 @@
 INPUT(
 E:\my_programm\tests\Test_Polar\obj\test_polar.o
 E:\my_programm\tests\Test_Polar\obj\main.o
+E:\my_programm\tests\Test_Polar\obj\test.o
 E:\my_programm\tests\Test_Polar\obj\qtsingleapplication.o
 E:\my_programm\tests\Test_Polar\obj\qtlocalpeer.o
 E:\my_programm\tests\Test_Polar\obj\mainwindow.o
@@ -23,6 +24,7 @@ E:\my_programm\tests\Test_Polar\obj\qrc_common.o
 E:\my_programm\tests\Test_Polar\obj\qrc_programm.o
 E:\my_programm\tests\Test_Polar\obj\qrc_system.o
 E:\my_programm\tests\Test_Polar\obj\moc_test_polar.o
+E:\my_programm\tests\Test_Polar\obj\moc_test.o
 E:\my_programm\tests\Test_Polar\obj\moc_qtsingleapplication.o
 E:\my_programm\tests\Test_Polar\obj\moc_qtlocalpeer.o
 E:\my_programm\tests\Test_Polar\obj\moc_mainwindow.o

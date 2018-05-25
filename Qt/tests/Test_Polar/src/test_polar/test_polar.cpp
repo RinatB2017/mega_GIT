@@ -148,6 +148,7 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+#if 0
     if(orig_image == nullptr)
     {
         emit error("orig_image not created");
@@ -174,13 +175,14 @@ bool MainBox::test_0(void)
 
     int stride = orig_image->bytesPerLine();
     emit info(QString("stride %1").arg(stride));
+#endif
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
-    emit info("Test_0()");
+    emit info("Test_1()");
 
     return true;
 }
@@ -457,7 +459,7 @@ bool MainBox::s_create_new_image(void)
 
     block_this_button(true);
 
-    qreal kx = pic_width / pic_height;
+    //qreal kx = pic_width / pic_height;
 
     qreal BIG_R_X = pic_width / 2;
     qreal BIG_R_Y = pic_height / 2;
@@ -483,7 +485,9 @@ bool MainBox::s_create_new_image(void)
         max_r = BIG_R_Y;
     }
 
-    new_image = new QImage(width + 1.0, height + 1.0, QImage::Format_RGB32);
+    new_image = new QImage(width  + 1.0,
+                           height + 1.0,
+                           QImage::Format_RGB32);
 
     QPointF center;
     center.setX(pic_width  / 2.0);
@@ -510,7 +514,7 @@ bool MainBox::s_create_new_image(void)
             }
             qreal res_x = qreal(x) * qCos(qDegreesToRadians(angle));
             cnt_cos++;
-            qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle));
+            qreal res_y = qreal(y - min_r) * qSin(qDegreesToRadians(angle));
             cnt_sin++;
 
             qreal t_x = center.x() + res_x;

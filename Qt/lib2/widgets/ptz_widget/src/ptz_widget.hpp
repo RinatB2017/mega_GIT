@@ -89,6 +89,12 @@ private slots:
     void f_set_brightness(int value);
     void f_set_contrast(int value);
     void f_set_tone(int value);
+    void f_set_saturation(int value);
+    void f_set_iris(int value);
+    void f_set_shutter(int value);
+    void f_set_gamma(int value);
+    void f_set_sharpness(int value);
+    void f_set_noise(int value);
 
 private:
     Ui::PTZ_widget *ui;
@@ -120,6 +126,7 @@ private:
 
     void create_player(void);
     void create_tcp_socket(void);
+    void create_position_widgets(void);
 
     void init(void);
     void updateText(void);

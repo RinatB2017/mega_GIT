@@ -44,6 +44,8 @@ void PTZ_dialog::init(void)
     ui->setupUi(this);
 
     ui->le_add->setText("HD");
+    connect(ui->buttonBox,  SIGNAL(accepted()), this,   SLOT(accept()));
+    connect(ui->buttonBox,  SIGNAL(rejected()), this,   SLOT(reject()));
 }
 //--------------------------------------------------------------------------------
 void PTZ_dialog::set_url(QUrl url)

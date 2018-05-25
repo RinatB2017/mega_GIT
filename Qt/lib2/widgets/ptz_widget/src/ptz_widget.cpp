@@ -69,66 +69,21 @@ void PTZ_widget::init(void)
 
     create_tcp_socket();
     create_player();
+    create_position_widgets();
 
     ui->video_widget->setMinimumSize(640, 480);
 
-    btn_lu = new QToolButton(ui->video_widget);
-    btn_ru = new QToolButton(ui->video_widget);
-
-    btn_u  = new QToolButton(ui->video_widget);
-    btn_d  = new QToolButton(ui->video_widget);
-    btn_l  = new QToolButton(ui->video_widget);
-    btn_r  = new QToolButton(ui->video_widget);
-
-    btn_ld = new QToolButton(ui->video_widget);
-    btn_rd = new QToolButton(ui->video_widget);
-
-    btn_lu->setFixedSize(32, 32);
-    btn_ru->setFixedSize(32, 32);
-    btn_u->setFixedSize(32, 32);
-    btn_d->setFixedSize(32, 32);
-    btn_l->setFixedSize(32, 32);
-    btn_r->setFixedSize(32, 32);
-    btn_ld->setFixedSize(32, 32);
-    btn_rd->setFixedSize(32, 32);
-
-    btn_lu->setIcon(QIcon(":/arrows/up_left.png"));
-    btn_ru->setIcon(QIcon(":/arrows/up_right.png"));
-
-    btn_u->setIcon(QIcon(":/arrows/up.png"));
-    btn_d->setIcon(QIcon(":/arrows/down.png"));
-    btn_l->setIcon(QIcon(":/arrows/left.png"));
-    btn_r->setIcon(QIcon(":/arrows/right.png"));
-
-    btn_ld->setIcon(QIcon(":/arrows/down_left.png"));
-    btn_rd->setIcon(QIcon(":/arrows/down_right.png"));
-
-    //---
     ui->sl_speed->setRange(0, 100);
     ui->sl_speed->setValue(50);
     ui->sl_brightness->setRange(0, 255);
     ui->sl_contrast->setRange(0, 255);
     ui->sl_tone->setRange(0, 255);
-    //---
-
-    connect(btn_lu, SIGNAL(pressed()),  this,   SLOT(f_left_up()));
-    connect(btn_ru, SIGNAL(pressed()),  this,   SLOT(f_right_up()));
-    connect(btn_l,  SIGNAL(pressed()),  this,   SLOT(f_left()));
-    connect(btn_r,  SIGNAL(pressed()),  this,   SLOT(f_right()));
-    connect(btn_u,  SIGNAL(pressed()),  this,   SLOT(f_up()));
-    connect(btn_d,  SIGNAL(pressed()),  this,   SLOT(f_down()));
-    connect(btn_ld, SIGNAL(pressed()),  this,   SLOT(f_left_down()));
-    connect(btn_rd, SIGNAL(pressed()),  this,   SLOT(f_right_down()));
-
-    connect(btn_lu, SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_ru, SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_l,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_r,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_u,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_d,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_ld, SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_rd, SIGNAL(released()), this,   SLOT(f_stop()));
-    //---
+    ui->sl_saturation->setRange(0, 255);
+    ui->sl_iris->setRange(0, 13);
+    ui->sl_shutter->setRange(0, 21);
+    ui->sl_gamma->setRange(0, 4);
+    ui->sl_sharpness->setRange(0, 15);
+    ui->sl_noise->setRange(0, 5);
 
 #ifdef Q_OS_LINUX
     ui->le_address->setText("rtsp://192.168.1.66/av0_0");
@@ -169,6 +124,64 @@ void PTZ_widget::init(void)
     connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  this,   SLOT(f_set_brightness(int)));
     connect(ui->sl_contrast,    SIGNAL(valueChanged(int)),  this,   SLOT(f_set_contrast(int)));
     connect(ui->sl_tone,        SIGNAL(valueChanged(int)),  this,   SLOT(f_set_tone(int)));
+    connect(ui->sl_saturation,  SIGNAL(valueChanged(int)),  this,   SLOT(f_set_saturation(int)));
+    connect(ui->sl_iris,        SIGNAL(valueChanged(int)),  this,   SLOT(f_set_iris(int)));
+    connect(ui->sl_shutter,     SIGNAL(valueChanged(int)),  this,   SLOT(f_set_shutter(int)));
+    connect(ui->sl_gamma,       SIGNAL(valueChanged(int)),  this,   SLOT(f_set_gamma(int)));
+    connect(ui->sl_sharpness,   SIGNAL(valueChanged(int)),  this,   SLOT(f_set_sharpness(int)));
+    connect(ui->sl_noise,       SIGNAL(valueChanged(int)),  this,   SLOT(f_set_noise(int)));
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::create_position_widgets(void)
+{
+    btn_lu = new QToolButton(ui->video_widget);
+    btn_ru = new QToolButton(ui->video_widget);
+
+    btn_u  = new QToolButton(ui->video_widget);
+    btn_d  = new QToolButton(ui->video_widget);
+    btn_l  = new QToolButton(ui->video_widget);
+    btn_r  = new QToolButton(ui->video_widget);
+
+    btn_ld = new QToolButton(ui->video_widget);
+    btn_rd = new QToolButton(ui->video_widget);
+
+    btn_lu->setFixedSize(32, 32);
+    btn_ru->setFixedSize(32, 32);
+    btn_u->setFixedSize(32, 32);
+    btn_d->setFixedSize(32, 32);
+    btn_l->setFixedSize(32, 32);
+    btn_r->setFixedSize(32, 32);
+    btn_ld->setFixedSize(32, 32);
+    btn_rd->setFixedSize(32, 32);
+
+    btn_lu->setIcon(QIcon(":/arrows/up_left.png"));
+    btn_ru->setIcon(QIcon(":/arrows/up_right.png"));
+
+    btn_u->setIcon(QIcon(":/arrows/up.png"));
+    btn_d->setIcon(QIcon(":/arrows/down.png"));
+    btn_l->setIcon(QIcon(":/arrows/left.png"));
+    btn_r->setIcon(QIcon(":/arrows/right.png"));
+
+    btn_ld->setIcon(QIcon(":/arrows/down_left.png"));
+    btn_rd->setIcon(QIcon(":/arrows/down_right.png"));
+
+    connect(btn_lu, SIGNAL(pressed()),  this,   SLOT(f_left_up()));
+    connect(btn_ru, SIGNAL(pressed()),  this,   SLOT(f_right_up()));
+    connect(btn_l,  SIGNAL(pressed()),  this,   SLOT(f_left()));
+    connect(btn_r,  SIGNAL(pressed()),  this,   SLOT(f_right()));
+    connect(btn_u,  SIGNAL(pressed()),  this,   SLOT(f_up()));
+    connect(btn_d,  SIGNAL(pressed()),  this,   SLOT(f_down()));
+    connect(btn_ld, SIGNAL(pressed()),  this,   SLOT(f_left_down()));
+    connect(btn_rd, SIGNAL(pressed()),  this,   SLOT(f_right_down()));
+
+    connect(btn_lu, SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(btn_ru, SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(btn_l,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(btn_r,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(btn_u,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(btn_d,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(btn_ld, SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(btn_rd, SIGNAL(released()), this,   SLOT(f_stop()));
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -378,7 +391,13 @@ void PTZ_widget::f_test(void)
     //send_cmd("ptz", "O", 0, 0);
     //send_cmd("ptz", "D", 0, 0);
 
-    send_cmd("isp", "contrast", 128, 0);
+    //send_cmd("isp", "contrast", 128, 0);
+
+    //send_cmd("isp", "mirror", 0, 0);
+    //send_cmd("isp", "mirror", 1, 0);
+
+    //send_cmd("isp", "flip", 0, 0);
+    send_cmd("isp", "flip", 1, 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_set_brightness(int value)
@@ -394,6 +413,36 @@ void PTZ_widget::f_set_contrast(int value)
 void PTZ_widget::f_set_tone(int value)
 {
     send_cmd("isp", "tone", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_saturation(int value)
+{
+    send_cmd("isp", "saturation", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_iris(int value)
+{
+    send_cmd("isp", "iris", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_shutter(int value)
+{
+    send_cmd("isp", "shutter", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_gamma(int value)
+{
+    send_cmd("isp", "gamma", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_sharpness(int value)
+{
+    send_cmd("isp", "sharpness", value, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_noise(int value)
+{
+    send_cmd("isp", "noise", value, 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_wiper_on(void)

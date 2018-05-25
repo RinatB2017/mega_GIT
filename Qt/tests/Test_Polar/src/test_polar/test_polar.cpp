@@ -317,6 +317,15 @@ bool MainBox::s_create_orig_image(void)
         emit error("cannot create orig_image");
         return false;
     }
+    block_this_button(true);
+
+    qreal kx = pic_width / pic_height;
+
+    qreal BIG_R_X = pic_width / 2;
+    qreal BIG_R_Y = pic_height / 2;
+    qreal SMALL_R_X = pic_width / 8.0;
+    qreal SMALL_R_Y = pic_height / 8.0;
+
     QPointF center;
     center.setX(pic_width / 2);
     center.setY(pic_height / 2);
@@ -330,44 +339,47 @@ bool MainBox::s_create_orig_image(void)
                QBrush(Qt::black));
 
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    p.drawEllipse(center, pic_width / 2, pic_height / 2);
+    p.drawEllipse(center, BIG_R_X, BIG_R_Y);
 
-    p.drawEllipse(center, pic_width / 8.0, pic_height / 8.0);   //FIXME
+    p.drawEllipse(center, SMALL_R_X, SMALL_R_Y);
 
     //---
-    qreal BIG_R = pic_width / 2;
-    qreal SMALL_R = pic_width / 8.0;
-    qreal radius_w = (BIG_R  - SMALL_R) / 2  + SMALL_R; //FIXME
-    qreal radius_h = (BIG_R  - SMALL_R) / 2  + SMALL_R; //FIXME
+    qreal radius_w = (BIG_R_X  - SMALL_R_X) / 2  + SMALL_R_X;
+    qreal radius_h = ((BIG_R_Y  - SMALL_R_Y) / 2  + SMALL_R_Y);
     p.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
     p.drawEllipse(center, radius_w, radius_h);
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
 
-    emit info(QString("BIG_R %1").arg(BIG_R));
-    emit info(QString("SMALL_R %1").arg(SMALL_R));
+    emit info(QString("kx %1").arg(kx));
+    emit info(QString("BIG_R_X %1").arg(BIG_R_X));
+    emit info(QString("BIG_R_Y %1").arg(BIG_R_Y));
+    emit info(QString("SMALL_R_X %1").arg(SMALL_R_X));
+    emit info(QString("SMALL_R_Y %1").arg(SMALL_R_Y));
     emit info(QString("pic_width  %1").arg(pic_width));
     emit info(QString("pic_height %1").arg(pic_height));
     emit info(QString("radius_w   %1").arg(radius_w));
     emit info(QString("radius_h   %1").arg(radius_h));
     //---
 
-    qreal x1 = (pic_width - radius_w * 2.0) / 2;// LEN_SIDE / 4;
-    qreal y1 = (pic_height - radius_h * 2.0) / 2;// LEN_SIDE / 4;
+#if 1
+    qreal x1 = (pic_width - radius_w * 2.0) / 2;
+    qreal y1 = (pic_height - radius_h * 2.0) / 2;
     qreal w = radius_w * 2.0;
     qreal h = radius_h * 2.0;
     p.drawRect(x1, y1, w, h);
-    p.drawRect(x1+10, y1+10, w-20, h-20);
 
     for(qreal a=0.0; a<360.0; a+=10.0)
     {
-        qreal new_x = center.x() + (pic_width / 2) * qCos(qDegreesToRadians(a));
-        qreal new_y = center.x() + (pic_height / 2) * qSin(qDegreesToRadians(a));
+        qreal new_x = BIG_R_X * qCos(qDegreesToRadians(a));
+        qreal new_y = BIG_R_Y * qSin(qDegreesToRadians(a));
         p.drawLine(center.x(),
                    center.y(),
-                   new_x,
-                   new_y);
+                   center.x() + new_x,
+                   center.y() + new_y);
     }
+#endif
 
+#if 1
     QPointF center_circle_1;
     QPointF center_circle_2;
     QPointF center_circle_3;
@@ -386,13 +398,16 @@ bool MainBox::s_create_orig_image(void)
     center_circle_4.setX(center.x() + radius_w * qCos(qDegreesToRadians(angle)));
     center_circle_4.setY(center.y() - radius_h * qCos(qDegreesToRadians(angle)));
 
-    for(int r=50; r<(radius_w - (radius_w / 4.0)); r+=10)   //FIXME
+    for(int r=50; r<(radius_w - SMALL_R_X); r+=10)   //FIXME
     {
-        p.drawEllipse(center_circle_1, r, r);
-        p.drawEllipse(center_circle_2, r, r);
-        p.drawEllipse(center_circle_3, r, r);
-        p.drawEllipse(center_circle_4, r, r);
+        qreal rx = r;
+        qreal ry = r / kx;
+        p.drawEllipse(center_circle_1, rx, ry);
+        p.drawEllipse(center_circle_2, rx, ry);
+        p.drawEllipse(center_circle_3, rx, ry);
+        p.drawEllipse(center_circle_4, rx, ry);
     }
+#endif
     //---
 
     emit info("OK");
@@ -403,6 +418,7 @@ bool MainBox::s_create_orig_image(void)
         s_show_orig_image();
     }
     //---
+    block_this_button(false);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -440,16 +456,32 @@ bool MainBox::s_create_new_image(void)
     }
 
     block_this_button(true);
-    qreal min_r = pic_width / 8.0;
-    qreal max_r = pic_width / 2.0;
 
-    qreal width  = M_PI * pic_width;
-    qreal height = max_r - min_r;
+    qreal kx = pic_width / pic_height;
 
-    emit debug(QString("min_r %1").arg(min_r));
-    emit debug(QString("max_r %1").arg(max_r));
-    emit debug(QString("width %1").arg(width));
-    emit debug(QString("height %1").arg(height));
+    qreal BIG_R_X = pic_width / 2;
+    qreal BIG_R_Y = pic_height / 2;
+    qreal SMALL_R_X = pic_width / 8.0;
+    qreal SMALL_R_Y = pic_height / 8.0;
+
+    qreal width = 0;
+    qreal height = 0;
+    qreal min_r = 0;
+    qreal max_r = 0;
+    if(pic_width > pic_height)
+    {
+        width = M_PI * pic_width;
+        height = BIG_R_X - SMALL_R_X;
+        min_r = SMALL_R_X;
+        max_r = BIG_R_X;
+    }
+    else
+    {
+        width = M_PI * pic_height;
+        height = BIG_R_Y - SMALL_R_Y;
+        min_r = SMALL_R_Y;
+        max_r = BIG_R_Y;
+    }
 
     new_image = new QImage(width + 1.0, height + 1.0, QImage::Format_RGB32);
 
@@ -467,17 +499,44 @@ bool MainBox::s_create_new_image(void)
         qreal k = width / small_width;
         for(qreal x=0; x<small_width; x++)
         {
-            qreal angle = qreal(k * x) * 360.0 / qreal(width);
+            qreal angle = 0;
+            if(width > height)
+            {
+                angle = (k * x) * 360.0 / width;
+            }
+            else
+            {
+                angle = (k * x) * 360.0 / height;
+            }
             qreal res_x = qreal(x) * qCos(qDegreesToRadians(angle));
             cnt_cos++;
             qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle));
             cnt_sin++;
 
-            QRgb rgb = orig_image->pixel(center.x() + res_x,
-                                         center.y() + res_y);
+            qreal t_x = center.x() + res_x;
+            qreal t_y = center.y() + res_y;
+            if((t_x < 0) || (t_x > orig_image->width()))
+            {
+                emit error(QString("incorrect x %1").arg(t_x));
+                emit error(QString("res_x %1").arg(res_x));
+                block_this_button(false);
+                return false;
+            }
+            if((t_y < 0) || (t_y > orig_image->height()))
+            {
+                emit error(QString("incorrect y %1").arg(t_y));
+                emit error(QString("res_y %1").arg(res_y));
+                block_this_button(false);
+                return false;
+            }
+#if 1
+            QRgb rgb = orig_image->pixel(t_x, t_y);
             new_image->setPixel(x * k,
                                 y - min_r,
                                 rgb);
+#else
+            // быстрая отрисовка
+#endif
         }
     }
     emit info(QString("time elapsed %1").arg(timer.elapsed()));

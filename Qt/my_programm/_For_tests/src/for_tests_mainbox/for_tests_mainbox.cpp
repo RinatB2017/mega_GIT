@@ -349,6 +349,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    check_tooltips();
+#endif
+
+#if 0
     PTZ_widget *widget = new PTZ_widget;
     connect(widget, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(widget, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));

@@ -166,6 +166,7 @@ signals:
 
 public slots:
     void block_interface(bool state);
+    void check_tooltips(void);
 
 private slots:
     void log(const QString data);

@@ -162,6 +162,8 @@ void MyMainWindow::create_toolbars(void)
     {
         QToolButton *btn = new QToolButton;
         btn->setIcon(QIcon(QString(":/red/%1.png").arg(n)));
+        btn->setObjectName(QString("red_btn_%1").arg(n));
+        btn->setToolTip(QString("%1").arg(n));
         btn->setProperty("value", n);
         connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click_btn()));
         toolBar->addWidget(btn);
@@ -182,6 +184,8 @@ void MyMainWindow::create_toolbars(void)
     {
         QToolButton *btn = new QToolButton;
         btn->setIcon(QIcon(QString(":/white/%1.png").arg(n)));
+        btn->setObjectName(QString("white_btn_%1").arg(n));
+        btn->setToolTip(QString("%1").arg(n));
         btn->setProperty("value", n);
         connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click_btn()));
         toolBar2->addWidget(btn);

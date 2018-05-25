@@ -1160,6 +1160,31 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
     return tool_button;
 }
 //--------------------------------------------------------------------------------
+void MyWidget::check_tooltips(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+
+    QList<QAbstractButton *> l_obj = mw->findChildren<QAbstractButton *>();
+    foreach (QAbstractButton *obj, l_obj)
+    {
+        if(obj->objectName().left(3) == "qt_")
+        {
+            continue;
+        }
+        if(obj->objectName().left(3) == "tb_")
+        {
+            continue;
+        }
+        if(obj->toolTip().isEmpty())
+        {
+            emit error(QString("obj [%1] [%2] no tooltip")
+                       .arg(obj->objectName())
+                       .arg(obj->text()));
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
     QWidget::changeEvent(event);

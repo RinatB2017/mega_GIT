@@ -736,6 +736,7 @@ void MainWindow::createStyleToolBar(void)
     foreach (QString style, sl)
     {
         QPushButton *btnTemp = new QPushButton(this);
+        btnTemp->setToolTip(style);
         btnTemp->setText(style);
 
         styletoolbar->addWidget(btnTemp);

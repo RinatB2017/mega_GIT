@@ -346,8 +346,8 @@ bool MainBox::s_create_orig_image(void)
     p.drawEllipse(center, SMALL_R_X, SMALL_R_Y);
 
     //---
-    qreal radius_w = (BIG_R_X  - SMALL_R_X) / 2  + SMALL_R_X;
-    qreal radius_h = ((BIG_R_Y  - SMALL_R_Y) / 2  + SMALL_R_Y);
+    qreal radius_w = (BIG_R_X - SMALL_R_X) / 2  + SMALL_R_X;
+    qreal radius_h = (BIG_R_Y - SMALL_R_Y) / 2  + SMALL_R_Y;
     p.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
     p.drawEllipse(center, radius_w, radius_h);
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
@@ -400,7 +400,16 @@ bool MainBox::s_create_orig_image(void)
     center_circle_4.setX(center.x() + radius_w * qCos(qDegreesToRadians(angle)));
     center_circle_4.setY(center.y() - radius_h * qCos(qDegreesToRadians(angle)));
 
-    for(int r=50; r<(radius_w - SMALL_R_X); r+=10)   //FIXME
+    qreal max_r = 0;
+    if(pic_width > pic_height)
+    {
+        max_r = radius_h - SMALL_R_Y;
+    }
+    else
+    {
+        max_r = radius_w - SMALL_R_X;
+    }
+    for(qreal r=50; r<max_r; r+=((max_r - 50.0) / 10.0))   //FIXME
     {
         qreal rx = r;
         qreal ry = r / kx;
@@ -411,9 +420,7 @@ bool MainBox::s_create_orig_image(void)
     }
 #endif
     //---
-
     emit info("OK");
-
     //---
     if(ui->cb_auto_show_orig_image->isChecked())
     {
@@ -514,7 +521,7 @@ bool MainBox::s_create_new_image(void)
             }
             qreal res_x = qreal(x) * qCos(qDegreesToRadians(angle));
             cnt_cos++;
-            qreal res_y = qreal(y - min_r) * qSin(qDegreesToRadians(angle));
+            qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle));
             cnt_sin++;
 
             qreal t_x = center.x() + res_x;

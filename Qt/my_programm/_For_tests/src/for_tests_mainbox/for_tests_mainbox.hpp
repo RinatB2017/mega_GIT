@@ -41,6 +41,8 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
+
+class QDnsLookup;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -91,6 +93,8 @@ private:
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
+
+    QDnsLookup *m_dns;
 
     //---
     void test_validator(void);

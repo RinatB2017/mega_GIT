@@ -13,23 +13,27 @@ class AsyncDNS : public QObject
 {
     Q_OBJECT
 public:
-    enum QTYPE{
+    enum QTYPE
+    {
         A = 1,
         NS = 2,
         CNAME = 5,
         AAAA = 28 //IPV6
     };
 
-    enum QCLASS{
+    enum QCLASS
+    {
         IN = 1
     };
 
-    enum BDADDR{
+    enum BDADDR
+    {
         TO_QS = 1,
         FROM_QS = 2
     };
 
-    struct DNSHeader{
+    struct DNSHeader
+    {
         quint16 request_id;
         quint8  flag;
         quint8  rcode;
@@ -39,13 +43,15 @@ public:
         quint16 ar_count;
     };
 
-    struct DNS_QD{
+    struct DNS_QD
+    {
         QString host;
         quint16 qtype;
         quint16 qclass;
     };
 
-    struct DNS_RR{
+    struct DNS_RR
+    {
         quint16 name;
         quint16 type;
         quint16 rclass;
@@ -63,6 +69,7 @@ public:
     QHostAddress getFirstIP(const QString &host);
     QHostAddress getRandomIP(const QString &host);
     QUdpSocket * getSocket();
+
 private:
     Buffer         build_request(QString address, ushort qtype, ushort request_id);
     QString        build_address(QString address, int direction = TO_QS);
@@ -82,6 +89,7 @@ private:
 
 signals:
     void resolve(QString host);
+
 public slots:
     void handleReadData();
     void onResolve(QString host);

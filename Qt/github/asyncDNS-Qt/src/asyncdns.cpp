@@ -30,7 +30,8 @@ AsyncDNS::~AsyncDNS()
 QString AsyncDNS::build_address(QString address, int direction)
 {
     QString fmt_address("");
-    if(direction == BDADDR::TO_QS){
+    if(direction == BDADDR::TO_QS)
+    {
         QStringList label_list = address.split(".");
 
         /* fmt domain data*/
@@ -43,10 +44,12 @@ QString AsyncDNS::build_address(QString address, int direction)
 
         fmt_address.append('\0');
         return fmt_address;
-    }else if(direction == BDADDR::FROM_QS){
+    }
+    else if(direction == BDADDR::FROM_QS){
         int index = 0;
         while(index < address.size()){
-            if(address[index] > 0 && address[index] <= 63){
+            if(address[index] > 0 && address[index] <= 63)
+            {
                 address.replace(index,1,QChar('.'));
             }
             index += 1;
@@ -55,7 +58,9 @@ QString AsyncDNS::build_address(QString address, int direction)
         address.chop(1);
         fmt_address = address.mid(1);
         return fmt_address;
-    }else{
+    }
+    else
+    {
         return fmt_address; // empty string
     }
 }
@@ -192,7 +197,8 @@ unsigned int AsyncDNS::parse_question(char *response_data, DNS_QD *question)
 
 QString AsyncDNS::parse_ip(Buffer &ip_buf)
 {
-    if(ip_buf.size() != 4) {
+    if(ip_buf.size() != 4)
+    {
         return QString("0.0.0.0");
     }
 
@@ -210,7 +216,8 @@ void AsyncDNS::handleReadData()
     QString host;
     QList<QHostAddress> host_set;
 
-    while(socket->hasPendingDatagrams()) {
+    while(socket->hasPendingDatagrams())
+    {
         datagram.resize(socket->pendingDatagramSize());
 
         socket->readDatagram(datagram.data(), datagram.size());
@@ -233,24 +240,31 @@ void AsyncDNS::handleReadData()
     dat += offset;
 
     //cache
-    if( !cache.contains(host) ) {
+    if( !cache.contains(host) )
+    {
         cache.insert(host, host_set);
     }
 
     //parse RRs
     int an_rr = header.an_count;
-    for(int j = 0; j < an_rr ; j++ ) {
+    for(int j = 0; j < an_rr ; j++ )
+    {
         dat += parse_RR(dat, &rr);
 
-        if( rr.type == QTYPE::A && rr.rclass == QCLASS::IN ) {
-            if(rr.rdlength == 4){ // IPV4 data
+        if( rr.type == QTYPE::A && rr.rclass == QCLASS::IN )
+        {
+            if(rr.rdlength == 4)
+            {
+                // IPV4 data
                 bool lock = false;
                 QHostAddress addr = QHostAddress(parse_ip(rr.rdata));
 
-                if(cache.contains(host)){
+                if(cache.contains(host))
+                {
                     for(QHostAddress item : cache[host])
                     {
-                        if(item == addr){
+                        if(item == addr)
+                        {
                             lock = true;
                         }
                     }
@@ -259,7 +273,9 @@ void AsyncDNS::handleReadData()
                         (cache[host]).append(addr);
                     }
                 }
-            }else{
+            }
+            else
+            {
                 qDebug() << "[ERROR] parse RR error!";
                 return ;
             }
@@ -285,29 +301,38 @@ QHostAddress AsyncDNS::getFirstIP(const QString &host)
     //retrieve host address from cache
     if(cache.contains(host))
     {
-        if(host.length() > 0) {
+        if(host.length() > 0)
+        {
             return (cache[host])[0];
-        } else {
+        }
+        else
+        {
             return QHostAddress("");
         }
-    } else {
+    }
+    else
+    {
         return QHostAddress("");
     }
 }
 
 QHostAddress AsyncDNS::getRandomIP(const QString &host)
 {
-
     //retrieve host address from cache
     if(cache.contains(host))
     {
-        if(host.length() > 0) {
+        if(host.length() > 0)
+        {
             int total = host.length();
             return (cache[host])[ qrand() % total ];
-        } else {
+        }
+        else
+        {
             return QHostAddress("");
         }
-    } else {
+    }
+    else
+    {
         return QHostAddress("");
     }
 }

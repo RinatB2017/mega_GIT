@@ -38,34 +38,39 @@ Buffer Buffer::pack(const char * fmt, ...)
 
     while(*fmt != '\0')
     {
-        if(*fmt == 'B'){
+        if(*fmt == 'B')
+        {
             uchar byt = va_arg(args, uchar);
             qToBigEndian(byt,cs);
             rtn_buf.append(reinterpret_cast<const char *>(cs), 1);
         }
 
-        if(*fmt == 'H'){
+        if(*fmt == 'H')
+        {
             ushort dbyt = va_arg(args, ushort);
             qToBigEndian(dbyt, cs);
             rtn_buf.append(reinterpret_cast<const char*>(cs), 2);
         }
 
-        if(*fmt == 'X'){
+        if(*fmt == 'X')
+        {
             str = va_arg(args, const char*);
             rtn_buf.append(str);
         }
 
-        if(*fmt == 'x'){
+        if(*fmt == 'x')
+        {
             Buffer new_buf(va_arg(args, Buffer));
             rtn_buf.append(new_buf);
         }
-        if(*fmt == 'I'){
+        if(*fmt == 'I')
+        {
             uint qbyt = va_arg(args, uint);
             qToBigEndian(qbyt, cs);
             rtn_buf.append(reinterpret_cast<const char*>(cs), 4);
         }
         ++fmt;
-   }
+    }
 
     delete [] cs;
     cs = NULL;
@@ -100,7 +105,8 @@ unsigned int Buffer::unpack(const char * fmt,const Buffer &buf, ...)
     int var_count = 0;
     while(*fmt != '\0')
     {
-        if(*fmt == 'B'){
+        if(*fmt == 'B')
+        {
             char* byt = va_arg(args,char*);
             // set value
             *byt = *(dat + offset);
@@ -109,7 +115,8 @@ unsigned int Buffer::unpack(const char * fmt,const Buffer &buf, ...)
             arg_list << *byt;
         }
 
-        if(*fmt == 'H'){
+        if(*fmt == 'H')
+        {
             qint16* dbyt = va_arg(args, qint16*);
             qint16  val  = qFromBigEndian<qint16>(reinterpret_cast<const uchar*>(dat + offset));
 
@@ -119,7 +126,8 @@ unsigned int Buffer::unpack(const char * fmt,const Buffer &buf, ...)
             arg_list << *dbyt;
         }
 
-        if(*fmt == 'I'){
+        if(*fmt == 'I')
+        {
             qint32* qbyt = va_arg(args,qint32*);
             qint32   val = qFromBigEndian<qint32>(reinterpret_cast<const uchar*>(dat+offset));
 
@@ -131,19 +139,23 @@ unsigned int Buffer::unpack(const char * fmt,const Buffer &buf, ...)
 
         bool ref_flag = false;
         //parse [N]
-        if(*fmt == '['){
+        if(*fmt == '[')
+        {
             int num = 0;
             fmt += 1;
 
-            if( *(fmt+1) == '&' ){
+            if( *(fmt+1) == '&' )
+            {
                 ref_flag = true;
                 fmt += 1;
             }
 
-            while(*fmt != ']'){
+            while(*fmt != ']')
+            {
                 num *= 10;
 
-                if(*fmt >= '0' && *fmt <= '9'){
+                if(*fmt >= '0' && *fmt <= '9')
+                {
                     num += (*fmt - '0');
                 }
                 ++fmt;
@@ -153,7 +165,8 @@ unsigned int Buffer::unpack(const char * fmt,const Buffer &buf, ...)
 
             if(ref_flag == true)
             {
-                if(num > 0 && num <= var_count){
+                if(num > 0 && num <= var_count)
+                {
                     num = arg_list.at(num - 1);
                 }
             }
@@ -180,7 +193,8 @@ unsigned int Buffer::unpack(const char * fmt, char * data, ...)
     int var_count = 0;
     while(*fmt != '\0')
     {
-        if(*fmt == 'B'){
+        if(*fmt == 'B')
+        {
             char* byt = va_arg(args,char*);
             // set value
             *byt = *(dat + offset);
@@ -189,7 +203,8 @@ unsigned int Buffer::unpack(const char * fmt, char * data, ...)
             arg_list << *byt;
         }
 
-        if(*fmt == 'H'){
+        if(*fmt == 'H')
+        {
             qint16* dbyt = va_arg(args, qint16*);
             qint16  val  = qFromBigEndian<qint16>(reinterpret_cast<const uchar*>(dat + offset));
 
@@ -199,7 +214,8 @@ unsigned int Buffer::unpack(const char * fmt, char * data, ...)
             arg_list << *dbyt;
         }
 
-        if(*fmt == 'I'){
+        if(*fmt == 'I')
+        {
             qint32* qbyt = va_arg(args,qint32*);
             qint32   val = qFromBigEndian<qint32>(reinterpret_cast<const uchar*>(dat+offset));
 
@@ -211,19 +227,23 @@ unsigned int Buffer::unpack(const char * fmt, char * data, ...)
 
         bool ref_flag = false;
         //parse [N]
-        if(*fmt == '['){
+        if(*fmt == '[')
+        {
             int num = 0;
             fmt += 1;
 
-            if( *fmt == '&' ){
+            if( *fmt == '&' )
+            {
                 ref_flag = true;
                 fmt += 1;
             }
 
-            while(*fmt != ']'){
+            while(*fmt != ']')
+            {
                 num *= 10;
 
-                if(*fmt >= '0' && *fmt <= '9'){
+                if(*fmt >= '0' && *fmt <= '9')
+                {
                     num += (*fmt - '0');
                 }
                 ++fmt;
@@ -233,7 +253,8 @@ unsigned int Buffer::unpack(const char * fmt, char * data, ...)
 
             if(ref_flag == true)
             {
-                if(num > 0 && num <= var_count){
+                if(num > 0 && num <= var_count)
+                {
                     num = arg_list.at(num - 1);
                 }
             }

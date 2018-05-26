@@ -27,7 +27,6 @@
 #include "ptz_widget.hpp"
 #include "ptz_dialog.hpp"
 //--------------------------------------------------------------------------------
-#include "for_tests_mainbox.hpp"
 #include "ui_ptz_widget.h"
 //--------------------------------------------------------------------------------
 PTZ_widget::PTZ_widget(QWidget *parent) :

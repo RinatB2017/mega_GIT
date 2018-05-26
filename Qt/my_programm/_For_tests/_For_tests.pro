@@ -92,10 +92,6 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
-include ($$LIB_PATH2/icons/arrows.pri)
-include ($$LIB_PATH2/widgets/ipctrl4/ipctrl4.pri)
-include ($$LIB_PATH2/widgets/ptz_widget/ptz_widget.pri)
-
 include (src/mymainwindow/mymainwindow.pri)
 
 !exists(OBJECTS_DIR) {

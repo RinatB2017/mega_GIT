@@ -17,6 +17,7 @@ SUBDIRS += \
     Organizations \
     PelcoD_485 \
     Reader_SAAT_T505 \
+    Simple_HTTP_reader \
     neural/QNeuralNet \
     Labyrinth \
     NewMoonLight \

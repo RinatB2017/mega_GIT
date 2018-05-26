@@ -3,9 +3,9 @@
 #include <stdint.h>
 #ifdef _MSC_VER
 #include <intrin.h> /* for rdtscp and clflush */
-#pragma optimize("gt",on)
+#   pragma optimize("gt",on)
 #else
-#include <x86intrin.h> /* for rdtscp and clflush */
+#   include <x86intrin.h> /* for rdtscp and clflush */
 #endif
 
 /********************************************************************

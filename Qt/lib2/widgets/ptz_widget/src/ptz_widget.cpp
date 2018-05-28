@@ -174,21 +174,33 @@ void PTZ_widget::init(void)
 
     int index = 0;
     PTZ_PARAM param;
-    add_slider(index++, "speed",        1,  100,    param);
-    add_slider(index++, "brightness",   1,  100,    param);
-    add_slider(index++, "contrast",     1,  100,    param);
-    add_slider(index++, "iris",         1,  100,    param);
-    add_slider(index++, "gamma",        1,  100,    param);
-    add_slider(index++, "noise",        1,  100,    param);
-    add_slider(index++, "tone",         1,  100,    param);
-    add_slider(index++, "saturation",   1,  100,    param);
-    add_slider(index++, "shutter",      1,  100,    param);
-    add_slider(index++, "sharpness",    1,  100,    param);
+    param.cmd = "ptz"; param.func1 = "brightness"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "brightness",   param);
+    param.cmd = "ptz"; param.func1 = "contrast"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "contrast",     param);
+    param.cmd = "ptz"; param.func1 = "iris"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "iris",         param);
+    param.cmd = "ptz"; param.func1 = "gamma"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "gamma",        param);
+    param.cmd = "ptz"; param.func1 = "noise"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "noise",        param);
+    param.cmd = "ptz"; param.func1 = "tone"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "tone",         param);
+    param.cmd = "ptz"; param.func1 = "saturation"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "saturation",   param);
+    param.cmd = "ptz"; param.func1 = "shutter"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "shutter",      param);
+    param.cmd = "ptz"; param.func1 = "sharpness"; param.min_value = 1; param.max_value = 100;
+    add_slider(index++, "sharpness",    param);
 
-    add_buttons(index++,    "WIPER",        sl_buttons,     param);
-    add_buttons(index++,    "LIGHT",        sl_buttons2,    param);
-    add_buttons(index++,    "DIAPHGRAM",    sl_buttons3,    param);
-    add_buttons(index++,    "ZOOM",         sl_buttons4,    param);
+    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "CA"; param.param1 = "WIPER"; param.btn1_caption = "ON"; param.btn2_caption = "OFF";
+    add_buttons(index++,    "WIPER",        param);
+    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "SA"; param.param1 = "WIPER"; param.btn1_caption = "ON"; param.btn2_caption = "OFF";
+    add_buttons(index++,    "LIGHT",        param);
+    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "CA"; param.param1 = "LIGHT"; param.btn1_caption = "+"; param.btn2_caption = "-";
+    add_buttons(index++,    "DIAPHGRAM",    param);
+    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "SA"; param.param1 = "LIGHT"; param.btn1_caption = "+"; param.btn2_caption = "-";
+    add_buttons(index++,    "ZOOM",         param);
     //---
     //l_params.append({ "buttons", "ptz", "STOP", 0, 0 });
 #endif
@@ -199,7 +211,6 @@ void PTZ_widget::init(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_buttons(int index,
                              QString name,
-                             QList<QAbstractButton *> buttons,
                              PTZ_PARAM params)
 {
     QLabel *caption = new QLabel(this);
@@ -208,6 +219,24 @@ void PTZ_widget::add_buttons(int index,
 
     ui->grid->addWidget(caption, index, 0);
 
+    QPushButton *btn1 = new QPushButton(this);
+    btn1->setText(params.btn1_caption);
+    btn1->setProperty("cmd",      params.cmd);
+    btn1->setProperty("func",     params.func1);
+    btn1->setProperty("param1",   params.param1);
+    btn1->setProperty("param2",   params.param2);
+
+    QPushButton *btn2 = new QPushButton(this);
+    btn2->setText(params.btn2_caption);
+    btn2->setProperty("cmd",      params.cmd);
+    btn2->setProperty("func",     params.func1);
+    btn2->setProperty("param1",   params.param1);
+    btn2->setProperty("param2",   params.param2);
+
+    ui->grid->addWidget(btn1, index, 1);
+    ui->grid->addWidget(btn2, index, 2);
+
+#if 0
     int x = 1;
     foreach (QAbstractButton *btn, buttons)
     {
@@ -219,12 +248,11 @@ void PTZ_widget::add_buttons(int index,
         ui->grid->addWidget(btn, index, x);
         x++;
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_slider(int index,
                             QString name,
-                            int min_value,
-                            int max_value,
                             PTZ_PARAM params)
 {
     QLabel *caption = new QLabel(this);
@@ -235,7 +263,8 @@ void PTZ_widget::add_slider(int index,
 
     QSlider *slider = new QSlider(Qt::Horizontal);
     slider->setObjectName(QString("sl_%1").arg(name));
-    slider->setRange(min_value, max_value);
+    slider->setRange(params.min_value,
+                     params.max_value);
     slider->setProperty("cmd",      params.cmd);
     slider->setProperty("func",     params.func1);
     slider->setProperty("param1",   params.param1);

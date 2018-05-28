@@ -36,6 +36,8 @@ struct PTZ_PARAM
     QString func2;
     QVariant param1;
     QVariant param2;
+    QString btn1_caption;
+    QString btn2_caption;
     int min_value;
     int max_value;
 };
@@ -122,12 +124,9 @@ private slots:
     //---
     void add_buttons(int index,
                      QString name,
-                     QList<QAbstractButton *> buttons,
                      PTZ_PARAM params);
     void add_slider(int index,
                     QString name,
-                    int min_value,
-                    int max_value,
                     PTZ_PARAM params);
     //---
 

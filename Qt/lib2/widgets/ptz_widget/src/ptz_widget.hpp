@@ -29,12 +29,15 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 //--------------------------------------------------------------------------------
-struct PTZ_PARAM{
-    QString name;
+struct PTZ_PARAM
+{
     QString cmd;
-    QString func;
+    QString func1;
+    QString func2;
     QVariant param1;
     QVariant param2;
+    int min_value;
+    int max_value;
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -119,11 +122,13 @@ private slots:
     //---
     void add_buttons(int index,
                      QString name,
-                     QList<QAbstractButton *> buttons);
+                     QList<QAbstractButton *> buttons,
+                     PTZ_PARAM params);
     void add_slider(int index,
                     QString name,
                     int min_value,
-                    int max_value);
+                    int max_value,
+                    PTZ_PARAM params);
     //---
 
 private:

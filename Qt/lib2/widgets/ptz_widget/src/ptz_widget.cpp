@@ -157,24 +157,40 @@ void PTZ_widget::init(void)
     //---
 #ifdef QT_DEBUG
     QList<QAbstractButton *> sl_buttons;
-    sl_buttons.append(new QPushButton("+"));
-    sl_buttons.append(new QPushButton("-"));
+    sl_buttons.append(new QPushButton("ON"));
+    sl_buttons.append(new QPushButton("OFF"));
 
     QList<QAbstractButton *> sl_buttons2;
     sl_buttons2.append(new QPushButton("ON"));
     sl_buttons2.append(new QPushButton("OFF"));
 
     QList<QAbstractButton *> sl_buttons3;
-    sl_buttons3.append(new QPushButton("ON"));
-    sl_buttons3.append(new QPushButton("OFF"));
+    sl_buttons3.append(new QPushButton("+"));
+    sl_buttons3.append(new QPushButton("-"));
 
-    add_buttons(0, "test",   sl_buttons);
-    add_slider(1,  "slider", 1, 100);
-    add_buttons(2, "WIPER",  sl_buttons2);
-    add_buttons(3, "LIGHT",  sl_buttons3);
-    add_slider(4,  "slider2", 1, 10);
+    QList<QAbstractButton *> sl_buttons4;
+    sl_buttons4.append(new QPushButton("+"));
+    sl_buttons4.append(new QPushButton("-"));
+
+    int index = 0;
+    PTZ_PARAM param;
+    add_slider(index++, "speed",        1,  100,    param);
+    add_slider(index++, "brightness",   1,  100,    param);
+    add_slider(index++, "contrast",     1,  100,    param);
+    add_slider(index++, "iris",         1,  100,    param);
+    add_slider(index++, "gamma",        1,  100,    param);
+    add_slider(index++, "noise",        1,  100,    param);
+    add_slider(index++, "tone",         1,  100,    param);
+    add_slider(index++, "saturation",   1,  100,    param);
+    add_slider(index++, "shutter",      1,  100,    param);
+    add_slider(index++, "sharpness",    1,  100,    param);
+
+    add_buttons(index++,    "WIPER",        sl_buttons,     param);
+    add_buttons(index++,    "LIGHT",        sl_buttons2,    param);
+    add_buttons(index++,    "DIAPHGRAM",    sl_buttons3,    param);
+    add_buttons(index++,    "ZOOM",         sl_buttons4,    param);
     //---
-    l_params.append({ "buttons", "ptz", "STOP", 0, 0 });
+    //l_params.append({ "buttons", "ptz", "STOP", 0, 0 });
 #endif
     //---
 
@@ -183,9 +199,11 @@ void PTZ_widget::init(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_buttons(int index,
                              QString name,
-                             QList<QAbstractButton *> buttons)
+                             QList<QAbstractButton *> buttons,
+                             PTZ_PARAM params)
 {
     QLabel *caption = new QLabel(this);
+    caption->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     caption->setText(name);
 
     ui->grid->addWidget(caption, index, 0);
@@ -193,6 +211,11 @@ void PTZ_widget::add_buttons(int index,
     int x = 1;
     foreach (QAbstractButton *btn, buttons)
     {
+        btn->setProperty("cmd",      params.cmd);
+        btn->setProperty("func",     params.func1);
+        btn->setProperty("param1",   params.param1);
+        btn->setProperty("param2",   params.param2);
+
         ui->grid->addWidget(btn, index, x);
         x++;
     }
@@ -201,16 +224,22 @@ void PTZ_widget::add_buttons(int index,
 void PTZ_widget::add_slider(int index,
                             QString name,
                             int min_value,
-                            int max_value)
+                            int max_value,
+                            PTZ_PARAM params)
 {
     QLabel *caption = new QLabel(this);
+    caption->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     caption->setText(name);
 
     ui->grid->addWidget(caption, index, 0);
 
     QSlider *slider = new QSlider(Qt::Horizontal);
-    slider->setRange(min_value, max_value);
     slider->setObjectName(QString("sl_%1").arg(name));
+    slider->setRange(min_value, max_value);
+    slider->setProperty("cmd",      params.cmd);
+    slider->setProperty("func",     params.func1);
+    slider->setProperty("param1",   params.param1);
+    slider->setProperty("param2",   params.param2);
 
     ui->grid->addWidget(slider, index, 1, 1, 2);
 }

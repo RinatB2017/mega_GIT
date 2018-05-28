@@ -30,11 +30,10 @@
 #include <QNetworkRequest>
 //--------------------------------------------------------------------------------
 struct PTZ_PARAM{
-    QString name;
     QString cmd;
     QString func;
-    QVariant param1;
-    QVariant param2;
+    QString param1;
+    QString param2;
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -116,16 +115,6 @@ private slots:
     void f_set_sharpness(int value);
     void f_set_noise(int value);
 
-    //---
-    void add_buttons(int index,
-                     QString name,
-                     QList<QAbstractButton *> buttons);
-    void add_slider(int index,
-                    QString name,
-                    int min_value,
-                    int max_value);
-    //---
-
 private:
     Ui::PTZ_widget *ui;
     QMediaPlayer *player = 0;
@@ -148,8 +137,6 @@ private:
     QNetworkAccessManager networkManager;
 
     QUrl url;
-
-    QList<PTZ_PARAM> l_params;
 
     void send_cmd(QString cmd,
                   QString func,

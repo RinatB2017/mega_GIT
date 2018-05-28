@@ -154,7 +154,63 @@ void PTZ_widget::init(void)
     connect(ui->sl_noise,       SIGNAL(valueChanged(int)),  this,   SLOT(f_set_noise(int)));
 #endif
 
+    //---
+    QList<QAbstractButton *> sl_buttons;
+    sl_buttons.append(new QPushButton("+"));
+    sl_buttons.append(new QPushButton("-"));
+
+    QList<QAbstractButton *> sl_buttons2;
+    sl_buttons2.append(new QPushButton("ON"));
+    sl_buttons2.append(new QPushButton("OFF"));
+
+    QList<QAbstractButton *> sl_buttons3;
+    sl_buttons3.append(new QPushButton("ON"));
+    sl_buttons3.append(new QPushButton("OFF"));
+
+    add_buttons(0, "test",   sl_buttons);
+    add_slider(1,  "slider", 1, 100);
+    add_buttons(2, "WIPER",  sl_buttons2);
+    add_buttons(3, "LIGHT",  sl_buttons3);
+    add_slider(4,  "slider2", 1, 10);
+    //---
+    l_params.append({ "buttons", "ptz", "STOP", 0, 0 });
+    //---
+
     load_widgets("PTZ");
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::add_buttons(int index,
+                             QString name,
+                             QList<QAbstractButton *> buttons)
+{
+    QLabel *caption = new QLabel(this);
+    caption->setText(name);
+
+    ui->grid->addWidget(caption, index, 0);
+
+    int x = 1;
+    foreach (QAbstractButton *btn, buttons)
+    {
+        ui->grid->addWidget(btn, index, x);
+        x++;
+    }
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::add_slider(int index,
+                            QString name,
+                            int min_value,
+                            int max_value)
+{
+    QLabel *caption = new QLabel(this);
+    caption->setText(name);
+
+    ui->grid->addWidget(caption, index, 0);
+
+    QSlider *slider = new QSlider(Qt::Horizontal);
+    slider->setRange(min_value, max_value);
+    slider->setObjectName(QString("sl_%1").arg(name));
+
+    ui->grid->addWidget(slider, index, 1, 1, 2);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::create_position_widgets(void)

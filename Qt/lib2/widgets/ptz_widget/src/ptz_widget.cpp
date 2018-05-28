@@ -155,6 +155,7 @@ void PTZ_widget::init(void)
 #endif
 
     //---
+#ifdef QT_DEBUG
     QList<QAbstractButton *> sl_buttons;
     sl_buttons.append(new QPushButton("+"));
     sl_buttons.append(new QPushButton("-"));
@@ -174,6 +175,7 @@ void PTZ_widget::init(void)
     add_slider(4,  "slider2", 1, 10);
     //---
     l_params.append({ "buttons", "ptz", "STOP", 0, 0 });
+#endif
     //---
 
     load_widgets("PTZ");

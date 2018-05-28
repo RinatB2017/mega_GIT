@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
 #include <QToolButton>
+#include <QSettings>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
@@ -86,6 +87,17 @@ private slots:
     void f_diaphragm_minus(void);
     void f_zoom_plus(void);
     void f_zoom_minus(void);
+
+    void f_set_brightness(void);
+    void f_set_contrast(void);
+    void f_set_tone(void);
+    void f_set_saturation(void);
+    void f_set_iris(void);
+    void f_set_shutter(void);
+    void f_set_gamma(void);
+    void f_set_sharpness(void);
+    void f_set_noise(void);
+
     void f_set_brightness(int value);
     void f_set_contrast(int value);
     void f_set_tone(int value);
@@ -99,6 +111,8 @@ private slots:
 private:
     Ui::PTZ_widget *ui;
     QMediaPlayer *player = 0;
+
+    QSettings *settings = 0;
 
     QToolButton *btn_lu = 0;
     QToolButton *btn_ru = 0;
@@ -127,6 +141,9 @@ private:
     void create_player(void);
     void create_tcp_socket(void);
     void create_position_widgets(void);
+
+    void load_widgets(QString group_name);
+    void save_widgets(QString group_name);
 
     void init(void);
     void updateText(void);

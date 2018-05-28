@@ -28,6 +28,7 @@
 #include "ptz_dialog.hpp"
 //--------------------------------------------------------------------------------
 #include "ui_ptz_widget.h"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 PTZ_widget::PTZ_widget(QWidget *parent) :
     QWidget(parent),
@@ -38,6 +39,11 @@ PTZ_widget::PTZ_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 PTZ_widget::~PTZ_widget()
 {
+    save_widgets("PTZ");
+    if(settings)
+    {
+        settings->deleteLater();
+    }
     if(player)
     {
         player->deleteLater();
@@ -65,6 +71,12 @@ void PTZ_widget::create_tcp_socket(void)
 void PTZ_widget::init(void)
 {
     ui->setupUi(this);
+
+#ifndef SAVE_INI
+    settings = new QSettings(ORGNAME, APPNAME);
+#else
+    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
 
     create_tcp_socket();
     create_player();
@@ -120,6 +132,17 @@ void PTZ_widget::init(void)
     connect(ui->btn_zoom_plus,  SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_plus()));
     connect(ui->btn_zoom_minus, SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_minus()));
 
+#if 1
+    connect(ui->sl_brightness,  SIGNAL(sliderReleased()),  this,   SLOT(f_set_brightness()));
+    connect(ui->sl_contrast,    SIGNAL(sliderReleased()),  this,   SLOT(f_set_contrast()));
+    connect(ui->sl_tone,        SIGNAL(sliderReleased()),  this,   SLOT(f_set_tone()));
+    connect(ui->sl_saturation,  SIGNAL(sliderReleased()),  this,   SLOT(f_set_saturation()));
+    connect(ui->sl_iris,        SIGNAL(sliderReleased()),  this,   SLOT(f_set_iris()));
+    connect(ui->sl_shutter,     SIGNAL(sliderReleased()),  this,   SLOT(f_set_shutter()));
+    connect(ui->sl_gamma,       SIGNAL(sliderReleased()),  this,   SLOT(f_set_gamma()));
+    connect(ui->sl_sharpness,   SIGNAL(sliderReleased()),  this,   SLOT(f_set_sharpness()));
+    connect(ui->sl_noise,       SIGNAL(sliderReleased()),  this,   SLOT(f_set_noise()));
+#else
     connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  this,   SLOT(f_set_brightness(int)));
     connect(ui->sl_contrast,    SIGNAL(valueChanged(int)),  this,   SLOT(f_set_contrast(int)));
     connect(ui->sl_tone,        SIGNAL(valueChanged(int)),  this,   SLOT(f_set_tone(int)));
@@ -129,6 +152,9 @@ void PTZ_widget::init(void)
     connect(ui->sl_gamma,       SIGNAL(valueChanged(int)),  this,   SLOT(f_set_gamma(int)));
     connect(ui->sl_sharpness,   SIGNAL(valueChanged(int)),  this,   SLOT(f_set_sharpness(int)));
     connect(ui->sl_noise,       SIGNAL(valueChanged(int)),  this,   SLOT(f_set_noise(int)));
+#endif
+
+    load_widgets("PTZ");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::create_position_widgets(void)
@@ -399,6 +425,51 @@ void PTZ_widget::f_test(void)
     send_cmd("isp", "flip", 1, 0);
 }
 //--------------------------------------------------------------------------------
+void PTZ_widget::f_set_brightness(void)
+{
+    send_cmd("isp", "brightness", ui->sl_brightness->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_contrast(void)
+{
+    send_cmd("isp", "contrast", ui->sl_contrast->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_tone(void)
+{
+    send_cmd("isp", "tone", ui->sl_tone->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_saturation(void)
+{
+    send_cmd("isp", "saturation", ui->sl_saturation->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_iris(void)
+{
+    send_cmd("isp", "iris", ui->sl_iris->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_shutter(void)
+{
+    send_cmd("isp", "shutter", ui->sl_shutter->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_gamma(void)
+{
+    send_cmd("isp", "gamma", ui->sl_gamma->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_sharpness(void)
+{
+    send_cmd("isp", "sharpness", ui->sl_sharpness->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_set_noise(void)
+{
+    send_cmd("isp", "noise", ui->sl_noise->value(), 0);
+}
+//--------------------------------------------------------------------------------
 void PTZ_widget::f_set_brightness(int value)
 {
     send_cmd("isp", "brightness", value, 0);
@@ -518,7 +589,6 @@ void PTZ_widget::send_cmd(QString cmd,
     ok = tcpSocket->isOpen();
     if(ok == false)
     {
-        emit debug("isOpen() return false");
         ok = f_connect();
         if(ok == false)
         {
@@ -589,6 +659,42 @@ void PTZ_widget::f_disconnect(void)
         tcpSocket->close();
     }
     tcpSocket->disconnectFromHost();
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::load_widgets(QString group_name)
+{
+    QList<QSlider *> allobj = findChildren<QSlider *>();
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach (QSlider *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            obj->setSliderPosition(settings->value("position", 0).toDouble());
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::save_widgets(QString group_name)
+{
+    QList<QSlider *> allobj = findChildren<QSlider *>();
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach(QSlider *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            settings->setValue("position", QVariant(obj->value()));
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::updateText(void)

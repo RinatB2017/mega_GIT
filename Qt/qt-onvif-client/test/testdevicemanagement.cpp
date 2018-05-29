@@ -13,7 +13,7 @@ TestDeviceManagement::TestDeviceManagement(QObject *parent) :
 
 void TestDeviceManagement::initTestCase()
 {
-    mDeviceManagement = new DeviceManagement("http://192.168.2.113/onvif/device_service", "admin", "nvrnvr888");
+    mDeviceManagement = new DeviceManagement("http://192.168.1.66/onvif/device_service", "admin", "nvrnvr888");
 }
 
 void TestDeviceManagement::testGetDeviceInformation()
@@ -72,21 +72,21 @@ void TestDeviceManagement::testGetCapabilitiesPtz()
 {
     Capabilities *cap = mDeviceManagement->getCapabilitiesPtz();
     QVERIFY(cap != NULL);
-    QCOMPARE(cap->ptzXAddr(),QString("http://192.168.2.145:80/onvif/ptz_service"));
+    QCOMPARE(cap->ptzXAddr(),QString("http://192.168.1.66:80/onvif/ptz_service"));
 }
 
 void TestDeviceManagement::testGetCapabilitiesImaging()
 {
     Capabilities *cap = mDeviceManagement->getCapabilitiesImaging();
     QVERIFY(cap != NULL);
-    QCOMPARE(cap->imagingXAddr(),QString("http://192.168.2.145:80//onvif/imaging_service"));
+    QCOMPARE(cap->imagingXAddr(),QString("http://192.168.1.66:80//onvif/imaging_service"));
 }
 
 void TestDeviceManagement::testGetCapabilitiesMedia()
 {
     Capabilities *cap = mDeviceManagement->getCapabilitiesMedia();
     QVERIFY(cap != NULL);
-    QCOMPARE(cap->mediaXAddr(),QString("http://192.168.2.145:80/onvif/media_service"));
+    QCOMPARE(cap->mediaXAddr(),QString("http://192.168.1.66:80/onvif/media_service"));
     QCOMPARE(cap->rtpMulticast(),true);
     QCOMPARE(cap->rtpRtspTcp(),true);
     QCOMPARE(cap->rtpTcp(),true);
@@ -96,7 +96,7 @@ void TestDeviceManagement::testGetCapabilitiesDevice()
 {
     Capabilities *cap = mDeviceManagement->getCapabilitiesDevice();
     QVERIFY(cap != NULL);
-    QCOMPARE(cap->deviceXAddr(),QString("http://192.168.2.145:80/onvif/device_service"));
+    QCOMPARE(cap->deviceXAddr(),QString("http://192.168.1.66:80/onvif/device_service"));
     QCOMPARE(cap->iPFilter(),false);
     QCOMPARE(cap->zeroConfiguration(),false);
     QCOMPARE(cap->iPVersion6(),false);
@@ -132,15 +132,15 @@ void TestDeviceManagement::testGetNetworkInterfaces()
 {
     NetworkInterfaces *networkInterfaces = mDeviceManagement->getNetworkInterfaces();
     QVERIFY(networkInterfaces != NULL);
-    QCOMPARE(networkInterfaces->networkInfacesEnabled(),true);
-    QCOMPARE(networkInterfaces->networkInfacesName(),QString("NetworkInterfaces_Info_1"));
-    QCOMPARE(networkInterfaces->hwAaddress(),QString("0000510203A1"));
-    QCOMPARE(networkInterfaces->mtu(),1500);
-    QCOMPARE(networkInterfaces->ipv4ManualAddress(),QString("192.168.2.145"));
-    QCOMPARE(networkInterfaces->ipv4ManualPrefixLength(),24);
-    QCOMPARE(networkInterfaces->ipv4LinkLocalAddress(),QString("192.168.2.145"));
-    QCOMPARE(networkInterfaces->ipvLinkLocalPrefixLength(),24);
-    QCOMPARE(networkInterfaces->ipv4FromDHCPAddress(),QString("192.168.2.145"));
+    QCOMPARE(networkInterfaces->networkInfacesEnabled(), true);
+    QCOMPARE(networkInterfaces->networkInfacesName(), QString("NetworkInterfaces_Info_1"));
+    QCOMPARE(networkInterfaces->hwAaddress(), QString("0000510203A1"));
+    QCOMPARE(networkInterfaces->mtu(), 1500);
+    QCOMPARE(networkInterfaces->ipv4ManualAddress(), QString("192.168.1.66"));
+    QCOMPARE(networkInterfaces->ipv4ManualPrefixLength(), 24);
+    QCOMPARE(networkInterfaces->ipv4LinkLocalAddress(), QString("192.168.1.66"));
+    QCOMPARE(networkInterfaces->ipvLinkLocalPrefixLength(), 24);
+    QCOMPARE(networkInterfaces->ipv4FromDHCPAddress(), QString("192.168.1.66"));
     QCOMPARE(networkInterfaces->ipv4FromDHCPPrefixLength(),24);
     QCOMPARE(networkInterfaces->ipv4Enabled(),true);
 }
@@ -154,7 +154,7 @@ void TestDeviceManagement::testSetNetworkInterfaces()
     //    networkInterfaces->setDuplex(NetworkInterfaces::Full);
     //    networkInterfaces->setMtu(1500);
     //    networkInterfaces->setIpv4Enabled(true);
-    //    networkInterfaces->setIpv4ManualAddress("192.168.2.145");
+    //    networkInterfaces->setIpv4ManualAddress("192.168.1.66");
     //    networkInterfaces->setIpv4ManualPrefixLength(24);
     //    networkInterfaces->setIpv4DHCP(true);
     //    mDeviceManagement->setNetworkInterfaces(networkInterfaces);

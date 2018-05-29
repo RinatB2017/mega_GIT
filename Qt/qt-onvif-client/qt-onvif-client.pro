@@ -17,7 +17,7 @@ TEMPLATE = app
 SOURCES += \
     src/main.cpp \
     lib/message.cpp \
-    test/TestMessage.cpp \
+    test/testmessage.cpp \
     lib/devicesearcher.cpp \
     lib/messageparser.cpp \
     lib/service.cpp \
@@ -63,7 +63,7 @@ SOURCES += \
 
 HEADERS += \
     lib/message.h \
-    test/TestMessage.h \
+    test/testmessage.h \
     lib/devicesearcher.h \
     lib/messageparser.h \
     lib/service.h \

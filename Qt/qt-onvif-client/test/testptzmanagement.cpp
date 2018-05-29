@@ -12,7 +12,7 @@ TestPtzManagement::TestPtzManagement(QObject *parent) : QObject(parent)
 
 void TestPtzManagement::initTestCase()
 {
-    mPtzManagement = new PtzManagement("http://192.168.2.113/onvif/ptz_service", "admin", "nvrnvr888");
+    mPtzManagement = new PtzManagement("http://192.168.1.66/onvif/ptz_service", "admin", "nvrnvr888");
 }
 
 void TestPtzManagement::cleanupTestCase()

@@ -13,7 +13,7 @@ TestMediaManagement::TestMediaManagement(QObject *parent) :
 
 void TestMediaManagement::initTestCase()
 {
-    mMediaManagement = new MediaManagement("http://192.168.2.113/onvif/media_service", "admin", "nvrnvr888");
+    mMediaManagement = new MediaManagement("http://192.168.1.66/onvif/media_service", "admin", "nvrnvr888");
 }
 
 void TestMediaManagement::cleanupTestCase()
@@ -358,7 +358,7 @@ void TestMediaManagement::getVideoEncoderConfigurationOptions()
 void TestMediaManagement::getStreamUri()
 {
     StreamUri *streamUri = mMediaManagement->getStreamUri();
-    QCOMPARE(streamUri->uri(),QString("rtsp://192.168.2.113:554/1/cif"));
+    QCOMPARE(streamUri->uri(),QString("rtsp://192.168.1.66:554/1/cif"));
     QCOMPARE(streamUri->invalidAfterConnect(),true);
     QCOMPARE(streamUri->invalidAfterReboot(),true);
     QCOMPARE(streamUri->timeout(),QString("PT0H0M3.600S"));

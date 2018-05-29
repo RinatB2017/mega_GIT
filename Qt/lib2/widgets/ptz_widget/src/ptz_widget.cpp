@@ -223,19 +223,33 @@ void PTZ_widget::init(void)
     add_buttons(index++, "ZOOM", param1, param2);
 
     param1.cmd = "isp";
-    param1.func = "flip";
-    param1.param1 = 0;
+    param1.func = "mirror";
+    param1.param1 = 1;
     param1.param2 = 0;
-    param1.btn_caption = "0";
+    param1.btn_caption = "ON";
+    param2.cmd = "isp";
+    param2.func = "mirror";
+    param2.param1 = 0;
+    param1.param2 = 0;
+    param2.btn_caption = "OFF";
+    add_buttons(index++, "MIRROR", param1, param2);
+
+    param1.cmd = "isp";
+    param1.func = "flip";
+    param1.param1 = 1;
+    param1.param2 = 0;
+    param1.btn_caption = "ON";
     param2.cmd = "isp";
     param2.func = "flip";
-    param2.param1 = 1;
+    param2.param1 = 0;
     param1.param2 = 0;
-    param2.btn_caption = "1";
+    param2.btn_caption = "OFF";
     add_buttons(index++, "FLIP", param1, param2);
     //---
 
     load_widgets("PTZ");
+
+    play();
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_buttons(int index,
@@ -521,6 +535,9 @@ void PTZ_widget::f_right_down(void)
 void PTZ_widget::f_test(void)
 {
     emit info("test");
+
+    emit info(QString("margin %1").arg(ui->grid->margin()));
+    emit info(QString("spacing %1").arg(ui->grid->spacing()));
 
     //send_cmd("isp", "flip", 0, 0);
     //send_cmd("isp", "flip", 1, 0);

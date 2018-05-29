@@ -1,4 +1,4 @@
-#include "testmesasge.h"
+#include "testmessage.h"
 #include "lib/message.h"
 #include <QHash>
 #include <QTest>
@@ -7,11 +7,13 @@
 using namespace ONVIF;
 
 
-TestMesasge::TestMesasge(QObject *parent) : QObject(parent) {
+TestMessage::TestMessage(QObject *parent) : QObject(parent)
+{
     
 }
 
-void TestMesasge::testNamespaceOptions() {
+void TestMessage::testNamespaceOptions()
+{
     QHash<QString, QString> namespaces;
     namespaces.insert("wsdl", "http://www.onvif.org/ver10/device/wsdl");
     Message *message = new Message(namespaces);
@@ -19,15 +21,16 @@ void TestMesasge::testNamespaceOptions() {
     delete message;
 }
 
-void TestMesasge::testMessageToString() {
+void TestMessage::testMessageToString()
+{
     QHash<QString, QString> namespaces;
     Message *message = new Message(namespaces);
     QString message_result =
-"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
-<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\
-<soap:Header/>\
-<soap:Body/>\
-</soap:Envelope>";
-    QCOMPARE(message->toXmlStr(), message_result);
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+            <soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\
+            <soap:Header/>\
+            <soap:Body/>\
+            </soap:Envelope>";
+            QCOMPARE(message->toXmlStr(), message_result);
     delete message;
 }

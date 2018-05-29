@@ -2,10 +2,13 @@
 #include "lib/message.h"
 using namespace ONVIF;
 
-SystemDateAndTime::SystemDateAndTime(QObject *parent) : QObject(parent) {
+SystemDateAndTime::SystemDateAndTime(QObject *parent) : QObject(parent)
+{
+
 }
 
-void SystemDateAndTime::setUtcTime(int year, int month, int day, int hour, int minute, int second) {
+void SystemDateAndTime::setUtcTime(int year, int month, int day, int hour, int minute, int second)
+{
     QDate date;
     date.setDate(year, month, day);
     QTime time;
@@ -13,7 +16,8 @@ void SystemDateAndTime::setUtcTime(int year, int month, int day, int hour, int m
     this->m_utcTime = QDateTime(date, time, Qt::UTC);
 }
 
-void SystemDateAndTime::setLocalTime(int year, int month, int day, int hour, int minute, int second) {
+void SystemDateAndTime::setLocalTime(int year, int month, int day, int hour, int minute, int second)
+{
     QDate date;
     date.setDate(year, month, day);
     QTime time;
@@ -21,7 +25,8 @@ void SystemDateAndTime::setLocalTime(int year, int month, int day, int hour, int
     this->m_localTime = QDateTime(date, time);
 }
 
-QDomElement SystemDateAndTime::toxml(){
+QDomElement SystemDateAndTime::toxml()
+{
     QDomElement setSystemDateAndTime,dateTimeType,daylightSavings,timeZone,tz,utcDateTime,time,hour,minute,second,date,year
             ,month,day;
     setSystemDateAndTime = newElement("wsdl:SetSystemDateAndTime");

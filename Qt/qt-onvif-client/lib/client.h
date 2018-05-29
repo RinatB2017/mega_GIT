@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QHttp>
 
-namespace ONVIF {
+namespace ONVIF
+{
     class Client : public QObject {
         Q_OBJECT
     public:

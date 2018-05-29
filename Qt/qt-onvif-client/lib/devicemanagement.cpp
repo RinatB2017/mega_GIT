@@ -5,26 +5,28 @@ using namespace ONVIF;
 
 
 DeviceManagement::DeviceManagement(const QString & wsdlUrl, const QString &username, const QString &password) 
-    :Service(wsdlUrl, username, password) {
+    :Service(wsdlUrl, username, password)
+{
     
 }
 
-QHash<QString, QString> DeviceManagement::namespaces(const QString &key) {
+QHash<QString, QString> DeviceManagement::namespaces(const QString &key)
+{
     QHash<QString, QString> names;
     names.insert("SOAP-ENV", "http://www.w3.org/2003/05/soap-envelope");
     names.insert("SOAP-ENC", "http://www.w3.org/2003/05/soap-encoding");
-    names.insert("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-    names.insert("xsd", "http://www.w3.org/2001/XMLSchema");
+    names.insert("xsi",  "http://www.w3.org/2001/XMLSchema-instance");
+    names.insert("xsd",  "http://www.w3.org/2001/XMLSchema");
     names.insert("c14n", "http://www.w3.org/2001/10/xml-exc-c14n#");
-    names.insert("wsu", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
+    names.insert("wsu",  "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
     names.insert("xenc", "http://www.w3.org/2001/04/xmlenc#");
-    names.insert("ds", "http://www.w3.org/2000/09/xmldsig#");
+    names.insert("ds",   "http://www.w3.org/2000/09/xmldsig#");
     names.insert("wsse", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
     names.insert("wsa5", "http://www.w3.org/2005/08/addressing");
     names.insert("xmime", "http://tempuri.org/xmime.xsd");
-    names.insert("xop", "http://www.w3.org/2004/08/xop/include");
-    names.insert("wsa", "http://schemas.xmlsoap.org/ws/2004/08/addressing");
-    names.insert("tt", "http://www.onvif.org/ver10/schema");
+    names.insert("xop",  "http://www.w3.org/2004/08/xop/include");
+    names.insert("wsa",  "http://schemas.xmlsoap.org/ws/2004/08/addressing");
+    names.insert("tt",   "http://www.onvif.org/ver10/schema");
     names.insert("wsbf", "http://docs.oasis-open.org/wsrf/bf-2");
     names.insert("wstop", "http://docs.oasis-open.org/wsn/t-1");
     names.insert("d", "http://schemas.xmlsoap.org/ws/2005/04/discovery");
@@ -65,12 +67,14 @@ QHash<QString, QString> DeviceManagement::namespaces(const QString &key) {
 }
 
 
-QHash<QString, QString> DeviceManagement::getDeviceInformation() {
+QHash<QString, QString> DeviceManagement::getDeviceInformation()
+{
     QHash<QString, QString> device_info;
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetDeviceInformation"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL) {
+    if(result != NULL)
+    {
         device_info.insert("mf", result->getValue("//tds:Manufacturer"));
         device_info.insert("model", result->getValue("//tds:Model"));
         device_info.insert("firmware_version", result->getValue("//tds:FirmwareVersion"));
@@ -82,39 +86,42 @@ QHash<QString, QString> DeviceManagement::getDeviceInformation() {
     return device_info;
 }
 
-Message *DeviceManagement::newMessage() {
+Message *DeviceManagement::newMessage()
+{
     QHash<QString, QString> names;
     names.insert("wsdl", "http://www.onvif.org/ver10/device/wsdl");
     names.insert("sch", "http://www.onvif.org/ver10/schema");
     return createMessage(names);
 }
 
-SystemDateAndTime *DeviceManagement::getSystemDateAndTime() {
+SystemDateAndTime *DeviceManagement::getSystemDateAndTime()
+{
     SystemDateAndTime *systemDateAndTime = NULL;
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetSystemDateAndTime"));
     MessageParser *result = sendMessage(msg);
     
-    if(result != NULL) {
+    if(result != NULL)
+    {
         systemDateAndTime = new SystemDateAndTime();
         systemDateAndTime->setProperty("dateTimeType", result->getValue("//tt:DateTimeType"));
         systemDateAndTime->setDaylightSavings(result->getValue("//tt:DaylightSavings") == "true");
         systemDateAndTime->setUtcTime(
-            result->getValue("//tt:UTCDateTime/tt:Date/tt:Year").toInt(),
-            result->getValue("//tt:UTCDateTime/tt:Date/tt:Month").toInt(),
-            result->getValue("//tt:UTCDateTime/tt:Date/tt:Day").toInt(),
-            result->getValue("//tt:UTCDateTime/tt:Time/tt:Hour").toInt(),
-            result->getValue("//tt:UTCDateTime/tt:Time/tt:Minute").toInt(),
-            result->getValue("//tt:UTCDateTime/tt:Time/tt:Second").toInt()
-        );
+                    result->getValue("//tt:UTCDateTime/tt:Date/tt:Year").toInt(),
+                    result->getValue("//tt:UTCDateTime/tt:Date/tt:Month").toInt(),
+                    result->getValue("//tt:UTCDateTime/tt:Date/tt:Day").toInt(),
+                    result->getValue("//tt:UTCDateTime/tt:Time/tt:Hour").toInt(),
+                    result->getValue("//tt:UTCDateTime/tt:Time/tt:Minute").toInt(),
+                    result->getValue("//tt:UTCDateTime/tt:Time/tt:Second").toInt()
+                    );
         systemDateAndTime->setLocalTime(
-            result->getValue("//tt:LocalDateTime/tt:Date/tt:Year").toInt(),
-            result->getValue("//tt:LocalDateTime/tt:Date/tt:Month").toInt(),
-            result->getValue("//tt:LocalDateTime/tt:Date/tt:Day").toInt(),
-            result->getValue("//tt:LocalDateTime/tt:Time/tt:Hour").toInt(),
-            result->getValue("//tt:LocalDateTime/tt:Time/tt:Minute").toInt(),
-            result->getValue("//tt:LocalDateTime/tt:Time/tt:Second").toInt()
-        );
+                    result->getValue("//tt:LocalDateTime/tt:Date/tt:Year").toInt(),
+                    result->getValue("//tt:LocalDateTime/tt:Date/tt:Month").toInt(),
+                    result->getValue("//tt:LocalDateTime/tt:Date/tt:Day").toInt(),
+                    result->getValue("//tt:LocalDateTime/tt:Time/tt:Hour").toInt(),
+                    result->getValue("//tt:LocalDateTime/tt:Time/tt:Minute").toInt(),
+                    result->getValue("//tt:LocalDateTime/tt:Time/tt:Second").toInt()
+                    );
     }
     
     delete result;
@@ -128,14 +135,15 @@ void DeviceManagement::setSystemDateAndTime(SystemDateAndTime *systemDateAndTime
     msg->appendToBody(systemDateAndTime->toxml());
     qDebug() << msg->toXmlStr();
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         if(result->find("//tds:SetSystemDateAndTimeResponse"))
             systemDateAndTime->setResult(true);
         else
             systemDateAndTime->setResult(false);
         delete result;
         delete msg;
-   }
+    }
 }
 
 void DeviceManagement::setSystemFactoryDefault(SystemFactoryDefault *systemFactoryDefault)
@@ -144,7 +152,8 @@ void DeviceManagement::setSystemFactoryDefault(SystemFactoryDefault *systemFacto
     msg->appendToBody(systemFactoryDefault->toxml());
     qDebug() << msg->toXmlStr();
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         if(result->find("//tds:SetSystemFactoryDefaultResponse"))
             systemFactoryDefault->setResult(true);
         else
@@ -160,7 +169,8 @@ void DeviceManagement::systemReboot(SystemReboot *systemReboot)
     msg->appendToBody(systemReboot->toxml());
     qDebug() << msg->toXmlStr();
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         if(result->find("//tds:SystemRebootResponse"))
             systemReboot->setResult(true);
         else
@@ -176,7 +186,8 @@ Users *DeviceManagement::getUsers()
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetUsers"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL) {
+    if(result != NULL)
+    {
         user = new Users();
         user->setProperty("userName", result->getValue("//tt:Username"));
         user->setProperty("passWord",result->getValue("//tt:Password"));
@@ -195,7 +206,8 @@ Capabilities *DeviceManagement::getCapabilitiesPtz()
     cap.appendChild(newElement("wsdl:Category","PTZ"));
     msg->appendToBody(cap);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         capabilities = new Capabilities();
         capabilities->setProperty("ptzXAddr",result->getValue("//tt:PTZ/tt:XAddr"));
     }
@@ -212,7 +224,8 @@ Capabilities *DeviceManagement::getCapabilitiesImaging()
     cap.appendChild(newElement("wsdl:Category","Imaging"));
     msg->appendToBody(cap);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         capabilities = new Capabilities();
         capabilities->setProperty("imagingXAddr",result->getValue("//tt:Imaging/tt:XAddr"));
     }
@@ -229,7 +242,8 @@ Capabilities *DeviceManagement::getCapabilitiesMedia()
     cap.appendChild(newElement("wsdl:Category","Media"));
     msg->appendToBody(cap);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         capabilities = new Capabilities();
         capabilities->setProperty("mediaXAddr",result->getValue("//tt:Media/tt:XAddr"));
         capabilities->setProperty("rtpMulticast",result->getValue("//tt:RTPMulticast") == "true"?true:false);
@@ -249,7 +263,8 @@ Capabilities *DeviceManagement::getCapabilitiesDevice()
     cap.appendChild(newElement("wsdl:Category","Device"));
     msg->appendToBody(cap);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         capabilities = new Capabilities();
         capabilities->setProperty("deviceXAddr",result->getValue("//tt:Device/tt:XAddr"));
         capabilities->setProperty("iPFilter",result->getValue("//tt:IPFilter") == "true"?true:false);
@@ -282,7 +297,7 @@ Capabilities *DeviceManagement::getCapabilitiesDevice()
         capabilities->setProperty("dot1x",result->getValue("//tt:Dot1x") == "true"?true:false);
         capabilities->setProperty("remoteUserHanding",result->getValue("//tt:RemoteUserHanding") == "true"?true:false);
 
- }
+    }
     delete result;
     delete msg;
     return capabilities;
@@ -296,7 +311,8 @@ NetworkInterfaces *DeviceManagement::getNetworkInterfaces()
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetNetworkInterfaces"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         networkInterfaces = new NetworkInterfaces();
         networkInterfaces->setProperty("networkInfacesEnabled",result->getValue("//tds:NetworkInterfaces/tt:Enabled"));
         networkInterfaces->setProperty("networkInfacesName",result->getValue("//tt:Name"));
@@ -322,7 +338,8 @@ void DeviceManagement::setNetworkInterfaces(NetworkInterfaces *networkInterfaces
     msg->appendToBody(networkInterfaces->toxml());
     qDebug() << msg->toXmlStr();
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         if(result->find("//tds:SetNetworkInterfacesResponse"))
             networkInterfaces->setResult(true);
         else
@@ -339,7 +356,8 @@ NetworkProtocols *DeviceManagement::getNetworkProtocols()
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetNetworkProtocols"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         networkProtocols = new NetworkProtocols();
         QXmlQuery *query = result->query();
         query->setQuery(result->nameSpace()+"doc($inputDocument)//tds:NetworkProtocols");
@@ -347,7 +365,8 @@ NetworkProtocols *DeviceManagement::getNetworkProtocols()
         query->evaluateTo(&items);
         QXmlItem item = items.next();
         QString protocolsName,protocolsEnabled,protocolsPort;
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+"./tt:Name/string()");
             query->evaluateTo(&protocolsName);

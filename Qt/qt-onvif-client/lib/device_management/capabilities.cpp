@@ -2,17 +2,24 @@
 
 using namespace ONVIF;
 
-Capabilities::Capabilities(QObject *parent) : QObject(parent) {
+Capabilities::Capabilities(QObject *parent) : QObject(parent)
+{
+
 }
-Capabilities::~Capabilities(){
+
+Capabilities::~Capabilities()
+{
+
 }
+
 QDomElement Capabilities::toxml()
 {
 
 }
 QString Capabilities::enumToString(Category category)
 {
-    switch (category) {
+    switch (category)
+    {
     case Capabilities::All:
         return "All";
         break;

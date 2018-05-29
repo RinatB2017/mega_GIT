@@ -2,8 +2,13 @@
 
 using namespace ONVIF;
 
-Users::Users(QObject *parent) : QObject(parent) {
+Users::Users(QObject *parent) : QObject(parent)
+{
+
 }
-Users::~Users(){
+
+Users::~Users()
+{
+
 }
 

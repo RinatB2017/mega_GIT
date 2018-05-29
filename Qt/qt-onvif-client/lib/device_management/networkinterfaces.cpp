@@ -3,12 +3,18 @@
 
 using namespace ONVIF;
 
-NetworkInterfaces::NetworkInterfaces(QObject *parent) : QObject(parent) {
-}
-NetworkInterfaces::~NetworkInterfaces(){
+NetworkInterfaces::NetworkInterfaces(QObject *parent) : QObject(parent)
+{
+
 }
 
-QDomElement NetworkInterfaces::toxml(){
+NetworkInterfaces::~NetworkInterfaces()
+{
+
+}
+
+QDomElement NetworkInterfaces::toxml()
+{
     QDomElement setNetworkInterfaces,interfaceToken,networkInterface,networkInterfaceEnabled,link,autoNegotiation,speed,duplex,
             mtu,ipv4,ipv4Enabled,manual,address,prefixLength,dhcp;
     setNetworkInterfaces = newElement("wsdl:SetNetworkInterfaces");

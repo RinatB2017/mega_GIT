@@ -14,9 +14,10 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp \
+SOURCES += \
+    src/main.cpp \
     lib/message.cpp \
-    test/testmesasge.cpp \
+    test/TestMessage.cpp \
     lib/devicesearcher.cpp \
     lib/messageparser.cpp \
     lib/service.cpp \
@@ -62,7 +63,7 @@ SOURCES += main.cpp \
 
 HEADERS += \
     lib/message.h \
-    test/testmesasge.h \
+    test/TestMessage.h \
     lib/devicesearcher.h \
     lib/messageparser.h \
     lib/service.h \

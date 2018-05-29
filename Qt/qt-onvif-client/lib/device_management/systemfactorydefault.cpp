@@ -2,12 +2,18 @@
 #include "lib/message.h"
 using namespace ONVIF;
 
-SystemFactoryDefault::SystemFactoryDefault(QObject *parent) : QObject(parent) {
-}
-SystemFactoryDefault::~SystemFactoryDefault(){
+SystemFactoryDefault::SystemFactoryDefault(QObject *parent) : QObject(parent)
+{
+
 }
 
-QDomElement SystemFactoryDefault::toxml(){
+SystemFactoryDefault::~SystemFactoryDefault()
+{
+
+}
+
+QDomElement SystemFactoryDefault::toxml()
+{
     QDomElement setSystemFactoryDefault,factoryDefault;
     setSystemFactoryDefault = newElement("wsdl:SetSystemFactoryDefault");
     factoryDefault = newElement("wsdl:FactoryDefault",this->factoryDefault() == SystemFactoryDefault::Hard?"Hard":"Soft");

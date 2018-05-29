@@ -4,7 +4,8 @@
 #include <QObject>
 #include "lib/devicemanagement.h"
 
-class TestDeviceManagement : public QObject {
+class TestDeviceManagement : public QObject
+{
     Q_OBJECT
 public:
     explicit TestDeviceManagement(QObject *parent = 0);

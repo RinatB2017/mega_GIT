@@ -10,7 +10,7 @@ namespace ONVIF {
         Q_PROPERTY(QString name READ name WRITE setName)
         Q_PROPERTY(int useCount READ useCount WRITE setUseCount)
         Q_PROPERTY(QString nodeToken READ nodeToken WRITE setNodeToken)
-        Q_PROPERTY(QString defaultAbsolutePantTiltPositionSpace READ defaultAbsolutePantTiltPositionSpace WRITE setDefaultAbsolutePanTiltPositionSpace)
+        //TODO xxx Q_PROPERTY(QString defaultAbsolutePantTiltPositionSpace READ defaultAbsolutePantTiltPositionSpace WRITE setDefaultAbsolutePanTiltPositionSpace)
         Q_PROPERTY(QString defaultAbsoluteZoomPositionSpace READ defaultAbsoluteZoomPositionSpace WRITE setDefaultAbsoluteZoomPositionSpace)
         Q_PROPERTY(QString defaultRelativePanTiltTranslationSpace READ defaultRelativePanTiltTranslationSpace WRITE setDefaultRelativePanTiltTranslationSpace)
         Q_PROPERTY(QString defaultRelativeZoomTranslationSpace READ defaultRelativeZoomTranslationSpace WRITE setDefaultRelativeZoomTranslationSpace)

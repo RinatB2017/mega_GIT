@@ -10,25 +10,30 @@ using namespace ONVIF;
 QDomElement ONVIF::hashToXml(const QString &name,const QHash<QString, QString> &hash) {
     QDomElement element = newElement(name);
     QHashIterator<QString, QString> i(hash);
-    while(i.hasNext()) {
+    while(i.hasNext())
+    {
         i.next();
         element.appendChild(newElement(i.key(), i.value()));
     }
     return element;
 }
 
-QDomElement ONVIF::listToXml(const QString &name, const QString &itemName, const QStringList &list) {
+QDomElement ONVIF::listToXml(const QString &name, const QString &itemName, const QStringList &list)
+{
     QDomElement element = newElement(name);
-    for(int i = 0; i < list.length(); i++) {
+    for(int i = 0; i < list.length(); i++)
+    {
         element.appendChild(newElement(itemName, list.at(i)));
     }
     return element;
 }
 
-QDomElement ONVIF::newElement(const QString &name, const QString &value) {
+QDomElement ONVIF::newElement(const QString &name, const QString &value)
+{
     QDomDocument doc;
     QDomElement element = doc.createElement(name);
-    if(value != "") {
+    if(value != "")
+    {
         QDomText textNode = doc.createTextNode(value);
         element.appendChild(textNode);
     }
@@ -37,7 +42,8 @@ QDomElement ONVIF::newElement(const QString &name, const QString &value) {
 }
 
 
-Message *Message::getOnvifSearchMessage() {
+Message *Message::getOnvifSearchMessage()
+{
     QHash<QString, QString> namespaces;
     namespaces.insert("a", "http://schemas.xmlsoap.org/ws/2004/08/addressing");
     namespaces.insert("d", "http://schemas.xmlsoap.org/ws/2005/04/discovery");
@@ -60,7 +66,8 @@ Message *Message::getOnvifSearchMessage() {
 }
 
 
-Message* Message::getMessageWithUserInfo(QHash<QString, QString> &namespaces, const QString &name, const QString &passwd) {
+Message* Message::getMessageWithUserInfo(QHash<QString, QString> &namespaces, const QString &name, const QString &passwd)
+{
     namespaces.insert("wsse", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
     namespaces.insert("wsu", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
     Message *msg = new Message(namespaces);
@@ -86,7 +93,8 @@ Message* Message::getMessageWithUserInfo(QHash<QString, QString> &namespaces, co
 }
 
 
-Message::Message(const QHash<QString, QString> &namespaces, QObject *parent) : QObject(parent) {
+Message::Message(const QHash<QString, QString> &namespaces, QObject *parent) : QObject(parent)
+{
     this->mNamespaces = namespaces;
     mDoc.appendChild(mDoc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
     mEnv = mDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "soap:Envelope");
@@ -94,9 +102,11 @@ Message::Message(const QHash<QString, QString> &namespaces, QObject *parent) : Q
     mBody = mDoc.createElement("soap:Body");
 }
 
-QString Message::toXmlStr() {
+QString Message::toXmlStr()
+{
     QHashIterator<QString, QString> i(mNamespaces);
-    while (i.hasNext()) {
+    while (i.hasNext())
+    {
         i.next();
         mEnv.setAttribute("xmlns:" + i.key(), i.value());
     }
@@ -107,15 +117,18 @@ QString Message::toXmlStr() {
     return mDoc.toString();
 }
 
-QString Message::uuid() {
+QString Message::uuid()
+{
     QUuid id = QUuid::createUuid();
     return id.toString();
 }
 
-void Message::appendToBody(const QDomElement &body) {
+void Message::appendToBody(const QDomElement &body)
+{
     mBody.appendChild(body);
 }
 
-void Message::appendToHeader(const QDomElement &header) {
+void Message::appendToHeader(const QDomElement &header)
+{
     mHeader.appendChild(header);
 }

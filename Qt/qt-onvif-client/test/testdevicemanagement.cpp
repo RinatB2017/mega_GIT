@@ -8,13 +8,16 @@ using namespace ONVIF;
 TestDeviceManagement::TestDeviceManagement(QObject *parent) :
     QObject(parent)
 {
+
 }
 
-void TestDeviceManagement::initTestCase() {
+void TestDeviceManagement::initTestCase()
+{
     mDeviceManagement = new DeviceManagement("http://192.168.2.113/onvif/device_service", "admin", "nvrnvr888");
 }
 
-void TestDeviceManagement::testGetDeviceInformation() {
+void TestDeviceManagement::testGetDeviceInformation()
+{
     QHash<QString, QString> device_info = mDeviceManagement->getDeviceInformation();
     QCOMPARE(device_info["mf"], QString("CNJABSCO"));
     QCOMPARE(device_info["model"], QString("jimxl-ipc"));
@@ -31,7 +34,8 @@ void TestDeviceManagement::testGetSystemDateAndTime() {
     QVERIFY(dt->utcTime().isValid());
 }
 
-void TestDeviceManagement::testSetSystemDateAndTime(){
+void TestDeviceManagement::testSetSystemDateAndTime()
+{
     SystemDateAndTime *systemDateAndTime = new SystemDateAndTime();
     systemDateAndTime->setLocalTime(2010,5,5,5,5,5);
     systemDateAndTime->setDaylightSavings(false);
@@ -40,20 +44,23 @@ void TestDeviceManagement::testSetSystemDateAndTime(){
     QCOMPARE(systemDateAndTime->result(),true);
 }
 
-void TestDeviceManagement::testSetSystemFactoryDefault(){
+void TestDeviceManagement::testSetSystemFactoryDefault()
+{
     SystemFactoryDefault *systemFactoryDefault = new SystemFactoryDefault();
     systemFactoryDefault->setFactoryDefault(SystemFactoryDefault::Hard);
     mDeviceManagement->setSystemFactoryDefault(systemFactoryDefault);
     QCOMPARE(systemFactoryDefault->result(),true);
 }
 
-void TestDeviceManagement::testSystemReboot(){
+void TestDeviceManagement::testSystemReboot()
+{
     SystemReboot *systemReboot = new SystemReboot();
-  //  mDeviceManagement->systemReboot(systemReboot);
+    //  mDeviceManagement->systemReboot(systemReboot);
     QCOMPARE(systemReboot->result(),true);
 }
 
-void TestDeviceManagement::testGetUsers(){
+void TestDeviceManagement::testGetUsers()
+{
     Users *user = mDeviceManagement->getUsers();
     QVERIFY(user != NULL);
     QCOMPARE(user->userName(),QString("admin"));
@@ -140,18 +147,18 @@ void TestDeviceManagement::testGetNetworkInterfaces()
 
 void TestDeviceManagement::testSetNetworkInterfaces()
 {
-//    NetworkInterfaces *networkInterfaces = new NetworkInterfaces();
-//    networkInterfaces->setNetworkInfacesEnabled(true);
-//    networkInterfaces->setAutoNegotiation(true);
-//    networkInterfaces->setSpeed(100);
-//    networkInterfaces->setDuplex(NetworkInterfaces::Full);
-//    networkInterfaces->setMtu(1500);
-//    networkInterfaces->setIpv4Enabled(true);
-//    networkInterfaces->setIpv4ManualAddress("192.168.2.145");
-//    networkInterfaces->setIpv4ManualPrefixLength(24);
-//    networkInterfaces->setIpv4DHCP(true);
-//    mDeviceManagement->setNetworkInterfaces(networkInterfaces);
-//    QCOMPARE(networkInterfaces->result(),true);
+    //    NetworkInterfaces *networkInterfaces = new NetworkInterfaces();
+    //    networkInterfaces->setNetworkInfacesEnabled(true);
+    //    networkInterfaces->setAutoNegotiation(true);
+    //    networkInterfaces->setSpeed(100);
+    //    networkInterfaces->setDuplex(NetworkInterfaces::Full);
+    //    networkInterfaces->setMtu(1500);
+    //    networkInterfaces->setIpv4Enabled(true);
+    //    networkInterfaces->setIpv4ManualAddress("192.168.2.145");
+    //    networkInterfaces->setIpv4ManualPrefixLength(24);
+    //    networkInterfaces->setIpv4DHCP(true);
+    //    mDeviceManagement->setNetworkInterfaces(networkInterfaces);
+    //    QCOMPARE(networkInterfaces->result(),true);
 }
 
 void TestDeviceManagement::testGetNetworkProtocols()
@@ -167,8 +174,10 @@ void TestDeviceManagement::testGetNetworkProtocols()
 }
 
 
-void TestDeviceManagement::cleanupTestCase() {
-    if(mDeviceManagement != NULL) {
+void TestDeviceManagement::cleanupTestCase()
+{
+    if(mDeviceManagement != NULL)
+    {
         delete mDeviceManagement;
         mDeviceManagement = NULL;
     }

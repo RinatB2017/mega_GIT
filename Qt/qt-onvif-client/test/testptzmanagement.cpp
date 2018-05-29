@@ -7,14 +7,18 @@ using namespace ONVIF;
 
 TestPtzManagement::TestPtzManagement(QObject *parent) : QObject(parent)
 {
+
 }
 
-void TestPtzManagement::initTestCase() {
+void TestPtzManagement::initTestCase()
+{
     mPtzManagement = new PtzManagement("http://192.168.2.113/onvif/ptz_service", "admin", "nvrnvr888");
 }
 
-void TestPtzManagement::cleanupTestCase() {
-    if(mPtzManagement != NULL) {
+void TestPtzManagement::cleanupTestCase()
+{
+    if(mPtzManagement != NULL)
+    {
         delete mPtzManagement;
         mPtzManagement = NULL;
     }
@@ -64,7 +68,7 @@ void TestPtzManagement::removePreset()
     RemovePreset *removePreset = new RemovePreset();
     removePreset->setProfileToken("profile_CIF");
     removePreset->setPresetToken("2");
-  //  mPtzManagement->removePreset(removePreset);
+    //  mPtzManagement->removePreset(removePreset);
     QCOMPARE(removePreset->result(),true);
 }
 
@@ -125,8 +129,8 @@ void TestPtzManagement::stop()
     stop->setProfileToken("profile_CIF");
     stop->setPanTilt(true);
     stop->setZoom(false);
-   // mPtzManagement->stop(stop);
-  //  QCOMPARE(stop->result(),true);
+    // mPtzManagement->stop(stop);
+    //  QCOMPARE(stop->result(),true);
 }
 
 void TestPtzManagement::getNodes()

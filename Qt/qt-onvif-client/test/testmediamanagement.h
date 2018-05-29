@@ -3,7 +3,8 @@
 #include <QObject>
 #include "lib/mediamanagement.h"
 
-class TestMediaManagement : public QObject {
+class TestMediaManagement : public QObject
+{
     Q_OBJECT
 public:
     explicit TestMediaManagement(QObject *parent = 0);

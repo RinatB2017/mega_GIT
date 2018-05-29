@@ -3,7 +3,8 @@
 #include <QObject>
 #include "lib/ptzmanagement.h"
 
-class TestPtzManagement : public QObject {
+class TestPtzManagement : public QObject
+{
     Q_OBJECT
 public:
     explicit TestPtzManagement(QObject *parent = 0);

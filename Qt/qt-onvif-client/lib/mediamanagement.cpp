@@ -4,11 +4,13 @@
 #include <QDebug>
 using namespace ONVIF;
 MediaManagement::MediaManagement(const QString & wsdlUrl, const QString &username, const QString &password)
-    :Service(wsdlUrl, username, password) {
+    :Service(wsdlUrl, username, password)
+{
 
 }
 
-QHash<QString, QString> MediaManagement::namespaces(const QString &key) {
+QHash<QString, QString> MediaManagement::namespaces(const QString &key)
+{
     QHash<QString, QString> names;
     names.insert("SOAP-ENV", "http://www.w3.org/2003/05/soap-envelope");
     names.insert("SOAP-ENC", "http://www.w3.org/2003/05/soap-encoding");
@@ -62,7 +64,9 @@ QHash<QString, QString> MediaManagement::namespaces(const QString &key) {
 
     return names;
 }
-Message *MediaManagement::newMessage() {
+
+Message *MediaManagement::newMessage()
+{
     QHash<QString, QString> names;
     names.insert("wsdl", "http://www.onvif.org/ver10/media/wsdl");
     names.insert("tt","http://www.onvif.org/ver10/schema");
@@ -70,13 +74,15 @@ Message *MediaManagement::newMessage() {
     names.insert("sch", "http://www.onvif.org/ver10/schema");
     return createMessage(names);
 }
+
 VideoSourceConfigurations *MediaManagement::getVideoSourceConfigurations()
 {
     VideoSourceConfigurations *videoSourceConfigurations = NULL;
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetVideoSourceConfigurations"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         videoSourceConfigurations = new VideoSourceConfigurations();
         QXmlQuery *query = result->query();
         query->setQuery(result->nameSpace()+"doc($inputDocument)//trt:Configurations");
@@ -87,7 +93,8 @@ VideoSourceConfigurations *MediaManagement::getVideoSourceConfigurations()
         QString name,useCount,sourceToken,bounds,value;
         QDomDocument doc;
         QRect rect;
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+"./tt:Name/string()");
             query->evaluateTo(&name);
@@ -105,7 +112,8 @@ VideoSourceConfigurations *MediaManagement::getVideoSourceConfigurations()
             query->evaluateTo(&bounds);
             doc.setContent(bounds);
             QDomNodeList itemNodeList = doc.elementsByTagName("tt:Bounds");
-            for(int i=0; i< itemNodeList.size(); i++){
+            for(int i=0; i< itemNodeList.size(); i++)
+            {
                 QDomNode node = itemNodeList.at(i);
                 value = node.toElement().attribute("width");
                 rect.setWidth(value.toInt());
@@ -131,7 +139,8 @@ VideoEncoderConfigurations *MediaManagement::getVideoEncoderConfigurations()
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetVideoEncoderConfigurations"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         videoEncoderConfigurations = new VideoEncoderConfigurations();
         QXmlQuery *query = result->query();
         query->setQuery(result->nameSpace()+"doc($inputDocument)//trt:Configurations");
@@ -145,7 +154,8 @@ VideoEncoderConfigurations *MediaManagement::getVideoEncoderConfigurations()
         QDomDocument doc;
         QDomNodeList itemNodeList;
         QDomNode node;
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
 
             query->setQuery(result->nameSpace()+".");
@@ -240,7 +250,8 @@ Profiles *MediaManagement::getProfiles()
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetProfiles"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         profiles = new Profiles();
         QXmlQuery *query = result->query();
         query->setQuery(result->nameSpace()+"doc($inputDocument)//trt:Profiles");
@@ -250,7 +261,8 @@ Profiles *MediaManagement::getProfiles()
         QDomDocument doc;
         QString value,bounds,panTilt,zoom,profileNode;
         QRect rect;
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
 
             query->setQuery(result->nameSpace()+".");
@@ -287,7 +299,8 @@ Profiles *MediaManagement::getProfiles()
             query->evaluateTo(&bounds);
             doc.setContent(bounds);
             itemNodeList = doc.elementsByTagName("tt:Bounds");
-            for(int i = 0; i<itemNodeList.size();i++){
+            for(int i = 0; i<itemNodeList.size();i++)
+            {
                 node = itemNodeList.at(i);
                 value = node.toElement().attribute("width");
                 rect.setWidth(value.toInt());
@@ -541,7 +554,8 @@ Profile *MediaManagement::getProfile720P()
     Message *msg = newMessage();
     msg->appendToBody(newElement("<wsdl:ProfileToken>profile_720P</wsdl:ProfileToken>"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         profile = new Profile();
         QXmlQuery *query = result->query();
         query->setQuery(result->nameSpace()+"doc($inputDocument)//trt:Profile");
@@ -551,7 +565,8 @@ Profile *MediaManagement::getProfile720P()
         QDomDocument doc;
         QString value,bounds,panTilt,zoom,profileNode;
         QRect rect;
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+".");
             query->evaluateTo(&profileNode);
@@ -587,7 +602,8 @@ Profile *MediaManagement::getProfile720P()
             query->evaluateTo(&bounds);
             doc.setContent(bounds);
             itemNodeList = doc.elementsByTagName("tt:Bounds");
-            for(int i = 0; i<itemNodeList.size();i++){
+            for(int i = 0; i<itemNodeList.size();i++)
+            {
                 node = itemNodeList.at(i);
                 value = node.toElement().attribute("width");
                 rect.setWidth(value.toInt());
@@ -841,7 +857,8 @@ Profile *MediaManagement::getProfileD1()
     Message *msg = newMessage();
     msg->appendToBody(newElement("<wsdl:ProfileToken>profile_D1</wsdl:ProfileToken>"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         profile = new Profile();
         QXmlQuery *query = result->query();
         query->setQuery(result->nameSpace()+"doc($inputDocument)//trt:Profiles");
@@ -851,7 +868,8 @@ Profile *MediaManagement::getProfileD1()
         QDomDocument doc;
         QString value,bounds,panTilt,zoom,profileNode;
         QRect rect;
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
 
             query->setQuery(result->nameSpace()+".");
@@ -888,7 +906,8 @@ Profile *MediaManagement::getProfileD1()
             query->evaluateTo(&bounds);
             doc.setContent(bounds);
             itemNodeList = doc.elementsByTagName("tt:Bounds");
-            for(int i = 0; i<itemNodeList.size();i++){
+            for(int i = 0; i<itemNodeList.size();i++)
+            {
                 node = itemNodeList.at(i);
                 value = node.toElement().attribute("width");
                 rect.setWidth(value.toInt());
@@ -1142,7 +1161,8 @@ AudioSourceConfigurations* MediaManagement::getAudioSourceConfigurations()
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetAudioSourceConfigurations"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         audioSourceConfigurations = new AudioSourceConfigurations();
         QString xml,value;
         QDomDocument doc;
@@ -1162,7 +1182,8 @@ AudioSourceConfigurations* MediaManagement::getAudioSourceConfigurations()
         }
         query->evaluateTo(&items);
         item = items.next();
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+"./tt:Name/string()");
             query->evaluateTo(&value);
@@ -1188,7 +1209,8 @@ AudioEncoderConfigurations* MediaManagement::getAudioEncoderConfigurations()
     Message *msg = newMessage();
     msg->appendToBody(newElement("wsdl:GetAudioEncoderConfigurations"));
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         audioEncoderConfigurations = new AudioEncoderConfigurations();
         QXmlQuery *query = result->query();
         query->setQuery(result->nameSpace()+"doc($inputDocument)//trt:Configurations");
@@ -1210,7 +1232,8 @@ AudioEncoderConfigurations* MediaManagement::getAudioEncoderConfigurations()
 
         query->evaluateTo(&items);
         item = items.next();
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+"./tt:Name/string()");
             query->evaluateTo(&value);
@@ -1276,7 +1299,8 @@ VideoSourceConfiguration *MediaManagement::getVideoSourceConfiguration()
     body.appendChild(token);
     msg->appendToBody(body);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         videoSourceConfiguration = new VideoSourceConfiguration();
         QXmlQuery *query = result->query();
         QString value,xml;
@@ -1328,7 +1352,8 @@ VideoEncoderConfiguration *MediaManagement::getVideoEncoderConfiguration()
     body.appendChild(token);
     msg->appendToBody(body);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         videoEncoderConfiguration = new VideoEncoderConfiguration();
         QXmlQuery *query = result->query();
         QString value,xml;
@@ -1380,7 +1405,8 @@ AudioEncoderConfiguration *MediaManagement::getAudioEncoderConfiguration()
     body.appendChild(token);
     msg->appendToBody(body);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         audioEncoderConfiguration = new AudioEncoderConfiguration();
         QXmlQuery *query = result->query();
         QString value,xml;
@@ -1426,7 +1452,8 @@ AudioEncoderConfigurationOptions *MediaManagement::getAudioEncoderConfigurationO
     body.appendChild(profileToken);
     msg->appendToBody(body);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         audioEncoderConfigurationOptions = new AudioEncoderConfigurationOptions();
         QXmlQuery *query = result->query();
         QXmlResultItems items,items1;
@@ -1436,7 +1463,8 @@ AudioEncoderConfigurationOptions *MediaManagement::getAudioEncoderConfigurationO
         query->setQuery(result->nameSpace()+"doc($inputDocument)//tt:Options");
         query->evaluateTo(&items);
         item = items.next();
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+"./tt:Encoding/string()");
             query->evaluateTo(&value);
@@ -1445,7 +1473,8 @@ AudioEncoderConfigurationOptions *MediaManagement::getAudioEncoderConfigurationO
             query->setQuery(result->nameSpace()+"./tt:BitrateList/tt:Items");
             query->evaluateTo(&items1);
             item1 = items1.next();
-            while(!item1.isNull()){
+            while(!item1.isNull())
+            {
                 query->setFocus(item1);
                 query->setQuery(result->nameSpace()+"./string()");
                 query->evaluateTo(&value);
@@ -1456,7 +1485,8 @@ AudioEncoderConfigurationOptions *MediaManagement::getAudioEncoderConfigurationO
             query->setQuery(result->nameSpace()+"../../tt:SampleRateList/tt:Items");
             query->evaluateTo(&items1);
             item1 = items1.next();
-            while(!item1.isNull()){
+            while(!item1.isNull())
+            {
                 query->setFocus(item1);
                 query->setQuery(result->nameSpace()+"./string()");
                 query->evaluateTo(&value);
@@ -1484,7 +1514,8 @@ VideoEncoderConfigurationOptions *MediaManagement::getVideoEncoderConfigurationO
     body.appendChild(profileTokekn);
     msg->appendToBody(body);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         videoEncoderConfigurationOptions = new VideoEncoderConfigurationOptions();
         QXmlQuery *query = result->query();
         QXmlResultItems items;
@@ -1495,7 +1526,8 @@ VideoEncoderConfigurationOptions *MediaManagement::getVideoEncoderConfigurationO
         query->setQuery(result->nameSpace()+"doc($inputDocument)//tt:H264/tt:ResolutionsAvailable");
         query->evaluateTo(&items);
         item = items.next();
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+"./tt:Width/string()");
             query->evaluateTo(&value);
@@ -1515,7 +1547,8 @@ VideoEncoderConfigurationOptions *MediaManagement::getVideoEncoderConfigurationO
         query->setQuery(result->nameSpace()+"../tt:H264ProfilesSupported");
         query->evaluateTo(&items);
         item = items.next();
-        while(!item.isNull()){
+        while(!item.isNull())
+        {
             query->setFocus(item);
             query->setQuery(result->nameSpace()+"./string()");
             query->evaluateTo(&value);
@@ -1548,7 +1581,8 @@ StreamUri *MediaManagement::getStreamUri()
     transport.appendChild(tunnel);
     msg->appendToBody(getStreamUri);
     MessageParser *result = sendMessage(msg);
-    if(result != NULL){
+    if(result != NULL)
+    {
         streamUri = new StreamUri();
         streamUri->setUri(result->getValue("//tt:Uri").trimmed());
         streamUri->setInvalidAfterConnect(result->getValue("//tt:InvalidAfterConnect").trimmed() == "true"?true:false);

@@ -9,14 +9,17 @@ using namespace ONVIF;
 
 DeviceSearcher* DeviceSearcher::searcher = NULL;
 
-DeviceSearcher* DeviceSearcher::instance() {
-    if(searcher == NULL) {
+DeviceSearcher* DeviceSearcher::instance()
+{
+    if(searcher == NULL)
+    {
         searcher = new DeviceSearcher();
     }
     return searcher;
 }
 
-DeviceSearcher::DeviceSearcher(QObject *parent) : QObject(parent) {
+DeviceSearcher::DeviceSearcher(QObject *parent) : QObject(parent)
+{
     mUdpSocket = new QUdpSocket(this);
     mUdpSocket->bind(QHostAddress::Any, 0, QUdpSocket::ShareAddress);
 
@@ -24,8 +27,10 @@ DeviceSearcher::DeviceSearcher(QObject *parent) : QObject(parent) {
             this, SLOT(readPendingDatagrams()));
 }
 
-DeviceSearcher::~DeviceSearcher() {
-    if(this->mUdpSocket != NULL) {
+DeviceSearcher::~DeviceSearcher()
+{
+    if(this->mUdpSocket != NULL)
+    {
         mUdpSocket->close();
         delete mUdpSocket;
         mUdpSocket = NULL;
@@ -33,24 +38,27 @@ DeviceSearcher::~DeviceSearcher() {
 }
 
 
-void DeviceSearcher::sendSearchMsg() {
+void DeviceSearcher::sendSearchMsg()
+{
     Message *msg = Message::getOnvifSearchMessage();
     QString msg_str = msg->toXmlStr();
     qDebug() << msg_str;
     mUdpSocket->writeDatagram(msg_str.toUtf8(), QHostAddress("239.255.255.250"), 3702);
 }
 
-void DeviceSearcher::readPendingDatagrams() {
-    while (mUdpSocket->hasPendingDatagrams()) {
+void DeviceSearcher::readPendingDatagrams()
+{
+    while (mUdpSocket->hasPendingDatagrams())
+    {
         QByteArray datagram;
         datagram.resize(mUdpSocket->pendingDatagramSize());
         QHostAddress sender;
         quint16 senderPort;
         
         mUdpSocket->readDatagram(datagram.data(), datagram.size(),
-                                &sender, &senderPort);
+                                 &sender, &senderPort);
         
-//        qDebug() << "========> \n" << datagram << "\n++++++++++++++++++++++++\n";
+        //        qDebug() << "========> \n" << datagram << "\n++++++++++++++++++++++++\n";
         
         QHash<QString, QString> namespaces;
         namespaces.insert("SOAP-ENV", "http://www.w3.org/2003/05/soap-envelope");
@@ -116,5 +124,5 @@ void DeviceSearcher::readPendingDatagrams() {
         
         qDebug() << "Device =============>\n" << device_infos;
         emit receiveData(device_infos);
-    }    
+    }
 }

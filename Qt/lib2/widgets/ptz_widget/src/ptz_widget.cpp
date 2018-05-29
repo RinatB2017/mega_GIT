@@ -80,21 +80,12 @@ void PTZ_widget::init(void)
 
     create_tcp_socket();
     create_player();
-    create_position_widgets();
+    connect_position_widgets();
 
     ui->video_widget->setMinimumSize(640, 480);
 
     ui->sl_speed->setRange(0, 100);
     ui->sl_speed->setValue(50);
-    ui->sl_brightness->setRange(0, 255);
-    ui->sl_contrast->setRange(0, 255);
-    ui->sl_tone->setRange(0, 255);
-    ui->sl_saturation->setRange(0, 255);
-    ui->sl_iris->setRange(0, 13);
-    ui->sl_shutter->setRange(0, 21);
-    ui->sl_gamma->setRange(0, 4);
-    ui->sl_sharpness->setRange(0, 15);
-    ui->sl_noise->setRange(0, 5);
 
 #ifdef Q_OS_LINUX
     ui->le_address->setText("rtsp://192.168.1.66/av0_0");
@@ -123,87 +114,125 @@ void PTZ_widget::init(void)
 
     connect(ui->btn_choice, SIGNAL(clicked(bool)),  this,   SLOT(choice()));
 
-    connect(ui->btn_wiper_on,   SIGNAL(clicked(bool)),  this,   SLOT(f_wiper_on()));
-    connect(ui->btn_wiper_off,  SIGNAL(clicked(bool)),  this,   SLOT(f_wiper_off()));
-    connect(ui->btn_light_on,   SIGNAL(clicked(bool)),  this,   SLOT(f_light_on()));
-    connect(ui->btn_light_off,  SIGNAL(clicked(bool)),  this,   SLOT(f_light_off()));
-    connect(ui->btn_diaphragm_plus,     SIGNAL(clicked(bool)),  this,   SLOT(f_diaphragm_plus()));
-    connect(ui->btn_diaphragm_minus,    SIGNAL(clicked(bool)),  this,   SLOT(f_diaphragm_minus()));
-    connect(ui->btn_zoom_plus,  SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_plus()));
-    connect(ui->btn_zoom_minus, SIGNAL(clicked(bool)),  this,   SLOT(f_zoom_minus()));
-
-#if 1
-    connect(ui->sl_brightness,  SIGNAL(sliderReleased()),  this,   SLOT(f_set_brightness()));
-    connect(ui->sl_contrast,    SIGNAL(sliderReleased()),  this,   SLOT(f_set_contrast()));
-    connect(ui->sl_tone,        SIGNAL(sliderReleased()),  this,   SLOT(f_set_tone()));
-    connect(ui->sl_saturation,  SIGNAL(sliderReleased()),  this,   SLOT(f_set_saturation()));
-    connect(ui->sl_iris,        SIGNAL(sliderReleased()),  this,   SLOT(f_set_iris()));
-    connect(ui->sl_shutter,     SIGNAL(sliderReleased()),  this,   SLOT(f_set_shutter()));
-    connect(ui->sl_gamma,       SIGNAL(sliderReleased()),  this,   SLOT(f_set_gamma()));
-    connect(ui->sl_sharpness,   SIGNAL(sliderReleased()),  this,   SLOT(f_set_sharpness()));
-    connect(ui->sl_noise,       SIGNAL(sliderReleased()),  this,   SLOT(f_set_noise()));
-#else
-    connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  this,   SLOT(f_set_brightness(int)));
-    connect(ui->sl_contrast,    SIGNAL(valueChanged(int)),  this,   SLOT(f_set_contrast(int)));
-    connect(ui->sl_tone,        SIGNAL(valueChanged(int)),  this,   SLOT(f_set_tone(int)));
-    connect(ui->sl_saturation,  SIGNAL(valueChanged(int)),  this,   SLOT(f_set_saturation(int)));
-    connect(ui->sl_iris,        SIGNAL(valueChanged(int)),  this,   SLOT(f_set_iris(int)));
-    connect(ui->sl_shutter,     SIGNAL(valueChanged(int)),  this,   SLOT(f_set_shutter(int)));
-    connect(ui->sl_gamma,       SIGNAL(valueChanged(int)),  this,   SLOT(f_set_gamma(int)));
-    connect(ui->sl_sharpness,   SIGNAL(valueChanged(int)),  this,   SLOT(f_set_sharpness(int)));
-    connect(ui->sl_noise,       SIGNAL(valueChanged(int)),  this,   SLOT(f_set_noise(int)));
-#endif
-
     //---
-#ifdef QT_DEBUG
-    QList<QAbstractButton *> sl_buttons;
-    sl_buttons.append(new QPushButton("ON"));
-    sl_buttons.append(new QPushButton("OFF"));
-
-    QList<QAbstractButton *> sl_buttons2;
-    sl_buttons2.append(new QPushButton("ON"));
-    sl_buttons2.append(new QPushButton("OFF"));
-
-    QList<QAbstractButton *> sl_buttons3;
-    sl_buttons3.append(new QPushButton("+"));
-    sl_buttons3.append(new QPushButton("-"));
-
-    QList<QAbstractButton *> sl_buttons4;
-    sl_buttons4.append(new QPushButton("+"));
-    sl_buttons4.append(new QPushButton("-"));
-
     int index = 0;
     PTZ_PARAM param;
-    param.cmd = "ptz"; param.func1 = "brightness"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "brightness",   param);
-    param.cmd = "ptz"; param.func1 = "contrast"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "contrast",     param);
-    param.cmd = "ptz"; param.func1 = "iris"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "iris",         param);
-    param.cmd = "ptz"; param.func1 = "gamma"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "gamma",        param);
-    param.cmd = "ptz"; param.func1 = "noise"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "noise",        param);
-    param.cmd = "ptz"; param.func1 = "tone"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "tone",         param);
-    param.cmd = "ptz"; param.func1 = "saturation"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "saturation",   param);
-    param.cmd = "ptz"; param.func1 = "shutter"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "shutter",      param);
-    param.cmd = "ptz"; param.func1 = "sharpness"; param.min_value = 1; param.max_value = 100;
-    add_slider(index++, "sharpness",    param);
+    PTZ_PARAM param1;
+    PTZ_PARAM param2;
 
-    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "CA"; param.param1 = "WIPER"; param.btn1_caption = "ON"; param.btn2_caption = "OFF";
-    add_buttons(index++,    "WIPER",        param);
-    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "SA"; param.param1 = "WIPER"; param.btn1_caption = "ON"; param.btn2_caption = "OFF";
-    add_buttons(index++,    "LIGHT",        param);
-    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "CA"; param.param1 = "LIGHT"; param.btn1_caption = "+"; param.btn2_caption = "-";
-    add_buttons(index++,    "DIAPHGRAM",    param);
-    param.cmd = "ptz"; param.func1 = "AD"; param.func2 = "SA"; param.param1 = "LIGHT"; param.btn1_caption = "+"; param.btn2_caption = "-";
-    add_buttons(index++,    "ZOOM",         param);
-    //---
-    //l_params.append({ "buttons", "ptz", "STOP", 0, 0 });
-#endif
+    param.cmd = "isp";
+    param.func = "brightness";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "brightness", param);
+
+    param.cmd = "isp";
+    param.func = "contrast";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "contrast", param);
+
+    param.cmd = "isp";
+    param.func = "iris";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "iris", param);
+
+    param.cmd = "isp";
+    param.func = "gamma";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "gamma", param);
+
+    param.cmd = "isp";
+    param.func = "noise";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "noise", param);
+
+    param.cmd = "isp";
+    param.func = "tone";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "tone", param);
+
+    param.cmd = "isp";
+    param.func = "saturation";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "saturation", param);
+
+    param.cmd = "isp";
+    param.func = "shutter";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "shutter", param);
+
+    param.cmd = "isp";
+    param.func = "sharpness";
+    param.min_value = 1;
+    param.max_value = 100;
+    add_slider(index++, "sharpness", param);
+
+    param1.cmd = "ptz";
+    param1.func = "AD";
+    param1.param1 = "SA";
+    param1.param2 = "WIPER";
+    param1.btn_caption = "ON";
+    param2.cmd = "ptz";
+    param2.func = "AD";
+    param2.param1 = "CA";
+    param1.param2 = "WIPER";
+    param2.btn_caption = "OFF";
+    add_buttons(index++, "WIPER", param1, param2);
+
+    param1.cmd = "ptz";
+    param1.func = "AD";
+    param1.param1 = "SA";
+    param1.param2 = "LIGHT";
+    param1.btn_caption = "ON";
+    param2.cmd = "ptz";
+    param2.func = "AD";
+    param2.param1 = "CA";
+    param1.param2 = "LIGHT";
+    param2.btn_caption = "OFF";
+    add_buttons(index++, "LIGHT", param1, param2);
+
+    param1.cmd = "ptz";
+    param1.func = "AD";
+    param1.param1 = "SA";
+    param1.param2 = "DIAPHGRAM";
+    param1.btn_caption = "+";
+    param2.cmd = "ptz";
+    param2.func = "AD";
+    param2.param1 = "CA";
+    param1.param2 = "DIAPHGRAM";
+    param2.btn_caption = "-";
+    add_buttons(index++, "DIAPHGRAM", param1, param2);
+
+    param1.cmd = "ptz";
+    param1.func = "T";
+    param1.param1 = 0;
+    param1.param2 = 0;
+    param1.btn_caption = "+";
+    param2.cmd = "ptz";
+    param2.func = "W";
+    param2.param1 = 0;
+    param1.param2 = 0;
+    param2.btn_caption = "-";
+    add_buttons(index++, "ZOOM", param1, param2);
+
+    param1.cmd = "isp";
+    param1.func = "flip";
+    param1.param1 = 0;
+    param1.param2 = 0;
+    param1.btn_caption = "0";
+    param2.cmd = "isp";
+    param2.func = "flip";
+    param2.param1 = 1;
+    param1.param2 = 0;
+    param2.btn_caption = "1";
+    add_buttons(index++, "FLIP", param1, param2);
     //---
 
     load_widgets("PTZ");
@@ -211,7 +240,8 @@ void PTZ_widget::init(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_buttons(int index,
                              QString name,
-                             PTZ_PARAM params)
+                             PTZ_PARAM param1,
+                             PTZ_PARAM param2)
 {
     QLabel *caption = new QLabel(this);
     caption->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -220,35 +250,26 @@ void PTZ_widget::add_buttons(int index,
     ui->grid->addWidget(caption, index, 0);
 
     QPushButton *btn1 = new QPushButton(this);
-    btn1->setText(params.btn1_caption);
-    btn1->setProperty("cmd",      params.cmd);
-    btn1->setProperty("func",     params.func1);
-    btn1->setProperty("param1",   params.param1);
-    btn1->setProperty("param2",   params.param2);
+    btn1->setObjectName(QString("btn1_%1").arg(name));
+    btn1->setText(param1.btn_caption);
+    btn1->setProperty("cmd",      param1.cmd);
+    btn1->setProperty("func",     param1.func);
+    btn1->setProperty("param1",   param1.param1);
+    btn1->setProperty("param2",   param1.param2);
 
     QPushButton *btn2 = new QPushButton(this);
-    btn2->setText(params.btn2_caption);
-    btn2->setProperty("cmd",      params.cmd);
-    btn2->setProperty("func",     params.func1);
-    btn2->setProperty("param1",   params.param1);
-    btn2->setProperty("param2",   params.param2);
+    btn2->setObjectName(QString("btn2_%1").arg(name));
+    btn2->setText(param2.btn_caption);
+    btn2->setProperty("cmd",      param2.cmd);
+    btn2->setProperty("func",     param2.func);
+    btn2->setProperty("param1",   param2.param1);
+    btn2->setProperty("param2",   param2.param2);
+
+    connect(btn1,   SIGNAL(clicked(bool)),  this,   SLOT(f_push_button()));
+    connect(btn2,   SIGNAL(clicked(bool)),  this,   SLOT(f_push_button()));
 
     ui->grid->addWidget(btn1, index, 1);
     ui->grid->addWidget(btn2, index, 2);
-
-#if 0
-    int x = 1;
-    foreach (QAbstractButton *btn, buttons)
-    {
-        btn->setProperty("cmd",      params.cmd);
-        btn->setProperty("func",     params.func1);
-        btn->setProperty("param1",   params.param1);
-        btn->setProperty("param2",   params.param2);
-
-        ui->grid->addWidget(btn, index, x);
-        x++;
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_slider(int index,
@@ -266,63 +287,79 @@ void PTZ_widget::add_slider(int index,
     slider->setRange(params.min_value,
                      params.max_value);
     slider->setProperty("cmd",      params.cmd);
-    slider->setProperty("func",     params.func1);
+    slider->setProperty("func",     params.func);
     slider->setProperty("param1",   params.param1);
     slider->setProperty("param2",   params.param2);
+
+    connect(slider, SIGNAL(sliderReleased()),   this,   SLOT(f_move_slider()));
 
     ui->grid->addWidget(slider, index, 1, 1, 2);
 }
 //--------------------------------------------------------------------------------
-void PTZ_widget::create_position_widgets(void)
+void PTZ_widget::f_push_button(void)
 {
-    btn_lu = new QToolButton(ui->video_widget);
-    btn_ru = new QToolButton(ui->video_widget);
+    QPushButton *btn = (QPushButton *)sender();
+    if(btn == nullptr)
+    {
+        return;
+    }
+    QString cmd = btn->property("cmd").toString();
+    QString func = btn->property("func").toString();
+    QVariant param1 = btn->property("param1").toString();
+    QVariant param2 = btn->property("param2").toString();
 
-    btn_u  = new QToolButton(ui->video_widget);
-    btn_d  = new QToolButton(ui->video_widget);
-    btn_l  = new QToolButton(ui->video_widget);
-    btn_r  = new QToolButton(ui->video_widget);
+    emit debug(QString("%1").arg(btn->objectName()));
 
-    btn_ld = new QToolButton(ui->video_widget);
-    btn_rd = new QToolButton(ui->video_widget);
+    emit debug(QString("cmd [%1]").arg(cmd));
+    emit debug(QString("func [%1]").arg(func));
+    emit debug(QString("param1 [%1]").arg(param1.toString()));
+    emit debug(QString("param2 [%1]").arg(param2.toString()));
 
-    btn_lu->setFixedSize(32, 32);
-    btn_ru->setFixedSize(32, 32);
-    btn_u->setFixedSize(32, 32);
-    btn_d->setFixedSize(32, 32);
-    btn_l->setFixedSize(32, 32);
-    btn_r->setFixedSize(32, 32);
-    btn_ld->setFixedSize(32, 32);
-    btn_rd->setFixedSize(32, 32);
+    send_cmd(cmd, func, param1, param2);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::f_move_slider(void)
+{
+    QSlider *slider = (QSlider *)sender();
+    if(slider == nullptr)
+    {
+        return;
+    }
+    QString  cmd = slider->property("cmd").toString();
+    QString  func = slider->property("func").toString();
+    //QVariant param1 = slider->property("param1").toString();
+    //QVariant param2 = slider->property("param2").toString();
 
-    btn_lu->setIcon(QIcon(":/arrows/up_left.png"));
-    btn_ru->setIcon(QIcon(":/arrows/up_right.png"));
+    emit debug(QString("%1").arg(slider->objectName()));
 
-    btn_u->setIcon(QIcon(":/arrows/up.png"));
-    btn_d->setIcon(QIcon(":/arrows/down.png"));
-    btn_l->setIcon(QIcon(":/arrows/left.png"));
-    btn_r->setIcon(QIcon(":/arrows/right.png"));
+    emit debug(QString("cmd [%1]").arg(cmd));
+    emit debug(QString("func [%1]").arg(func));
+    //emit debug(QString("param1 [%1]").arg(param1.toString()));
+    //emit debug(QString("param2 [%1]").arg(param2.toString()));
 
-    btn_ld->setIcon(QIcon(":/arrows/down_left.png"));
-    btn_rd->setIcon(QIcon(":/arrows/down_right.png"));
+    //send_cmd(cmd, func, param1, param2);
+    send_cmd(cmd, func, slider->value(), 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::connect_position_widgets(void)
+{
+    connect(ui->btn_lu, SIGNAL(pressed()),  this,   SLOT(f_left_up()));
+    connect(ui->btn_ru, SIGNAL(pressed()),  this,   SLOT(f_right_up()));
+    connect(ui->btn_l,  SIGNAL(pressed()),  this,   SLOT(f_left()));
+    connect(ui->btn_r,  SIGNAL(pressed()),  this,   SLOT(f_right()));
+    connect(ui->btn_u,  SIGNAL(pressed()),  this,   SLOT(f_up()));
+    connect(ui->btn_d,  SIGNAL(pressed()),  this,   SLOT(f_down()));
+    connect(ui->btn_ld, SIGNAL(pressed()),  this,   SLOT(f_left_down()));
+    connect(ui->btn_rd, SIGNAL(pressed()),  this,   SLOT(f_right_down()));
 
-    connect(btn_lu, SIGNAL(pressed()),  this,   SLOT(f_left_up()));
-    connect(btn_ru, SIGNAL(pressed()),  this,   SLOT(f_right_up()));
-    connect(btn_l,  SIGNAL(pressed()),  this,   SLOT(f_left()));
-    connect(btn_r,  SIGNAL(pressed()),  this,   SLOT(f_right()));
-    connect(btn_u,  SIGNAL(pressed()),  this,   SLOT(f_up()));
-    connect(btn_d,  SIGNAL(pressed()),  this,   SLOT(f_down()));
-    connect(btn_ld, SIGNAL(pressed()),  this,   SLOT(f_left_down()));
-    connect(btn_rd, SIGNAL(pressed()),  this,   SLOT(f_right_down()));
-
-    connect(btn_lu, SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_ru, SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_l,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_r,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_u,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_d,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_ld, SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(btn_rd, SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_lu, SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_ru, SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_l,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_r,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_u,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_d,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_ld, SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_rd, SIGNAL(released()), this,   SLOT(f_stop()));
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -436,44 +473,6 @@ void PTZ_widget::choice(void)
     dlg->deleteLater();
 }
 //--------------------------------------------------------------------------------
-void PTZ_widget::resizeEvent(QResizeEvent *)
-{
-    int lu_x = 0;
-    int lu_y = 0;
-
-    int ru_x = ui->video_widget->width() - btn_ru->width();
-    int ru_y = 0;
-
-    int ld_x = 0;
-    int ld_y = ui->video_widget->height() - btn_ld->height();
-
-    int rd_x = ui->video_widget->width() - btn_rd->width();
-    int rd_y = ui->video_widget->height() - btn_rd->height();
-
-    int u_x = ui->video_widget->width() / 2.0 - btn_u->width() / 2.0;
-    int u_y = 0;
-
-    int d_x = ui->video_widget->width() / 2.0 - btn_d->width() / 2.0;
-    int d_y = ui->video_widget->height() - btn_d->height();
-
-    int l_x = 0;
-    int l_y = ui->video_widget->height() / 2.0 - btn_l->height() / 2.0;
-
-    int r_x = ui->video_widget->width() - btn_r->width();
-    int r_y = ui->video_widget->height() / 2.0 - btn_r->height() / 2.0;
-
-    btn_lu->move(lu_x, lu_y);
-    btn_ru->move(ru_x, ru_y);
-
-    btn_u->move(u_x, u_y);
-    btn_d->move(d_x, d_y);
-    btn_l->move(l_x, l_y);
-    btn_r->move(r_x, r_y);
-
-    btn_ld->move(ld_x, ld_y);
-    btn_rd->move(rd_x, rd_y);
-}
-//--------------------------------------------------------------------------------
 void PTZ_widget::f_stop(void)
 {
     send_cmd("ptz", "STOP", 0, 0);
@@ -523,156 +522,12 @@ void PTZ_widget::f_test(void)
 {
     emit info("test");
 
-    //send_cmd("ptz", "AD", "SA", "WIPER");
-    //send_cmd("ptz", "AD", "CA", "WIPER");
-
-    //send_cmd("ptz", "AD", "SA", "LIGHT");
-    //send_cmd("ptz", "AD", "CA", "LIGHT");
-
-    //send_cmd("ptz", "O", 0, 0);
-    //send_cmd("ptz", "D", 0, 0);
-
-    //send_cmd("isp", "contrast", 128, 0);
-
-    //send_cmd("isp", "mirror", 0, 0);
-    //send_cmd("isp", "mirror", 1, 0);
-
     //send_cmd("isp", "flip", 0, 0);
-    send_cmd("isp", "flip", 1, 0);
+    //send_cmd("isp", "flip", 1, 0);
 }
 //--------------------------------------------------------------------------------
-void PTZ_widget::f_set_brightness(void)
-{
-    send_cmd("isp", "brightness", ui->sl_brightness->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_contrast(void)
-{
-    send_cmd("isp", "contrast", ui->sl_contrast->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_tone(void)
-{
-    send_cmd("isp", "tone", ui->sl_tone->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_saturation(void)
-{
-    send_cmd("isp", "saturation", ui->sl_saturation->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_iris(void)
-{
-    send_cmd("isp", "iris", ui->sl_iris->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_shutter(void)
-{
-    send_cmd("isp", "shutter", ui->sl_shutter->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_gamma(void)
-{
-    send_cmd("isp", "gamma", ui->sl_gamma->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_sharpness(void)
-{
-    send_cmd("isp", "sharpness", ui->sl_sharpness->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_noise(void)
-{
-    send_cmd("isp", "noise", ui->sl_noise->value(), 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_brightness(int value)
-{
-    send_cmd("isp", "brightness", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_contrast(int value)
-{
-    send_cmd("isp", "contrast", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_tone(int value)
-{
-    send_cmd("isp", "tone", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_saturation(int value)
-{
-    send_cmd("isp", "saturation", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_iris(int value)
-{
-    send_cmd("isp", "iris", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_shutter(int value)
-{
-    send_cmd("isp", "shutter", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_gamma(int value)
-{
-    send_cmd("isp", "gamma", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_sharpness(int value)
-{
-    send_cmd("isp", "sharpness", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_set_noise(int value)
-{
-    send_cmd("isp", "noise", value, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_wiper_on(void)
-{
-    send_cmd("ptz", "AD", "SA", "WIPER");
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_wiper_off(void)
-{
-    send_cmd("ptz", "AD", "CA", "WIPER");
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_light_on(void)
-{
-    send_cmd("ptz", "AD", "SA", "LIGHT");
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_light_off(void)
-{
-    send_cmd("ptz", "AD", "CA", "LIGHT");
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_diaphragm_plus(void)
-{
-    send_cmd("ptz", "O", 0, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_diaphragm_minus(void)
-{
-    send_cmd("ptz", "D", 0, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_zoom_plus(void)
-{
-    send_cmd("ptz", "T", 0, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::f_zoom_minus(void)
-{
-    send_cmd("ptz", "W", 0, 0);
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::send_cmd(QString cmd,
-                          QString func,
+void PTZ_widget::send_cmd(QString  cmd,
+                          QString  func,
                           QVariant param_1,
                           QVariant param_2)
 {

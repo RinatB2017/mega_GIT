@@ -67,274 +67,29 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <layout class="QGridLayout" name="grid"/>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <layout class="QGridLayout" name="grid"/>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <layout class="QGridLayout" name="gridLayout_3">
-              <item row="3" column="1">
-               <widget class="QSlider" name="sl_iris">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>saturation</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <widget class="QSlider" name="sl_gamma">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
-               <widget class="QSlider" name="sl_noise">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QSlider" name="sl_saturation">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>sharpness</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>noise</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QSlider" name="sl_contrast">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>brightness</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QSlider" name="sl_brightness">
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_11">
-                <property name="text">
-                 <string>shutter</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <widget class="QSlider" name="sl_tone">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>gamma</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1">
-               <widget class="QSlider" name="sl_shutter">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_10">
-                <property name="text">
-                 <string>iris</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>contrast</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_8">
-                <property name="text">
-                 <string>tone</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1">
-               <widget class="QSlider" name="sl_sharpness">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="3">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>DIAPHGRAM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QToolButton" name="btn_light_on">
-                <property name="text">
-                 <string>ON</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>LIGHT</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>WIPER</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QToolButton" name="btn_light_off">
-                <property name="text">
-                 <string>OFF</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QToolButton" name="btn_wiper_on">
-                <property name="text">
-                 <string>ON</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QToolButton" name="btn_wiper_off">
-                <property name="text">
-                 <string>OFF</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QToolButton" name="btn_diaphragm_plus">
-                <property name="text">
-                 <string>+</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="5">
-               <widget class="QToolButton" name="btn_diaphragm_minus">
-                <property name="text">
-                 <string>-</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>ZOOM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="4">
-               <widget class="QToolButton" name="btn_zoom_plus">
-                <property name="text">
-                 <string>+</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="5">
-               <widget class="QToolButton" name="btn_zoom_minus">
-                <property name="text">
-                 <string>-</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_test">
-              <property name="text">
-               <string>test</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_test">
+            <property name="text">
+             <string>test</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -388,7 +143,195 @@
         </layout>
        </item>
        <item>
-        <widget class="QVideoWidget" name="video_widget" native="true"/>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="4" column="5">
+          <widget class="QToolButton" name="btn_rd">
+           <property name="icon">
+            <iconset resource="../../../../icons/arrows/arrows.qrc">
+             <normaloff>:/arrows/down_right.png</normaloff>:/arrows/down_right.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QToolButton" name="btn_ld">
+           <property name="icon">
+            <iconset resource="../../../../icons/arrows/arrows.qrc">
+             <normaloff>:/arrows/down_left.png</normaloff>:/arrows/down_left.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QToolButton" name="btn_ru">
+           <property name="icon">
+            <iconset resource="../../../../icons/arrows/arrows.qrc">
+             <normaloff>:/arrows/up_right.png</normaloff>:/arrows/up_right.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QToolButton" name="btn_lu">
+           <property name="icon">
+            <iconset resource="../../../../icons/arrows/arrows.qrc">
+             <normaloff>:/arrows/up_left.png</normaloff>:/arrows/up_left.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QVideoWidget" name="video_widget" native="true"/>
+         </item>
+         <item row="0" column="3">
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_u">
+             <property name="icon">
+              <iconset resource="../../../../icons/arrows/arrows.qrc">
+               <normaloff>:/arrows/up.png</normaloff>:/arrows/up.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item row="4" column="3">
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_d">
+             <property name="icon">
+              <iconset resource="../../../../icons/arrows/arrows.qrc">
+               <normaloff>:/arrows/down.png</normaloff>:/arrows/down.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_l">
+             <property name="icon">
+              <iconset resource="../../../../icons/arrows/arrows.qrc">
+               <normaloff>:/arrows/left.png</normaloff>:/arrows/left.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="5">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_r">
+             <property name="icon">
+              <iconset resource="../../../../icons/arrows/arrows.qrc">
+               <normaloff>:/arrows/right.png</normaloff>:/arrows/right.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -404,16 +347,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>btn_wiper_on</tabstop>
-  <tabstop>btn_wiper_off</tabstop>
-  <tabstop>btn_diaphragm_plus</tabstop>
-  <tabstop>btn_diaphragm_minus</tabstop>
-  <tabstop>btn_light_on</tabstop>
-  <tabstop>btn_light_off</tabstop>
-  <tabstop>btn_zoom_plus</tabstop>
-  <tabstop>btn_zoom_minus</tabstop>
- </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../../icons/arrows/arrows.qrc"/>
+ </resources>
  <connections/>
 </ui>

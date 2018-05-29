@@ -32,12 +32,11 @@
 struct PTZ_PARAM
 {
     QString cmd;
-    QString func1;
-    QString func2;
+    QString func;
     QVariant param1;
     QVariant param2;
-    QString btn1_caption;
-    QString btn2_caption;
+
+    QString btn_caption;
     int min_value;
     int max_value;
 };
@@ -92,39 +91,14 @@ private slots:
 
     void f_test(void);
 
-    void f_wiper_on(void);
-    void f_wiper_off(void);
-    void f_light_on(void);
-    void f_light_off(void);
-    void f_diaphragm_plus(void);
-    void f_diaphragm_minus(void);
-    void f_zoom_plus(void);
-    void f_zoom_minus(void);
-
-    void f_set_brightness(void);
-    void f_set_contrast(void);
-    void f_set_tone(void);
-    void f_set_saturation(void);
-    void f_set_iris(void);
-    void f_set_shutter(void);
-    void f_set_gamma(void);
-    void f_set_sharpness(void);
-    void f_set_noise(void);
-
-    void f_set_brightness(int value);
-    void f_set_contrast(int value);
-    void f_set_tone(int value);
-    void f_set_saturation(int value);
-    void f_set_iris(int value);
-    void f_set_shutter(int value);
-    void f_set_gamma(int value);
-    void f_set_sharpness(int value);
-    void f_set_noise(int value);
+    void f_push_button(void);
+    void f_move_slider(void);
 
     //---
     void add_buttons(int index,
                      QString name,
-                     PTZ_PARAM params);
+                     PTZ_PARAM param1,
+                     PTZ_PARAM param2);
     void add_slider(int index,
                     QString name,
                     PTZ_PARAM params);
@@ -135,17 +109,6 @@ private:
     QMediaPlayer *player = 0;
 
     QSettings *settings = 0;
-
-    QToolButton *btn_lu = 0;
-    QToolButton *btn_ru = 0;
-
-    QToolButton *btn_u = 0;
-    QToolButton *btn_d = 0;
-    QToolButton *btn_l = 0;
-    QToolButton *btn_r = 0;
-
-    QToolButton *btn_ld = 0;
-    QToolButton *btn_rd = 0;
 
     QTcpSocket *tcpSocket = 0;
     QNetworkRequest request;
@@ -164,16 +127,13 @@ private:
 
     void create_player(void);
     void create_tcp_socket(void);
-    void create_position_widgets(void);
+    void connect_position_widgets(void);
 
     void load_widgets(QString group_name);
     void save_widgets(QString group_name);
 
     void init(void);
     void updateText(void);
-
-protected:
-    void resizeEvent (QResizeEvent *);
 };
 //--------------------------------------------------------------------------------
 #endif // PTZ_WIDGET_HPP

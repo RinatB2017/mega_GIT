@@ -229,8 +229,13 @@ void MainBox::set_pic_height(int value)
 //--------------------------------------------------------------------------------
 void MainBox::f_test(void)
 {
-    int pic_width  = 3464; //800
-    int pic_height = 3464; //600
+#if 1
+    int pic_width  = 800;
+    int pic_height = 600;
+#else
+    int pic_width  = 3464;
+    int pic_height = 3464;
+#endif
 
     //---
     QImage *orig_image = new QImage(pic_width + 1,

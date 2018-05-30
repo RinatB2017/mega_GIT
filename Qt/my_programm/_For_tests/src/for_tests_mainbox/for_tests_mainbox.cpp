@@ -342,10 +342,77 @@ void MainBox::show_flower(void)
     label->show();
 }
 //--------------------------------------------------------------------------------
+#pragma pack(push, 1)
+
+typedef struct pet_frame {
+   uint8_t  addr;                      /* Адрес ведомого устройства */
+   uint8_t  cmd;                       /* Код команды */
+   uint16_t len;                       /* Размер поля данных (байт) */
+   uint8_t  data[];                    /* Данные или код ошибки выполнения команды */
+} pet_frame_t;
+
+typedef struct pet_event {
+    uint8_t  src;           /* Источник события */
+    uint8_t  flags;         /* Информационное поле (флаги) события */
+    uint16_t ts_fract;      /* Метка времени - дробная часть */
+    uint32_t ts;            /* Метка времени - целая часть */
+    uint16_t xp;            /* Безразмерное значение координатного сигнала X+ */
+    uint16_t xn;            /* Безразмерное значение координатного сигнала X- */
+    uint16_t yp;            /* Безразмерное значение координатного сигнала Y+ */
+    uint16_t yn;            /* Безразмерное значение координатного сигнала Y- */
+} pet_event_t;
+
+#pragma pack(pop)
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    emit info(QString("sizeof %1").arg(sizeof(pet_frame)));
+
+    QByteArray ba;
+    ba.resize(sizeof(pet_frame) + sizeof(pet_event));
+    pet_frame_t *header = (pet_frame_t *)ba.data();
+    pet_event_t *data   = (pet_event_t *)header->data;
+
+    header->addr = 0;
+    header->cmd = 1;
+    header->len = sizeof(pet_event_t);
+
+    data->src = 0;           /* Источник события */
+    data->flags = 1;         /* Информационное поле (флаги) события */
+    data->ts_fract = 2;      /* Метка времени - дробная часть */
+    data->ts = 3;            /* Метка времени - целая часть */
+    data->xp = 4;            /* Безразмерное значение координатного сигнала X+ */
+    data->xn = 5;            /* Безразмерное значение координатного сигнала X- */
+    data->yp = 6;            /* Безразмерное значение координатного сигнала Y+ */
+    data->yn = 7;            /* Безразмерное значение координатного сигнала Y- */
+
+    //---
+    QByteArray ba2;
+    ba2.clear();
+    ba2.append(ba);
+
+    pet_frame_t *header2 = (pet_frame_t *)ba2.data();
+    pet_event_t *data2   = (pet_event_t *)header->data;
+
+    emit info("---");
+    emit info(QString("addr = %1").arg(header2->addr));
+    emit info(QString("cmd = %1").arg(header2->cmd));
+    emit info(QString("len = %1").arg(header2->len));
+    emit info("---");
+    emit info(QString("src = %1").arg(data2->src));
+    emit info(QString("flags = %1").arg(data2->flags));
+    emit info(QString("ts_fract = %1").arg(data2->ts_fract));
+    emit info(QString("ts = %1").arg(data2->ts));
+    emit info(QString("xp = %1").arg(data2->xp));
+    emit info(QString("xn = %1").arg(data2->xn));
+    emit info(QString("yp = %1").arg(data2->yp));
+    emit info(QString("yn = %1").arg(data2->yn));
+    emit info("---");
+#endif
 
 #if 0
     check_tooltips();

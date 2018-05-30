@@ -67,6 +67,8 @@ private slots:
     void set_pic_width(int value);
     void set_pic_height(int value);
 
+    void f_test(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,

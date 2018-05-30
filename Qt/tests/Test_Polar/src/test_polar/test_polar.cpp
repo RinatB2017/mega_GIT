@@ -77,6 +77,8 @@ void MainBox::init(void)
     connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
     connect(ui->btn_show_new_image,     SIGNAL(clicked(bool)),  this,   SLOT(s_show_new_image()));
 
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(f_test()));
+
     load_widgets("Polar");
 }
 //--------------------------------------------------------------------------------
@@ -223,6 +225,115 @@ void MainBox::set_pic_width(int value)
 void MainBox::set_pic_height(int value)
 {
     pic_height = value;
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_test(void)
+{
+    int pic_width  = 3464; //800
+    int pic_height = 3464; //600
+
+    //---
+    QImage *orig_image = new QImage(pic_width + 1,
+                                    pic_height + 1,
+                                    QImage::Format_RGB32);
+    QPainter p(orig_image);
+    QPointF center;
+    center.setX(210);
+    center.setY(pic_height / 2);
+
+    QPointF center2;
+    center2.setX(pic_width - 110);
+    center2.setY(pic_height / 2);
+
+    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
+    p.drawEllipse(center,  200, 200);
+    p.drawEllipse(center2, 100, 100);
+    //---
+    QImage *new_image = new QImage(pic_height + 1,
+                                   pic_width + 1,
+                                   QImage::Format_RGB32);
+    //---
+    QTime timer;
+    //---
+#if 0
+    timer.start();
+    for(int y=0; y<pic_height; y++)
+    {
+        for(int x=0; x<pic_width; x++)
+        {
+            QRgb rgb = orig_image->pixel(x, y);
+            new_image->setPixel(y, x, rgb);
+        }
+    }
+    emit info(QString("time elapsed (soft) %1").arg(timer.elapsed()));
+#endif
+    //---
+#if 0
+    qreal t_x = 0;
+    qreal t_y = 0;
+
+    timer.start();
+    for(int y=0; y<pic_height; y++)
+    {
+        for(int x=0; x<pic_width; x++)
+        {
+            qreal angle = x;
+            t_x = qCos(qDegreesToRadians(angle));
+            t_y = qSin(qDegreesToRadians(angle));
+
+            QRgb rgb = orig_image->pixel(x, y);
+            new_image->setPixel(y, x, rgb);
+        }
+    }
+    emit info(QString("time elapsed (cos/sin) %1").arg(timer.elapsed()));
+    emit debug(QString("%1 %2")
+               .arg(t_x)
+               .arg(t_y));
+    new_image->fill(Qt::red);
+#endif
+    //---
+#if 1
+    //FAST
+    quint8 const* orig_line = orig_image->constScanLine(0);
+    int orig_stride = orig_image->bytesPerLine();
+
+    quint8 * new_line = new_image->scanLine(0);
+    int new_stride = new_image->bytesPerLine();
+
+    timer.start();
+    for(int y=0; y<pic_height; y++)
+    {
+        for(int x=0; x<pic_width; x++)
+        {
+            new_line[x*new_stride + y*4]     = orig_line[y*orig_stride + x*4];
+            new_line[x*new_stride + y*4 + 1] = orig_line[y*orig_stride + x*4 + 1];
+            new_line[x*new_stride + y*4 + 2] = orig_line[y*orig_stride + x*4 + 2];
+            new_line[x*new_stride + y*4 + 3] = orig_line[y*orig_stride + x*4 + 3];
+        }
+    }
+    emit info(QString("time elapsed (fast) %1").arg(timer.elapsed()));
+#endif
+    //---
+    emit debug(QString("orig_stride %1").arg(orig_stride));
+    emit debug(QString("new_stride  %1").arg(new_stride));
+    //---
+
+#if 1
+    QLabel *label = new QLabel;
+    label->setFixedSize(new_image->width(),
+                        new_image->height());
+    label->setPixmap(QPixmap::fromImage(*new_image));
+    label->show();
+
+    QScrollArea *area = new QScrollArea;
+    area->setWidget(label);
+
+    QWidget *widget = new QWidget;
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(area);
+    widget->setLayout(vbox);
+    widget->show();
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_show_orig_image(void)
@@ -454,6 +565,7 @@ for ( int y = top; y < bottom; ++y, line += stride )
 }
 #endif
 //--------------------------------------------------------------------------------
+//#define FAST_PIC
 bool MainBox::s_create_new_image(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -465,8 +577,6 @@ bool MainBox::s_create_new_image(void)
     }
 
     block_this_button(true);
-
-    //qreal kx = pic_width / pic_height;
 
     qreal BIG_R_X = pic_width / 2;
     qreal BIG_R_Y = pic_height / 2;
@@ -504,6 +614,16 @@ bool MainBox::s_create_new_image(void)
     timer.start();
     cnt_sin = 0;
     cnt_cos = 0;
+    //---
+#ifdef FAST_PIC
+    quint8 const* orig_line = orig_image->constScanLine(0);
+    int orig_stride = orig_image->bytesPerLine();
+    quint8 const* new_line = new_image->constScanLine(0);
+    int new_stride = new_image->bytesPerLine();
+
+    quint32 red = 0, green = 0, blue = 0;
+#endif
+    //---
     for(qreal y=min_r; y<max_r; y++)
     {
         qreal small_width = M_PI * 2.0 * (qreal)y;
@@ -511,42 +631,53 @@ bool MainBox::s_create_new_image(void)
         for(qreal x=0; x<small_width; x++)
         {
             qreal angle = 0;
+            qreal kx = 0;
+            qreal ky = 0;
             if(width > height)
             {
                 angle = (k * x) * 360.0 / width;
+                kx = pic_height / pic_width;
+                ky = 1.0;
             }
             else
             {
                 angle = (k * x) * 360.0 / height;
+                kx = 1.0;
+                ky = pic_width / pic_height;
             }
-            qreal res_x = qreal(x) * qCos(qDegreesToRadians(angle));
+            //qreal kx = pic_width / pic_height;
+            qreal res_x = qreal(y) * qCos(qDegreesToRadians(angle)) * kx;
+            qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle)) * ky;
             cnt_cos++;
-            qreal res_y = qreal(y) * qSin(qDegreesToRadians(angle));
             cnt_sin++;
 
             qreal t_x = center.x() + res_x;
             qreal t_y = center.y() + res_y;
-            if((t_x < 0) || (t_x > orig_image->width()))
+            if((t_x < 0) || (t_x > pic_width))
             {
                 emit error(QString("incorrect x %1").arg(t_x));
-                emit error(QString("res_x %1").arg(res_x));
+                emit error(QString("angle %1").arg(angle));
                 block_this_button(false);
                 return false;
             }
-            if((t_y < 0) || (t_y > orig_image->height()))
+            if((t_y < 0) || (t_y > pic_height))
             {
                 emit error(QString("incorrect y %1").arg(t_y));
-                emit error(QString("res_y %1").arg(res_y));
+                emit error(QString("angle %1").arg(angle));
                 block_this_button(false);
                 return false;
             }
-#if 1
+#ifdef FAST_PIC
+            // быстрая отрисовка
+            quint8 const* orig_pix = orig_line;
+            blue  = orig_pix[0];
+            green = orig_pix[1];
+            red   = orig_pix[2];
+#else
             QRgb rgb = orig_image->pixel(t_x, t_y);
             new_image->setPixel(x * k,
                                 y - min_r,
                                 rgb);
-#else
-            // быстрая отрисовка
 #endif
         }
     }

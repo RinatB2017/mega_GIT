@@ -357,11 +357,21 @@ void MainBox::s_show_new_image(void)
         emit error("cannot create new_image");
         return;
     }
+
     QLabel *label = new QLabel;
     label->setFixedSize(new_image->width(),
                         new_image->height());
     label->setPixmap(QPixmap::fromImage(*new_image));
     label->show();
+
+    QScrollArea *area = new QScrollArea;
+    area->setWidget(label);
+
+    QWidget *widget = new QWidget;
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(area);
+    widget->setLayout(vbox);
+    widget->show();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::s_load_orig_image(void)

@@ -36,6 +36,9 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#define MAX_TABLE_SIN   (360 * 100)
+#define MAX_TABLE_COS   (360 * 100)
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
@@ -102,6 +105,9 @@ private:
     //---
     void show_circle(void);
     void show_flower(void);
+    //---
+    qreal sin_table[MAX_TABLE_SIN];
+    qreal cos_table[MAX_TABLE_COS];
     //---
 
     void init(void);

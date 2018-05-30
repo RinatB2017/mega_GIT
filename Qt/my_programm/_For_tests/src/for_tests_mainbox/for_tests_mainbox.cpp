@@ -465,6 +465,17 @@ bool MainBox::test_3(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_3()");
 
+#if 1
+    QTime timer;
+    timer.start();
+    for(qreal angle=0.0; angle<360.0; angle+=0.01)
+    {
+        sin_table[(int)(angle * 100.0 + 0.5)] = qSin(angle);
+        cos_table[(int)(angle * 100.0 + 0.5)] = qCos(angle);
+    }
+    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------

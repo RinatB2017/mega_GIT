@@ -100,7 +100,9 @@ private:
     qreal pic_width = 0;
     qreal pic_height = 0;
 
-    void show_image(QImage *image);
+    void show_image(QImage *image,
+                    int min_x,
+                    int min_y);
 
     void init(void);
     void createTestBar(void);

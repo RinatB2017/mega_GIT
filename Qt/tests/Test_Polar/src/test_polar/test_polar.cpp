@@ -325,7 +325,7 @@ void MainBox::f_test(void)
     //---
 
 #if 1
-    show_image(new_image);
+    show_image(new_image, 800, 800);
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -376,31 +376,43 @@ void MainBox::f_test_2(void)
     qreal t_x = 0;
     qreal t_y = 0;
 
+    QPointF center;
+    center.setX(dst_width  / 2.0);
+    center.setY(dst_height / 2.0);
+
     for(qreal radius = begin_r; radius < end_r; radius++)
     {
         qreal angle = 0.0;
         qreal temp_w = M_PI * 2.0 * radius;
         qreal k_angle = temp_w / 360.0;
+        qreal k_tx = src_width / temp_w;
+
         t_x = 0;
         while(angle < 360.0)
         {
             qreal x = radius * qCos(qDegreesToRadians(angle));
             qreal y = radius * qSin(qDegreesToRadians(angle));
-            t_x += k_angle;
+            t_x += k_tx;
 
             QRgb rgb = src_image->pixel(t_x, t_y);
-            dst_image->setPixel(x, y, rgb);
+            dst_image->setPixel(center.x() + x,
+                                center.y() + y,
+                                rgb);
 
             angle += k_angle;
         }
+        emit info(QString("k_tx %1").arg(k_tx));
+        emit info(QString("t_x %1").arg(t_x));
         t_y++;
     }
 
-    show_image(dst_image);
+    show_image(dst_image, 850, 850);
     //---
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_image(QImage *image)
+void MainBox::show_image(QImage *image,
+                         int min_x,
+                         int min_y)
 {
     QLabel *label = new QLabel;
     label->setFixedSize(image->width(),
@@ -412,6 +424,8 @@ void MainBox::show_image(QImage *image)
     area->setWidget(label);
 
     QWidget *widget = new QWidget;
+    widget->setMinimumSize(min_x, min_y);
+
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(area);
     widget->setLayout(vbox);
@@ -420,12 +434,12 @@ void MainBox::show_image(QImage *image)
 //--------------------------------------------------------------------------------
 void MainBox::s_show_orig_image(void)
 {
-    show_image(orig_image);
+    show_image(orig_image, 800, 800);
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_show_new_image(void)
 {
-    show_image(new_image);
+    show_image(new_image, 800, 800);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::s_load_orig_image(void)

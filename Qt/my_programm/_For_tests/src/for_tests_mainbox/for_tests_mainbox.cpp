@@ -363,7 +363,7 @@ typedef struct pet_event {
 } pet_event_t;
 
 #pragma pack(pop)
-
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -381,14 +381,14 @@ bool MainBox::test_0(void)
     header->cmd = 1;
     header->len = sizeof(pet_event_t);
 
-    data->src = 0;           /* Источник события */
-    data->flags = 1;         /* Информационное поле (флаги) события */
-    data->ts_fract = 2;      /* Метка времени - дробная часть */
-    data->ts = 3;            /* Метка времени - целая часть */
-    data->xp = 4;            /* Безразмерное значение координатного сигнала X+ */
-    data->xn = 5;            /* Безразмерное значение координатного сигнала X- */
-    data->yp = 6;            /* Безразмерное значение координатного сигнала Y+ */
-    data->yn = 7;            /* Безразмерное значение координатного сигнала Y- */
+    data->src = 0;
+    data->flags = 1;
+    data->ts_fract = 2;
+    data->ts = 3;
+    data->xp = 4;
+    data->xn = 5;
+    data->yp = 6;
+    data->yn = 7;
 
     //---
     QByteArray ba2;

@@ -338,11 +338,18 @@ void MainBox::f_test_2(void)
     //height 300
 #endif
 
-    QImage *image = new QImage(2513 + 1,
-                               300 + 1,
-                               QImage::Format_RGB32);
+    qreal src_width  = 2513;
+    qreal src_height = 300;
 
-    QPainter p(image);
+    qreal dst_width  = 800;
+    qreal dst_height = 800;
+
+    //---
+    QImage *src_image = new QImage(src_width + 1,
+                                   src_height + 1,
+                                   QImage::Format_RGB32);
+
+    QPainter p(src_image);
     int pos_x = 57 + 150;
     p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
     for(int n=0; n<8; n++)
@@ -355,7 +362,42 @@ void MainBox::f_test_2(void)
         pos_x += 300;
     }
 
-    show_image(image);
+    //show_image(src_image);
+    //---
+
+    //---
+    QImage *dst_image = new QImage(dst_width + 1,
+                                   dst_height + 1,
+                                   QImage::Format_RGB32);
+
+    qreal begin_r = (dst_width / 2.0) - src_height;
+    qreal end_r   = (dst_width / 2.0);
+
+    qreal t_x = 0;
+    qreal t_y = 0;
+
+    for(qreal radius = begin_r; radius < end_r; radius++)
+    {
+        qreal angle = 0.0;
+        qreal temp_w = M_PI * 2.0 * radius;
+        qreal k_angle = temp_w / 360.0;
+        t_x = 0;
+        while(angle < 360.0)
+        {
+            qreal x = radius * qCos(qDegreesToRadians(angle));
+            qreal y = radius * qSin(qDegreesToRadians(angle));
+            t_x += k_angle;
+
+            QRgb rgb = src_image->pixel(t_x, t_y);
+            dst_image->setPixel(x, y, rgb);
+
+            angle += k_angle;
+        }
+        t_y++;
+    }
+
+    show_image(dst_image);
+    //---
 }
 //--------------------------------------------------------------------------------
 void MainBox::show_image(QImage *image)

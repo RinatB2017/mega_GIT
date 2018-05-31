@@ -332,6 +332,30 @@ void MainBox::f_test(void)
 void MainBox::f_test_2(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 0
+    //width  2513.27
+    //height 300
+#endif
+
+    QImage *image = new QImage(2513 + 1,
+                               300 + 1,
+                               QImage::Format_RGB32);
+
+    QPainter p(image);
+    int pos_x = 57 + 150;
+    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
+    for(int n=0; n<8; n++)
+    {
+        QPoint center;
+        center.setX(pos_x);
+        center.setY(150);
+
+        p.drawEllipse(center, 150, 150);
+        pos_x += 300;
+    }
+
+    show_image(image);
 }
 //--------------------------------------------------------------------------------
 void MainBox::show_image(QImage *image)
@@ -600,8 +624,8 @@ bool MainBox::s_create_new_image(void)
         max_r = BIG_R_Y;
     }
 
-    emit info(QString("width  %1").arg(pic_width));
-    emit info(QString("height %1").arg(pic_height));
+    emit info(QString("width  %1").arg(width));
+    emit info(QString("height %1").arg(height));
 
     new_image = new QImage(width  + 1.0,
                            height + 1.0,

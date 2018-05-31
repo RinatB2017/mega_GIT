@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>316</width>
-    <height>272</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -144,11 +144,31 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btn_test_2">
+        <property name="text">
+         <string>test 2</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>sb_width</tabstop>
+  <tabstop>sb_height</tabstop>
+  <tabstop>btn_create_orig_image</tabstop>
+  <tabstop>btn_create_new_image</tabstop>
+  <tabstop>btn_load_orig_image</tabstop>
+  <tabstop>btn_show_orig_image</tabstop>
+  <tabstop>btn_show_new_image</tabstop>
+  <tabstop>cb_auto_show_orig_image</tabstop>
+  <tabstop>cb_auto_show_new_image</tabstop>
+  <tabstop>btn_test</tabstop>
+  <tabstop>btn_test_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

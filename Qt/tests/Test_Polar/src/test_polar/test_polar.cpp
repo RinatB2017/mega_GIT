@@ -78,6 +78,7 @@ void MainBox::init(void)
     connect(ui->btn_show_new_image,     SIGNAL(clicked(bool)),  this,   SLOT(s_show_new_image()));
 
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(f_test()));
+    connect(ui->btn_test_2, SIGNAL(clicked(bool)),  this,   SLOT(f_test_2()));
 
     load_widgets("Polar");
 }
@@ -229,7 +230,7 @@ void MainBox::set_pic_height(int value)
 //--------------------------------------------------------------------------------
 void MainBox::f_test(void)
 {
-#if 1
+#if 0
     int pic_width  = 800;
     int pic_height = 600;
 #else
@@ -324,10 +325,21 @@ void MainBox::f_test(void)
     //---
 
 #if 1
+    show_image(new_image);
+#endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_test_2(void)
+{
+    emit trace(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_image(QImage *image)
+{
     QLabel *label = new QLabel;
-    label->setFixedSize(new_image->width(),
-                        new_image->height());
-    label->setPixmap(QPixmap::fromImage(*new_image));
+    label->setFixedSize(image->width(),
+                        image->height());
+    label->setPixmap(QPixmap::fromImage(*image));
     label->show();
 
     QScrollArea *area = new QScrollArea;
@@ -338,45 +350,16 @@ void MainBox::f_test(void)
     vbox->addWidget(area);
     widget->setLayout(vbox);
     widget->show();
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_show_orig_image(void)
 {
-    if(orig_image == nullptr)
-    {
-        emit error("cannot create orig_image");
-        return;
-    }
-    QLabel *label = new QLabel;
-    label->setFixedSize(orig_image->width(),
-                        orig_image->height());
-    label->setPixmap(QPixmap::fromImage(*orig_image));
-    label->show();
+    show_image(orig_image);
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_show_new_image(void)
 {
-    if(new_image == nullptr)
-    {
-        emit error("cannot create new_image");
-        return;
-    }
-
-    QLabel *label = new QLabel;
-    label->setFixedSize(new_image->width(),
-                        new_image->height());
-    label->setPixmap(QPixmap::fromImage(*new_image));
-    label->show();
-
-    QScrollArea *area = new QScrollArea;
-    area->setWidget(label);
-
-    QWidget *widget = new QWidget;
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(area);
-    widget->setLayout(vbox);
-    widget->show();
+    show_image(new_image);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::s_load_orig_image(void)
@@ -616,6 +599,9 @@ bool MainBox::s_create_new_image(void)
         min_r = SMALL_R_Y;
         max_r = BIG_R_Y;
     }
+
+    emit info(QString("width  %1").arg(pic_width));
+    emit info(QString("height %1").arg(pic_height));
 
     new_image = new QImage(width  + 1.0,
                            height + 1.0,

@@ -68,6 +68,7 @@ private slots:
     void set_pic_height(int value);
 
     void f_test(void);
+    void f_test_2(void);
 
 private:
     enum {
@@ -96,9 +97,10 @@ private:
     long cnt_sin = 0;
     long cnt_cos = 0;
 
-    //qreal LEN_SIDE = 0; //3465
     qreal pic_width = 0;
     qreal pic_height = 0;
+
+    void show_image(QImage *image);
 
     void init(void);
     void createTestBar(void);

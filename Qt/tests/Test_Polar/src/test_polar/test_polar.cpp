@@ -348,21 +348,25 @@ void MainBox::f_test_2(void)
     QImage *src_image = new QImage(src_width + 1,
                                    src_height + 1,
                                    QImage::Format_RGB32);
+    //src_image->fill(Qt::red);
 
     QPainter p(src_image);
     int pos_x = 57 + 150;
-    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
+    p.setPen(QPen(Qt::white, 1, Qt::SolidLine));
     for(int n=0; n<8; n++)
     {
         QPoint center;
         center.setX(pos_x);
         center.setY(150);
 
-        p.drawEllipse(center, 150, 150);
+        for(int i=10; i<150; i+=10)
+        {
+            p.drawEllipse(center, i, i);
+        }
         pos_x += 300;
     }
 
-    //show_image(src_image);
+    //show_image(src_image, 2500, 350);
     //---
 
     //---
@@ -384,25 +388,25 @@ void MainBox::f_test_2(void)
     {
         qreal angle = 0.0;
         qreal temp_w = M_PI * 2.0 * radius;
-        qreal k_angle = temp_w / 360.0;
+        qreal k_angle = 360.0 / temp_w;
         qreal k_tx = src_width / temp_w;
 
         t_x = 0;
+        int cnt = 0;
         while(angle < 360.0)
         {
             qreal x = radius * qCos(qDegreesToRadians(angle));
             qreal y = radius * qSin(qDegreesToRadians(angle));
-            t_x += k_tx;
 
             QRgb rgb = src_image->pixel(t_x, t_y);
             dst_image->setPixel(center.x() + x,
                                 center.y() + y,
                                 rgb);
 
+            t_x += k_tx;
             angle += k_angle;
+            cnt++;
         }
-        emit info(QString("k_tx %1").arg(k_tx));
-        emit info(QString("t_x %1").arg(t_x));
         t_y++;
     }
 

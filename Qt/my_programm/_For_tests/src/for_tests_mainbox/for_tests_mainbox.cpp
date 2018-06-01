@@ -345,10 +345,10 @@ void MainBox::show_flower(void)
 #pragma pack(push, 1)
 
 typedef struct pet_frame {
-   uint8_t  addr;                      /* Адрес ведомого устройства */
-   uint8_t  cmd;                       /* Код команды */
-   uint16_t len;                       /* Размер поля данных (байт) */
-   uint8_t  data[];                    /* Данные или код ошибки выполнения команды */
+    uint8_t  addr;          /* Адрес ведомого устройства */
+    uint8_t  cmd;           /* Код команды */
+    uint16_t len;           /* Размер поля данных (байт) */
+    uint8_t  data[];        /* Данные или код ошибки выполнения команды */
 } pet_frame_t;
 
 typedef struct pet_event {
@@ -370,7 +370,7 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    emit info(QString("sizeof %1").arg(sizeof(pet_frame)));
+    emit debug(QString("sizeof %1").arg(sizeof(pet_frame)));
 
     QByteArray ba;
     ba.resize(sizeof(pet_frame) + sizeof(pet_event));
@@ -381,14 +381,14 @@ bool MainBox::test_0(void)
     header->cmd = 1;
     header->len = sizeof(pet_event_t);
 
-    data->src = 0;
-    data->flags = 1;
-    data->ts_fract = 2;
-    data->ts = 3;
-    data->xp = 4;
-    data->xn = 5;
-    data->yp = 6;
-    data->yn = 7;
+    data->src = 2;
+    data->flags = 3;
+    data->ts_fract = 4;
+    data->ts = 5;
+    data->xp = 6;
+    data->xn = 7;
+    data->yp = 8;
+    data->yn = 9;
 
     //---
     QByteArray ba2;

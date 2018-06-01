@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>523</width>
-    <height>307</height>
+    <width>525</width>
+    <height>311</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
         </size>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../aboutbox.qrc">:/logo/logo.png</pixmap>
+        <pixmap resource="../../aboutbox.qrc">:/logo/pinguin.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

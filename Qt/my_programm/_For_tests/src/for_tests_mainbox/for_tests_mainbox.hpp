@@ -95,6 +95,8 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
+    QWidget *test_widget = 0;
+
     //---
     void test_validator(void);
     void test_time(void);

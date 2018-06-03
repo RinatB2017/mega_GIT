@@ -36,6 +36,11 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    if(test_widget)
+    {
+        test_widget->close();
+        test_widget->deleteLater();
+    }
     save_widgets("for_test");
 
     delete ui;
@@ -44,6 +49,13 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+    //---
+    test_widget = new QWidget;
+    test_widget->setMinimumSize(400, 400);
+    test_widget->setWindowFlags(Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
+    test_widget->show();
+    //---
 
     createTestBar();
 

@@ -19,9 +19,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    tcp_server_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    tcp_server_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     tcp_server_mainbox.cpp \
@@ -33,7 +33,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 !exists(OBJECTS_DIR) {
@@ -41,10 +41,10 @@ LIB_PATH2 = "../../../lib2"
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 
+include ($$LIB_PATH/mainwindow/mainwindow.pri)
+include ($$LIB_PATH2/ethernet/tcp_server.pri)
+include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
-include ($$LIB_PATH2/ethernet/tcp_server.pri)
-include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/mywidgets/mywidget.pri)
 
 VPATH = $$INCLUDEPATH

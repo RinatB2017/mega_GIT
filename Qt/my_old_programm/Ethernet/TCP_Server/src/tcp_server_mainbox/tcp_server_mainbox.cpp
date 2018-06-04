@@ -18,12 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QWidget>
+#include <QTcpServer>
 //--------------------------------------------------------------------------------
 #include "ui_tcp_server_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "tcp_server.hpp"
 #include "tcp_server_mainbox.hpp"
+#include "tcp_server.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
@@ -34,7 +34,10 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    delete server;
+    if(server)
+    {
+        delete server;
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -42,20 +45,40 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+    ui->sb_port->setRange(0, 0xFFFF);
+    ui->sb_port->setValue(554);
+
     server = new TCP_Server(this);
-    //server->createServerOnPort(QHostAddress::LocalHost, 10000);
-    server->createServerOnPort(QHostAddress::LocalHost, 554);
-    connect(server, SIGNAL(output(QByteArray)), this, SLOT(get_data(QByteArray)));
+
+    connect(server,             SIGNAL(output(QByteArray)), this,   SLOT(f_get_data(QByteArray)));
+    connect(ui->btn_connect,    SIGNAL(clicked(bool)),      this,   SLOT(f_connect()));
+    connect(ui->btn_disconnect, SIGNAL(clicked(bool)),      this,   SLOT(f_disconnect()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_connect(void)
+{
+    if(server)
+    {
+        server->createServerOnPort(QHostAddress::LocalHost, ui->sb_port->value());
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_disconnect(void)
+{
+    if(server)
+    {
+        server->closeServer();
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_get_data(const QByteArray &data)
+{
+    emit trace("get_data");
+    emit trace(data.data());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::get_data(const QByteArray &data)
-{
-    emit trace("get_data");
-    emit trace(data.data());
 }
 //--------------------------------------------------------------------------------

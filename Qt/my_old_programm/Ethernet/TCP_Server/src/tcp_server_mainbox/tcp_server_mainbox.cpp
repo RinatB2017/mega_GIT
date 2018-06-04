@@ -18,7 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-//--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "ui_tcp_server_mainbox.h"
@@ -44,7 +43,8 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     server = new TCP_Server(this);
-    server->createServerOnPort(QHostAddress::LocalHost, 10000);
+    //server->createServerOnPort(QHostAddress::LocalHost, 10000);
+    server->createServerOnPort(QHostAddress::LocalHost, 554);
     connect(server, SIGNAL(output(QByteArray)), this, SLOT(get_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------

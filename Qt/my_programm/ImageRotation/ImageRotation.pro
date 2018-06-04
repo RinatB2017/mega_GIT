@@ -8,7 +8,7 @@ PROGRAMM_PATH  += \
 #    c:\OpenCV\sources\include \
 #    c:\OpenCV\sources\modules\core\include \
 #    c:\OpenCV\build\include \
-    /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include/g++-v7 \
+    /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.0/include/g++-v8 \
     /usr/lib/OpenCL/vendors/mesa/include \
     $$PWD \
     $$PWD/src \

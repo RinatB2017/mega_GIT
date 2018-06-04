@@ -812,12 +812,28 @@ void MyWidget::block_wheel(void)
 //--------------------------------------------------------------------------------
 void MyWidget::show_objectname(void)
 {
+#if 1
+    QList<QWidget *> all_obj = findChildren<QWidget *>();
+    foreach(QWidget *obj, all_obj)
+    {
+        if(obj->objectName().isEmpty() == false)
+        {
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
+        }
+    }
+#else
     QList<QAbstractSpinBox *> all_sb = findChildren<QAbstractSpinBox *>();
     foreach(QAbstractSpinBox *obj, all_sb)
     {
         if(obj->objectName().isEmpty() == false)
         {
-            obj->setToolTip(obj->objectName());
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
         }
     }
     QList<QTextEdit *> all_te = findChildren<QTextEdit *>();
@@ -825,7 +841,10 @@ void MyWidget::show_objectname(void)
     {
         if(obj->objectName().isEmpty() == false)
         {
-            obj->setToolTip(obj->objectName());
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
         }
     }
     QList<QLineEdit *> all_le = findChildren<QLineEdit *>();
@@ -833,7 +852,10 @@ void MyWidget::show_objectname(void)
     {
         if(obj->objectName().isEmpty() == false)
         {
-            obj->setToolTip(obj->objectName());
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
         }
     }
     QList<QComboBox *> all_cb = findChildren<QComboBox *>();
@@ -841,7 +863,10 @@ void MyWidget::show_objectname(void)
     {
         if(obj->objectName().isEmpty() == false)
         {
-            obj->setToolTip(obj->objectName());
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
         }
     }
     QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
@@ -849,7 +874,10 @@ void MyWidget::show_objectname(void)
     {
         if(obj->objectName().isEmpty() == false)
         {
-            obj->setToolTip(obj->objectName());
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
         }
     }
     QList<QAbstractButton *> all_btn = findChildren<QAbstractButton *>();
@@ -857,7 +885,10 @@ void MyWidget::show_objectname(void)
     {
         if(obj->objectName().isEmpty() == false)
         {
-            obj->setToolTip(obj->objectName());
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
         }
     }
     QList<QAbstractSlider *> all_sl = findChildren<QAbstractSlider *>();
@@ -865,9 +896,13 @@ void MyWidget::show_objectname(void)
     {
         if(obj->objectName().isEmpty() == false)
         {
-            obj->setToolTip(obj->objectName());
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
         }
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------

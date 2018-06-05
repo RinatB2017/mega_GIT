@@ -99,6 +99,7 @@ void MainBox::init(void)
     player->setVideoOutput(ui->video_widget);
 
     ui->cb_address->addItem("rtsp://192.168.0.66/av0_0");
+    ui->cb_address->addItem("rtsp://192.168.1.66/av0_0");
     ui->cb_address->addItem("rtsp://192.168.1.88:554/HD");
     ui->cb_address->addItem("rtsp://192.168.1.67:554/av0_0");
 

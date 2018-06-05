@@ -748,7 +748,8 @@ void MainWindow::createStyleToolBar(void)
 //--------------------------------------------------------------------------------
 void MainWindow::help(void)
 {
-    HelpBrowser::showPage("qrc:/index.html", false);
+    //HelpBrowser::showPage("qrc:/index.html", false);
+    HelpBrowser::showPage("index.html", false);
 }
 //--------------------------------------------------------------------------------
 MainWindow *MainWindow::getThis(void)

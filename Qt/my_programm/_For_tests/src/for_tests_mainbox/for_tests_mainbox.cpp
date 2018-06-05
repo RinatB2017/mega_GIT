@@ -50,13 +50,6 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //---
-    test_widget = new QWidget;
-    test_widget->setMinimumSize(400, 400);
-    test_widget->setWindowFlags(Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
-    test_widget->show();
-    //---
-
     createTestBar();
 
     connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));

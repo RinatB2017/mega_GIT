@@ -60,9 +60,9 @@ QMAKE_CXXFLAGS += -fno-show-column
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    for_tests_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    for_tests_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     for_tests_mainbox.cpp \

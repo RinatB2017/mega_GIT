@@ -219,142 +219,6 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_time(void)
-{
-    QTime timer;
-
-    long num_steps = 1000000000;
-    double step = 1.0 / num_steps;
-    double x, pi, sum = 0.0;
-
-    //---
-    timer.start();
-
-    for (long i = 0; i<num_steps; i++)
-    {
-        x = (i + 0.5)*step;
-        sum += 4.0/(1.0 + x*x);
-    }
-    pi = sum*step;
-
-    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
-    emit info(QString("%1").arg(pi));
-    //---
-
-    //---
-    timer.start();
-    sum=0.0;
-    long divisor=40000;
-    long internalCnt=num_steps/divisor;
-    double partsum=0.;
-    for(long i=0; i<divisor; i++)
-    {
-        partsum=0.;
-        for(long j=i*internalCnt; j<(i+1)*internalCnt; j++)
-        {
-            x=(j+0.5)*step;
-            partsum+=4.0/(1.+x*x);
-        }
-        sum+=partsum;
-    }
-    pi=sum*step;
-
-    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
-    emit info(QString("%1").arg(pi));
-    //---
-}
-//--------------------------------------------------------------------------------
-void MainBox::show_circle(void)
-{
-    qreal pic_width = 800;
-    qreal pic_height = 800;
-    qreal pic_kx = 1.0;
-    qreal pic_ky = 1.0;
-    qreal angle = 0;
-    qreal radius = pic_width / 2.0 - 100;
-
-    QImage *image = new QImage(pic_width + 1, pic_height + 1, QImage::Format_RGB32);
-
-    QPointF center;
-    center.setX(pic_width / 2);
-    center.setY(pic_height / 2);
-
-    QPainter p(image);
-
-    p.fillRect(0,
-               0,
-               image->width(),
-               image->height(),
-               QBrush(Qt::black));
-
-    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    for(angle=0.0; angle<360.0; angle+=0.01)
-    {
-        qreal x = radius *qCos(qDegreesToRadians(angle))*pic_kx;
-        qreal y = radius *qSin(qDegreesToRadians(angle))*pic_ky;
-        p.drawPoint(x + center.x(),
-                    y + center.y());
-    }
-
-    QLabel *label = new QLabel;
-    label->setFixedSize(image->width(),
-                        image->height());
-    label->setPixmap(QPixmap::fromImage(*image));
-    label->show();
-}
-//--------------------------------------------------------------------------------
-void MainBox::show_flower(void)
-{
-    qreal pic_width = 800;
-    qreal pic_height = 800;
-    qreal pic_kx = 1.0;
-    qreal pic_ky = 1.0;
-    qreal angle = 0;
-    qreal radius = pic_width / 2.0 - 100;
-
-    QImage *image = new QImage(pic_width + 1, pic_height + 1, QImage::Format_RGB32);
-
-    QPointF center;
-    center.setX(pic_width / 2);
-    center.setY(pic_height / 2);
-
-    QPainter p(image);
-
-    p.fillRect(0,
-               0,
-               image->width(),
-               image->height(),
-               QBrush(Qt::black));
-
-    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    qreal delta = 0.1;
-    qreal new_radius = 0;
-    for(angle=0.0; angle<360.0; angle+=0.01)
-    {
-        if(new_radius <= 0.0)
-        {
-            new_radius = 0;
-            delta = 0.1;
-        }
-        if(new_radius >= radius)
-        {
-            new_radius = radius;
-            delta = -0.1;
-        }
-        new_radius += delta;
-        qreal x = new_radius *qCos(qDegreesToRadians(angle))*pic_kx;
-        qreal y = new_radius *qSin(qDegreesToRadians(angle))*pic_ky;
-        p.drawPoint(x + center.x(),
-                    y + center.y());
-    }
-
-    QLabel *label = new QLabel;
-    label->setFixedSize(image->width(),
-                        image->height());
-    label->setPixmap(QPixmap::fromImage(*image));
-    label->show();
-}
-//--------------------------------------------------------------------------------
 #pragma pack(push, 1)
 
 typedef struct pet_frame {
@@ -439,10 +303,6 @@ bool MainBox::test_1(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
 
-#if 1
-    show_circle();
-#endif
-
 #if 0
     emit info("info");
     emit debug("debug");
@@ -466,10 +326,6 @@ bool MainBox::test_2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_2()");
 
-#if 1
-    show_flower();
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -477,17 +333,6 @@ bool MainBox::test_3(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_3()");
-
-#if 1
-    QTime timer;
-    timer.start();
-    for(qreal angle=0.0; angle<360.0; angle+=0.01)
-    {
-        sin_table[(int)(angle * 100.0 + 0.5)] = qSin(angle);
-        cos_table[(int)(angle * 100.0 + 0.5)] = qCos(angle);
-    }
-    emit info(QString("elapsed time %1 msec").arg(timer.elapsed()));
-#endif
 
     return true;
 }

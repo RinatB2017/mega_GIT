@@ -99,13 +99,6 @@ private:
 
     //---
     void test_validator(void);
-    void test_time(void);
-    //---
-    void show_circle(void);
-    void show_flower(void);
-    //---
-    qreal sin_table[MAX_TABLE_SIN];
-    qreal cos_table[MAX_TABLE_COS];
     //---
 
     void init(void);

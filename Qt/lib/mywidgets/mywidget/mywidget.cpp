@@ -812,7 +812,6 @@ void MyWidget::block_wheel(void)
 //--------------------------------------------------------------------------------
 void MyWidget::show_objectname(void)
 {
-#if 1
     QList<QWidget *> all_obj = findChildren<QWidget *>();
     foreach(QWidget *obj, all_obj)
     {
@@ -824,85 +823,6 @@ void MyWidget::show_objectname(void)
             }
         }
     }
-#else
-    QList<QAbstractSpinBox *> all_sb = findChildren<QAbstractSpinBox *>();
-    foreach(QAbstractSpinBox *obj, all_sb)
-    {
-        if(obj->objectName().isEmpty() == false)
-        {
-            if(obj->objectName().left(3) != "qt_")
-            {
-                obj->setToolTip(obj->objectName());
-            }
-        }
-    }
-    QList<QTextEdit *> all_te = findChildren<QTextEdit *>();
-    foreach(QTextEdit *obj, all_te)
-    {
-        if(obj->objectName().isEmpty() == false)
-        {
-            if(obj->objectName().left(3) != "qt_")
-            {
-                obj->setToolTip(obj->objectName());
-            }
-        }
-    }
-    QList<QLineEdit *> all_le = findChildren<QLineEdit *>();
-    foreach(QLineEdit *obj, all_le)
-    {
-        if(obj->objectName().isEmpty() == false)
-        {
-            if(obj->objectName().left(3) != "qt_")
-            {
-                obj->setToolTip(obj->objectName());
-            }
-        }
-    }
-    QList<QComboBox *> all_cb = findChildren<QComboBox *>();
-    foreach(QComboBox *obj, all_cb)
-    {
-        if(obj->objectName().isEmpty() == false)
-        {
-            if(obj->objectName().left(3) != "qt_")
-            {
-                obj->setToolTip(obj->objectName());
-            }
-        }
-    }
-    QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
-    foreach(QCheckBox *obj, all_chb)
-    {
-        if(obj->objectName().isEmpty() == false)
-        {
-            if(obj->objectName().left(3) != "qt_")
-            {
-                obj->setToolTip(obj->objectName());
-            }
-        }
-    }
-    QList<QAbstractButton *> all_btn = findChildren<QAbstractButton *>();
-    foreach(QAbstractButton *obj, all_btn)
-    {
-        if(obj->objectName().isEmpty() == false)
-        {
-            if(obj->objectName().left(3) != "qt_")
-            {
-                obj->setToolTip(obj->objectName());
-            }
-        }
-    }
-    QList<QAbstractSlider *> all_sl = findChildren<QAbstractSlider *>();
-    foreach(QAbstractSlider *obj, all_sl)
-    {
-        if(obj->objectName().isEmpty() == false)
-        {
-            if(obj->objectName().left(3) != "qt_")
-            {
-                obj->setToolTip(obj->objectName());
-            }
-        }
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------

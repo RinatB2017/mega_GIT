@@ -231,6 +231,34 @@ typedef struct pet_event {
     uint16_t yp;            /* Безразмерное значение координатного сигнала Y+ */
     uint16_t yn;            /* Безразмерное значение координатного сигнала Y- */
 } pet_event_t;
+#pragma pack (push, 1)
+
+typedef struct HEADER
+{
+    uint8_t h0;
+    uint8_t h1;
+    uint8_t h2;
+    uint8_t data[];
+} header_t;
+
+typedef struct DATA
+{
+    uint8_t d0;
+    uint8_t d1;
+    uint8_t d2;
+} data_t;
+
+#define PREFIX      0xBBAA
+typedef struct WORK_HEADER
+{
+    uint16_t  prefix_16;  // префикс
+    uint8_t   addr_8;     // адрес модуля
+    uint8_t   cmd_8;      // команда
+    uint16_t  len_16;     // длина данных
+    uint8_t   data[];     // данные
+} work_header_t;
+
+uint8_t modbus_buf[500] = { 0 };
 
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
@@ -240,6 +268,25 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    WORK_HEADER header;
+    header.prefix_16 = PREFIX;
+    header.addr_8 = 1;
+    header.cmd_8 = 2;
+    header.len_16 = 3;
+
+    char *addr = (char *)&header;
+    for (unsigned int n=0; n<sizeof(WORK_HEADER); n++)
+    {
+        modbus_buf[n] = *addr++;
+    }
+
+    QByteArray ba;
+    ba.append((char *)&modbus_buf, sizeof(WORK_HEADER));
+
+    emit info(ba.toHex());
+#endif
+
+#if 0
     emit debug(QString("sizeof %1").arg(sizeof(pet_frame)));
 
     QByteArray ba;

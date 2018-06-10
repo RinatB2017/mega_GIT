@@ -122,45 +122,37 @@ void Test::test_protocol(void)
     uint16_t crc16 = 0;
     int result = 0;
 
+    DATA_CMD_1 data_cmd_1;
+    DATA_CMD_2 data_cmd_2;
+
     //---
     header.addr = 0;
-    header.cmd = 1;
-    header.len = 0;
-
-    crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER));
+    header.cmd = CMD_1;
+    header.len = sizeof(DATA_CMD_1);
 
     question.clear();
-    question.append((char *)&header, sizeof(HEADER));
+    question.append((char *)&header,     sizeof(HEADER));
+    question.append((char *)&data_cmd_1, sizeof(DATA_CMD_1));
+
+    crc16 = CRC::crc16((uint8_t *)question.data(), question.length());
     question.append((char *)&crc16,  sizeof(crc16));
 
     result = proto->check_packet(question, &answer);
     QCOMPARE(result, Base_protocol::E_NO_ERROR);
     //---
-    header.addr = 1;
-    header.cmd = 1;
-    header.len = 0;
-
-    crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER));
-
-    question.clear();
-    question.append((char *)&header, sizeof(HEADER));
-    question.append((char *)&crc16,  sizeof(crc16));
-
-    result = proto->check_packet(question, &answer);
-    QCOMPARE(result, Base_protocol::E_BAD_ADDRESS);
-    //---
     header.addr = 0;
-    header.cmd = 1;
-    header.len = 0;
-
-    crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER)) + 1;
+    header.cmd = CMD_2;
+    header.len = sizeof(DATA_CMD_2);
 
     question.clear();
-    question.append((char *)&header, sizeof(HEADER));
+    question.append((char *)&header,     sizeof(HEADER));
+    question.append((char *)&data_cmd_2, sizeof(DATA_CMD_2));
+
+    crc16 = CRC::crc16((uint8_t *)question.data(), question.length());
     question.append((char *)&crc16,  sizeof(crc16));
 
     result = proto->check_packet(question, &answer);
-    QCOMPARE(result, Base_protocol::E_BAD_CRC16);
+    QCOMPARE(result, Base_protocol::E_NO_ERROR);
     //---
 }
 //--------------------------------------------------------------------------------

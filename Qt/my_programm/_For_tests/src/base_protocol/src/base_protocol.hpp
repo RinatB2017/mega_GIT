@@ -43,25 +43,19 @@ class Base_protocol : public QObject
 public:
     Base_protocol();
 
-    //typedef int (*func)(QByteArray, QByteArray *);
     enum ERRORS {
         E_NO_ERROR = 0,
         E_PACKET_EMPTY,
         E_BAD_ADDRESS,
         E_BAD_CMD,
+        E_BAD_DATA,
         E_BAD_SIZE,
         E_BAD_CRC16
     };
 
-    typedef struct CMD
-    {
-        int cmd;
-        int (*func)(QByteArray, QByteArray *);
-    } CMD_t;
-
     int check_packet(QByteArray question,
                      QByteArray *answer);
-    void add_command(CMD cmd);
+    virtual int command(uint8_t cmd, QByteArray data) = 0;
 
 signals:
     void info(const QString &);
@@ -69,8 +63,7 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-private:
-    QList<CMD> commands;
+    void data_is_comming(uint8_t, QByteArray);
 
 protected:
     uint8_t address = 0;

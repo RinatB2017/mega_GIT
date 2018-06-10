@@ -38,6 +38,7 @@ int Base_protocol::check_packet(QByteArray question,
         return E_BAD_SIZE;
     }
     HEADER *header = (HEADER *)question.data();
+
     if(address != header->addr)
     {
         return E_BAD_ADDRESS;
@@ -57,11 +58,25 @@ int Base_protocol::check_packet(QByteArray question,
         return E_BAD_CRC16;
     }
 
+    QByteArray data;
+    int size_data = question.length() - sizeof(HEADER) - 2;
+    if(size_data > 0)
+    {
+        data.append((char *)&header->data, size_data);
+    }
+    emit data_is_comming(header->cmd,
+                         data);
+
+    //---
+#if 1
+    int res = command(header->cmd, data);
+    if(res == E_NO_ERROR)
+    {
+        (*answer).append(1);
+    }
+    return res;
+#else
     return E_NO_ERROR;
-}
-//--------------------------------------------------------------------------------
-void Base_protocol::add_command(CMD cmd)
-{
-    commands.append(cmd);
+#endif
 }
 //--------------------------------------------------------------------------------

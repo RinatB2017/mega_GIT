@@ -30,3 +30,40 @@ void Test_protocol::set_address(uint8_t new_address)
     address = new_address;
 }
 //--------------------------------------------------------------------------------
+int Test_protocol::command(uint8_t cmd,
+                           QByteArray data)
+{
+    switch(cmd)
+    {
+    case CMD_1:
+        if(data.length() != sizeof(DATA_CMD_1))
+        {
+            emit error(QString("command: %1 data len %2")
+                      .arg(cmd)
+                      .arg(data.size()));
+            return E_BAD_DATA;
+        }
+        emit info("CMD_1: OK");
+        break;
+
+    case CMD_2:
+        if(data.length() != sizeof(DATA_CMD_2))
+        {
+            emit error(QString("command: %1 data len %2")
+                      .arg(cmd)
+                      .arg(data.size()));
+            return E_BAD_DATA;
+        }
+        emit info("CMD_2: OK");
+        break;
+
+    case CMD_3:
+        emit info("CMD_3");
+        break;
+
+    default:
+        return E_BAD_CMD;
+    }
+    return E_NO_ERROR;
+}
+//--------------------------------------------------------------------------------

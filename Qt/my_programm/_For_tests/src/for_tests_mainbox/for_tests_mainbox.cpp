@@ -218,16 +218,23 @@ bool MainBox::test_0(void)
     QByteArray answer;
 
     HEADER header;
+    DATA_CMD_1 data;
+
     header.addr = 0;
-    header.cmd = 1;
-    header.len = 0;
+    header.cmd = CMD_1;
+    header.len = sizeof(DATA_CMD_1);
 
-    uint16_t crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER));
-
-    question.append((char *)&header, sizeof(HEADER));
-    question.append((char *)&crc16,  sizeof(crc16));
+    question.append((char *)&header,    sizeof(HEADER));
+    question.append((char *)&data,      sizeof(data));
+    uint16_t crc16 = CRC::crc16((uint8_t *)question.data(), question.length());
+    question.append((char *)&crc16,     sizeof(crc16));
 
     Test_protocol *proto = new Test_protocol;
+    connect(proto,  SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(proto,  SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(proto,  SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(proto,  SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
     int result = proto->check_packet(question, &answer);
     if(result != Base_protocol::E_NO_ERROR)
     {
@@ -236,6 +243,7 @@ bool MainBox::test_0(void)
         case Base_protocol::E_PACKET_EMPTY: emit error("E_PACKET_EMPTY");   break;
         case Base_protocol::E_BAD_ADDRESS:  emit error("E_BAD_ADDRESS");        break;
         case Base_protocol::E_BAD_CMD:      emit error("E_BAD_CMD");        break;
+        case Base_protocol::E_BAD_DATA:     emit error("E_BAD_DATA");       break;
         case Base_protocol::E_BAD_SIZE:     emit error("E_BAD_SIZE");       break;
         case Base_protocol::E_BAD_CRC16:    emit error("E_BAD_CRC16");      break;
         default:

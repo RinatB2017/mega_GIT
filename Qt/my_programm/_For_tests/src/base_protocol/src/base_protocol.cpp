@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,58 +18,50 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#include "base_protocol.hpp"
+#include "crc.h"
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include <QTest>
-//--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
-#include "test_protocol.hpp"
-//--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
-//--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-struct TEST
+Base_protocol::Base_protocol()
 {
-    uint8_t  addr;
-    uint16_t cmd;
-    uint8_t  reserved;
-    uint8_t  data;
-};
-#pragma pack(pop)
+
+}
 //--------------------------------------------------------------------------------
-class Test : public QObject
+int Base_protocol::check_packet(QByteArray question,
+                                QByteArray *answer)
 {
-    Q_OBJECT
+    if(question.isEmpty())
+    {
+        return E_PACKET_EMPTY;
+    }
+    if(question.length() <= (int)sizeof(HEADER))
+    {
+        return E_BAD_SIZE;
+    }
+    HEADER *header = (HEADER *)question.data();
+    if(address != header->addr)
+    {
+        return E_BAD_ADDRESS;
+    }
 
-public:
-    Test();
-    ~Test();
+    int calc_len = question.length() - sizeof(HEADER) - 2;
+    if(calc_len != header->len)
+    {
+        return E_BAD_SIZE;
+    }
+    uint16_t calc_crc16 = CRC::crc16((uint8_t *)question.data(), question.length() - 2);
+    uint8_t a = question[question.length() - 1];
+    uint8_t b = question[question.length() - 2];
+    uint16_t packet_crc16 = (a << 8) | b;
+    if(packet_crc16 != calc_crc16)
+    {
+        return E_BAD_CRC16;
+    }
 
-    int cmd_1(QByteArray question,
-              QByteArray *answer);
-
-private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void test_protocol(void);
-
-    void simple_test(void);
-
-private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
-
-    void test_slider(void);
-    void test_mainbox(void);
-};
+    return E_NO_ERROR;
+}
 //--------------------------------------------------------------------------------
-#endif
+void Base_protocol::add_command(CMD cmd)
+{
+    commands.append(cmd);
+}
+//--------------------------------------------------------------------------------

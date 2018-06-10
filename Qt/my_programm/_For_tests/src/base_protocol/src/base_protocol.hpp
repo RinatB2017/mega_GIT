@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,58 +18,63 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef BASE_PROTOCOL_HPP
+#define BASE_PROTOCOL_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include <QTest>
-//--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
-#include "test_protocol.hpp"
-//--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
+#include <QByteArray>
+#include <QObject>
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
-struct TEST
+//--------------------------------------------------------------------------------
+typedef struct HEADER
 {
-    uint8_t  addr;
-    uint16_t cmd;
-    uint8_t  reserved;
-    uint8_t  data;
-};
+    uint8_t   addr;     // адрес
+    uint8_t   cmd;      // команда
+    uint16_t  len;      // длина данных
+    uint8_t   data[];   // данные
+} header_t;
+//--------------------------------------------------------------------------------
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
-class Test : public QObject
+class Base_protocol : public QObject
 {
     Q_OBJECT
 
 public:
-    Test();
-    ~Test();
+    Base_protocol();
 
-    int cmd_1(QByteArray question,
-              QByteArray *answer);
+    //typedef int (*func)(QByteArray, QByteArray *);
+    enum ERRORS {
+        E_NO_ERROR = 0,
+        E_PACKET_EMPTY,
+        E_BAD_ADDRESS,
+        E_BAD_CMD,
+        E_BAD_SIZE,
+        E_BAD_CRC16
+    };
 
-private slots:
-    void test_GUI(void);
-    void test_func(void);
+    typedef struct CMD
+    {
+        int cmd;
+        int (*func)(QByteArray, QByteArray *);
+    } CMD_t;
 
-    void test_protocol(void);
+    int check_packet(QByteArray question,
+                     QByteArray *answer);
+    void add_command(CMD cmd);
 
-    void simple_test(void);
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
 
 private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
+    QList<CMD> commands;
 
-    void test_slider(void);
-    void test_mainbox(void);
+protected:
+    uint8_t address = 0;
+
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // BASE_PROTOCOL_HPP

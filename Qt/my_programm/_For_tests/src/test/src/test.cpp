@@ -33,6 +33,7 @@
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
+#include "crc.h"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -67,31 +68,31 @@ void Test::test_slider(void)
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    for(int n=1; n<7; n++)
-    {
-        tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
-    }
+    //for(int n=1; n<7; n++)
+    //{
+    //    tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
+    //}
 }
 //--------------------------------------------------------------------------------
 void Test::test_mainbox(void)
 {
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
+    //MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    //QVERIFY(mb);
 
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
+    //QCOMPARE(mb->test_0(), true);
+    //QCOMPARE(mb->test_1(), true);
+    //QCOMPARE(mb->test_2(), true);
+    //QCOMPARE(mb->test_3(), true);
+    //QCOMPARE(mb->test_4(), true);
+    //QCOMPARE(mb->test_5(), true);
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    test_mainbox();
+    //test_mainbox();
 
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
+    //MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    //QVERIFY(mb);
 
     //QCOMPARE(mb->test(QByteArray::fromHex("000102030405")), 15);
     //QCOMPARE(mb->test(QByteArray::fromHex("1F1F1F1F1F1F")), 6*0x1F);
@@ -107,6 +108,67 @@ void Test::test_func(void)
     //QByteArray ba;
     //ba.append((char *)&test, sizeof(test));
     //QCOMPARE(mb->test(ba), 5);
+}
+//--------------------------------------------------------------------------------
+void Test::test_protocol(void)
+{
+    QByteArray question;
+    QByteArray answer;
+
+    Test_protocol *proto = new Test_protocol;
+    //proto->add_command(&cmd_1);
+
+    HEADER header;
+    uint16_t crc16 = 0;
+    int result = 0;
+
+    //---
+    header.addr = 0;
+    header.cmd = 1;
+    header.len = 0;
+
+    crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER));
+
+    question.clear();
+    question.append((char *)&header, sizeof(HEADER));
+    question.append((char *)&crc16,  sizeof(crc16));
+
+    result = proto->check_packet(question, &answer);
+    QCOMPARE(result, Base_protocol::E_NO_ERROR);
+    //---
+    header.addr = 1;
+    header.cmd = 1;
+    header.len = 0;
+
+    crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER));
+
+    question.clear();
+    question.append((char *)&header, sizeof(HEADER));
+    question.append((char *)&crc16,  sizeof(crc16));
+
+    result = proto->check_packet(question, &answer);
+    QCOMPARE(result, Base_protocol::E_BAD_ADDRESS);
+    //---
+    header.addr = 0;
+    header.cmd = 1;
+    header.len = 0;
+
+    crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER)) + 1;
+
+    question.clear();
+    question.append((char *)&header, sizeof(HEADER));
+    question.append((char *)&crc16,  sizeof(crc16));
+
+    result = proto->check_packet(question, &answer);
+    QCOMPARE(result, Base_protocol::E_BAD_CRC16);
+    //---
+}
+//--------------------------------------------------------------------------------
+int Test::cmd_1(QByteArray question, QByteArray *answer)
+{
+    Q_UNUSED(question);
+    Q_UNUSED(answer);
+    return Base_protocol::E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 void Test::simple_test(void)

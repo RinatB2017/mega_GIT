@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,58 +18,19 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef TEST_PROTOCOL_HPP
+#define TEST_PROTOCOL_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include "base_protocol.hpp"
 //--------------------------------------------------------------------------------
-#include <QTest>
-//--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
-#include "test_protocol.hpp"
-//--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
-//--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-struct TEST
-{
-    uint8_t  addr;
-    uint16_t cmd;
-    uint8_t  reserved;
-    uint8_t  data;
-};
-#pragma pack(pop)
-//--------------------------------------------------------------------------------
-class Test : public QObject
+class Test_protocol : public Base_protocol
 {
     Q_OBJECT
 
 public:
-    Test();
-    ~Test();
+    Test_protocol();
+    void set_address(uint8_t new_address);
 
-    int cmd_1(QByteArray question,
-              QByteArray *answer);
-
-private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void test_protocol(void);
-
-    void simple_test(void);
-
-private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
-
-    void test_slider(void);
-    void test_mainbox(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // TEST_PROTOCOL_HPP

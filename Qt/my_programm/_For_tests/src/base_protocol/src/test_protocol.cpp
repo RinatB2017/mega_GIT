@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,58 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
-//--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include <QTest>
-//--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
 #include "test_protocol.hpp"
 //--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
-//--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-struct TEST
+Test_protocol::Test_protocol()
 {
-    uint8_t  addr;
-    uint16_t cmd;
-    uint8_t  reserved;
-    uint8_t  data;
-};
-#pragma pack(pop)
+
+}
 //--------------------------------------------------------------------------------
-class Test : public QObject
+void Test_protocol::set_address(uint8_t new_address)
 {
-    Q_OBJECT
-
-public:
-    Test();
-    ~Test();
-
-    int cmd_1(QByteArray question,
-              QByteArray *answer);
-
-private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void test_protocol(void);
-
-    void simple_test(void);
-
-private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
-
-    void test_slider(void);
-    void test_mainbox(void);
-};
+    address = new_address;
+}
 //--------------------------------------------------------------------------------
-#endif

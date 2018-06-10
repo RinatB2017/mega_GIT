@@ -205,10 +205,47 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include "test_protocol.hpp"
+#include "crc.h"
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    QByteArray question;
+    QByteArray answer;
+
+    HEADER header;
+    header.addr = 0;
+    header.cmd = 1;
+    header.len = 0;
+
+    uint16_t crc16 = CRC::crc16((uint8_t *)&header, sizeof(HEADER));
+
+    question.append((char *)&header, sizeof(HEADER));
+    question.append((char *)&crc16,  sizeof(crc16));
+
+    Test_protocol *proto = new Test_protocol;
+    int result = proto->check_packet(question, &answer);
+    if(result != Base_protocol::E_NO_ERROR)
+    {
+        switch(result)
+        {
+        case Base_protocol::E_PACKET_EMPTY: emit error("E_PACKET_EMPTY");   break;
+        case Base_protocol::E_BAD_ADDRESS:  emit error("E_BAD_ADDRESS");        break;
+        case Base_protocol::E_BAD_CMD:      emit error("E_BAD_CMD");        break;
+        case Base_protocol::E_BAD_SIZE:     emit error("E_BAD_SIZE");       break;
+        case Base_protocol::E_BAD_CRC16:    emit error("E_BAD_CRC16");      break;
+        default:
+            emit error(QString("unknown error %1").arg(result));
+            break;
+        }
+        return false;
+    }
+    emit info("OK");
+#endif
 
 #if 0
     check_tooltips();

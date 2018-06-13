@@ -58,6 +58,7 @@ void MainBox::init(void)
     createTestBar();
 
     QGridLayout *grid = new QGridLayout(this);
+    grid->setMargin(0);
     grid->setSpacing(0);
 
     for(int y=0; y<10; y++)
@@ -74,15 +75,6 @@ void MainBox::init(void)
 
     setLayout(grid);
     setFixedSize(sizeHint());
-
-#if 1
-    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::click(void)
@@ -92,12 +84,19 @@ void MainBox::click(void)
     {
         return;
     }
+    btn->setText("*");
+#if 0
     emit info(QString("%1:%2")
               .arg(btn->property("pos_x").toInt())
               .arg(btn->property("pos_y").toInt()));
-    emit info(QString("%1:%2")
-              .arg(btn->width())
-              .arg(btn->height()));
+#endif
+
+#if 0
+    emit info(QString("pos_x %1").arg(btn->property("pos_x").toInt()));
+    emit info(QString("pos_y %1").arg(btn->property("pos_y").toInt()));
+    emit info(QString("width %1").arg(btn->width()));
+    emit info(QString("height %1").arg(btn->height()));
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -176,6 +175,7 @@ void MainBox::mouse_click(unsigned int button, QPoint pos)
     Display* display = XOpenDisplay( nullptr );
     if( display == nullptr )
     {
+        emit error("display == nullptr");
         return;
     }
 
@@ -279,47 +279,29 @@ bool MainBox::test_0(void)
 
     int mb_x = mw->centralWidget()->x();
     int mb_y = mw->centralWidget()->y();
-    int mb_w = mw->centralWidget()->width();
-    int mb_h = mw->centralWidget()->height();
 
     int x = 0;
     int y = 0;
     int w = 0;
     int h = 0;
 
-    emit info(QString("mb_x %1").arg(mb_x));
-    emit info(QString("mb_y %1").arg(mb_y));
-    emit info(QString("mb_w %1").arg(mb_w));
-    emit info(QString("mb_h %1").arg(mb_h));
-
     bool ok = find_window("Test_mouse", &x, &y, &w, &h);
     if(ok)
     {
-        emit info(QString("x %1").arg(x));
-        emit info(QString("y %1").arg(y));
-        emit info(QString("w %1").arg(w));
-        emit info(QString("h %1").arg(h));
+        for(int temp_y=0; temp_y<10; temp_y++)
+        {
+            for(int temp_x=0; temp_x<10; temp_x++)
+            {
+                int pos_x = x + mb_x + 16 + (32 * temp_x);
+                int pos_y = y + mb_y + 16 + (32 * temp_y);
 
-        int corr_x = (mb_w - 320.0) / 2.0;
-        int corr_y = (mb_h - 320.0) / 2.0;
-
-        emit info(QString("corr_x %1").arg(corr_x));
-        emit info(QString("corr_y %1").arg(corr_y));
-
-        QPoint pos = QPoint(x + mb_x + corr_x,
-                            y + mb_y + corr_y);
-        mouse_move_to(pos);
+                QPoint pos = QPoint(pos_x, pos_y);
+                //mouse_move_to(pos);
+                mouse_click(Qt::LeftButton, pos);
+                mouse_release(Qt::LeftButton);
+            }
+        }
     }
-#endif
-
-#if 0
-    //QRect available_geom = QDesktopWidget().availableGeometry();
-    //QPoint pos = QPoint(available_geom.center().x(),
-    //                    available_geom.center().y());
-    QPoint pos = QPoint(10, 10);
-    mouse_move_to(pos);
-    //mouse_click(Qt::LeftButton, pos);
-    //mouse_release(Qt::LeftButton);
 #endif
 
     return true;

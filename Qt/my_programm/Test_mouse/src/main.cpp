@@ -24,21 +24,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#if QT_VERSION >= 0x050000
-#   include <QtMessageHandler>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_mouse.hpp"
 #include "defines.hpp"
 #include "version.hpp"
-//--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include "posix.hpp"
-#endif
-#include "log_to_file.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -74,17 +65,7 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    //---
-    // Workaround: Removing the /usr/lib/libGL.so.1 file fixes the problem.
-    // qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    // QGLFormat format;
-    // format.setVersion(4, 3);
-    // QGLFormat::setDefaultFormat(format);
-    //---
-
-    //MainBox *mainBox = new MainBox(0, splash);
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
 
     main_window->setCentralWidget(mainBox);
@@ -97,7 +78,6 @@ int main(int argc, char *argv[])
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

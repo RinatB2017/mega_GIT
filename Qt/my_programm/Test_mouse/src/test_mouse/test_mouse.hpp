@@ -83,7 +83,11 @@ private:
     void mouse_release(unsigned int button);
     void mouse_move_to(QPoint pos);
 
-    bool find_window(const QString programm_title, int *x, int *y, int *width, int *heigth);
+    bool find_window(const QString programm_title,
+                     int *x,
+                     int *y,
+                     int *width,
+                     int *heigth);
 
     void init(void);
     void createTestBar(void);

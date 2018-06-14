@@ -74,8 +74,8 @@ void MainBox::init(void)
     connect(ui->btn_load_orig_image,    SIGNAL(clicked(bool)),  this,   SLOT(s_load_orig_image()));
     connect(ui->btn_show_orig_image,    SIGNAL(clicked(bool)),  this,   SLOT(s_show_orig_image()));
 
-    connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
-    //connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image_2()));
+    //connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
+    connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image_2()));
     connect(ui->btn_show_new_image,     SIGNAL(clicked(bool)),  this,   SLOT(s_show_new_image()));
 
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(f_test()));
@@ -885,15 +885,38 @@ bool MainBox::s_create_new_image_2(void)
             }
 #ifdef FAST_PIC
             // быстрая отрисовка
-            quint8 const* orig_pix = orig_line;
-            blue  = orig_pix[0];
-            green = orig_pix[1];
-            red   = orig_pix[2];
+//            quint8 const* orig_pix = orig_line;
+//            blue  = orig_pix[0];
+//            green = orig_pix[1];
+//            red   = orig_pix[2];
 
-            quint8 * new_pix = new_line;
-            new_pix[0] = blue;
-            new_pix[1] = green;
-            new_pix[2] = red;
+//            quint8 * new_pix = new_line;
+//            new_pix[0] = blue;
+//            new_pix[1] = green;
+//            new_pix[2] = red;
+
+            quint8 const* orig_line = orig_image->constScanLine(0);
+            int orig_stride = orig_image->bytesPerLine();
+
+            quint8 * new_line = new_image->scanLine(0);
+            int new_stride = new_image->bytesPerLine();
+
+//            for(int y=0; y<pic_height; y++)
+//            {
+//                for(int x=0; x<pic_width; x++)
+//                {
+//                    new_line[x*new_stride + y*4]     = orig_line[y*orig_stride + x*4];
+//                    new_line[x*new_stride + y*4 + 1] = orig_line[y*orig_stride + x*4 + 1];
+//                    new_line[x*new_stride + y*4 + 2] = orig_line[y*orig_stride + x*4 + 2];
+//                    new_line[x*new_stride + y*4 + 3] = orig_line[y*orig_stride + x*4 + 3];
+//                }
+//            }
+
+            new_line[(int)x*new_stride + (int)y*4]     = orig_line[(int)y*orig_stride + (int)x*4];
+            new_line[(int)x*new_stride + (int)y*4 + 1] = orig_line[(int)y*orig_stride + (int)x*4 + 1];
+            new_line[(int)x*new_stride + (int)y*4 + 2] = orig_line[(int)y*orig_stride + (int)x*4 + 2];
+            new_line[(int)x*new_stride + (int)y*4 + 3] = orig_line[(int)y*orig_stride + (int)x*4 + 3];
+
 #else
             QRgb rgb = orig_image->pixel(t_x, t_y);
             new_image->setPixel(x * k,

@@ -28,7 +28,7 @@
 //#define LEN_SIDE    800
 //#define LEN_SIDE    3465
 //#define SMALL_R     (LEN_SIDE / 8)
-//#define FAST_PIC
+#define FAST_PIC
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;

@@ -28,6 +28,7 @@
 //#define LEN_SIDE    800
 //#define LEN_SIDE    3465
 //#define SMALL_R     (LEN_SIDE / 8)
+//#define FAST_PIC
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -62,6 +63,7 @@ private slots:
     void s_show_orig_image(void);
 
     bool s_create_new_image(void);
+    bool s_create_new_image_2(void);
     void s_show_new_image(void);
 
     void set_pic_width(int value);

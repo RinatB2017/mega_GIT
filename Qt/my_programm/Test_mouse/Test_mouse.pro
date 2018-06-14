@@ -35,6 +35,7 @@ LIBS    += -lX11 -lXtst
 
 win32 {
     RC_FILE = ico/myapp.rc
+    error (Only linux)
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

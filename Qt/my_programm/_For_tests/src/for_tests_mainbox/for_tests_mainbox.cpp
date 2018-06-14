@@ -207,6 +207,7 @@ void MainBox::test_validator(void)
 //--------------------------------------------------------------------------------
 #include "test_protocol.hpp"
 #include "crc.h"
+#include <unistd.h>
 
 bool MainBox::test_0(void)
 {
@@ -214,6 +215,33 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QProcess *proccess = new QProcess();
+    proccess->setProcessChannelMode(QProcess::SeparateChannels);
+    //proccess->setReadChannel(QProcess::StandardOutput);
+
+    connect(proccess, SIGNAL(started()),                 this, SLOT(started()));
+    connect(proccess, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
+    connect(proccess, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
+    connect(proccess, SIGNAL(finished(int)),             this, SLOT(finished(int)));
+    connect(proccess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
+
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
+    QString fullPath = env.value("PATH")+ ":/home/boss/bin";
+    env.insert("PATH", fullPath);
+    proccess->setProcessEnvironment(env);
+
+    //if(le_script_filename->text().isEmpty() == false)
+    //{
+    //    proccess->start("sh", QStringList() << le_script_filename->text());
+    //}
+#endif
+
+#if 0
+    execlp( "wget", "wget", "-rc", "-l1", "-np", "-nH", "--cut-dirs=1", "-A", "zip", "-P", "$PWD/quotes", "http://www.forexite.com/free_forex_quotes/forex_history_arhiv.html", NULL);
+#endif
+
+#if 0
     QByteArray question;
     QByteArray answer;
 
@@ -241,7 +269,7 @@ bool MainBox::test_0(void)
         switch(result)
         {
         case Base_protocol::E_PACKET_EMPTY: emit error("E_PACKET_EMPTY");   break;
-        case Base_protocol::E_BAD_ADDRESS:  emit error("E_BAD_ADDRESS");        break;
+        case Base_protocol::E_BAD_ADDRESS:  emit error("E_BAD_ADDRESS");    break;
         case Base_protocol::E_BAD_CMD:      emit error("E_BAD_CMD");        break;
         case Base_protocol::E_BAD_DATA:     emit error("E_BAD_DATA");       break;
         case Base_protocol::E_BAD_SIZE:     emit error("E_BAD_SIZE");       break;

@@ -74,8 +74,8 @@ void MainBox::init(void)
     connect(ui->btn_load_orig_image,    SIGNAL(clicked(bool)),  this,   SLOT(s_load_orig_image()));
     connect(ui->btn_show_orig_image,    SIGNAL(clicked(bool)),  this,   SLOT(s_show_orig_image()));
 
-    //connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
-    connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image_2()));
+    connect(ui->btn_create_new_image,   SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image()));
+    connect(ui->btn_create_new_image_2, SIGNAL(clicked(bool)),  this,   SLOT(s_create_new_image_2()));
     connect(ui->btn_show_new_image,     SIGNAL(clicked(bool)),  this,   SLOT(s_show_new_image()));
 
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(f_test()));
@@ -700,15 +700,6 @@ bool MainBox::s_create_new_image(void)
     cnt_sin = 0;
     cnt_cos = 0;
     //---
-#ifdef FAST_PIC
-    quint8 const* orig_line = orig_image->constScanLine(0);
-    //int orig_stride = orig_image->bytesPerLine();
-    //quint8 const* new_line = new_image->constScanLine(0);
-    //int new_stride = new_image->bytesPerLine();
-
-    quint32 red = 0, green = 0, blue = 0;
-#endif
-    //---
     for(qreal y=min_r; y<max_r; y++)
     {
         qreal small_width = M_PI * 2.0 * (qreal)y;
@@ -752,18 +743,10 @@ bool MainBox::s_create_new_image(void)
                 block_this_button(false);
                 return false;
             }
-#ifdef FAST_PIC
-            // быстрая отрисовка
-            quint8 const* orig_pix = orig_line;
-            blue  = orig_pix[0];
-            green = orig_pix[1];
-            red   = orig_pix[2];
-#else
             QRgb rgb = orig_image->pixel(t_x, t_y);
             new_image->setPixel(x * k,
                                 y - min_r,
                                 rgb);
-#endif
         }
     }
     emit info(QString("time elapsed %1").arg(timer.elapsed()));

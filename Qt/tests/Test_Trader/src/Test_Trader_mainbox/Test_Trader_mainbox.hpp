@@ -50,6 +50,12 @@ private slots:
     void save(void);
     void test(void);
 
+    void started(void);
+    void read_data(void);
+    void read_error(void);
+    void finished(int state);
+    void process_error(QProcess::ProcessError err);
+
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;

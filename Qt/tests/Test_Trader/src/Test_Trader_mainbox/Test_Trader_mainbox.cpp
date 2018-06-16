@@ -174,66 +174,66 @@ void MainBox::create_plot_currency(void)
 {
     QStringList sl_currency;
     sl_currency << "EURUSD"
-//                << "EURGBP"
-//                << "EURCHF"
-//                << "EURJPY"
+                   //                << "EURGBP"
+                   //                << "EURCHF"
+                   //                << "EURJPY"
                 << "EURRUB"
-//                << "EURHKD"
-//                << "EURMXN"
-//                << "EURTRY"
-//                << "EURAUD"
-//                << "EURNZD"
-//                << "EURSGD"
-//                << "EURZAR"
-//                << "EURCAD"
+                   //                << "EURHKD"
+                   //                << "EURMXN"
+                   //                << "EURTRY"
+                   //                << "EURAUD"
+                   //                << "EURNZD"
+                   //                << "EURSGD"
+                   //                << "EURZAR"
+                   //                << "EURCAD"
 
-//                << "USDCHF"
-//                << "USDJPY"
-//                << "USDCAD"
-//                << "USDDKK"
-//                << "USDCZK"
-//                << "USDNOK"
-//                << "USDPLN"
+                   //                << "USDCHF"
+                   //                << "USDJPY"
+                   //                << "USDCAD"
+                   //                << "USDDKK"
+                   //                << "USDCZK"
+                   //                << "USDNOK"
+                   //                << "USDPLN"
                 << "USDRUB"
-//                << "USDSEK"
-//                << "USDSGD"
-//                << "USDZAR"
-//                << "USDHKD"
-//                << "USDMXN"
-//                << "USDTRY"
-//                << "USDHUF"
-//                << "USDCNH"
+                   //                << "USDSEK"
+                   //                << "USDSGD"
+                   //                << "USDZAR"
+                   //                << "USDHKD"
+                   //                << "USDMXN"
+                   //                << "USDTRY"
+                   //                << "USDHUF"
+                   //                << "USDCNH"
 
-//                << "GBPUSD"
-//                << "GBPCHF"
-//                << "GBPJPY"
-//                << "GBPCAD"
-//                << "GBPAUD"
-//                << "GBPNZD"
+                   //                << "GBPUSD"
+                   //                << "GBPCHF"
+                   //                << "GBPJPY"
+                   //                << "GBPCAD"
+                   //                << "GBPAUD"
+                   //                << "GBPNZD"
 
-//                << "AUDUSD"
-//                << "AUDJPY"
-//                << "AUDCHF"
-//                << "AUDCAD"
-//                << "AUDNZD"
+                   //                << "AUDUSD"
+                   //                << "AUDJPY"
+                   //                << "AUDCHF"
+                   //                << "AUDCAD"
+                   //                << "AUDNZD"
 
-//                << "NZDUSD"
-//                << "NZDJPY"
-//                << "NZDCHF"
-//                << "NZDCAD"
+                   //                << "NZDUSD"
+                   //                << "NZDJPY"
+                   //                << "NZDCHF"
+                   //                << "NZDCAD"
 
-//                << "XAUUSD"
-//                << "XAGUSD"
-//                << "XAUEUR"
-//                << "XAGEUR"
+                   //                << "XAUUSD"
+                   //                << "XAGUSD"
+                   //                << "XAUEUR"
+                   //                << "XAGEUR"
 
-//                << "CADCHF"
-//                << "CADJPY"
+                   //                << "CADCHF"
+                   //                << "CADJPY"
 
-//                << "CHFJPY"
-//                << "BTCUSD"
-//                << "ETHUSD"
-//                << "LTCUSD"
+                   //                << "CHFJPY"
+                   //                << "BTCUSD"
+                   //                << "ETHUSD"
+                   //                << "LTCUSD"
                    ;
 
     foreach (QString currency, sl_currency)
@@ -243,21 +243,21 @@ void MainBox::create_plot_currency(void)
         plot_tickets.append(plot);
     }
 
-//    Plot *plot_EURUSD = new Plot("EURUSD", this);
-//    plot_EURUSD->setMode(1);
-//    //plot_EURUSD->setMinimumSize(800, 600);
+    //    Plot *plot_EURUSD = new Plot("EURUSD", this);
+    //    plot_EURUSD->setMode(1);
+    //    //plot_EURUSD->setMinimumSize(800, 600);
 
-//    Plot *plot_USDRUB = new Plot("USDRUB", this);
-//    plot_USDRUB->setMode(1);
-//    //plot_USDRUB->setMinimumSize(800, 600);
+    //    Plot *plot_USDRUB = new Plot("USDRUB", this);
+    //    plot_USDRUB->setMode(1);
+    //    //plot_USDRUB->setMinimumSize(800, 600);
 
-//    Plot *plot_EURRUB = new Plot("EURRUB", this);
-//    plot_EURRUB->setMode(1);
-//    //plot_EURRUB->setMinimumSize(800, 600);
+    //    Plot *plot_EURRUB = new Plot("EURRUB", this);
+    //    plot_EURRUB->setMode(1);
+    //    //plot_EURRUB->setMinimumSize(800, 600);
 
-//    plot_tickets.append(plot_EURUSD);
-//    plot_tickets.append(plot_USDRUB);
-//    plot_tickets.append(plot_EURRUB);
+    //    plot_tickets.append(plot_EURUSD);
+    //    plot_tickets.append(plot_USDRUB);
+    //    plot_tickets.append(plot_EURRUB);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -405,12 +405,72 @@ void MainBox::save(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    Plot *d_plot = new Plot("EURUSD");
-    d_plot->setMode(1);
-    d_plot->setMinimumSize(640, 480);
-    d_plot->show();
+    //Plot *d_plot = new Plot("EURUSD");
+    //d_plot->setMode(1);
+    //d_plot->setMinimumSize(640, 480);
+    //d_plot->show();
 
     //plot_tickets.at(0)->test();
+
+#if 1
+    QProcess *proccess = new QProcess(this);
+    proccess->setProcessChannelMode(QProcess::SeparateChannels);
+    //proccess->setReadChannel(QProcess::StandardOutput);
+
+    connect(proccess, SIGNAL(started()),                 this, SLOT(started()));
+    connect(proccess, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
+    connect(proccess, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
+    connect(proccess, SIGNAL(finished(int)),             this, SLOT(finished(int)));
+    connect(proccess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
+
+    proccess->start("wget", QStringList()
+                    << "-rc"
+                    << "-l1"
+                    << "-np"
+                    << "-nH"
+                    << "--cut-dirs=1"
+                    << "-A"
+                    << "zip"
+                    << "-P"
+                    << "quotes"
+                    << "http://www.forexite.com/free_forex_quotes/forex_history_arhiv.html");
+#endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::started(void)
+{
+    //emit trace(Q_FUNC_INFO);
+    emit info("Starting...");
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_data(void)
+{
+    //emit trace(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_error(void)
+{
+    //emit trace(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void MainBox::finished(int state)
+{
+    //emit trace(Q_FUNC_INFO);
+    emit info(QString("Finished: %1").arg(state));
+}
+//--------------------------------------------------------------------------------
+void MainBox::process_error(QProcess::ProcessError err)
+{
+    emit trace(Q_FUNC_INFO);
+    switch(err)
+    {
+    case QProcess::FailedToStart:    emit error("FailedToStart");    break;
+    case QProcess::Crashed:          emit error("Crashed");          break;
+    case QProcess::Timedout:         emit error("Timedout");         break;
+    case QProcess::ReadError:        emit error("ReadError");        break;
+    case QProcess::WriteError:       emit error("WriteError");       break;
+    case QProcess::UnknownError:     emit error("UnknownError");     break;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

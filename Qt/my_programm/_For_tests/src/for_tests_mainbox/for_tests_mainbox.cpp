@@ -214,33 +214,6 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
-    QProcess *proccess = new QProcess();
-    proccess->setProcessChannelMode(QProcess::SeparateChannels);
-    //proccess->setReadChannel(QProcess::StandardOutput);
-
-    connect(proccess, SIGNAL(started()),                 this, SLOT(started()));
-    connect(proccess, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
-    connect(proccess, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
-    connect(proccess, SIGNAL(finished(int)),             this, SLOT(finished(int)));
-    connect(proccess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
-
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-
-    QString fullPath = env.value("PATH")+ ":/home/boss/bin";
-    env.insert("PATH", fullPath);
-    proccess->setProcessEnvironment(env);
-
-    //if(le_script_filename->text().isEmpty() == false)
-    //{
-    //    proccess->start("sh", QStringList() << le_script_filename->text());
-    //}
-#endif
-
-#if 0
-    execlp( "wget", "wget", "-rc", "-l1", "-np", "-nH", "--cut-dirs=1", "-A", "zip", "-P", "$PWD/quotes", "http://www.forexite.com/free_forex_quotes/forex_history_arhiv.html", NULL);
-#endif
-
 #if 0
     QByteArray question;
     QByteArray answer;

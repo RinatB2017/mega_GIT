@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainBox</class>
- <widget class="QWidget" name="MainBox">
+ <class>CandleStick_Box</class>
+ <widget class="QWidget" name="CandleStick_Box">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>371</width>
-    <height>269</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>CandleStick_Box</string>
   </property>
  </widget>
  <resources/>

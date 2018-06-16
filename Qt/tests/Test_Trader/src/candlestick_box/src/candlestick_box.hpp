@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,67 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef CANDLESTICK_BOX_HPP
+#define CANDLESTICK_BOX_HPP
 //--------------------------------------------------------------------------------
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QCandlestickSeries>
+#include <QtCharts/QChartView>
+#include <QtCharts/QValueAxis>
+#include <QDateTime>
 #include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+
+QT_CHARTS_USE_NAMESPACE
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class CandleStick_Box;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-
-class GrapherBox;
-class Plot;
-
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class CandleStick_Box : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    explicit CandleStick_Box(QWidget *parent = 0);
+    ~CandleStick_Box();
 
-private slots:
-    void load(void);
-    void save(void);
-    void test(void);
-
-    void started(void);
-    void read_data(void);
-    void read_error(void);
-    void finished(int state);
-    void process_error(QProcess::ProcessError err);
+    void append(QCandlestickSet *set);
+    void update_data(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
-    int index = 0;
-
-    QList<Plot *> plot_tickets;
-
-#ifdef GRAPHER
-    GrapherBox *grapher = 0;
-#endif
-
-    void init(void);
-
-    void createTestBar(void);
-    void create_plot_currency(void);
-
-    QVector<QPointF> circle(float x, float y, float r);
-    QVector<QLine> circle_line(float x, float y, float r);
-
-    void updateText(void);
+    Ui::CandleStick_Box *ui;
+    QCandlestickSeries *acmeSeries = 0;
+    QChart *chart = 0;
+    QStringList categories;
+    QBarCategoryAxis *axisX = 0;
 
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // CANDLESTICK_BOX_HPP

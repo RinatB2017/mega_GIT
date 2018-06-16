@@ -2,7 +2,8 @@ QT += charts
 
 TARGET = candlestickchart
 
-SOURCES += main.cpp \
+SOURCES += \
+    main.cpp \
     candlestickdatareader.cpp
 
 HEADERS += \

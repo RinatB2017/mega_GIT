@@ -214,6 +214,25 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    QDateTime dt;
+    QDate date;
+    date.setDate(1970, 1, 2);
+    QTime time(0, 0, 0);
+
+    dt.setDate(date);
+    dt.setTime(time);
+
+    emit info(QString("Timestamp1 is: %1").arg(dt.toTime_t()));
+
+    //uint timestamp=QDateTime::currentDateTime().toTime_t();
+    //emit info(QString("Current timestamp is: %1").arg(timestamp));
+
+    QDateTime time2 = QDateTime::fromString (QString("1970-01-02T00:00:00"), Qt::ISODate);
+    emit info(QString("Timestamp2 is: %1").arg(time2.toTime_t()));
+
+#endif
+
 #if 0
     QByteArray question;
     QByteArray answer;

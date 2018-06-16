@@ -403,16 +403,39 @@ void MainBox::save(void)
     emit info("save");
 }
 //--------------------------------------------------------------------------------
+#include "candlestick_box.hpp"
+#include "qcandlestickset.h"
 void MainBox::test(void)
 {
-    //Plot *d_plot = new Plot("EURUSD");
-    //d_plot->setMode(1);
-    //d_plot->setMinimumSize(640, 480);
-    //d_plot->show();
-
-    //plot_tickets.at(0)->test();
-
 #if 1
+    CandleStick_Box *box = new CandleStick_Box();
+    box->setMinimumSize(800, 600);
+    box->show();
+
+    for(int n=0; n<10; n++)
+    {
+        QCandlestickSet *set = new QCandlestickSet;
+        set->setTimestamp(1435708800000 * n);
+        //set->setTimestamp(n * 24 * 3600);
+        set->setOpen(qrand() % 1000);
+        set->setClose(qrand() % 1000);
+        set->setHigh(qrand() % 1000);
+        set->setLow(qrand() % 1000);
+        box->append(set);
+    }
+    box->update_data();
+#endif
+
+#if 0
+    Plot *d_plot = new Plot("EURUSD");
+    d_plot->setMode(1);
+    d_plot->setMinimumSize(640, 480);
+    d_plot->show();
+
+    plot_tickets.at(0)->test();
+#endif
+
+#if 0
     QProcess *proccess = new QProcess(this);
     proccess->setProcessChannelMode(QProcess::SeparateChannels);
     //proccess->setReadChannel(QProcess::StandardOutput);

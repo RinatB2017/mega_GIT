@@ -55,9 +55,11 @@ int main(int argc, char *argv[])
     QStringList categories;
 
     CandlestickDataReader dataReader(&acmeData);
-    while (!dataReader.atEnd()) {
+    while (!dataReader.atEnd()) 
+    {
         QCandlestickSet *set = dataReader.readCandlestickSet();
-        if (set) {
+        if (set) 
+        {
             acmeSeries->append(set);
             categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("dd");
         }

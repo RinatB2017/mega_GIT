@@ -65,6 +65,7 @@ private:
     void init(void);
 
     void createTestBar(void);
+    void create_plot_currency(void);
 
     QVector<QPointF> circle(float x, float y, float r);
     QVector<QLine> circle_line(float x, float y, float r);

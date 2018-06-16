@@ -80,60 +80,60 @@ QVector<QPointF> MainBox::circle(float x, float y, float r)
 }
 //--------------------------------------------------------------------------------
 #if 0
-    EURUSD
-    GBPUSD
-    USDCHF
-    USDJPY
-    EURGBP
-    EURCHF
-    EURJPY
-    GBPCHF
-    GBPJPY
-    CHFJPY
-    USDCAD
-    EURCAD
-    AUDUSD
-    AUDJPY
-    NZDUSD
-    NZDJPY
-    XAUUSD
-    XAGUSD
-    USDCZK
-    USDDKK
-    EURRUB
-    USDHUF
-    USDNOK
-    USDPLN
-    USDRUB
-    USDSEK
-    USDSGD
-    USDZAR
-    USDHKD
-    USDMXN
-    USDTRY
-    EURHKD
-    EURMXN
-    EURTRY
-    EURAUD
-    EURNZD
-    EURSGD
-    EURZAR
-    XAUEUR
-    XAGEUR
-    GBPCAD
-    GBPAUD
-    GBPNZD
-    AUDCHF
-    AUDCAD
-    AUDNZD
-    NZDCHF
-    NZDCAD
-    CADCHF
-    CADJPY
-    BTCUSD
-    ETHUSD
-    LTCUSD
-    USDCNH
+EURUSD
+GBPUSD
+USDCHF
+USDJPY
+EURGBP
+EURCHF
+EURJPY
+GBPCHF
+GBPJPY
+CHFJPY
+USDCAD
+EURCAD
+AUDUSD
+AUDJPY
+NZDUSD
+NZDJPY
+XAUUSD
+XAGUSD
+USDCZK
+USDDKK
+EURRUB
+USDHUF
+USDNOK
+USDPLN
+USDRUB
+USDSEK
+USDSGD
+USDZAR
+USDHKD
+USDMXN
+USDTRY
+EURHKD
+EURMXN
+EURTRY
+EURAUD
+EURNZD
+EURSGD
+EURZAR
+XAUEUR
+XAGEUR
+GBPCAD
+GBPAUD
+GBPNZD
+AUDCHF
+AUDCAD
+AUDNZD
+NZDCHF
+NZDCAD
+CADCHF
+CADJPY
+BTCUSD
+ETHUSD
+LTCUSD
+USDCNH
 #endif
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
@@ -141,27 +141,7 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
-
-    Plot *plot_EURUSD = new Plot("EURUSD", this);
-    plot_EURUSD->setMode(1);
-    //plot_EURUSD->setMinimumSize(800, 600);
-
-    Plot *plot_AUDJPY = new Plot("AUDJPY", this);
-    plot_AUDJPY->setMode(1);
-    //plot_AUDJPY->setMinimumSize(800, 600);
-
-    Plot *plot_USDRUB = new Plot("USDRUB", this);
-    plot_USDRUB->setMode(1);
-    //plot_USDRUB->setMinimumSize(800, 600);
-
-    Plot *plot_EURRUB = new Plot("EURRUB", this);
-    plot_EURRUB->setMode(1);
-    //plot_EURRUB->setMinimumSize(800, 600);
-
-    plot_tickets.append(plot_EURUSD);
-    plot_tickets.append(plot_AUDJPY);
-    plot_tickets.append(plot_USDRUB);
-    plot_tickets.append(plot_EURRUB);
+    create_plot_currency();
 
     QVBoxLayout *vbox = new QVBoxLayout();
     QScrollArea *scroll = new QScrollArea(this);
@@ -188,6 +168,96 @@ void MainBox::init(void)
     hbox->setMargin(0);
     hbox->addWidget(frame);
     setLayout(hbox);
+}
+//--------------------------------------------------------------------------------
+void MainBox::create_plot_currency(void)
+{
+    QStringList sl_currency;
+    sl_currency << "EURUSD"
+//                << "EURGBP"
+//                << "EURCHF"
+//                << "EURJPY"
+                << "EURRUB"
+//                << "EURHKD"
+//                << "EURMXN"
+//                << "EURTRY"
+//                << "EURAUD"
+//                << "EURNZD"
+//                << "EURSGD"
+//                << "EURZAR"
+//                << "EURCAD"
+
+//                << "USDCHF"
+//                << "USDJPY"
+//                << "USDCAD"
+//                << "USDDKK"
+//                << "USDCZK"
+//                << "USDNOK"
+//                << "USDPLN"
+                << "USDRUB"
+//                << "USDSEK"
+//                << "USDSGD"
+//                << "USDZAR"
+//                << "USDHKD"
+//                << "USDMXN"
+//                << "USDTRY"
+//                << "USDHUF"
+//                << "USDCNH"
+
+//                << "GBPUSD"
+//                << "GBPCHF"
+//                << "GBPJPY"
+//                << "GBPCAD"
+//                << "GBPAUD"
+//                << "GBPNZD"
+
+//                << "AUDUSD"
+//                << "AUDJPY"
+//                << "AUDCHF"
+//                << "AUDCAD"
+//                << "AUDNZD"
+
+//                << "NZDUSD"
+//                << "NZDJPY"
+//                << "NZDCHF"
+//                << "NZDCAD"
+
+//                << "XAUUSD"
+//                << "XAGUSD"
+//                << "XAUEUR"
+//                << "XAGEUR"
+
+//                << "CADCHF"
+//                << "CADJPY"
+
+//                << "CHFJPY"
+//                << "BTCUSD"
+//                << "ETHUSD"
+//                << "LTCUSD"
+                   ;
+
+    foreach (QString currency, sl_currency)
+    {
+        Plot *plot = new Plot(currency, this);
+        plot->setMode(1);
+        plot_tickets.append(plot);
+    }
+
+//    Plot *plot_EURUSD = new Plot("EURUSD", this);
+//    plot_EURUSD->setMode(1);
+//    //plot_EURUSD->setMinimumSize(800, 600);
+
+//    Plot *plot_USDRUB = new Plot("USDRUB", this);
+//    plot_USDRUB->setMode(1);
+//    //plot_USDRUB->setMinimumSize(800, 600);
+
+//    Plot *plot_EURRUB = new Plot("EURRUB", this);
+//    plot_EURRUB->setMode(1);
+//    //plot_EURRUB->setMinimumSize(800, 600);
+
+//    plot_tickets.append(plot_EURUSD);
+//    plot_tickets.append(plot_USDRUB);
+//    plot_tickets.append(plot_EURRUB);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

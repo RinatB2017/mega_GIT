@@ -84,7 +84,7 @@ CandleStick_Box::CandleStick_Box(QWidget *parent) :
 void CandleStick_Box::append(QCandlestickSet *set)
 {
     acmeSeries->append(set);
-    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("dd");
+    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy-MM-dd");
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::update_data(void)

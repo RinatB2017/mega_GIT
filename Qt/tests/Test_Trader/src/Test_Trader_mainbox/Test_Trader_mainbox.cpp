@@ -44,10 +44,6 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "Test_Trader_mainbox.hpp"
-
-#include "logbox.hpp"
-
-#include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -83,100 +79,103 @@ QVector<QPointF> MainBox::circle(float x, float y, float r)
     return vector1;
 }
 //--------------------------------------------------------------------------------
+#if 0
+    EURUSD
+    GBPUSD
+    USDCHF
+    USDJPY
+    EURGBP
+    EURCHF
+    EURJPY
+    GBPCHF
+    GBPJPY
+    CHFJPY
+    USDCAD
+    EURCAD
+    AUDUSD
+    AUDJPY
+    NZDUSD
+    NZDJPY
+    XAUUSD
+    XAGUSD
+    USDCZK
+    USDDKK
+    EURRUB
+    USDHUF
+    USDNOK
+    USDPLN
+    USDRUB
+    USDSEK
+    USDSGD
+    USDZAR
+    USDHKD
+    USDMXN
+    USDTRY
+    EURHKD
+    EURMXN
+    EURTRY
+    EURAUD
+    EURNZD
+    EURSGD
+    EURZAR
+    XAUEUR
+    XAGEUR
+    GBPCAD
+    GBPAUD
+    GBPNZD
+    AUDCHF
+    AUDCAD
+    AUDNZD
+    NZDCHF
+    NZDCAD
+    CADCHF
+    CADJPY
+    BTCUSD
+    ETHUSD
+    LTCUSD
+    USDCNH
+#endif
+//--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);
 
     createTestBar();
 
-#if 0
-    QStringList sl;
-    sl.clear();
+    Plot *plot_EURUSD = new Plot("EURUSD", this);
+    plot_EURUSD->setMode(1);
+    //plot_EURUSD->setMinimumSize(800, 600);
 
-    sl << "EURUSD"
-       << "EURGBP"
-       << "EURCHF"
-       << "EURJPY"
-       << "EURCAD"
+    Plot *plot_AUDJPY = new Plot("AUDJPY", this);
+    plot_AUDJPY->setMode(1);
+    //plot_AUDJPY->setMinimumSize(800, 600);
 
-       << "USDCAD"
-       << "USDCHF"
-       << "USDJPY"
+    Plot *plot_USDRUB = new Plot("USDRUB", this);
+    plot_USDRUB->setMode(1);
+    //plot_USDRUB->setMinimumSize(800, 600);
 
-       << "GPBUSD"
-       << "GBPCHF"
-       << "GBPJPY"
+    Plot *plot_EURRUB = new Plot("EURRUB", this);
+    plot_EURRUB->setMode(1);
+    //plot_EURRUB->setMinimumSize(800, 600);
 
-       << "AUDCAD"
-       << "AUDJPY"
-
-       << "NZDUSD"
-       << "NZDJPY"
-
-       << "CHFJPY"
-       << "XAGUSD";
-
-    foreach(QString ticket, sl)
-    {
-        Plot *temp_plot = new Plot(ticket, this);
-        temp_plot->setMode(1);
-        plot_tickets.append(temp_plot);
-    }
-#else
-    Plot *temp_plot = new Plot("EURUSD", this);
-    temp_plot->setMode(1);
-    temp_plot->setMinimumSize(800, 600);
-    plot_tickets.append(temp_plot);
-#endif
-
-    CsvReader *csv = new CsvReader(0, "011109.txt");
-    csv->set_new_separator(',');
-    if(csv->Open())
-    {
-        QList<QStringList> str = csv->CSVRead();
-        //int time = 0;
-        foreach (QStringList sl, str)
-        {
-            //<TICKER>,<DTYYYYMMDD>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>
-            bool ok;
-            QString ticket_name = sl.at(0);
-            foreach (Plot *plot_ticket, plot_tickets)
-            {
-                if(plot_ticket->get_ticket_name() == ticket_name)
-                {
-                    //int data = sl.at(1).toInt(&ok);
-                    //if(!ok) data = 0;
-                    int time = sl.at(2).toInt(&ok);
-                    if(!ok) time = 0;
-                    float open = sl.at(3).toFloat(&ok);
-                    if(!ok) open = 0;
-                    float high = sl.at(4).toFloat(&ok);
-                    if(!ok) high = 0;
-                    float low = sl.at(5).toFloat(&ok);
-                    if(!ok) low = 0;
-                    float close = sl.at(6).toFloat(&ok);
-                    if(!ok) close = 0;
-
-                    plot_ticket->append(time, open, close, low, high);
-                }
-                plot_ticket->update_ticket();
-            }
-        }
-    }
-    else
-    {
-        qDebug() << "file 011109.txt not open";
-    }
-    index = 0;
+    plot_tickets.append(plot_EURUSD);
+    plot_tickets.append(plot_AUDJPY);
+    plot_tickets.append(plot_USDRUB);
+    plot_tickets.append(plot_EURRUB);
 
     QVBoxLayout *vbox = new QVBoxLayout();
     QScrollArea *scroll = new QScrollArea(this);
     QMdiArea *area = new QMdiArea(this);
-    //area->cascadeSubWindows();
+
+    area->show();
     foreach (Plot *plot, plot_tickets)
     {
         area->addSubWindow(plot);
     }
+    //area->setViewMode(QMdiArea::SubWindowView);
+    area->setViewMode(QMdiArea::TabbedView);
+    emit debug(QString("area: %1 %2").arg(area->width()).arg(area->height()));
+
     scroll->setWidgetResizable(true);
     scroll->setWidget(area);
     vbox->addWidget(scroll);
@@ -195,10 +194,6 @@ void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    if(mw ==nullptr)
-    {
-        return;
-    }
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -228,22 +223,124 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::load(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+#if 0
+    //QString filename = "011109.txt";
+    QString filename = "140618.txt";
+#else
+    QFileDialog *dlg = 0;
+    QString filename;
+
+    dlg = new QFileDialog;
+    dlg->setAcceptMode(QFileDialog::AcceptOpen);
+    dlg->setNameFilter(tr("TXT files (*.txt)"));
+    dlg->setDefaultSuffix(tr("txt"));
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        filename = files.at(0);
+    }
+    dlg->deleteLater();
+
+    if(filename.isEmpty())
+    {
+        emit error("Файл не выбран!");
+        return;
+    }
+    //emit info(filename);
+#endif
+
+    QStringList t_sl;
+    CsvReader *csv = new CsvReader(0, filename);
+    csv->set_new_separator(',');
+    if(csv->Open())
+    {
+        QList<QStringList> str = csv->CSVRead();
+        int cnt = 0;
+        foreach (QStringList sl, str)
+        {
+            //<TICKER>,<DTYYYYMMDD>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>
+            bool ok = false;
+            QString ticket_name = sl.at(0);
+            //---
+            foreach (QString t_name, t_sl)
+            {
+                if(t_name == ticket_name)
+                {
+                    ok = true;
+                }
+            }
+            if(ok == false)
+            {
+                //emit info(ticket_name);
+                t_sl.append(ticket_name);
+            }
+            //---
+
+            foreach (Plot *plot_ticket, plot_tickets)
+            {
+                if(plot_ticket->get_ticket_name() == ticket_name)
+                {
+                    //int data = sl.at(1).toInt(&ok);
+                    //if(!ok) data = 0;
+                    //emit info(QString("%1").arg(data));
+
+                    int time = sl.at(2).toInt(&ok);
+                    if(!ok) time = 0;
+                    float open = sl.at(3).toFloat(&ok);
+                    if(!ok) open = 0;
+                    float high = sl.at(4).toFloat(&ok);
+                    if(!ok) high = 0;
+                    float low = sl.at(5).toFloat(&ok);
+                    if(!ok) low = 0;
+                    float close = sl.at(6).toFloat(&ok);
+                    if(!ok) close = 0;
+
+                    if(time > 0)
+                    {
+#if 0
+                        emit info(QString("ticket: %1 %2 %3 %4 %5")
+                                  .arg(time)
+                                  .arg(open)
+                                  .arg(close)
+                                  .arg(low)
+                                  .arg(high));
+#endif
+                        plot_ticket->append(time, open, close, low, high);
+                        cnt++;
+                        plot_ticket->update_ticket();
+                        plot_ticket->test();
+                    }
+                }
+            }
+        }
+        foreach (QString t_name, t_sl)
+        {
+            emit info(t_name);
+        }
+        emit info(QString("cnt = %1").arg(cnt));
+        emit info("OK");
+    }
+    else
+    {
+        emit error(QString("File %1 not open").arg(filename));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::save(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    emit info("save");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     Plot *d_plot = new Plot("EURUSD");
-    d_plot->setMinimumSize(640, 480);
     d_plot->setMode(1);
+    d_plot->setMinimumSize(640, 480);
     d_plot->show();
+
+    //plot_tickets.at(0)->test();
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

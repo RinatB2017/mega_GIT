@@ -24,6 +24,7 @@ public slots:
                 float close,
                 float low,
                 float high);
+    void test(void);
 
 private slots:
     void showItem(QwtPlotItem *, bool on);
@@ -32,8 +33,6 @@ private:
     QwtPlotTradingCurve *curve;
     QVector<QwtOHLCSample> tickets;
     QString ticket_name;
-
-    void populate(void);
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -1,6 +1,5 @@
 //--------------------------------------------------------------------------------
 #include "plot.h"
-#include "legend.h"
 #include "griditem.h"
 #include "quotefactory.h"
 
@@ -10,11 +9,9 @@
 #include <qwt_plot_renderer.h>
 #include <qwt_plot_zoomer.h>
 #include <qwt_plot_panner.h>
-#include <qwt_legend_label.h>
 #include <qwt_date_scale_engine.h>
 #include <qwt_date_scale_draw.h>
 #include <qwt_plot_magnifier.h>
-#include <qwt_legend.h>
 #include <qwt_date.h>
 //--------------------------------------------------------------------------------
 class Zoomer: public QwtPlotZoomer
@@ -115,13 +112,13 @@ bool Plot::append(int time,
 {
     QwtOHLCSample temp;
 
-    temp.time = time;
+    temp.time  = time;
     temp.high  = high;
     temp.close = close;
     temp.open  = open;
     temp.low   = low;
     tickets.append(temp);
-    //qDebug() << time << open << close << low << high;
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -134,12 +131,13 @@ Plot::Plot(const QString &ticket_name, QWidget *parent):
     QwtPlot(parent),
     ticket_name(ticket_name)
 {
+    setWindowTitle(ticket_name);
     setTitle(ticket_name);
 
     QwtDateScaleDraw *scaleDraw = new DateScaleDraw(Qt::UTC);
     QwtDateScaleEngine *scaleEngine = new QwtDateScaleEngine(Qt::UTC);
 
-    setAxisTitle(QwtPlot::xBottom, QString("2010"));
+    setAxisTitle(QwtPlot::xBottom, QString("2018"));
     setAxisScaleDraw(QwtPlot::xBottom, scaleDraw);
     setAxisScaleEngine(QwtPlot::xBottom, scaleEngine);
     setAxisLabelRotation(QwtPlot::xBottom, -50.0);
@@ -147,25 +145,14 @@ Plot::Plot(const QString &ticket_name, QWidget *parent):
 
     setAxisTitle(QwtPlot::yLeft, QString("Price"));
 
-#if 0
-    QwtLegend *legend = new QwtLegend;
-    legend->setDefaultItemMode(QwtLegendData::Checkable);
-    insertLegend(legend, QwtPlot::RightLegend);
-#else
-    Legend *legend = new Legend;
-    insertLegend(legend, QwtPlot::RightLegend);
-#endif
-
     curve = new QwtPlotTradingCurve();
     curve->setTitle(ticket_name);
     curve->setOrientation(Qt::Vertical);
     curve->attach(this);
 
-//    curve->setSymbolExtent(12*3600*1000.0);
-//    curve->setMinSymbolWidth(3);
-//    curve->setMaxSymbolWidth(15);
-
-    curve->setSamples(tickets);
+    // curve->setSymbolExtent(12*3600*1000.0);
+    // curve->setMinSymbolWidth(3);
+    // curve->setMaxSymbolWidth(15);
 
     // LeftButton for the zooming
     // MidButton for the panning
@@ -174,101 +161,13 @@ Plot::Plot(const QString &ticket_name, QWidget *parent):
 
     Zoomer* zoomer = new Zoomer(canvas());
     zoomer->setMousePattern(QwtEventPattern::MouseSelect2,
-                            Qt::RightButton, Qt::ControlModifier);
+                            Qt::RightButton,
+                            Qt::ControlModifier);
     zoomer->setMousePattern(QwtEventPattern::MouseSelect3,
                             Qt::RightButton);
 
     QwtPlotPanner *panner = new QwtPlotPanner(canvas());
     panner->setMouseButton(Qt::MidButton);
-
-    connect(legend, SIGNAL(checked(QwtPlotItem *, bool, int)), SLOT(showItem(QwtPlotItem *, bool)));
-}
-//--------------------------------------------------------------------------------
-void Plot::populate(void)
-{
-    GridItem *gridItem = new GridItem();
-#if 0
-    gridItem->setOrientations( Qt::Horizontal );
-#endif
-    gridItem->attach( this );
-
-    const Qt::GlobalColor colors[] =
-    {
-        Qt::red,
-        Qt::blue,
-        Qt::darkCyan,
-        Qt::darkMagenta,
-        Qt::darkYellow
-    };
-
-    const int numColors = sizeof( colors ) / sizeof( colors[0] );
-
-    for ( int i = 0; i < QuoteFactory::NumStocks; i++ )
-    {
-        QuoteFactory::Stock stock = static_cast<QuoteFactory::Stock>( i );
-
-        QwtPlotTradingCurve *curve = new QwtPlotTradingCurve();
-        curve->setTitle( QuoteFactory::title( stock ) );
-        curve->setOrientation( Qt::Vertical );
-        curve->setSamples( QuoteFactory::samples2010( stock ) );
-
-        // as we have one sample per day a symbol width of
-        // 12h avoids overlapping symbols. We also bound
-        // the width, so that is is not scaled below 3 and
-        // above 15 pixels.
-
-        curve->setSymbolExtent( 12 * 3600 * 1000.0 );
-        curve->setMinSymbolWidth( 3 );
-        curve->setMaxSymbolWidth( 15 );
-
-        const Qt::GlobalColor color = colors[ i % numColors ];
-
-        curve->setSymbolPen( color );
-        curve->setSymbolBrush( QwtPlotTradingCurve::Decreasing, color );
-        curve->setSymbolBrush( QwtPlotTradingCurve::Increasing, Qt::white );
-        curve->attach( this );
-
-        showItem( curve, true );
-    }
-
-    for ( int i = 0; i < 4; i++ )
-    {
-        QwtPlotMarker *marker = new QwtPlotMarker();
-
-        marker->setTitle( QString( "Event %1" ).arg( i + 1 ) );
-        marker->setLineStyle( QwtPlotMarker::VLine );
-        marker->setLinePen( colors[ i % numColors ], 0, Qt::DashLine );
-        marker->setVisible( false );
-
-        QDateTime dt( QDate( 2010, 1, 1 ) );
-        dt = dt.addDays( 77 * ( i + 1 ) );
-        
-        marker->setValue( QwtDate::toDouble( dt ), 0.0 );
-
-        marker->setItemAttribute( QwtPlotItem::Legend, true );
-
-        marker->attach( this );
-    }
-
-    // to show how QwtPlotZoneItem works
-
-    ZoneItem *zone1 = new ZoneItem( "Zone 1");
-    zone1->setColor( Qt::darkBlue );
-    zone1->setInterval( QDate( 2010, 3, 10 ), QDate( 2010, 3, 27 ) );
-    zone1->setVisible( false );
-    zone1->attach( this );
-
-    ZoneItem *zone2 = new ZoneItem( "Zone 2");
-    zone2->setColor( Qt::darkMagenta );
-    zone2->setInterval( QDate( 2010, 8, 1 ), QDate( 2010, 8, 24 ) );
-    zone2->setVisible( false );
-    zone2->attach( this );
-
-    ZoneItem *zone3 = new ZoneItem( "Zone 3");
-    zone3->setColor( Qt::darkBlue );
-    zone3->setInterval( QDate( 2010, 8, 1 ), QDate( 2012, 8, 24 ) );
-    zone3->setVisible( false );
-    zone3->attach( this );
 }
 //--------------------------------------------------------------------------------
 void Plot::setMode(int style)
@@ -301,5 +200,10 @@ void Plot::exportPlot(void)
 QString Plot::get_ticket_name(void)
 {
     return ticket_name;
+}
+//--------------------------------------------------------------------------------
+void Plot::test(void)
+{
+    showItem(curve, true);
 }
 //--------------------------------------------------------------------------------

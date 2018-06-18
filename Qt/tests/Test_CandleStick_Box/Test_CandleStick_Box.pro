@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Test_Trader
+TARGET   = Test_CandleStick_Box
 
 FOLDER  = tests
 
@@ -24,26 +24,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    curvedata.hpp \
-    plot.h \
-    quotefactory.h \
-    griditem.h \
-    legend.h
-
-SOURCES += \
-    griditem.cpp \
-    legend.cpp \
-    quotefactory.cpp \
-    plot.cpp
-
-HEADERS += \
-    traderplot.hpp \
+    Test_Trader_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_Trader_mainbox.hpp
 
 SOURCES += \
-    traderplot.cpp \
     Test_Trader_mainbox.cpp \
     main.cpp
 
@@ -60,7 +45,8 @@ LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
-include ($$LIB_PATH2/qwt/qwt.pri)
+
+include (src/candlestick_box/candlestick_box.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

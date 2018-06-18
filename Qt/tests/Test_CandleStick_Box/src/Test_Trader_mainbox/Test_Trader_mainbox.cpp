@@ -28,24 +28,19 @@
 #   include <sys/sysinfo.h>
 #endif
 
-#include <qwt_plot_seriesitem.h>
-#include <qwt_series_data.h>
-#include <qwt_plot_curve.h>
-#include <qwt_plot_grid.h>
-#include <qwt_symbol.h>
-#include <qwt_plot.h>
 #include <qmath.h>
-
-#include "traderplot.hpp"
-#include "csvreader.hpp"
-#include "plot.h"
 //--------------------------------------------------------------------------------
 #include "ui_Test_Trader_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
+#include "csvreader.hpp"
 #include "Test_Trader_mainbox.hpp"
+
+#include "qcandlestickset.h"
+
+#include "candlestick_box.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -86,16 +81,34 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
+
+#if 1
+    CandleStick_Box *box = new CandleStick_Box("EURUSD");
+    for(int n=0; n<16; n++)
+    {
+        QCandlestickSet *set = new QCandlestickSet;
+        set->setTimestamp(1435708800000 * n);
+        //set->setTimestamp(n * 24 * 3600);
+        set->setOpen(qrand() % 1000);
+        set->setClose(qrand() % 1000);
+        set->setHigh(qrand() % 1000);
+        set->setLow(qrand() % 1000);
+        box->append(set);
+    }
+    box->update_data();
+    plot_tickets.append(box);
+#else
     create_plot_currency();
+#endif
 
     QVBoxLayout *vbox = new QVBoxLayout();
     QScrollArea *scroll = new QScrollArea(this);
     QMdiArea *area = new QMdiArea(this);
 
     //area->show();
-    foreach (Plot *plot, plot_tickets)
+    foreach (CandleStick_Box *box, plot_tickets)
     {
-        area->addSubWindow(plot);
+        area->addSubWindow(box);
     }
     //area->setViewMode(QMdiArea::SubWindowView);
     area->setViewMode(QMdiArea::TabbedView);
@@ -183,9 +196,8 @@ void MainBox::create_plot_currency(void)
 
     foreach (QString currency, sl_currency)
     {
-        Plot *plot = new Plot(currency, this);
-        plot->setMode(1);
-        plot_tickets.append(plot);
+        CandleStick_Box *box = new CandleStick_Box(currency, this);
+        plot_tickets.append(box);
     }
 }
 //--------------------------------------------------------------------------------
@@ -277,7 +289,7 @@ void MainBox::load(void)
             }
             //---
 
-            foreach (Plot *plot_ticket, plot_tickets)
+            foreach (CandleStick_Box *plot_ticket, plot_tickets)
             {
                 if(plot_ticket->get_ticket_name() == ticket_name)
                 {
@@ -306,10 +318,17 @@ void MainBox::load(void)
                                   .arg(low)
                                   .arg(high));
 #endif
-                        plot_ticket->append(time, open, close, low, high);
+                        QCandlestickSet *set = new QCandlestickSet;
+                        set->setTimestamp(1435708800000 + time); //TODO
+                        //set->setTimestamp(n * 24 * 3600);
+                        set->setOpen(open);
+                        set->setClose(close);
+                        set->setHigh(high);
+                        set->setLow(low);
+
+                        plot_ticket->append(set);
                         cnt++;
-                        plot_ticket->update_ticket();
-                        plot_ticket->test();
+                        plot_ticket->update_data();
                     }
                 }
             }
@@ -332,15 +351,27 @@ void MainBox::save(void)
     emit info("save");
 }
 //--------------------------------------------------------------------------------
+#include "candlestick_box.hpp"
+#include "qcandlestickset.h"
 void MainBox::test(void)
 {
 #if 1
-    Plot *d_plot = new Plot("EURUSD");
-    d_plot->setMode(1);
-    d_plot->setMinimumSize(640, 480);
-    d_plot->show();
+    CandleStick_Box *box = new CandleStick_Box("USDEUR");
+    box->setMinimumSize(800, 600);
+    box->show();
 
-    plot_tickets.at(0)->test();
+    for(int n=0; n<10; n++)
+    {
+        QCandlestickSet *set = new QCandlestickSet;
+        set->setTimestamp(1435708800000 * n);
+        //set->setTimestamp(n * 24 * 3600);
+        set->setOpen(qrand() % 1000);
+        set->setClose(qrand() % 1000);
+        set->setHigh(qrand() % 1000);
+        set->setLow(qrand() % 1000);
+        box->append(set);
+    }
+    box->update_data();
 #endif
 
 #if 0

@@ -26,15 +26,17 @@
 
 #include "candlestickdatareader.h"
 //--------------------------------------------------------------------------------
-CandleStick_Box::CandleStick_Box(QWidget *parent) :
+CandleStick_Box::CandleStick_Box(const QString ticket_name, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CandleStick_Box)
 {
+    this->ticket_name = ticket_name;
+
     ui->setupUi(this);
     
     //---
     acmeSeries = new QCandlestickSeries();
-    acmeSeries->setName("Acme Ltd");
+    acmeSeries->setName(ticket_name);
     acmeSeries->setIncreasingColor(QColor(Qt::green));
     acmeSeries->setDecreasingColor(QColor(Qt::red));
 
@@ -58,7 +60,7 @@ CandleStick_Box::CandleStick_Box(QWidget *parent) :
 
     chart = new QChart();
     chart->addSeries(acmeSeries);
-    chart->setTitle("Historical Data");
+    chart->setTitle(ticket_name);
     //chart->setAnimationOptions(QChart::SeriesAnimations);
 
     chart->createDefaultAxes();
@@ -70,8 +72,8 @@ CandleStick_Box::CandleStick_Box(QWidget *parent) :
     axisY->setMax(1000);    //axisY->max() * 10.00);
     axisY->setMin(0);       //axisY->min() * 0.00);
 
-    //chart->legend()->setVisible(true);
-    //chart->legend()->setAlignment(Qt::AlignBottom);
+    chart->legend()->setVisible(false);
+    chart->legend()->setAlignment(Qt::AlignBottom);
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -92,6 +94,11 @@ void CandleStick_Box::update_data(void)
     //chart->removeAllSeries();
     chart->addSeries(acmeSeries);
     axisX->setCategories(categories);
+}
+//--------------------------------------------------------------------------------
+QString CandleStick_Box::get_ticket_name(void)
+{
+    return ticket_name;
 }
 //--------------------------------------------------------------------------------
 CandleStick_Box::~CandleStick_Box()

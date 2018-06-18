@@ -115,14 +115,11 @@ E:\my_programm\tests\Test_Trader\obj\qwt_thermo.o
 E:\my_programm\tests\Test_Trader\obj\qwt_transform.o
 E:\my_programm\tests\Test_Trader\obj\qwt_wheel.o
 E:\my_programm\tests\Test_Trader\obj\qwt_widget_overlay.o
-E:\my_programm\tests\Test_Trader\obj\candlestickdatareader.o
-E:\my_programm\tests\Test_Trader\obj\candlestick_box.o
 E:\my_programm\tests\Test_Trader\obj\qrc_mw_images.o
 E:\my_programm\tests\Test_Trader\obj\qrc_aboutbox.o
 E:\my_programm\tests\Test_Trader\obj\qrc_common.o
 E:\my_programm\tests\Test_Trader\obj\qrc_programm.o
 E:\my_programm\tests\Test_Trader\obj\qrc_system.o
-E:\my_programm\tests\Test_Trader\obj\qrc_candlestickdata.o
 E:\my_programm\tests\Test_Trader\obj\moc_plot.o
 E:\my_programm\tests\Test_Trader\obj\moc_legend.o
 E:\my_programm\tests\Test_Trader\obj\moc_Test_Trader_mainbox.o
@@ -168,5 +165,4 @@ E:\my_programm\tests\Test_Trader\obj\moc_qwt_slider.o
 E:\my_programm\tests\Test_Trader\obj\moc_qwt_text_label.o
 E:\my_programm\tests\Test_Trader\obj\moc_qwt_thermo.o
 E:\my_programm\tests\Test_Trader\obj\moc_qwt_wheel.o
-E:\my_programm\tests\Test_Trader\obj\moc_candlestick_box.o
 );

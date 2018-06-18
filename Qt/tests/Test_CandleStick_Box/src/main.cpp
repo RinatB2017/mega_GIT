@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2018                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,40 +18,59 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef CANDLESTICK_BOX_HPP
-#define CANDLESTICK_BOX_HPP
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#include <QtCharts/QBarCategoryAxis>
-#include <QtCharts/QCandlestickSeries>
-#include <QtCharts/QChartView>
-#include <QtCharts/QValueAxis>
-#include <QDateTime>
-#include <QWidget>
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "Test_Trader_mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        return -1;
+    }
 
-QT_CHARTS_USE_NAMESPACE
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class CandleStick_Box;
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    splash->show();
+
+    qApp->processEvents();
+
+    MainWindow *main_window = new MainWindow;
+    Q_CHECK_PTR(main_window);
+    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    Q_CHECK_PTR(mainBox);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class CandleStick_Box : public QWidget
-{
-    Q_OBJECT
-
-public:
-    explicit CandleStick_Box(QWidget *parent = 0);
-    ~CandleStick_Box();
-
-    void append(QCandlestickSet *set);
-    void update_data(void);
-
-private:
-    Ui::CandleStick_Box *ui;
-    QCandlestickSeries *acmeSeries = 0;
-    QChart *chart = 0;
-    QStringList categories;
-    QBarCategoryAxis *axisX = 0;
-
-};
-//--------------------------------------------------------------------------------
-#endif // CANDLESTICK_BOX_HPP

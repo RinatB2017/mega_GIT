@@ -24,7 +24,9 @@
 #   include <QtGui>
 #endif
 
-#include <sys/sysinfo.h>
+#ifdef Q_OS_LINUX
+#   include <sys/sysinfo.h>
+#endif
 
 #include <qwt_plot_seriesitem.h>
 #include <qwt_series_data.h>

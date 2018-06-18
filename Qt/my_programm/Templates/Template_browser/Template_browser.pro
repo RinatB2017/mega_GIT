@@ -13,13 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/template_browser_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += webkitwidgets
-} else {
-    QT += webkit
-}
-QT += network
-
 QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR

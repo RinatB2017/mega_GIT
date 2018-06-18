@@ -53,6 +53,7 @@ OTHER_FILES += doc/notebook.txt
 
 win32 {
     RC_FILE = ico/myapp.rc
+    error(Linux only)
 }
 
 LIB_PATH  = "../../../Qt/lib"

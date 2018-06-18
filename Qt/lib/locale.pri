@@ -31,7 +31,7 @@ isEmpty(QMAKE_LRELEASE) {
 # qtxmlpatterns_ru.qm
 # лучше грузить из ресурсов, т.к. на целевой машине, скорее всего, Qt не установлен
 
-RESOURCES += system/system.qrc
+RESOURCES += $$PWD/system/system.qrc
 
 updateqm.input = TRANSLATIONS
 updateqm.output = locale/${QMAKE_FILE_BASE}.qm

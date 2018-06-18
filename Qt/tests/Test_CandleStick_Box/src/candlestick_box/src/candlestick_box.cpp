@@ -31,6 +31,7 @@ CandleStick_Box::CandleStick_Box(const QString ticket_name, QWidget *parent) :
     ui(new Ui::CandleStick_Box)
 {
     this->ticket_name = ticket_name;
+    setWindowTitle(ticket_name);
 
     ui->setupUi(this);
     

@@ -3,7 +3,6 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
@@ -14,15 +13,15 @@ SOURCES += aboutbox.cpp
 contains(DEFINES, LOGO_GL) {
     message (LOGO_GL)
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-    include (glwidget/glwidget_qt5.pri)
-} else {
-    include (glwidget/glwidget_qt4.pri)
-}
+    greaterThan(QT_MAJOR_VERSION, 4) {
+        include (glwidget/glwidget_qt5.pri)
+    } else {
+        include (glwidget/glwidget_qt4.pri)
+    }
 
     QT *= opengl
 }
 
 FORMS       += aboutbox.ui
 
-RESOURCES   += aboutbox.qrc
+RESOURCES   += $$PWD/images/aboutbox.qrc

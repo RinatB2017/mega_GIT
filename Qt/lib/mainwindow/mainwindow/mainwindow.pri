@@ -3,10 +3,9 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS   += mainwindow.hpp
 SOURCES   += mainwindow.cpp
-RESOURCES += mw_images.qrc
+RESOURCES += $$PWD/mw_images/mw_images.qrc

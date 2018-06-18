@@ -53,7 +53,6 @@ OTHER_FILES += doc/notebook.txt
 
 win32 {
     RC_FILE = ico/myapp.rc
-    error(Linux only)
 }
 
 LIB_PATH  = "../../../Qt/lib"
@@ -68,6 +67,15 @@ include (src/candlestick_box/candlestick_box.pri)
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
+}
+
+win32 {
+    CONFIG(debug, debug|release) {
+        DESTDIR = c:/Programming/my_programm_bin/debug
+    }
+    else {
+        DESTDIR = c:/Programming/my_programm_bin/release
+    }
 }
 
 VPATH = $$INCLUDEPATH

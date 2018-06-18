@@ -81,63 +81,6 @@ QVector<QPointF> MainBox::circle(float x, float y, float r)
     return vector1;
 }
 //--------------------------------------------------------------------------------
-#if 0
-EURUSD
-GBPUSD
-USDCHF
-USDJPY
-EURGBP
-EURCHF
-EURJPY
-GBPCHF
-GBPJPY
-CHFJPY
-USDCAD
-EURCAD
-AUDUSD
-AUDJPY
-NZDUSD
-NZDJPY
-XAUUSD
-XAGUSD
-USDCZK
-USDDKK
-EURRUB
-USDHUF
-USDNOK
-USDPLN
-USDRUB
-USDSEK
-USDSGD
-USDZAR
-USDHKD
-USDMXN
-USDTRY
-EURHKD
-EURMXN
-EURTRY
-EURAUD
-EURNZD
-EURSGD
-EURZAR
-XAUEUR
-XAGEUR
-GBPCAD
-GBPAUD
-GBPNZD
-AUDCHF
-AUDCAD
-AUDNZD
-NZDCHF
-NZDCAD
-CADCHF
-CADJPY
-BTCUSD
-ETHUSD
-LTCUSD
-USDCNH
-#endif
-//--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);
@@ -149,7 +92,7 @@ void MainBox::init(void)
     QScrollArea *scroll = new QScrollArea(this);
     QMdiArea *area = new QMdiArea(this);
 
-    area->show();
+    //area->show();
     foreach (Plot *plot, plot_tickets)
     {
         area->addSubWindow(plot);
@@ -244,22 +187,6 @@ void MainBox::create_plot_currency(void)
         plot->setMode(1);
         plot_tickets.append(plot);
     }
-
-    //    Plot *plot_EURUSD = new Plot("EURUSD", this);
-    //    plot_EURUSD->setMode(1);
-    //    //plot_EURUSD->setMinimumSize(800, 600);
-
-    //    Plot *plot_USDRUB = new Plot("USDRUB", this);
-    //    plot_USDRUB->setMode(1);
-    //    //plot_USDRUB->setMinimumSize(800, 600);
-
-    //    Plot *plot_EURRUB = new Plot("EURRUB", this);
-    //    plot_EURRUB->setMode(1);
-    //    //plot_EURRUB->setMinimumSize(800, 600);
-
-    //    plot_tickets.append(plot_EURUSD);
-    //    plot_tickets.append(plot_USDRUB);
-    //    plot_tickets.append(plot_EURRUB);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

@@ -70,8 +70,8 @@ CandleStick_Box::CandleStick_Box(QWidget *parent) :
     axisY->setMax(1000);    //axisY->max() * 10.00);
     axisY->setMin(0);       //axisY->min() * 0.00);
 
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
+    //chart->legend()->setVisible(true);
+    //chart->legend()->setAlignment(Qt::AlignBottom);
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);

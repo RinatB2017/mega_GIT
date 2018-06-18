@@ -14,6 +14,8 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
+QT += webkit webkitwidgets network
+#QT  += webenginewidgets
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON

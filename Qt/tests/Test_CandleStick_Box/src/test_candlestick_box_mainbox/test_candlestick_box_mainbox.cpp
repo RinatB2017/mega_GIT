@@ -30,15 +30,13 @@
 
 #include <qmath.h>
 //--------------------------------------------------------------------------------
-#include "ui_Test_Trader_mainbox.h"
+#include "ui_test_candlestick_box_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "csvreader.hpp"
-#include "Test_Trader_mainbox.hpp"
-
-#include "qcandlestickset.h"
+#include "test_candlestick_box_mainbox.hpp"
 
 #include "candlestick_box.hpp"
 //--------------------------------------------------------------------------------
@@ -83,20 +81,7 @@ void MainBox::init(void)
     createTestBar();
 
 #if 1
-    CandleStick_Box *box = new CandleStick_Box("EURUSD");
-    for(int n=0; n<16; n++)
-    {
-        QCandlestickSet *set = new QCandlestickSet;
-        set->setTimestamp(1435708800000 * n);
-        //set->setTimestamp(n * 24 * 3600);
-        set->setOpen(qrand() % 1000);
-        set->setClose(qrand() % 1000);
-        set->setHigh(qrand() % 1000);
-        set->setLow(qrand() % 1000);
-        box->append(set);
-    }
-    box->update_data();
-    plot_tickets.append(box);
+    create_test_currency();
 #else
     create_plot_currency();
 #endif
@@ -126,6 +111,26 @@ void MainBox::init(void)
     hbox->setMargin(0);
     hbox->addWidget(frame);
     setLayout(hbox);
+}
+//--------------------------------------------------------------------------------
+void MainBox::create_test_currency(void)
+{
+    CandleStick_Box *box = new CandleStick_Box("EURUSD", this);
+#if 0
+    for(int n=0; n<16; n++)
+    {
+        QCandlestickSet *set = new QCandlestickSet;
+        set->setTimestamp(1527802700 * n);
+        //set->setTimestamp(n * 24 * 3600);
+        set->setOpen(qrand() % 1000);
+        set->setClose(qrand() % 1000);
+        set->setHigh(qrand() % 1000);
+        set->setLow(qrand() % 1000);
+        box->append(set);
+    }
+    box->update_data();
+#endif
+    plot_tickets.append(box);
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_plot_currency(void)
@@ -232,6 +237,57 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
+bool MainBox::create_set(QStringList sl,
+                         QCandlestickSet *set)
+{
+    if(sl.size() != 7)
+    {
+        emit error(QString("bad len %1").arg(sl.size()));
+        return false;
+    }
+    QString s_ticket = sl.at(0);
+    QString s_date   = sl.at(1);
+    QString s_time   = sl.at(2);
+    QString s_open   = sl.at(3);
+    QString s_high   = sl.at(4);
+    QString s_low    = sl.at(5);
+    QString s_close  = sl.at(6);
+
+    bool ok = false;
+    //---
+    int year = 0;
+    int month = 0;
+    int day = 0;
+    if(s_date.length() == 8)
+    {
+        year  = s_date.left(4).toInt(&ok);
+        month = s_date.mid(4, 2).toInt(&ok);
+        day   = s_date.right(2).toInt(&ok);
+    }
+
+    QDateTime dt;
+    QDate date(year, month, day);
+    dt.setDate(date);
+    QDateTime dt2 = dt.addSecs(s_time.toInt());
+    //---
+
+    qreal d_open  = s_open.toDouble(&ok);
+    qreal d_high  = s_high.toDouble(&ok);
+    qreal d_low   = s_low.toDouble(&ok);
+    qreal d_close = s_close.toDouble(&ok);
+
+    if(set)
+    {
+        set->setTimestamp(dt2.toTime_t());
+        set->setOpen(d_open);
+        set->setHigh(d_high);
+        set->setLow(d_low);
+        set->setClose(d_close);
+    }
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainBox::load(void)
 {
 #if 0
@@ -293,41 +349,11 @@ void MainBox::load(void)
             {
                 if(plot_ticket->get_ticket_name() == ticket_name)
                 {
-                    //int data = sl.at(1).toInt(&ok);
-                    //if(!ok) data = 0;
-                    //emit info(QString("%1").arg(data));
-
-                    int time = sl.at(2).toInt(&ok);
-                    if(!ok) time = 0;
-                    float open = sl.at(3).toFloat(&ok);
-                    if(!ok) open = 0;
-                    float high = sl.at(4).toFloat(&ok);
-                    if(!ok) high = 0;
-                    float low = sl.at(5).toFloat(&ok);
-                    if(!ok) low = 0;
-                    float close = sl.at(6).toFloat(&ok);
-                    if(!ok) close = 0;
-
-                    if(time > 0)
+                    QCandlestickSet *set = new QCandlestickSet;
+                    ok = create_set(sl, set);
+                    if(ok)
                     {
-#if 0
-                        emit info(QString("ticket: %1 %2 %3 %4 %5")
-                                  .arg(time)
-                                  .arg(open)
-                                  .arg(close)
-                                  .arg(low)
-                                  .arg(high));
-#endif
-                        QCandlestickSet *set = new QCandlestickSet;
-                        set->setTimestamp(1435708800000 + time); //TODO
-                        //set->setTimestamp(n * 24 * 3600);
-                        set->setOpen(open);
-                        set->setClose(close);
-                        set->setHigh(high);
-                        set->setLow(low);
-
                         plot_ticket->append(set);
-                        cnt++;
                         plot_ticket->update_data();
                     }
                 }

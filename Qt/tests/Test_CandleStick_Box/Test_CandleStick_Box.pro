@@ -10,11 +10,13 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/trader \
-    $$PWD/src/Test_Trader_mainbox \
-    $$PWD/src/Test_Trader_mainbox/ui
+    $$PWD/src/test_candlestick_box_mainbox \
+    $$PWD/src/test_candlestick_box_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
+
+QT  += charts
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -24,15 +26,15 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    Test_Trader_mainbox.hpp \
+    test_candlestick_box_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    Test_Trader_mainbox.cpp \
+    test_candlestick_box_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_Trader_mainbox.ui
+FORMS   += test_candlestick_box_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

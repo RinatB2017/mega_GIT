@@ -40,7 +40,7 @@
 #include "csvreader.hpp"
 #include "plot.h"
 //--------------------------------------------------------------------------------
-#include "ui_Test_Trader_mainbox.h"
+#include "ui_test_trader_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"

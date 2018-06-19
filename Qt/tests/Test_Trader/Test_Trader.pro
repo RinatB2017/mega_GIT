@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/trader \
-    $$PWD/src/Test_Trader_mainbox \
-    $$PWD/src/Test_Trader_mainbox/ui
+    $$PWD/src/test_trader_mainbox \
+    $$PWD/src/test_trader_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
@@ -40,14 +40,14 @@ HEADERS += \
     traderplot.hpp \
     defines.hpp \
     version.hpp \
-    Test_Trader_mainbox.hpp
+    test_trader_mainbox.hpp
 
 SOURCES += \
     traderplot.cpp \
-    Test_Trader_mainbox.cpp \
+    test_trader_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_Trader_mainbox.ui
+FORMS   += test_trader_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

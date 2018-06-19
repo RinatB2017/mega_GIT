@@ -70,8 +70,8 @@ CandleStick_Box::CandleStick_Box(const QString ticket_name, QWidget *parent) :
     axisX->setCategories(categories);
 
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    axisY->setMax(1000);    //axisY->max() * 10.00);
-    axisY->setMin(0);       //axisY->min() * 0.00);
+    axisY->setMax(1.17);    //axisY->max() * 10.00);
+    axisY->setMin(1.16);    //axisY->min() * 0.00);
 
     chart->legend()->setVisible(false);
     chart->legend()->setAlignment(Qt::AlignBottom);

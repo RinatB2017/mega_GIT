@@ -7,8 +7,6 @@ DEPENDPATH  += \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QT  += charts
-
 HEADERS += candlestickdatareader.h
 SOURCES += candlestickdatareader.cpp
 

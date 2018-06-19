@@ -205,16 +205,95 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#if 0
+<TICKER>,<DTYYYYMMDD>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>
+EURUSD,20180601,000100,1.1690,1.1690,1.1690,1.1690
+EURUSD,20180601,000200,1.1690,1.1691,1.1690,1.1691
+EURUSD,20180601,000300,1.1691,1.1691,1.1691,1.1691
+EURUSD,20180601,000400,1.1691,1.1691,1.1691,1.1691
+EURUSD,20180601,000500,1.1691,1.1692,1.1691,1.1692
+EURUSD,20180601,000600,1.1692,1.1692,1.1692,1.1692
+EURUSD,20180601,000700,1.1692,1.1692,1.1692,1.1692
+EURUSD,20180601,000800,1.1692,1.1692,1.1692,1.1692
+EURUSD,20180601,000900,1.1692,1.1692,1.1692,1.1692
+EURUSD,20180601,001000,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,001100,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,001200,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,001300,1.1693,1.1693,1.1692,1.1692
+EURUSD,20180601,001400,1.1692,1.1693,1.1692,1.1693
+EURUSD,20180601,001500,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,001600,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,001700,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,001800,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,001900,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,002000,1.1693,1.1693,1.1693,1.1693
+EURUSD,20180601,002100,1.1694,1.1695,1.1694,1.1695
+EURUSD,20180601,002200,1.1696,1.1696,1.1696,1.1696
+EURUSD,20180601,002300,1.1695,1.1697,1.1695,1.1696
+EURUSD,20180601,002400,1.1697,1.1697,1.1696,1.1696
+#endif
+//--------------------------------------------------------------------------------
 #include "test_protocol.hpp"
 #include "crc.h"
 #include <unistd.h>
+
+#include <QDate>
+#include <QTime>
 
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 0
+    QTime t_time(0, 0, 0);
+    QTime t2 = t_time.addSecs(2300);
+    emit info(QString("%1:%2:%3")
+              .arg(t2.hour())
+              .arg(t2.minute())
+              .arg(t2.second()));
+#endif
+
 #if 1
+    bool ok = false;
+    QString temp = "20180601";
+    int year = 0;
+    int month = 0;
+    int day = 0;
+    if(temp.length() == 8)
+    {
+        year = temp.left(4).toInt(&ok);
+        month = temp.mid(4, 2).toInt(&ok);
+        day = temp.right(2).toInt(&ok);
+        emit info(QString("%1 %2 %3")
+                  .arg(year)
+                  .arg(month)
+                  .arg(day));
+    }
+
+    temp = "002300";
+    if(temp.length() == 6)
+    {
+        int t_time = temp.toInt(&ok);
+        emit info(QString("t_time: %1").arg(t_time));
+
+        QDateTime dt;
+#if 1
+        QDate date(year, month, day);
+        dt.setDate(date);
+        QDateTime dt2 = dt.addSecs(t_time);
+#else
+        dt.addYears(year);
+        dt.addMonths(month);
+        dt.addDays(day);
+        dt.addSecs(t_time);
+#endif
+        emit info(dt2.toString("yyyy.MM.dd HH:mm:ss"));
+        emit info(QString("Unixtime: %1").arg(dt2.toTime_t()));
+    }
+#endif
+
+#if 0
     QDateTime dt;
     QDate date;
     date.setDate(1970, 1, 2);

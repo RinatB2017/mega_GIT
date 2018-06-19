@@ -23,6 +23,10 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include <QtCharts/QCandlestickSet>
+QT_CHARTS_USE_NAMESPACE
+
+#include "qcandlestickset.h"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -70,7 +74,10 @@ private:
     void init(void);
 
     void createTestBar(void);
+    void create_test_currency(void);
     void create_plot_currency(void);
+
+    bool create_set(QStringList sl, QCandlestickSet *set);
 
     QVector<QPointF> circle(float x, float y, float r);
     QVector<QLine> circle_line(float x, float y, float r);

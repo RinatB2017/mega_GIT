@@ -33,7 +33,6 @@
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
-#include "crc.h"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -108,59 +107,6 @@ void Test::test_func(void)
     //QByteArray ba;
     //ba.append((char *)&test, sizeof(test));
     //QCOMPARE(mb->test(ba), 5);
-}
-//--------------------------------------------------------------------------------
-void Test::test_protocol(void)
-{
-    QByteArray question;
-    QByteArray answer;
-
-    Test_protocol *proto = new Test_protocol;
-    //proto->add_command(&cmd_1);
-
-    HEADER header;
-    uint16_t crc16 = 0;
-    int result = 0;
-
-    DATA_CMD_1 data_cmd_1;
-    DATA_CMD_2 data_cmd_2;
-
-    //---
-    header.addr = 0;
-    header.cmd = CMD_1;
-    header.len = sizeof(DATA_CMD_1);
-
-    question.clear();
-    question.append((char *)&header,     sizeof(HEADER));
-    question.append((char *)&data_cmd_1, sizeof(DATA_CMD_1));
-
-    crc16 = CRC::crc16((uint8_t *)question.data(), question.length());
-    question.append((char *)&crc16,  sizeof(crc16));
-
-    result = proto->check_packet(question, &answer);
-    //QCOMPARE(result, Base_protocol::E_NO_ERROR);
-    //---
-    header.addr = 0;
-    header.cmd = CMD_2;
-    header.len = sizeof(DATA_CMD_2);
-
-    question.clear();
-    question.append((char *)&header,     sizeof(HEADER));
-    question.append((char *)&data_cmd_2, sizeof(DATA_CMD_2));
-
-    crc16 = CRC::crc16((uint8_t *)question.data(), question.length());
-    question.append((char *)&crc16,  sizeof(crc16));
-
-    result = proto->check_packet(question, &answer);
-    //QCOMPARE(result, Base_protocol::E_NO_ERROR);
-    //---
-}
-//--------------------------------------------------------------------------------
-int Test::cmd_1(QByteArray question, QByteArray *answer)
-{
-    Q_UNUSED(question);
-    Q_UNUSED(answer);
-    return Base_protocol::E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 void Test::simple_test(void)

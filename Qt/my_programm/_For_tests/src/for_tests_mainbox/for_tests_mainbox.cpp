@@ -233,8 +233,6 @@ EURUSD,20180601,002300,1.1695,1.1697,1.1695,1.1696
 EURUSD,20180601,002400,1.1697,1.1697,1.1696,1.1696
 #endif
 //--------------------------------------------------------------------------------
-#include "test_protocol.hpp"
-#include "crc.h"
 #include <unistd.h>
 
 #include <QDate>
@@ -310,48 +308,6 @@ bool MainBox::test_0(void)
     QDateTime time2 = QDateTime::fromString (QString("1970-01-02T00:00:00"), Qt::ISODate);
     emit info(QString("Timestamp2 is: %1").arg(time2.toTime_t()));
 
-#endif
-
-#if 0
-    QByteArray question;
-    QByteArray answer;
-
-    HEADER header;
-    DATA_CMD_1 data;
-
-    header.addr = 0;
-    header.cmd = CMD_1;
-    header.len = sizeof(DATA_CMD_1);
-
-    question.append((char *)&header,    sizeof(HEADER));
-    question.append((char *)&data,      sizeof(data));
-    uint16_t crc16 = CRC::crc16((uint8_t *)question.data(), question.length());
-    question.append((char *)&crc16,     sizeof(crc16));
-
-    Test_protocol *proto = new Test_protocol;
-    connect(proto,  SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(proto,  SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(proto,  SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(proto,  SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-
-    int result = proto->check_packet(question, &answer);
-    if(result != Base_protocol::E_NO_ERROR)
-    {
-        switch(result)
-        {
-        case Base_protocol::E_PACKET_EMPTY: emit error("E_PACKET_EMPTY");   break;
-        case Base_protocol::E_BAD_ADDRESS:  emit error("E_BAD_ADDRESS");    break;
-        case Base_protocol::E_BAD_CMD:      emit error("E_BAD_CMD");        break;
-        case Base_protocol::E_BAD_DATA:     emit error("E_BAD_DATA");       break;
-        case Base_protocol::E_BAD_SIZE:     emit error("E_BAD_SIZE");       break;
-        case Base_protocol::E_BAD_CRC16:    emit error("E_BAD_CRC16");      break;
-        default:
-            emit error(QString("unknown error %1").arg(result));
-            break;
-        }
-        return false;
-    }
-    emit info("OK");
 #endif
 
 #if 0

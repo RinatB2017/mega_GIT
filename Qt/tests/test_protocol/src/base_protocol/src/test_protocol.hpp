@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,42 +18,49 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef TEST_PROTOCOL_HPP
+#define TEST_PROTOCOL_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include "base_protocol.hpp"
 //--------------------------------------------------------------------------------
-#include <QTest>
+#pragma pack (push, 1)
 //--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
+typedef struct DATA_CMD_1
+{
+    uint8_t  a;
+    uint8_t  b;
+    uint8_t  c;
+} data_cmd_1_t;
+
+typedef struct DATA_CMD_2
+{
+    uint8_t  a;
+    uint8_t  b;
+    uint8_t  c;
+    uint8_t  d;
+    uint8_t  e;
+    uint8_t  f;
+} data_cmd_2_t;
 //--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
-//--------------------------------------------------------------------------------
-class Test : public QObject
+#pragma pack(pop)
+//-------------------------------------------------------------------------------
+enum {
+    CMD_1 = 1,
+    CMD_2 = 2,
+    CMD_3 = 3
+};
+//-------------------------------------------------------------------------------
+class Test_protocol : public Base_protocol
 {
     Q_OBJECT
 
 public:
-    Test();
-    ~Test();
-
-private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void simple_test(void);
+    Test_protocol();
+    void set_address(uint8_t new_address);
 
 private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
+    int command(uint8_t cmd, QByteArray data);
 
-    void test_slider(void);
-    void test_mainbox(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // TEST_PROTOCOL_HPP

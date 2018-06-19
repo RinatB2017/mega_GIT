@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,42 +18,56 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef BASE_PROTOCOL_HPP
+#define BASE_PROTOCOL_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QByteArray>
+#include <QObject>
 //--------------------------------------------------------------------------------
-#include <QTest>
+#pragma pack (push, 1)
 //--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
+typedef struct HEADER
+{
+    uint8_t   addr;     // адрес
+    uint8_t   cmd;      // команда
+    uint16_t  len;      // длина данных
+    uint8_t   data[];   // данные
+} header_t;
 //--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
+#pragma pack(pop)
 //--------------------------------------------------------------------------------
-class Test : public QObject
+class Base_protocol : public QObject
 {
     Q_OBJECT
 
 public:
-    Test();
-    ~Test();
+    Base_protocol();
 
-private slots:
-    void test_GUI(void);
-    void test_func(void);
+    enum ERRORS {
+        E_NO_ERROR = 0,
+        E_PACKET_EMPTY,
+        E_BAD_ADDRESS,
+        E_BAD_CMD,
+        E_BAD_DATA,
+        E_BAD_SIZE,
+        E_BAD_CRC16
+    };
 
-    void simple_test(void);
+    int check_packet(QByteArray question,
+                     QByteArray *answer);
+    virtual int command(uint8_t cmd, QByteArray data) = 0;
 
-private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
 
-    void test_slider(void);
-    void test_mainbox(void);
+    void data_is_comming(uint8_t, QByteArray);
+
+protected:
+    uint8_t address = 0;
+
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // BASE_PROTOCOL_HPP

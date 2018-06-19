@@ -21,17 +21,10 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QTest>
 //--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
+#include "test_protocol.hpp"
 //--------------------------------------------------------------------------------
-class MyMainWindow;
 class Test_function;
 //--------------------------------------------------------------------------------
 class Test : public QObject
@@ -43,17 +36,7 @@ public:
     ~Test();
 
 private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void simple_test(void);
-
-private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
-
-    void test_slider(void);
-    void test_mainbox(void);
+    void test_protocol(void);
 };
 //--------------------------------------------------------------------------------
 #endif

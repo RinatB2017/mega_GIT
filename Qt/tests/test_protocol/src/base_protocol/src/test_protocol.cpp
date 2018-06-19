@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,42 +18,52 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#include "test_protocol.hpp"
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include <QTest>
-//--------------------------------------------------------------------------------
-#include "mymainwindow.hpp"
-//--------------------------------------------------------------------------------
-class MyMainWindow;
-class Test_function;
-//--------------------------------------------------------------------------------
-class Test : public QObject
+Test_protocol::Test_protocol()
 {
-    Q_OBJECT
 
-public:
-    Test();
-    ~Test();
-
-private slots:
-    void test_GUI(void);
-    void test_func(void);
-
-    void simple_test(void);
-
-private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
-
-    void test_slider(void);
-    void test_mainbox(void);
-};
+}
 //--------------------------------------------------------------------------------
-#endif
+void Test_protocol::set_address(uint8_t new_address)
+{
+    address = new_address;
+}
+//--------------------------------------------------------------------------------
+int Test_protocol::command(uint8_t cmd,
+                           QByteArray data)
+{
+    switch(cmd)
+    {
+    case CMD_1:
+        if(data.length() != sizeof(DATA_CMD_1))
+        {
+            emit error(QString("command: %1 data len %2")
+                      .arg(cmd)
+                      .arg(data.size()));
+            return E_BAD_DATA;
+        }
+        emit info("CMD_1: OK");
+        break;
+
+    case CMD_2:
+        if(data.length() != sizeof(DATA_CMD_2))
+        {
+            emit error(QString("command: %1 data len %2")
+                      .arg(cmd)
+                      .arg(data.size()));
+            return E_BAD_DATA;
+        }
+        emit info("CMD_2: OK");
+        break;
+
+    case CMD_3:
+        emit info("CMD_3");
+        break;
+
+    default:
+        return E_BAD_CMD;
+    }
+    return E_NO_ERROR;
+}
+//--------------------------------------------------------------------------------

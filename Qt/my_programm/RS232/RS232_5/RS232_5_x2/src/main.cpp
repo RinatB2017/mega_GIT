@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
     serial2->add_menu(4);
 \
-    QWidget *cw = new QWidget;
+    QWidget *cw = new QWidget(main_window->getThis());
     cw->setFixedSize(0, 0);
 
     main_window->setCentralWidget(cw);

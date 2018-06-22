@@ -76,11 +76,35 @@ void MainBox::init(void)
 
 #else
     ui->grapher_widget->setVisible(false);
-    setFixedSize(sizeHint());
 #endif
     ui->serial_widget->set_fix_baudrate(57600);
 
+    //---
+#ifdef NO_SHOW_TEMPERATURE
+    ui->label_temp->setVisible(false);
+    ui->display_temperature->setVisible(false);
+#endif
+
+#ifdef NO_SHOW_PRESSURE
+    ui->label_press->setVisible(false);
+    ui->display_pressure->setVisible(false);
+#endif
+
+#ifdef NO_SHOW_ATM
+    ui->label_atm->setVisible(false);
+    ui->display_atm->setVisible(false);
+#endif
+
+#ifdef NO_SHOW_ALTITUDE
+    ui->label_alt->setVisible(false);
+    ui->display_altitude->setVisible(false);
+#endif
+
+
+    //---
+
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_gy652(QByteArray)));
+    setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

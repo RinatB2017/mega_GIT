@@ -74,7 +74,11 @@ int main(int argc, char *argv[])
     splash->showMessage("init RS-232_5 (2)...");
     SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232_5 (2)", "RS-232_2");
     serial2->add_menu(4);
+\
+    QWidget *cw = new QWidget;
+    cw->setFixedSize(0, 0);
 
+    main_window->setCentralWidget(cw);
     main_window->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  serial);
     main_window->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, serial2);
     main_window->load_setting();

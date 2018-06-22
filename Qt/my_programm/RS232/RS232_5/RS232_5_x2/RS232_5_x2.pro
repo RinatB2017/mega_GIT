@@ -21,7 +21,7 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
-#DEFINES += NO_LOG
+DEFINES += NO_LOG
 
 SOURCES += main.cpp
 
@@ -33,7 +33,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

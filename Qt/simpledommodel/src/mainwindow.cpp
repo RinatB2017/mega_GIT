@@ -46,7 +46,9 @@
 #include <QMenuBar>
 #include <QFileDialog>
 
-MainWindow::MainWindow() : QMainWindow(), model(0)
+MainWindow::MainWindow() : 
+    QMainWindow(), 
+    model(0)
 {
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(tr("&Open..."), this, SLOT(openFile()), QKeySequence::Open);
@@ -62,8 +64,10 @@ MainWindow::MainWindow() : QMainWindow(), model(0)
 
 void MainWindow::openFile()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    xmlPath, tr("XML files (*.xml);;HTML files (*.html);;"
+    QString filePath = QFileDialog::getOpenFileName(this,
+                                                    tr("Open File"),
+                                                    xmlPath,
+                                                    tr("XML files (*.xml);;HTML files (*.html);;"
                                                                 "SVG files (*.svg);;User Interface files (*.ui)"));
 
     if (!filePath.isEmpty())

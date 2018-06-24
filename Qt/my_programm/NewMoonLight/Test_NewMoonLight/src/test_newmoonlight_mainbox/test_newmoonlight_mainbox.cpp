@@ -286,6 +286,7 @@ void MainBox::analize(void)
     temp.append('\n');
 
     emit debug(temp);
+    emit debug(QString("sending %1 bytes").arg(temp.length()));
     emit send(temp);
 }
 //--------------------------------------------------------------------------------
@@ -463,7 +464,7 @@ void MainBox::test_0(void)
 {
     for(int n=0; n<18; n++)
     {
-        //leds[n]->set_hot_color(128);
+        leds[n]->set_hot_color(128);
     }
 }
 //--------------------------------------------------------------------------------
@@ -471,7 +472,7 @@ void MainBox::test_1(void)
 {
     for(int n=0; n<18; n++)
     {
-        //leds[n]->set_cold_color(128);
+        leds[n]->set_cold_color(128);
     }
 }
 //--------------------------------------------------------------------------------

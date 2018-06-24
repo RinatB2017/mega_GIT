@@ -270,6 +270,23 @@ void MainBox::analize(void)
     leds.at(15)->set_color(get_value(packet,  0x2001));
     leds.at(16)->set_color(get_value(packet,  0x4011));
     leds.at(17)->set_color(get_value(packet,  0x3050));
+
+    NewMoonLightPacket out_packet;
+    for(unsigned int n=0; n<sizeof(NewMoonLightPacket); n++)
+    {
+        out_packet.buf[n] = packet->buf[n];
+    }
+
+    QByteArray temp;
+    temp.append(':');
+    for(unsigned int n=0; n<sizeof(NewMoonLightPacket); n++)
+    {
+        temp.append(convert_data_to_ascii(out_packet.buf[n]));
+    }
+    temp.append('\n');
+
+    emit debug(temp);
+    emit send(temp);
 }
 //--------------------------------------------------------------------------------
 int MainBox::get_address(uint16_t value)

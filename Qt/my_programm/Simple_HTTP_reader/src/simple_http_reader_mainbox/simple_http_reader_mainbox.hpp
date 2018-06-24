@@ -58,6 +58,7 @@ private slots:
 
     void f_run(void);
     void f_update(void);
+    void f_host_to_ip(void);
 
     void read_data(void);
     void s_error(QAbstractSocket::SocketError err);

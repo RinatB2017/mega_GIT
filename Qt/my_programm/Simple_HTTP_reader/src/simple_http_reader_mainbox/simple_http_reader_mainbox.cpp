@@ -24,6 +24,8 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include <QHostInfo>
+//--------------------------------------------------------------------------------
 #include "ui_simple_http_reader_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -47,6 +49,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("HTTP");
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -64,6 +67,9 @@ void MainBox::init(void)
 
     connect(ui->btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(f_run()));
     connect(ui->btn_update, SIGNAL(clicked(bool)),  this,   SLOT(f_update()));
+    connect(ui->btn_host_to_ip, SIGNAL(clicked(bool)),  this,   SLOT(f_host_to_ip()));
+
+    load_widgets("HTTP");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -141,9 +147,12 @@ void MainBox::create_tcp_socket(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(void)
 {
-    emit debug("read_data");
     QByteArray ba = tcpSocket->readAll();
+
+    emit debug("read_data");
+    emit debug("---------------------------------------------------------------");
     emit info(ba);
+    emit debug("---------------------------------------------------------------");
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_error(QAbstractSocket::SocketError err)
@@ -166,12 +175,13 @@ void MainBox::s_error(QAbstractSocket::SocketError err)
 //--------------------------------------------------------------------------------
 void MainBox::f_connected(void)
 {
-    emit info("Connected");
+    emit debug("Connected");
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_disconnected(void)
 {
-    emit info("Disconnected");
+    emit debug("Disconnected");
+    f_disconnect();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_connect(void)
@@ -211,6 +221,7 @@ QUrl MainBox::get_url(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_run(void)
 {
+    // https://unixforum.org/index.php?act=rssout&id=1
     //---
     bool ok = false;
     ok = tcpSocket->isOpen();
@@ -226,7 +237,6 @@ void MainBox::f_run(void)
     //---
 
     QByteArray reqStr;
-#if 1
     QString str=ui->le_question->toPlainText();
     QStringList strList=str.split('\n');
     foreach (QString line, strList)
@@ -234,17 +244,6 @@ void MainBox::f_run(void)
         reqStr.append(QString("%1\r\n").arg(line));
     }
     reqStr.append("\r\n");
-#else
-    QString param = "/";
-    reqStr.append(QString("GET %1 HTTP/1.1\r\n")
-                  .arg(param));
-
-    reqStr.append(QString("Host: %1\r\n").arg(get_url().host()));
-    reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
-    reqStr.append("Accept: text/html\r\n");
-    reqStr.append("Connection: close\r\n");
-    reqStr.append("\r\n");
-#endif
 
     qint64 bytes = tcpSocket->write(reqStr);
     if(bytes < 0)
@@ -253,21 +252,6 @@ void MainBox::f_run(void)
         f_disconnect();
         return;
     }
-    ok = tcpSocket->waitForBytesWritten(1000);
-    if(!ok)
-    {
-        emit error("waitForBytesWritten");
-        f_disconnect();
-        return;
-    }
-    ok = tcpSocket->waitForReadyRead(1000);
-    if(!ok)
-    {
-        emit error("waitForReadyRead");
-        f_disconnect();
-        return;
-    }
-    f_disconnect();
     //---
 }
 //--------------------------------------------------------------------------------
@@ -279,6 +263,30 @@ void MainBox::f_update(void)
     ui->le_question->append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5");
     ui->le_question->append("Accept: text/html");
     ui->le_question->append("Connection: close");
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_host_to_ip(void)
+{
+    QString h_name = ui->le_host->text();
+    if(h_name.isEmpty())
+    {
+        emit error("host is empty!");
+        return;
+    }
+
+    QUrl url;
+    url.setUrl(h_name);
+
+    QHostInfo h_info =  QHostInfo::fromName(url.host());
+    QList<QHostAddress> list = h_info.addresses();
+    if(list.isEmpty() == false)
+    {
+        ui->host_widget->set_url(QUrl(list.first().toString()));
+    }
+    else
+    {
+        emit error("list is empty!");
+    }
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

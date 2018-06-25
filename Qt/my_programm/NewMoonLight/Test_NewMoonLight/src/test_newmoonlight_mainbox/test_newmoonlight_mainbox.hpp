@@ -32,7 +32,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox5;
+class SerialBox5_fix_baudrate;
 class QToolButton;
 class QSpinBox;
 class QToolBar;
@@ -64,8 +64,9 @@ private slots:
 private:
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+    SerialBox5_fix_baudrate *serialBox = 0;
     QByteArray data_rs232;
+    QByteArray clean_data;
 
     enum {
         ID_TEST_0 = 1000,
@@ -118,6 +119,8 @@ private:
                    qreal *end_y);
 
     void analize(void);
+    void f_get(void);
+    void f_set(void);
     int get_address(uint16_t value);
 
     uint16_t get_value(NewMoonLightPacket *packet, uint16_t address);

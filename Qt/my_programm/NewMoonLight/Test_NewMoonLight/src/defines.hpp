@@ -4,14 +4,15 @@
 #define ORGNAME "Work"
 #define APPNAME "Test_NewMoonLight"
 //--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-//--------------------------------------------------------------------------------
-#define CMD_0x01    0x01
+#define CMD_SET    0x01
+#define CMD_GET    0x02
 //--------------------------------------------------------------------------------
 #define MAX_SCREEN_X    6
 #define MAX_SCREEN_Y    6
 #define MAX_LED     (3 * 6)
 //--------------------------------------------------------------------------------
+#pragma pack (push, 1)
+
 union NewMoonLightPacket
 {
     struct BODY
@@ -23,7 +24,7 @@ union NewMoonLightPacket
     } body;
     unsigned char buf[sizeof(BODY)];
 };
-//--------------------------------------------------------------------------------
+
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM ":/mainwindow/computer.png"

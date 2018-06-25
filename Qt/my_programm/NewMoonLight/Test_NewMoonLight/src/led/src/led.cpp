@@ -42,9 +42,7 @@ Led::~Led()
 //--------------------------------------------------------------------------------
 void Led::set_color(uint16_t color)
 {
-    //qDebug() << color;
-
-#if 0
+#if 1
     cold_color  = (color >> 8) & 0xFF;
     hot_color = color & 0xFF;
 #else

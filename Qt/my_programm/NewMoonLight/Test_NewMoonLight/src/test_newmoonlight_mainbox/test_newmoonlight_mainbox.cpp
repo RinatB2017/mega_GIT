@@ -38,7 +38,7 @@
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox5.hpp"
+#include "serialbox5_fix_baudrate.hpp"
 #include "test_newmoonlight_mainbox.hpp"
 #include "defines.hpp"
 #include "sleeper.h"
@@ -174,11 +174,13 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::createSerialBox(void)
 {
-    serialBox = new SerialBox5(this, "RS232", "RS232");
+    serialBox = new SerialBox5_fix_baudrate(this, "RS232", "RS232");
+    serialBox->set_fix_baudrate(57600);
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
+    ui->serial_layout->setSpacing(0);
+    ui->serial_layout->setMargin(0);
 
     connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
     connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
@@ -227,7 +229,7 @@ uint16_t MainBox::get_value(NewMoonLightPacket *packet, uint16_t address)
 //--------------------------------------------------------------------------------
 void MainBox::analize(void)
 {
-    QByteArray clean_data = QByteArray::fromHex(data_rs232);
+    clean_data = QByteArray::fromHex(data_rs232);
 
     if(clean_data.size() != sizeof(NewMoonLightPacket))
     {
@@ -241,6 +243,41 @@ void MainBox::analize(void)
     emit debug(QString("command 0x%1").arg(packet->body.command));
     emit debug(QString("cnt_data %1").arg(packet->body.cnt_data));
 
+    int cmd = packet->body.command;
+    switch(cmd)
+    {
+    case CMD_GET:   f_get();    break;
+    case CMD_SET:   f_set();    break;
+    default:
+        emit error(QString("unknown cmd %1").arg(cmd));
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_get(void)
+{
+    NewMoonLightPacket packet;
+
+    packet.body.address = 0;
+    packet.body.cnt_data = (MAX_LED * 2);
+    packet.body.command = CMD_GET;
+    packet.body.data[0][0] = 5; //FIXME
+
+    QByteArray temp;
+    temp.append(':');
+    for(unsigned int n=0; n<sizeof(NewMoonLightPacket); n++)
+    {
+        temp.append(convert_data_to_ascii(packet.buf[n]));
+    }
+    temp.append('\n');
+
+    emit debug(temp);
+    emit info(QString("sending %1 bytes").arg(temp.length()));
+    emit send(temp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_set(void)
+{
+    NewMoonLightPacket *packet = (NewMoonLightPacket *)clean_data.data();
     if(packet->body.cnt_data != (MAX_LED * 2))
     {
         emit error(QString("error cnt_data %1").arg(packet->body.cnt_data));
@@ -286,7 +323,7 @@ void MainBox::analize(void)
     temp.append('\n');
 
     emit debug(temp);
-    emit debug(QString("sending %1 bytes").arg(temp.length()));
+    emit info(QString("sending %1 bytes").arg(temp.length()));
     emit send(temp);
 }
 //--------------------------------------------------------------------------------

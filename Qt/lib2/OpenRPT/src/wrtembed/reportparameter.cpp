@@ -20,6 +20,7 @@
 
 #include "reportparameter.h"
 
+#include <QButtonGroup>
 #include <QVariant>
 #include <QTableWidgetItem>
 #include "reportparameterlistitem.h"

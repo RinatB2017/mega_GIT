@@ -39,6 +39,20 @@
 #define MAX_TABLE_SIN   (360 * 100)
 #define MAX_TABLE_COS   (360 * 100)
 //--------------------------------------------------------------------------------
+class Bot
+{
+public:
+    Bot() {}
+
+    void append(int x, int y, int value)
+    {
+        data[x][y] = value;
+    }
+
+private:
+    uint8_t data[8][8] = { 0 };
+};
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

@@ -45,7 +45,7 @@
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "Test_Trader_mainbox.hpp"
+#include "test_trader_mainbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

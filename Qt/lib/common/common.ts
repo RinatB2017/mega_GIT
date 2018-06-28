@@ -149,6 +149,10 @@
         <translation>О программе</translation>
     </message>
     <message>
+        <source>Always on top</source>
+        <translation>Всегда наверху</translation>
+    </message>
+    <message>
         <source>Author: Bikbao Rinat Zinorovich</source>
         <translation>Автор: Бикбао Ринат Зинорович</translation>
     </message>

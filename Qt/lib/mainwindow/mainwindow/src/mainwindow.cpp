@@ -380,6 +380,8 @@ void MainWindow::createMenus(void)
 #endif
     app_menu_add_style(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
+    app_menu_add_show_on_top(m_app_optionsmenu);
+    app_menu_add_separator(m_app_optionsmenu);
     app_menu_add_confirm_exit(m_app_optionsmenu);
 
     app_menu_add_about(m_app_helpmenu);
@@ -450,6 +452,27 @@ void MainWindow::setToolBarLanguage(void)
 void MainWindow::closeOnExit(bool state)
 {
     flag_close = state;
+}
+//--------------------------------------------------------------------------------
+void MainWindow::alwaysOnTop(bool state)
+{
+    flag_always_on_top = state;
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(!mw)
+    {
+        return;
+    }
+
+    if(state)
+    {
+        mw->setWindowFlags(mw->windowFlags() | Qt::WindowStaysOnTopHint);
+    }
+    else
+    {
+        mw->setWindowFlags(mw->windowFlags() & ~Qt::WindowStaysOnTopHint);
+    }
+    mw->show();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::set_status1_text(const QString &data)
@@ -563,6 +586,7 @@ void MainWindow::load_main(void)
 
     style_name = settings->value("StyleName", "Breeze").toString();
     flag_close = settings->value("NoAnswerFromExit", true).toBool();
+    flag_always_on_top = settings->value("AlwaysOnTop", false).toBool();
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 
@@ -602,6 +626,7 @@ void MainWindow::save_main(void)
     settings->setValue("StyleName",     style_name);
 
     settings->setValue("NoAnswerFromExit", flag_close);
+    settings->setValue("AlwaysOnTop", flag_always_on_top);
 #ifndef NO_LOG_INFO
     settings->setValue("flag_show_info",  flag_show_info);
 #endif
@@ -1723,6 +1748,26 @@ void MainWindow::app_menu_add_confirm_exit(QMenu *menu)
     app_actions.append(exit);
 
     menu->addAction(exit);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::app_menu_add_show_on_top(QMenu *menu)
+{
+    Q_CHECK_PTR(menu);
+
+    QAction *on_top = new QAction(menu);
+    on_top->setProperty(APP_PROPERTY_ENG_TEXT, "Always on top");
+    on_top->setText("Always on top");
+    on_top->setToolTip("Always on top");
+    on_top->setStatusTip("Always on top");
+    on_top->setCheckable(flag_close);
+    connect(on_top,   SIGNAL(triggered(bool)),    this,   SLOT(alwaysOnTop(bool)));
+    on_top->setChecked(flag_always_on_top);
+
+    //alwaysOnTop(flag_always_on_top);    //TODO
+
+    app_actions.append(on_top);
+
+    menu->addAction(on_top);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_about(QMenu *menu)

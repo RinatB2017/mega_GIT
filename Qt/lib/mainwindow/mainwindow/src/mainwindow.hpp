@@ -146,6 +146,7 @@ private slots:
     void set_app_font(void);
     void setStyles(void);
     void closeOnExit(bool state);
+    void alwaysOnTop(bool state);
     void about(void);
     void setMenuLanguage(void);
     void setToolBarLanguage(void);
@@ -267,6 +268,7 @@ private:
     void app_menu_add_lang(QMenu *menu);
     void app_menu_add_style(QMenu *menu);
     void app_menu_add_confirm_exit(QMenu *menu);
+    void app_menu_add_show_on_top(QMenu *menu);
     void app_menu_add_about(QMenu *menu);
     void app_menu_add_help(QMenu *menu);
 
@@ -282,6 +284,7 @@ private:
 
 protected:
     bool flag_close = false;
+    bool flag_always_on_top = false;
 #ifndef NO_LOG_INFO
     bool flag_show_info = false;
 #endif

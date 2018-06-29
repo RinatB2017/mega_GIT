@@ -210,15 +210,6 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->setWindowFlags(mw->windowFlags() | Qt::WindowStaysOnTopHint);
-        mw->show();
-    }
-#endif
-
 #if 0
     QTime timer;
     timer.start();
@@ -242,15 +233,6 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
-
-#if 1
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->setWindowFlags(mw->windowFlags() & ~Qt::WindowStaysOnTopHint);
-        mw->show();
-    }
-#endif
 
 #if 0
     emit info("info");

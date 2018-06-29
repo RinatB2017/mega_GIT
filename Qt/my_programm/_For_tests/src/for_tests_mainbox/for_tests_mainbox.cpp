@@ -205,10 +205,25 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include <QFontDatabase>
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    int res = 0;
+    res = QFontDatabase::addApplicationFont(":/local_fonts/HANDGOTN.TTF");
+    if(res < 0)
+    {
+        emit error("Font HANDGOTN not loaded!");
+    }
+    res = QFontDatabase::addApplicationFont(":/local_fonts/VENUSRIS.TTF");
+    if(res < 0)
+    {
+        emit error("Font VENUSRIS not loaded!");
+    }
+#endif
 
 #if 0
     QTime timer;

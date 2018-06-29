@@ -74,7 +74,9 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-RESOURCES += images/images.qrc
+RESOURCES += \
+    images/images.qrc \
+    local_fonts/local_fonts.qrc
 
 #можно поставить новое logo
 RESOURCES += about/about.qrc

@@ -202,6 +202,7 @@ void MainWindow::init(void)
     createSysLog_dock();
 #endif
 
+    load_setting();
 #ifndef NO_MENU
     createMenus();
 #endif
@@ -240,8 +241,18 @@ void MainWindow::init(void)
     check_date();
 #endif
 
+    //---
+    if(flag_always_on_top)
+    {
+        setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    }
+    else
+    {
+        setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
+    }
+    //---
+
     setAttribute(Qt::WA_DeleteOnClose);
-    load_setting();
 }
 //--------------------------------------------------------------------------------
 //    if(now.date().year()        >= DEMO_YEAR &&
@@ -459,20 +470,18 @@ void MainWindow::alwaysOnTop(bool state)
     flag_always_on_top = state;
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(!mw)
+    if(mw)
     {
-        return;
+        if(state)
+        {
+            mw->setWindowFlags(mw->windowFlags() | Qt::WindowStaysOnTopHint);
+        }
+        else
+        {
+            mw->setWindowFlags(mw->windowFlags() & ~Qt::WindowStaysOnTopHint);
+        }
+        mw->show();
     }
-
-    if(state)
-    {
-        mw->setWindowFlags(mw->windowFlags() | Qt::WindowStaysOnTopHint);
-    }
-    else
-    {
-        mw->setWindowFlags(mw->windowFlags() & ~Qt::WindowStaysOnTopHint);
-    }
-    mw->show();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::set_status1_text(const QString &data)
@@ -587,6 +596,13 @@ void MainWindow::load_main(void)
     style_name = settings->value("StyleName", "Breeze").toString();
     flag_close = settings->value("NoAnswerFromExit", true).toBool();
     flag_always_on_top = settings->value("AlwaysOnTop", false).toBool();
+
+    //---
+    if(flag_always_on_top)
+    {
+        emit debug("flag_always_on_top");
+    }
+    //---
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 
@@ -1741,7 +1757,7 @@ void MainWindow::app_menu_add_confirm_exit(QMenu *menu)
     exit->setText("Do not ask when you exit");
     exit->setToolTip("Do not ask when you exit");
     exit->setStatusTip("Do not ask when you exit");
-    exit->setCheckable(flag_close);
+    exit->setCheckable(true);
     connect(exit,   SIGNAL(triggered(bool)),    this,   SLOT(closeOnExit(bool)));
     exit->setChecked(flag_close);
 
@@ -1759,11 +1775,9 @@ void MainWindow::app_menu_add_show_on_top(QMenu *menu)
     on_top->setText("Always on top");
     on_top->setToolTip("Always on top");
     on_top->setStatusTip("Always on top");
-    on_top->setCheckable(flag_close);
+    on_top->setCheckable(true);
     connect(on_top,   SIGNAL(triggered(bool)),    this,   SLOT(alwaysOnTop(bool)));
     on_top->setChecked(flag_always_on_top);
-
-    //alwaysOnTop(flag_always_on_top);    //TODO
 
     app_actions.append(on_top);
 

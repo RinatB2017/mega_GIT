@@ -187,14 +187,16 @@ void MainBox::test_validator(void)
 {
     /* Create a string for a regular expression */
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
-    /* Create a regular expression with a string
+    /*
+     * Create a regular expression with a string
      * as a repeating element
      */
     QRegExp ipRegex ("^" + ipRange
                      + "\\." + ipRange
                      + "\\." + ipRange
                      + "\\." + ipRange + "$");
-    /* Create a validation regular expression
+    /*
+     * Create a validation regular expression
      * using a regular expression
      */
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
@@ -205,7 +207,6 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include <QFontDatabase>
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);

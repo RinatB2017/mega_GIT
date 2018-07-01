@@ -92,7 +92,9 @@ int main(int argc, char *argv[])
     //MainWindow window(QUrl("http://qt.io"));
     MainWindow window(QUrl("https://2ip.ru/"));
 
+#ifdef Q_OS_LINUX
     set_light_palette();
+#endif
 
     window.show();
     return app.exec();

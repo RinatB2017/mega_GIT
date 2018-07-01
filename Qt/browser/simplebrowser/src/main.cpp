@@ -115,5 +115,9 @@ int main(int argc, char **argv)
     BrowserWindow *window = browser.createWindow();
     window->currentTab()->setUrl(url);
 
+#ifdef Q_OS_LINUX
+    set_light_palette();
+#endif
+
     return app.exec();
 }

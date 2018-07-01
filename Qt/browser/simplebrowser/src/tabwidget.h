@@ -102,6 +102,8 @@ private:
     void setupView(WebView *webView);
 
     QWebEngineProfile *m_profile;
+
+    void test(void);    //TODO
 };
 
 #endif // TABWIDGET_H

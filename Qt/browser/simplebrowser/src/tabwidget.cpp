@@ -221,7 +221,7 @@ void TabWidget::setupView(WebView *webView)
 
 WebView *TabWidget::createTab()
 {
-    WebView *webView = createBackgroundTab();
+    WebView *webView = createBackgroundTab();   //TODO
     setCurrentWidget(webView);
     return webView;
 }

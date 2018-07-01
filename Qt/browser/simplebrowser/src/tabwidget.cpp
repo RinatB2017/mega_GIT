@@ -194,7 +194,17 @@ void TabWidget::setupView(WebView *webView)
 
 WebView *TabWidget::createTab()
 {
+#if 0
+    for(int n=0; n<10; n++)
+    {
+        WebView *webView = createBackgroundTab();
+        webView->setUrl(QUrl("http://www.opennet.ru/"));   //TODO
+        setCurrentWidget(webView);
+    }
+#endif
+
     WebView *webView = createBackgroundTab();
+    webView->setUrl(QUrl("http://www.opennet.ru/"));   //TODO
     setCurrentWidget(webView);
     return webView;
 }

@@ -204,7 +204,6 @@ WebView *TabWidget::createTab()
 #endif
 
     WebView *webView = createBackgroundTab();
-    webView->setUrl(QUrl("http://www.opennet.ru/"));   //TODO
     setCurrentWidget(webView);
     return webView;
 }

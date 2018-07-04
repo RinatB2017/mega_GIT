@@ -226,22 +226,6 @@ bool MainBox::test_0(void)
     }
 #endif
 
-#if 0
-    QTime timer;
-    timer.start();
-
-    QList<Bot *> bots;
-    for(int n=0; n<1000000; n++)
-    {
-        Bot *bot = new Bot;
-        bots.append(bot);
-    }
-    emit info(QString("time elapsed %1").arg(timer.elapsed()));
-    emit info(QString("bot size %1").arg(sizeof(Bot)));
-
-    bots.clear();
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------

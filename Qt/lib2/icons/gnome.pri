@@ -2,18 +2,15 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/gnome
-INCLUDEPATH = $$DEPENDPATH
-
 RESOURCES += \
-    gnome_actions.qrc \
-    gnome_animations.qrc \
-    gnome_apps.qrc \
-    gnome_categories.qrc \
-    gnome_devices.qrc \
-    gnome_emblems.qrc \
-    gnome_emotes.qrc \
-    gnome_mimetypes.qrc \
-    gnome_places.qrc \
-    gnome_status.qrc
+    $$PWD/gnome/gnome_actions.qrc \
+    $$PWD/gnome/gnome_animations.qrc \
+    $$PWD/gnome/gnome_apps.qrc \
+    $$PWD/gnome/gnome_categories.qrc \
+    $$PWD/gnome/gnome_devices.qrc \
+    $$PWD/gnome/gnome_emblems.qrc \
+    $$PWD/gnome/gnome_emotes.qrc \
+    $$PWD/gnome/gnome_mimetypes.qrc \
+    $$PWD/gnome/gnome_places.qrc \
+    $$PWD/gnome/gnome_status.qrc
     

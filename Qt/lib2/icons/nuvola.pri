@@ -2,15 +2,12 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/nuvola
-INCLUDEPATH = $$DEPENDPATH
-
 RESOURCES += \
-    nuvola_actions.qrc \
-    nuvola_apps.qrc \
-    nuvola_categories.qrc \
-    nuvola_devices.qrc \
-    nuvola_emblems.qrc \
-    nuvola_mimetypes.qrc \
-    nuvola_places.qrc \
-    nuvola_status.qrc
+    $$PWD/nuvola/nuvola_actions.qrc \
+    $$PWD/nuvola/nuvola_apps.qrc \
+    $$PWD/nuvola/nuvola_categories.qrc \
+    $$PWD/nuvola/nuvola_devices.qrc \
+    $$PWD/nuvola/nuvola_emblems.qrc \
+    $$PWD/nuvola/nuvola_mimetypes.qrc \
+    $$PWD/nuvola/nuvola_places.qrc \
+    $$PWD/nuvola/nuvola_status.qrc

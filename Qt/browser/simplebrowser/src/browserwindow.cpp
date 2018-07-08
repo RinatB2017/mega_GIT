@@ -163,6 +163,7 @@ BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile)
         WebView *webView = new WebView();
         webView->setUrl(QUrl(site));   //TODO
         webView->setFixedSize(320, 200);
+        webView->page()->setAudioMuted(true);
         webView->show();
 
         grid->addWidget(webView, 0, x++);

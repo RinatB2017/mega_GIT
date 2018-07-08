@@ -61,18 +61,13 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    createTestBar();
+    //createTestBar();
 
     ui->serial0->set_caption("RS232 (0)");
     ui->serial1->set_caption("RS232 (1)");
 
     ui->serial0->add_menu(1, "RS232 (0)");
     ui->serial1->add_menu(2, "RS232 (1)");
-
-#if 1
-    connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->log0,   SLOT(bappend(QByteArray)));
-    connect(ui->serial1,    SIGNAL(output(QByteArray)), ui->log1,   SLOT(bappend(QByteArray)));
-#endif
 
     connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->serial1,    SLOT(input(QByteArray)));
     connect(ui->serial1,    SIGNAL(output(QByteArray)), ui->serial0,    SLOT(input(QByteArray)));

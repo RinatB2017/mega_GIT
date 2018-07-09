@@ -70,6 +70,12 @@ void HID_device::init(void)
     ui->setupUi(this);
 
     createTestBar();
+
+    connect(ui->btn_open,   SIGNAL(clicked()), this, SLOT(dev_open()));
+    connect(ui->btn_close,  SIGNAL(clicked()), this, SLOT(dev_close()));
+    connect(ui->btn_send,   SIGNAL(clicked()), this, SLOT(dev_send()));
+
+    setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 void HID_device::createTestBar(void)
@@ -137,27 +143,59 @@ void HID_device::test_0(void)
 {
     emit info("Test_0()");
 
-    dev_open();
+    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_1(void)
 {
     emit info("Test_1()");
+
+    memset(output_buf, 0, sizeof(output_buf));
+
+    output_buf[0] = 0x01;
+    output_buf[1] = 0x00;
+    output_buf[2] = 0x00;
+
+    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_2(void)
 {
     emit info("Test_2()");
+
+    memset(output_buf, 0, sizeof(output_buf));
+
+    output_buf[0] = 0x02;
+    output_buf[1] = 0x00;
+    output_buf[2] = 0x00;
+
+    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_3(void)
 {
     emit info("Test_3()");
+
+    memset(output_buf, 0, sizeof(output_buf));
+
+    output_buf[0] = 0x03;
+    output_buf[1] = 0x00;
+    output_buf[2] = 0x00;
+
+    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_4(void)
 {
     emit info("Test_4()");
+
+    memset(output_buf, 0, sizeof(output_buf));
+
+    output_buf[0] = 0x04;
+    output_buf[1] = 0x00;
+    output_buf[2] = 0x00;
+
+    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_5(void)
@@ -255,6 +293,28 @@ void HID_device::dev_close(void)
         hid_close(dev);
         dev = 0;
     }
+}
+//--------------------------------------------------------------------------------
+void HID_device::dev_send(void)
+{
+    if(dev == 0)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int res = 0;
+    res = hid_send_feature_report(dev, output_buf, sizeof(output_buf));
+    if(res < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(res));
+        return;
+    }
+    QByteArray ba;
+    ba.append((char *)&output_buf, sizeof(output_buf));
+
+    emit info(ba.toHex().data());
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void HID_device::updateText(void)

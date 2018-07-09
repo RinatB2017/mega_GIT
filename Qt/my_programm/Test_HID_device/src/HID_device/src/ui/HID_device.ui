@@ -6,14 +6,42 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>333</width>
-    <height>98</height>
+    <width>115</width>
+    <height>120</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>HID_device</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QPushButton" name="btn_open">
+     <property name="text">
+      <string>Open</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_close">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_send">
+     <property name="text">
+      <string>Send</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
+ <tabstops>
+  <tabstop>btn_open</tabstop>
+  <tabstop>btn_close</tabstop>
+  <tabstop>btn_send</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -66,6 +66,7 @@ private slots:
     //---
     void dev_open(void);
     void dev_close(void);
+    void dev_send(void);
     //---
 
 private:
@@ -88,6 +89,9 @@ private:
 
     //---
     hid_device *dev = 0;
+
+    uint8_t output_buf[0x40];
+
     //---
 
     QComboBox *cb_test = 0;

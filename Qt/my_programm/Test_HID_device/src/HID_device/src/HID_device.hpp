@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef AD9106_BOX_HPP
-#define AD9106_BOX_HPP
+#ifndef HID_DEVICE_HPP
+#define HID_DEVICE_HPP
 //--------------------------------------------------------------------------------
 #include <stdint.h>
 #include <QWidget>
@@ -33,61 +33,23 @@
     #include "hidapi_win/hidapi.h"
 #endif
 //--------------------------------------------------------------------------------
-#pragma pack(push, 1)
-
-typedef struct question
-{
-    uint8_t     zero;
-    uint8_t     cmd;
-    uint8_t     num;
-    uint16_t    addr;
-} question_t;
-
-typedef struct answer
-{
-    uint8_t     zero;
-    uint8_t     cmd;
-    uint8_t     num;
-    uint16_t    addr;
-    uint16_t    data;
-} answer_t;
-
-enum ADC_GetVoltage
-{
-    AVCC = 0,
-    AVSS = 1,
-    BIAS = 2,
-    VCCIN = 3
-};
-
-enum DAC_SetVoltage
-{
-    REFIO = 0,
-    TEMPRETURE = 1,
-    NU0 = 2,
-    NU1 = 3
-};
-
-#pragma pack(pop)
+#define MAX_STR 255
 //--------------------------------------------------------------------------------
 namespace Ui {
-class AD9106_Box;
+    class HID_device;
 }
 //--------------------------------------------------------------------------------
 class QToolButton;
 class QToolBar;
 class QComboBox;
 //--------------------------------------------------------------------------------
-class CurveBox;
-class QHexEdit;
-//--------------------------------------------------------------------------------
-class AD9106_Box : public MyWidget
+class HID_device : public MyWidget
 {
     Q_OBJECT
 
 public:
-    AD9106_Box(QWidget *parent);
-    ~AD9106_Box();
+    HID_device(QWidget *parent);
+    ~HID_device();
 
 signals:
     void block_widget(bool);
@@ -104,30 +66,7 @@ private slots:
     //---
     void dev_open(void);
     void dev_close(void);
-    void dev_read_all_registers(void);
-    void dev_write_all_registers(void);
-
-    void ApplySettings(void);
-    void StopGeneration(void);
-    void ManualReset(void);
-
-    void read_xml(void);
-    void convert_xml(void);
-
-    void set_values(void);
     //---
-    void btn_open_click(void);
-    void btn_read_all_click(void);
-    void btn_close_click(void);
-    void btn_ApplySettings_click(void);
-    void btn_StopGeneration_click(void);
-    void btn_ManualReset_click(void);
-    void btn_read_xml_click(void);
-    void btn_convert_xml_click(void);
-    void btn_set_values_click(void);
-    //---
-
-    void click(bool state);
 
 private:
     enum {
@@ -143,47 +82,24 @@ private:
     {
         int cmd;
         QString cmd_text;
-        void (AD9106_Box::*func)(void);
+        void (HID_device::*func)(void);
     };
-    Ui::AD9106_Box *ui = 0;
+    Ui::HID_device *ui = 0;
 
     //---
     hid_device *dev = 0;
-    bool AD9106_read(QString name_reg, uint16_t *data);
-    bool AD9106_write(QString name_reg, uint16_t data);
     //---
-    bool ReadADC(uint8_t channel, uint16_t *data);
-    bool ReadTemperature(float *temperature);
-    bool ReadVoltage(int channel, double *voltage);
-    // DDS.ADC_GetVoltage.AVCC
-    // DDS.ADC_GetVoltage.AVSS
-    // DDS.ADC_GetVoltage.BIAS
-    // DDS.ADC_GetVoltage.VCCIN
-    //---
-#ifdef Q_OS_LINUX
-    uint8_t output_buf[128];
-#endif
-#ifdef Q_OS_WIN
-    uint8_t output_buf[256];
-#endif
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
-    QStringList sl_registers;
-
-#ifdef GRAPHER
-    CurveBox *curve = 0;
-#endif
-
     void init(void);
-    void init_sl_registers(void);
 
     void createTestBar(void);
+    void updateText(void);
 
 protected:
     void changeEvent(QEvent *event);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

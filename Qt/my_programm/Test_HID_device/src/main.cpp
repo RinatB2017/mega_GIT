@@ -27,7 +27,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "AD9106_box.hpp"
+#include "HID_device.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -56,22 +56,14 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    QPixmap pixmap(":/logo/logo.png");
-
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    Q_CHECK_PTR(splash);
-    splash->show();
-
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
 
-    AD9106_box *mainBox = new AD9106_box(main_window->getThis(), splash);
+    HID_device *mainBox = new HID_device(main_window->getThis());
 
     main_window->setCentralWidget(mainBox);
     main_window->show();
-
-    splash->finish(main_window);
 
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));

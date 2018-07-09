@@ -1,0 +1,41 @@
+
+const float _Amplitude1mV = 7.142857142857143F;
+const float _Offset1mV = 28.0F;
+const float _Phase1deg = 11.0F;
+
+const UInt64 Dev_FCLK = 125000000; // тактовая частота DDS в Гц
+
+// расчитываем частоту
+DDS_TW = (UInt64)(((float)nud_Sig_Frequency.Value) / ((float)DDS.FCLK / (float)0x1000000));
+AD9106_Register.List[41].Data = (UInt16)(DDS_TW >> 8);
+AD9106_Register.List[42].Data = (UInt16)((DDS_TW & 0xff) << 8);
+
+// расчитываем амплитуду
+DAC_DGAIN = (UInt16)(((float)DC.Sig_AmplitudeYp * 1000.0F) * _Amplitude1mV);
+AD9106_Register.List[38].Data = DAC_DGAIN;
+DAC_DGAIN = (UInt16)(((float)DC.Sig_AmplitudeYn * 1000.0F) * _Amplitude1mV);
+AD9106_Register.List[37].Data = DAC_DGAIN;
+DAC_DGAIN = (UInt16)(((float)DC.Sig_AmplitudeXp * 1000.0F) * _Amplitude1mV);
+AD9106_Register.List[36].Data = DAC_DGAIN;
+DAC_DGAIN = (UInt16)(((float)DC.Sig_AmplitudeXn * 1000.0F) * _Amplitude1mV);
+AD9106_Register.List[35].Data = DAC_DGAIN;
+
+// расчитываем сдвиг (offset)
+DAC_DOF = (UInt16)(((float)DC.Sig_OffsetYp * 1000.0F) * _Offset1mV);
+AD9106_Register.List[22].Data = DAC_DOF;
+DAC_DOF = (UInt16)(((float)DC.Sig_OffsetYn * 1000.0F) * _Offset1mV);
+AD9106_Register.List[21].Data = DAC_DOF;
+DAC_DOF = (UInt16)(((float)DC.Sig_OffsetXp * 1000.0F) * _Offset1mV);
+AD9106_Register.List[20].Data = DAC_DOF;
+DAC_DOF = (UInt16)(((float)DC.Sig_OffsetXn * 1000.0F) * _Offset1mV);
+AD9106_Register.List[19].Data = DAC_DOF;
+
+// расчитываем сдвиг фазы
+DDS_PW = (UInt16)((float)DC.Sig_PhaseYp * _Phase1deg);
+AD9106_Register.List[46].Data = (UInt16)(DDS_PW << 4); // прикол от AD
+DDS_PW = (UInt16)((float)DC.Sig_PhaseYn * _Phase1deg);
+AD9106_Register.List[45].Data = (UInt16)(DDS_PW << 4);
+DDS_PW = (UInt16)((float)DC.Sig_PhaseXp * _Phase1deg);
+AD9106_Register.List[44].Data = (UInt16)(DDS_PW << 4);
+DDS_PW = (UInt16)((float)DC.Sig_PhaseXn * _Phase1deg);
+AD9106_Register.List[43].Data = (UInt16)(DDS_PW << 4);

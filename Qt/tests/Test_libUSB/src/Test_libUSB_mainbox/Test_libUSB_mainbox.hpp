@@ -25,11 +25,11 @@
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include </usr/include/hidapi/hidapi.h>
+#   include </usr/include/libusb-1.0/libusb.h>
 #endif
 #ifdef Q_OS_WIN
 #   include "hidapi_win/hidapi.h"
 #endif
-#include </usr/include/libusb-1.0/libusb.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

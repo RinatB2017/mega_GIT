@@ -4,13 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 PROGRAMM_PATH  += \
-#    C:\OpenCV\sources\3rdparty\include\opencl\1.2 \
-#    c:\OpenCV\sources\include \
-#    c:\OpenCV\sources\modules\core\include \
-#    c:\OpenCV\build\include \
+    /usr/include \
     /usr/lib/OpenCL/global/include/CL-2.1 \
     /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.0/include/g++-v8 \
-    /usr/lib/OpenCL/vendors/mesa/include \
     $$PWD \
     $$PWD/src \
     $$PWD/opencl

@@ -2,12 +2,9 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/lol
-INCLUDEPATH = $$DEPENDPATH
-
 RESOURCES += \
-    lol_actions.qrc \
-    lol_apps.qrc \
-    lol_devices.qrc \
-    lol_filesystems.qrc \
-    lol_mimetypes.qrc
+    $$PWD/lol/lol_actions.qrc \
+    $$PWD/lol/lol_apps.qrc \
+    $$PWD/lol/lol_devices.qrc \
+    $$PWD/lol/lol_filesystems.qrc \
+    $$PWD/lol/lol_mimetypes.qrc

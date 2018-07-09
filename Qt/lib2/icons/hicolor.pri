@@ -2,12 +2,9 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/hicolor
-INCLUDEPATH = $$DEPENDPATH
-
 RESOURCES += \
-    hicolor_actions.qrc \
-    hicolor_apps.qrc \
-    hicolor_mimetypes.qrc \
-    hicolor_places.qrc
+    $$PWD/hicolor/hicolor_actions.qrc \
+    $$PWD/hicolor/hicolor_apps.qrc \
+    $$PWD/hicolor/hicolor_mimetypes.qrc \
+    $$PWD/hicolor/hicolor_places.qrc
     

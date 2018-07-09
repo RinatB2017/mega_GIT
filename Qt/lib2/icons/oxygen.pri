@@ -2,17 +2,14 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/oxygen
-INCLUDEPATH = $$DEPENDPATH
-
 RESOURCES += \
-    oxygen_actions.qrc \
-    oxygen_animations.qrc \
-    oxygen_apps.qrc \
-    oxygen_categories.qrc \
-    oxygen_devices.qrc \
-    oxygen_emblems.qrc \
-    oxygen_emotes.qrc \
-    oxygen_mimetypes.qrc \
-    oxygen_places.qrc \
-    oxygen_status.qrc
+    $$PWD/oxygen/oxygen_actions.qrc \
+    $$PWD/oxygen/oxygen_animations.qrc \
+    $$PWD/oxygen/oxygen_apps.qrc \
+    $$PWD/oxygen/oxygen_categories.qrc \
+    $$PWD/oxygen/oxygen_devices.qrc \
+    $$PWD/oxygen/oxygen_emblems.qrc \
+    $$PWD/oxygen/oxygen_emotes.qrc \
+    $$PWD/oxygen/oxygen_mimetypes.qrc \
+    $$PWD/oxygen/oxygen_places.qrc \
+    $$PWD/oxygen/oxygen_status.qrc

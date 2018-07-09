@@ -25,9 +25,9 @@ DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
 
 HEADERS += \
+    rs232_5_echo_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    rs232_5_echo_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     rs232_5_echo_mainbox.cpp \
@@ -39,7 +39,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

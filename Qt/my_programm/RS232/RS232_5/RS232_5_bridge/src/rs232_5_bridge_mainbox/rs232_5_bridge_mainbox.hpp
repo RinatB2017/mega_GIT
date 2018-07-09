@@ -43,14 +43,8 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
-signals:
-    void send(QByteArray);
-
 private slots:
     void test(void);
-
-    void send_data_1(QByteArray ba);
-    void send_data_2(QByteArray ba);
 
 private:
     MySplashScreen *splash = 0;
@@ -59,7 +53,6 @@ private:
     void init(void);
     void createTestBar(void);
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

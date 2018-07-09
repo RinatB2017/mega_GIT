@@ -65,15 +65,17 @@ SerialBox5::SerialBox5(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5::~SerialBox5()
 {
+    if(serial5)
+    {
+        serial5->deleteLater();
+    }
+
 #ifdef RS232_LOG
-    logBox->deleteLater();
+    if(logBox)
+    {
+        logBox->deleteLater();
+    }
 #endif
-
-#ifdef RS232_SEND
-    sendBox5->deleteLater();
-#endif
-
-    serial5->deleteLater();
 
     delete ui;
 }

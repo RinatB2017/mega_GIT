@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>115</width>
-    <height>120</height>
+    <width>141</width>
+    <height>153</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,30 @@
       <string>Send</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QToolButton" name="btn_led1">
+       <property name="text">
+        <string>LED1</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_led2">
+       <property name="text">
+        <string>LED2</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

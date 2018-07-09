@@ -63,6 +63,9 @@ private slots:
     void test_4(void);
     void test_5(void);
 
+    void show_led1(bool state);
+    void show_led2(bool state);
+
     //---
     void dev_open(void);
     void dev_close(void);

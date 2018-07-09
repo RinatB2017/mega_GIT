@@ -24,10 +24,12 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
 
+#DEFINES += SAVE_INI
+
 HEADERS += \
+    rs232_5_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    rs232_5_mainbox.hpp
 
 SOURCES += \
     rs232_5_mainbox.cpp \

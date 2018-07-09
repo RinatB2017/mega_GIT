@@ -75,7 +75,58 @@ void HID_device::init(void)
     connect(ui->btn_close,  SIGNAL(clicked()), this, SLOT(dev_close()));
     connect(ui->btn_send,   SIGNAL(clicked()), this, SLOT(dev_send()));
 
+    connect(ui->btn_led1,   SIGNAL(toggled(bool)), this, SLOT(show_led1(bool)));
+    connect(ui->btn_led2,   SIGNAL(toggled(bool)), this, SLOT(show_led2(bool)));
+
     setFixedSize(sizeHint());
+}
+//--------------------------------------------------------------------------------
+void HID_device::show_led1(bool state)
+{
+    if(state)
+    {
+        memset(output_buf, 0, sizeof(output_buf));
+
+        output_buf[0] = 0x01;
+        output_buf[1] = 0xFF;
+        output_buf[2] = 0x00;
+
+        dev_send();
+    }
+    else
+    {
+        memset(output_buf, 0, sizeof(output_buf));
+
+        output_buf[0] = 0x01;
+        output_buf[1] = 0x00;
+        output_buf[2] = 0x00;
+
+        dev_send();
+    }
+}
+//--------------------------------------------------------------------------------
+void HID_device::show_led2(bool state)
+{
+    if(state)
+    {
+        memset(output_buf, 0, sizeof(output_buf));
+
+        output_buf[0] = 0x02;
+        output_buf[1] = 0xFF;
+        output_buf[2] = 0x00;
+
+        dev_send();
+    }
+    else
+    {
+        memset(output_buf, 0, sizeof(output_buf));
+
+        output_buf[0] = 0x02;
+        output_buf[1] = 0x00;
+        output_buf[2] = 0x00;
+
+        dev_send();
+    }
 }
 //--------------------------------------------------------------------------------
 void HID_device::createTestBar(void)
@@ -142,60 +193,26 @@ void HID_device::choice_test(void)
 void HID_device::test_0(void)
 {
     emit info("Test_0()");
-
-    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_1(void)
 {
     emit info("Test_1()");
-
-    memset(output_buf, 0, sizeof(output_buf));
-
-    output_buf[0] = 0x01;
-    output_buf[1] = 0x00;
-    output_buf[2] = 0x00;
-
-    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_2(void)
 {
     emit info("Test_2()");
-
-    memset(output_buf, 0, sizeof(output_buf));
-
-    output_buf[0] = 0x02;
-    output_buf[1] = 0x00;
-    output_buf[2] = 0x00;
-
-    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_3(void)
 {
     emit info("Test_3()");
-
-    memset(output_buf, 0, sizeof(output_buf));
-
-    output_buf[0] = 0x03;
-    output_buf[1] = 0x00;
-    output_buf[2] = 0x00;
-
-    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_4(void)
 {
     emit info("Test_4()");
-
-    memset(output_buf, 0, sizeof(output_buf));
-
-    output_buf[0] = 0x04;
-    output_buf[1] = 0x00;
-    output_buf[2] = 0x00;
-
-    dev_send();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_5(void)
@@ -310,10 +327,11 @@ void HID_device::dev_send(void)
         emit error(QString("hid_send_feature_report return %1").arg(res));
         return;
     }
-    QByteArray ba;
-    ba.append((char *)&output_buf, sizeof(output_buf));
 
-    emit info(ba.toHex().data());
+    //QByteArray ba;
+    //ba.append((char *)&output_buf, sizeof(output_buf));
+    //emit info(ba.toHex().data());
+
     emit info("OK");
 }
 //--------------------------------------------------------------------------------

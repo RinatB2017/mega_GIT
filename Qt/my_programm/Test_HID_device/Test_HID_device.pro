@@ -11,7 +11,6 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
-QT  += xml
 
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
@@ -19,8 +18,7 @@ DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \
-    version.hpp \
-    other.hpp
+    version.hpp
 
 SOURCES += \
     main.cpp

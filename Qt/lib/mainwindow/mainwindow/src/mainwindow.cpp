@@ -736,12 +736,14 @@ void MainWindow::createToolBar(void)
     app_toolbar_add_separator();
 #endif
 #endif
+
 #ifndef NO_TOOLBAR_BUTTON_FONT
     app_toolbar_add_font();
 #ifndef NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
+
 #ifndef ONLY_ENGLISH
 #ifndef NO_TOOLBAR_BUTTON_LANG
     app_toolbar_add_lang();
@@ -750,12 +752,14 @@ void MainWindow::createToolBar(void)
 #endif
 #endif
 #endif
+
 #ifndef NO_TOOLBAR_BUTTON_STYLE
     app_toolbar_add_style();
 #ifndef NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
+
 #ifndef NO_TOOLBAR_BUTTON_ABOUT
     app_toolbar_add_about();
 #endif

@@ -65,6 +65,7 @@ private slots:
 
     void show_led1(bool state);
     void show_led2(bool state);
+    void show_state(void);
 
     //---
     void dev_open(void);

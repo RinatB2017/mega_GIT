@@ -73,7 +73,7 @@ void HID_device::init(void)
 
     connect(ui->btn_open,   SIGNAL(clicked()), this, SLOT(dev_open()));
     connect(ui->btn_close,  SIGNAL(clicked()), this, SLOT(dev_close()));
-    connect(ui->btn_send,   SIGNAL(clicked()), this, SLOT(dev_send()));
+    connect(ui->btn_send,   SIGNAL(clicked()), this, SLOT(show_state()));
 
     connect(ui->btn_led1,   SIGNAL(toggled(bool)), this, SLOT(show_led1(bool)));
     connect(ui->btn_led2,   SIGNAL(toggled(bool)), this, SLOT(show_led2(bool)));
@@ -320,8 +320,9 @@ void HID_device::dev_send(void)
         return;
     }
 
+    int len = sizeof(output_buf);
     int res = 0;
-    res = hid_send_feature_report(dev, output_buf, sizeof(output_buf));
+    res = hid_send_feature_report(dev, output_buf, len);
     if(res < 0)
     {
         emit error(QString("hid_send_feature_report return %1").arg(res));
@@ -329,10 +330,39 @@ void HID_device::dev_send(void)
     }
 
     //QByteArray ba;
-    //ba.append((char *)&output_buf, sizeof(output_buf));
+    //ba.append((char *)&output_buf, len);
     //emit info(ba.toHex().data());
 
     emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::show_state(void)
+{
+    if(dev == 0)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int len = sizeof(output_buf);
+
+    memset(output_buf, 0, len);
+    output_buf[0] = 0x04;
+
+    int res = 0;
+    res = hid_send_feature_report(dev, output_buf, len);
+    if(res < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(res));
+        return;
+    }
+
+    QByteArray ba;
+    ba.append((char *)&output_buf, len);
+    emit info(ba.toHex().data());
+
+    emit info("OK");
+
 }
 //--------------------------------------------------------------------------------
 void HID_device::updateText(void)

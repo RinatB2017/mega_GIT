@@ -21,18 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QVBoxLayout>
-#   include <QMessageBox>
-#   include <QComboBox>
-#   include <QLineEdit>
-#   include <QLabel>
-#   include <QTime>
-
-#   include <QAction>
-#   include <QMenu>
-
-#   include <QToolButton>
-#   include <QToolBar>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -45,6 +34,7 @@
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
 #include "hc_06_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -70,10 +60,11 @@ void MainBox::init(void)
     Q_CHECK_PTR(serialBox);
 
     ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
 
     connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
     connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -87,41 +78,41 @@ void MainBox::createTestBar(void)
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     cb_command = new QComboBox(this);
-    cb_command->addItem("AT", QVariant(Qt::UserRole + AT));
-    cb_command->addItem("RESET", QVariant(Qt::UserRole + RESET));
-    cb_command->addItem("VERSION", QVariant(Qt::UserRole + VERSION));
-    cb_command->addItem("ORGL", QVariant(Qt::UserRole + ORGL));
-    cb_command->addItem("ADDR", QVariant(Qt::UserRole + ADDR));
-    cb_command->addItem("NAME", QVariant(Qt::UserRole + NAME));
-    cb_command->addItem("RNAME", QVariant(Qt::UserRole + RNAME));
-    cb_command->addItem("ROLE", QVariant(Qt::UserRole + ROLE));
-    cb_command->addItem("CLASS", QVariant(Qt::UserRole + CLASS));
-    cb_command->addItem("IAC", QVariant(Qt::UserRole + IAC));
-    cb_command->addItem("INQM", QVariant(Qt::UserRole + INQM));
-    cb_command->addItem("PSWD", QVariant(Qt::UserRole + PSWD));
-    cb_command->addItem("UART", QVariant(Qt::UserRole + UART));
-    cb_command->addItem("CMODE", QVariant(Qt::UserRole + CMODE));
-    cb_command->addItem("BIND", QVariant(Qt::UserRole + BIND));
-    cb_command->addItem("POLAR", QVariant(Qt::UserRole + POLAR));
-    cb_command->addItem("PIO", QVariant(Qt::UserRole + PIO));
-    cb_command->addItem("MPIO", QVariant(Qt::UserRole + MPIO));
-    cb_command->addItem("IPSCAN", QVariant(Qt::UserRole + IPSCAN));
-    cb_command->addItem("SNIFF", QVariant(Qt::UserRole + SNIFF));
-    cb_command->addItem("SENM", QVariant(Qt::UserRole + SENM));
-    cb_command->addItem("PMSAD", QVariant(Qt::UserRole + PMSAD));
-    cb_command->addItem("RMAAD", QVariant(Qt::UserRole + RMAAD));
-    cb_command->addItem("FSAD", QVariant(Qt::UserRole + FSAD));
-    cb_command->addItem("ADCN", QVariant(Qt::UserRole + ADCN));
-    cb_command->addItem("MRAD", QVariant(Qt::UserRole + MRAD));
-    cb_command->addItem("STATE", QVariant(Qt::UserRole + STATE));
-    cb_command->addItem("INIT", QVariant(Qt::UserRole + INIT));
-    cb_command->addItem("INQ", QVariant(Qt::UserRole + INQ));
-    cb_command->addItem("INQC", QVariant(Qt::UserRole + INQC));
-    cb_command->addItem("PAIR", QVariant(Qt::UserRole + PAIR));
-    cb_command->addItem("LINK", QVariant(Qt::UserRole + LINK));
-    cb_command->addItem("DISC", QVariant(Qt::UserRole + DISC));
-    cb_command->addItem("ENSNIFF", QVariant(Qt::UserRole + ENSNIFF));
-    cb_command->addItem("EXSNIFF", QVariant(Qt::UserRole + EXSNIFF));
+    cb_command->addItem("AT",       QVariant(Qt::UserRole + AT));
+    cb_command->addItem("RESET",    QVariant(Qt::UserRole + RESET));
+    cb_command->addItem("VERSION",  QVariant(Qt::UserRole + VERSION));
+    cb_command->addItem("ORGL",     QVariant(Qt::UserRole + ORGL));
+    cb_command->addItem("ADDR",     QVariant(Qt::UserRole + ADDR));
+    cb_command->addItem("NAME",     QVariant(Qt::UserRole + NAME));
+    cb_command->addItem("RNAME",    QVariant(Qt::UserRole + RNAME));
+    cb_command->addItem("ROLE",     QVariant(Qt::UserRole + ROLE));
+    cb_command->addItem("CLASS",    QVariant(Qt::UserRole + CLASS));
+    cb_command->addItem("IAC",      QVariant(Qt::UserRole + IAC));
+    cb_command->addItem("INQM",     QVariant(Qt::UserRole + INQM));
+    cb_command->addItem("PSWD",     QVariant(Qt::UserRole + PSWD));
+    cb_command->addItem("UART",     QVariant(Qt::UserRole + UART));
+    cb_command->addItem("CMODE",    QVariant(Qt::UserRole + CMODE));
+    cb_command->addItem("BIND",     QVariant(Qt::UserRole + BIND));
+    cb_command->addItem("POLAR",    QVariant(Qt::UserRole + POLAR));
+    cb_command->addItem("PIO",      QVariant(Qt::UserRole + PIO));
+    cb_command->addItem("MPIO",     QVariant(Qt::UserRole + MPIO));
+    cb_command->addItem("IPSCAN",   QVariant(Qt::UserRole + IPSCAN));
+    cb_command->addItem("SNIFF",    QVariant(Qt::UserRole + SNIFF));
+    cb_command->addItem("SENM",     QVariant(Qt::UserRole + SENM));
+    cb_command->addItem("PMSAD",    QVariant(Qt::UserRole + PMSAD));
+    cb_command->addItem("RMAAD",    QVariant(Qt::UserRole + RMAAD));
+    cb_command->addItem("FSAD",     QVariant(Qt::UserRole + FSAD));
+    cb_command->addItem("ADCN",     QVariant(Qt::UserRole + ADCN));
+    cb_command->addItem("MRAD",     QVariant(Qt::UserRole + MRAD));
+    cb_command->addItem("STATE",    QVariant(Qt::UserRole + STATE));
+    cb_command->addItem("INIT",     QVariant(Qt::UserRole + INIT));
+    cb_command->addItem("INQ",      QVariant(Qt::UserRole + INQ));
+    cb_command->addItem("INQC",     QVariant(Qt::UserRole + INQC));
+    cb_command->addItem("PAIR",     QVariant(Qt::UserRole + PAIR));
+    cb_command->addItem("LINK",     QVariant(Qt::UserRole + LINK));
+    cb_command->addItem("DISC",     QVariant(Qt::UserRole + DISC));
+    cb_command->addItem("ENSNIFF",  QVariant(Qt::UserRole + ENSNIFF));
+    cb_command->addItem("EXSNIFF",  QVariant(Qt::UserRole + EXSNIFF));
 
     le_name = new QLineEdit();
     le_name->setText("HC-05");
@@ -245,7 +236,7 @@ void MainBox::command_AT(void)
         emit error(QString("err = %1").arg(err));
         return;
     }
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -263,7 +254,7 @@ void MainBox::command_RESET(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+RESET"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -281,7 +272,7 @@ void MainBox::command_VERSION(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+VERSION"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -299,7 +290,7 @@ void MainBox::command_ORGL(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+ORGL"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -317,7 +308,7 @@ void MainBox::command_ADDR(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+ADDR"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -341,7 +332,7 @@ void MainBox::command_NAME(void)
     is_ready = false;
 
     serialBox->input(get_command_string(QString("AT+NAME%1").arg(le_name->text())));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -359,7 +350,7 @@ void MainBox::command_RNAME(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+RNAME"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -377,7 +368,7 @@ void MainBox::command_ROLE(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+ROLE"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -395,7 +386,7 @@ void MainBox::command_CLASS(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+CLASS"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -413,7 +404,7 @@ void MainBox::command_IAC(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+IAC"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -431,7 +422,7 @@ void MainBox::command_INQM(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+INQM"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -449,7 +440,7 @@ void MainBox::command_PSWD(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+PSWD"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -467,7 +458,7 @@ void MainBox::command_UART(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+UART"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -485,7 +476,7 @@ void MainBox::command_CMODE(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+CMODE"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -503,7 +494,7 @@ void MainBox::command_BIND(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+BIND"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -521,7 +512,7 @@ void MainBox::command_POLAR(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+POLAR"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -539,7 +530,7 @@ void MainBox::command_PIO(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+PIO"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -557,7 +548,7 @@ void MainBox::command_MPIO(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+MPIO"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -575,7 +566,7 @@ void MainBox::command_IPSCAN(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+IPSCAN"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -593,7 +584,7 @@ void MainBox::command_SNIFF(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+SNIFF"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -611,7 +602,7 @@ void MainBox::command_SENM(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+SENM"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -629,7 +620,7 @@ void MainBox::command_PMSAD(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+PMSAD"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -647,7 +638,7 @@ void MainBox::command_RMAAD(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+RMAAD"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -665,7 +656,7 @@ void MainBox::command_FSAD(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+FSAD"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -683,7 +674,7 @@ void MainBox::command_ADCN(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+ADCN"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -701,7 +692,7 @@ void MainBox::command_MRAD(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+MRAD"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -719,7 +710,7 @@ void MainBox::command_STATE(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+STATE"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -737,7 +728,7 @@ void MainBox::command_INIT(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+INIT"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -755,7 +746,7 @@ void MainBox::command_INQ(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+INQ"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -773,7 +764,7 @@ void MainBox::command_INQC(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+INQC"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -791,7 +782,7 @@ void MainBox::command_PAIR(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+PAIR"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -809,7 +800,7 @@ void MainBox::command_LINK(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+LINK"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -827,7 +818,7 @@ void MainBox::command_DISC(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+DISC"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -845,7 +836,7 @@ void MainBox::command_ENSNIFF(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+ENSNIFF"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {
@@ -863,7 +854,7 @@ void MainBox::command_EXSNIFF(void)
     is_ready = false;
 
     serialBox->input(get_command_string("AT+EXSNIFF"));
-    wait(1000);
+    wait(MAX_WAIT);
 
     if(data_rs232.isEmpty())
     {

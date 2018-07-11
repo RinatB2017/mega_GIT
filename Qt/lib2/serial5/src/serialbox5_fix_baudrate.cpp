@@ -191,27 +191,26 @@ void SerialBox5_fix_baudrate::change_icon(bool state)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::serial5_error(QSerialPort::SerialPortError err)
 {
-    if(err == QSerialPort::NoError) return;
+    if(err == QSerialPort::NoError)
+    {
+        return;
+    }
 
     switch(err)
     {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError"); break;
-    case QSerialPort::PermissionError:              emit error("PermissionError"); break;
-    case QSerialPort::OpenError:                    emit error("OpenError"); break;
-    case QSerialPort::ParityError:                  emit error("ParityError"); break;
-    case QSerialPort::FramingError:                 emit error("FramingError"); break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError"); break;
-    case QSerialPort::WriteError:                   emit error("WriteError");   break;
-    case QSerialPort::ReadError:
-        emit error("ReadError");
-        serial5->close();
-        setCloseState();
-        break;
-    case QSerialPort::ResourceError:                emit error("ResourceError"); break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError"); break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError"); break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError"); break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError"); break;
+    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
+    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
+    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
+    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
+    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
+    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
+    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
+    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
+    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
+    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
+    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
+    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
+    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
 
     default:
         emit error(QString("unknown error %1").arg(err));
@@ -240,7 +239,7 @@ void SerialBox5_fix_baudrate::setCloseState(void)
 {
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
-    emit port_is_active(false);
+    emit is_close();
     ui->btn_power->setToolTip("Старт");
 }
 //--------------------------------------------------------------------------------
@@ -248,7 +247,7 @@ void SerialBox5_fix_baudrate::setOpenState()
 {
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
-    emit port_is_active(true);
+    emit is_open();
     ui->btn_power->setToolTip("Стоп");
 }
 //--------------------------------------------------------------------------------
@@ -266,8 +265,12 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
         else
         {
             QString text = ui->PortBox->currentText();
-            Q_ASSERT(!text.isEmpty());
-            serial5->setPortName(ui->PortBox->currentText());
+            if(text.isEmpty())
+            {
+                serial5->close();
+                setCloseState();
+            }
+            serial5->setPortName(text);
             result = serial5->open(QIODevice::ReadWrite);
             if(result)
             {
@@ -297,13 +300,13 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit port_is_active(false);
+        emit is_close();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit port_is_active(false);
+        emit is_open();
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -339,13 +342,13 @@ int SerialBox5_fix_baudrate::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit port_is_active(false);
+        emit is_close();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit port_is_active(false);
+        emit is_close();
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;

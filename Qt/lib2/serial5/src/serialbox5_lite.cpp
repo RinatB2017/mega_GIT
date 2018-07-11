@@ -208,23 +208,19 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
 
     switch(err)
     {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError"); break;
-    case QSerialPort::PermissionError:              emit error("PermissionError"); break;
-    case QSerialPort::OpenError:                    emit error("OpenError"); break;
-    case QSerialPort::ParityError:                  emit error("ParityError"); break;
-    case QSerialPort::FramingError:                 emit error("FramingError"); break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError"); break;
-    case QSerialPort::WriteError:                   emit error("WriteError");   break;
-    case QSerialPort::ReadError:
-        emit error("ReadError");
-        serial5->close();
-        setCloseState();
-        break;
-    case QSerialPort::ResourceError:                emit error("ResourceError"); break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError"); break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError"); break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError"); break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError"); break;
+    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
+    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
+    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
+    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
+    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
+    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
+    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
+    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
+    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
+    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
+    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
+    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
+    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
 
     default:
         emit error(QString("unknown error %1").arg(err));
@@ -238,6 +234,8 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
 
     setCloseState();
     refresh();
+
+    emit not_working();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::getStatus(const QString &status, QDateTime current)
@@ -306,7 +304,13 @@ void SerialBox5_lite::btnOpenPortClicked()
         }
         else
         {
-            serial5->setPortName(ui->PortBox->currentText());
+            QString text = ui->PortBox->currentText();
+            if(text.isEmpty())
+            {
+                serial5->close();
+                setCloseState();
+            }
+            serial5->setPortName(text);
             result = serial5->open(QIODevice::ReadWrite);
             if(result)
             {

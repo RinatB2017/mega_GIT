@@ -133,8 +133,10 @@ signals:
     void readyRead(void);
     void readChannelFinished(void);
 
-    void not_working(void);
     void output(const QByteArray &data);
+
+    void is_open(void);
+    void is_close(void);
 
 public slots:
     int input(const QByteArray &sending_data);

@@ -100,10 +100,11 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
-    void port_is_active(bool);
-    void output(const QByteArray &data);
     void readyRead(void);
     void readChannelFinished(void);
+
+    void output(const QByteArray &data);
+
     void is_open(void);
     void is_close(void);
 

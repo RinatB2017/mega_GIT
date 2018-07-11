@@ -107,6 +107,7 @@ signals:
     void output(const QByteArray &data);
     void readyRead(void);
     void readChannelFinished(void);
+
     void is_open(void);
     void is_close(void);
 

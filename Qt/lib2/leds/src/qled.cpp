@@ -1,42 +1,46 @@
 //--------------------------------------------------------------------------------
+#include <QPainter>
 #include "qled.hpp"
 //--------------------------------------------------------------------------------
 QLed::QLed(unsigned int width,
            unsigned int height,
            const QString &tooltip,
-           const QColor &color,
+           const QColor &color_off,
+           const QColor &color_on,
            QWidget *parent) :
-    QFrame(parent)
+    QWidget(parent)
 {
-    ledColor = "";
+    this->color_off = color_off;
+    this->color_on = color_on;
 
     if(width < 16) width = 16;
     if(height < 16) height = 16;
-    setMinimumSize(width, height);
+    setFixedSize(width, height);
     setToolTip(tooltip);
-    setFrameShape(StyledPanel);
-    setFrameShadow(Sunken);
-    ledColor = color == Qt::white ? "background:white" : ledColor;
-    ledColor = color == Qt::black ? "background:black" : ledColor;
-    ledColor = color == Qt::red ? "background:red" : ledColor;
-    ledColor = color == Qt::darkRed ? "background:darkRed" : ledColor;
-    ledColor = color == Qt::green ? "background:green" : ledColor;
-    ledColor = color == Qt::darkGreen ? "background:darkGreen" : ledColor;
-    ledColor = color == Qt::blue ? "background:blue" : ledColor;
-    ledColor = color == Qt::darkBlue ? "background:darkBlue" : ledColor;
-    ledColor = color == Qt::cyan ? "background:cyan" : ledColor;
-    ledColor = color == Qt::darkCyan ? "background:darkCyan" : ledColor;
-    ledColor = color == Qt::magenta ? "background:magenta" : ledColor;
-    ledColor = color == Qt::darkMagenta ? "background:darkMagenta" : ledColor;
-    ledColor = color == Qt::yellow ? "background:yellow" : ledColor;
-    ledColor = color == Qt::darkYellow ? "background:darkYellow" : ledColor;
-    ledColor = color == Qt::gray ? "background:gray" : ledColor;
-    ledColor = color == Qt::darkGray ? "background:darkGray" : ledColor;
-    ledColor = color == Qt::lightGray ? "background:lightGray" : ledColor;
+
+    current_color = color_off;
+    update();
 }
 //--------------------------------------------------------------------------------
 void QLed::setState(bool state)
 {
-    setStyleSheet(state ? ledColor : "");
+    if(state)
+    {
+        current_color = color_on;
+    }
+    else
+    {
+        current_color = color_off;
+    }
+    update();
+}
+//--------------------------------------------------------------------------------
+void QLed::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    painter.fillRect(0, 0, width(), height(), Qt::transparent);
+    painter.setPen(QPen(Qt::black));
+    painter.setBrush(QBrush(current_color));
+    painter.drawEllipse(QPointF(width() / 2.0, height() / 2.0), width() / 2.0 - 1.0, height() / 2.0 - 1.0);
 }
 //--------------------------------------------------------------------------------

@@ -4,26 +4,24 @@
 //--------------------------------------------------------------------------------
 #include <QFrame>
 //--------------------------------------------------------------------------------
-class QLed : public QWidget
+class QLed : public QFrame
 {
     Q_OBJECT
 public:
     explicit QLed(unsigned int width,
                   unsigned int height,
                   const QString &tooltip,
-                  const QColor &color_off = Qt::gray,
-                  const QColor &color_on = Qt::red,
+                  const QColor &color = Qt::black,
                   QWidget *parent = 0);
-    void setState(bool state); 
+    void setState(bool state);
+
+signals:
+
+public slots:    
 
 private:
-    QColor color_off;
-    QColor color_on;
+    QString ledColor;
 
-    QColor current_color = color_off;
-
-protected:
-    void paintEvent(QPaintEvent *);
 };
 //--------------------------------------------------------------------------------
 #endif

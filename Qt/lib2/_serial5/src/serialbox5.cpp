@@ -65,15 +65,17 @@ SerialBox5::SerialBox5(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5::~SerialBox5()
 {
+    if(serial5)
+    {
+        serial5->deleteLater();
+    }
+
 #ifdef RS232_LOG
-    logBox->deleteLater();
+    if(logBox)
+    {
+        logBox->deleteLater();
+    }
 #endif
-
-#ifdef RS232_SEND
-    sendBox5->deleteLater();
-#endif
-
-    serial5->deleteLater();
 
     delete ui;
 }
@@ -115,8 +117,6 @@ void SerialBox5::createWidgets(void)
 
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
-
-    ui->btn_refresh->setToolTip("Обновить список портов");
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
@@ -238,13 +238,14 @@ void SerialBox5::initSerial(void)
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
 
     connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this,   SLOT(serial5_error(QSerialPort::SerialPortError)));
-    //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this,   SLOT(errorOccurred(QSerialPort::SerialPortError)));
+    connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
+    //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
 
     connect(serial5, SIGNAL(baudRateChanged(qint32,QSerialPort::Directions)),   this,   SLOT(baudRateChanged(qint32,QSerialPort::Directions)));
     connect(serial5, SIGNAL(breakEnabledChanged(bool)),                         this,   SLOT(breakEnabledChanged(bool)));
     connect(serial5, SIGNAL(dataBitsChanged(QSerialPort::DataBits)),            this,   SLOT(dataBitsChanged(QSerialPort::DataBits)));
     connect(serial5, SIGNAL(dataTerminalReadyChanged(bool)),                    this,   SLOT(dataTerminalReadyChanged(bool)));
+    //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)),       this,   SLOT(errorOccurred(QSerialPort::SerialPortError)));
     connect(serial5, SIGNAL(flowControlChanged(QSerialPort::FlowControl)),      this,   SLOT(flowControlChanged(QSerialPort::FlowControl)));
     connect(serial5, SIGNAL(parityChanged(QSerialPort::Parity)),                this,   SLOT(parityChanged(QSerialPort::Parity)));
     connect(serial5, SIGNAL(requestToSendChanged(bool)),                        this,   SLOT(requestToSendChanged(bool)));
@@ -260,23 +261,19 @@ void SerialBox5::serial5_error(QSerialPort::SerialPortError err)
 
     switch(err)
     {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError"); break;
-    case QSerialPort::PermissionError:              emit error("PermissionError"); break;
-    case QSerialPort::OpenError:                    emit error("OpenError");    break;
-    case QSerialPort::ParityError:                  emit error("ParityError");  break;
-    case QSerialPort::FramingError:                 emit error("FramingError"); break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError"); break;
-    case QSerialPort::WriteError:                   emit error("WriteError");   break;
-    case QSerialPort::ReadError:
-        emit error("ReadError");
-        serial5->close();
-        setCloseState();
-        break;
-    case QSerialPort::ResourceError:                emit error("ResourceError"); break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError"); break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError"); break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError"); break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError"); break;
+    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
+    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
+    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
+    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
+    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
+    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
+    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
+    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
+    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
+    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
+    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
+    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
+    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
 
     default:
         emit error(QString("unknown error %1").arg(err));
@@ -285,9 +282,8 @@ void SerialBox5::serial5_error(QSerialPort::SerialPortError err)
 
     if(err != QSerialPort::NoError)
     {
-        //serial5->close();
-        //btnOpenPortClicked();
-        //setCloseState();
+        serial5->close();
+        refresh();
     }
 
     setCloseState();
@@ -381,7 +377,6 @@ void SerialBox5::setCloseState(void)
 #if RS232_SEND
     sendBox5->block_interface(true);
 #endif
-    ui->btn_power->setToolTip("Старт");
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setOpenState()
@@ -400,7 +395,6 @@ void SerialBox5::setOpenState()
 #if RS232_SEND
     sendBox5->block_interface(false);
 #endif
-    ui->btn_power->setToolTip("Стоп");
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::btnOpenPortClicked()
@@ -411,10 +405,17 @@ void SerialBox5::btnOpenPortClicked()
     if (result)
     {
         serial5->close();
+        emit is_close();
         result = false;
     }
     else
     {
+        if(ui->PortBox->currentText().isEmpty())
+        {
+            //emit error("portname is empty!");
+            setCloseState();
+            return;
+        }
         serial5->setPortName(ui->PortBox->currentText());
         result = serial5->open(QIODevice::ReadWrite);
         if(result)
@@ -435,12 +436,14 @@ void SerialBox5::btnOpenPortClicked()
             if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
 
             get_parameter();
+            emit is_open();
         }
         else
         {
             emit error(QString("ERROR: serial [%1] not open (%2)")
                        .arg(serial5->portName())
                        .arg(serial5->errorString()));
+            emit is_close();
         }
     }
 
@@ -470,20 +473,7 @@ int SerialBox5::input(const QByteArray &sending_data)
     }
     else
     {
-        QString temp = sending_data;
-        bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\x{0000}-\\x{007F}]")));
-        if(containsNonASCII == false)
-        {
-            if(temp.isEmpty() == false)
-            {
-                QString x_str = temp.remove('\r').remove('\n');
-                emit debug(QString("send: %1").arg(x_str));
-            }
-        }
-        else
-        {
-            emit debug(QString("send [%1]").arg(sending_data.toHex().toUpper().data()));
-        }
+        emit debug(QString("send [%1]").arg(sending_data.toHex().toUpper().data()));
         serial5->write(sending_data);
     }
     return E_NO_ERROR;

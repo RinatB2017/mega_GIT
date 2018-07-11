@@ -59,8 +59,8 @@ SerialBox5_lite::SerialBox5_lite(QWidget *parent) :
 }
 //--------------------------------------------------------------------------------
 SerialBox5_lite::SerialBox5_lite(QWidget *parent,
-                                 const QString &caption,
-                                 const QString &o_name) :
+                       const QString &caption,
+                       const QString &o_name) :
     MyWidget(parent),
     ui(new Ui::SerialBox5_lite),
     parent(parent),
@@ -102,18 +102,16 @@ void SerialBox5_lite::init(void)
     initEnumerator();
     initSerial();
     setCloseState();
+#ifdef RS232_FIXED_SIZE
+    setFixedSize(sizeHint());
+#endif
 
     ui->PortBox->setMinimumWidth(150);
+
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    //setFixedWidth(sizeHint().width());
-
-#ifdef RS232_FIXED_SIZE
-    //setFixedSize(sizeHint());
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-#endif
-
+    setFixedWidth(sizeHint().width());
     updateText();
 }
 //--------------------------------------------------------------------------------
@@ -122,9 +120,10 @@ void SerialBox5_lite::createWidgets(void)
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
 
-    ui->btn_power->setProperty("no_block", true);
-    ui->btn_refresh->setProperty("no_block", true);
-    ui->PortBox->setProperty("no_block", true);
+    ui->btn_power->setProperty(NO_BLOCK, true);
+    ui->btn_refresh->setToolTip("Обновить список портов");
+    ui->btn_refresh->setProperty(NO_BLOCK, true);
+    ui->PortBox->setProperty(NO_BLOCK, true);
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
@@ -136,7 +135,7 @@ void SerialBox5_lite::createWidgets(void)
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
 void SerialBox5_lite::add_frame_text(QFrame *parent,
-                                     const QString &text)
+                                const QString &text)
 {
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);
@@ -205,26 +204,27 @@ void SerialBox5_lite::change_icon(bool state)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
 {
-    if(err == QSerialPort::NoError)
-    {
-        return;
-    }
+    if(err == QSerialPort::NoError) return;
 
     switch(err)
     {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
-    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
-    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
-    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
-    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
-    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
-    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
-    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
+    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError"); break;
+    case QSerialPort::PermissionError:              emit error("PermissionError"); break;
+    case QSerialPort::OpenError:                    emit error("OpenError"); break;
+    case QSerialPort::ParityError:                  emit error("ParityError"); break;
+    case QSerialPort::FramingError:                 emit error("FramingError"); break;
+    case QSerialPort::BreakConditionError:          emit error("BreakConditionError"); break;
+    case QSerialPort::WriteError:                   emit error("WriteError");   break;
+    case QSerialPort::ReadError:
+        emit error("ReadError");
+        serial5->close();
+        setCloseState();
+        break;
+    case QSerialPort::ResourceError:                emit error("ResourceError"); break;
+    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError"); break;
+    case QSerialPort::UnknownError:                 emit error("UnknownError"); break;
+    case QSerialPort::TimeoutError:                 emit error("TimeoutError"); break;
+    case QSerialPort::NotOpenError:                 emit error("NotOpenError"); break;
 
     default:
         emit error(QString("unknown error %1").arg(err));
@@ -234,7 +234,6 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
     if(err != QSerialPort::NoError)
     {
         serial5->close();
-        refresh();
     }
 
     setCloseState();
@@ -279,7 +278,8 @@ void SerialBox5_lite::setCloseState(void)
     ui->PortBox->setEnabled(true);
     ui->BaudBox->setEnabled(false);
     ui->btn_power->setChecked(false);
-    emit port_is_active(true);
+    emit port_is_active(false);
+    ui->btn_power->setToolTip("Старт");
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::setOpenState()
@@ -287,48 +287,46 @@ void SerialBox5_lite::setOpenState()
     ui->PortBox->setEnabled(false);
     ui->BaudBox->setEnabled(true);
     ui->btn_power->setChecked(true);
-    emit port_is_active(false);
+    emit port_is_active(true);
+    ui->btn_power->setToolTip("Стоп");
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::btnOpenPortClicked()
 {
     int idx;
 
-    bool result = serial5->isOpen();
-    if (result)
+    if (serial5)
     {
-        serial5->close();
-        emit is_close();
-        result = false;
-    }
-    else
-    {
-        if(ui->PortBox->currentText().isEmpty())
+        bool result = serial5->isOpen();
+        if (result)
         {
-            //emit error("portname is empty!");
-            setCloseState();
-            return;
-        }
-        serial5->setPortName(ui->PortBox->currentText());
-        result = serial5->open(QIODevice::ReadWrite);
-        if(result)
-        {
-            idx = ui->BaudBox->findData(serial5->baudRate());
-            if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
-
-            get_parameter();
-            emit is_open();
+            serial5->close();
+            emit is_close();
+            result = false;
         }
         else
         {
-            emit error(QString("ERROR: serial [%1] not open (%2)")
-                       .arg(serial5->portName())
-                       .arg(serial5->errorString()));
-            emit is_close();
-        }
-    }
+            serial5->setPortName(ui->PortBox->currentText());
+            result = serial5->open(QIODevice::ReadWrite);
+            if(result)
+            {
+                idx = ui->BaudBox->findData(serial5->baudRate());
+                if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
-    (result) ? setOpenState() : setCloseState();
+                get_parameter();
+                emit is_open();
+            }
+            else
+            {
+                emit error(QString("ERROR: serial [%1] not open (%2)")
+                           .arg(serial5->portName())
+                           .arg(serial5->errorString()));
+                emit is_close();
+            }
+        }
+
+        (result) ? setOpenState() : setCloseState();
+    }
 }
 //--------------------------------------------------------------------------------
 int SerialBox5_lite::input(const QByteArray &sending_data)

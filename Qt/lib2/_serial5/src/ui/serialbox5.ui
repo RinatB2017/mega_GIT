@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>331</width>
-    <height>328</height>
+    <height>345</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -25,12 +25,6 @@
    </property>
    <item>
     <widget class="QFrame" name="frame">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -134,10 +128,10 @@
            </widget>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="buttons_layout"/>
+           <layout class="QHBoxLayout" name="layout_SEND"/>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="layout_SEND"/>
+           <layout class="QVBoxLayout" name="buttons_layout"/>
           </item>
           <item>
            <layout class="QHBoxLayout" name="layout_status"/>

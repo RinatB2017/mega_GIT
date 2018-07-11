@@ -40,7 +40,7 @@ Test::Test()
 //--------------------------------------------------------------------------------
 void Test::check_serial(void)
 {
-    SerialBox5 *sb1 = mw->findChild<SerialBox5 *>("RS232");
+    SerialBox5 *sb1 = mw->findChild<SerialBox5 *>("RS232_5");
     QVERIFY(sb1);
 
     QPushButton *pb1 = sb1->findChild<QPushButton *>("btn_power");
@@ -69,7 +69,7 @@ void Test::check_serial(void)
     QSignalSpy spy2(sb1, SIGNAL(not_working()));
     QCOMPARE(spy2.isValid(), true); // signal exists
 
-    QCOMPARE(sb1->input(QString("test1")),  SerialBox5::E_NO_ERROR);
+    //QCOMPARE(sb1->input(QString("test1")),  SerialBox5::E_NO_ERROR);
     QTest::qWait(1000);
 
     QCOMPARE(spy.count(), 1);                       // fired exactly once

@@ -7,16 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>422</width>
-    <height>153</height>
+    <height>228</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QHBoxLayout" name="serial_layout"/>
-   </item>
    <item>
     <widget class="QPushButton" name="btn_find_hc05">
      <property name="text">
@@ -28,6 +25,20 @@
     <widget class="QPushButton" name="btn_get_version">
      <property name="text">
       <string>Get version</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_get_addr">
+     <property name="text">
+      <string>Get addr</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_test">
+     <property name="text">
+      <string>TEST</string>
      </property>
     </widget>
    </item>

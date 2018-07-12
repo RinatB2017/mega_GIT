@@ -25,7 +25,8 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#include "serialbox5_fix_baudrate.hpp"
+#include <QSerialPortInfo>
+#include <QSerialPort>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -46,9 +47,6 @@ public:
                      MySplashScreen *splash);
     ~MainBox();
 
-signals:
-    void send(QByteArray);
-
 private slots:
     void choice_test(void);
     bool test_0(void);
@@ -59,8 +57,13 @@ private slots:
     bool test_5(void);
 
     void find_device(void);
-    void get_version(void);
-    void read_data(QByteArray ba);
+    bool get_version(void);
+    bool get_address(void);
+
+    void port_read(void);
+    void port_error(QSerialPort::SerialPortError serial_error);
+
+    void test(void);
 
 private:
 
@@ -83,22 +86,23 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    SerialBox5_fix_baudrate *serial = 0;
+    QSerialPort serial;
+
     QByteArray rs232_data;
     bool is_ready = false;
 
-    int device_speed = 0;
+    bool flag_closed = false;
 
     void init_serial(void);
     bool send_AT(void);
     void wait(int time_msec);
 
     QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
     QList<CMD> commands;
 
     void init(void);
     void createTestBar(void);
+    bool send_command(QString cmd_string);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

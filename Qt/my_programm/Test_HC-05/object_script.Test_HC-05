@@ -14,10 +14,6 @@ E:\my_programm\_Templates\Test_HC-05\obj\logbox.o
 E:\my_programm\_Templates\Test_HC-05\obj\mywaitsplashscreen.o
 E:\my_programm\_Templates\Test_HC-05\obj\mysplashscreen.o
 E:\my_programm\_Templates\Test_HC-05\obj\mywidget.o
-E:\my_programm\_Templates\Test_HC-05\obj\serialbox5.o
-E:\my_programm\_Templates\Test_HC-05\obj\sendbox5.o
-E:\my_programm\_Templates\Test_HC-05\obj\serialbox5_lite.o
-E:\my_programm\_Templates\Test_HC-05\obj\serialbox5_fix_baudrate.o
 E:\my_programm\_Templates\Test_HC-05\obj\qrc_images.o
 E:\my_programm\_Templates\Test_HC-05\obj\qrc_doc.o
 E:\my_programm\_Templates\Test_HC-05\obj\qrc_mw_images.o
@@ -25,7 +21,6 @@ E:\my_programm\_Templates\Test_HC-05\obj\qrc_aboutbox.o
 E:\my_programm\_Templates\Test_HC-05\obj\qrc_common.o
 E:\my_programm\_Templates\Test_HC-05\obj\qrc_programm.o
 E:\my_programm\_Templates\Test_HC-05\obj\qrc_system.o
-E:\my_programm\_Templates\Test_HC-05\obj\qrc_power_knock.o
 E:\my_programm\_Templates\Test_HC-05\obj\moc_test_hc05_mainbox.o
 E:\my_programm\_Templates\Test_HC-05\obj\moc_qtsingleapplication.o
 E:\my_programm\_Templates\Test_HC-05\obj\moc_qtlocalpeer.o
@@ -40,8 +35,4 @@ E:\my_programm\_Templates\Test_HC-05\obj\moc_logbox.o
 E:\my_programm\_Templates\Test_HC-05\obj\moc_mywaitsplashscreen.o
 E:\my_programm\_Templates\Test_HC-05\obj\moc_mysplashscreen.o
 E:\my_programm\_Templates\Test_HC-05\obj\moc_mywidget.o
-E:\my_programm\_Templates\Test_HC-05\obj\moc_serialbox5.o
-E:\my_programm\_Templates\Test_HC-05\obj\moc_sendbox5.o
-E:\my_programm\_Templates\Test_HC-05\obj\moc_serialbox5_lite.o
-E:\my_programm\_Templates\Test_HC-05\obj\moc_serialbox5_fix_baudrate.o
 );

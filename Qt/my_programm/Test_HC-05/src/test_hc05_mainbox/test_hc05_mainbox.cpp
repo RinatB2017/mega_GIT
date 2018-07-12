@@ -59,6 +59,8 @@ void MainBox::init(void)
 
     connect(ui->btn_find_hc05,      SIGNAL(clicked(bool)),  this,   SLOT(find_device()));
     connect(ui->btn_get_version,    SIGNAL(clicked(bool)),  this,   SLOT(get_version()));
+    connect(ui->btn_get_addr,       SIGNAL(clicked(bool)),  this,   SLOT(get_address()));
+    connect(ui->btn_test,           SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -72,14 +74,32 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)
 {
-    serial = new SerialBox5_fix_baudrate(this, "RS232", "RS232");
-
-    serial->add_menu(2);
-
-    ui->serial_layout->addWidget(serial);
-
-    connect(this,   SIGNAL(send(QByteArray)),   serial,     SLOT(input(QByteArray)));
-    connect(serial, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+    connect(&serial, SIGNAL(readyRead()), this, SLOT(port_read()));
+    connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
+}
+//--------------------------------------------------------------------------------
+void MainBox::port_error(QSerialPort::SerialPortError serial_error)
+{
+    switch(serial_error)
+    {
+    case QSerialPort::NoError:  break;
+    case QSerialPort::DeviceNotFoundError:  emit error("Error: DeviceNotFoundError"); break;
+    case QSerialPort::PermissionError:      emit error("Error: PermissionError"); break;
+    case QSerialPort::OpenError:            emit error("Error: OpenError"); break;
+    case QSerialPort::ParityError:          emit error("Error: ParityError"); break;
+    case QSerialPort::FramingError:         emit error("Error: FramingError"); break;
+    case QSerialPort::BreakConditionError:  emit error("Error: BreakConditionError"); break;
+    case QSerialPort::WriteError:           emit error("Error: WriteError"); break;
+    case QSerialPort::ReadError:            emit error("Error: ReadError"); break;
+    case QSerialPort::ResourceError:        emit error("Error: ResourceError"); break;
+    case QSerialPort::UnsupportedOperationError: emit error("Error: UnsupportedOperationError"); break;
+    case QSerialPort::UnknownError:         emit error("Error: UnknownError"); break;
+    case QSerialPort::TimeoutError:         emit error("Error: TimeoutError"); break;
+    case QSerialPort::NotOpenError:         emit error("Error: NotOpenError"); break;
+    default:
+        emit error(QString("Unknown error %1").arg(serial_error));
+        break;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::find_device(void)
@@ -96,6 +116,9 @@ void MainBox::find_device(void)
     speeds.append(76800);
     speeds.append(115200);
 
+    if(serial.isOpen()) serial.close();
+
+    flag_closed = false;
     foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
     {
         emit info(QString(tr("Ищем %1 на порту %2"))
@@ -103,18 +126,24 @@ void MainBox::find_device(void)
                   .arg(port.portName()));
         foreach (int speed, speeds)
         {
+            if(flag_closed) return;
             emit info(QString("speed %1").arg(speed));
-            bool ok = serial->set_fix_baudrate(speed);
+
+            serial.setPort(port);
+            bool ok = serial.setBaudRate(speed);
             if(ok)
             {
-                bool ok = send_AT();
-                if(ok)
+                if(serial.open(QIODevice::ReadWrite))
                 {
-                    emit info(QString(tr("%1 найден на скорости %2"))
-                              .arg(DEVICE_NAME)
-                              .arg(speed));
-                    device_speed = speed;
-                    return;
+                    bool ok = send_AT();
+                    if(ok)
+                    {
+                        emit info(QString(tr("%1 найден на скорости %2"))
+                                  .arg(DEVICE_NAME)
+                                  .arg(speed));
+                        return;
+                    }
+                    serial.close();
                 }
             }
             else
@@ -128,54 +157,113 @@ void MainBox::find_device(void)
 //--------------------------------------------------------------------------------
 bool MainBox::send_AT(void)
 {
-    QByteArray ba;
-    ba.append("AT");
-
-    rs232_data.clear();
-    is_ready = false;
-    emit send(ba);
-
-    wait(1000);
-
-    if(is_ready == false)
+    if(serial.isOpen() == false)
     {
+        emit error("serial not open!");
         return false;
     }
 
-    if(rs232_data.contains("OK"))
-    {
-        emit info("OK");
-        return true;
-    }
-    return false;
+    return send_command("AT");
 }
 //--------------------------------------------------------------------------------
-void MainBox::get_version(void)
+bool MainBox::get_version(void)
 {
+    // [HC-05_white] addr (00:21:13:03:C4:81)
+    // [HC-05_black] addr (00:14:02:10:09:04)
+
+    return send_command("AT+VERSION?");
+}
+//--------------------------------------------------------------------------------
+bool MainBox::get_address(void)
+{
+    // [HC-05_white] addr (00:21:13:03:C4:81)
+    // [HC-05_black] addr (00:14:02:10:09:04)
+
+    return send_command("AT+ADDR?");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test(void)
+{
+    // [HC-05_white] addr (00:21:13:03:C4:81)
+    // [HC-05_black] addr (00:14:02:10:09:04)
+
+    //14,2,100904
+
+    bool ok = false;
+
+    ok = send_command("AT+ORGL");
+    //if(!ok) return;
+    ok = send_command("AT+RMAAD");
+    //if(!ok) return;
+    ok = send_command("AT+ROLE=1");
+    //if(!ok) return;
+    ok = send_command("AT+RESET");
+    //if(!ok) return;
+    ok = send_command("AT+PSWD=1234");
+    //if(!ok) return;
+    ok = send_command("AT+PAIR=14,2,100904, 5");    // (пример: AT+PAIR=12,6,143117, 5)
+    //if(!ok) return;
+    ok = send_command("AT+BIND=14,2,100904");       // (пример: AT+BIND=12,6,143117)
+    //if(!ok) return;
+    ok = send_command("AT+CMODE=0");
+    //if(!ok) return;
+
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+bool MainBox::send_command(QString cmd_string)
+{
+    if(cmd_string.isEmpty())
+    {
+        emit error("cmd_string is empty");
+        return false;
+    }
+
+    if(serial.isOpen() == false)
+    {
+        emit error("serial not open!");
+        return false;
+    }
+
+    emit info(QString("send: %1").arg(cmd_string));
+
     QByteArray ba;
-    //ba.append("AT");
-    ba.append("AT+VERSION?");
-    //ba.append(0x0D);
+    ba.append(cmd_string);
+    ba.append(0x0D);
     ba.append(0x0A);
 
     rs232_data.clear();
     is_ready = false;
-    emit send(ba);
+    serial.write(ba);
 
     wait(1000);
 
     if(is_ready == false)
     {
         emit error("No answer");
-        return;
+        return false;
     }
+
+    if(rs232_data.isEmpty())
+    {
+        emit error("data is empty");
+        return false;
+    }
+
+    if(rs232_data.contains("OK") == false)
+    {
+        emit error("data incorrect");
+        return false;
+    }
+
+    emit info(rs232_data.replace('\r', "").replace('\n', "").replace("OK", ""));
     emit info("OK");
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(QByteArray ba)
+void MainBox::port_read(void)
 {
-    emit debug(QString("read_data: [%1]").arg(ba.data()));
-    rs232_data.append(ba);
+    rs232_data.append(serial.readAll());
     is_ready = true;
 }
 //--------------------------------------------------------------------------------
@@ -191,6 +279,9 @@ void MainBox::wait(int time_msec)
     {
         QCoreApplication::processEvents();
         if(time.elapsed() > time_msec)
+            break;
+
+        if(is_ready)
             break;
     }
 #endif
@@ -214,9 +305,6 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -233,9 +321,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
     //testbar->setFixedWidth(toolBar->sizeHint().width());
 }

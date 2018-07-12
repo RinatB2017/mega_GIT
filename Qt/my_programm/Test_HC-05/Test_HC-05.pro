@@ -15,6 +15,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QMAKE_CXXFLAGS += -fno-show-column
+QT  += serialport
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -58,7 +59,6 @@ LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

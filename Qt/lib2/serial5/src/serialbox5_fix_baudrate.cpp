@@ -85,9 +85,15 @@ void SerialBox5_fix_baudrate::set_caption(QString value)
     o_name = value;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::set_fix_baudrate(int value)
+bool SerialBox5_fix_baudrate::set_fix_baudrate(int value)
 {
+    bool ok = false;
     fix_baudrate = value;
+    if(serial5)
+    {
+        ok = serial5->setBaudRate(value);
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
 qint64 SerialBox5_fix_baudrate::bytesAvailable(void)

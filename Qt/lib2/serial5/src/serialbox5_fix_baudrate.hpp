@@ -63,7 +63,7 @@ public:
     QByteArray readAll(void);
 
     void set_caption(QString value);
-    void set_fix_baudrate(int value);
+    bool set_fix_baudrate(int value);
 
     qint64 bytesAvailable(void);
     qint64 write ( const char *data );

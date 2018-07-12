@@ -407,7 +407,17 @@ void SerialBox5::btnOpenPortClicked()
     }
     else
     {
-        serial5->setPortName(ui->PortBox->currentText());
+        QString text = ui->PortBox->currentText();
+        if(text.isEmpty())
+        {
+            if(serial5->isOpen())
+            {
+                serial5->close();
+            }
+            setCloseState();
+            return;
+        }
+        serial5->setPortName(text);
         result = serial5->open(QIODevice::ReadWrite);
         if(result)
         {

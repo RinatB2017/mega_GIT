@@ -2,17 +2,10 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE  = subdirs
-CONFIG   += ordered
+DEPENDPATH  += $$PWD/src
+INCLUDEPATH = $$DEPENDPATH
 
-SUBDIRS += \
-    Template \
-    Template_main \
-    Template_old \
-	Template_RS232 \
-    Template_wo_MainBox \
+QT      += testlib
 
-unix {
-SUBDIRS += \
-    Template_browser \
-}
+HEADERS += test.hpp
+SOURCES += test.cpp

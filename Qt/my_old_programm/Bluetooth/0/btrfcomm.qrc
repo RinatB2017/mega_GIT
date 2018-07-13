@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>interOff.png</file>
+        <file>interOn.png</file>
+    </qresource>
+</RCC>

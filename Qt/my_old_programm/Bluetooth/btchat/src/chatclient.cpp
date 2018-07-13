@@ -84,7 +84,8 @@ void ChatClient::readSocket()
     if (!socket)
         return;
 
-    while (socket->canReadLine()) {
+    while (socket->canReadLine())
+    {
         QByteArray line = socket->readLine();
         emit messageReceived(socket->peerName(),
                              QString::fromUtf8(line.constData(), line.length()));

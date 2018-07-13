@@ -59,6 +59,7 @@ private slots:
     void find_device(void);
     bool get_version(void);
     bool get_address(void);
+    bool reset(void);
 
     void port_read(void);
     void port_error(QSerialPort::SerialPortError serial_error);

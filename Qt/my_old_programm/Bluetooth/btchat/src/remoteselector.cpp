@@ -81,7 +81,8 @@ void RemoteSelector::startDiscovery(const QBluetoothUuid &uuid)
 
 void RemoteSelector::stopDiscovery()
 {
-    if (m_discoveryAgent){
+    if (m_discoveryAgent)
+    {
         m_discoveryAgent->stop();
     }
 }
@@ -106,9 +107,11 @@ void RemoteSelector::serviceDiscovered(const QBluetoothServiceInfo &serviceInfo)
     qDebug() << "\tRFCOMM server channel:" << serviceInfo.serverChannel();
 #endif
     QMapIterator<QListWidgetItem *, QBluetoothServiceInfo> i(m_discoveredServices);
-    while (i.hasNext()){
+    while (i.hasNext())
+    {
         i.next();
-        if (serviceInfo.device().address() == i.value().device().address()){
+        if (serviceInfo.device().address() == i.value().device().address())
+        {
             return;
         }
     }

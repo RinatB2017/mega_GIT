@@ -61,6 +61,7 @@ void MainBox::init(void)
     connect(ui->btn_get_version,    SIGNAL(clicked(bool)),  this,   SLOT(get_version()));
     connect(ui->btn_get_addr,       SIGNAL(clicked(bool)),  this,   SLOT(get_address()));
     connect(ui->btn_test,           SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    connect(ui->btn_reset,          SIGNAL(clicked(bool)),  this,   SLOT(reset()));
 
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -166,6 +167,14 @@ bool MainBox::send_AT(void)
     return send_command("AT");
 }
 //--------------------------------------------------------------------------------
+bool MainBox::reset(void)
+{
+    // [HC-05_white] addr (00:21:13:03:C4:81)
+    // [HC-05_black] addr (00:14:02:10:09:04)
+
+    return send_command("AT+ORGL");
+}
+//--------------------------------------------------------------------------------
 bool MainBox::get_version(void)
 {
     // [HC-05_white] addr (00:21:13:03:C4:81)
@@ -191,6 +200,20 @@ void MainBox::test(void)
 
     bool ok = false;
 
+#if 1
+    ok = send_command("AT+UART=9600,0,0");
+    if(!ok) return;
+    ok = send_command("AT+NAME=hc05-arduino-nano");
+    if(!ok) return;
+    //ok = send_command("AT+PSWD=1234");
+    //if(!ok) return;
+    ok = send_command("AT+ROLE=0");
+    if(!ok) return;
+    ok = send_command("AT+RMAAD");
+    if(!ok) return;
+    ok = send_command("AT+CMODE=0");
+    if(!ok) return;
+#else
     ok = send_command("AT+ORGL");
     //if(!ok) return;
     ok = send_command("AT+RMAAD");
@@ -207,6 +230,7 @@ void MainBox::test(void)
     //if(!ok) return;
     ok = send_command("AT+CMODE=0");
     //if(!ok) return;
+#endif
 
     emit info("OK");
 }

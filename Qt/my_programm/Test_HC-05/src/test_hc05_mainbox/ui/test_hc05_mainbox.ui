@@ -36,6 +36,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="btn_reset">
+     <property name="text">
+      <string>RESET</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="btn_test">
      <property name="text">
       <string>TEST</string>
@@ -57,6 +64,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>btn_find_hc05</tabstop>
+  <tabstop>btn_get_version</tabstop>
+  <tabstop>btn_get_addr</tabstop>
+  <tabstop>btn_reset</tabstop>
+  <tabstop>btn_test</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

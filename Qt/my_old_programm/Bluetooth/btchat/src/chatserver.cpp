@@ -49,8 +49,9 @@ static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c8");
 //! [Service UUID]
 
 ChatServer::ChatServer(QObject *parent)
-:   QObject(parent), rfcommServer(0)
+    :   QObject(parent), rfcommServer(0)
 {
+
 }
 
 ChatServer::~ChatServer()
@@ -67,7 +68,8 @@ void ChatServer::startServer(const QBluetoothAddress& localAdapter)
     rfcommServer = new QBluetoothServer(QBluetoothServiceInfo::RfcommProtocol, this);
     connect(rfcommServer, SIGNAL(newConnection()), this, SLOT(clientConnected()));
     bool result = rfcommServer->listen(localAdapter);
-    if (!result) {
+    if (!result)
+    {
         qWarning() << "Cannot bind chat server to" << localAdapter.toString();
         return;
     }
@@ -184,7 +186,8 @@ void ChatServer::readSocket()
     if (!socket)
         return;
 
-    while (socket->canReadLine()) {
+    while (socket->canReadLine())
+    {
         QByteArray line = socket->readLine().trimmed();
         emit messageReceived(socket->peerName(),
                              QString::fromUtf8(line.constData(), line.length()));

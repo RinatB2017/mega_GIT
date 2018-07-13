@@ -69,9 +69,13 @@ Chat::Chat(QWidget *parent)
     //! [Construct UI]
 
     localAdapters = QBluetoothLocalDevice::allDevices();
-    if (localAdapters.count() < 2) {
+    if (localAdapters.count() < 2)
+    {
+        qDebug() << "localAdapters.count() = " << localAdapters.count();
         ui->localAdapterBox->setVisible(false);
-    } else {
+    }
+    else
+    {
         //we ignore more than two adapters
         ui->localAdapterBox->setVisible(true);
         ui->firstAdapter->setText(tr("Default (%1)", "%1 = Bluetooth address").
@@ -97,7 +101,26 @@ Chat::Chat(QWidget *parent)
     //! [Get local device name]
     localName = QBluetoothLocalDevice().name();
     //! [Get local device name]
+
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 }
+
+//-----------------------------------------------------------------------------------------------------------------
+//TODO
+void Chat::test(void)
+{
+    ui->chat->append("test");
+
+    QList<QBluetoothHostInfo> localAdapters = QBluetoothLocalDevice::allDevices();
+    for(int n=0; n<localAdapters.count(); n++)
+    {
+        QString temp = QString("%1 (%2)")
+                .arg(localAdapters.at(n).name())
+                .arg(localAdapters.at(n).address().toString());
+        ui->chat->append(temp);
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------
 
 Chat::~Chat()
 {
@@ -126,7 +149,8 @@ void Chat::connected(const QString &name)
 void Chat::newAdapterSelected()
 {
     const int newAdapterIndex = adapterFromUserSelection();
-    if (currentAdapterIndex != newAdapterIndex) {
+    if (currentAdapterIndex != newAdapterIndex)
+    {
         server->stopServer();
         currentAdapterIndex = newAdapterIndex;
         const QBluetoothHostInfo info = localAdapters.at(currentAdapterIndex);
@@ -142,7 +166,8 @@ int Chat::adapterFromUserSelection() const
     int result = 0;
     QBluetoothAddress newAdapter = localAdapters.at(0).address();
 
-    if (ui->secondAdapter->isChecked()) {
+    if (ui->secondAdapter->isChecked())
+    {
         newAdapter = localAdapters.at(1).address();
         result = 1;
     }
@@ -154,7 +179,8 @@ int Chat::adapterFromUserSelection() const
 void Chat::clientDisconnected()
 {
     ChatClient *client = qobject_cast<ChatClient *>(sender());
-    if (client) {
+    if (client)
+    {
         clients.removeOne(client);
         client->deleteLater();
     }
@@ -173,7 +199,8 @@ void Chat::connectClicked()
 
     RemoteSelector remoteSelector(adapter);
     remoteSelector.startDiscovery(QBluetoothUuid(serviceUuid));
-    if (remoteSelector.exec() == QDialog::Accepted) {
+    if (remoteSelector.exec() == QDialog::Accepted)
+    {
         QBluetoothServiceInfo service = remoteSelector.service();
 
         qDebug() << "Connecting to service 2" << service.serviceName()

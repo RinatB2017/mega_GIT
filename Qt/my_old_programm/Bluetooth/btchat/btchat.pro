@@ -27,4 +27,7 @@ FORMS = \
     chat.ui \
     remoteselector.ui
 
+#include (device/device.pri)
+#include (service/service.pri)
+
 VPATH = $$INCLUDEPATH

@@ -168,8 +168,8 @@ void Chat::connectClicked()
 
     // scan for services
     const QBluetoothAddress adapter = localAdapters.isEmpty() ?
-                                           QBluetoothAddress() :
-                                           localAdapters.at(currentAdapterIndex).address();
+                QBluetoothAddress() :
+                localAdapters.at(currentAdapterIndex).address();
 
     RemoteSelector remoteSelector(adapter);
     remoteSelector.startDiscovery(QBluetoothUuid(serviceUuid));
@@ -182,14 +182,14 @@ void Chat::connectClicked()
         // Create client
         qDebug() << "Going to create client";
         ChatClient *client = new ChatClient(this);
-qDebug() << "Connecting...";
+        qDebug() << "Connecting...";
 
         connect(client, SIGNAL(messageReceived(QString,QString)),
                 this, SLOT(showMessage(QString,QString)));
         connect(client, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
         connect(client, SIGNAL(connected(QString)), this, SLOT(connected(QString)));
         connect(this, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
-qDebug() << "Start client";
+        qDebug() << "Start client";
         client->startClient(service);
 
         clients.append(client);

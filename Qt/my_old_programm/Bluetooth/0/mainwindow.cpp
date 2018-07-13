@@ -83,9 +83,9 @@ void MainWindow::deviceDiscovered(const QBluetoothDeviceInfo device)
     qDebug() << "address" << device.address();
 
     // this is my Arduino device
-    socket->connectToService(device.address(), 1);      //   works under Android but not on Desktop
+    //socket->connectToService(device.address(), 1);      //   works under Android but not on Desktop
     // here is a misterious ????
-    //socket->connectToService(device.address(),QBluetoothUuid(QBluetoothUuid::SerialPort));      // only on Desktop
+    socket->connectToService(device.address(),QBluetoothUuid(QBluetoothUuid::SerialPort));      // only on Desktop
 
     socket->open(QIODevice::ReadWrite);
     if (socket->isOpen())          // write on interface
@@ -136,7 +136,10 @@ void MainWindow::on_toolButton_clicked()
 {
     static bool state = false;
 
-    if (!socket->isOpen() || !socket->isWritable())return;      // a problem
+    if (!socket->isOpen() || !socket->isWritable())
+    {
+        return;      // a problem
+    }
 
     if (state)         // make the remote led on, writing "ON"
     {

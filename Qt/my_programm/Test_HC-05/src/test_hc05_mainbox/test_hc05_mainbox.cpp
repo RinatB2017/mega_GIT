@@ -205,8 +205,8 @@ void MainBox::test(void)
     if(!ok) return;
     ok = send_command("AT+NAME=hc05-arduino-nano");
     if(!ok) return;
-    //ok = send_command("AT+PSWD=1234");
-    //if(!ok) return;
+    ok = send_command("AT+PSWD=\"1234\"");
+    if(!ok) return;
     ok = send_command("AT+ROLE=0");
     if(!ok) return;
     ok = send_command("AT+RMAAD");

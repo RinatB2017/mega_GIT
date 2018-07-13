@@ -1,1 +1,2 @@
 http://oss.fruct.org/wiki/%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0_%D1%81_bluetooth_%D0%B2_Qt
+http://grimaldi.univ-tln.fr/communiquer-en-bluetooth-avec-un-systeme-arduino-sous-qt.html

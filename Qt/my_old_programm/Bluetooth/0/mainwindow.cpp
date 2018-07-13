@@ -70,8 +70,8 @@ void MainWindow::deviceDiscovered(const QBluetoothDeviceInfo device)
     QList<QBluetoothUuid> uidd = device.serviceUuids();
     int rssi = device.rssi();
 
-    qDebug() << classes;
-    qDebug() << rssi;
+    qDebug() << "classes" << classes;
+    qDebug() << "rssi" << rssi;
 
     // we proceed only our remote device (Arduino/HC05 address), nothing for others...
     if (device.address().toString()!= MYARDUINO_ADDRESS)

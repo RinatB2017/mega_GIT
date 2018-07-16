@@ -24,6 +24,8 @@
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
+
+#include "led_display.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -42,6 +44,12 @@ MainBox::~MainBox()
         test_widget->deleteLater();
     }
     save_widgets("for_test");
+
+    if(display)
+    {
+        display->disconnect();
+        display->deleteLater();
+    }
 
     delete ui;
 }
@@ -217,6 +225,7 @@ bool MainBox::test_0(void)
     if(display == nullptr)
     {
         display = new LED_display(100, 50, 16, 16);
+        //display = new LED_display(1920 / 4, 1080 / 4 - 50, 4, 4);
         connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
         connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
         connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
@@ -255,9 +264,9 @@ bool MainBox::test_1(void)
         while(1)
         {
             flag = !flag;
-            for(int y=0; y<max_y; y++)
+            for(unsigned int y=0; y<max_y; y++)
             {
-                for(int x=0; x<max_x; x++)
+                for(unsigned int x=0; x<max_x; x++)
                 {
                     if(flag)
                         display->draw_led(x, y, QColor(Qt::red));

@@ -33,7 +33,7 @@
 #define MAX_LED_WIDTH   1000
 #define MAX_LED_HEIGHT  1000
 
-#define MIN_LED_WIDTH   10
+#define MIN_LED_WIDTH   2
 #define MIN_LED_HEIGHT  2
 
 #define DEFAULT_LED_WIDTH   32

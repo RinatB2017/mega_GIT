@@ -1,7 +1,7 @@
 TARGET = btscanner
 
 QT = core bluetooth widgets
-requires(qtConfig(listwidget))
+#requires(qtConfig(listwidget))
 TEMPLATE = app
 
 SOURCES = \
@@ -17,5 +17,5 @@ FORMS = \
     device.ui \
     service.ui
 
-target.path = $$[QT_INSTALL_EXAMPLES]/bluetooth/btscanner
-INSTALLS += target
+#target.path = $$[QT_INSTALL_EXAMPLES]/bluetooth/btscanner
+#INSTALLS += target

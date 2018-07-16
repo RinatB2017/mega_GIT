@@ -41,6 +41,8 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
+
+class LED_display;  //TODO
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -93,6 +95,9 @@ private:
     QList<CMD> commands;
 
     QWidget *test_widget = 0;
+
+    LED_display *display = 0;   //TODO
+    bool flag = true;
 
     //---
     void test_validator(void);

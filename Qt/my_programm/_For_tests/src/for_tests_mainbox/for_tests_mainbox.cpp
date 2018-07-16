@@ -207,12 +207,25 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include "led_display.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    if(display == nullptr)
+    {
+        display = new LED_display(100, 50, 16, 16);
+        connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+        connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+        connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+        connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+        display->show();
+    }
+#endif
+
+#if 0
     int res = 0;
     res = QFontDatabase::addApplicationFont(":/local_fonts/HANDGOTN.TTF");
     if(res < 0)
@@ -233,6 +246,29 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
+
+#if 1
+    unsigned int max_x = display->get_max_x();
+    unsigned int max_y = display->get_max_y();
+    if(display)
+    {
+        while(1)
+        {
+            flag = !flag;
+            for(int y=0; y<max_y; y++)
+            {
+                for(int x=0; x<max_x; x++)
+                {
+                    if(flag)
+                        display->draw_led(x, y, QColor(Qt::red));
+                    else
+                        display->draw_led(x, y, QColor(Qt::blue));
+                }
+            }
+            QCoreApplication::processEvents();
+        }
+    }
+#endif
 
 #if 0
     emit info("info");
@@ -256,6 +292,13 @@ bool MainBox::test_2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_2()");
+
+#if 1
+    if(display)
+    {
+        display->show_param();
+    }
+#endif
 
     return true;
 }

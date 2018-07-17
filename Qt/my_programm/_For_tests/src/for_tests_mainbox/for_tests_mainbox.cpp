@@ -224,8 +224,10 @@ bool MainBox::test_0(void)
 #if 1
     if(display == nullptr)
     {
-        display = new LED_display(100, 50, 16, 16);
+        //display = new LED_display(100, 50, 16, 16);
         //display = new LED_display(1920 / 4, 1080 / 4 - 50, 4, 4);
+        display = new LED_display(2560 / 4, 1080 / 4 - 25, 4, 4);
+        emit info(QString("Point count %1").arg((2560 / 4) * (1080 / 4 - 25)));
         connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
         connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
         connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
@@ -257,10 +259,10 @@ bool MainBox::test_1(void)
     emit info("Test_1()");
 
 #if 1
-    unsigned int max_x = display->get_max_x();
-    unsigned int max_y = display->get_max_y();
     if(display)
     {
+        unsigned int max_x = display->get_max_x();
+        unsigned int max_y = display->get_max_y();
         while(1)
         {
             flag = !flag;

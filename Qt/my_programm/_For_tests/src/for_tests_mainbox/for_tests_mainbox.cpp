@@ -224,22 +224,52 @@ bool MainBox::test_0(void)
 
 #if 1
     QStringList sl;
-    sl.append("https://www.youtube.com/watch?v=tdJghiO_8vQ");
-    sl.append("https://www.youtube.com/watch?v=7dfFAa_XFqE");
-    sl.append("https://www.youtube.com/watch?v=CwgMZ3HsqYE");
-    sl.append("https://www.youtube.com/watch?v=oDf8e5xLJZU");
-
+    sl.append("https://www.youtube.com/watch?v=zsfj9j0kjoU&start_radio=1&list=RDzsfj9j0kjoU");
+    sl.append("https://www.youtube.com/watch?v=rKoeE00WuN0&start_radio=1&list=RDGMEMQ1dJ7wXfLlqCjwV0xfSNbAVMrKoeE00WuN0");
+    sl.append("https://www.youtube.com/watch?v=PkbEjheIe9o&start_radio=1&list=RDPkbEjheIe9o");
+    sl.append("https://www.youtube.com/watch?v=rhEqzW5WtbE&start_radio=1&list=RDrhEqzW5WtbE");
+    sl.append("https://www.youtube.com/watch?v=1bGOgY1CmiU&start_radio=1&list=RD1bGOgY1CmiU");
+    
+    sl.append("https://www.youtube.com/watch?v=-jTx4bBOCY8");
+    sl.append("https://www.youtube.com/watch?v=aNm2Qtwq3yg");
+    sl.append("https://www.youtube.com/watch?v=b8I-7Wk_Vbc");
+    sl.append("https://www.youtube.com/watch?v=S0jBoJXlchU");
+    sl.append("https://www.youtube.com/watch?v=S0jBoJXlchU");
+    
+    sl.append("https://www.youtube.com/watch?v=8YCI1zRfqKE");
+    sl.append("https://www.youtube.com/watch?v=dZnv1XB_jjk");
+    sl.append("https://www.youtube.com/watch?v=46qR1HetnPo");
+    sl.append("https://www.youtube.com/watch?v=JMdCM7MDEhA");
+    sl.append("https://www.youtube.com/watch?v=2iSTzyAoUYk");
+    
+    sl.append("https://www.youtube.com/watch?v=OzHkNT8RqJc");
+    sl.append("https://www.youtube.com/watch?v=NhZRiOo-MqE");
+    sl.append("https://www.youtube.com/watch?v=oBmVt-zwiwg");
+    sl.append("https://www.youtube.com/watch?v=fV9xoCIjeDg");
+    sl.append("https://www.youtube.com/watch?v=AJqthEHmli4");
+    
     QWidget *widget = new QWidget;
     QGridLayout *grid = new QGridLayout;
     widget->setLayout(grid);
     int x = 0;
+    int y = 0;
     foreach (QString site, sl)
     {
         QWebEngineView *webView = new QWebEngineView();
-        webView->setUrl(QUrl(site));   //TODO
+        webView->setUrl(QUrl(site));
+        webView->page()->setAudioMuted(true);
         webView->show();
 
-        grid->addWidget(webView, 0, x++);
+        grid->addWidget(webView, y, x);
+        if(x < 4)
+        {
+            x++;
+        }
+        else
+        {
+            x=0;
+            y++;
+        }
     }
     widget->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     widget->show();

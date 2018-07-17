@@ -75,33 +75,6 @@ TabWidget::TabWidget(QWebEngineProfile *profile, QWidget *parent)
     setElideMode(Qt::ElideRight);
 
     connect(this, &QTabWidget::currentChanged, this, &TabWidget::handleCurrentChanged);
-
-    //test();
-}
-
-#include <QGridLayout>
-void TabWidget::test(void)
-{
-    QStringList sl;
-    sl.append("https://www.youtube.com/watch?v=tdJghiO_8vQ");
-    sl.append("https://www.youtube.com/watch?v=7dfFAa_XFqE");
-    sl.append("https://www.youtube.com/watch?v=CwgMZ3HsqYE");
-    sl.append("https://www.youtube.com/watch?v=oDf8e5xLJZU");
-
-    QWidget *widget = new QWidget;
-    QGridLayout *grid = new QGridLayout;
-    widget->setLayout(grid);
-    int x = 0;
-    foreach (QString site, sl)
-    {
-        WebView *webView = new WebView();
-        webView->setUrl(QUrl(site));   //TODO
-        webView->show();
-
-        grid->addWidget(webView, 0, x++);
-    }
-    widget->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-    widget->show();
 }
 
 void TabWidget::handleCurrentChanged(int index)
@@ -221,7 +194,7 @@ void TabWidget::setupView(WebView *webView)
 
 WebView *TabWidget::createTab()
 {
-    WebView *webView = createBackgroundTab();   //TODO
+    WebView *webView = createBackgroundTab();
     setCurrentWidget(webView);
     return webView;
 }

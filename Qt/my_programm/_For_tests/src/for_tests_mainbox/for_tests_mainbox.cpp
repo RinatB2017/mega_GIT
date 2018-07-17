@@ -215,6 +215,7 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include <QWebEngineView>
 #include "led_display.hpp"
 bool MainBox::test_0(void)
 {
@@ -222,6 +223,29 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QStringList sl;
+    sl.append("https://www.youtube.com/watch?v=tdJghiO_8vQ");
+    sl.append("https://www.youtube.com/watch?v=7dfFAa_XFqE");
+    sl.append("https://www.youtube.com/watch?v=CwgMZ3HsqYE");
+    sl.append("https://www.youtube.com/watch?v=oDf8e5xLJZU");
+
+    QWidget *widget = new QWidget;
+    QGridLayout *grid = new QGridLayout;
+    widget->setLayout(grid);
+    int x = 0;
+    foreach (QString site, sl)
+    {
+        QWebEngineView *webView = new QWebEngineView();
+        webView->setUrl(QUrl(site));   //TODO
+        webView->show();
+
+        grid->addWidget(webView, 0, x++);
+    }
+    widget->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    widget->show();
+#endif
+
+#if 0
     if(display == nullptr)
     {
         //display = new LED_display(100, 50, 16, 16);

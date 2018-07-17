@@ -138,40 +138,6 @@ BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile)
     layout->addWidget(m_progressBar);
     layout->addWidget(m_tabWidget);
 
-    //---
-    //TODO
-#if 0
-    WebView *webView = new WebView();
-    webView->setUrl(QUrl("https://www.youtube.com/watch?v=tdJghiO_8vQ"));
-    webView->setFixedSize(320, 200);
-    layout->addWidget(webView);
-#endif
-
-#if 0
-    QStringList sl;
-    sl.append("https://www.youtube.com/watch?v=tdJghiO_8vQ");
-    sl.append("https://www.youtube.com/watch?v=7dfFAa_XFqE");
-    sl.append("https://www.youtube.com/watch?v=CwgMZ3HsqYE");
-    sl.append("https://www.youtube.com/watch?v=oDf8e5xLJZU");
-
-    QWidget *widget = new QWidget;
-    QGridLayout *grid = new QGridLayout;
-    widget->setLayout(grid);
-    int x = 0;
-    foreach (QString site, sl)
-    {
-        WebView *webView = new WebView();
-        webView->setUrl(QUrl(site));   //TODO
-        webView->setFixedSize(320, 200);
-        webView->page()->setAudioMuted(true);
-        webView->show();
-
-        grid->addWidget(webView, 0, x++);
-    }
-    layout->addWidget(widget);
-#endif
-    //---
-
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
 

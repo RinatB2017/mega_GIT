@@ -27,7 +27,7 @@
 #define MAX_WIDTH   2000
 #define MAX_HEIGHT  1000
 
-#define MIN_WIDTH   8
+#define MIN_WIDTH   1
 #define MIN_HEIGHT  1
 
 #define MAX_LED_WIDTH   1000

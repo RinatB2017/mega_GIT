@@ -8,6 +8,7 @@ CONFIG   *= ordered
 SUBDIRS += \
     Test_arduino \
     Test_arduino_modbus \
+    Test_CandleStick_Box \
     Test_curvetracker \
     Test_digits \
     Test_database \
@@ -16,6 +17,7 @@ SUBDIRS += \
     Test_GrapherBox \
     Test_GY-652 \
     Test_HistogramBox \
+    Test_HID_device \
     Test_QHexEdit \
     Test_md5 \
     Test_OpenRPT \
@@ -44,11 +46,13 @@ SUBDIRS += \
     Test_OpenMP \
     Test_QDBus \
     Test_QGraphicsView \
+    Test_QML \
     Test_QStateMachine \
     Test_QTreeWidget \
 #
     Test_Game \
     Test_OpenGL \
+    Test_mouse \
     Test_draw_line \
 #
     Tester

@@ -25,9 +25,10 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    reader_saat_t505_mainbox.hpp \
+    ascii_data.hpp \
     defines.hpp \
-    version.hpp \
-    reader_saat_t505_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     reader_saat_t505_mainbox.cpp \

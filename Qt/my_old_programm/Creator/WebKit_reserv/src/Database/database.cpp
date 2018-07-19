@@ -77,7 +77,8 @@ void Database::view(const QString &query)
     view->setModel(model);
 
     QHeaderView *header = new QHeaderView(Qt::Horizontal);
-    header->setResizeMode(QHeaderView::ResizeToContents);
+    //header->setResizeMode(QHeaderView::ResizeToContents);
+    header->setResizeContentsPrecision(QHeaderView::ResizeToContents);
     view->setHorizontalHeader(header);
 
     view->show();

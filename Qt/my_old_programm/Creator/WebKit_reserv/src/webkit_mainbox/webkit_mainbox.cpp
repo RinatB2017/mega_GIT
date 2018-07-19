@@ -48,7 +48,7 @@
 #include "helpbrowser.hpp"
 #include "mainwindow.hpp"
 #include "findlinks.hpp"
-#include "mainbox.hpp"
+#include "webkit_mainbox.hpp"
 #include "webview.hpp"
 #include "qxmlputget.h"
 #include "logbox.hpp"
@@ -56,7 +56,7 @@
 #include "listwidget_site.hpp"
 #include "listwidget_link.hpp"
 //--------------------------------------------------------------------------------
-#include "ui_mainbox.h"
+#include "ui_webkit_mainbox.h"
 //--------------------------------------------------------------------------------
 #include <stdarg.h>
 //--------------------------------------------------------------------------------
@@ -425,7 +425,8 @@ void MainBox::view_table(const QString &query)
     view->setModel(model);
 
     QHeaderView *header = new QHeaderView(Qt::Horizontal);
-    header->setResizeMode(QHeaderView::ResizeToContents);
+    //header->setResizeMode(QHeaderView::ResizeToContents);
+    header->setResizeContentsPrecision(QHeaderView::ResizeToContents);
     view->setHorizontalHeader(header);
 
     view->show();

@@ -47,12 +47,14 @@ void FindLinks::connect_log(void)
         connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
+        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
     }
     else
     {
         connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
         connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
+        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
     }
 }
 //--------------------------------------------------------------------------------

@@ -22,7 +22,7 @@
 #include <QDebug>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "mainbox.hpp"
+#include "webkit_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -60,15 +60,15 @@ int main(int argc, char *argv[])
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
 
-    MainWindow main_window(QObject::tr(APPNAME), QString("%1.%2.%3").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_BUILD));
-    main_window.setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
-    main_window.showMaximized();
+    MainWindow *main_window = new MainWindow; //(QObject::tr(APPNAME), QString("%1.%2.%3").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_BUILD));
 
-    MainBox *mainBox = new MainBox(main_window.getThis());
+    main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    main_window->showMaximized();
 
-    main_window.setCentralWidget(mainBox);
+    MainBox *mainBox = new MainBox(main_window->getThis());
 
-    main_window.setWindowIcon(QIcon(QLatin1String(":/mainwindow/computer.png")));
+    main_window->setCentralWidget(mainBox);
+    main_window->setWindowIcon(QIcon(QLatin1String(":/mainwindow/computer.png")));
 
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 

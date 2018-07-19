@@ -215,13 +215,42 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include <QWebEngineView>
 #include "led_display.hpp"
+
+#if 0
+http://www.qtcentre.org/threads/65044-Get-Html-element-value-with-QWebEngine
+
+webFrame->runJavaScript("function myFunction() {"
+                            "var Row = document.getElementById('GridView1');var Cells = Row.getElementsByTagName('td');"
+                            "return Cells[0].innerText;} myFunction();",
+                            [] (const QVariant &result) {
+        qDebug()<<result.toString();
+ });
+#endif
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QWebEngineView *webView = new QWebEngineView();
+    webView->setUrl(QUrl("http://localhost/mso/home/next/12"));
+    webView->page()->setAudioMuted(true);
+    webView->page()->runJavaScript("function myFunction() {"
+                                   "var Row = document.getElementById('reklama_table');"
+                                   "var Cells = Row.getElementsByTagName('td');"
+                                   "return Cells[0].innerText;} myFunction();",
+                                   [] (const QVariant &result)
+    {
+        qDebug() << "result [" << result.toString() << "]";
+    }
+    );
+    webView->show();
+#endif
+
+#if 0
     if(display == nullptr)
     {
         //display = new LED_display(100, 50, 16, 16);

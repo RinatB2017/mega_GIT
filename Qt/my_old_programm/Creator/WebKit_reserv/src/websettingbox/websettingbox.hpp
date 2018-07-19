@@ -32,6 +32,7 @@ struct ATTR
     QString tooltip;
     QCheckBox *object;
     bool default_value;
+    bool value;
 };
 //--------------------------------------------------------------------------------
 class WebSettingBox : public QDialog

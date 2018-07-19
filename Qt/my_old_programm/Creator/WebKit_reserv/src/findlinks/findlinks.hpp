@@ -36,14 +36,15 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 private slots:
     void log(const QString &data);
 
 private:
-    QWebFrame *main_frame;
-    QLineEdit *le;
-    QLineEdit *le2;
+    QWebFrame *main_frame = 0;
+    QLineEdit *le = 0;
+    QLineEdit *le2 = 0;
     void init(void);
     void connect_log(void);
     

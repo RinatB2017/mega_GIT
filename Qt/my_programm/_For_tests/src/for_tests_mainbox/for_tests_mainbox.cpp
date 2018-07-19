@@ -236,12 +236,15 @@ bool MainBox::test_0(void)
 
 #if 1
     QWebEngineView *webView = new QWebEngineView();
-    webView->setUrl(QUrl("http://localhost/mso/home/next/12"));
+    webView->setUrl(QUrl("https://unixforum.org/"));
     webView->page()->setAudioMuted(true);
     webView->page()->runJavaScript("function myFunction() {"
-                                   "var Row = document.getElementById('reklama_table');"
-                                   "var Cells = Row.getElementsByTagName('td');"
-                                   "return Cells[0].innerText;} myFunction();",
+                                   "var elements = document.getElementsByTagName('div');"
+                                   "var input = elements[0];"
+                                   "return input.innerHTML;} myFunction();",
+                                   //"var Row = document.getElementById('reklama_table');"
+                                   //"var Cells = Row.getElementsByTagName('td');"
+                                   //"return Cells[0].innerText;} myFunction();",
                                    [] (const QVariant &result)
     {
         qDebug() << "result [" << result.toString() << "]";

@@ -16,10 +16,10 @@
 static char* readSDPFile(const char* path)
 {
 	char* text;
-	FILE* fp;
+    FILE* fp;
     int err;
     err = fopen(&fp, path, "r");
-	if (err != 0)
+    if (err != 0)
 	{
 		printf("the .sdp file open failed\n");
 		exit(1);
@@ -96,7 +96,7 @@ private:
 		QByteArray frameBuffer((char*)fReceiveBuffer, frameSize);
 		
 		
-		//²åÈëSPS PPS²ÅÄÜÈÃH264½âÂëÆ÷ÕıÈ·½âÂë
+		//æ’å…¥SPS PPSæ‰èƒ½è®©H264è§£ç å™¨æ­£ç¡®è§£ç 
 		QByteArray sps = sprop_parameter_sets;
 		QByteArray extraData;
 		QList<QByteArray> recodList = sps.split(',');
@@ -156,11 +156,9 @@ void  RtspThread::run()
 	
 	if (!m_ffmpeg->Init())  return;
 
-	//³õÊ¼»¯Live555µÄ»·¾³
 	m_scheduler = BasicTaskScheduler::createNew();
 	m_env = BasicUsageEnvironment::createNew(*m_scheduler);
 
-	//Í¨¹ıdpÎÄ¼şµÄÄÚÈİ´´½¨Ã½Ìå»á»°
 	m_session = MediaSession::createNew(*m_env, readSDPFile(m_url.toStdString().c_str()));
 
 	if (!m_session)
@@ -171,7 +169,6 @@ void  RtspThread::run()
 
 	MediaSubsessionIterator iter(*m_session);
 
-	//µü´ú×Ó»á»°£¬²¢´´½¨×Ó»á»°Êı¾İ½ÓÊÕÆ÷¡£
 	while ((m_subsession = iter.next()) != NULL)
 	{
 		if (!m_subsession->initiate(0))

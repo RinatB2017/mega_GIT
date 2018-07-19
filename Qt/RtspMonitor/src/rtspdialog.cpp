@@ -32,10 +32,8 @@ void RtspDialog::OK()
 	
 	if (sdpFileExp.exactMatch(ui->filePath->text()) && recordDirExp.exactMatch(ui->recordPath->text()))
 	{
-		
-		emit fileComplete(ui->filePath->text(), ui->recordPath->text(),ui->format->currentText());
+        emit fileComplete(ui->filePath->text(), ui->recordPath->text(), ui->format->currentText());
 		this->close();
-		
 	}
 	else
 	{

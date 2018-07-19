@@ -14,7 +14,7 @@ public:
 	~RtspDialog();
 
 signals:
-	void fileComplete(QString& file, QString &path,QString &format);
+    void fileComplete(QString file, QString path,QString format);
 
 public slots:
 	void OK();

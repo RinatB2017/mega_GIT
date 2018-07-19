@@ -14,7 +14,7 @@ QFFmpeg::QFFmpeg(QObject *parent)
 	m_isRecord = -1;
 	m_pSwsContext = nullptr;
 	
-	av_register_all();//注册库中所有可用的文件格式和解码器
+	av_register_all();
 	
 	m_pAVFrame = av_frame_alloc();
 	
@@ -45,8 +45,6 @@ bool QFFmpeg::Init()
 
 void QFFmpeg::Record()
 {
-	
-
 	/*AVFormatContext *recordFmtCtx;
 	AVStream *record_video_stream;
 
@@ -210,7 +208,7 @@ void  QFFmpeg::decodeFrame(uint8_t* frameBuffer, int frameLength, long second, l
 		return;
 	}
 	
-	//解码成功
+	//瑙ｇ爜鎴愬姛
 	if (frameFinished)
 	{
 		m_playMutex.lock();
@@ -218,7 +216,6 @@ void  QFFmpeg::decodeFrame(uint8_t* frameBuffer, int frameLength, long second, l
 		m_videoWidth = m_pAVFrame->width;
 		m_videoHeight = m_pAVFrame->height;
 
-		//创建一个Image，以存储放缩后的帧图像
 		QImage frame = QImage(m_videoWidth, m_videoHeight, QImage::Format_ARGB32);
 		
 		m_pSwsContext = sws_getCachedContext(m_pSwsContext, m_videoWidth, m_videoHeight, AVPixelFormat::AV_PIX_FMT_YUV420P, m_videoWidth, m_videoHeight,
@@ -237,13 +234,11 @@ void  QFFmpeg::decodeFrame(uint8_t* frameBuffer, int frameLength, long second, l
 
 		now_time = gmtime(&time);
 
-		strftime(timestamp, 100, "%Y-%m-%d %H:%M:%S", now_time);
-        sprintf(millisecond, 50, "  %ld.%d%d%d",microSecond/1000,0,0,0);
+        strftime(timestamp,  100, "%Y-%m-%d %H:%M:%S", now_time);
+        sprintf(millisecond, "50  %ld.%d%d%d", microSecond/1000, 0, 0, 0);
 
-		//发送获取一帧图像信号
 		QImage image((uchar*)dstSlice[0], m_videoWidth, m_videoHeight, QImage::Format_RGB32);
 
-		//在帧图像上打印时间戳信息并发送
 		QPainter pen(&image);
 		pen.setPen(Qt::white);
 		pen.setFont(QFont("Times", 30, QFont::Bold));
@@ -251,7 +246,5 @@ void  QFFmpeg::decodeFrame(uint8_t* frameBuffer, int frameLength, long second, l
 		emit GetImage(image);
 		m_playMutex.unlock();
 	}
-
-	
 }
 

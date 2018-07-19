@@ -408,8 +408,8 @@ bool MyGLWidget::test_0(void)
 {
     emit info("test_0");
 
-#if 1
-    GLUquadricObj cylinder;
+#if 0
+    GLUquadricObj *cylinder;
     cylinder = gluNewQuadric();
     gluQuadricDrawStyle(cylinder, GLU_FILL);
     gluCylinder(cylinder, 10, 0, 10, 20, 20);

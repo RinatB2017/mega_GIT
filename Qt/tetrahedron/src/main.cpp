@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     Tetrahedron tetrahedron;
     tetrahedron.setWindowTitle(QObject::tr("Tetrahedron"));
-    tetrahedron.resize(300, 300);
+    tetrahedron.resize(600, 600);
     tetrahedron.show();
 
     return app.exec();

@@ -2,10 +2,18 @@
 TEMPLATE    = app
 QT          += opengl
 
-#CONFIG      += console
+PROGRAMM_PATH  += \
+    $$PWD/src
+INCLUDEPATH += $$PROGRAMM_PATH
+DEPENDPATH  += $$PROGRAMM_PATH
 
-HEADERS     = tetrahedron.h
-SOURCES     = main.cpp \
-              tetrahedron.cpp
+HEADERS     = \
+    tetrahedron.h
+
+SOURCES     = \
+    main.cpp \
+    tetrahedron.cpp
                 
 LIBS        += -lglut -lGLU
+
+VPATH = $$INCLUDEPATH

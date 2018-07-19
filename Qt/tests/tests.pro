@@ -55,6 +55,7 @@ SUBDIRS += \
     Test_mouse \
     Test_draw_line \
 #
+    Test_YouTube \
     Tester
 
 unix {

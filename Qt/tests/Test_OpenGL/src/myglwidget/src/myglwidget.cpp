@@ -52,6 +52,8 @@
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
 #include <QtMath>
+
+#include <GL/glu.h>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "myglwidget.hpp"
@@ -405,6 +407,13 @@ void MyGLWidget::choice_test(void)
 bool MyGLWidget::test_0(void)
 {
     emit info("test_0");
+
+#if 1
+    GLUquadricObj cylinder;
+    cylinder = gluNewQuadric();
+    gluQuadricDrawStyle(cylinder, GLU_FILL);
+    gluCylinder(cylinder, 10, 0, 10, 20, 20);
+#endif
 
     m_camera.rotate(5.0,
                     0,

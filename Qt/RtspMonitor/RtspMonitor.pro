@@ -39,3 +39,7 @@ SOURCES += \
 
 RESOURCES += \
     vlcplayer.qrc
+
+win32 {
+    error(Only linux)
+}

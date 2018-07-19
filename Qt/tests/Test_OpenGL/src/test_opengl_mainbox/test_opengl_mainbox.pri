@@ -5,11 +5,5 @@
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#QT      *= opengl
-#LIBS    += -lglut -lGLU
-
-HEADERS += myglwidget.hpp
-SOURCES += myglwidget.cpp
-
-HEADERS += logo.h
-SOURCES += logo.cpp
+HEADERS += test_opengl_mainbox.hpp
+SOURCES += test_opengl_mainbox.cpp

@@ -31,7 +31,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "myglwidget.hpp"
+#include "test_opengl_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -71,14 +71,14 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
-    MyGLWidget *mainBox = new MyGLWidget(main_window->getThis());
+    Test_QGLWidget *mainBox = new Test_QGLWidget(main_window->getThis());
 
     QObject::connect(mainBox,    SIGNAL(info(QString)),  main_window,    SIGNAL(info(QString)));
     QObject::connect(mainBox,    SIGNAL(debug(QString)), main_window,    SIGNAL(debug(QString)));
     QObject::connect(mainBox,    SIGNAL(error(QString)), main_window,    SIGNAL(error(QString)));
     QObject::connect(mainBox,    SIGNAL(trace(QString)), main_window,    SIGNAL(trace(QString)));
 
-    main_window->setCentralWidget(mainBox);
+    main_window->setCentralWidget(mainBox, true);
     main_window->show();
 
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));

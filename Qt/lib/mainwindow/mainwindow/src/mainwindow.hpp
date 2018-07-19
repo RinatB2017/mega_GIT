@@ -66,7 +66,8 @@ public:
     MainWindow(QMainWindow* parent = 0);
     ~MainWindow();
 
-    void setCentralWidget(QWidget *widget);
+    void setCentralWidget(QWidget *widget,
+                          bool not_load_setting = false);
     MainWindow *getThis(void);
 
     void setWindowTitle(const QString &title);

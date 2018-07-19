@@ -76,12 +76,15 @@ MainWindow::~MainWindow()
     }
 }
 //--------------------------------------------------------------------------------
-void MainWindow::setCentralWidget(QWidget *widget)
+void MainWindow::setCentralWidget(QWidget *widget, bool not_load_setting)
 {
     Q_CHECK_PTR(widget);
     QMainWindow::setCentralWidget(widget);
 
-    load_setting();
+    if(!not_load_setting)
+    {
+        load_setting();
+    }
 
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());

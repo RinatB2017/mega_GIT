@@ -44,7 +44,6 @@
 #endif
 //--------------------------------------------------------------------------------
 #define ICON_HELP       ":/mainwindow/system-help.png"
-#define ICON_ABOUT      ":/mainwindow/computer.png"
 #define ICON_RU         ":/mainwindow/ru.png"
 #define ICON_US         ":/mainwindow/us.png"
 #define ICON_STYLE      ":/mainwindow/style.png"

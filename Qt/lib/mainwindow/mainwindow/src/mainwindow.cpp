@@ -1806,7 +1806,7 @@ void MainWindow::app_menu_add_about(QMenu *menu)
     about->setText("About");
     about->setToolTip("About");
     about->setStatusTip("About");
-    about->setIcon(QIcon(ICON_ABOUT));
+    about->setIcon(QIcon(ICON_PROGRAMM));
     connect(about,   SIGNAL(triggered()),    this,   SLOT(about()));
 
     app_actions.append(about);
@@ -1823,7 +1823,7 @@ void MainWindow::app_menu_add_help(QMenu *menu)
     help->setText("Help");
     help->setToolTip("Help");
     help->setStatusTip("Help");
-    help->setIcon(QIcon(ICON_ABOUT));
+    help->setIcon(QIcon(ICON_HELP));
     connect(help,   SIGNAL(triggered()),    this,   SLOT(help()));
 
     app_actions.append(help);
@@ -1937,7 +1937,7 @@ void MainWindow::app_toolbar_add_about(void)
 {
     QToolButton *btnAbout = new QToolButton(this);
     btnAbout->setObjectName("btnExit");
-    btnAbout->setIcon(QPixmap(ICON_ABOUT));
+    btnAbout->setIcon(QPixmap(ICON_PROGRAMM));
     btnAbout->setToolTip("About");
     btnAbout->setStatusTip("About");
     btnAbout->setProperty(APP_PROPERTY_ENG_TEXT, "About");

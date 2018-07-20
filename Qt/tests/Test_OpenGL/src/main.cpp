@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     QObject::connect(mainBox,    SIGNAL(error(QString)), main_window,    SIGNAL(error(QString)));
     QObject::connect(mainBox,    SIGNAL(trace(QString)), main_window,    SIGNAL(trace(QString)));
 
-    main_window->setCentralWidget(mainBox, true);
+    main_window->setCentralWidget(mainBox);
     main_window->show();
 
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));

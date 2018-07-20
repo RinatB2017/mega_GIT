@@ -321,7 +321,7 @@ void WebView::wheelEvent(QWheelEvent *event)
 //--------------------------------------------------------------------------------
 void WebView::run_websettingbox(void)
 {
-    WebSettingBox *vBox = new WebSettingBox(this);
+    WebSettingBox *vBox = new WebSettingBox(attributes, this);
     Q_CHECK_PTR(vBox);
 
     int res = vBox->exec();

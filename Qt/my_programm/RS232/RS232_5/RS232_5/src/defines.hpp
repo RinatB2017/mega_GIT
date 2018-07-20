@@ -1,9 +1,9 @@
-#ifndef _DEFINES_H
-#define _DEFINES_H
+#ifndef _DEFINES_HPP
+#define _DEFINES_HPP
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "RS232_5"
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM ":/mainwindow/computer.png"
+#define ICON_PROGRAMM ":/ico/RS232.ico"
 //--------------------------------------------------------------------------------
 #endif

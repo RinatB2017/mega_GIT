@@ -36,7 +36,7 @@ SOURCES += \
 FORMS   += rs232_5_bridge_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/RS232.ico
 }
 
 LIB_PATH  = "../../../../lib"
@@ -53,6 +53,9 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)
 }
+
+RESOURCES += \
+    ico/icons.qrc
 
 VPATH = $$INCLUDEPATH
 

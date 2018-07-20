@@ -30,7 +30,7 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/RS232.ico
 }
 
 LIB_PATH  = "../../../../lib"
@@ -43,5 +43,8 @@ include ($$LIB_PATH2/serial5/serial5.pri)
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+
+RESOURCES += \
+    ico/icons.qrc
 
 VPATH = $$INCLUDEPATH

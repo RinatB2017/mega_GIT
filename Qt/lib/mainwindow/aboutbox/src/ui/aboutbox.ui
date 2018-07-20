@@ -23,7 +23,7 @@
      <item>
       <widget class="QLabel" name="labelLogo">
        <property name="pixmap">
-        <pixmap resource="../../aboutbox.qrc">:/logo/logo.png</pixmap>
+        <pixmap resource="../../images/aboutbox.qrc">:/logo/logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -74,7 +74,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../aboutbox.qrc"/>
+  <include location="../../images/aboutbox.qrc"/>
  </resources>
  <connections/>
 </ui>

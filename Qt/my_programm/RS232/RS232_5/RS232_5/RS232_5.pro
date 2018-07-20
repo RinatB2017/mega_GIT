@@ -42,10 +42,10 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/RS232.ico
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
@@ -60,4 +60,8 @@ lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)
 }
 
+RESOURCES += \
+    ico/icons.qrc
+
 VPATH = $$INCLUDEPATH
+

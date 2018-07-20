@@ -4,6 +4,6 @@
 #define ORGNAME "Work"
 #define APPNAME "RS232_5_bridge"
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM ":/mainwindow/computer.png"
+#define ICON_PROGRAMM ":/ico/RS232.ico"
 //--------------------------------------------------------------------------------
 #endif

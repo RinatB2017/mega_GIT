@@ -66,8 +66,7 @@ public:
     MainWindow(QMainWindow* parent = 0);
     ~MainWindow();
 
-    void setCentralWidget(QWidget *widget,
-                          bool not_load_setting = false);
+    void setCentralWidget(QWidget *widget);
     MainWindow *getThis(void);
 
     void setWindowTitle(const QString &title);
@@ -218,6 +217,8 @@ private:
     QMenu *trayIconMenu = 0;
 
     QSettings *settings = 0;
+
+    bool main_already_loaded = false;
 
     void load_main(void);
     void save_main(void);

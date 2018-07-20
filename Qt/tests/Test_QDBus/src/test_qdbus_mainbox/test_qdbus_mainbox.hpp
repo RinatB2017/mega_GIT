@@ -21,8 +21,10 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QDBusObjectPath>
-#include <QWidget>
+#include <QDBusConnectionInterface>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusReply>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -82,16 +84,17 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
+    //QDBusConnection system_bus;
+    //QDBusConnection session_bus;
+
     void init(void);
+
+    void connect_system_bus(void);
+    void connect_session_bus(void);
 
     void createTestBar(void);
 
     void updateText(void);
-
-protected:
-    bool eventFilter(QObject*, QEvent* event);
-    void paintEvent(QPaintEvent *);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

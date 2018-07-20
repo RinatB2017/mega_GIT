@@ -76,15 +76,12 @@ MainWindow::~MainWindow()
     }
 }
 //--------------------------------------------------------------------------------
-void MainWindow::setCentralWidget(QWidget *widget, bool not_load_setting)
+void MainWindow::setCentralWidget(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
     QMainWindow::setCentralWidget(widget);
 
-    if(!not_load_setting)
-    {
-        load_setting();
-    }
+    load_setting();
 
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
@@ -571,6 +568,15 @@ void MainWindow::about(void)
 //--------------------------------------------------------------------------------
 void MainWindow::load_main(void)
 {
+    //TODO костыль
+    if(main_already_loaded)
+    {
+        emit debug("main_already_loaded is true");
+        return;
+    }
+    main_already_loaded = true;
+    //
+
     QFont font = qApp->font();
     QString font_name;
     int font_weight;

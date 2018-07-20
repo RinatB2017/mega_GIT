@@ -27,7 +27,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "Test_QDBus_mainbox.hpp"
+#include "test_qdbus_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -66,14 +66,6 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
     Q_CHECK_PTR(main_window);
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
-
-    //---
-    // Workaround: Removing the /usr/lib/libGL.so.1 file fixes the problem.
-    // qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    // QGLFormat format;
-    // format.setVersion(4, 3);
-    // QGLFormat::setDefaultFormat(format);
-    //---
 
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     Q_CHECK_PTR(mainBox);

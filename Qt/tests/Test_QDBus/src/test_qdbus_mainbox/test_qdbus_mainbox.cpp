@@ -29,12 +29,12 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 //--------------------------------------------------------------------------------
-#include "ui_Test_QDBus_mainbox.h"
+#include "ui_test_qdbus_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "Test_QDBus_mainbox.hpp"
+#include "test_qdbus_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -60,58 +60,58 @@ MainBox::~MainBox()
 #define HAL_DEV_INT   "org.freedesktop.Hal.Device"
 
 #define HAL_MGR_PATH  "/org/freedesktop/Hal/Manager"
-#define HAL_DEVS_PATH "/org/freedesktop/Hal/devices"
+//#define HAL_DEVS_PATH "/org/freedesktop/Hal/devices"
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::connect_system_bus(void)
 {
-    ui->setupUi(this);
-
-#ifndef QT_DEBUG
-    Q_CHECK_PTR(parentWidget());
-#endif
-
-    createTestBar();
-
-    //---
     bool ok = false;
     if (QDBusConnection::systemBus().isConnected())
-    //if (QDBusConnection::sessionBus().isConnected())
     {
-        QDBusConnection bus = QDBusConnection::systemBus();
-        //QDBusConnection bus = QDBusConnection::sessionBus();
+        QDBusConnection system_bus = QDBusConnection::systemBus();
+
+#if 0
+        //HAL
+        ok = system_bus.connect(HAL_SERV,
+                                HAL_MGR_PATH,
+                                HAL_MGR_INT,
+                                "DeviceAdded",
+                                this,
+                                SLOT(UDisks_deviceAdded(QDBusObjectPath)));
+        emit info(QString("HAL:DeviceAdded return %1").arg(ok ? "true" : "false"));
+#endif
 
         //UDisks
-        ok = bus.connect("org.freedesktop.UDisks",
-                         "/org/freedesktop/UDisks",
-                         "org.freedesktop.UDisks",
-                         "DeviceAdded",
-                         this,
-                         SLOT(UDisks_deviceAdded(QDBusObjectPath)));
+        ok = system_bus.connect("org.freedesktop.UDisks",
+                                "/org/freedesktop/UDisks",
+                                "org.freedesktop.UDisks",
+                                "DeviceAdded",
+                                this,
+                                SLOT(UDisks_deviceAdded(QDBusObjectPath)));
         emit info(QString("UDisks:DeviceAdded return %1").arg(ok ? "true" : "false"));
 
-        ok = bus.connect("org.freedesktop.UDisks",
-                         "/org/freedesktop/UDisks",
-                         "org.freedesktop.UDisks",
-                         "DeviceRemoved",
-                         this,
-                         SLOT(UDisks_deviceRemoved(QDBusObjectPath)));
+        ok = system_bus.connect("org.freedesktop.UDisks",
+                                "/org/freedesktop/UDisks",
+                                "org.freedesktop.UDisks",
+                                "DeviceRemoved",
+                                this,
+                                SLOT(UDisks_deviceRemoved(QDBusObjectPath)));
         emit info(QString("UDisks:deviceRemoved return %1").arg(ok ? "true" : "false"));
 
         //DBus
-        ok = bus.connect("org.freedesktop.DBus",
-                         "/org/freedesktop/DBus",
-                         "org.freedesktop.DBus",
-                         "DeviceAdded",
-                         this,
-                         SLOT(DBus_deviceAdded(QDBusObjectPath)));
+        ok = system_bus.connect("org.freedesktop.DBus",
+                                "/org/freedesktop/DBus",
+                                "org.freedesktop.DBus",
+                                "DeviceAdded",
+                                this,
+                                SLOT(DBus_deviceAdded(QDBusObjectPath)));
         emit info(QString("DBus:DeviceAdded return %1").arg(ok ? "true" : "false"));
 
-        ok = bus.connect("org.freedesktop.DBus",
-                         "/org/freedesktop/DBus",
-                         "org.freedesktop.DBus",
-                         "DeviceRemoved",
-                         this,
-                         SLOT(DBus_deviceRemoved(QDBusObjectPath)));
+        ok = system_bus.connect("org.freedesktop.DBus",
+                                "/org/freedesktop/DBus",
+                                "org.freedesktop.DBus",
+                                "DeviceRemoved",
+                                this,
+                                SLOT(DBus_deviceRemoved(QDBusObjectPath)));
         emit info(QString("DBus:deviceRemoved return %1").arg(ok ? "true" : "false"));
     }
     else
@@ -119,15 +119,67 @@ void MainBox::init(void)
         qDebug() << "NO QDBusConnection";
         emit error("NO QDBusConnection");
     }
-    //---
-#if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
+}
+//--------------------------------------------------------------------------------
+void MainBox::connect_session_bus(void)
+{
+    bool ok = false;
+    if (QDBusConnection::sessionBus().isConnected())
     {
-        setMinimumHeight(sizeHint().height());
+        QDBusConnection session_bus = QDBusConnection::sessionBus();
+
+        //UDisks
+        ok = session_bus.connect("org.freedesktop.UDisks",
+                                 "/org/freedesktop/UDisks",
+                                 "org.freedesktop.UDisks",
+                                 "DeviceAdded",
+                                 this,
+                                 SLOT(UDisks_deviceAdded(QDBusObjectPath)));
+        emit info(QString("UDisks:DeviceAdded return %1").arg(ok ? "true" : "false"));
+
+        ok = session_bus.connect("org.freedesktop.UDisks",
+                                 "/org/freedesktop/UDisks",
+                                 "org.freedesktop.UDisks",
+                                 "DeviceRemoved",
+                                 this,
+                                 SLOT(UDisks_deviceRemoved(QDBusObjectPath)));
+        emit info(QString("UDisks:deviceRemoved return %1").arg(ok ? "true" : "false"));
+
+        //DBus
+        ok = session_bus.connect("org.freedesktop.DBus",
+                                 "/org/freedesktop/DBus",
+                                 "org.freedesktop.DBus",
+                                 "DeviceAdded",
+                                 this,
+                                 SLOT(DBus_deviceAdded(QDBusObjectPath)));
+        emit info(QString("DBus:DeviceAdded return %1").arg(ok ? "true" : "false"));
+
+        ok = session_bus.connect("org.freedesktop.DBus",
+                                 "/org/freedesktop/DBus",
+                                 "org.freedesktop.DBus",
+                                 "DeviceRemoved",
+                                 this,
+                                 SLOT(DBus_deviceRemoved(QDBusObjectPath)));
+        emit info(QString("DBus:deviceRemoved return %1").arg(ok ? "true" : "false"));
     }
-#endif
+    else
+    {
+        qDebug() << "NO QDBusConnection";
+        emit error("NO QDBusConnection");
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::init(void)
+{
+    ui->setupUi(this);
+
+    createTestBar();
+
+    //---
+    connect_system_bus();
+    //connect_session_bus();
+    //---
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
 void MainBox::UDisks_deviceAdded(QDBusObjectPath dev)
@@ -288,38 +340,5 @@ bool MainBox::test_5(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::eventFilter(QObject*, QEvent* event)
-{
-    QMouseEvent *mouseEvent = (QMouseEvent *) event;
-    if(mouseEvent == nullptr)
-    {
-        return false;
-    }
-    //---
-    if(mouseEvent->type() == QMouseEvent::MouseButtonPress)
-    {
-        emit info(QString("%1 %2")
-                  .arg(mouseEvent->pos().x())
-                  .arg(mouseEvent->pos().y()));
-        return true;
-    }
-    //---
-    if(mouseEvent->type() == QMouseEvent::Wheel)
-    {
-        return true;
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-void MainBox::paintEvent(QPaintEvent *)
-{
-#if 0
-    QPainter p(this);
-    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    p.drawLine(0, 0, width(), height());
-    p.drawLine(0, height(), width(), 0);
-#endif
 }
 //--------------------------------------------------------------------------------

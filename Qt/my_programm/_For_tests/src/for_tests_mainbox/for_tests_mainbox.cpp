@@ -215,7 +215,7 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include <QWebEngineView>
+//#include <QWebEngineView>
 #include "led_display.hpp"
 
 #if 0
@@ -234,7 +234,7 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     QWebEngineView *webView = new QWebEngineView();
     webView->setUrl(QUrl("https://unixforum.org/"));
     webView->page()->setAudioMuted(true);
@@ -253,7 +253,7 @@ bool MainBox::test_0(void)
     webView->show();
 #endif
 
-#if 0
+#if 1
     if(display == nullptr)
     {
         //display = new LED_display(100, 50, 16, 16);

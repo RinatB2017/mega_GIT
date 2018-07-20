@@ -1,8 +1,8 @@
-#ifndef _DEFINES_HPP
-#define _DEFINES_HPP
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#define ORGNAME "Selena"
-#define APPNAME "RS232"
+#define ORGNAME "Work"
+#define APPNAME "RS232_4"
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------

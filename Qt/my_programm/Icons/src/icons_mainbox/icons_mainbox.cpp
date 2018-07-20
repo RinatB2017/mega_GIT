@@ -31,6 +31,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "icons_mainbox.hpp"
+#include "myfiledialog.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -55,7 +56,6 @@ void MainBox::init(void)
     createTestBar();
 
     tab = new QTabWidget(this);
-    ui->verticalLayout->addWidget(tab);
 
     QTabWidget *crystal_clear = new QTabWidget(this);
     QTabWidget *oxygen = new QTabWidget(this);
@@ -63,8 +63,6 @@ void MainBox::init(void)
     QTabWidget *gnome = new QTabWidget(this);
     QTabWidget *hicolor = new QTabWidget(this);
     QTabWidget *lol = new QTabWidget(this);
-
-    ui->drop_frame->installEventFilter(this);
 
     tab->addTab(crystal_clear, "crystal clear");
     tab->addTab(oxygen, "oxygen");
@@ -122,12 +120,132 @@ void MainBox::init(void)
     add_icons(lol, ":/lol/filesystems");
     add_icons(lol, ":/lol/mimetypes");
 
-//    crystal_clear->setFixedSize(crystal_clear->sizeHint());
-//    oxygen = new QTabWidget(this);
-//    nuvola = new QTabWidget(this);
-//    gnome = new QTabWidget(this);
-//    hicolor = new QTabWidget(this);
-//    lol = new QTabWidget(this);
+    Q_CHECK_PTR(tab);
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    setLayout(vbox);
+
+    layout()->addWidget(tab);
+
+    QPushButton *btn_clean = new QPushButton("Очистить");
+    QPushButton *btn_save  = new QPushButton("Сохранить");
+
+    connect(btn_clean,  SIGNAL(clicked(bool)),  this,   SLOT(clean()));
+    connect(btn_save,   SIGNAL(clicked(bool)),  this,   SLOT(save()));
+
+    QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->addWidget(btn_clean);
+    hbox->addWidget(btn_save);
+    hbox->addStretch(1);
+
+    QWidget *w = new QWidget;
+    w->setLayout(hbox);
+
+    layout()->addWidget(w);
+}
+//--------------------------------------------------------------------------------
+void MainBox::clean(void)
+{
+    emit info("Очистка нажатых кнопок");
+    foreach (QToolButton *btn, l_buttons)
+    {
+        if(btn)
+        {
+            btn->setChecked(false);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::save(void)
+{
+    emit info("save");
+    int cnt = 0;
+    foreach (QToolButton *btn, l_buttons)
+    {
+        if(btn)
+        {
+            if(btn->isChecked())
+            {
+                cnt++;
+#ifdef QT_DEBUG
+                QString filename = btn->property("filename").toString();
+                QString catalog_name = btn->property("catalog_name").toString();
+
+                emit debug("---");
+                emit debug(QString("filename %1").arg(filename));
+                emit debug(QString("catalog_name %1").arg(catalog_name));
+#endif
+            }
+        }
+    }
+    if(cnt == 0)
+    {
+        QMessageBox::critical(this, tr("Ошибка"), tr("Нет выбранных иконок!"));
+        return;
+    }
+    MyFileDialog *dlg = 0;
+    dlg = new MyFileDialog("MyFileDialog", "MyFileDialog");
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setNameFilter(tr("qrc files (*.qrc)"));
+    dlg->setDefaultSuffix(tr("qrc"));
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    dlg->setConfirmOverwrite(true);
+    if(dlg->exec() == false)
+    {
+        return;
+    }
+
+    QStringList files = dlg->selectedFiles();
+    emit debug(files.at(0));
+    emit info(dlg->directory().dirName());
+
+    cnt = 0;
+    QString path = QString("%1/")
+            .arg(dlg->directory().absolutePath());
+    QString prefix = "icons";
+    QString qrc_file;
+    qrc_file.append("<RCC>\n");
+    qrc_file.append(QString("    <qresource prefix=\"/%1\">\n")
+                    .arg(prefix));
+    foreach (QToolButton *button, l_buttons)
+    {
+        if(button->isChecked())
+        {
+            QString filename = button->objectName();
+            if(filename.isEmpty() == false)
+            {
+                QFile file(filename);
+                QFileInfo fileInfo(file.fileName());
+
+                qrc_file.append(QString("        <file>%1</file>\n")
+                                .arg(fileInfo.fileName()));
+
+                QString full_path = QString("%1%2")
+                        .arg(path)
+                        .arg(fileInfo.fileName());
+
+                QPixmap pixmap;
+                pixmap.load(filename);
+                pixmap.save(full_path);
+
+                emit info(QString("pixmap.load %1").arg(filename));
+                emit info(QString("pixmap.save %1").arg(full_path));
+            }
+        }
+    }
+    qrc_file.append("    </qresource>\n");
+    qrc_file.append("</RCC>\n");
+
+    QFile file(files.at(0));
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        file.write(qrc_file.toLocal8Bit());
+        file.close();
+    }
+    emit info(qrc_file);
+    emit debug(QString(tr("обработано %1")).arg(cnt));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -153,6 +271,8 @@ void MainBox::add_icons(QTabWidget *page,
                         const QString &catalog_name,
                         int max_x)
 {
+    Q_CHECK_PTR(page);
+
     QWidget *view = new QWidget;
     QGridLayout *gbox = new QGridLayout;
     gbox->setMargin(0);
@@ -187,17 +307,17 @@ void MainBox::add_icons(QTabWidget *page,
         pixmap.load(filename);
         QIcon icon(pixmap);
         QToolButton *btn = new QToolButton(this);
-        //btn->setCheckable(true);
+        btn->setCheckable(true);
         btn->setIconSize(QSize(32, 32));
         btn->setIcon(icon);
         btn->setToolTip(filename);
         btn->setObjectName(filename);
+        l_buttons.append(btn);
 
         QFileInfo fi(filename);
         QString name = fi.fileName();
         btn->setProperty("filename", name);
-
-        connect(btn, SIGNAL(pressed()), this, SLOT(drag()));
+        btn->setProperty("catalog_name", catalog_name);
 
         gbox->addWidget(btn, y, x);
         if(x < (max_x - 1))
@@ -221,111 +341,9 @@ void MainBox::add_icons(QTabWidget *page,
     page->addTab(area, fileInfo.fileName());
 }
 //--------------------------------------------------------------------------------
-void MainBox::drag(void)
-{
-    QToolButton *btn = (QToolButton *)sender();
-    setCursor(btn->icon().pixmap(32, 32));
-    current_png = btn->property("filename").toString();
-    emit info(current_png);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::eventFilter(QObject *obj, QEvent *ev)
-{
-    if ((obj == ui->drop_frame) && (ev->type() == QEvent::MouseButtonPress))
-    {
-        QToolButton *btn = new QToolButton();
-        if(current_png.isEmpty() == false)
-        {
-            btn->setIcon(cursor().pixmap());
-            x++;
-            if(x>3)
-            {
-                x=0;
-                y++;
-            }
-            ui->grid->addWidget(btn, y, x);
-            cursor().pixmap().save(current_png);
-        }
-        return true;
-    }
-    return QObject::eventFilter(obj, ev);
-}
-//--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    int cnt = 0;
-    QList<QToolButton *> allobj = findChildren<QToolButton *>();
-    foreach (QToolButton *button, allobj)
-    {
-        if(button->isChecked())
-            cnt++;
-    }
-    if(cnt == 0)
-    {
-        QMessageBox::critical(this, tr("Ошибка"), tr("Нет выбранных иконок!"));
-        return;
-    }
-
-    QFileDialog *dlg = 0;
-    dlg = new QFileDialog;
-    dlg->setAcceptMode(QFileDialog::AcceptSave);
-    dlg->setNameFilter(tr("qrc files (*.qrc)"));
-    dlg->setDefaultSuffix(tr("qrc"));
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    dlg->selectFile("noname");
-    dlg->setConfirmOverwrite(true);
-    if(dlg->exec() == false)
-        return;
-    QStringList files = dlg->selectedFiles();
-    emit debug(files.at(0));
-    emit info(dlg->directory().dirName());
-
-    cnt = 0;
-    QString path = QString("%1/")
-            .arg(dlg->directory().dirName());
-    QString prefix = "temp";
-    QString qrc_file;
-    qrc_file.append("<RCC>\n");
-    qrc_file.append(QString("    <qresource prefix=\"/%1\">\n")
-                    .arg(prefix));
-    foreach (QToolButton *button, allobj)
-    {
-        if(button->isChecked())
-        {
-            cnt++;
-
-            QString filename = button->objectName();
-            if(filename.isEmpty() == false)
-            {
-                QFile file(filename);
-                QFileInfo fileInfo(file.fileName());
-
-                qrc_file.append(QString("        <file>%1</file>\n")
-                                .arg(fileInfo.fileName()));
-
-                QString full_path = QString("%1%2")
-                        .arg(path)
-                        .arg(fileInfo.fileName());
-
-                QPixmap pixmap;
-                pixmap.load(filename);
-                pixmap.save(full_path);
-            }
-        }
-    }
-    qrc_file.append("    </qresource>\n");
-    qrc_file.append("</RCC>\n");
-
-    QFile file(files.at(0));
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        file.write(qrc_file.toLocal8Bit());
-        file.close();
-    }
-    emit info(qrc_file);
-
-    emit debug(QString(tr("обработано %1")).arg(cnt));
+    emit info("test");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

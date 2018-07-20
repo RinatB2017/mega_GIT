@@ -43,16 +43,15 @@ public:
 
 private slots:
     void test(void);
-    void drag(void);
+
+    void clean(void);
+    void save(void);
 
 private:
     Ui::MainBox *ui = 0;
 
     QTabWidget *tab = 0;
-
-    QString current_png;
-    int x;
-    int y;
+    QList<QToolButton *> l_buttons;
 
     void init(void);
     void add_icons(QTabWidget *page,
@@ -61,9 +60,6 @@ private:
 
     void createTestBar(void);
     void updateText(void);
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *ev);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

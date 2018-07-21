@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     Ping ping;
 
-    if (!QDBusConnection::sessionBus().isConnected()) {
+    if (!QDBusConnection::sessionBus().isConnected()) 
+    {
              fprintf(stderr, "Cannot connect to the D-Bus session bus.\n"
                      "To start it, run:\n"
                      "\teval `dbus-launch --auto-syntax`\n");
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
     QDBusServiceWatcher watcher;
     watcher.setConnection(QDBusConnection::sessionBus());;
     watcher.addWatchedService(ping.m_aviableServiceName);
-//    QObject::connect(&watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),&ping,  SLOT(manageConnection(QString,QString,QString)));
+    //    QObject::connect(&watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),&ping,  SLOT(manageConnection(QString,QString,QString)));
     QObject::connect(&watcher, SIGNAL(serviceRegistered(QString)), &ping, SLOT(connectToService(QString)));
 
     QStringList registedServices = iface->registeredServiceNames();

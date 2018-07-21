@@ -34,7 +34,8 @@ void Ping::connectToService(const QString &name)
     qDebug()<<"Connceting";
     m_interface = new QDBusInterface(name, "/", m_interfaceName, QDBusConnection::sessionBus(), this);
     QObject::connect(m_interface, SIGNAL(callingMe(QString, QString)), this, SLOT(reacoOnMeCalling(QString, QString)));
-    if(!m_interface->isValid()){
+    if(!m_interface->isValid())
+    {
         qDebug()<<"Invalid interface"<<m_interface->lastError();
         delete m_interface;
         m_interface = NULL;

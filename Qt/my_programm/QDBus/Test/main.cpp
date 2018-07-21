@@ -2,8 +2,7 @@
 #include </usr/include/glib-2.0/glib.h>
 #include </usr/include/dbus-1.0/dbus/dbus-glib.h>
 
-int
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
     DBusGConnection *connection;
     GError *error;
@@ -61,7 +60,8 @@ main (int argc, char **argv)
 
     proxy = dbus_g_proxy_new_for_name(connection, "org.freedesktop.UDisks", "/org/freedesktop/UDisks", "org.freedesktop.DBus.Properties");
 
-    if (proxy) {
+    if (proxy) 
+    {
         if (dbus_g_proxy_call(proxy, "Get", &error,
                               G_TYPE_STRING, "org.freedesktop.UDisks",
                               G_TYPE_STRING, "DaemonVersion",
@@ -73,12 +73,14 @@ main (int argc, char **argv)
             ver = g_value_get_string(&value);
             g_print("UDisks-%s", ver);
         }
-        else {
+        else 
+        {
             g_printerr("Can not get Ver: %s\n", error->message);
             g_error_free (error);
         }
     }
-    else {
+    else 
+    {
         g_printerr("Not UDisks\n");
     }
 

@@ -215,53 +215,13 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include <QWebEngineView>
 #include "led_display.hpp"
-
-void MainBox::test_JS(bool)
-{
-#if 0
-    webView->page()->runJavaScript("document.title", [=](const QVariant &v)
-    {
-        emit info(QString("result [%1]").arg(v.toString()));
-    }
-    );
-#else
-    webView->page()->runJavaScript("function myFunction() {"
-                                   //"var elements = document.getElementsByTagName('div');"
-                                   //"var input = elements[0];"
-                                   //"return input.innerHTML;} myFunction();",
-                                   "var table = document.getElementById('reklama_table');"
-                                   "var Cells = table.getElementsByTagName('td');"
-                                   "var Rows = table.getElementsByTagName('tr');"
-                                   "var Cells2 = Rows[1].getElementsByTagName('td');"
-                                   "return Cells2[4].innerText;} myFunction();",
-                                   [=] (const QVariant &result)
-    {
-        //emit error("------------------------------------");
-        emit error(QString("result [%1]").arg(result.toString()));
-    }
-    );
-#endif
-}
-
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
-    if(webView == nullptr)
-    {
-        webView = new QWebEngineView();
-    }
-    connect(webView->page(),    SIGNAL(loadFinished(bool)), this,   SLOT(test_JS(bool)));
-    //webView->setUrl(QUrl("http://localhost/mso/"));
-    webView->setUrl(QUrl("http://localhost/mso/home/next/12"));
-    webView->show();
-#endif
-
-#if 0
     if(display == nullptr)
     {
         //display = new LED_display(100, 50, 16, 16);

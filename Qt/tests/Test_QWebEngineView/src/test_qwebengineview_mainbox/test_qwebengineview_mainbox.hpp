@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,97 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+//--------------------------------------------------------------------------------
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QWidget>
 //--------------------------------------------------------------------------------
-#include "for_tests_mainbox.hpp"
-#include "ui_for_tests_mainbox.h"
-
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-
-class LED_display;  //TODO
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent = 0);
     ~MainBox();
 
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    void s_inFunc(void);
-
-    void check_in(void);
-    void victory(void);
+private slots:
+    void test(void);
+    void test_JS(bool);
 
 private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
-    QList<CMD> commands;
-
-    QWidget *test_widget = 0;
-
-    LED_display *display = 0;   //TODO
-    bool flag = true;
-
-    //---
-    void test_validator(void);
-    //---
+    QWidget *parent = 0;
 
     void init(void);
     void createTestBar(void);
-    void updateText(void);
 
-    quint32 test(const QByteArray ba);
-    int get_cnt(void);
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

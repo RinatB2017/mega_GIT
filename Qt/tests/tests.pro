@@ -71,4 +71,5 @@ SUBDIRS += \
     Test_Trader \
     Test_WebKit \
     Test_wwWidgets \
+    Test_QWebEngineView
 }

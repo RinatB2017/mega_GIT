@@ -35,10 +35,6 @@ private:
 
     GLUquadricObj *cylinder;
     GLUquadricObj *sphere;
-
-    GLfloat x = 0;
-    GLfloat y = 0;
-    GLfloat z = 0;
 };
  
 #endif

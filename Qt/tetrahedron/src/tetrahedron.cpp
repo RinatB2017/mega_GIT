@@ -43,8 +43,9 @@ void Tetrahedron::resizeGL(int width, int height)
 void Tetrahedron::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //draw();
-    draw_sphere();
+    draw();
+    //draw_sphere();
+    //draw_cylinder();
 }
 
 void Tetrahedron::mousePressEvent(QMouseEvent *event)
@@ -77,13 +78,11 @@ void Tetrahedron::keyPressEvent(QKeyEvent *event)
     switch (event->key())
     {
     case Qt::Key_Up:
-        z += 0.1;
-        qDebug() << "up" << z;
+        qDebug() << "up";
         break;
 
     case Qt::Key_Down:
-        z -= 0.1;
-        qDebug() << "down" << z;
+        qDebug() << "down";
         break;
 
     case Qt::Key_Left:

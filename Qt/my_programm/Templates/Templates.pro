@@ -9,7 +9,7 @@ SUBDIRS += \
     Template \
     Template_main \
     Template_old \
-	Template_RS232 \
+    Template_RS232 \
     Template_wo_MainBox \
 
 unix {

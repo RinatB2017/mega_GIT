@@ -96,8 +96,10 @@ private:
 
     QWidget *test_widget = 0;
 
-    LED_display *display = 0;   //TODO
+    //TODO
+    LED_display *display = 0;
     bool flag = true;
+    //---
 
     //---
     void test_validator(void);

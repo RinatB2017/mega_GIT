@@ -74,7 +74,8 @@ void MainWindow::on_loadButton_clicked()
     scene->setSceneRect(SvgReader::getSizes(path)); // Зададим размеры графической сцены
 
     // Установим на графическую сцену объекты, получив их с помощью метода getElements
-    foreach (QGraphicsRectItem *item, SvgReader::getElements(path)) {
+    foreach (QGraphicsRectItem *item, SvgReader::getElements(path))
+    {
         QGraphicsRectItem *rect = item;
         scene->addItem(rect);
     }

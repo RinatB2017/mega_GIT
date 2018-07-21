@@ -9,14 +9,12 @@ DEPENDPATH  += \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
 QT       += core gui svg xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = SvgExample
 TEMPLATE = app
-
 
 SOURCES += \
     main.cpp\

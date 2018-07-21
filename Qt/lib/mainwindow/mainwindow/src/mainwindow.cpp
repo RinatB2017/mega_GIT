@@ -202,7 +202,7 @@ void MainWindow::init(void)
     createSysLog_dock();
 #endif
 
-    load_setting();
+    //TODO load_setting();
 #ifndef NO_MENU
     createMenus();
 #endif
@@ -568,15 +568,6 @@ void MainWindow::about(void)
 //--------------------------------------------------------------------------------
 void MainWindow::load_main(void)
 {
-    //TODO костыль
-    if(main_already_loaded)
-    {
-        emit debug("main_already_loaded is true");
-        return;
-    }
-    main_already_loaded = true;
-    //
-
     QFont font = qApp->font();
     QString font_name;
     int font_weight;

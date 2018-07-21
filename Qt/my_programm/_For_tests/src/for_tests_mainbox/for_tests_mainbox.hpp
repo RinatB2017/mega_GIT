@@ -43,6 +43,7 @@ namespace Ui {
 class MySplashScreen;
 
 class LED_display;  //TODO
+#include <QWebEngineView>
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -69,6 +70,9 @@ public slots:
 
     void check_in(void);
     void victory(void);
+
+    //TODO
+    void test_JS(bool);
 
 private:
     enum {
@@ -98,6 +102,8 @@ private:
 
     LED_display *display = 0;   //TODO
     bool flag = true;
+
+    QWebEngineView *webView = 0;    //TODO
 
     //---
     void test_validator(void);

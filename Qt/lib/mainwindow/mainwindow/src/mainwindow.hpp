@@ -217,8 +217,6 @@ private:
 
     QSettings *settings = 0;
 
-    bool main_already_loaded = false;
-
     void load_main(void);
     void save_main(void);
 

@@ -39,12 +39,39 @@ public:
     ~MainBox();
 
 private slots:
-    void test(void);
+    void choice_test(void);
+    bool test_0(void);
+    bool test_1(void);
+    bool test_2(void);
+    bool test_3(void);
+    bool test_4(void);
+    bool test_5(void);
+
     void test_JS(bool);
+
+    void run(void);
 
 private:
     Ui::MainBox *ui = 0;
     QWidget *parent = 0;
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+
+    QComboBox *cb_test = 0;
+    QList<CMD> commands;
 
     void init(void);
     void createTestBar(void);

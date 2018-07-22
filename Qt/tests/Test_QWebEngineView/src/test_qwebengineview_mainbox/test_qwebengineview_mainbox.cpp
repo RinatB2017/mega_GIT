@@ -54,64 +54,192 @@ void MainBox::init(void)
 
     createTestBar();
 
-    connect(ui->webEngineView->page(),  SIGNAL(loadFinished(bool)), this,               SLOT(test_JS(bool)));
-    connect(ui->webEngineView->page(),  SIGNAL(loadProgress(int)),  ui->progressBar,    SLOT(setValue(int)));
+    connect(ui->webEngineView->page(),  SIGNAL(loadProgress(int)),
+            ui->progressBar,            SLOT(setValue(int)));
+    connect(ui->webEngineView->page(),  SIGNAL(loadFinished(bool)),
+            this,                       SLOT(test_JS(bool)));
+    connect(ui->btn_run,                SIGNAL(clicked(bool)),
+            this,                       SLOT(run()));
 
     //ui->webEngineView->setUrl(QUrl("http://localhost/mso/"));
-    ui->webEngineView->setUrl(QUrl("http://localhost/mso/home/next/12"));
+    //ui->webEngineView->setUrl(QUrl("http://localhost/mso/home/next/12"));
 
-    ui->webEngineView->show();
+    ui->le_address->setText("http://localhost/mso/home/next/12");
+
+    ui->te_js->append("function myFunction() {");
+    ui->te_js->append("var table = document.getElementById('reklama_table');");
+    ui->te_js->append("var Cells = table.getElementsByTagName('td');");
+    ui->te_js->append("var Rows = table.getElementsByTagName('tr');");
+    ui->te_js->append("var Cells2 = Rows[1].getElementsByTagName('td');");
+    ui->te_js->append("return Cells2[4].innerText;} myFunction();");
+
+    //---
+    QSplitter *splitter = new QSplitter(Qt::Horizontal);
+    splitter->setChildrenCollapsible(true);
+
+    ui->te_js->setParent(splitter);
+    ui->frame->setParent(splitter);
+    splitter->addWidget(ui->te_js);
+    splitter->addWidget(ui->frame);
+    splitter->setStretchFactor(0, 1);
+    splitter->setStretchFactor(1, 2);
+    layout()->addWidget(splitter);
+    //---
+
+    //ui->progressBar->setValue(0);
+}
+//--------------------------------------------------------------------------------
+void MainBox::run(void)
+{
+    QString address = ui->le_address->text();
+    if(address.isEmpty())
+    {
+        emit error("address is empty!");
+        return;
+    }
+
+    ui->webEngineView->setUrl(QUrl(address));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_JS(bool)
 {
-#if 0
-    ui->webEngineView->page()->runJavaScript("document.title", [=](const QVariant &v)
+    //emit info("test_JS");
+
+    const QString javascript = ui->te_js->toPlainText();
+    if(javascript.isEmpty())
     {
-        emit info(QString("result [%1]").arg(v.toString()));
+        emit error("JS is empty!");
+        return;
     }
-    );
-#else
-    ui->webEngineView->page()->runJavaScript("function myFunction() {"
-                                             //"var elements = document.getElementsByTagName('div');"
-                                             //"var input = elements[0];"
-                                             //"return input.innerHTML;} myFunction();",
-                                             "var table = document.getElementById('reklama_table');"
-                                             "var Cells = table.getElementsByTagName('td');"
-                                             "var Rows = table.getElementsByTagName('tr');"
-                                             "var Cells2 = Rows[1].getElementsByTagName('td');"
-                                             "return Cells2[4].innerText;} myFunction();",
-                                             [=] (const QVariant &result)
+    //emit trace(javascript);
+
+    ui->webEngineView->page()->runJavaScript(javascript, [=](const QVariant &v)
     {
-        //emit error("------------------------------------");
-        emit error(QString("result [%1]").arg(result.toString()));
-    }
-    );
-#endif
+        emit info(v.toString());
+    });
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
-    QToolButton *btnTest = new QToolButton(this);
-    btnTest->setText("test");
-    btnTest->setIcon(QIcon::fromTheme(QLatin1String("applications-system")));
+    commands.clear();
+    commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
+    commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
+    commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
+    commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
+    commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
+    commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
 
-    QToolBar *testbar = new QToolBar("testbar", this);
+    QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
-
-    testbar->addWidget(btnTest);
-
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::choice_test(void)
 {
-    emit info("test");
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef bool (MainBox::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_0(void)
+{
+    emit info("Test_0()");
+
+    ui->te_js->clear();
+    ui->te_js->append("document.title");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
+    emit info("Test_1()");
+
+    ui->te_js->clear();
+    ui->te_js->append("function myFunction() {");
+    ui->te_js->append("var table = document.getElementById('reklama_table');");
+    ui->te_js->append("var Cells = table.getElementsByTagName('td');");
+    ui->te_js->append("var Rows = table.getElementsByTagName('tr');");
+    ui->te_js->append("var Cells2 = Rows[1].getElementsByTagName('td');");
+    ui->te_js->append("return Cells2[4].innerText;} myFunction();");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_2(void)
+{
+    emit info("Test_2()");
+
+    ui->te_js->clear();
+    ui->te_js->append("function myFunction() {");
+    ui->te_js->append("var elements = document.getElementsByTagName('div');");
+    ui->te_js->append("var input = elements[0];");
+    ui->te_js->append("return input.innerHTML;} myFunction();");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_3(void)
+{
+    emit info("Test_3()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_4(void)
+{
+    emit info("Test_4()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_5(void)
+{
+    emit info("Test_5()");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

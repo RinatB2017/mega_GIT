@@ -77,6 +77,8 @@ void MainBox::init(void)
             this,                       SLOT(run()));
     connect(ui->btn_run_js,             SIGNAL(clicked(bool)),
             this,                       SLOT(test_JS(bool)));
+    connect(this,                       SIGNAL(send(QString)),
+            this,                       SLOT(analize(QString)));
 
     //ui->le_address->setText("https://2ip.ru/");
     ui->le_address->setText("https://www.youtube.com/");
@@ -150,8 +152,20 @@ void MainBox::test_JS(bool)
 
     ui->webEngineView->page()->runJavaScript(javascript, [=](const QVariant &v)
     {
-        emit info(v.toString());
+        //emit info(v.toString());
+        emit send(v.toString());
     });
+}
+//--------------------------------------------------------------------------------
+void MainBox::analize(const QString data)
+{
+    QStringList sl = data.split(';');
+    //emit error(QString("%1 bytes").arg(data.length()));
+    emit error(QString("len = %1").arg(sl.length()));
+    foreach (QString text, sl)
+    {
+        emit info(text);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

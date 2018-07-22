@@ -37,6 +37,9 @@ public:
     MainBox(QWidget *parent = 0);
     ~MainBox();
 
+signals:
+    void send(const QString &);
+
 private slots:
     void choice_test(void);
     bool test_0(void);
@@ -49,6 +52,8 @@ private slots:
     void test_JS(bool);
 
     void run(void);
+
+    void analize(const QString data);
 
 private:
     Ui::MainBox *ui = 0;

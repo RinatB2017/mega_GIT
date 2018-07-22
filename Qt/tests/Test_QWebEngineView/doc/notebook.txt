@@ -1,0 +1,12 @@
+function myFunction()
+{
+   var links = document.getElementsByTagName('a');
+   var temp = "";
+   for (var i = 0; i < links.length; i++)
+   {
+      temp += links[i].href;
+      temp += ";";
+   }
+   return temp;
+}
+myFunction();

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
+    <width>319</width>
     <height>279</height>
    </rect>
   </property>
@@ -15,10 +15,29 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="QTextEdit" name="te_js"/>
+    <widget class="QFrame" name="frame_js">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTextEdit" name="te_js"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_run_js">
+        <property name="text">
+         <string>run</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frame_browser">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>

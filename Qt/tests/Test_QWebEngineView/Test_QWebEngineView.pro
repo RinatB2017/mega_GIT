@@ -20,6 +20,8 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
+DEFINES += SAVE_WIDGETS_TEXTEDIT
+
 HEADERS += \
     test_qwebengineview_mainbox.hpp \
     defines.hpp \

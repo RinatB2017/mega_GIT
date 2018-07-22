@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -46,6 +46,8 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("Test_QWebEngineView");
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -73,26 +75,47 @@ void MainBox::init(void)
             this,                       SLOT(test_JS(bool)));
     connect(ui->btn_run,                SIGNAL(clicked(bool)),
             this,                       SLOT(run()));
+    connect(ui->btn_run_js,             SIGNAL(clicked(bool)),
+            this,                       SLOT(test_JS(bool)));
 
-    ui->le_address->setText("https://2ip.ru/");
+    //ui->le_address->setText("https://2ip.ru/");
+    ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
 
-    ui->te_js->append("function myFunction() {");
-    ui->te_js->append("var table = document.getElementById('reklama_table');");
-    ui->te_js->append("var Cells = table.getElementsByTagName('td');");
-    ui->te_js->append("var Rows = table.getElementsByTagName('tr');");
-    ui->te_js->append("var Cells2 = Rows[1].getElementsByTagName('td');");
-    ui->te_js->append("return Cells2[4].innerText;} myFunction();");
+#if 1
+    load_widgets("Test_QWebEngineView");
+#else
+    ui->te_js->clear();
+
+    ui->te_js->append("function myFunction()");
+    ui->te_js->append("{");
+    ui->te_js->append("   var links = document.getElementsByTagName('a');");
+    ui->te_js->append("   var arr = new Array();");
+    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
+    ui->te_js->append("   {");
+    ui->te_js->append("      arr[i] = links[i].href;");
+    ui->te_js->append("   }");
+    ui->te_js->append("   return arr;");
+    ui->te_js->append("}");
+    ui->te_js->append("myFunction();");
+
+    //ui->te_js->append("function myFunction() {");
+    //ui->te_js->append("var table = document.getElementById('reklama_table');");
+    //ui->te_js->append("var Cells = table.getElementsByTagName('td');");
+    //ui->te_js->append("var Rows = table.getElementsByTagName('tr');");
+    //ui->te_js->append("var Cells2 = Rows[1].getElementsByTagName('td');");
+    //ui->te_js->append("return Cells2[4].innerText;} myFunction();");
+#endif
 
     //---
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setChildrenCollapsible(true);
 
-    ui->te_js->setParent(splitter);
-    ui->frame->setParent(splitter);
-    splitter->addWidget(ui->te_js);
-    splitter->addWidget(ui->frame);
+    ui->frame_js->setParent(splitter);
+    ui->frame_browser->setParent(splitter);
+    splitter->addWidget(ui->frame_js);
+    splitter->addWidget(ui->frame_browser);
     splitter->setStretchFactor(0, 1);
     splitter->setStretchFactor(1, 2);
     layout()->addWidget(splitter);
@@ -115,7 +138,7 @@ void MainBox::run(void)
 //--------------------------------------------------------------------------------
 void MainBox::test_JS(bool)
 {
-    //emit info("test_JS");
+    emit info("test_JS");
 
     const QString javascript = ui->te_js->toPlainText();
     if(javascript.isEmpty())
@@ -164,6 +187,8 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    mw->add_windowsmenu_action(testbar->toggleViewAction());    //TODO странно
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -235,7 +260,13 @@ bool MainBox::test_2(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
+    //https://stackoverflow.com/questions/7977198/document-getelementsbytagnamea-misses-a-link
     emit info("Test_3()");
+
+    ui->te_js->clear();
+    ui->te_js->append("function myFunction() {");
+    ui->te_js->append("var links = document.getElementsByTagName('a');");
+    ui->te_js->append("return links[0].href;} myFunction();");
 
     return true;
 }
@@ -243,6 +274,19 @@ bool MainBox::test_3(void)
 bool MainBox::test_4(void)
 {
     emit info("Test_4()");
+
+    ui->te_js->clear();
+    ui->te_js->append("function myFunction()");
+    ui->te_js->append("{");
+    ui->te_js->append("   var links = document.getElementsByTagName('a');");
+    ui->te_js->append("   var arr = new Array()");
+    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
+    ui->te_js->append("   {");
+    ui->te_js->append("      arr.push(links[i].href);");
+    ui->te_js->append("   }");
+    ui->te_js->append("   return arr;");
+    ui->te_js->append("}");
+    ui->te_js->append("myFunction();");
 
     return true;
 }

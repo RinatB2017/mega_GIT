@@ -766,6 +766,8 @@ void MainWindow::createToolBar(void)
 #ifndef NO_TOOLBAR_BUTTON_HELP
     app_toolbar_add_help();
 #endif
+
+    m_app_windowsmenu->addAction(toolbar->toggleViewAction());    //TODO странно
 }
 //--------------------------------------------------------------------------------
 void MainWindow::createStyleToolBar(void)

@@ -24,6 +24,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include <QWebEngineProfile>
 #include <QWebEngineView>
 //--------------------------------------------------------------------------------
 #include "ui_test_qwebengineview_mainbox.h"
@@ -61,10 +62,21 @@ void MainBox::init(void)
     connect(ui->btn_run,                SIGNAL(clicked(bool)),
             this,                       SLOT(run()));
 
-    //ui->webEngineView->setUrl(QUrl("http://localhost/mso/"));
-    //ui->webEngineView->setUrl(QUrl("http://localhost/mso/home/next/12"));
+    QWebEngineProfile *profile = new QWebEngineProfile();
+    // изменяем необходимые http-заголовки на свои значения
+    //profile->setHttpUserAgent("Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
+    //profile->setHttpUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
+    //profile->setHttpUserAgent("Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");
+    //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+    profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; U; en) Presto/2.9.168 Version/11.50");
+    //profile->setHttpUserAgent("iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
+    QWebEnginePage *page = new QWebEnginePage(profile);
 
-    ui->le_address->setText("http://localhost/mso/home/next/12");
+    ui->webEngineView->setPage(page);
+
+    ui->le_address->setText("https://2ip.ru/");
+    //ui->le_address->setText("http://localhost/mso/");
+    //ui->le_address->setText("http://localhost/mso/home/next/12");
 
     ui->te_js->append("function myFunction() {");
     ui->te_js->append("var table = document.getElementById('reklama_table');");

@@ -13,9 +13,8 @@ DEPENDPATH  += \
     $$PWD/src/template_browser_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 QT += webkit webkitwidgets network
-#QT  += webenginewidgets
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON

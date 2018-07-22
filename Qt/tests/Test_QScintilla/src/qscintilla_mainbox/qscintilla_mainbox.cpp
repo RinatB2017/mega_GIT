@@ -66,6 +66,8 @@ void MainBox::init(void)
 
     QsciLexerCPP * lexCpp = new QsciLexerCPP(this);
     ui->textEdit->setLexer(lexCpp);
+
+    //ui->textEdit->setStyleSheet("background:white;");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

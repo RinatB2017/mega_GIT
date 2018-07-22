@@ -55,13 +55,6 @@ void MainBox::init(void)
 
     createTestBar();
 
-    connect(ui->webEngineView->page(),  SIGNAL(loadProgress(int)),
-            ui->progressBar,            SLOT(setValue(int)));
-    connect(ui->webEngineView->page(),  SIGNAL(loadFinished(bool)),
-            this,                       SLOT(test_JS(bool)));
-    connect(ui->btn_run,                SIGNAL(clicked(bool)),
-            this,                       SLOT(run()));
-
     QWebEngineProfile *profile = new QWebEngineProfile();
     // изменяем необходимые http-заголовки на свои значения
     //profile->setHttpUserAgent("Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
@@ -73,6 +66,13 @@ void MainBox::init(void)
     QWebEnginePage *page = new QWebEnginePage(profile);
 
     ui->webEngineView->setPage(page);
+
+    connect(ui->webEngineView->page(),  SIGNAL(loadProgress(int)),
+            ui->progressBar,            SLOT(setValue(int)));
+    connect(ui->webEngineView->page(),  SIGNAL(loadFinished(bool)),
+            this,                       SLOT(test_JS(bool)));
+    connect(ui->btn_run,                SIGNAL(clicked(bool)),
+            this,                       SLOT(run()));
 
     ui->le_address->setText("https://2ip.ru/");
     //ui->le_address->setText("http://localhost/mso/");
@@ -98,7 +98,7 @@ void MainBox::init(void)
     layout()->addWidget(splitter);
     //---
 
-    //ui->progressBar->setValue(0);
+    ui->progressBar->setValue(0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::run(void)

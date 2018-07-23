@@ -224,10 +224,16 @@ bool MainBox::test_0(void)
 #if 1
     if(display == nullptr)
     {
-        //display = new LED_display(100, 50, 16, 16);
-        //display = new LED_display(1920 / 4, 1080 / 4 - 50, 4, 4);
-        display = new LED_display(2560 / 4, 1080 / 4 - 25, 4, 4);
-        emit info(QString("Point count %1").arg((2560 / 4) * (1080 / 4 - 25)));
+#ifdef Q_OS_LINUX
+        unsigned int d_width = 2560 / 4;
+        unsigned int d_height = 1080 / 4 - 25;
+#else
+        unsigned int d_width = 1920 / 4;
+        unsigned int d_height = 1080 / 4 - 50;
+#endif
+        display = new LED_display(d_width, d_height, 4, 4);
+        emit info(QString("Point count %1").arg(d_width * d_height));
+
         connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
         connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
         connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));

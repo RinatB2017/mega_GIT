@@ -238,7 +238,7 @@ void SerialBox5::initSerial(void)
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
 
     connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this,   SLOT(serial5_error(QSerialPort::SerialPortError)));
+    connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this,   SLOT(serial5_error(QSerialPort::SerialPortError)));
     //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this,   SLOT(errorOccurred(QSerialPort::SerialPortError)));
 
     connect(serial5, SIGNAL(baudRateChanged(qint32,QSerialPort::Directions)),   this,   SLOT(baudRateChanged(qint32,QSerialPort::Directions)));

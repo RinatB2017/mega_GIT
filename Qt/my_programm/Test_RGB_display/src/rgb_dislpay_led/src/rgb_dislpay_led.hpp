@@ -22,17 +22,41 @@
 #define RGB_DISLPAY_LED_HPP
 //--------------------------------------------------------------------------------
 #include <QToolButton>
+#include <QMouseEvent>
 //--------------------------------------------------------------------------------
 class RGB_dislpay_led : public QToolButton
 {
     Q_OBJECT
 
 public:
-    explicit RGB_dislpay_led(QWidget *parent = nullptr);
+    explicit RGB_dislpay_led(int fix_width,
+                             int fix_heigth,
+                             QWidget *parent = nullptr);
     ~RGB_dislpay_led();
 
-private:
+    void set_R(int value);
+    void set_G(int value);
+    void set_B(int value);
 
+    int get_R(void);
+    int get_G(void);
+    int get_B(void);
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+protected:
+    void mouseReleaseEvent(QMouseEvent *event);
+
+private:
+    int color_R = 0;
+    int color_G = 0;
+    int color_B = 0;
+
+    void set_color(void);
 };
 //--------------------------------------------------------------------------------
 #endif // RGB_DISLPAY_LED_HPP

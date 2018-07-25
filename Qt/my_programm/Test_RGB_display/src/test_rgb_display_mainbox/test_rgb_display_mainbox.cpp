@@ -61,15 +61,21 @@ void MainBox::init(void)
     ui->grid->setMargin(0);
 
     double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    double w_led = pixelPerMm * 3.5;    //Ширина
-    double h_led = pixelPerMm * 3.5;    //Высота
+    double w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
+    double h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
 
     for(int col=0; col<SCREEN_WIDTH; col++)
     {
         for(int row=0; row<SCREEN_HEIGTH; row++)
         {
-            RGB_dislpay_led *led = new RGB_dislpay_led();
-            led->setFixedSize(w_led, h_led);
+            RGB_dislpay_led *led = new RGB_dislpay_led(w_led, h_led, this);
+            connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+            connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+            connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+            connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+            led->setProperty("property_col", col);
+            led->setProperty("property_row", row);
 
             ui->grid->addWidget(led, row, col);
 

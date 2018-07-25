@@ -33,6 +33,7 @@ SUBDIRS += \
     QRCodeGenerator \
     Teacher \
     Teacher_light \
+    Walkers \
 }
     
 lessThan(QT_MAJOR_VERSION, 5) {

@@ -48,15 +48,14 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-protected:
-    void mouseReleaseEvent(QMouseEvent *event);
-
 private:
     int color_R = 0;
     int color_G = 0;
     int color_B = 0;
 
-    void set_color(void);
+protected:
+    void mouseReleaseEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *);
 };
 //--------------------------------------------------------------------------------
 #endif // RGB_DISLPAY_LED_HPP

@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QColorDialog>
+#include <QPainter>
 //--------------------------------------------------------------------------------
 #include "rgb_dislpay_led.hpp"
 //--------------------------------------------------------------------------------
@@ -43,7 +44,13 @@ void RGB_dislpay_led::mouseReleaseEvent(QMouseEvent *event)
                   .arg(property("property_col").toInt())
                   .arg(property("property_row").toInt()));
 
+        QColor color;
+        color.setRed(color_R);
+        color.setGreen(color_G);
+        color.setBlue(color_B);
+
         QColorDialog *dialog = new QColorDialog(this);
+        dialog->setCurrentColor(color);
         int btn = dialog->exec();
         if(btn == QColorDialog::Accepted)
         {
@@ -52,8 +59,6 @@ void RGB_dislpay_led::mouseReleaseEvent(QMouseEvent *event)
             color_R = color.red();
             color_G = color.green();
             color_B = color.blue();
-
-            set_color();
         }
     }
     QToolButton::mouseReleaseEvent(event);
@@ -62,19 +67,16 @@ void RGB_dislpay_led::mouseReleaseEvent(QMouseEvent *event)
 void RGB_dislpay_led::set_R(int value)
 {
     color_R = value;
-    set_color();
 }
 //--------------------------------------------------------------------------------
 void RGB_dislpay_led::set_G(int value)
 {
     color_G = value;
-    set_color();
 }
 //--------------------------------------------------------------------------------
 void RGB_dislpay_led::set_B(int value)
 {
     color_B = value;
-    set_color();
 }
 //--------------------------------------------------------------------------------
 int RGB_dislpay_led::get_R(void)
@@ -92,11 +94,14 @@ int RGB_dislpay_led::get_B(void)
     return color_B;
 }
 //--------------------------------------------------------------------------------
-void RGB_dislpay_led::set_color(void)
+void RGB_dislpay_led::paintEvent(QPaintEvent *)
 {
-    setStyleSheet(QString("background-color:rgb(%1, %2, %3);")
-                  .arg(color_R)
-                  .arg(color_G)
-                  .arg(color_B));
+    QColor color;
+    color.setRed(color_R);
+    color.setGreen(color_G);
+    color.setBlue(color_B);
+
+    QPainter p(this);
+    p.fillRect(0, 0, width(), height(), color);
 }
 //--------------------------------------------------------------------------------

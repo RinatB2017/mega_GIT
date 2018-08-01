@@ -37,8 +37,9 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
     set_codecs();
+
+    QApplication app(argc, argv);
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));

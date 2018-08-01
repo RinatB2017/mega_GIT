@@ -46,11 +46,13 @@ private slots:
     void test_JS(bool);
     void find_url(const QString &text);
 
-    void set_url(QString url);
+    void load_url(void);
 
 private:
     QWebEngineView *viewer = nullptr;
     QList<QString> urls;
+
+    QString current_url;
 
     void init(void);
 };

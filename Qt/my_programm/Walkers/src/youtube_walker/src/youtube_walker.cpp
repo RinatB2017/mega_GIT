@@ -89,11 +89,11 @@ void Youtube_walker::find_url(const QString &text)
         if(url.contains("watch?"))
         {
             cnt++;
-            emit info(url);
+            //emit info(url);
             urls.append(url);
         }
     }
-    emit info(QString("cnt %1").arg(cnt));
+    emit info(QString("find %1 urls").arg(cnt));
 
     if(cnt <= 0)
     {
@@ -101,7 +101,27 @@ void Youtube_walker::find_url(const QString &text)
     }
 
     int rand_url = rand() % cnt;
-    QTimer::singleShot(15000 + rand() % 20000, this, SLOT(set_url(urls.at(rand_url))));
+    if(urls.isEmpty())
+    {
+        return;
+    }
+    current_url = urls.at(rand_url);
+
+    int next_time = 15000 + rand() % 20000;
+
+    emit info(QString("next_time %1 ms").arg(next_time));
+    emit info(QString("next_url %1").arg(current_url));
+
+    QTimer::singleShot(next_time, this, SLOT(load_url()));
+}
+//--------------------------------------------------------------------------------
+void Youtube_walker::load_url(void)
+{
+    if(current_url.isEmpty())
+    {
+        return;
+    }
+    setUrl(QUrl(current_url));
 }
 //--------------------------------------------------------------------------------
 void Youtube_walker::setUrl(QUrl url)

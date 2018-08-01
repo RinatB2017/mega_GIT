@@ -56,25 +56,31 @@ void MainBox::init(void)
 
     createTestBar();
 
+#if 1
     youtube_walker = new Youtube_walker(this);
     connect(youtube_walker, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(youtube_walker, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(youtube_walker, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(youtube_walker, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-#if 1
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(youtube_walker);
     setLayout(vbox);
+
+    youtube_walker->setUrl(QUrl("https://www.youtube.com/"));
 #else
     QGridLayout *grid = new QGridLayout;
     int x = 0;
     int y = 0;
     for(int n=0; n<20; n++)
     {
-        QWebEngineView *webView = new QWebEngineView();
-        //webView->setUrl(QUrl(site));
-        webView->page()->setAudioMuted(true);
+        Youtube_walker *webView = new Youtube_walker(this);
+        connect(webView,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+        connect(webView,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+        connect(webView,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+        connect(webView,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+        webView->setUrl(QUrl("https://www.youtube.com/"));
         l_views.append(webView);
 
         grid->addWidget(webView, y, x);
@@ -90,7 +96,6 @@ void MainBox::init(void)
     }
 
     QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->addWidget(youtube_walker);
     hbox->addLayout(grid);
 
     setLayout(hbox);
@@ -120,7 +125,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    youtube_walker->setUrl(QUrl("https://www.youtube.com/"));
+    emit info("test");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

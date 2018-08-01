@@ -30,7 +30,7 @@
 class Youtube_walker;
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -49,7 +49,7 @@ private:
     QWidget *parent = 0;
 
     Youtube_walker *youtube_walker = nullptr;
-    QList<QWebEngineView *> l_views;
+    QList<Youtube_walker *> l_views;
     int cnt = 0;
 
     void init(void);

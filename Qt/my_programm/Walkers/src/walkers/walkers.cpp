@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -26,10 +26,10 @@
 //--------------------------------------------------------------------------------
 #include <QWebEngineView>
 //--------------------------------------------------------------------------------
-#include "ui_test_youtube_mainbox.h"
+#include "ui_walkers.h"
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_youtube_mainbox.hpp"
+#include "walkers.hpp"
 //--------------------------------------------------------------------------------
 #include "youtube_walker.hpp"
 //--------------------------------------------------------------------------------
@@ -62,8 +62,11 @@ void MainBox::init(void)
     connect(youtube_walker, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(youtube_walker, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    connect(youtube_walker, SIGNAL(show_url(QString)),  this,   SLOT(show_url(QString)));
-
+#if 1
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(youtube_walker);
+    setLayout(vbox);
+#else
     QGridLayout *grid = new QGridLayout;
     int x = 0;
     int y = 0;
@@ -91,6 +94,7 @@ void MainBox::init(void)
     hbox->addLayout(grid);
 
     setLayout(hbox);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -112,26 +116,6 @@ void MainBox::createTestBar(void)
     connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
 
     mw->add_windowsmenu_action(testbar->toggleViewAction());    //TODO странно
-}
-//--------------------------------------------------------------------------------
-void MainBox::show_url(QString url)
-{
-    if(cnt < (l_views.count() - 1))
-    {
-        cnt++;
-    }
-    else
-    {
-        cnt = 0;
-    }
-    if(l_views[cnt])
-    {
-        l_views[cnt]->setUrl(QUrl(url));
-    }
-    else
-    {
-        emit error(QString("bad cnt %1").arg(cnt));
-    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

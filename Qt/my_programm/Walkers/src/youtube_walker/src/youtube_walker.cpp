@@ -95,13 +95,13 @@ void Youtube_walker::find_url(const QString &text)
     }
     emit info(QString("cnt %1").arg(cnt));
 
-    foreach (QString url, urls)
+    if(cnt <= 0)
     {
-        if(!(rand() % 3))
-        {
-            emit show_url(url);
-        }
+        return;
     }
+
+    int rand_url = rand() % cnt;
+    QTimer::singleShot(15000 + rand() % 20000, this, SLOT(set_url(urls.at(rand_url))));
 }
 //--------------------------------------------------------------------------------
 void Youtube_walker::setUrl(QUrl url)

@@ -42,6 +42,9 @@ public:
     int get_G(void);
     int get_B(void);
 
+    int get_width(void);
+    int get_height(void);
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -52,6 +55,9 @@ private:
     int color_R = 0;
     int color_G = 0;
     int color_B = 0;
+
+    int fix_width  = 0;
+    int fix_heigth = 0;
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event);

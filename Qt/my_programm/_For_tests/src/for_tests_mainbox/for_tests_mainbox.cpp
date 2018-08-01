@@ -222,6 +222,13 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    for(int n=5; n>=0; n--)
+    {
+        emit info(QString("%1").arg(n));
+    }
+#endif
+
+#if 0
     if(display == nullptr)
     {
 #ifdef Q_OS_LINUX

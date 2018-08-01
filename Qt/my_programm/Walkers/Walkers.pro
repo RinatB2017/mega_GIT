@@ -7,8 +7,8 @@ TARGET   = Walkers
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/test_youtube_mainbox \
-    $$PWD/src/test_youtube_mainbox/ui
+    $$PWD/src/walkers \
+    $$PWD/src/walkers/ui
 INCLUDEPATH = $$DEPENDPATH
 
 #QMAKE_CXXFLAGS += -fno-show-column
@@ -19,15 +19,15 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    test_youtube_mainbox.hpp \
+    walkers.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_youtube_mainbox.cpp \
+    walkers.cpp \
     main.cpp
 
-FORMS   += test_youtube_mainbox.ui
+FORMS   += walkers.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

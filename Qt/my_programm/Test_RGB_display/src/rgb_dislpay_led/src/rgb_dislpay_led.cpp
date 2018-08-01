@@ -28,6 +28,8 @@ RGB_dislpay_led::RGB_dislpay_led(int fix_width,
                                  QWidget *parent) :
     QToolButton(parent)
 {
+    this->fix_width = fix_width;
+    this->fix_heigth = fix_heigth;
     setFixedSize(fix_width, fix_heigth);
 }
 //--------------------------------------------------------------------------------
@@ -92,6 +94,16 @@ int RGB_dislpay_led::get_G(void)
 int RGB_dislpay_led::get_B(void)
 {
     return color_B;
+}
+//--------------------------------------------------------------------------------
+int RGB_dislpay_led::get_width(void)
+{
+    return fix_width;
+}
+//--------------------------------------------------------------------------------
+int RGB_dislpay_led::get_height(void)
+{
+    return fix_heigth;
 }
 //--------------------------------------------------------------------------------
 void RGB_dislpay_led::paintEvent(QPaintEvent *)

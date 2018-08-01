@@ -61,8 +61,8 @@ void MainBox::init(void)
     ui->grid->setMargin(0);
 
     double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    double w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
-    double h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
+    w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
+    h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
 
     for(int col=0; col<SCREEN_WIDTH; col++)
     {
@@ -97,7 +97,6 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -158,9 +157,39 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+#include <QImage>
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    QImage picture;
+    bool ok = picture.load(":/mainwindow/computer.png");
+    if(!ok)
+    {
+        emit error("can't load picture");
+        return false;
+    }
+
+    for(int y=0; y<SCREEN_HEIGTH; y++)
+    {
+        for(int x=0; x<SCREEN_WIDTH; x++)
+        {
+            QRgb color = picture.pixel(x, y);
+            foreach(RGB_dislpay_led *led, l_buttons)
+            {
+                int p_x = led->property("property_col").toInt();
+                int p_y = led->property("property_row").toInt();
+                if((p_x == x) && (p_y == y))
+                {
+                      led->set_R(qRed(color));
+                      led->set_G(qGreen(color));
+                      led->set_B(qBlue(color));
+                      led->repaint();
+                      break;
+                }
+            }
+        }
+    }
 
     return true;
 }

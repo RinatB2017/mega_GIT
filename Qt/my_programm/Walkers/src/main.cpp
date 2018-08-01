@@ -25,7 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_youtube_mainbox.hpp"
+#include "walkers.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

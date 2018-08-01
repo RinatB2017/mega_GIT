@@ -41,11 +41,12 @@ signals:
     void trace(const QString &);
 
     void send(const QString &);
-    void show_url(QString url);
 
 private slots:
     void test_JS(bool);
     void find_url(const QString &text);
+
+    void set_url(QString url);
 
 private:
     QWebEngineView *viewer = nullptr;

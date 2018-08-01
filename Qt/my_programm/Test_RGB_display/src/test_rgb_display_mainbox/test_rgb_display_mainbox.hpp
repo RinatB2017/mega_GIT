@@ -76,6 +76,8 @@ private:
     Ui::MainBox *ui = nullptr;
 
     QList<RGB_dislpay_led *> l_buttons;
+    double w_led = 0;
+    double h_led = 0;
 
     QComboBox *cb_test = nullptr;
     QCheckBox *cb_block = nullptr;

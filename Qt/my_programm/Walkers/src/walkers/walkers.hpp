@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2018                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -43,8 +43,6 @@ public:
 
 private slots:
     void test(void);
-
-    void show_url(QString url);
 
 private:
     Ui::MainBox *ui = 0;

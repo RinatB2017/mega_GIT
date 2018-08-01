@@ -46,6 +46,9 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
+signals:
+    void send(QByteArray);
+
 private slots:
     void choice_test(void);
     bool test_0(void);
@@ -54,6 +57,9 @@ private slots:
     bool test_3(void);
     bool test_4(void);
     bool test_5(void);
+
+    void load_ico(void);
+    void read_data(QByteArray data);
 
 private:
     enum {
@@ -85,6 +91,8 @@ private:
 
     void init(void);
     void createTestBar(void);
+    void create_display(void);
+    bool prepare_data(QByteArray input, QByteArray *output);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

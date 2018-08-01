@@ -24,6 +24,8 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include <QImage>
+//--------------------------------------------------------------------------------
 #include "ui_test_rgb_display_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -56,32 +58,13 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
+    create_display();
 
-    ui->grid->setSpacing(0);
-    ui->grid->setMargin(0);
+    connect(this,   SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
 
-    double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
-    h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
+    connect(ui->btn_load,   SIGNAL(clicked(bool)),  this,   SLOT(load_ico()));
 
-    for(int col=0; col<SCREEN_WIDTH; col++)
-    {
-        for(int row=0; row<SCREEN_HEIGTH; row++)
-        {
-            RGB_dislpay_led *led = new RGB_dislpay_led(w_led, h_led, this);
-            connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-            connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-            connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-            connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-
-            led->setProperty("property_col", col);
-            led->setProperty("property_row", row);
-
-            ui->grid->addWidget(led, row, col);
-
-            l_buttons.append(led);
-        }
-    }
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
@@ -125,7 +108,36 @@ void MainBox::createTestBar(void)
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
-    //testbar->setFixedWidth(toolBar->sizeHint().width());
+    mw->add_windowsmenu_action(testbar->toggleViewAction());    //TODO странно
+}
+//--------------------------------------------------------------------------------
+void MainBox::create_display(void)
+{
+    ui->grid->setSpacing(0);
+    ui->grid->setMargin(0);
+
+    double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
+    w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
+    h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
+
+    for(int col=0; col<SCREEN_WIDTH; col++)
+    {
+        for(int row=0; row<SCREEN_HEIGTH; row++)
+        {
+            RGB_dislpay_led *led = new RGB_dislpay_led(w_led, h_led, this);
+            connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+            connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+            connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+            connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+            led->setProperty("property_col", col);
+            led->setProperty("property_row", row);
+
+            ui->grid->addWidget(led, row, col);
+
+            l_buttons.append(led);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -157,8 +169,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-#include <QImage>
-bool MainBox::test_0(void)
+void MainBox::load_ico(void)
 {
     emit info("Test_0()");
 
@@ -167,7 +178,7 @@ bool MainBox::test_0(void)
     if(!ok)
     {
         emit error("can't load picture");
-        return false;
+        return;
     }
 
     for(int y=0; y<SCREEN_HEIGTH; y++)
@@ -190,6 +201,73 @@ bool MainBox::test_0(void)
             }
         }
     }
+}
+//--------------------------------------------------------------------------------
+bool MainBox::prepare_data(QByteArray input, QByteArray *output)
+{
+    Q_CHECK_PTR(output);
+
+    if(input.isEmpty())
+    {
+        emit error("Input is empty!");
+        return false;
+    }
+    output->clear();
+
+    output->append(':');
+    output->append(input.toHex().toUpper());
+    output->append('\n');
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_data(QByteArray data)
+{
+    emit trace("read_data");
+    emit debug(data.data());
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_0(void)
+{
+    emit info("Test_0()");
+
+    emit info(QString("header %1").arg(sizeof(P_HEADER)));
+    emit info(QString("data %1").arg(sizeof(P_DATA)));
+
+    P_HEADER header;
+    header.addr = 0;
+    header.cmd = CMD_01;
+    header.len = sizeof(P_DATA);
+
+    P_DATA data;
+    data.brightness = 128;
+    foreach (RGB_dislpay_led *led, l_buttons)
+    {
+        int p_x = led->property("property_col").toInt();
+        int p_y = led->property("property_row").toInt();
+
+        LED p_led;
+        p_led.color_R = led->get_R();
+        p_led.color_G = led->get_G();
+        p_led.color_B = led->get_B();
+
+        data.leds[p_x][p_y] = p_led;
+    }
+
+    QByteArray input;
+    input.append((char *)&header, sizeof(P_HEADER));
+    input.append((char *)&data,   sizeof(P_DATA));
+
+    QByteArray output;
+
+    bool ok = prepare_data(input, &output);
+    if(!ok)
+    {
+        return false;
+    }
+
+    emit debug(output.data());
+    emit send(output);
 
     return true;
 }

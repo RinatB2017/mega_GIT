@@ -24,6 +24,7 @@ DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     test_rgb_display_mainbox.hpp \
+    ascii_data.hpp \
     defines.hpp \
     version.hpp \
 
@@ -49,8 +50,11 @@ CONFIG(debug, debug|release) {
 }
 
 #----------------------------------------------
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
+LIB_PATH2 = "../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/rgb_dislpay_led/rgb_dislpay_led.pri)
 

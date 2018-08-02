@@ -34,13 +34,13 @@ public:
                              QWidget *parent = nullptr);
     ~RGB_dislpay_led();
 
-    void set_R(int value);
-    void set_G(int value);
-    void set_B(int value);
+    void set_R(uint8_t value);
+    void set_G(uint8_t value);
+    void set_B(uint8_t value);
 
-    int get_R(void);
-    int get_G(void);
-    int get_B(void);
+    uint8_t get_R(void);
+    uint8_t get_G(void);
+    uint8_t get_B(void);
 
     int get_width(void);
     int get_height(void);
@@ -52,9 +52,9 @@ signals:
     void trace(const QString &);
 
 private:
-    int color_R = 0;
-    int color_G = 0;
-    int color_B = 0;
+    uint8_t color_R = 0;
+    uint8_t color_G = 0;
+    uint8_t color_B = 0;
 
     int fix_width  = 0;
     int fix_heigth = 0;

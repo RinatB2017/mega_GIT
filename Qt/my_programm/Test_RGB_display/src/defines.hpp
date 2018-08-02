@@ -21,6 +21,10 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
+#ifndef Q_OS_LINUX
+#   include <stdint.h>
+#endif
+//--------------------------------------------------------------------------------
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
@@ -34,6 +38,8 @@
 #define SCREEN_HEIGTH   16
 //--------------------------------------------------------------------------------
 #define CMD_01          0x01
+//--------------------------------------------------------------------------------
+#define NUM_LEDS        6
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
 
@@ -54,8 +60,9 @@ typedef struct LED
 
 typedef struct P_DATA
 {
-    uint8_t   brightness;
-    LED       leds[SCREEN_WIDTH][SCREEN_HEIGTH];
+    //uint8_t   brightness;
+    struct LED	leds[NUM_LEDS];
+    //LED       leds[SCREEN_WIDTH][SCREEN_HEIGTH];
 } p_data_t;
 
 #pragma pack(pop)

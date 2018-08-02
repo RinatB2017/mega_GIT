@@ -240,18 +240,25 @@ bool MainBox::test_0(void)
     header.len = sizeof(P_DATA);
 
     P_DATA data;
-    data.brightness = 128;
+    //data.brightness = 128;
+    int n = 0;
     foreach (RGB_dislpay_led *led, l_buttons)
     {
-        int p_x = led->property("property_col").toInt();
-        int p_y = led->property("property_row").toInt();
+        //int p_x = led->property("property_col").toInt();
+        //int p_y = led->property("property_row").toInt();
 
         LED p_led;
         p_led.color_R = led->get_R();
         p_led.color_G = led->get_G();
         p_led.color_B = led->get_B();
 
-        data.leds[p_x][p_y] = p_led;
+        //data.leds[p_x][p_y] = p_led;
+
+        data.leds[n++] = p_led;
+        if(n > NUM_LEDS)
+        {
+            break;
+        }
     }
 
     QByteArray input;

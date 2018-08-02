@@ -75,7 +75,10 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
 {
-    delete serial5;
+    if(serial5)
+    {
+        delete serial5;
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -167,9 +170,10 @@ void SerialBox5_fix_baudrate::refresh(void)
 void SerialBox5_fix_baudrate::initSerial(void)
 {
     serial5 = new QSerialPort(this);
+    Q_CHECK_PTR(serial5);
 
-    connect(serial5,    SIGNAL(readyRead()),                            this,   SIGNAL(readyRead(void)));
-    connect(serial5,    SIGNAL(readChannelFinished()),                  this,   SIGNAL(readChannelFinished(void)));
+    connect(serial5,    SIGNAL(readyRead()),            this,   SIGNAL(readyRead(void)));
+    connect(serial5,    SIGNAL(readChannelFinished()),  this,   SIGNAL(readChannelFinished(void)));
 
     //TODO
     timer = new QTimer();

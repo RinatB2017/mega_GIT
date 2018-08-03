@@ -30,7 +30,11 @@ Youtube_walker::Youtube_walker(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Youtube_walker::~Youtube_walker()
 {
-
+    if(viewer)
+    {
+        viewer->disconnect();
+        viewer->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void Youtube_walker::init(void)
@@ -100,19 +104,39 @@ void Youtube_walker::find_url(const QString &text)
         return;
     }
 
-    int rand_url = rand() % cnt;
-    if(urls.isEmpty())
+    bool ok = false;
+    while(!ok)
     {
-        return;
+        int rand_url = rand() % cnt;
+        if(urls.isEmpty())
+        {
+            return;
+        }
+        QString new_url = urls.at(rand_url);
+        if(current_url != new_url)
+        {
+            current_url = new_url;
+            ok = true;
+        }
     }
-    current_url = urls.at(rand_url);
 
     int next_time = 15000 + rand() % 20000;
 
     emit info(QString("next_time %1 ms").arg(next_time));
     emit info(QString("next_url %1").arg(current_url));
 
+#if 0
+    QTime time;
+
+    time.start();
+    while(time.elapsed() < next_time)
+    {
+        QCoreApplication::processEvents();
+    }
+    load_url();
+#else
     QTimer::singleShot(next_time, this, SLOT(load_url()));
+#endif
 }
 //--------------------------------------------------------------------------------
 void Youtube_walker::load_url(void)
@@ -126,6 +150,7 @@ void Youtube_walker::load_url(void)
 //--------------------------------------------------------------------------------
 void Youtube_walker::setUrl(QUrl url)
 {
+    //viewer->stop();
     viewer->setUrl(url);
 }
 //--------------------------------------------------------------------------------

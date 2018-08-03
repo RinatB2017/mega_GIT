@@ -138,6 +138,46 @@ void MainBox::create_display(void)
             l_buttons.append(led);
         }
     }
+
+#if 1
+    int state = 0;
+    foreach(RGB_dislpay_led *led, l_buttons)
+    {
+        switch(state)
+        {
+        case 0:
+        case 3:
+        case 6:
+            led->set_R(255);
+            led->set_G(0);
+            led->set_B(0);
+            led->repaint();
+            break;
+
+        case 1:
+        case 4:
+        case 7:
+            led->set_R(0);
+            led->set_G(255);
+            led->set_B(0);
+            led->repaint();
+            break;
+
+        case 2:
+        case 5:
+        case 8:
+            led->set_R(0);
+            led->set_G(0);
+            led->set_B(255);
+            led->repaint();
+            break;
+
+        default:
+            return;
+        }
+        state++;
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -260,6 +300,17 @@ bool MainBox::test_0(void)
             break;
         }
     }
+
+#if 0
+    for(unsigned int n=0; n<sizeof(P_DATA); n++)
+    {
+        emit debug(QString("n RGB: %1 %2 %3 %4")
+                   .arg(n)
+                   .arg(data.leds[n].color_R)
+                   .arg(data.leds[n].color_G)
+                   .arg(data.leds[n].color_B));
+    }
+#endif
 
     QByteArray input;
     input.append((char *)&header, sizeof(P_HEADER));

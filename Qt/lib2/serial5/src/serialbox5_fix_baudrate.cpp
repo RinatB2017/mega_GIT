@@ -77,6 +77,8 @@ SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
 {
     if(serial5)
     {
+        serial5->disconnect();
+        serial5->close();
         delete serial5;
     }
     delete ui;

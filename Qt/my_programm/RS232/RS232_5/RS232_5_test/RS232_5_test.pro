@@ -1,0 +1,67 @@
+#**********************************************************************************
+#**                   Author: Bikbao Rinat Zinorovich                            **
+#**********************************************************************************
+
+TEMPLATE    = app
+TARGET      = RS232_5_test
+
+FOLDER      = RS232
+
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/rs232_5_test \
+    $$PWD/src/rs232_5_test/ui
+INCLUDEPATH = $$DEPENDPATH
+
+QMAKE_CXXFLAGS += -fno-show-column
+
+#DEFINES += RS232_FIXED_SIZE
+DEFINES += RS232_SEND
+DEFINES += RS232_LOG
+
+DEFINES += NO_STYLETOOLBAR
+DEFINES += PROGRAMM_IN_UTF8
+DEFINES += NO_TRAYICON
+DEFINES += NO_LOG
+
+#DEFINES += SAVE_INI
+
+HEADERS += \
+    rs232_5_test.hpp \
+    defines.hpp \
+    version.hpp \
+
+SOURCES += \
+    rs232_5_test.cpp \
+    main.cpp
+
+FORMS   += rs232_5_test.ui
+
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
+
+win32 {
+    RC_ICONS += ico/RS232.ico
+}
+
+LIB_PATH  = "../../../../lib"
+LIB_PATH2 = "../../../../lib2"
+
+include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/serial5/serial5.pri)
+
+!exists(OBJECTS_DIR) {
+    VERSION_HEADER = src/version.hpp
+    include ($$LIB_PATH/auto_inc_version.pri)
+}
+
+lessThan(QT_MAJOR_VERSION, 5) {
+    error (Only Qt5)
+}
+
+RESOURCES += \
+    ico/icons.qrc
+
+VPATH = $$INCLUDEPATH
+

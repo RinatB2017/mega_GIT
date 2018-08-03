@@ -204,7 +204,10 @@ void SerialBox5_lite::change_icon(bool state)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
 {
-    if(err == QSerialPort::NoError) return;
+    if(err == QSerialPort::NoError)
+    {
+        return;
+    }
 
     switch(err)
     {
@@ -229,7 +232,10 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
 
     if(err != QSerialPort::NoError)
     {
-        serial5->close();
+        if(serial5->isOpen())
+        {
+            serial5->close();
+        }
     }
 
     setCloseState();
@@ -273,6 +279,7 @@ void SerialBox5_lite::setBaudBox(int index)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::setCloseState(void)
 {
+    ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
     ui->BaudBox->setEnabled(false);
     ui->btn_power->setChecked(false);
@@ -282,6 +289,7 @@ void SerialBox5_lite::setCloseState(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::setOpenState()
 {
+    ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
     ui->BaudBox->setEnabled(true);
     ui->btn_power->setChecked(true);
@@ -291,7 +299,7 @@ void SerialBox5_lite::setOpenState()
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::btnOpenPortClicked()
 {
-    int idx;
+    int idx = 0;
 
     if (serial5)
     {

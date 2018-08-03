@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainBox</class>
+ <widget class="QWidget" name="MainBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>314</width>
+    <height>167</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="SerialBox5" name="serial_widget" native="true"/>
+   </item>
+   <item>
+    <widget class="SerialBox5_lite" name="serial_widget_lite" native="true"/>
+   </item>
+   <item>
+    <widget class="SerialBox5_fix_baudrate" name="serial_widget_fix_baudrate" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SerialBox5</class>
+   <extends>QWidget</extends>
+   <header>serialbox5.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SerialBox5_lite</class>
+   <extends>QWidget</extends>
+   <header>serialbox5_lite.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SerialBox5_fix_baudrate</class>
+   <extends>QWidget</extends>
+   <header>serialbox5_fix_baudrate.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

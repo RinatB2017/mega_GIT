@@ -66,14 +66,29 @@ SerialBox5::SerialBox5(QWidget *parent,
 SerialBox5::~SerialBox5()
 {
 #ifdef RS232_LOG
-    logBox->deleteLater();
+    if(logBox)
+    {
+        logBox->disconnect();
+        logBox->close();
+        logBox->deleteLater();
+    }
 #endif
 
 #ifdef RS232_SEND
-    sendBox5->deleteLater();
+    if(sendBox5)
+    {
+        sendBox5->disconnect();
+        sendBox5->close();
+        sendBox5->deleteLater();
+    }
 #endif
 
-    serial5->deleteLater();
+    if(serial5)
+    {
+        serial5->disconnect();
+        serial5->close();
+        serial5->deleteLater();
+    }
 
     delete ui;
 }
@@ -281,7 +296,10 @@ void SerialBox5::serial5_error(QSerialPort::SerialPortError err)
 
     if(err != QSerialPort::NoError)
     {
-        serial5->close();
+        if(serial5->isOpen())
+        {
+            serial5->close();
+        }
     }
 
     setCloseState();

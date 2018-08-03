@@ -2,12 +2,10 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE  = subdirs
-CONFIG   += ordered
+DEPENDPATH  += $$PWD/src
+INCLUDEPATH = $$DEPENDPATH
 
-SUBDIRS += \
-    RS232_5 \
-    RS232_5_x2 \
-    RS232_5_bridge \
-    RS232_5_echo \
-	RS232_5_test
+QT      += testlib
+
+HEADERS += test.hpp
+SOURCES += test.cpp

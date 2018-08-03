@@ -60,8 +60,8 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent) :
 }
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
-                       const QString &caption,
-                       const QString &o_name) :
+                                                 const QString &caption,
+                                                 const QString &o_name) :
     MyWidget(parent),
     ui(new Ui::SerialBox5_fix_baudrate),
     parent(parent),
@@ -147,7 +147,7 @@ void SerialBox5_fix_baudrate::createWidgets(void)
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
 void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
-                                const QString &text)
+                                             const QString &text)
 {
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);
@@ -231,7 +231,10 @@ void SerialBox5_fix_baudrate::serial5_error(QSerialPort::SerialPortError err)
 
     if(err != QSerialPort::NoError)
     {
-        serial5->close();
+        if(serial5->isOpen())
+        {
+            serial5->close();
+        }
     }
 
     setCloseState();
@@ -249,6 +252,9 @@ void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::setCloseState(void)
 {
+    //ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop)));
+
+    ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
     emit is_close();
@@ -257,6 +263,9 @@ void SerialBox5_fix_baudrate::setCloseState(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::setOpenState()
 {
+    //ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
+
+    ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
     emit is_open();

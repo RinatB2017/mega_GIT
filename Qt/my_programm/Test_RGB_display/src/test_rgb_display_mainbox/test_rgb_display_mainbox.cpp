@@ -120,9 +120,9 @@ void MainBox::create_display(void)
     w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
     h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
 
-    for(int col=0; col<SCREEN_WIDTH; col++)
+    for(int row=0; row<SCREEN_HEIGTH; row++)
     {
-        for(int row=0; row<SCREEN_HEIGTH; row++)
+        for(int col=0; col<SCREEN_WIDTH; col++)
         {
             RGB_dislpay_led *led = new RGB_dislpay_led(w_led, h_led, this);
             connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
@@ -173,7 +173,12 @@ void MainBox::create_display(void)
             break;
 
         default:
-            return;
+            state = 0;
+            led->set_R(255);
+            led->set_G(0);
+            led->set_B(0);
+            led->repaint();
+            break;
         }
         state++;
     }

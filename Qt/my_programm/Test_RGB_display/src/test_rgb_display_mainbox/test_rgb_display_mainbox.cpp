@@ -50,6 +50,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_leds();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -111,6 +112,59 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar->toggleViewAction());    //TODO странно
 }
 //--------------------------------------------------------------------------------
+void MainBox::load_leds(void)
+{
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+
+    settings->beginGroup("Display");
+    QByteArray ba_display = settings->value("ba_display").toByteArray();
+    settings->endGroup();
+
+    int count_led = 0;
+    if(ba_display.isEmpty() == false)
+    {
+        if(ba_display.count() == (l_buttons.count() * 3))
+        {
+            for(int n=0; n<ba_display.count(); n+=3)
+            {
+                l_buttons[count_led]->set_R(ba_display.at(n));
+                l_buttons[count_led]->set_G(ba_display.at(n+1));
+                l_buttons[count_led]->set_B(ba_display.at(n+2));
+                count_led++;
+            }
+        }
+    }
+
+    settings->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_leds(void)
+{
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+
+    QByteArray ba_display;
+    foreach (RGB_dislpay_led *led, l_buttons)
+    {
+        ba_display.append(led->get_R());
+        ba_display.append(led->get_G());
+        ba_display.append(led->get_B());
+    }
+
+    settings->beginGroup("Display");
+    settings->setValue("ba_display", ba_display);
+    settings->endGroup();
+
+    settings->deleteLater();
+}
+//--------------------------------------------------------------------------------
 void MainBox::create_display(void)
 {
     ui->grid->setSpacing(0);
@@ -139,7 +193,9 @@ void MainBox::create_display(void)
         }
     }
 
-#if 1
+    load_leds();
+
+#if 0
     int state = 0;
     foreach(RGB_dislpay_led *led, l_buttons)
     {
@@ -237,11 +293,11 @@ void MainBox::load_ico(void)
                 int p_y = led->property("property_row").toInt();
                 if((p_x == x) && (p_y == y))
                 {
-                      led->set_R(qRed(color));
-                      led->set_G(qGreen(color));
-                      led->set_B(qBlue(color));
-                      led->repaint();
-                      break;
+                    led->set_R(qRed(color));
+                    led->set_G(qGreen(color));
+                    led->set_B(qBlue(color));
+                    led->repaint();
+                    break;
                 }
             }
         }

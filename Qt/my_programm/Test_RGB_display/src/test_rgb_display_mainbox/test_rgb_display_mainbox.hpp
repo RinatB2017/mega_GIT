@@ -93,6 +93,8 @@ private:
     void createTestBar(void);
     void create_display(void);
     bool prepare_data(QByteArray input, QByteArray *output);
+    void load_leds(void);
+    void save_leds(void);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

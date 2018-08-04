@@ -42,6 +42,9 @@
 
 #define DATA_SIZE 4
 
+#define EP_DATA_IN  0x83
+#define EP_DATA_OUT 0x02
+
 #define EP_IN 0x81
 #define TIMEOUT 1000
 //--------------------------------------------------------------------------------

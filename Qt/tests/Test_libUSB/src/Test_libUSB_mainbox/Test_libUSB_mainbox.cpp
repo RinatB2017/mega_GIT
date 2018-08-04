@@ -98,6 +98,8 @@ void MainBox::createTestBar(void)
 
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+
+    mw->add_windowsmenu_action(testbar->toggleViewAction());    //TODO странно
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -187,6 +189,17 @@ bool MainBox::test_1(void)
         return false;
     }
 
+    //---
+#if 0
+    int rc = libusb_set_interface_alt_setting(handle, DEV_INTF, 2); //1
+    if(rc != 0)
+    {
+        emit error("Cannot configure alternate setting");
+        return false;
+    }
+#endif
+    //---
+
     interrupt_transfer_loop(handle);
     bulk_transfer_loop(handle);
 
@@ -200,6 +213,56 @@ bool MainBox::test_1(void)
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
+
+    libusb_init(NULL);   // инициализация
+
+    libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+
+    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
+    if (handle == NULL)
+    {
+        emit error("Устройство не подключено");
+        return false;
+    }
+    else
+    {
+        emit info("Устройство найдено");
+    }
+
+    if (libusb_kernel_driver_active(handle,DEV_INTF))
+    {
+        libusb_detach_kernel_driver(handle, DEV_INTF);
+    }
+
+    if (libusb_claim_interface(handle,  DEV_INTF) < 0)
+    {
+        emit error("Ошибка захвата интерфейса");
+        return false;
+    }
+
+    //---
+    //Write data
+    int actual = 0;
+    unsigned char *data = new unsigned char[4];
+    data[0]='a';
+    data[1]='b';
+    data[2]='c';
+    data[3]='d';
+
+    int rc = libusb_bulk_transfer(handle, EP_DATA_OUT, data, sizeof(data), &actual, 100);
+    if(rc != 100)
+    {
+        emit error(QString("Cannot write data. rc = %1").arg(rc));
+        return false;
+    }
+    //---
+
+    interrupt_transfer_loop(handle);
+    bulk_transfer_loop(handle);
+
+    libusb_attach_kernel_driver(handle, DEV_INTF);
+    libusb_close(handle);
+    libusb_exit(NULL);
 
     return true;
 }
@@ -379,7 +442,7 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
     emit info("Цикл считывания (interrupt).");
     unsigned char buf[DATA_SIZE];
     int ret;
-    int i=0xFF;
+    int i=0xF;
 
     int cc=0;
 
@@ -427,7 +490,7 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
     int act_len = 0;
 
     int cc=0;
-    int i=0xff;
+    int i=0xF;
 
     struct timeval start, end;
     long mtime, seconds, useconds;
@@ -435,7 +498,7 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
 
     while(i--)
     {
-        int returned = libusb_bulk_transfer(handle, EP_IN, buf, DATA_SIZE,&act_len, TIMEOUT);
+        int returned = libusb_bulk_transfer(handle, EP_IN, buf, DATA_SIZE, &act_len, TIMEOUT);
 
         // parce transfer errors
         if (returned >= 0)

@@ -15,7 +15,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += sql
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += FIXED_SIZE
 

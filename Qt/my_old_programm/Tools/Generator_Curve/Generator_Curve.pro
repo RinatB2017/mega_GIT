@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/generator_curve_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += SAVE_WIDGETS_SLIDER
 DEFINES += NO_STYLETOOLBAR

@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/multimeter_v7xx_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += USE_SCALE_POINT_DATETIME
 DEFINES += USE_SCALE_POINT_TIME

@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_wwWidgets_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 #QT  += serialbus
 

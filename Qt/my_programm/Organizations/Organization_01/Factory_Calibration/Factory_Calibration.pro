@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/myreport
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 QT      += multimedia
 QT      += serialport

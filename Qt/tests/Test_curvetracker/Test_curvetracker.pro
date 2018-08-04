@@ -15,7 +15,7 @@ DEPENDPATH  += \
     $$PWD/src/plot
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE

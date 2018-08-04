@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/test_trader_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON

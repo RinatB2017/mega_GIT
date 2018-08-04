@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/debug_frame
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8

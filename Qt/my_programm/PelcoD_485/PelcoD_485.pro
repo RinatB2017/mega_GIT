@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/pelco_d_485_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 QT  += network
 QT  += multimediawidgets

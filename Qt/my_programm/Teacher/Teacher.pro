@@ -19,7 +19,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 QT += network
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON

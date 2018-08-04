@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/screen
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND

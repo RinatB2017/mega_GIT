@@ -12,7 +12,7 @@ DEPENDPATH  += \
     $$PWD/src/mainbox
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += RS232_LOG
 DEFINES += RS232_SEND

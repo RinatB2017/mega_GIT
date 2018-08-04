@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_GY-652_mainbox/ui \
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON

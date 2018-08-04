@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_OpenRPT_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += FIXED_SIZE
 

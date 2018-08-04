@@ -15,7 +15,7 @@ DEPENDPATH  += \
     $$PWD/src/ft2232_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_TESTBAR_GRAPHER
 DEFINES += NO_STYLETOOLBAR

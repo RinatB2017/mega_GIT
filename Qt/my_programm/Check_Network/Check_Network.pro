@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/check_network_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 QT  += network
 

@@ -52,7 +52,7 @@ INCLUDEPATH = $$DEPENDPATH
 QT      += multimedia
 QT      += serialport
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8

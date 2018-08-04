@@ -24,8 +24,6 @@
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
-
-#include "led_display.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -44,12 +42,6 @@ MainBox::~MainBox()
         test_widget->deleteLater();
     }
     save_widgets("for_test");
-
-    if(display)
-    {
-        display->disconnect();
-        display->deleteLater();
-    }
 
     delete ui;
 }
@@ -215,7 +207,6 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include "led_display.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -225,27 +216,6 @@ bool MainBox::test_0(void)
     for(int n=5; n>=0; n--)
     {
         emit info(QString("%1").arg(n));
-    }
-#endif
-
-#if 0
-    if(display == nullptr)
-    {
-#ifdef Q_OS_LINUX
-        unsigned int d_width = 2560 / 4;
-        unsigned int d_height = 1080 / 4 - 25;
-#else
-        unsigned int d_width = 1920 / 4;
-        unsigned int d_height = 1080 / 4 - 50;
-#endif
-        display = new LED_display(d_width, d_height, 4, 4);
-        emit info(QString("Point count %1").arg(d_width * d_height));
-
-        connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-        connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-        connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-        connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-        display->show();
     }
 #endif
 
@@ -271,29 +241,6 @@ bool MainBox::test_1(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
 
-#if 1
-    if(display)
-    {
-        unsigned int max_x = display->get_max_x();
-        unsigned int max_y = display->get_max_y();
-        while(1)
-        {
-            flag = !flag;
-            for(unsigned int y=0; y<max_y; y++)
-            {
-                for(unsigned int x=0; x<max_x; x++)
-                {
-                    if(flag)
-                        display->draw_led(x, y, QColor(Qt::red));
-                    else
-                        display->draw_led(x, y, QColor(Qt::blue));
-                }
-            }
-            QCoreApplication::processEvents();
-        }
-    }
-#endif
-
 #if 0
     emit info("info");
     emit debug("debug");
@@ -316,13 +263,6 @@ bool MainBox::test_2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_2()");
-
-#if 1
-    if(display)
-    {
-        display->show_param();
-    }
-#endif
 
     return true;
 }

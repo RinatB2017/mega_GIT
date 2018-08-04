@@ -15,7 +15,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_TESTBAR_GRAPHER
 DEFINES += NO_STYLETOOLBAR

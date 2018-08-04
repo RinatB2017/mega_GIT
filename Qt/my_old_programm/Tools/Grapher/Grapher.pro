@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/GrapherBox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_TRAYICON
 

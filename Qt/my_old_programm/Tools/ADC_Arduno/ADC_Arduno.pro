@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/adc_arduino_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += RS232LOG
 DEFINES += PROGRAMM_IN_UTF8

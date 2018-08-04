@@ -16,7 +16,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport network
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8

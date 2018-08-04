@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/cards_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 QT	+= svg
 QT      += xml

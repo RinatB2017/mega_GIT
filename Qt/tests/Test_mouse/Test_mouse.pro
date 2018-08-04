@@ -12,7 +12,7 @@ DEPENDPATH  += \
     $$PWD/src/test_mouse/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR

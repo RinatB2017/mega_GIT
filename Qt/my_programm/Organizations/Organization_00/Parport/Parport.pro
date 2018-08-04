@@ -10,7 +10,7 @@ FOLDER  = organizations/Organization_00
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH += $$PWD/src
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += FAKE_DATADIR
 DEFINES += LEDPANEL_ON

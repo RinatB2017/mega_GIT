@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/multimeter_calc_time_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 QT      += serialport
 

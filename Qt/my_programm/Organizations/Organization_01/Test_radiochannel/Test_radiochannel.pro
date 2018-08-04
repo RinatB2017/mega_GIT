@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/test_radiochannel_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
+#QMAKE_CXXFLAGS += -fno-show-column
 
 QT      += serialport
 

@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_libUSB_mainbox \
-    $$PWD/src/Test_libUSB_mainbox/ui
+    $$PWD/src/test_libusb_mainbox \
+    $$PWD/src/test_libusb_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 #QMAKE_CXXFLAGS += -fno-show-column
@@ -40,15 +40,15 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += HEX16
 
 HEADERS += \
+    test_libusb_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_libUSB_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_libUSB_mainbox.cpp \
+    test_libusb_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_libUSB_mainbox.ui
+FORMS   += test_libusb_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc

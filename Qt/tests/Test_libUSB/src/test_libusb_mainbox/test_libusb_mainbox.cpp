@@ -24,12 +24,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_Test_libUSB_mainbox.h"
+#include "ui_test_libusb_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "Test_libUSB_mainbox.hpp"
+#include "test_libusb_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -209,7 +209,8 @@ bool MainBox::f_read(void)
 {
     libusb_init(NULL);   // инициализация
 
-    libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    //libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    libusb_set_option(NULL, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 
     libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, get_VID(), get_PID());
     if (handle == NULL)
@@ -222,7 +223,7 @@ bool MainBox::f_read(void)
         emit info("Устройство найдено");
     }
 
-    if (libusb_kernel_driver_active(handle,DEV_INTF))
+    if (libusb_kernel_driver_active(handle, DEV_INTF))
     {
         libusb_detach_kernel_driver(handle, DEV_INTF);
     }
@@ -235,7 +236,7 @@ bool MainBox::f_read(void)
 
     //---
 #if 0
-    int rc = libusb_set_interface_alt_setting(handle, DEV_INTF, 2); //1
+    int rc = libusb_set_interface_alt_setting(handle, DEV_INTF, 1);
     if(rc != 0)
     {
         emit error("Cannot configure alternate setting");
@@ -257,7 +258,8 @@ bool MainBox::f_write(void)
 {
     libusb_init(NULL);   // инициализация
 
-    libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    //libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    libusb_set_option(NULL, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 
     libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, get_VID(), get_PID());
     if (handle == NULL)
@@ -270,7 +272,7 @@ bool MainBox::f_write(void)
         emit info("Устройство найдено");
     }
 
-    if (libusb_kernel_driver_active(handle,DEV_INTF))
+    if (libusb_kernel_driver_active(handle, DEV_INTF))
     {
         libusb_detach_kernel_driver(handle, DEV_INTF);
     }
@@ -290,16 +292,16 @@ bool MainBox::f_write(void)
     data[2]='c';
     data[3]='d';
 
-    int rc = libusb_bulk_transfer(handle, EP_DATA_OUT, data, sizeof(data), &actual, 100);
+    int rc = libusb_bulk_transfer(handle, EP_OUT, data, sizeof(data), &actual, TIMEOUT);
     if(rc != 100)
     {
         emit error(QString("Cannot write data. rc = %1").arg(rc));
-        return false;
     }
-    //---
-
-    interrupt_transfer_loop(handle);
-    bulk_transfer_loop(handle);
+    else
+    {
+        interrupt_transfer_loop(handle);
+        bulk_transfer_loop(handle);
+    }
 
     libusb_attach_kernel_driver(handle, DEV_INTF);
     libusb_close(handle);
@@ -470,20 +472,20 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
 
     while (i--)
     {
-        int returned = libusb_interrupt_transfer(handle, EP_IN, buf, DATA_SIZE, &ret, TIMEOUT);
+        int returned = libusb_interrupt_transfer(handle, EP_CTRL, buf, DATA_SIZE, &ret, TIMEOUT);
 
         if (returned >= 0)
         {
             for (short i=0; i < DATA_SIZE; i++)
             {
                 emit info(QString("buf[%1] = %2").arg(i).arg((int)buf[i]));
+                cc++;
             }
         }
         else
         {
             emit error(QString("interrupt_transfer_loop: %1").arg(libusb_error_name(returned)));
         }
-        cc++;
     }
 
     emit info(QString("Считано: %1").arg(cc));
@@ -516,22 +518,21 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
 
     while(i--)
     {
-        int returned = libusb_bulk_transfer(handle, EP_IN, buf, DATA_SIZE, &act_len, TIMEOUT);
+        int returned = libusb_bulk_transfer(handle, EP_CTRL, buf, DATA_SIZE, &act_len, TIMEOUT);
 
         // parce transfer errors
         if (returned >= 0)
         {
             for (short i=0; i < DATA_SIZE; i++)
             {
-                //cout << "buf["<< i << "] = " << (int)buf[i] << endl;
                 emit info(QString("buf[%1] = %2").arg(i).arg((int)buf[i]));
+                cc++;
             }
         }
         else
         {
             emit error(QString("bulk_transfer_loop: %1").arg(libusb_error_name(returned)));
         }
-        cc++;
     }
 
     emit info(QString("Считано: %1").arg(cc));

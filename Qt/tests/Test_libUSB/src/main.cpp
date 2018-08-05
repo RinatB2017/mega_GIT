@@ -24,21 +24,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#if QT_VERSION >= 0x050000
-#   include <QtMessageHandler>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "Test_libUSB_mainbox.hpp"
+#include "test_libusb_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
-//--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include "posix.hpp"
-#endif
-#include "log_to_file.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -49,15 +40,6 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_LINUX
-    //set_signals();
-#endif
-#if QT_VERSION >= 0x050000
-    //qInstallMessageHandler(log_to_file);
-#else
-    //qInstallMsgHandler(log_to_file);
-#endif
-
     set_codecs();
 #if 1
     QtSingleApplication app(argc, argv);
@@ -106,7 +88,6 @@ int main(int argc, char *argv[])
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

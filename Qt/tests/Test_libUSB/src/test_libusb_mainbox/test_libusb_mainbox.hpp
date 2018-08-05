@@ -36,17 +36,17 @@
 //#define VID 0x08bb
 //#define PID 0x2704
 
-#define DEV_INTF 0    // номер интерфейса
+#define DEV_INTF    1    // номер интерфейса
 
 #define USB_DEBUG_LEVEL 3
 
-#define DATA_SIZE 4
+#define DATA_SIZE   4
 
-#define EP_DATA_IN  0x83
-#define EP_DATA_OUT 0x02
+#define EP_CTRL     0x00
+#define EP_OUT      0x02
+#define EP_HID      0x05
 
-#define EP_IN 0x81
-#define TIMEOUT 1000
+#define TIMEOUT     1000
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;

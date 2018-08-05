@@ -54,6 +54,13 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+    set_VID(0x08BB);
+    set_PID(0x2704);
+
+    connect(ui->btn_list,   SIGNAL(clicked(bool)),  this,   SLOT(f_list()));
+    connect(ui->btn_read,   SIGNAL(clicked(bool)),  this,   SLOT(f_read()));
+    connect(ui->btn_write,  SIGNAL(clicked(bool)),  this,   SLOT(f_write()));
+
     createTestBar();
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
@@ -135,6 +142,46 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
+    emit info("Test_1()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_2(void)
+{
+    emit info("Test_2()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_3(void)
+{
+    emit info("Test_3()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_4(void)
+{
+    emit info("Test_4()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_5(void)
+{
+    emit info("Test_5()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_list(void)
+{
     libusb_device **devs;
     int r;
     ssize_t cnt;
@@ -155,19 +202,16 @@ bool MainBox::test_0(void)
     libusb_free_device_list(devs, 1);
 
     libusb_exit(NULL);
-
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+bool MainBox::f_read(void)
 {
-    emit info("Test_1()");
-
     libusb_init(NULL);   // инициализация
 
     libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
 
-    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
+    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, get_VID(), get_PID());
     if (handle == NULL)
     {
         emit error("Устройство не подключено");
@@ -206,19 +250,16 @@ bool MainBox::test_1(void)
     libusb_attach_kernel_driver(handle, DEV_INTF);
     libusb_close(handle);
     libusb_exit(NULL);
-
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+bool MainBox::f_write(void)
 {
-    emit info("Test_2()");
-
     libusb_init(NULL);   // инициализация
 
     libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
 
-    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
+    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, get_VID(), get_PID());
     if (handle == NULL)
     {
         emit error("Устройство не подключено");
@@ -263,32 +304,9 @@ bool MainBox::test_2(void)
     libusb_attach_kernel_driver(handle, DEV_INTF);
     libusb_close(handle);
     libusb_exit(NULL);
-
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-#include <QDebug>
 void MainBox::print_devs(libusb_device **devs)
 {
     libusb_device *dev = 0;
@@ -382,7 +400,7 @@ void MainBox::dev_open(void)
     int cnt_err = 0;
     while(dev == 0)
     {
-        dev = hid_open(VID, PID, NULL);
+        dev = hid_open(get_VID(), get_PID(), NULL);
         if(dev == 0)
         {
             cnt_err++;
@@ -526,6 +544,26 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
     mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
 
     emit info(QString("Прошло: %1 мс").arg(mtime));
+}
+//--------------------------------------------------------------------------------
+uint16_t MainBox::get_VID(void)
+{
+    return ui->sb_VID->value();
+}
+//--------------------------------------------------------------------------------
+uint16_t MainBox::get_PID(void)
+{
+    return ui->sb_PID->value();
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_VID(uint16_t value)
+{
+    ui->sb_VID->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_PID(uint16_t value)
+{
+    ui->sb_PID->setValue(value);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

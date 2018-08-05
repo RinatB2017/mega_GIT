@@ -33,8 +33,8 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define VID 0x08bb
-#define PID 0x2704
+//#define VID 0x08bb
+//#define PID 0x2704
 
 #define DEV_INTF 0    // номер интерфейса
 
@@ -76,6 +76,10 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
+    bool f_list(void);
+    bool f_read(void);
+    bool f_write(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -109,6 +113,11 @@ private:
 
     void dev_open(void);
     void dev_close(void);
+
+    uint16_t get_VID(void);
+    uint16_t get_PID(void);
+    void set_VID(uint16_t value);
+    void set_PID(uint16_t value);
 
     void print_devs(libusb_device **devs);
     //---

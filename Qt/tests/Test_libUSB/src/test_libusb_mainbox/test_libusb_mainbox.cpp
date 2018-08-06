@@ -24,6 +24,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#if 0
+#include <sys/time.h>  // to use gettimeofday() function
+#include <time.h>      // to use time() function
+#include "libusb/libusb.h"
+#endif
+//--------------------------------------------------------------------------------
 #include "ui_test_libusb_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"

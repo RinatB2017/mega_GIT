@@ -29,6 +29,7 @@
 #endif
 #ifdef Q_OS_WIN
 #   include "hidapi_win/hidapi.h"
+#   include "libusb/libusb.h"
 #endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"

@@ -48,6 +48,12 @@ SOURCES += \
     test_libusb_mainbox.cpp \
     main.cpp
 
+#WIN
+SOURCES += \
+    libusb/core.c \
+    libusb/windows_winusb.c \
+    libusb/hotplug.c
+
 FORMS   += test_libusb_mainbox.ui
 
 win32 {

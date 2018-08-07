@@ -1,5 +1,24 @@
-//--------------------------------------------------------------------------------
-//
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2018                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+// http://www.firststeps.ru/mfc/opengl/opengl1.html
 //--------------------------------------------------------------------------------
 #include <QtGui>
 #include <QtOpenGL>
@@ -29,6 +48,13 @@ Test_QGLWidget::Test_QGLWidget(QWidget *parent)
     faceColors[3] = Qt::yellow;
 
     createTestBar();
+}
+//--------------------------------------------------------------------------------
+Test_QGLWidget::~Test_QGLWidget()
+{
+    gluDeleteQuadric(cylinder);
+    gluDeleteQuadric(cylinder2);
+    gluDeleteQuadric(sphere);
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::initializeGL()
@@ -99,6 +125,8 @@ void Test_QGLWidget::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    mw->add_windowsmenu_action(testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::choice_test(void)
@@ -177,7 +205,9 @@ void Test_QGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //draw();
     //draw_sphere();
-    draw_cylinder();
+    //draw_cylinder();
+    draw_object();
+    //draw_cube();
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::mousePressEvent(QMouseEvent *event)
@@ -251,7 +281,7 @@ void Test_QGLWidget::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void Test_QGLWidget::draw()
+void Test_QGLWidget::draw(void)
 {
     static const GLfloat P1[3] = { 0.0, -1.0, +2.0 };
     static const GLfloat P2[3] = { +1.73205081, -1.0, -1.0 };
@@ -284,7 +314,7 @@ void Test_QGLWidget::draw()
     }
 }
 //--------------------------------------------------------------------------------
-void Test_QGLWidget::draw_sphere()
+void Test_QGLWidget::draw_sphere(void)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3d(1.0, 0.0, 0.0);
@@ -299,7 +329,7 @@ void Test_QGLWidget::draw_sphere()
     gluSphere(sphere, 1.0f, 10, 10);
 }
 //--------------------------------------------------------------------------------
-void Test_QGLWidget::draw_cylinder()
+void Test_QGLWidget::draw_cylinder(void)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3d(1.0, 0.0, 0.0);
@@ -309,6 +339,44 @@ void Test_QGLWidget::draw_cylinder()
 
     //---
     glTranslatef(0.0, 0.0, -10.0);
+
+    glRotatef(rotationX, 1.0, 0.0, 0.0);
+    glRotatef(rotationY, 0.0, 1.0, 0.0);
+    glRotatef(rotationZ, 0.0, 0.0, 1.0);
+
+    gluCylinder(cylinder, 0.1, 0.1, 2.0, 10, 20);
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::draw_object(void)
+{
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glColor3d(1.0, 0.0, 0.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    //---
+    glTranslatef(0.0, 0.0, -10.0);
+
+    glColor3f(1, 0, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 0, 100);
+    glEnd();
+    glColor3f(0, 1, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 100, 0);
+    glEnd();
+    glColor3f(0, 0, 1);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (100, 0, 0);
+    glEnd();
+    //---
+
+    //---
+    //glTranslatef(0.0, 0.0, -10.0);
 
     glRotatef(rotationX, 1.0, 0.0, 0.0);
     glRotatef(rotationY, 0.0, 1.0, 0.0);
@@ -337,6 +405,77 @@ void Test_QGLWidget::draw_cylinder()
     gluSphere(sphere, 0.5, 20, 20);
     //---
 
+    //glMatrixMode(GL_PROJECTION);
+    //glLoadIdentity();
+    //gluPerspective(130, 1, 50, 0);
+
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+    //gluLookAt(150, 150, 150, 0, 0, 0, 0, 100, 0);
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::draw_cube(void)
+{
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glColor3d(1.0, 0.0, 0.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glTranslatef(0.0, 0.0, -10.0);
+
+    glRotatef(rotationX, 1.0, 0.0, 0.0);
+    glRotatef(rotationY, 0.0, 1.0, 0.0);
+    glRotatef(rotationZ, 0.0, 0.0, 1.0);
+    //---
+
+    glBegin (GL_QUADS);
+        glNormal3f(0.0, 0.0, 1.0);
+        glVertex3f (1.0, 1.0, 1.0);
+        glVertex3f (-1.0, 1.0, 1.0);
+        glVertex3f (-1.0, -1.0, 1.0);
+        glVertex3f (1.0, -1.0, 1.0);
+    glEnd();
+
+    glBegin (GL_QUADS);
+        glNormal3f(0.0, 0.0, -1.0);
+        glVertex3f (1.0, 1.0, -1.0);
+        glVertex3f (1.0, -1.0, -1.0);
+        glVertex3f (-1.0, -1.0, -1.0);
+        glVertex3f (-1.0, 1.0, -1.0);
+    glEnd();
+
+    glBegin (GL_QUADS);
+        glNormal3f(-1.0, 0.0, 0.0);
+        glVertex3f (-1.0, 1.0, 1.0);
+        glVertex3f (-1.0, 1.0, -1.0);
+        glVertex3f (-1.0, -1.0, -1.0);
+        glVertex3f (-1.0, -1.0, 1.0);
+    glEnd();
+
+    glBegin (GL_QUADS);
+        glNormal3f(1.0, 0.0, 0.0);
+        glVertex3f (1.0, 1.0, 1.0);
+        glVertex3f (1.0, -1.0, 1.0);
+        glVertex3f (1.0, -1.0, -1.0);
+        glVertex3f (1.0, 1.0, -1.0);
+    glEnd();
+
+    glBegin (GL_QUADS);
+        glNormal3f(0.0, 1.0, 0.0);
+        glVertex3f (-1.0, 1.0, -1.0);
+        glVertex3f (-1.0, 1.0, 1.0);
+        glVertex3f (1.0, 1.0, 1.0);
+        glVertex3f (1.0, 1.0, -1.0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glNormal3f(0.0, -1.0, 0.0);
+        glVertex3f (-1.0, -1.0, -1.0);
+        glVertex3f (1.0, -1.0, -1.0);
+        glVertex3f (1.0, -1.0, 1.0);
+        glVertex3f (-1.0, -1.0, 1.0);
+    glEnd();
 }
 //--------------------------------------------------------------------------------
 int Test_QGLWidget::faceAtPosition(const QPoint &pos)

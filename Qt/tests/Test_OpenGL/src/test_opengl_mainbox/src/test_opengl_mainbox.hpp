@@ -19,16 +19,6 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-protected:
-    void initializeGL();
-    void resizeGL(int width, int height);
-    void paintGL();
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseDoubleClickEvent(QMouseEvent *event);
-
-    void keyPressEvent(QKeyEvent *event);
-
 private slots:
     void choice_test(void);
     bool test_0(void);
@@ -71,18 +61,32 @@ private:
 
     int faceAtPosition(const QPoint &pos);
 
-    GLfloat rotationX;
-    GLfloat rotationY;
-    GLfloat rotationZ;
+    GLfloat rotationX = 0;
+    GLfloat rotationY = 0;
+    GLfloat rotationZ = 0;
+
     QColor faceColors[4];
     QPoint lastPos;
 
     GLUquadricObj *cylinder;
+    GLUquadricObj *cylinder2;
+
     GLUquadricObj *sphere;
 
     GLfloat x = 0;
     GLfloat y = 0;
     GLfloat z = 0;
+
+protected:
+    void initializeGL();
+    void resizeGL(int width, int height);
+    void paintGL();
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+
+    void keyPressEvent(QKeyEvent *event);
+
 };
 //--------------------------------------------------------------------------------
 #endif

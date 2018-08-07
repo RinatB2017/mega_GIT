@@ -14,12 +14,15 @@ Test_QGLWidget::Test_QGLWidget(QWidget *parent)
 {
     setFormat(QGLFormat(QGL::DoubleBuffer | QGL::DepthBuffer));
 
-    cylinder = gluNewQuadric();
+    cylinder  = gluNewQuadric();
+    cylinder2 = gluNewQuadric();
+
     sphere = gluNewQuadric();
 
-    rotationX = -21.0;
-    rotationY = -57.0;
+    rotationX = 0.0; //-21.0;
+    rotationY = 90.0; //-57.0;
     rotationZ = 0.0;
+
     faceColors[0] = Qt::red;
     faceColors[1] = Qt::green;
     faceColors[2] = Qt::blue;
@@ -173,8 +176,8 @@ void Test_QGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //draw();
-    draw_sphere();
-    //draw_cylinder();
+    //draw_sphere();
+    draw_cylinder();
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::mousePressEvent(QMouseEvent *event)
@@ -303,12 +306,37 @@ void Test_QGLWidget::draw_cylinder()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    //---
     glTranslatef(0.0, 0.0, -10.0);
+
     glRotatef(rotationX, 1.0, 0.0, 0.0);
     glRotatef(rotationY, 0.0, 1.0, 0.0);
     glRotatef(rotationZ, 0.0, 0.0, 1.0);
 
-    gluCylinder(cylinder, 1.0, 1.0, 1.0, 10, 10);
+    gluCylinder(cylinder, 0.1, 0.1, 2.0, 10, 20);
+    //---
+
+    //---
+    glColor3d(0.0, 1.0, 0.0);
+
+    glTranslatef(0.0, 0.0, -2.0);
+
+    //glRotatef(rotationX, 1.0, 0.0, 0.0);
+    //glRotatef(rotationY, 0.0, 1.0, 0.0);
+    //glRotatef(rotationZ, 0.0, 0.0, 1.0);
+
+    gluCylinder(cylinder2, 0.1, 0.1, 2.0, 10, 20);
+    //---
+
+    //---
+    glColor3d(0.0, 0.0, 1.0);
+
+    //glTranslatef(0.0, 0.0, -3.0);
+
+    gluSphere(sphere, 0.5, 20, 20);
+    //---
+
 }
 //--------------------------------------------------------------------------------
 int Test_QGLWidget::faceAtPosition(const QPoint &pos)

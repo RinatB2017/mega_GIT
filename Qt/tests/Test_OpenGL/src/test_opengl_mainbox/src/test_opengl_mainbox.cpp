@@ -66,9 +66,17 @@ void MainBox::init(void)
     ui->dsb_Y->setRange(-100, 100);
     ui->dsb_Z->setRange(-100, 100);
 
+    ui->dsb_angle_X->setRange(-100, 100);
+    ui->dsb_angle_Y->setRange(-100, 100);
+    ui->dsb_angle_Z->setRange(-100, 100);
+
     ui->dsb_X->setSingleStep(0.01);
     ui->dsb_Y->setSingleStep(0.01);
     ui->dsb_Z->setSingleStep(0.01);
+
+    ui->dsb_angle_X->setSingleStep(0.01);
+    ui->dsb_angle_Y->setSingleStep(0.01);
+    ui->dsb_angle_Z->setSingleStep(0.01);
 
     connect(ui->btn_get_X,  SIGNAL(clicked(bool)),  this,   SLOT(get_X()));
     connect(ui->btn_get_Y,  SIGNAL(clicked(bool)),  this,   SLOT(get_Y()));
@@ -77,6 +85,14 @@ void MainBox::init(void)
     connect(ui->btn_set_X,  SIGNAL(clicked(bool)),  this,   SLOT(set_X()));
     connect(ui->btn_set_Y,  SIGNAL(clicked(bool)),  this,   SLOT(set_Y()));
     connect(ui->btn_set_Z,  SIGNAL(clicked(bool)),  this,   SLOT(set_Z()));
+
+    connect(ui->btn_get_angle_X,  SIGNAL(clicked(bool)),  this,   SLOT(get_angle_X()));
+    connect(ui->btn_get_angle_Y,  SIGNAL(clicked(bool)),  this,   SLOT(get_angle_Y()));
+    connect(ui->btn_get_angle_Z,  SIGNAL(clicked(bool)),  this,   SLOT(get_angle_Z()));
+
+    connect(ui->btn_set_angle_X,  SIGNAL(clicked(bool)),  this,   SLOT(set_angle_X()));
+    connect(ui->btn_set_angle_Y,  SIGNAL(clicked(bool)),  this,   SLOT(set_angle_Y()));
+    connect(ui->btn_set_angle_Z,  SIGNAL(clicked(bool)),  this,   SLOT(set_angle_Z()));
 
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
@@ -190,6 +206,36 @@ void MainBox::get_Y(void)
 void MainBox::get_Z(void)
 {
     ui->dsb_Z->setValue(ui->widget->get_z());
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_angle_X(void)
+{
+    ui->dsb_angle_X->setValue(ui->widget->get_angle_x());
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_angle_Y(void)
+{
+    ui->dsb_angle_Y->setValue(ui->widget->get_angle_y());
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_angle_Z(void)
+{
+    ui->dsb_angle_Z->setValue(ui->widget->get_angle_z());
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_angle_X(void)
+{
+    ui->widget->set_angle_X(ui->dsb_angle_X->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_angle_Y(void)
+{
+    ui->widget->set_angle_Y(ui->dsb_angle_Y->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_angle_Z(void)
+{
+    ui->widget->set_angle_Z(ui->dsb_angle_Z->value());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

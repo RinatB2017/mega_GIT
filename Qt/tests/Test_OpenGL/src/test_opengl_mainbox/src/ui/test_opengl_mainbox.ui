@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>471</width>
-    <height>232</height>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,92 +15,189 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QFrame" name="frame">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="title">
-      <string>GroupBox</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Y</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Z</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QToolButton" name="btn_get_X">
-          <property name="text">
-           <string>get</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>X</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_X"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_Z"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_Y"/>
-        </item>
-        <item row="0" column="3">
-         <widget class="QToolButton" name="btn_set_X">
-          <property name="text">
-           <string>set</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="btn_get_Y">
-          <property name="text">
-           <string>get</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QToolButton" name="btn_set_Y">
-          <property name="text">
-           <string>set</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QToolButton" name="btn_get_Z">
-          <property name="text">
-           <string>get</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QToolButton" name="btn_set_Z">
-          <property name="text">
-           <string>set</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>Position</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Y</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QToolButton" name="btn_get_X">
+             <property name="text">
+              <string>get</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>X</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_X"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_Z"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_Y"/>
+           </item>
+           <item row="0" column="3">
+            <widget class="QToolButton" name="btn_set_X">
+             <property name="text">
+              <string>set</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QToolButton" name="btn_get_Y">
+             <property name="text">
+              <string>get</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QToolButton" name="btn_set_Y">
+             <property name="text">
+              <string>set</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QToolButton" name="btn_get_Z">
+             <property name="text">
+              <string>get</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QToolButton" name="btn_set_Z">
+             <property name="text">
+              <string>set</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>Angle</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Y</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QToolButton" name="btn_get_angle_X">
+             <property name="text">
+              <string>get</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>X</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_angle_X"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_angle_Z"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_angle_Y"/>
+           </item>
+           <item row="0" column="3">
+            <widget class="QToolButton" name="btn_set_angle_X">
+             <property name="text">
+              <string>set</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QToolButton" name="btn_get_angle_Y">
+             <property name="text">
+              <string>get</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QToolButton" name="btn_set_angle_Y">
+             <property name="text">
+              <string>set</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QToolButton" name="btn_get_angle_Z">
+             <property name="text">
+              <string>get</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QToolButton" name="btn_set_angle_Z">
+             <property name="text">
+              <string>set</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_test">
@@ -117,7 +214,7 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>101</height>
+          <height>40</height>
          </size>
         </property>
        </spacer>
@@ -148,6 +245,15 @@
   <tabstop>dsb_Z</tabstop>
   <tabstop>btn_get_Z</tabstop>
   <tabstop>btn_set_Z</tabstop>
+  <tabstop>dsb_angle_X</tabstop>
+  <tabstop>btn_get_angle_X</tabstop>
+  <tabstop>btn_set_angle_X</tabstop>
+  <tabstop>dsb_angle_Y</tabstop>
+  <tabstop>btn_get_angle_Y</tabstop>
+  <tabstop>btn_set_angle_Y</tabstop>
+  <tabstop>dsb_angle_Z</tabstop>
+  <tabstop>btn_get_angle_Z</tabstop>
+  <tabstop>btn_set_angle_Z</tabstop>
   <tabstop>btn_test</tabstop>
  </tabstops>
  <resources/>

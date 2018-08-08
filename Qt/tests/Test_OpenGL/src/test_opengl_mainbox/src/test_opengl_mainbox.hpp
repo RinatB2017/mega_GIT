@@ -63,6 +63,14 @@ private slots:
     void set_Y(void);
     void set_Z(void);
 
+    void get_angle_X(void);
+    void get_angle_Y(void);
+    void get_angle_Z(void);
+
+    void set_angle_X(void);
+    void set_angle_Y(void);
+    void set_angle_Z(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,

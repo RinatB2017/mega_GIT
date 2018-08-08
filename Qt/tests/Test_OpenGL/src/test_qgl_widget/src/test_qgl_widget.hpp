@@ -38,6 +38,10 @@ public:
     qreal get_y(void);
     qreal get_z(void);
 
+    qreal get_angle_x(void);
+    qreal get_angle_y(void);
+    qreal get_angle_z(void);
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -54,6 +58,10 @@ public slots:
     void set_X(qreal value);
     void set_Y(qreal value);
     void set_Z(qreal value);
+
+    void set_angle_X(qreal value);
+    void set_angle_Y(qreal value);
+    void set_angle_Z(qreal value);
 
 private:
     int faceAtPosition(const QPoint &pos);

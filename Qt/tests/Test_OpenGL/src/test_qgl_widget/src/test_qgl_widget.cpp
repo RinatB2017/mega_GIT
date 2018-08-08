@@ -406,6 +406,30 @@ void Test_QGLWidget::set_Z(qreal value)
     emit info(QString("z = %1").arg(z));
 }
 //--------------------------------------------------------------------------------
+void Test_QGLWidget::set_angle_X(qreal value)
+{
+    rotationX = value;
+    updateGL();
+
+    emit info(QString("z = %1").arg(rotationX));
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::set_angle_Y(qreal value)
+{
+    rotationY = value;
+    updateGL();
+
+    emit info(QString("y = %1").arg(rotationY));
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::set_angle_Z(qreal value)
+{
+    rotationZ = value;
+    updateGL();
+
+    emit info(QString("z = %1").arg(rotationZ));
+}
+//--------------------------------------------------------------------------------
 qreal Test_QGLWidget::get_x(void)
 {
     return x;
@@ -419,5 +443,20 @@ qreal Test_QGLWidget::get_y(void)
 qreal Test_QGLWidget::get_z(void)
 {
     return z;
+}
+//--------------------------------------------------------------------------------
+qreal Test_QGLWidget::get_angle_x(void)
+{
+    return rotationX;
+}
+//--------------------------------------------------------------------------------
+qreal Test_QGLWidget::get_angle_y(void)
+{
+    return rotationY;
+}
+//--------------------------------------------------------------------------------
+qreal Test_QGLWidget::get_angle_z(void)
+{
+    return rotationZ;
 }
 //--------------------------------------------------------------------------------

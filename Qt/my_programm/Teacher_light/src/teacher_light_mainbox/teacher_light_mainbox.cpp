@@ -220,8 +220,8 @@ void MainBox::create_widgets(void)
     dock_note->setWidget(note);
     dock_tab->setWidget(tab);
 
-    mw->add_windowsmenu_action(dock_note->toggleViewAction());
-    mw->add_windowsmenu_action(dock_tab->toggleViewAction());
+    mw->add_windowsmenu_action(dock_note, dock_note->toggleViewAction());
+    mw->add_windowsmenu_action(dock_tab, dock_tab->toggleViewAction());
 
     mw->addDockWidget(Qt::TopDockWidgetArea,   dock_tab);
     mw->addDockWidget(Qt::BottomDockWidgetArea,  dock_note);

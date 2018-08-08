@@ -86,7 +86,7 @@ public:
                              QAction *action);
     bool add_optionsmenu_action(int pos_y,
                                 QAction *action);
-    bool add_windowsmenu_action(QAction *action);
+    bool add_windowsmenu_action(QWidget *widget, QAction *action);
     bool add_helpmenu_action(int pos_y,
                              QAction *action);
 
@@ -258,6 +258,8 @@ private:
     QMenu *m_app_windowsmenu    = 0;
     QMenu *m_app_helpmenu    = 0;
 
+    QList<QWidget *> l_docs;
+
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
     void app_menu_add_font_programm(QMenu *menu);
@@ -280,6 +282,8 @@ private:
     void app_toolbar_add_help(void);
 
     void app_updateText(void);
+
+    void show_docs(void);
 
 protected:
     bool flag_close = false;

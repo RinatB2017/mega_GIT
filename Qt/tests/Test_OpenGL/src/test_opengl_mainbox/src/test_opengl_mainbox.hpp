@@ -26,7 +26,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -53,6 +53,8 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
+    void test(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -75,11 +77,6 @@ private:
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
-
-    //QPixmap picture_pixmap;
-    int w = 0;
-    int h = 0;
-    int timerId = 0;
 
     void init(void);
     void createTestBar(void);

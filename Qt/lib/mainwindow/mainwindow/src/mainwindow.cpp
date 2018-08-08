@@ -86,6 +86,8 @@ void MainWindow::setCentralWidget(QWidget *widget)
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
+
+    show_docs();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::changeEvent(QEvent *event)
@@ -210,18 +212,12 @@ void MainWindow::init(void)
 #ifndef NO_LOG
     //FIXME костыль, надо убрать
     // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
-    if(m_app_windowsmenu)
-    {
-        m_app_windowsmenu->addAction(ld->toggleViewAction());
-    }
+    add_windowsmenu_action(ld, ld->toggleViewAction());
 #endif
 #ifdef SYSLOG_LOG
     //FIXME костыль, надо убрать
     // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
-    if(m_app_windowsmenu)
-    {
-        m_app_windowsmenu->addAction(syslog_dock->toggleViewAction());
-    }
+    add_windowsmenu_action(syslog_dock, syslog_dock->toggleViewAction());
 #endif
 
 #ifndef NO_TOOLBAR
@@ -674,6 +670,14 @@ void MainWindow::save_setting(void)
     save_main();
 }
 //--------------------------------------------------------------------------------
+void MainWindow::show_docs(void)
+{
+    foreach (QWidget *widget, l_docs)
+    {
+        widget->show();
+    }
+}
+//--------------------------------------------------------------------------------
 void MainWindow::createLog(void)
 {
     ld = new LogDock(tr("log"), this);
@@ -767,7 +771,7 @@ void MainWindow::createToolBar(void)
     app_toolbar_add_help();
 #endif
 
-    m_app_windowsmenu->addAction(toolbar->toggleViewAction());    //TODO странно
+    add_windowsmenu_action(toolbar, toolbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::createStyleToolBar(void)
@@ -970,12 +974,15 @@ bool MainWindow::add_optionsmenu_action(int pos_y,
     return false;
 }
 //--------------------------------------------------------------------------------
-bool MainWindow::add_windowsmenu_action(QAction *action)
+bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
 {
+    Q_CHECK_PTR(widget);
     Q_CHECK_PTR(action);
     Q_CHECK_PTR(m_app_windowsmenu);
 
+    l_docs.append(widget);
     m_app_windowsmenu->addAction(action);
+
     return true;
 }
 //--------------------------------------------------------------------------------

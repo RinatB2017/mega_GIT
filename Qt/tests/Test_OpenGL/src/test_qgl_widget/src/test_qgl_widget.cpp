@@ -79,8 +79,8 @@ void Test_QGLWidget::paintGL()
     //draw();
     //draw_sphere();
     //draw_cylinder();
-    draw_object();
-    //draw_cube();
+    //draw_object();
+    draw_cube();
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::mousePressEvent(QMouseEvent *event)

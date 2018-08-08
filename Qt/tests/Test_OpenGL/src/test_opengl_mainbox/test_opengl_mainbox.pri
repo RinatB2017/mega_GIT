@@ -4,7 +4,7 @@
 
 DEPENDPATH  += \
 	$$PWD/src \
-	$$PWD/src\ui
+        $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += test_opengl_mainbox.hpp

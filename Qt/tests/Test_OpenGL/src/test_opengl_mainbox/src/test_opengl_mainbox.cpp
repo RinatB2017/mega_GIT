@@ -58,22 +58,12 @@ void MainBox::init(void)
     Q_CHECK_PTR(parentWidget());
 #endif
 
+    ui->widget->setMinimumSize(800, 600);
+
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+
     createTestBar();
-
-    //connect(ui->checkBox_0, SIGNAL(clicked(bool)),  ui->checkBox_1, SLOT(setDisabled(bool)));
-
-    init_w_lists();
-
     installEventFilter(this);
-
-#if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -110,7 +100,7 @@ void MainBox::createTestBar(void)
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
-    //testbar->setFixedWidth(toolBar->sizeHint().width());
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -142,9 +132,17 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::test(void)
+{
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    ui->widget->draw_object();
+    ui->widget->updateGL();
 
     return true;
 }

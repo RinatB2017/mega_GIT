@@ -40,22 +40,14 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-private:
+public slots:
     void draw(void);
     void draw_sphere(void);
     void draw_cylinder(void);
     void draw_object(void);
     void draw_cube(void);
 
+private:
     int faceAtPosition(const QPoint &pos);
 
     GLfloat rotationX = 0;
@@ -83,7 +75,6 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
 
     void keyPressEvent(QKeyEvent *event);
-
 };
 //--------------------------------------------------------------------------------
 #endif

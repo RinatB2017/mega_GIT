@@ -69,14 +69,8 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     MainWindow *main_window = new MainWindow;
-    main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     MainBox *mainBox = new MainBox(main_window->getThis(), 0);
-
-    QObject::connect(mainBox,    SIGNAL(info(QString)),  main_window,    SIGNAL(info(QString)));
-    QObject::connect(mainBox,    SIGNAL(debug(QString)), main_window,    SIGNAL(debug(QString)));
-    QObject::connect(mainBox,    SIGNAL(error(QString)), main_window,    SIGNAL(error(QString)));
-    QObject::connect(mainBox,    SIGNAL(trace(QString)), main_window,    SIGNAL(trace(QString)));
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

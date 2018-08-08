@@ -2,11 +2,8 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += \
-	$$PWD/src \
-	$$PWD/src\ui
+DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += test_opengl_mainbox.hpp
-SOURCES += test_opengl_mainbox.cpp
-FORMS	+= test_opengl_mainbox.ui
+HEADERS += test_qgl_widget.hpp
+SOURCES += test_qgl_widget.cpp

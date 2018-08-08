@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2018                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,27 +18,31 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_QGLWIDGET_HPP
-#define TEST_QGLWIDGET_HPP
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#include <QWidget>
 //--------------------------------------------------------------------------------
-#include <QGLWidget>
-#include <GL/glu.h>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Test_QGLWidget : public QGLWidget
+namespace Ui {
+class MainBox;
+}
+//--------------------------------------------------------------------------------
+class MySplashScreen;
+class QToolButton;
+class QToolBar;
+class QComboBox;
+class QCheckBox;
+//--------------------------------------------------------------------------------
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    Test_QGLWidget(QWidget *parent = 0);
-    ~Test_QGLWidget();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
 private slots:
     void choice_test(void);
@@ -63,53 +67,23 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (Test_QGLWidget::*func)(void);
+        bool (MainBox::*func)(void);
     } CMD_t;
+
+    MySplashScreen *splash = 0;
+    Ui::MainBox *ui = 0;
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
+    //QPixmap picture_pixmap;
+    int w = 0;
+    int h = 0;
+    int timerId = 0;
+
+    void init(void);
     void createTestBar(void);
-    QToolButton *add_button(QToolBar *tool_bar,
-                            QToolButton *tool_button,
-                            QIcon icon,
-                            const QString &text,
-                            const QString &tool_tip);
-
-    void draw(void);
-    void draw_sphere(void);
-    void draw_cylinder(void);
-    void draw_object(void);
-    void draw_cube(void);
-
-    int faceAtPosition(const QPoint &pos);
-
-    GLfloat rotationX = 0;
-    GLfloat rotationY = 0;
-    GLfloat rotationZ = 0;
-
-    QColor faceColors[4];
-    QPoint lastPos;
-
-    GLUquadricObj *cylinder;
-    GLUquadricObj *cylinder2;
-
-    GLUquadricObj *sphere;
-
-    GLfloat x = 0;
-    GLfloat y = 0;
-    GLfloat z = 0;
-
-protected:
-    void initializeGL();
-    void resizeGL(int width, int height);
-    void paintGL();
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseDoubleClickEvent(QMouseEvent *event);
-
-    void keyPressEvent(QKeyEvent *event);
-
+    void updateText(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // MAINBOX_HPP

@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
-    Test_QGLWidget *mainBox = new Test_QGLWidget(main_window->getThis());
+    MainBox *mainBox = new MainBox(main_window->getThis(), 0);
 
     QObject::connect(mainBox,    SIGNAL(info(QString)),  main_window,    SIGNAL(info(QString)));
     QObject::connect(mainBox,    SIGNAL(debug(QString)), main_window,    SIGNAL(debug(QString)));

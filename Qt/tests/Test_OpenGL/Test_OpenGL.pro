@@ -42,6 +42,7 @@ LIB_PATH = "../../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_opengl_mainbox/test_opengl_mainbox.pri)
+include (src/test_qgl_widget/test_qgl_widget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

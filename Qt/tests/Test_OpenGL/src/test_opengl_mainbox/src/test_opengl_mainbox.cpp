@@ -47,6 +47,8 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("OpenGL");
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -60,10 +62,33 @@ void MainBox::init(void)
 
     ui->widget->setMinimumSize(800, 600);
 
+    ui->dsb_X->setRange(-100, 100);
+    ui->dsb_Y->setRange(-100, 100);
+    ui->dsb_Z->setRange(-100, 100);
+
+    ui->dsb_X->setSingleStep(0.01);
+    ui->dsb_Y->setSingleStep(0.01);
+    ui->dsb_Z->setSingleStep(0.01);
+
+    connect(ui->btn_get_X,  SIGNAL(clicked(bool)),  this,   SLOT(get_X()));
+    connect(ui->btn_get_Y,  SIGNAL(clicked(bool)),  this,   SLOT(get_Y()));
+    connect(ui->btn_get_Z,  SIGNAL(clicked(bool)),  this,   SLOT(get_Z()));
+
+    connect(ui->btn_set_X,  SIGNAL(clicked(bool)),  this,   SLOT(set_X()));
+    connect(ui->btn_set_Y,  SIGNAL(clicked(bool)),  this,   SLOT(set_Y()));
+    connect(ui->btn_set_Z,  SIGNAL(clicked(bool)),  this,   SLOT(set_Z()));
+
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+
+    connect(ui->widget,     SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(ui->widget,     SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(ui->widget,     SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(ui->widget,     SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     createTestBar();
     installEventFilter(this);
+
+    load_widgets("OpenGL");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -135,6 +160,36 @@ void MainBox::choice_test(void)
 void MainBox::test(void)
 {
     emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_X(void)
+{
+    ui->widget->set_X(ui->dsb_X->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_Y(void)
+{
+    ui->widget->set_Y(ui->dsb_Y->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_Z(void)
+{
+    ui->widget->set_Z(ui->dsb_Z->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_X(void)
+{
+    ui->dsb_X->setValue(ui->widget->get_x());
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_Y(void)
+{
+    ui->dsb_Y->setValue(ui->widget->get_y());
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_Z(void)
+{
+    ui->dsb_Z->setValue(ui->widget->get_z());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

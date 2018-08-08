@@ -55,6 +55,14 @@ private slots:
 
     void test(void);
 
+    void get_X(void);
+    void get_Y(void);
+    void get_Z(void);
+
+    void set_X(void);
+    void set_Y(void);
+    void set_Z(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,

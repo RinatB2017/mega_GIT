@@ -34,6 +34,10 @@ public:
     Test_QGLWidget(QWidget *parent = 0);
     ~Test_QGLWidget();
 
+    qreal get_x(void);
+    qreal get_y(void);
+    qreal get_z(void);
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -46,6 +50,10 @@ public slots:
     void draw_cylinder(void);
     void draw_object(void);
     void draw_cube(void);
+
+    void set_X(qreal value);
+    void set_Y(qreal value);
+    void set_Z(qreal value);
 
 private:
     int faceAtPosition(const QPoint &pos);

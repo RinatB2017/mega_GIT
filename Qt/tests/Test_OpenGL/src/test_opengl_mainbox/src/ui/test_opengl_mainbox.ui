@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>471</width>
-    <height>207</height>
+    <height>232</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,6 +26,82 @@
       <string>GroupBox</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Y</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Z</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="btn_get_X">
+          <property name="text">
+           <string>get</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>X</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QDoubleSpinBox" name="dsb_X"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDoubleSpinBox" name="dsb_Z"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDoubleSpinBox" name="dsb_Y"/>
+        </item>
+        <item row="0" column="3">
+         <widget class="QToolButton" name="btn_set_X">
+          <property name="text">
+           <string>set</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QToolButton" name="btn_get_Y">
+          <property name="text">
+           <string>get</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QToolButton" name="btn_set_Y">
+          <property name="text">
+           <string>set</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QToolButton" name="btn_get_Z">
+          <property name="text">
+           <string>get</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QToolButton" name="btn_set_Z">
+          <property name="text">
+           <string>set</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
       <item>
        <widget class="QPushButton" name="btn_test">
         <property name="text">
@@ -62,6 +138,18 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>dsb_X</tabstop>
+  <tabstop>btn_get_X</tabstop>
+  <tabstop>btn_set_X</tabstop>
+  <tabstop>dsb_Y</tabstop>
+  <tabstop>btn_get_Y</tabstop>
+  <tabstop>btn_set_Y</tabstop>
+  <tabstop>dsb_Z</tabstop>
+  <tabstop>btn_get_Z</tabstop>
+  <tabstop>btn_set_Z</tabstop>
+  <tabstop>btn_test</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

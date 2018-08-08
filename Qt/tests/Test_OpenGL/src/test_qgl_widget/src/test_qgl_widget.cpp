@@ -295,7 +295,7 @@ void Test_QGLWidget::draw_cube(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glTranslatef(0.0, 0.0, -10.0);
+    glTranslatef(x, y, z);
 
     glRotatef(rotationX, 1.0, 0.0, 0.0);
     glRotatef(rotationY, 0.0, 1.0, 0.0);
@@ -380,5 +380,44 @@ int Test_QGLWidget::faceAtPosition(const QPoint &pos)
     if (!glRenderMode(GL_RENDER))
         return -1;
     return buffer[3];
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::set_X(qreal value)
+{
+    x = value;
+    updateGL();
+
+    emit info(QString("x = %1").arg(x));
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::set_Y(qreal value)
+{
+    y = value;
+    updateGL();
+
+    emit info(QString("y = %1").arg(y));
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::set_Z(qreal value)
+{
+    z = value;
+    updateGL();
+
+    emit info(QString("z = %1").arg(z));
+}
+//--------------------------------------------------------------------------------
+qreal Test_QGLWidget::get_x(void)
+{
+    return x;
+}
+//--------------------------------------------------------------------------------
+qreal Test_QGLWidget::get_y(void)
+{
+    return y;
+}
+//--------------------------------------------------------------------------------
+qreal Test_QGLWidget::get_z(void)
+{
+    return z;
 }
 //--------------------------------------------------------------------------------

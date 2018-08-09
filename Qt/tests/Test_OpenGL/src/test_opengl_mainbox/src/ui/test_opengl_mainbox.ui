@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>471</width>
-    <height>450</height>
+    <height>554</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -200,10 +200,65 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_test">
-        <property name="text">
-         <string>test</string>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>Draw</string>
         </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="cb_cylinder">
+             <property name="text">
+              <string>cylinder</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="cb_sphere">
+             <property name="text">
+              <string>sphere</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="cb_draw">
+             <property name="text">
+              <string>draw</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QCheckBox" name="cb_object">
+             <property name="text">
+              <string>object</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="cb_object2">
+             <property name="text">
+              <string>object2</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QCheckBox" name="cb_cube">
+             <property name="text">
+              <string>cube</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_set">
+           <property name="text">
+            <string>set</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -254,7 +309,13 @@
   <tabstop>dsb_angle_Z</tabstop>
   <tabstop>btn_get_angle_Z</tabstop>
   <tabstop>btn_set_angle_Z</tabstop>
-  <tabstop>btn_test</tabstop>
+  <tabstop>cb_draw</tabstop>
+  <tabstop>cb_sphere</tabstop>
+  <tabstop>cb_cylinder</tabstop>
+  <tabstop>cb_object</tabstop>
+  <tabstop>cb_object2</tabstop>
+  <tabstop>cb_cube</tabstop>
+  <tabstop>btn_set</tabstop>
  </tabstops>
  <resources/>
  <connections/>

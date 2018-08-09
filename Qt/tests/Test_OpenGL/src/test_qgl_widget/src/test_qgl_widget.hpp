@@ -49,12 +49,21 @@ signals:
     void trace(const QString &);
 
 public slots:
+    void add_grid(void);
+
     void draw(void);
     void draw_sphere(void);
     void draw_cylinder(void);
     void draw_object(void);
     void draw_object2(void);
     void draw_cube(void);
+
+    void show_object(bool o0,
+                     bool o1,
+                     bool o2,
+                     bool o3,
+                     bool o4,
+                     bool o5);
 
     void set_X(qreal value);
     void set_Y(qreal value);
@@ -101,6 +110,13 @@ private:
     GLUquadricObj *cylinder_09;
     GLUquadricObj *cylinder_10;
     GLUquadricObj *cylinder_11;
+
+    bool flag_o0 = false;
+    bool flag_o1 = false;
+    bool flag_o2 = false;
+    bool flag_o3 = false;
+    bool flag_o4 = false;
+    bool flag_o5 = false;
 
     GLfloat x = 0;
     GLfloat y = 0;

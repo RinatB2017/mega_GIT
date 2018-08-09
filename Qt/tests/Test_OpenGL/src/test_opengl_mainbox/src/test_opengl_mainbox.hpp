@@ -53,8 +53,6 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
-    void test(void);
-
     void get_X(void);
     void get_Y(void);
     void get_Z(void);
@@ -70,6 +68,8 @@ private slots:
     void set_angle_X(void);
     void set_angle_Y(void);
     void set_angle_Z(void);
+
+    void set_shown_object(void);
 
 private:
     enum {

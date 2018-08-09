@@ -148,12 +148,12 @@ void MainBox::init_widgets(void)
     connect(ui->dsb_angle_Y,        SIGNAL(valueChanged(double)),   this,   SLOT(set_angle_Y()));
     connect(ui->dsb_angle_Z,        SIGNAL(valueChanged(double)),   this,   SLOT(set_angle_Z()));
 
-    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
-
     connect(ui->widget,     SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(ui->widget,     SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(ui->widget,     SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(ui->widget,     SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    connect(ui->btn_set,    SIGNAL(clicked(bool)),  this,   SLOT(set_shown_object()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -183,11 +183,6 @@ void MainBox::choice_test(void)
             return;
         }
     }
-}
-//--------------------------------------------------------------------------------
-void MainBox::test(void)
-{
-    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_X(void)
@@ -248,6 +243,17 @@ void MainBox::set_angle_Y(void)
 void MainBox::set_angle_Z(void)
 {
     ui->widget->set_angle_Z(ui->dsb_angle_Z->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_shown_object(void)
+{
+    ui->widget->show_object(ui->cb_draw->isChecked(),
+                            ui->cb_sphere->isChecked(),
+                            ui->cb_cylinder->isChecked(),
+                            ui->cb_object->isChecked(),
+                            ui->cb_object2->isChecked(),
+                            ui->cb_cube->isChecked());
+    ui->widget->updateGL();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

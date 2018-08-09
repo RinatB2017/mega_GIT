@@ -53,6 +53,7 @@ public slots:
     void draw_sphere(void);
     void draw_cylinder(void);
     void draw_object(void);
+    void draw_object2(void);
     void draw_cube(void);
 
     void set_X(qreal value);
@@ -77,10 +78,35 @@ private:
     GLUquadricObj *cylinder2;
 
     GLUquadricObj *sphere;
+    GLUquadricObj *sphere2;
+
+    GLUquadricObj *sphere_0;
+    GLUquadricObj *sphere_1;
+    GLUquadricObj *sphere_2;
+    GLUquadricObj *sphere_3;
+    GLUquadricObj *sphere_4;
+    GLUquadricObj *sphere_5;
+    GLUquadricObj *sphere_6;
+    GLUquadricObj *sphere_7;
+
+    GLUquadricObj *cylinder_00;
+    GLUquadricObj *cylinder_01;
+    GLUquadricObj *cylinder_02;
+    GLUquadricObj *cylinder_03;
+    GLUquadricObj *cylinder_04;
+    GLUquadricObj *cylinder_05;
+    GLUquadricObj *cylinder_06;
+    GLUquadricObj *cylinder_07;
+    GLUquadricObj *cylinder_08;
+    GLUquadricObj *cylinder_09;
+    GLUquadricObj *cylinder_10;
+    GLUquadricObj *cylinder_11;
 
     GLfloat x = 0;
     GLfloat y = 0;
     GLfloat z = 0;
+
+    QList<GLUquadricObj *> l_obj;
 
 protected:
     void initializeGL();
@@ -89,8 +115,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
-
-    void keyPressEvent(QKeyEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif

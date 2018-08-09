@@ -35,8 +35,55 @@ Test_QGLWidget::Test_QGLWidget(QWidget *parent)
 
     cylinder  = gluNewQuadric();
     cylinder2 = gluNewQuadric();
+    l_obj.append(cylinder);
+    l_obj.append(cylinder2);
 
     sphere = gluNewQuadric();
+    sphere2 = gluNewQuadric();
+    l_obj.append(sphere);
+    l_obj.append(sphere2);
+
+    sphere_0 = gluNewQuadric();
+    sphere_1 = gluNewQuadric();
+    sphere_2 = gluNewQuadric();
+    sphere_3 = gluNewQuadric();
+    sphere_4 = gluNewQuadric();
+    sphere_5 = gluNewQuadric();
+    sphere_6 = gluNewQuadric();
+    sphere_7 = gluNewQuadric();
+    l_obj.append(sphere_0);
+    l_obj.append(sphere_1);
+    l_obj.append(sphere_2);
+    l_obj.append(sphere_3);
+    l_obj.append(sphere_4);
+    l_obj.append(sphere_5);
+    l_obj.append(sphere_6);
+    l_obj.append(sphere_7);
+
+    cylinder_00 = gluNewQuadric();
+    cylinder_01 = gluNewQuadric();
+    cylinder_02 = gluNewQuadric();
+    cylinder_03 = gluNewQuadric();
+    cylinder_04 = gluNewQuadric();
+    cylinder_05 = gluNewQuadric();
+    cylinder_06 = gluNewQuadric();
+    cylinder_07 = gluNewQuadric();
+    cylinder_08 = gluNewQuadric();
+    cylinder_09 = gluNewQuadric();
+    cylinder_10 = gluNewQuadric();
+    cylinder_11 = gluNewQuadric();
+    l_obj.append(cylinder_00);
+    l_obj.append(cylinder_01);
+    l_obj.append(cylinder_02);
+    l_obj.append(cylinder_03);
+    l_obj.append(cylinder_04);
+    l_obj.append(cylinder_05);
+    l_obj.append(cylinder_06);
+    l_obj.append(cylinder_07);
+    l_obj.append(cylinder_08);
+    l_obj.append(cylinder_09);
+    l_obj.append(cylinder_10);
+    l_obj.append(cylinder_11);
 
     rotationX = 0.0; //-21.0;
     rotationY = 90.0; //-57.0;
@@ -50,9 +97,10 @@ Test_QGLWidget::Test_QGLWidget(QWidget *parent)
 //--------------------------------------------------------------------------------
 Test_QGLWidget::~Test_QGLWidget()
 {
-    gluDeleteQuadric(cylinder);
-    gluDeleteQuadric(cylinder2);
-    gluDeleteQuadric(sphere);
+    foreach (GLUquadricObj *obj, l_obj)
+    {
+        gluDeleteQuadric(obj);
+    }
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::initializeGL()
@@ -80,7 +128,8 @@ void Test_QGLWidget::paintGL()
     //draw_sphere();
     //draw_cylinder();
     //draw_object();
-    draw_cube();
+    draw_object2();
+    //draw_cube();
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::mousePressEvent(QMouseEvent *event)
@@ -106,38 +155,6 @@ void Test_QGLWidget::mouseMoveEvent(QMouseEvent *event)
         updateGL();
     }
     lastPos = event->pos();
-}
-//--------------------------------------------------------------------------------
-void Test_QGLWidget::keyPressEvent(QKeyEvent *event)
-{
-    switch (event->key())
-    {
-    case Qt::Key_Up:
-        z += 0.1;
-        qDebug() << "up" << z;
-        break;
-
-    case Qt::Key_Down:
-        z -= 0.1;
-        qDebug() << "down" << z;
-        break;
-
-    case Qt::Key_Left:
-        qDebug() << "left";
-        break;
-
-    case Qt::Key_Right:
-        qDebug() << "right";
-        break;
-
-    case Qt::Key_Escape:
-        qApp->quit();
-        break;
-
-    default:
-        break;
-    }
-    updateGL();
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::mouseDoubleClickEvent(QMouseEvent *event)
@@ -194,10 +211,34 @@ void Test_QGLWidget::draw_sphere(void)
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.0, 0.0, -10.0);
+
+    glTranslatef(x, y, z);
+
     glRotatef(rotationX, 1.0, 0.0, 0.0);
     glRotatef(rotationY, 0.0, 1.0, 0.0);
     glRotatef(rotationZ, 0.0, 0.0, 1.0);
+
+    //---
+    glColor3f(1, 0, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 0, 100);
+    glEnd();
+    glColor3f(0, 1, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 100, 0);
+    glEnd();
+    glColor3f(0, 0, 1);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (100, 0, 0);
+    glEnd();
+
+    // R z
+    // G y
+    // B x
+    //---
 
     gluSphere(sphere, 1.0f, 10, 10);
 }
@@ -211,11 +252,33 @@ void Test_QGLWidget::draw_cylinder(void)
     glLoadIdentity();
 
     //---
-    glTranslatef(0.0, 0.0, -10.0);
+    glTranslatef(x, y, z);
 
     glRotatef(rotationX, 1.0, 0.0, 0.0);
     glRotatef(rotationY, 0.0, 1.0, 0.0);
     glRotatef(rotationZ, 0.0, 0.0, 1.0);
+
+    //---
+    glColor3f(1, 0, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 0, 100);
+    glEnd();
+    glColor3f(0, 1, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 100, 0);
+    glEnd();
+    glColor3f(0, 0, 1);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (100, 0, 0);
+    glEnd();
+
+    // R z
+    // G y
+    // B x
+    //---
 
     gluCylinder(cylinder, 0.1, 0.1, 2.0, 10, 20);
 }
@@ -229,7 +292,7 @@ void Test_QGLWidget::draw_object(void)
     glLoadIdentity();
 
     //---
-    glTranslatef(0.0, 0.0, -10.0);
+    glTranslatef(x, y, z);
 
     glColor3f(1, 0, 0);
     glBegin(GL_LINES);
@@ -272,19 +335,134 @@ void Test_QGLWidget::draw_object(void)
 
     //---
     glColor3d(0.0, 0.0, 1.0);
-
     //glTranslatef(0.0, 0.0, -3.0);
-
     gluSphere(sphere, 0.5, 20, 20);
     //---
 
-    //glMatrixMode(GL_PROJECTION);
-    //glLoadIdentity();
-    //gluPerspective(130, 1, 50, 0);
+    //---
+    glColor3d(1.0, 0.0, 0.0);
+    glTranslatef(0.0, 0.0, 4.0);
+    gluSphere(sphere2, 0.5, 20, 20);
+    //---
+}
+//--------------------------------------------------------------------------------
+void Test_QGLWidget::draw_object2(void)
+{
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-    //gluLookAt(150, 150, 150, 0, 0, 0, 0, 100, 0);
+    glTranslatef(x, y, z);
+    //glTranslatef(x-0.5, y-0.5, z-0.5);
+
+    glRotatef(rotationX, 1.0, 0.0, 0.0);
+    glRotatef(rotationY, 0.0, 1.0, 0.0);
+    glRotatef(rotationZ, 0.0, 0.0, 1.0);
+
+    //---
+    glColor3f(1, 0, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 0, 100);
+    glEnd();
+    glColor3f(0, 1, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 100, 0);
+    glEnd();
+    glColor3f(0, 0, 1);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (100, 0, 0);
+    glEnd();
+
+    // R z
+    // G y
+    // B x
+    //---
+
+    glColor3f(1, 0, 0);
+
+    qreal radius = 0.1;
+    GLint slices = 20;
+    GLint stacks = 20;
+    //---
+    glTranslatef(0.0, 0.0, 0.0);
+    gluSphere(sphere_0, radius, slices, stacks);
+    //---
+    glTranslatef(-1.0, 0.0, 0.0);
+    gluSphere(sphere_1, radius, slices, stacks);
+    //---
+    glTranslatef(0.0, -1.0, 0.0);
+    gluSphere(sphere_2, radius, slices, stacks);
+    //---
+    glTranslatef(1.0, 0.0, 0.0);
+    gluSphere(sphere_3, radius, slices, stacks);
+    //---
+    glTranslatef(0.0, 1.0, 1.0);
+    //---
+    glTranslatef(0.0, 0.0, 0.0);
+    gluSphere(sphere_4, radius, slices, stacks);
+    //---
+    glTranslatef(-1.0, 0.0, 0.0);
+    gluSphere(sphere_5, radius, slices, stacks);
+    //---
+    glTranslatef(0.0, -1.0, 0.0);
+    gluSphere(sphere_6, radius, slices, stacks);
+    //---
+    glTranslatef(1.0, 0.0, 0.0);
+    gluSphere(sphere_7, radius, slices, stacks);
+    //---
+
+    glColor3f(0, 0, 1);
+
+    glTranslatef(0.0, 1.0, -1.0);
+
+    //---
+    glTranslatef(0.0, 0.0, 0.0);
+    gluCylinder(cylinder_00, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, 0.0, 1.0);
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    gluCylinder(cylinder_01, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, 0.0, 1.0);
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    gluCylinder(cylinder_02, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, 0.0, 1.0);
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    gluCylinder(cylinder_03, 0.05, 0.05, 1.0, 10, 20);
+    //---
+    glTranslatef(-1.0, 0.0, 0.0);
+    //---
+    glTranslatef(0.0, 0.0, 0.0);
+    gluCylinder(cylinder_04, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, 0.0, 1.0);
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    gluCylinder(cylinder_05, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, 0.0, 1.0);
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    gluCylinder(cylinder_06, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, 0.0, 1.0);
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    gluCylinder(cylinder_07, 0.05, 0.05, 1.0, 10, 20);
+    //---
+
+    glRotatef(90.0, 0.0, 1.0, 0.0);
+    gluCylinder(cylinder_08, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, -1.0, 0.0);
+    gluCylinder(cylinder_09, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(-1.0, 0.0, 0.0);
+    gluCylinder(cylinder_10, 0.05, 0.05, 1.0, 10, 20);
+
+    glTranslatef(0.0, 1.0, 0.0);
+    gluCylinder(cylinder_11, 0.05, 0.05, 1.0, 10, 20);
 }
 //--------------------------------------------------------------------------------
 void Test_QGLWidget::draw_cube(void)
@@ -300,6 +478,28 @@ void Test_QGLWidget::draw_cube(void)
     glRotatef(rotationX, 1.0, 0.0, 0.0);
     glRotatef(rotationY, 0.0, 1.0, 0.0);
     glRotatef(rotationZ, 0.0, 0.0, 1.0);
+    //---
+
+    //---
+    glColor3f(1, 0, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 0, 100);
+    glEnd();
+    glColor3f(0, 1, 0);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (0, 100, 0);
+    glEnd();
+    glColor3f(0, 0, 1);
+    glBegin(GL_LINES);
+        glVertex3f (0, 0, 0);
+        glVertex3f (100, 0, 0);
+    glEnd();
+
+    // R z
+    // G y
+    // B x
     //---
 
     glBegin (GL_QUADS);

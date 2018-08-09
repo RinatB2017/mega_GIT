@@ -24,20 +24,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#if QT_VERSION >= 0x050000
-#   include <QtMessageHandler>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_opengl_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
-//--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include "posix.hpp"
-#endif
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -47,10 +39,6 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_LINUX
-    //set_signals();
-#endif
-
     set_codecs();
 #if 1
     QtSingleApplication app(argc, argv);

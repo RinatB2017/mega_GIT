@@ -95,6 +95,7 @@ private:
     QList<CMD> commands;
 
     void init(void);
+    void init_widgets(void);
     void createTestBar(void);
     void updateText(void);
 };

@@ -60,47 +60,7 @@ void MainBox::init(void)
     Q_CHECK_PTR(parentWidget());
 #endif
 
-    ui->widget->setMinimumSize(800, 600);
-
-    ui->dsb_X->setRange(-100, 100);
-    ui->dsb_Y->setRange(-100, 100);
-    ui->dsb_Z->setRange(-100, 100);
-
-    ui->dsb_angle_X->setRange(-100, 100);
-    ui->dsb_angle_Y->setRange(-100, 100);
-    ui->dsb_angle_Z->setRange(-100, 100);
-
-    ui->dsb_X->setSingleStep(0.01);
-    ui->dsb_Y->setSingleStep(0.01);
-    ui->dsb_Z->setSingleStep(0.01);
-
-    ui->dsb_angle_X->setSingleStep(0.01);
-    ui->dsb_angle_Y->setSingleStep(0.01);
-    ui->dsb_angle_Z->setSingleStep(0.01);
-
-    connect(ui->btn_get_X,  SIGNAL(clicked(bool)),  this,   SLOT(get_X()));
-    connect(ui->btn_get_Y,  SIGNAL(clicked(bool)),  this,   SLOT(get_Y()));
-    connect(ui->btn_get_Z,  SIGNAL(clicked(bool)),  this,   SLOT(get_Z()));
-
-    connect(ui->btn_set_X,  SIGNAL(clicked(bool)),  this,   SLOT(set_X()));
-    connect(ui->btn_set_Y,  SIGNAL(clicked(bool)),  this,   SLOT(set_Y()));
-    connect(ui->btn_set_Z,  SIGNAL(clicked(bool)),  this,   SLOT(set_Z()));
-
-    connect(ui->btn_get_angle_X,  SIGNAL(clicked(bool)),  this,   SLOT(get_angle_X()));
-    connect(ui->btn_get_angle_Y,  SIGNAL(clicked(bool)),  this,   SLOT(get_angle_Y()));
-    connect(ui->btn_get_angle_Z,  SIGNAL(clicked(bool)),  this,   SLOT(get_angle_Z()));
-
-    connect(ui->btn_set_angle_X,  SIGNAL(clicked(bool)),  this,   SLOT(set_angle_X()));
-    connect(ui->btn_set_angle_Y,  SIGNAL(clicked(bool)),  this,   SLOT(set_angle_Y()));
-    connect(ui->btn_set_angle_Z,  SIGNAL(clicked(bool)),  this,   SLOT(set_angle_Z()));
-
-    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
-
-    connect(ui->widget,     SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(ui->widget,     SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(ui->widget,     SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(ui->widget,     SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-
+    init_widgets();
     createTestBar();
     installEventFilter(this);
 
@@ -142,6 +102,58 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_widgets(void)
+{
+    ui->widget->setMinimumSize(800, 600);
+
+    ui->dsb_X->setRange(-100, 100);
+    ui->dsb_Y->setRange(-100, 100);
+    ui->dsb_Z->setRange(-100, 100);
+
+    ui->dsb_angle_X->setRange(-100, 100);
+    ui->dsb_angle_Y->setRange(-100, 100);
+    ui->dsb_angle_Z->setRange(-100, 100);
+
+    ui->dsb_X->setSingleStep(0.01);
+    ui->dsb_Y->setSingleStep(0.01);
+    ui->dsb_Z->setSingleStep(0.01);
+
+    ui->dsb_angle_X->setSingleStep(0.01);
+    ui->dsb_angle_Y->setSingleStep(0.01);
+    ui->dsb_angle_Z->setSingleStep(0.01);
+
+    connect(ui->btn_get_X,  SIGNAL(clicked(bool)),  this,   SLOT(get_X()));
+    connect(ui->btn_get_Y,  SIGNAL(clicked(bool)),  this,   SLOT(get_Y()));
+    connect(ui->btn_get_Z,  SIGNAL(clicked(bool)),  this,   SLOT(get_Z()));
+
+    connect(ui->btn_set_X,  SIGNAL(clicked(bool)),  this,   SLOT(set_X()));
+    connect(ui->btn_set_Y,  SIGNAL(clicked(bool)),  this,   SLOT(set_Y()));
+    connect(ui->btn_set_Z,  SIGNAL(clicked(bool)),  this,   SLOT(set_Z()));
+
+    connect(ui->dsb_X,      SIGNAL(valueChanged(double)),   this,   SLOT(set_X()));
+    connect(ui->dsb_Y,      SIGNAL(valueChanged(double)),   this,   SLOT(set_Y()));
+    connect(ui->dsb_Z,      SIGNAL(valueChanged(double)),   this,   SLOT(set_Z()));
+
+    connect(ui->btn_get_angle_X,    SIGNAL(clicked(bool)),  this,   SLOT(get_angle_X()));
+    connect(ui->btn_get_angle_Y,    SIGNAL(clicked(bool)),  this,   SLOT(get_angle_Y()));
+    connect(ui->btn_get_angle_Z,    SIGNAL(clicked(bool)),  this,   SLOT(get_angle_Z()));
+
+    connect(ui->btn_set_angle_X,    SIGNAL(clicked(bool)),  this,   SLOT(set_angle_X()));
+    connect(ui->btn_set_angle_Y,    SIGNAL(clicked(bool)),  this,   SLOT(set_angle_Y()));
+    connect(ui->btn_set_angle_Z,    SIGNAL(clicked(bool)),  this,   SLOT(set_angle_Z()));
+
+    connect(ui->dsb_angle_X,        SIGNAL(valueChanged(double)),   this,   SLOT(set_angle_X()));
+    connect(ui->dsb_angle_Y,        SIGNAL(valueChanged(double)),   this,   SLOT(set_angle_Y()));
+    connect(ui->dsb_angle_Z,        SIGNAL(valueChanged(double)),   this,   SLOT(set_angle_Z()));
+
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+
+    connect(ui->widget,     SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(ui->widget,     SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(ui->widget,     SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(ui->widget,     SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

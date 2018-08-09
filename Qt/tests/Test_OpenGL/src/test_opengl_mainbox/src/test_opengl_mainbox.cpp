@@ -153,7 +153,12 @@ void MainBox::init_widgets(void)
     connect(ui->widget,     SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(ui->widget,     SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    connect(ui->btn_set,    SIGNAL(clicked(bool)),  this,   SLOT(set_shown_object()));
+    connect(ui->cb_draw,        SIGNAL(toggled(bool)),  this,   SLOT(set_shown_object()));
+    connect(ui->cb_sphere,      SIGNAL(toggled(bool)),  this,   SLOT(set_shown_object()));
+    connect(ui->cb_cylinder,    SIGNAL(toggled(bool)),  this,   SLOT(set_shown_object()));
+    connect(ui->cb_object,      SIGNAL(toggled(bool)),  this,   SLOT(set_shown_object()));
+    connect(ui->cb_object2,     SIGNAL(toggled(bool)),  this,   SLOT(set_shown_object()));
+    connect(ui->cb_cube,        SIGNAL(toggled(bool)),  this,   SLOT(set_shown_object()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

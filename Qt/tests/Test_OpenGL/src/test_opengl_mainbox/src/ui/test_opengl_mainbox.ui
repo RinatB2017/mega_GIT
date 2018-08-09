@@ -251,13 +251,6 @@
            </item>
           </layout>
          </item>
-         <item>
-          <widget class="QPushButton" name="btn_set">
-           <property name="text">
-            <string>set</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
@@ -315,7 +308,6 @@
   <tabstop>cb_object</tabstop>
   <tabstop>cb_object2</tabstop>
   <tabstop>cb_cube</tabstop>
-  <tabstop>btn_set</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -45,14 +45,26 @@ void Mesh_control::init(void)
 
     ui->widget_serial->set_fix_baudrate(115200);
 
+    connect(this,   SIGNAL(info(QString)),  ui->widget_log, SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(debug(QString)), ui->widget_log, SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(error(QString)), ui->widget_log, SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(trace(QString)), ui->widget_log, SLOT(traceLog(QString)));
+
     connect(ui->widget_serial,  SIGNAL(info(QString)),  ui->widget_log, SLOT(infoLog(QString)));
     connect(ui->widget_serial,  SIGNAL(debug(QString)), ui->widget_log, SLOT(debugLog(QString)));
     connect(ui->widget_serial,  SIGNAL(error(QString)), ui->widget_log, SLOT(errorLog(QString)));
     connect(ui->widget_serial,  SIGNAL(trace(QString)), ui->widget_log, SLOT(traceLog(QString)));
+
+    connect(ui->widget_serial,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void Mesh_control::read_data(QByteArray data)
 {
+    if(data.isEmpty())
+    {
+        return;
+    }
+    //emit info(QString("read_data: %1").arg(data.data()));
     emit info(data.data());
 }
 //--------------------------------------------------------------------------------

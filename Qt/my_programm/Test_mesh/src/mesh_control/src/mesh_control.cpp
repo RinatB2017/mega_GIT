@@ -1,0 +1,63 @@
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2018                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include "mesh_control.hpp"
+#include "ui_mesh_control.h"
+//--------------------------------------------------------------------------------
+Mesh_control::Mesh_control(QWidget *parent) :
+    MyWidget(parent),
+    ui(new Ui::Mesh_control)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+Mesh_control::~Mesh_control()
+{
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void Mesh_control::init(void)
+{
+    ui->setupUi(this);
+
+    ui->widget_serial->set_fix_baudrate(115200);
+
+    connect(ui->widget_serial,  SIGNAL(info(QString)),  ui->widget_log, SLOT(infoLog(QString)));
+    connect(ui->widget_serial,  SIGNAL(debug(QString)), ui->widget_log, SLOT(debugLog(QString)));
+    connect(ui->widget_serial,  SIGNAL(error(QString)), ui->widget_log, SLOT(errorLog(QString)));
+    connect(ui->widget_serial,  SIGNAL(trace(QString)), ui->widget_log, SLOT(traceLog(QString)));
+}
+//--------------------------------------------------------------------------------
+void Mesh_control::read_data(QByteArray data)
+{
+    emit info(data.data());
+}
+//--------------------------------------------------------------------------------
+void Mesh_control::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------

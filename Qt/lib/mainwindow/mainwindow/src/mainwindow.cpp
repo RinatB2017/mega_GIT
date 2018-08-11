@@ -1136,7 +1136,8 @@ bool MainWindow::add_dock_widget(QString title,
                         Qt::BottomDockWidgetArea);
 
     addDockWidget(area, dw);
-    m_app_windowsmenu->addAction(dw->toggleViewAction());
+    //m_app_windowsmenu->addAction(dw->toggleViewAction());
+    add_windowsmenu_action(dw, dw->toggleViewAction());
 
     return true;
 }

@@ -63,12 +63,15 @@ void MainBox::init(void)
     Mesh_control *control0 = new Mesh_control(this);
     Mesh_control *control1 = new Mesh_control(this);
     Mesh_control *control2 = new Mesh_control(this);
+    Mesh_control *control3 = new Mesh_control(this);
 
-    mw->add_dock_widget("Serial0", "serial0", Qt::RightDockWidgetArea, control0);
-    mw->add_dock_widget("Serial1", "serial1", Qt::RightDockWidgetArea, control1);
-    mw->add_dock_widget("Serial2", "serial2", Qt::RightDockWidgetArea, control2);
+    mw->add_dock_widget("Serial0", "serial0", Qt::LeftDockWidgetArea,   control0);
+    mw->add_dock_widget("Serial1", "serial1", Qt::RightDockWidgetArea,  control1);
+    mw->add_dock_widget("Serial2", "serial2", Qt::LeftDockWidgetArea,   control2);
+    mw->add_dock_widget("Serial3", "serial3", Qt::RightDockWidgetArea,  control3);
 
-    setFixedSize(1, 1);
+    setFixedSize(10, 10);
+    setStyleSheet("background:green;");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

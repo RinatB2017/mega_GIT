@@ -34,7 +34,10 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <widget class="Mesh_Led" name="widget_led" native="true"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -45,9 +48,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="Mesh_Led" name="widget_led" native="true"/>
      </item>
     </layout>
    </item>

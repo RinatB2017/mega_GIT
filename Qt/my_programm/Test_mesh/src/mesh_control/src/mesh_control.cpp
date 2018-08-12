@@ -45,6 +45,11 @@ void Mesh_control::init(void)
 
     ui->widget_serial->set_fix_baudrate(115200);
 
+    connect(this,   SIGNAL(send(QString)),  ui->widget_serial,  SLOT(input(QString)));
+
+    connect(ui->btn_ON,     SIGNAL(clicked(bool)),  this,   SLOT(led_on()));
+    connect(ui->btn_OFF,    SIGNAL(clicked(bool)),  this,   SLOT(led_off()));
+
     connect(this,   SIGNAL(info(QString)),  ui->widget_log, SLOT(infoLog(QString)));
     connect(this,   SIGNAL(debug(QString)), ui->widget_log, SLOT(debugLog(QString)));
     connect(this,   SIGNAL(error(QString)), ui->widget_log, SLOT(errorLog(QString)));
@@ -65,7 +70,27 @@ void Mesh_control::read_data(QByteArray data)
         return;
     }
     //emit info(QString("read_data: %1").arg(data.data()));
+
+    if(data.contains("led ON"))
+    {
+        ui->widget_led->setState(true);
+    }
+    if(data.contains("led OFF"))
+    {
+        ui->widget_led->setState(false);
+    }
+
     emit info(data.data());
+}
+//--------------------------------------------------------------------------------
+void Mesh_control::led_on(void)
+{
+    emit send("1");
+}
+//--------------------------------------------------------------------------------
+void Mesh_control::led_off(void)
+{
+    emit send("0");
 }
 //--------------------------------------------------------------------------------
 void Mesh_control::updateText(void)

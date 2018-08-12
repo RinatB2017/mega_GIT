@@ -70,8 +70,8 @@ void MainBox::init(void)
     mw->add_dock_widget("Serial2", "serial2", Qt::LeftDockWidgetArea,   control2);
     mw->add_dock_widget("Serial3", "serial3", Qt::RightDockWidgetArea,  control3);
 
-    setFixedSize(10, 10);
-    setStyleSheet("background:green;");
+    setFixedSize(0, 0);
+    //setStyleSheet("background:green;");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

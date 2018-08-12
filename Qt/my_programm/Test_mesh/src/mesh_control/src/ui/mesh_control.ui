@@ -20,6 +20,20 @@
       <widget class="SerialBox5_fix_baudrate" name="widget_serial" native="true"/>
      </item>
      <item>
+      <widget class="QToolButton" name="btn_ON">
+       <property name="text">
+        <string>1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_OFF">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

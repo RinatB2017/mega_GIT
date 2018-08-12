@@ -35,8 +35,14 @@ public:
     explicit Mesh_control(QWidget *parent = 0);
     ~Mesh_control();
 
+signals:
+    void send(QString msg);
+
 private slots:
     void read_data(QByteArray data);
+
+    void led_on(void);
+    void led_off(void);
 
 private:
     Ui::Mesh_control *ui;

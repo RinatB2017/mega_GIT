@@ -76,8 +76,8 @@ int main(int argc, char *argv[])
     serial2->add_menu(4);
 
     QWidget *cw = new QWidget(main_window->getThis());
-    cw->setStyleSheet("background:green;");
-    cw->setFixedSize(10, 10);
+    //cw->setStyleSheet("background:green;");
+    cw->setFixedSize(0, 0);
 
     main_window->setCentralWidget(cw);
     main_window->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  serial);

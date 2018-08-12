@@ -54,7 +54,8 @@ SOURCES += \
 
 FORMS   += mesh_mainbox.ui
 
-OTHER_FILES += Mesh_unit/Mesh_unit.ino
+OTHER_FILES += arduino/Mesh_unit/Mesh_unit.ino
+OTHER_FILES += arduino/basic/basic.ino
 
 win32 {
     RC_FILE = ico/myapp.rc

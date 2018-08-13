@@ -32,7 +32,7 @@ class Mesh_control : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Mesh_control(QWidget *parent = 0);
+    explicit Mesh_control(QString o_name, QWidget *parent = 0);
     ~Mesh_control();
 
 signals:

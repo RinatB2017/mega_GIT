@@ -35,12 +35,14 @@ public:
     LogBox(QWidget *parent);
     LogBox(const QString &o_name,
            QWidget *parent,
-           unsigned int min_width  = 1,
-           unsigned int min_height = 1);
+           int min_width  = 1,
+           int min_height = 1);
     ~LogBox();
 
     void load_settings(void);
     void save_settings(void);
+
+    void set_o_name(QString value);
 
     void updateText(void);
 

@@ -60,10 +60,10 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
-    Mesh_control *control0 = new Mesh_control(this);
-    Mesh_control *control1 = new Mesh_control(this);
-    Mesh_control *control2 = new Mesh_control(this);
-    Mesh_control *control3 = new Mesh_control(this);
+    Mesh_control *control0 = new Mesh_control("control0", this);
+    Mesh_control *control1 = new Mesh_control("control1", this);
+    Mesh_control *control2 = new Mesh_control("control2", this);
+    Mesh_control *control3 = new Mesh_control("control3", this);
 
     mw->add_dock_widget("Serial0", "serial0", Qt::LeftDockWidgetArea,   control0);
     mw->add_dock_widget("Serial1", "serial1", Qt::RightDockWidgetArea,  control1);

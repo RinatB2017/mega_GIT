@@ -44,8 +44,8 @@ LogBox::LogBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 LogBox::LogBox(const QString &o_name,
                QWidget *parent,
-               unsigned int min_width,
-               unsigned int min_height) :
+               int min_width,
+               int min_height) :
     QFrame(parent),
     o_name(o_name),
     flagNoCRLF(false),
@@ -56,9 +56,9 @@ LogBox::LogBox(const QString &o_name,
 {
     init();
 
-    if(min_width != 0)
+    if(min_width > 0)
         setMinimumWidth(min_width);
-    if(min_height != 0)
+    if(min_height > 0)
         setMinimumHeight(min_height);
 }
 //--------------------------------------------------------------------------------
@@ -66,6 +66,8 @@ LogBox::~LogBox()
 {
     Q_CHECK_PTR(logBox);
     Q_CHECK_PTR(progressBar);
+
+    //qDebug() << "logbox is closed!";
 
     save_settings();
 
@@ -76,7 +78,11 @@ LogBox::~LogBox()
 void LogBox::init(void)
 {
     create_widgets();
-    load_settings();
+
+    if(o_name.isEmpty() == false)
+    {
+        load_settings();
+    }
 
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(logBox, SIGNAL(customContextMenuRequested(QPoint)),   this, SLOT(popup(QPoint)));
@@ -372,18 +378,18 @@ void LogBox::colorLog(const QString &text,
         temp = text;
     }
 
-//#ifdef Q_OS_LINUX
-//    //TODO белый цвет, если тема темная
-//    QColor cb = QColor(Qt::white);
-//#else
-//    QColor cb = logBox->textBackgroundColor();
-//#endif
+    //#ifdef Q_OS_LINUX
+    //    //TODO белый цвет, если тема темная
+    //    QColor cb = QColor(Qt::white);
+    //#else
+    //    QColor cb = logBox->textBackgroundColor();
+    //#endif
 
     flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
     flagColor ? logBox->setTextColor(text_color) : logBox->setTextColor(QColor(Qt::black));
 
     // восстанавливаем цвет фона
-//    logBox->setTextBackgroundColor(cb);
+    //    logBox->setTextBackgroundColor(cb);
 
     if(flagNoCRLF)
         logBox->insertPlainText(temp);
@@ -628,6 +634,15 @@ void LogBox::load_settings(void)
     flagErrorAsMessage = settings->value("ErrorAsMessage", false).toBool();
     flagTextIsWindows  = settings->value("TextIsWindows", false).toBool();
 
+#ifdef QT_DEBUG
+    qDebug() << "logbox: load settings";
+    qDebug() << "flagNoCRLF" << flagNoCRLF;
+    qDebug() << "flagAddDateTime" << flagAddDateTime;
+    qDebug() << "flagColor" << flagColor;
+    qDebug() << "flagErrorAsMessage" << flagErrorAsMessage;
+    qDebug() << "flagTextIsWindows" << flagTextIsWindows;
+#endif
+
     QFont font;
     QString font_name;
     int font_weight = 0;
@@ -657,6 +672,7 @@ void LogBox::save_settings(void)
 #endif
 
     QString text = o_name;
+    //if(text.isEmpty())  text = objectName();
     if(text.isEmpty())  text = "RS-232";
 
 #ifndef SAVE_INI
@@ -664,26 +680,39 @@ void LogBox::save_settings(void)
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
-    if(settings)
-    {
-        settings->beginGroup(text);
-        settings->setValue("readOnly",      (bool)logBox->isReadOnly());
-        settings->setValue("acceptRichText",(bool)logBox->acceptRichText());
-        settings->setValue("no_CRLF",       (bool)flagNoCRLF);
-        settings->setValue("addDateTime",   (bool)flagAddDateTime);
-        settings->setValue("color",         (bool)flagColor);
-        settings->setValue("ErrorAsMessage",(bool)flagErrorAsMessage);
-        settings->setValue("TextIsWindows", (bool)flagTextIsWindows);
+    Q_CHECK_PTR(settings);
 
-#ifndef NO_LOG
-        QFont font = get_font();
-        settings->setValue("FontWeight",  font.weight());
-        settings->setValue("FontSize",    font.pointSize());
-        settings->setValue("FontName",    font.family());
+#ifdef QT_DEBUG
+    qDebug() << "logbox: save settings";
+    qDebug() << "flagNoCRLF" << flagNoCRLF;
+    qDebug() << "flagAddDateTime" << flagAddDateTime;
+    qDebug() << "flagColor" << flagColor;
+    qDebug() << "flagErrorAsMessage" << flagErrorAsMessage;
+    qDebug() << "flagTextIsWindows" << flagTextIsWindows;
 #endif
 
-        settings->endGroup();
-        settings->deleteLater();
-    }
+    settings->beginGroup(text);
+    settings->setValue("readOnly",      (bool)logBox->isReadOnly());
+    settings->setValue("acceptRichText",(bool)logBox->acceptRichText());
+    settings->setValue("no_CRLF",       (bool)flagNoCRLF);
+    settings->setValue("addDateTime",   (bool)flagAddDateTime);
+    settings->setValue("color",         (bool)flagColor);
+    settings->setValue("ErrorAsMessage",(bool)flagErrorAsMessage);
+    settings->setValue("TextIsWindows", (bool)flagTextIsWindows);
+
+#ifndef NO_LOG
+    QFont font = get_font();
+    settings->setValue("FontWeight",  font.weight());
+    settings->setValue("FontSize",    font.pointSize());
+    settings->setValue("FontName",    font.family());
+#endif
+
+    settings->endGroup();
+    settings->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void LogBox::set_o_name(QString value)
+{
+    o_name = value;
 }
 //--------------------------------------------------------------------------------

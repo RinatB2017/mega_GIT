@@ -27,10 +27,12 @@
 #include "mesh_control.hpp"
 #include "ui_mesh_control.h"
 //--------------------------------------------------------------------------------
-Mesh_control::Mesh_control(QWidget *parent) :
+Mesh_control::Mesh_control(QString o_name, QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Mesh_control)
 {
+    if(o_name.isEmpty())    o_name = "noname";
+    setObjectName(o_name);
     init();
 }
 //--------------------------------------------------------------------------------
@@ -44,6 +46,10 @@ void Mesh_control::init(void)
     ui->setupUi(this);
 
     ui->widget_serial->set_fix_baudrate(115200);
+    ui->widget_log->set_o_name(QString("%1_log").arg(objectName()));
+    ui->widget_log->load_settings();
+
+    //qDebug() << "ui->widget_log->objectName()" << ui->widget_log->objectName();
 
     connect(this,   SIGNAL(send(QString)),  ui->widget_serial,  SLOT(input(QString)));
 

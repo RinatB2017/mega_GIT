@@ -55,11 +55,6 @@ void Mesh_control::init(void)
     connect(this,   SIGNAL(error(QString)), ui->widget_log, SLOT(errorLog(QString)));
     connect(this,   SIGNAL(trace(QString)), ui->widget_log, SLOT(traceLog(QString)));
 
-    connect(ui->widget_serial,  SIGNAL(info(QString)),  ui->widget_log, SLOT(infoLog(QString)));
-    connect(ui->widget_serial,  SIGNAL(debug(QString)), ui->widget_log, SLOT(debugLog(QString)));
-    connect(ui->widget_serial,  SIGNAL(error(QString)), ui->widget_log, SLOT(errorLog(QString)));
-    connect(ui->widget_serial,  SIGNAL(trace(QString)), ui->widget_log, SLOT(traceLog(QString)));
-
     connect(ui->widget_serial,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
@@ -69,27 +64,27 @@ void Mesh_control::read_data(QByteArray data)
     {
         return;
     }
-    //emit info(QString("read_data: %1").arg(data.data()));
+    emit info(data.data());
 
-    if(data.contains("led ON"))
+    if(data.contains("led_ON"))
     {
         ui->widget_led->setState(true);
     }
-    if(data.contains("led OFF"))
+    if(data.contains("led_OFF"))
     {
         ui->widget_led->setState(false);
     }
-
-    emit info(data.data());
 }
 //--------------------------------------------------------------------------------
 void Mesh_control::led_on(void)
 {
+    emit debug("send 1");
     emit send("1");
 }
 //--------------------------------------------------------------------------------
 void Mesh_control::led_off(void)
 {
+    emit debug("send 0");
     emit send("0");
 }
 //--------------------------------------------------------------------------------

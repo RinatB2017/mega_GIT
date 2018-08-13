@@ -25,9 +25,6 @@ Task taskSendMessage( TASK_SECOND * 1 , TASK_FOREVER, &sendMessage );
 
 void sendMessage()
 {
-  //String msg = "Hello from node ";
-  //msg += mesh.getNodeId();
-
   String msg;
   if(led_flag)
   {
@@ -48,13 +45,13 @@ void receivedCallback( uint32_t from, String &msg )
   //Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
   if(msg == "led_ON")
   {
-    Serial.println("====================> led ON <====================");
+    Serial.println("led_ON");
     led_flag = true;
   }
   
   if(msg == "led_OFF")
   {
-    Serial.println("====================> led OFF <====================");
+    Serial.println("led_OFF");
     led_flag = false;
   }
 }

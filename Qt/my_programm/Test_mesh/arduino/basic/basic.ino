@@ -7,35 +7,35 @@
 //
 //************************************************************
 #include "painlessMesh.h"
-
+//--------------------------------------------------------------------------------
 #define   MESH_PREFIX     "whateverYouLike"
 #define   MESH_PASSWORD   "somethingSneaky"
 #define   MESH_PORT       5555
-
+//--------------------------------------------------------------------------------
 int incomingByte = 0;  // для хранения полученного байта
 bool led_flag = false;
-
+//--------------------------------------------------------------------------------
 Scheduler userScheduler; // to control your personal task
 painlessMesh  mesh;
-
+//--------------------------------------------------------------------------------
 // User stub
 void sendMessage() ; // Prototype so PlatformIO doesn't complain
 
 void led_ON(void);
 void led_OFF(void);
-
+//--------------------------------------------------------------------------------
 Task taskSendMessage( TASK_SECOND * 1 , TASK_FOREVER, &sendMessage );
-
+//--------------------------------------------------------------------------------
 void led_ON(void)
 {
     digitalWrite(LED_BUILTIN, LOW);
 }
-
+//--------------------------------------------------------------------------------
 void led_OFF(void)
 {
     digitalWrite(LED_BUILTIN, HIGH);
 }
-
+//--------------------------------------------------------------------------------
 void sendMessage()
 {
     String msg;
@@ -51,7 +51,7 @@ void sendMessage()
     mesh.sendBroadcast( msg );
     taskSendMessage.setInterval( random( TASK_SECOND * 1, TASK_SECOND * 5 ));
 }
-
+//--------------------------------------------------------------------------------
 // Needed for painless library
 void receivedCallback( uint32_t from, String &msg )
 {
@@ -70,22 +70,22 @@ void receivedCallback( uint32_t from, String &msg )
         led_OFF();
     }
 }
-
+//--------------------------------------------------------------------------------
 void newConnectionCallback(uint32_t nodeId)
 {
     //Serial.printf("--> startHere: New Connection, nodeId = %u\n", nodeId);
 }
-
+//--------------------------------------------------------------------------------
 void changedConnectionCallback()
 {
     //Serial.printf("Changed connections %s\n", mesh.subConnectionJson().c_str());
 }
-
+//--------------------------------------------------------------------------------
 void nodeTimeAdjustedCallback(int32_t offset)
 {
     //Serial.printf("Adjusted time %u. Offset = %d\n", mesh.getNodeTime(), offset);
 }
-
+//--------------------------------------------------------------------------------
 void setup()
 {
     Serial.begin(115200);
@@ -105,17 +105,30 @@ void setup()
     pinMode(LED_BUILTIN, OUTPUT);
     led_OFF();
 }
-
+//--------------------------------------------------------------------------------
 void loop()
 {
-    userScheduler.execute(); // it will run mesh scheduler as well
-    mesh.update();
-
     if (Serial.available() > 0)
     {
         incomingByte = Serial.read();
-        if(incomingByte == '1') led_flag = true;
-        if(incomingByte == '0') led_flag = false;
-    }
-}
+        if(incomingByte == '1') 
+        {
+          led_flag = true;
+          led_ON();
+        }
+        if(incomingByte == '0')
+        {
+          led_flag = false;
+          led_OFF();
+        }
 
+        String value = led_flag ? "true" : "false";
+        Serial.println("### led_flag is " + value);
+
+        sendMessage();
+    }
+
+    userScheduler.execute(); // it will run mesh scheduler as well
+    mesh.update();
+}
+//--------------------------------------------------------------------------------

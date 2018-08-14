@@ -21,83 +21,101 @@ painlessMesh  mesh;
 // User stub
 void sendMessage() ; // Prototype so PlatformIO doesn't complain
 
+void led_ON(void);
+void led_OFF(void);
+
 Task taskSendMessage( TASK_SECOND * 1 , TASK_FOREVER, &sendMessage );
+
+void led_ON(void)
+{
+    digitalWrite(LED_BUILTIN, LOW);
+}
+
+void led_OFF(void)
+{
+    digitalWrite(LED_BUILTIN, HIGH);
+}
 
 void sendMessage()
 {
-  String msg;
-  if(led_flag)
-  {
-    msg = "led_ON";
-  }
-  else
-  {
-    msg = "led_OFF";
-  }
-  
-  mesh.sendBroadcast( msg );
-  taskSendMessage.setInterval( random( TASK_SECOND * 1, TASK_SECOND * 5 ));
+    String msg;
+    if(led_flag)
+    {
+        msg = "led_ON";
+    }
+    else
+    {
+        msg = "led_OFF";
+    }
+
+    mesh.sendBroadcast( msg );
+    taskSendMessage.setInterval( random( TASK_SECOND * 1, TASK_SECOND * 5 ));
 }
 
 // Needed for painless library
 void receivedCallback( uint32_t from, String &msg )
 {
-  //Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
-  if(msg == "led_ON")
-  {
-    Serial.println("led_ON");
-    led_flag = true;
-  }
-  
-  if(msg == "led_OFF")
-  {
-    Serial.println("led_OFF");
-    led_flag = false;
-  }
+    //Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
+    if(msg == "led_ON")
+    {
+        Serial.println("led_ON");
+        led_flag = true;
+        led_ON();
+    }
+
+    if(msg == "led_OFF")
+    {
+        Serial.println("led_OFF");
+        led_flag = false;
+        led_OFF();
+    }
 }
 
 void newConnectionCallback(uint32_t nodeId)
 {
-  //Serial.printf("--> startHere: New Connection, nodeId = %u\n", nodeId);
+    //Serial.printf("--> startHere: New Connection, nodeId = %u\n", nodeId);
 }
 
 void changedConnectionCallback()
 {
-  //Serial.printf("Changed connections %s\n", mesh.subConnectionJson().c_str());
+    //Serial.printf("Changed connections %s\n", mesh.subConnectionJson().c_str());
 }
 
 void nodeTimeAdjustedCallback(int32_t offset)
 {
-  //Serial.printf("Adjusted time %u. Offset = %d\n", mesh.getNodeTime(), offset);
+    //Serial.printf("Adjusted time %u. Offset = %d\n", mesh.getNodeTime(), offset);
 }
 
 void setup()
 {
-  Serial.begin(115200);
+    Serial.begin(115200);
 
-  //mesh.setDebugMsgTypes( ERROR | MESH_STATUS | CONNECTION | SYNC | COMMUNICATION | GENERAL | MSG_TYPES | REMOTE ); // all types on
-  mesh.setDebugMsgTypes( ERROR | STARTUP );  // set before init() so that you can see startup messages
+    //mesh.setDebugMsgTypes( ERROR | MESH_STATUS | CONNECTION | SYNC | COMMUNICATION | GENERAL | MSG_TYPES | REMOTE ); // all types on
+    mesh.setDebugMsgTypes( ERROR | STARTUP );  // set before init() so that you can see startup messages
 
-  mesh.init( MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT );
-  mesh.onReceive(&receivedCallback);
-  mesh.onNewConnection(&newConnectionCallback);
-  mesh.onChangedConnections(&changedConnectionCallback);
-  mesh.onNodeTimeAdjusted(&nodeTimeAdjustedCallback);
+    mesh.init( MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT );
+    mesh.onReceive(&receivedCallback);
+    mesh.onNewConnection(&newConnectionCallback);
+    mesh.onChangedConnections(&changedConnectionCallback);
+    mesh.onNodeTimeAdjusted(&nodeTimeAdjustedCallback);
 
-  userScheduler.addTask( taskSendMessage );
-  taskSendMessage.enable();
+    userScheduler.addTask( taskSendMessage );
+    taskSendMessage.enable();
+
+    pinMode(LED_BUILTIN, OUTPUT);
+    led_OFF();
 }
 
 void loop()
 {
-  userScheduler.execute(); // it will run mesh scheduler as well
-  mesh.update();
+    userScheduler.execute(); // it will run mesh scheduler as well
+    mesh.update();
 
-  if (Serial.available() > 0) 
-  {  
-    incomingByte = Serial.read();
-    if(incomingByte == '1') led_flag = true;
-    if(incomingByte == '0') led_flag = false;
-  }
+    if (Serial.available() > 0)
+    {
+        incomingByte = Serial.read();
+        if(incomingByte == '1') led_flag = true;
+        if(incomingByte == '0') led_flag = false;
+    }
 }
 

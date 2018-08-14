@@ -76,6 +76,11 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
+    void add_serial0(void);
+    void add_serial1(void);
+    void add_serial2(void);
+    void add_serial3(void);
+
     void init(void);
     void createTestBar(void);
     void updateText(void);

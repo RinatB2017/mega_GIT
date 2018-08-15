@@ -59,11 +59,10 @@ void MainBox::init(void)
 
     add_serial0();
     add_serial1();
-    //add_serial2();
-    //add_serial3();
+    add_serial2();
+    add_serial3();
 
     setFixedSize(0, 0);
-    //setStyleSheet("background:green;");
 }
 //--------------------------------------------------------------------------------
 void MainBox::add_serial0(void)

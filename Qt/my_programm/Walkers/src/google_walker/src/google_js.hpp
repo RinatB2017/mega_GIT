@@ -18,44 +18,23 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#ifndef GOOGLE_JS_HPP
+#define GOOGLE_JS_HPP
 //--------------------------------------------------------------------------------
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#include <QWebEngineView>
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class Youtube_walker;
-class Google_walker;
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Google_JS : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = 0);
-    ~MainBox();
+    explicit Google_JS(QWidget *parent = 0);
+    ~Google_JS();
 
-private slots:
-    void test(void);
-
-private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
-
-    Youtube_walker *youtube_walker = nullptr;
-    Google_walker *google_walker = nullptr;
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // GOOGLE_JS_HPP

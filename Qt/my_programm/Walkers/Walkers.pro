@@ -37,6 +37,7 @@ LIB_PATH = "../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/youtube_walker/youtube_walker.pri)
+include (src/google_walker/google_walker.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

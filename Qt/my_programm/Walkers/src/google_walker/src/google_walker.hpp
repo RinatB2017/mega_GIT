@@ -18,44 +18,43 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-//--------------------------------------------------------------------------------
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef GOOGLE_WALKER_HPP
+#define GOOGLE_WALKER_HPP
 //--------------------------------------------------------------------------------
 #include <QWebEngineView>
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class Youtube_walker;
-class Google_walker;
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Google_walker : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = 0);
-    ~MainBox();
+    explicit Google_walker(QWidget *parent = 0);
+    ~Google_walker();
+
+    void setUrl(QUrl url);
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+    void send(const QString &);
 
 private slots:
-    void test(void);
+    void test_JS(bool);
+    void find_url(const QString &text);
+
+    void load_url(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    QWebEngineView *viewer = nullptr;
+    QList<QString> urls;
 
-    Youtube_walker *youtube_walker = nullptr;
-    Google_walker *google_walker = nullptr;
+    QString current_url;
 
     void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // GOOGLE_WALKER_HPP

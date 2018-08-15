@@ -32,6 +32,7 @@
 #include "walkers.hpp"
 //--------------------------------------------------------------------------------
 #include "youtube_walker.hpp"
+#include "google_walker.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -47,6 +48,18 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    if(youtube_walker)
+    {
+        youtube_walker->disconnect();
+        youtube_walker->close();
+        youtube_walker->deleteLater();
+    }
+    if(google_walker)
+    {
+        google_walker->disconnect();
+        google_walker->close();
+        google_walker->deleteLater();
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -57,6 +70,20 @@ void MainBox::init(void)
     createTestBar();
 
 #if 1
+    google_walker = new Google_walker(this);
+    connect(google_walker, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(google_walker, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(google_walker, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(google_walker, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(google_walker);
+    setLayout(vbox);
+
+    google_walker->setUrl(QUrl("https://www.google.com/"));
+#endif
+
+#if 0
     youtube_walker = new Youtube_walker(this);
     connect(youtube_walker, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(youtube_walker, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
@@ -68,7 +95,9 @@ void MainBox::init(void)
     setLayout(vbox);
 
     youtube_walker->setUrl(QUrl("https://www.youtube.com/"));
-#else
+#endif
+
+#if 0
     QGridLayout *grid = new QGridLayout;
     int x = 0;
     int y = 0;

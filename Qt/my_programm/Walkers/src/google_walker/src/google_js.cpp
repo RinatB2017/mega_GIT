@@ -18,44 +18,24 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "google_js.hpp"
 //--------------------------------------------------------------------------------
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
-#include <QWebEngineView>
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class Youtube_walker;
-class Google_walker;
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Google_JS::Google_JS(QWidget *parent) :
+    QWidget(parent)
+{
+    QTextEdit *te = new QTextEdit(this);
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(te);
+
+    QPushButton *btn_run = new QPushButton(this);
+    btn_run->setText("RUN");
+    vbox->addWidget(btn_run);
+
+    setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+Google_JS::~Google_JS()
 {
-    Q_OBJECT
 
-public:
-    MainBox(QWidget *parent = 0);
-    ~MainBox();
-
-private slots:
-    void test(void);
-
-private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
-
-    Youtube_walker *youtube_walker = nullptr;
-    Google_walker *google_walker = nullptr;
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
-};
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

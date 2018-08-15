@@ -35,6 +35,15 @@ public:
     explicit Google_JS(QWidget *parent = 0);
     ~Google_JS();
 
+signals:
+    void send(const QString &);
+
+private slots:
+    void send_javascript(void);
+
+private:
+    QTextEdit *te = 0;
+
 };
 //--------------------------------------------------------------------------------
 #endif // GOOGLE_JS_HPP

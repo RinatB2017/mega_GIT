@@ -23,12 +23,16 @@
 Google_JS::Google_JS(QWidget *parent) :
     QWidget(parent)
 {
-    QTextEdit *te = new QTextEdit(this);
+    te = new QTextEdit(this);
+    te->setObjectName("js_textedit");
+
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(te);
 
     QPushButton *btn_run = new QPushButton(this);
     btn_run->setText("RUN");
+    connect(btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(send_javascript()));
+
     vbox->addWidget(btn_run);
 
     setLayout(vbox);
@@ -36,6 +40,19 @@ Google_JS::Google_JS(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Google_JS::~Google_JS()
 {
-
+    if(te)
+    {
+        te->deleteLater();
+    }
+}
+//--------------------------------------------------------------------------------
+void Google_JS::send_javascript(void)
+{
+    QString text = te->toPlainText();
+    if(text.isEmpty())
+    {
+        return;
+    }
+    emit send(text);
 }
 //--------------------------------------------------------------------------------

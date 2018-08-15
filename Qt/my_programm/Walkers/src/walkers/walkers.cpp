@@ -48,6 +48,8 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("Walkers");
+
     if(youtube_walker)
     {
         youtube_walker->disconnect();
@@ -129,6 +131,8 @@ void MainBox::init(void)
 
     setLayout(hbox);
 #endif
+
+    load_widgets("Walkers");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

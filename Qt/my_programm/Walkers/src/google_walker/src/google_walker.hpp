@@ -47,6 +47,7 @@ private slots:
     void find_url(const QString &text);
 
     void load_url(void);
+    void run_js(const QString &javascript);
 
 private:
     QWebEngineView *viewer = nullptr;

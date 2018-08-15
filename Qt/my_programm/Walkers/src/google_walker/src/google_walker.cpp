@@ -49,6 +49,8 @@ void Google_walker::init(void)
     Q_CHECK_PTR(mw);
 
     Google_JS *gjs = new Google_JS(this);
+    connect(gjs,    SIGNAL(send(QString)),  this,   SLOT(run_js(QString)));
+
     mw->add_dock_widget("JS", "JS", Qt::RightDockWidgetArea, gjs);
     //---
 
@@ -89,6 +91,20 @@ void Google_walker::test_JS(bool)
     {
         //emit info(v.toString());
         emit send(v.toString());
+    });
+}
+//--------------------------------------------------------------------------------
+void Google_walker::run_js(const QString &javascript)
+{
+    if(javascript.isEmpty())
+    {
+        emit error("no script");
+        return;
+    }
+
+    viewer->page()->runJavaScript(javascript, [=](const QVariant &v)
+    {
+        emit info(v.toString());
     });
 }
 //--------------------------------------------------------------------------------

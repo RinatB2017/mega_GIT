@@ -170,6 +170,7 @@ void MyMainWindow::create_toolbars(void)
     }
 
     toolBar->setMovable(true);
+    add_windowsmenu_action(toolBar, toolBar->toggleViewAction());
 
     //---
 
@@ -192,6 +193,7 @@ void MyMainWindow::create_toolbars(void)
     }
 
     toolBar2->setMovable(true);
+    add_windowsmenu_action(toolBar2, toolBar2->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MyMainWindow::click_btn(void)

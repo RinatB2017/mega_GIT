@@ -125,6 +125,8 @@ void MainBox::createTestBar(void)
 
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 #if 0
@@ -207,12 +209,38 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include "pixmaploader.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QString host_str = "https://ru.wikipedia.org/wiki/Favicon";
+    //QString host_str = "https://www.youtube.com/watch?v=hUzZLkjedg4";
+
+    QUrl url(host_str);
+    emit info(QString("host_str [%1]").arg(host_str));
+    emit info(QString("scheme [%1]").arg(url.scheme()));
+    emit info(QString("host   [%1]").arg(url.host()));
+    emit info(QString("path   [%1]").arg(url.path()));
+
+    QString new_url = QString("%1://%2/favicon.ico")
+            .arg(url.scheme())
+            .arg(url.host());
+    emit info(new_url);
+
+    QLabel *label = new QLabel;
+    PixmapLoader *pixmapLoader = new PixmapLoader(this);
+
+    QObject::connect(pixmapLoader,  SIGNAL(loaded(QPixmap)),    label,  SLOT(setPixmap(QPixmap)));
+
+    pixmapLoader->load(new_url);
+
+    label->show();
+#endif
+
+#if 0
     for(int n=5; n>=0; n--)
     {
         emit info(QString("%1").arg(n));

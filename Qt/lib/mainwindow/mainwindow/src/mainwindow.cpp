@@ -795,6 +795,8 @@ void MainWindow::createStyleToolBar(void)
     }
 
     addToolBar(Qt::LeftToolBarArea, styletoolbar);
+
+    add_windowsmenu_action(styletoolbar, styletoolbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::help(void)

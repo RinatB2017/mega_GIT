@@ -15,6 +15,8 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 #QMAKE_CXXFLAGS += -fno-show-column
 
+QT  += network
+
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 #
@@ -97,6 +99,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
+
+include (src/pixmaploader/pixmaploader.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

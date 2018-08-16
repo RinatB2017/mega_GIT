@@ -44,22 +44,24 @@ void Google_walker::init(void)
     viewer = new QWebEngineView(this);
     viewer->page()->setAudioMuted(true);
 
-    //---
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
-
     Google_JS *gjs = new Google_JS(this);
     connect(gjs,    SIGNAL(send(QString)),  this,   SLOT(run_js(QString)));
 
-    mw->add_dock_widget("JS", "JS", Qt::RightDockWidgetArea, gjs);
-    //---
+    QSplitter *splitter = new QSplitter(Qt::Horizontal);
+    splitter->addWidget(viewer);
+    splitter->addWidget(gjs);
+
+    splitter->setCollapsible(0, false);
+    splitter->setCollapsible(1, false);
+
+    splitter->setStretchFactor(0, 1);
+    splitter->setStretchFactor(1, 0);
 
     QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(viewer);
+    vbox->addWidget(splitter);
     setLayout(vbox);
 
-    //connect(viewer->page(), SIGNAL(loadFinished(bool)), this,   SLOT(test_JS(bool)));
-    //connect(this,           SIGNAL(send(QString)),      this,   SLOT(find_url(QString)));
+    viewer->setUrl(QUrl("https://www.google.com/"));
 }
 //--------------------------------------------------------------------------------
 void Google_walker::test_JS(bool)
@@ -90,7 +92,7 @@ void Google_walker::test_JS(bool)
     viewer->page()->runJavaScript(javascript, [=](const QVariant &v)
     {
         //emit info(v.toString());
-        emit send(v.toString());
+        emit send(QString("v = [%1]").arg(v.toString()));
     });
 }
 //--------------------------------------------------------------------------------
@@ -104,7 +106,7 @@ void Google_walker::run_js(const QString &javascript)
 
     viewer->page()->runJavaScript(javascript, [=](const QVariant &v)
     {
-        emit info(v.toString());
+        emit info(QString("v = [%1]").arg(v.toString()));
     });
 }
 //--------------------------------------------------------------------------------

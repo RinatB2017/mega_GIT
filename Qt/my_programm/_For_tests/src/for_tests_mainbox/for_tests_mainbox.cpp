@@ -215,6 +215,24 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 0
+    QTextEdit *te1 = new QTextEdit;
+    QTextEdit *te2 = new QTextEdit;
+
+    te1->setPlainText("1");
+    te2->setPlainText("2");
+
+    QSplitter *splitter = new QSplitter(Qt::Horizontal);
+
+    splitter->addWidget(te1);
+    splitter->addWidget(te2);
+
+    splitter->setCollapsible(0, false);
+    splitter->setCollapsible(1, false);
+
+    splitter->show();
+#endif
+
 #if 1
     QString host_str = "https://ru.wikipedia.org/wiki/Favicon";
     //QString host_str = "https://www.youtube.com/watch?v=hUzZLkjedg4";

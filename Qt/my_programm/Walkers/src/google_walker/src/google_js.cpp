@@ -24,7 +24,25 @@ Google_JS::Google_JS(QWidget *parent) :
     QWidget(parent)
 {
     te = new QTextEdit(this);
-    te->setObjectName("js_textedit");
+    te->setObjectName("te_javascript");
+
+#if 0
+    function myFunction()
+    {
+       var x=document.forms["f"]["q"].value;"
+       return x;
+    }
+    myFunction();
+#endif
+
+#if 0
+    te->append("function myFunction()");
+    te->append("{");
+    te->append("   var x=document.forms[\"f\"][\"q\"].value;");
+    te->append("   return x;");
+    te->append("}");
+    te->append("myFunction();");
+#endif
 
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(te);

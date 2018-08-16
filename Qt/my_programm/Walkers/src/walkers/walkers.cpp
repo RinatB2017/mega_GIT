@@ -153,12 +153,31 @@ void MainBox::createTestBar(void)
 
     connect(btnTest, SIGNAL(clicked()), this, SLOT(test()));
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());    //TODO странно
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     emit info("test");
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+
+    //QList<QDockWidget *> all_dw = mw->findChildren<QDockWidget *>();
+    //emit info(QString("all_dw: cnt %1").arg(all_dw.count()));
+
+    QList<QTextEdit *> allobj = mw->findChildren<QTextEdit *>();
+    emit info(QString("allobj: cnt %1").arg(allobj.count()));
+    foreach (QTextEdit *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            emit error(obj->objectName());
+            emit info(obj->toPlainText());
+        }
+    }
+
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

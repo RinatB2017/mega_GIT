@@ -57,12 +57,37 @@ void MainBox::init(void)
 
     createTestBar();
 
+#if 0
     add_serial0();
     add_serial1();
     add_serial2();
     add_serial3();
 
     setFixedSize(0, 0);
+#else
+    Mesh_control *control0 = new Mesh_control("control0", this);
+    Mesh_control *control1 = new Mesh_control("control1", this);
+    Mesh_control *control2 = new Mesh_control("control2", this);
+    Mesh_control *control3 = new Mesh_control("control3", this);
+
+    QSplitter *sp_0 = new QSplitter(Qt::Horizontal);
+    QSplitter *sp_1 = new QSplitter(Qt::Horizontal);
+    QSplitter *sp_2 = new QSplitter(Qt::Vertical);
+
+    sp_0->addWidget(control0);
+    sp_0->addWidget(control1);
+
+    sp_1->addWidget(control2);
+    sp_1->addWidget(control3);
+
+    sp_2->addWidget(sp_0);
+    sp_2->addWidget(sp_1);
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(sp_2);
+
+    setLayout(vbox);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::add_serial0(void)
@@ -135,6 +160,8 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

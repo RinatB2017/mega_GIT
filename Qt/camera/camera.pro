@@ -1,7 +1,14 @@
 TEMPLATE = app
 TARGET = camera
 
-QT += multimedia multimediawidgets
+
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
+
+QT  += multimedia multimediawidgets
+QT  +=widgets
 
 HEADERS = \
     camera.h \
@@ -19,6 +26,6 @@ FORMS += \
     videosettings.ui \
     imagesettings.ui
 
-RESOURCES += camera.qrc
+RESOURCES += images/camera.qrc
 
-QT+=widgets
+VPATH = $$INCLUDEPATH

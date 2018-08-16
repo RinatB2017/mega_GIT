@@ -67,7 +67,8 @@ VideoSettings::VideoSettings(QMediaRecorder *mediaRecorder, QWidget *parent) :
     //audio codecs
     ui->audioCodecBox->addItem(tr("Default audio codec"), QVariant(QString()));
     const QStringList supportedAudioCodecs =  mediaRecorder->supportedAudioCodecs();
-    for (const QString &codecName : supportedAudioCodecs) {
+    for (const QString &codecName : supportedAudioCodecs)
+    {
         QString description = mediaRecorder->audioCodecDescription(codecName);
         ui->audioCodecBox->addItem(codecName + ": " + description, QVariant(codecName));
     }
@@ -82,7 +83,8 @@ VideoSettings::VideoSettings(QMediaRecorder *mediaRecorder, QWidget *parent) :
     //video codecs
     ui->videoCodecBox->addItem(tr("Default video codec"), QVariant(QString()));
     const QStringList supportedVideoCodecs = mediaRecorder->supportedVideoCodecs();
-    for (const QString &codecName : supportedVideoCodecs) {
+    for (const QString &codecName : supportedVideoCodecs)
+    {
         QString description = mediaRecorder->videoCodecDescription(codecName);
         ui->videoCodecBox->addItem(codecName + ": " + description, QVariant(codecName));
     }
@@ -92,14 +94,16 @@ VideoSettings::VideoSettings(QMediaRecorder *mediaRecorder, QWidget *parent) :
 
     ui->videoResolutionBox->addItem(tr("Default"));
     const QList<QSize> supportedResolutions = mediaRecorder->supportedResolutions();
-    for (const QSize &resolution : supportedResolutions) {
+    for (const QSize &resolution : supportedResolutions)
+    {
         ui->videoResolutionBox->addItem(QString("%1x%2").arg(resolution.width()).arg(resolution.height()),
                                         QVariant(resolution));
     }
 
     ui->videoFramerateBox->addItem(tr("Default"));
     const QList<qreal> supportedFrameRates = mediaRecorder->supportedFrameRates();
-    for (qreal rate : supportedFrameRates) {
+    for (qreal rate : supportedFrameRates)
+    {
         QString rateString = QString("%1").arg(rate, 0, 'f', 2);
         ui->videoFramerateBox->addItem(rateString, QVariant(rate));
     }
@@ -107,7 +111,8 @@ VideoSettings::VideoSettings(QMediaRecorder *mediaRecorder, QWidget *parent) :
     //containers
     ui->containerFormatBox->addItem(tr("Default container"), QVariant(QString()));
     const QStringList formats = mediaRecorder->supportedContainers();
-    for (const QString &format : formats) {
+    for (const QString &format : formats)
+    {
         ui->containerFormatBox->addItem(format + ": " + mediaRecorder->containerDescription(format),
                                         QVariant(format));
     }
@@ -121,10 +126,12 @@ VideoSettings::~VideoSettings()
 void VideoSettings::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
-    switch (e->type()) {
+    switch (e->type())
+    {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
+
     default:
         break;
     }
@@ -164,9 +171,11 @@ void VideoSettings::setVideoSettings(const QVideoEncoderSettings &videoSettings)
     ui->videoQualitySlider->setValue(videoSettings.quality());
 
     //special case for frame rate
-    for (int i = 0; i < ui->videoFramerateBox->count(); ++i) {
+    for (int i = 0; i < ui->videoFramerateBox->count(); ++i)
+    {
         qreal itemRate = ui->videoFramerateBox->itemData(i).value<qreal>();
-        if (qFuzzyCompare(itemRate, videoSettings.frameRate())) {
+        if (qFuzzyCompare(itemRate, videoSettings.frameRate()))
+        {
             ui->videoFramerateBox->setCurrentIndex(i);
             break;
         }
@@ -194,8 +203,10 @@ QVariant VideoSettings::boxValue(const QComboBox *box) const
 
 void VideoSettings::selectComboBoxItem(QComboBox *box, const QVariant &value)
 {
-    for (int i = 0; i < box->count(); ++i) {
-        if (box->itemData(i) == value) {
+    for (int i = 0; i < box->count(); ++i)
+    {
+        if (box->itemData(i) == value)
+        {
             box->setCurrentIndex(i);
             break;
         }

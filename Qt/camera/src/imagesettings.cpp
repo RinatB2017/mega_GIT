@@ -67,7 +67,8 @@ ImageSettings::ImageSettings(QCameraImageCapture *imageCapture, QWidget *parent)
     //image codecs
     ui->imageCodecBox->addItem(tr("Default image format"), QVariant(QString()));
     const QStringList supportedImageCodecs = imagecapture->supportedImageCodecs();
-    for (const QString &codecName : supportedImageCodecs) {
+    for (const QString &codecName : supportedImageCodecs)
+    {
         QString description = imagecapture->imageCodecDescription(codecName);
         ui->imageCodecBox->addItem(codecName + ": " + description, QVariant(codecName));
     }
@@ -76,7 +77,8 @@ ImageSettings::ImageSettings(QCameraImageCapture *imageCapture, QWidget *parent)
 
     ui->imageResolutionBox->addItem(tr("Default Resolution"));
     const QList<QSize> supportedResolutions = imagecapture->supportedResolutions();
-    for (const QSize &resolution : supportedResolutions) {
+    for (const QSize &resolution : supportedResolutions)
+    {
         ui->imageResolutionBox->addItem(QString("%1x%2").arg(resolution.width()).arg(resolution.height()),
                                         QVariant(resolution));
     }
@@ -90,10 +92,12 @@ ImageSettings::~ImageSettings()
 void ImageSettings::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
-    switch (e->type()) {
+    switch (e->type())
+    {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
+
     default:
         break;
     }
@@ -127,8 +131,10 @@ QVariant ImageSettings::boxValue(const QComboBox *box) const
 
 void ImageSettings::selectComboBoxItem(QComboBox *box, const QVariant &value)
 {
-    for (int i = 0; i < box->count(); ++i) {
-        if (box->itemData(i) == value) {
+    for (int i = 0; i < box->count(); ++i)
+    {
+        if (box->itemData(i) == value)
+        {
             box->setCurrentIndex(i);
             break;
         }

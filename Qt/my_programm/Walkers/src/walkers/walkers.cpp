@@ -71,33 +71,29 @@ void MainBox::init(void)
 
     createTestBar();
 
-#if 1
     google_walker = new Google_walker(this);
     connect(google_walker, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(google_walker, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(google_walker, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(google_walker, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(google_walker);
-    setLayout(vbox);
-
     google_walker->setUrl(QUrl("https://www.google.com/"));
-#endif
 
-#if 0
     youtube_walker = new Youtube_walker(this);
     connect(youtube_walker, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
     connect(youtube_walker, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
     connect(youtube_walker, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
     connect(youtube_walker, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(youtube_walker);
-    setLayout(vbox);
-
     youtube_walker->setUrl(QUrl("https://www.youtube.com/"));
-#endif
+
+    QTabWidget *tab = new QTabWidget(this);
+    tab->addTab(google_walker, "Google");
+    tab->addTab(youtube_walker, "Youtube");
+
+    QHBoxLayout *box = new QHBoxLayout;
+    box->addWidget(tab);
+    setLayout(box);
 
 #if 0
     QGridLayout *grid = new QGridLayout;

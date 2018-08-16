@@ -29,7 +29,7 @@ Google_JS::Google_JS(QWidget *parent) :
 #if 0
     function myFunction()
     {
-       var x=document.forms["f"]["q"].value;"
+       var x=document.forms["f"]["q"].value;
        return x;
     }
     myFunction();

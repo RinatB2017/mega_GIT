@@ -93,7 +93,11 @@ void LogBox::init(void)
 void LogBox::popup(QPoint)
 {
     QMenu *popup_menu = logBox->createStandardContextMenu();
-    Q_CHECK_PTR(popup_menu);
+    if(popup_menu == nullptr)
+    {
+        //errorLog("cannot create standard context menu");
+        popup_menu = new QMenu;
+    }
 
     popup_menu->setStyleSheet("background:white;color:black;");
 

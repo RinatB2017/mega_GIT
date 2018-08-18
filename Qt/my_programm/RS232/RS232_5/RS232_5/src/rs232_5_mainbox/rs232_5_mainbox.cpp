@@ -57,11 +57,14 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    ui->serial_widget->set_caption("RS232_5");
-    ui->serial_widget->add_menu(2);
+    SerialBox5 *serial_widget = new SerialBox5(this, "RS232_5", "RS232_5");
+    serial_widget->add_menu(2);
+    connect(this,           SIGNAL(send(QByteArray)),   serial_widget,  SLOT(input(QByteArray)));
+    connect(serial_widget,  SIGNAL(output(QByteArray)), this,           SLOT(read_data(QByteArray)));
 
-    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(serial_widget);
+    setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -81,6 +84,8 @@ void MainBox::createTestBar(void)
                                        "test");
     
     connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)

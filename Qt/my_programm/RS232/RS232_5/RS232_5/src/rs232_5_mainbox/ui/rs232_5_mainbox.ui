@@ -13,20 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="SerialBox5" name="serial_widget" native="true"/>
-   </item>
-  </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>SerialBox5</class>
-   <extends>QWidget</extends>
-   <header>serialbox5.hpp</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

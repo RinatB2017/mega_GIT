@@ -63,14 +63,19 @@ void MainBox::init(void)
 
     //createTestBar();
 
-    ui->serial0->set_caption("RS232 (0)");
-    ui->serial1->set_caption("RS232 (1)");
+    SerialBox5 *serial0 = new SerialBox5(this, "RS232 (0)", "RS232 (0)");
+    SerialBox5 *serial1 = new SerialBox5(this, "RS232 (1)", "RS232 (1)");
 
-    ui->serial0->add_menu(1, "RS232 (0)");
-    ui->serial1->add_menu(2, "RS232 (1)");
+    serial0->add_menu(1, "RS232 (0)");
+    serial1->add_menu(2, "RS232 (1)");
 
-    connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->serial1,    SLOT(input(QByteArray)));
-    connect(ui->serial1,    SIGNAL(output(QByteArray)), ui->serial0,    SLOT(input(QByteArray)));
+    connect(serial0,    SIGNAL(output(QByteArray)), serial1,    SLOT(input(QByteArray)));
+    connect(serial1,    SIGNAL(output(QByteArray)), serial0,    SLOT(input(QByteArray)));
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(serial0);
+    vbox->addWidget(serial1);
+    setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

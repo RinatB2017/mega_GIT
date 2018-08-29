@@ -7,8 +7,8 @@ DEPENDPATH  += \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QT  += multimedia multimediawidgets
-QT  +=widgets
+QT  +=  multimedia multimediawidgets
+QT  +=  widgets
 
 HEADERS = \
     camera.h \

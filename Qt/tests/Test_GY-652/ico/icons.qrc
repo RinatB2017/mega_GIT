@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/ico">
+        <file>computer.ico</file>
+        <file>temperature.ico</file>
+		<file>temperature.png</file>
+    </qresource>
+</RCC>

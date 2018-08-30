@@ -4,6 +4,6 @@
 #define ORGNAME "Work"
 #define APPNAME "Test_GY-652"
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+#define ICON_PROGRAMM   ":/icons/temperature.png"
 //--------------------------------------------------------------------------------
 #endif

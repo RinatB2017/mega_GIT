@@ -51,8 +51,11 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/temperature.ico
 }
+
+RESOURCES += \
+    ico/icons.qrc
 
 #----------------------------------------------
 LIB_PATH  = "../../../Qt/lib"

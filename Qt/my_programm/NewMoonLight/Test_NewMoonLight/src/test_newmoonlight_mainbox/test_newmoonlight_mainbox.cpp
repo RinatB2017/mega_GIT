@@ -175,7 +175,7 @@ void MainBox::createTestBar(void)
 void MainBox::createSerialBox(void)
 {
     serialBox = new SerialBox5_fix_baudrate(this, "RS232", "RS232");
-    serialBox->set_fix_baudrate(57600);
+    serialBox->set_fix_baudrate(BAUDRATE);
     serialBox->add_menu(2);
 
     ui->serial_layout->addWidget(serialBox);

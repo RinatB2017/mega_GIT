@@ -46,7 +46,7 @@ class Plot;
 class QwtPlotPanner;
 class QwtPlotMagnifier;
 //--------------------------------------------------------------------------------
-#define MAX_CHANNELS 16
+#define MAX_CHANNELS 32
 //--------------------------------------------------------------------------------
 typedef struct
 {

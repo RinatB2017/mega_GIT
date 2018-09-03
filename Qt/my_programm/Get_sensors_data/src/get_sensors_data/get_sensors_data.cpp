@@ -79,6 +79,10 @@ void MainBox::init_serial(void)
 void MainBox::init_grapher(void)
 {
     grapher_widget = new GrapherBox(this);
+    for(int n=0; n<21; n++)
+    {
+        curves[n] = grapher_widget->add_curve(QString("curse_%1").arg(n));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -197,6 +201,11 @@ void MainBox::read_data(QByteArray data)
 
     QStringList sl = text.split(';');
     emit info(QString("count %1").arg(sl.count()));
+
+    if(sl.count() != 21)
+    {
+        return;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

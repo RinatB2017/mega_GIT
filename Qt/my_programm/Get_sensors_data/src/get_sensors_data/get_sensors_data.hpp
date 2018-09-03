@@ -87,6 +87,8 @@ private:
     SerialBox5 *serial_widget = 0;
     GrapherBox *grapher_widget = 0;
 
+    int curves[21] = { 0 };
+
     void init(void);
     void init_serial(void);
     void init_grapher(void);

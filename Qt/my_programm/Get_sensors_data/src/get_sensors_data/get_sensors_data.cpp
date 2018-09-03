@@ -194,17 +194,24 @@ bool MainBox::test_5(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray data)
 {
-    //emit info(data);
+    emit debug(data);
 
     QString text;
     text.append(data);
 
     QStringList sl = text.split(';');
-    emit info(QString("count %1").arg(sl.count()));
+    //emit info(QString("count %1").arg(sl.count()));
 
     if(sl.count() != 21)
     {
         return;
+    }
+
+    for(int n=0; n<21; n++)
+    {
+        QString value_str = ((QString)sl.at(n)).replace(',', '.');
+        float value = value_str.toFloat();
+        grapher_widget->add_curve_data(curves[n], value);
     }
 }
 //--------------------------------------------------------------------------------

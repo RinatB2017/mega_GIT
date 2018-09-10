@@ -215,6 +215,17 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    qreal x = 1000.0;
+    for(int n=0; n<10; n++)
+    {
+        emit info(QString("n = %1 x = %2")
+                  .arg(n)
+                  .arg(x, 0, 'f', 2));
+        x *= 1.1;
+    }
+#endif
+
 #if 0
     QTextEdit *te1 = new QTextEdit;
     QTextEdit *te2 = new QTextEdit;
@@ -233,7 +244,7 @@ bool MainBox::test_0(void)
     splitter->show();
 #endif
 
-#if 1
+#if 0
     QString host_str = "https://ru.wikipedia.org/wiki/Favicon";
     //QString host_str = "https://www.youtube.com/watch?v=hUzZLkjedg4";
 

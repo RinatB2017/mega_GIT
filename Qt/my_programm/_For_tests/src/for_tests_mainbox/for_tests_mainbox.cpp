@@ -219,11 +219,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    QFile outputFile;
-    outputFile.setFileName("/dev/shm/_my_record.raw");
-    outputFile.open( QIODevice::WriteOnly | QIODevice::Truncate );
+    outputFile = new QFile();
+    outputFile->setFileName("/dev/shm/_my_record.raw");
+    outputFile->open( QIODevice::WriteOnly | QIODevice::Truncate );
 
-    QAudioFormat format;
     // set up the format you want, eg.
     format.setSampleRate(8000);
     format.setChannelCount(1);
@@ -233,17 +232,18 @@ bool MainBox::test_0(void)
     format.setSampleType(QAudioFormat::UnSignedInt);
 
     QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
-    if (!info.isFormatSupported(format)) {
-        qDebug()<<"default format not supported try to use nearest";
+    if (!info.isFormatSupported(format))
+    {
+        emit error("default format not supported try to use nearest");
         format = info.nearestFormat(format);
     }
 
     audio = new QAudioInput(format, this);
-    QTimer* timer = new QTimer;
+    timer = new QTimer;
     connect(timer, SIGNAL(timeout()), this, SLOT(stopRecord()));
     timer->start(5000);
 
-    audio->start(&outputFile);
+    audio->start(outputFile);
 #endif
 
     return true;

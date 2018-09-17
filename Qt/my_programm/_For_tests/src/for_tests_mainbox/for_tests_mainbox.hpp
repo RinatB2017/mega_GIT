@@ -42,7 +42,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 
-class LED_display;  //TODO
+class QAudioInput;  //TODO
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -70,6 +70,8 @@ public slots:
     void check_in(void);
     void victory(void);
 
+    void stopRecord(void); //TODO
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -96,10 +98,7 @@ private:
 
     QWidget *test_widget = 0;
 
-    //TODO
-    LED_display *display = 0;
-    bool flag = true;
-    //---
+    QAudioInput *audio = 0; //TODO
 
     //---
     void test_validator(void);

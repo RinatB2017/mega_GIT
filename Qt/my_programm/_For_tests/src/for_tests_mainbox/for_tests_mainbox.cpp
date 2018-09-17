@@ -209,88 +209,50 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include "pixmaploader.hpp"
+
+#include <QAudioFormat>
+#include <QAudioDeviceInfo>
+#include <QAudioInput>
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
-    qreal x = 1000.0;
-    for(int n=0; n<10; n++)
-    {
-        emit info(QString("n = %1 x = %2")
-                  .arg(n)
-                  .arg(x, 0, 'f', 2));
-        x *= 1.1;
+    QFile outputFile;
+    outputFile.setFileName("/dev/shm/_my_record.raw");
+    outputFile.open( QIODevice::WriteOnly | QIODevice::Truncate );
+
+    QAudioFormat format;
+    // set up the format you want, eg.
+    format.setSampleRate(8000);
+    format.setChannelCount(1);
+    format.setSampleSize(16);
+    format.setCodec("audio/PCM");
+    format.setByteOrder(QAudioFormat::LittleEndian);
+    format.setSampleType(QAudioFormat::UnSignedInt);
+
+    QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
+    if (!info.isFormatSupported(format)) {
+        qDebug()<<"default format not supported try to use nearest";
+        format = info.nearestFormat(format);
     }
-#endif
 
-#if 0
-    QTextEdit *te1 = new QTextEdit;
-    QTextEdit *te2 = new QTextEdit;
+    audio = new QAudioInput(format, this);
+    QTimer* timer = new QTimer;
+    connect(timer, SIGNAL(timeout()), this, SLOT(stopRecord()));
+    timer->start(5000);
 
-    te1->setPlainText("1");
-    te2->setPlainText("2");
-
-    QSplitter *splitter = new QSplitter(Qt::Horizontal);
-
-    splitter->addWidget(te1);
-    splitter->addWidget(te2);
-
-    splitter->setCollapsible(0, false);
-    splitter->setCollapsible(1, false);
-
-    splitter->show();
-#endif
-
-#if 0
-    QString host_str = "https://ru.wikipedia.org/wiki/Favicon";
-    //QString host_str = "https://www.youtube.com/watch?v=hUzZLkjedg4";
-
-    QUrl url(host_str);
-    emit info(QString("host_str [%1]").arg(host_str));
-    emit info(QString("scheme [%1]").arg(url.scheme()));
-    emit info(QString("host   [%1]").arg(url.host()));
-    emit info(QString("path   [%1]").arg(url.path()));
-
-    QString new_url = QString("%1://%2/favicon.ico")
-            .arg(url.scheme())
-            .arg(url.host());
-    emit info(new_url);
-
-    QLabel *label = new QLabel;
-    PixmapLoader *pixmapLoader = new PixmapLoader(this);
-
-    QObject::connect(pixmapLoader,  SIGNAL(loaded(QPixmap)),    label,  SLOT(setPixmap(QPixmap)));
-
-    pixmapLoader->load(new_url);
-
-    label->show();
-#endif
-
-#if 0
-    for(int n=5; n>=0; n--)
-    {
-        emit info(QString("%1").arg(n));
-    }
-#endif
-
-#if 0
-    int res = 0;
-    res = QFontDatabase::addApplicationFont(":/local_fonts/HANDGOTN.TTF");
-    if(res < 0)
-    {
-        emit error("Font HANDGOTN not loaded!");
-    }
-    res = QFontDatabase::addApplicationFont(":/local_fonts/VENUSRIS.TTF");
-    if(res < 0)
-    {
-        emit error("Font VENUSRIS not loaded!");
-    }
+    audio->start(&outputFile);
 #endif
 
     return true;
+}
+
+void MainBox::stopRecord(void)
+{
+    emit info("Запись завершена!");
+    audio->stop();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)

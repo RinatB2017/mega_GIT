@@ -231,11 +231,15 @@ bool MainBox::test_0(void)
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::UnSignedInt);
 
-    QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
-    if (!info.isFormatSupported(format))
+    QList<QAudioDeviceInfo> list = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
+    QAudioDeviceInfo a_info = list.at(1);
+    emit info(QString("name [%1]").arg(a_info.deviceName()));
+
+    //QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
+    if (!a_info.isFormatSupported(format))
     {
         emit error("default format not supported try to use nearest");
-        format = info.nearestFormat(format);
+        format = a_info.nearestFormat(format);
     }
 
     audio = new QAudioInput(format, this);
@@ -253,12 +257,23 @@ void MainBox::stopRecord(void)
 {
     emit info("Запись завершена!");
     audio->stop();
+    outputFile->close();
+    delete audio;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
+
+    QList<QAudioDeviceInfo> list = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
+    emit info(QString("cnt %1").arg(list.count()));
+    foreach (QAudioDeviceInfo a_info, list)
+    {
+        emit info(QString("name [%1]").arg(a_info.deviceName()));
+        a_info.nearestFormat(format);
+        emit info(QString("   sampleRate %1").arg(format.sampleRate()));
+    }
 
 #if 0
     emit info("info");

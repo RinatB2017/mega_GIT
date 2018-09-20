@@ -66,7 +66,7 @@ QString Proto_NMEA_0183::get_checksum(const QString &data)
 {
     QString temp;
     uchar sum;
-    int n;
+    int n = 0;
 
     if(data.length()<3)
     {
@@ -345,13 +345,17 @@ int Proto_NMEA_0183::calc_time_UTC(const QString &data,
                                    int *min,
                                    float *sec)
 {
-    bool ok;
+    bool ok = false;
     uint temp;
     float f_temp = 0;
 
-    // emit debug(QString("calc_time_UTC: data [%1]").arg(data));
-    if(data.length() != 9)
+    emit debug(QString("calc_time_UTC: data [%1]").arg(data));
+
+    float time_utc = data.toFloat(&ok);
+    if(!ok)
         return E_ERROR_FORMAT_MESSAGE;
+
+    emit debug(QString("time_utc %1").arg(time_utc));
 
     ok = string_to_int(data.mid(0, 2), &temp);
     if(ok)
@@ -376,9 +380,16 @@ int Proto_NMEA_0183::calc_latitude(const QString &data,
                                    int *grad,
                                    float *min)
 {
-    bool ok;
+    bool ok = false;
 
-    // emit debug(QString("calc_latitude: data [%1]").arg(data));
+    emit debug(QString("calc_latitude: data [%1]").arg(data));
+
+    if(data.isEmpty())
+    {
+        emit error("calc_latitude: нет данных");
+        return E_NO_ERROR;
+    }
+
     if(data.length() != 9)
         return E_ERROR_FORMAT_MESSAGE;
 
@@ -397,9 +408,16 @@ int Proto_NMEA_0183::calc_longitude(const QString &data,
                                     int *grad,
                                     float *min)
 {
-    bool ok;
+    bool ok = false;
 
-    // emit debug(QString("calc_longitude: data [%1]").arg(data));
+    emit debug(QString("calc_longitude: data [%1]").arg(data));
+
+    if(data.isEmpty())
+    {
+        emit error("calc_latitude: нет данных");
+        return E_NO_ERROR;
+    }
+
     if(data.length() != 10)
         return E_ERROR_FORMAT_MESSAGE;
 
@@ -505,6 +523,9 @@ int Proto_NMEA_0183::parse_message_GGA(const QString &data)
     bool ok = false;
     QString temp;
     QStringList sl;
+    int err = E_NO_ERROR;
+
+    emit debug("parse_message_GGA");
 
     sl = data.split(",");
     if(sl.count() == 0)
@@ -513,20 +534,32 @@ int Proto_NMEA_0183::parse_message_GGA(const QString &data)
         return E_ERROR_UNKNOWN_MESSAGE;
     }
 
-    calc_time_UTC(sl.at(1),
-                  &time_observation_hour,
-                  &time_observation_min,
-                  &time_observation_sec);
+    err = calc_time_UTC(sl.at(1),
+                        &time_observation_hour,
+                        &time_observation_min,
+                        &time_observation_sec);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
-    calc_latitude(sl.at(2),
-                  &latitude_grad,
-                  &latitude_min);
+    err = calc_latitude(sl.at(2),
+                        &latitude_grad,
+                        &latitude_min);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     latitude_dir = sl.at(3);
 
-    calc_longitude(sl.at(4),
-                   &longitude_grad,
-                   &longitude_min);
+    err = calc_longitude(sl.at(4),
+                         &longitude_grad,
+                         &longitude_min);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     longitude_dir = sl.at(5);
 
@@ -585,8 +618,10 @@ int Proto_NMEA_0183::parse_message_GGA(const QString &data)
 int Proto_NMEA_0183::parse_message_GSA(const QString &data)
 {
     QStringList sl;
-    int n;
-    bool ok;
+    int n = 0;
+    bool ok = false;
+
+    emit debug("parse_message_GSA");
 
     sl = data.split(",");
     if(sl.count() == 0)
@@ -638,6 +673,9 @@ int Proto_NMEA_0183::parse_message_GSA(const QString &data)
 int Proto_NMEA_0183::parse_message_GSV(const QString &data)
 {
     Q_UNUSED(data);
+
+    emit debug("parse_message_GSV");
+
     // QStringList sl;
 
     // sl = data.split(",");
@@ -649,9 +687,11 @@ int Proto_NMEA_0183::parse_message_GSV(const QString &data)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::parse_message_RMC(const QString &data)
 {
-    //QString temp;
-    bool ok;
+    bool ok = false;
     QStringList sl;
+    int err = E_NO_ERROR;
+
+    emit debug("parse_message_RMC");
 
     sl = data.split(",");
     if(sl.count() == 0)
@@ -659,23 +699,41 @@ int Proto_NMEA_0183::parse_message_RMC(const QString &data)
         emit debug("sl.count() == 0");
         return E_ERROR_UNKNOWN_MESSAGE;
     }
+    emit debug(QString("found %1 elements").arg(sl.count()));
 
-    calc_time_UTC(sl.at(1),
-                  &time_observation_hour,
-                  &time_observation_min,
-                  &time_observation_sec);
+    err = calc_time_UTC(sl.at(1),
+                        &time_observation_hour,
+                        &time_observation_min,
+                        &time_observation_sec);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     state = sl.at(2);
+    if(state == 'V')
+    {
+        emit error("недостоверно");
+        return E_NO_ERROR;
+    }
 
-    calc_latitude(sl.at(3),
-                  &latitude_grad,
-                  &latitude_min);
+    err = calc_latitude(sl.at(3),
+                        &latitude_grad,
+                        &latitude_min);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     latitude_dir = sl.at(4);
 
-    calc_longitude(sl.at(5),
-                   &longitude_grad,
-                   &longitude_min);
+    err = calc_longitude(sl.at(5),
+                         &longitude_grad,
+                         &longitude_min);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     longitude_dir = sl.at(6);
 
@@ -714,9 +772,11 @@ int Proto_NMEA_0183::parse_message_RMC(const QString &data)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::parse_message_VTG(const QString &data)
 {
-    QString temp;
-    bool ok;
+    //QString temp;
+    bool ok = false;
     QStringList sl;
+
+    emit debug("parse_message_VTG");
 
     sl = data.split(",");
     if(sl.count() == 0)
@@ -758,8 +818,11 @@ int Proto_NMEA_0183::parse_message_VTG(const QString &data)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::parse_message_GLL(const QString &data)
 {
-    QString temp;
+    //QString temp;
     QStringList sl;
+    int err = E_NO_ERROR;
+
+    emit debug("parse_message_GLL");
 
     sl = data.split(",");
     if(sl.count() == 0)
@@ -768,24 +831,41 @@ int Proto_NMEA_0183::parse_message_GLL(const QString &data)
         return E_ERROR_UNKNOWN_MESSAGE;
     }
 
-    calc_latitude(sl.at(1),
-                  &latitude_grad,
-                  &latitude_min);
+    state = sl.at(6);
+    if(state == 'V')
+    {
+        emit error("недостоверно");
+        return E_NO_ERROR;
+    }
+
+    err = calc_latitude(sl.at(1),
+                        &latitude_grad,
+                        &latitude_min);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     latitude_dir = sl.at(2);
 
-    calc_longitude(sl.at(3),
-                   &longitude_grad,
-                   &longitude_min);
+    err = calc_longitude(sl.at(3),
+                         &longitude_grad,
+                         &longitude_min);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     longitude_dir = sl.at(4);
 
-    calc_time_UTC(sl.at(5),
-                  &time_observation_hour,
-                  &time_observation_min,
-                  &time_observation_sec);
-
-    state = sl.at(6);
+    err = calc_time_UTC(sl.at(5),
+                        &time_observation_hour,
+                        &time_observation_min,
+                        &time_observation_sec);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     // temp = sl.at(7);
 
@@ -800,8 +880,11 @@ int Proto_NMEA_0183::parse_message_GLL(const QString &data)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::parse_message_ZDA(QString &data)
 {
-    bool ok;
+    bool ok = false;
     QStringList sl;
+    int err = E_NO_ERROR;
+
+    emit debug("parse_message_ZDA");
 
     sl = data.split(",");
     if(sl.count() == 0)
@@ -810,10 +893,14 @@ int Proto_NMEA_0183::parse_message_ZDA(QString &data)
         return E_ERROR_UNKNOWN_MESSAGE;
     }
 
-    calc_time_UTC(sl.at(1),
-                  &time_observation_hour,
-                  &time_observation_min,
-                  &time_observation_sec);
+    err = calc_time_UTC(sl.at(1),
+                        &time_observation_hour,
+                        &time_observation_min,
+                        &time_observation_sec);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     ok = string_to_int(sl.at(2), &day_utc);
     if(!ok)
@@ -864,6 +951,8 @@ int Proto_NMEA_0183::parse_message_PIREA(const QString &data)
 {
     QStringList sl;
 
+    emit debug("parse_message_PIREA");
+
     sl = data.split(",");
     if(sl.count() == 0)
     {
@@ -878,6 +967,8 @@ int Proto_NMEA_0183::parse_message_PIRFV(const QString &data)
 {
     QStringList sl;
 
+    emit debug("parse_message_PIRFV");
+
     sl = data.split(",");
     if(sl.count() == 0)
     {
@@ -890,8 +981,11 @@ int Proto_NMEA_0183::parse_message_PIRFV(const QString &data)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::parse_message_PIRGK(const QString &data)
 {
-    bool ok;
+    bool ok = false;
     QStringList sl;
+    int err = E_NO_ERROR;
+
+    emit debug("parse_message_PIRGK");
 
     sl = data.split(",");
     if(sl.count() == 0)
@@ -900,10 +994,14 @@ int Proto_NMEA_0183::parse_message_PIRGK(const QString &data)
         return E_ERROR_UNKNOWN_MESSAGE;
     }
 
-    calc_time_UTC(sl.at(1),
-                  &time_observation_hour,
-                  &time_observation_min,
-                  &time_observation_sec);
+    err = calc_time_UTC(sl.at(1),
+                        &time_observation_hour,
+                        &time_observation_min,
+                        &time_observation_sec);
+    if(err != E_NO_ERROR)
+    {
+        return err;
+    }
 
     ok = string_to_float(sl.at(3), &X);
     if(!ok)
@@ -965,6 +1063,8 @@ int Proto_NMEA_0183::parse_message_PIRGK(const QString &data)
 int Proto_NMEA_0183::parse_message_PIRRA(const QString &data)
 {
     QStringList sl;
+
+    emit debug("parse_message_PIRRA");
 
     sl = data.split(",");
     emit debug(QString("parse_message_PIRRA: count %1").arg(sl.count()));
@@ -1402,7 +1502,7 @@ QString Proto_NMEA_0183::get_latitude_string(void)
     if(get_latitude_dir() == "W") temp = "з.д.";
     if(get_latitude_dir() == "E") temp = "в.д.";
 
-    return QString("%1%2%3' %4")
+    return QString("%1 %2 %3' %4")
             .arg((int)get_latitude_grad(),  2, 10, QLatin1Char('0'))
             .arg(dg)
             .arg((int)get_latitude_min(),  2, 10, QLatin1Char('0'))

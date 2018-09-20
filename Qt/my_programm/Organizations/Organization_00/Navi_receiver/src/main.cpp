@@ -68,9 +68,8 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-#ifdef QT_DEBUG
+#ifdef QT_DEBUG2
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

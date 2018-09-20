@@ -35,6 +35,8 @@ SOURCES += \
 
 FORMS   += navi_receiver_mainbox.ui
 
+RESOURCES += doc/test_data.qrc
+
 win32 {
     RC_FILE = ico/myapp.rc
 }

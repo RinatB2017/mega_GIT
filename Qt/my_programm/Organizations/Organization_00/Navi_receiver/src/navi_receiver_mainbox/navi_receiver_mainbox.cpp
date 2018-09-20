@@ -100,11 +100,31 @@ void MainBox::createTestBar(void)
                                        "test");
     
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     emit info(tr("test"));
+
+    QFile file(":/test_data.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    emit info("Begin");
+    int cnt = 0;
+    while (!file.atEnd())
+    {
+        QByteArray line = file.readLine();
+        read_data((line));
+        cnt++;
+        if(cnt>10)
+        {
+            break;
+        }
+    }
+    emit info("End");
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
@@ -135,6 +155,11 @@ void MainBox::read_data(QByteArray ba)
 void MainBox::analize(void)
 {
     int err = proto->check_message(data_rs232.data());
+    if(err == Proto_NMEA_0183::E_ERROR_UNKNOWN_MESSAGE)
+    {
+        proto->print_error(data_rs232, err);
+        return;
+    }
     if(err != Proto_NMEA_0183::E_NO_ERROR)
     {
         proto->print_error(data_rs232, err);
@@ -152,9 +177,9 @@ void MainBox::analize(void)
     QString str_latitude = proto->get_latitude_string();
     QString str_longitude = proto->get_longitude_string();
     QString str_time = QString("%1:%2:%3")
-            .arg(hour)
-            .arg(min)
-            .arg(sec);
+            .arg(hour,  2,  10, QChar('0'))
+            .arg(min,   2,  10, QChar('0'))
+            .arg(sec,   2,  10, QChar('0'));
 
     emit info(QString("latitude %1").arg(str_latitude));
     emit info(QString("longitude %1").arg(str_longitude));

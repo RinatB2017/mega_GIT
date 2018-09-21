@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
-    <height>450</height>
+    <width>682</width>
+    <height>373</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -66,26 +66,109 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <layout class="QGridLayout" name="gridLayout_3">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_12">
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>latitude</string>
+                 <string>время обсервации UTC: часы</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_13">
+              <item>
+               <widget class="QSpinBox" name="spinBox_3"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_5">
                 <property name="text">
-                 <string>longitude</string>
+                 <string>мин.</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="lineEdit"/>
+              <item>
+               <widget class="QSpinBox" name="spinBox_4"/>
               </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="lineEdit_2"/>
+              <item>
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>сек.</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+                <property name="decimals">
+                 <number>4</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <layout class="QGridLayout" name="gridLayout_4">
+                <item row="1" column="1">
+                 <widget class="QSpinBox" name="spinBox_2"/>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>мин.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>мин.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>широта: градусы</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>долгота: градусы</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QSpinBox" name="spinBox"/>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                  <property name="decimals">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                  <property name="decimals">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </item>
@@ -106,6 +189,20 @@
               <layout class="QVBoxLayout" name="verticalLayout_5">
                <item>
                 <layout class="QGridLayout" name="gridLayout">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="btn_GCA">
+                   <property name="text">
+                    <string>GCA</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="btn_VTG">
+                   <property name="text">
+                    <string>VTG</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="1">
                   <widget class="QPushButton" name="btn_GSV">
                    <property name="text">
@@ -113,7 +210,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
+                 <item row="0" column="4">
                   <widget class="QPushButton" name="btn_GSA">
                    <property name="text">
                     <string>GSA</string>
@@ -127,56 +224,42 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="3">
-                  <widget class="QPushButton" name="btn_PIREA">
-                   <property name="text">
-                    <string>PIREA</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="btn_GCA">
-                   <property name="text">
-                    <string>GCA</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
+                 <item row="0" column="5">
                   <widget class="QPushButton" name="btn_RMC">
                    <property name="text">
                     <string>RMC</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="2">
-                  <widget class="QPushButton" name="btn_VTG">
-                   <property name="text">
-                    <string>VTG</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
+                 <item row="1" column="0">
                   <widget class="QPushButton" name="btn_GLL">
                    <property name="text">
                     <string>GLL</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="0">
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="btn_PIREA">
+                   <property name="text">
+                    <string>PIREA</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
                   <widget class="QPushButton" name="btn_PIRFV">
                    <property name="text">
                     <string>PIRFV</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="1">
+                 <item row="1" column="3">
                   <widget class="QPushButton" name="btn_PIRGK">
                    <property name="text">
                     <string>PIRGK</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="2">
+                 <item row="1" column="4">
                   <widget class="QPushButton" name="btn_PIRRA">
                    <property name="text">
                     <string>PIRRA</string>
@@ -190,18 +273,6 @@
             </item>
            </layout>
           </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="groupBox_2">
-        <property name="title">
-         <string>Time</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QTimeEdit" name="timeEdit"/>
          </item>
         </layout>
        </widget>
@@ -243,11 +314,37 @@
            </property>
           </widget>
          </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </widget>
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
@@ -260,20 +357,10 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>lineEdit_2</tabstop>
-  <tabstop>timeEdit</tabstop>
   <tabstop>btn_GCA</tabstop>
   <tabstop>btn_GSV</tabstop>
   <tabstop>btn_VTG</tabstop>
   <tabstop>btn_ZDA</tabstop>
-  <tabstop>btn_GSA</tabstop>
-  <tabstop>btn_RMC</tabstop>
-  <tabstop>btn_GLL</tabstop>
-  <tabstop>btn_PIREA</tabstop>
-  <tabstop>btn_PIRFV</tabstop>
-  <tabstop>btn_PIRGK</tabstop>
-  <tabstop>btn_PIRRA</tabstop>
  </tabstops>
  <resources/>
  <connections/>

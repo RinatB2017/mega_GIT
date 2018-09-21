@@ -55,13 +55,10 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
-
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
 
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
-
     splash->finish(main_window);
 
     return app.exec();

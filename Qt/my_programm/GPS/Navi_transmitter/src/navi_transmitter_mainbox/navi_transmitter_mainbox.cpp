@@ -18,15 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QTime>
-
-#include <QAction>
-#include <QMenu>
-
-#include <QToolButton>
-#include <QToolBar>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_navi_transmitter_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -236,6 +232,7 @@ void MainBox::test_GGA(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_GSA(void)
@@ -265,6 +262,7 @@ void MainBox::test_GSA(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_GSV(void)
@@ -305,6 +303,7 @@ void MainBox::test_RMC(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_VTG(void)
@@ -337,6 +336,7 @@ void MainBox::test_VTG(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_GLL(void)
@@ -367,6 +367,7 @@ void MainBox::test_GLL(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_ZDA(void)
@@ -396,6 +397,7 @@ void MainBox::test_ZDA(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_PIREA(void)
@@ -419,6 +421,7 @@ void MainBox::test_PIREA(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_PIRFV(void)
@@ -442,6 +445,7 @@ void MainBox::test_PIRFV(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_PIRGK(void)
@@ -475,6 +479,7 @@ void MainBox::test_PIRGK(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_PIRRA(void)
@@ -502,6 +507,7 @@ void MainBox::test_PIRRA(void)
     data.append((char)0x0A);
 
     emit send(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

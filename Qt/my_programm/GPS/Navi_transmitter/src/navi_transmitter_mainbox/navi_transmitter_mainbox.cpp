@@ -59,6 +59,17 @@ void MainBox::init(void)
 
     read_fake_data();
 
+    ui->sb_hour->setRange(0, 23);
+    ui->sb_min->setRange(0, 59);
+    ui->dsb_sec->setRange(0,59);
+    ui->dsb_sec->setDecimals(4);
+
+    ui->sb_latitude_grad->setRange(0, 99);
+    ui->sb_longitude_grad->setRange(0, 99);
+
+    ui->dsb_latitude_min->setRange(0, 59);
+    ui->dsb_longitude_min->setRange(0, 59);
+
     timer = new QTimer(this);
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
 

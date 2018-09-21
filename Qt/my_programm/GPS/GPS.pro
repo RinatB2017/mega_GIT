@@ -6,10 +6,5 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
-    Parport \
-    Test_MKU5 \
-    Tester \
-
-unix {
-    SUBDIRS += Test_r4_serial_widget
-}
+    Navi_receiver \
+    Navi_transmitter

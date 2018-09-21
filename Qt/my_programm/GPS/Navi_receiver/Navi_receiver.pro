@@ -5,8 +5,6 @@
 TEMPLATE    = app
 TARGET      = Navi_receiver
 
-FOLDER  = organizations/Organization_00
-
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/navi_receiver_mainbox \
@@ -41,8 +39,8 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH  = "../../../../lib"
-LIB_PATH2 = "../../../../lib2"
+LIB_PATH  = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

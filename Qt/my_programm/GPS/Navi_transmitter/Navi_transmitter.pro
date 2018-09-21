@@ -5,8 +5,6 @@
 TEMPLATE    = app
 TARGET      = Navi_transmitter
 
-FOLDER  = organizations/Organization_00
-
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/navi_transmitter_mainbox \
@@ -19,6 +17,8 @@ INCLUDEPATH = $$DEPENDPATH
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
 
+DEFINES += SAVE_WIDGETS_SPINBOX
+
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -27,9 +27,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    navi_transmitter_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    navi_transmitter_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     navi_transmitter_mainbox.cpp \
@@ -37,12 +37,14 @@ SOURCES += \
 
 FORMS   += navi_transmitter_mainbox.ui
 
+RESOURCES += doc/test_data.qrc
+
 win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH  = "../../../../lib"
-LIB_PATH2 = "../../../../lib2"
+LIB_PATH  = "../../../lib"
+LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)

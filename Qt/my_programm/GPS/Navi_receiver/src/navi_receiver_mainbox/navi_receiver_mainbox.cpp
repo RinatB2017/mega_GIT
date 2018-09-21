@@ -60,7 +60,7 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     init_protocol();
-
+    read_fake_data();
     createTestBar();
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
@@ -93,13 +93,38 @@ void MainBox::createTestBar(void)
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                       "test",
-                                       "test");
-    
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    QToolButton *btn_skip_backward = add_button(testbar,
+                                                new QToolButton(this),
+                                                qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward),
+                                                "<<",
+                                                "<<");
+    QToolButton *btn_seek_backward = add_button(testbar,
+                                                new QToolButton(this),
+                                                qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward),
+                                                "<",
+                                                "<");
+
+    le_index = new QLineEdit(this);
+    le_index->setReadOnly(true);
+    le_index->setText("0");
+    le_index->setFixedWidth(100);
+    testbar->addWidget(le_index);
+
+    QToolButton *btn_seek_forward = add_button(testbar,
+                                               new QToolButton(this),
+                                               qApp->style()->standardIcon(QStyle::SP_MediaSeekForward),
+                                               ">",
+                                               ">");
+    QToolButton *btn_skip_forward = add_button(testbar,
+                                               new QToolButton(this),
+                                               qApp->style()->standardIcon(QStyle::SP_MediaSkipForward),
+                                               "<<",
+                                               "<<");
+
+    connect(btn_skip_backward,  SIGNAL(clicked(bool)),  this,   SLOT(skip_backward()));
+    connect(btn_seek_backward,  SIGNAL(clicked(bool)),  this,   SLOT(seek_backward()));
+    connect(btn_seek_forward,   SIGNAL(clicked(bool)),  this,   SLOT(seek_forward()));
+    connect(btn_skip_forward,   SIGNAL(clicked(bool)),  this,   SLOT(skip_forward()));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -108,23 +133,81 @@ void MainBox::test(void)
 {
     emit info(tr("test"));
 
+    read_fake_data();
+}
+//--------------------------------------------------------------------------------
+void MainBox::skip_backward(void)
+{
+    if(fake_data.isEmpty())
+    {
+        emit error("no data");
+        return;
+    }
+
+    index_fake_data = 0;
+    le_index->setText(QString("%1").arg(index_fake_data));
+    read_data(fake_data.at(index_fake_data));
+}
+//--------------------------------------------------------------------------------
+void MainBox::seek_backward(void)
+{
+    if(fake_data.isEmpty())
+    {
+        emit error("no data");
+        return;
+    }
+
+    index_fake_data--;
+    if(index_fake_data < 0)
+        index_fake_data = 0;
+    le_index->setText(QString("%1").arg(index_fake_data));
+    read_data(fake_data.at(index_fake_data));
+}
+//--------------------------------------------------------------------------------
+void MainBox::seek_forward(void)
+{
+    if(fake_data.isEmpty())
+    {
+        emit error("no data");
+        return;
+    }
+
+    index_fake_data++;
+    if(index_fake_data > (fake_data.count() - 1))
+        index_fake_data = fake_data.count() - 1;
+    le_index->setText(QString("%1").arg(index_fake_data));
+    read_data(fake_data.at(index_fake_data));
+}
+//--------------------------------------------------------------------------------
+void MainBox::skip_forward(void)
+{
+    if(fake_data.isEmpty())
+    {
+        emit error("no data");
+        return;
+    }
+
+    index_fake_data = fake_data.count() - 1;
+    le_index->setText(QString("%1").arg(index_fake_data));
+    read_data(fake_data.at(index_fake_data));
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_fake_data(void)
+{
     QFile file(":/test_data.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
-    emit info("Begin");
-    int cnt = 0;
+    fake_data.clear();
+    index_fake_data = 0;
+
     while (!file.atEnd())
     {
         QByteArray line = file.readLine();
-        read_data((line));
-        cnt++;
-        if(cnt>10)
-        {
-            break;
-        }
+        fake_data.append(line);
     }
-    emit info("End");
+    max_index_fake_data = fake_data.count();
+    emit info(QString("Found %1 record").arg(max_index_fake_data));
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)

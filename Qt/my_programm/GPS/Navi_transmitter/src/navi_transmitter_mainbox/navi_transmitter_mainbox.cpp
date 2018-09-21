@@ -50,6 +50,8 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("Transmitter");
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -58,6 +60,15 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
+
+    read_fake_data();
+
+    timer = new QTimer(this);
+    connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
+
+    ui->sb_interval->setRange(0, 0xFFFF);
+    connect(ui->btn_start,  SIGNAL(clicked(bool)),  this,   SLOT(start()));
+    connect(ui->btn_stop,   SIGNAL(clicked(bool)),  this,   SLOT(stop()));
 
     ui->serialWidget->set_caption("RS232");
     ui->serialWidget->add_menu(2);
@@ -78,6 +89,8 @@ void MainBox::init(void)
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serialWidget,   SLOT(input(QByteArray)));
     connect(ui->serialWidget,   SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
+
+    load_widgets("Transmitter");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -97,11 +110,71 @@ void MainBox::createTestBar(void)
                                        "test");
     
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     emit error(tr("test"));
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_fake_data(void)
+{
+    QFile file(":/test_data.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    fake_data.clear();
+    index_fake_data = 0;
+
+    while (!file.atEnd())
+    {
+        QByteArray line = file.readLine();
+        fake_data.append(line);
+    }
+    max_index_fake_data = fake_data.count();
+    emit info(QString("Found %1 record").arg(max_index_fake_data));
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_data(QByteArray)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::start(void)
+{
+    if(timer)
+    {
+        timer->start(ui->sb_interval->value());
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::stop(void)
+{
+    if(timer)
+    {
+        timer->stop();
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::update(void)
+{
+    if(ui->serialWidget->isOpen() == false)
+    {
+        emit error("serial not open!");
+        timer->stop();
+        return;
+    }
+
+    emit send(fake_data.at(index_fake_data));
+    ui->le_current_record->setText(QString("%1").arg(index_fake_data));
+
+    index_fake_data++;
+    if(index_fake_data > max_index_fake_data)
+    {
+        index_fake_data = 0;
+    }
 }
 //--------------------------------------------------------------------------------
 QString MainBox::get_checksum(const QString &data)

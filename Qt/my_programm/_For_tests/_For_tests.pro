@@ -18,7 +18,7 @@ DEPENDPATH  += $$PROGRAMM_PATH
 #
 #DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
+#DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_MENU
 
@@ -87,7 +87,7 @@ LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 CONFIG(debug, debug|release) {
-    include ($$LIB_PATH/test_function/test_function.pri)
+    #include ($$LIB_PATH/test_function/test_function.pri)
     include (src/test/test.pri)
 }
 

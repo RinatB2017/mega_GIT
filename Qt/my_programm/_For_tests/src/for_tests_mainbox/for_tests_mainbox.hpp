@@ -26,8 +26,6 @@
 #else
 #   include <QtGui>
 #endif
-
-#include <QAudioFormat>
 //--------------------------------------------------------------------------------
 #include "for_tests_mainbox.hpp"
 #include "ui_for_tests_mainbox.h"
@@ -72,8 +70,6 @@ public slots:
     void check_in(void);
     void victory(void);
 
-    void stopRecord(void); //TODO
-
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -99,11 +95,6 @@ private:
     QList<CMD> commands;
 
     QWidget *test_widget = 0;
-
-    QAudioInput *audio = 0; //TODO
-    QAudioFormat format;    //TODO
-    QTimer *timer = 0;      //TODO
-    QFile *outputFile = 0;  //TODO
 
     //---
     void test_validator(void);

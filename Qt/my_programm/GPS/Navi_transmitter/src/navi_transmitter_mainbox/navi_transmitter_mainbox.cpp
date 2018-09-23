@@ -208,6 +208,47 @@ QString MainBox::get_checksum(const QString &data)
     return QString("%1").arg(sum, 2, 16, QLatin1Char('0')).toUpper();
 }
 //--------------------------------------------------------------------------------
+QString MainBox::get_utc_string(void)
+{
+    QString hour = QString("%1").arg(ui->sb_hour->value(),  2,  10,     QChar('0'));
+    QString min = QString("%1").arg(ui->sb_min->value(),    2,  10,     QChar('0'));
+    QString sec = QString("%1").arg(ui->dsb_sec->value(),   2,  'f',    2);
+    QString temp = QString("%1%2%3").arg(hour).arg(min).arg(sec);
+    return temp;
+}
+//--------------------------------------------------------------------------------
+QString MainBox::get_latitude_string(void)
+{
+    QString grad = QString("%1").arg(ui->sb_latitude_grad->value(),    2,  10,     QChar('0'));
+    //QString min  = QString("%1").arg(ui->dsb_latitude_min->value(),    2,  'f',    4);
+
+    float value = ui->dsb_latitude_min->value();
+    int a = (int)value;
+    int b = (value - (float)a) * 10000;
+    QString min = QString("%1.%2")
+              .arg(a,   2,  10, QChar('0'))
+              .arg(b,   4,  10, QChar('0'));
+
+    QString temp = QString("%1%2").arg(grad).arg(min);
+    return temp;
+}
+//--------------------------------------------------------------------------------
+QString MainBox::get_longitude_string(void)
+{
+    QString grad = QString("%1").arg(ui->sb_longitude_grad->value(),    2,  10,     QChar('0'));
+    //QString min  = QString("%1").arg(ui->dsb_longitude_min->value(),    2,  'f',    4);
+
+    float value = ui->dsb_longitude_min->value();
+    int a = (int)value;
+    int b = (value - (float)a) * 10000;
+    QString min = QString("%1.%2")
+              .arg(a,   2,  10, QChar('0'))
+              .arg(b,   4,  10, QChar('0'));
+
+    QString temp = QString("%1%2").arg(grad).arg(min);
+    return temp;
+}
+//--------------------------------------------------------------------------------
 void MainBox::test_GGA(void)
 {
     QByteArray data;
@@ -217,10 +258,18 @@ void MainBox::test_GGA(void)
     message.clear();
     message.append("GL");
     message.append("GGA,");
-    message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
-    message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+
+    //message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+    message.append(QString("%1,").arg(get_utc_string()));
+
+    //message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append(QString("%1,").arg(get_latitude_string()));
+
     message.append("N,");          // север/юг
-    message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+
+    //message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append(QString("%1,").arg(get_longitude_string()));
+
     message.append("E,");          // восток/запад
     message.append("0,");          // показатель качества обсервации 0-1-2
     message.append("12,");         // число НКА в решении
@@ -290,11 +339,20 @@ void MainBox::test_RMC(void)
     message.clear();
     message.append("GL");
     message.append("RMC,");
-    message.append("112233.44,");  // время UTC (часы, минуты, целая и дробная часть секунд)
+
+    //message.append("112233.44,");  // время UTC (часы, минуты, целая и дробная часть секунд)
+    message.append(QString("%1,").arg(get_utc_string()));
+
     message.append("A,");          // статус     A-D-V
-    message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+
+    //message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append(QString("%1,").arg(get_latitude_string()));
+
     message.append("N,");          // север/юг
-    message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+
+    //message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append(QString("%1,").arg(get_longitude_string()));
+
     message.append("E,");          // восток/запад
     message.append("1.2,");        // наземная скорость, в узлах
     message.append("3.4,");        // наземный курс, в градусах
@@ -359,11 +417,20 @@ void MainBox::test_GLL(void)
     message.clear();
     message.append("GL");
     message.append("GLL,");
-    message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+
+    //message.append("1234.1234,");  // широта  ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append(QString("%1,").arg(get_latitude_string()));
+
     message.append("N,");          // север/юг
-    message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+
+    //message.append("12345.1234,"); // долгота ХХ - градусы, ХХ.ХХХХ - целая и дробная часть минут
+    message.append(QString("%1,").arg(get_longitude_string()));
+
     message.append("E,");          // восток/запад
-    message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+
+    //message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+    message.append(QString("%1,").arg(get_utc_string()));
+
     message.append("A,");          // статус A-D-V
     message.append("A");           // режим местоопределения     A-D-E-M-S-N
 
@@ -390,7 +457,10 @@ void MainBox::test_ZDA(void)
     message.clear();
     message.append("GL");
     message.append("ZDA,");
-    message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+
+    //message.append("123456.12,");  // время обсервации UTC (часы, минуты, целая и дробная часть секунд)
+    message.append(QString("%1,").arg(get_utc_string()));
+
     message.append("01,");         // день UTC  (от 01 до 31)
     message.append("02,");         // месяц UTC (от 01 до 12)
     message.append("2012,");       // год UTC
@@ -467,7 +537,10 @@ void MainBox::test_PIRGK(void)
 
     message.clear();
     message.append("PIRGK,");
-    message.append("123456.12,");      // время UTC (часы, минуты, целая и дробная часть секунд)
+
+    //message.append("123456.12,");      // время UTC (часы, минуты, целая и дробная часть секунд)
+    message.append(QString("%1,").arg(get_utc_string()));
+
     message.append("1,");              // индикатор качества GNSS 0-1
     message.append("1.2,");            // координата X, м
     message.append("500000.1000000,"); // координата Y, м

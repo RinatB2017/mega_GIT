@@ -209,71 +209,31 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-
-#include <QAudioFormat>
-#include <QAudioDeviceInfo>
-#include <QAudioInput>
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
-    outputFile = new QFile();
-    outputFile->setFileName("/dev/shm/_my_record.raw");
-    outputFile->open( QIODevice::WriteOnly | QIODevice::Truncate );
-
-    // set up the format you want, eg.
-    format.setSampleRate(8000);
-    format.setChannelCount(1);
-    format.setSampleSize(16);
-    format.setCodec("audio/PCM");
-    format.setByteOrder(QAudioFormat::LittleEndian);
-    format.setSampleType(QAudioFormat::UnSignedInt);
-
-    QList<QAudioDeviceInfo> list = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
-    QAudioDeviceInfo a_info = list.at(1);
-    emit info(QString("name [%1]").arg(a_info.deviceName()));
-
-    //QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
-    if (!a_info.isFormatSupported(format))
-    {
-        emit error("default format not supported try to use nearest");
-        format = a_info.nearestFormat(format);
-    }
-
-    audio = new QAudioInput(format, this);
-    timer = new QTimer;
-    connect(timer, SIGNAL(timeout()), this, SLOT(stopRecord()));
-    timer->start(5000);
-
-    audio->start(outputFile);
+    //float value = 1234.56789;
+    //float value = 1234.0;
+    float value = 0.123456789;
+    int a = (int)value;
+    int b = (value - (float)a) * 10000;
+    QString temp  = QString("[%1]").arg(value, 2, 'f', 4);
+    emit info(temp);
+    emit info(QString("[%1.%2]")
+              .arg(a,   2,  10, QChar('0'))
+              .arg(b,   4,  10, QChar('0')));
 #endif
 
     return true;
-}
-
-void MainBox::stopRecord(void)
-{
-    emit info("Запись завершена!");
-    audio->stop();
-    outputFile->close();
-    delete audio;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
-
-    QList<QAudioDeviceInfo> list = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
-    emit info(QString("cnt %1").arg(list.count()));
-    foreach (QAudioDeviceInfo a_info, list)
-    {
-        emit info(QString("name [%1]").arg(a_info.deviceName()));
-        a_info.nearestFormat(format);
-        emit info(QString("   sampleRate %1").arg(format.sampleRate()));
-    }
 
 #if 0
     emit info("info");

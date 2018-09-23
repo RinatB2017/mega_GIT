@@ -418,14 +418,14 @@ int Proto_NMEA_0183::calc_longitude(const QString &data,
         return E_NO_ERROR;
     }
 
-    if(data.length() != 10)
+    if(data.length() != 9)
         return E_ERROR_FORMAT_MESSAGE;
 
-    ok = string_to_int(data.mid(0, 3), grad);
+    ok = string_to_int(data.mid(0, 2), grad);
     if(!ok)
         return E_ERROR_FORMAT_MESSAGE;
 
-    ok = string_to_float(data.mid(3, 7), min);
+    ok = string_to_float(data.mid(2, 7), min);
     if(!ok)
         return E_ERROR_FORMAT_MESSAGE;
 

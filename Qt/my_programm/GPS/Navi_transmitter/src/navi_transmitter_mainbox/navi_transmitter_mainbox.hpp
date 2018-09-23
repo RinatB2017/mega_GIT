@@ -88,6 +88,10 @@ private:
     QString get_checksum(const QString &data);
     void read_fake_data(void);
 
+    QString get_utc_string(void);
+    QString get_latitude_string(void);
+    QString get_longitude_string(void);
+
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

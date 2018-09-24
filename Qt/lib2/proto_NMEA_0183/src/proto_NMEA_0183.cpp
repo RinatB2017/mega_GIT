@@ -386,20 +386,27 @@ int Proto_NMEA_0183::calc_latitude(const QString &data,
 
     if(data.isEmpty())
     {
-        emit error("calc_latitude: нет данных");
+        emit debug("calc_latitude: нет данных");
         return E_NO_ERROR;
     }
 
-    if(data.length() != 9)
+    if(data.length() < 9)
+    {
         return E_ERROR_FORMAT_MESSAGE;
+    }
 
+    // «GGMM.MM» — широта. 2 цифры градусов(«GG»), 2 цифры целых минут, точка и дробная часть минут переменной длины. Лидирующие нули не опускаются.
     ok = string_to_int(data.mid(0, 2), grad);
     if(!ok)
+    {
         return E_ERROR_FORMAT_MESSAGE;
+    }
 
-    ok = string_to_float(data.mid(2, 7), min);
+    ok = string_to_float(data.mid(2), min);
     if(!ok)
+    {
         return E_ERROR_FORMAT_MESSAGE;
+    }
 
     return E_NO_ERROR;
 }
@@ -414,20 +421,27 @@ int Proto_NMEA_0183::calc_longitude(const QString &data,
 
     if(data.isEmpty())
     {
-        emit error("calc_latitude: нет данных");
+        emit debug("calc_latitude: нет данных");
         return E_NO_ERROR;
     }
 
-    if(data.length() != 9)
+    if(data.length() < 9)
+    {
         return E_ERROR_FORMAT_MESSAGE;
+    }
 
-    ok = string_to_int(data.mid(0, 2), grad);
+    // «gggmm.mm» — долгота. 3 цифры градусов(«ggg»), 2 цифры целых минут, точка и дробная часть минут переменной длины. Лидирующие нули не опускаются.
+    ok = string_to_int(data.mid(0, 3), grad);
     if(!ok)
+    {
         return E_ERROR_FORMAT_MESSAGE;
+    }
 
-    ok = string_to_float(data.mid(2, 7), min);
+    ok = string_to_float(data.mid(3), min);
     if(!ok)
+    {
         return E_ERROR_FORMAT_MESSAGE;
+    }
 
     return E_NO_ERROR;
 }
@@ -711,7 +725,7 @@ int Proto_NMEA_0183::parse_message_RMC(const QString &data)
     }
 
     state = sl.at(2);
-    if(state == 'V')
+    if(state == "V")
     {
         emit error("недостоверно");
         return E_NO_ERROR;
@@ -832,7 +846,7 @@ int Proto_NMEA_0183::parse_message_GLL(const QString &data)
     }
 
     state = sl.at(6);
-    if(state == 'V')
+    if(state == "V")
     {
         emit error("недостоверно");
         return E_NO_ERROR;

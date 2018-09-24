@@ -264,9 +264,9 @@ void MainBox::analize(void)
             .arg(min,   2,  10, QChar('0'))
             .arg(sec,   2,  10, QChar('0'));
 
-    emit info(QString("latitude %1").arg(str_latitude));
-    emit info(QString("longitude %1").arg(str_longitude));
-    emit info(QString("time %1").arg(str_time));
+    emit debug(QString("latitude %1").arg(str_latitude));
+    emit debug(QString("longitude %1").arg(str_longitude));
+    emit debug(QString("time %1").arg(str_time));
 
     ui->le_latitude->setText(str_latitude);
     ui->le_longitude->setText(str_longitude);

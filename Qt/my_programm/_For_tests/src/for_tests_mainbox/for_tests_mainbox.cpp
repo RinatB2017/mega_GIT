@@ -215,6 +215,12 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    int i = 5;
+    i = ++i + ++i;
+    emit info(QString("i %1").arg(i));
+#endif
+
+#if 0
     //float value = 1234.56789;
     //float value = 1234.0;
     float value = 0.123456789;

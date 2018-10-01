@@ -1,13 +1,13 @@
-#ifndef _DEFINES_HPP
-#define _DEFINES_HPP
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_RGB_Matrix"
 //--------------------------------------------------------------------------------
-#define NUM_LEDS_PER_STRIP  16
-#define NUM_STRIPS          8
+#define NUM_LEDS_PER_STRIP  32
+#define NUM_STRIPS          16
 
-#define LED_SIZE    32
+#define LED_SIZE    16
 
 #define MAX_SCREEN_X NUM_LEDS_PER_STRIP * 3
 #define MAX_SCREEN_Y NUM_STRIPS

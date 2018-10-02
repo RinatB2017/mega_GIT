@@ -84,19 +84,30 @@ void MainBox::init_widgets(void)
     ui->widget->setStyleSheet("background:white;");
 
     //---
-    int index = 1;
+    int number = 1;
     center_x = ui->widget->width() / 2;
     center_y = ui->widget->height() / 2;
     center_r = ui->widget->width() / 14;
     led_r = ui->widget->width() / 17;
     min_r = center_r + led_r + 10;
     max_r = ui->widget->width() / 2 - 20;
-    min_angle = 270; //-30.0f;
-    max_angle = -90; //330.0f;
+    min_angle = -30.0;
+    max_angle = 330.0;
+    //min_angle = 270.0;
+    //max_angle = -90.0;
     inc_r = (int)((max_r - min_r) / 2.4);
     qreal angle = min_angle;
-    int i = 0;
-    while(angle > max_angle)
+
+//    calc_line(center_x,
+//              center_y,
+//              45.0f,
+//              1000,
+//              &temp_x,
+//              &temp_y);
+
+//    qDebug() << center_x << center_y << temp_x << temp_y;
+
+    while(angle < max_angle)
     {
         for(int n=0; n<3; n++)
         {
@@ -108,17 +119,16 @@ void MainBox::init_widgets(void)
                       &temp_y);
             Led *led = new Led(led_r*2, led_r*2, ui->widget);
 
-            led->setProperty("index", index);
+            led->setProperty("index", number);
             leds.append(led);
             led->move(temp_x-led_r,
                       temp_y-led_r);
 #ifndef QT_DEBUG
             led->lock();
 #endif
-            index++;
+            number++;
         }
-        i++;
-        angle -= 60.0;
+        angle += 60.0;
     }
 
     setFixedSize(sizeHint());
@@ -172,6 +182,8 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::createSerialBox(void)

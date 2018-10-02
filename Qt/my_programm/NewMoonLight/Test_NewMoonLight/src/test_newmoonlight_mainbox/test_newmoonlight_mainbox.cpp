@@ -84,16 +84,16 @@ void MainBox::init_widgets(void)
     ui->widget->setStyleSheet("background:white;");
 
     //---
-    int index = 0;
-    center_x = ui->widget->width() / 2.0f;
-    center_y = ui->widget->height() / 2.0f;
-    center_r = ui->widget->width() / 14.0f;
-    led_r = ui->widget->width() / 17.0f;
-    min_r = center_r + led_r + 10.0f;
-    max_r = ui->widget->width() / 2.0f - 20.0f;
-    min_angle = 270.0f; //-30.0f;
-    max_angle = -90.0f; //330.0f;
-    inc_r = (int)((max_r - min_r) / 2.4f);
+    int index = 1;
+    center_x = ui->widget->width() / 2;
+    center_y = ui->widget->height() / 2;
+    center_r = ui->widget->width() / 14;
+    led_r = ui->widget->width() / 17;
+    min_r = center_r + led_r + 10;
+    max_r = ui->widget->width() / 2 - 20;
+    min_angle = 270; //-30.0f;
+    max_angle = -90; //330.0f;
+    inc_r = (int)((max_r - min_r) / 2.4);
     qreal angle = min_angle;
     int i = 0;
     while(angle > max_angle)
@@ -107,6 +107,8 @@ void MainBox::init_widgets(void)
                       &temp_x,
                       &temp_y);
             Led *led = new Led(led_r*2, led_r*2, ui->widget);
+
+            led->setProperty("index", index);
             leds.append(led);
             led->move(temp_x-led_r,
                       temp_y-led_r);
@@ -499,6 +501,7 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 void MainBox::test_0(void)
 {
+    emit debug("test_0()");
     for(int n=0; n<18; n++)
     {
         leds[n]->set_hot_color(128);
@@ -507,6 +510,7 @@ void MainBox::test_0(void)
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
+    emit debug("test_1()");
     for(int n=0; n<18; n++)
     {
         leds[n]->set_cold_color(128);
@@ -515,22 +519,22 @@ void MainBox::test_1(void)
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)
 {
-
+    emit debug("test_2()");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_3(void)
 {
-
+    emit debug("test_3()");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_4(void)
 {
-
+    emit debug("test_4()");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_5(void)
 {
-
+    emit debug("test_5()");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

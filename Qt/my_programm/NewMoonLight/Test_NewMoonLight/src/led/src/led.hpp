@@ -21,9 +21,9 @@
 #ifndef LED_HPP
 #define LED_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Led : public QWidget
+class Led : public MyWidget
 {
     Q_OBJECT
 
@@ -40,6 +40,8 @@ public:
     void lock(void);
     void unlock(void);
 
+    void updateText(void);
+
 private:
     QPoint lastPoint;
     bool b_move = false;
@@ -52,7 +54,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-
 };
 //--------------------------------------------------------------------------------
 #endif

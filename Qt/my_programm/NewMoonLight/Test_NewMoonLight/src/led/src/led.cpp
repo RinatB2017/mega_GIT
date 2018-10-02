@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QFontMetrics>
 #include <QMouseEvent>
 #include <QPainter>
 //--------------------------------------------------------------------------------
@@ -30,7 +31,7 @@
 Led::Led(int width,
          int height,
          QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
     setFixedSize(width, height);
 }
@@ -77,6 +78,9 @@ void Led::unlock(void)
 //--------------------------------------------------------------------------------
 void Led::paintEvent(QPaintEvent *)
 {
+    bool ok = false;
+    int index = property("index").toInt(&ok);
+
     QPainter painter;
     painter.begin(this);
 
@@ -89,6 +93,25 @@ void Led::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor(0, 0, cold_color), 1, Qt::SolidLine));
     painter.setBrush(QBrush(QColor(0, 0, cold_color)));
     painter.drawChord(QRect(0, 0, width(), height()), -90 * 16, 180 * 16);
+
+    if(ok)
+    {
+        //emit info(QString("show %1").arg(index));
+        painter.setPen(QPen(QColor(Qt::white)));
+
+        QFontMetrics fm = painter.fontMetrics();
+        QString text = QString("%1").arg(index);
+        QRect r = fm.boundingRect(text);
+        int w_text = r.width();
+        int h_text = r.height();
+        painter.drawText(width() / 2 - w_text / 2,
+                         height() / 2 + h_text / 2,
+                         text);
+    }
+    else
+    {
+        emit error("caanot show index");
+    }
 
     painter.end();
 }
@@ -120,5 +143,10 @@ void Led::mouseReleaseEvent(QMouseEvent *event)
     {
         b_move = false;
     }
+}
+//--------------------------------------------------------------------------------
+void Led::updateText(void)
+{
+
 }
 //--------------------------------------------------------------------------------

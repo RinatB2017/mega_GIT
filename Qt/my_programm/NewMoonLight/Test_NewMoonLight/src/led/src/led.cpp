@@ -78,9 +78,6 @@ void Led::unlock(void)
 //--------------------------------------------------------------------------------
 void Led::paintEvent(QPaintEvent *)
 {
-    bool ok = false;
-    int index = property("index").toInt(&ok);
-
     QPainter painter;
     painter.begin(this);
 
@@ -94,19 +91,14 @@ void Led::paintEvent(QPaintEvent *)
     painter.setBrush(QBrush(QColor(0, 0, cold_color)));
     painter.drawChord(QRect(0, 0, width(), height()), -90 * 16, 180 * 16);
 
+    bool ok = false;
+    int index = property("index").toInt(&ok);
     if(ok)
     {
         //emit info(QString("show %1").arg(index));
         painter.setPen(QPen(QColor(Qt::white)));
-
-        QFontMetrics fm = painter.fontMetrics();
         QString text = QString("%1").arg(index);
-        QRect r = fm.boundingRect(text);
-        int w_text = r.width();
-        int h_text = r.height();
-        painter.drawText(width() / 2 - w_text / 2,
-                         height() / 2 + h_text / 2,
-                         text);
+        painter.drawText(0, 0, width(), height(), Qt::AlignCenter, text);
     }
     else
     {

@@ -209,12 +209,19 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include <QWebEngineView>
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QWebEngineView *view = new QWebEngineView();
+    view->setUrl(QUrl("https://www.youtube.com"));
+    view->show();
+#endif
+
+#if 0
     int i = 5;
     i = ++i + ++i;
     emit info(QString("i %1").arg(i));

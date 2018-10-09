@@ -26,7 +26,7 @@
 #include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#include "test_function.hpp"
+//#include "test_function.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #define private public
@@ -38,17 +38,10 @@ Test::Test()
 {
     mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
-
-    tf = new Test_function;
-    QVERIFY(tf);
 }
 //--------------------------------------------------------------------------------
 Test::~Test()
 {
-    if(tf)
-    {
-        tf->deleteLater();
-    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_slider(void)

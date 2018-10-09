@@ -1,8 +1,4 @@
-# if defined(UNDER_CE)
-#  include <winbase.h>
-# else
-#  include <windows.h>
-# endif
+#include <windows.h>
 
 IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\User\\Programming\\GitHub\\mega_GIT\\Qt\\my_programm\\RS232\\RS232_5\\RS232_5_x2\\ico\\RS232.ico"
 

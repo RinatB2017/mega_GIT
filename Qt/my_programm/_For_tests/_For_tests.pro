@@ -13,6 +13,9 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
+QT += webenginewidgets
+CONFIG += c++11
+
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 #
@@ -70,8 +73,10 @@ SOURCES += \
 
 FORMS   += for_tests_mainbox.ui
 
+RESOURCES += ico/icons.qrc
+
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/computer.ico
 }
 
 RESOURCES += \

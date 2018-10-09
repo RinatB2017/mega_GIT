@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\User\\Programming\\GitHub\\mega_GIT\\Qt\\my_programm\\RS232\\RS232_5\\RS232_5_bridge\\ico\\RS232.ico"
+IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\User\\Programming\\GitHub\\mega_GIT\\Qt\\my_programm\\_For_tests\\ico\\computer.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0
@@ -23,8 +23,8 @@ VS_VERSION_INFO VERSIONINFO
 				VALUE "FileDescription", "\0"
 				VALUE "FileVersion", "0.0.0.0\0"
 				VALUE "LegalCopyright", "\0"
-				VALUE "OriginalFilename", "RS232_5_bridge.exe\0"
-				VALUE "ProductName", "RS232_5_bridge\0"
+				VALUE "OriginalFilename", "_For_tests.exe\0"
+				VALUE "ProductName", "_For_tests\0"
 				VALUE "ProductVersion", "0.0.0.0\0"
 			END
 		END

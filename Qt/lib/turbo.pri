@@ -55,17 +55,20 @@ win32 {
 #OPTIMIZE = -pipe -Ofast #only for gcc-4.6
 
 CONFIG(debug, debug|release) {
-    OPTIMIZE = -pipe -O0
+    #OPTIMIZE = -pipe -O0
+    OPTIMIZE = -O0
 }
 else {
-    OPTIMIZE = -pipe -O2
+    #OPTIMIZE = -pipe -O2
+    OPTIMIZE =  -O2
 }
 ###############################################################################
 #CONFIG	 += precompile_header
 #PRECOMPILED_HEADER  = stable.h
 ###############################################################################
 unix:!macx {
-    QMAKE_CXX      = ccache g++
+    QMAKE_CXX   = ccache g++
+    OPTIMIZE    += -pipe
 }
 ###############################################################################
 QMAKE_CFLAGS   += $${OPTIMIZE}

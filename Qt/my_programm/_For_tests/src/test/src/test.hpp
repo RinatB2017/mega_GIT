@@ -32,7 +32,6 @@
 #include "mymainwindow.hpp"
 //--------------------------------------------------------------------------------
 class MyMainWindow;
-class Test_function;
 //--------------------------------------------------------------------------------
 class Test : public QObject
 {
@@ -49,8 +48,7 @@ private slots:
     void simple_test(void);
 
 private:
-    MyMainWindow *mw = 0;
-    Test_function *tf = 0;
+    MyMainWindow *mw = nullptr;
 
     void test_slider(void);
     void test_mainbox(void);

@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QDialogButtonBox>
 #include <QApplication>
-#include <QWebSettings>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>

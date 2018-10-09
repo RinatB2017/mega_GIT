@@ -21,20 +21,10 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QStackedWidget>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QTabWidget>
-#   include <QLineEdit>
-#   include <QToolBar>
-#   include <QtWebKit>
-#   include <QSplitter>
-#   include <QComboBox>
-#   include <QDebug>
-#   include <QLabel>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include <QWebView>
+#include <QWebEngineView>
 //--------------------------------------------------------------------------------
 #include "ui_teacher_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -67,9 +57,9 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::prepare_browsers(void)
 {
-    browser_site = new QWebView(this);
-    browser_translate_en_ru = new QWebView(this);
-    browser_translate_ru_en = new QWebView(this);
+    browser_site = new QWebEngineView(this);
+    browser_translate_en_ru = new QWebEngineView(this);
+    browser_translate_ru_en = new QWebEngineView(this);
 
     browser_site->setUrl(QUrl(DEFAULT_SITE));
 

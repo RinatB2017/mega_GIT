@@ -12,11 +12,7 @@ DEPENDPATH  += \
     $$PWD/src/teacher_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += webkitwidgets
-} else {
-    QT += webkit
-}
+QT += webenginewidgets
 QT += network
 
 #QMAKE_CXXFLAGS += -fno-show-column

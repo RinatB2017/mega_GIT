@@ -26,7 +26,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -37,8 +37,9 @@ class QTabWidget;
 class QLineEdit;
 class Notebook;
 class QToolBar;
-class QWebView;
 class QFrame;
+
+class QWebEngineView;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -61,9 +62,9 @@ private:
 
     bool is_blocked;
     QLineEdit *site_address = 0;
-    QWebView *browser_site = 0;
-    QWebView *browser_translate_en_ru = 0;
-    QWebView *browser_translate_ru_en = 0;
+    QWebEngineView *browser_site = 0;
+    QWebEngineView *browser_translate_en_ru = 0;
+    QWebEngineView *browser_translate_ru_en = 0;
 
     QGridLayout *grid1 = 0;
     QGridLayout *grid2 = 0;

@@ -23,7 +23,6 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include <QNetworkProxyFactory>
-#include <QWebSettings>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"

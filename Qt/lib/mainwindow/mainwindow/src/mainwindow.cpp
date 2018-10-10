@@ -81,13 +81,14 @@ void MainWindow::setCentralWidget(QWidget *widget)
     Q_CHECK_PTR(widget);
     QMainWindow::setCentralWidget(widget);
 
-    load_setting();
-
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
 
     show_docs();
+
+    //TODO
+    load_setting();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::changeEvent(QEvent *event)
@@ -204,7 +205,9 @@ void MainWindow::init(void)
     createSysLog_dock();
 #endif
 
-    //TODO load_setting();
+    //TODO
+    //load_setting();
+
 #ifndef NO_MENU
     createMenus();
 #endif
@@ -726,10 +729,10 @@ void MainWindow::createSysLog_dock(void)
 //--------------------------------------------------------------------------------
 void MainWindow::createToolBar(void)
 {
-    toolbar = new QToolBar(tr("toolbar"), this);
+    toolbar = new QToolBar("toolbar", this);
     Q_CHECK_PTR(toolbar);
 
-    toolbar->setObjectName(tr("toolbar"));
+    toolbar->setObjectName("toolbar");
     toolbar->setMovable(true);
 
     addToolBar(Qt::TopToolBarArea, toolbar);

@@ -52,9 +52,6 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-
 #ifdef Q_OS_LINUX
     //set_signals();
 #endif
@@ -81,6 +78,7 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
     app.setAttribute(Qt::AA_EnableHighDpiScaling);
+    app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QPixmap pixmap(":/logo/logo.png");
 

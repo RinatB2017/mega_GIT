@@ -17,8 +17,6 @@ macx {
 }
 
 win32 {
-    #TEMP_PATH = "C:\\shm"
-    #TEMP_PATH = "K:"
     TEMP_PATH = "E:"
     OBJECTS_DIR = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\moc
@@ -30,11 +28,12 @@ win32 {
 }
 ###############################################################################
 unix:!macx {
-    DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
-}
+        DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
+    }
 macx {
-    DESTDIR = bin
-}
+        DESTDIR = bin
+    }
+
 win32 {
     CONFIG(debug, debug|release) {
         #DESTDIR = bin/debug
@@ -54,27 +53,23 @@ win32 {
 #OPTIMIZE = -pipe -Os #only size code optimization
 #OPTIMIZE = -pipe -Ofast #only for gcc-4.6
 
-CONFIG(debug, debug|release) {
-    #OPTIMIZE = -pipe -O0
-    OPTIMIZE = -O0
-}
-else {
-    #OPTIMIZE = -pipe -O2
-    OPTIMIZE =  -O2
+unix:!macx {
+    CONFIG(debug, debug|release) {
+        OPTIMIZE = -pipe -O0
+    }
+    else {
+        PTIMIZE = -pipe -O2
+    }
+    QMAKE_CFLAGS   += $${OPTIMIZE}
+    QMAKE_CXXFLAGS += $${OPTIMIZE}
+    QMAKE_LFLAGS   += $${OPTIMIZE}
+    QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
+
+    QMAKE_CXX   = ccache g++
 }
 ###############################################################################
 #CONFIG	 += precompile_header
 #PRECOMPILED_HEADER  = stable.h
-###############################################################################
-unix:!macx {
-    QMAKE_CXX   = ccache g++
-    OPTIMIZE    += -pipe
-}
-###############################################################################
-QMAKE_CFLAGS   += $${OPTIMIZE}
-QMAKE_CXXFLAGS += $${OPTIMIZE}
-QMAKE_LFLAGS   += $${OPTIMIZE}
-QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 ###############################################################################
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets

@@ -217,6 +217,7 @@ bool MainBox::test_0(void)
 
 #if 1
     QWebEngineView *view = new QWebEngineView();
+    view->setMinimumSize(800, 600);
     view->setUrl(QUrl("https://www.youtube.com"));
     view->show();
 #endif

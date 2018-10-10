@@ -58,7 +58,7 @@ CONFIG += c++11
 #DEFINES += NO_LOG
 #DEFINES += SYSLOG_LOG
 
-DEFINES += SAVE_INI
+#DEFINES += SAVE_INI
 
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -80,8 +80,7 @@ win32 {
 }
 
 RESOURCES += \
-    images/images.qrc \
-    local_fonts/local_fonts.qrc
+    images/images.qrc
 
 #можно поставить новое logo
 RESOURCES += about/about.qrc
@@ -92,7 +91,6 @@ LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 CONFIG(debug, debug|release) {
-    #include ($$LIB_PATH/test_function/test_function.pri)
     include (src/test/test.pri)
 }
 

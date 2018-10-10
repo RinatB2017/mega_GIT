@@ -301,9 +301,6 @@ protected:
     bool flag_show_trace = false;
 #endif
 
-    //TODO
-    bool flag_on_close = false;
-
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);
 #ifndef NO_RESIZE

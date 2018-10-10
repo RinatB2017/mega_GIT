@@ -51,7 +51,7 @@ MainWindow::~MainWindow()
 #ifdef QT_DEBUG
     qDebug() << "~MainWindow()";
 #endif
-    save_setting();
+    //save_setting();
 
 #ifndef NO_LOG_INFO
     MyWidget::set_param("Main", "flag_show_info",   flag_show_info);
@@ -681,14 +681,10 @@ void MainWindow::load_setting(void)
 //--------------------------------------------------------------------------------
 void MainWindow::save_setting(void)
 {
-    if(flag_on_close == false)
-    {
-        flag_on_close = true;
 #ifdef QT_DEBUG
-        qDebug() << "MainWindow::save_setting";
+    qDebug() << "MainWindow::save_setting";
 #endif
-        save_main();
-    }
+    save_main();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::show_docs(void)

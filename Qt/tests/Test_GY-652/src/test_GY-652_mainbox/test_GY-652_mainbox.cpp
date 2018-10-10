@@ -28,13 +28,13 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_Test_GY-652_mainbox.h"
+#include "ui_test_GY-652_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "Test_GY-652_mainbox.hpp"
+#include "test_GY-652_mainbox.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER
 #   include "grapherbox.hpp"

@@ -77,6 +77,8 @@ LogBox::~LogBox()
 //--------------------------------------------------------------------------------
 void LogBox::init(void)
 {
+    setObjectName("logbox");
+
     create_widgets();
 
     if(o_name.isEmpty() == false)
@@ -177,7 +179,7 @@ void LogBox::create_widgets(void)
     setLayout(mainbox);
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
-    adjustSize();
+    //adjustSize();
 }
 //--------------------------------------------------------------------------------
 void LogBox::setColorLog(bool state)
@@ -530,6 +532,8 @@ void LogBox::changeOptions(void)
 {
     Log_options *optionsBox = new Log_options();
     Q_CHECK_PTR(optionsBox);
+
+    optionsBox->setObjectName("optionsBox");
 
     optionsBox->setProperty("flag_ReadOnly",        logBox->isReadOnly());
     optionsBox->setProperty("flag_AcceptRichText",  logBox->acceptRichText());

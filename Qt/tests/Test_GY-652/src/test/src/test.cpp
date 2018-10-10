@@ -29,9 +29,12 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "grapherbox.hpp"
 #include "Test_GY-652_mainbox.hpp"
 #include "test.hpp"
+//--------------------------------------------------------------------------------
+#ifndef NO_GRAPHER
+#   include "grapherbox.hpp"
+#endif
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -39,6 +42,7 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_GRAPHER
 void Test::test_grapher(void)
 {
 #ifdef NO_GRAPHER
@@ -73,4 +77,5 @@ void Test::test_grapher(void)
         QCOMPARE((int)x, n);
     }
 }
+#endif
 //--------------------------------------------------------------------------------

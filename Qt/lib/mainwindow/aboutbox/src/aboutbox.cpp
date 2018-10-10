@@ -92,6 +92,7 @@ void AboutBox::show_env(void)
 {
     QStringList sl = QProcessEnvironment::systemEnvironment().toStringList();
     QTextEdit *te = new QTextEdit();
+    te->setObjectName("te");
     te->setWindowModality(Qt::WindowModal);
     te->setMinimumSize(800, 600);
     te->setReadOnly(true);

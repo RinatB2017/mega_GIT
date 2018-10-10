@@ -62,7 +62,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QMainWindow* parent = 0);
+    explicit MainWindow(QMainWindow* parent = 0);
     ~MainWindow();
 
     void setCentralWidget(QWidget *widget);
@@ -300,6 +300,9 @@ protected:
 #ifndef NO_LOG_TRACE
     bool flag_show_trace = false;
 #endif
+
+    //TODO
+    bool flag_on_close = false;
 
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);

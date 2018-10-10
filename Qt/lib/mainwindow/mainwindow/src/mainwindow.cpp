@@ -127,18 +127,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMessageBox msgBox;
 
     //---
+#if 0
     MyWidget *cw = (MyWidget *)centralWidget();
     if(cw)
     {
-#if 0
         //TODO как нибудь потом
         if(cw->no_exit())
         {
             event->ignore();
             return;
         }
-#endif
     }
+#endif
     //---
 
     if(flag_close)
@@ -567,6 +567,10 @@ void MainWindow::about(void)
 //--------------------------------------------------------------------------------
 void MainWindow::load_main(void)
 {
+#ifdef QT_DEBUG
+    qDebug() << "MainWindow::load_main";
+#endif
+
     QFont font = qApp->font();
     QString font_name;
     int font_weight;
@@ -632,6 +636,10 @@ void MainWindow::load_main(void)
 //--------------------------------------------------------------------------------
 void MainWindow::save_main(void)
 {
+#ifdef QT_DEBUG
+    qDebug() << "MainWindow::save_main";
+#endif
+
     Q_CHECK_PTR(settings);
 
     settings->beginGroup("Main");
@@ -665,12 +673,22 @@ void MainWindow::save_main(void)
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)
 {
+#ifdef QT_DEBUG
+    qDebug() << "MainWindow::load_setting";
+#endif
     load_main();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::save_setting(void)
 {
-    save_main();
+    if(flag_on_close == false)
+    {
+        flag_on_close = true;
+#ifdef QT_DEBUG
+        qDebug() << "MainWindow::save_setting";
+#endif
+        save_main();
+    }
 }
 //--------------------------------------------------------------------------------
 void MainWindow::show_docs(void)
@@ -1888,6 +1906,9 @@ void MainWindow::app_toolbar_add_lang(void)
 {
     QToolButton *btnRus = new QToolButton(this);
     QToolButton *btnEng = new QToolButton(this);
+
+    btnRus->setObjectName("btnRus");
+    btnEng->setObjectName("btnEng");
 
     btnRus->setObjectName("btnRus");
     btnRus->setIcon(QPixmap(ICON_RU));

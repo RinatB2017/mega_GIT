@@ -89,7 +89,6 @@ int main(int argc, char *argv[])
 
     MyMainWindow *main_window = new MyMainWindow();
     Q_CHECK_PTR(main_window);
-    main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     // отключает заголовок
     // main_window->setWindowFlags(Qt::FramelessWindowHint);

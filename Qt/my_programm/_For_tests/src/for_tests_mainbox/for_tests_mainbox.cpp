@@ -216,6 +216,19 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QList<QWidget *> all_obj = topLevelWidget()->findChildren<QWidget *>();
+    emit info(QString("found %1 widgets").arg(all_obj.count()));
+    foreach (QWidget *obj, all_obj)
+    {
+        if(obj->objectName().isEmpty())
+        {
+            emit error(QString("[%1] is empty!")
+                       .arg(obj->metaObject()->className()));
+        }
+    }
+#endif
+
+#if 0
     QWebEngineView *view = new QWebEngineView();
     view->setMinimumSize(800, 600);
     view->setUrl(QUrl("https://www.youtube.com"));

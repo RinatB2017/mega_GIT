@@ -99,8 +99,6 @@ void MainBox::init(void)
     ui->label_alt->setVisible(false);
     ui->display_altitude->setVisible(false);
 #endif
-
-
     //---
 
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_gy652(QByteArray)));
@@ -124,6 +122,7 @@ void MainBox::createTestBar(void)
                                        "test");
 
     connect(btn_test,   SIGNAL(clicked()),  this,   SLOT(test()));
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::data_gy652(QByteArray data)

@@ -45,9 +45,9 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 
 #ifndef RS232_LOG
-//    if(parent)
-//        connect_log(parent);
-//    else
+    if(parent)
+        connect_log(parent);
+    else
         connect_log(topLevelWidget());
 #endif
 #ifdef QT_DEBUG

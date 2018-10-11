@@ -81,11 +81,12 @@ void MainBox::init(void)
             this,                       SLOT(analize(QString)));
 
     //ui->le_address->setText("https://2ip.ru/");
-    ui->le_address->setText("https://www.youtube.com/");
+    //ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
+    ui->le_address->setText("https://www.avito.ru/krasnodar");
 
-#if 1
+#if 0
     load_widgets("Test_QWebEngineView");
 #else
     ui->te_js->clear();
@@ -93,12 +94,12 @@ void MainBox::init(void)
     ui->te_js->append("function myFunction()");
     ui->te_js->append("{");
     ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   var arr = new Array();");
+    ui->te_js->append("   var l_str = '';");
     ui->te_js->append("   for (var i = 0; i < links.length; i++)");
     ui->te_js->append("   {");
-    ui->te_js->append("      arr[i] = links[i].href;");
+    ui->te_js->append("      l_str += links[i].href + \";\";");
     ui->te_js->append("   }");
-    ui->te_js->append("   return arr;");
+    ui->te_js->append("   return l_str;");
     ui->te_js->append("}");
     ui->te_js->append("myFunction();");
 
@@ -152,7 +153,7 @@ void MainBox::test_JS(bool)
 
     ui->webEngineView->page()->runJavaScript(javascript, [=](const QVariant &v)
     {
-        //emit info(v.toString());
+        emit info(v.toString());
         emit send(v.toString());
     });
 }
@@ -293,14 +294,28 @@ bool MainBox::test_4(void)
     ui->te_js->append("function myFunction()");
     ui->te_js->append("{");
     ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   var arr = new Array()");
+    ui->te_js->append("   var l_str = '';");
     ui->te_js->append("   for (var i = 0; i < links.length; i++)");
     ui->te_js->append("   {");
-    ui->te_js->append("      arr.push(links[i].href);");
+    ui->te_js->append("      l_str += links[i].href + \";\";");
     ui->te_js->append("   }");
-    ui->te_js->append("   return arr;");
+    ui->te_js->append("   return l_str;");
     ui->te_js->append("}");
     ui->te_js->append("myFunction();");
+
+    /*
+    function myFunction()
+    {
+       var links = document.getElementsByTagName('a');
+       var l_str = '';
+       for (var i = 0; i < links.length; i++)
+       {
+         l_str += links[i].href + ";";
+       }
+       return l_str;
+    }
+    myFunction();
+    */
 
     return true;
 }

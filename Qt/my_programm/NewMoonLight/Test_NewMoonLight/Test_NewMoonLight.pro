@@ -45,8 +45,10 @@ RESOURCES   += pic/pic.qrc
 OTHER_FILES += doc/notebook.txt
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/computer.ico
 }
+
+RESOURCES   += images/images.qrc
 
 LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"

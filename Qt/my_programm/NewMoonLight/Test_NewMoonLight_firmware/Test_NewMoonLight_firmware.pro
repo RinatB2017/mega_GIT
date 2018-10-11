@@ -40,15 +40,17 @@ SOURCES += \
 
 FORMS   += test_newmoonlight_firmware_mainbox.ui
 
-RESOURCES   += pic/pic.qrc
+RESOURCES   += \
+    pic/pic.qrc \
+    images/images.qrc
 
 OTHER_FILES += doc/notebook.txt
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/computer.ico
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

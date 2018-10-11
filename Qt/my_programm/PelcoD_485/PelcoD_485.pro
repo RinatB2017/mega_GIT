@@ -27,13 +27,15 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
+DEFINES += WIN32_LEAN_AND_MEAN
+
 DEFINES += SAVE_WIDGETS_SPINBOX
 DEFINES += SAVE_WIDGETS_SLIDER
 
 HEADERS += \
+    pelco_d_485_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    pelco_d_485_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     pelco_d_485_mainbox.cpp \
@@ -46,10 +48,12 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/computer.ico
 }
 
-LIB_PATH = "../../lib"
+RESOURCES	+= images/images.qrc
+
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

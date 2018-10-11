@@ -46,7 +46,7 @@
 
 union PELCO_PACKET
 {
-    struct BODY
+    struct PELCO_BODY
     {
         uint8_t sync;
         uint8_t address;
@@ -56,10 +56,10 @@ union PELCO_PACKET
         uint8_t data2;
         uint8_t crc;
     } body;
-    uint8_t buf[sizeof(BODY)];
+    uint8_t buf[sizeof(PELCO_BODY)];
 };
 
-#pragma pack(pop)
+#pragma pack (pop)
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :

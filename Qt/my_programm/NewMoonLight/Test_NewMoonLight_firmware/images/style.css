@@ -1,0 +1,22 @@
+
+QCheckBox::hover
+{
+    background-color: gray;
+    color: black;
+}
+
+QStatusBar
+{
+    background-color: green;
+    color: black;
+}
+
+QDockWidget
+{
+    background-color: red;
+}
+
+QTextEdit
+{
+    background-color: blue;
+}

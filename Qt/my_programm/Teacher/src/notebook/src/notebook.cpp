@@ -138,7 +138,7 @@ void Notebook::save_all(void)
         }
         xmlPut->rise();
     }
-    xmlPut->save("alphabet.xml");
+    xmlPut->save(ALPHABET_FILE);
 }
 //--------------------------------------------------------------------------------
 void Notebook::btn_click(void)
@@ -166,10 +166,10 @@ void Notebook::btn_click(void)
 bool Notebook::load_data(QString name, QStringList *data)
 {
     QXmlGet *xmlGet = new QXmlGet();
-    bool ok = xmlGet->load("alphabet.xml");
+    bool ok = xmlGet->load(ALPHABET_FILE);
     if(!ok)
     {
-        emit error("load alphabet.xml");
+        emit error(QString("load %1 failed").arg(ALPHABET_FILE));
         return false;
     }
 

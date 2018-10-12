@@ -41,6 +41,8 @@ SOURCES += \
 
 FORMS += proxy_walker_mainbox.ui
 
+OTHER_FILES += proxies/proxies.xml
+
 win32 {
     RC_FILE = ico/myapp.rc
 }

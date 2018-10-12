@@ -18,69 +18,46 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
+#include <QApplication>
+#include <QObject>
 #include <QWidget>
+#include <QList>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#define private public
 //--------------------------------------------------------------------------------
-namespace Ui {
-class MainBox;
+#include "mainwindow.hpp"
+#include "template_old_mainbox.hpp"
+#include "test.hpp"
+//--------------------------------------------------------------------------------
+Test::Test()
+{
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void Test::test_GUI(void)
 {
-    Q_OBJECT
+    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
+    QVERIFY(cb);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
 
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
-    QList<CMD> commands;
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
-};
+    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
+    QVERIFY(tb);
+    QTest::mouseClick(tb, Qt::LeftButton);
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Test::test_func(void)
+{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
+
+    QCOMPARE(mb->test_0(), true);
+    QCOMPARE(mb->test_1(), true);
+    QCOMPARE(mb->test_2(), true);
+    QCOMPARE(mb->test_3(), true);
+    QCOMPARE(mb->test_4(), true);
+    QCOMPARE(mb->test_5(), true);
+}
+//--------------------------------------------------------------------------------

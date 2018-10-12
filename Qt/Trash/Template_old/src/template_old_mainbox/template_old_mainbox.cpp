@@ -25,6 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_template_old_mainbox.h"
+//#include "ui_template_old_mainbox_test.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
@@ -53,7 +54,18 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifndef QT_DEBUG
+    Q_CHECK_PTR(parentWidget());
+#endif
+
     createTestBar();
+
+    //connect(ui->checkBox_0, SIGNAL(clicked(bool)),  ui->checkBox_1, SLOT(setDisabled(bool)));
+
+    init_w_lists();
+
+    installEventFilter(this);
 
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -141,41 +153,146 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    lock_interface();
+
+#if 0
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        emit info(QString("w %1").arg(mw->centralWidget()->width()));
+        emit info(QString("h %1").arg(mw->centralWidget()->height()));
+    }
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    unlock_interface();
+
+#if 0
+    qApp->setStyle(QStyleFactory::create("Fusion"));
+
+    QPalette darkPalette;
+    darkPalette.setColor(QPalette::Window, QColor(53,53,53));
+    darkPalette.setColor(QPalette::WindowText, Qt::white);
+    darkPalette.setColor(QPalette::Base, QColor(25,25,25));
+    darkPalette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+    darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+    darkPalette.setColor(QPalette::Text, Qt::white);
+    darkPalette.setColor(QPalette::Button, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ButtonText, Qt::white);
+    darkPalette.setColor(QPalette::BrightText, Qt::red);
+    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+
+    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+
+    qApp->setPalette(darkPalette);
+
+    qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
+
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
     emit info("Test_3()");
+
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_4(void)
 {
     emit info("Test_4()");
+
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_5(void)
 {
     emit info("Test_5()");
+
     return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::eventFilter(QObject*, QEvent* event)
+{
+    QMouseEvent *mouseEvent = (QMouseEvent *) event;
+    if(mouseEvent == nullptr)
+    {
+        return false;
+    }
+    //---
+    if(mouseEvent->type() == QMouseEvent::MouseButtonPress)
+    {
+        emit info(QString("%1 %2")
+                  .arg(mouseEvent->pos().x())
+                  .arg(mouseEvent->pos().y()));
+        return true;
+    }
+    //---
+    if(mouseEvent->type() == QMouseEvent::Wheel)
+    {
+        return true;
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+void MainBox::resizeEvent(QResizeEvent *event)
+{
+#if 1
+    // не забыть про margin MainBox
+    int w = event->size().width()  - ui->frame->width() - ui->frame_2->width() - 4*10;
+    int h = event->size().height() - 20;
+
+    QPixmap picture_pixmap(w, h);
+
+    QPainter painter;
+    painter.begin(&picture_pixmap);
+    painter.fillRect(0, 0,
+                     w, h,
+                     Qt::SolidPattern);
+
+    int x = (w > h) ? h : w;
+
+    painter.setPen(Qt::white);
+    painter.drawRect(w/2-x/2+x*0.1, x*0.1,
+                     x*0.8, x*0.8);
+    painter.end();
+
+    QGraphicsScene *scene = new QGraphicsScene;
+    scene->addPixmap(picture_pixmap);
+
+    ui->graphicsView->setScene(scene);
+#endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::paintEvent(QPaintEvent *)
+{
+#if 0
+    QPainter p(this);
+    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
+    p.drawLine(0, 0, width(), height());
+    p.drawLine(0, height(), width(), 0);
+#endif
 }
 //--------------------------------------------------------------------------------

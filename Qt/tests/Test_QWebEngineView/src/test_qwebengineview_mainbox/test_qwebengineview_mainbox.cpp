@@ -89,13 +89,14 @@ void MainBox::init(void)
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
     //ui->le_address->setText("https://www.avito.ru/krasnodar");
-    ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
+    //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
+    ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
 
-#if 1
+#if 0
     load_widgets("Test_QWebEngineView");
 #endif
 
-#if 0
+#if 1
     ui->te_js->clear();
 
     ui->te_js->append("function myFunction()");
@@ -106,7 +107,7 @@ void MainBox::init(void)
     ui->te_js->append("   {");
     ui->te_js->append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";");
 
-    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт')");
+    ui->te_js->append("      if(links[i].innerHTML == 'тест')");
     ui->te_js->append("      {");
     ui->te_js->append("          links[i].click();");
     ui->te_js->append("      }");

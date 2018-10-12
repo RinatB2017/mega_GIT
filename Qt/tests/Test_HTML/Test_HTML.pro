@@ -3,27 +3,26 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Template_old
+TARGET   = Test_HTML
 
-FOLDER  = _Templates
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/template_old_mainbox \
-    $$PWD/src/template_old_mainbox/ui
+    $$PWD/src/test_html_mainbox \
+    $$PWD/src/test_html_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 #QMAKE_CXXFLAGS += -fno-show-column
+QT += webenginewidgets
+CONFIG += c++11
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-#
-#DEFINES += NO_STYLETOOLBAR
+DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
-DEFINES += NO_RESIZE
+#DEFINES += NO_RESIZE
 #DEFINES += NO_MENU
 #DEFINES += NO_LOG
 
@@ -38,9 +37,9 @@ DEFINES += NO_RESIZE
 #DEFINES += SAVE_WIDGETS_SPINBOX
 #DEFINES += SAVE_WIDGETS_DOUBLESPINBOX
 #DEFINES += SAVE_WIDGETS_SLIDER
-#DEFINES += SAVE_WIDGETS_TEXTEDIT
+DEFINES += SAVE_WIDGETS_TEXTEDIT
 #DEFINES += SAVE_WIDGETS_LINEEDIT
-#DEFINES += SAVE_WIDGETS_SPLITTER
+DEFINES += SAVE_WIDGETS_SPLITTER
 
 #DEFINES += NO_TOOLBAR_BUTTON_EXIT
 #DEFINES += NO_TOOLBAR_BUTTON_FONT
@@ -58,15 +57,15 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    template_old_mainbox.hpp \
+    test_html_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    template_old_mainbox.cpp \
+    test_html_mainbox.cpp \
     main.cpp
 
-FORMS   += template_old_mainbox.ui
+FORMS   += test_html_mainbox.ui
 
 win32 {
     RC_ICONS += ico/computer.ico
@@ -83,7 +82,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH = "../../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {

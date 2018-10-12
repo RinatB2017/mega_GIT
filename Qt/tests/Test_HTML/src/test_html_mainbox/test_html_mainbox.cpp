@@ -24,12 +24,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_template_old_mainbox.h"
+#include "ui_test_html_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "template_old_mainbox.hpp"
+#include "test_html_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -47,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("test_html");
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -55,14 +56,67 @@ void MainBox::init(void)
     ui->setupUi(this);
     createTestBar();
 
-#if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
+    connect(ui->btn_run,        SIGNAL(clicked(bool)),  this,   SLOT(s_run()));
+    connect(ui->btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(s_default()));
+
+    QSplitter *splitter = new QSplitter(Qt::Horizontal);
+    splitter->setObjectName("splitter");
+    splitter->setChildrenCollapsible(false);
+
+    ui->frame_text->setParent(splitter);
+    ui->frame_html->setParent(splitter);
+    splitter->addWidget(ui->frame_text);
+    splitter->addWidget(ui->frame_html);
+
+    QVBoxLayout *vbox = new QVBoxLayout();
+    vbox->addWidget(splitter);
+
+    QWidget *w = new QWidget(this);
+    w->setLayout(vbox);
+
+    layout()->addWidget(w);
+
+    load_widgets("test_html");
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_run(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QString temp = ui->le_html->toPlainText();
+    if(temp.isEmpty())
     {
-        setMinimumHeight(sizeHint().height());
+        emit error("no data");
+        return;
     }
-#endif
+    ui->webEngineView->setHtml(temp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_default(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QString temp;
+    temp.append("<!DOCTYPE html>\n");
+    temp.append("<html>\n");
+    temp.append("<head>\n");
+    temp.append("  <meta charset=\"utf-8\">\n");
+    temp.append("  <title>Название документа</title>\n");
+    temp.append("</head>\n");
+    temp.append("<body>\n");
+    temp.append("  <p>Нажмите кнопку, чтобы изменить текст в этом абзаце.</p>\n");
+    temp.append("  <a href=\"xxx\">тест</a>\n");
+    temp.append("  <br>\n");
+    temp.append("  <button onclick=\"foo()\">Попробовать</button>\n");
+    temp.append("  <script>\n");
+    temp.append("    function foo() {\n");
+    temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"Hello World\";\n");
+    temp.append("    }\n");
+    temp.append("  </script>\n");
+    temp.append("</body>\n");
+    temp.append("</html>\n");
+
+    ui->le_html->setPlainText(temp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -106,7 +160,7 @@ void MainBox::createTestBar(void)
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
-    //testbar->setFixedWidth(toolBar->sizeHint().width());
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

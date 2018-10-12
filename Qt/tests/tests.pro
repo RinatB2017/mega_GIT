@@ -18,6 +18,7 @@ SUBDIRS += \
     Test_GY-652 \
     Test_HistogramBox \
     Test_HID_device \
+    Test_HTML \
     Test_QHexEdit \
     Test_md5 \
     Test_OpenRPT \

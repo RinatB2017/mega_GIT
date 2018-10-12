@@ -18,69 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    Test();
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
+    void test_GUI(void);
+    void test_func(void);
+    
 private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
-    QList<CMD> commands;
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
+    MainWindow *mw = 0;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

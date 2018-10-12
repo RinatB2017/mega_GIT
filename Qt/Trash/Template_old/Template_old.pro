@@ -16,6 +16,8 @@ INCLUDEPATH = $$DEPENDPATH
 
 #QMAKE_CXXFLAGS += -fno-show-column
 
+#QT  += serialbus
+
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 #
@@ -58,18 +60,19 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    template_old_mainbox.hpp \
     defines.hpp \
-    version.hpp
+    version.hpp \
+    template_old_mainbox.hpp
 
 SOURCES += \
     template_old_mainbox.cpp \
     main.cpp
 
 FORMS   += template_old_mainbox.ui
+#FORMS   += template_old_mainbox_test.ui
 
 win32 {
-    RC_ICONS += ico/computer.ico
+    RC_FILE = ico/myapp.rc
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
@@ -83,6 +86,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
+#----------------------------------------------
 LIB_PATH = "../../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
@@ -90,5 +94,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+#----------------------------------------------
 
 VPATH = $$INCLUDEPATH

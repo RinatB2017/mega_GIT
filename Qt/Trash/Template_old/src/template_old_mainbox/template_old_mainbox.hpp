@@ -77,10 +77,22 @@ private:
     QCheckBox *cb_block = 0;
     QList<CMD> commands;
 
+    //QPixmap picture_pixmap;
+    int w = 0;
+    int h = 0;
+    int timerId = 0;
+
     void init(void);
+
     void createTestBar(void);
 
     void updateText(void);
+
+protected:
+    bool eventFilter(QObject*, QEvent* event);
+    void resizeEvent (QResizeEvent * event);
+    void paintEvent(QPaintEvent *);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

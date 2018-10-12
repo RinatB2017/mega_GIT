@@ -53,6 +53,9 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
+    void s_run(void);
+    void s_default(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,

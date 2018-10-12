@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,66 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "test_html_mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-namespace Ui {
-class MainBox;
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_CHECK_PTR(splash);
+    splash->show();
+
+    qApp->processEvents();
+
+    MainWindow *main_window = new MainWindow();
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
-    QList<CMD> commands;
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

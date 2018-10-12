@@ -29,6 +29,8 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
+class CustomPage;
+//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
@@ -76,6 +78,8 @@ private:
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
+
+    CustomPage *new_page = 0;
 
     void init(void);
     void createTestBar(void);

@@ -23,10 +23,11 @@ public:
                                           const QString &sourceID)
     {
         Q_UNUSED(level);
-        Q_UNUSED(lineNumber);
         Q_UNUSED(sourceID);
 
-        emit err_output(message);
+        emit err_output(QString("msg [%1] line_number %2")
+                        .arg(message)
+                        .arg(lineNumber));
     }
 };
 //--------------------------------------------------------------------------------

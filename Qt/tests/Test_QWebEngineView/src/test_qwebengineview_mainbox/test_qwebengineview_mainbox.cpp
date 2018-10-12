@@ -31,6 +31,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test_qwebengineview_mainbox.hpp"
+#include "custompage.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -63,22 +64,25 @@ void MainBox::init(void)
     //profile->setHttpUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
     //profile->setHttpUserAgent("Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");
     //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
-    profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; U; en) Presto/2.9.168 Version/11.50");
-    //profile->setHttpUserAgent("iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
-    QWebEnginePage *page = new QWebEnginePage(profile);
+    //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; U; en) Presto/2.9.168 Version/11.50");
+    profile->setHttpUserAgent("iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
 
-    ui->webEngineView->setPage(page);
+    new_page = new CustomPage(profile);
+    //new_page = new CustomPage();
+    connect(new_page,   SIGNAL(err_output(QString)),  this,   SIGNAL(error(QString)));
 
-    connect(ui->webEngineView->page(),  SIGNAL(loadProgress(int)),
-            ui->progressBar,            SLOT(setValue(int)));
-    connect(ui->webEngineView->page(),  SIGNAL(loadFinished(bool)),
-            this,                       SLOT(test_JS(bool)));
-    connect(ui->btn_run,                SIGNAL(clicked(bool)),
-            this,                       SLOT(run()));
-    connect(ui->btn_run_js,             SIGNAL(clicked(bool)),
-            this,                       SLOT(test_JS(bool)));
-    connect(this,                       SIGNAL(send(QString)),
-            this,                       SLOT(analize(QString)));
+    ui->webEngineView->setPage(new_page);
+
+    connect(new_page,           SIGNAL(loadProgress(int)),
+            ui->progressBar,    SLOT(setValue(int)));
+    connect(new_page,           SIGNAL(loadFinished(bool)),
+            this,               SLOT(test_JS(bool)));
+    connect(ui->btn_run,        SIGNAL(clicked(bool)),
+            this,               SLOT(run()));
+    connect(ui->btn_run_js,     SIGNAL(clicked(bool)),
+            this,               SLOT(test_JS(bool)));
+    connect(this,               SIGNAL(send(QString)),
+            this,               SLOT(analize(QString)));
 
     //ui->le_address->setText("https://2ip.ru/");
     //ui->le_address->setText("https://www.youtube.com/");
@@ -97,18 +101,17 @@ void MainBox::init(void)
     ui->te_js->append("   var l_str = '';");
     ui->te_js->append("   for (var i = 0; i < links.length; i++)");
     ui->te_js->append("   {");
-    ui->te_js->append("      l_str += links[i].href + \";\";");
+    ui->te_js->append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";");
+
+    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт')");
+    ui->te_js->append("      {");
+    ui->te_js->append("          links[i].click();");
+    ui->te_js->append("      }");
+
     ui->te_js->append("   }");
     ui->te_js->append("   return l_str;");
     ui->te_js->append("}");
     ui->te_js->append("myFunction();");
-
-    //ui->te_js->append("function myFunction() {");
-    //ui->te_js->append("var table = document.getElementById('reklama_table');");
-    //ui->te_js->append("var Cells = table.getElementsByTagName('td');");
-    //ui->te_js->append("var Rows = table.getElementsByTagName('tr');");
-    //ui->te_js->append("var Cells2 = Rows[1].getElementsByTagName('td');");
-    //ui->te_js->append("return Cells2[4].innerText;} myFunction();");
 #endif
 
     //---
@@ -151,7 +154,7 @@ void MainBox::test_JS(bool)
     }
     //emit trace(javascript);
 
-    ui->webEngineView->page()->runJavaScript(javascript, [=](const QVariant &v)
+    new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
         emit info(v.toString());
         emit send(v.toString());
@@ -250,12 +253,15 @@ bool MainBox::test_1(void)
     emit info("Test_1()");
 
     ui->te_js->clear();
-    ui->te_js->append("function myFunction() {");
-    ui->te_js->append("var table = document.getElementById('reklama_table');");
-    ui->te_js->append("var Cells = table.getElementsByTagName('td');");
-    ui->te_js->append("var Rows = table.getElementsByTagName('tr');");
-    ui->te_js->append("var Cells2 = Rows[1].getElementsByTagName('td');");
-    ui->te_js->append("return Cells2[4].innerText;} myFunction();");
+    ui->te_js->append("function myFunction()");
+    ui->te_js->append("{");
+    ui->te_js->append("   var table = document.getElementById('reklama_table');");
+    ui->te_js->append("   var Cells = table.getElementsByTagName('td');");
+    ui->te_js->append("   var Rows = table.getElementsByTagName('tr');");
+    ui->te_js->append("   var Cells2 = Rows[1].getElementsByTagName('td');");
+    ui->te_js->append("   return Cells2[4].innerText;");
+    ui->te_js->append("}");
+    ui->te_js->append("myFunction();");
 
     return true;
 }
@@ -265,10 +271,13 @@ bool MainBox::test_2(void)
     emit info("Test_2()");
 
     ui->te_js->clear();
-    ui->te_js->append("function myFunction() {");
-    ui->te_js->append("var elements = document.getElementsByTagName('div');");
-    ui->te_js->append("var input = elements[0];");
-    ui->te_js->append("return input.innerHTML;} myFunction();");
+    ui->te_js->append("function myFunction()");
+    ui->te_js->append("{");
+    ui->te_js->append("   var elements = document.getElementsByTagName('div');");
+    ui->te_js->append("   var input = elements[0];");
+    ui->te_js->append("   return input.innerHTML;");
+    ui->te_js->append("}");
+    ui->te_js->append("myFunction();");
 
     return true;
 }
@@ -279,9 +288,12 @@ bool MainBox::test_3(void)
     emit info("Test_3()");
 
     ui->te_js->clear();
-    ui->te_js->append("function myFunction() {");
-    ui->te_js->append("var links = document.getElementsByTagName('a');");
-    ui->te_js->append("return links[0].href;} myFunction();");
+    ui->te_js->append("function myFunction()");
+    ui->te_js->append("{");
+    ui->te_js->append("   var links = document.getElementsByTagName('a');");
+    ui->te_js->append("   return links[0].href;");
+    ui->te_js->append("}");
+    ui->te_js->append("myFunction();");
 
     return true;
 }
@@ -302,20 +314,6 @@ bool MainBox::test_4(void)
     ui->te_js->append("   return l_str;");
     ui->te_js->append("}");
     ui->te_js->append("myFunction();");
-
-    /*
-    function myFunction()
-    {
-       var links = document.getElementsByTagName('a');
-       var l_str = '';
-       for (var i = 0; i < links.length; i++)
-       {
-         l_str += links[i].href + ";";
-       }
-       return l_str;
-    }
-    myFunction();
-    */
 
     return true;
 }

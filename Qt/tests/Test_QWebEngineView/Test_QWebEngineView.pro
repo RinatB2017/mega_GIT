@@ -24,6 +24,7 @@ DEFINES += SAVE_WIDGETS_TEXTEDIT
 
 HEADERS += \
     test_qwebengineview_mainbox.hpp \
+    custompage.h \
     defines.hpp \
     version.hpp
 

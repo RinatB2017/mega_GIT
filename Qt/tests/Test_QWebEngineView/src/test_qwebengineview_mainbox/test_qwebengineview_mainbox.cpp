@@ -88,11 +88,14 @@ void MainBox::init(void)
     //ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
-    ui->le_address->setText("https://www.avito.ru/krasnodar");
+    //ui->le_address->setText("https://www.avito.ru/krasnodar");
+    ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
+
+#if 1
+    load_widgets("Test_QWebEngineView");
+#endif
 
 #if 0
-    load_widgets("Test_QWebEngineView");
-#else
     ui->te_js->clear();
 
     ui->te_js->append("function myFunction()");

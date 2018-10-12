@@ -88,9 +88,9 @@ void MainBox::init(void)
     //ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
-    //ui->le_address->setText("https://www.avito.ru/krasnodar");
+    ui->le_address->setText("https://www.avito.ru/krasnodar");
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
-    ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
+    //ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
 
 #if 0
     load_widgets("Test_QWebEngineView");
@@ -107,7 +107,7 @@ void MainBox::init(void)
     ui->te_js->append("   {");
     ui->te_js->append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";");
 
-    ui->te_js->append("      if(links[i].innerHTML == 'тест')");
+    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт3')");
     ui->te_js->append("      {");
     ui->te_js->append("          links[i].click();");
     ui->te_js->append("      }");
@@ -257,13 +257,22 @@ bool MainBox::test_1(void)
     emit info("Test_1()");
 
     ui->te_js->clear();
+
     ui->te_js->append("function myFunction()");
     ui->te_js->append("{");
-    ui->te_js->append("   var table = document.getElementById('reklama_table');");
-    ui->te_js->append("   var Cells = table.getElementsByTagName('td');");
-    ui->te_js->append("   var Rows = table.getElementsByTagName('tr');");
-    ui->te_js->append("   var Cells2 = Rows[1].getElementsByTagName('td');");
-    ui->te_js->append("   return Cells2[4].innerText;");
+    ui->te_js->append("   var links = document.getElementsByTagName('a');");
+    ui->te_js->append("   var l_str = '';");
+    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
+    ui->te_js->append("   {");
+    ui->te_js->append("      l_str += links[i].innerHTML + \";\";");
+
+    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт3')");
+    ui->te_js->append("      {");
+    ui->te_js->append("          links[i].click();");
+    ui->te_js->append("      }");
+
+    ui->te_js->append("   }");
+    ui->te_js->append("   return l_str;");
     ui->te_js->append("}");
     ui->te_js->append("myFunction();");
 
@@ -275,11 +284,17 @@ bool MainBox::test_2(void)
     emit info("Test_2()");
 
     ui->te_js->clear();
+
     ui->te_js->append("function myFunction()");
     ui->te_js->append("{");
-    ui->te_js->append("   var elements = document.getElementsByTagName('div');");
-    ui->te_js->append("   var input = elements[0];");
-    ui->te_js->append("   return input.innerHTML;");
+    ui->te_js->append("   var links = document.getElementsByTagName('a');");
+    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
+    ui->te_js->append("   {");
+    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт3')");
+    ui->te_js->append("      {");
+    ui->te_js->append("          links[i].click();");
+    ui->te_js->append("      }");
+    ui->te_js->append("   }");
     ui->te_js->append("}");
     ui->te_js->append("myFunction();");
 

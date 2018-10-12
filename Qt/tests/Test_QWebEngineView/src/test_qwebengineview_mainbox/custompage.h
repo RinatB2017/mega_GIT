@@ -22,12 +22,30 @@ public:
                                           int lineNumber,
                                           const QString &sourceID)
     {
-        Q_UNUSED(level);
         Q_UNUSED(sourceID);
 
-        emit err_output(QString("msg [%1] line_number %2")
-                        .arg(message)
-                        .arg(lineNumber));
+        switch(level)
+        {
+        case JavaScriptConsoleMessageLevel::InfoMessageLevel:
+            emit err_output(QString("INFO: msg [%1] line_number %2")
+                            .arg(message)
+                            .arg(lineNumber));
+            break;
+
+        case JavaScriptConsoleMessageLevel::WarningMessageLevel:
+#if 0
+            emit err_output(QString("WARNING: msg [%1] line_number %2")
+                            .arg(message)
+                            .arg(lineNumber));
+#endif
+            break;
+
+        case JavaScriptConsoleMessageLevel::ErrorMessageLevel:
+            emit err_output(QString("ERROR: msg [%1] line_number %2")
+                            .arg(message)
+                            .arg(lineNumber));
+            break;
+        }
     }
 };
 //--------------------------------------------------------------------------------

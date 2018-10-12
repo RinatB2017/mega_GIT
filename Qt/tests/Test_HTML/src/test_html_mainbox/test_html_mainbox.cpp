@@ -105,12 +105,22 @@ void MainBox::s_default(void)
     temp.append("</head>\n");
     temp.append("<body>\n");
     temp.append("  <p>Нажмите кнопку, чтобы изменить текст в этом абзаце.</p>\n");
-    temp.append("  <a href=\"xxx\">тест</a>\n");
-    temp.append("  <br>\n");
+
+    //temp.append("  <a href=\"xxx\">тест</a><br>\n");
+    temp.append("  <a href=\"#\" onclick=foo()>тест</a><br>\n");
+    temp.append("  <a href=\"#\" onclick=foo1()>1</a><br>\n");
+    temp.append("  <a href=\"#\" onclick=foo2()>2</a><br>\n");
+
     temp.append("  <button onclick=\"foo()\">Попробовать</button>\n");
     temp.append("  <script>\n");
     temp.append("    function foo() {\n");
     temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"Hello World\";\n");
+    temp.append("    }\n");
+    temp.append("    function foo1() {\n");
+    temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"1\";\n");
+    temp.append("    }\n");
+    temp.append("    function foo2() {\n");
+    temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"2\";\n");
     temp.append("    }\n");
     temp.append("  </script>\n");
     temp.append("</body>\n");

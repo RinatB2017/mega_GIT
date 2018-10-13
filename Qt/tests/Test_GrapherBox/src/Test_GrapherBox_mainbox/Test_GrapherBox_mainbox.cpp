@@ -133,10 +133,14 @@ void MainBox::init(void)
 #endif
 
     //grapher->set_legend_is_visible(false);
+#if 1
+    curve_0 = grapher_widget->add_curve("test");
+#else
     for(int n=0; n<MAX_CHANNELS; n++)
     {
         grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
     }
+#endif
     grapher_widget->legends_all_on();
     //---
     ui->cb_type_curve->clear();
@@ -148,11 +152,60 @@ void MainBox::init(void)
             this,   SLOT(grapher_refresh()));
 
     //---
+    test_data();
+    grapher_widget->push_btn_Horizontal(true);
+    grapher_widget->push_btn_Vertical(true);
+    //---
     grapher_refresh();
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
     mw->add_dock_widget("График", "grapher", Qt::LeftDockWidgetArea, grapher_widget);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_data(void)
+{
+    typedef struct
+    {
+        int x;
+        float y;
+    } temp_f;
+    QList<temp_f> l_temp;
+    l_temp.append({ 5000,  50000 });
+    l_temp.append({ 5500,  60000 });
+    l_temp.append({ 6000,  70000 });
+    l_temp.append({ 6500,  80000 });
+    l_temp.append({ 7000,  90000 });
+    l_temp.append({ 7500,  100000 });
+    l_temp.append({ 8000,  120000 });
+    l_temp.append({ 8500,  140000 });
+    l_temp.append({ 9000,  160000 });
+    l_temp.append({ 9500,  180000 });
+    l_temp.append({ 10000, 200000 });
+    l_temp.append({ 11000, 225000 });
+    l_temp.append({ 12000, 250000 });
+    l_temp.append({ 13000, 275000 });
+    l_temp.append({ 14000, 300000 });
+    l_temp.append({ 15000, 350000 });
+    l_temp.append({ 16000, 400000 });
+    l_temp.append({ 17000, 450000 });
+    l_temp.append({ 18000, 500000 });
+    l_temp.append({ 19000, 550000 });
+    l_temp.append({ 20000, 600000 });
+    l_temp.append({ 22000, 650000 });
+    l_temp.append({ 24000, 700000 });
+    l_temp.append({ 25000, 750000 });
+    l_temp.append({ 28000, 800000 });
+    l_temp.append({ 30000, 850000 });
+    l_temp.append({ 33000, 900000 });
+    l_temp.append({ 36000, 950000 });
+    l_temp.append({ 39000, 1000000 });
+    l_temp.append({ 40000, 1100000 });
+
+    foreach(temp_f temp, l_temp)
+    {
+        grapher_widget->add_curve_data(curve_0, temp.x, temp.y);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::grapher_refresh(void)
@@ -220,27 +273,27 @@ void MainBox::createTestBar(void)
 
     QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                       QIcon(":/red/0.png"),
                                        "test",
                                        "test");
     QToolButton *btn_test_2 = add_button(testbar,
                                          new QToolButton(this),
-                                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                         QIcon(":/red/2.png"),
                                          "test2",
                                          "test2");
     QToolButton *btn_test_3 = add_button(testbar,
                                          new QToolButton(this),
-                                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                         QIcon(":/red/3.png"),
                                          "test3",
                                          "test3");
     QToolButton *btn_test_4 = add_button(testbar,
                                          new QToolButton(this),
-                                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                         QIcon(":/red/4.png"),
                                          "test4",
                                          "test4");
     QToolButton *btn_test_5 = add_button(testbar,
                                          new QToolButton(this),
-                                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                         QIcon(":/red/5.png"),
                                          "test5",
                                          "test5");
 

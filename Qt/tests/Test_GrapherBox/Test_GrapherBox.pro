@@ -26,9 +26,9 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    Test_GrapherBox_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_GrapherBox_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     Test_GrapherBox_mainbox.cpp \
@@ -47,11 +47,12 @@ win32 {
 }
 
 #----------------------------------------------
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
+include ($$LIB_PATH2/icons/digits.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

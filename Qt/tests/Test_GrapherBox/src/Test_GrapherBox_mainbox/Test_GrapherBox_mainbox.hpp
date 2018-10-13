@@ -69,11 +69,13 @@ private:
     bool all_break = false;
 
     GrapherBox *grapher_widget = 0;
+    int curve_0 = 0;
 
     void init(void);
     void createTestBar(void);
     void updateText(void);
 
+    void test_data(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

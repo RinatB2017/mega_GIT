@@ -5,7 +5,7 @@
 #include <QImage>
 
 namespace Ui {
-class CaptureWindow;
+    class CaptureWindow;
 }
 
 class CaptureWindow : public QDialog

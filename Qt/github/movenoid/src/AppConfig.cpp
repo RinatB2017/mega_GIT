@@ -60,7 +60,6 @@ QString AppConfig::getParameter(const QString name) const
         } else {
             criticalError("Get unknown parameter: "+name);
         }
-
     }
 
     return QString();

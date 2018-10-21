@@ -9,7 +9,7 @@
 
 
 namespace Ui {
-class SettingsWindow;
+    class SettingsWindow;
 }
 
 class SettingsWindow : public QDialog

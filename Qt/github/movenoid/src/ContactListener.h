@@ -22,7 +22,6 @@ protected:
 
     Ball *ball;
     QList<Brick*> *bricks; // В арканоидах имеет смысл отслеживать только события контакта мяча с кирпичами, чтобы кирпичи убирать
-
 };
 
 #endif // CONTACTLISTENER_H

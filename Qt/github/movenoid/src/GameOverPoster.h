@@ -4,7 +4,7 @@
 #include <QDialog>
 
 namespace Ui {
-class GameOverPoster;
+    class GameOverPoster;
 }
 
 class GameOverPoster : public QDialog

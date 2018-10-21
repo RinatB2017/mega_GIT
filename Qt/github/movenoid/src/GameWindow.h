@@ -7,7 +7,7 @@
 #include "GameField.h"
 
 namespace Ui {
-class GameWindow;
+    class GameWindow;
 }
 
 class GameWindow : public QDialog

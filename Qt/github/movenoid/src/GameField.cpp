@@ -113,17 +113,19 @@ void GameField::initBarriers()
     barrierTop->setPhysicsWorld(physicsWorld);
 
     // Временная балка снизу
-    /*
+#if 1
     Barrier *barrierBottom=new Barrier();
     polygon.clear();
-    polygon << QPointF(0.0, 0.0) << QPointF(0.0, 0.15) << QPointF(8.0, 0.15) << QPointF(8.0, 0.0);
-    barrierBottom->setRotation(-10.0);
+    //polygon << QPointF(0.0, 0.0) << QPointF(0.0, 0.15) << QPointF(8.0, 0.15) << QPointF(8.0, 0.0);
+    polygon << QPointF(0.0, 0.0) << QPointF(0.0, 0.15) << QPointF(10.0, 0.15) << QPointF(10.0, 0.0);
+    //barrierBottom->setRotation(-10.0);
     barrierBottom->setPolygon(polygon);
-    barrierBottom->setPos(1.5, 9.8);
+    //barrierBottom->setPos(1.5, 9.8);
+    barrierBottom->setPos(0.0, 9.8);
     barriers.append( barrierBottom );
     this->addItem(barrierBottom);
     barrierBottom->setPhysicsWorld(physicsWorld);
-    */
+#endif
 }
 
 

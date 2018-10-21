@@ -5,7 +5,7 @@
 #include <QTimer>
 
 namespace Ui {
-class ReadyPoster;
+    class ReadyPoster;
 }
 
 class ReadyPoster : public QDialog

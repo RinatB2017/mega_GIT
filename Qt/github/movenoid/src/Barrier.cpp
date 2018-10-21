@@ -5,16 +5,13 @@
 Barrier::Barrier(QGraphicsItem *parent)
 {
     QGraphicsItem::setParentItem(parent);
-
     polygon.clear();
 }
-
 
 void Barrier::setPolygon(const QPolygonF &iPolygon)
 {
     polygon=iPolygon;
 }
-
 
 void Barrier::putToPhysicsWorld()
 {
@@ -41,12 +38,10 @@ void Barrier::putToPhysicsWorld()
     physicsBody=body;
 }
 
-
 QRectF Barrier::boundingRect() const
 {
     return polygon.boundingRect();
 }
-
 
 QPainterPath Barrier::shape() const
 {
@@ -54,7 +49,6 @@ QPainterPath Barrier::shape() const
     path.addPolygon( polygon );
     return path;
 }
-
 
 void Barrier::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {

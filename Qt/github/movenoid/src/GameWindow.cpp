@@ -29,13 +29,12 @@ GameWindow::GameWindow(QWidget *parent) :
     ui->graphicsView->fitInView(0.0, 0.0, 5.0, 5.0, Qt::KeepAspectRatio);
     // ui->graphicsView->fitInView(0.0, 0.0, 1.0, 1.0, Qt::KeepAspectRatio);
 
-    connect(gameField, SIGNAL(setScore(int)), this, SLOT(onSetScore(int)));
-    connect(gameField, SIGNAL(setLives(int)), this, SLOT(onSetLives(int)));
-    connect(gameField, SIGNAL(closeGame()), this, SLOT(reject()));
+    connect(gameField,  SIGNAL(setScore(int)),  this,   SLOT(onSetScore(int)));
+    connect(gameField,  SIGNAL(setLives(int)),  this,   SLOT(onSetLives(int)));
+    connect(gameField,  SIGNAL(closeGame()),    this,   SLOT(reject()));
 
     gameField->runGame();
 }
-
 
 GameWindow::~GameWindow()
 {
@@ -43,19 +42,16 @@ GameWindow::~GameWindow()
     delete ui;
 }
 
-
 void GameWindow::reject()
 {
     qDebug() << "Reject game window";
     QDialog::reject();
 }
 
-
 void GameWindow::onSetScore(const int iScore)
 {
     ui->lcdScreenScore->display(iScore);
 }
-
 
 void GameWindow::onSetLives(const int iLives)
 {

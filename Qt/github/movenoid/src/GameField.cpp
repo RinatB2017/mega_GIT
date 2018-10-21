@@ -91,7 +91,7 @@ void GameField::initBarriers()
     barrierLeft->setPolygon(polygon);
     barrierLeft->setPos(0.0, 0.0);
     barriers.append( barrierLeft ); // Запоминается указатель на препятствие
-    this->addItem(barrierLeft); // Препятствие кладется на поле
+    this->addItem(barrierLeft);     // Препятствие кладется на поле
     barrierLeft->setPhysicsWorld(physicsWorld);
 
     // Правая стена
@@ -128,7 +128,6 @@ void GameField::initBarriers()
 #endif
 }
 
-
 // Установки мячика
 void GameField::initBall()
 {
@@ -138,7 +137,6 @@ void GameField::initBall()
     ball.setPhysicsWorld(physicsWorld);
 }
 
-
 // Установки ракетки
 void GameField::initRocketBit()
 {
@@ -147,7 +145,6 @@ void GameField::initRocketBit()
     rocketBit.setPhysicsWorld(physicsWorld);
     rocketBit.setMoveDetector(&moveDetector);
 }
-
 
 // Загрузка уровня
 void GameField::loadLevel(const int levelNum)
@@ -192,9 +189,7 @@ void GameField::loadLevel(const int levelNum)
             }
         }
     }
-
 }
-
 
 // Создание кирпича по игровым координатам
 void GameField::createBrick(const qreal x, const qreal y)
@@ -205,7 +200,6 @@ void GameField::createBrick(const qreal x, const qreal y)
     this->addItem(brick); // Кирпич кладется на поле
     brick->setPhysicsWorld(physicsWorld);
 }
-
 
 // Метод удаляет кирпичи, с которыми столкнулся мячик
 void GameField::destroyBricks()
@@ -228,7 +222,6 @@ void GameField::destroyBricks()
     }
 }
 
-
 void GameField::runGame()
 {
     level=1;
@@ -236,7 +229,6 @@ void GameField::runGame()
 
     updateWorldTimer.start(1000/60);
 }
-
 
 // Обновление мира, этот слот срабатывает по таймеру updateWorldTimer
 void GameField::updateWorld()
@@ -257,11 +249,10 @@ void GameField::updateWorld()
     this->update();
 }
 
-
 // Проверка местоположения мяча
 void GameField::checkBallPosition()
 {
-    // Если мячь улетел
+    // Если мяч улетел
     if(ball.y()>MOVE_NOID_FIELD_HEIGHT+1.0) {
         if(lives>0) { // Если еще есть попытки
             emit setLives(--lives);
@@ -282,7 +273,6 @@ void GameField::checkBallPosition()
     }
 }
 
-
 // Проверка выбитых кирпичей
 void GameField::checkBricksCount()
 {
@@ -299,5 +289,4 @@ void GameField::checkBricksCount()
         rocketBit.moveToDefaultPos();
         loadLevel(level);
     }
-
 }

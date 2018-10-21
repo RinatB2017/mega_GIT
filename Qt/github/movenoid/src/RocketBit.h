@@ -31,7 +31,6 @@ public:
     void setMoveDetector(MoveDetector *iMoveDetector);
 
 protected:
-
     qreal width;
     qreal height;
     QColor color;

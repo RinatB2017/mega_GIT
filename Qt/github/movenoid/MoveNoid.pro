@@ -100,4 +100,3 @@ unix {
 }
 
 VPATH = $$INCLUDEPATH
-

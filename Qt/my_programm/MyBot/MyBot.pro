@@ -43,7 +43,7 @@ OTHER_FILES += doc/notebook.txt
 CONFIG  += c++11
 LIBS    += -lX11 -lXtst -lOpenCL
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

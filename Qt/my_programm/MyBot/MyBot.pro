@@ -19,9 +19,9 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    mybot_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    mybot_mainbox.hpp
+    version.hpp
 
 unix {
     HEADERS += other.hpp
@@ -47,8 +47,8 @@ CONFIG  += c++11
 
 unix {
     LIBS    += -lX11 -lXtst
+    LIBS    += -lOpenCL
 }
-LIBS    += -lOpenCL
 
 LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"

@@ -33,7 +33,10 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "webcamera.hpp"
-#include "other.hpp"
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include "other.hpp"
+#endif
 //--------------------------------------------------------------------------------
 #include "cards.hpp"
 //--------------------------------------------------------------------------------
@@ -149,6 +152,7 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 void MainBox::mouse_click(unsigned int button, QPoint pos)
 {
+#ifdef Q_OS_LINUX
     Display* display = XOpenDisplay( nullptr );
     if( display == nullptr )
     {
@@ -160,10 +164,12 @@ void MainBox::mouse_click(unsigned int button, QPoint pos)
 
     XFlush( display );
     XCloseDisplay( display );
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::mouse_release(unsigned int button)
 {
+#ifdef Q_OS_LINUX
     Display* display = XOpenDisplay( nullptr );
     if( display == nullptr )
     {
@@ -174,10 +180,12 @@ void MainBox::mouse_release(unsigned int button)
 
     XFlush( display );
     XCloseDisplay( display );
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::mouse_move_to(QPoint pos)
 {
+#ifdef Q_OS_LINUX
     Display* display = XOpenDisplay( nullptr );
     if( display == nullptr )
     {
@@ -188,6 +196,7 @@ void MainBox::mouse_move_to(QPoint pos)
 
     XFlush( display );
     XCloseDisplay( display );
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::run_kmines(void)
@@ -243,6 +252,7 @@ void MainBox::run_program(const QString program,
 //--------------------------------------------------------------------------------
 bool MainBox::find_window(const QString programm_title, int *x, int *y, int *width, int *heigth)
 {
+#ifdef Q_OS_LINUX
     Display* display = XOpenDisplay( nullptr );
     Q_CHECK_PTR(display);
 
@@ -294,6 +304,9 @@ bool MainBox::find_window(const QString programm_title, int *x, int *y, int *wid
     XCloseDisplay( display );
 
     return is_found;
+#else
+    return false;
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::find_programm(void)

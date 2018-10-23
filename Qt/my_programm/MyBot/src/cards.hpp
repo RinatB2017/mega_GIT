@@ -1,8 +1,14 @@
 #ifndef CARDS_HPP
 #define CARDS_HPP
 
-#include </usr/include/opencv2/opencv.hpp>
-#include </usr/include/opencv2/highgui/highgui.hpp>
+#ifdef Q_OS_LINUX
+#   include </usr/include/opencv2/opencv.hpp>
+#   include </usr/include/opencv2/highgui/highgui.hpp>
+#else
+#   include <opencv2/opencv.hpp>
+#   include <opencv2/highgui/highgui.hpp>
+#endif
+
 #include <iostream>
 
 using namespace cv;

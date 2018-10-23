@@ -21,8 +21,11 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    mybot_mainbox.hpp \
-    other.hpp
+    mybot_mainbox.hpp
+
+unix {
+    HEADERS += other.hpp
+}
 
 SOURCES += \
     mybot_mainbox.cpp \
@@ -41,7 +44,11 @@ RESOURCES += \
 OTHER_FILES += doc/notebook.txt
 
 CONFIG  += c++11
-LIBS    += -lX11 -lXtst -lOpenCL
+
+unix {
+    LIBS    += -lX11 -lXtst
+}
+LIBS    += -lOpenCL
 
 LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"

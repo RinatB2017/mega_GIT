@@ -24,7 +24,9 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include </usr/include/stdlib.h>
+#ifdef Q_OS_LINUX
+#   include </usr/include/stdlib.h>
+#endif
 //--------------------------------------------------------------------------------
 #define FEAT_FACE_FILE  "xml/haarcascade_frontalface_default.xml"
 #define FEAT_EYE_FILE   "xml/haarcascade_mcs_eyepair_big.xml"

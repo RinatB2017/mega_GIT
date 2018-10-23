@@ -23,11 +23,19 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include </usr/include/opencv2/core/core.hpp>
-#include </usr/include/opencv2/objdetect/objdetect.hpp>
-#include </usr/include/opencv2/imgproc/imgproc.hpp>
-#include </usr/include/opencv2/highgui/highgui.hpp>
-#include </usr/include/opencv2/opencv.hpp>
+#ifdef Q_OS_LINUX
+#   include </usr/include/opencv2/core/core.hpp>
+#   include </usr/include/opencv2/objdetect/objdetect.hpp>
+#   include </usr/include/opencv2/imgproc/imgproc.hpp>
+#   include </usr/include/opencv2/highgui/highgui.hpp>
+#   include </usr/include/opencv2/opencv.hpp>
+#else
+#   include <opencv2/core/core.hpp>
+#   include <opencv2/objdetect/objdetect.hpp>
+#   include <opencv2/imgproc/imgproc.hpp>
+#   include <opencv2/highgui/highgui.hpp>
+#   include <opencv2/opencv.hpp>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

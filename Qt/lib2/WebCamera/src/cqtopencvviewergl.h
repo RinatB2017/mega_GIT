@@ -2,7 +2,12 @@
 #define CQTOPENCVVIEWERGL_H
 
 #include <QGLWidget>
-#include </usr/include/opencv2/core/core.hpp>
+
+#ifdef Q_OS_LINUX
+#   include </usr/include/opencv2/core/core.hpp>
+#else
+#   include <opencv2/core/core.hpp>
+#endif
 
 class CQtOpenCVViewerGl : public QGLWidget
 {

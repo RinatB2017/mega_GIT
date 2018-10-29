@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>536</width>
-    <height>186</height>
+    <width>474</width>
+    <height>182</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_html">
         <item>
          <widget class="QPushButton" name="btn_run_html">
           <property name="text">
@@ -52,7 +52,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="te_html"/>
+       <widget class="QTextEdit" name="te_text_html"/>
       </item>
      </layout>
     </widget>
@@ -64,8 +64,8 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QWebEngineView" name="webEngineView" native="true">
-        <property name="url" stdset="0">
+       <widget class="QWebEngineView" name="webEngineView">
+        <property name="url">
          <url>
           <string>about:blank</string>
          </url>
@@ -82,7 +82,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QHBoxLayout" name="horizontalLayout_js">
         <item>
          <widget class="QPushButton" name="btn_run_js">
           <property name="text">
@@ -113,7 +113,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="te_js"/>
+       <widget class="QTextEdit" name="te_text_js"/>
       </item>
      </layout>
     </widget>
@@ -130,10 +130,10 @@
  <tabstops>
   <tabstop>btn_run_html</tabstop>
   <tabstop>btn_default_html</tabstop>
-  <tabstop>te_html</tabstop>
+  <tabstop>te_text_html</tabstop>
   <tabstop>btn_run_js</tabstop>
   <tabstop>btn_default_js</tabstop>
-  <tabstop>te_js</tabstop>
+  <tabstop>te_text_js</tabstop>
  </tabstops>
  <resources/>
  <connections/>

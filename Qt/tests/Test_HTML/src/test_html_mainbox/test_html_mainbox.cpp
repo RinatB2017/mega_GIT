@@ -74,8 +74,7 @@ void MainBox::init(void)
 
     ui->webEngineView->setPage(new_page);
 
-    connect(new_page,           SIGNAL(loadFinished(bool)),
-            this,               SLOT(s_run_js()));
+    //connect(new_page,               SIGNAL(loadFinished(bool)),     this,   SLOT(s_run_js()));
 
     connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
     connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
@@ -83,6 +82,7 @@ void MainBox::init(void)
     connect(ui->btn_run_js,         SIGNAL(clicked(bool)),  this,   SLOT(s_run_js()));
     connect(ui->btn_default_js,     SIGNAL(clicked(bool)),  this,   SLOT(s_default_js()));
 
+#if 1
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");
     splitter->setChildrenCollapsible(false);
@@ -94,13 +94,14 @@ void MainBox::init(void)
     splitter->addWidget(ui->groupBox_view);
     splitter->addWidget(ui->groupBox_js);
 
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(splitter);
+//    QVBoxLayout *vbox = new QVBoxLayout();
+//    vbox->addWidget(splitter);
 
-    QWidget *w = new QWidget(this);
-    w->setLayout(vbox);
+//    QWidget *w = new QWidget(this);
+//    w->setLayout(vbox);
 
-    layout()->addWidget(w);
+    layout()->addWidget(splitter);
+#endif
 
     load_widgets("test_html");
 }
@@ -109,7 +110,7 @@ void MainBox::s_run_html(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    QString temp = ui->te_html->toPlainText();
+    const QString temp = ui->te_text_html->toPlainText();
     if(temp.isEmpty())
     {
         emit error("no data");
@@ -172,14 +173,14 @@ void MainBox::s_default_html(void)
     temp.append("</body>\n");
     temp.append("</html>\n");
 
-    ui->te_html->setPlainText(temp);
+    ui->te_text_html->setPlainText(temp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_run_js(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    const QString javascript = ui->te_js->toPlainText();
+    const QString javascript = ui->te_text_js->toPlainText();
     if(javascript.isEmpty())
     {
         emit error("JS is empty!");
@@ -198,23 +199,26 @@ void MainBox::s_default_js(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    ui->te_js->append("function myFunction()");
-    ui->te_js->append("{");
-    ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   var l_str = '';");
-    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
-    ui->te_js->append("   {");
-    ui->te_js->append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";");
+    QString temp;
+    temp.append("function myFunction()\n");
+    temp.append("{\n");
+    temp.append("   var links = document.getElementsByTagName('a');\n");
+    temp.append("   var l_str = '';\n");
+    temp.append("   for (var i = 0; i < links.length; i++)\n");
+    temp.append("   {\n");
+    temp.append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";\n");
 
-    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт')");
-    ui->te_js->append("      {");
-    ui->te_js->append("          links[i].click();");
-    ui->te_js->append("      }");
+    temp.append("      if(links[i].innerHTML == 'Транспорт')\n");
+    temp.append("      {\n");
+    temp.append("          links[i].click();\n");
+    temp.append("      }\n");
 
-    ui->te_js->append("   }");
-    ui->te_js->append("   return l_str;");
-    ui->te_js->append("}");
-    ui->te_js->append("myFunction();");
+    temp.append("   }\n");
+    temp.append("   return l_str;\n");
+    temp.append("}\n");
+    temp.append("myFunction();\n");
+
+    ui->te_text_js->setText(temp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -293,6 +297,21 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    QList<QTextEdit *> allobj = topLevelWidget()->findChildren<QTextEdit *>();
+
+    foreach(QTextEdit *obj, allobj)
+    {
+        QString o_name = obj->objectName();
+        if(!o_name.isEmpty())
+        {
+            if(o_name.left(3) == "te_") //TODO костыль
+            {
+                emit info(o_name);
+            }
+        }
+    }
+
     return true;
 }
 //--------------------------------------------------------------------------------

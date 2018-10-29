@@ -488,9 +488,6 @@ void MyWidget::save_QToolButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QTextEdit(QString group_name)
 {
-    //MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    //Q_CHECK_PTR(mw);
-
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
     Q_CHECK_PTR(settings);
 
@@ -502,8 +499,10 @@ void MyWidget::load_QTextEdit(QString group_name)
         {
             if(o_name.left(3) == "te_") //TODO костыль
             {
-                settings->beginGroup(obj->objectName());
-                obj->setText(settings->value("text", "").toString());
+                settings->beginGroup(o_name);
+                //qDebug() << "objectName ===>" << obj->objectName();
+                //qDebug() << "text       ===>" << settings->value("text", "").toString();
+                obj->setPlainText(settings->value("text", "").toString());
                 settings->endGroup();
             }
         }
@@ -513,9 +512,6 @@ void MyWidget::load_QTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QTextEdit(QString group_name)
 {
-    //MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    //Q_CHECK_PTR(mw);
-
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
     Q_CHECK_PTR(settings);
 
@@ -527,7 +523,7 @@ void MyWidget::save_QTextEdit(QString group_name)
         {
             if(o_name.left(3) == "te_") //TODO костыль
             {
-                settings->beginGroup(obj->objectName());
+                settings->beginGroup(o_name);
                 settings->setValue("text", QVariant(obj->toPlainText()));
                 settings->endGroup();
             }

@@ -138,9 +138,9 @@ void MainBox::s_default_html(void)
     temp.append("  <a href=\"#\" onclick=foo1()>1</a><br>\n");
     temp.append("  <a href=\"#\" onclick=foo2()>2</a><br>\n");
 
-    temp.append("  <br>\n");
+    temp.append("  <hr>\n");
     temp.append("  <form action=\"#\">\n");
-    temp.append("    <select name=\"cars\">\n");
+    temp.append("    cars<select name=\"cars\">\n");
     temp.append("      <option value=\"car1\">car1</option>\n");
     temp.append("      <option value=\"car2\">car2</option>\n");
     temp.append("      <option value=\"car3\">car3</option>\n");
@@ -151,12 +151,12 @@ void MainBox::s_default_html(void)
     temp.append("    <br>\n");
     temp.append("    <input type=\"submit\">\n");
     temp.append("  </form>\n");
-    temp.append("  <br>\n");
+    temp.append("  <hr>\n");
 
-    temp.append("  <p>\n");
     temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad1\"> Пиво<Br>\n");
     temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad2\"> Чай<Br>\n");
-    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad3\"> Кофе</p>\n");
+    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad3\"> Кофе\n");
+    temp.append("  <hr>\n");
 
     temp.append("  <button onclick=\"foo()\">Попробовать</button>\n");
     temp.append("  <script>\n");
@@ -298,19 +298,17 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    QList<QTextEdit *> allobj = topLevelWidget()->findChildren<QTextEdit *>();
+    QString temp;
+    temp.append("function myFunction()\n");
+    temp.append("{\n");
+    temp.append("   document.getElementById('car_x').value = 'car1';\n");
+    temp.append("   document.getElementById('rad2').checked = true;;\n");
+    temp.append("   document.getElementById('text1').value = 'car1';\n");
+    //temp.append("   return \"\";\n");
+    temp.append("}\n");
+    temp.append("myFunction();\n");
 
-    foreach(QTextEdit *obj, allobj)
-    {
-        QString o_name = obj->objectName();
-        if(!o_name.isEmpty())
-        {
-            if(o_name.left(3) == "te_") //TODO костыль
-            {
-                emit info(o_name);
-            }
-        }
-    }
+    ui->te_text_js->setPlainText(temp);
 
     return true;
 }

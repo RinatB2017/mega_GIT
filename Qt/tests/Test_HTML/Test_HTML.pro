@@ -58,6 +58,7 @@ DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     test_html_mainbox.hpp \
+    custompage.h \
     defines.hpp \
     version.hpp
 

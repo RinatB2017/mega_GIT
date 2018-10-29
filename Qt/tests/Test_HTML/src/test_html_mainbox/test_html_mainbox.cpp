@@ -24,12 +24,16 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include <QWebEngineProfile>
+#include <QWebEngineView>
+//--------------------------------------------------------------------------------
 #include "ui_test_html_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_html_mainbox.hpp"
+#include "custompage.h"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -56,17 +60,39 @@ void MainBox::init(void)
     ui->setupUi(this);
     createTestBar();
 
-    connect(ui->btn_run,        SIGNAL(clicked(bool)),  this,   SLOT(s_run()));
-    connect(ui->btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(s_default()));
+    QWebEngineProfile *profile = new QWebEngineProfile();
+    // изменяем необходимые http-заголовки на свои значения
+    //profile->setHttpUserAgent("Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
+    //profile->setHttpUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
+    //profile->setHttpUserAgent("Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");
+    //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+    //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; U; en) Presto/2.9.168 Version/11.50");
+    profile->setHttpUserAgent("iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
+
+    new_page = new CustomPage(profile);
+    connect(new_page,   SIGNAL(err_output(QString)),  this,   SIGNAL(error(QString)));
+
+    ui->webEngineView->setPage(new_page);
+
+    connect(new_page,           SIGNAL(loadFinished(bool)),
+            this,               SLOT(s_run_js()));
+
+    connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
+    connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
+
+    connect(ui->btn_run_js,         SIGNAL(clicked(bool)),  this,   SLOT(s_run_js()));
+    connect(ui->btn_default_js,     SIGNAL(clicked(bool)),  this,   SLOT(s_default_js()));
 
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");
     splitter->setChildrenCollapsible(false);
 
-    ui->frame_text->setParent(splitter);
-    ui->frame_html->setParent(splitter);
-    splitter->addWidget(ui->frame_text);
-    splitter->addWidget(ui->frame_html);
+    ui->groupBox_html->setParent(splitter);
+    ui->groupBox_view->setParent(splitter);
+    ui->groupBox_js->setParent(splitter);
+    splitter->addWidget(ui->groupBox_html);
+    splitter->addWidget(ui->groupBox_view);
+    splitter->addWidget(ui->groupBox_js);
 
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(splitter);
@@ -79,11 +105,11 @@ void MainBox::init(void)
     load_widgets("test_html");
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_run(void)
+void MainBox::s_run_html(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    QString temp = ui->le_html->toPlainText();
+    QString temp = ui->te_html->toPlainText();
     if(temp.isEmpty())
     {
         emit error("no data");
@@ -92,7 +118,7 @@ void MainBox::s_run(void)
     ui->webEngineView->setHtml(temp);
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_default(void)
+void MainBox::s_default_html(void)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -111,6 +137,26 @@ void MainBox::s_default(void)
     temp.append("  <a href=\"#\" onclick=foo1()>1</a><br>\n");
     temp.append("  <a href=\"#\" onclick=foo2()>2</a><br>\n");
 
+    temp.append("  <br>\n");
+    temp.append("  <form action=\"#\">\n");
+    temp.append("    <select name=\"cars\">\n");
+    temp.append("      <option value=\"car1\">car1</option>\n");
+    temp.append("      <option value=\"car2\">car2</option>\n");
+    temp.append("      <option value=\"car3\">car3</option>\n");
+    temp.append("      <option value=\"car4\">car4</option>\n");
+    temp.append("    </select>\n");
+    temp.append("    <br>\n");
+    temp.append("    text <input type=\"text\">\n");
+    temp.append("    <br>\n");
+    temp.append("    <input type=\"submit\">\n");
+    temp.append("  </form>\n");
+    temp.append("  <br>\n");
+
+    temp.append("  <p>\n");
+    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad1\"> Пиво<Br>\n");
+    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad2\"> Чай<Br>\n");
+    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad3\"> Кофе</p>\n");
+
     temp.append("  <button onclick=\"foo()\">Попробовать</button>\n");
     temp.append("  <script>\n");
     temp.append("    function foo() {\n");
@@ -126,7 +172,49 @@ void MainBox::s_default(void)
     temp.append("</body>\n");
     temp.append("</html>\n");
 
-    ui->le_html->setPlainText(temp);
+    ui->te_html->setPlainText(temp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_run_js(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    const QString javascript = ui->te_js->toPlainText();
+    if(javascript.isEmpty())
+    {
+        emit error("JS is empty!");
+        return;
+    }
+    //emit trace(javascript);
+
+    new_page->runJavaScript(javascript, [=](const QVariant &v)
+    {
+        emit info(v.toString());
+        emit send(v.toString());
+    });
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_default_js(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    ui->te_js->append("function myFunction()");
+    ui->te_js->append("{");
+    ui->te_js->append("   var links = document.getElementsByTagName('a');");
+    ui->te_js->append("   var l_str = '';");
+    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
+    ui->te_js->append("   {");
+    ui->te_js->append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";");
+
+    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт')");
+    ui->te_js->append("      {");
+    ui->te_js->append("          links[i].click();");
+    ui->te_js->append("      }");
+
+    ui->te_js->append("   }");
+    ui->te_js->append("   return l_str;");
+    ui->te_js->append("}");
+    ui->te_js->append("myFunction();");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

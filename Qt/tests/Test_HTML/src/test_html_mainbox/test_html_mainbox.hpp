@@ -26,7 +26,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -34,6 +34,8 @@ class QToolButton;
 class QToolBar;
 class QComboBox;
 class QCheckBox;
+
+class CustomPage;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -44,6 +46,9 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
+signals:
+    void send(const QString &);
+
 private slots:
     void choice_test(void);
     bool test_0(void);
@@ -53,8 +58,11 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
-    void s_run(void);
-    void s_default(void);
+    void s_run_html(void);
+    void s_default_html(void);
+
+    void s_run_js(void);
+    void s_default_js(void);
 
 private:
     enum {
@@ -79,6 +87,8 @@ private:
     QComboBox *cb_test = 0;
     QCheckBox *cb_block = 0;
     QList<CMD> commands;
+
+    CustomPage *new_page = 0;\
 
     void init(void);
     void createTestBar(void);

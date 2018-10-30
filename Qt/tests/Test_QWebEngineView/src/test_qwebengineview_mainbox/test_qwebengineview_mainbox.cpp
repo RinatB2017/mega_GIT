@@ -73,6 +73,8 @@ void MainBox::init(void)
 
     ui->webEngineView->setPage(new_page);
 
+    ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
+
     connect(new_page,           SIGNAL(loadProgress(int)),
             ui->progressBar,    SLOT(setValue(int)));
     connect(new_page,           SIGNAL(loadFinished(bool)),

@@ -53,7 +53,8 @@ private slots:
 
     void test_JS(bool);
 
-    void run(void);
+    void s_run(void);
+    void s_default(void);
 
     void analize(const QString data);
 
@@ -83,6 +84,8 @@ private:
 
     void init(void);
     void createTestBar(void);
+
+    void load_js_default(void);
 
     void updateText(void);
 };

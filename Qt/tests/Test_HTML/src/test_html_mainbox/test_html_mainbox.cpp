@@ -74,7 +74,7 @@ void MainBox::init(void)
 
     ui->webEngineView->setPage(new_page);
 
-    //connect(new_page,               SIGNAL(loadFinished(bool)),     this,   SLOT(s_run_js()));
+    connect(new_page,               SIGNAL(loadFinished(bool)),     this,   SLOT(s_run_js()));
 
     connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
     connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
@@ -82,7 +82,6 @@ void MainBox::init(void)
     connect(ui->btn_run_js,         SIGNAL(clicked(bool)),  this,   SLOT(s_run_js()));
     connect(ui->btn_default_js,     SIGNAL(clicked(bool)),  this,   SLOT(s_default_js()));
 
-#if 1
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");
     splitter->setChildrenCollapsible(false);
@@ -94,14 +93,7 @@ void MainBox::init(void)
     splitter->addWidget(ui->groupBox_view);
     splitter->addWidget(ui->groupBox_js);
 
-//    QVBoxLayout *vbox = new QVBoxLayout();
-//    vbox->addWidget(splitter);
-
-//    QWidget *w = new QWidget(this);
-//    w->setLayout(vbox);
-
     layout()->addWidget(splitter);
-#endif
 
     load_widgets("test_html");
 }

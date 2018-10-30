@@ -79,8 +79,8 @@ void MainBox::init(void)
             ui->progressBar,    SLOT(setValue(int)));
     connect(new_page,           SIGNAL(loadFinished(bool)),
             this,               SLOT(test_JS(bool)));
-    connect(ui->btn_run,        SIGNAL(clicked(bool)),
-            this,               SLOT(run()));
+    connect(ui->btn_run,        SIGNAL(clicked(bool)),  this,   SLOT(s_run()));
+    connect(ui->btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(s_default()));
     connect(ui->btn_run_js,     SIGNAL(clicked(bool)),
             this,               SLOT(test_JS(bool)));
     connect(this,               SIGNAL(send(QString)),
@@ -94,50 +94,64 @@ void MainBox::init(void)
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
     //ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
 
-#if 0
-    load_widgets("Test_QWebEngineView");
-#endif
-
-#if 1
-    ui->te_js->clear();
-
-    ui->te_js->append("function myFunction()");
-    ui->te_js->append("{");
-    ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   var l_str = '';");
-    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
-    ui->te_js->append("   {");
-    ui->te_js->append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";");
-
-    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт3')");
-    ui->te_js->append("      {");
-    ui->te_js->append("          links[i].click();");
-    ui->te_js->append("      }");
-
-    ui->te_js->append("   }");
-    ui->te_js->append("   return l_str;");
-    ui->te_js->append("}");
-    ui->te_js->append("myFunction();");
-#endif
-
     //---
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
-    splitter->setChildrenCollapsible(true);
+    splitter->setObjectName("splitter");
+    splitter->setChildrenCollapsible(false);
 
-    ui->frame_js->setParent(splitter);
+    ui->groupBox_js->setParent(splitter);
     ui->frame_browser->setParent(splitter);
-    splitter->addWidget(ui->frame_js);
     splitter->addWidget(ui->frame_browser);
-    splitter->setStretchFactor(0, 1);
-    splitter->setStretchFactor(1, 2);
+    splitter->addWidget(ui->groupBox_js);
     layout()->addWidget(splitter);
     //---
 
     ui->progressBar->setValue(0);
+
+    load_widgets("Test_QWebEngineView");
 }
 //--------------------------------------------------------------------------------
-void MainBox::run(void)
+void MainBox::load_js_default(void)
 {
+    QString temp;
+
+#if 1
+    temp.append("function myFunction()\n");
+    temp.append("{\n");
+    temp.append("   var links = document.getElementsByTagName('a');\n");
+    temp.append("   var temp = 'false';\n");
+    temp.append("   for (var i = 0; i < links.length; i++)\n");
+    temp.append("   {\n");
+
+    temp.append("      if(links[i].innerHTML == 'Транспорт')\n");
+    temp.append("      {\n");
+    temp.append("          temp = 'true';\n");
+    temp.append("          links[i].click();\n");
+    temp.append("      }\n");
+
+    temp.append("   }\n");
+    temp.append("   return temp;\n");
+    temp.append("}\n");
+    temp.append("myFunction();\n");
+#endif
+
+#if 0
+    temp.append("function myFunction()\n");
+    temp.append("{\n");
+    temp.append("   document.getElementById('directions-select').value = 'Прикубанский';\n");
+    //temp.append("   document.getElementById('rad2').checked = true;;\n");
+    //temp.append("   document.getElementById('text1').value = 'car1';\n");
+    temp.append("}\n");
+    temp.append("myFunction();\n");
+#endif
+
+    ui->te_js->setPlainText(temp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_run(void)
+{
+    emit trace(Q_FUNC_INFO);
+
     QString address = ui->le_address->text();
     if(address.isEmpty())
     {
@@ -148,9 +162,16 @@ void MainBox::run(void)
     ui->webEngineView->setUrl(QUrl(address));
 }
 //--------------------------------------------------------------------------------
+void MainBox::s_default(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    load_js_default();
+}
+//--------------------------------------------------------------------------------
 void MainBox::test_JS(bool)
 {
-    emit info("test_JS");
+    emit trace(Q_FUNC_INFO);
 
     const QString javascript = ui->te_js->toPlainText();
     if(javascript.isEmpty())
@@ -170,11 +191,13 @@ void MainBox::test_JS(bool)
 void MainBox::analize(const QString data)
 {
     QStringList sl = data.split(';');
-    //emit error(QString("%1 bytes").arg(data.length()));
-    emit error(QString("len = %1").arg(sl.length()));
-    foreach (QString text, sl)
+    if(sl.length() > 0)
     {
-        emit info(text);
+        emit info(QString("len = %1").arg(sl.length()));
+        foreach (QString text, sl)
+        {
+            emit info(QString("text [%1]").arg(text));
+        }
     }
 }
 //--------------------------------------------------------------------------------
@@ -247,102 +270,35 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-
-    ui->te_js->clear();
-    ui->te_js->append("document.title");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-    ui->te_js->clear();
-
-    ui->te_js->append("function myFunction()");
-    ui->te_js->append("{");
-    ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   var l_str = '';");
-    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
-    ui->te_js->append("   {");
-    ui->te_js->append("      l_str += links[i].innerHTML + \";\";");
-
-    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт3')");
-    ui->te_js->append("      {");
-    ui->te_js->append("          links[i].click();");
-    ui->te_js->append("      }");
-
-    ui->te_js->append("   }");
-    ui->te_js->append("   return l_str;");
-    ui->te_js->append("}");
-    ui->te_js->append("myFunction();");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
-
-    ui->te_js->clear();
-
-    ui->te_js->append("function myFunction()");
-    ui->te_js->append("{");
-    ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
-    ui->te_js->append("   {");
-    ui->te_js->append("      if(links[i].innerHTML == 'Транспорт3')");
-    ui->te_js->append("      {");
-    ui->te_js->append("          links[i].click();");
-    ui->te_js->append("      }");
-    ui->te_js->append("   }");
-    ui->te_js->append("}");
-    ui->te_js->append("myFunction();");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
-    //https://stackoverflow.com/questions/7977198/document-getelementsbytagnamea-misses-a-link
-    emit info("Test_3()");
-
-    ui->te_js->clear();
-    ui->te_js->append("function myFunction()");
-    ui->te_js->append("{");
-    ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   return links[0].href;");
-    ui->te_js->append("}");
-    ui->te_js->append("myFunction();");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_4(void)
 {
     emit info("Test_4()");
-
-    ui->te_js->clear();
-    ui->te_js->append("function myFunction()");
-    ui->te_js->append("{");
-    ui->te_js->append("   var links = document.getElementsByTagName('a');");
-    ui->te_js->append("   var l_str = '';");
-    ui->te_js->append("   for (var i = 0; i < links.length; i++)");
-    ui->te_js->append("   {");
-    ui->te_js->append("      l_str += links[i].href + \";\";");
-    ui->te_js->append("   }");
-    ui->te_js->append("   return l_str;");
-    ui->te_js->append("}");
-    ui->te_js->append("myFunction();");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_5(void)
 {
     emit info("Test_5()");
-
     return true;
 }
 //--------------------------------------------------------------------------------

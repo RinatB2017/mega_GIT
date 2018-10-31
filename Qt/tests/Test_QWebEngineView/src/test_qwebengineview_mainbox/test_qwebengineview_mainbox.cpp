@@ -181,7 +181,6 @@ void MainBox::test_JS(bool)
         emit error("JS is empty!");
         return;
     }
-    //emit trace(javascript);
 
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
@@ -237,7 +236,7 @@ void MainBox::createTestBar(void)
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());    //TODO странно
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

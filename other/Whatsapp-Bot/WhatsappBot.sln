@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebWhatsappAPI", "WebWhatsappAPI\WebWhatsappAPI.csproj", "{F04A0119-CDEC-4C05-88EC-AE40E47F8CDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirefoxExample", "FirefoxExample\FirefoxExample.csproj", "{E1F40998-68B4-44BC-8C6A-A09626F7A2A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularExample", "ModularExample\ModularExample.csproj", "{B360EAC2-691C-4214-A7D9-3A68786B65AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F04A0119-CDEC-4C05-88EC-AE40E47F8CDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F04A0119-CDEC-4C05-88EC-AE40E47F8CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F04A0119-CDEC-4C05-88EC-AE40E47F8CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F04A0119-CDEC-4C05-88EC-AE40E47F8CDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F40998-68B4-44BC-8C6A-A09626F7A2A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F40998-68B4-44BC-8C6A-A09626F7A2A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F40998-68B4-44BC-8C6A-A09626F7A2A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F40998-68B4-44BC-8C6A-A09626F7A2A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B360EAC2-691C-4214-A7D9-3A68786B65AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B360EAC2-691C-4214-A7D9-3A68786B65AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B360EAC2-691C-4214-A7D9-3A68786B65AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B360EAC2-691C-4214-A7D9-3A68786B65AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -138,15 +138,11 @@ void MainBox::load_js_default(void)
 #if 1
     temp.append("function myFunction()\n");
     temp.append("{\n");
-    temp.append("   var myElement = document.getElementById('directions-select').value = 'Западный';\n");
-    temp.append("   document.getElementById('directions-select').value = 'Прикубанский';\n");
-    temp.append("   document.getElementById('directions-select').value = 'Центральный';\n");
-    //temp.append("   document.getElementById('rad2').checked = true;\n");
-    //temp.append("   document.getElementById('text1').value = 'car1';\n");
-    temp.append("   if (myElement == null)\n");
-    temp.append("      return 'false';\n");
-    temp.append("   else\n");
-    temp.append("      return 'true';\n");
+    temp.append("   document.getElementById('rf_district_547').checked = true;\n");
+    temp.append("   document.getElementById('rf_district_359').checked = true;\n");
+    temp.append("   document.getElementById('rf_district_360').checked = true;\n");
+    temp.append("   document.getElementById('rf_district_361').checked = true;\n");
+    temp.append("   document.getElementById('rf_district_362').checked = true;\n");
     temp.append("}\n");
     temp.append("myFunction();\n");
 #endif

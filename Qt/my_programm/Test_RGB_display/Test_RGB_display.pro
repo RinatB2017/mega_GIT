@@ -57,6 +57,7 @@ LIB_PATH2 = "../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
+include (src/rgb_dislpay/rgb_dislpay.pri)
 include (src/rgb_dislpay_led/rgb_dislpay_led.pri)
 
 !exists(OBJECTS_DIR) {

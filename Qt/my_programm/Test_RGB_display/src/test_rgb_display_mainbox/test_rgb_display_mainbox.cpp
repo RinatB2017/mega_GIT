@@ -463,9 +463,14 @@ void MainBox:: move_dr(void)
     show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
+#include "rgb_dislpay.hpp"
+
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    RGB_dislpay *display = new RGB_dislpay();
+    display->show();
 
     return true;
 }

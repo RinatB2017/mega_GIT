@@ -210,12 +210,45 @@ void MainBox::test_validator(void)
 }
 //--------------------------------------------------------------------------------
 #include <QWebEngineView>
+
+#include <QBluetoothServer>
+#include <QBluetoothSocket>
+#include <QBluetoothLocalDevice>
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice;
+    if(!localDevice)
+    {
+        emit error("localDevice is null");
+        return false;
+    }
+    localDevice->powerOn();
+
+    QList<QBluetoothHostInfo> localAdapters = QBluetoothLocalDevice::allDevices();
+    if(localAdapters.count() < 1)
+    {
+        emit error("localAdapters not found!");
+        return false;
+    }
+    QBluetoothAddress localAdapter = localAdapters.at(0).address();
+
+    QBluetoothServer *rfcommServer = new QBluetoothServer(QBluetoothServiceInfo::RfcommProtocol, this);
+    connect(rfcommServer, SIGNAL(newConnection()), this, SLOT(clientConnected()));
+    bool result = rfcommServer->listen(localAdapter);
+    if (!result)
+    {
+        emit error(QString("Cannot bind chat server to %1").arg(localAdapter.toString()));
+    }
+    rfcommServer->deleteLater();
+    emit info("OK");
+#endif
+
+#if 0
     QWebEngineView *view = new QWebEngineView();
     view->setMinimumSize(800, 600);
     view->setUrl(QUrl("https://www.avito.ru/krasnodar"));
@@ -243,6 +276,12 @@ bool MainBox::test_0(void)
 
     return true;
 }
+
+void MainBox::clientConnected(void)
+{
+    emit info("clientConnected");
+}
+
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {

@@ -16,6 +16,10 @@ DEPENDPATH  += $$PROGRAMM_PATH
 QT += webenginewidgets
 CONFIG += c++11
 
+QT          += bluetooth widgets
+CONFIG      += mobility
+MOBILITY    += connectivity
+
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 #

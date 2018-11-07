@@ -40,6 +40,7 @@ win32 {
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
+    arrows/arrows.qrc \
     images/images.qrc \
     doc/doc.qrc
 

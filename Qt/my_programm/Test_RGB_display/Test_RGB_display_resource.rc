@@ -1,8 +1,4 @@
-# if defined(UNDER_CE)
-#  include <winbase.h>
-# else
-#  include <windows.h>
-# endif
+#include <windows.h>
 
 IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\User\\Programming\\GitHub\\mega_GIT\\Qt\\my_programm\\Test_RGB_display\\ico\\computer.ico"
 

@@ -49,6 +49,9 @@ public:
 signals:
     void send(QByteArray);
 
+public slots:
+    void show_picture(int begin_x, int begin_y);
+
 private slots:
     void choice_test(void);
     bool test_0(void);
@@ -60,6 +63,15 @@ private slots:
 
     void load_ico(void);
     void read_data(QByteArray data);
+
+    void move_ul(void);
+    void move_u(void);
+    void move_ur(void);
+    void move_l(void);
+    void move_r(void);
+    void move_dl(void);
+    void move_d(void);
+    void move_dr(void);
 
 private:
     enum {
@@ -84,6 +96,12 @@ private:
     QList<RGB_dislpay_led *> l_buttons;
     double w_led = 0;
     double h_led = 0;
+
+    QImage picture;
+    int max_x = 0;
+    int max_y = 0;
+    int begin_x = 0;
+    int begin_y = 0;
 
     QComboBox *cb_test = nullptr;
     QCheckBox *cb_block = nullptr;

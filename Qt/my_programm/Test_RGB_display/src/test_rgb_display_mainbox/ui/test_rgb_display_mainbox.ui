@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
+    <width>232</width>
     <height>207</height>
    </rect>
   </property>
@@ -25,6 +25,98 @@
         <string>Load ICO</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QToolButton" name="btn_ul">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/up_left.png</normaloff>:/arrows/up_left.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QToolButton" name="btn_l">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/left.png</normaloff>:/arrows/left.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QToolButton" name="btn_u">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/up.png</normaloff>:/arrows/up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QToolButton" name="btn_ur">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/up_right.png</normaloff>:/arrows/up_right.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QToolButton" name="btn_d">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/down.png</normaloff>:/arrows/down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QToolButton" name="btn_r">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/right.png</normaloff>:/arrows/right.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QToolButton" name="btn_dl">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/down_left.png</normaloff>:/arrows/down_left.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QToolButton" name="btn_dr">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../arrows/arrows.qrc">
+           <normaloff>:/arrows/down_right.png</normaloff>:/arrows/down_right.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -54,6 +146,19 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <tabstops>
+  <tabstop>btn_load</tabstop>
+  <tabstop>btn_ul</tabstop>
+  <tabstop>btn_u</tabstop>
+  <tabstop>btn_ur</tabstop>
+  <tabstop>btn_l</tabstop>
+  <tabstop>btn_r</tabstop>
+  <tabstop>btn_dl</tabstop>
+  <tabstop>btn_d</tabstop>
+  <tabstop>btn_dr</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../arrows/arrows.qrc"/>
+ </resources>
  <connections/>
 </ui>

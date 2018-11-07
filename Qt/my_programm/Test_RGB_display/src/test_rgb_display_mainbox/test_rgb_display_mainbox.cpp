@@ -50,7 +50,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_leds();
+    //save_leds();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -63,6 +63,17 @@ void MainBox::init(void)
 
     connect(this,   SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
+
+    connect(ui->btn_ul, SIGNAL(clicked(bool)),  this,   SLOT(move_ul()));
+    connect(ui->btn_u,  SIGNAL(clicked(bool)),  this,   SLOT(move_u()));
+    connect(ui->btn_ur, SIGNAL(clicked(bool)),  this,   SLOT(move_ur()));
+
+    connect(ui->btn_l,  SIGNAL(clicked(bool)),  this,   SLOT(move_l()));
+    connect(ui->btn_r,  SIGNAL(clicked(bool)),  this,   SLOT(move_r()));
+
+    connect(ui->btn_dl, SIGNAL(clicked(bool)),  this,   SLOT(move_dl()));
+    connect(ui->btn_d,  SIGNAL(clicked(bool)),  this,   SLOT(move_d()));
+    connect(ui->btn_dr, SIGNAL(clicked(bool)),  this,   SLOT(move_dr()));
 
     connect(ui->btn_load,   SIGNAL(clicked(bool)),  this,   SLOT(load_ico()));
 
@@ -193,52 +204,7 @@ void MainBox::create_display(void)
         }
     }
 
-    load_leds();
-
-#if 0
-    int state = 0;
-    foreach(RGB_dislpay_led *led, l_buttons)
-    {
-        switch(state)
-        {
-        case 0:
-        case 3:
-        case 6:
-            led->set_R(255);
-            led->set_G(0);
-            led->set_B(0);
-            led->repaint();
-            break;
-
-        case 1:
-        case 4:
-        case 7:
-            led->set_R(0);
-            led->set_G(255);
-            led->set_B(0);
-            led->repaint();
-            break;
-
-        case 2:
-        case 5:
-        case 8:
-            led->set_R(0);
-            led->set_G(0);
-            led->set_B(255);
-            led->repaint();
-            break;
-
-        default:
-            state = 0;
-            led->set_R(255);
-            led->set_G(0);
-            led->set_B(0);
-            led->repaint();
-            break;
-        }
-        state++;
-    }
-#endif
+    //load_leds();
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -274,19 +240,44 @@ void MainBox::load_ico(void)
 {
     emit info("Test_0()");
 
-    QImage picture;
     bool ok = picture.load(":/mainwindow/computer.png");
     if(!ok)
     {
         emit error("can't load picture");
         return;
     }
+    max_x = picture.width();
+    max_y = picture.height();
 
     for(int y=0; y<SCREEN_HEIGTH; y++)
     {
         for(int x=0; x<SCREEN_WIDTH; x++)
         {
             QRgb color = picture.pixel(x, y);
+            foreach(RGB_dislpay_led *led, l_buttons)
+            {
+                int p_x = led->property("property_col").toInt();
+                int p_y = led->property("property_row").toInt();
+                if((p_x == x) && (p_y == y))
+                {
+                    led->set_R(qRed(color));
+                    led->set_G(qGreen(color));
+                    led->set_B(qBlue(color));
+                    led->repaint();
+                    break;
+                }
+            }
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_picture(int begin_x, int begin_y)
+{
+    for(int y=0; y<SCREEN_HEIGTH; y++)
+    {
+        for(int x=0; x<SCREEN_WIDTH; x++)
+        {
+            QRgb color = picture.pixel(begin_x + x, begin_y + y);
             foreach(RGB_dislpay_led *led, l_buttons)
             {
                 int p_x = led->property("property_col").toInt();
@@ -328,9 +319,160 @@ void MainBox::read_data(QByteArray data)
     emit debug(data.data());
 }
 //--------------------------------------------------------------------------------
+void MainBox::move_ul(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if(begin_x > 0)
+    {
+        begin_x--;
+    }
+    if(begin_y > 0)
+    {
+        begin_y--;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
+void MainBox::move_u(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if(begin_y > 0)
+    {
+        begin_y--;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
+void MainBox::move_ur(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if((begin_x < max_x)  && ((begin_x + SCREEN_WIDTH) < max_x))
+    {
+        begin_x++;
+    }
+    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    {
+        begin_y++;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
+void MainBox::move_l(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if(begin_x > 0)
+    {
+        begin_x--;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
+void MainBox::move_r(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if((begin_x < max_x) && ((begin_x + SCREEN_WIDTH) < max_x))
+    {
+        begin_x++;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
+void MainBox::move_dl(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if(begin_x > 0)
+    {
+        begin_x--;
+    }
+    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    {
+        begin_y++;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
+void MainBox::move_d(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    {
+        begin_y++;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
+void MainBox:: move_dr(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(picture.isNull())
+    {
+        emit error("picture not loaded!");
+        return;
+    }
+    if((begin_x < max_x)  && ((begin_x + SCREEN_WIDTH) < max_x))
+    {
+        begin_x++;
+    }
+    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    {
+        begin_y++;
+    }
+    show_picture(begin_x, begin_y);
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
+    emit info("Test_1()");
 
     emit info(QString("header %1").arg(sizeof(P_HEADER)));
     emit info(QString("data %1").arg(sizeof(P_DATA)));
@@ -387,13 +529,6 @@ bool MainBox::test_0(void)
 
     emit debug(output.data());
     emit send(output);
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
 
     return true;
 }

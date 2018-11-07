@@ -63,9 +63,9 @@ Chat::Chat(QWidget *parent)
     //! [Construct UI]
     ui->setupUi(this);
 
-    connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(accept()));
-    connect(ui->connectButton, SIGNAL(clicked()), this, SLOT(connectClicked()));
-    connect(ui->sendButton, SIGNAL(clicked()), this, SLOT(sendClicked()));
+    connect(ui->quitButton,     SIGNAL(clicked()), this, SLOT(accept()));
+    connect(ui->connectButton,  SIGNAL(clicked()), this, SLOT(connectClicked()));
+    connect(ui->sendButton,     SIGNAL(clicked()), this, SLOT(sendClicked()));
     //! [Construct UI]
 
     localAdapters = QBluetoothLocalDevice::allDevices();
@@ -82,18 +82,17 @@ Chat::Chat(QWidget *parent)
                                   arg(localAdapters.at(0).address().toString()));
         ui->secondAdapter->setText(localAdapters.at(1).address().toString());
         ui->firstAdapter->setChecked(true);
-        connect(ui->firstAdapter, SIGNAL(clicked()), this, SLOT(newAdapterSelected()));
-        connect(ui->secondAdapter, SIGNAL(clicked()), this, SLOT(newAdapterSelected()));
+        connect(ui->firstAdapter,   SIGNAL(clicked()), this, SLOT(newAdapterSelected()));
+        connect(ui->secondAdapter,  SIGNAL(clicked()), this, SLOT(newAdapterSelected()));
         QBluetoothLocalDevice adapter(localAdapters.at(0).address());
         adapter.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
     }
 
     //! [Create Chat Server]
     server = new ChatServer(this);
-    connect(server, SIGNAL(clientConnected(QString)), this, SLOT(clientConnected(QString)));
-    connect(server, SIGNAL(clientDisconnected(QString)), this, SLOT(clientDisconnected(QString)));
-    connect(server, SIGNAL(messageReceived(QString,QString)),
-            this, SLOT(showMessage(QString,QString)));
+    connect(server, SIGNAL(clientConnected(QString)),           this,   SLOT(clientConnected(QString)));
+    connect(server, SIGNAL(clientDisconnected(QString)),        this,   SLOT(clientDisconnected(QString)));
+    connect(server, SIGNAL(messageReceived(QString,QString)),   this,   SLOT(showMessage(QString,QString)));
     connect(this, SIGNAL(sendMessage(QString)), server, SLOT(sendMessage(QString)));
     server->startServer();
     //! [Create Chat Server]
@@ -112,6 +111,7 @@ void Chat::test(void)
     ui->chat->append("test");
 
     QList<QBluetoothHostInfo> localAdapters = QBluetoothLocalDevice::allDevices();
+    ui->chat->append(QString("found %1 devices").arg(localAdapters.count()));
     for(int n=0; n<localAdapters.count(); n++)
     {
         QString temp = QString("%1 (%2)")
@@ -119,6 +119,8 @@ void Chat::test(void)
                 .arg(localAdapters.at(n).address().toString());
         ui->chat->append(temp);
     }
+
+    ui->chat->append("end");
 }
 //-----------------------------------------------------------------------------------------------------------------
 

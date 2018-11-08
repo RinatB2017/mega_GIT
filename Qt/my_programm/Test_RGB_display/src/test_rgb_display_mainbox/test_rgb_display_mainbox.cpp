@@ -284,24 +284,6 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    emit info("begin");
-
-    RGB_display *display = new RGB_display();
-    connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-
-    bool ok = false;
-    ok = display->load_ico();
-    if(ok)
-    {
-        display->show_picture(0, 0);
-    }
-    display->show();
-
-    emit info("end");
-
     return true;
 }
 //--------------------------------------------------------------------------------

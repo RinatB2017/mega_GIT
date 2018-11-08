@@ -45,22 +45,26 @@ RGB_display::~RGB_display()
 void RGB_display::init(void)
 {
     double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    double w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
-    double h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
+    double w_led = pixelPerMm * LED_SIZE_MM;    // Ширина 3.5 mm
+    double h_led = pixelPerMm * LED_SIZE_MM;    // Высота 3.5 mm
+
+    double border = pixelPerMm * LED_BORDER_MM;
 
     grid = new QGridLayout();
-    grid->setMargin(0);
-    grid->setSpacing(0);
+    grid->setMargin(border);
+    grid->setSpacing(border);
 
     for(int row=0; row<SCREEN_HEIGTH; row++)
     {
         for(int col=0; col<SCREEN_WIDTH; col++)
         {
-            RGB_dislpay_led *led = new RGB_dislpay_led(w_led, h_led, this);
+            RGB_dislpay_led *led = new RGB_dislpay_led(this);
             connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
             connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
             connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
             connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+            led->set_size(w_led, h_led);
 
             led->setProperty("property_col", col);
             led->setProperty("property_row", row);

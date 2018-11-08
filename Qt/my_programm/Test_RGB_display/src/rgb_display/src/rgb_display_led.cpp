@@ -22,14 +22,13 @@
 #include <QPainter>
 //--------------------------------------------------------------------------------
 #include "rgb_display_led.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-RGB_dislpay_led::RGB_dislpay_led(int fix_width,
-                                 int fix_heigth,
-                                 QWidget *parent) :
+RGB_dislpay_led::RGB_dislpay_led(QWidget *parent) :
     QToolButton(parent)
 {
-    this->fix_width = fix_width;
-    this->fix_heigth = fix_heigth;
+    fix_width  = LED_DEFAULT_W;
+    fix_heigth = LED_DEFAULT_H;
     setFixedSize(fix_width, fix_heigth);
 }
 //--------------------------------------------------------------------------------
@@ -104,6 +103,24 @@ int RGB_dislpay_led::get_width(void)
 int RGB_dislpay_led::get_height(void)
 {
     return fix_heigth;
+}
+//--------------------------------------------------------------------------------
+bool RGB_dislpay_led::set_size(int w_value,  int h_value)
+{
+    if((w_value <= 0) || (h_value <= 0))
+    {
+        return false;
+    }
+    fix_width = w_value;
+    fix_heigth = h_value;
+    setFixedSize(fix_width, fix_heigth);
+    return true;
+}
+//--------------------------------------------------------------------------------
+void RGB_dislpay_led::get_size(int *w_value, int *h_value)
+{
+    *w_value = fix_width;
+    *h_value = fix_heigth;
 }
 //--------------------------------------------------------------------------------
 void RGB_dislpay_led::paintEvent(QPaintEvent *)

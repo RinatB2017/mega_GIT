@@ -46,10 +46,10 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    Chat d;
-    QObject::connect(&d, SIGNAL(accepted()), &app, SLOT(quit()));
+    Chat *d = new Chat;
+    QObject::connect(d, SIGNAL(accepted()), &app, SLOT(quit()));
 
-    d.show();
+    d->show();
 
     app.exec();
 

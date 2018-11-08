@@ -43,6 +43,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QToolButton" name="btn_test">
+        <property name="text">
+         <string>test</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

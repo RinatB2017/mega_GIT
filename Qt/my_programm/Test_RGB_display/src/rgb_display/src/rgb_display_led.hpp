@@ -29,9 +29,7 @@ class RGB_dislpay_led : public QToolButton
     Q_OBJECT
 
 public:
-    explicit RGB_dislpay_led(int fix_width,
-                             int fix_heigth,
-                             QWidget *parent = nullptr);
+    explicit RGB_dislpay_led(QWidget *parent = nullptr);
     ~RGB_dislpay_led();
 
     void set_R(uint8_t value);
@@ -44,6 +42,9 @@ public:
 
     int get_width(void);
     int get_height(void);
+
+    bool set_size(int w_value,  int h_value);
+    void get_size(int *w_value, int *h_value);
 
 signals:
     void info(const QString &);

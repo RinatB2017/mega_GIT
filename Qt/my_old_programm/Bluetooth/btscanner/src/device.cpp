@@ -94,6 +94,28 @@ DeviceDiscoveryDialog::DeviceDiscoveryDialog(QWidget *parent)
     connect(localDevice, SIGNAL(pairingFinished(QBluetoothAddress,QBluetoothLocalDevice::Pairing))
         , this, SLOT(pairingDone(QBluetoothAddress,QBluetoothLocalDevice::Pairing)));
 
+    //TODO
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+}
+
+//TODO
+void DeviceDiscoveryDialog::test(void)
+{
+    qDebug() << "test";
+    QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice();
+    if(!localDevice)
+    {
+        qDebug() << "localDevice is null";
+        return;
+    }
+    qDebug() << "localDevice found " << localDevice->name();
+
+    localDevice->powerOn();
+
+    QList<QBluetoothHostInfo> localAdapters = QBluetoothLocalDevice::allDevices();
+    qDebug() << "count" << localAdapters.count();
+
+    qDebug("the end");
 }
 
 DeviceDiscoveryDialog::~DeviceDiscoveryDialog()

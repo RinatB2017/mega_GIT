@@ -192,12 +192,15 @@ void Chat::clientDisconnected()
 //! [Connect to remote service]
 void Chat::connectClicked()
 {
+    qDebug() << "connectClicked";
     ui->connectButton->setEnabled(false);
 
     // scan for services
     const QBluetoothAddress adapter = localAdapters.isEmpty() ?
                 QBluetoothAddress() :
                 localAdapters.at(currentAdapterIndex).address();
+
+    qDebug() << adapter;
 
     RemoteSelector remoteSelector(adapter);
     remoteSelector.startDiscovery(QBluetoothUuid(serviceUuid));

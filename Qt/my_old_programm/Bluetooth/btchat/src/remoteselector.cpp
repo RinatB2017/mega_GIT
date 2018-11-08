@@ -94,7 +94,7 @@ QBluetoothServiceInfo RemoteSelector::service() const
 
 void RemoteSelector::serviceDiscovered(const QBluetoothServiceInfo &serviceInfo)
 {
-#if 0
+#if 1
     qDebug() << "Discovered service on"
              << serviceInfo.device().name() << serviceInfo.device().address().toString();
     qDebug() << "\tService name:" << serviceInfo.serviceName();
@@ -106,6 +106,7 @@ void RemoteSelector::serviceDiscovered(const QBluetoothServiceInfo &serviceInfo)
              << serviceInfo.protocolServiceMultiplexer();
     qDebug() << "\tRFCOMM server channel:" << serviceInfo.serverChannel();
 #endif
+
     QMapIterator<QListWidgetItem *, QBluetoothServiceInfo> i(m_discoveredServices);
     while (i.hasNext())
     {

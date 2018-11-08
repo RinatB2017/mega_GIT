@@ -76,12 +76,15 @@ public slots:
     void on_discoverable_clicked(bool clicked);
     void displayPairingMenu(const QPoint &pos);
     void pairingDone(const QBluetoothAddress&, QBluetoothLocalDevice::Pairing);
+
 private slots:
     void startScan();
     void scanFinished();
     void setGeneralUnlimited(bool unlimited);
     void itemActivated(QListWidgetItem *item);
     void hostModeStateChanged(QBluetoothLocalDevice::HostMode);
+
+    void test(void);
 
 private:
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;

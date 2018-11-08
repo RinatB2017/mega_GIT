@@ -221,7 +221,7 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice;
+    QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice();
     if(!localDevice)
     {
         emit error("localDevice is null");

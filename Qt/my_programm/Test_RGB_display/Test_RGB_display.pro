@@ -57,8 +57,8 @@ LIB_PATH2 = "../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
-include (src/rgb_dislpay/rgb_dislpay.pri)
-include (src/rgb_dislpay_led/rgb_dislpay_led.pri)
+include (src/rgb_display/rgb_display.pri)
+include (src/rgb_display_led/rgb_display_led.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

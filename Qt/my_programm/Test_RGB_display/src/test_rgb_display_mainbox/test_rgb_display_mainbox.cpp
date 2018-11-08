@@ -32,7 +32,8 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_rgb_display_mainbox.hpp"
-#include "rgb_dislpay_led.hpp"
+#include "rgb_display_led.hpp"
+#include "rgb_display.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -59,7 +60,6 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
-    create_display();
 
     connect(this,   SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
@@ -75,7 +75,7 @@ void MainBox::init(void)
     connect(ui->btn_d,  SIGNAL(clicked(bool)),  this,   SLOT(move_d()));
     connect(ui->btn_dr, SIGNAL(clicked(bool)),  this,   SLOT(move_dr()));
 
-    connect(ui->btn_load,   SIGNAL(clicked(bool)),  this,   SLOT(load_ico()));
+    connect(ui->btn_load,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_ico()));
 
     setFixedSize(sizeHint());
 }
@@ -123,90 +123,6 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_leds(void)
-{
-#ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
-#else
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-#endif
-
-    settings->beginGroup("Display");
-    QByteArray ba_display = settings->value("ba_display").toByteArray();
-    settings->endGroup();
-
-    int count_led = 0;
-    if(ba_display.isEmpty() == false)
-    {
-        if(ba_display.count() == (l_buttons.count() * 3))
-        {
-            for(int n=0; n<ba_display.count(); n+=3)
-            {
-                l_buttons[count_led]->set_R(ba_display.at(n));
-                l_buttons[count_led]->set_G(ba_display.at(n+1));
-                l_buttons[count_led]->set_B(ba_display.at(n+2));
-                count_led++;
-            }
-        }
-    }
-
-    settings->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_leds(void)
-{
-#ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
-#else
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-#endif
-
-    QByteArray ba_display;
-    foreach (RGB_dislpay_led *led, l_buttons)
-    {
-        ba_display.append(led->get_R());
-        ba_display.append(led->get_G());
-        ba_display.append(led->get_B());
-    }
-
-    settings->beginGroup("Display");
-    settings->setValue("ba_display", ba_display);
-    settings->endGroup();
-
-    settings->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void MainBox::create_display(void)
-{
-    ui->grid->setSpacing(0);
-    ui->grid->setMargin(0);
-
-    double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
-    h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
-
-    for(int row=0; row<SCREEN_HEIGTH; row++)
-    {
-        for(int col=0; col<SCREEN_WIDTH; col++)
-        {
-            RGB_dislpay_led *led = new RGB_dislpay_led(w_led, h_led, this);
-            connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-            connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-            connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-            connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-
-            led->setProperty("property_col", col);
-            led->setProperty("property_row", row);
-
-            ui->grid->addWidget(led, row, col);
-
-            l_buttons.append(led);
-        }
-    }
-
-    //load_leds();
-}
-//--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
 {
     bool ok = false;
@@ -232,65 +148,6 @@ void MainBox::choice_test(void)
             }
 
             return;
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_ico(void)
-{
-    emit info("Test_0()");
-
-    bool ok = picture.load(":/mainwindow/computer.png");
-    if(!ok)
-    {
-        emit error("can't load picture");
-        return;
-    }
-    max_x = picture.width();
-    max_y = picture.height();
-
-    for(int y=0; y<SCREEN_HEIGTH; y++)
-    {
-        for(int x=0; x<SCREEN_WIDTH; x++)
-        {
-            QRgb color = picture.pixel(x, y);
-            foreach(RGB_dislpay_led *led, l_buttons)
-            {
-                int p_x = led->property("property_col").toInt();
-                int p_y = led->property("property_row").toInt();
-                if((p_x == x) && (p_y == y))
-                {
-                    led->set_R(qRed(color));
-                    led->set_G(qGreen(color));
-                    led->set_B(qBlue(color));
-                    led->repaint();
-                    break;
-                }
-            }
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::show_picture(int begin_x, int begin_y)
-{
-    for(int y=0; y<SCREEN_HEIGTH; y++)
-    {
-        for(int x=0; x<SCREEN_WIDTH; x++)
-        {
-            QRgb color = picture.pixel(begin_x + x, begin_y + y);
-            foreach(RGB_dislpay_led *led, l_buttons)
-            {
-                int p_x = led->property("property_col").toInt();
-                int p_y = led->property("property_row").toInt();
-                if((p_x == x) && (p_y == y))
-                {
-                    led->set_R(qRed(color));
-                    led->set_G(qGreen(color));
-                    led->set_B(qBlue(color));
-                    led->repaint();
-                    break;
-                }
-            }
         }
     }
 }
@@ -323,11 +180,6 @@ void MainBox::move_ul(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
     if(begin_x > 0)
     {
         begin_x--;
@@ -336,141 +188,119 @@ void MainBox::move_ul(void)
     {
         begin_y--;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_u(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
     if(begin_y > 0)
     {
         begin_y--;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_ur(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
-    if((begin_x < max_x)  && ((begin_x + SCREEN_WIDTH) < max_x))
+    if((begin_x < ui->rgb_display->get_max_x())  && ((begin_x + SCREEN_WIDTH) < ui->rgb_display->get_max_x()))
     {
         begin_x++;
     }
-    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
     {
         begin_y++;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_l(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
     if(begin_x > 0)
     {
         begin_x--;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_r(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
-    if((begin_x < max_x) && ((begin_x + SCREEN_WIDTH) < max_x))
+    if((begin_x < ui->rgb_display->get_max_x()) && ((begin_x + SCREEN_WIDTH) < ui->rgb_display->get_max_x()))
     {
         begin_x++;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_dl(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
     if(begin_x > 0)
     {
         begin_x--;
     }
-    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
     {
         begin_y++;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_d(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
-    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
     {
         begin_y++;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
 void MainBox:: move_dr(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(picture.isNull())
-    {
-        emit error("picture not loaded!");
-        return;
-    }
-    if((begin_x < max_x)  && ((begin_x + SCREEN_WIDTH) < max_x))
+    if((begin_x < ui->rgb_display->get_max_x())  && ((begin_x + SCREEN_WIDTH) < ui->rgb_display->get_max_x()))
     {
         begin_x++;
     }
-    if((begin_y < max_y)  && ((begin_y + SCREEN_HEIGTH) < max_y))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
     {
         begin_y++;
     }
-    show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-#include "rgb_dislpay.hpp"
-
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    RGB_dislpay *display = new RGB_dislpay();
+    emit info("begin");
+
+    RGB_display *display = new RGB_display();
+    connect(display,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(display,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(display,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(display,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+    bool ok = false;
+    ok = display->load_ico();
+    if(ok)
+    {
+        display->show_picture(0, 0);
+    }
     display->show();
+
+    emit info("end");
 
     return true;
 }
@@ -478,62 +308,6 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-    emit info(QString("header %1").arg(sizeof(P_HEADER)));
-    emit info(QString("data %1").arg(sizeof(P_DATA)));
-
-    P_HEADER header;
-    header.addr = 0;
-    header.cmd = CMD_01;
-    header.len = sizeof(P_DATA);
-
-    P_DATA data;
-    //data.brightness = 128;
-    int n = 0;
-    foreach (RGB_dislpay_led *led, l_buttons)
-    {
-        //int p_x = led->property("property_col").toInt();
-        //int p_y = led->property("property_row").toInt();
-
-        LED p_led;
-        p_led.color_R = led->get_R();
-        p_led.color_G = led->get_G();
-        p_led.color_B = led->get_B();
-
-        //data.leds[p_x][p_y] = p_led;
-
-        data.leds[n++] = p_led;
-        if(n > NUM_LEDS)
-        {
-            break;
-        }
-    }
-
-#if 0
-    for(unsigned int n=0; n<sizeof(P_DATA); n++)
-    {
-        emit debug(QString("n RGB: %1 %2 %3 %4")
-                   .arg(n)
-                   .arg(data.leds[n].color_R)
-                   .arg(data.leds[n].color_G)
-                   .arg(data.leds[n].color_B));
-    }
-#endif
-
-    QByteArray input;
-    input.append((char *)&header, sizeof(P_HEADER));
-    input.append((char *)&data,   sizeof(P_DATA));
-
-    QByteArray output;
-
-    bool ok = prepare_data(input, &output);
-    if(!ok)
-    {
-        return false;
-    }
-
-    emit debug(output.data());
-    emit send(output);
 
     return true;
 }

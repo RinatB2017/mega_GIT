@@ -49,9 +49,6 @@ public:
 signals:
     void send(QByteArray);
 
-public slots:
-    void show_picture(int begin_x, int begin_y);
-
 private slots:
     void choice_test(void);
     bool test_0(void);
@@ -61,7 +58,6 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
-    void load_ico(void);
     void read_data(QByteArray data);
 
     void move_ul(void);
@@ -93,13 +89,6 @@ private:
     MySplashScreen *splash = nullptr;
     Ui::MainBox *ui = nullptr;
 
-    QList<RGB_dislpay_led *> l_buttons;
-    double w_led = 0;
-    double h_led = 0;
-
-    QImage picture;
-    int max_x = 0;
-    int max_y = 0;
     int begin_x = 0;
     int begin_y = 0;
 
@@ -109,10 +98,7 @@ private:
 
     void init(void);
     void createTestBar(void);
-    void create_display(void);
     bool prepare_data(QByteArray input, QByteArray *output);
-    void load_leds(void);
-    void save_leds(void);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

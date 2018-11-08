@@ -21,7 +21,7 @@
 #include <QColorDialog>
 #include <QPainter>
 //--------------------------------------------------------------------------------
-#include "rgb_dislpay_led.hpp"
+#include "rgb_display_led.hpp"
 //--------------------------------------------------------------------------------
 RGB_dislpay_led::RGB_dislpay_led(int fix_width,
                                  int fix_heigth,

@@ -18,51 +18,50 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtWidgets>
+#ifndef RGB_DISLPAY_HPP
+#define RGB_DISLPAY_HPP
 //--------------------------------------------------------------------------------
-#include "rgb_dislpay_led.hpp"
-#include "rgb_dislpay.hpp"
-#include "defines.hpp"
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-RGB_dislpay::RGB_dislpay(QWidget *parent) :
-    QWidget(parent)
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+#include "rgb_display_led.hpp"
+//--------------------------------------------------------------------------------
+class RGB_display : public MyWidget
 {
-    double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    double w_led = pixelPerMm * 3.5;    // Ширина 3.5 mm
-    double h_led = pixelPerMm * 3.5;    // Высота 3.5 mm
+    Q_OBJECT
 
-    grid = new QGridLayout();
+public:
+    explicit RGB_display(QWidget *parent = nullptr);
+    ~RGB_display();
 
-    for(int row=0; row<SCREEN_HEIGTH; row++)
-    {
-        for(int col=0; col<SCREEN_WIDTH; col++)
-        {
-            RGB_dislpay_led *led = new RGB_dislpay_led(w_led, h_led, this);
-            connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-            connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-            connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-            connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    void show_picture(int begin_x, int begin_y);
 
-            led->setProperty("property_col", col);
-            led->setProperty("property_row", row);
+    int get_max_x(void);
+    int get_max_y(void);
 
-            grid->addWidget(led, row, col);
+    void load_leds(void);
+    void save_leds(void);
 
-            l_buttons.append(led);
-        }
-    }
+public slots:
+    bool load_ico(void);
 
-    QWidget *w = new QWidget(this);
-    w->setLayout(grid);
+private:
+    QGridLayout *grid = nullptr;
+    QList<RGB_dislpay_led *> l_buttons;
 
-    layout()->addWidget(w);
+    QImage picture;
+    int max_x = 0;
+    int max_y = 0;
+    int begin_x = 0;
+    int begin_y = 0;
 
-    //adjustSize();
-    //setFixedSize(width(), height());
-}
+    void init(void);
+    void updateText(void);
+};
 //--------------------------------------------------------------------------------
-RGB_dislpay::~RGB_dislpay()
-{
-
-}
-//--------------------------------------------------------------------------------
+#endif // RGB_DISLPAY_HPP

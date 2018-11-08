@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>232</width>
+    <width>138</width>
     <height>207</height>
    </rect>
   </property>
@@ -134,7 +134,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QGridLayout" name="grid"/>
+    <widget class="RGB_display" name="rgb_display" native="true"/>
    </item>
   </layout>
  </widget>
@@ -143,6 +143,12 @@
    <class>SerialBox5_fix_baudrate</class>
    <extends>QWidget</extends>
    <header>serialbox5_fix_baudrate.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RGB_display</class>
+   <extends>QWidget</extends>
+   <header>rgb_display.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

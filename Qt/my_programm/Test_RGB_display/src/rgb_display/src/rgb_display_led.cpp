@@ -105,7 +105,10 @@ int RGB_dislpay_led::get_height(void)
     return fix_heigth;
 }
 //--------------------------------------------------------------------------------
-bool RGB_dislpay_led::set_size(int w_value,  int h_value)
+bool RGB_dislpay_led::set_size(int w_value,
+                               int h_value,
+                               int l_border,
+                               int u_border)
 {
     if((w_value <= 0) || (h_value <= 0))
     {
@@ -113,14 +116,22 @@ bool RGB_dislpay_led::set_size(int w_value,  int h_value)
     }
     fix_width = w_value;
     fix_heigth = h_value;
+    left_border_width = l_border;
+    up_border_height = u_border;
+
     setFixedSize(fix_width, fix_heigth);
     return true;
 }
 //--------------------------------------------------------------------------------
-void RGB_dislpay_led::get_size(int *w_value, int *h_value)
+void RGB_dislpay_led::get_size(int *w_value,
+                               int *h_value,
+                               int *l_border,
+                               int *u_border)
 {
     *w_value = fix_width;
     *h_value = fix_heigth;
+    *l_border = left_border_width;
+    *u_border = up_border_height;
 }
 //--------------------------------------------------------------------------------
 void RGB_dislpay_led::paintEvent(QPaintEvent *)
@@ -131,6 +142,10 @@ void RGB_dislpay_led::paintEvent(QPaintEvent *)
     color.setBlue(color_B);
 
     QPainter p(this);
-    p.fillRect(0, 0, width(), height(), color);
+    p.fillRect(left_border_width,
+               up_border_height,
+               fix_width - left_border_width * 2,
+               fix_heigth - up_border_height * 2,
+               color);
 }
 //--------------------------------------------------------------------------------

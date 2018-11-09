@@ -43,8 +43,13 @@ public:
     int get_width(void);
     int get_height(void);
 
-    bool set_size(int w_value,  int h_value);
-    void get_size(int *w_value, int *h_value);
+    bool set_size(int w_value,
+                  int h_value,
+                  int l_border, int u_border);
+    void get_size(int *w_value,
+                  int *h_value,
+                  int *l_border,
+                  int *u_border);
 
 signals:
     void info(const QString &);
@@ -59,6 +64,9 @@ private:
 
     int fix_width  = 0;
     int fix_heigth = 0;
+
+    int left_border_width = 0;
+    int up_border_height = 0;
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event);

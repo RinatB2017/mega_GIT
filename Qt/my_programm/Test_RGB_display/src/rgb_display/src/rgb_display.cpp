@@ -48,11 +48,12 @@ void RGB_display::init(void)
     double w_led = pixelPerMm * LED_SIZE_W_MM;
     double h_led = pixelPerMm * LED_SIZE_H_MM;
 
-    double border = pixelPerMm * LED_BORDER_MM;
+    double left_border = pixelPerMm * LED_BORDER_W_MM;
+    double up_border = pixelPerMm * LED_BORDER_H_MM;
 
     grid = new QGridLayout();
-    grid->setMargin(border);
-    grid->setSpacing(border);
+    grid->setMargin(LED_BORDER_SIZE);
+    grid->setSpacing(LED_BORDER_SIZE);
 
     for(int row=0; row<SCREEN_HEIGTH; row++)
     {
@@ -64,7 +65,7 @@ void RGB_display::init(void)
             connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
             connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-            led->set_size(w_led, h_led);
+            led->set_size(w_led, h_led, left_border, up_border);
 
             led->setProperty("property_col", col);
             led->setProperty("property_row", row);

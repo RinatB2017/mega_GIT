@@ -45,8 +45,8 @@ RGB_display::~RGB_display()
 void RGB_display::init(void)
 {
     double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    double w_led = pixelPerMm * LED_SIZE_MM;    // Ширина 3.5 mm
-    double h_led = pixelPerMm * LED_SIZE_MM;    // Высота 3.5 mm
+    double w_led = pixelPerMm * LED_SIZE_W_MM;
+    double h_led = pixelPerMm * LED_SIZE_H_MM;
 
     double border = pixelPerMm * LED_BORDER_MM;
 

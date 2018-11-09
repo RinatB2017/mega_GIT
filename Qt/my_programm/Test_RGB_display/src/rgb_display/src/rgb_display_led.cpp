@@ -142,6 +142,7 @@ void RGB_dislpay_led::paintEvent(QPaintEvent *)
     color.setBlue(color_B);
 
     QPainter p(this);
+    p.fillRect(0, 0, width(), height(), QColor(Qt::gray));
     p.fillRect(left_border_width,
                up_border_height,
                fix_width - left_border_width * 2,

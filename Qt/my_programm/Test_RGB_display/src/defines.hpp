@@ -40,13 +40,13 @@
 #define LED_DEFAULT_W   16
 #define LED_DEFAULT_H   16
 
-#define LED_BORDER_SIZE 0
+#define LED_BORDER_SIZE 0.5
 
-#define LED_SIZE_W_MM     4.0
-#define LED_SIZE_H_MM     5.0
+#define LED_SIZE_W_MM     3.5
+#define LED_SIZE_H_MM     3.5
 
-#define LED_BORDER_W_MM   0.25
-#define LED_BORDER_H_MM   0.75
+#define LED_BORDER_W_MM   2.0
+#define LED_BORDER_H_MM   4.0
 //--------------------------------------------------------------------------------
 #define CMD_01          0x01
 //--------------------------------------------------------------------------------

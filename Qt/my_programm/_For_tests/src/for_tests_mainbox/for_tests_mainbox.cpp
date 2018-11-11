@@ -220,6 +220,11 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 0
+    QSpinBox *sb = ui->sb_1;
+    sb->setValue(6);
+#endif
+
 #if 1
     QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice();
     if(!localDevice)

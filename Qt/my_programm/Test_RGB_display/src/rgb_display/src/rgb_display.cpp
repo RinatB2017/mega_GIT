@@ -34,6 +34,7 @@ RGB_display::RGB_display(QWidget *parent) :
     init();
 
     adjustSize();
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //setFixedSize(width(), height());
 }
 //--------------------------------------------------------------------------------
@@ -134,8 +135,12 @@ void RGB_display::init(void)
     vbox2->addLayout(grid);
     vbox2->addStretch(1);
 
+    QFrame *frame = new QFrame(this);
+    frame->setLayout(vbox);
+    frame->setFixedWidth(frame->sizeHint().width());
+
     QHBoxLayout *box = new QHBoxLayout;
-    box->addLayout(vbox);
+    box->addWidget(frame);
     box->addLayout(vbox2);
 
     setLayout(box);
@@ -207,6 +212,9 @@ void RGB_display::redraw_display(void)
             l_buttons.append(led);
         }
     }
+
+    adjustSize();
+    //setFixedSize(width(), height());
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)

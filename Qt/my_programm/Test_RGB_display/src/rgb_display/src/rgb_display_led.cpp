@@ -114,6 +114,9 @@ bool RGB_dislpay_led::set_size(int w_value,
     {
         return false;
     }
+    if(l_border < 0) l_border = 0;
+    if(u_border < 0) u_border = 0;
+
     fix_width = w_value;
     fix_heigth = h_value;
     left_border_width = l_border;

@@ -78,7 +78,7 @@ void MainBox::init(void)
     connect(ui->btn_load_ico,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_ico()));
     connect(ui->btn_load_pic,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_pic()));
 
-    setFixedSize(sizeHint());
+    //setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

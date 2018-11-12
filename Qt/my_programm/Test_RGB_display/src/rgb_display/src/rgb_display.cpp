@@ -34,7 +34,7 @@ RGB_display::RGB_display(QWidget *parent) :
     init();
 
     adjustSize();
-    setFixedSize(width(), height());
+    //setFixedSize(width(), height());
 }
 //--------------------------------------------------------------------------------
 RGB_display::~RGB_display()
@@ -80,6 +80,9 @@ void RGB_display::init(void)
     }
 
     //---
+    max_x = SCREEN_WIDTH;
+    max_y = SCREEN_HEIGTH;
+
     sb_max_x = new QSpinBox(this);
     sb_max_y = new QSpinBox(this);
     dsb_led_width = new QDoubleSpinBox(this);
@@ -103,10 +106,10 @@ void RGB_display::init(void)
 
     sb_max_x->setValue(max_x);
     sb_max_y->setValue(max_y);
-    dsb_led_width->setValue(w_led);
-    dsb_led_height->setValue(h_led);
-    dsb_up_border->setValue(up_border);
-    dsb_left_border->setValue(left_border);
+    dsb_led_width->setValue(w_led / pixelPerMm);
+    dsb_led_height->setValue(h_led / pixelPerMm);
+    dsb_up_border->setValue(up_border / pixelPerMm);
+    dsb_left_border->setValue(left_border / pixelPerMm);
 
     QGridLayout *grid_buttons = new QGridLayout;
     grid_buttons->addWidget(new QLabel("max_x"),        0, 0);    grid_buttons->addWidget(sb_max_x,           0, 1);
@@ -127,9 +130,13 @@ void RGB_display::init(void)
     vbox->addStretch(1);
     //---
 
+    QVBoxLayout *vbox2 = new QVBoxLayout;
+    vbox2->addLayout(grid);
+    vbox2->addStretch(1);
+
     QHBoxLayout *box = new QHBoxLayout;
     box->addLayout(vbox);
-    box->addLayout(grid);
+    box->addLayout(vbox2);
 
     setLayout(box);
 }
@@ -137,6 +144,71 @@ void RGB_display::init(void)
 void RGB_display::redraw_display(void)
 {
     emit trace(Q_FUNC_INFO);
+
+    int max_x = sb_max_x->value();
+    int max_y = sb_max_y->value();
+    double led_width = dsb_led_width->value();
+    double led_height = dsb_led_height->value();
+    double up_border = dsb_up_border->value();
+    double left_border = dsb_left_border->value();
+
+    emit info(QString("row %1").arg(grid->rowCount()));
+    emit info(QString("col %1").arg(grid->columnCount()));
+
+    emit info(QString("count %1").arg(grid->count()));
+
+    max_x = grid->columnCount();
+    max_y = grid->rowCount();
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            QLayoutItem *item = grid->itemAtPosition(y, x);
+            if(item)
+            {
+                QWidget *w = item->widget();
+                if(w)
+                {
+                    grid->removeWidget(w);
+                    w->deleteLater();
+                }
+            }
+        }
+    }
+    l_buttons.clear();
+
+    max_x = sb_max_x->value();
+    max_y = sb_max_y->value();
+
+    double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
+    led_width *= pixelPerMm;
+    led_height *= pixelPerMm;
+    left_border *= pixelPerMm;
+    up_border *= pixelPerMm;
+
+    for(int row=0; row<max_y; row++)
+    {
+        for(int col=0; col<max_x; col++)
+        {
+            RGB_dislpay_led *led = new RGB_dislpay_led(this);
+            connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+            connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+            connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+            connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+
+            led->set_size(led_width + left_border * 2,
+                          led_height + up_border * 2,
+                          left_border,
+                          up_border);
+
+            led->setProperty("property_col", col);
+            led->setProperty("property_row", row);
+
+            grid->addWidget(led, row, col);
+
+            l_buttons.append(led);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)

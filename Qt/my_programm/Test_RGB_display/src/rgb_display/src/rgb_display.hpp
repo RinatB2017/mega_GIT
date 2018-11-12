@@ -49,6 +49,10 @@ public:
 
 public slots:
     bool load_ico(void);
+    bool load_pic(void);
+
+private slots:
+    void redraw_display(void);
 
 private:
     QGridLayout *grid = nullptr;
@@ -59,6 +63,13 @@ private:
     int max_y = 0;
     int begin_x = 0;
     int begin_y = 0;
+
+    QSpinBox *sb_max_x;
+    QSpinBox *sb_max_y;
+    QDoubleSpinBox *dsb_led_width;
+    QDoubleSpinBox *dsb_led_height;
+    QDoubleSpinBox *dsb_up_border;
+    QDoubleSpinBox *dsb_left_border;
 
     void init(void);
     void updateText(void);

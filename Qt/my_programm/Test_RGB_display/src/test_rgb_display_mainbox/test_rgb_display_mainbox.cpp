@@ -75,7 +75,8 @@ void MainBox::init(void)
     connect(ui->btn_d,  SIGNAL(clicked(bool)),  this,   SLOT(move_d()));
     connect(ui->btn_dr, SIGNAL(clicked(bool)),  this,   SLOT(move_dr()));
 
-    connect(ui->btn_load,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_ico()));
+    connect(ui->btn_load_ico,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_ico()));
+    connect(ui->btn_load_pic,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_pic()));
 
     setFixedSize(sizeHint());
 }

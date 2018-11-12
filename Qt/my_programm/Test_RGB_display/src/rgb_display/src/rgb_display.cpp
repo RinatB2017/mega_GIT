@@ -79,12 +79,111 @@ void RGB_display::init(void)
         }
     }
 
-    setLayout(grid);
+    //---
+    sb_max_x = new QSpinBox(this);
+    sb_max_y = new QSpinBox(this);
+    dsb_led_width = new QDoubleSpinBox(this);
+    dsb_led_height = new QDoubleSpinBox(this);
+    dsb_up_border = new QDoubleSpinBox(this);
+    dsb_left_border = new QDoubleSpinBox(this);
+
+    sb_max_x->setObjectName("sb_max_x");
+    sb_max_y->setObjectName("sb_max_y");
+    dsb_led_width->setObjectName("dsb_led_width");
+    dsb_led_height->setObjectName("dsb_led_height");
+    dsb_up_border->setObjectName("dsb_up_border");
+    dsb_left_border->setObjectName("dsb_left_border");
+
+    sb_max_x->setRange(1, 64);
+    sb_max_y->setRange(1, 32);
+    dsb_led_width->setRange(1.0, 10.0);
+    dsb_led_height->setRange(1.0, 10.0);
+    dsb_up_border->setRange(0.1, 10.0);
+    dsb_left_border->setRange(0.1, 10.8);
+
+    sb_max_x->setValue(max_x);
+    sb_max_y->setValue(max_y);
+    dsb_led_width->setValue(w_led);
+    dsb_led_height->setValue(h_led);
+    dsb_up_border->setValue(up_border);
+    dsb_left_border->setValue(left_border);
+
+    QGridLayout *grid_buttons = new QGridLayout;
+    grid_buttons->addWidget(new QLabel("max_x"),        0, 0);    grid_buttons->addWidget(sb_max_x,           0, 1);
+    grid_buttons->addWidget(new QLabel("max_y"),        1, 0);    grid_buttons->addWidget(sb_max_y,           1, 1);
+    grid_buttons->addWidget(new QLabel("led_width"),    2, 0);    grid_buttons->addWidget(dsb_led_width,      2, 1);
+    grid_buttons->addWidget(new QLabel("led_height"),   3, 0);    grid_buttons->addWidget(dsb_led_height,     3, 1);
+    grid_buttons->addWidget(new QLabel("up_border"),    4, 0);    grid_buttons->addWidget(dsb_up_border,      4, 1);
+    grid_buttons->addWidget(new QLabel("left_border"),  5, 0);    grid_buttons->addWidget(dsb_left_border,    5, 1);
+
+    QPushButton *btn = new QPushButton(this);
+    btn->setText("redraw");
+    connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(redraw_display()));
+
+    grid_buttons->addWidget(btn,    6,  0,  1, 2);
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addLayout(grid_buttons);
+    vbox->addStretch(1);
+    //---
+
+    QHBoxLayout *box = new QHBoxLayout;
+    box->addLayout(vbox);
+    box->addLayout(grid);
+
+    setLayout(box);
+}
+//--------------------------------------------------------------------------------
+void RGB_display::redraw_display(void)
+{
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)
 {
     bool ok = picture.load(":/mainwindow/computer.png");
+    if(!ok)
+    {
+        emit error("can't load picture");
+        return false;
+    }
+    max_x = picture.width();
+    max_y = picture.height();
+
+    for(int y=0; y<SCREEN_HEIGTH; y++)
+    {
+        for(int x=0; x<SCREEN_WIDTH; x++)
+        {
+            QRgb color = picture.pixel(x, y);
+            foreach(RGB_dislpay_led *led, l_buttons)
+            {
+                int p_x = led->property("property_col").toInt();
+                int p_y = led->property("property_row").toInt();
+                if((p_x == x) && (p_y == y))
+                {
+                    led->set_R(qRed(color));
+                    led->set_G(qGreen(color));
+                    led->set_B(qBlue(color));
+                    led->repaint();
+                    break;
+                }
+            }
+        }
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool RGB_display::load_pic(void)
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.bmp)"));
+    if(fileName.isEmpty())
+    {
+        emit info("Файл не выбран");
+        return false;
+    }
+
+    bool ok = picture.load(fileName);
     if(!ok)
     {
         emit error("can't load picture");

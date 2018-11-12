@@ -42,11 +42,11 @@
 
 #define LED_BORDER_SIZE 0.5
 
-#define LED_SIZE_W_MM     3.5
-#define LED_SIZE_H_MM     3.5
+#define LED_SIZE_W_MM     3.0
+#define LED_SIZE_H_MM     5.0
 
-#define LED_BORDER_W_MM   2.0
-#define LED_BORDER_H_MM   4.0
+#define LED_BORDER_W_MM   1.0
+#define LED_BORDER_H_MM   1.5
 //--------------------------------------------------------------------------------
 #define CMD_01          0x01
 //--------------------------------------------------------------------------------

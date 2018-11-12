@@ -145,8 +145,6 @@ void RGB_display::redraw_display(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    int max_x = sb_max_x->value();
-    int max_y = sb_max_y->value();
     double led_width = dsb_led_width->value();
     double led_height = dsb_led_height->value();
     double up_border = dsb_up_border->value();
@@ -219,12 +217,12 @@ bool RGB_display::load_ico(void)
         emit error("can't load picture");
         return false;
     }
-    max_x = picture.width();
-    max_y = picture.height();
+    max_x = sb_max_x->value();
+    max_y = sb_max_y->value();
 
-    for(int y=0; y<SCREEN_HEIGTH; y++)
+    for(int y=0; y<sb_max_y->value(); y++)
     {
-        for(int x=0; x<SCREEN_WIDTH; x++)
+        for(int x=0; x<sb_max_x->value(); x++)
         {
             QRgb color = picture.pixel(x, y);
             foreach(RGB_dislpay_led *led, l_buttons)
@@ -264,9 +262,9 @@ bool RGB_display::load_pic(void)
     max_x = picture.width();
     max_y = picture.height();
 
-    for(int y=0; y<SCREEN_HEIGTH; y++)
+    for(int y=0; y<sb_max_y->value(); y++)
     {
-        for(int x=0; x<SCREEN_WIDTH; x++)
+        for(int x=0; x<sb_max_x->value(); x++)
         {
             QRgb color = picture.pixel(x, y);
             foreach(RGB_dislpay_led *led, l_buttons)
@@ -289,15 +287,22 @@ bool RGB_display::load_pic(void)
 //--------------------------------------------------------------------------------
 void RGB_display::show_picture(int begin_x, int begin_y)
 {
+    emit trace(QString("begin_x %1").arg(begin_x));
+    emit trace(QString("begin_y %1").arg(begin_y));
+    emit trace(QString("max_x %1").arg(get_max_x()));
+    emit trace(QString("max_y %1").arg(get_max_y()));
+    emit trace(QString("picture_w %1").arg(get_picture_w()));
+    emit trace(QString("picture_h %1").arg(get_picture_h()));
+
     if(picture.isNull())
     {
         emit error("picture not loaded!");
         return;
     }
 
-    for(int y=0; y<SCREEN_HEIGTH; y++)
+    for(int y=0; y<sb_max_y->value(); y++)
     {
-        for(int x=0; x<SCREEN_WIDTH; x++)
+        for(int x=0; x<sb_max_x->value(); x++)
         {
             QRgb color = picture.pixel(begin_x + x, begin_y + y);
             foreach(RGB_dislpay_led *led, l_buttons)
@@ -378,6 +383,16 @@ int RGB_display::get_max_x(void)
 int RGB_display::get_max_y(void)
 {
     return max_y;
+}
+//--------------------------------------------------------------------------------
+int RGB_display::get_picture_w(void)
+{
+    return picture.width();
+}
+//--------------------------------------------------------------------------------
+int RGB_display::get_picture_h(void)
+{
+    return picture.height();
 }
 //--------------------------------------------------------------------------------
 void RGB_display::updateText(void)

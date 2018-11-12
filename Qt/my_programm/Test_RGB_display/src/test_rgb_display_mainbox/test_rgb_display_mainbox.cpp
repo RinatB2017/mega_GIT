@@ -207,11 +207,11 @@ void MainBox::move_ur(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if((begin_x < ui->rgb_display->get_max_x())  && ((begin_x + SCREEN_WIDTH) < ui->rgb_display->get_max_x()))
+    if((begin_x < ui->rgb_display->get_max_x())  && ((begin_x + ui->rgb_display->get_max_x()) < ui->rgb_display->get_picture_w()))
     {
         begin_x++;
     }
-    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + ui->rgb_display->get_max_y()) < ui->rgb_display->get_picture_h()))
     {
         begin_y++;
     }
@@ -233,7 +233,7 @@ void MainBox::move_r(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if((begin_x < ui->rgb_display->get_max_x()) && ((begin_x + SCREEN_WIDTH) < ui->rgb_display->get_max_x()))
+    if((begin_x < ui->rgb_display->get_max_x()) && ((begin_x + ui->rgb_display->get_max_x()) < ui->rgb_display->get_picture_w()))
     {
         begin_x++;
     }
@@ -248,7 +248,7 @@ void MainBox::move_dl(void)
     {
         begin_x--;
     }
-    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + ui->rgb_display->get_max_y()) < ui->rgb_display->get_picture_h()))
     {
         begin_y++;
     }
@@ -259,7 +259,7 @@ void MainBox::move_d(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + ui->rgb_display->get_max_y()) < ui->rgb_display->get_picture_h()))
     {
         begin_y++;
     }
@@ -270,11 +270,11 @@ void MainBox:: move_dr(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if((begin_x < ui->rgb_display->get_max_x())  && ((begin_x + SCREEN_WIDTH) < ui->rgb_display->get_max_x()))
+    if((begin_x < ui->rgb_display->get_max_x())  && ((begin_x + ui->rgb_display->get_max_x()) < ui->rgb_display->get_picture_w()))
     {
         begin_x++;
     }
-    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + SCREEN_HEIGTH) < ui->rgb_display->get_max_y()))
+    if((begin_y < ui->rgb_display->get_max_y())  && ((begin_y + ui->rgb_display->get_max_y()) < ui->rgb_display->get_picture_h()))
     {
         begin_y++;
     }

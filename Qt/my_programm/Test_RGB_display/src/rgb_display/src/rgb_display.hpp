@@ -44,6 +44,9 @@ public:
     int get_max_x(void);
     int get_max_y(void);
 
+    int get_picture_w(void);
+    int get_picture_h(void);
+
     void load_leds(void);
     void save_leds(void);
 

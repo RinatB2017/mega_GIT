@@ -25,6 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include <QWebEngineProfile>
+#include <QWebEngineSettings>
 #include <QWebEngineView>
 //--------------------------------------------------------------------------------
 #include "ui_test_qwebengineview_mainbox.h"
@@ -65,7 +66,7 @@ void MainBox::init(void)
     //profile->setHttpUserAgent("Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");
     //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
     //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; U; en) Presto/2.9.168 Version/11.50");
-    profile->setHttpUserAgent("iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
+    //profile->setHttpUserAgent("iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
 
     new_page = new CustomPage(profile);
     //new_page = new CustomPage();
@@ -90,9 +91,12 @@ void MainBox::init(void)
     //ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
-    ui->le_address->setText("https://www.avito.ru/krasnodar");
+    //ui->le_address->setText("https://www.avito.ru/krasnodar");
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
     //ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
+    ui->le_address->setText("http://fgramota.org/game/");
+
+    QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 
     //---
     QSplitter *splitter = new QSplitter(Qt::Horizontal);

@@ -220,7 +220,7 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     struct temp
     {
         QWidget *w0;
@@ -252,7 +252,7 @@ bool MainBox::test_0(void)
     sb->setValue(6);
 #endif
 
-#if 0
+#if 1
     QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice();
     if(!localDevice)
     {

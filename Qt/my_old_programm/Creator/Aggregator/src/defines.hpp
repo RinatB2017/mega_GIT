@@ -10,7 +10,7 @@ enum errors{
 };
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
-#define APPNAME "Template"
+#define APPNAME "Aggregator"
 
 #define WEBSETTINGS_XML "websettings.xml"
 #define MAX_TIMEOUT 30000

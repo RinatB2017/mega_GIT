@@ -27,6 +27,7 @@
 #include <QWebEngineProfile>
 #include <QWebEngineSettings>
 #include <QWebEngineView>
+#include <QNetworkProxy>
 //--------------------------------------------------------------------------------
 #include "ui_test_qwebengineview_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -109,6 +110,13 @@ void MainBox::init(void)
     splitter->addWidget(ui->groupBox_js);
     layout()->addWidget(splitter);
     //---
+    
+    //---
+    ui->sb_proxy_port->setRange(0, 0xFFFF);
+
+    ui->le_proxy_ip->setText("103.217.156.31");
+    ui->sb_proxy_port->setValue(8080);
+    //---
 
     ui->progressBar->setValue(0);
 
@@ -163,6 +171,25 @@ void MainBox::s_run(void)
     {
         emit error("address is empty!");
         return;
+    }
+
+    if(ui->cb_use_proxy->isChecked())
+    {
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::HttpProxy);
+#if 1
+        proxy.setHostName(ui->le_address->text());
+        proxy.setPort(ui->sb_proxy_port->value());
+#else
+        proxy.setHostName("103.217.156.31");
+        proxy.setPort(8080);
+#endif
+        //webviews[index].webview->page()->networkAccessManager()->setProxy(proxy);
+        QNetworkProxy::setApplicationProxy(proxy);
+    }
+    else
+    {
+        QNetworkProxy::setApplicationProxy(QNetworkProxy());
     }
 
     ui->webEngineView->setUrl(QUrl(address));

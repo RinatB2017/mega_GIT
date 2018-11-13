@@ -55,13 +55,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    is_loaded(false),
-    webview(0),
-    global_stop_flag(false),
-    main_frame(0),
-    proxy_list(0),
-    current_index(-1)
+    ui(new Ui::MainBox)
 {
     init();
 }

@@ -80,7 +80,7 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
-    CustomPage *new_page = 0;\
+    CustomPage *new_page = 0;
 
     void init(void);
     void createTestBar(void);

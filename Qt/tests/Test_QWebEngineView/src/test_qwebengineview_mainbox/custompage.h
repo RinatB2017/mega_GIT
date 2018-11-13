@@ -11,8 +11,8 @@ signals:
     void err_output(const QString &);
 
 public:
-    CustomPage(QObject* parent = 0) :
-        QWebEnginePage(parent)
+    CustomPage(QWebEngineProfile *profile, QObject* parent = 0) :
+        QWebEnginePage(profile, parent)
     {
 
     }

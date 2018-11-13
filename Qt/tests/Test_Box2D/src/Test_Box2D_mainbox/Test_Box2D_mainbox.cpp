@@ -56,7 +56,7 @@ void MainBox::init(void)
     createTestBar();
 
     connect(world, SIGNAL(cnt_objects(int)), lcd, SLOT(display(int)));
-    connect(cb_block_insert_object, SIGNAL(clicked(bool)), world, SLOT(block_insert_objects(bool)));
+    //connect(cb_block_insert_object, SIGNAL(clicked(bool)), world, SLOT(block_insert_objects(bool)));
 
     world->setFixedSize(WIDTH, HEIGHT);
     world->show();
@@ -81,6 +81,8 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
+
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     commands.clear();

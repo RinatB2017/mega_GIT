@@ -220,23 +220,23 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 0
+#if 1
     struct temp
     {
         QWidget *w0;
         QWidget *w1;
     };
 
-    QList<temp> xxx;
+    QList<temp> l_temp;
 
     for(int n=0; n<10; n++)
     {
-        xxx.append({ new QLabel(QString("a%1").arg(n)), new QSpinBox() });
+        l_temp.append({ new QLabel(QString("a%1").arg(n)), new QSpinBox() });
     }
 
     QGridLayout *grid = new QGridLayout;
     int row = 0;
-    foreach (temp x, xxx) {
+    foreach (temp x, l_temp) {
         grid->addWidget(x.w0, row, 0);
         grid->addWidget(x.w1, row, 1);
         row++;
@@ -252,7 +252,7 @@ bool MainBox::test_0(void)
     sb->setValue(6);
 #endif
 
-#if 1
+#if 0
     QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice();
     if(!localDevice)
     {

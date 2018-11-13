@@ -38,7 +38,7 @@ MiniMap::~MiniMap()
 //--------------------------------------------------------------------------------
 void MiniMap::init(void)
 {
-    grid_map = new QGridLayout(this);
+    grid_map = new QGridLayout();
     grid_map->setSpacing(0);
     grid_map->setMargin(0);
     setLayout(grid_map);

@@ -21,20 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QDialogButtonBox>
-#   include <QDockWidget>
-#   include <QMessageBox>
-#   include <QFileDialog>
-#   include <QGridLayout>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QComboBox>
-#   include <QPainter>
-#   include <QSpinBox>
-#   include <QToolBar>
-#   include <QDialog>
-#   include <QLabel>
-#   include <QDebug>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_labyrinth_mainbox.h"

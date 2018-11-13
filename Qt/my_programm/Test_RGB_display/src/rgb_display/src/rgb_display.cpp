@@ -146,25 +146,11 @@ void RGB_display::init(void)
     setLayout(box);
 }
 //--------------------------------------------------------------------------------
-void RGB_display::redraw_display(void)
+void RGB_display::clean_grid(void)
 {
-    emit trace(Q_FUNC_INFO);
-
-    double led_width = dsb_led_width->value();
-    double led_height = dsb_led_height->value();
-    double up_border = dsb_up_border->value();
-    double left_border = dsb_left_border->value();
-
-    emit info(QString("row %1").arg(grid->rowCount()));
-    emit info(QString("col %1").arg(grid->columnCount()));
-
-    emit info(QString("count %1").arg(grid->count()));
-
-    max_x = grid->columnCount();
-    max_y = grid->rowCount();
-    for(int y=0; y<max_y; y++)
+    for(int y=0; y<grid->rowCount(); y++)
     {
-        for(int x=0; x<max_x; x++)
+        for(int x=0; x<grid->columnCount(); x++)
         {
             QLayoutItem *item = grid->itemAtPosition(y, x);
             if(item)
@@ -179,9 +165,14 @@ void RGB_display::redraw_display(void)
         }
     }
     l_buttons.clear();
-
-    max_x = sb_max_x->value();
-    max_y = sb_max_y->value();
+}
+//--------------------------------------------------------------------------------
+void RGB_display::create_new_display(void)
+{
+    double led_width = dsb_led_width->value();
+    double led_height = dsb_led_height->value();
+    double up_border = dsb_up_border->value();
+    double left_border = dsb_left_border->value();
 
     double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
     led_width *= pixelPerMm;
@@ -212,6 +203,23 @@ void RGB_display::redraw_display(void)
             l_buttons.append(led);
         }
     }
+}
+//--------------------------------------------------------------------------------
+void RGB_display::redraw_display(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    emit info(QString("row %1").arg(grid->rowCount()));
+    emit info(QString("col %1").arg(grid->columnCount()));
+
+    emit info(QString("count %1").arg(grid->count()));
+
+    clean_grid();
+
+    max_x = sb_max_x->value();
+    max_y = sb_max_y->value();
+
+    create_new_display();
 
     adjustSize();
     //setFixedSize(width(), height());
@@ -295,12 +303,14 @@ bool RGB_display::load_pic(void)
 //--------------------------------------------------------------------------------
 void RGB_display::show_picture(int begin_x, int begin_y)
 {
-    emit trace(QString("begin_x %1").arg(begin_x));
-    emit trace(QString("begin_y %1").arg(begin_y));
-    emit trace(QString("max_x %1").arg(get_max_x()));
-    emit trace(QString("max_y %1").arg(get_max_y()));
-    emit trace(QString("picture_w %1").arg(get_picture_w()));
-    emit trace(QString("picture_h %1").arg(get_picture_h()));
+#ifdef QT_DEBUG
+    emit debug(QString("begin_x %1").arg(begin_x));
+    emit debug(QString("begin_y %1").arg(begin_y));
+    emit debug(QString("max_x %1").arg(get_max_x()));
+    emit debug(QString("max_y %1").arg(get_max_y()));
+    emit debug(QString("picture_w %1").arg(get_picture_w()));
+    emit debug(QString("picture_h %1").arg(get_picture_h()));
+#endif
 
     if(picture.isNull())
     {

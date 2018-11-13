@@ -353,9 +353,9 @@ bool Display::resize_led(unsigned int w, unsigned int h)
     if(w > MAX_LED_SIZE_W)  return false;
     if(h > MAX_LED_SIZE_H)  return false;
 
-    for(int y=0; y<MAX_DISPLAY_Y; y++)
+    for(unsigned int y=0; y<max_y; y++)
     {
-        for(int x=0; x<MAX_DISPLAY_X; x++)
+        for(unsigned int x=0; x<max_x; x++)
         {
             if(diod[x][y])
             {

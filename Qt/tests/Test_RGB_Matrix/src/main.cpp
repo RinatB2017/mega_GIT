@@ -36,15 +36,12 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#if 1
+
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
         if(app.sendMessage("Wake up!")) return 0;
     }
-#else
-    MyApplication app(argc, argv);
-#endif
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));

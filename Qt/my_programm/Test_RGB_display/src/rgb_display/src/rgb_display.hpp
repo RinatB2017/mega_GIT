@@ -75,6 +75,8 @@ private:
     QDoubleSpinBox *dsb_left_border;
 
     void init(void);
+    void clean_grid(void);
+    void create_new_display(void);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

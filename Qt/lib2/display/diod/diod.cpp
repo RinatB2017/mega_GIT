@@ -32,10 +32,10 @@ Diod::Diod(int led_width,
            QWidget *parent) :
     QToolButton(parent)
 {
-    if(led_width < 0)   led_width = MAX_LED_SIZE_W;
-    if(led_width > MAX_LED_SIZE_W)   led_width = MAX_LED_SIZE_W;
-    if(led_height < 0)   led_height = MAX_LED_SIZE_H;
-    if(led_height > MAX_LED_SIZE_H)   led_height = MAX_LED_SIZE_H;
+    if(led_width < 0)               led_width = MAX_LED_SIZE_W;
+    if(led_width > MAX_LED_SIZE_W)  led_width = MAX_LED_SIZE_W;
+    if(led_height < 0)              led_height = MAX_LED_SIZE_H;
+    if(led_height > MAX_LED_SIZE_H) led_height = MAX_LED_SIZE_H;
 
     setFixedSize(led_width,
                  led_height);

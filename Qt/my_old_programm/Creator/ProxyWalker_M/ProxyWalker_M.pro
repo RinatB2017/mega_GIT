@@ -29,6 +29,8 @@ QT += testlib network webkit
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
+DEFINES += SAVE_WIDGETS_SPLITTER
+
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
@@ -46,7 +48,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)

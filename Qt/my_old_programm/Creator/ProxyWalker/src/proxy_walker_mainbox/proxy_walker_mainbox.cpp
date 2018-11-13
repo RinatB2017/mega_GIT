@@ -68,6 +68,8 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("ProxyWalker");
+
     save_setting();
     delete ui;
 }
@@ -80,7 +82,6 @@ void MainBox::init(void)
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
 
-
     webview = new WebView(this);
     connect(webview, SIGNAL(titleChanged(QString)), this, SLOT(setWindowTitle(QString)));
     connect(webview, SIGNAL(loadStarted()), this, SLOT(web_started()));
@@ -92,12 +93,23 @@ void MainBox::init(void)
 
     proxy_list = new QListWidget(this);
 
+#if 1
+    QSplitter *splitter = new QSplitter(Qt::Horizontal);
+    splitter->setObjectName("splitter");
+    splitter->addWidget(proxy_list);
+    splitter->addWidget(webview);
+
+    ui->hbox->addWidget(splitter);
+#else
     ui->hbox->addWidget(proxy_list, 1);
     ui->hbox->addWidget(webview, 7);
+#endif
 
     load_setting();
     if(current_index > 0)
         proxy_list->setCurrentRow(current_index);
+
+    load_widgets("ProxyWalker");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

@@ -30,6 +30,8 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
+DEFINES += SAVE_WIDGETS_SPLITTER
+
 HEADERS += \
     defines.hpp \
     version.hpp \
@@ -47,7 +49,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)

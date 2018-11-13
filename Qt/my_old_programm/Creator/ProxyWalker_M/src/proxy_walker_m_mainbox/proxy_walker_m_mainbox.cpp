@@ -64,6 +64,8 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("ProxyWalker_M");
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -104,14 +106,25 @@ void MainBox::init(void)
     }
     proxy_list = new QListWidget(this);
 
+#if 1
+    QSplitter *splitter = new QSplitter(Qt::Horizontal);
+    splitter->setObjectName("splitter");
+    splitter->addWidget(proxy_list);
+    splitter->addWidget(tw);
+
+    ui->hbox->addWidget(splitter);
+#else
     ui->hbox->addWidget(proxy_list, 1);
     ui->hbox->addWidget(tw, 7);
+#endif
 
     load_setting();
     if(current_index > 0)
     {
         proxy_list->setCurrentRow(current_index);
     }
+
+    load_widgets("ProxyWalker_M");
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_menu(void)

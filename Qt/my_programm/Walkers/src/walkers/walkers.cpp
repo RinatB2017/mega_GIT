@@ -95,11 +95,11 @@ void MainBox::init(void)
     box->addWidget(tab);
     setLayout(box);
 
-#if 0
+#if 1
     QGridLayout *grid = new QGridLayout;
     int x = 0;
     int y = 0;
-    for(int n=0; n<20; n++)
+    for(int n=0; n<10; n++)
     {
         Youtube_walker *webView = new Youtube_walker(this);
         connect(webView,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
@@ -108,7 +108,7 @@ void MainBox::init(void)
         connect(webView,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
         webView->setUrl(QUrl("https://www.youtube.com/"));
-        l_views.append(webView);
+        //l_views.append(webView);
 
         grid->addWidget(webView, y, x);
         if(x < 4)
@@ -122,10 +122,10 @@ void MainBox::init(void)
         }
     }
 
-    QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->addLayout(grid);
+    QWidget *w_test = new QWidget(this);
+    w_test->setLayout(grid);
 
-    setLayout(hbox);
+    tab->addTab(w_test, "Test");
 #endif
 
     load_widgets("Walkers");

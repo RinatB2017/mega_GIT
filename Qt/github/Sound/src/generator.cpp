@@ -51,8 +51,8 @@ Generator::Generator(const QAudioFormat &format,
                      int left_value,
                      int right_value,
                      QObject *parent)
-    :   QIODevice(parent)
-    ,   m_pos(0)
+    : QIODevice(parent)
+    , m_pos(0)
 {
     if (format.isValid())
     {

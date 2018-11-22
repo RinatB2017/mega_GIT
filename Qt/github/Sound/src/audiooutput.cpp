@@ -57,13 +57,13 @@ const int BufferSize        = 32768;
 #define APPNAME "audiooutput"
 //---------------------------------------------------------------------------
 AudioTest::AudioTest()
-    :   m_pushTimer(new QTimer(this))
-    ,   m_deviceBox(0)
-    ,   m_device(QAudioDeviceInfo::defaultOutputDevice())
-    ,   m_generator(0)
-    ,   m_audioOutput(0)
-    ,   m_output(0)
-    ,   m_buffer(BufferSize, 0)
+    : m_pushTimer(new QTimer(this))
+    , m_deviceBox(0)
+    , m_device(QAudioDeviceInfo::defaultOutputDevice())
+    , m_generator(0)
+    , m_audioOutput(0)
+    , m_output(0)
+    , m_buffer(BufferSize, 0)
 {
     initializeWindow();
     initializeAudio();

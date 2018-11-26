@@ -1,0 +1,45 @@
+CMD command;
+command.cmd = ID_TEST_0; command.cmd_text = "test 0";   command.func = &MainBox::test_0;  commands.append(command);
+command.cmd = ID_TEST_1; command.cmd_text = "test 1";   command.func = &MainBox::test_1;  commands.append(command);
+command.cmd = ID_TEST_2; command.cmd_text = "test 2";   command.func = &MainBox::test_2;  commands.append(command);
+command.cmd = ID_TEST_3; command.cmd_text = "test 3";   command.func = &MainBox::test_3;  commands.append(command);
+command.cmd = ID_TEST_4; command.cmd_text = "test 4";   command.func = &MainBox::test_4;  commands.append(command);
+command.cmd = ID_TEST_5; command.cmd_text = "test 5";   command.func = &MainBox::test_5;  commands.append(command);
+command.cmd = ID_TEST_6; command.cmd_text = "test 6";   command.func = 0;    commands.append(command);
+//---
+
+#include <windows.h>
+
+#define VER_FILEVERSION             1,0,0,0
+#define VER_FILEVERSION_STR         "1.0.0.0\0"
+#define VER_PRODUCTVERSION          1,0,0
+#define VER_PRODUCTVERSION_STR      "1.0.0\0"
+#define VER_FILEDESCRIPTION_STR     "HelloWorld"
+#define VER_INTERNALNAME_STR        "Sensor"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright (C) 2015, MyCompany"
+#define VER_ORIGINALFILENAME_STR    "HelloWorld.exe"
+#define VER_PRODUCTNAME_STR         "Hello World"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "FileDescription",    VER_FILEDESCRIPTION_STR
+            VALUE "FileVersion",        VER_FILEVERSION_STR
+            VALUE "InternalName",       VER_INTERNALNAME_STR
+            VALUE "LegalCopyright",     VER_LEGALCOPYRIGHT_STR
+            VALUE "OriginalFilename",   VER_ORIGINALFILENAME_STR
+            VALUE "ProductName",        VER_PRODUCTNAME_STR
+            VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

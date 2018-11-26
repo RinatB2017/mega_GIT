@@ -24,12 +24,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_get_sensors_data.h"
+#include "ui_get_acceleration_data.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "get_sensors_data.hpp"
+#include "get_acceleration_data.hpp"
 #include "defines.hpp"
 
 #include "serialbox5_fix_baudrate.hpp"

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,78 +18,46 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QApplication>
+#include <QObject>
+#include <QWidget>
+#include <QList>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#if QT_VERSION >= 0x050000
-#   include <QtMessageHandler>
-#endif
+#define private public
 //--------------------------------------------------------------------------------
-#include "qtsingleapplication.h"
-#include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "get_sensors_data.hpp"
-#include "defines.hpp"
-#include "version.hpp"
+#include "test.hpp"
 //--------------------------------------------------------------------------------
-#include "codecs.h"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+Test::Test()
 {
-    set_codecs();
-#if 1
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
-        if(app.sendMessage("Wake up!")) return 0;
-    }
-#else
-    QApplication app(argc, argv);
-#endif
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
+}
+//--------------------------------------------------------------------------------
+void Test::test_GUI(void)
+{
+    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
+    QVERIFY(cb);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
+    QVERIFY(tb);
+    QTest::mouseClick(tb, Qt::LeftButton);
+}
+//--------------------------------------------------------------------------------
+void Test::test_func(void)
+{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 
-    QPixmap pixmap(":/logo/logo.png");
-
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    Q_CHECK_PTR(splash);
-    splash->show();
-
-    qApp->processEvents();
-
-    MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
-
-    //MainBox *mainBox = new MainBox(0, splash);
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-
-    main_window->setCentralWidget(mainBox);
-    main_window->show();
-
-    splash->finish(main_window);
-
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-
-#ifdef QT_DEBUG
-    int test_result = QTest::qExec(new Test(), argc, argv);
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
-
-    return app.exec();
+    QCOMPARE(mb->test_0(), true);
+    QCOMPARE(mb->test_1(), true);
+    QCOMPARE(mb->test_2(), true);
+    QCOMPARE(mb->test_3(), true);
+    QCOMPARE(mb->test_4(), true);
+    QCOMPARE(mb->test_5(), true);
 }
 //--------------------------------------------------------------------------------

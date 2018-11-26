@@ -3,13 +3,13 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Get_sensors_data
+TARGET   = Get_acceleration_data
 
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/get_sensors_data \
-    $$PWD/src/get_sensors_data/ui
+    $$PWD/src/get_acceleration_data \
+    $$PWD/src/get_acceleration_data/ui
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -24,15 +24,15 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    get_sensors_data.hpp \
+    get_acceleration_data.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    get_sensors_data.cpp \
+    get_acceleration_data.cpp \
     main.cpp
 
-FORMS   += get_sensors_data.ui
+FORMS   += get_acceleration_data.ui
 
 win32 {
     RC_ICONS += ico/computer.ico

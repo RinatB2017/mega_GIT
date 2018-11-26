@@ -35,7 +35,7 @@ class QToolBar;
 class QComboBox;
 class QCheckBox;
 
-class SerialBox5;
+class SerialBox5_fix_baudrate;
 class GrapherBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -84,7 +84,7 @@ private:
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
-    SerialBox5 *serial_widget = 0;
+    SerialBox5_fix_baudrate *serial_widget = 0;
     GrapherBox *grapher_widget = 0;
 
     int curves[21] = { 0 };

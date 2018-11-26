@@ -32,7 +32,7 @@
 #include "get_sensors_data.hpp"
 #include "defines.hpp"
 
-#include "serialbox5.hpp"
+#include "serialbox5_fix_baudrate.hpp"
 #include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -62,18 +62,33 @@ void MainBox::init(void)
     init_serial();
     init_grapher();
 
+    //QVBoxLayout *vbox = new QVBoxLayout;
+    //vbox->addWidget(serial_widget);
+    //vbox->addStretch(1);
+
     QHBoxLayout *box = new QHBoxLayout;
-    box->addWidget(serial_widget);
+    //box->addLayout(vbox);
     box->addWidget(grapher_widget);
     setLayout(box);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)
 {
-    serial_widget = new SerialBox5(this, "RS232", "RS232");
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+
+    serial_widget = new SerialBox5_fix_baudrate(this, "RS232", "RS232");
+    serial_widget->set_fix_baudrate(115200);
     serial_widget->add_menu(2);
     connect(this,           SIGNAL(send(QByteArray)),   serial_widget,  SLOT(input(QByteArray)));
     connect(serial_widget,  SIGNAL(output(QByteArray)), this,           SLOT(read_data(QByteArray)));
+
+    //mw->add_dock_widget("serial", "serial_widget", Qt::TopDockWidgetArea, serial_widget);
+
+    QToolBar *serial_bar = new QToolBar("serial_bar");
+    serial_bar->setObjectName("serial_bar");
+    mw->addToolBar(Qt::TopToolBarArea, serial_bar);
+    serial_bar->addWidget(serial_widget);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_grapher(void)

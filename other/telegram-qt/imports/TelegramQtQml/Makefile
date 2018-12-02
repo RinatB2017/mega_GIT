@@ -35,10 +35,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = TelegramQt5Qml0.2.0
-DISTDIR = /tmp/0/telegram-qt/imports/TelegramQtQml/.tmp/TelegramQt5Qml0.2.0
+DISTDIR = /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/imports/TelegramQtQml/.tmp/TelegramQt5Qml0.2.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -shared -Wl,-soname,libTelegramQt5Qml.so.0
-LIBS          = $(SUBLIBS) -lssl -lcrypto -lz -L/tmp/0/telegram-qt/imports/TelegramQtQml/../../TelegramQt -lTelegramQt5 -lQt5Qml -lQt5Network -lQt5Core -lpthread 
+LIBS          = $(SUBLIBS) -lssl -lcrypto -lz -L/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/imports/TelegramQtQml/../../TelegramQt -lTelegramQt5 -lQt5Qml -lQt5Network -lQt5Core -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -1083,7 +1083,7 @@ plugin.moc: ../../TelegramQt/CTelegramCore.hpp \
 		plugin.cpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/imports/TelegramQtQml/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/imports/TelegramQtQml -I/usr/include/qt5 -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include plugin.cpp -o plugin.moc
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/imports/TelegramQtQml/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/imports/TelegramQtQml -I/usr/include/qt5 -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include plugin.cpp -o plugin.moc
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1122,8 +1122,8 @@ uninstall_target: FORCE
 
 install_qmlIndexFiles: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/lib64/qt5/qml/TelegramQt || mkdir -p $(INSTALL_ROOT)/usr/lib64/qt5/qml/TelegramQt
-	-$(QINSTALL) /tmp/0/telegram-qt/imports/TelegramQtQml/qmldir $(INSTALL_ROOT)/usr/lib64/qt5/qml/TelegramQt/qmldir
-	-$(QINSTALL) /tmp/0/telegram-qt/imports/TelegramQtQml/plugins.qmltypes $(INSTALL_ROOT)/usr/lib64/qt5/qml/TelegramQt/plugins.qmltypes
+	-$(QINSTALL) /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/imports/TelegramQtQml/qmldir $(INSTALL_ROOT)/usr/lib64/qt5/qml/TelegramQt/qmldir
+	-$(QINSTALL) /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/imports/TelegramQtQml/plugins.qmltypes $(INSTALL_ROOT)/usr/lib64/qt5/qml/TelegramQt/plugins.qmltypes
 
 uninstall_qmlIndexFiles: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/lib64/qt5/qml/TelegramQt/plugins.qmltypes

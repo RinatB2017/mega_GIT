@@ -35,10 +35,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = testApp1.0.0
-DISTDIR = /tmp/0/telegram-qt/clients/widgets/.tmp/testApp1.0.0
+DISTDIR = /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/.tmp/testApp1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) -lssl -lcrypto -lz -L/tmp/0/telegram-qt/clients/widgets/../../TelegramQt -lTelegramQt5 -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lssl -lcrypto -lz -L/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/../../TelegramQt -lTelegramQt5 -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -1121,7 +1121,7 @@ moc_MainWindow.cpp: ../../TelegramQt/TelegramNamespace.hpp \
 		MainWindow.hpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/clients/widgets -I/tmp/0/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include MainWindow.hpp -o moc_MainWindow.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include MainWindow.hpp -o moc_MainWindow.cpp
 
 moc_CFileManager.cpp: ../../TelegramQt/TelegramQt/TelegramNamespace \
 		../../TelegramQt/TelegramNamespace.hpp \
@@ -1129,14 +1129,14 @@ moc_CFileManager.cpp: ../../TelegramQt/TelegramQt/TelegramNamespace \
 		CFileManager.hpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/clients/widgets -I/tmp/0/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CFileManager.hpp -o moc_CFileManager.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CFileManager.hpp -o moc_CFileManager.cpp
 
 moc_CPeerModel.cpp: ../../TelegramQt/TelegramNamespace.hpp \
 		../../TelegramQt/telegramqt_global.h \
 		CPeerModel.hpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/clients/widgets -I/tmp/0/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CPeerModel.hpp -o moc_CPeerModel.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CPeerModel.hpp -o moc_CPeerModel.cpp
 
 moc_CContactModel.cpp: CPeerModel.hpp \
 		../../TelegramQt/TelegramNamespace.hpp \
@@ -1144,7 +1144,7 @@ moc_CContactModel.cpp: CPeerModel.hpp \
 		CContactModel.hpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/clients/widgets -I/tmp/0/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CContactModel.hpp -o moc_CContactModel.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CContactModel.hpp -o moc_CContactModel.cpp
 
 moc_CChatInfoModel.cpp: CPeerModel.hpp \
 		../../TelegramQt/TelegramNamespace.hpp \
@@ -1152,7 +1152,7 @@ moc_CChatInfoModel.cpp: CPeerModel.hpp \
 		CChatInfoModel.hpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/clients/widgets -I/tmp/0/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CChatInfoModel.hpp -o moc_CChatInfoModel.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CChatInfoModel.hpp -o moc_CChatInfoModel.cpp
 
 moc_CDialogModel.cpp: CPeerModel.hpp \
 		../../TelegramQt/TelegramNamespace.hpp \
@@ -1160,14 +1160,14 @@ moc_CDialogModel.cpp: CPeerModel.hpp \
 		CDialogModel.hpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/clients/widgets -I/tmp/0/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CDialogModel.hpp -o moc_CDialogModel.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CDialogModel.hpp -o moc_CDialogModel.cpp
 
 moc_CMessageModel.cpp: ../../TelegramQt/TelegramNamespace.hpp \
 		../../TelegramQt/telegramqt_global.h \
 		CMessageModel.hpp \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /tmp/0/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/tmp/0/telegram-qt/clients/widgets -I/tmp/0/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CMessageModel.hpp -o moc_CMessageModel.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/clients/widgets -I/home/boss/Programming/_GitHub/mega_GIT/other/telegram-qt/TelegramQt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include CMessageModel.hpp -o moc_CMessageModel.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

@@ -215,12 +215,28 @@ void MainBox::test_validator(void)
 #include <QBluetoothSocket>
 #include <QBluetoothLocalDevice>
 
+void MainBox::test(void)
+{
+    emit info(cb_test2->itemData(cb_test2->currentIndex()).toString());
+}
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    cb_test2 = new QComboBox;
+    for(int n=0; n<10; n++)
+    {
+        cb_test2->addItem(QString("a%1").arg(n), QString("x%1").arg(n));
+    }
+    connect(cb_test2,    SIGNAL(currentIndexChanged(int)),   this,   SLOT(test()));
+    cb_test2->show();
+
+#endif
+
+#if 0
     struct temp
     {
         QWidget *w0;

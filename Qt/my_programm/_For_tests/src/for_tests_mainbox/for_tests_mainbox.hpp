@@ -70,6 +70,7 @@ public slots:
 
     //TODO
     void clientConnected(void);
+    void test(void);
 
 private:
     enum {
@@ -96,6 +97,7 @@ private:
     QList<CMD> commands;
 
     QWidget *test_widget = 0;
+    QComboBox *cb_test2 = 0;
 
     //---
     void test_validator(void);

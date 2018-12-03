@@ -70,6 +70,9 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
+         <widget class="QComboBox" name="cb_user_agent"/>
+        </item>
+        <item>
          <widget class="QLineEdit" name="le_address"/>
         </item>
         <item>

@@ -24,6 +24,7 @@ DEFINES += SAVE_INI
 
 DEFINES += SAVE_WIDGETS_TEXTEDIT
 DEFINES += SAVE_WIDGETS_SPLITTER
+DEFINES += SAVE_WIDGETS_CHECKBOX
 
 HEADERS += \
     test_qwebengineview_mainbox.hpp \
@@ -43,9 +44,11 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
+LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
@@ -53,3 +56,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 }
 
 VPATH = $$INCLUDEPATH
+
+RESOURCES += \
+    proxy/proxies.qrc

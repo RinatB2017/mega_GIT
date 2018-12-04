@@ -52,6 +52,7 @@ MainBox::~MainBox()
         note->check_modified();
         note->deleteLater();
     }
+    save_widgets("teacher");
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -249,6 +250,9 @@ void MainBox::create_widgets(void)
 #else
     QSplitter *v_splitter = new QSplitter(Qt::Vertical);
     QSplitter *h_splitter = new QSplitter(Qt::Horizontal);
+    h_splitter->setObjectName("h_splitter");
+    v_splitter->setObjectName("v_splitter");
+
     v_splitter->setChildrenCollapsible(false);
     h_splitter->setChildrenCollapsible(false);
 
@@ -265,7 +269,6 @@ void MainBox::create_widgets(void)
     main_box->addWidget(notebook_frame);
 #endif
     setLayout(main_box);
-
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
@@ -274,6 +277,8 @@ void MainBox::init(void)
 
     createTestBar();
     create_widgets();
+
+    load_widgets("teacher");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

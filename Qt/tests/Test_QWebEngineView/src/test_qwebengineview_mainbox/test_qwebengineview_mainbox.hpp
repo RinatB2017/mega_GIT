@@ -85,6 +85,7 @@ private:
     void init(void);
     void createTestBar(void);
 
+    void load_proxies(void);
     void load_js_default(void);
 
     void updateText(void);

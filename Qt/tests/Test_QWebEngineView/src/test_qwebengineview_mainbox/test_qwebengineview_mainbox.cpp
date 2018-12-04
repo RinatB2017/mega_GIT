@@ -34,6 +34,8 @@
 #include "mainwindow.hpp"
 #include "test_qwebengineview_mainbox.hpp"
 #include "custompage.h"
+#include "qxmlputget.h"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -133,15 +135,57 @@ void MainBox::init(void)
     //---
     
     //---
-    ui->sb_proxy_port->setRange(0, 0xFFFF);
+    //ui->sb_proxy_port->setRange(0, 0xFFFF);
 
-    ui->le_proxy_ip->setText("103.217.156.31");
-    ui->sb_proxy_port->setValue(8080);
+    //ui->le_proxy_ip->setText("103.217.156.31:8080");
+    //ui->sb_proxy_port->setValue(8080);
+
+    load_proxies();
     //---
 
     ui->progressBar->setValue(0);
 
     load_widgets("Test_QWebEngineView");
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_proxies(void)
+{
+    bool ok = false;
+    QXmlGet xmlGet;
+    if(!QFile(PROXIES_XML).exists())
+    {
+        emit error(QString(tr("file %1 not exists")).arg(PROXIES_XML));
+        return;
+    }
+
+    QString error_message;
+    int error_line;
+    int error_column;
+    ok = xmlGet.load(PROXIES_XML, &error_message, &error_line, &error_column);
+    if(ok == false)
+    {
+        emit error(QString(tr("file %1 not load ERROR: %2 line %3 column %4"))
+                   .arg(PROXIES_XML)
+                   .arg(error_message)
+                   .arg(error_line)
+                   .arg(error_column));
+        return;
+    }
+
+    while(xmlGet.findNext("proxy"))
+    {
+        xmlGet.descend();
+        if (xmlGet.find("uri"))
+        {
+            QString uri = xmlGet.getString();
+            if(uri.isEmpty() == false)
+            {
+                ui->cb_proxy->addItem(uri);
+            }
+        }
+        xmlGet.rise();
+    }
+    emit info(QString(tr("load %1 proxy")).arg(ui->cb_proxy->count()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_js_default(void)
@@ -199,8 +243,21 @@ void MainBox::s_run(void)
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::HttpProxy);
 #if 1
-        proxy.setHostName(ui->le_address->text());
-        proxy.setPort(ui->sb_proxy_port->value());
+        QString host = ui->cb_proxy->currentText();
+        QStringList sl = host.split(':');
+        if(sl.count() == 2)
+        {
+            proxy.setHostName(sl.at(0));
+            proxy.setPort(sl.at(1).toInt());
+
+            emit info(QString("proxy %1:%2")
+                      .arg(sl.at(0))
+                      .arg(sl.at(1)));
+        }
+        else
+        {
+            emit error("bad address of proxy");
+        }
 #else
         proxy.setHostName("103.217.156.31");
         proxy.setPort(8080);
@@ -238,6 +295,11 @@ void MainBox::s_default(void)
 void MainBox::test_JS(bool)
 {
     emit trace(Q_FUNC_INFO);
+
+    if(ui->cb_auto->isChecked() == false)
+    {
+        return;
+    }
 
     const QString javascript = ui->te_js->toPlainText();
     if(javascript.isEmpty())

@@ -60,6 +60,10 @@ void MainBox::init(void)
     ui->setupUi(this);
     createTestBar();
 
+    // ширина TAB в символах
+    int fontWidth = QFontMetrics(ui->te_text_js->currentCharFormat().font()).averageCharWidth();
+    ui->te_text_js->setTabStopWidth(3 * fontWidth);
+
     QWebEngineProfile *profile = new QWebEngineProfile();
     // изменяем необходимые http-заголовки на свои значения
     //profile->setHttpUserAgent("Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");

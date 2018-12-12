@@ -220,12 +220,16 @@ void MainBox::test(void)
     emit info(cb_test2->itemData(cb_test2->currentIndex()).toString());
 }
 
+
+#include "simple.h"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+    emit info(QString("%1").arg(simple_mul(5)));
+
+#if 0
     cb_test2 = new QComboBox;
     for(int n=0; n<10; n++)
     {

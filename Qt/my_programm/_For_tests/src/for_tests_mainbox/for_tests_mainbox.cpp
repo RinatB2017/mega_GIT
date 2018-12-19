@@ -229,6 +229,12 @@ bool MainBox::test_0(void)
 
     emit info(QString("%1").arg(simple_mul(5)));
 
+#if 1
+    QColorDialog *dlg = new QColorDialog();
+    dlg->setOption(QColorDialog::ShowAlphaChannel);
+    dlg->show();
+#endif
+
 #if 0
     cb_test2 = new QComboBox;
     for(int n=0; n<10; n++)

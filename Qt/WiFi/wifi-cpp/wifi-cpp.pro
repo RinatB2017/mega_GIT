@@ -1,4 +1,5 @@
-#QT += core widgets b2qtwifi
+QT += core widgets
+#QT += b2qtwifi
 
 TARGET = wifi-cpp
 TEMPLATE = app

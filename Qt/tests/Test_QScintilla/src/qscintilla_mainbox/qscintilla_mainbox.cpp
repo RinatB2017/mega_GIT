@@ -26,6 +26,7 @@
 //--------------------------------------------------------------------------------
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexercpp.h>
+#include <Qsci/qscilexerjavascript.h>
 //--------------------------------------------------------------------------------
 #include "ui_qscintilla_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -64,8 +65,11 @@ void MainBox::init(void)
     createTestBar();
     init_w_lists();
 
-    QsciLexerCPP * lexCpp = new QsciLexerCPP(this);
-    ui->textEdit->setLexer(lexCpp);
+    //QsciLexerCPP *lexCpp = new QsciLexerCPP(this);
+    //ui->textEdit->setLexer(lexCpp);
+
+    QsciLexerJavaScript *lexJS = new QsciLexerJavaScript(this);
+    ui->textEdit->setLexer(lexJS);
 
     //ui->textEdit->setStyleSheet("background:white;");
 }

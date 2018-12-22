@@ -88,14 +88,14 @@
        </layout>
       </item>
       <item>
-       <widget class="QWebEngineView" name="webEngineView">
+       <widget class="QWebEngineView" name="webEngineView" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="url">
+        <property name="url" stdset="0">
          <url>
           <string>about:blank</string>
          </url>
@@ -121,7 +121,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="cb_auto">
+         <widget class="QCheckBox" name="cb_auto_js">
           <property name="text">
            <string>auto</string>
           </property>
@@ -141,21 +141,21 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_load">
+         <widget class="QPushButton" name="btn_load_js">
           <property name="text">
            <string>load</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_save">
+         <widget class="QPushButton" name="btn_save_js">
           <property name="text">
            <string>save</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_default">
+         <widget class="QPushButton" name="btn_default_js">
           <property name="text">
            <string>default</string>
           </property>
@@ -186,10 +186,10 @@
   <tabstop>btn_run</tabstop>
   <tabstop>te_js</tabstop>
   <tabstop>btn_run_js</tabstop>
-  <tabstop>cb_auto</tabstop>
-  <tabstop>btn_load</tabstop>
-  <tabstop>btn_save</tabstop>
-  <tabstop>btn_default</tabstop>
+  <tabstop>cb_auto_js</tabstop>
+  <tabstop>btn_load_js</tabstop>
+  <tabstop>btn_save_js</tabstop>
+  <tabstop>btn_default_js</tabstop>
  </tabstops>
  <resources/>
  <connections/>

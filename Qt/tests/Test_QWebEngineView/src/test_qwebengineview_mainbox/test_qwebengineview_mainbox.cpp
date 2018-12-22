@@ -26,6 +26,7 @@
 //--------------------------------------------------------------------------------
 #include <QWebEngineProfile>
 #include <QWebEngineSettings>
+#include <QWebEnginePage>
 #include <QWebEngineView>
 #include <QNetworkProxy>
 //--------------------------------------------------------------------------------
@@ -97,6 +98,7 @@ void MainBox::init(void)
 	//profile->setHttpUserAgent("Googlebot/2.1 (+http://www.google.com/bot.html)");
 
     new_page = new CustomPage(profile);
+    //new_page = new QWebEnginePage(profile);
 
     connect(new_page,   SIGNAL(err_output(QString)),  this,   SIGNAL(error(QString)));
 
@@ -110,7 +112,7 @@ void MainBox::init(void)
             this,               SLOT(run_JS(bool)));
     connect(ui->btn_run,        SIGNAL(clicked(bool)),
             this,               SLOT(s_run()));
-    connect(ui->btn_default,    SIGNAL(clicked(bool)),
+    connect(ui->btn_default_js, SIGNAL(clicked(bool)),
             this,               SLOT(s_default()));
     connect(ui->btn_run_js,     SIGNAL(clicked(bool)),
             this,               SLOT(test_JS(bool)));
@@ -119,12 +121,13 @@ void MainBox::init(void)
 
     connect(ui->le_address,     SIGNAL(returnPressed()),
             this,               SLOT(s_run()));
-    connect(ui->btn_load,       SIGNAL(clicked(bool)),
+    connect(ui->btn_load_js,    SIGNAL(clicked(bool)),
             this,               SLOT(js_load()));
-    connect(ui->btn_save,       SIGNAL(clicked(bool)),
+    connect(ui->btn_save_js,    SIGNAL(clicked(bool)),
             this,               SLOT(js_save()));
 
-    ui->le_address->setText("https://2ip.ru/");
+    //ui->le_address->setText("https://2ip.ru/");
+    ui->le_address->setText("https://cashgo.ru/play/levels/#103");
     //ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
@@ -174,7 +177,7 @@ void MainBox::js_load(void)
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
-        save_js(files.at(0));
+        load_js(files.at(0));
     }
     dlg->deleteLater();
 }
@@ -197,6 +200,20 @@ void MainBox::js_save(void)
         save_js(files.at(0));
     }
     dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_js(const QString &filename)
+{
+    if(filename.isEmpty()) return;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+    ui->te_js->setText(file.readAll());
+
+    file.close();
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_js(const QString &filename)
@@ -308,7 +325,6 @@ void MainBox::s_run(void)
     {
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::HttpProxy);
-#if 1
         QString host = ui->cb_proxy->currentText();
         QStringList sl = host.split(':');
         if(sl.count() == 2)
@@ -324,10 +340,6 @@ void MainBox::s_run(void)
         {
             emit error("bad address of proxy");
         }
-#else
-        proxy.setHostName("103.217.156.31");
-        proxy.setPort(8080);
-#endif
         //webviews[index].webview->page()->networkAccessManager()->setProxy(proxy);
         QNetworkProxy::setApplicationProxy(proxy);
     }
@@ -336,18 +348,17 @@ void MainBox::s_run(void)
         QNetworkProxy::setApplicationProxy(QNetworkProxy());
     }
 
-#if 1
     QWebEngineProfile *profile = new QWebEngineProfile();
     profile->setHttpUserAgent(ui->cb_user_agent->itemData(ui->cb_user_agent->currentIndex()).toString());
 
     new_page->deleteLater();
 
     new_page = new CustomPage(profile);
-    connect(new_page,   SIGNAL(err_output(QString)),  this,   SIGNAL(error(QString)));
+    connect(new_page,   SIGNAL(loadProgress(int)),      ui->progressBar,    SLOT(setValue(int)));
+    connect(new_page,   SIGNAL(loadFinished(bool)),     this,               SLOT(run_JS(bool)));
+    connect(new_page,   SIGNAL(err_output(QString)),    this,               SIGNAL(error(QString)));
 
     ui->webEngineView->setPage(new_page);
-#endif
-
     ui->webEngineView->setUrl(QUrl(address));
 }
 //--------------------------------------------------------------------------------
@@ -362,8 +373,12 @@ void MainBox::run_JS(bool)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(ui->cb_auto->isChecked() == false)
+#if 0
+    s_run();
+#else
+    if(ui->cb_auto_js->isChecked() == false)
     {
+        emit trace("no autorun JS");
         return;
     }
 
@@ -379,6 +394,7 @@ void MainBox::run_JS(bool)
         emit info(v.toString());
         emit send(v.toString());
     });
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_JS(bool)

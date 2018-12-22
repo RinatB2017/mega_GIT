@@ -29,6 +29,7 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
+class QWebEnginePage;
 class CustomPage;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -85,6 +86,7 @@ private:
     QList<CMD> commands;
 
     CustomPage *new_page = 0;
+    //QWebEnginePage *new_page = 0;
 
     void init(void);
     void createTestBar(void);
@@ -92,6 +94,7 @@ private:
     void load_proxies(void);
     void load_js_default(void);
 
+    void load_js(const QString &filename);
     void save_js(const QString &filename);
 
     void updateText(void);

@@ -16,7 +16,9 @@ INCLUDEPATH = $$DEPENDPATH
 
 #QMAKE_CXXFLAGS += -fno-show-column
 
-LIBS    += -lqscintilla2_qt5
+unix {
+    LIBS    += -lqscintilla2_qt5
+}
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -63,11 +65,12 @@ SOURCES += \
 FORMS   += qscintilla_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/computer.ico
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
+    ico/icons.qrc \
     images/images.qrc \
     doc/doc.qrc
 
@@ -82,7 +85,10 @@ LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-#include ($$LIB_PATH2/scintilla/ScintillaEdit.pri)
+
+win32 {
+    include ($$LIB_PATH2/QScintilla/QScintilla.pri)
+}
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

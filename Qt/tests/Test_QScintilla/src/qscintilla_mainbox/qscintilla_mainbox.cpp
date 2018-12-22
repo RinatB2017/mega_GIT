@@ -25,9 +25,9 @@
 #endif
 //--------------------------------------------------------------------------------
 #if defined(Q_OS_WIN)
-#   include "qsciscintilla.h"
-#   include "qscilexercpp.h"
-#   include "qscilexerjavascript.h"
+#   include "Qsci/qsciscintilla.h"
+#   include "Qsci/qscilexercpp.h"
+#   include "Qsci/qscilexerjavascript.h"
 #else
 #   include <Qsci/qsciscintilla.h>
 #   include <Qsci/qscilexercpp.h>
@@ -71,13 +71,33 @@ void MainBox::init(void)
     createTestBar();
     init_w_lists();
 
-    //QsciLexerCPP *lexCpp = new QsciLexerCPP(this);
-    //ui->textEdit->setLexer(lexCpp);
+    QsciLexerCPP *lexCpp = new QsciLexerCPP(this);
+    ui->te_CPP->setUtf8(true);
+    ui->te_CPP->setLexer(lexCpp);
 
     QsciLexerJavaScript *lexJS = new QsciLexerJavaScript(this);
-    ui->textEdit->setLexer(lexJS);
+    ui->te_JS->setUtf8(true);
+    ui->te_JS->setLexer(lexJS);
 
-    //ui->textEdit->setStyleSheet("background:white;");
+    QString temp_CPP;
+    temp_CPP.append("void function(void)\n");
+    temp_CPP.append("{\n");
+    temp_CPP.append("   int x = 5;\n");
+    temp_CPP.append("}\n");
+
+    QString temp_JS;
+    temp_JS.append("function()\n");
+    temp_JS.append("{\n");
+    temp_JS.append("   alert(document.title)\n");
+    temp_JS.append("}\n");
+
+    ui->te_CPP->setText(temp_CPP);
+    ui->te_JS->setText(temp_JS);
+
+#ifdef Q_OS_LINUX
+    //TODO белый цвет, если тема темная
+    ui->textEdit->setStyleSheet("background:white;");
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

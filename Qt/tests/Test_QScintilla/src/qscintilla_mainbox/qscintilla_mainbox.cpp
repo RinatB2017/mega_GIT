@@ -24,9 +24,15 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include <Qsci/qsciscintilla.h>
-#include <Qsci/qscilexercpp.h>
-#include <Qsci/qscilexerjavascript.h>
+#if defined(Q_OS_WIN)
+#   include "qsciscintilla.h"
+#   include "qscilexercpp.h"
+#   include "qscilexerjavascript.h"
+#else
+#   include <Qsci/qsciscintilla.h>
+#   include <Qsci/qscilexercpp.h>
+#   include <Qsci/qscilexerjavascript.h>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_qscintilla_mainbox.h"
 //--------------------------------------------------------------------------------

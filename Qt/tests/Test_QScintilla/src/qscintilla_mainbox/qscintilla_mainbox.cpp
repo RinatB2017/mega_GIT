@@ -80,10 +80,21 @@ void MainBox::init(void)
     ui->te_JS->setLexer(lexJS);
 
     QString temp_CPP;
-    temp_CPP.append("void function(void)\n");
+    temp_CPP.append("class MainBox : public QWidget\n");
     temp_CPP.append("{\n");
-    temp_CPP.append("   int x = 5;\n");
-    temp_CPP.append("}\n");
+    temp_CPP.append("   Q_OBJECT\n");
+    temp_CPP.append("\n");
+    temp_CPP.append("   public:\n");
+    temp_CPP.append("       explicit MainBox(QWidget *parent);\n");
+    temp_CPP.append("       ~MainBox();\n");
+    temp_CPP.append("\n");
+    temp_CPP.append("   private:\n");
+    temp_CPP.append("       void init(void);\n");
+    temp_CPP.append("       void function(void)\n");
+    temp_CPP.append("       {\n");
+    temp_CPP.append("           int x = 5;\n");
+    temp_CPP.append("       }\n");
+    temp_CPP.append("};\n");
 
     QString temp_JS;
     temp_JS.append("function()\n");

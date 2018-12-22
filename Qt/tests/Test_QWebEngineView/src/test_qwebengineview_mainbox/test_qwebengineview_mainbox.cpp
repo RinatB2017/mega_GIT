@@ -64,6 +64,10 @@ void MainBox::init(void)
 	
 	//https://support.google.com/webmasters/answer/1061943?hl=ru
 
+    // ширина TAB в символах
+    int fontWidth = QFontMetrics(ui->te_js->currentCharFormat().font()).averageCharWidth();
+    ui->te_js->setTabStopWidth(3 * fontWidth);
+
     ui->cb_user_agent->addItem("Linux", "Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
     ui->cb_user_agent->addItem("Windows XP", "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
     ui->cb_user_agent->addItem("Windows 7", "Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");
@@ -103,13 +107,22 @@ void MainBox::init(void)
     connect(new_page,           SIGNAL(loadProgress(int)),
             ui->progressBar,    SLOT(setValue(int)));
     connect(new_page,           SIGNAL(loadFinished(bool)),
-            this,               SLOT(test_JS(bool)));
-    connect(ui->btn_run,        SIGNAL(clicked(bool)),  this,   SLOT(s_run()));
-    connect(ui->btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(s_default()));
+            this,               SLOT(run_JS(bool)));
+    connect(ui->btn_run,        SIGNAL(clicked(bool)),
+            this,               SLOT(s_run()));
+    connect(ui->btn_default,    SIGNAL(clicked(bool)),
+            this,               SLOT(s_default()));
     connect(ui->btn_run_js,     SIGNAL(clicked(bool)),
             this,               SLOT(test_JS(bool)));
     connect(this,               SIGNAL(send(QString)),
             this,               SLOT(analize(QString)));
+
+    connect(ui->le_address,     SIGNAL(returnPressed()),
+            this,               SLOT(s_run()));
+    connect(ui->btn_load,       SIGNAL(clicked(bool)),
+            this,               SLOT(js_load()));
+    connect(ui->btn_save,       SIGNAL(clicked(bool)),
+            this,               SLOT(js_save()));
 
     ui->le_address->setText("https://2ip.ru/");
     //ui->le_address->setText("https://www.youtube.com/");
@@ -146,6 +159,59 @@ void MainBox::init(void)
     ui->progressBar->setValue(0);
 
     load_widgets("Test_QWebEngineView");
+}
+//--------------------------------------------------------------------------------
+void MainBox::js_load(void)
+{
+    QFileDialog *dlg;
+
+    dlg = new QFileDialog;
+    dlg->setNameFilter(tr("JS files (*.js)"));
+    dlg->setDefaultSuffix("js");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        save_js(files.at(0));
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::js_save(void)
+{
+    QFileDialog *dlg;
+
+    dlg = new QFileDialog;
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setNameFilter(tr("JS files (*.js)"));
+    dlg->setDefaultSuffix("js");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    dlg->setConfirmOverwrite(true);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        save_js(files.at(0));
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_js(const QString &filename)
+{
+    if(filename.isEmpty()) return;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        return;
+    }
+    file.write(ui->te_js->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
+    //file.write(ui->te_js->toPlainText().toLocal8Bit()); //.toAscii());
+
+    file.close();
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_proxies(void)
@@ -292,7 +358,7 @@ void MainBox::s_default(void)
     load_js_default();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_JS(bool)
+void MainBox::run_JS(bool)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -300,6 +366,24 @@ void MainBox::test_JS(bool)
     {
         return;
     }
+
+    const QString javascript = ui->te_js->toPlainText();
+    if(javascript.isEmpty())
+    {
+        emit error("JS is empty!");
+        return;
+    }
+
+    new_page->runJavaScript(javascript, [=](const QVariant &v)
+    {
+        emit info(v.toString());
+        emit send(v.toString());
+    });
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_JS(bool)
+{
+    emit trace(Q_FUNC_INFO);
 
     const QString javascript = ui->te_js->toPlainText();
     if(javascript.isEmpty())

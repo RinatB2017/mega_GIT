@@ -51,10 +51,14 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
+    void run_JS(bool);
     void test_JS(bool);
 
     void s_run(void);
     void s_default(void);
+
+    void js_load(void);
+    void js_save(void);
 
     void analize(const QString data);
 
@@ -87,6 +91,8 @@ private:
 
     void load_proxies(void);
     void load_js_default(void);
+
+    void save_js(const QString &filename);
 
     void updateText(void);
 };

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
+    <width>896</width>
     <height>186</height>
    </rect>
   </property>
@@ -88,14 +88,14 @@
        </layout>
       </item>
       <item>
-       <widget class="QWebEngineView" name="webEngineView" native="true">
+       <widget class="QWebEngineView" name="webEngineView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="url" stdset="0">
+        <property name="url">
          <url>
           <string>about:blank</string>
          </url>
@@ -141,6 +141,20 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="btn_load">
+          <property name="text">
+           <string>load</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_save">
+          <property name="text">
+           <string>save</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="btn_default">
           <property name="text">
            <string>default</string>
@@ -164,6 +178,19 @@
    <header location="global">QtWebEngineWidgets/QWebEngineView</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>cb_proxy</tabstop>
+  <tabstop>cb_use_proxy</tabstop>
+  <tabstop>cb_user_agent</tabstop>
+  <tabstop>le_address</tabstop>
+  <tabstop>btn_run</tabstop>
+  <tabstop>te_js</tabstop>
+  <tabstop>btn_run_js</tabstop>
+  <tabstop>cb_auto</tabstop>
+  <tabstop>btn_load</tabstop>
+  <tabstop>btn_save</tabstop>
+  <tabstop>btn_default</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -24,6 +24,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
 #include <QWebEngineSettings>
 #include <QWebEnginePage>
@@ -97,6 +98,14 @@ void MainBox::init(void)
     //profile->setHttpUserAgent("Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
 	//profile->setHttpUserAgent("Googlebot/2.1 (+http://www.google.com/bot.html)");
 
+    //TODO печеньки
+    emit info(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
+    //profile->setPersistentStoragePath(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
+    m_store = profile->cookieStore();
+    connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainBox::handleCookieAdded);
+    m_store->loadAllCookies();
+    //---
+
     new_page = new CustomPage(profile);
     //new_page = new QWebEnginePage(profile);
 
@@ -162,6 +171,27 @@ void MainBox::init(void)
     ui->progressBar->setValue(0);
 
     load_widgets("Test_QWebEngineView");
+}
+//--------------------------------------------------------------------------------
+bool MainBox::containsCookie(const QNetworkCookie &cookie)
+{
+    for (auto c: m_cookies)
+    {
+        if (c.hasSameIdentifier(cookie))
+            return true;
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+void MainBox::handleCookieAdded(const QNetworkCookie &cookie)
+{
+    emit info("handleCookieAdded");
+
+    // only new cookies
+    if (containsCookie(cookie))
+        return;
+
+    m_cookies.append(cookie);
 }
 //--------------------------------------------------------------------------------
 void MainBox::js_load(void)
@@ -357,6 +387,14 @@ void MainBox::s_run(void)
     connect(new_page,   SIGNAL(loadProgress(int)),      ui->progressBar,    SLOT(setValue(int)));
     connect(new_page,   SIGNAL(loadFinished(bool)),     this,               SLOT(run_JS(bool)));
     connect(new_page,   SIGNAL(err_output(QString)),    this,               SIGNAL(error(QString)));
+
+    //TODO печеньки
+    emit info(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
+    //profile->setPersistentStoragePath(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
+    m_store = profile->cookieStore();
+    connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainBox::handleCookieAdded);
+    m_store->loadAllCookies();
+    //---
 
     ui->webEngineView->setPage(new_page);
     ui->webEngineView->setUrl(QUrl(address));

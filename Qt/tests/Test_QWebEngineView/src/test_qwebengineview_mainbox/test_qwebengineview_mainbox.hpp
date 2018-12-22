@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QNetworkCookie>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -29,6 +30,7 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
+class QWebEngineCookieStore;
 class QWebEnginePage;
 class CustomPage;
 //--------------------------------------------------------------------------------
@@ -63,6 +65,8 @@ private slots:
 
     void analize(const QString data);
 
+    void handleCookieAdded(const QNetworkCookie &cookie);
+
 private:
     Ui::MainBox *ui = 0;
     QWidget *parent = 0;
@@ -88,6 +92,9 @@ private:
     CustomPage *new_page = 0;
     //QWebEnginePage *new_page = 0;
 
+    QWebEngineCookieStore *m_store;
+    QVector<QNetworkCookie> m_cookies;
+
     void init(void);
     void createTestBar(void);
 
@@ -96,6 +103,8 @@ private:
 
     void load_js(const QString &filename);
     void save_js(const QString &filename);
+
+    bool containsCookie(const QNetworkCookie &cookie);
 
     void updateText(void);
 };

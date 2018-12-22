@@ -85,6 +85,8 @@ void MainBox::init(void)
 
     connect(ui->btn_run_js,         SIGNAL(clicked(bool)),  this,   SLOT(s_run_js()));
     connect(ui->btn_default_js,     SIGNAL(clicked(bool)),  this,   SLOT(s_default_js()));
+    connect(ui->btn_load_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_load_js()));
+    connect(ui->btn_save_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_save_js()));
 
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");
@@ -215,6 +217,73 @@ void MainBox::s_default_js(void)
     temp.append("myFunction();\n");
 
     ui->te_text_js->setText(temp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_load_js(void)
+{
+    QFileDialog *dlg;
+
+    dlg = new QFileDialog;
+    dlg->setNameFilter(tr("JS files (*.js)"));
+    dlg->setDefaultSuffix("js");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        load_js(files.at(0));
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_save_js(void)
+{
+    QFileDialog *dlg;
+
+    dlg = new QFileDialog;
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setNameFilter(tr("JS files (*.js)"));
+    dlg->setDefaultSuffix("js");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    dlg->setConfirmOverwrite(true);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        save_js(files.at(0));
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_js(const QString &filename)
+{
+    if(filename.isEmpty()) return;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+    ui->te_text_js->setText(file.readAll());
+
+    file.close();
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_js(const QString &filename)
+{
+    if(filename.isEmpty()) return;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        return;
+    }
+    file.write(ui->te_text_js->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
+    //file.write(ui->te_text_js->toPlainText().toLocal8Bit()); //.toAscii());
+
+    file.close();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

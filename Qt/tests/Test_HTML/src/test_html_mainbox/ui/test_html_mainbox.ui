@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>182</height>
+    <width>791</width>
+    <height>186</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,8 +64,8 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QWebEngineView" name="webEngineView">
-        <property name="url">
+       <widget class="QWebEngineView" name="webEngineView" native="true">
+        <property name="url" stdset="0">
          <url>
           <string>about:blank</string>
          </url>
@@ -104,6 +104,20 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="btn_load_js">
+          <property name="text">
+           <string>load</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_save_js">
+          <property name="text">
+           <string>save</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="btn_default_js">
           <property name="text">
            <string>default</string>
@@ -129,11 +143,13 @@
  </customwidgets>
  <tabstops>
   <tabstop>btn_run_html</tabstop>
-  <tabstop>btn_default_html</tabstop>
   <tabstop>te_text_html</tabstop>
+  <tabstop>btn_default_html</tabstop>
   <tabstop>btn_run_js</tabstop>
-  <tabstop>btn_default_js</tabstop>
   <tabstop>te_text_js</tabstop>
+  <tabstop>btn_load_js</tabstop>
+  <tabstop>btn_save_js</tabstop>
+  <tabstop>btn_default_js</tabstop>
  </tabstops>
  <resources/>
  <connections/>

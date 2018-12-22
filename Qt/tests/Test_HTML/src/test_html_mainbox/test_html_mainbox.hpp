@@ -64,6 +64,9 @@ private slots:
     void s_run_js(void);
     void s_default_js(void);
 
+    void s_load_js(void);
+    void s_save_js(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -88,10 +91,13 @@ private:
     QCheckBox *cb_block = 0;
     QList<CMD> commands;
 
-    CustomPage *new_page = 0;\
+    CustomPage *new_page = 0;
 
     void init(void);
     void createTestBar(void);
+
+    void load_js(const QString &filename);
+    void save_js(const QString &filename);
 
     void updateText(void);
 };

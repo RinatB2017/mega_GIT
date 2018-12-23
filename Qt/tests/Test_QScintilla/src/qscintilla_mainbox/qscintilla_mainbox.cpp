@@ -107,7 +107,7 @@ void MainBox::init(void)
 
 #ifdef Q_OS_LINUX
     //TODO белый цвет, если тема темная
-    ui->textEdit->setStyleSheet("background:white;");
+    //ui->textEdit->setStyleSheet("background:white;");
 #endif
 
     load_widgets("QScintilla");

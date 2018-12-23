@@ -209,137 +209,30 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include <QWebEngineView>
-
-#include <QBluetoothServer>
-#include <QBluetoothSocket>
-#include <QBluetoothLocalDevice>
-
-void MainBox::test(void)
-{
-    emit info(cb_test2->itemData(cb_test2->currentIndex()).toString());
-}
-
-
-#include "simple.h"
+#include "binary.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-    emit info(QString("%1").arg(simple_mul(5)));
+    Binary *bin = new Binary();
 
-#if 1
-    QColorDialog *dlg = new QColorDialog();
-    dlg->setOption(QColorDialog::ShowAlphaChannel);
-    dlg->show();
-#endif
+    QFileDialog *dlg;
 
-#if 0
-    cb_test2 = new QComboBox;
-    for(int n=0; n<10; n++)
+    dlg = new QFileDialog;
+    dlg->setNameFilter(tr("All files (*.*)"));
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    if(dlg->exec())
     {
-        cb_test2->addItem(QString("a%1").arg(n), QString("x%1").arg(n));
+        QStringList files = dlg->selectedFiles();
+        bin->file_to_buf(files.at(0));
     }
-    connect(cb_test2,    SIGNAL(currentIndexChanged(int)),   this,   SLOT(test()));
-    cb_test2->show();
-
-#endif
-
-#if 0
-    struct temp
-    {
-        QWidget *w0;
-        QWidget *w1;
-    };
-
-    QList<temp> l_temp;
-
-    for(int n=0; n<10; n++)
-    {
-        l_temp.append({ new QLabel(QString("a%1").arg(n)), new QSpinBox() });
-    }
-
-    QGridLayout *grid = new QGridLayout;
-    int row = 0;
-    foreach (temp x, l_temp) {
-        grid->addWidget(x.w0, row, 0);
-        grid->addWidget(x.w1, row, 1);
-        row++;
-    }
-
-    QWidget *w = new QWidget;
-    w->setLayout(grid);
-    w->show();
-#endif
-
-#if 0
-    QSpinBox *sb = ui->sb_1;
-    sb->setValue(6);
-#endif
-
-#if 0
-    QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice();
-    if(!localDevice)
-    {
-        emit error("localDevice is null");
-        return false;
-    }
-    localDevice->powerOn();
-
-    QList<QBluetoothHostInfo> localAdapters = QBluetoothLocalDevice::allDevices();
-    if(localAdapters.count() < 1)
-    {
-        emit error("localAdapters not found!");
-        return false;
-    }
-    QBluetoothAddress localAdapter = localAdapters.at(0).address();
-
-    QBluetoothServer *rfcommServer = new QBluetoothServer(QBluetoothServiceInfo::RfcommProtocol, this);
-    connect(rfcommServer, SIGNAL(newConnection()), this, SLOT(clientConnected()));
-    bool result = rfcommServer->listen(localAdapter);
-    if (!result)
-    {
-        emit error(QString("Cannot bind chat server to %1").arg(localAdapter.toString()));
-    }
-    rfcommServer->deleteLater();
-    emit info("OK");
-#endif
-
-#if 0
-    QWebEngineView *view = new QWebEngineView();
-    view->setMinimumSize(800, 600);
-    view->setUrl(QUrl("https://www.avito.ru/krasnodar"));
-    view->show();
-#endif
-
-#if 0
-    int i = 5;
-    i = ++i + ++i;
-    emit info(QString("i %1").arg(i));
-#endif
-
-#if 0
-    //float value = 1234.56789;
-    //float value = 1234.0;
-    float value = 0.123456789;
-    int a = (int)value;
-    int b = (value - (float)a) * 10000;
-    QString temp  = QString("[%1]").arg(value, 2, 'f', 4);
-    emit info(temp);
-    emit info(QString("[%1.%2]")
-              .arg(a,   2,  10, QChar('0'))
-              .arg(b,   4,  10, QChar('0')));
-#endif
+    dlg->deleteLater();
 
     return true;
 }
-
-void MainBox::clientConnected(void)
-{
-    emit info("clientConnected");
-}
-
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {

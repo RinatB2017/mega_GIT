@@ -43,37 +43,18 @@ Binary::~Binary()
 //--------------------------------------------------------------------------------
 void Binary::file_to_buf(const QString &i_filename)
 {
-    QFileDialog *dlg;
-
-    dlg = new QFileDialog;
-    dlg->setNameFilter(tr("JS files (*.js)"));
-    dlg->setDefaultSuffix("js");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    dlg->selectFile("noname");
-    if(dlg->exec())
+    if(i_filename.isEmpty())
     {
-        QStringList files = dlg->selectedFiles();
-        //load_js(files.at(0));
+        return;
     }
-    dlg->deleteLater();
+    //static const unsigned char qt_resource_data[] = {
 }
 //--------------------------------------------------------------------------------
 void Binary::buf_to_file(const QString &o_filename)
 {
-    QFileDialog *dlg;
-
-    dlg = new QFileDialog;
-    dlg->setNameFilter(tr("JS files (*.js)"));
-    dlg->setDefaultSuffix("js");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    dlg->selectFile("noname");
-    if(dlg->exec())
+    if(o_filename.isEmpty())
     {
-        QStringList files = dlg->selectedFiles();
-        //load_js(files.at(0));
+        return;
     }
-    dlg->deleteLater();
 }
 //--------------------------------------------------------------------------------

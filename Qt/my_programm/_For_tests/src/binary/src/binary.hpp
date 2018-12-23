@@ -32,7 +32,7 @@ class Binary : public QObject
     Q_OBJECT
 
 public:
-    Binary(QObject *parent);
+    Binary(QObject *parent = 0);
     ~Binary();
 
     void file_to_buf(const QString &i_filename);

@@ -68,10 +68,6 @@ public slots:
     void check_in(void);
     void victory(void);
 
-    //TODO
-    void clientConnected(void);
-    void test(void);
-
 private:
     enum {
         ID_TEST_0 = 1000,

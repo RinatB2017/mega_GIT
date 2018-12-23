@@ -57,6 +57,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets("QScintilla");
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -69,7 +70,6 @@ void MainBox::init(void)
 #endif
 
     createTestBar();
-    init_w_lists();
 
     QsciLexerCPP *lexCpp = new QsciLexerCPP(this);
     ui->te_CPP->setUtf8(true);
@@ -109,6 +109,8 @@ void MainBox::init(void)
     //TODO белый цвет, если тема темная
     ui->textEdit->setStyleSheet("background:white;");
 #endif
+
+    load_widgets("QScintilla");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -185,42 +187,36 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
     emit info("Test_3()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_4(void)
 {
     emit info("Test_4()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_5(void)
 {
     emit info("Test_5()");
-
     return true;
 }
 //--------------------------------------------------------------------------------

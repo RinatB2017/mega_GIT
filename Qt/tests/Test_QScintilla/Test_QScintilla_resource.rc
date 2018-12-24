@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\User\\Programming\\GitHub\\mega_GIT\\Qt\\tests\\Test_QScintilla\\ico\\computer.ico"
+IDI_ICON1	ICON	DISCARDABLE	"D:\\tests\\Test_QScintilla\\ico\\computer.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0

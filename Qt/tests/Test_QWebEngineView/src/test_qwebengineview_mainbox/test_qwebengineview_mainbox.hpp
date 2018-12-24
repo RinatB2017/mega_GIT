@@ -32,6 +32,8 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class QWebEngineCookieStore;
 class QWebEnginePage;
+
+class Highlighter;
 class CustomPage;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -68,8 +70,8 @@ private slots:
     void handleCookieAdded(const QNetworkCookie &cookie);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
     enum {
         ID_TEST_0 = 1000,
         ID_TEST_1,
@@ -86,14 +88,16 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    CustomPage *new_page = 0;
+    CustomPage *new_page;
     //QWebEnginePage *new_page = 0;
 
     QWebEngineCookieStore *m_store;
     QVector<QNetworkCookie> m_cookies;
+
+    Highlighter *highlighter_js;
 
     void init(void);
     void createTestBar(void);

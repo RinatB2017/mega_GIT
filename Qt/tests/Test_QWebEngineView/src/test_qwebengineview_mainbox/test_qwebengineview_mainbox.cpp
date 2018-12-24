@@ -37,6 +37,7 @@
 #include "test_qwebengineview_mainbox.hpp"
 #include "custompage.h"
 #include "qxmlputget.h"
+#include "highlighter.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -159,6 +160,8 @@ void MainBox::init(void)
     layout()->addWidget(splitter);
     //---
     
+    highlighter_js  = new Highlighter(ui->te_js->document());
+
     //---
     //ui->sb_proxy_port->setRange(0, 0xFFFF);
 

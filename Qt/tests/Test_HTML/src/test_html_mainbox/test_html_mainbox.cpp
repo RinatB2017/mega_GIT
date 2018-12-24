@@ -35,6 +35,8 @@
 #include "test_html_mainbox.hpp"
 #include "custompage.h"
 #include "defines.hpp"
+
+#include "highlighter.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -61,8 +63,11 @@ void MainBox::init(void)
     createTestBar();
 
     // ширина TAB в символах
-    int fontWidth = QFontMetrics(ui->te_text_js->currentCharFormat().font()).averageCharWidth();
-    ui->te_text_js->setTabStopWidth(3 * fontWidth);
+    int fontWidth_html = QFontMetrics(ui->te_text_html->currentCharFormat().font()).averageCharWidth();
+    ui->te_text_html->setTabStopWidth(3 * fontWidth_html);
+
+    int fontWidth_js = QFontMetrics(ui->te_text_js->currentCharFormat().font()).averageCharWidth();
+    ui->te_text_js->setTabStopWidth(3 * fontWidth_js);
 
     QWebEngineProfile *profile = new QWebEngineProfile();
     // изменяем необходимые http-заголовки на свои значения
@@ -98,6 +103,9 @@ void MainBox::init(void)
     splitter->addWidget(ui->groupBox_html);
     splitter->addWidget(ui->groupBox_view);
     splitter->addWidget(ui->groupBox_js);
+
+    highlighter_cpp = new Highlighter(ui->te_text_html->document());
+    highlighter_js  = new Highlighter(ui->te_text_js->document());
 
     layout()->addWidget(splitter);
 

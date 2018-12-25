@@ -79,6 +79,40 @@ void MainBox::init(void)
     ui->te_JS->setUtf8(true);
     ui->te_JS->setLexer(lexJS);
 
+    //---
+    //! Текущая строка кода и ее подсветка
+    ui->te_CPP->setCaretLineVisible(true);
+    ui->te_CPP->setCaretLineBackgroundColor(QColor("gainsboro"));
+
+    //! Выравнивание
+    ui->te_CPP->setAutoIndent(true);
+    ui->te_CPP->setIndentationGuides(false);
+    ui->te_CPP->setIndentationsUseTabs(true);
+    ui->te_CPP->setIndentationWidth(4);
+
+    //! margin это полоска слева, на которой обычно распологаются breakpoints
+    ui->te_CPP->setMarginsBackgroundColor(QColor("gainsboro"));
+    ui->te_CPP->setMarginLineNumbers(1, true);
+    ui->te_CPP->setMarginWidth(1, 50);
+
+    //! Авто-дополнение кода в зависимости от источника
+    ui->te_CPP->setAutoCompletionSource(QsciScintilla::AcsAll);
+    ui->te_CPP->setAutoCompletionCaseSensitivity(true);
+    ui->te_CPP->setAutoCompletionReplaceWord(true);
+    ui->te_CPP->setAutoCompletionUseSingle(QsciScintilla::AcusAlways);
+    ui->te_CPP->setAutoCompletionThreshold(0);
+
+    //! Подсветка соответствий скобок
+    ui->te_CPP->setBraceMatching(QsciScintilla::SloppyBraceMatch);
+    ui->te_CPP->setMatchedBraceBackgroundColor(Qt::yellow);
+    ui->te_CPP->setUnmatchedBraceForegroundColor(Qt::blue);
+    //---
+    //! margin это полоска слева, на которой обычно распологаются breakpoints
+    ui->te_JS->setMarginsBackgroundColor(QColor("gainsboro"));
+    ui->te_JS->setMarginLineNumbers(1, true);
+    ui->te_JS->setMarginWidth(1, 50);
+    //---
+
     QString temp_CPP;
     temp_CPP.append("class MainBox : public QWidget\n");
     temp_CPP.append("{\n");

@@ -35,8 +35,17 @@ public:
     Binary(QObject *parent = 0);
     ~Binary();
 
-    void file_to_buf(const QString &i_filename);
-    void buf_to_file(const QString &o_filename);
+    void file_to_buf(const QString &i_filename,
+                     const QString &o_filename);
+    void buf_to_file(const QString &i_filename,
+                     const QString &o_filename);
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
 };
 //--------------------------------------------------------------------------------
 #endif

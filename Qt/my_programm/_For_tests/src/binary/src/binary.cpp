@@ -41,17 +41,44 @@ Binary::~Binary()
 
 }
 //--------------------------------------------------------------------------------
-void Binary::file_to_buf(const QString &i_filename)
+void Binary::file_to_buf(const QString &i_filename,
+                         const QString &o_filename)
 {
     if(i_filename.isEmpty())
     {
         return;
     }
+    if(o_filename.isEmpty())
+    {
+        return;
+    }
+
+    QFile i_file(i_filename);
+    if (!i_file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+    QFile o_file(o_filename);
+    if (!o_file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        return;
+    }
+
+    while (!i_file.atEnd()) {
+        QByteArray line = i_file.readLine();
+        //process_line(i_line);
+    }
+
     //static const unsigned char qt_resource_data[] = {
 }
 //--------------------------------------------------------------------------------
-void Binary::buf_to_file(const QString &o_filename)
+void Binary::buf_to_file(const QString &i_filename,
+                         const QString &o_filename)
 {
+    if(i_filename.isEmpty())
+    {
+        return;
+    }
     if(o_filename.isEmpty())
     {
         return;

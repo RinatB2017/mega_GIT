@@ -216,9 +216,16 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
     Binary *bin = new Binary();
+    connect(bin,    SIGNAL(info(QString)),     this,   SIGNAL(info(QString)));
+    connect(bin,    SIGNAL(debug(QString)),    this,   SIGNAL(debug(QString)));
+    connect(bin,    SIGNAL(error(QString)),    this,   SIGNAL(error(QString)));
+    connect(bin,    SIGNAL(trace(QString)),    this,   SIGNAL(trace(QString)));
 
     QFileDialog *dlg;
+    QString i_filename;
+    QString o_filename;
 
+    //---
     dlg = new QFileDialog;
     dlg->setNameFilter(tr("All files (*.*)"));
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
@@ -227,9 +234,27 @@ bool MainBox::test_0(void)
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
-        bin->file_to_buf(files.at(0));
+        i_filename = files.at(0);
     }
     dlg->deleteLater();
+    //---
+
+    //---
+    dlg = new QFileDialog;
+    dlg->setNameFilter(tr("All files (*.*)"));
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        o_filename = files.at(0);
+    }
+    dlg->deleteLater();
+    //---
+
+    bin->file_to_buf(i_filename,
+                     o_filename);
 
     return true;
 }

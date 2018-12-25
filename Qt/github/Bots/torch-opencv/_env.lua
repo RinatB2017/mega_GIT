@@ -1,3 +1,0 @@
-local cv = {}
-
-return cv

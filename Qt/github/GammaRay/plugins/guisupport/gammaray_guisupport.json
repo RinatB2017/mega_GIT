@@ -1,9 +1,0 @@
-{
-    "hidden": true,
-    "id": "gammaray_guisupport",
-    "name": "GUI Support",
-    "name[de]": "GUI Unterstützung",
-    "types": [
-        "QObject"
-    ]
-}

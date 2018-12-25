@@ -1,9 +1,0 @@
-QPushButton {
-	background:red;
-	border-radius: 15px;
-}
-QToolButton {
-	background:green;
-	color: black;
-	border-radius: 10px;
-}

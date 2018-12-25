@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>scripts/linux.sh</file>
-        <file>scripts/windows.vbs</file>
-    </qresource>
-</RCC>

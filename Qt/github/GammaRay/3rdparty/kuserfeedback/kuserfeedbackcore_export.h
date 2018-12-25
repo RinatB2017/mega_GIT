@@ -1,8 +1,0 @@
-#ifndef USERFEEDBACKCORE_EXPORT_H
-#define USERFEEDBACKCORE_EXPORT_H
-
-#include "gammaray_kuserfeedback_export.h"
-
-#define KUSERFEEDBACKCORE_EXPORT GAMMARAY_KUSERFEEDBACK_EXPORT
-
-#endif

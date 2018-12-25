@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>launcher/warning.png</file>
-    </qresource>
-</RCC>

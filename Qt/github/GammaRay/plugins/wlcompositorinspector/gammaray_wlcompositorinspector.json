@@ -1,6 +1,0 @@
-{
-    "id": "gammaray_wlcompositorinspector",
-    "name": "Wayland Compositor",
-    "selectableTypes": [ "QWaylandClient" ],
-    "types": [ "QWaylandCompositor" ]
-}

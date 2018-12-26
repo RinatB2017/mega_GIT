@@ -85,29 +85,18 @@ void MainBox::init_widgets(void)
 
     //---
     int number = 1;
-    center_x = ui->widget->width() / 2;
-    center_y = ui->widget->height() / 2;
-    center_r = ui->widget->width() / 14;
-    led_r = ui->widget->width() / 17;
-    min_r = center_r + led_r + 10;
-    max_r = ui->widget->width() / 2 - 20;
-    min_angle = -30.0;
-    max_angle = 330.0;
-    //min_angle = 270.0;
-    //max_angle = -90.0;
-    inc_r = (int)((max_r - min_r) / 2.4);
+    center_x = ui->widget->width() / 2.0f;
+    center_y = ui->widget->height() / 2.0f;
+    center_r = ui->widget->width() / 14.0f;
+    led_r = ui->widget->width() / 17.0f;
+    min_r = center_r + led_r + 10.0f;
+    max_r = ui->widget->width() / 2.0f - 20.0f;
+    min_angle = -30.0f;
+    max_angle = 330.0f;
+    inc_r = (int)((max_r - min_r) / 2.4f);
     qreal angle = min_angle;
 
-//    calc_line(center_x,
-//              center_y,
-//              45.0f,
-//              1000,
-//              &temp_x,
-//              &temp_y);
-
-//    qDebug() << center_x << center_y << temp_x << temp_y;
-
-    while(angle < max_angle)
+    while(angle > max_angle)
     {
         for(int n=0; n<3; n++)
         {
@@ -117,7 +106,9 @@ void MainBox::init_widgets(void)
                       inc_r * (n + 1),
                       &temp_x,
                       &temp_y);
-            Led *led = new Led(led_r*2, led_r*2, ui->widget);
+            Led *led = new Led(led_r*2,
+                               led_r*2,
+                               ui->widget);
 
             led->setProperty("index", number);
             leds.append(led);

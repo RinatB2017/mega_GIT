@@ -88,8 +88,8 @@ void MainBox::init_widgets(void)
     led_r = ui->lbl_pic->width() / 17.0f;
     min_r = center_r + led_r + 10.0f;
     max_r = ui->lbl_pic->width() / 2.0f - 20.0f;
-    min_angle = 270.0f; //-30.0f;
-    max_angle = -90.0f; //330.0f;
+    min_angle = -30.0f;
+    max_angle = 330.0f;
     inc_r = (int)((max_r - min_r) / 2.4f);
     qreal angle = min_angle;
     int i = 0;
@@ -116,7 +116,7 @@ void MainBox::init_widgets(void)
             index++;
             i++;
         }
-        angle -= 60.0;
+        angle += 60.0;
     }
 
     set_property(0,   0x2112);

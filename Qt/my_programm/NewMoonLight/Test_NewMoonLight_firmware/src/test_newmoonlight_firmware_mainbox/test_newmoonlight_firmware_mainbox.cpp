@@ -103,7 +103,10 @@ void MainBox::init_widgets(void)
                       inc_r * (n + 1),
                       &temp_x,
                       &temp_y);
-            Button *btn = new Button(led_r*2, led_r*2, ui->lbl_pic);
+            Button *btn = new Button(led_r*2,
+                                     led_r*2,
+                                     i,
+                                     ui->lbl_pic);
             btn->setCheckable(true);
             pic_buttons.append(btn);
             btn->set_color(Qt::red, Qt::black);
@@ -111,8 +114,8 @@ void MainBox::init_widgets(void)
                       temp_y-led_r);
             // connect(btn,    SIGNAL(toggled(bool)),  this,   SLOT(btn_click_adv(bool)));
             index++;
+            i++;
         }
-        i++;
         angle -= 60.0;
     }
 

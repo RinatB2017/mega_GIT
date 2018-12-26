@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include <QMouseEvent>
 #include <QPainter>
+#include <QColor>
 //--------------------------------------------------------------------------------
 #include "button.hpp"
 //--------------------------------------------------------------------------------
@@ -29,9 +30,11 @@
 //--------------------------------------------------------------------------------
 Button::Button(int width,
                int height,
+               int index_led,
                QWidget *parent) :
     QToolButton(parent)
 {
+    this->index_led = index_led;
     color_ON  = Qt::red;
     color_OFF = Qt::black;
     setFixedSize(width, height);
@@ -71,9 +74,22 @@ void Button::paintEvent(QPaintEvent *)
     QPainter painter;
     painter.begin(this);
 
+    QFont *font = new QFont("Terminal", 8);
+
+    QString text = QString("%1").arg(index_led);
+    QFontMetrics fm(*font);
+    int w = fm.width(text);
+    int h = fm.height();
+
     painter.setPen(QPen(QBrush(color), 1, Qt::SolidLine));
     painter.setBrush(QBrush(color));
     painter.drawEllipse(QPointF(width()/2, height()/2), width()/2 - 1, height()/2 - 1);
+
+    painter.setPen(QPen(QBrush(Qt::white), 1, Qt::SolidLine));
+    painter.setFont(*font);
+    painter.drawText(width()/2 - w/2,
+                     height()/2 + h/2,
+                     text);
 
     painter.end();
 }

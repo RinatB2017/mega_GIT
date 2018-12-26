@@ -30,6 +30,7 @@ class Button : public QToolButton
 public:
     explicit Button(int width,
                     int height,
+                    int index_led,
                     QWidget *parent = 0);
     ~Button();
 
@@ -42,6 +43,8 @@ private:
     QColor color_ON;
     QColor color_OFF;
     QColor color;
+
+    int index_led = 0;
 
 protected:
     void paintEvent(QPaintEvent *);

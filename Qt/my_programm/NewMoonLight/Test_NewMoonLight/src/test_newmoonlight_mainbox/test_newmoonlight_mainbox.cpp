@@ -289,29 +289,29 @@ void MainBox::f_set(void)
         return;
     }
 
-    leds.at(15)->set_color(get_value(packet,   0x2112));
-    leds.at(16)->set_color(get_value(packet,   0x4151));
-    leds.at(17)->set_color(get_value(packet,   0x3102));
+    leds.at(15)->set_color(get_value(packet,    0x2112));
+    leds.at(16)->set_color(get_value(packet,    0x4151));
+    leds.at(17)->set_color(get_value(packet,    0x3102));
 
-    leds.at(12)->set_color(get_value(packet,   0x2255));
-    leds.at(13)->set_color(get_value(packet,   0x3245));
-    leds.at(14)->set_color(get_value(packet,   0x2535));
+    leds.at(12)->set_color(get_value(packet,    0x2255));
+    leds.at(13)->set_color(get_value(packet,    0x3245));
+    leds.at(14)->set_color(get_value(packet,    0x2535));
 
-    leds.at(9)->set_color(get_value(packet,   0x4223));
-    leds.at(10)->set_color(get_value(packet,   0x5213));
-    leds.at(11)->set_color(get_value(packet,   0x0333));
+    leds.at(9)->set_color(get_value(packet,     0x4223));
+    leds.at(10)->set_color(get_value(packet,    0x5213));
+    leds.at(11)->set_color(get_value(packet,    0x0333));
 
-    leds.at(6)->set_color(get_value(packet,   0x4314));
-    leds.at(7)->set_color(get_value(packet,  0x5334));
-    leds.at(8)->set_color(get_value(packet,  0x0424));
+    leds.at(6)->set_color(get_value(packet,     0x4314));
+    leds.at(7)->set_color(get_value(packet,     0x5334));
+    leds.at(8)->set_color(get_value(packet,     0x0424));
 
-    leds.at(3)->set_color(get_value(packet,  0x5415));
-    leds.at(4)->set_color(get_value(packet,  0x0510));
-    leds.at(5)->set_color(get_value(packet,  0x4400));
+    leds.at(3)->set_color(get_value(packet,     0x5415));
+    leds.at(4)->set_color(get_value(packet,     0x0510));
+    leds.at(5)->set_color(get_value(packet,     0x4400));
 
-    leds.at(0)->set_color(get_value(packet,  0x2001));
-    leds.at(1)->set_color(get_value(packet,  0x4011));
-    leds.at(2)->set_color(get_value(packet,  0x3050));
+    leds.at(0)->set_color(get_value(packet,     0x2001));
+    leds.at(1)->set_color(get_value(packet,     0x4011));
+    leds.at(2)->set_color(get_value(packet,     0x3050));
 
     NewMoonLightPacket out_packet;
     for(unsigned int n=0; n<sizeof(NewMoonLightPacket); n++)

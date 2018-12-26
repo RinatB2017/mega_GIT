@@ -82,18 +82,18 @@ void MainBox::init_widgets(void)
 {
     //---
     int index = 0;
-    center_x = ui->lbl_pic->width() / 2.0f;
-    center_y = ui->lbl_pic->height() / 2.0f;
-    center_r = ui->lbl_pic->width() / 14.0f;
-    led_r = ui->lbl_pic->width() / 17.0f;
-    min_r = center_r + led_r + 10.0f;
-    max_r = ui->lbl_pic->width() / 2.0f - 20.0f;
-    min_angle = -30.0f;
-    max_angle = 330.0f;
-    inc_r = (int)((max_r - min_r) / 2.4f);
+    center_x = ui->lbl_pic->width() / 2.0;
+    center_y = ui->lbl_pic->height() / 2.0;
+    center_r = ui->lbl_pic->width() / 14.0;
+    led_r = ui->lbl_pic->width() / 17.0;
+    min_r = center_r + led_r + 10.0;
+    max_r = ui->lbl_pic->width() / 2.0 - 20.0;
+    min_angle = -30.0;
+    max_angle = 330.0;
+    inc_r = (int)((max_r - min_r) / 2.4);
     qreal angle = min_angle;
-    int i = 0;
-    while(angle > max_angle)
+    int i = 1;
+    while(angle < max_angle)
     {
         for(int n=0; n<3; n++)
         {
@@ -190,6 +190,8 @@ void MainBox::createTestBar(void)
     connect(btn_off,    SIGNAL(clicked(bool)), this, SLOT(off()));
 
     connect(btn_test,   SIGNAL(clicked(bool)), this, SLOT(test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::createGridBox(void)

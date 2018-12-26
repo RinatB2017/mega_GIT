@@ -96,7 +96,7 @@ void MainBox::init_widgets(void)
     inc_r = (int)((max_r - min_r) / 2.4f);
     qreal angle = min_angle;
 
-    while(angle > max_angle)
+    while(angle < max_angle)
     {
         for(int n=0; n<3; n++)
         {
@@ -106,8 +106,8 @@ void MainBox::init_widgets(void)
                       inc_r * (n + 1),
                       &temp_x,
                       &temp_y);
-            Led *led = new Led(led_r*2,
-                               led_r*2,
+            Led *led = new Led(led_r*2.0,
+                               led_r*2.0,
                                ui->widget);
 
             led->setProperty("index", number);

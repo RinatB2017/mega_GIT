@@ -289,6 +289,11 @@ void MainBox::f_set(void)
         return;
     }
 
+    QByteArray ba;
+    ba.clear();
+    ba.append(packet->buf[0], sizeof(NewMoonLightPacket));
+    emit debug(ba.toHex());
+
     leds.at(15)->set_color(get_value(packet,    0x2112));
     leds.at(16)->set_color(get_value(packet,    0x4151));
     leds.at(17)->set_color(get_value(packet,    0x3102));

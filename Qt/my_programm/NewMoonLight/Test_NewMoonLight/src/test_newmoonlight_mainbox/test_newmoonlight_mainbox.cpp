@@ -85,15 +85,15 @@ void MainBox::init_widgets(void)
 
     //---
     int number = 1;
-    center_x = ui->widget->width() / 2.0f;
-    center_y = ui->widget->height() / 2.0f;
-    center_r = ui->widget->width() / 14.0f;
-    led_r = ui->widget->width() / 17.0f;
-    min_r = center_r + led_r + 10.0f;
-    max_r = ui->widget->width() / 2.0f - 20.0f;
-    min_angle = -30.0f;
-    max_angle = 330.0f;
-    inc_r = (int)((max_r - min_r) / 2.4f);
+    center_x = ui->widget->width() / 2.0;
+    center_y = ui->widget->height() / 2.0;
+    center_r = ui->widget->width() / 14.0;
+    led_r = ui->widget->width() / 17.0;
+    min_r = center_r + led_r + 10.0;
+    max_r = ui->widget->width() / 2.0 - 20.0;
+    min_angle = -30.0;
+    max_angle = 330.0;
+    inc_r = (int)((max_r - min_r) / 2.4);
     qreal angle = min_angle;
 
     while(angle < max_angle)
@@ -216,20 +216,15 @@ void MainBox::read_data(QByteArray ba)
 //--------------------------------------------------------------------------------
 uint16_t MainBox::get_value(NewMoonLightPacket *packet, uint16_t address)
 {
-    union UINT16 {
-        uint16_t value;
-        struct {
-            uint8_t c:4;
-            uint8_t d:4;
-            uint8_t a:4;
-            uint8_t b:4;
-        } bytes;
-    };
-
     union UINT16 temp;
     temp.value = address;
 
-    return packet->body.data[temp.bytes.a][temp.bytes.b] << 8 | packet->body.data[temp.bytes.c][temp.bytes.d];
+    uint16_t res = packet->body.data[temp.bytes.a][temp.bytes.b] << 8 | packet->body.data[temp.bytes.c][temp.bytes.d];
+    emit debug(QString("address %1 value %2")
+               .arg(address, 4, 16, QChar('0'))
+               .arg(res, 4, 16, QChar('0')));
+
+    return res;
 }
 //--------------------------------------------------------------------------------
 void MainBox::analize(void)
@@ -510,19 +505,35 @@ void MainBox::choice_test(void)
 void MainBox::test_0(void)
 {
     emit debug("test_0()");
+
+    UINT16 temp;
+    temp.value = 0x1234;
+    emit info(QString("a 0x%1").arg(temp.bytes.a, 0, 16));
+    emit info(QString("b 0x%1").arg(temp.bytes.b, 0, 16));
+    emit info(QString("c 0x%1").arg(temp.bytes.c, 0, 16));
+    emit info(QString("d 0x%1").arg(temp.bytes.d, 0, 16));
+
+    data_rs232.clear();
+    data_rs232.append(":000124FFFF000000000000FFFFFFFFFFFF0000FFFFFF000000000000000000000000FF00000000\n");
+    analize();
+
+#if 0
     for(int n=0; n<18; n++)
     {
         leds[n]->set_hot_color(128);
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
     emit debug("test_1()");
+#if 0
     for(int n=0; n<18; n++)
     {
         leds[n]->set_cold_color(128);
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)

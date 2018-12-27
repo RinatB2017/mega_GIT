@@ -264,6 +264,25 @@ bool MainBox::test_1(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
 
+#if 1
+    union UINT16 {
+        uint16_t value;
+        struct {
+            uint8_t c:4;
+            uint8_t d:4;
+            uint8_t a:4;
+            uint8_t b:4;
+        } bytes;
+    };
+
+    UINT16 temp;
+    temp.value = 0x1234;
+    emit info(QString("a 0x%1").arg(temp.bytes.a, 0, 16));
+    emit info(QString("b 0x%1").arg(temp.bytes.b, 0, 16));
+    emit info(QString("c 0x%1").arg(temp.bytes.c, 0, 16));
+    emit info(QString("d 0x%1").arg(temp.bytes.d, 0, 16));
+#endif
+
 #if 0
     emit info("info");
     emit debug("debug");

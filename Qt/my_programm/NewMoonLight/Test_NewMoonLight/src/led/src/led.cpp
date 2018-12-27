@@ -46,7 +46,7 @@ void Led::set_color(uint16_t color)
     if(color != 0)
     {
         int index = property("index").toInt();
-        emit debug(QString("index %1 color %2").arg(index).arg(color, 2, 16, QChar('0')));
+        emit debug(QString("index %1 color %2").arg(index).arg(color, 4, 16, QChar('0')));
     }
 #if 1
     cold_color  = (color >> 8) & 0xFF;

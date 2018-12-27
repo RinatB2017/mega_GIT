@@ -27,6 +27,16 @@ union NewMoonLightPacket
     unsigned char buf[sizeof(BODY)];
 };
 
+union UINT16 {
+    uint16_t value;
+    struct {
+        uint8_t c:4;
+        uint8_t d:4;
+        uint8_t a:4;
+        uint8_t b:4;
+    } bytes;
+};
+
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM ":/mainwindow/computer.png"

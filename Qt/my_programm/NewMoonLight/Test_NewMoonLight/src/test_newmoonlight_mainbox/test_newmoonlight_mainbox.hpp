@@ -62,9 +62,9 @@ private slots:
     void test_5(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5_fix_baudrate *serialBox = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    SerialBox5_fix_baudrate *serialBox;
     QByteArray data_rs232;
     QByteArray clean_data;
 
@@ -86,7 +86,7 @@ private:
     } CMD_t;
     QList<CMD> commands;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
 
     qreal center_x;
     qreal center_y;

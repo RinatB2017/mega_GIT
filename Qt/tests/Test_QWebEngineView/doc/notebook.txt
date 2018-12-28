@@ -10,3 +10,17 @@ function myFunction()
    return temp;
 }
 myFunction();
+
+function myFunction()
+{
+        var username = document.getElementsByName('LoginForm[username]');
+        username[0].value = "username";
+        var password = document.getElementsByName('LoginForm[password]');
+        password[0].value = "password";
+        var buttons = document.getElementsByClassName("btn login-btn");
+        buttons[0].click();
+        //alert("username " + username.length);
+        //alert("password " + password.length);
+}
+myFunction();
+

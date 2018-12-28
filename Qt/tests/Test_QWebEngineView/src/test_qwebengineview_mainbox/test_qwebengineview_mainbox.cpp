@@ -311,6 +311,19 @@ void MainBox::load_js_default(void)
 #if 1
     temp.append("function myFunction()\n");
     temp.append("{\n");
+    temp.append("        var username = document.getElementsByName('LoginForm[username]');\n");
+    temp.append("        username[0].value = 'username';\n");
+    temp.append("        var password = document.getElementsByName('LoginForm[password]');\n");
+    temp.append("        password[0].value = 'password';\n");
+    temp.append("        var buttons = document.getElementsByClassName('btn login-btn');\n");
+    temp.append("        buttons[0].click();\n");
+    temp.append("}\n");
+    temp.append("myFunction();\n");
+#endif
+
+#if 0
+    temp.append("function myFunction()\n");
+    temp.append("{\n");
     temp.append("   var links = document.getElementsByTagName('a');\n");
     temp.append("   var temp = 'false';\n");
     temp.append("   for (var i = 0; i < links.length; i++)\n");

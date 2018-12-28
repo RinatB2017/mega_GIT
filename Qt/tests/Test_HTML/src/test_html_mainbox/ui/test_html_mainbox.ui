@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>791</width>
+    <width>924</width>
     <height>186</height>
    </rect>
   </property>
@@ -43,6 +43,20 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="btn_load_html">
+          <property name="text">
+           <string>load</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_save_html">
+          <property name="text">
+           <string>save</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="btn_default_html">
           <property name="text">
            <string>default</string>
@@ -64,8 +78,8 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QWebEngineView" name="webEngineView" native="true">
-        <property name="url" stdset="0">
+       <widget class="QWebEngineView" name="webEngineView">
+        <property name="url">
          <url>
           <string>about:blank</string>
          </url>
@@ -144,6 +158,8 @@
  <tabstops>
   <tabstop>btn_run_html</tabstop>
   <tabstop>te_text_html</tabstop>
+  <tabstop>btn_load_html</tabstop>
+  <tabstop>btn_save_html</tabstop>
   <tabstop>btn_default_html</tabstop>
   <tabstop>btn_run_js</tabstop>
   <tabstop>te_text_js</tabstop>

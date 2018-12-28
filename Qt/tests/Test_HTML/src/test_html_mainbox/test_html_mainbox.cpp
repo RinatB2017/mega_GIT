@@ -87,6 +87,8 @@ void MainBox::init(void)
 
     connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
     connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
+    connect(ui->btn_load_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_load_html()));
+    connect(ui->btn_save_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_save_html()));
 
     connect(ui->btn_run_js,         SIGNAL(clicked(bool)),  this,   SLOT(s_run_js()));
     connect(ui->btn_default_js,     SIGNAL(clicked(bool)),  this,   SLOT(s_default_js()));
@@ -137,9 +139,11 @@ void MainBox::s_default_html(void)
     temp.append("  <title>Название документа</title>\n");
     temp.append("</head>\n");
     temp.append("<body>\n");
-    temp.append("  <p>Нажмите кнопку, чтобы изменить текст в этом абзаце.</p>\n");
 
-    //temp.append("  <a href=\"xxx\">тест</a><br>\n");
+    temp.append("   <button name='btn_test' onclick=btn_test()>Кнопка с текстом</button>\n");
+
+    temp.append("   <p>Нажмите кнопку, чтобы изменить текст в этом абзаце.</p>\n");
+
     temp.append("  <a href=\"#\" onclick=foo()>тест</a><br>\n");
     temp.append("  <a href=\"#\" onclick=foo1()>1</a><br>\n");
     temp.append("  <a href=\"#\" onclick=foo2()>2</a><br>\n");
@@ -174,6 +178,9 @@ void MainBox::s_default_html(void)
     temp.append("    }\n");
     temp.append("    function foo2() {\n");
     temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"2\";\n");
+    temp.append("    }\n");
+    temp.append("    function btn_test() {\n");
+    temp.append("      alert('YES');\n");
     temp.append("    }\n");
     temp.append("  </script>\n");
     temp.append("</body>\n");
@@ -227,6 +234,44 @@ void MainBox::s_default_js(void)
     ui->te_text_js->setText(temp);
 }
 //--------------------------------------------------------------------------------
+void MainBox::s_load_html(void)
+{
+    QFileDialog *dlg;
+
+    dlg = new QFileDialog;
+    dlg->setNameFilter(tr("HTML files (*.html)"));
+    dlg->setDefaultSuffix("html");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        load_html(files.at(0));
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_save_html(void)
+{
+    QFileDialog *dlg;
+
+    dlg = new QFileDialog;
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setNameFilter(tr("HTML files (*.html)"));
+    dlg->setDefaultSuffix("html");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("noname");
+    dlg->setConfirmOverwrite(true);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        save_html(files.at(0));
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
 void MainBox::s_load_js(void)
 {
     QFileDialog *dlg;
@@ -265,6 +310,34 @@ void MainBox::s_save_js(void)
     dlg->deleteLater();
 }
 //--------------------------------------------------------------------------------
+void MainBox::load_html(const QString &filename)
+{
+    if(filename.isEmpty()) return;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+    ui->te_text_html->setText(file.readAll());
+
+    file.close();
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_html(const QString &filename)
+{
+    if(filename.isEmpty()) return;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        return;
+    }
+    file.write(ui->te_text_html->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
+
+    file.close();
+}
+//--------------------------------------------------------------------------------
 void MainBox::load_js(const QString &filename)
 {
     if(filename.isEmpty()) return;
@@ -289,7 +362,6 @@ void MainBox::save_js(const QString &filename)
         return;
     }
     file.write(ui->te_text_js->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
-    //file.write(ui->te_text_js->toPlainText().toLocal8Bit()); //.toAscii());
 
     file.close();
 }
@@ -306,7 +378,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

@@ -65,6 +65,9 @@ private slots:
     void s_run_js(void);
     void s_default_js(void);
 
+    void s_load_html(void);
+    void s_save_html(void);
+
     void s_load_js(void);
     void s_save_js(void);
 
@@ -99,6 +102,9 @@ private:
 
     void init(void);
     void createTestBar(void);
+
+    void load_html(const QString &filename);
+    void save_html(const QString &filename);
 
     void load_js(const QString &filename);
     void save_js(const QString &filename);

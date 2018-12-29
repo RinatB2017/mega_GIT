@@ -62,6 +62,7 @@ private slots:
     void s_run_html(void);
     void s_default_html(void);
 
+    void s_autorun_js(void);
     void s_run_js(void);
     void s_default_js(void);
 

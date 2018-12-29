@@ -83,7 +83,7 @@ void MainBox::init(void)
 
     ui->webEngineView->setPage(new_page);
 
-    connect(new_page,               SIGNAL(loadFinished(bool)),     this,   SLOT(s_run_js()));
+    connect(new_page,               SIGNAL(loadFinished(bool)),     this,   SLOT(s_autorun_js()));
 
     connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
     connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
@@ -187,6 +187,30 @@ void MainBox::s_default_html(void)
     temp.append("</html>\n");
 
     ui->te_text_html->setPlainText(temp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_autorun_js(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(ui->cb_auto->isChecked() == false)
+    {
+        return;
+    }
+
+    const QString javascript = ui->te_text_js->toPlainText();
+    if(javascript.isEmpty())
+    {
+        emit error("JS is empty!");
+        return;
+    }
+    //emit trace(javascript);
+
+    new_page->runJavaScript(javascript, [=](const QVariant &v)
+    {
+        emit info(v.toString());
+        emit send(v.toString());
+    });
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_run_js(void)

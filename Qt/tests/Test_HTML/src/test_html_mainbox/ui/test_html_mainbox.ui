@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>924</width>
+    <width>967</width>
     <height>186</height>
    </rect>
   </property>
@@ -101,6 +101,13 @@
          <widget class="QPushButton" name="btn_run_js">
           <property name="text">
            <string>run</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="cb_auto">
+          <property name="text">
+           <string>auto</string>
           </property>
          </widget>
         </item>

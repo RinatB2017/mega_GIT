@@ -115,37 +115,37 @@ void MyWidget::log(const QString data)
 //--------------------------------------------------------------------------------
 void MyWidget::init_w_lists(void)
 {
-    QList<QLineEdit *> allle = findChildren<QLineEdit *>();
+    QList<QLineEdit *> allle = topLevelWidget()->findChildren<QLineEdit *>();
     foreach (QLineEdit *obj, allle)
     {
         obj->setProperty("state", true);
         w_lists.append(obj);
     }
-    QList<QAbstractSlider *> allsl = findChildren<QAbstractSlider *>();
+    QList<QAbstractSlider *> allsl = topLevelWidget()->findChildren<QAbstractSlider *>();
     foreach (QAbstractSlider *obj, allsl)
     {
         obj->setProperty("state", true);
         w_lists.append(obj);
     }
-    QList<QAbstractScrollArea *> allsa = findChildren<QAbstractScrollArea *>();
+    QList<QAbstractScrollArea *> allsa = topLevelWidget()->findChildren<QAbstractScrollArea *>();
     foreach (QAbstractScrollArea *obj, allsa)
     {
         obj->setProperty("state", true);
         w_lists.append(obj);
     }
-    QList<QAbstractSpinBox *> allsb = findChildren<QAbstractSpinBox *>();
+    QList<QAbstractSpinBox *> allsb = topLevelWidget()->findChildren<QAbstractSpinBox *>();
     foreach (QAbstractSpinBox *obj, allsb)
     {
         obj->setProperty("state", true);
         w_lists.append(obj);
     }
-    QList<QComboBox *> allcb = findChildren<QComboBox *>();
+    QList<QComboBox *> allcb = topLevelWidget()->findChildren<QComboBox *>();
     foreach (QComboBox *obj, allcb)
     {
         obj->setProperty("state", true);
         w_lists.append(obj);
     }
-    QList<QAbstractButton *> allbtn = findChildren<QAbstractButton *>();
+    QList<QAbstractButton *> allbtn = topLevelWidget()->findChildren<QAbstractButton *>();
     foreach (QAbstractButton *obj, allbtn)
     {
         obj->setProperty("state", true);
@@ -215,7 +215,7 @@ void MyWidget::block_this_button(bool state)
 //--------------------------------------------------------------------------------
 void MyWidget::block_interface(bool state)
 {
-    QList<QAbstractButton *> all_obj = findChildren<QAbstractButton *>();
+    QList<QAbstractButton *> all_obj = topLevelWidget()->findChildren<QAbstractButton *>();
     foreach(QAbstractButton *obj, all_obj)
     {
         if(obj->property(NO_BLOCK).toBool() == false)
@@ -224,7 +224,7 @@ void MyWidget::block_interface(bool state)
         }
     }
     //---
-    QList<QComboBox *> all_cb = findChildren<QComboBox *>();
+    QList<QComboBox *> all_cb = topLevelWidget()->findChildren<QComboBox *>();
     foreach(QComboBox *obj, all_cb)
     {
         if(obj->property(NO_BLOCK).toBool() == false)
@@ -233,7 +233,7 @@ void MyWidget::block_interface(bool state)
         }
     }
     //---
-    QList<QDoubleSpinBox *> all_dsb = findChildren<QDoubleSpinBox *>();
+    QList<QDoubleSpinBox *> all_dsb = topLevelWidget()->findChildren<QDoubleSpinBox *>();
     foreach(QDoubleSpinBox *obj, all_dsb)
     {
         if(obj->property(NO_BLOCK).toBool() == false)
@@ -242,7 +242,7 @@ void MyWidget::block_interface(bool state)
         }
     }
     //---
-    QList<QSpinBox *> all_sb = findChildren<QSpinBox *>();
+    QList<QSpinBox *> all_sb = topLevelWidget()->findChildren<QSpinBox *>();
     foreach(QSpinBox *obj, all_sb)
     {
         if(obj->property(NO_BLOCK).toBool() == false)
@@ -258,7 +258,7 @@ void MyWidget::block_widget(const QString name, bool state)
     {
         return;
     }
-    QList<QWidget *> all_obj = findChildren<QWidget *>();
+    QList<QWidget *> all_obj = topLevelWidget()->findChildren<QWidget *>();
     foreach(QWidget *obj, all_obj)
     {
         if(obj->objectName() == name)
@@ -344,7 +344,7 @@ QStringList MyWidget::get_all_param_name(void)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QCheckBox(QString group_name)
 {
-    QList<QCheckBox *> widgets = findChildren<QCheckBox *>();
+    QList<QCheckBox *> widgets = topLevelWidget()->findChildren<QCheckBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -362,7 +362,7 @@ void MyWidget::load_QCheckBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QCheckBox(QString group_name)
 {
-    QList<QCheckBox *> allobj = findChildren<QCheckBox *>();
+    QList<QCheckBox *> allobj = topLevelWidget()->findChildren<QCheckBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -380,7 +380,7 @@ void MyWidget::save_QCheckBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QComboBox(QString group_name)
 {
-    QList<QComboBox *> allobj = findChildren<QComboBox *>();
+    QList<QComboBox *> allobj = topLevelWidget()->findChildren<QComboBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -398,7 +398,7 @@ void MyWidget::load_QComboBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QComboBox(QString group_name)
 {
-    QList<QComboBox *> allobj = findChildren<QComboBox *>();
+    QList<QComboBox *> allobj = topLevelWidget()->findChildren<QComboBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -416,7 +416,7 @@ void MyWidget::save_QComboBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QPushButton(QString group_name)
 {
-    QList<QPushButton *> allobj = findChildren<QPushButton *>();
+    QList<QPushButton *> allobj = topLevelWidget()->findChildren<QPushButton *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -434,7 +434,7 @@ void MyWidget::load_QPushButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QPushButton(QString group_name)
 {
-    QList<QPushButton *> allobj = findChildren<QPushButton *>();
+    QList<QPushButton *> allobj = topLevelWidget()->findChildren<QPushButton *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -452,7 +452,7 @@ void MyWidget::save_QPushButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QToolButton(QString group_name)
 {
-    QList<QToolButton *> allobj = findChildren<QToolButton *>();
+    QList<QToolButton *> allobj = topLevelWidget()->findChildren<QToolButton *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -470,7 +470,7 @@ void MyWidget::load_QToolButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QToolButton(QString group_name)
 {
-    QList<QToolButton *> allobj = findChildren<QToolButton *>();
+    QList<QToolButton *> allobj = topLevelWidget()->findChildren<QToolButton *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -488,7 +488,7 @@ void MyWidget::save_QToolButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QTextEdit(QString group_name)
 {
-    QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
+    QList<QTextEdit *> allobj = topLevelWidget()->findChildren<QTextEdit *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -512,7 +512,7 @@ void MyWidget::load_QTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QTextEdit(QString group_name)
 {
-    QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
+    QList<QTextEdit *> allobj = topLevelWidget()->findChildren<QTextEdit *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -534,7 +534,7 @@ void MyWidget::save_QTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QLineEdit(QString group_name)
 {
-    QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
+    QList<QLineEdit *> allobj = topLevelWidget()->findChildren<QLineEdit *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -556,7 +556,7 @@ void MyWidget::load_QLineEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QLineEdit(QString group_name)
 {
-    QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
+    QList<QLineEdit *> allobj = topLevelWidget()->findChildren<QLineEdit *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -578,7 +578,7 @@ void MyWidget::save_QLineEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSpinBox(QString group_name)
 {
-    QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
+    QList<QSpinBox *> allobj = topLevelWidget()->findChildren<QSpinBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -596,7 +596,7 @@ void MyWidget::load_QSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSpinBox(QString group_name)
 {
-    QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
+    QList<QSpinBox *> allobj = topLevelWidget()->findChildren<QSpinBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -614,7 +614,7 @@ void MyWidget::save_QSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QDoubleSpinBox(QString group_name)
 {
-    QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
+    QList<QDoubleSpinBox *> allobj = topLevelWidget()->findChildren<QDoubleSpinBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -632,7 +632,7 @@ void MyWidget::load_QDoubleSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QDoubleSpinBox(QString group_name)
 {
-    QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
+    QList<QDoubleSpinBox *> allobj = topLevelWidget()->findChildren<QDoubleSpinBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -650,7 +650,7 @@ void MyWidget::save_QDoubleSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSlider(QString group_name)
 {
-    QList<QSlider *> allobj = findChildren<QSlider *>();
+    QList<QSlider *> allobj = topLevelWidget()->findChildren<QSlider *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -668,7 +668,7 @@ void MyWidget::load_QSlider(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSlider(QString group_name)
 {
-    QList<QSlider *> allobj = findChildren<QSlider *>();
+    QList<QSlider *> allobj = topLevelWidget()->findChildren<QSlider *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -686,7 +686,7 @@ void MyWidget::save_QSlider(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSplitter(QString group_name)
 {
-    QList<QSplitter *> allobj = findChildren<QSplitter *>();
+    QList<QSplitter *> allobj = topLevelWidget()->findChildren<QSplitter *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -704,7 +704,7 @@ void MyWidget::load_QSplitter(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSplitter(QString group_name)
 {
-    QList<QSplitter *> allobj = findChildren<QSplitter *>();
+    QList<QSplitter *> allobj = topLevelWidget()->findChildren<QSplitter *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -810,7 +810,7 @@ void MyWidget::debug(void)
 //--------------------------------------------------------------------------------
 void MyWidget::block_wheel(void)
 {
-    QList<QWidget *> all_obj = findChildren<QWidget *>();
+    QList<QWidget *> all_obj = topLevelWidget()->findChildren<QWidget *>();
     foreach(QWidget *obj, all_obj)
     {
         if(!obj->objectName().isEmpty())
@@ -822,7 +822,7 @@ void MyWidget::block_wheel(void)
 //--------------------------------------------------------------------------------
 void MyWidget::show_objectname(void)
 {
-    QList<QWidget *> all_obj = findChildren<QWidget *>();
+    QList<QWidget *> all_obj = topLevelWidget()->findChildren<QWidget *>();
     foreach(QWidget *obj, all_obj)
     {
         if(obj->objectName().isEmpty() == false)
@@ -918,7 +918,7 @@ int MyWidget::messagebox_warning(const QString title,
 //--------------------------------------------------------------------------------
 void MyWidget::load_checkBox(QList<check_box> data)
 {
-    QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
+    QList<QCheckBox *> all_chb = topLevelWidget()->findChildren<QCheckBox *>();
 
     foreach (check_box cb_obj, data) {
         foreach(QCheckBox *obj, all_chb)
@@ -933,7 +933,7 @@ void MyWidget::load_checkBox(QList<check_box> data)
 //--------------------------------------------------------------------------------
 void MyWidget::load_comboBox(QList<combo_box> data)
 {
-    QList<QComboBox *> all_chb = findChildren<QComboBox *>();
+    QList<QComboBox *> all_chb = topLevelWidget()->findChildren<QComboBox *>();
 
     foreach (combo_box cb_obj, data) {
         foreach(QComboBox *obj, all_chb)
@@ -948,7 +948,7 @@ void MyWidget::load_comboBox(QList<combo_box> data)
 //--------------------------------------------------------------------------------
 void MyWidget::load_spinBox(QList<spin_box> data)
 {
-    QList<QSpinBox *> all_chb = findChildren<QSpinBox *>();
+    QList<QSpinBox *> all_chb = topLevelWidget()->findChildren<QSpinBox *>();
 
     foreach (spin_box cb_obj, data) {
         foreach(QSpinBox *obj, all_chb)
@@ -963,7 +963,7 @@ void MyWidget::load_spinBox(QList<spin_box> data)
 //--------------------------------------------------------------------------------
 void MyWidget::load_d_spinBox(QList<d_spin_box> data)
 {
-    QList<QDoubleSpinBox *> all_chb = findChildren<QDoubleSpinBox *>();
+    QList<QDoubleSpinBox *> all_chb = topLevelWidget()->findChildren<QDoubleSpinBox *>();
 
     foreach (d_spin_box cb_obj, data) {
         foreach(QDoubleSpinBox *obj, all_chb)
@@ -978,7 +978,7 @@ void MyWidget::load_d_spinBox(QList<d_spin_box> data)
 //--------------------------------------------------------------------------------
 void MyWidget::save_checkBox(QString group_name, QList<QCheckBox *> data)
 {
-    QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
+    QList<QCheckBox *> all_chb = topLevelWidget()->findChildren<QCheckBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -998,7 +998,7 @@ void MyWidget::save_checkBox(QString group_name, QList<QCheckBox *> data)
 //--------------------------------------------------------------------------------
 void MyWidget::save_comboBox(QString group_name, QList<QComboBox *> data)
 {
-    QList<QComboBox *> all_chb = findChildren<QComboBox *>();
+    QList<QComboBox *> all_chb = topLevelWidget()->findChildren<QComboBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -1018,7 +1018,7 @@ void MyWidget::save_comboBox(QString group_name, QList<QComboBox *> data)
 //--------------------------------------------------------------------------------
 void MyWidget::save_spinBox(QString group_name, QList<QSpinBox *> data)
 {
-    QList<QSpinBox *> all_chb = findChildren<QSpinBox *>();
+    QList<QSpinBox *> all_chb = topLevelWidget()->findChildren<QSpinBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -1038,7 +1038,7 @@ void MyWidget::save_spinBox(QString group_name, QList<QSpinBox *> data)
 //--------------------------------------------------------------------------------
 void MyWidget::save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data)
 {
-    QList<QDoubleSpinBox *> all_chb = findChildren<QDoubleSpinBox *>();
+    QList<QDoubleSpinBox *> all_chb = topLevelWidget()->findChildren<QDoubleSpinBox *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);

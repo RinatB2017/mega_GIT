@@ -47,7 +47,7 @@ unix {
 LIBS    += -lusb
 LIBS    += /opt/lib64/libftd2xx.so
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)

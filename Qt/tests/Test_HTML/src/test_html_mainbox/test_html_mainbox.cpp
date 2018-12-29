@@ -95,6 +95,14 @@ void MainBox::init(void)
     connect(ui->btn_load_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_load_js()));
     connect(ui->btn_save_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_save_js()));
 
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("HTML", "html_widget",  Qt::LeftDockWidgetArea, ui->groupBox_html);
+        mw->add_dock_widget("JS",   "js_widget",    Qt::LeftDockWidgetArea, ui->groupBox_js);
+    }
+#else
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");
     splitter->setChildrenCollapsible(false);
@@ -106,10 +114,11 @@ void MainBox::init(void)
     splitter->addWidget(ui->groupBox_view);
     splitter->addWidget(ui->groupBox_js);
 
+    layout()->addWidget(splitter);
+#endif
+
     highlighter_cpp = new Highlighter(ui->te_text_html->document());
     highlighter_js  = new Highlighter(ui->te_text_js->document());
-
-    layout()->addWidget(splitter);
 
     load_widgets("test_html");
 }
@@ -343,7 +352,7 @@ void MainBox::load_html(const QString &filename)
     {
         return;
     }
-    ui->te_text_html->setText(file.readAll());
+    ui->te_text_html->setPlainText(file.readAll());
 
     file.close();
 }

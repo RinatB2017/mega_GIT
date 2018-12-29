@@ -136,6 +136,9 @@ void MainBox::init(void)
     connect(ui->btn_save_js,    SIGNAL(clicked(bool)),
             this,               SLOT(js_save()));
 
+    connect(ui->btn_get_document_title, SIGNAL(clicked(bool)),
+            this,               SLOT(get_document_title()));
+
     //ui->le_address->setText("https://2ip.ru/");
     ui->le_address->setText("https://cashgo.ru/play/levels/#103");
     //ui->le_address->setText("https://www.youtube.com/");
@@ -162,14 +165,7 @@ void MainBox::init(void)
     
     highlighter_js  = new Highlighter(ui->te_js->document());
 
-    //---
-    //ui->sb_proxy_port->setRange(0, 0xFFFF);
-
-    //ui->le_proxy_ip->setText("103.217.156.31:8080");
-    //ui->sb_proxy_port->setValue(8080);
-
     load_proxies();
-    //---
 
     ui->progressBar->setValue(0);
 
@@ -195,6 +191,26 @@ void MainBox::handleCookieAdded(const QNetworkCookie &cookie)
         return;
 
     m_cookies.append(cookie);
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_document_title(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+   QString javascript;
+   javascript.append("function myFunction()\n");
+   javascript.append("{\n");
+   javascript.append("  var title = document.title;\n");
+   javascript.append("  alert(title);\n");
+   javascript.append("  return title;\n");
+   javascript.append("}\n");
+   javascript.append("myFunction();\n");
+
+    new_page->runJavaScript(javascript, [=](const QVariant &v)
+    {
+        emit info(v.toString());
+        emit send(v.toString());
+    });
 }
 //--------------------------------------------------------------------------------
 void MainBox::js_load(void)

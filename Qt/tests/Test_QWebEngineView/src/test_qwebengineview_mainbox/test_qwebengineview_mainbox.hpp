@@ -69,6 +69,8 @@ private slots:
 
     void handleCookieAdded(const QNetworkCookie &cookie);
 
+    void get_document_title(void);
+
 private:
     Ui::MainBox *ui;
     QWidget *parent;

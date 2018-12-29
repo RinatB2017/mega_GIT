@@ -54,7 +54,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("Test_QWebEngineView");
+    save_widgets(SAVE_WIDGETS_NAME);
 
     delete ui;
 }
@@ -99,13 +99,14 @@ void MainBox::init(void)
     //profile->setHttpUserAgent("Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
 	//profile->setHttpUserAgent("Googlebot/2.1 (+http://www.google.com/bot.html)");
 
+#if 0
     //TODO печеньки
     emit info(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
     //profile->setPersistentStoragePath(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
     m_store = profile->cookieStore();
     connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainBox::handleCookieAdded);
     m_store->loadAllCookies();
-    //---
+#endif
 
     new_page = new CustomPage(profile);
     //new_page = new QWebEnginePage(profile);
@@ -169,7 +170,7 @@ void MainBox::init(void)
 
     ui->progressBar->setValue(0);
 
-    load_widgets("Test_QWebEngineView");
+    load_widgets(SAVE_WIDGETS_NAME);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::containsCookie(const QNetworkCookie &cookie)
@@ -420,13 +421,14 @@ void MainBox::s_run(void)
     connect(new_page,   SIGNAL(loadFinished(bool)),     this,               SLOT(run_JS(bool)));
     connect(new_page,   SIGNAL(err_output(QString)),    this,               SIGNAL(error(QString)));
 
+#if 0
     //TODO печеньки
     emit info(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
     //profile->setPersistentStoragePath(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
     m_store = profile->cookieStore();
     connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainBox::handleCookieAdded);
     m_store->loadAllCookies();
-    //---
+#endif
 
     ui->webEngineView->setPage(new_page);
     ui->webEngineView->setUrl(QUrl(address));

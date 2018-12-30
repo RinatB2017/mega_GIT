@@ -141,9 +141,9 @@ void MainBox::init(void)
             this,               SLOT(get_document_title()));
 
     //ui->le_address->setText("https://2ip.ru/");
-    ui->le_address->setText("https://cashgo.ru/play/levels/#103");
+    //ui->le_address->setText("https://cashgo.ru/play/levels/#103");
     //ui->le_address->setText("https://www.youtube.com/");
-    //ui->le_address->setText("http://localhost/mso/");
+    ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
     //ui->le_address->setText("https://www.avito.ru/krasnodar");
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
@@ -326,6 +326,25 @@ void MainBox::load_js_default(void)
     QString temp;
 
 #if 1
+    temp.append("function find_link_and_click(text)\n");
+    temp.append("{\n");
+    temp.append("   var links = document.getElementsByTagName('a');\n");
+    temp.append("   for (var i = 0; i < links.length; i++)\n");
+    temp.append("   {\n");
+    temp.append("       if(links[i].innerHTML == text)\n");
+    temp.append("       {\n");
+    temp.append("           links[i].click();\n");
+    temp.append("           return;\n");
+    temp.append("       }\n");
+    temp.append("   }\n");
+    temp.append("   alert('not found!');\n");
+    temp.append("}\n");
+    temp.append("\n");
+
+    temp.append(ui->te_js->toPlainText());
+#endif
+
+#if 0
     temp.append("function myFunction()\n");
     temp.append("{\n");
     temp.append("        var username = document.getElementsByName('LoginForm[username]');\n");
@@ -334,26 +353,6 @@ void MainBox::load_js_default(void)
     temp.append("        password[0].value = 'password';\n");
     temp.append("        var buttons = document.getElementsByClassName('btn login-btn');\n");
     temp.append("        buttons[0].click();\n");
-    temp.append("}\n");
-    temp.append("myFunction();\n");
-#endif
-
-#if 0
-    temp.append("function myFunction()\n");
-    temp.append("{\n");
-    temp.append("   var links = document.getElementsByTagName('a');\n");
-    temp.append("   var temp = 'false';\n");
-    temp.append("   for (var i = 0; i < links.length; i++)\n");
-    temp.append("   {\n");
-
-    temp.append("      if(links[i].innerHTML == 'Транспорт')\n");
-    temp.append("      {\n");
-    temp.append("          temp = 'true';\n");
-    temp.append("          links[i].click();\n");
-    temp.append("      }\n");
-
-    temp.append("   }\n");
-    temp.append("   return temp;\n");
     temp.append("}\n");
     temp.append("myFunction();\n");
 #endif

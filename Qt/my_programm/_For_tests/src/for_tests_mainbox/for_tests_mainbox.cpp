@@ -215,6 +215,15 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    QPixmap myPixmap(ICON_PROGRAMM);
+    QLabel *label = new QLabel();
+    label->setPixmap(myPixmap);
+    mw->statusBar()->addWidget(label);
+#endif
+
+#if 0
     Binary *bin = new Binary();
     connect(bin,    SIGNAL(info(QString)),     this,   SIGNAL(info(QString)));
     connect(bin,    SIGNAL(debug(QString)),    this,   SIGNAL(debug(QString)));
@@ -255,6 +264,7 @@ bool MainBox::test_0(void)
 
     bin->file_to_buf(i_filename,
                      o_filename);
+#endif
 
     return true;
 }

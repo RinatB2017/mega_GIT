@@ -91,8 +91,7 @@ LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/highlighter/highlighter.pri)
-
-include (src/codeeditor/codeeditor.pri)
+include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

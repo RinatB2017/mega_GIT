@@ -261,7 +261,7 @@ void MainBox::load_js(const QString &filename)
     {
         return;
     }
-    ui->te_js->setText(file.readAll());
+    ui->te_js->setPlainText(file.readAll());
 
     file.close();
 }

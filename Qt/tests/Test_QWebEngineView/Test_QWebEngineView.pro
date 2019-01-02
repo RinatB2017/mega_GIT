@@ -22,7 +22,7 @@ DEFINES += NO_TRAYICON
 
 DEFINES += SAVE_INI
 
-DEFINES += SAVE_WIDGETS_TEXTEDIT
+DEFINES += SAVE_WIDGETS_PLAINTEXTEDIT
 DEFINES += SAVE_WIDGETS_SPLITTER
 DEFINES += SAVE_WIDGETS_CHECKBOX
 
@@ -50,6 +50,7 @@ LIB_PATH2 = "../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH2/highlighter/highlighter.pri)
+include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -264,7 +264,7 @@ void MainBox::s_default_js(void)
     temp.append("}\n");
     temp.append("myFunction();\n");
 
-    ui->te_text_js->setText(temp);
+    ui->te_text_js->setPlainText(temp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_load_html(void)
@@ -380,7 +380,7 @@ void MainBox::load_js(const QString &filename)
     {
         return;
     }
-    ui->te_text_js->setText(file.readAll());
+    ui->te_text_js->setPlainText(file.readAll());
 
     file.close();
 }

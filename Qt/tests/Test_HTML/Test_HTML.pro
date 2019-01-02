@@ -37,7 +37,8 @@ DEFINES += SAVE_WIDGETS_CHECKBOX
 #DEFINES += SAVE_WIDGETS_SPINBOX
 #DEFINES += SAVE_WIDGETS_DOUBLESPINBOX
 #DEFINES += SAVE_WIDGETS_SLIDER
-DEFINES += SAVE_WIDGETS_TEXTEDIT
+DEFINES += SAVE_WIDGETS_PLAINTEXTEDIT
+#DEFINES += SAVE_WIDGETS_TEXTEDIT
 #DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += SAVE_WIDGETS_SPLITTER
 
@@ -89,8 +90,9 @@ LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
 include ($$LIB_PATH2/highlighter/highlighter.pri)
+
+include (src/codeeditor/codeeditor.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

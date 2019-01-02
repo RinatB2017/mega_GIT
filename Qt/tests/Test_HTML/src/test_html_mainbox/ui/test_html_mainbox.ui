@@ -66,7 +66,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="te_text_html"/>
+       <widget class="CodeEditor" name="te_text_html"/>
       </item>
      </layout>
     </widget>
@@ -148,7 +148,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="te_text_js"/>
+       <widget class="CodeEditor" name="te_text_js"/>
       </item>
      </layout>
     </widget>
@@ -160,6 +160,11 @@
    <class>QWebEngineView</class>
    <extends>QWidget</extends>
    <header location="global">QtWebEngineWidgets/QWebEngineView</header>
+  </customwidget>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QTextEdit</extends>
+   <header>codeeditor.hpp</header>
   </customwidget>
  </customwidgets>
  <tabstops>

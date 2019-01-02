@@ -184,6 +184,7 @@ private:
     void load_QComboBox(QString group_name);
     void load_QPushButton(QString group_name);
     void load_QToolButton(QString group_name);
+    void load_QPlainTextEdit(QString group_name);
     void load_QTextEdit(QString group_name);
     void load_QLineEdit(QString group_name);
     void load_QSpinBox(QString group_name);
@@ -195,6 +196,7 @@ private:
     void save_QComboBox(QString group_name);
     void save_QPushButton(QString group_name);
     void save_QToolButton(QString group_name);
+    void save_QPlainTextEdit(QString group_name);
     void save_QTextEdit(QString group_name);
     void save_QLineEdit(QString group_name);
     void save_QSpinBox(QString group_name);

@@ -532,6 +532,52 @@ void MyWidget::save_QTextEdit(QString group_name)
     settings->endGroup();
 }
 //--------------------------------------------------------------------------------
+void MyWidget::load_QPlainTextEdit(QString group_name)
+{
+    QList<QPlainTextEdit *> allobj = topLevelWidget()->findChildren<QPlainTextEdit *>();
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach (QPlainTextEdit *obj, allobj)
+    {
+        QString o_name = obj->objectName();
+        if(!o_name.isEmpty())
+        {
+            if(o_name.left(3) == "te_") //TODO костыль
+            {
+                settings->beginGroup(o_name);
+                //qDebug() << "objectName ===>" << obj->objectName();
+                //qDebug() << "text       ===>" << settings->value("text", "").toString();
+                obj->setPlainText(settings->value("text", "").toString());
+                settings->endGroup();
+            }
+        }
+    }
+    settings->endGroup();
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_QPlainTextEdit(QString group_name)
+{
+    QList<QPlainTextEdit *> allobj = topLevelWidget()->findChildren<QPlainTextEdit *>();
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach(QPlainTextEdit *obj, allobj)
+    {
+        QString o_name = obj->objectName();
+        if(!o_name.isEmpty())
+        {
+            if(o_name.left(3) == "te_") //TODO костыль
+            {
+                settings->beginGroup(o_name);
+                settings->setValue("text", QVariant(obj->toPlainText()));
+                settings->endGroup();
+            }
+        }
+    }
+    settings->endGroup();
+}
+//--------------------------------------------------------------------------------
 void MyWidget::load_QLineEdit(QString group_name)
 {
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
@@ -746,6 +792,9 @@ void MyWidget::load_widgets(QString group_name)
 #ifdef SAVE_WIDGETS_SPLITTER
     load_QSplitter(group_name);
 #endif
+#ifdef SAVE_WIDGETS_PLAINTEXTEDIT
+    load_QPlainTextEdit(group_name);
+#endif
 #ifdef SAVE_WIDGETS_TEXTEDIT
     load_QTextEdit(group_name);
 #endif
@@ -780,6 +829,9 @@ void MyWidget::save_widgets(QString group_name)
 #endif
 #ifdef SAVE_WIDGETS_SPLITTER
     save_QSplitter(group_name);
+#endif
+#ifdef SAVE_WIDGETS_PLAINTEXTEDIT
+    save_QPlainTextEdit(group_name);
 #endif
 #ifdef SAVE_WIDGETS_TEXTEDIT
     save_QTextEdit(group_name);

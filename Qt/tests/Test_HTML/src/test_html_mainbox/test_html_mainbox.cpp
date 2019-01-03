@@ -53,7 +53,28 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+#if 0
+    QMessageBox *msgBox = new QMessageBox();
+    msgBox->setIcon(QMessageBox::Warning);
+    msgBox->setWindowTitle("title");
+    msgBox->setText("text");
+    msgBox->setStandardButtons(QMessageBox::Ok);
+    msgBox->exec();
+#endif
+
+#if 1
+    if(ui->te_text_html->document()->isModified())
+    {
+        messagebox_warning("error", "HTML not saved");
+    }
+    if(ui->te_text_js->document()->isModified())
+    {
+        messagebox_warning("error", "JS not saved");
+    }
+#endif
+
     save_widgets("test_html");
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -68,6 +89,10 @@ void MainBox::init(void)
 
     int fontWidth_js = QFontMetrics(ui->te_text_js->currentCharFormat().font()).averageCharWidth();
     ui->te_text_js->setTabStopWidth(3 * fontWidth_js);
+
+    QFont font("Courier", 10);
+    ui->te_text_html->setFont(font);
+    ui->te_text_js->setFont(font);
 
     QWebEngineProfile *profile = new QWebEngineProfile();
     // изменяем необходимые http-заголовки на свои значения
@@ -476,17 +501,7 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    QString temp;
-    temp.append("function myFunction()\n");
-    temp.append("{\n");
-    temp.append("   document.getElementById('car_x').value = 'car1';\n");
-    temp.append("   document.getElementById('rad2').checked = true;;\n");
-    temp.append("   document.getElementById('text1').value = 'car1';\n");
-    //temp.append("   return \"\";\n");
-    temp.append("}\n");
-    temp.append("myFunction();\n");
-
-    ui->te_text_js->setPlainText(temp);
+    emit info(QString("%1").arg(ui->te_text_js->document()->isModified()));
 
     return true;
 }

@@ -111,6 +111,4 @@ include (src/binary/binary.pri)
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 
-message ($$QT)
-
 VPATH = $$INCLUDEPATH

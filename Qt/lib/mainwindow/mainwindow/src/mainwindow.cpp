@@ -252,6 +252,7 @@ void MainWindow::init(void)
     //---
 
     setAttribute(Qt::WA_DeleteOnClose);
+    //setAttribute(Qt::WA_QuitOnClose);
 }
 //--------------------------------------------------------------------------------
 //    if(now.date().year()        >= DEMO_YEAR &&

@@ -54,6 +54,12 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    if(ui->te_js->document()->isModified())
+    {
+        qDebug() << "JS not saved";
+        messagebox_critical("ERROR", "JS not saved");
+    }
+
     save_widgets(SAVE_WIDGETS_NAME);
 
     delete ui;
@@ -70,6 +76,9 @@ void MainBox::init(void)
     // ширина TAB в символах
     int fontWidth = QFontMetrics(ui->te_js->currentCharFormat().font()).averageCharWidth();
     ui->te_js->setTabStopWidth(3 * fontWidth);
+
+    QFont font("Courier", 10);
+    ui->te_js->setFont(font);
 
     ui->cb_user_agent->addItem("Linux", "Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
     ui->cb_user_agent->addItem("Windows XP", "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");

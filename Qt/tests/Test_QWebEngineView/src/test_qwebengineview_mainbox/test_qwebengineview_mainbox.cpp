@@ -54,11 +54,13 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+#if 0
     if(ui->te_js->document()->isModified())
     {
         qDebug() << "JS not saved";
         messagebox_critical("ERROR", "JS not saved");
     }
+#endif
 
     save_widgets(SAVE_WIDGETS_NAME);
 

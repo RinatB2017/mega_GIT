@@ -344,7 +344,11 @@ QStringList MyWidget::get_all_param_name(void)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QCheckBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QCheckBox *> widgets = topLevelWidget()->findChildren<QCheckBox *>();
+#else
     QList<QCheckBox *> widgets = findChildren<QCheckBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -362,7 +366,11 @@ void MyWidget::load_QCheckBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QCheckBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QCheckBox *> allobj = topLevelWidget()->findChildren<QCheckBox *>();
+#else
     QList<QCheckBox *> allobj = findChildren<QCheckBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -380,7 +388,11 @@ void MyWidget::save_QCheckBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QComboBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QComboBox *> allobj = topLevelWidget()->findChildren<QComboBox *>();
+#else
     QList<QComboBox *> allobj = findChildren<QComboBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -398,7 +410,11 @@ void MyWidget::load_QComboBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QComboBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QComboBox *> allobj = topLevelWidget()->findChildren<QComboBox *>();
+#else
     QList<QComboBox *> allobj = findChildren<QComboBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -416,7 +432,11 @@ void MyWidget::save_QComboBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QPushButton(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QPushButton *> allobj = topLevelWidget()->findChildren<QPushButton *>();
+#else
     QList<QPushButton *> allobj = findChildren<QPushButton *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -434,7 +454,11 @@ void MyWidget::load_QPushButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QPushButton(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QPushButton *> allobj = topLevelWidget()->findChildren<QPushButton *>();
+#else
     QList<QPushButton *> allobj = findChildren<QPushButton *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -452,7 +476,11 @@ void MyWidget::save_QPushButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QToolButton(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QToolButton *> allobj = topLevelWidget()->findChildren<QToolButton *>();
+#else
     QList<QToolButton *> allobj = findChildren<QToolButton *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -470,7 +498,11 @@ void MyWidget::load_QToolButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QToolButton(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QToolButton *> allobj = topLevelWidget()->findChildren<QToolButton *>();
+#else
     QList<QToolButton *> allobj = findChildren<QToolButton *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -488,7 +520,11 @@ void MyWidget::save_QToolButton(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QTextEdit(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QTextEdit *> allobj = topLevelWidget()->findChildren<QTextEdit *>();
+#else
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -512,7 +548,11 @@ void MyWidget::load_QTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QTextEdit(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QTextEdit *> allobj = topLevelWidget()->findChildren<QTextEdit *>();
+#else
     QList<QTextEdit *> allobj = findChildren<QTextEdit *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -534,7 +574,11 @@ void MyWidget::save_QTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QPlainTextEdit(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QPlainTextEdit *> allobj = topLevelWidget()->findChildren<QPlainTextEdit *>();
+#else
     QList<QPlainTextEdit *> allobj = findChildren<QPlainTextEdit *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -558,7 +602,11 @@ void MyWidget::load_QPlainTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QPlainTextEdit(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QPlainTextEdit *> allobj = topLevelWidget()->findChildren<QPlainTextEdit *>();
+#else
     QList<QPlainTextEdit *> allobj = findChildren<QPlainTextEdit *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -580,7 +628,11 @@ void MyWidget::save_QPlainTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QLineEdit(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QLineEdit *> allobj = topLevelWidget()->findChildren<QLineEdit *>();
+#else
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -602,7 +654,11 @@ void MyWidget::load_QLineEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QLineEdit(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QLineEdit *> allobj = topLevelWidget()->findChildren<QLineEdit *>();
+#else
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -624,7 +680,11 @@ void MyWidget::save_QLineEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSpinBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QSpinBox *> allobj = topLevelWidget()->findChildren<QSpinBox *>();
+#else
     QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -642,7 +702,11 @@ void MyWidget::load_QSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSpinBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QSpinBox *> allobj = topLevelWidget()->findChildren<QSpinBox *>();
+#else
     QList<QSpinBox *> allobj = findChildren<QSpinBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -660,7 +724,11 @@ void MyWidget::save_QSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QDoubleSpinBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QDoubleSpinBox *> allobj = topLevelWidget()->findChildren<QDoubleSpinBox *>();
+#else
     QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -678,7 +746,11 @@ void MyWidget::load_QDoubleSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QDoubleSpinBox(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QDoubleSpinBox *> allobj = topLevelWidget()->findChildren<QDoubleSpinBox *>();
+#else
     QList<QDoubleSpinBox *> allobj = findChildren<QDoubleSpinBox *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -696,7 +768,11 @@ void MyWidget::save_QDoubleSpinBox(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSlider(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QSlider *> allobj = topLevelWidget()->findChildren<QSlider *>();
+#else
     QList<QSlider *> allobj = findChildren<QSlider *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -714,7 +790,11 @@ void MyWidget::load_QSlider(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSlider(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QSlider *> allobj = topLevelWidget()->findChildren<QSlider *>();
+#else
     QList<QSlider *> allobj = findChildren<QSlider *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -732,7 +812,11 @@ void MyWidget::save_QSlider(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QSplitter(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QSplitter *> allobj = topLevelWidget()->findChildren<QSplitter *>();
+#else
     QList<QSplitter *> allobj = findChildren<QSplitter *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -750,7 +834,11 @@ void MyWidget::load_QSplitter(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QSplitter(QString group_name)
 {
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QSplitter *> allobj = topLevelWidget()->findChildren<QSplitter *>();
+#else
     QList<QSplitter *> allobj = findChildren<QSplitter *>();
+#endif
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);

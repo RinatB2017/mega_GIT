@@ -534,7 +534,7 @@ void MyWidget::save_QTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_QPlainTextEdit(QString group_name)
 {
-    QList<QPlainTextEdit *> allobj = topLevelWidget()->findChildren<QPlainTextEdit *>();
+    QList<QPlainTextEdit *> allobj = findChildren<QPlainTextEdit *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);
@@ -558,7 +558,7 @@ void MyWidget::load_QPlainTextEdit(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_QPlainTextEdit(QString group_name)
 {
-    QList<QPlainTextEdit *> allobj = topLevelWidget()->findChildren<QPlainTextEdit *>();
+    QList<QPlainTextEdit *> allobj = findChildren<QPlainTextEdit *>();
     Q_CHECK_PTR(settings);
 
     settings->beginGroup(group_name);

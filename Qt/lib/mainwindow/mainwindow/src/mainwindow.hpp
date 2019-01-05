@@ -200,22 +200,22 @@ private:
                         QIcon   *icon,
                         b_saveSlot slot);
 
-    QTranslator *translator_system = 0;
-    QTranslator *translator_common = 0;
-    QTranslator *translator_programm = 0;
+    QTranslator *translator_system;
+    QTranslator *translator_common;
+    QTranslator *translator_programm;
 
     QString orgName;
     QString appName;
     QString appVersion;
     QString style_name;
 
-    QLabel *statusLabel1 = 0;
-    QLabel *statusLabel2 = 0;
+    QLabel *statusLabel1;
+    QLabel *statusLabel2;
 
-    QSystemTrayIcon *trayIcon = 0;
-    QMenu *trayIconMenu = 0;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
 
-    QSettings *settings = 0;
+    QSettings *settings;
 
     void load_main(void);
     void save_main(void);
@@ -231,14 +231,14 @@ private:
 
     void createToolBar(void);
 
-    QToolBar *toolbar = 0;
+    QToolBar *toolbar;
 
     QToolBar *styletoolbar = 0;
-    QDockWidget *sd = 0;
+    QDockWidget *sd;
     void createStyleToolBar(void);
 
-    LogDock *ld = 0;
-    SysLog_dock *syslog_dock = 0;
+    LogDock *ld;
+    SysLog_dock *syslog_dock;
 
     void createLog(void);
     void createSysLog_dock(void);
@@ -247,16 +247,16 @@ private:
 
     void check_date(void);
 
-    QMenuBar *app_mainBar = 0;
+    QMenuBar *app_mainBar;
 
     QList<QMenu   *> app_menus;
     QList<QAction *> app_actions;
     QList<QAbstractButton *> app_buttons;
 
-    QMenu *m_app_filemenu    = 0;
-    QMenu *m_app_optionsmenu = 0;
-    QMenu *m_app_windowsmenu    = 0;
-    QMenu *m_app_helpmenu    = 0;
+    QMenu *m_app_filemenu;
+    QMenu *m_app_optionsmenu;
+    QMenu *m_app_windowsmenu;
+    QMenu *m_app_helpmenu;
 
     QList<QWidget *> l_docs;
 

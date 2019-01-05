@@ -127,6 +127,32 @@ void MainBox::init(void)
         mw->add_dock_widget("HTML", "html_widget",  Qt::LeftDockWidgetArea, ui->groupBox_html);
         mw->add_dock_widget("JS",   "js_widget",    Qt::LeftDockWidgetArea, ui->groupBox_js);
     }
+
+    //---
+    //FIXME жуткий уостыль, надо что нибудь придумать
+    QList<QPlainTextEdit *> allobj = topLevelWidget()->findChildren<QPlainTextEdit *>();
+#ifndef SAVE_INI
+    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+#else
+    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
+    settings->beginGroup("test_html");
+    foreach (QPlainTextEdit *obj, allobj)
+    {
+        QString o_name = obj->objectName();
+        if(!o_name.isEmpty())
+        {
+            if(o_name.left(3) == "te_") //TODO костыль
+            {
+                settings->beginGroup(o_name);
+                obj->setPlainText(settings->value("text", "").toString());
+                settings->endGroup();
+            }
+        }
+    }
+    settings->endGroup();
+    settings->deleteLater();
+    //---
 #else
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");

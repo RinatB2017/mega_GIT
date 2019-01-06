@@ -565,8 +565,6 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    ui->webEngineView->reload();
-
 #if 0
     QStringList *sl = new QStringList();
     new_page->toHtml([sl](QString const &s)
@@ -576,7 +574,7 @@ bool MainBox::test_0(void)
     emit info(QString("ken = %1").arg(sl->count()));
 #endif
 
-#if 0
+#if 1
     QPlainTextEdit *te = new QPlainTextEdit();
     new_page->toHtml([te](QString const &s)
     {
@@ -608,13 +606,15 @@ bool MainBox::test_1(void)
 {
     emit info("Test_1()");
 
-    emit info(new_page->profile()->httpUserAgent());
+    ui->webEngineView->reload();
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
+
+    emit info(new_page->profile()->httpUserAgent());
     return true;
 }
 //--------------------------------------------------------------------------------

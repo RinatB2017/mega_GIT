@@ -110,6 +110,9 @@ void MainBox::init(void)
 
     connect(new_page,               SIGNAL(loadFinished(bool)),     this,   SLOT(s_autorun_js()));
 
+    //TODO
+    connect(new_page,               SIGNAL(urlChanged(const QUrl &)),  this,   SLOT(test_0()));
+
     connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
     connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
     connect(ui->btn_load_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_load_html()));
@@ -502,7 +505,6 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
     emit info(QString("%1").arg(ui->te_text_js->document()->isModified()));
-
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -35,10 +35,13 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test_qwebengineview_mainbox.hpp"
-#include "custompage.h"
 #include "qxmlputget.h"
 #include "highlighter.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef USE_CUSTOMPAGE
+#   include "custompage.h"
+#endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -72,8 +75,8 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
-	
-	//https://support.google.com/webmasters/answer/1061943?hl=ru
+
+    //https://support.google.com/webmasters/answer/1061943?hl=ru
 
     // ширина TAB в символах
     int fontWidth = QFontMetrics(ui->te_js->currentCharFormat().font()).averageCharWidth();
@@ -96,34 +99,23 @@ void MainBox::init(void)
 
     ui->cb_user_agent->setFixedWidth(200);
 
-    QWebEngineProfile *profile = new QWebEngineProfile();
-    // изменяем необходимые http-заголовки на свои значения
-    //profile->setHttpUserAgent("Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
-    //profile->setHttpUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
-    //profile->setHttpUserAgent("Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");
-    //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
-    //profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; U; en) Presto/2.9.168 Version/11.50");
-    //profile->setHttpUserAgent("iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
-	
-    //profile->setHttpUserAgent("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
-	//profile->setHttpUserAgent("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Safari/537.36");
-    //profile->setHttpUserAgent("Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
-	//profile->setHttpUserAgent("Googlebot/2.1 (+http://www.google.com/bot.html)");
+    profile = QWebEngineProfile::defaultProfile();;
 
-#if 0
     //TODO печеньки
-    emit info(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
-    //profile->setPersistentStoragePath(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
+    QString path_cookies = QCoreApplication::applicationDirPath() + QLatin1String("/storage");
+    emit info(path_cookies);
+    profile->setCachePath(path_cookies);
+    profile->setPersistentStoragePath(path_cookies);
     m_store = profile->cookieStore();
     connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainBox::handleCookieAdded);
     m_store->loadAllCookies();
-#endif
 
+#ifdef USE_CUSTOMPAGE
     new_page = new CustomPage(profile);
-    //new_page = new QWebEnginePage(profile);
-
     connect(new_page,   SIGNAL(err_output(QString)),  this,   SIGNAL(error(QString)));
-
+#else
+    new_page = new QWebEnginePage(profile);
+#endif
     ui->webEngineView->setPage(new_page);
 
     ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
@@ -152,9 +144,9 @@ void MainBox::init(void)
             this,               SLOT(get_document_title()));
 
     //ui->le_address->setText("https://2ip.ru/");
-    //ui->le_address->setText("https://cashgo.ru/play/levels/#103");
+    ui->le_address->setText("https://cashgo.ru/play/levels/#103");
     //ui->le_address->setText("https://www.youtube.com/");
-    ui->le_address->setText("http://localhost/mso/");
+    //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
     //ui->le_address->setText("https://www.avito.ru/krasnodar");
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
@@ -164,6 +156,13 @@ void MainBox::init(void)
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 
     //---
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("JS", "js_dock", Qt::RightDockWidgetArea, ui->groupBox_js);
+    }
+#else
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");
     splitter->setChildrenCollapsible(false);
@@ -173,6 +172,7 @@ void MainBox::init(void)
     splitter->addWidget(ui->frame_browser);
     splitter->addWidget(ui->groupBox_js);
     layout()->addWidget(splitter);
+#endif
     //---
     
     highlighter_js  = new Highlighter(ui->te_js->document());
@@ -196,12 +196,14 @@ bool MainBox::containsCookie(const QNetworkCookie &cookie)
 //--------------------------------------------------------------------------------
 void MainBox::handleCookieAdded(const QNetworkCookie &cookie)
 {
-    emit info("handleCookieAdded");
+    emit trace(Q_FUNC_INFO);
 
     // only new cookies
     if (containsCookie(cookie))
         return;
 
+    emit debug(QString("append new cookie = [%1]")
+               .arg(cookie.name().data()));
     m_cookies.append(cookie);
 }
 //--------------------------------------------------------------------------------
@@ -209,14 +211,14 @@ void MainBox::get_document_title(void)
 {
     emit trace(Q_FUNC_INFO);
 
-   QString javascript;
-   javascript.append("function myFunction()\n");
-   javascript.append("{\n");
-   javascript.append("  var title = document.title;\n");
-   javascript.append("  alert(title);\n");
-   javascript.append("  return title;\n");
-   javascript.append("}\n");
-   javascript.append("myFunction();\n");
+    QString javascript;
+    javascript.append("function myFunction()\n");
+    javascript.append("{\n");
+    javascript.append("  var title = document.title;\n");
+    javascript.append("  alert(title);\n");
+    javascript.append("  return title;\n");
+    javascript.append("}\n");
+    javascript.append("myFunction();\n");
 
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
@@ -421,27 +423,9 @@ void MainBox::s_run(void)
         QNetworkProxy::setApplicationProxy(QNetworkProxy());
     }
 
-    QWebEngineProfile *profile = new QWebEngineProfile();
     profile->setHttpUserAgent(ui->cb_user_agent->itemData(ui->cb_user_agent->currentIndex()).toString());
 
-    new_page->deleteLater();
-
-    new_page = new CustomPage(profile);
-    connect(new_page,   SIGNAL(loadProgress(int)),      ui->progressBar,    SLOT(setValue(int)));
-    connect(new_page,   SIGNAL(loadFinished(bool)),     this,               SLOT(run_JS(bool)));
-    connect(new_page,   SIGNAL(err_output(QString)),    this,               SIGNAL(error(QString)));
-
-#if 0
-    //TODO печеньки
-    emit info(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
-    //profile->setPersistentStoragePath(QCoreApplication::applicationDirPath() + QLatin1String("/storage"));
-    m_store = profile->cookieStore();
-    connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainBox::handleCookieAdded);
-    m_store->loadAllCookies();
-#endif
-
-    ui->webEngineView->setPage(new_page);
-    ui->webEngineView->setUrl(QUrl(address));
+    ui->webEngineView->load(QUrl(address));
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_default(void)
@@ -490,6 +474,7 @@ void MainBox::test_JS(bool)
         return;
     }
 
+    //emit debug(javascript);
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
         emit info(v.toString());
@@ -580,13 +565,50 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    emit info(new_page->profile()->httpUserAgent());
+    ui->webEngineView->reload();
+
+#if 0
+    QStringList *sl = new QStringList();
+    new_page->toHtml([sl](QString const &s)
+    {
+        sl->append(s);
+    });
+    emit info(QString("ken = %1").arg(sl->count()));
+#endif
+
+#if 0
+    QPlainTextEdit *te = new QPlainTextEdit();
+    new_page->toHtml([te](QString const &s)
+    {
+        te->appendPlainText(s);
+    });
+    te->setMinimumSize(1280, 600);
+    te->show();
+#endif
+
+#if 0
+    QByteArray ba;
+    ba.append(te->toPlainText());
+
+    QString filename = "html.sav";
+    QFile *file = new QFile(filename);
+    if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
+        return false;
+
+    qint64 bytes = file->write(ba);
+    file->close();
+    emit info(QString("file %1 is saved [%2 bytes]")
+              .arg(filename)
+              .arg(bytes));
+#endif
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    emit info(new_page->profile()->httpUserAgent());
     return true;
 }
 //--------------------------------------------------------------------------------

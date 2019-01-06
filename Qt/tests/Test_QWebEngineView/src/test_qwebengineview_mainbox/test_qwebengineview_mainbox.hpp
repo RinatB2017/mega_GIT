@@ -31,6 +31,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class QWebEngineCookieStore;
+class QWebEngineProfile;
 class QWebEnginePage;
 
 class Highlighter;
@@ -41,7 +42,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = 0);
+    explicit MainBox(QWidget *parent = 0);
     ~MainBox();
 
 signals:
@@ -93,8 +94,13 @@ private:
     QComboBox *cb_test;
     QList<CMD> commands;
 
+#ifdef USE_CUSTOMPAGE
     CustomPage *new_page;
-    //QWebEnginePage *new_page = 0;
+#else
+    QWebEnginePage *new_page;
+#endif
+
+    QWebEngineProfile *profile;
 
     QWebEngineCookieStore *m_store;
     QVector<QNetworkCookie> m_cookies;

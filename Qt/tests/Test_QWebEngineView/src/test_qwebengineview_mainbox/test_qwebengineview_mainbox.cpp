@@ -202,8 +202,7 @@ void MainBox::handleCookieAdded(const QNetworkCookie &cookie)
     if (containsCookie(cookie))
         return;
 
-    emit debug(QString("append new cookie = [%1]")
-               .arg(cookie.name().data()));
+    emit debug(QString("append new cookie = [%1]").arg(cookie.name().data()));
     m_cookies.append(cookie);
 }
 //--------------------------------------------------------------------------------

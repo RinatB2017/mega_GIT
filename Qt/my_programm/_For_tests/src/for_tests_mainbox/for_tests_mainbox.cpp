@@ -216,6 +216,26 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QString filename = "./temp.txt";
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Append))
+        return false;
+    file.write("\n");
+    file.close();
+
+    QFileInfo fileInfo(filename);
+
+    //Дата и время создания файла
+    emit info(fileInfo.created().toString());
+
+    //Дата и время последнего изменения файла
+    emit info(fileInfo.lastModified().toString());
+
+    //Дата и время последнего чтения файла
+    emit info(fileInfo.lastRead().toString());
+#endif
+
+#if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     QPixmap myPixmap(ICON_PROGRAMM);
     QLabel *label = new QLabel();

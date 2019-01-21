@@ -28,6 +28,8 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#include <QtGlobal>
+//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -40,8 +42,16 @@
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
-#if ((not defined USE_ONLY_H4_6) & (not defined USE_ONLY_H4_7) & (not defined USE_BOTH))
-    error("Calibrator not defined")
+#ifdef Q_OS_LINUX
+    #if ((not defined USE_ONLY_H4_6) & (not defined USE_ONLY_H4_7) & (not defined USE_BOTH))
+        error("Calibrator not defined")
+    #endif
+#endif
+
+#ifdef Q_OS_WIN
+    #if (!defined USE_ONLY_H4_6 && !defined USE_ONLY_H4_7 && !defined USE_BOTH)
+        error("Calibrator not defined")
+    #endif
 #endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])

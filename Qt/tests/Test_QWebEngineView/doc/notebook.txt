@@ -1,3 +1,18 @@
+function send_password()
+{
+  var username = document.getElementsByName('LoginForm[username]');
+  var password = document.getElementsByName('LoginForm[password]');
+  var buttons = document.getElementsByClassName("btn login-btn");
+
+  if(username.length == 0)  return;
+  if(password.length == 0)  return;
+  if(buttons.length == 0)   return;
+
+  username[0].value = "tux32@yandex.ru";
+  password[0].value = "q12345";
+  buttons[0].click();
+}
+
 function myFunction()
 {
    var links = document.getElementsByTagName('a');
@@ -9,7 +24,6 @@ function myFunction()
    }
    return temp;
 }
-myFunction();
 
 function myFunction()
 {
@@ -22,5 +36,20 @@ function myFunction()
         //alert("username " + username.length);
         //alert("password " + password.length);
 }
-myFunction();
 
+function myFunction()
+{
+  var buttons = document.getElementsByTagName('button');
+  var temp = "";
+  for (var i = 0; i < buttons.length; i++)
+  {
+    var js = buttons[i].onclick;
+    if(js != null)
+    {
+      temp += js;
+      temp += ";";
+    }
+  }
+  return temp;
+}
+myFunction();

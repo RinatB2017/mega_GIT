@@ -60,6 +60,8 @@ DEFINES += NO_TRAYICON
 
 DEFINES += CONVERT_DATA_TO_ASCII
 
+DEFINES += WIN32_LEAN_AND_MEAN
+
 DEFINES += SAVE_WIDGETS_PROPERTIES
 DEFINES += SAVE_WIDGETS_CHECKBOX
 DEFINES += SAVE_WIDGETS_SPINBOX
@@ -110,7 +112,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include (../common/handcontrol/handcontrol.pri)

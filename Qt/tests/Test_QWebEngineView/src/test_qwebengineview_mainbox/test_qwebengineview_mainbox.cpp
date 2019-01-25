@@ -234,7 +234,15 @@ void MainBox::js_load(void)
     dlg->setNameFilter(tr("JS files (*.js)"));
     dlg->setDefaultSuffix("js");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+
+#ifdef Q_OS_LINUX
     dlg->setDirectory(".");
+#endif
+
+#ifdef Q_OS_WIN
+    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
+#endif
+
     dlg->selectFile("noname");
     if(dlg->exec())
     {
@@ -253,7 +261,15 @@ void MainBox::js_save(void)
     dlg->setNameFilter(tr("JS files (*.js)"));
     dlg->setDefaultSuffix("js");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+
+#ifdef Q_OS_LINUX
     dlg->setDirectory(".");
+#endif
+
+#ifdef Q_OS_WIN
+    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
+#endif
+
     dlg->selectFile("noname");
     dlg->setConfirmOverwrite(true);
     if(dlg->exec())

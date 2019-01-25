@@ -303,7 +303,15 @@ void MainBox::s_load_html(void)
     dlg->setNameFilter(tr("HTML files (*.html)"));
     dlg->setDefaultSuffix("html");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+
+#ifdef Q_OS_LINUX
     dlg->setDirectory(".");
+#endif
+
+#ifdef Q_OS_WIN
+    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
+#endif
+
     dlg->selectFile("noname");
     if(dlg->exec())
     {
@@ -322,7 +330,15 @@ void MainBox::s_save_html(void)
     dlg->setNameFilter(tr("HTML files (*.html)"));
     dlg->setDefaultSuffix("html");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+
+#ifdef Q_OS_LINUX
     dlg->setDirectory(".");
+#endif
+
+#ifdef Q_OS_WIN
+    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
+#endif
+
     dlg->selectFile("noname");
     dlg->setConfirmOverwrite(true);
     if(dlg->exec())
@@ -341,7 +357,15 @@ void MainBox::s_load_js(void)
     dlg->setNameFilter(tr("JS files (*.js)"));
     dlg->setDefaultSuffix("js");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+
+#ifdef Q_OS_LINUX
     dlg->setDirectory(".");
+#endif
+
+#ifdef Q_OS_WIN
+    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
+#endif
+
     dlg->selectFile("noname");
     if(dlg->exec())
     {
@@ -360,7 +384,15 @@ void MainBox::s_save_js(void)
     dlg->setNameFilter(tr("JS files (*.js)"));
     dlg->setDefaultSuffix("js");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+
+#ifdef Q_OS_LINUX
     dlg->setDirectory(".");
+#endif
+
+#ifdef Q_OS_WIN
+    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
+#endif
+
     dlg->selectFile("noname");
     dlg->setConfirmOverwrite(true);
     if(dlg->exec())

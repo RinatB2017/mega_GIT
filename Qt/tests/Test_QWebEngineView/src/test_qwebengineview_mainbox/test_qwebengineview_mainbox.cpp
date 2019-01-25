@@ -236,7 +236,7 @@ void MainBox::js_load(void)
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
 
 #ifdef Q_OS_LINUX
-    dlg->setDirectory(".");
+    dlg->setDirectory("/home/boss/Programming/_GitHub/Private/JS/home");
 #endif
 
 #ifdef Q_OS_WIN
@@ -263,7 +263,7 @@ void MainBox::js_save(void)
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
 
 #ifdef Q_OS_LINUX
-    dlg->setDirectory(".");
+    dlg->setDirectory("/home/boss/Programming/_GitHub/Private/JS/home");
 #endif
 
 #ifdef Q_OS_WIN

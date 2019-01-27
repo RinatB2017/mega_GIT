@@ -2,6 +2,9 @@
 <Proxies>
   <index>0</index>
   <proxy>
+    <uri>192.40.220.123:443</uri>
+  </proxy>
+  <proxy>
     <uri>103.5.6.253:8080</uri>
   </proxy>
   <proxy>

@@ -54,6 +54,9 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
+    void generate(void);
+    void calc(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -80,6 +83,8 @@ private:
     GrapherBox *grapher_data;
     GrapherBox *grapher_profit;
 
+    QList<qreal> data_values;
+
     int curve_data = 0;
     int curve_profit;
 
@@ -88,6 +93,13 @@ private:
 
     void init_grapher_data(void);
     void init_grapher_profit(void);
+    void init_widgets(void);
+
+    int get_count(void);
+    int get_inc_price(void);
+    int get_price(void);
+    int get_profit(void);
+    int get_loss(void);
 
     void updateText(void);
 };

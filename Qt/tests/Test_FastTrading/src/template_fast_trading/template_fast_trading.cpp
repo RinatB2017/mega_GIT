@@ -49,6 +49,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -59,6 +60,9 @@ void MainBox::init(void)
 
     init_grapher_data();
     init_grapher_profit();
+    init_widgets();
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -144,6 +148,7 @@ void MainBox::init_grapher_data(void)
     grapher_data->set_visible_btn_all_OFF(false);
     grapher_data->set_visible_btn_Options(false);
     grapher_data->set_visible_btn_Statistic(false);
+    grapher_data->set_silense(true);
 
     curve_data = grapher_data->add_curve("data");
 
@@ -169,6 +174,7 @@ void MainBox::init_grapher_profit(void)
     grapher_profit->set_visible_btn_all_OFF(false);
     grapher_profit->set_visible_btn_Options(false);
     grapher_profit->set_visible_btn_Statistic(false);
+    grapher_profit->set_silense(true);
 
     curve_profit = grapher_profit->add_curve("profit");
 
@@ -178,38 +184,123 @@ void MainBox::init_grapher_profit(void)
     mw->add_dock_widget("Grapher profit", "grapher_profit", Qt::RightDockWidgetArea, grapher_profit);
 }
 //--------------------------------------------------------------------------------
+void MainBox::init_widgets(void)
+{
+    ui->sb_count->setRange(1e3, 1e6);
+    ui->sb_price->setRange(1e3, 1e6);
+    ui->sb_inc_price->setRange(1, 1e3);
+    ui->sb_profit->setRange(0, 1e3);
+    ui->sb_loss->setRange(0, 1e3);
+
+    connect(ui->btn_generate,   SIGNAL(clicked()),   this,   SLOT(generate()));
+    connect(ui->btn_calc,       SIGNAL(clicked()),   this,   SLOT(calc()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::generate(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    int cnt = get_count();
+    if(cnt <= 0)
+    {
+        emit error("Bad count");
+        return;
+    }
+
+    int price = get_price();
+    int inc_price = get_inc_price();
+
+    block_interface(true);
+
+    grapher_data->clear();
+    data_values.clear();
+    for(int n=0; n<cnt; n++)
+    {
+        int inc = (rand() % inc_price) - inc_price / 2;
+
+        grapher_data->add_curve_data(curve_data, price);
+        data_values.append(price);
+
+        price += inc;
+    }
+
+    block_interface(false);
+}
+//--------------------------------------------------------------------------------
+void MainBox::calc(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    grapher_profit->clear();
+    foreach(qreal value, data_values)
+    {
+        grapher_profit->add_curve_data(curve_profit, value);
+    }
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_count(void)
+{
+    return ui->sb_count->value();
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_inc_price(void)
+{
+    return ui->sb_inc_price->value();
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_price(void)
+{
+    return ui->sb_price->value();
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_profit(void)
+{
+    return ui->sb_profit->value();
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_loss(void)
+{
+    return ui->sb_loss->value();
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
+    emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
+    emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_2(void)
 {
+    emit trace(Q_FUNC_INFO);
     emit info("Test_2()");
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
+    emit trace(Q_FUNC_INFO);
     emit info("Test_3()");
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_4(void)
 {
+    emit trace(Q_FUNC_INFO);
     emit info("Test_4()");
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_5(void)
 {
+    emit trace(Q_FUNC_INFO);
     emit info("Test_5()");
     return true;
 }

@@ -201,12 +201,12 @@ private slots:
     //---
 
 private:
-    Ui::GrapherBox *ui = 0;
+    Ui::GrapherBox *ui;
     bool legend_is_visible = true;
 
-    QwtPlotPicker *d_picker = 0;
+    QwtPlotPicker *d_picker;
 
-    QwtLegend *legend = 0;
+    QwtLegend *legend;
 
     QVector<GRAPHER_CURVE> curves;
     QColor curve_colors[MAX_CHANNELS];
@@ -231,12 +231,12 @@ private:
 
 #ifndef GRAPHER_NOT_PANNING
     // panning with the left mouse button
-    QwtPlotPanner *plot_panner = 0;
+    QwtPlotPanner *plot_panner;
 #endif
 
 #ifndef GRAPHER_NOT_ZOOM
     // zoom in/out with the wheel
-    QwtPlotMagnifier *plot_magnifier = 0;
+    QwtPlotMagnifier *plot_magnifier;
 #endif
 
     int getPositionStep(void);

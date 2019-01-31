@@ -150,6 +150,9 @@ void MainBox::init_grapher_data(void)
     grapher_data->set_visible_btn_Statistic(false);
     grapher_data->set_silense(true);
 
+    grapher_data->push_btn_Horizontal(true);
+    grapher_data->push_btn_Vertical(true);
+
     curve_data = grapher_data->add_curve("data");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -176,6 +179,9 @@ void MainBox::init_grapher_profit(void)
     grapher_profit->set_visible_btn_Statistic(false);
     grapher_profit->set_silense(true);
 
+    grapher_profit->push_btn_Horizontal(true);
+    grapher_profit->push_btn_Vertical(true);
+
     curve_profit = grapher_profit->add_curve("profit");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -189,8 +195,10 @@ void MainBox::init_widgets(void)
     ui->sb_count->setRange(1e3, 1e6);
     ui->sb_price->setRange(1e3, 1e6);
     ui->sb_inc_price->setRange(1, 1e3);
-    ui->sb_profit->setRange(0, 1e3);
-    ui->sb_loss->setRange(0, 1e3);
+    ui->sb_order_up_hi->setRange(0, 1e3);
+    ui->sb_order_up_lo->setRange(0, 1e3);
+    ui->sb_order_down_hi->setRange(0, 1e3);
+    ui->sb_order_down_lo->setRange(0, 1e3);
 
     connect(ui->btn_generate,   SIGNAL(clicked()),   this,   SLOT(generate()));
     connect(ui->btn_calc,       SIGNAL(clicked()),   this,   SLOT(calc()));
@@ -243,6 +251,12 @@ void MainBox::calc(void)
     int end_price = begin_price;
     int inc = get_inc_price();
 
+    int up_hi = get_order_up_hi();
+    int up_lo = get_order_up_lo();
+
+    int down_hi = get_order_down_hi();
+    int down_lo = get_order_down_lo();
+
     order_up.hi = begin_price + inc;
     order_up.lo = begin_price - inc / 2;
 
@@ -262,23 +276,29 @@ void MainBox::calc(void)
 
         if(price >= order_up.hi)
         {
-            end_price += inc;
+            end_price += up_hi;
         }
         if(price < order_up.lo)
         {
-            end_price -= inc;
+            end_price -= up_lo;
         }
 
         if(price <= order_down.hi)
         {
-            end_price -= inc;
+            end_price -= down_hi;
         }
         if(price > order_down.lo)
         {
-            end_price += inc;
+            end_price += down_lo;
         }
 
         grapher_profit->add_curve_data(curve_profit, end_price);
+
+        order_up.hi = end_price + up_hi;
+        order_up.lo = end_price - up_lo / 2;
+
+        order_down.hi = end_price - down_hi;
+        order_down.lo = end_price + down_lo / 2;
     }
     emit info(QString("End price %1").arg(end_price));
 }
@@ -298,14 +318,24 @@ int MainBox::get_price(void)
     return ui->sb_price->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_profit(void)
+int MainBox::get_order_up_hi(void)
 {
-    return ui->sb_profit->value();
+    return ui->sb_order_up_hi->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_loss(void)
+int MainBox::get_order_up_lo(void)
 {
-    return ui->sb_loss->value();
+    return ui->sb_order_up_lo->value();
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_order_down_hi(void)
+{
+    return ui->sb_order_down_hi->value();
+}
+//--------------------------------------------------------------------------------
+int MainBox::get_order_down_lo(void)
+{
+    return ui->sb_order_down_lo->value();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

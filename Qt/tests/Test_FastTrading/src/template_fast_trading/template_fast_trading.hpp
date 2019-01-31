@@ -98,8 +98,11 @@ private:
     int get_count(void);
     int get_inc_price(void);
     int get_price(void);
-    int get_profit(void);
-    int get_loss(void);
+
+    int get_order_up_hi(void);
+    int get_order_up_lo(void);
+    int get_order_down_hi(void);
+    int get_order_down_lo(void);
 
     void updateText(void);
 };

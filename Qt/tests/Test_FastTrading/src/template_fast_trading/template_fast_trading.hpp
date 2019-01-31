@@ -83,7 +83,7 @@ private:
     GrapherBox *grapher_data;
     GrapherBox *grapher_profit;
 
-    QList<qreal> data_values;
+    QList<qreal> data_prices;
 
     int curve_data = 0;
     int curve_profit;

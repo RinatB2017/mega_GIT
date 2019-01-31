@@ -213,13 +213,13 @@ void MainBox::generate(void)
     block_interface(true);
 
     grapher_data->clear();
-    data_values.clear();
+    data_prices.clear();
     for(int n=0; n<cnt; n++)
     {
         int inc = (rand() % inc_price) - inc_price / 2;
 
         grapher_data->add_curve_data(curve_data, price);
-        data_values.append(price);
+        data_prices.append(price);
 
         price += inc;
     }
@@ -231,11 +231,56 @@ void MainBox::calc(void)
 {
     emit trace(Q_FUNC_INFO);
 
+    typedef struct {
+        qreal hi;
+        qreal lo;
+    } ORDER;
+
+    ORDER order_up;
+    ORDER order_down;
+
+    int begin_price = get_price();
+    int end_price = begin_price;
+    int inc = get_inc_price();
+
+    order_up.hi = begin_price + inc;
+    order_up.lo = begin_price - inc / 2;
+
+    order_down.hi = begin_price - inc;
+    order_down.lo = begin_price + inc / 2;
+
     grapher_profit->clear();
-    foreach(qreal value, data_values)
+
+    emit info(QString("Begin price %1").arg(begin_price));
+    foreach(qreal price, data_prices)
     {
-        grapher_profit->add_curve_data(curve_profit, value);
+        if(end_price <= 0)
+        {
+            emit error("You lost!");
+            return;
+        }
+
+        if(price >= order_up.hi)
+        {
+
+        }
+        if(price < order_up.lo)
+        {
+
+        }
+
+        if(price <= order_down.hi)
+        {
+
+        }
+        if(price > order_down.lo)
+        {
+
+        }
+
+        grapher_profit->add_curve_data(curve_profit, price);
     }
+    emit info(QString("End price %1").arg(end_price));
 }
 //--------------------------------------------------------------------------------
 int MainBox::get_count(void)

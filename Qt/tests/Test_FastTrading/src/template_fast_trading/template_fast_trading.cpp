@@ -262,23 +262,23 @@ void MainBox::calc(void)
 
         if(price >= order_up.hi)
         {
-
+            end_price += inc;
         }
         if(price < order_up.lo)
         {
-
+            end_price -= inc;
         }
 
         if(price <= order_down.hi)
         {
-
+            end_price -= inc;
         }
         if(price > order_down.lo)
         {
-
+            end_price += inc;
         }
 
-        grapher_profit->add_curve_data(curve_profit, price);
+        grapher_profit->add_curve_data(curve_profit, end_price);
     }
     emit info(QString("End price %1").arg(end_price));
 }

@@ -283,11 +283,11 @@ void MainBox::calc(void)
             end_price -= up_lo;
         }
 
-        if(price <= order_down.hi)
+        if(price >= order_down.hi)
         {
             end_price -= down_hi;
         }
-        if(price > order_down.lo)
+        if(price < order_down.lo)
         {
             end_price += down_lo;
         }
@@ -297,8 +297,8 @@ void MainBox::calc(void)
         order_up.hi = end_price + up_hi;
         order_up.lo = end_price - up_lo / 2;
 
-        order_down.hi = end_price - down_hi;
-        order_down.lo = end_price + down_lo / 2;
+        order_down.hi = end_price + down_hi;
+        order_down.lo = end_price - down_lo / 2;
     }
     emit info(QString("End price %1").arg(end_price));
 }

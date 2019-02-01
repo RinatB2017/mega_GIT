@@ -57,6 +57,37 @@ class LogBox;
 class LogDock;
 class SysLog_dock;
 //--------------------------------------------------------------------------------
+class ToolButtonAction : public QWidgetAction {
+public:
+    ToolButtonAction (const QString& title) :
+      QWidgetAction (nullptr) {
+        QWidget* pWidget = new QWidget (nullptr);
+
+        QHBoxLayout* pLayout = new QHBoxLayout();
+        pLayout->setMargin(0);
+        //pLayout->setSpacing(0);
+
+        QLabel* pLabel = new QLabel(title);  //bug fixed here, pointer was missing
+        pLayout->addWidget(pLabel);
+
+        pToolButton = new QToolButton(nullptr);
+        pToolButton->setText("...");
+
+        pLayout->addWidget(pToolButton);
+
+        pWidget->setLayout(pLayout);
+
+        setDefaultWidget(pWidget);
+    }
+
+    QToolButton *toolButton () {
+        return pToolButton;
+    }
+
+private:
+    QToolButton *pToolButton;
+};
+//--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -173,6 +204,8 @@ private slots:
 
     void setToolBarStyles(void);
 
+    void change_value(void);
+
 #ifdef  DEMO
     void kill(void);
     void kill2(void);
@@ -233,7 +266,7 @@ private:
 
     QToolBar *toolbar;
 
-    QToolBar *styletoolbar = 0;
+    QToolBar *styletoolbar;
     QDockWidget *sd;
     void createStyleToolBar(void);
 

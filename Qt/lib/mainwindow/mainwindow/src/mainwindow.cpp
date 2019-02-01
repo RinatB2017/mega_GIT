@@ -994,6 +994,11 @@ bool MainWindow::add_optionsmenu_action(int pos_y,
     return false;
 }
 //--------------------------------------------------------------------------------
+void MainWindow::change_value(void)
+{
+    emit info(QString("change_value %1").arg(sender()->metaObject()->className()));
+}
+//--------------------------------------------------------------------------------
 bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
 {
     Q_CHECK_PTR(widget);
@@ -1001,7 +1006,15 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
     Q_CHECK_PTR(m_app_windowsmenu);
 
     l_docs.append(widget);
+
+#if 1
+    ToolButtonAction *tb_action = new ToolButtonAction(action->text());
+    connect(tb_action->toolButton(), SIGNAL(clicked()), this, SLOT(change_value()));
+
+    m_app_windowsmenu->addAction(tb_action);
+#else
     m_app_windowsmenu->addAction(action);
+#endif
 
     return true;
 }
@@ -1156,7 +1169,6 @@ bool MainWindow::add_dock_widget(QString title,
                         Qt::BottomDockWidgetArea);
 
     addDockWidget(area, dw);
-    //m_app_windowsmenu->addAction(dw->toggleViewAction());
     add_windowsmenu_action(dw, dw->toggleViewAction());
 
     return true;

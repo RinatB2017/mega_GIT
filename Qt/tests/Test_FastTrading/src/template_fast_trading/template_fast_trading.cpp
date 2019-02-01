@@ -222,8 +222,32 @@ void MainBox::generate(void)
 
     grapher_data->clear();
     data_prices.clear();
+
+    QProgressDialog *dlg = new QProgressDialog(this);
+    dlg->setWindowTitle("Генерация данных");
+    dlg->setLabelText("Пожалуйста, ждите!");
+    dlg->setMinimumSize(500, 100);
+    dlg->setMinimum(0);
+    dlg->setMaximum(cnt);
+    dlg->setWindowModality(Qt::ApplicationModal);
+    dlg->show();
+
+    grapher_data->push_btn_Horizontal(false);
+    grapher_data->push_btn_Vertical(false);
     for(int n=0; n<cnt; n++)
     {
+        if((n % 10) == 0)
+        {
+            dlg->setLabelText(QString("Пожалуйста, ждите! (осталось %1 из %2)")
+                              .arg(cnt - n)
+                              .arg(cnt));
+            dlg->setValue(n);
+        }
+        if(dlg->wasCanceled())
+        {
+            break;
+        }
+
         int inc = (rand() % inc_price) - inc_price / 2;
 
         grapher_data->add_curve_data(curve_data, price);
@@ -231,6 +255,11 @@ void MainBox::generate(void)
 
         price += inc;
     }
+    grapher_data->push_btn_Horizontal(true);
+    grapher_data->push_btn_Vertical(true);
+
+    dlg->close();
+    dlg->deleteLater();
 
     block_interface(false);
 }
@@ -266,8 +295,35 @@ void MainBox::calc(void)
     grapher_profit->clear();
 
     emit info(QString("Begin price %1").arg(begin_price));
+    int cnt = data_prices.count();
+    int n=0;
+
+    QProgressDialog *dlg = new QProgressDialog(this);
+    dlg->setWindowTitle("Подсчёт");
+    dlg->setLabelText("Пожалуйста, ждите!");
+    dlg->setMinimumSize(500, 100);
+    dlg->setMinimum(0);
+    dlg->setMaximum(cnt);
+    dlg->setWindowModality(Qt::ApplicationModal);
+    dlg->show();
+
+    grapher_profit->push_btn_Horizontal(false);
+    grapher_profit->push_btn_Vertical(false);
     foreach(qreal price, data_prices)
     {
+        if((n % 10) == 0)
+        {
+            dlg->setLabelText(QString("Пожалуйста, ждите! (осталось %1 из %2)")
+                              .arg(cnt - n)
+                              .arg(cnt));
+            dlg->setValue(n);
+        }
+        if(dlg->wasCanceled())
+        {
+            break;
+        }
+        n++;
+
         if(end_price <= 0)
         {
             emit error("You lost!");
@@ -300,6 +356,12 @@ void MainBox::calc(void)
         order_down.hi = end_price + down_hi;
         order_down.lo = end_price - down_lo / 2;
     }
+    grapher_profit->push_btn_Horizontal(true);
+    grapher_profit->push_btn_Vertical(true);
+
+    dlg->close();
+    dlg->deleteLater();
+
     emit info(QString("End price %1").arg(end_price));
     emit info(QString("Profit <font style=\"color:red\">%1</font>").arg(end_price - begin_price));
 }

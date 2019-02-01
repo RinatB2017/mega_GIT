@@ -64,8 +64,8 @@ public:
         QWidget* pWidget = new QWidget (nullptr);
 
         QHBoxLayout* pLayout = new QHBoxLayout();
-        pLayout->setMargin(0);
-        //pLayout->setSpacing(0);
+        //pLayout->setMargin(0);
+        pLayout->setSpacing(0);
 
         QLabel* pLabel = new QLabel(title);  //bug fixed here, pointer was missing
         pLayout->addWidget(pLabel);
@@ -264,11 +264,16 @@ private:
 
     void createToolBar(void);
 
+#ifndef NO_TOOLBAR
     QToolBar *toolbar;
+#endif
 
+#ifndef NO_STYLETOOLBAR
     QToolBar *styletoolbar;
-    QDockWidget *sd;
     void createStyleToolBar(void);
+#endif
+
+    QDockWidget *sd;
 
     LogDock *ld;
     SysLog_dock *syslog_dock;

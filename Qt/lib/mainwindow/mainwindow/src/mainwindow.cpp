@@ -107,10 +107,12 @@ void MainWindow::changeEvent(QEvent *event)
         {
             toolbar->setWindowTitle(tr("toolbar"));
         }
+#ifndef NO_STYLETOOLBAR
         if(styletoolbar)
         {
             styletoolbar->setWindowTitle(tr("styletoolbar"));
         }
+#endif
         if(ld)
         {
             ld->setWindowTitle(tr("log"));
@@ -792,6 +794,7 @@ void MainWindow::createToolBar(void)
     add_windowsmenu_action(toolbar, toolbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_STYLETOOLBAR
 void MainWindow::createStyleToolBar(void)
 {
     styletoolbar = new QToolBar(tr("styletoolbar"), this);
@@ -816,6 +819,7 @@ void MainWindow::createStyleToolBar(void)
 
     add_windowsmenu_action(styletoolbar, styletoolbar->toggleViewAction());
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::help(void)
 {
@@ -1007,7 +1011,7 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
 
     l_docs.append(widget);
 
-#if 1
+#if 0
     ToolButtonAction *tb_action = new ToolButtonAction(action->text());
     connect(tb_action->toolButton(), SIGNAL(clicked()), this, SLOT(change_value()));
 

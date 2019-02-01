@@ -301,6 +301,7 @@ void MainBox::calc(void)
         order_down.lo = end_price - down_lo / 2;
     }
     emit info(QString("End price %1").arg(end_price));
+    emit info(QString("Profit <font style=\"color:red\">%1</font>").arg(end_price - begin_price));
 }
 //--------------------------------------------------------------------------------
 int MainBox::get_count(void)

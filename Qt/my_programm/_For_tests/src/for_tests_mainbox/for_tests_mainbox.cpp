@@ -216,6 +216,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    emit info("Текст <font style=\"color:red\">красный</font>");
+#endif
+
+#if 0
     QString filename = "./temp.txt";
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Append))

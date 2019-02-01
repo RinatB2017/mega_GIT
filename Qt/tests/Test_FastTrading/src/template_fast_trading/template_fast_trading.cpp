@@ -195,10 +195,10 @@ void MainBox::init_widgets(void)
     ui->sb_count->setRange(1e3, 1e6);
     ui->sb_price->setRange(1e3, 1e6);
     ui->sb_inc_price->setRange(1, 1e3);
-    ui->sb_order_up_hi->setRange(0, 1e3);
-    ui->sb_order_up_lo->setRange(0, 1e3);
-    ui->sb_order_down_hi->setRange(0, 1e3);
-    ui->sb_order_down_lo->setRange(0, 1e3);
+    ui->sb_order_up_profit->setRange(0, 1e3);
+    ui->sb_order_up_loss->setRange(0, 1e3);
+    ui->sb_order_down_profit->setRange(0, 1e3);
+    ui->sb_order_down_loss->setRange(0, 1e3);
 
     connect(ui->btn_generate,   SIGNAL(clicked()),   this,   SLOT(generate()));
     connect(ui->btn_calc,       SIGNAL(clicked()),   this,   SLOT(calc()));
@@ -269,8 +269,8 @@ void MainBox::calc(void)
     emit trace(Q_FUNC_INFO);
 
     typedef struct {
-        qreal hi;
-        qreal lo;
+        qreal profit;
+        qreal loss;
     } ORDER;
 
     ORDER order_up;
@@ -280,17 +280,17 @@ void MainBox::calc(void)
     int end_price = begin_price;
     int inc = get_inc_price();
 
-    int up_hi = get_order_up_hi();
-    int up_lo = get_order_up_lo();
+    int up_profit = get_order_up_profit();
+    int up_loss   = get_order_up_loss();
 
-    int down_hi = get_order_down_hi();
-    int down_lo = get_order_down_lo();
+    int down_profit = get_order_down_profit();
+    int down_loss   = get_order_down_loss();
 
-    order_up.hi = begin_price + inc;
-    order_up.lo = begin_price - inc / 2;
+    order_up.profit = begin_price + inc;
+    order_up.loss   = begin_price - inc / 2;
 
-    order_down.hi = begin_price - inc;
-    order_down.lo = begin_price + inc / 2;
+    order_down.profit = begin_price - inc;
+    order_down.loss   = begin_price + inc / 2;
 
     grapher_profit->clear();
 
@@ -330,31 +330,31 @@ void MainBox::calc(void)
             return;
         }
 
-        if(price >= order_up.hi)
+        if(price >= order_up.profit)
         {
-            end_price += up_hi;
+            end_price += up_profit;
         }
-        if(price < order_up.lo)
+        if(price < order_up.loss)
         {
-            end_price -= up_lo;
+            end_price -= up_loss;
         }
 
-        if(price < order_down.hi)
+        if(price > order_down.loss)
         {
-            end_price -= down_lo;
+            end_price -= down_loss;
         }
-        if(price >= order_down.lo)
+        if(price <= order_down.profit)
         {
-            end_price += down_hi;
+            end_price += down_profit;
         }
 
         grapher_profit->add_curve_data(curve_profit, end_price);
 
-        order_up.hi = end_price + up_hi;
-        order_up.lo = end_price - up_lo / 2;
+        order_up.profit = end_price + up_profit;
+        order_up.loss   = end_price - up_loss / 2;
 
-        order_down.hi = end_price + down_hi;
-        order_down.lo = end_price - down_lo / 2;
+        order_down.profit = end_price - down_profit;
+        order_down.loss   = end_price + down_loss / 2;
     }
     grapher_profit->push_btn_Horizontal(true);
     grapher_profit->push_btn_Vertical(true);
@@ -381,24 +381,24 @@ int MainBox::get_price(void)
     return ui->sb_price->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_up_hi(void)
+int MainBox::get_order_up_profit(void)
 {
-    return ui->sb_order_up_hi->value();
+    return ui->sb_order_up_profit->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_up_lo(void)
+int MainBox::get_order_up_loss(void)
 {
-    return ui->sb_order_up_lo->value();
+    return ui->sb_order_up_loss->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_down_hi(void)
+int MainBox::get_order_down_profit(void)
 {
-    return ui->sb_order_down_hi->value();
+    return ui->sb_order_down_profit->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_down_lo(void)
+int MainBox::get_order_down_loss(void)
 {
-    return ui->sb_order_down_lo->value();
+    return ui->sb_order_down_loss->value();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

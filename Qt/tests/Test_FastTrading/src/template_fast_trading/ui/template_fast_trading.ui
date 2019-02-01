@@ -110,10 +110,10 @@
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QSpinBox" name="sb_order_up_hi"/>
+                 <widget class="QSpinBox" name="sb_order_up_profit"/>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QSpinBox" name="sb_order_up_lo"/>
+                 <widget class="QSpinBox" name="sb_order_up_loss"/>
                 </item>
                </layout>
               </item>
@@ -143,10 +143,10 @@
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QSpinBox" name="sb_order_down_hi"/>
+                 <widget class="QSpinBox" name="sb_order_down_profit"/>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QSpinBox" name="sb_order_down_lo"/>
+                 <widget class="QSpinBox" name="sb_order_down_loss"/>
                 </item>
                </layout>
               </item>
@@ -183,6 +183,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>sb_count</tabstop>
+  <tabstop>sb_price</tabstop>
+  <tabstop>sb_inc_price</tabstop>
+  <tabstop>btn_generate</tabstop>
+  <tabstop>sb_order_up_profit</tabstop>
+  <tabstop>sb_order_up_loss</tabstop>
+  <tabstop>sb_order_down_profit</tabstop>
+  <tabstop>sb_order_down_loss</tabstop>
+  <tabstop>btn_calc</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

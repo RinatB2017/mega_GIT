@@ -99,10 +99,10 @@ private:
     int get_inc_price(void);
     int get_price(void);
 
-    int get_order_up_hi(void);
-    int get_order_up_lo(void);
-    int get_order_down_hi(void);
-    int get_order_down_lo(void);
+    int get_order_up_profit(void);
+    int get_order_up_loss(void);
+    int get_order_down_profit(void);
+    int get_order_down_loss(void);
 
     void updateText(void);
 };

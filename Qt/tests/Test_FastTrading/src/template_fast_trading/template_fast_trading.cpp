@@ -339,13 +339,13 @@ void MainBox::calc(void)
             end_price -= up_lo;
         }
 
-        if(price >= order_down.hi)
+        if(price < order_down.hi)
         {
-            end_price -= down_hi;
+            end_price -= down_lo;
         }
-        if(price < order_down.lo)
+        if(price >= order_down.lo)
         {
-            end_price += down_lo;
+            end_price += down_hi;
         }
 
         grapher_profit->add_curve_data(curve_profit, end_price);

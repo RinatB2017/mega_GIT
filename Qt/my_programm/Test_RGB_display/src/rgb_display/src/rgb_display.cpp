@@ -53,8 +53,8 @@ void RGB_display::init(void)
     double up_border = pixelPerMm * LED_BORDER_H_MM;
 
     grid = new QGridLayout();
-    grid->setMargin(LED_BORDER_SIZE + 0.5);
-    grid->setSpacing(LED_BORDER_SIZE + 0.5);
+    grid->setMargin(static_cast<int>(LED_BORDER_SIZE + 0.5));
+    grid->setSpacing(static_cast<int>(LED_BORDER_SIZE + 0.5));
 
     for(int row=0; row<SCREEN_HEIGTH; row++)
     {
@@ -66,10 +66,10 @@ void RGB_display::init(void)
             connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
             connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-            led->set_size(w_led + left_border * 2,
-                          h_led + up_border * 2,
-                          left_border,
-                          up_border);
+            led->set_size(static_cast<int>(w_led + left_border * 2),
+                          static_cast<int>(h_led + up_border * 2),
+                          static_cast<int>(left_border),
+                          static_cast<int>(up_border));
 
             led->setProperty("property_col", col);
             led->setProperty("property_row", row);
@@ -190,10 +190,10 @@ void RGB_display::create_new_display(void)
             connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
             connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-            led->set_size(led_width + left_border * 2,
-                          led_height + up_border * 2,
-                          left_border,
-                          up_border);
+            led->set_size(static_cast<int>(led_width + left_border * 2),
+                          static_cast<int>(led_height + up_border * 2),
+                          static_cast<int>(left_border),
+                          static_cast<int>(up_border));
 
             led->setProperty("property_col", col);
             led->setProperty("property_row", row);
@@ -301,7 +301,7 @@ bool RGB_display::load_pic(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void RGB_display::show_picture(int begin_x, int begin_y)
+void RGB_display::show_picture(int begin_x, int begin_y, int brightness)
 {
 #ifdef QT_DEBUG
     emit debug(QString("begin_x %1").arg(begin_x));
@@ -318,9 +318,24 @@ void RGB_display::show_picture(int begin_x, int begin_y)
         return;
     }
 
-    for(int y=0; y<sb_max_y->value(); y++)
+    int max_x = sb_max_x->value();
+    int max_y = sb_max_y->value();
+
+#if 0
+    union PACKET
     {
-        for(int x=0; x<sb_max_x->value(); x++)
+        struct {
+            uint8_t brightness;
+            uint8_t leds[SCREEN_WIDTH * SCREEN_HEIGTH * 3];
+        } body;
+        uint8_t buf[sizeof(body)];
+    };
+#endif
+
+    QByteArray leds_data;
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
         {
             QRgb color = picture.pixel(begin_x + x, begin_y + y);
             foreach(RGB_dislpay_led *led, l_buttons)
@@ -333,11 +348,28 @@ void RGB_display::show_picture(int begin_x, int begin_y)
                     led->set_G(qGreen(color));
                     led->set_B(qBlue(color));
                     led->repaint();
-                    break;
+
+                    leds_data.append(static_cast<char>(qRed(color)));
+                    leds_data.append(static_cast<char>(qGreen(color)));
+                    leds_data.append(static_cast<char>(qBlue(color)));
+                     break;
                 }
             }
         }
     }
+
+#if 1
+    QString packet_str;
+    packet_str.append(":");
+    packet_str.append(QString("%1").arg(brightness, 2, 16, QChar('0')));
+    packet_str.append(leds_data.toHex());
+    packet_str.append("\n");
+
+    emit debug(QString("len = %1").arg(packet_str.length()));
+    emit debug(QString("leds_data = %1").arg(leds_data.length() * 2));
+
+    emit send(packet_str);
+#endif
 }
 //--------------------------------------------------------------------------------
 void RGB_display::load_leds(void)
@@ -381,9 +413,9 @@ void RGB_display::save_leds(void)
     QByteArray ba_display;
     foreach (RGB_dislpay_led *led, l_buttons)
     {
-        ba_display.append(led->get_R());
-        ba_display.append(led->get_G());
-        ba_display.append(led->get_B());
+        ba_display.append(static_cast<char>(led->get_R()));
+        ba_display.append(static_cast<char>(led->get_G()));
+        ba_display.append(static_cast<char>(led->get_B()));
     }
 
     settings->beginGroup("Display");

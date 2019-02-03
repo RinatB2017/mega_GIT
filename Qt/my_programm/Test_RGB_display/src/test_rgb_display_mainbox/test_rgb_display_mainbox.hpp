@@ -69,6 +69,8 @@ private slots:
     void move_d(void);
     void move_dr(void);
 
+    void send_data(QString data);
+
 private:
     enum {
         ID_TEST_0 = 1000,

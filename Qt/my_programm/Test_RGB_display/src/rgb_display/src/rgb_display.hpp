@@ -35,11 +35,14 @@ class RGB_display : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void send(QString);
+
 public:
     explicit RGB_display(QWidget *parent = nullptr);
     ~RGB_display();
 
-    void show_picture(int begin_x, int begin_y);
+    void show_picture(int begin_x, int begin_y, int brightness);
 
     int get_max_x(void);
     int get_max_y(void);

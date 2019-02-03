@@ -32,9 +32,9 @@ public:
     explicit RGB_dislpay_led(QWidget *parent = nullptr);
     ~RGB_dislpay_led();
 
-    void set_R(uint8_t value);
-    void set_G(uint8_t value);
-    void set_B(uint8_t value);
+    void set_R(int value);
+    void set_G(int value);
+    void set_B(int value);
 
     uint8_t get_R(void);
     uint8_t get_G(void);

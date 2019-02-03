@@ -61,6 +61,8 @@ void MainBox::init(void)
 
     createTestBar();
 
+    ui->sb_brightness->setRange(1, 0xFF);
+
     connect(this,   SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
 
@@ -77,6 +79,8 @@ void MainBox::init(void)
 
     connect(ui->btn_load_ico,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_ico()));
     connect(ui->btn_load_pic,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_pic()));
+
+    connect(ui->rgb_display,    SIGNAL(send(QString)),  this,   SLOT(send_data(QString)));
 
     //setFixedSize(sizeHint());
 }
@@ -189,7 +193,7 @@ void MainBox::move_ul(void)
     {
         begin_y--;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_u(void)
@@ -200,7 +204,7 @@ void MainBox::move_u(void)
     {
         begin_y--;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_ur(void)
@@ -215,7 +219,7 @@ void MainBox::move_ur(void)
     {
         begin_y++;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_l(void)
@@ -226,7 +230,7 @@ void MainBox::move_l(void)
     {
         begin_x--;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_r(void)
@@ -237,7 +241,7 @@ void MainBox::move_r(void)
     {
         begin_x++;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_dl(void)
@@ -252,7 +256,7 @@ void MainBox::move_dl(void)
     {
         begin_y++;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_d(void)
@@ -263,7 +267,7 @@ void MainBox::move_d(void)
     {
         begin_y++;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox:: move_dr(void)
@@ -278,7 +282,7 @@ void MainBox:: move_dr(void)
     {
         begin_y++;
     }
-    ui->rgb_display->show_picture(begin_x, begin_y);
+    ui->rgb_display->show_picture(begin_x, begin_y, ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
@@ -321,6 +325,11 @@ bool MainBox::test_5(void)
     emit info("Test_5()");
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_data(QString data)
+{
+    emit debug(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

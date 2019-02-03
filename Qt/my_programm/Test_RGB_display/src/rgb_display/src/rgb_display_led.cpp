@@ -65,19 +65,19 @@ void RGB_dislpay_led::mouseReleaseEvent(QMouseEvent *event)
     QToolButton::mouseReleaseEvent(event);
 }
 //--------------------------------------------------------------------------------
-void RGB_dislpay_led::set_R(uint8_t value)
+void RGB_dislpay_led::set_R(int value)
 {
-    color_R = value;
+    color_R = static_cast<uint8_t>(value);
 }
 //--------------------------------------------------------------------------------
-void RGB_dislpay_led::set_G(uint8_t value)
+void RGB_dislpay_led::set_G(int value)
 {
-    color_G = value;
+    color_G = static_cast<uint8_t>(value);
 }
 //--------------------------------------------------------------------------------
-void RGB_dislpay_led::set_B(uint8_t value)
+void RGB_dislpay_led::set_B(int value)
 {
-    color_B = value;
+    color_B = static_cast<uint8_t>(value);
 }
 //--------------------------------------------------------------------------------
 uint8_t RGB_dislpay_led::get_R(void)

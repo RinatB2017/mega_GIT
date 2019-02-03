@@ -76,38 +76,38 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
+    QComboBox *cb_test;
+    QCheckBox *cb_block;
     QList<CMD> commands;
 
     void init(void);
 
-    QPushButton *btn_qwwcolorbutton = 0;
-    QPushButton *btn_qwwhuesatradialpicker = 0;
-    QPushButton *btn_qwwlongspinbox = 0;
-    QPushButton *btn_qwwrichtextedit = 0;
-    QPushButton *btn_qwwcolorcombobox = 0;
-    QPushButton *btn_qwwled = 0;
-    QPushButton *btn_qwwnavigationbar = 0;
-    QPushButton *btn_qwwtaskpanel = 0;
-    QPushButton *btn_qwwbreadcrumb = 0;
-    QPushButton *btn_qwwconfigwidget = 0;
-    QPushButton *btn_qwwlistnavigator = 0;
-    QPushButton *btn_qwwnumpad = 0;
-    QPushButton *btn_qwwtextspinbox = 0;
-    QPushButton *btn_qwwbuttonlineedit = 0;
-    QPushButton *btn_qwwfilechooser = 0;
-    QPushButton *btn_qwwlistwidget = 0;
-    QPushButton *btn_qwwresetlineedit = 0;
-    QPushButton *btn_qwwtipwidget = 0;
-    QPushButton *btn_qwwclearlineedit = 0;
-    QPushButton *btn_qwwhuesatpicker = 0;
-    QPushButton *btn_qwwloginbox = 0;
-    QPushButton *btn_qwwrichtextbutton = 0;
-    QPushButton *btn_qwwtwocolorindicator = 0;
+    QPushButton *btn_qwwcolorbutton;
+    QPushButton *btn_qwwhuesatradialpicker;
+    QPushButton *btn_qwwlongspinbox;
+    QPushButton *btn_qwwrichtextedit;
+    QPushButton *btn_qwwcolorcombobox;
+    QPushButton *btn_qwwled;
+    QPushButton *btn_qwwnavigationbar;
+    QPushButton *btn_qwwtaskpanel;
+    QPushButton *btn_qwwbreadcrumb;
+    QPushButton *btn_qwwconfigwidget;
+    QPushButton *btn_qwwlistnavigator;
+    QPushButton *btn_qwwnumpad;
+    QPushButton *btn_qwwtextspinbox;
+    QPushButton *btn_qwwbuttonlineedit;
+    QPushButton *btn_qwwfilechooser;
+    QPushButton *btn_qwwlistwidget;
+    QPushButton *btn_qwwresetlineedit;
+    QPushButton *btn_qwwtipwidget;
+    QPushButton *btn_qwwclearlineedit;
+    QPushButton *btn_qwwhuesatpicker;
+    QPushButton *btn_qwwloginbox;
+    QPushButton *btn_qwwrichtextbutton;
+    QPushButton *btn_qwwtwocolorindicator;
 
     //---
     void f_qwwcolorbutton(int col, int row);

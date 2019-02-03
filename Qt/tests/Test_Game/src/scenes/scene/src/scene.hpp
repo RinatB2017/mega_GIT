@@ -50,8 +50,8 @@ private:
         RIGHT
     };
 
-    QPixmap *pix = 0;
-    QGraphicsPixmapItem *item = 0;
+    QPixmap *pix;
+    QGraphicsPixmapItem *item;
     qreal x = 0;
     qreal y = 0;
     qreal delta = 0.05;

@@ -50,13 +50,13 @@ private slots:
     void test(void);
 
 private:
-    Ui::TestBox_1 *ui = 0;
+    Ui::TestBox_1 *ui;
 
     QList<pet_discovery_data> p_pet_config;
 
     void init(void);
 
-    Device_BOS *device = 0;
+    Device_BOS *device;
     PET_RESULT check_packet(uint8_t addr,
                             uint8_t cmd,
                             uint8_t len,

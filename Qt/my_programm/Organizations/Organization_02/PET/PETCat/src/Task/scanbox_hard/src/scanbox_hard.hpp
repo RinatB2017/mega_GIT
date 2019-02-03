@@ -60,13 +60,13 @@ private slots:
     void get_packet(QHostAddress host, quint16 port, QByteArray packet);
 
 private:
-    Ui::ScanBox_hard *ui = 0;
+    Ui::ScanBox_hard *ui;
 
-    QUdpSocket *scan_socket = 0;
+    QUdpSocket *scan_socket;
     QByteArray scan_datagram;
 
-    QTimer *timer = 0;
-    QFile *file = 0;
+    QTimer *timer;
+    QFile *file;
 
     quint32 cnt_second;
 

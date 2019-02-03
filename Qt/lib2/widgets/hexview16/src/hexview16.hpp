@@ -42,8 +42,8 @@ public:
     void test2(void);
 
 private:
-    QTableView *tv = 0;
-    QStandardItemModel *model = 0;
+    QTableView *tv;
+    QStandardItemModel *model;
     uint16_t buf[0xFFFF] = { 0 };
     QStandardItem *items[0xFFFF];
 

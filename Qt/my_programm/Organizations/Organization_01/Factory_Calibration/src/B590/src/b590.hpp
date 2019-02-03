@@ -140,21 +140,21 @@ private slots:
     void save_table_I(void);
 
 private:
-    Ui::B590 *ui = 0;
+    Ui::B590 *ui;
 
 #ifdef V764
-    Multimeter_V764 *multimeter = 0;
+    Multimeter_V764 *multimeter;
 #endif
 #ifdef V7642
-    Multimeter_V764_2 *multimeter = 0;
+    Multimeter_V764_2 *multimeter;
 #endif
 #ifdef V780
-    Multimeter_V780 *multimeter = 0;
+    Multimeter_V780 *multimeter;
 #endif
 
-    Powersupply_B590  *powersupply = 0;
+    Powersupply_B590  *powersupply;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
 
     bool flag_stop_calibration_ADC_U;
     bool flag_stop_calibration_DAC_U;
@@ -165,75 +165,75 @@ private:
 
 #ifndef USER_CALIBRATIONS
     //---
-    QtVariantProperty *item_U_point_0 = 0;
-    QtVariantProperty *item_U_max_deviation_point_0 = 0;
-    QtVariantProperty *item_U_begin_DAC_point_0 = 0;
+    QtVariantProperty *item_U_point_0;
+    QtVariantProperty *item_U_max_deviation_point_0;
+    QtVariantProperty *item_U_begin_DAC_point_0;
 
-    QtVariantProperty *item_U_point_1 = 0;
-    QtVariantProperty *item_U_max_deviation_point_1 = 0;
-    QtVariantProperty *item_U_begin_DAC_point_1 = 0;
+    QtVariantProperty *item_U_point_1;
+    QtVariantProperty *item_U_max_deviation_point_1;
+    QtVariantProperty *item_U_begin_DAC_point_1;
 
-    QtVariantProperty *item_U_point_2 = 0;
-    QtVariantProperty *item_U_max_deviation_point_2 = 0;
-    QtVariantProperty *item_U_begin_DAC_point_2 = 0;
+    QtVariantProperty *item_U_point_2;
+    QtVariantProperty *item_U_max_deviation_point_2;
+    QtVariantProperty *item_U_begin_DAC_point_2;
 
-    QtVariantProperty *item_U_point_3 = 0;
-    QtVariantProperty *item_U_max_deviation_point_3 = 0;
-    QtVariantProperty *item_U_begin_DAC_point_3 = 0;
+    QtVariantProperty *item_U_point_3;
+    QtVariantProperty *item_U_max_deviation_point_3;
+    QtVariantProperty *item_U_begin_DAC_point_3;
 
     //---
-    QtVariantProperty *item_I_point_0 = 0;
-    QtVariantProperty *item_I_max_deviation_point_0 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_0 = 0;
-    QtVariantProperty *item_I_end_DAC_point_0 = 0;
+    QtVariantProperty *item_I_point_0;
+    QtVariantProperty *item_I_max_deviation_point_0;
+    QtVariantProperty *item_I_begin_DAC_point_0;
+    QtVariantProperty *item_I_end_DAC_point_0;
 
-    QtVariantProperty *item_I_point_1 = 0;
-    QtVariantProperty *item_I_max_deviation_point_1 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_1 = 0;
+    QtVariantProperty *item_I_point_1;
+    QtVariantProperty *item_I_max_deviation_point_1;
+    QtVariantProperty *item_I_begin_DAC_point_1;
 
-    QtVariantProperty *item_I_point_2 = 0;
-    QtVariantProperty *item_I_max_deviation_point_2 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_2 = 0;
+    QtVariantProperty *item_I_point_2;
+    QtVariantProperty *item_I_max_deviation_point_2;
+    QtVariantProperty *item_I_begin_DAC_point_2;
 
-    QtVariantProperty *item_I_point_3 = 0;
-    QtVariantProperty *item_I_max_deviation_point_3 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_3 = 0;
+    QtVariantProperty *item_I_point_3;
+    QtVariantProperty *item_I_max_deviation_point_3;
+    QtVariantProperty *item_I_begin_DAC_point_3;
 
-    QtVariantProperty *item_I_point_4 = 0;
-    QtVariantProperty *item_I_max_deviation_point_4 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_4 = 0;
+    QtVariantProperty *item_I_point_4;
+    QtVariantProperty *item_I_max_deviation_point_4;
+    QtVariantProperty *item_I_begin_DAC_point_4;
 
-    QtVariantProperty *item_I_point_5 = 0;
-    QtVariantProperty *item_I_max_deviation_point_5 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_5 = 0;
+    QtVariantProperty *item_I_point_5;
+    QtVariantProperty *item_I_max_deviation_point_5;
+    QtVariantProperty *item_I_begin_DAC_point_5;
 
-    QtVariantProperty *item_I_point_6 = 0;
-    QtVariantProperty *item_I_max_deviation_point_6 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_6 = 0;
+    QtVariantProperty *item_I_point_6;
+    QtVariantProperty *item_I_max_deviation_point_6;
+    QtVariantProperty *item_I_begin_DAC_point_6;
 
-    QtVariantProperty *item_I_point_7 = 0;
-    QtVariantProperty *item_I_max_deviation_point_7 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_7 = 0;
+    QtVariantProperty *item_I_point_7;
+    QtVariantProperty *item_I_max_deviation_point_7;
+    QtVariantProperty *item_I_begin_DAC_point_7;
 
-    QtVariantProperty *item_I_point_8 = 0;
-    QtVariantProperty *item_I_max_deviation_point_8 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_8 = 0;
+    QtVariantProperty *item_I_point_8;
+    QtVariantProperty *item_I_max_deviation_point_8;
+    QtVariantProperty *item_I_begin_DAC_point_8;
 
-    QtVariantProperty *item_I_point_9 = 0;
-    QtVariantProperty *item_I_max_deviation_point_9 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_9 = 0;
+    QtVariantProperty *item_I_point_9;
+    QtVariantProperty *item_I_max_deviation_point_9;
+    QtVariantProperty *item_I_begin_DAC_point_9;
 
-    QtVariantProperty *item_I_point_10 = 0;
-    QtVariantProperty *item_I_max_deviation_point_10 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_10 = 0;
+    QtVariantProperty *item_I_point_10;
+    QtVariantProperty *item_I_max_deviation_point_10;
+    QtVariantProperty *item_I_begin_DAC_point_10;
 
-    QtVariantProperty *item_I_point_11 = 0;
-    QtVariantProperty *item_I_max_deviation_point_11 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_11 = 0;
+    QtVariantProperty *item_I_point_11;
+    QtVariantProperty *item_I_max_deviation_point_11;
+    QtVariantProperty *item_I_begin_DAC_point_11;
 
-    QtVariantProperty *item_I_point_12 = 0;
-    QtVariantProperty *item_I_max_deviation_point_12 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_12 = 0;
+    QtVariantProperty *item_I_point_12;
+    QtVariantProperty *item_I_max_deviation_point_12;
+    QtVariantProperty *item_I_begin_DAC_point_12;
 #endif
 
 #ifdef FAKE
@@ -277,12 +277,12 @@ private:
     unsigned short points_U[MAX_CALIBRATION_POINTS_B590_U];
     unsigned short points_I[MAX_CALIBRATION_POINTS_B590_I];
 
-    QStandardItemModel *model_U = 0;
-    QStandardItemModel *model_I = 0;
+    QStandardItemModel *model_U;
+    QStandardItemModel *model_I;
 
-    QPushButton *btn_set_max_U = 0;
-    QPushButton *btn_set_max_I = 0;
-    QPushButton *btn_clear_UI = 0;
+    QPushButton *btn_set_max_U;
+    QPushButton *btn_set_max_I;
+    QPushButton *btn_clear_UI;
 
     bool Calibration_remote_control_on(void);
 

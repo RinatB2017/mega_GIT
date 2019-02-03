@@ -49,8 +49,8 @@ private slots:
     void onBtnClicked(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     void init(void);
     void makeItem(QListWidget* lstWgt);

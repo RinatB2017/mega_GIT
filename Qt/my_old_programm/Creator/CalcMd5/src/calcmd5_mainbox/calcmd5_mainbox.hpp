@@ -44,8 +44,8 @@ private slots:
     void calc_md5(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
     void init(void);
 

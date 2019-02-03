@@ -45,15 +45,15 @@ public:
     ~MainBox();
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
     void init(void);
 
-    WIFI_frame *frame_1 = 0;
-    WIFI_frame *frame_2 = 0;
-    WIFI_frame *frame_3 = 0;
+    WIFI_frame *frame_1;
+    WIFI_frame *frame_2;
+    WIFI_frame *frame_3;
 
     void createTestBar(void);
 

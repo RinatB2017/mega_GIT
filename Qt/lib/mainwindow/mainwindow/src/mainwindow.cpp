@@ -103,10 +103,12 @@ void MainWindow::changeEvent(QEvent *event)
     {
     case QEvent::LanguageChange:
         app_updateText();
+#ifndef NO_TOOLBAR
         if(toolbar)
         {
             toolbar->setWindowTitle(tr("toolbar"));
         }
+#endif
 #ifndef NO_STYLETOOLBAR
         if(styletoolbar)
         {
@@ -744,6 +746,7 @@ void MainWindow::createSysLog_dock(void)
     addDockWidget(Qt::BottomDockWidgetArea, syslog_dock);
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_TOOLBAR
 void MainWindow::createToolBar(void)
 {
     toolbar = new QToolBar("toolbar", this);
@@ -791,8 +794,11 @@ void MainWindow::createToolBar(void)
     app_toolbar_add_help();
 #endif
 
+#ifndef NO_TOOLBAR
     add_windowsmenu_action(toolbar, toolbar->toggleViewAction());
+#endif
 }
+#endif
 //--------------------------------------------------------------------------------
 #ifndef NO_STYLETOOLBAR
 void MainWindow::createStyleToolBar(void)
@@ -1870,8 +1876,10 @@ void MainWindow::app_menu_add_help(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_separator(void)
 {
+#ifndef NO_TOOLBAR
     Q_CHECK_PTR(toolbar);
     toolbar->addSeparator();
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_exit(void)
@@ -1884,7 +1892,9 @@ void MainWindow::app_toolbar_add_exit(void)
     btnExit->setProperty(APP_PROPERTY_ENG_TEXT, "Exit");
     connect(btnExit,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
+#ifndef NO_TOOLBAR
     toolbar->addWidget(btnExit);
+#endif
 
     app_buttons.append(btnExit);
 }
@@ -1908,8 +1918,10 @@ void MainWindow::app_toolbar_add_font(void)
     btnLogFont->setProperty(APP_PROPERTY_ENG_TEXT, "Select the font logging");
     connect(btnLogFont,    SIGNAL(clicked(bool)),  this,   SLOT(set_log_font()));
 
+#ifndef NO_TOOLBAR
     toolbar->addWidget(btnAppFont);
     toolbar->addWidget(btnLogFont);
+#endif
 
     app_buttons.append(btnAppFont);
     app_buttons.append(btnLogFont);
@@ -1937,8 +1949,10 @@ void MainWindow::app_toolbar_add_lang(void)
     btnEng->setProperty(APP_PROPERTY_ENG_TEXT, "English");
     connect(btnEng,    SIGNAL(clicked(bool)),  this,   SLOT(setToolBarLanguage()));
 
+#ifndef NO_TOOLBAR
     toolbar->addWidget(btnRus);
     toolbar->addWidget(btnEng);
+#endif
 
     app_buttons.append(btnRus);
     app_buttons.append(btnEng);
@@ -1968,7 +1982,9 @@ void MainWindow::app_toolbar_add_style(void)
     btnStyle->setPopupMode(QToolButton::InstantPopup);
     connect(btnStyle,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
+#ifndef NO_TOOLBAR
     toolbar->addWidget(btnStyle);
+#endif
 
     app_buttons.append(btnStyle);
 }
@@ -1983,7 +1999,9 @@ void MainWindow::app_toolbar_add_about(void)
     btnAbout->setProperty(APP_PROPERTY_ENG_TEXT, "About");
     connect(btnAbout,    SIGNAL(clicked(bool)),  this,   SLOT(about()));
 
+#ifndef NO_TOOLBAR
     toolbar->addWidget(btnAbout);
+#endif
     app_buttons.append(btnAbout);
 }
 //--------------------------------------------------------------------------------
@@ -1998,7 +2016,9 @@ void MainWindow::app_toolbar_add_help(void)
     btnHelp->setShortcut(Qt::Key_F1);
     connect(btnHelp,    SIGNAL(clicked(bool)),  this,   SLOT(help()));
 
+#ifndef NO_TOOLBAR
     toolbar->addWidget(btnHelp);
+#endif
     app_buttons.append(btnHelp);
 }
 //--------------------------------------------------------------------------------

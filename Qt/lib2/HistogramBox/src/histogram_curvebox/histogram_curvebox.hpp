@@ -45,8 +45,8 @@ private slots:
 
 private:
     int index;
-    QLineEdit *caption_curve = 0;
-    QLabel *color_curve = 0;
+    QLineEdit *caption_curve;
+    QLabel *color_curve;
 
     void updateText(void);
 

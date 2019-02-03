@@ -145,10 +145,10 @@ private:
         QString cmd_text;
         void (AD9106_Box::*func)(void);
     };
-    Ui::AD9106_Box *ui = 0;
+    Ui::AD9106_Box *ui;
 
     //---
-    hid_device *dev = 0;
+    hid_device *dev;
     bool AD9106_read(QString name_reg, uint16_t *data);
     bool AD9106_write(QString name_reg, uint16_t data);
     //---
@@ -167,13 +167,13 @@ private:
     uint8_t output_buf[256];
 #endif
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
     QStringList sl_registers;
 
 #ifdef GRAPHER
-    CurveBox *curve = 0;
+    CurveBox *curve;
 #endif
 
     void init(void);

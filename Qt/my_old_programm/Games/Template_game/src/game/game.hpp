@@ -60,10 +60,10 @@ private:
     void DrawBackground(QPainter*);
     void DrawBlock(QPainter*, QBrush brush, int x, int y);
     void DrawMap(QPainter*);
-    QSize *WindowSize = 0;
-    QTimer *timer = 0;
-    Map *map = 0;
-    Player *player = 0;
+    QSize *WindowSize;
+    QTimer *timer;
+    Map *map;
+    Player *player;
     QPainter painter;
     QBrush objects[MAX_OBJECTS];
 

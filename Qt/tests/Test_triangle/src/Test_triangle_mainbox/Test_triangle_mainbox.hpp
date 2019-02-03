@@ -42,8 +42,8 @@ private slots:
     void test(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
     void init(void);
     void createTestBar(void);

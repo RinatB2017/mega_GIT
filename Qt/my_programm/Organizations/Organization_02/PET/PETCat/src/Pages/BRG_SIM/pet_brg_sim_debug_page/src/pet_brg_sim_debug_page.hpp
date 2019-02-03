@@ -53,7 +53,7 @@ private slots:
     void btn_set_default_click(void);
 
 private:
-    Ui::PET_brg_sim_debug_page *ui = 0;
+    Ui::PET_brg_sim_debug_page *ui;
 
     void init(void);
 };

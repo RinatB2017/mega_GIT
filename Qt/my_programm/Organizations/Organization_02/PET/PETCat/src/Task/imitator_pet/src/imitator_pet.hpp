@@ -76,9 +76,9 @@ private slots:
     void show_control_events(void);
 
 private:
-    Ui::Imitator_PET *ui = 0;
+    Ui::Imitator_PET *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<struct point_data> points;
 
     QList<struct pet_event> control_events;

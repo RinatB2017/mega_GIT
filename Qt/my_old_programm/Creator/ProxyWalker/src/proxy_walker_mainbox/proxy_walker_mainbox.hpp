@@ -58,16 +58,16 @@ private slots:
 
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
     bool is_loaded = false;
-    WebView *webview = 0;
+    WebView *webview;
     bool global_stop_flag = false;
-    QWebFrame *main_frame = 0;
+    QWebFrame *main_frame;
 
-    QProgressBar *web_progressBar = 0;
-    QProgressBar *result_progressBar = 0;
+    QProgressBar *web_progressBar;
+    QProgressBar *result_progressBar;
 
-    QListWidget *proxy_list = 0;
+    QListWidget *proxy_list;
 
     int current_index;
 

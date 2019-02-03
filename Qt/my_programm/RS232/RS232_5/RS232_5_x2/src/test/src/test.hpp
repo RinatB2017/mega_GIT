@@ -37,7 +37,7 @@ private slots:
     void check_serial_2(void);
 
 private:
-    MainWindow *mw = 0;
+    MainWindow *mw;
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -53,7 +53,7 @@ signals:
     void trace(const QString &);
 
 private:
-    QGridLayout *grid = 0;
+    QGridLayout *grid;
     QList<Diod *> buttons;
 
     int max_x = 0;

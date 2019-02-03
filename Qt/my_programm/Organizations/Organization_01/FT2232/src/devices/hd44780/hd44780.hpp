@@ -40,7 +40,7 @@ public:
     void test(void);
 
 private:
-    FT2232H *ft2232h = 0;
+    FT2232H *ft2232h;
 
     void screen_on(void);
     void screen_off(void);

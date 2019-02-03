@@ -72,26 +72,26 @@ private:
     QString caption;
     bool is_server = false;
     bool server_is_created = false;
-    SerialBox5_lite *serial = 0;
+    SerialBox5_lite *serial;
     QByteArray  serial_data;
-    LogBox *logBox = 0;
+    LogBox *logBox;
 
-    QLineEdit *le_Network = 0;
-    QLineEdit *le_Password = 0;
-    QLineEdit *le_IP = 0;
-    QLineEdit *le_Gate = 0;
-    QLineEdit *le_Mask = 0;
-    QLineEdit *le_RemoteIP = 0;
-    QLineEdit *le_RemotePort = 0;
-    QComboBox *cb_EncryptType = 0;
+    QLineEdit *le_Network;
+    QLineEdit *le_Password;
+    QLineEdit *le_IP;
+    QLineEdit *le_Gate;
+    QLineEdit *le_Mask;
+    QLineEdit *le_RemoteIP;
+    QLineEdit *le_RemotePort;
+    QComboBox *cb_EncryptType;
 
     bool is_ready = false;
 
-    QPushButton *btn_server = 0;
-    QPushButton *btn_client = 0;
-    QPushButton *btn_send_data = 0;
+    QPushButton *btn_server;
+    QPushButton *btn_client;
+    QPushButton *btn_send_data;
 
-    QPushButton *btn_read_settings = 0;
+    QPushButton *btn_read_settings;
 
     void init(void);
     void connect_serial(void);

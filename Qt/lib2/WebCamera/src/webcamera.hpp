@@ -68,7 +68,7 @@ private slots:
     void set_autofocus(bool state);
 
 private:
-    Ui::WebCamera *ui = 0;
+    Ui::WebCamera *ui;
 
     int mCameraEventId = 0;
 

@@ -51,7 +51,7 @@ public:
     void block_state_interface(bool state);
 
 private:
-    Ui::PET_brg_ch_page *ui = 0;
+    Ui::PET_brg_ch_page *ui;
     uint16_t channel;
 
     void init(void);

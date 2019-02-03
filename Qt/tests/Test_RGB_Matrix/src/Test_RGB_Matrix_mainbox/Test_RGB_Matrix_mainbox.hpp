@@ -59,21 +59,21 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    SerialBox5_lite *main_serialBox = 0;
-    SerialBox5_lite *control_serialBox = 0;
+    SerialBox5_lite *main_serialBox;
+    SerialBox5_lite *control_serialBox;
 
     QByteArray display_data_rs232;
     QByteArray data_rs232;
 
-    QSpinBox *sb_interval = 0;
-    QTimer *timer = 0;
+    QSpinBox *sb_interval;
+    QTimer *timer;
 
-    Display *display = 0;
-    Display *control_display = 0;
-    MyPalette *palette = 0;
+    Display *display;
+    Display *control_display;
+    MyPalette *palette;
     int pos_x;
 
     bool is_busy = false;

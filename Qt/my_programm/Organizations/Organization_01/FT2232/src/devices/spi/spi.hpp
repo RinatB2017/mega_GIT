@@ -45,7 +45,7 @@ public:
     BOOL test_at93c56(void);
 
 private:
-    FT2232H *ft2232h = 0;
+    FT2232H *ft2232h;
     DWORD dwClockDivisor;
 
     void SPI_CSEnable(void);

@@ -100,18 +100,15 @@ private slots:
     int set_UI_parrot(int U, int I);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::B590 *ui = 0;
+    MySplashScreen *splash;
+    Ui::B590 *ui;
 
-    Powersupply_B590  *powersupply = 0;
-    GrapherBox *grapher = 0;
-    QTimer *timer = 0;
+    Powersupply_B590  *powersupply;
+    GrapherBox *grapher;
+    QTimer *timer;
 
-    //HexSpinBox *sb_begin = 0;
-    //HexSpinBox *sb_end = 0;
-
-    QSpinBox *sb_begin = 0;
-    QSpinBox *sb_end = 0;
+    QSpinBox *sb_begin;
+    QSpinBox *sb_end;
 
     bool flag_find_stop = false;
     bool flag_test_stop = false;

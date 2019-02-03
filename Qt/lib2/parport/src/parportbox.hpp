@@ -78,19 +78,19 @@ private slots:
     void on_powerButton_toggled(bool checked);
 
 private:
-    Ui::ParportBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::ParportBox *ui;
+    QWidget *parent;
     QMap <QPushButton *, int> keymap;
 #if LEDPANEL_ON
     LedPanel *ledPanel8;
     LedPanel *ledControlPanel8;
 #endif
-    QHBoxLayout *hbox = 0;
-    QVBoxLayout *vbox = 0;
-    QFrame *ledFrame = 0;
-    Parport *parport = 0;
-    QTimer *timer = 0;
-    QTimer *timer2 = 0;
+    QHBoxLayout *hbox;
+    QVBoxLayout *vbox;
+    QFrame *ledFrame;
+    Parport *parport;
+    QTimer *timer;
+    QTimer *timer2;
     void message(const QString &text);
     void set_enable(bool state);
     void initKeyboard(void);

@@ -77,17 +77,17 @@ private slots:
 private:
     QList<syslog_t> l_syslog;
 
-    QToolButton *btn_first = 0;
-    QToolButton *btn_prev = 0;
-    QToolButton *btn_next = 0;
-    QToolButton *btn_last = 0;
+    QToolButton *btn_first;
+    QToolButton *btn_prev;
+    QToolButton *btn_next;
+    QToolButton *btn_last;
 
     QList<QToolButton *> buttons;
 
-    QPushButton *btn_test = 0;
+    QPushButton *btn_test;
 
-    QStandardItemModel *model = 0;
-    QTableView *table = 0;
+    QStandardItemModel *model;
+    QTableView *table;
 
     QString syslog_to_str(int level);
 

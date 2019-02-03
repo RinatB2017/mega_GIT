@@ -45,9 +45,9 @@ public:
     ~MainBox();
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
-    QCustomPlot *plot = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
+    QCustomPlot *plot;
     int index = 0;
 
     void init(void);

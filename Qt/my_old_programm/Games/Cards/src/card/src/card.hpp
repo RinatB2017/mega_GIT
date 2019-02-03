@@ -46,7 +46,7 @@ public:
 private:
     void init(void);
 
-    QLabel *label = 0;
+    QLabel *label;
     QPoint lastPoint;
     bool b_move;
 
@@ -54,7 +54,7 @@ private:
     int pos_y;
     int card_width;
     int card_height;
-    QSvgRenderer *re = 0;
+    QSvgRenderer *re;
 
     QString card_name;
 

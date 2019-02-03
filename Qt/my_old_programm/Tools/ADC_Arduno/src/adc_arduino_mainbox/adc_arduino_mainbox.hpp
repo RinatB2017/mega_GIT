@@ -92,13 +92,13 @@ private slots:
     void analize_packet(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     QList<int> curves;
 
-    SerialBox5 *serial = 0;
+    SerialBox5 *serial;
     QByteArray dirty_data;
     QByteArray clean_data;
 

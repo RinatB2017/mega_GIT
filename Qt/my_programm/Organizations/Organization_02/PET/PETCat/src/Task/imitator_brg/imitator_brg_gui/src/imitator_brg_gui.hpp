@@ -54,10 +54,10 @@ private slots:
     bool set_values(void);
 
 private:
-    Ui::Imitator_BRG_GUI *ui = 0;
+    Ui::Imitator_BRG_GUI *ui;
 
-    Imitator_BRG *brg = 0;
-    QTimer *timer = 0;
+    Imitator_BRG *brg;
+    QTimer *timer;
 
     void block_interface(bool state);
 

@@ -48,9 +48,9 @@ private slots:
     void save(void);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
-    QTabWidget *tab = 0;
+    QTabWidget *tab;
     QList<QToolButton *> l_buttons;
 
     void init(void);

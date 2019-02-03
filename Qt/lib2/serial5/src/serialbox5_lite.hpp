@@ -72,16 +72,16 @@ public:
     qint64 write ( const char *data );
 
 private:
-    Ui::SerialBox5_lite *ui = 0;
-    QWidget *parent = 0;
-    QSerialPort *serial5 = 0;
+    Ui::SerialBox5_lite *ui;
+    QWidget *parent;
+    QSerialPort *serial5;
     QString caption;
     QString o_name;
 
     bool flag_in_hex = false;
     bool flag_byte_by_byte = false;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
     //TODO
     bool p_test = false;

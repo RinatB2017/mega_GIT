@@ -84,12 +84,12 @@ private slots:
     //---
 
 private:
-    Ui::Histogram_consilience *ui = 0;
+    Ui::Histogram_consilience *ui;
 
-    MetaData_widget *mtw = 0;
+    MetaData_widget *mtw;
     bool convert_metadata(QString name, QString *result);
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_Pdt = 0;
     int curve_gauss = 0;
 
@@ -100,7 +100,7 @@ private:
     quint64 EventTotal = 0;
     quint64 CmpNum = 0;
 
-    DAT3 *dat3 = 0;
+    DAT3 *dat3;
 
     char mSourceA = 0;
     char mSourceB = 0;
@@ -110,9 +110,9 @@ private:
 
     long mMax = 0;
 
-    int *buf = 0;
+    int *buf;
 
-    QSplitter *main_splitter = 0;
+    QSplitter *main_splitter;
 
     void init(void);
 

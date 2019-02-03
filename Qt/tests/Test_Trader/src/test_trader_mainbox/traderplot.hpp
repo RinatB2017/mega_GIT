@@ -38,9 +38,9 @@ public:
     void append_point(float a, float b, float c, float d);
 
 private:
-    CurveData *data_curve = 0;
-    QwtPlotCurve *curve = 0;
-    QwtPlotPicker *d_picker = 0;
+    CurveData *data_curve;
+    QwtPlotCurve *curve;
+    QwtPlotPicker *d_picker;
 };
 //--------------------------------------------------------------------------------
 #endif // TRADERPLOT_HPP

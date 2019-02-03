@@ -42,7 +42,7 @@ public:
     void close(void);
 
 private:
-    FT2232H *ft2232h = 0;
+    FT2232H *ft2232h;
 
     void updateText(void);
 

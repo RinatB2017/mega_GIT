@@ -82,9 +82,9 @@ private:
 
     QString default_player;
 
-    QXmlPut *xmlPut = 0;
+    QXmlPut *xmlPut;
 
-    QDomDocument *doc = 0;
+    QDomDocument *doc;
 
     void parseFolderElement(const QDomElement &element,
                             QTreeWidgetItem *parentItem = 0);

@@ -50,7 +50,7 @@ private slots:
     QByteArray send_data(const QByteArray);
 
 private:
-    QTcpSocket *tcpSocket = 0;
+    QTcpSocket *tcpSocket;
     QString address;
     int port = 0;
     void init(void);

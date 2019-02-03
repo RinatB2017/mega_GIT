@@ -48,7 +48,7 @@ public:
     void block_ctrl_interface(bool state);
 
 private:
-    Ui::PET_brg_ch_calibration_page *ui = 0;
+    Ui::PET_brg_ch_calibration_page *ui;
     uint16_t channel = 0;
 
     void init(void);

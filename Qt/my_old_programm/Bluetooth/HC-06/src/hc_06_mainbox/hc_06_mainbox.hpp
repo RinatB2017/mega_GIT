@@ -128,18 +128,18 @@ private slots:
     void command_EXSNIFF(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    SerialBox5 *serialBox = 0;
-    QLineEdit *le_name = 0;
+    SerialBox5 *serialBox;
+    QLineEdit *le_name;
 
     QByteArray data_rs232;
     bool is_ready = false;
     unsigned char test_byte = 0;
     unsigned int cnt = 0;
 
-    QComboBox *cb_command = 0;
+    QComboBox *cb_command;
 
     void init(void);
     void wait(int max_time_ms);

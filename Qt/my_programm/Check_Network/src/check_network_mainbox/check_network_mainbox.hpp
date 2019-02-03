@@ -57,14 +57,14 @@ private slots:
     void slotConnected   (void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     QString strHost;
     int nPort = 0;
     QTcpSocket* m_pTcpSocket;
 
-    QStandardItemModel *model = 0;
+    QStandardItemModel *model;
 
     void init(void);
     void updateText(void);

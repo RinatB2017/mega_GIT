@@ -46,10 +46,10 @@ private slots:
     void textChanged(void);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
-    MyTextEdit *srcTextEdit = 0;
-    MyTextEdit *dstTextEdit = 0;
+    MyTextEdit *srcTextEdit;
+    MyTextEdit *dstTextEdit;
 
     void init(void);
 

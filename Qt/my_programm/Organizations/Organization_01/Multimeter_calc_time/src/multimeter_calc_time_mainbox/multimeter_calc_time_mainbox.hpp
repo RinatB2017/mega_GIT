@@ -53,10 +53,10 @@ private slots:
 #endif
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    Multimeter_V786_2 *multimeter = 0;
+    Multimeter_V786_2 *multimeter;
 
     void init(void);
 

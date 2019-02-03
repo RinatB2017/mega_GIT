@@ -44,7 +44,7 @@ private slots:
     void get_data(QByteArray data);
 
 private:
-    Ui::Serial  *ui = 0;
+    Ui::Serial  *ui;
     QByteArray  data_rs232;
 
     void init(void);

@@ -56,8 +56,8 @@ private slots:
     void data_gy652(QByteArray data);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     int curve_temperature = 0;
     int curve_pressure = 0;

@@ -54,19 +54,19 @@ private slots:
     void send_bin(void);
 
 private:
-    QComboBox *cb_send_text = 0;
-    QComboBox *cb_send_bin = 0;
-    QComboBox *append_comboBox = 0;
+    QComboBox *cb_send_text;
+    QComboBox *cb_send_bin;
+    QComboBox *append_comboBox;
 
-    QToolButton *btn_send_text = 0;
-    QToolButton *btn_send_bin = 0;
+    QToolButton *btn_send_text;
+    QToolButton *btn_send_bin;
 
-    QHBoxLayout *hbox_text = 0;
-    QHBoxLayout *hbox_bin = 0;
+    QHBoxLayout *hbox_text;
+    QHBoxLayout *hbox_bin;
 
-    QCheckBox *cb_SendStenToStep = 0;
+    QCheckBox *cb_SendStenToStep;
 
-    QGridLayout *grid = 0;
+    QGridLayout *grid;
 };
 //--------------------------------------------------------------------------------
 #endif // SENDBOX_HPP

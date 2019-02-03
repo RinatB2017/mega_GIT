@@ -32,7 +32,7 @@ public:
     ~MyMainWindow();
 
 private:
-    QAction *save_action = 0;
+    QAction *save_action;
 #ifndef NO_MENU
     void create_local_menus(void);
 #endif

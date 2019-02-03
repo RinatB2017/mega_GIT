@@ -89,16 +89,16 @@ private:
         QString cmd_text;
         void (HID_device::*func)(void);
     };
-    Ui::HID_device *ui = 0;
+    Ui::HID_device *ui;
 
     //---
-    hid_device *dev = 0;
+    hid_device *dev;
 
     uint8_t output_buf[0x40];
 
     //---
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
     void init(void);

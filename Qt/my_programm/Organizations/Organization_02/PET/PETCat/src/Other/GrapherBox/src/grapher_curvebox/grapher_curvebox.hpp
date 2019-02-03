@@ -59,10 +59,10 @@ private:
     };
 
     int index;
-    QLineEdit *caption_curve = 0;
-    QLabel *color_curve = 0;
-    QCheckBox *cb_symbol = 0;
-    QComboBox *cb_type_curve = 0;
+    QLineEdit *caption_curve;
+    QLabel *color_curve;
+    QCheckBox *cb_symbol;
+    QComboBox *cb_type_curve;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

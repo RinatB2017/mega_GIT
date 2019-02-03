@@ -53,8 +53,8 @@ private slots:
     void test(void);
 
 private:
-    Ui::B590_imitator *ui = 0;
-    UPacket *up = 0;
+    Ui::B590_imitator *ui;
+    UPacket *up;
 
     typedef struct
     {

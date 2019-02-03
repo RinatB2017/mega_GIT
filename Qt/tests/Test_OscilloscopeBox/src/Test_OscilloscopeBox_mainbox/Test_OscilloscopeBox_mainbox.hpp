@@ -52,11 +52,11 @@ private slots:
     void update(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    OscilloscopeBox *oscilloscope = 0;
-    QTimer *main_timer = 0;
+    OscilloscopeBox *oscilloscope;
+    QTimer *main_timer;
     int index = 0;
 
     void init(void);

@@ -57,12 +57,12 @@ private slots:
     void test_3(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
 
-    PCA10000 *sniffer = 0;
+    PCA10000 *sniffer;
 
     void init(void);
 

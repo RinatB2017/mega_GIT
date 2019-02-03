@@ -58,8 +58,8 @@ private slots:
     void check_move(QObject *obj);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     int map[MAX_X][MAX_Y];
     Bone *bone[MAX_BONE];

@@ -408,7 +408,7 @@ private slots:
     void port_error(QSerialPort::SerialPortError serial_error);
 
 private:
-    Ui::Oscilloscope_GDS_840C *ui = 0;
+    Ui::Oscilloscope_GDS_840C *ui;
 
 #ifdef FAKE
     Fake_oscilloscope_GDS_840C serial;
@@ -420,7 +420,7 @@ private:
     bool flag_closed;
     bool is_ready;
 
-    GrapherBox *oscilloscope = 0;
+    GrapherBox *oscilloscope;
     int channel_1;
     int channel_2;
     int timeout;

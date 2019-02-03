@@ -77,18 +77,18 @@ private:
     int def_src = 0;
     int def_level = 0;
 
-    QComboBox *cb_level = 0;
+    QComboBox *cb_level;
 
-    QSpinBox *sb_src = 0;
+    QSpinBox *sb_src;
 
-    QSpinBox *sb_interval = 0;
+    QSpinBox *sb_interval;
 
-    QLineEdit *le_message = 0;
+    QLineEdit *le_message;
 
-    QPushButton *btn_start = 0;
-    QPushButton *btn_stop = 0;
+    QPushButton *btn_start;
+    QPushButton *btn_stop;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
     void init(void);
     void init_timer(void);

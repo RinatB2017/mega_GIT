@@ -42,7 +42,7 @@ public slots:
                      const QColor &color = Qt::black);
 
 private:
-    QProgressBar *progress = 0;
+    QProgressBar *progress;
     int current_progress = 0;
     int max_progress = 0;
     

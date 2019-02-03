@@ -94,9 +94,9 @@ public:
     qint64 bytesAvailable(void);
 
 private:
-    Ui::SerialBox5 *ui = 0;
-    QWidget *parent = 0;
-    QSerialPort *serial5 = 0;
+    Ui::SerialBox5 *ui;
+    QWidget *parent;
+    QSerialPort *serial5;
     QString caption;
     QString o_name;
 
@@ -104,19 +104,19 @@ private:
     bool flag_byte_by_byte = false;
 
 #ifdef RS232_LOG
-    LogBox  *logBox = 0;
+    LogBox  *logBox;
 #endif
 
 #ifdef RS232_SEND
-    SendBox5 *sendBox5 = 0;
+    SendBox5 *sendBox5;
 #endif
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
 #ifndef RS232_NO_FRAME
-    QFrame *frame_ring = 0;
-    QFrame *frame_dsr = 0;
-    QFrame *frame_cts = 0;
+    QFrame *frame_ring;
+    QFrame *frame_dsr;
+    QFrame *frame_cts;
     void add_frame_text(QFrame *parent,
                         const QString &text);
 #endif

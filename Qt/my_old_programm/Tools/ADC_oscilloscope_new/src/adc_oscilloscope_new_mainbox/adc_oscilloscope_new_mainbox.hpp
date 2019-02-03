@@ -62,11 +62,11 @@ private slots:
     void raw_data( QByteArray );
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
-    GrapherBox *grapher = 0;
-    SerialBox5 *serial = 0;
+    GrapherBox *grapher;
+    SerialBox5 *serial;
     QByteArray dirty_data;
 
     void init(void);

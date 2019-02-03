@@ -55,9 +55,9 @@ private slots:
     void clientDisconnected(void);
 
 private:
-    Processor *processor = 0;
-    QTcpServer *tcpServer = 0;
-    QTcpSocket *clientConnection = 0;
+    Processor *processor;
+    QTcpServer *tcpServer;
+    QTcpSocket *clientConnection;
 
     void updateText(void);
 };

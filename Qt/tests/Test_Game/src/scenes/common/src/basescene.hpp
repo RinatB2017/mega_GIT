@@ -66,8 +66,8 @@ public slots:
     virtual void update(void) = 0;
 
 private:
-    QTimer *timer = 0;
-    QGraphicsPixmapItem *background = 0;
+    QTimer *timer;
+    QGraphicsPixmapItem *background;
 
     void create_timer(void);
 

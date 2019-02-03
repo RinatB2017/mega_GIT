@@ -38,7 +38,7 @@ private slots:
 #endif
 
 private:
-    MainWindow *mw = 0;
+    MainWindow *mw;
 };
 //--------------------------------------------------------------------------------
 #endif

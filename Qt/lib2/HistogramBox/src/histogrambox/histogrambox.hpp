@@ -125,11 +125,11 @@ private slots:
     void statistic(void);
 
 private:
-    Ui::HistogramBox *ui = 0;
+    Ui::HistogramBox *ui;
 
-    QwtPlotPicker *d_picker = 0;
+    QwtPlotPicker *d_picker;
 
-    QwtLegend *legend = 0;
+    QwtLegend *legend;
 
     QVector<HISTOGRAM_CURVE> histograms;
 

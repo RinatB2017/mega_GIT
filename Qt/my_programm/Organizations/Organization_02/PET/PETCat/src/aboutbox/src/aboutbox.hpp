@@ -23,7 +23,7 @@ public:
 private slots:
 
 private:
-    Ui::AboutBox *ui = 0;
+    Ui::AboutBox *ui;
 };
 //--------------------------------------------------------------------------------
 #endif // ABOUTBOX_H

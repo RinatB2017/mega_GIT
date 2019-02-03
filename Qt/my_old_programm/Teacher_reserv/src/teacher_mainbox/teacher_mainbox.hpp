@@ -47,11 +47,11 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     bool is_blocked = false;
-    QLineEdit *site_address = 0;
+    QLineEdit *site_address;
 
     void init(void);
 

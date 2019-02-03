@@ -49,10 +49,10 @@ public:
 
 private:
     Ui::CandleStick_Box *ui;
-    QCandlestickSeries *acmeSeries = 0;
-    QChart *chart = 0;
+    QCandlestickSeries *acmeSeries;
+    QChart *chart;
     QStringList categories;
-    QBarCategoryAxis *axisX = 0;
+    QBarCategoryAxis *axisX;
     QString ticket_name;
 
 };

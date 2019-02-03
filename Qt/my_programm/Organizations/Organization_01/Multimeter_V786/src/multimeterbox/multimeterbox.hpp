@@ -77,16 +77,16 @@ private slots:
 #endif
 
 private:
-    Ui::Multimeter *ui = 0;
+    Ui::Multimeter *ui;
     QString title;
 
-    BatteryProgressBar *battery_progress_bar = 0;
-    QPushButton *btn_find_multimeter = 0;
+    BatteryProgressBar *battery_progress_bar;
+    QPushButton *btn_find_multimeter;
 
-    Multimeter_V786_2 *multimeter = 0;
+    Multimeter_V786_2 *multimeter;
 
 #ifndef NO_GRAPHER
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
 #endif
 
     bool flag_measuring;

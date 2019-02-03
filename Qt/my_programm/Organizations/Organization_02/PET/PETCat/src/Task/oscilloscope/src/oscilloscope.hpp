@@ -67,16 +67,16 @@ private slots:
     void save_picture_to_file_old(void);
 
 private:
-    Ui::OscilloscopeBox *ui = 0;
+    Ui::OscilloscopeBox *ui;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
-    PET_device_brg *pet_brg = 0;
+    PET_device_brg *pet_brg;
     QList<pet_discovery_data> p_pet_config;
 
-    QSplitter *main_splitter = 0;
+    QSplitter *main_splitter;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_xp = 0;
     int curve_xn = 0;
     int curve_yp = 0;

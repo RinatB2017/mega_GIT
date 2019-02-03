@@ -88,14 +88,14 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    QImage *orig_image = 0;
-    QImage *new_image = 0;
+    QImage *orig_image;
+    QImage *new_image;
     long cnt_sin = 0;
     long cnt_cos = 0;
 

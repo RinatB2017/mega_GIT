@@ -26,7 +26,7 @@ private slots:
     void show_env(void);
 
 private:
-    Ui::AboutBox *ui = 0;
+    Ui::AboutBox *ui;
 
 protected:
     void changeEvent(QEvent *event);

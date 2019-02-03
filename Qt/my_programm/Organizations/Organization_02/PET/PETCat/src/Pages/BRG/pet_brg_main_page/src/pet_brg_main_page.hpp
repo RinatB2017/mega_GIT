@@ -68,7 +68,7 @@ private slots:
     void btn_export_click(void);
 
 private:
-    Ui::PET_brg_main_page *ui = 0;
+    Ui::PET_brg_main_page *ui;
     bool flag_is_demo;
 
     // параметры BRG
@@ -102,14 +102,14 @@ private:
     PET_RESULT f_PET_CMD_GET_CH_STATE(void);
 
     //---
-    PET_device_info_page *p_brg_device_info = 0;
+    PET_device_info_page *p_brg_device_info;
 
-    PET_brg_debug_page  *p_brg_debug = 0;
+    PET_brg_debug_page  *p_brg_debug;
     //---
-    PET_brg_ch_page     *p_brg_ch_0 = 0;
-    PET_brg_ch_page     *p_brg_ch_1 = 0;
-    PET_brg_ch_page     *p_brg_ch_2 = 0;
-    PET_brg_ch_page     *p_brg_ch_3 = 0;
+    PET_brg_ch_page     *p_brg_ch_0;
+    PET_brg_ch_page     *p_brg_ch_1;
+    PET_brg_ch_page     *p_brg_ch_2;
+    PET_brg_ch_page     *p_brg_ch_3;
     //---
     void add_page_device_info(void);
     void add_page_debug(void);

@@ -63,21 +63,21 @@ private slots:
     void move(QString text);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
 #ifndef NO_CHESSBOARD
-    ChessBoard *board = 0;
+    ChessBoard *board;
 #endif
-    QProcess   *m_engine = 0;
+    QProcess   *m_engine;
     Q_PID m_pid;
 
     void init(void);
 
-    QLineEdit   *le_test = 0;
+    QLineEdit   *le_test;
 
-    QToolButton *btn_test = 0;
-    QToolButton *btn_run = 0;
+    QToolButton *btn_test;
+    QToolButton *btn_run;
 
     QRegExp whiteMoveRegEx;
     QRegExp blackMoveRegEx;

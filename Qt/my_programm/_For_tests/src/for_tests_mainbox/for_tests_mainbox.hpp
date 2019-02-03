@@ -86,14 +86,14 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    QWidget *test_widget = 0;
-    QComboBox *cb_test2 = 0;
+    QWidget *test_widget;
+    QComboBox *cb_test2;
 
     //---
     void test_validator(void);

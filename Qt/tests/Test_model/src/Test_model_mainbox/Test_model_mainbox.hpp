@@ -68,13 +68,13 @@ private:
         QString cmd_text;
         void (MainBox::*func)(void);
     };
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    QStandardItemModel *model = 0;
+    QStandardItemModel *model;
 
     void init(void);
 

@@ -36,7 +36,7 @@ public:
     void test(void);
 
 private:
-    FT2232H *ft2232h = 0;
+    FT2232H *ft2232h;
 
     float convert_9bit(unsigned short  temp_ds18b20);
     float convert_10bit(unsigned short temp_ds18b20);

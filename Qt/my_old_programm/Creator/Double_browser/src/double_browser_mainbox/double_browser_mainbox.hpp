@@ -45,14 +45,14 @@ public:
     ~MainBox();
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
     bool flag = false;
 
-    WebView *other_browser = 0;
-    WebView *my_browser = 0;
+    WebView *other_browser;
+    WebView *my_browser;
 
-    QProgressBar *progressBar = 0;
-    QLineEdit *address = 0;
+    QProgressBar *progressBar;
+    QLineEdit *address;
 
     void init(void);
 

@@ -57,8 +57,8 @@ private:
         QString cmd_text;
         bool (NewMainWindow::*func)(void);
     } CMD_t;
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
+    QComboBox *cb_test;
+    QCheckBox *cb_block;
     QList<CMD> commands;
 
     QToolButton *add_button(QToolBar *tool_bar,

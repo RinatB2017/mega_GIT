@@ -63,9 +63,8 @@ private slots:
     void read_data(QByteArray ba);
 
 private:
-
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     enum {
         ID_TEST_0 = 1000,
@@ -83,14 +82,14 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    //SerialBox5 *serial = 0;
-    SerialBox5_fix_baudrate *serial = 0;
-    //SerialBox5_lite *serial = 0;
+    //SerialBox5 *serial;
+    SerialBox5_fix_baudrate *serial;
+    //SerialBox5_lite *serial;
 
     void init_serial(void);
 
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
+    QComboBox *cb_test;
+    QCheckBox *cb_block;
     QList<CMD> commands;
 
     void init(void);

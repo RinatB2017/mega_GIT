@@ -79,10 +79,10 @@ private slots:
     void f_error(QMediaPlayer::Error err);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QMediaPlayer *player = 0;
+    QMediaPlayer *player;
 
     void init(void);
     void createTestBar(void);

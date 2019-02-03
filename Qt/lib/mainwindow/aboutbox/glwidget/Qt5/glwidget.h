@@ -100,7 +100,7 @@ private:
     Logo m_logo;
     QOpenGLVertexArrayObject m_vao;
     QOpenGLBuffer m_logoVbo;
-    QOpenGLShaderProgram *m_program = 0;
+    QOpenGLShaderProgram *m_program;
     int m_projMatrixLoc;
     int m_mvMatrixLoc;
     int m_normalMatrixLoc;

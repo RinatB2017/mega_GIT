@@ -63,24 +63,24 @@ private slots:
     void click(QModelIndex);
 
 private:
-    Ui::PETCat_optionsBox *ui = 0;
+    Ui::PETCat_optionsBox *ui;
 
     //---
-    Page_main_options                   *o_options = 0;
-    Page_logging                        *o_logging = 0;
-    Page_oscilloscope_options           *o_oscilloscope = 0;
-    Page_floodmap_options               *o_floodmap = 0;
-    Page_histogram_consulience_options  *o_consulience = 0;
-    Page_histogram_energy_options       *o_energy = 0;
-    Page_imitator_BRG_options           *o_imitator_brg = 0;
+    Page_main_options                   *o_options;
+    Page_logging                        *o_logging;
+    Page_oscilloscope_options           *o_oscilloscope;
+    Page_floodmap_options               *o_floodmap;
+    Page_histogram_consulience_options  *o_consulience;
+    Page_histogram_energy_options       *o_energy;
+    Page_imitator_BRG_options           *o_imitator_brg;
 
-    QTreeWidgetItem *i_main_options = 0;
-    QTreeWidgetItem *i_logging = 0;
-    QTreeWidgetItem *i_oscilloscope = 0;
-    QTreeWidgetItem *i_floodmap = 0;
-    QTreeWidgetItem *i_histogram_consulience = 0;
-    QTreeWidgetItem *i_histogram_energy = 0;
-    QTreeWidgetItem *i_imitator_brg = 0;
+    QTreeWidgetItem *i_main_options;
+    QTreeWidgetItem *i_logging;
+    QTreeWidgetItem *i_oscilloscope;
+    QTreeWidgetItem *i_floodmap;
+    QTreeWidgetItem *i_histogram_consulience;
+    QTreeWidgetItem *i_histogram_energy;
+    QTreeWidgetItem *i_imitator_brg;
 
     int index_main_options = 0;
     int index_logging = 0;

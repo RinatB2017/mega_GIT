@@ -58,18 +58,18 @@ private slots:
     void rc_off(void);
 
 private:
-    Ui::B590 *ui = 0;
+    Ui::B590 *ui;
 
-    Powersupply_B590 *powersupply = 0;
+    Powersupply_B590 *powersupply;
 
     bool is_blocked;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
     s_zero_b590_U calib_U;
     s_zero_b590_I calib_I;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_U = 0;
     int curve_I = 0;
     int curve_U_adc = 0;

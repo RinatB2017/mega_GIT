@@ -54,8 +54,8 @@ private slots:
     void drawGraphics(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    GrapherBox *grapher = 0;
+    Ui::MainBox *ui;
+    GrapherBox *grapher;
 
     double max_U = 0;
     double current_U = 0;

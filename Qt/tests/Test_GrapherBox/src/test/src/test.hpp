@@ -36,7 +36,7 @@ private slots:
     void test_grapher(void);
 
 private:
-    MainWindow *mw = 0;
+    MainWindow *mw;
 };
 //--------------------------------------------------------------------------------
 #endif

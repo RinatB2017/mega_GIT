@@ -74,7 +74,7 @@ private:
     QString database_name;
     QString table_name;
 
-    QTreeWidgetItem  *root_item = 0;
+    QTreeWidgetItem  *root_item;
 
     void init(void);
 

@@ -56,24 +56,24 @@ private slots:
     void vent_auto(void);
 
 private:
-    Ui::B590 *ui = 0;
+    Ui::B590 *ui;
 
     bool is_blocked;
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
 
     void createTestBar(void);
 
 #ifndef NO_GRAPH
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_1 = 0;
     int curve_2 = 0;
     int curve_3 = 0;
     int curve_temp = 0;
 #endif
 
-    Powersupply_B590 *powersupply = 0;
+    Powersupply_B590 *powersupply;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
     s_zero_b590_U calib_U;
     s_zero_b590_I calib_I;

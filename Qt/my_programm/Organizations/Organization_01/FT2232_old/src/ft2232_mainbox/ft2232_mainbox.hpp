@@ -91,7 +91,7 @@ private:
     Ui::MainBox *ui;
     bool test_flag;
 
-    QByteArray *serial_data = 0;
+    QByteArray *serial_data;
 
     ftdi_context ftdi;
 

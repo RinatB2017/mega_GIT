@@ -40,8 +40,8 @@ public:
     ~MainBox();
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
     QSqlDatabase db;
 
     void init(void);

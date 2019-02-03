@@ -54,13 +54,13 @@ private slots:
     void draw(QByteArray ba);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    SerialBox5 *serialBox;
 
     QByteArray data_rs232;
 
-    QHexEdit *he = 0;
+    QHexEdit *he;
 
     void init(void);
 

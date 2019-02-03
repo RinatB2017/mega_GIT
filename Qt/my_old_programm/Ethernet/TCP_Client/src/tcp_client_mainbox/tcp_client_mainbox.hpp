@@ -44,8 +44,8 @@ private slots:
     void send(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    TCP_Client *client = 0;
+    Ui::MainBox *ui;
+    TCP_Client *client;
 
     void init(void);
     void init_widgets(void);

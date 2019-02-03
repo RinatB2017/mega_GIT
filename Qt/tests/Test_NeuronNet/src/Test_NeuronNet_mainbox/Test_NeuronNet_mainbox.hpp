@@ -103,14 +103,14 @@ private:
         QString cmd_text;
         void (MainBox::*func)(void);
     };
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    QTableWidget *display = 0;
-    QLCDNumber *display_number = 0;
+    QTableWidget *display;
+    QLCDNumber *display_number;
 
     QList<data_NMIST> test_data;
 

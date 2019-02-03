@@ -53,11 +53,11 @@ private:
     qreal w_item = 0;
     qreal h_item = 0;
 
-    Player  *player = 0;
-    Ship    *ship = 0;
+    Player  *player;
+    Ship    *ship;
     QList<Rock *> rocks;
 
-    Ship    *moved_ship = 0;
+    Ship    *moved_ship;
 
     bool is_worked = false;
 

@@ -79,9 +79,9 @@ private slots:
     //---
 
 private:
-    Ui::Histogram_energy *ui = 0;
+    Ui::Histogram_energy *ui;
 
-    MetaData_widget *mtw = 0;
+    MetaData_widget *mtw;
     bool convert_metadata(QString name, QString *result);
 
     float Emin = 0;
@@ -90,7 +90,7 @@ private:
     float E = 0;
     float delta = 0;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve = 0;
 
     bool ignore_filter_address = false;
@@ -98,11 +98,11 @@ private:
     uint8_t event_flags = 0;
 
     //---
-    DAT3 *dat3 = 0;
+    DAT3 *dat3;
 
     int max_i = 0;
 
-    QSplitter *main_splitter = 0;
+    QSplitter *main_splitter;
 
     quint64 buf_energy[MAX_SIZE_BUF_ENERGY];
     void clear_buf_energy(void);

@@ -85,7 +85,7 @@ private slots:
     void popup(QPoint);
 
 private:
-    QTextEdit *logBox = 0;
+    QTextEdit *logBox;
 
     bool flagNoCRLF = false;
     bool flagAddDateTime = false;
@@ -95,10 +95,10 @@ private:
     bool flagErrorAsMessage = false;
     bool flagTextIsWindows = false;
 
-    QProgressBar *progressBar = 0;
-    QHBoxLayout *hbox = 0;
-    QVBoxLayout *vbox = 0;
-    QHBoxLayout *mainbox = 0;
+    QProgressBar *progressBar;
+    QHBoxLayout *hbox;
+    QVBoxLayout *vbox;
+    QHBoxLayout *mainbox;
 
     bool old_state_btn_show_Info = false;
     bool old_state_btn_show_Debug = false;

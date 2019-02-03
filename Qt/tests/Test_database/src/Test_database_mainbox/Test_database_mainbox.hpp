@@ -69,11 +69,11 @@ private slots:
     bool close_database(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
-    Database *db = 0;
+    QComboBox *cb_test;
+    Database *db;
 
     void init(void);
 

@@ -31,7 +31,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class QTreeWidgetItem;
@@ -61,22 +61,22 @@ private slots:
     void select_last_film(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
     QPixmap current_picture;
     QString current_picture_name;
 
-    QAction *change_player_action = 0;
-    QAction *save_action = 0;
-    QAction *last_film = 0;
+    QAction *change_player_action;
+    QAction *save_action;
+    QAction *last_film;
 
     void init(void);
 
-    TreeFilms *tree_films = 0;
-    QLabel *lblFilmPicture = 0;
-    QVBoxLayout *picture_vbox = 0;
-    QHBoxLayout *picture_hbox = 0;
+    TreeFilms *tree_films;
+    QLabel *lblFilmPicture;
+    QVBoxLayout *picture_vbox;
+    QHBoxLayout *picture_hbox;
 
     void init_tree_widget(void);
 

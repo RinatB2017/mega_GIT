@@ -137,7 +137,7 @@ private slots:
     void f_del_device(void);
 
 private:
-    Ui::PET_demo *ui = 0;
+    Ui::PET_demo *ui;
 
     // для удаления
     QString str_adr;
@@ -146,21 +146,21 @@ private:
     QString str_uid;
     //---
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
 
-    QUdpSocket *udp_socket = 0;
-    QUdpSocket *udp_socket_broadcast = 0;
+    QUdpSocket *udp_socket;
+    QUdpSocket *udp_socket_broadcast;
 
     int last_error;
     QString last_error_text;
 
     QString server_name;
 
-    QThread *thread = 0;
+    QThread *thread;
 
     bool flag_test = false;
 
-    UDP_packet_sender *packet_sender = 0;
+    UDP_packet_sender *packet_sender;
 
     QByteArray input_buffer;
     QByteArray output_buffer;

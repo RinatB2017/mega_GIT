@@ -87,7 +87,7 @@ private slots:
     void popup(QPoint);
 
 private:
-    QTextEdit *logBox = 0;
+    QTextEdit *logBox;
 
     QString o_name;
 
@@ -102,10 +102,10 @@ private:
     bool flag_is_shows_error = true;
     bool flag_is_shows_trace = true;
 
-    QProgressBar *progressBar = 0;
-    QHBoxLayout *hbox = 0;
-    QVBoxLayout *vbox = 0;
-    QHBoxLayout *mainbox = 0;
+    QProgressBar *progressBar;
+    QHBoxLayout *hbox;
+    QVBoxLayout *vbox;
+    QHBoxLayout *mainbox;
 
     bool old_state_btn_show_Info = false;
     bool old_state_btn_show_Debug = false;

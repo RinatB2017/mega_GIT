@@ -82,13 +82,13 @@ private slots:
     void clear_profile(void);
 
 private:
-    Ui::B590 *ui = 0;
+    Ui::B590 *ui;
 
-    Powersupply_B590  *powersupply = 0;
-    QStandardItemModel *model_profiles = 0;
+    Powersupply_B590  *powersupply;
+    QStandardItemModel *model_profiles;
 
 #ifdef USE_GRAPHER
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_U = 0;
     int curve_I = 0;
 #endif

@@ -56,12 +56,12 @@ private:
         void (World::*func)(void);
     };
 
-    Ui::MainBox *ui = 0;
-    World *world = 0;
-    QLCDNumber *lcd = 0;
-    QCheckBox *cb_block_insert_object = 0;
+    Ui::MainBox *ui;
+    World *world;
+    QLCDNumber *lcd;
+    QCheckBox *cb_block_insert_object;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
     void init(void);

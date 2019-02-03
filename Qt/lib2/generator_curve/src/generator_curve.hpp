@@ -39,11 +39,11 @@ private slots:
     void start(void);
 
 private:
-    QPushButton *btnPower = 0;
-    QPushButton *btnSinus = 0;
-    QPushButton *btnTriangle = 0;
-    QPushButton *btnSaw = 0;
-    QPushButton *btnMeandr = 0;
+    QPushButton *btnPower;
+    QPushButton *btnSinus;
+    QPushButton *btnTriangle;
+    QPushButton *btnSaw;
+    QPushButton *btnMeandr;
 
     QList<QSlider *> sliders;
 

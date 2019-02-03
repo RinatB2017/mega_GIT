@@ -45,7 +45,7 @@ public:
     int get_max_axis_y(void);
 
 private:
-    Ui::GrapherBox_Options *ui = 0;
+    Ui::GrapherBox_Options *ui;
 
     double min_axis_X;
     double max_axis_X;

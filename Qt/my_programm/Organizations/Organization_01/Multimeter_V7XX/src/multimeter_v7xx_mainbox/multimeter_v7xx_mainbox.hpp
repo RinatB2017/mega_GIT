@@ -79,17 +79,17 @@ private slots:
     void send_cmd(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
 #ifdef V764
-    Multimeter_V764 *multimeter = 0;
+    Multimeter_V764 *multimeter;
 #endif
 #ifdef V7642
-    Multimeter_V764_2 *multimeter = 0;
+    Multimeter_V764_2 *multimeter;
 #endif
 #ifdef V780
-    Multimeter_V780 *multimeter = 0;
+    Multimeter_V780 *multimeter;
 #endif
 
     bool flag_measuring;
@@ -97,7 +97,7 @@ private:
     int multimeter_state;
     int multimeter_limit;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_UDC = 0;
     int curve_UAC = 0;
     int curve_IDC = 0;
@@ -108,9 +108,9 @@ private:
 #endif
 
 #ifdef MEASURING_CURRENT_IN_SHUNT
-    QDoubleSpinBox *db_voltage_value = 0;
-    QDoubleSpinBox *db_shunt_value = 0;
-    QDoubleSpinBox *db_current_value = 0;
+    QDoubleSpinBox *db_voltage_value;
+    QDoubleSpinBox *db_shunt_value;
+    QDoubleSpinBox *db_current_value;
 #endif
 
     void init(void);

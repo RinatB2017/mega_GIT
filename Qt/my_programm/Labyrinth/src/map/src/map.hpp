@@ -67,7 +67,7 @@ public slots:
     void update(void);
 
 private:
-    QGridLayout *grid_map = 0;
+    QGridLayout *grid_map;
 
     int id_map[MAX_WIDTH][MAX_HEIGHT];
 
@@ -82,7 +82,7 @@ private:
     int player_y = 0;
     int start_x = 0;
     int start_y = 0;
-    QTimer *timer = 0;
+    QTimer *timer;
 
     void init(void);
     void init_id_map(void);

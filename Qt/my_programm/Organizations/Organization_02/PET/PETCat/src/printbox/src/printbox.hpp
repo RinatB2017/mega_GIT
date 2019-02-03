@@ -47,7 +47,7 @@ private slots:
     void btn_choose_printer_click(void);
 
 private:
-    Ui::PrintBox *ui = 0;
+    Ui::PrintBox *ui;
 
     void init(void);
 };

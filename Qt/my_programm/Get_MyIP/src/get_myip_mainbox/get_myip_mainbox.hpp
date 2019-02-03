@@ -48,8 +48,8 @@ private slots:
     void show_my_IP(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     QNetworkRequest request;
     QNetworkAccessManager networkManager;

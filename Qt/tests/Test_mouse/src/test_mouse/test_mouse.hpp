@@ -72,11 +72,11 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
-    QCheckBox *cb_block = 0;
+    QComboBox *cb_test;
+    QCheckBox *cb_block;
     QList<CMD> commands;
 
     void mouse_click(unsigned int button, QPoint pos);

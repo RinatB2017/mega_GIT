@@ -139,7 +139,7 @@ private slots:
     void goto_in(void);
 
 private:
-    PersistentCookieJar *cookies = 0;
+    PersistentCookieJar *cookies;
     QVector<ATTR> attributes;
     QUrl home_page;
 

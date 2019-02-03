@@ -73,12 +73,12 @@ private slots:
     void save_setting(void);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
     QList <web_struct> webviews;
     bool global_stop_flag = false;
-    QProgressBar *result_progressBar = 0;
-    QListWidget *proxy_list = 0;
-    QAction *save_action = 0;
+    QProgressBar *result_progressBar;
+    QListWidget *proxy_list;
+    QAction *save_action;
     int current_index = 0;
 
     void init(void);

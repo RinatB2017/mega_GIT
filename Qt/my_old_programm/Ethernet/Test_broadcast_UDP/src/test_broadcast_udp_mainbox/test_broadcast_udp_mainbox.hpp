@@ -54,8 +54,8 @@ private slots:
     void client_thread_is_finished(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     void init(void);
     void connect_log(void);

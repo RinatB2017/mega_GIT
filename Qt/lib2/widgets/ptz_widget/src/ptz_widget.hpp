@@ -106,11 +106,11 @@ private slots:
 
 private:
     Ui::PTZ_widget *ui;
-    QMediaPlayer *player = 0;
+    QMediaPlayer *player;
 
-    QSettings *settings = 0;
+    QSettings *settings;
 
-    QTcpSocket *tcpSocket = 0;
+    QTcpSocket *tcpSocket;
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
 

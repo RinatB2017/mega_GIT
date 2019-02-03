@@ -19,7 +19,7 @@ public:
     void setSliderMaxValue(int i);
 
 private:
-    Ui::DBarcodeConfig *ui = 0;
+    Ui::DBarcodeConfig *ui;
 };
 
 #endif // DBARCODECONFIG_H

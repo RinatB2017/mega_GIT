@@ -119,9 +119,9 @@ private slots:
     void color_changed(int);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
     char eeprom_buffer[MAX_EEPROM_BYTES+1];
     QByteArray sending_array;

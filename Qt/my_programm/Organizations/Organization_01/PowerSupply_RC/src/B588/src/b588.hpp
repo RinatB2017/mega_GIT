@@ -113,18 +113,15 @@ private slots:
     void set_manual_I(int value);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::B588 *ui = 0;
+    MySplashScreen *splash;
+    Ui::B588 *ui;
 
-    Powersupply_B588  *powersupply = 0;
-    GrapherBox *grapher = 0;
-    QTimer *timer = 0;
+    Powersupply_B588  *powersupply;
+    GrapherBox *grapher;
+    QTimer *timer;
 
-    //HexSpinBox *sb_begin = 0;
-    //HexSpinBox *sb_end = 0;
-
-    QSpinBox *sb_begin = 0;
-    QSpinBox *sb_end = 0;
+    QSpinBox *sb_begin;
+    QSpinBox *sb_end;
 
     bool flag_find_stop;
     bool flag_test_stop;

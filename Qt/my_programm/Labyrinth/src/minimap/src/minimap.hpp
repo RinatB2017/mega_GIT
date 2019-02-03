@@ -44,7 +44,7 @@ public:
 
 private:
     int id_map[MAX_WIDTH][MAX_HEIGHT];
-    QGridLayout *grid_map = 0;
+    QGridLayout *grid_map;
 
     int max_x = MIN_WIDTH;
     int max_y = MIN_HEIGHT;

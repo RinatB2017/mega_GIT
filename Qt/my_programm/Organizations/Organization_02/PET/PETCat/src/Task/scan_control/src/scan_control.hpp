@@ -56,12 +56,12 @@ private slots:
     void expanding_all(void);
 
 private:
-    Ui::Scan_control *ui = 0;
+    Ui::Scan_control *ui;
 
     QList<pet_discovery_data_t> l_info;
     QList<pet_discovery_data> p_pet_config;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
     bool flag_busy = false;
 

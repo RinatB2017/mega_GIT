@@ -52,12 +52,12 @@ private slots:
     void client_thread_is_finished(void);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
     int messageNo = 0;
-    QTimer *timer = 0;
-    QUdpSocket *udpSocket = 0;
-    QToolButton *startButton = 0;
+    QTimer *timer;
+    QUdpSocket *udpSocket;
+    QToolButton *startButton;
 
     void createTestBar(void);
 

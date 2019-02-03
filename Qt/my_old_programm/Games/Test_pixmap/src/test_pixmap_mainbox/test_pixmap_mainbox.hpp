@@ -48,8 +48,8 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     QPixmap p;
     int x = 0;

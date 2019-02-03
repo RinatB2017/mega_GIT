@@ -69,6 +69,7 @@ private slots:
     void move_d(void);
     void move_dr(void);
 
+    void get_data(QByteArray data);
     void send_data(QString data);
 
 private:

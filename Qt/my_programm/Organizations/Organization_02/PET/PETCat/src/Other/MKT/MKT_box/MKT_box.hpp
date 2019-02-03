@@ -108,16 +108,16 @@ private:
         QString cmd_text;
         void (MKT_box::*func)(void);
     };
-    Ui::MKT_box *ui = 0;
+    Ui::MKT_box *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
 
     QList<DATA> grapher_data;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
     void init(void);
     void init_timer(void);
@@ -125,7 +125,7 @@ private:
     void createTestBar(void);
     void create_grapher(void);
 
-    modbus_t *ctx = 0;
+    modbus_t *ctx;
     uint16_t tab_reg[MAX_SENSORS];
     int cmd_address = 0;
     bool is_open = false;

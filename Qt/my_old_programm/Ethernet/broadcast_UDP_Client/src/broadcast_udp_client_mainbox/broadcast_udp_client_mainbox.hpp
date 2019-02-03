@@ -43,8 +43,8 @@ private slots:
     void send(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    UDP_Client *client = 0;
+    Ui::MainBox *ui;
+    UDP_Client *client;
 
     void init(void);
     void updateText(void);

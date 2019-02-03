@@ -43,8 +43,8 @@ public slots:
     void update(void);
 
 private:
-    QGraphicsPixmapItem *item = 0;
-    QGraphicsPixmapItem *tux = 0;
+    QGraphicsPixmapItem *item;
+    QGraphicsPixmapItem *tux;
     QGraphicsItemGroup *group;
 
     void move(void);

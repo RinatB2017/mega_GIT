@@ -42,7 +42,7 @@ private slots:
     void send_javascript(void);
 
 private:
-    QTextEdit *te = 0;
+    QTextEdit *te;
 
 };
 //--------------------------------------------------------------------------------

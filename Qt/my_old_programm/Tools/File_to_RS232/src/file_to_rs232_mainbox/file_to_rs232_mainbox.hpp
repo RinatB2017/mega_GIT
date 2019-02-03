@@ -50,9 +50,9 @@ private slots:
     void load_data(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
-    QTimer *timer = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
+    QTimer *timer;
     int index = 0;
 
     void init(void);

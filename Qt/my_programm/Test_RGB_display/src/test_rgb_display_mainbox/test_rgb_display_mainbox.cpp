@@ -80,6 +80,9 @@ void MainBox::init(void)
     connect(ui->btn_load_ico,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_ico()));
     connect(ui->btn_load_pic,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_pic()));
 
+    connect(this,   SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget, SIGNAL(output(QByteArray)),  this,   SLOT(get_data(QByteArray)));
+
     connect(ui->rgb_display,    SIGNAL(send(QString)),  this,   SLOT(send_data(QString)));
 
     //setFixedSize(sizeHint());
@@ -327,9 +330,19 @@ bool MainBox::test_5(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+void MainBox::get_data(QByteArray data)
+{
+    emit info(data);
+}
+//--------------------------------------------------------------------------------
 void MainBox::send_data(QString data)
 {
     emit debug(data);
+
+    QByteArray temp;
+    temp.append(data);
+
+    emit send(temp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

@@ -55,11 +55,11 @@ private slots:
     void draw_value(int x,unsigned short data);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
 
     unsigned char old_values[MAX_CHANNEL];
 

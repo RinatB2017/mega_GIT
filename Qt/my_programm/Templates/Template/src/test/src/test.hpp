@@ -40,8 +40,8 @@ private slots:
     void test_func(void);
     
 private:
-    MainWindow *mw = 0;
-    Test_function *tf = 0;
+    MainWindow *mw;
+    Test_function *tf;
 };
 //--------------------------------------------------------------------------------
 #endif

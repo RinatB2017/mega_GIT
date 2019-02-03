@@ -68,7 +68,7 @@ private slots:
     bool get_LOG_DEBUG(void);
 
 private:
-    Ui::LogDock_options *ui = 0;
+    Ui::LogDock_options *ui;
     bool m_readonly = false;
 
     bool m_LOG_EMERG = false;

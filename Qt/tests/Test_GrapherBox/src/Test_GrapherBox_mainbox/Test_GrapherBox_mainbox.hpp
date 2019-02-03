@@ -64,11 +64,11 @@ private slots:
     void test4(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
     bool all_break = false;
 
-    GrapherBox *grapher_widget = 0;
+    GrapherBox *grapher_widget;
     int curve_0 = 0;
 
     void init(void);

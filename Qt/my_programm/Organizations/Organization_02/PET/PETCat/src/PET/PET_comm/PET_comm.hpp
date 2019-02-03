@@ -86,7 +86,7 @@ private:
                             quint16      r_port,
                             QByteArray   r_data);
 
-    QUdpSocket *socket = 0;
+    QUdpSocket *socket;
     QString last_error;
 
     int max_waiting_msec;

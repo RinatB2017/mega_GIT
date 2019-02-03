@@ -47,10 +47,10 @@ private slots:
     void select_picture(QModelIndex index);
 
 private:
-    QDialogButtonBox *buttonBox = 0;
-    QListWidget *list_pictures = 0;
-    QLabel *picture_label = 0;
-    QLabel *current_filename = 0;
+    QDialogButtonBox *buttonBox;
+    QListWidget *list_pictures;
+    QLabel *picture_label;
+    QLabel *current_filename;
     QString path;
     QString current_picture;
 };

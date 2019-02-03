@@ -38,7 +38,7 @@ private slots:
     void test_func(void);
 
 private:
-    MainWindow *mw = 0;
+    MainWindow *mw;
 
 };
 //--------------------------------------------------------------------------------

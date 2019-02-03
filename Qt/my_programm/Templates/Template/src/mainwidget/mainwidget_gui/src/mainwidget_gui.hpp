@@ -65,14 +65,14 @@ private:
         bool (MainWidget::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainWidget_GUI *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainWidget_GUI *ui;
 
-    MainWidget *w = 0;
+    MainWidget *w;
 
-    QToolBar *testbar = 0;
+    QToolBar *testbar;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
     void init(void);

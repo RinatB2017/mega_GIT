@@ -69,7 +69,7 @@ private slots:
     void btn_export_click(void);
 
 private:
-    Ui::PET_bos_main_page *ui = 0;
+    Ui::PET_bos_main_page *ui;
     bool flag_is_demo;
 
     // параметры BOS
@@ -94,8 +94,8 @@ private:
     PET_RESULT f_PET_CMD_SET_CONTROL(void);
 
     //---
-    PET_device_info_page *p_device_info = 0;
-    PET_net_config_page  *p_net_config = 0;
+    PET_device_info_page *p_device_info;
+    PET_net_config_page  *p_net_config;
     //---
     void add_page_p_device_info(void);
     void add_page_p_net_config(void);

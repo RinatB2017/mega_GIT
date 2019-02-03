@@ -47,7 +47,7 @@ public:
     void block_state_interface(bool state);
 
 private:
-    Ui::PET_device_info_page *ui = 0;
+    Ui::PET_device_info_page *ui;
 
     void init(void);
 };

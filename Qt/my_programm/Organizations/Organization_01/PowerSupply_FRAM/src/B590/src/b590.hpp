@@ -74,13 +74,13 @@ private slots:
     void tw_fram_clicked(QModelIndex index);
 
 private:
-    Ui::B590 *ui = 0;
+    Ui::B590 *ui;
 
-    Powersupply_B590  *powersupply = 0;
+    Powersupply_B590  *powersupply;
 
     QByteArray fram_data;
 
-    QHexEdit *he_fram = 0;
+    QHexEdit *he_fram;
 
     void createPowerSupplyBar(void);
 

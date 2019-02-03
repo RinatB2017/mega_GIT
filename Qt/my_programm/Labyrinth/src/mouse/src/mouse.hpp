@@ -44,7 +44,7 @@ public:
     bool get(int x, int y, int *id);
 
 private:
-    Ui::Mouse *ui = 0;
+    Ui::Mouse *ui;
 
     void init(void);
     void updateText(void);

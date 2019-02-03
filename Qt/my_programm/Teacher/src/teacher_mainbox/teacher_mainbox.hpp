@@ -57,22 +57,22 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     bool is_blocked;
-    QLineEdit *site_address = 0;
-    QWebEngineView *browser_site = 0;
-    QWebEngineView *browser_translate_en_ru = 0;
-    QWebEngineView *browser_translate_ru_en = 0;
+    QLineEdit *site_address;
+    QWebEngineView *browser_site;
+    QWebEngineView *browser_translate_en_ru;
+    QWebEngineView *browser_translate_ru_en;
 
-    QGridLayout *grid1 = 0;
-    QGridLayout *grid2 = 0;
-    QGridLayout *grid3 = 0;
-    QGridLayout *grid4 = 0;
+    QGridLayout *grid1;
+    QGridLayout *grid2;
+    QGridLayout *grid3;
+    QGridLayout *grid4;
 
-    QFrame *notebook_frame = 0;
-    QTabWidget *tab = 0;
+    QFrame *notebook_frame;
+    QTabWidget *tab;
 
     Notebook *note;
 

@@ -96,16 +96,16 @@ private slots:
     void search_devices(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    GrapherBox *grapher = 0;
-    Calibrator *calibrator = 0;
-    Multimeter_V786_2 *multimeter = 0;
-    SerialBox5 *serialPort_calibrator = 0;
+    GrapherBox *grapher;
+    Calibrator *calibrator;
+    Multimeter_V786_2 *multimeter;
+    SerialBox5 *serialPort_calibrator;
 
     QSerialPort serial_radiomodule;
-    QPushButton *btn_find_multimeter = 0;
+    QPushButton *btn_find_multimeter;
 
     QVector <questions_data> answers;
 

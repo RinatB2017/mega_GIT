@@ -48,7 +48,7 @@ private slots:
     void itemClicked(QTreeWidgetItem *item, int index);
 
 private:
-    QTreeWidget *tree = 0;
+    QTreeWidget *tree;
 };
 //--------------------------------------------------------------------------------
 #endif // MENUDOCK_HPP

@@ -86,18 +86,18 @@ private slots:
 #endif
 
 private:
-    Ui::FloodMapBox *ui = 0;
+    Ui::FloodMapBox *ui;
 
-    Viewer *viewer = 0;
+    Viewer *viewer;
 
 #ifdef SHOW_LOCAL_ENERGY
-    GrapherBox *grapher_le = 0;
-    QPushButton *btn_show_le = 0;
+    GrapherBox *grapher_le;
+    QPushButton *btn_show_le;
     quint64 buf_energy[MAX_SIZE_BUF_ENERGY];
     void clear_buf_energy(void);
 #endif
 
-    MetaData_widget *mtw = 0;
+    MetaData_widget *mtw;
     bool convert_metadata(QString name, QString *result);
 
     uint32_t min_energy = 0;
@@ -108,11 +108,11 @@ private:
     int max_x = 0;
     int max_y = 0;
 
-    DAT3 *dat3 = 0;
+    DAT3 *dat3;
 
-    QSplitter *main_splitter = 0;
+    QSplitter *main_splitter;
 
-    QStandardItemModel *filter_model = 0;
+    QStandardItemModel *filter_model;
 
     bool ignore_filter_address = false;
     uint8_t filter_address = 0;

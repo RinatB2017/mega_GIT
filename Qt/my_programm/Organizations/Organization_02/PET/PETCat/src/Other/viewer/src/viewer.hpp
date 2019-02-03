@@ -65,19 +65,19 @@ public:
 private:
     void init(void);
 
-    DAT3 *dat3 = 0;
+    DAT3 *dat3;
     QString filename;
 
     int maxCount = 0;
     int maxValue = 100;
 
-    QLinearGradient *color_gradient = 0;
-    QBrush *color_brush = 0;
+    QLinearGradient *color_gradient;
+    QBrush *color_brush;
 
-    QLinearGradient *mono_gradient = 0;
-    QBrush *mono_brush = 0;
+    QLinearGradient *mono_gradient;
+    QBrush *mono_brush;
 
-    QwtLinearColorMap *colorMap = 0;
+    QwtLinearColorMap *colorMap;
 
     QColor borderPenColor = Qt::white;
     QColor backgroundColor = Qt::black;

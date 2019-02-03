@@ -56,9 +56,9 @@ private slots:
     void set_color(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    SerialBox5 *serialBox;
     QByteArray data_rs232;
 
     int color_R = 0;

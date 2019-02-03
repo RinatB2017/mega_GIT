@@ -90,7 +90,7 @@ private slots:
     void timer_unlimited(bool state);
 
 private:
-    Ui::ControlBox *ui = 0;
+    Ui::ControlBox *ui;
 
 #ifdef FAKE
     TestSerialPort serial;
@@ -101,8 +101,8 @@ private:
     bool is_ready;
     QByteArray data_serial;
 
-    GrapherBox *grapher = 0;
-    QLCDNumber *display = 0;
+    GrapherBox *grapher;
+    QLCDNumber *display;
 
     int value_index;
 
@@ -115,27 +115,27 @@ private:
     double delta_value;
     double old_value;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
-    QSpinBox *sbTimer = 0;
-    QSpinBox *sbMaxTime = 0;
-    QCheckBox *cbUnlimTimer = 0;
-    QSpinBox *sb_timeout = 0;
-    int cnt_max_time;
+    QSpinBox *sbTimer;
+    QSpinBox *sbMaxTime;
+    QCheckBox *cbUnlimTimer;
+    QSpinBox *sb_timeout;
+    int cnt_max_time = 0;
 
-    QPushButton *btn_CMD_TEST = 0;
-    QPushButton *btn_CMD_INIT = 0;
-    QPushButton *btn_CMD_GET_DATA = 0;
+    QPushButton *btn_CMD_TEST;
+    QPushButton *btn_CMD_INIT;
+    QPushButton *btn_CMD_GET_DATA;
 
-    QPushButton *btn_CALIBRATION_0 = 0;
-    QPushButton *btn_CALIBRATION_1 = 0;
-    QPushButton *btn_CALIBRATION_2 = 0;
-    QPushButton *btn_CALIBRATION_3 = 0;
-    QPushButton *btn_CALIBRATION_4 = 0;
-    QPushButton *btn_CALIBRATION_5 = 0;
+    QPushButton *btn_CALIBRATION_0;
+    QPushButton *btn_CALIBRATION_1;
+    QPushButton *btn_CALIBRATION_2;
+    QPushButton *btn_CALIBRATION_3;
+    QPushButton *btn_CALIBRATION_4;
+    QPushButton *btn_CALIBRATION_5;
 
-    QPushButton *btnStart = 0;
-    QPushButton *btnStop = 0;
+    QPushButton *btnStart;
+    QPushButton *btnStop;
 
     void init(void);
 

@@ -71,7 +71,7 @@ private slots:
     void doubleClicked(QModelIndex);
 
 private:
-    Ui::FindPetBox *ui = 0;
+    Ui::FindPetBox *ui;
 
     bool pet_is_selected = false;
 
@@ -79,7 +79,7 @@ private:
 
     QList<int> permitted_dev;
 
-    PET_comm *pet = 0;
+    PET_comm *pet;
     bool block_close = false;
 
     void init(void);

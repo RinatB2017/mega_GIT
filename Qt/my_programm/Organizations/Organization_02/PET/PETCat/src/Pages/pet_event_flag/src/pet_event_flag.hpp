@@ -39,7 +39,7 @@ public:
     uint8_t get(void);
 
 private:
-    Ui::PET_event_flag *ui = 0;
+    Ui::PET_event_flag *ui;
 };
 //--------------------------------------------------------------------------------
 #endif

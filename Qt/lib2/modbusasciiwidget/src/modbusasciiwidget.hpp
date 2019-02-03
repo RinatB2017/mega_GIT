@@ -61,18 +61,18 @@ private slots:
     void close(void);
 
 private:
-    QSerialPort *serial = 0;
+    QSerialPort *serial;
     QByteArray clean_data;
-    QComboBox *port_name = 0;
-    QComboBox *port_baud = 0;
-    QComboBox *port_databits = 0;
-    QComboBox *port_parity = 0;
-    QComboBox *port_stopbits = 0;
-    QComboBox *port_flowcontrol = 0;
+    QComboBox *port_name;
+    QComboBox *port_baud;
+    QComboBox *port_databits;
+    QComboBox *port_parity;
+    QComboBox *port_stopbits;
+    QComboBox *port_flowcontrol;
 
-    QToolButton *btn_refresh = 0;
-    QToolButton *btn_start = 0;
-    QToolButton *btn_stop = 0;
+    QToolButton *btn_refresh;
+    QToolButton *btn_start;
+    QToolButton *btn_stop;
 
     void init(void);
     bool processing(void);

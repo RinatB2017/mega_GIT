@@ -52,12 +52,12 @@ private slots:
     void test_3(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
 
-    QHexEdit *he = 0;
+    QHexEdit *he;
 
     void init(void);
 

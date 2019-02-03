@@ -49,15 +49,15 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     bool is_blocked = 0;
 
-    QGraphicsScene *scene = 0;
-    QGraphicsRectItem *rectangle_R = 0;
-    QGraphicsRectItem *rectangle_G = 0;
-    QGraphicsRectItem *rectangle_B = 0;
+    QGraphicsScene *scene;
+    QGraphicsRectItem *rectangle_R;
+    QGraphicsRectItem *rectangle_G;
+    QGraphicsRectItem *rectangle_B;
 
     void init(void);
 

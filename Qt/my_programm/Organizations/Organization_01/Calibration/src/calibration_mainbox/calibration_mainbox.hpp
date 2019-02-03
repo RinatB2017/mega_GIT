@@ -244,79 +244,79 @@ private slots:
 #endif
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
-    ControlLog *control_log = 0;
+    ControlLog *control_log;
 
     int type_calibrator;
 
-    QPushButton *btn_find_devices = 0;
+    QPushButton *btn_find_devices;
 
-    MySplashScreen *splash = 0;
+    MySplashScreen *splash;
 
     CURRENT_STATE current_state;
 
     bool flag_is_measuring;
 
-    QTreeWidgetItem *item_UDC = 0;
-    QTreeWidgetItem *item_UAC = 0;
-    QTreeWidgetItem *item_IDC = 0;
-    QTreeWidgetItem *item_IAC = 0;
+    QTreeWidgetItem *item_UDC;
+    QTreeWidgetItem *item_UAC;
+    QTreeWidgetItem *item_IDC;
+    QTreeWidgetItem *item_IAC;
 #ifdef R_CALIBRATION_ENABLED
     QTreeWidgetItem *item_R;
 #endif
 
-    QTreeWidgetItem *item_limit_UDC_200mV = 0;
-    QTreeWidgetItem *item_limit_UDC_2V = 0;
-    QTreeWidgetItem *item_limit_UDC_20V = 0;
-    QTreeWidgetItem *item_limit_UDC_200V = 0;
-    QTreeWidgetItem *item_limit_UDC_1000V = 0;
+    QTreeWidgetItem *item_limit_UDC_200mV;
+    QTreeWidgetItem *item_limit_UDC_2V;
+    QTreeWidgetItem *item_limit_UDC_20V;
+    QTreeWidgetItem *item_limit_UDC_200V;
+    QTreeWidgetItem *item_limit_UDC_1000V;
 
-    QTreeWidgetItem *item_limit_UAC_200mV = 0;
-    QTreeWidgetItem *item_limit_UAC_2V = 0;
-    QTreeWidgetItem *item_limit_UAC_20V = 0;
-    QTreeWidgetItem *item_limit_UAC_200V = 0;
-    QTreeWidgetItem *item_limit_UAC_1000V = 0;
+    QTreeWidgetItem *item_limit_UAC_200mV;
+    QTreeWidgetItem *item_limit_UAC_2V;
+    QTreeWidgetItem *item_limit_UAC_20V;
+    QTreeWidgetItem *item_limit_UAC_200V;
+    QTreeWidgetItem *item_limit_UAC_1000V;
 
-    QTreeWidgetItem *item_limit_IDC_200uA = 0;
-    QTreeWidgetItem *item_limit_IDC_2mA = 0;
-    QTreeWidgetItem *item_limit_IDC_20mA = 0;
-    QTreeWidgetItem *item_limit_IDC_200mA = 0;
-    QTreeWidgetItem *item_limit_IDC_2000mA = 0;
-    QTreeWidgetItem *item_limit_IDC_20A = 0;
+    QTreeWidgetItem *item_limit_IDC_200uA;
+    QTreeWidgetItem *item_limit_IDC_2mA;
+    QTreeWidgetItem *item_limit_IDC_20mA;
+    QTreeWidgetItem *item_limit_IDC_200mA;
+    QTreeWidgetItem *item_limit_IDC_2000mA;
+    QTreeWidgetItem *item_limit_IDC_20A;
 
-    QTreeWidgetItem *item_limit_IAC_2mA = 0;
-    QTreeWidgetItem *item_limit_IAC_20mA = 0;
-    QTreeWidgetItem *item_limit_IAC_200mA = 0;
-    QTreeWidgetItem *item_limit_IAC_2000mA = 0;
-    QTreeWidgetItem *item_limit_IAC_20A = 0;
+    QTreeWidgetItem *item_limit_IAC_2mA;
+    QTreeWidgetItem *item_limit_IAC_20mA;
+    QTreeWidgetItem *item_limit_IAC_200mA;
+    QTreeWidgetItem *item_limit_IAC_2000mA;
+    QTreeWidgetItem *item_limit_IAC_20A;
 
 #ifdef R_CALIBRATION_ENABLED
-    QTreeWidgetItem *item_limit_R_200 = 0;
-    QTreeWidgetItem *item_limit_R_2K = 0;
-    QTreeWidgetItem *item_limit_R_20K = 0;
-    QTreeWidgetItem *item_limit_R_200K = 0;
-    QTreeWidgetItem *item_limit_R_2M = 0;
+    QTreeWidgetItem *item_limit_R_200;
+    QTreeWidgetItem *item_limit_R_2K;
+    QTreeWidgetItem *item_limit_R_20K;
+    QTreeWidgetItem *item_limit_R_200K;
+    QTreeWidgetItem *item_limit_R_2M;
 #endif
 
 #ifdef CALIBRATOR_DEBUG
-    QComboBox *cb_Cmd = 0;
-    QSpinBox *sb_data_len = 0;
-    Frame_8bit *frame_8bit = 0;
-    QSpinBox *sb_data_1 = 0;
+    QComboBox *cb_Cmd;
+    QSpinBox *sb_data_len;
+    Frame_8bit *frame_8bit;
+    QSpinBox *sb_data_1;
 
-    QLineEdit *le_calibrator = 0;
+    QLineEdit *le_calibrator;
 #endif
 
-    Calibrator *calibrator = 0;
-    Multimeter_V786_2 *multimeter = 0;
+    Calibrator *calibrator;
+    Multimeter_V786_2 *multimeter;
 
     QVector <questions_data> answers;
     bool is_worked = false;
 
-    QSpinBox *sb_time_calibration = 0;
-    QSpinBox *sb_repeat = 0;
-    QSpinBox *sb_delay = 0;
+    QSpinBox *sb_time_calibration;
+    QSpinBox *sb_repeat;
+    QSpinBox *sb_delay;
 
     QVector<log_data> time_log;
 

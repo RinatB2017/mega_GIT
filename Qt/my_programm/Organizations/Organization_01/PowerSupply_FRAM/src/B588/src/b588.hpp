@@ -70,17 +70,17 @@ private slots:
     void calc_crc16_factory_I(void);
 
 private:
-    Ui::B588 *ui = 0;
+    Ui::B588 *ui;
 
-    Powersupply_B588  *powersupply = 0;
+    Powersupply_B588  *powersupply;
 
     QByteArray fram_data;
 
-    QHexEdit *he = 0;
-    QHexEdit *he_user_U = 0;
-    QHexEdit *he_user_I = 0;
-    QHexEdit *he_factory_U = 0;
-    QHexEdit *he_factory_I = 0;
+    QHexEdit *he;
+    QHexEdit *he_user_U;
+    QHexEdit *he_user_I;
+    QHexEdit *he_factory_U;
+    QHexEdit *he_factory_I;
 
     void createTestBar(void);
     void createPowerSupplyBar(void);

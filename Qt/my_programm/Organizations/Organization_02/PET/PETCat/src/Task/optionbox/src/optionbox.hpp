@@ -63,11 +63,11 @@ private slots:
     void update_tree(void);
 
 private:
-    Ui::OptionBox *ui = 0;
+    Ui::OptionBox *ui;
 
-    PET_comm *comm = 0;
+    PET_comm *comm;
 
-    QSplitter *main_splitter = 0;
+    QSplitter *main_splitter;
 
     QList<pet_discovery_data> p_pet_config;
 

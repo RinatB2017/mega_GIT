@@ -95,61 +95,61 @@ public slots:
 
 private:
 #ifndef ONLY_ENGLISH
-    QTranslator *appTranslator = 0;
-    QTranslator *sysTranslator = 0;
+    QTranslator *appTranslator;
+    QTranslator *sysTranslator;
 #endif
 
-    QMenu   *m_file = 0;
-    QMenu   *m_analize = 0;
-    QMenu   *m_tools = 0;
-    QMenu   *m_demo = 0;
-    QMenu   *m_windows = 0;
-    QMenu   *m_help = 0;
+    QMenu   *m_file;
+    QMenu   *m_analize;
+    QMenu   *m_tools;
+    QMenu   *m_demo;
+    QMenu   *m_windows;
+    QMenu   *m_help;
 
     //---
-    QMenu   *m_task = 0;
-    QMenu   *m_scan_menu = 0;
-    QMenu   *m_options = 0;
-    QMenu   *m_tests = 0;
-    QMenu   *m_other = 0;
-    QAction *a_scan = 0;
-    QAction *a_scan_control = 0;
-    QAction *a_scan_hard = 0;
-    QAction *a_oscilloscope = 0;
-    QAction *a_viewer = 0;
-    QAction *a_floodmap = 0;
-    QAction *a_histogram_consulience = 0;
-    QAction *a_histogram_energy = 0;
-    QAction *a_options = 0;
-    QAction *a_demo = 0;
-    QAction *a_imitator = 0;
-    QAction *a_calibration = 0;
-    QAction *a_test_1 = 0;
-    QAction *a_test_2 = 0;
-    QAction *a_update_firmware = 0;
+    QMenu   *m_task;
+    QMenu   *m_scan_menu;
+    QMenu   *m_options;
+    QMenu   *m_tests;
+    QMenu   *m_other;
+    QAction *a_scan;
+    QAction *a_scan_control;
+    QAction *a_scan_hard;
+    QAction *a_oscilloscope;
+    QAction *a_viewer;
+    QAction *a_floodmap;
+    QAction *a_histogram_consulience;
+    QAction *a_histogram_energy;
+    QAction *a_options;
+    QAction *a_demo;
+    QAction *a_imitator;
+    QAction *a_calibration;
+    QAction *a_test_1;
+    QAction *a_test_2;
+    QAction *a_update_firmware;
     //---
 
-    QToolBar *mainToolBar = 0;
+    QToolBar *mainToolBar;
 
-    QAction *a_exit = 0;
+    QAction *a_exit;
 
-    QAction *a_print = 0;
-    QAction *a_help = 0;
-    QAction *a_about_programm = 0;
-    QAction *a_petcat_options = 0;
+    QAction *a_print;
+    QAction *a_help;
+    QAction *a_about_programm;
+    QAction *a_petcat_options;
 
-    QAction *a_mkt = 0;
-    QAction *a_similator = 0;
-    QAction *a_creator = 0;
+    QAction *a_mkt;
+    QAction *a_similator;
+    QAction *a_creator;
 
-    QTabWidget *main_tab = 0;
+    QTabWidget *main_tab;
 
-    QTreeWidget *tv_main = 0;
+    QTreeWidget *tv_main;
 
-    LogDock *ld = 0;
-    LogDock *nld = 0;
+    LogDock *ld;
+    LogDock *nld;
 
-    MetaData *md = 0;
+    MetaData *md;
     bool f_delete_metadata(QString name);
 
     void createActions(void);

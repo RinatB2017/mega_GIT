@@ -44,11 +44,11 @@ private slots:
     void get_data(const QByteArray &data);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
     int packets_good = 0;
     int packets_bad = 0;
-    QUdpSocket *udpSocket = 0;
+    QUdpSocket *udpSocket;
 
     QByteArray datagram;
 

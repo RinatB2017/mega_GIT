@@ -53,12 +53,12 @@ private slots:
     void btn_create_dat_file_click(void);
 
 private:
-    Ui::CreatorBox *ui = 0;
+    Ui::CreatorBox *ui;
 
     void init(void);
     void init_widgets(void);
 
-    QFile *file = 0;
+    QFile *file;
 
 protected:
     void changeEvent(QEvent *event);

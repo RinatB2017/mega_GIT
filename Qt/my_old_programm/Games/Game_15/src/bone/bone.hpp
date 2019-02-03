@@ -33,7 +33,7 @@ public:
     void setNumber(int n);
 
 private:
-    QLabel *label = 0;
+    QLabel *label;
     void init(void);
 };
 //--------------------------------------------------------------------------------

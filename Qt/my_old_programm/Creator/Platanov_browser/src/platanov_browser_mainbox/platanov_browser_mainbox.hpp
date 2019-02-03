@@ -57,18 +57,18 @@ private slots:
     void slot_platanov(void);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
     bool is_loaded = false;
 
-    WebView *browser = 0;
-    QProgressBar *progressBar = 0;
-    QLineEdit *address = 0;
+    WebView *browser;
+    QProgressBar *progressBar;
+    QLineEdit *address;
 
-    QPushButton *btn_livejournal = 0;
-    QPushButton *btn_odnoklassniki = 0;
-    QPushButton *btn_twitter = 0;
-    QPushButton *btn_facebook = 0;
-    QPushButton *btn_platanov = 0;
+    QPushButton *btn_livejournal;
+    QPushButton *btn_odnoklassniki;
+    QPushButton *btn_twitter;
+    QPushButton *btn_facebook;
+    QPushButton *btn_platanov;
 
     void init(void);
 

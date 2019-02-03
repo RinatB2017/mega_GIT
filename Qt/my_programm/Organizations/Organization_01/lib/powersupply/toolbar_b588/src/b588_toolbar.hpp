@@ -42,9 +42,9 @@ private slots:
     void run(void);
 
 private:
-    QComboBox *c1 = 0;
-    QComboBox *c2 = 0;
-    QPushButton *btn_run = 0;
+    QComboBox *c1;
+    QComboBox *c2;
+    QPushButton *btn_run;
 
     void init(void);
 };

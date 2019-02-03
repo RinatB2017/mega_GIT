@@ -67,10 +67,10 @@ public:
     QByteArray readAll(void);
 
 private:
-    Ui::SerialBox4 *ui = 0;
-    QWidget *parent = 0;
-    SerialDeviceEnumerator *enumerator = 0;
-    AbstractSerial *serial = 0;
+    Ui::SerialBox4 *ui;
+    QWidget *parent;
+    SerialDeviceEnumerator *enumerator;
+    AbstractSerial *serial;
     QString caption;
 
     bool flag_in_hex = false;
@@ -83,19 +83,19 @@ private:
     QString parameter_flow;
 
 #ifdef RS232_LOG
-    LogBox  *logBox = 0;
+    LogBox  *logBox;
 #endif
 
 #ifdef RS232_SEND
-    SendBox4 *sendBox = 0;
+    SendBox4 *sendBox;
 #endif
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
 #ifndef RS232_NO_FRAME
-    QFrame *frame_ring = 0;
-    QFrame *frame_dsr = 0;
-    QFrame *frame_cts = 0;
+    QFrame *frame_ring;
+    QFrame *frame_dsr;
+    QFrame *frame_cts;
     void add_frame_text(QFrame *parent,
                         const QString &text);
 #endif

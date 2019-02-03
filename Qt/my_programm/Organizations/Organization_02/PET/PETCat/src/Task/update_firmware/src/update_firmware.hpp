@@ -80,11 +80,11 @@ private:
     QList<QTreeWidgetItem *> uf_list;
     QList<BRG_DEVICE *> brg_list;
 
-    Ui::UpdateFirmware *ui = 0;
+    Ui::UpdateFirmware *ui;
 
     QList<pet_discovery_data_t> p_pet_config;
-    PET_device_brg *brg = 0;
-    PET_comm *comm = 0;
+    PET_device_brg *brg;
+    PET_comm *comm;
 
     QByteArray ba_firmware_brg;
     int cycles_brg = 0;

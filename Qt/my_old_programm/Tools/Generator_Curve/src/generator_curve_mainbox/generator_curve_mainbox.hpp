@@ -44,10 +44,10 @@ private slots:
     void temp(QByteArray data);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
-    Generator_Curve *generator = 0;
-    SerialBox5 *serial = 0;
+    Generator_Curve *generator;
+    SerialBox5 *serial;
 
     void init(void);
 

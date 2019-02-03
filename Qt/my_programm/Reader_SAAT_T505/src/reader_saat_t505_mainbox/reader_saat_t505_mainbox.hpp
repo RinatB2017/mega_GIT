@@ -109,13 +109,13 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    Ascii_data *ascii_data = 0;
+    Ascii_data *ascii_data;
     QList<uint32_t> l_cards;
     bool find_card(uint32_t card_num);
     int cnt_card = 0;

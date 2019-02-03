@@ -262,10 +262,9 @@ private:
     void createStatusBar(void);
     void createTrayIcon(void);
 
-    void createToolBar(void);
-
 #ifndef NO_TOOLBAR
     QToolBar *toolbar;
+    void createToolBar(void);
 #endif
 
 #ifndef NO_STYLETOOLBAR

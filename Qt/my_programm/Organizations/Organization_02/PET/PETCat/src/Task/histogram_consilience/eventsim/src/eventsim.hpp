@@ -37,7 +37,7 @@ public:
     pet_event Next(void);
 
 private:
-    Gauss *g = 0;
+    Gauss *g;
     char src = 2;
 
     uint tsA = 10000;

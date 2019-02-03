@@ -48,8 +48,8 @@ private:
     bool save_data(QString name, QStringList *data);
 
     QStringList alphabet;
-    QStackedWidget *sw = 0;
-    QPushButton *btn_save_all = 0;
+    QStackedWidget *sw;
+    QPushButton *btn_save_all;
 
     void updateText(void);
 };

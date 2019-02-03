@@ -81,13 +81,13 @@ private slots:
     void save(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    bool test_flag;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    bool test_flag = false;
 
-    GrapherBox *grapher = 0;
-    SerialBox5 *serial = 0;
-    QByteArray *serial_data = 0;
+    GrapherBox *grapher;
+    SerialBox5 *serial;
+    QByteArray *serial_data;
 
     ftdi_context ftdi;
 

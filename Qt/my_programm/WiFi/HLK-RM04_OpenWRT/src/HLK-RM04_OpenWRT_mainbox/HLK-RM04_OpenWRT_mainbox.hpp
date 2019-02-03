@@ -55,14 +55,14 @@ private slots:
     void load_firmvare(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QToolButton *btn_refresh_devices = 0;
-    QToolButton *btn_open = 0;
-    QToolButton *btn_close = 0;
-    QToolButton *btn_load_firmvare = 0;
-    QComboBox   *cb_ports = 0;
+    QToolButton *btn_refresh_devices;
+    QToolButton *btn_open;
+    QToolButton *btn_close;
+    QToolButton *btn_load_firmvare;
+    QComboBox   *cb_ports;
 
     QSerialPort serial;
     QByteArray  serial_data;

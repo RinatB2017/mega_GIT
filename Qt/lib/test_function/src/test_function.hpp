@@ -45,7 +45,7 @@ public:
     void combobox_key_down_and_check_value(QWidget *widget, QString name, QString value);
 
 private:
-    MyMainWindow *mw = 0;
+    MyMainWindow *mw;
 };
 //--------------------------------------------------------------------------------
 #endif

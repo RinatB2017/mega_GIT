@@ -47,8 +47,8 @@ private slots:
     void test_rtsp(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     bool is_blocked = false;
 

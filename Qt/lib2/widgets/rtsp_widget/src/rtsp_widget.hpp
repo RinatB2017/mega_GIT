@@ -53,7 +53,7 @@ private slots:
 
 private:
     Ui::RTSP_widget *ui;
-    QMediaPlayer *player = 0;
+    QMediaPlayer *player;
 
     void init(void);
     void updateText(void);

@@ -44,8 +44,8 @@ private slots:
     void f_disconnect(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    TCP_Server *server = 0;
+    Ui::MainBox *ui;
+    TCP_Server *server;
 
     void init(void);
     void updateText(void);

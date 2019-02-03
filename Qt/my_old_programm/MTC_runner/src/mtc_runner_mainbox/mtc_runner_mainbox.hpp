@@ -63,16 +63,16 @@ private slots:
     void auto_run(bool state);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     void init(void);
 
-    QCheckBox *cb_auto_run = 0;
-    QToolButton *btn_script = 0;
-    QLineEdit *le_script_filename = 0;
-    QToolButton *btn_run = 0;
-    QProcess *proccess = 0;
+    QCheckBox *cb_auto_run;
+    QToolButton *btn_script;
+    QLineEdit *le_script_filename;
+    QToolButton *btn_run;
+    QProcess *proccess;
 
     void createRunBar(void);
     void createScriptBar(void);

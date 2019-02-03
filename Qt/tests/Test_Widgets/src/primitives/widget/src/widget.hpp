@@ -39,7 +39,7 @@ public:
 private:
     void init(void);
 
-    QLabel *label = 0;
+    QLabel *label;
     QPoint lastPoint;
     bool b_move;
 

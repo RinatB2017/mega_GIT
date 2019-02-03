@@ -55,9 +55,9 @@ private slots:
     void change_cmd_multimeter(int index);
 
 private:
-    Ui::HandControl *ui = 0;
-    Calibrator *calibrator = 0;
-    Multimeter_V786_2 *multimeter = 0;
+    Ui::HandControl *ui;
+    Calibrator *calibrator;
+    Multimeter_V786_2 *multimeter;
 
     unsigned int serno;
     unsigned int year;

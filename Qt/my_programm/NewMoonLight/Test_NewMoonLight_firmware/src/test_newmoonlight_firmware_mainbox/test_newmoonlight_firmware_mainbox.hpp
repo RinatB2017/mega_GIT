@@ -70,9 +70,9 @@ private slots:
     void send_cold_pic_question(int value);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    SerialBox5 *serialBox;
     QByteArray data_rs232;
 
     uint8_t buf_leds[MAX_SCREEN_X][MAX_SCREEN_Y] = { \
@@ -104,8 +104,8 @@ private:
 
     QToolButton *btn[MAX_SCREEN_X][MAX_SCREEN_Y];
 
-    QSlider  *sl_value = 0;
-    QSpinBox *sb_value = 0;
+    QSlider  *sl_value;
+    QSpinBox *sb_value;
 
     void calc_line(qreal center_x,
                    qreal center_y,

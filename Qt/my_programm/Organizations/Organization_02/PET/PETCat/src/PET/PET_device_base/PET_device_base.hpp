@@ -82,7 +82,7 @@ public:
     void set_max_waiting_msec(uint16_t value);
     uint16_t get_max_waiting_msec(void);
 
-    PET_comm *comm = 0;
+    PET_comm *comm;
 
 private:
     PET_RESULT send_packet(QByteArray question, QByteArray *answer);

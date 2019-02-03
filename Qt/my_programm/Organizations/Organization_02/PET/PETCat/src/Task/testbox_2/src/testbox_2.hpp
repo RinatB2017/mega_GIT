@@ -49,7 +49,7 @@ private slots:
     void send_trace(void);
 
 private:
-    Ui::TestBox_2 *ui = 0;
+    Ui::TestBox_2 *ui;
 
     int curve_data = 0;
     int curve_ideal = 0;

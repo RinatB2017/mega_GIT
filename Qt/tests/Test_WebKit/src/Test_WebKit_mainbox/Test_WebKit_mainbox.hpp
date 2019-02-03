@@ -92,13 +92,13 @@ private slots:
     bool append_proxy(const QString &ip_and_port);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
-    WebView *browser = 0;
-    QWebFrame *main_frame = 0;
-    QLineEdit *leAddress = 0;
-    TableView *table_view = 0;
-    QProgressBar *progressBar = 0;
+    WebView *browser;
+    QWebFrame *main_frame;
+    QLineEdit *leAddress;
+    TableView *table_view;
+    QProgressBar *progressBar;
     bool is_loaded = false;
     QVector<page> pages;
     QStringList proxies;

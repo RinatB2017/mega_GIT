@@ -65,10 +65,10 @@ private slots:
     void test_read_holding_registers(void);
 
 private:
-    Ui::MODBUS_client *ui = 0;
+    Ui::MODBUS_client *ui;
 
-    QModbusReply *lastRequest = 0;
-    QModbusClient *modbusDevice = 0;
+    QModbusReply *lastRequest;
+    QModbusClient *modbusDevice;
 
     QModbusDataUnit readRequest() const;
     QModbusDataUnit writeRequest() const;

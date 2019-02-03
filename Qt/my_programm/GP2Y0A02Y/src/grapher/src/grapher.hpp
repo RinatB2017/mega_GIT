@@ -43,7 +43,7 @@ public slots:
     bool set_value(int channel, int value);
 
 private:
-    Ui::Grapher *ui = 0;
+    Ui::Grapher *ui;
     int curves[8];
 
     void init(void);

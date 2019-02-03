@@ -57,7 +57,7 @@ private:
 
     QHostAddress udp_host;
     quint16 udp_port;
-    QUdpSocket *udp_socket = 0;
+    QUdpSocket *udp_socket;
 };
 //--------------------------------------------------------------------------------
 #endif

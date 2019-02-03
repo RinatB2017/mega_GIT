@@ -58,19 +58,19 @@ private slots:
     void port_error(QSerialPort::SerialPortError serial_error);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     QByteArray data_multimeter;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
 
     bool test_is_started;
     bool is_ready;
 
-    QSpinBox *sb_address = 0;
-    QSpinBox *sb_channel = 0;
-    QSpinBox *sb_time_multimeter = 0;
+    QSpinBox *sb_address;
+    QSpinBox *sb_channel;
+    QSpinBox *sb_time_multimeter;
 
     QSerialPort serial;
 

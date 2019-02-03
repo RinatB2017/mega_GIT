@@ -56,15 +56,15 @@ private slots:
     void rc_off(void);
 
 private:
-    Ui::B588 *ui = 0;
+    Ui::B588 *ui;
 
     bool is_blocked;
 
-    Powersupply_B588 *powersupply = 0;
+    Powersupply_B588 *powersupply;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_U_adc = 0;
     int curve_I_adc = 0;
     int curve_U3_adc = 0;

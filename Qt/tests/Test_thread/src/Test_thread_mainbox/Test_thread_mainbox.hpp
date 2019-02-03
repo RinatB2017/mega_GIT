@@ -54,11 +54,11 @@ private slots:
     void set_sec(unsigned char sec);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QThread *thread = 0;
-    MyThread *worker = 0;
+    QThread *thread;
+    MyThread *worker;
 
     void init(void);
 

@@ -69,7 +69,7 @@ private slots:
     void btn_refresh_click(void);
 
 private:
-    Ui::Calibration *ui = 0;
+    Ui::Calibration *ui;
 
     //---
 #ifdef Q_OS_LINUX
@@ -79,19 +79,19 @@ private:
     uint8_t output_buf[256];
 #endif
 
-    Calibration_channel *channel_1 = 0;
-    Calibration_channel *channel_2 = 0;
-    Calibration_channel *channel_3 = 0;
-    Calibration_channel *channel_4 = 0;
+    Calibration_channel *channel_1;
+    Calibration_channel *channel_2;
+    Calibration_channel *channel_3;
+    Calibration_channel *channel_4;
 
-    Calibration_param *c_param = 0;
+    Calibration_param *c_param;
 
-    Imitator_BRG *imitator_brg = 0;
+    Imitator_BRG *imitator_brg;
 
     int curve_data = 0;
     int curve_ideal = 0;
 
-    PET_device_brg *pet_brg = 0;
+    PET_device_brg *pet_brg;
     QList<pet_discovery_data> p_pet_config;
 
     int channel = 0;

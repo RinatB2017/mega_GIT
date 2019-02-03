@@ -50,19 +50,19 @@ public:
     ~MainBox();
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QGridLayout *grid1 = 0;
-    QGridLayout *grid2 = 0;
-    QGridLayout *grid3 = 0;
-    QGridLayout *grid4 = 0;
+    QGridLayout *grid1;
+    QGridLayout *grid2;
+    QGridLayout *grid3;
+    QGridLayout *grid4;
 
 #ifndef USE_DOCKS
-    QFrame *notebook_frame = 0;
+    QFrame *notebook_frame;
 #endif
-    QTabWidget *tab = 0;
-    Notebook *note = 0;
+    QTabWidget *tab;
+    Notebook *note;
 
     void init(void);
 

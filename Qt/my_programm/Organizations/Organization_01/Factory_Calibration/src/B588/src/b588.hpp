@@ -97,16 +97,16 @@ private slots:
     void save_report(void);
 
 private:
-    Ui::B588 *ui = 0;
+    Ui::B588 *ui;
 
 #ifdef V764
-    Multimeter_V764 *multimeter = 0;
+    Multimeter_V764 *multimeter;
 #endif
 #ifdef V7642
-    Multimeter_V764_2 *multimeter = 0;
+    Multimeter_V764_2 *multimeter;
 #endif
 
-    Powersupply_B588  *powersupply = 0;
+    Powersupply_B588  *powersupply;
 
     QList<Point3> list;
 
@@ -120,25 +120,25 @@ private:
 
 #ifndef USER_CALIBRATIONS
     //---
-    QtVariantProperty *item_U_point_1 = 0;
-    QtVariantProperty *item_U_max_deviation_point_1 = 0;
-    QtVariantProperty *item_U_begin_DAC_point_1 = 0;
+    QtVariantProperty *item_U_point_1;
+    QtVariantProperty *item_U_max_deviation_point_1;
+    QtVariantProperty *item_U_begin_DAC_point_1;
 
-    QtVariantProperty *item_U_point_2 = 0;
-    QtVariantProperty *item_U_max_deviation_point_2 = 0;
-    QtVariantProperty *item_U_begin_DAC_point_2 = 0;
+    QtVariantProperty *item_U_point_2;
+    QtVariantProperty *item_U_max_deviation_point_2;
+    QtVariantProperty *item_U_begin_DAC_point_2;
 
-    QtVariantProperty *item_I_point_1 = 0;
-    QtVariantProperty *item_I_max_deviation_point_1 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_1 = 0;
+    QtVariantProperty *item_I_point_1;
+    QtVariantProperty *item_I_max_deviation_point_1;
+    QtVariantProperty *item_I_begin_DAC_point_1;
 
-    QtVariantProperty *item_I_point_2 = 0;
-    QtVariantProperty *item_I_max_deviation_point_2 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_2 = 0;
+    QtVariantProperty *item_I_point_2;
+    QtVariantProperty *item_I_max_deviation_point_2;
+    QtVariantProperty *item_I_begin_DAC_point_2;
 
-    QtVariantProperty *item_I_point_3 = 0;
-    QtVariantProperty *item_I_max_deviation_point_3 = 0;
-    QtVariantProperty *item_I_begin_DAC_point_3 = 0;
+    QtVariantProperty *item_I_point_3;
+    QtVariantProperty *item_I_max_deviation_point_3;
+    QtVariantProperty *item_I_begin_DAC_point_3;
     //---
 #endif
 
@@ -164,8 +164,8 @@ private:
     unsigned short points_U[61];
     unsigned short points_I[61];
 
-    QStandardItemModel *model_U = 0;
-    QStandardItemModel *model_I = 0;
+    QStandardItemModel *model_U;
+    QStandardItemModel *model_I;
 
     bool Calibration_remote_control_on(void);
 

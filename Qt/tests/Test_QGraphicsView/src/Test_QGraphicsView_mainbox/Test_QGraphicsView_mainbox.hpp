@@ -86,19 +86,19 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
     void init(void);
 
     void createTestBar(void);
 
-    QGraphicsPixmapItem *item = 0;
-    QGraphicsRectItem *rect_0 = 0;
-    QTimer *timer = 0;
+    QGraphicsPixmapItem *item;
+    QGraphicsRectItem *rect_0;
+    QTimer *timer;
     qreal pos_x = 0;
     qreal pos_y = 0;
     qreal delta = 0.01;
@@ -113,9 +113,9 @@ private:
     bool flag_left = false;
     bool flag_right = false;
 
-    QGraphicsScene *scene_0 = 0;
-    QGraphicsScene *scene_1 = 0;
-    QGraphicsScene *scene_2 = 0;
+    QGraphicsScene *scene_0;
+    QGraphicsScene *scene_1;
+    QGraphicsScene *scene_2;
 
     void create_scene_0(void);
     void create_scene_1(void);

@@ -44,7 +44,7 @@ private slots:
     void measuring_finished(void);
 
 private:
-    Indicator_thread *thread = 0;
+    Indicator_thread *thread;
     I2C_Freq freq;
 
     void init(void);

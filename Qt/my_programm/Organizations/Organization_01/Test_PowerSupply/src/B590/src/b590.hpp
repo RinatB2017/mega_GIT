@@ -84,20 +84,20 @@ private slots:
     int test(void);
 
 private:
-    Ui::B590 *ui = 0;
+    Ui::B590 *ui;
 
-    Powersupply_B590  *powersupply = 0;
+    Powersupply_B590  *powersupply;
 
 #ifdef USE_V764
-    Multimeter_V764 *multimeter = 0;
+    Multimeter_V764 *multimeter;
 #endif
 #ifdef USE_V7642
-    Multimeter_V764_2 *multimeter = 0;
+    Multimeter_V764_2 *multimeter;
 #endif
 
-    Multimeter_V786_2 *multimeter_V7862 = 0;
+    Multimeter_V786_2 *multimeter_V7862;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int index_progressbar = 0;
 
     int grapher_index = 0;

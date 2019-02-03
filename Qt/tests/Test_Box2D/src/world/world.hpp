@@ -90,7 +90,7 @@ public slots:
     void clear(void);
 
 private:
-    b2World *_world = 0;
+    b2World *_world;
     int _timerId;
     QTransform _transform;
     QVector<Object> _objects;

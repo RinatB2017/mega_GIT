@@ -129,7 +129,7 @@ private slots:
     void log(const QString &data);
 
 private:
-    QWidget *parent = 0;
+    QWidget *parent;
     int fd, mode;
     bool port_is_open;
     QString parport_filename;

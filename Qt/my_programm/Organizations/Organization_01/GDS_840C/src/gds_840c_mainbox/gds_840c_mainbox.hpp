@@ -51,10 +51,10 @@ private slots:
     void set_auto(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    Oscilloscope_GDS_840C *oscilloscope = 0;
+    Oscilloscope_GDS_840C *oscilloscope;
 
     void init(void);
 

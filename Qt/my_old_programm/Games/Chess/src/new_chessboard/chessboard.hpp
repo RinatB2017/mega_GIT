@@ -89,7 +89,7 @@ private:
     QPixmap b_queen;
     QPixmap b_rook;
 
-    QGridLayout *chessboard_grid = 0;
+    QGridLayout *chessboard_grid;
     QToolButton *btn_chessboard[8][8];
 
     QString first_str;

@@ -98,16 +98,16 @@ private slots:
     void multiply_changed(double value);
 
 private:
-    Ui::OscilloscopeBox *ui = 0;
+    Ui::OscilloscopeBox *ui;
     bool legend_is_visible = false;
 
-    QwtPlotPicker *d_picker = 0;
-    QwtLegend *legend = 0;
+    QwtPlotPicker *d_picker;
+    QwtLegend *legend;
 
     unsigned int num_curves = 0;
     QVector<OSCILLOSCOPE_CURVE> curves;
 
-    QTimer *timer = 0;
+    QTimer *timer;
 
     double axis_X_min = 0;
     double axis_X_max = 0;
@@ -135,12 +135,12 @@ private:
 
 #ifndef GRAPHER_NOT_PANNING
     // panning with the left mouse button
-    QwtPlotPanner *plot_panner = 0;
+    QwtPlotPanner *plot_panner;
 #endif
 
 #ifndef GRAPHER_NOT_ZOOM
     // zoom in/out with the wheel
-    QwtPlotMagnifier *plot_magnifier = 0;
+    QwtPlotMagnifier *plot_magnifier;
 #endif
 
     void set_zoom(bool x_state, bool y_state);

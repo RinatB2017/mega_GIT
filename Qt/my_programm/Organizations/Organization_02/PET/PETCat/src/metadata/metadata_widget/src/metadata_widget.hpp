@@ -45,7 +45,7 @@ private slots:
 
 private:
     Ui::MetaData_widget *ui;
-    QWidget *parent = 0;
+    QWidget *parent;
 };
 //--------------------------------------------------------------------------------
 #endif // METADATA_WIDGET_HPP

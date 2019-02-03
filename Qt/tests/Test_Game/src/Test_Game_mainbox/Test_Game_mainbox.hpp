@@ -78,15 +78,15 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    //Scene *scene = 0;
-    //Scene2 *scene = 0;
-    Scene3 *scene = 0;
+    //Scene *scene;
+    //Scene2 *scene;
+    Scene3 *scene;
 
     void init(void);
 

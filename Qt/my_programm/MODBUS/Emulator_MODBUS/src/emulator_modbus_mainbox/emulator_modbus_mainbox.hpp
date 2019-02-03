@@ -82,7 +82,7 @@ private:
     void setupDeviceData(void);
     void setupWidgetContainers(void);
 
-    QModbusServer *modbusDevice = 0;
+    QModbusServer *modbusDevice;
 
     QButtonGroup coilButtons;
     QButtonGroup discreteButtons;

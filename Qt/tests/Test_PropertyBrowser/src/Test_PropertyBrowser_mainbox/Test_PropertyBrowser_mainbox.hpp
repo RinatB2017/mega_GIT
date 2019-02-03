@@ -46,19 +46,19 @@ private slots:
     void test(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
-    QtEnumEditorFactory *comboBoxFactory = 0;
-    QtEnumPropertyManager *enumManager = 0;
-    QtTreePropertyBrowser *editor = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
+    QtEnumEditorFactory *comboBoxFactory;
+    QtEnumPropertyManager *enumManager;
+    QtTreePropertyBrowser *editor;
 
-    QtProperty *item0 = 0;
-    QtProperty *device = 0;
-    QtProperty *baudrate = 0;
-    QtProperty *databits = 0;
-    QtProperty *parity = 0;
-    QtProperty *stopbits = 0;
-    QtProperty *flow = 0;
+    QtProperty *item0;
+    QtProperty *device;
+    QtProperty *baudrate;
+    QtProperty *databits;
+    QtProperty *parity;
+    QtProperty *stopbits;
+    QtProperty *flow;
 
     void init(void);
 

@@ -53,13 +53,13 @@ private slots:
     void clean_data(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    SerialBox5 *serialBox;
 
     QByteArray data_rs232;
 
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
     int curve_ACC_x = 0;
     int curve_ACC_y = 0;
     int curve_ACC_z = 0;

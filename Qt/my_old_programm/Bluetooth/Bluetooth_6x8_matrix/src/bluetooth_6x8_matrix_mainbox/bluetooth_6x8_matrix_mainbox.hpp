@@ -93,9 +93,9 @@ private slots:
     void read_data(QByteArray ba);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    SerialBox5 *serialBox;
 
     QByteArray clean_data;
 

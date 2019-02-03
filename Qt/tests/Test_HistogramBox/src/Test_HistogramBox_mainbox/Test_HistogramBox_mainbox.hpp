@@ -49,9 +49,9 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    HistogramBox *histogram = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    HistogramBox *histogram;
     bool all_break = false;
 
     void init(void);

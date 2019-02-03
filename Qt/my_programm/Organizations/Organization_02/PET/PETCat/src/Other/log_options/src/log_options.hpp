@@ -72,9 +72,9 @@ public:
     void set_flag_TextIsWindows(bool value);
 
 private:
-    Ui::Log_options *ui = 0;
+    Ui::Log_options *ui;
     QList<QString> codecs;
-    QTextEdit *logEdit = 0;
+    QTextEdit *logEdit;
 
     void findCodecs(void);
 };

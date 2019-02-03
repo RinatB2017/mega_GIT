@@ -81,13 +81,13 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    QTcpSocket *tcpSocket = 0;
+    QTcpSocket *tcpSocket;
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
 

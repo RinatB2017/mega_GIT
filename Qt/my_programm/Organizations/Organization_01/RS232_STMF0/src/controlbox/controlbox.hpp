@@ -168,14 +168,14 @@ private slots:
     void get_gain(void);
 
 private:
-    Ui::ControlBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::ControlBox *ui;
+    QWidget *parent;
 
-    GrapherBox *grapher = 0;
-    SerialBox5 *stm32 = 0;
-    SerialBox5 *calibrator = 0;
+    GrapherBox *grapher;
+    SerialBox5 *stm32;
+    SerialBox5 *calibrator;
 
-    QLCDNumber *display = 0;
+    QLCDNumber *display;
 
     bool data_stm32_is_ready;
     bool data_calibrator_is_ready;
@@ -190,54 +190,54 @@ private:
 
     QByteArray data_stm32;
     QByteArray data_calibrator;
-    QTimer *timer = 0;
+    QTimer *timer;
 
     float gain;
     float correct_value;
     bool calibration_in_progress;
 
-    QPushButton *btnStart = 0;
-    QPushButton *btnStop = 0;
-    QPushButton *btnCalibrate = 0;
+    QPushButton *btnStart;
+    QPushButton *btnStop;
+    QPushButton *btnCalibrate;
 
-    QSpinBox *sbTimer = 0;
-    QSpinBox *sbMaxTime = 0;
-    QCheckBox *cbUnlimTimer = 0;
+    QSpinBox *sbTimer;
+    QSpinBox *sbMaxTime;
+    QCheckBox *cbUnlimTimer;
     int cnt_max_time;
 
-    QPushButton *btn_CMD_TEST = 0;
-    QPushButton *btn_CMD_INIT = 0;
-    QPushButton *btn_CMD_GET_DATA = 0;
-    QPushButton *btn_CMD_GET_DIRTY_DATA = 0;
+    QPushButton *btn_CMD_TEST;
+    QPushButton *btn_CMD_INIT;
+    QPushButton *btn_CMD_GET_DATA;
+    QPushButton *btn_CMD_GET_DIRTY_DATA;
 
-    QRadioButton *btn_gain_010 = 0;
-    QRadioButton *btn_gain_1 = 0;
-    QRadioButton *btn_gain_5 = 0;
-    QRadioButton *btn_gain_8 = 0;
-    QRadioButton *btn_gain_16 = 0;
-    QRadioButton *btn_gain_32 = 0;
-    QRadioButton *btn_gain_40 = 0;
-    QRadioButton *btn_gain_64 = 0;
-    QRadioButton *btn_gain_80 = 0;
-    QRadioButton *btn_gain_128 = 0;
-    QRadioButton *btn_gain_160 = 0;
-    QRadioButton *btn_gain_320 = 0;
-    QRadioButton *btn_gain_640 = 0;
+    QRadioButton *btn_gain_010;
+    QRadioButton *btn_gain_1;
+    QRadioButton *btn_gain_5;
+    QRadioButton *btn_gain_8;
+    QRadioButton *btn_gain_16;
+    QRadioButton *btn_gain_32;
+    QRadioButton *btn_gain_40;
+    QRadioButton *btn_gain_64;
+    QRadioButton *btn_gain_80;
+    QRadioButton *btn_gain_128;
+    QRadioButton *btn_gain_160;
+    QRadioButton *btn_gain_320;
+    QRadioButton *btn_gain_640;
 
-    QPushButton *btn_CALIBRATION_NULL = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_010 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_1 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_5 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_8 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_16 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_32 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_40 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_64 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_80 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_128 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_160 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_320 = 0;
-    QPushButton *btn_CALIBRATION_GAIN_MAX_640 = 0;
+    QPushButton *btn_CALIBRATION_NULL;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_010;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_1;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_5;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_8;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_16;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_32;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_40;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_64;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_80;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_128;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_160;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_320;
+    QPushButton *btn_CALIBRATION_GAIN_MAX_640;
 
     void init(void);
 

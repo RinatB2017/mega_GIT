@@ -58,15 +58,15 @@ private slots:
     void process_error(QProcess::ProcessError err);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    QWidget *parent;
     int index = 0;
 
     QList<Plot *> plot_tickets;
 
 #ifdef GRAPHER
-    GrapherBox *grapher = 0;
+    GrapherBox *grapher;
 #endif
 
     void init(void);

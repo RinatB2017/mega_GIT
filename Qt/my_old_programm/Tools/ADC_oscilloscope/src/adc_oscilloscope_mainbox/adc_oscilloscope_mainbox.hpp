@@ -84,12 +84,12 @@ private slots:
     void get_data(const QByteArray &data);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
-    OscilloscopeBox *oscilloscope = 0;
-    ModbusAsciiWidget *widget = 0;
-    Serial_thread *thread = 0;
+    OscilloscopeBox *oscilloscope;
+    ModbusAsciiWidget *widget;
+    Serial_thread *thread;
 
     void init(void);
 

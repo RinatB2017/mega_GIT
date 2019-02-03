@@ -52,10 +52,10 @@ private slots:
     void test2(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    WIFI_frame *wf = 0;
+    WIFI_frame *wf;
 
     void init(void);
 

@@ -44,7 +44,7 @@ public:
     BOOL close(void);
 
 private:
-    FT2232H *ft2232h = 0;
+    FT2232H *ft2232h;
     DWORD dwClockDivisor;
 
     BOOL SPI_Initial(DWORD dwClockDivisor);

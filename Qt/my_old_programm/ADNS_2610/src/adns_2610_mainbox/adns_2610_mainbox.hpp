@@ -53,12 +53,12 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
-    SerialBox5 *serialBox = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
+    SerialBox5 *serialBox;
     QByteArray data_rs232;
 
-    Screen *screen = 0;
+    Screen *screen;
 
     void init(void);
 

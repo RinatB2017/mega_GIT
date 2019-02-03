@@ -48,7 +48,7 @@ public:
     QString get_lastError(void);
 
 private:
-    Database *database = 0;
+    Database *database;
 
     void init(void);
 

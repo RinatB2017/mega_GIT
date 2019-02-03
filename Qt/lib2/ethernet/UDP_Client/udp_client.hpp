@@ -25,8 +25,8 @@ private slots:
     void readPendingDatagrams(void);
 
 private:
-    QWidget *parent = 0;
-    QUdpSocket *udpSocket = 0;
+    QWidget *parent;
+    QUdpSocket *udpSocket;
     QString fileName;
     QString address;
     unsigned int port;

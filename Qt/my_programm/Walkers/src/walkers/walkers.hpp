@@ -46,8 +46,8 @@ private slots:
     void test(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
 
     Youtube_walker *youtube_walker = nullptr;
     Google_walker *google_walker = nullptr;

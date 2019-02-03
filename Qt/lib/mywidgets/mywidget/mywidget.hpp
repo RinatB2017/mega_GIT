@@ -178,7 +178,7 @@ private slots:
 private:
     void connect_log(QWidget *parent);
 
-    QSettings *settings = 0;
+    QSettings *settings;
 
     void load_QCheckBox(QString group_name);
     void load_QComboBox(QString group_name);

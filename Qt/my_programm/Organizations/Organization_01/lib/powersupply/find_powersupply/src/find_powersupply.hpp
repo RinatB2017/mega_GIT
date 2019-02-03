@@ -43,11 +43,11 @@ private slots:
     void update(void);
 
 private:
-    QComboBox   *cb_port_list = 0;
-    QPushButton *pb_find = 0;
-    QPushButton *pb_update_port_list = 0;
+    QComboBox   *cb_port_list;
+    QPushButton *pb_find;
+    QPushButton *pb_update_port_list;
 
-    Powersupply_B590 *powersupply = 0;
+    Powersupply_B590 *powersupply;
 
     void init(void);
     void updateText(void);

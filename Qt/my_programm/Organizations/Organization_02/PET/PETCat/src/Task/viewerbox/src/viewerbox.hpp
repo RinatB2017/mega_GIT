@@ -66,11 +66,11 @@ private slots:
     void show_stat(void);
 
 private:
-    Ui::ViewerBox *ui = 0;
+    Ui::ViewerBox *ui;
 
     QList<event_src_t> l_event_src;
 
-    MyComboBox *cb_metadata = 0;
+    MyComboBox *cb_metadata;
     bool convert_metadata(QString name, QString *result);
 
     void init(void);

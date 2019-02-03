@@ -47,10 +47,10 @@ private slots:
     void test(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    WebView *webview = 0;
-    ListWidget_Link *lw_link = 0;
-    ListWidget_Site *lw_site = 0;
+    Ui::MainBox *ui;
+    WebView *webview;
+    ListWidget_Link *lw_link;
+    ListWidget_Site *lw_site;
 
     void init(void);
 

@@ -200,20 +200,20 @@ private slots:
     void clicked_takt_9(void);
 
 private:
-    Ui::MainBox *ui = 0;
-    QWidget *parent = 0;
-    TCP_Client *client = 0;
+    Ui::MainBox *ui;
+    QWidget *parent;
+    TCP_Client *client;
     QByteArray data;
 #ifdef RS232
-    SerialBox5 *serialBox = 0;
+    SerialBox5 *serialBox;
 #endif
-    LogBox *logBox = 0;
-    Test_RS232_1 *test_rs232_1 = 0;
-    Test_RS232_2 *test_rs232_2 = 0;
-    Test_RS232_3 *test_rs232_3 = 0;
-    Test_FLBI_1  *test_flbi_1 = 0;
-    Test_FLBI_2  *test_flbi_2 = 0;
-    Test_FLBI_3  *test_flbi_3 = 0;
+    LogBox *logBox;
+    Test_RS232_1 *test_rs232_1;
+    Test_RS232_2 *test_rs232_2;
+    Test_RS232_3 *test_rs232_3;
+    Test_FLBI_1  *test_flbi_1;
+    Test_FLBI_2  *test_flbi_2;
+    Test_FLBI_3  *test_flbi_3;
 
 #ifdef DEBUG_FRAME
     DebugFrame *debug_frame;

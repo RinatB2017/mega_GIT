@@ -32,12 +32,12 @@ signals:
     bool escapeSignal(bool);
 
 private:
-    Ui::DMatrixPreview *ui = 0;
+    Ui::DMatrixPreview *ui;
     int _format;
     static QString previewString;
 
-    DmtxEncode     *enc = 0;
-    DmtxImage      *img = 0;
+    DmtxEncode     *enc;
+    DmtxImage      *img;
 };
 
 #endif // DMATRIXPREVIEW_H

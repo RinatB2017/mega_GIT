@@ -89,14 +89,14 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = nullptr;
-    Ui::MainBox *ui = nullptr;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     int begin_x = 0;
     int begin_y = 0;
 
-    QComboBox *cb_test = nullptr;
-    QCheckBox *cb_block = nullptr;
+    QComboBox *cb_test;
+    QCheckBox *cb_block;
     QList<CMD> commands;
 
     void init(void);

@@ -34,6 +34,9 @@
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME
 //--------------------------------------------------------------------------------
+#define MAX_SCREEN_X    1024
+#define MAX_SCREEN_Y    1024
+
 #define SCREEN_WIDTH    32
 #define SCREEN_HEIGTH   16
 

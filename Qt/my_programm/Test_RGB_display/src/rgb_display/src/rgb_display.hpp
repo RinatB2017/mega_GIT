@@ -28,6 +28,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "rgb_display_led.hpp"
 //--------------------------------------------------------------------------------
@@ -61,7 +62,7 @@ private slots:
     void redraw_display(void);
 
 private:
-    QGridLayout *grid = nullptr;
+    QGridLayout *grid;
     QList<RGB_dislpay_led *> l_buttons;
 
     QImage picture;

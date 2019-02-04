@@ -265,33 +265,51 @@ bool RGB_display::load_pic(void)
                                                     tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.bmp)"));
     if(fileName.isEmpty())
     {
-        emit info("Файл не выбран");
+        emit error("Файл не выбран");
         return false;
     }
 
+    emit info(QString("load %1").arg(fileName));
     bool ok = picture.load(fileName);
     if(!ok)
     {
         emit error("can't load picture");
         return false;
     }
-    max_x = picture.width();
-    max_y = picture.height();
+    //max_x = picture.width();
+    //max_y = picture.height();
+
+    max_x = sb_max_x->value();
+    max_y = sb_max_y->value();
+
+    emit debug(QString("max_x %1").arg(max_x));
+    emit debug(QString("max_y %1").arg(max_y));
+
+    if(max_x <= 0)  return false;
+    if(max_y <= 0)  return false;
+    if(max_x > MAX_SCREEN_X)    return false;
+    if(max_y > MAX_SCREEN_Y)    return false;
 
     for(int y=0; y<sb_max_y->value(); y++)
     {
         for(int x=0; x<sb_max_x->value(); x++)
         {
-            QRgb color = picture.pixel(x, y);
+            QRgb color = picture.pixel(x,y);    //FIXME добавить проверку
             foreach(RGB_dislpay_led *led, l_buttons)
             {
                 int p_x = led->property("property_col").toInt();
                 int p_y = led->property("property_row").toInt();
                 if((p_x == x) && (p_y == y))
                 {
-                    led->set_R(qRed(color));
-                    led->set_G(qGreen(color));
-                    led->set_B(qBlue(color));
+                    int R = qRed(color);
+                    int G = qGreen(color);
+                    int B = qBlue(color);
+
+                    //emit info(QString("%1").arg(R));
+
+                    led->set_R(R);
+                    led->set_G(G);
+                    led->set_B(B);
                     led->repaint();
                     break;
                 }
@@ -352,7 +370,7 @@ void RGB_display::show_picture(int begin_x, int begin_y, int brightness)
                     leds_data.append(static_cast<char>(qRed(color)));
                     leds_data.append(static_cast<char>(qGreen(color)));
                     leds_data.append(static_cast<char>(qBlue(color)));
-                     break;
+                    break;
                 }
             }
         }

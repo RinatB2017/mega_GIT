@@ -3,13 +3,31 @@
 //---------------------------------------------------------------
 #define BAUDRATE  57600
 #define work_serial    Serial
+
+#define SCREEN_WIDTH  32 
+#define SCREEN_HEIGTH 16
 //---------------------------------------------------------------
-#define LEDS_PER_STRIP  6
+#define LEDS_PER_STRIP  512
 #define LED_PIN 9
 //---------------------------------------------------------------
 CRGB line_leds[LEDS_PER_STRIP];
 //---------------------------------------------------------------
 CLEDController *controllers;
+//---------------------------------------------------------------
+#pragma pack (push, 1)
+
+union PACKET
+{
+    struct {
+        uint8_t begin_packet;
+        uint8_t brightness;
+        uint8_t leds[SCREEN_WIDTH * SCREEN_HEIGTH * 3];
+        uint8_t enfd_packet;
+    } body;
+    uint8_t buf[sizeof(body)];
+};
+
+#pragma pack(pop)
 //---------------------------------------------------------------
 int imcomingByte = 0;
 String application_command;

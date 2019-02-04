@@ -227,36 +227,7 @@ void RGB_display::redraw_display(void)
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)
 {
-    bool ok = picture.load(":/mainwindow/computer.png");
-    if(!ok)
-    {
-        emit error("can't load picture");
-        return false;
-    }
-    max_x = sb_max_x->value();
-    max_y = sb_max_y->value();
-
-    for(int y=0; y<sb_max_y->value(); y++)
-    {
-        for(int x=0; x<sb_max_x->value(); x++)
-        {
-            QRgb color = picture.pixel(x, y);
-            foreach(RGB_dislpay_led *led, l_buttons)
-            {
-                int p_x = led->property("property_col").toInt();
-                int p_y = led->property("property_row").toInt();
-                if((p_x == x) && (p_y == y))
-                {
-                    led->set_R(qRed(color));
-                    led->set_G(qGreen(color));
-                    led->set_B(qBlue(color));
-                    led->repaint();
-                    break;
-                }
-            }
-        }
-    }
-    return true;
+    return load_picture(":/mainwindow/computer.png");
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_pic(void)
@@ -269,6 +240,17 @@ bool RGB_display::load_pic(void)
         return false;
     }
 
+    return load_picture(fileName);
+}
+//--------------------------------------------------------------------------------
+bool RGB_display::load_picture(QString fileName)
+{
+    if(fileName.isEmpty())
+    {
+        emit error("fileName is empty");
+        return false;
+    }
+
     emit info(QString("load %1").arg(fileName));
     bool ok = picture.load(fileName);
     if(!ok)
@@ -276,8 +258,6 @@ bool RGB_display::load_pic(void)
         emit error("can't load picture");
         return false;
     }
-    //max_x = picture.width();
-    //max_y = picture.height();
 
     max_x = sb_max_x->value();
     max_y = sb_max_y->value();
@@ -290,32 +270,7 @@ bool RGB_display::load_pic(void)
     if(max_x > MAX_SCREEN_X)    return false;
     if(max_y > MAX_SCREEN_Y)    return false;
 
-    for(int y=0; y<sb_max_y->value(); y++)
-    {
-        for(int x=0; x<sb_max_x->value(); x++)
-        {
-            QRgb color = picture.pixel(x,y);    //FIXME добавить проверку
-            foreach(RGB_dislpay_led *led, l_buttons)
-            {
-                int p_x = led->property("property_col").toInt();
-                int p_y = led->property("property_row").toInt();
-                if((p_x == x) && (p_y == y))
-                {
-                    int R = qRed(color);
-                    int G = qGreen(color);
-                    int B = qBlue(color);
-
-                    //emit info(QString("%1").arg(R));
-
-                    led->set_R(R);
-                    led->set_G(G);
-                    led->set_B(B);
-                    led->repaint();
-                    break;
-                }
-            }
-        }
-    }
+    show_picture(0, 0, 12);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -380,7 +335,7 @@ void RGB_display::show_picture(int begin_x, int begin_y, int brightness)
     QString packet_str;
     packet_str.append(":");
     packet_str.append(QString("%1").arg(brightness, 2, 16, QChar('0')));
-    packet_str.append(leds_data.toHex());
+    packet_str.append(leds_data.toHex().toUpper());
     packet_str.append("\n");
 
     emit debug(QString("len = %1").arg(packet_str.length()));

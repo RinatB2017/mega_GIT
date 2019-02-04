@@ -81,6 +81,7 @@ private:
     void init(void);
     void clean_grid(void);
     void create_new_display(void);
+    bool load_picture(QString fileName);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

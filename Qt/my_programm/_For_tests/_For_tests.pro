@@ -13,12 +13,7 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
-QT += webenginewidgets
-CONFIG += c++11
-
-QT          += bluetooth widgets
-CONFIG      += mobility
-MOBILITY    += connectivity
+QT          += widgets
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -103,7 +98,7 @@ include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 
-include (src/simple/simple.pri)
+#include (src/simple/simple.pri)
 include (src/binary/binary.pri)
 
 !exists(OBJECTS_DIR) {

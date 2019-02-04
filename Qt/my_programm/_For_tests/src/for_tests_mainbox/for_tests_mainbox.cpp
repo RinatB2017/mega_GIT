@@ -216,12 +216,6 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    unsigned int value = 0x000000FF;
-    uint8_t color_R = static_cast<uint8_t>(value);
-    emit info(QString("R %1").arg(color_R));
-#endif
-
-#if 0
     emit info("Текст <font style=\"color:red\">красный</font>");
 #endif
 

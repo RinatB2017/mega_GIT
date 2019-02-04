@@ -32,10 +32,6 @@ RGB_display::RGB_display(QWidget *parent) :
     MyWidget(parent)
 {
     init();
-
-    adjustSize();
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    //setFixedSize(width(), height());
 }
 //--------------------------------------------------------------------------------
 RGB_display::~RGB_display()
@@ -136,6 +132,7 @@ void RGB_display::init(void)
     vbox2->addStretch(1);
 
     QFrame *frame = new QFrame(this);
+    frame->setFrameStyle(QFrame::Box | QFrame::Raised);
     frame->setLayout(vbox);
     frame->setFixedWidth(frame->sizeHint().width());
 
@@ -144,6 +141,10 @@ void RGB_display::init(void)
     box->addLayout(vbox2);
 
     setLayout(box);
+
+    adjustSize();
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //setFixedSize(width(), height());
 }
 //--------------------------------------------------------------------------------
 void RGB_display::clean_grid(void)

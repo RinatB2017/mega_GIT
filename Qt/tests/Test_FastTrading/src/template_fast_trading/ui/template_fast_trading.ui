@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>256</width>
-    <height>463</height>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,6 +66,24 @@
            </item>
            <item row="2" column="1">
             <widget class="QSpinBox" name="sb_inc_price"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QCheckBox" name="cb_auto_generate">
+             <property name="text">
+              <string>auto</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_draw_generate">
+             <property name="text">
+              <string>draw</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -156,6 +174,24 @@
           </layout>
          </item>
          <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="cb_auto_calc">
+             <property name="text">
+              <string>auto</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_draw_calc">
+             <property name="text">
+              <string>draw</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
           <widget class="QPushButton" name="btn_calc">
            <property name="text">
             <string>Calc</string>
@@ -187,11 +223,15 @@
   <tabstop>sb_count</tabstop>
   <tabstop>sb_price</tabstop>
   <tabstop>sb_inc_price</tabstop>
+  <tabstop>cb_auto_generate</tabstop>
+  <tabstop>btn_draw_generate</tabstop>
   <tabstop>btn_generate</tabstop>
   <tabstop>sb_order_up_profit</tabstop>
   <tabstop>sb_order_up_loss</tabstop>
   <tabstop>sb_order_down_profit</tabstop>
   <tabstop>sb_order_down_loss</tabstop>
+  <tabstop>cb_auto_calc</tabstop>
+  <tabstop>btn_draw_calc</tabstop>
   <tabstop>btn_calc</tabstop>
  </tabstops>
  <resources/>

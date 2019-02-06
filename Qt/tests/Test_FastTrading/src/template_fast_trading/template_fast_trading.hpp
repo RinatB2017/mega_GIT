@@ -57,6 +57,9 @@ private slots:
     void generate(void);
     void calc(void);
 
+    void redraw_generate_data(void);
+    void redraw_calc_data(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -83,7 +86,8 @@ private:
     GrapherBox *grapher_data;
     GrapherBox *grapher_profit;
 
-    QList<qreal> data_prices;
+    QList<qreal> prices_data;
+    QList<qreal> prices_profit;
 
     int curve_data = 0;
     int curve_profit;

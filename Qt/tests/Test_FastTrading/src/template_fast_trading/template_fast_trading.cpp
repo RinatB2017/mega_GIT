@@ -143,7 +143,7 @@ void MainBox::init_grapher_data(void)
 
     grapher_data->set_visible_btn_Load(false);
     grapher_data->set_visible_btn_Save(false);
-    grapher_data->set_visible_btn_Clear(false);
+    //grapher_data->set_visible_btn_Clear(false);
     grapher_data->set_visible_btn_all_ON(false);
     grapher_data->set_visible_btn_all_OFF(false);
     grapher_data->set_visible_btn_Options(false);
@@ -172,7 +172,7 @@ void MainBox::init_grapher_profit(void)
 
     grapher_profit->set_visible_btn_Load(false);
     grapher_profit->set_visible_btn_Save(false);
-    grapher_profit->set_visible_btn_Clear(false);
+    //grapher_profit->set_visible_btn_Clear(false);
     grapher_profit->set_visible_btn_all_ON(false);
     grapher_profit->set_visible_btn_all_OFF(false);
     grapher_profit->set_visible_btn_Options(false);
@@ -301,7 +301,7 @@ void MainBox::calc(void)
     {
         grapher_profit->clear();
     }
-    prices_data.clear();
+    prices_profit.clear();
 
     emit info(QString("Begin price %1").arg(begin_price));
     int cnt = prices_data.count();
@@ -359,7 +359,7 @@ void MainBox::calc(void)
         {
             grapher_profit->add_curve_data(curve_profit, end_price);
         }
-        prices_data.append(end_price);
+        prices_profit.append(end_price);
 
         order_up.profit = end_price + up_profit;
         order_up.loss   = end_price - up_loss / 2;
@@ -382,11 +382,12 @@ void MainBox::redraw_generate_data(void)
     int cnt = prices_data.count();
 
     QProgressDialog *dlg = new QProgressDialog(this);
-    dlg->setWindowTitle("Генерация данных");
+    dlg->setWindowTitle("Отрисовка данных");
     dlg->setLabelText("Пожалуйста, ждите!");
     dlg->setMinimumSize(500, 100);
     dlg->setMinimum(0);
     dlg->setMaximum(cnt);
+    dlg->setValue(0);
     dlg->setWindowModality(Qt::ApplicationModal);
     dlg->show();
 
@@ -396,7 +397,7 @@ void MainBox::redraw_generate_data(void)
     int n = 0;
     foreach(qreal price, prices_data)
     {
-        if((n % 10) == 0)
+        if((n % 100) == 0)
         {
             dlg->setLabelText(QString("Пожалуйста, ждите! (осталось %1 из %2)")
                               .arg(cnt - n)
@@ -427,11 +428,12 @@ void MainBox::redraw_calc_data(void)
     int cnt = prices_profit.count();
 
     QProgressDialog *dlg = new QProgressDialog(this);
-    dlg->setWindowTitle("Генерация данных");
+    dlg->setWindowTitle("Отрисовка данных");
     dlg->setLabelText("Пожалуйста, ждите!");
     dlg->setMinimumSize(500, 100);
     dlg->setMinimum(0);
     dlg->setMaximum(cnt);
+    dlg->setValue(0);
     dlg->setWindowModality(Qt::ApplicationModal);
     dlg->show();
 
@@ -441,7 +443,7 @@ void MainBox::redraw_calc_data(void)
     int n = 0;
     foreach(qreal price, prices_profit)
     {
-        if((n % 10) == 0)
+        if((n % 100) == 0)
         {
             dlg->setLabelText(QString("Пожалуйста, ждите! (осталось %1 из %2)")
                               .arg(cnt - n)

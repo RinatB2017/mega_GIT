@@ -216,6 +216,15 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QByteArray ba = QByteArray::fromHex("01 02 03 04 05 06 07 08 09 0a 0B 0C ыыы");
+    emit info(QString("ba len %1").arg(ba.length()));
+    for(int n=0; n<ba.length(); n++)
+    {
+        emit info(QString("0x%1").arg(ba.at(n), 2, 16, QChar('0')));
+    }
+#endif
+
+#if 0
     emit info("Текст <font style=\"color:red\">красный</font>");
 #endif
 

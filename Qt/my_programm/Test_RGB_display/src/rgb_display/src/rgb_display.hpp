@@ -43,7 +43,7 @@ public:
     explicit RGB_display(QWidget *parent = nullptr);
     ~RGB_display();
 
-    void show_picture(int begin_x, int begin_y, int brightness);
+    void show_picture(int begin_x, int begin_y);
 
     int get_max_x(void);
     int get_max_y(void);
@@ -54,11 +54,13 @@ public:
     void load_leds(void);
     void save_leds(void);
 
+    bool set_brightness(int value);
+
 public slots:
     bool load_ico(void);
     bool load_pic(void);
 
-    void send_test_data(int brightness);
+    void send_test_data(void);
 
 private slots:
     void redraw_display(void);
@@ -73,6 +75,8 @@ private:
     int begin_x = 0;
     int begin_y = 0;
 
+    int brightness = 0;
+
     QSpinBox *sb_max_x;
     QSpinBox *sb_max_y;
     QDoubleSpinBox *dsb_led_width;
@@ -83,7 +87,7 @@ private:
     void init(void);
     void clean_grid(void);
     void create_new_display(void);
-    bool load_picture(QString fileName, int brightness);
+    bool load_picture(QString fileName);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

@@ -228,13 +228,11 @@ void RGB_display::redraw_display(void)
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)
 {
-    int brightness = 12; //FIXME
-    return load_picture(":/mainwindow/computer.png", brightness);
+    return load_picture(":/mainwindow/computer.png");
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_pic(void)
 {
-    int brightness = 12; //FIXME
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.bmp)"));
     if(fileName.isEmpty())
@@ -243,10 +241,10 @@ bool RGB_display::load_pic(void)
         return false;
     }
 
-    return load_picture(fileName, brightness);
+    return load_picture(fileName);
 }
 //--------------------------------------------------------------------------------
-bool RGB_display::load_picture(QString fileName, int brightness)
+bool RGB_display::load_picture(QString fileName)
 {
     if(fileName.isEmpty())
     {
@@ -273,11 +271,11 @@ bool RGB_display::load_picture(QString fileName, int brightness)
     if(max_x > MAX_SCREEN_X)    return false;
     if(max_y > MAX_SCREEN_Y)    return false;
 
-    show_picture(0, 0, brightness);
+    show_picture(0, 0);
     return true;
 }
 //--------------------------------------------------------------------------------
-void RGB_display::show_picture(int begin_x, int begin_y, int brightness)
+void RGB_display::show_picture(int begin_x, int begin_y)
 {
     PACKET packet;
 
@@ -406,7 +404,7 @@ int RGB_display::get_picture_h(void)
     return picture.height();
 }
 //--------------------------------------------------------------------------------
-void RGB_display::send_test_data(int brightness)
+void RGB_display::send_test_data(void)
 {
     PACKET packet;
 
@@ -446,6 +444,16 @@ void RGB_display::send_test_data(int brightness)
     emit debug(QString("len %1").arg(packet_str.length()));
 
     emit send(packet_str);
+}
+//--------------------------------------------------------------------------------
+bool RGB_display::set_brightness(int value)
+{
+    if(value < 0)
+    {
+        return false;
+    }
+    brightness = value;
+    return true;
 }
 //--------------------------------------------------------------------------------
 void RGB_display::updateText(void)

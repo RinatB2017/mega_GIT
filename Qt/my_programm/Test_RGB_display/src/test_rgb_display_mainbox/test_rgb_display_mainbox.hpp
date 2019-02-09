@@ -72,6 +72,8 @@ private slots:
     void get_data(QByteArray data);
     void send_data(QString data);
 
+    void send_test_data(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,

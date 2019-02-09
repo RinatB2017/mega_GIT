@@ -34,6 +34,8 @@
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME
 //--------------------------------------------------------------------------------
+#define BAUDRATE  115200
+//--------------------------------------------------------------------------------
 #define MAX_SCREEN_X    1024
 #define MAX_SCREEN_Y    1024
 
@@ -57,14 +59,6 @@
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
 
-typedef struct P_HEADER
-{
-    uint8_t   addr;
-    uint8_t   cmd;
-    uint16_t  len;
-    uint8_t   data[];
-} p_header_t;
-
 typedef struct LED
 {
     uint8_t color_R;
@@ -72,12 +66,14 @@ typedef struct LED
     uint8_t color_B;
 } led_t;
 
-typedef struct P_DATA
+union PACKET
 {
-    //uint8_t   brightness;
-    struct LED	leds[NUM_LEDS];
-    //LED       leds[SCREEN_WIDTH][SCREEN_HEIGTH];
-} p_data_t;
+    struct {
+        uint8_t brightness;
+        LED leds[SCREEN_WIDTH][SCREEN_HEIGTH];
+    } body;
+    uint8_t buf[sizeof(body)];
+};
 
 #pragma pack(pop)
 //--------------------------------------------------------------------------------

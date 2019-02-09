@@ -58,6 +58,8 @@ public slots:
     bool load_ico(void);
     bool load_pic(void);
 
+    void send_test_data(int brightness);
+
 private slots:
     void redraw_display(void);
 
@@ -81,7 +83,7 @@ private:
     void init(void);
     void clean_grid(void);
     void create_new_display(void);
-    bool load_picture(QString fileName);
+    bool load_picture(QString fileName, int brightness);
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

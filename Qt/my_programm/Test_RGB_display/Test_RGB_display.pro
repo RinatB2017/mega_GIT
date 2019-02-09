@@ -47,7 +47,9 @@ RESOURCES += \
     images/images.qrc \
     doc/doc.qrc
 
-OTHER_FILES += doc/notebook.txt
+OTHER_FILES += \
+    doc/notebook.txt \
+    arduino/arduino.ino
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

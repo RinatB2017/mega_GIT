@@ -349,7 +349,7 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
             if(temp.isEmpty() == false)
             {
                 QString x_str = temp.remove('\r').remove('\n');
-                emit debug(QString("send: %1").arg(x_str));
+                //emit debug(QString("send: %1").arg(x_str));
             }
         }
         else

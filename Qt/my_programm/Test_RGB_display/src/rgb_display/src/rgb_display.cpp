@@ -228,11 +228,13 @@ void RGB_display::redraw_display(void)
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)
 {
-    return load_picture(":/mainwindow/computer.png");
+    int brightness = 12; //FIXME
+    return load_picture(":/mainwindow/computer.png", brightness);
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_pic(void)
 {
+    int brightness = 12; //FIXME
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.bmp)"));
     if(fileName.isEmpty())
@@ -241,10 +243,10 @@ bool RGB_display::load_pic(void)
         return false;
     }
 
-    return load_picture(fileName);
+    return load_picture(fileName, brightness);
 }
 //--------------------------------------------------------------------------------
-bool RGB_display::load_picture(QString fileName)
+bool RGB_display::load_picture(QString fileName, int brightness)
 {
     if(fileName.isEmpty())
     {
@@ -271,20 +273,13 @@ bool RGB_display::load_picture(QString fileName)
     if(max_x > MAX_SCREEN_X)    return false;
     if(max_y > MAX_SCREEN_Y)    return false;
 
-    show_picture(0, 0, 12);
+    show_picture(0, 0, brightness);
     return true;
 }
 //--------------------------------------------------------------------------------
 void RGB_display::show_picture(int begin_x, int begin_y, int brightness)
 {
-#ifdef QT_DEBUG
-    emit debug(QString("begin_x %1").arg(begin_x));
-    emit debug(QString("begin_y %1").arg(begin_y));
-    emit debug(QString("max_x %1").arg(get_max_x()));
-    emit debug(QString("max_y %1").arg(get_max_y()));
-    emit debug(QString("picture_w %1").arg(get_picture_w()));
-    emit debug(QString("picture_h %1").arg(get_picture_h()));
-#endif
+    PACKET packet;
 
     if(picture.isNull())
     {
@@ -295,18 +290,8 @@ void RGB_display::show_picture(int begin_x, int begin_y, int brightness)
     int max_x = sb_max_x->value();
     int max_y = sb_max_y->value();
 
-#if 0
-    union PACKET
-    {
-        struct {
-            uint8_t brightness;
-            uint8_t leds[SCREEN_WIDTH * SCREEN_HEIGTH * 3];
-        } body;
-        uint8_t buf[sizeof(body)];
-    };
-#endif
+    packet.body.brightness = static_cast<uint8_t>(brightness);
 
-    QByteArray leds_data;
     for(int y=0; y<max_y; y++)
     {
         for(int x=0; x<max_x; x++)
@@ -323,27 +308,29 @@ void RGB_display::show_picture(int begin_x, int begin_y, int brightness)
                     led->set_B(qBlue(color));
                     led->repaint();
 
-                    leds_data.append(static_cast<char>(qRed(color)));
-                    leds_data.append(static_cast<char>(qGreen(color)));
-                    leds_data.append(static_cast<char>(qBlue(color)));
+                    LED led;
+                    led.color_R = static_cast<uint8_t>(qRed(color));
+                    led.color_G = static_cast<uint8_t>(qGreen(color));
+                    led.color_B = static_cast<uint8_t>(qBlue(color));
+                    packet.body.leds[x][y] = led;
                     break;
                 }
             }
         }
     }
 
-#if 1
     QString packet_str;
     packet_str.append(":");
-    packet_str.append(QString("%1").arg(brightness, 2, 16, QChar('0')));
-    packet_str.append(leds_data.toHex().toUpper());
+    for(unsigned int n=0; n<sizeof(PACKET); n++)
+    {
+        QString temp;
+        temp = QString("%1").arg(packet.buf[n], 2, 16, QChar('0')).toUpper();
+        packet_str.append(temp);
+    }
     packet_str.append("\n");
 
-    emit debug(QString("len = %1").arg(packet_str.length()));
-    emit debug(QString("leds_data = %1").arg(leds_data.length() * 2));
-
+    emit debug(QString("len %1").arg(packet_str.length()));
     emit send(packet_str);
-#endif
 }
 //--------------------------------------------------------------------------------
 void RGB_display::load_leds(void)
@@ -417,6 +404,48 @@ int RGB_display::get_picture_w(void)
 int RGB_display::get_picture_h(void)
 {
     return picture.height();
+}
+//--------------------------------------------------------------------------------
+void RGB_display::send_test_data(int brightness)
+{
+    PACKET packet;
+
+    packet.body.brightness = static_cast<uint8_t>(brightness);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            foreach(RGB_dislpay_led *led, l_buttons)
+            {
+                int p_x = led->property("property_col").toInt();
+                int p_y = led->property("property_row").toInt();
+                if((p_x == x) && (p_y == y))
+                {
+                    LED temp_l;
+                    temp_l.color_R = led->get_R();
+                    temp_l.color_G = led->get_G();
+                    temp_l.color_B = led->get_B();
+
+                    packet.body.leds[x][y] = temp_l;
+                }
+            }
+        }
+    }
+
+    QString packet_str;
+    packet_str.append(":");
+    for(unsigned int n=0; n<sizeof(PACKET); n++)
+    {
+        QString temp;
+        temp = QString("%1").arg(packet.buf[n], 2, 16, QChar('0')).toUpper();
+        packet_str.append(temp);
+    }
+    packet_str.append("\n");
+
+    //emit debug(packet_str);
+    emit debug(QString("len %1").arg(packet_str.length()));
+
+    emit send(packet_str);
 }
 //--------------------------------------------------------------------------------
 void RGB_display::updateText(void)

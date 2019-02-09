@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>174</width>
-    <height>295</height>
+    <height>363</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,6 +140,13 @@
       </layout>
      </item>
      <item>
+      <widget class="QPushButton" name="btn_send_test_data">
+       <property name="text">
+        <string>send</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -176,6 +183,7 @@
  <tabstops>
   <tabstop>btn_load_ico</tabstop>
   <tabstop>btn_load_pic</tabstop>
+  <tabstop>sb_brightness</tabstop>
   <tabstop>btn_ul</tabstop>
   <tabstop>btn_u</tabstop>
   <tabstop>btn_ur</tabstop>
@@ -184,6 +192,7 @@
   <tabstop>btn_dl</tabstop>
   <tabstop>btn_d</tabstop>
   <tabstop>btn_dr</tabstop>
+  <tabstop>btn_send_test_data</tabstop>
  </tabstops>
  <resources>
   <include location="../../../arrows/arrows.qrc"/>

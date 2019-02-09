@@ -51,6 +51,8 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
+
     //save_leds();
     delete ui;
 }
@@ -63,7 +65,8 @@ void MainBox::init(void)
 
     ui->sb_brightness->setRange(1, 0xFF);
 
-    connect(this,   SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    ui->serial_widget->set_fix_baudrate(BAUDRATE);
+
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
 
     connect(ui->btn_ul, SIGNAL(clicked(bool)),  this,   SLOT(move_ul()));
@@ -85,7 +88,11 @@ void MainBox::init(void)
 
     connect(ui->rgb_display,    SIGNAL(send(QString)),  this,   SLOT(send_data(QString)));
 
+    connect(ui->btn_send_test_data, SIGNAL(clicked(bool)),  this,   SLOT(send_test_data()));
+
     //setFixedSize(sizeHint());
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -181,7 +188,11 @@ bool MainBox::prepare_data(QByteArray input, QByteArray *output)
 void MainBox::read_data(QByteArray data)
 {
     emit trace("read_data");
+#if 0
     emit debug(data.data());
+#else
+    Q_UNUSED(data);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::move_ul(void)
@@ -337,12 +348,17 @@ void MainBox::get_data(QByteArray data)
 //--------------------------------------------------------------------------------
 void MainBox::send_data(QString data)
 {
-    emit debug(data);
+    //emit debug(data);
 
     QByteArray temp;
     temp.append(data);
 
     emit send(temp);
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_test_data(void)
+{
+    ui->rgb_display->send_test_data(ui->sb_brightness->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

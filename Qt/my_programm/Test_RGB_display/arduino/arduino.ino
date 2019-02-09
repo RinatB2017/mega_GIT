@@ -248,7 +248,7 @@ void test(void)
   show_leds();
 }
 //---------------------------------------------------------------
-void test_2(void)
+void calc_elapsed_time(void)
 {
   i_brightness = 1;
 
@@ -275,7 +275,7 @@ void test_2(void)
 void loop(void)
 {
   //test();
-  test_2();
+  //calc_elapsed_time();
 }
 //---------------------------------------------------------------
 

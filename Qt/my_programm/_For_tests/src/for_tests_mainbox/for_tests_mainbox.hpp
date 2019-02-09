@@ -103,7 +103,6 @@ private:
     void createTestBar(void);
     void updateText(void);
 
-    quint32 test(const QByteArray ba);
     int get_cnt(void);
 };
 //--------------------------------------------------------------------------------

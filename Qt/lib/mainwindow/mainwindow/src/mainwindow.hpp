@@ -59,7 +59,7 @@ class SysLog_dock;
 //--------------------------------------------------------------------------------
 class ToolButtonAction : public QWidgetAction {
 public:
-    ToolButtonAction (const QString& title) :
+    ToolButtonAction (QAction *action) :
       QWidgetAction (nullptr) {
         QWidget* pWidget = new QWidget (nullptr);
 
@@ -67,7 +67,7 @@ public:
         //pLayout->setMargin(0);
         pLayout->setSpacing(0);
 
-        QLabel* pLabel = new QLabel(title);  //bug fixed here, pointer was missing
+        QLabel* pLabel = new QLabel(action->text());  //bug fixed here, pointer was missing
         pLayout->addWidget(pLabel);
 
         pToolButton = new QToolButton(nullptr);

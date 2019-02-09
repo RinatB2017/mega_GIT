@@ -1018,7 +1018,7 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
     l_docs.append(widget);
 
 #if 0
-    ToolButtonAction *tb_action = new ToolButtonAction(action->text());
+    ToolButtonAction *tb_action = new ToolButtonAction(action);
     connect(tb_action->toolButton(), SIGNAL(clicked()), this, SLOT(change_value()));
 
     m_app_windowsmenu->addAction(tb_action);

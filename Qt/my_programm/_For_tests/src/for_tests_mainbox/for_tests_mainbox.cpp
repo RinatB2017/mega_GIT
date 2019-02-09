@@ -96,7 +96,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -176,7 +176,7 @@ void MainBox::inFunc(QPushButton *btn, saveSlot slot)
 void MainBox::s_inFunc(void)
 {
     emit trace(Q_FUNC_INFO);
-    QMessageBox::information(0,"","info");
+    QMessageBox::information(nullptr, "", "info");
 }
 //--------------------------------------------------------------------------------
 int MainBox::get_cnt(void)
@@ -209,7 +209,6 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include "binary.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -228,77 +227,6 @@ bool MainBox::test_0(void)
     emit info("Текст <font style=\"color:red\">красный</font>");
 #endif
 
-#if 0
-    QString filename = "./temp.txt";
-    QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Append))
-        return false;
-    file.write("\n");
-    file.close();
-
-    QFileInfo fileInfo(filename);
-
-    //Дата и время создания файла
-    emit info(fileInfo.created().toString());
-
-    //Дата и время последнего изменения файла
-    emit info(fileInfo.lastModified().toString());
-
-    //Дата и время последнего чтения файла
-    emit info(fileInfo.lastRead().toString());
-#endif
-
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    QPixmap myPixmap(ICON_PROGRAMM);
-    QLabel *label = new QLabel();
-    label->setPixmap(myPixmap);
-    mw->statusBar()->addWidget(label);
-#endif
-
-#if 0
-    Binary *bin = new Binary();
-    connect(bin,    SIGNAL(info(QString)),     this,   SIGNAL(info(QString)));
-    connect(bin,    SIGNAL(debug(QString)),    this,   SIGNAL(debug(QString)));
-    connect(bin,    SIGNAL(error(QString)),    this,   SIGNAL(error(QString)));
-    connect(bin,    SIGNAL(trace(QString)),    this,   SIGNAL(trace(QString)));
-
-    QFileDialog *dlg;
-    QString i_filename;
-    QString o_filename;
-
-    //---
-    dlg = new QFileDialog;
-    dlg->setNameFilter(tr("All files (*.*)"));
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    dlg->selectFile("noname");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        i_filename = files.at(0);
-    }
-    dlg->deleteLater();
-    //---
-
-    //---
-    dlg = new QFileDialog;
-    dlg->setNameFilter(tr("All files (*.*)"));
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    dlg->selectFile("noname");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        o_filename = files.at(0);
-    }
-    dlg->deleteLater();
-    //---
-
-    bin->file_to_buf(i_filename,
-                     o_filename);
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -306,40 +234,6 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
-
-#if 1
-    union UINT16 {
-        uint16_t value;
-        struct {
-            uint8_t c:4;
-            uint8_t d:4;
-            uint8_t a:4;
-            uint8_t b:4;
-        } bytes;
-    };
-
-    UINT16 temp;
-    temp.value = 0x1234;
-    emit info(QString("a 0x%1").arg(temp.bytes.a, 0, 16));
-    emit info(QString("b 0x%1").arg(temp.bytes.b, 0, 16));
-    emit info(QString("c 0x%1").arg(temp.bytes.c, 0, 16));
-    emit info(QString("d 0x%1").arg(temp.bytes.d, 0, 16));
-#endif
-
-#if 0
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
-
-    emit colorLog("Cyan", QColor(Qt::cyan), QColor(Qt::black));
-    emit colorLog("Yellow", QColor(Qt::yellow), QColor(Qt::white));
-#endif
-
-#if 0
-    emit info(__FILE__);
-    emit info(QString("line %1").arg(__LINE__));
-#endif
 
     return true;
 }
@@ -374,18 +268,5 @@ bool MainBox::test_5(void)
     emit info("Test_5()");
 
     return true;
-}
-//--------------------------------------------------------------------------------
-quint32 MainBox::test(const QByteArray ba)
-{
-    emit trace(Q_FUNC_INFO);
-    quint32 temp = 0;
-
-    for(int n=0; n<ba.length(); n++)
-    {
-        temp += (char)ba.at(n);
-    }
-
-    return temp;
 }
 //--------------------------------------------------------------------------------

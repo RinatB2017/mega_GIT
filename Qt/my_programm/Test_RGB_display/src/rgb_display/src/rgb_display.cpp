@@ -41,42 +41,16 @@ RGB_display::~RGB_display()
 //--------------------------------------------------------------------------------
 void RGB_display::init(void)
 {
-    double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    double w_led = pixelPerMm * LED_SIZE_W_MM;
-    double h_led = pixelPerMm * LED_SIZE_H_MM;
+    w_led = LED_SIZE_W_MM;
+    h_led = LED_SIZE_H_MM;
 
-    double left_border = pixelPerMm * LED_BORDER_W_MM;
-    double up_border = pixelPerMm * LED_BORDER_H_MM;
+    left_border = LED_BORDER_W_MM;
+    up_border   = LED_BORDER_H_MM;
 
     grid = new QGridLayout();
-    grid->setMargin(static_cast<int>(LED_BORDER_SIZE + 0.5));
-    grid->setSpacing(static_cast<int>(LED_BORDER_SIZE + 0.5));
+    grid->setMargin(1);
+    grid->setSpacing(1);
 
-    for(int row=0; row<SCREEN_HEIGTH; row++)
-    {
-        for(int col=0; col<SCREEN_WIDTH; col++)
-        {
-            RGB_dislpay_led *led = new RGB_dislpay_led(this);
-            connect(led,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-            connect(led,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-            connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-            connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-
-            led->set_size(static_cast<int>(w_led + left_border * 2),
-                          static_cast<int>(h_led + up_border * 2),
-                          static_cast<int>(left_border),
-                          static_cast<int>(up_border));
-
-            led->setProperty("property_col", col);
-            led->setProperty("property_row", row);
-
-            grid->addWidget(led, row, col);
-
-            l_buttons.append(led);
-        }
-    }
-
-    //---
     max_x = SCREEN_WIDTH;
     max_y = SCREEN_HEIGTH;
 
@@ -103,10 +77,12 @@ void RGB_display::init(void)
 
     sb_max_x->setValue(max_x);
     sb_max_y->setValue(max_y);
-    dsb_led_width->setValue(w_led / pixelPerMm);
-    dsb_led_height->setValue(h_led / pixelPerMm);
-    dsb_up_border->setValue(up_border / pixelPerMm);
-    dsb_left_border->setValue(left_border / pixelPerMm);
+    dsb_led_width->setValue(w_led);
+    dsb_led_height->setValue(h_led);
+    dsb_up_border->setValue(up_border);
+    dsb_left_border->setValue(left_border);
+
+    create_new_display();
 
     QGridLayout *grid_buttons = new QGridLayout;
     grid_buttons->addWidget(new QLabel("max_x"),        0, 0);    grid_buttons->addWidget(sb_max_x,           0, 1);
@@ -116,14 +92,26 @@ void RGB_display::init(void)
     grid_buttons->addWidget(new QLabel("up_border"),    4, 0);    grid_buttons->addWidget(dsb_up_border,      4, 1);
     grid_buttons->addWidget(new QLabel("left_border"),  5, 0);    grid_buttons->addWidget(dsb_left_border,    5, 1);
 
-    QPushButton *btn = new QPushButton(this);
-    btn->setText("redraw");
-    connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(redraw_display()));
+    QPushButton *btn_set = new QPushButton(this);
+    QPushButton *btn_get = new QPushButton(this);
+    QPushButton *btn_default = new QPushButton(this);
 
-    grid_buttons->addWidget(btn,    6,  0,  1, 2);
+    btn_set->setText("set");
+    btn_get->setText("get");
+    btn_default->setText("default");
+
+    connect(btn_set,        SIGNAL(clicked(bool)),  this,   SLOT(set_display()));
+    connect(btn_get,        SIGNAL(clicked(bool)),  this,   SLOT(get_display()));
+    connect(btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(set_default()));
+
+    QHBoxLayout *btn_l = new QHBoxLayout();
+    btn_l->addWidget(btn_get);
+    btn_l->addWidget(btn_set);
 
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addLayout(grid_buttons);
+    vbox->addLayout(btn_l);
+    vbox->addWidget(btn_default);
     vbox->addStretch(1);
     //---
 
@@ -175,11 +163,10 @@ void RGB_display::create_new_display(void)
     double up_border = dsb_up_border->value();
     double left_border = dsb_left_border->value();
 
-    double pixelPerMm = QApplication::screens().at(0)->logicalDotsPerInch()/2.54/10;
-    led_width *= pixelPerMm;
-    led_height *= pixelPerMm;
-    left_border *= pixelPerMm;
-    up_border *= pixelPerMm;
+    emit debug(QString("led_width %1").arg(led_width));
+    emit debug(QString("led_height %1").arg(led_height));
+    emit debug(QString("up_border %1").arg(up_border));
+    emit debug(QString("left_border %1").arg(left_border));
 
     for(int row=0; row<max_y; row++)
     {
@@ -191,10 +178,10 @@ void RGB_display::create_new_display(void)
             connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
             connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-            led->set_size(static_cast<int>(led_width + left_border * 2),
-                          static_cast<int>(led_height + up_border * 2),
-                          static_cast<int>(left_border),
-                          static_cast<int>(up_border));
+            led->set_size(led_width,
+                          led_height,
+                          left_border,
+                          up_border);
 
             led->setProperty("property_col", col);
             led->setProperty("property_row", row);
@@ -206,24 +193,70 @@ void RGB_display::create_new_display(void)
     }
 }
 //--------------------------------------------------------------------------------
-void RGB_display::redraw_display(void)
+void RGB_display::set_display(void)
 {
     emit trace(Q_FUNC_INFO);
-
-    emit info(QString("row %1").arg(grid->rowCount()));
-    emit info(QString("col %1").arg(grid->columnCount()));
-
-    emit info(QString("count %1").arg(grid->count()));
-
-    clean_grid();
 
     max_x = sb_max_x->value();
     max_y = sb_max_y->value();
 
-    create_new_display();
+    double led_width = dsb_led_width->value();
+    double led_height = dsb_led_height->value();
+    double up_border = dsb_up_border->value();
+    double left_border = dsb_left_border->value();
+
+    emit debug(QString("led_width %1").arg(led_width));
+    emit debug(QString("led_height %1").arg(led_height));
+    emit debug(QString("up_border %1").arg(up_border));
+    emit debug(QString("left_border %1").arg(left_border));
+
+    foreach(RGB_dislpay_led *led, l_buttons)
+    {
+        led->set_size(led_width,
+                      led_height,
+                      left_border,
+                      up_border);
+    }
+    //create_new_display();
 
     adjustSize();
     //setFixedSize(width(), height());
+}
+//--------------------------------------------------------------------------------
+void RGB_display::get_display(void)
+{
+    if(l_buttons.count() == 0)
+    {
+        emit error("l_buttons.count() == 0");
+        return;
+    }
+
+    double w_value = -1;
+    double h_value = -1;
+    double l_border = -1;
+    double u_border = -1;
+
+    l_buttons.at(0)->get_size(&w_value, &h_value, &l_border, &u_border);
+
+    emit debug(QString("w_value %1").arg(w_value));
+    emit debug(QString("h_value %1").arg(h_value));
+    emit debug(QString("l_border %1").arg(l_border));
+    emit debug(QString("u_border %1").arg(u_border));
+
+    dsb_led_width->setValue(w_value);
+    dsb_led_height->setValue(h_value);
+    dsb_left_border->setValue(l_border);
+    dsb_up_border->setValue(u_border);
+}
+//--------------------------------------------------------------------------------
+void RGB_display::set_default(void)
+{
+    sb_max_x->setValue(SCREEN_WIDTH);
+    sb_max_y->setValue(SCREEN_HEIGTH);
+    dsb_led_width->setValue(LED_SIZE_W_MM);
+    dsb_led_height->setValue(LED_SIZE_H_MM);
+    dsb_left_border->setValue(LED_BORDER_W_MM);
+    dsb_up_border->setValue(LED_BORDER_H_MM);
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)

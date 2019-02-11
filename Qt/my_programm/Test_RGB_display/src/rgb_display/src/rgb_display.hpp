@@ -63,7 +63,9 @@ public slots:
     void send_test_data(void);
 
 private slots:
-    void redraw_display(void);
+    void set_display(void);
+    void get_display(void);
+    void set_default(void);
 
 private:
     QGridLayout *grid;
@@ -74,6 +76,12 @@ private:
     int max_y = 0;
     int begin_x = 0;
     int begin_y = 0;
+
+    double w_led = 0;
+    double h_led = 0;
+
+    double left_border = 0;
+    double up_border = 0;
 
     int brightness = 0;
 

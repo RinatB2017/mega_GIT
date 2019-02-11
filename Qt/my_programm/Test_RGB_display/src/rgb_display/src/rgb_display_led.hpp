@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QToolButton>
 #include <QMouseEvent>
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 class RGB_dislpay_led : public QToolButton
 {
@@ -40,16 +41,17 @@ public:
     uint8_t get_G(void);
     uint8_t get_B(void);
 
-    int get_width(void);
-    int get_height(void);
+    double get_width(void);
+    double get_height(void);
 
-    bool set_size(int w_value,
-                  int h_value,
-                  int l_border, int u_border);
-    void get_size(int *w_value,
-                  int *h_value,
-                  int *l_border,
-                  int *u_border);
+    bool set_size(double w_size_mm,
+                  double h_size_mm,
+                  double l_border_mm,
+                  double u_border_mm);
+    void get_size(double *w_size_mm,
+                  double *h_size_mm,
+                  double *l_border_mm,
+                  double *u_border_mm);
 
 signals:
     void info(const QString &);
@@ -62,11 +64,16 @@ private:
     uint8_t color_G = 0;
     uint8_t color_B = 0;
 
-    int fix_width  = 0;
-    int fix_heigth = 0;
+    double pixelPerMm = 1.0;
 
-    int left_border_width = 0;
-    int up_border_height = 0;
+    double full_width = LED_SIZE_W_MM;
+    double full_height = LED_SIZE_H_MM;
+
+    double led_width  = 0;
+    double led_heigth = 0;
+
+    double left_border_width = 0;
+    double up_border_height = 0;
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event);

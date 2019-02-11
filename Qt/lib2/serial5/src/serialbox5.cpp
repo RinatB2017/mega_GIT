@@ -334,7 +334,7 @@ void SerialBox5::setDataBox(int index)
     if(!ok) return;
     if(value < 0) return;
 
-    ok = serial5->setDataBits((QSerialPort::DataBits)value);
+    ok = serial5->setDataBits(static_cast<QSerialPort::DataBits>(value));
     if(!ok) emit error("error set data");
     else emit info(QString("set %1").arg(ui->DataBitsBox->currentText()));
 }
@@ -346,7 +346,7 @@ void SerialBox5::setParityBox(int index)
     if(!ok) return;
     if(value < 0) return;
 
-    ok = serial5->setParity((QSerialPort::Parity)value);
+    ok = serial5->setParity(static_cast<QSerialPort::Parity>(value));
     if(!ok) emit error("error set parity");
     else emit info(QString("set %1").arg(ui->ParityBox->currentText()));
 }
@@ -358,7 +358,7 @@ void SerialBox5::setStopBox(int index)
     if(!ok) return;
     if(value < 0) return;
 
-    ok = serial5->setStopBits((QSerialPort::StopBits)value);
+    ok = serial5->setStopBits(static_cast<QSerialPort::StopBits>(value));
     if(!ok) emit error("error set stopbit");
     else emit info(QString("set %1").arg(ui->StopBitsBox->currentText()));
 }
@@ -370,7 +370,7 @@ void SerialBox5::setFlowBox(int index)
     if(!ok) return;
     if(value < 0) return;
 
-    ok = serial5->setFlowControl((QSerialPort::FlowControl)value);
+    ok = serial5->setFlowControl(static_cast<QSerialPort::FlowControl>(value));
     if(!ok) emit error("error set flow");
     else emit info(QString("set %1").arg(ui->FlowBox->currentText()));
 }
@@ -388,7 +388,7 @@ void SerialBox5::setCloseState(void)
 
     ui->btn_default->setEnabled(false);
 
-#if RS232_SEND
+#ifdef RS232_SEND
     sendBox5->block_interface(true);
 #endif
     ui->btn_power->setToolTip("Старт");
@@ -407,7 +407,7 @@ void SerialBox5::setOpenState()
 
     ui->btn_default->setEnabled(true);
 
-#if RS232_SEND
+#ifdef RS232_SEND
     sendBox5->block_interface(false);
 #endif
     ui->btn_power->setToolTip("Стоп");

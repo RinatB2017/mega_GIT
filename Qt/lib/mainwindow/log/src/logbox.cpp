@@ -700,13 +700,13 @@ void LogBox::save_settings(void)
 #endif
 
     settings->beginGroup(text);
-    settings->setValue("readOnly",      (bool)logBox->isReadOnly());
-    settings->setValue("acceptRichText",(bool)logBox->acceptRichText());
-    settings->setValue("no_CRLF",       (bool)flagNoCRLF);
-    settings->setValue("addDateTime",   (bool)flagAddDateTime);
-    settings->setValue("color",         (bool)flagColor);
-    settings->setValue("ErrorAsMessage",(bool)flagErrorAsMessage);
-    settings->setValue("TextIsWindows", (bool)flagTextIsWindows);
+    settings->setValue("readOnly",      logBox->isReadOnly());
+    settings->setValue("acceptRichText",logBox->acceptRichText());
+    settings->setValue("no_CRLF",       flagNoCRLF);
+    settings->setValue("addDateTime",   flagAddDateTime);
+    settings->setValue("color",         flagColor);
+    settings->setValue("ErrorAsMessage",flagErrorAsMessage);
+    settings->setValue("TextIsWindows", flagTextIsWindows);
 
 #ifndef NO_LOG
     QFont font = get_font();

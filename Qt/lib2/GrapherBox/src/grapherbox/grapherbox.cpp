@@ -87,7 +87,7 @@ public:
         return text;
     }
 };
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
 class TimeScaleDraw: public QwtScaleDraw
 {
 public:
@@ -232,7 +232,7 @@ int GrapherBox::add_curve(const QString &title,
     curve.title = title;
     curve.color = curve_colors[curves.count()];
 #ifdef USE_SCALE_POINT_DATETIME
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
 #else
     curve.pos_x = 0;
 #endif
@@ -264,7 +264,7 @@ int GrapherBox::add_curve(const QString &title,
     updateText();
 
     //TODO надо как-то умнее
-    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max+0.01f);
+    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max+0.01);
 
     updateGraphics();
     return curve.curve_ID;
@@ -293,7 +293,7 @@ bool GrapherBox::add_curve(const QString &title,
     curve.title = title;
     curve.color = curve_colors[curves.count()];
 #ifdef USE_SCALE_POINT_DATETIME
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
 #else
     curve.pos_x = 0;
 #endif
@@ -420,7 +420,7 @@ void GrapherBox::create_widgets(void)
     d_picker->setRubberBand(QwtPicker::CrossRubberBand);
     d_picker->setTrackerPen(QColor(Qt::blue));
     d_picker->setStateMachine(new QwtPickerDragPointMachine());
-#elif  USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
     d_picker = new PlotPicker(QwtPlot::xBottom,
                               QwtPlot::yLeft,
                               QwtPlotPicker::CrossRubberBand,
@@ -449,7 +449,7 @@ void GrapherBox::create_widgets(void)
 
 #ifdef USE_SCALE_POINT_DATETIME
     ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QTime::currentTime()));
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
     ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QTime::currentTime()));
 #endif
 
@@ -610,7 +610,7 @@ void GrapherBox::clear(void)
         curves[n].view_curve->clear();
 #ifdef USE_SCALE_POINT_DATETIME
         //nothing
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
         //nothing
 #else
         curves[n].pos_x = 0;
@@ -735,7 +735,7 @@ void GrapherBox::add_curve_data_points(int channel, QVector<QPointF> *points)
 //--------------------------------------------------------------------------------
 void GrapherBox::add_curve_data(int channel,
                                 int x,
-                                float data)
+                                qreal data)
 {
     if(curves.count() == 0)
     {
@@ -757,7 +757,7 @@ void GrapherBox::add_curve_data(int channel,
 //--------------------------------------------------------------------------------
 bool GrapherBox::get_curve_data(int channel,
                                 int index,
-                                float *data)
+                                qreal *data)
 {
     if(curves.count() == 0)
     {
@@ -776,7 +776,7 @@ bool GrapherBox::get_curve_data(int channel,
 }
 //--------------------------------------------------------------------------------
 bool GrapherBox::add_curve_data(int channel,
-                                float data)
+                                qreal data)
 {
     if(curves.count() == 0)
     {
@@ -796,7 +796,7 @@ bool GrapherBox::add_curve_data(int channel,
     qreal x = dt.toTime_t();
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
     QTime time;
     time = QTime::currentTime();
     qreal x = (time.hour() * 3600) + (time.minute() * 60) + time.second();
@@ -836,7 +836,7 @@ bool GrapherBox::add_curve_array(int channel,
         curves[channel].real_data.append(point);
         curves[channel].view_curve->append(point);
     }
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
     foreach (QPointF point, a_points)
     {
         curves[channel].real_data.append(point);
@@ -904,7 +904,7 @@ void GrapherBox::load_curves(void)
     {
         QStringList files = dlg->selectedFiles();
         QFile file(files.at(0));
-        CsvReader *csv = new CsvReader(0,files.at(0));
+        CsvReader *csv = new CsvReader(nullptr ,files.at(0));
         csv->set_new_separator(';');
         if(csv->Open())
         {
@@ -920,15 +920,15 @@ void GrapherBox::load_curves(void)
                 {
 #ifdef USE_SCALE_POINT_DATETIME
                     //nothing
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
                     //nothing
 #else
                     bool ok = false;
                     int i = sl.at(0).toInt(&ok);
                     if(!ok) i=0;
-                    float x = sl.at(1).toFloat(&ok);
+                    qreal x = sl.at(1).toDouble(&ok);
                     if(!ok) x=curves.at(i).pos_x;
-                    float y = sl.at(2).toFloat(&ok);
+                    qreal y = sl.at(2).toDouble(&ok);
                     if(!ok) y=0;
                     //qDebug() << QString("%1 %2 %3").arg(i).arg(x).arg(y);
                     curves[i].real_data.append(QPointF(x, y));
@@ -1006,8 +1006,8 @@ void GrapherBox::save_curves(void)
             {
                 QString temp = QString("%1;%2;%3\n")
                         .arg(n)
-                        .arg(curves.at(n).view_curve->sample(x).x())
-                        .arg(curves.at(n).view_curve->sample(x).y());
+                        .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).x())
+                        .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).y());
                 file.write(temp.toLocal8Bit());
             }
         }
@@ -1038,14 +1038,13 @@ void GrapherBox::tune_vertical_axis(bool state)
         {
             if(curves.at(n).plot_curve->isVisible())
             {
-                double temp_y = curves.at(n).view_curve->sample(x).y();
+                double temp_y = curves.at(n).view_curve->sample(static_cast<size_t>(x)).y();
                 if(temp_y > max_y) max_y = temp_y;
                 if(temp_y < min_y) min_y = temp_y;
             }
         }
     }
-    if(min_y != max_y)
-        ui->qwtPlot->setAxisScale(QwtPlot::yLeft, min_y, max_y);
+    ui->qwtPlot->setAxisScale(QwtPlot::yLeft, min_y, max_y);
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
@@ -1066,13 +1065,12 @@ void GrapherBox::tune_horizontal_axis(bool state)
     {
         for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
         {
-            double temp_x = curves.at(n).view_curve->sample(x).x();
+            double temp_x = curves.at(n).view_curve->sample(static_cast<size_t>(x)).x();
             if(temp_x > max_x) max_x = temp_x;
             if(temp_x < min_x) min_x = temp_x;
         }
     }
-    if(min_x != max_x)
-        ui->qwtPlot->setAxisScale(QwtPlot::xBottom, min_x, max_x);
+    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, min_x, max_x);
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
@@ -1090,8 +1088,8 @@ void GrapherBox::correct(int channel,
     temp.clear();
     for(int x=0; x<curves.at(channel).view_curve->samples().size(); x++)
     {
-        temp.append(QPointF(curves[channel].view_curve->sample(x).x(),
-                            curves[channel].view_curve->sample(x).y() * mul));
+        temp.append(QPointF(curves[channel].view_curve->sample(static_cast<size_t>(x)).x(),
+                            curves[channel].view_curve->sample(static_cast<size_t>(x)).y() * static_cast<size_t>(mul)));
     }
     curves[channel].view_curve->clear();
     curves[channel].view_curve->setSamples(temp.samples());
@@ -1105,14 +1103,14 @@ void GrapherBox::statistic(void)
     {
         if(curves.at(n).plot_curve->isVisible())
         {
-            float max_value = INT_MIN;
-            float min_value = INT_MAX;
-            double value = 0;
-            double average = 0;
+            qreal max_value = INT_MIN;
+            qreal min_value = INT_MAX;
+            qreal value = 0;
+            qreal average = 0;
             int cnt = curves.at(n).view_curve->samples().size();
             for(int x=0; x<cnt; x++)
             {
-                value = curves.at(n).view_curve->sample(x).y();
+                value = curves.at(n).view_curve->sample(static_cast<size_t>(x)).y();
                 average += value;
                 if(value > max_value) max_value = value;
                 if(value < min_value) min_value = value;
@@ -1120,7 +1118,7 @@ void GrapherBox::statistic(void)
             emit info(QString("   График %1, кол-во точек %2").arg(n).arg(cnt));
             if(cnt > 0)
             {
-                average /= (double)cnt;
+                average /= static_cast<double>(cnt);
                 emit info(QString("     min %1").arg(min_value));
                 emit info(QString("     max %1").arg(max_value));
                 emit info(QString("     average %1").arg(average));
@@ -1325,7 +1323,7 @@ void GrapherBox::test_sinus(void)
         for(int n=0; n<360; n++)
         {
             if(!(n % 60)) QCoreApplication::processEvents();
-            double height = double(axis_Y_max - axis_Y_min)*0.5f;
+            double height = double(axis_Y_max - axis_Y_min) * 0.5;
             double shift_x = index * 50;
             add_curve_data(index, height*qSin(double(n + shift_x)*double(M_PI)/double(180.0)));
         }

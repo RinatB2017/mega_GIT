@@ -65,7 +65,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    GLWidget(QWidget *parent = 0);
+    GLWidget(QWidget *parent = nullptr);
     ~GLWidget();
 
     QSize minimumSizeHint() const override;
@@ -93,9 +93,9 @@ private:
     void setupVertexAttribs();
 
     bool m_core;
-    int m_xRot;
-    int m_yRot;
-    int m_zRot;
+    int m_xRot = 0;
+    int m_yRot = 0;
+    int m_zRot = 0;
     QPoint m_lastPos;
     Logo m_logo;
     QOpenGLVertexArrayObject m_vao;

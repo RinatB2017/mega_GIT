@@ -127,20 +127,20 @@ void SendBox5::send_text(void)
         break;
 
     case 1: //  << tr("0x00")
-        ba.append((char)0x00);
+        ba.append(static_cast<char>(0x00));
         break;
 
     case 2: //  << tr("0x0D")
-        ba.append((char)0x0D);
+        ba.append(static_cast<char>(0x0D));
         break;
 
     case 3: //  << tr("0x0A")
-        ba.append((char)0x0A);
+        ba.append(static_cast<char>(0x0A));
         break;
 
     case 4: //  << tr("0x0D 0x0A")
-        ba.append((char)0x0D);
-        ba.append((char)0x0A);
+        ba.append(static_cast<char>(0x0D));
+        ba.append(static_cast<char>(0x0A));
         break;
     }
     emit sendData(ba);

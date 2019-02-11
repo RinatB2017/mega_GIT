@@ -94,7 +94,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -565,7 +565,7 @@ bool MainBox::test_card(void)
                             Point current = poly[pointIndex];
                             Point previous = (pointIndex == 0) ? poly[poly.size() - 1] : poly[pointIndex - 1];
 
-                            uint32_t length = norm(current - previous);
+                            uint32_t length = static_cast<uint32_t>(norm(current - previous));
 
                             lineLengths.push_back(length);
 
@@ -574,7 +574,7 @@ bool MainBox::test_card(void)
 
                         std::sort(lineLengths.begin(), lineLengths.end(), std::greater<int>());
 
-                        int shortestLine = lineLengths[3];
+                        uint32_t shortestLine = lineLengths[3];
 
                         vector<Vec4f> lines;
 
@@ -583,7 +583,7 @@ bool MainBox::test_card(void)
                             Point current = poly[pointIndex];
                             Point previous = (pointIndex == 0) ? poly[poly.size() - 1] : poly[pointIndex - 1];
 
-                            uint32_t length = norm(current - previous);
+                            uint32_t length = static_cast<uint32_t>(norm(current - previous));
 
                             if (length >= shortestLine)
                             {
@@ -595,13 +595,13 @@ bool MainBox::test_card(void)
                                 currentLine[0] = 0;
 
                                 // start y
-                                currentLine[1] = ((float)previous.y - current.y) / (previous.x - current.x) * -previous.x + previous.y;
+                                currentLine[1] = (static_cast<float>(previous.y) - current.y) / (previous.x - current.x) * -previous.x + previous.y;
 
                                 // end x
                                 currentLine[2] = frame.cols;
 
                                 // end y
-                                currentLine[3] = ((float)previous.y - current.y) / (previous.x - current.x) * (frame.cols - current.x) + current.y;
+                                currentLine[3] = (static_cast<float>(previous.y) - current.y) / (previous.x - current.x) * (frame.cols - current.x) + current.y;
 
                                 lines.push_back(currentLine);
 
@@ -640,17 +640,22 @@ bool MainBox::test_card(void)
                             //630mm x 870mm
                             vector<Point2f> np;
                             np.push_back(Point(0, 0));
-                            np.push_back(Point(cardSize.width, 0));
-                            np.push_back(Point(cardSize.width, cardSize.height));
-                            np.push_back(Point(0, cardSize.height));
+                            np.push_back(Point(static_cast<int>(cardSize.width),
+                                               0));
+                            np.push_back(Point(static_cast<int>(cardSize.width),
+                                               static_cast<int>(cardSize.height)));
+                            np.push_back(Point(0,
+                                               static_cast<int>(cardSize.height)));
 
                             Mat transform = getPerspectiveTransform(corners, np);
 
                             Mat warp;
-                            warpPerspective(frame, warp, transform, Point(cardSize.width, cardSize.height));
+                            warpPerspective(frame, warp, transform, Point(static_cast<int>(cardSize.width),
+                                                                          static_cast<int>(cardSize.height)));
 
                             Mat warp2;
-                            warpPerspective(thresh, warp2, transform, Point(cardSize.width, cardSize.height));
+                            warpPerspective(thresh, warp2, transform, Point(static_cast<int>(cardSize.width),
+                                                                            static_cast<int>(cardSize.height)));
 
                             if (!warp.empty() && !warp2.empty())
                             {
@@ -735,7 +740,7 @@ void MainBox::process_error(QProcess::ProcessError p_error)
 //--------------------------------------------------------------------------------
 bool MainBox::eventFilter(QObject*, QEvent* event)
 {
-    QMouseEvent *mouseEvent = (QMouseEvent *) event;
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
     if(mouseEvent == nullptr)
     {
         return false;

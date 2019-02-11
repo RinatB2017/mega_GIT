@@ -41,7 +41,11 @@ MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
       orgName(ORGNAME),
       appName(APPNAME),
-      appVersion(QString("%1.%2.%3 (%4)").arg(VER_MAJOR).arg(VER_MINOR).arg(VER_PATCH).arg(VER_BUILD))
+      appVersion(QString("%1.%2.%3 (%4)")
+                 .arg(VER_MAJOR)
+                 .arg(VER_MINOR)
+                 .arg(VER_PATCH)
+                 .arg(VER_BUILD))
 {
     init();
 }
@@ -311,7 +315,7 @@ void MainWindow::load_translations()
     bool res = translator_system->load("qt_ru", ":/system");
     if(!res)
     {
-        QMessageBox::critical(0, "Error", "sysTranslator not loaded");
+        QMessageBox::critical(nullptr, "Error", "sysTranslator not loaded");
 #ifdef QT_DEBUG
         qDebug() << "translator_system not loaded!";
 #endif
@@ -323,7 +327,7 @@ void MainWindow::load_translations()
     res = translator_common->load(":/common");
     if(!res)
     {
-        QMessageBox::critical(0, "Error", "appTranslator (common) not loaded!");
+        QMessageBox::critical(nullptr, "Error", "appTranslator (common) not loaded!");
 #ifdef QT_DEBUG
         qDebug() << "translator_common not loaded!";
 #endif
@@ -337,7 +341,7 @@ void MainWindow::load_translations()
     res = translator_programm->load(":/programm");
     if(!res)
     {
-        QMessageBox::critical(0, "Error", "appTranslator (programm) not loaded!");
+        QMessageBox::critical(nullptr, "Error", "appTranslator (programm) not loaded!");
 #ifdef QT_DEBUG
         qDebug() << "translator_programm not loaded!";
 #endif
@@ -406,7 +410,7 @@ void MainWindow::createMenus(void)
 void MainWindow::setMenuLanguage(void)
 {
 #ifndef ONLY_ENGLISH
-    QAction* menu =(QAction*)sender();
+    QAction* menu = static_cast<QAction *>(sender());
     Q_CHECK_PTR(menu);
 
     QString language;
@@ -515,7 +519,7 @@ void MainWindow::createStatusBar(void)
 //--------------------------------------------------------------------------------
 void MainWindow::setStyles(void)
 {
-    QAction* menu =(QAction*)sender();
+    QAction* menu = static_cast<QAction *>(sender());
     Q_CHECK_PTR(menu);
 
     style_name = menu->text().remove("&");
@@ -854,7 +858,7 @@ void MainWindow::createTrayIcon(void)
 {
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
-        QMessageBox::critical(0,
+        QMessageBox::critical(nullptr,
                               QObject::tr("Systray"),
                               QObject::tr("I couldn't detect any system tray on this system."));
         return;
@@ -862,12 +866,12 @@ void MainWindow::createTrayIcon(void)
 
     trayIconMenu = new QMenu(this);
 
-    add_new_action(trayIconMenu,    "Minimize", 0,  &MainWindow::showMinimized);
-    add_new_action(trayIconMenu,    "Maximize", 0,  &MainWindow::showMaximized);
-    add_new_action(trayIconMenu,    "Restore",  0,  &MainWindow::showNormal);
+    add_new_action(trayIconMenu,    "Minimize", nullptr,    &MainWindow::showMinimized);
+    add_new_action(trayIconMenu,    "Maximize", nullptr,    &MainWindow::showMaximized);
+    add_new_action(trayIconMenu,    "Restore",  nullptr,    &MainWindow::showNormal);
 
     trayIconMenu->addSeparator();
-    add_new_action(trayIconMenu,    "Quit",     0,  &MainWindow::quit);
+    add_new_action(trayIconMenu,    "Quit",     nullptr,  &MainWindow::quit);
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);

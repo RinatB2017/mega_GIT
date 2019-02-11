@@ -28,7 +28,7 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-QFile *MyMainWindow::m_logFile = 0;
+QFile *MyMainWindow::m_logFile = nullptr;
 //--------------------------------------------------------------------------------
 MyMainWindow::MyMainWindow(MainWindow *parent) :
     MainWindow(parent)

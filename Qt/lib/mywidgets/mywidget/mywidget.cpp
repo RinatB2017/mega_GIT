@@ -737,7 +737,7 @@ void MyWidget::load_QDoubleSpinBox(QString group_name)
         if(!obj->objectName().isEmpty())
         {
             settings->beginGroup(obj->objectName());
-            obj->setValue(settings->value("value", 0).toFloat());
+            obj->setValue(settings->value("value", 0).toDouble());
             settings->endGroup();
         }
     }
@@ -781,7 +781,7 @@ void MyWidget::load_QSlider(QString group_name)
         if(!obj->objectName().isEmpty())
         {
             settings->beginGroup(obj->objectName());
-            obj->setSliderPosition(settings->value("position", 0).toDouble());
+            obj->setSliderPosition(settings->value("position", 0).toInt());
             settings->endGroup();
         }
     }
@@ -985,8 +985,8 @@ int MyWidget::messagebox_noicon(const QString title,
     msgBox.setWindowTitle(title);
     msgBox.setText(text);
     msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(width, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
     return msgBox.exec();
 }
@@ -1000,8 +1000,8 @@ int MyWidget::messagebox_info(const QString title,
     msgBox.setWindowTitle(title);
     msgBox.setText(text);
     msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(width, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
     return msgBox.exec();
 }
@@ -1019,8 +1019,8 @@ int MyWidget::messagebox_question(const QString title,
     msgBox.setText(text);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::Yes);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(width, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
     return msgBox.exec();
 }
@@ -1034,8 +1034,8 @@ int MyWidget::messagebox_critical(const QString title,
     msgBox.setWindowTitle(title);
     msgBox.setText(text);
     msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(width, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
     return msgBox.exec();
 }
@@ -1049,8 +1049,8 @@ int MyWidget::messagebox_warning(const QString title,
     msgBox.setWindowTitle(title);
     msgBox.setText(text);
     msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(width, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
     return msgBox.exec();
 }
@@ -1227,7 +1227,7 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
         //---
 #ifdef HAVE_QT5
         QPixmap p_central = w_central->grab(QRect(0, 0, w_central->width(), w_central->height()));
-        QPixmap left_pixmap = ((QWidget *)frame)->grab(QRect(0, 0, frame->width(), frame->height()));
+        QPixmap left_pixmap = (static_cast<QWidget *>(frame)->grab(QRect(0, 0, frame->width(), frame->height())));
         QPixmap *main_pixmap = new QPixmap(left_pixmap.width() + p_central.width(), p_central.height());
         //---
         QPainter painter;
@@ -1307,7 +1307,7 @@ void MyWidget::changeEvent(QEvent *event)
 #ifndef BLOCK_WHEEL
 bool MyWidget::eventFilter(QObject*, QEvent* event)
 {
-    QMouseEvent *mouseEvent = (QMouseEvent *) event;
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
     //---
     if(mouseEvent->type() == QMouseEvent::Wheel)
     {

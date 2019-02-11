@@ -139,14 +139,14 @@ public slots:
                                QVector<QPointF> *points);
     void add_curve_data(int channel,
                         int x,
-                        float data);
+                        qreal data);
     bool add_curve_data(int channel,
-                        float data);
+                        qreal data);
     bool add_curve_array(int channel,
                          QList<QPointF> a_points);
     bool get_curve_data(int channel,
                         int index,
-                        float *data);
+                        qreal *data);
 
     void clear(void);
     void reset(void);

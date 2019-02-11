@@ -93,7 +93,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QMainWindow* parent = 0);
+    explicit MainWindow(QMainWindow* parent = nullptr);
     ~MainWindow();
 
     void setCentralWidget(QWidget *widget);

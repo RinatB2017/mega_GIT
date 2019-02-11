@@ -107,7 +107,7 @@ void TreeFilms::init(void)
         int cnt = 0;
         while (*it)
         {
-            if(*it!=NULL)
+            if(*it != nullptr)
             {
                 if((*it)->data(0, ROLE_IS_FOLDER).toBool() == false)
                     cnt++;

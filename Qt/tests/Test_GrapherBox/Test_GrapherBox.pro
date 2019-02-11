@@ -10,7 +10,7 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/Test_GrapherBox_mainbox \
-    $$PWD/src/Test_GrapherBox_mainbox/ui \
+    $$PWD/src/Test_GrapherBox_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 #QMAKE_CXXFLAGS += -fno-show-column

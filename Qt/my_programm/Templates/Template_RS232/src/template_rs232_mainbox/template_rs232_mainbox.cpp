@@ -76,6 +76,7 @@ void MainBox::init_serial(void)
     serial->add_menu(2);
 
     ui->serial_layout->addWidget(serial);
+    ui->serial_layout->addStretch(1);
 
     connect(this,   SIGNAL(send(QByteArray)),   serial,     SLOT(input(QByteArray)));
     connect(serial, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));

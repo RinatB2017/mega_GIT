@@ -183,7 +183,7 @@ void MainBox::save(void)
         QMessageBox::critical(this, tr("Ошибка"), tr("Нет выбранных иконок!"));
         return;
     }
-    MyFileDialog *dlg = 0;
+    MyFileDialog *dlg;
     dlg = new MyFileDialog("MyFileDialog", "MyFileDialog");
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setNameFilter(tr("qrc files (*.qrc)"));

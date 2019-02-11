@@ -28,7 +28,7 @@ class MainWidget : public QObject
     Q_OBJECT
 
 public:
-    MainWidget(QObject *parent = 0);
+    MainWidget(QObject *parent = nullptr);
     ~MainWidget();
 
 signals:

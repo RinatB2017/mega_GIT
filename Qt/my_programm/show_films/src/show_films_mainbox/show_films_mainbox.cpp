@@ -135,9 +135,9 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
 //--------------------------------------------------------------------------------
 void MainBox::show_picture(const QString &data)
 {
-    float multiplier = 1.0f;
-    int width  = MAX_WIDTH;
-    int height = MAX_HEIGHT;
+    qreal multiplier = 1.0;
+    qreal width  = MAX_WIDTH;
+    qreal height = MAX_HEIGHT;
     QPixmap new_picture;
 
     if(data.isEmpty())
@@ -153,12 +153,12 @@ void MainBox::show_picture(const QString &data)
     }
 
     current_picture.load(current_picture_name);
-    multiplier = (float)lblFilmPicture->height() / current_picture.height();
+    multiplier = static_cast<double>(lblFilmPicture->height()) / static_cast<double>(current_picture.height());
     width = current_picture.width() * multiplier;
     height = current_picture.height() * multiplier;
 
-    new_picture = current_picture.scaled(width,
-                                         height,
+    new_picture = current_picture.scaled(static_cast<int>(width),
+                                         static_cast<int>(height),
                                          Qt::KeepAspectRatio,
                                          Qt::SmoothTransformation);
     lblFilmPicture->setPixmap(new_picture);
@@ -167,28 +167,28 @@ void MainBox::show_picture(const QString &data)
 void MainBox::resizeEvent(QResizeEvent *event)
 {
     QPixmap new_picture;
-    int width  = MAX_WIDTH;
-    int height = MAX_HEIGHT;
+    double width  = MAX_WIDTH;
+    double height = MAX_HEIGHT;
 
     if(current_picture_name.isEmpty() == false)
     {
         current_picture.load(current_picture_name);
 
-        float fixed_multplier = (float)MAX_WIDTH / (float)MAX_HEIGHT;
-        float real_multplier = (float)tree_films->width() / (float)tree_films->height();
+        double fixed_multplier = static_cast<double>(MAX_WIDTH) / static_cast<double>(MAX_HEIGHT);
+        double real_multplier = static_cast<double>(tree_films->width()) / static_cast<double>(tree_films->height());
         if(fixed_multplier > real_multplier)
         {
             width = tree_films->width();
-            height = ((float)width * fixed_multplier) + 0.5f;
+            height = (width * fixed_multplier) + 0.5;
         }
         else
         {
             height = tree_films->height();
-            width = ((float)height * fixed_multplier) + 0.5f;
+            width = (height * fixed_multplier) + 0.5;
         }
 
-        new_picture = current_picture.scaled(width,
-                                             height,
+        new_picture = current_picture.scaled(static_cast<int>(width),
+                                             static_cast<int>(height),
                                              Qt::KeepAspectRatioByExpanding,
                                              Qt::SmoothTransformation);
         lblFilmPicture->setPixmap(new_picture);

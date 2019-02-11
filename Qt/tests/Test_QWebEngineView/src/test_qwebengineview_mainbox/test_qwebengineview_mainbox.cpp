@@ -422,7 +422,7 @@ void MainBox::s_run(void)
         if(sl.count() == 2)
         {
             proxy.setHostName(sl.at(0));
-            proxy.setPort(sl.at(1).toInt());
+            proxy.setPort(static_cast<quint16>(sl.at(1).toInt()));
 
             emit info(QString("proxy %1:%2")
                       .arg(sl.at(0))

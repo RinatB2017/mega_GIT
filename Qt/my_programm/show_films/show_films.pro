@@ -44,7 +44,7 @@ RESOURCES += no_picture.qrc
 
 include (src/selectbox.pri)
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

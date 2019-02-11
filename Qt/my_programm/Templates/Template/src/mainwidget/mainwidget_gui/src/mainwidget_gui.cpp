@@ -99,7 +99,7 @@ void MainWidget_GUI::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainWidget::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainWidget::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainWidget::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");

@@ -117,7 +117,7 @@ void MainBox::init(void)
     grapher_widget->set_title_axis_Y("Y");
     grapher_widget->set_axis_scale_x(x, x+100);
     grapher_widget->set_axis_scale_y(-100, 100);
-#elif USE_SCALE_POINT_TIME
+#elif defined(USE_SCALE_POINT_TIME)
     uint x = (QTime::currentTime().hour() * 3600) + (QTime::currentTime().minute() * 60) + QTime::currentTime().second();
     grapher_widget->set_title("тест");
     grapher_widget->set_title_axis_X("X");
@@ -168,7 +168,7 @@ void MainBox::test_data(void)
     typedef struct
     {
         int x;
-        float y;
+        qreal y;
     } temp_f;
     QList<temp_f> l_temp;
     l_temp.append({ 5000,  50000 });
@@ -223,7 +223,7 @@ void MainBox::grapher_refresh(void)
 
             grapher_widget->set_curve_symbol(n, symbol);
             grapher_widget->set_curve_style(n, QwtPlotCurve::Dots);
-            grapher_widget->set_curve_fitter(n, 0);
+            grapher_widget->set_curve_fitter(n, nullptr);
         }
         grapher_widget->updateGraphics();
 
@@ -233,9 +233,9 @@ void MainBox::grapher_refresh(void)
     case LINES:
         for(int n=0; n<grapher_widget->get_curves_count(); n++)
         {
-            grapher_widget->set_curve_symbol(n, 0);
+            grapher_widget->set_curve_symbol(n, nullptr);
             grapher_widget->set_curve_style(n, QwtPlotCurve::Lines);
-            grapher_widget->set_curve_fitter(n, 0);
+            grapher_widget->set_curve_fitter(n, nullptr);
         }
         grapher_widget->updateGraphics();
 
@@ -248,7 +248,7 @@ void MainBox::grapher_refresh(void)
             QwtSplineCurveFitter *fitter=new QwtSplineCurveFitter;
             fitter->setFitMode(QwtSplineCurveFitter::Spline);
 
-            grapher_widget->set_curve_symbol(n, 0);
+            grapher_widget->set_curve_symbol(n, nullptr);
             grapher_widget->set_curve_style(n, QwtPlotCurve::Lines);
 
             grapher_widget->set_curve_attribute(n, QwtPlotCurve::Fitted);
@@ -351,7 +351,7 @@ void MainBox::test2(void)
 void MainBox::test3(void)
 {
     block_interface(true);
-    grapher_widget->setAxisScaleDraw(QwtPlot::xBottom, new MyScaleDraw(100.0f));
+    grapher_widget->setAxisScaleDraw(QwtPlot::xBottom, new MyScaleDraw(100.0));
     grapher_refresh();
     block_interface(false);
 }

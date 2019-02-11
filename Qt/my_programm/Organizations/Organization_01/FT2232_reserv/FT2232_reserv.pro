@@ -20,8 +20,6 @@ DEPENDPATH  += \
     $$PWD/src/ad8400
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_TESTBAR_GRAPHER
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
@@ -65,7 +63,7 @@ win32 {
     include (./src/ftdi/ftdi.pri)
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

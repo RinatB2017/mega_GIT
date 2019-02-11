@@ -10,8 +10,6 @@ FOLDER  = organizations/Organization_01
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT      += serialport
 
 DEFINES += SAVE_WIDGETS_COMBOBOX
@@ -25,7 +23,6 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_RESIZE
 
 DEFINES += USE_DOUBLE_COUNT_DATA
-
 
 #DEFINES += TEST
 
@@ -55,7 +52,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

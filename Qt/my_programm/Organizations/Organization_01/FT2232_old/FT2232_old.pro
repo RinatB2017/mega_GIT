@@ -6,7 +6,7 @@ TEMPLATE    = app
 TARGET      = FT2232_old
 
 unix {
-DEPENDPATH  += /usr/include/libftdi1
+    DEPENDPATH  += /usr/include/libftdi1
 }
 DEPENDPATH  += \
     $$PWD/src \
@@ -19,8 +19,6 @@ DEPENDPATH  += \
     $$PWD/src/bitbang \
     $$PWD/src/ad8400
 INCLUDEPATH = $$DEPENDPATH
-
-#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_TESTBAR_GRAPHER
 DEFINES += NO_STYLETOOLBAR
@@ -65,7 +63,7 @@ win32 {
     include (./src/ftdi/ftdi.pri)
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

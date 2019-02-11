@@ -11,8 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT      += serialport
 
 DEFINES += SAVE_WIDGETS_COMBOBOX

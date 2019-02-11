@@ -14,17 +14,14 @@ DEPENDPATH  += \
     $$PWD/src/test_r4_serial_widget_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    test_r4_serial_widget_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    test_r4_serial_widget_mainbox.hpp \
     delegates.h \
     angle_line_edit.h \
     worker.hpp

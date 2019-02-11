@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/multimeterbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
@@ -53,7 +51,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include (../common/batteryprogressbar/batteryprogressbar.pri)

@@ -12,8 +12,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT      += serialport
 
 DEFINES += NO_STYLETOOLBAR
@@ -54,7 +52,7 @@ win32 {
 
 include (src/test/test.pri)
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/test_radiochannel_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT      += serialport
 
 DEFINES += USE_SCALE_POINT_TIME
@@ -27,9 +25,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    test_radiochannel_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    test_radiochannel_mainbox.hpp
 
 SOURCES += \
     test_radiochannel_mainbox.cpp \
@@ -43,7 +41,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)

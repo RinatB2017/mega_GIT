@@ -10,8 +10,6 @@ FOLDER  = organizations/Organization_00
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 

@@ -15,8 +15,6 @@ DEPENDPATH  += \
     $$PWD/src/controlbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT      += serialport
 
 DEFINES += NO_STYLETOOLBAR
@@ -26,9 +24,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += FAKE
 
 HEADERS += \
+    rs232_stmf1_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    rs232_stmf1_mainbox.hpp \
     controlbox.hpp \
 
 SOURCES += \
@@ -48,7 +46,7 @@ win32 {
 
 include (src/test_serialport/testserialport.pri)
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

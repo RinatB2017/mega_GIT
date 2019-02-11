@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/multimeter_v7xx_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += USE_SCALE_POINT_DATETIME
 DEFINES += USE_SCALE_POINT_TIME
 
@@ -27,7 +25,6 @@ DEFINES += SAVE_WIDGETS_DOUBLESPINBOX
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 DEFINES += MEASURING_CURRENT_IN_SHUNT
-
 
 DEFINES += FAST_COMMAND
 #DEFINES += FAKE
@@ -55,7 +52,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/power_knock/power_knock.pri)

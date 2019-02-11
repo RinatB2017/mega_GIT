@@ -15,8 +15,6 @@ DEPENDPATH  += \
     $$PWD/src/controlbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -28,9 +26,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    rs232_stmf0_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    rs232_stmf0_mainbox.hpp \
     controlbox.hpp
 
 SOURCES += \
@@ -48,7 +46,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

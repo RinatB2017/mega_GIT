@@ -12,7 +12,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
 QT  += serialport
 
 DEFINES += NO_STYLETOOLBAR
@@ -23,7 +22,6 @@ DEFINES += SAVE_WIDGETS_COMBOBOX
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += FAST_COMMAND
 #DEFINES += FAKE
-
 
 #CONFIG  += use_b588
 CONFIG  += use_b590
@@ -43,7 +41,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../../lib"
+LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

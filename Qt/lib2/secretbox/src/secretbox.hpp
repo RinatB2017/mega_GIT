@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,61 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#ifndef SECRETBOX_HPP
+#define SECRETBOX_HPP
 //--------------------------------------------------------------------------------
-#include "qtsingleapplication.h"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "get_myip_mainbox.hpp"
-#include "defines.hpp"
-#include "version.hpp"
+#include <QDialog>
 //--------------------------------------------------------------------------------
-#include "codecs.h"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
-{
-    set_codecs();
-#if 1
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        if(app.sendMessage("Wake up!")) return 0;
-    }
-#else
-    MyApplication app(argc, argv);
-#endif
-
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
-
-    QPixmap pixmap(":/logo/logo.png");
-
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    Q_CHECK_PTR(splash);
-    splash->show();
-
-    MainWindow *main_window = new MainWindow();
-    //qDebug() << main_window->windowFlags();
-
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-    main_window->setCentralWidget(mainBox);
-
-    main_window->show();
-
-    splash->finish(main_window);
-
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-
-    return app.exec();
+namespace Ui {
+    class SecretBox;
 }
 //--------------------------------------------------------------------------------
+class SecretBox : public QDialog
+{
+    Q_OBJECT
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+public:
+    explicit SecretBox(const QString &secret, QWidget *parent = nullptr);
+    ~SecretBox();
+
+private slots:
+    void click_number(void);
+    void click_button(void);
+
+private:
+    Ui::SecretBox *ui;
+    QString secret_word = "";
+    QString input_word = "";
+
+    void init(void);
+    void show_word(void);
+};
+//--------------------------------------------------------------------------------
+#endif // SECRETBOX_HPP

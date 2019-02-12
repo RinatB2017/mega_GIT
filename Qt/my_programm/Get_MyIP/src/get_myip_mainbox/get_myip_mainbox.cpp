@@ -89,10 +89,10 @@ void MainBox::show_my_IP(void)
                     QString str = ba.mid(begin+begin_str.length(), end-begin-begin_str.length());
                     emit debug(QString("%1").arg(str));
                     quint32 ip = QHostAddress(str).toIPv4Address();
-                    ui->lcd_0->display((int)((ip >> 24) & 0xFF ));
-                    ui->lcd_1->display((int)((ip >> 16) & 0xFF ));
-                    ui->lcd_2->display((int)((ip >> 8) & 0xFF ));
-                    ui->lcd_3->display((int)(ip & 0xFF ));
+                    ui->lcd_0->display(static_cast<int>((ip >> 24) & 0xFF ));
+                    ui->lcd_1->display(static_cast<int>((ip >> 16) & 0xFF ));
+                    ui->lcd_2->display(static_cast<int>((ip >> 8) & 0xFF ));
+                    ui->lcd_3->display(static_cast<int>(ip & 0xFF ));
 
                     block_this_button(false);
                     return;

@@ -145,8 +145,7 @@ private:
     void create_toolbars(void);
 
 protected:
-    //void closeEvent(QCloseEvent *event);
-
+    void closeEvent(QCloseEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // MYMAINWINDOW_HPP

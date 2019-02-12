@@ -87,7 +87,7 @@ class MyWidget : public QWidget
     Q_OBJECT
 
 public:
-    MyWidget(QWidget *parent = 0);
+    explicit MyWidget(QWidget *parent = nullptr);
     ~MyWidget();
 
     void init_w_lists(void);

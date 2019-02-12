@@ -102,24 +102,6 @@ void MyMainWindow::messageHandler(QtMsgType type,
 }
 #endif
 //--------------------------------------------------------------------------------
-#if 0
-void MyMainWindow::closeEvent(QCloseEvent *event)
-{
-    int btn =  QMessageBox::question(this,
-                                     "Выход из программы",
-                                     "Вы уверены, что хотите выйти из программы?",
-                                     QMessageBox::Yes | QMessageBox::No);
-    if(btn == QMessageBox::Yes)
-    {
-        event->accept();
-    }
-    else
-    {
-        event->ignore();
-    }
-}
-#endif
-//--------------------------------------------------------------------------------
 void MyMainWindow::create_local_menus(void)
 {
     QAction *file_action = new QAction(this);
@@ -281,5 +263,27 @@ void MyMainWindow::setCentralWidget(QWidget *widget)
     w->setLayout(grid);
 
     MainWindow::setCentralWidget(w);
+}
+//--------------------------------------------------------------------------------
+void MyMainWindow::closeEvent(QCloseEvent *event)
+{
+    if(flag_close)
+    {
+        event->accept();
+        return;
+    }
+
+    int btn =  QMessageBox::question(this,
+                                     "Выход из программы",
+                                     "Вы уверены, что хотите выйти из программы?",
+                                     QMessageBox::Yes | QMessageBox::No);
+    if(btn == QMessageBox::Yes)
+    {
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 }
 //--------------------------------------------------------------------------------

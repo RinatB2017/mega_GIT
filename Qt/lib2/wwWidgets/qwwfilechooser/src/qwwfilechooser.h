@@ -38,7 +38,7 @@ class Q_WW_EXPORT QwwFileChooser : public QwwButtonLineEdit {
   Q_ENUMS(QCompleter::CompletionMode)
 #endif
 public:
-  QwwFileChooser(QWidget *parent=0);
+  QwwFileChooser(QWidget *parent = nullptr);
   virtual ~QwwFileChooser(){}
 #if QT_VERSION >= 0x040200 && !defined(QT_NO_COMPLETER)
   QCompleter::CompletionMode completionMode() const;

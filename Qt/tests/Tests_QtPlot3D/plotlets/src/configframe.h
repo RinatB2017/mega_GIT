@@ -13,7 +13,7 @@ class ConfigFrame : public QFrame, protected Ui::ConfigFrameBase
 	Q_OBJECT
     
 public:
-  ConfigFrame(QWidget *parent=0);
+  ConfigFrame(QWidget *parent = nullptr);
   Qwt3D::RGBA meshColor() const {return meshcolor_;}
   const Qwt3D::StandardColor& dataColor() const {return datacolor_;}
   Qwt3D::PLOTSTYLE plotstyle() const {return plotstyle_;}

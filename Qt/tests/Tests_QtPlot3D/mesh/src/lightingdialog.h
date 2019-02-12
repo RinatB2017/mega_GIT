@@ -49,7 +49,7 @@ class LightingDlg : public QDialog, protected Ui::Dialog
 	Q_OBJECT
     
 public:
-  LightingDlg(QWidget *parent=0);
+  LightingDlg(QWidget *parent = nullptr);
   ~LightingDlg();
 
   void assign(Qwt3D::Plot3D* pl);

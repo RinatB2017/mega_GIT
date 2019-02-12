@@ -23,7 +23,7 @@
  */
 class Q_WW_EXPORT ColorModel : public QStandardItemModel {
 public:
-    ColorModel(QObject *parent=0);
+    ColorModel(QObject *parent = nullptr);
     QModelIndex contains(const QColor &c);
     ColorModel *clone(QObject *par=0) const;
     QModelIndex addColor(const QColor &c, const QString &name=QString::null);

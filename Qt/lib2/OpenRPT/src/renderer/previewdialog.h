@@ -52,7 +52,7 @@ public:
     /// Construct a PreviewDialog dialog
     PreviewDialog(ORODocument *document,
                   QPrinter *pPrinter,
-                  QWidget *parent=0);
+                  QWidget *parent = nullptr);
     /// Destructor
     virtual ~PreviewDialog();
 
@@ -67,7 +67,7 @@ class PreviewWidget : public QAbstractScrollArea
 public:
     PreviewWidget(ORODocument *document,
                   QPrinter *pPrinter,
-                  QWidget *parent=0);
+                  QWidget *parent = nullptr);
     virtual ~PreviewWidget();
     void updateView();
 

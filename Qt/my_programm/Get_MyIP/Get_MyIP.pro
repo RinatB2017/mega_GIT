@@ -12,8 +12,6 @@ DEPENDPATH  += \
     $$PWD/src/get_myip_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT  += network
 
 DEFINES += NO_STYLETOOLBAR
@@ -23,9 +21,9 @@ DEFINES += NO_LOG
 DEFINES += NO_RESIZE
 
 HEADERS += \
+    get_myip_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    get_myip_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     get_myip_mainbox.cpp \
@@ -34,7 +32,7 @@ SOURCES += \
 FORMS   += get_myip_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS += ico/computer.ico
 }
 
 RESOURCES += \

@@ -209,13 +209,41 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include "secretbox.hpp"
+#include <QHostAddress>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+
+//#include "secretbox.hpp"
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QNetworkRequest request;
+    QNetworkAccessManager networkManager;
+
+    request.setUrl(QUrl("https://yandex.ru/"));
+    QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
+    while (!reply->isFinished())
+    {
+        QCoreApplication::processEvents();
+    }
+    QByteArray ba;
+    int lines = 0;
+    do
+    {
+        ba = reply->readLine();
+        lines++;
+
+        emit info(ba);
+    } while(ba.isEmpty() == false);
+
+    emit info(QString("lines %1").arg(lines));
+#endif
+
+#if 0
     SecretBox *sbox = new SecretBox("666");
     connect(sbox, SIGNAL(info(QString)),    this, SIGNAL(info(QString)));
     connect(sbox, SIGNAL(debug(QString)),   this, SIGNAL(debug(QString)));

@@ -56,7 +56,6 @@ private:
 
     void init(void);
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

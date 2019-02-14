@@ -209,57 +209,10 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include <QHostAddress>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-
-//#include "secretbox.hpp"
-
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
-
-#if 1
-    QNetworkRequest request;
-    QNetworkAccessManager networkManager;
-
-    request.setUrl(QUrl("https://yandex.ru/"));
-    QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
-    while (!reply->isFinished())
-    {
-        QCoreApplication::processEvents();
-    }
-    QByteArray ba;
-    int lines = 0;
-    do
-    {
-        ba = reply->readLine();
-        lines++;
-
-        emit info(ba);
-    } while(ba.isEmpty() == false);
-
-    emit info(QString("lines %1").arg(lines));
-#endif
-
-#if 0
-    SecretBox *sbox = new SecretBox("666");
-    connect(sbox, SIGNAL(info(QString)),    this, SIGNAL(info(QString)));
-    connect(sbox, SIGNAL(debug(QString)),   this, SIGNAL(debug(QString)));
-    connect(sbox, SIGNAL(error(QString)),   this, SIGNAL(error(QString)));
-    connect(sbox, SIGNAL(trace(QString)),   this, SIGNAL(trace(QString)));
-
-    int res = sbox->exec();
-    if(res == QDialog::Accepted)
-    {
-        emit info("OK");
-    }
-    else
-    {
-        emit error("FAIL");
-    }
-#endif
 
 #if 0
     QByteArray ba = QByteArray::fromHex("01 02 03 04 05 06 07 08 09 0a 0B 0C ыыы");
@@ -270,10 +223,6 @@ bool MainBox::test_0(void)
     }
 #endif
 
-#if 0
-    emit info("Текст <font style=\"color:red\">красный</font>");
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -281,6 +230,10 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
+
+#if 0
+    emit info("Текст <font style=\"color:red\">красный</font>");
+#endif
 
     return true;
 }

@@ -14,7 +14,6 @@ INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
 QT          += widgets
-QT          += network
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -98,7 +97,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
-#include ($$LIB_PATH2/secretbox/secretbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

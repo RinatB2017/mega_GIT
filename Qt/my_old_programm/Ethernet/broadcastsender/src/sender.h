@@ -56,7 +56,7 @@ class Sender : public QWidget
     Q_OBJECT
 
 public:
-    Sender(QWidget *parent = 0);
+    Sender(QWidget *parent = nullptr);
 
 private slots:
     void startBroadcasting();

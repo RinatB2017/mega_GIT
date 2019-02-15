@@ -31,7 +31,7 @@ class FT2232H_thread : public QThread
 {
     Q_OBJECT
 public:
-    explicit FT2232H_thread(QObject *parent = 0);
+    explicit FT2232H_thread(QObject *parent = nullptr);
     void run(void);
 
 signals:

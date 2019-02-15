@@ -15,7 +15,7 @@ class UDP_Client : public MyWidget
     Q_OBJECT
 
 public:
-    UDP_Client(QWidget *parent = 0);
+    UDP_Client(QWidget *parent = nullptr);
     ~UDP_Client();
 
 public slots:

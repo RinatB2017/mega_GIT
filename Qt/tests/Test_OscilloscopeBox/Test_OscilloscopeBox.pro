@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_OscilloscopeBox_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 DEFINES += SAVE_WIDGETS_PROPERTIES
 DEFINES += SAVE_WIDGETS_SLIDER

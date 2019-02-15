@@ -224,15 +224,15 @@ void HID_device::dev_open(void)
 {
     int res;
     wchar_t wstr[MAX_STR];
-    int VID = 0x0483;
-    int PID = 0x5711;
+    uint16_t VID = 0x0483;
+    uint16_t PID = 0x5711;
 
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;
 
     devs = hid_enumerate(VID, PID);
     cur_dev = devs;
-    if(cur_dev == NULL)
+    if(cur_dev == nullptr)
     {
         //messagebox_critical("Ошибка", "HID_device не найден!");
         emit error("HID_device не найден!");
@@ -255,10 +255,10 @@ void HID_device::dev_open(void)
     // Open the device using the VID, PID,
     // and optionally the Serial number.
     int cnt_err = 0;
-    while(dev == 0)
+    while(dev == nullptr)
     {
-        dev = hid_open(VID, PID, NULL);
-        if(dev == 0)
+        dev = hid_open(VID, PID, nullptr);
+        if(dev == nullptr)
         {
             cnt_err++;
         }
@@ -305,22 +305,22 @@ void HID_device::dev_open(void)
 //--------------------------------------------------------------------------------
 void HID_device::dev_close(void)
 {
-    if(dev != 0)
+    if(dev != nullptr)
     {
         hid_close(dev);
-        dev = 0;
+        dev = nullptr;
     }
 }
 //--------------------------------------------------------------------------------
 void HID_device::dev_send(void)
 {
-    if(dev == 0)
+    if(dev == nullptr)
     {
         emit error("dev not open!");
         return;
     }
 
-    int len = sizeof(output_buf);
+    size_t len = sizeof(output_buf);
     int res = 0;
     res = hid_send_feature_report(dev, output_buf, len);
     if(res < 0)
@@ -338,13 +338,13 @@ void HID_device::dev_send(void)
 //--------------------------------------------------------------------------------
 void HID_device::show_state(void)
 {
-    if(dev == 0)
+    if(dev == nullptr)
     {
         emit error("dev not open!");
         return;
     }
 
-    int len = sizeof(output_buf);
+    size_t len = sizeof(output_buf);
 
     memset(output_buf, 0, len);
     output_buf[0] = 0x04;
@@ -358,7 +358,7 @@ void HID_device::show_state(void)
     }
 
     QByteArray ba;
-    ba.append((char *)&output_buf, len);
+    ba.append((char *)&output_buf, static_cast<int>(len));
     emit info(ba.toHex().data());
 
     emit info("OK");

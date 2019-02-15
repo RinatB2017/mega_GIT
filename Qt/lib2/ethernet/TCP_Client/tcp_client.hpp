@@ -36,7 +36,7 @@ class TCP_Client : public MyWidget
     Q_OBJECT
 
 public:
-    TCP_Client(QWidget* parent = 0);
+    TCP_Client(QWidget* parent = nullptr);
     void setAddress(const QHostAddress &);
     void setPort(unsigned int);
 

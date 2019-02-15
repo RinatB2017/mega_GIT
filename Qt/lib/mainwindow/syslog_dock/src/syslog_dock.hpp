@@ -43,7 +43,7 @@ class SysLog_dock : public QDockWidget
 
 public:
     SysLog_dock(const QString &title,
-                QWidget *parent = 0);
+                QWidget *parent = nullptr);
 
 signals:
     void info(const QString &);

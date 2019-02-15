@@ -52,7 +52,7 @@ public:
     SerialBox5_fix_baudrate(QWidget *parent,
                     const QString &caption,
                     const QString &o_name);
-    SerialBox5_fix_baudrate(QWidget *parent = 0);
+    SerialBox5_fix_baudrate(QWidget *parent = nullptr);
     ~SerialBox5_fix_baudrate();
 
     bool isOpen(void);

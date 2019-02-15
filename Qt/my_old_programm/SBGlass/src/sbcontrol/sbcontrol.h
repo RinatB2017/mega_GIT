@@ -16,7 +16,7 @@ class SBControl : public QWidget
 	Q_OBJECT
 
 public:
-	SBControl(QWidget * inTestWidget, QWidget *parent = 0);
+	SBControl(QWidget * inTestWidget, QWidget *parent = nullptr);
 	~SBControl();
 
 private:

@@ -15,16 +15,14 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += serialport
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    adc_oscilloscope_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    adc_oscilloscope_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     adc_oscilloscope_mainbox.cpp \
@@ -36,7 +34,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

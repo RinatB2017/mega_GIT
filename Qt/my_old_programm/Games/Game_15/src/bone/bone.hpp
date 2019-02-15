@@ -29,7 +29,7 @@ class Bone : public QFrame
 {
     Q_OBJECT
 public:
-    explicit Bone(QWidget *parent = 0);
+    explicit Bone(QWidget *parent = nullptr);
     void setNumber(int n);
 
 private:

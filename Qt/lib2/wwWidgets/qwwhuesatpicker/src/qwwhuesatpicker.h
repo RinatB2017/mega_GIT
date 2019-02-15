@@ -28,7 +28,7 @@ class Q_WW_EXPORT QwwHueSatPicker : public QFrame, public QwwPrivatable {
     Q_PROPERTY(int value READ value WRITE setValue)
     Q_PROPERTY(QColor color READ color WRITE setColor)
 public:
-    QwwHueSatPicker(QWidget *parent = 0);
+    QwwHueSatPicker(QWidget *parent = nullptr);
     QSize sizeHint() const;
     QSize minimumSizeHint() const;
     int value() const;

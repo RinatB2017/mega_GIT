@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/mtc_runner_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
@@ -25,9 +23,9 @@ DEFINES += SAVE_WIDGETS_CHECKBOX
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    mtc_runner_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    mtc_runner_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     mtc_runner_mainbox.cpp \

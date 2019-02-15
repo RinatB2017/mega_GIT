@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/hc_06_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -25,9 +23,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    hc_06_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    hc_06_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     hc_06_mainbox.cpp \

@@ -33,7 +33,7 @@ class RTSP_widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit RTSP_widget(QWidget *parent = 0);
+    explicit RTSP_widget(QWidget *parent = nullptr);
     ~RTSP_widget();
 
 signals:

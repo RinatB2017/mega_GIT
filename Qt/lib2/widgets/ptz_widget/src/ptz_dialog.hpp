@@ -32,7 +32,7 @@ class PTZ_dialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PTZ_dialog(QWidget *parent = 0);
+    explicit PTZ_dialog(QWidget *parent = nullptr);
     ~PTZ_dialog();
 
     void set_url(QUrl url);

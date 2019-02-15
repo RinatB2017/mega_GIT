@@ -13,17 +13,15 @@ DEPENDPATH  += \
     $$PWD/src/adc_oscilloscope_new_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += RS232LOG
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    adc_oscilloscope_new_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    adc_oscilloscope_new_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     adc_oscilloscope_new_mainbox.cpp \
@@ -35,7 +33,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

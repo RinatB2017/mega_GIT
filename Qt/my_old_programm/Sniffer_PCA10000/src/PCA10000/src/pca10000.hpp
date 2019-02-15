@@ -29,7 +29,7 @@ class PCA10000 : public QObject
 {
     Q_OBJECT
 public:
-    explicit PCA10000(QObject *parent = 0);
+    explicit PCA10000(QObject *parent = nullptr);
 
     bool find_device(void);
     void print_info(const QSerialPortInfo &port);

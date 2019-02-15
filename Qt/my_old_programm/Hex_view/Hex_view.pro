@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/hex_view_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -27,9 +25,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    hex_view_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    hex_view_mainbox.hpp
 
 SOURCES += \
     hex_view_mainbox.cpp \

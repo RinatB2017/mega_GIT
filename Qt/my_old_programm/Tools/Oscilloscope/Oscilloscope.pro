@@ -13,16 +13,14 @@ DEPENDPATH  += \
     $$PWD/src/oscilloscope_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    defines.hpp \
-    oscilloscope_mainbox.hpp
+    oscilloscope_mainbox.hpp \
+    defines.hpp
 
 SOURCES += \
     oscilloscope_mainbox.cpp \
@@ -34,7 +32,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)

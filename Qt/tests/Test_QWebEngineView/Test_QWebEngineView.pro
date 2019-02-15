@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/test_qwebengineview_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 QT  += webenginewidgets
 
 DEFINES += PROGRAMM_IN_UTF8

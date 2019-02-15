@@ -41,7 +41,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private:

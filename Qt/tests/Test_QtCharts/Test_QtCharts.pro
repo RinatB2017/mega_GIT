@@ -16,7 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += charts
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE

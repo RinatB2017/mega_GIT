@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/test_candlestick_box_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT  += charts
 
 DEFINES += NO_STYLETOOLBAR

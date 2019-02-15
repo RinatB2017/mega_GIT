@@ -12,7 +12,7 @@ class IPCtrl4 : public QFrame
     Q_OBJECT
 
 public:
-    IPCtrl4(QWidget *parent = 0);
+    IPCtrl4(QWidget *parent = nullptr);
     ~IPCtrl4();
 
     virtual bool eventFilter( QObject *obj, QEvent *event );

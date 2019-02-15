@@ -9,7 +9,7 @@ class QHexEditDataWriter : public QObject
     Q_OBJECT
 
     public:
-        explicit QHexEditDataWriter(QHexEditData* hexeditdata, QObject* parent = 0);
+        explicit QHexEditDataWriter(QHexEditData* hexeditdata, QObject* parent = nullptr);
         const QHexEditData* hexEditData() const;
         void append(const QByteArray& ba);
         void insert(qint64 pos, uchar ch);

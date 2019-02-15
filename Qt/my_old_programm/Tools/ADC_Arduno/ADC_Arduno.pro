@@ -13,17 +13,15 @@ DEPENDPATH  += \
     $$PWD/src/adc_arduino_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += RS232LOG
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    adc_arduino_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    adc_arduino_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     adc_arduino_mainbox.cpp \
@@ -35,7 +33,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)

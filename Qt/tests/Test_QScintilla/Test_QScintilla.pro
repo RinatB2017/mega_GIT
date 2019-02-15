@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/qscintilla_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 unix {
     LIBS    += -lqscintilla2_qt5

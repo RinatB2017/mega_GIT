@@ -19,7 +19,7 @@ class Generator_Curve : public MyWidget
 {
     Q_OBJECT
 public:
-    Generator_Curve(QWidget *parent = 0);
+    Generator_Curve(QWidget *parent = nullptr);
     ~Generator_Curve(void);
     
 signals:

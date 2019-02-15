@@ -55,7 +55,7 @@ class ChatClient : public QObject
     Q_OBJECT
 
 public:
-    explicit ChatClient(QObject *parent = 0);
+    explicit ChatClient(QObject *parent = nullptr);
     ~ChatClient();
 
     void startClient(const QBluetoothServiceInfo &remoteService);

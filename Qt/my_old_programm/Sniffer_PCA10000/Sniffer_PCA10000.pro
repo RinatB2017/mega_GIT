@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/sniffer_pca10000_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT      += serialport
 
 DEFINES += NO_STYLETOOLBAR
@@ -34,9 +32,9 @@ DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    sniffer_pca10000_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    sniffer_pca10000_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     sniffer_pca10000_mainbox.cpp \

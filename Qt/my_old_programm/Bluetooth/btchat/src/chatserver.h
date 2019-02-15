@@ -58,7 +58,7 @@ class ChatServer : public QObject
     Q_OBJECT
 
 public:
-    explicit ChatServer(QObject *parent = 0);
+    explicit ChatServer(QObject *parent = nullptr);
     ~ChatServer();
 
     void startServer(const QBluetoothAddress &localAdapter = QBluetoothAddress());

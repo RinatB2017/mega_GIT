@@ -61,7 +61,7 @@ class Chat : public QDialog
     Q_OBJECT
 
 public:
-    Chat(QWidget *parent = 0);
+    Chat(QWidget *parent = nullptr);
     ~Chat();
 
 signals:

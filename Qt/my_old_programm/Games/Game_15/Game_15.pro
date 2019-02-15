@@ -15,8 +15,6 @@ DEPENDPATH  += \
     $$PWD/src/bone
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
@@ -25,9 +23,9 @@ DEFINES += NO_RESIZE
 DEFINES += NO_LOG
 
 HEADERS += \
+    game_15_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    game_15_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     game_15_mainbox.cpp \

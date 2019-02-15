@@ -11,15 +11,13 @@ DEPENDPATH  += \
     $$PWD/src/broadcast_udp_client_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    broadcast_udp_client_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    broadcast_udp_client_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     broadcast_udp_client_mainbox.cpp \
@@ -31,7 +29,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 VERSION_HEADER = src/version.hpp

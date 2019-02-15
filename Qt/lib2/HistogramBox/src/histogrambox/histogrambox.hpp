@@ -59,7 +59,7 @@ class HistogramBox : public MyWidget
     Q_OBJECT
 
 public:
-    HistogramBox(QWidget *parent = 0);
+    HistogramBox(QWidget *parent = nullptr);
     ~HistogramBox();
 
     void set_axis_scale_x(double new_axis_X_min, double new_axis_X_max);

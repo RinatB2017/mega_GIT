@@ -44,7 +44,7 @@ class Log_options : public QDialog
     Q_PROPERTY(bool flag_TextIsWindows  READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
 
 public:
-    Log_options(QWidget *parent = 0);
+    Log_options(QWidget *parent = nullptr);
     ~Log_options();
 
 private:

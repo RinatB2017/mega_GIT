@@ -13,7 +13,7 @@ class QSDLScreenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    QSDLScreenWidget(QWidget *parent = 0);
+    QSDLScreenWidget(QWidget *parent = nullptr);
     void draw_image(SDL_Surface *image, int pos_x, int pos_y);
 
 private slots:

@@ -512,7 +512,7 @@ public:
     };
 
     //! Construct an empty QsciScintilla with parent \a parent.
-    QsciScintilla(QWidget *parent = 0);
+    QsciScintilla(QWidget *parent = nullptr);
 
     //! Destroys the QsciScintilla instance.
     virtual ~QsciScintilla();

@@ -32,7 +32,7 @@ class MyWaitSplashScreen : public QSplashScreen
 public:
     MyWaitSplashScreen(const QPixmap &pixmap,
                        int max_step = 100,
-                       QWidget *parent = 0);
+                       QWidget *parent = nullptr);
 
 public slots:
     void showMessage(const QString &message,

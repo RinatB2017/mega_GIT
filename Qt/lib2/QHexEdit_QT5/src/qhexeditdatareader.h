@@ -9,7 +9,7 @@ class QHexEditDataReader : public QObject
     Q_OBJECT
 
     public:
-        explicit QHexEditDataReader(QHexEditData* hexeditdata, QObject* parent = 0);
+        explicit QHexEditDataReader(QHexEditData* hexeditdata, QObject* parent = nullptr);
         const QHexEditData* hexEditData() const;
         uchar at(qint64 pos);
         qint64 indexOf(const QByteArray& ba, qint64 start);

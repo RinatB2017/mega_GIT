@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_PropertyBrowser_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 
 DEFINES += PROGRAMM_IN_UTF8

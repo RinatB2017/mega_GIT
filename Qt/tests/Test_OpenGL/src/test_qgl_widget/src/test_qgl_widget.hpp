@@ -31,7 +31,7 @@ class Test_QGLWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    Test_QGLWidget(QWidget *parent = 0);
+    Test_QGLWidget(QWidget *parent = nullptr);
     ~Test_QGLWidget();
 
     qreal get_x(void);

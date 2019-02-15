@@ -17,7 +17,7 @@ public:
              const QString &programmName,
              const QString &version,
              const QString &author,
-             QWidget *parent = 0);
+             QWidget *parent = nullptr);
     ~AboutBox();
 
 private slots:

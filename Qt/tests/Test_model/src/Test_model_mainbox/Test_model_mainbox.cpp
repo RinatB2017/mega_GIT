@@ -129,11 +129,11 @@ QString MainBox::convert_int_to_string(uint32_t value)
 {
     if(value >= 1e6)
     {
-        return QString("%1 млн.").arg((double)value / (double)1e6, 0, 'f', 3);
+        return QString("%1 млн.").arg(static_cast<double>(value) / static_cast<double>(1e6), 0, 'f', 3);
     }
     if(value >= 1e3)
     {
-        return QString("%1 тыс.").arg((double)value / (double)1e3, 0, 'f', 3);
+        return QString("%1 тыс.").arg(static_cast<double>(value) / static_cast<double>(1e3), 0, 'f', 3);
     }
     return QString("%1").arg(value);
 }

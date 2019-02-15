@@ -55,7 +55,7 @@ class Receiver : public QWidget
     Q_OBJECT
 
 public:
-    Receiver(QWidget *parent = 0);
+    Receiver(QWidget *parent = nullptr);
 
 private slots:
     void processPendingDatagrams();

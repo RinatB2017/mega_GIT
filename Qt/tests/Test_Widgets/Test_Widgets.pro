@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_Widgets_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE

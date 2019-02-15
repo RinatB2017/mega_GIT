@@ -16,7 +16,7 @@ class DMatrixSquareConfig : public QWidget
     Q_OBJECT
 
 public:
-    explicit DMatrixSquareConfig(QWidget *parent = 0);
+    explicit DMatrixSquareConfig(QWidget *parent = nullptr);
     ~DMatrixSquareConfig();
 
     QString format();

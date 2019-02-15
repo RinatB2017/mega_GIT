@@ -27,7 +27,7 @@ class MyTextEdit : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit MyTextEdit(QWidget *parent = 0);
+    explicit MyTextEdit(QWidget *parent = nullptr);
     
 signals:
     void info(const QString &);

@@ -38,7 +38,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:

@@ -28,7 +28,7 @@ class MyDisplay : public QWidget
 {
     Q_OBJECT
 public:
-    MyDisplay(QWidget *parent = 0);
+    MyDisplay(QWidget *parent = nullptr);
     bool display(unsigned int value);
 
     void set_color(QColor color);

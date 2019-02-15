@@ -25,7 +25,7 @@ class Q_WW_EXPORT QwwBreadCrumb : public QWidget, public QwwPrivatable {
     Q_OBJECT
     Q_PROPERTY(QSize iconSize READ iconSize WRITE setIconSize)
 public:
-    QwwBreadCrumb(QWidget *parent = 0);
+    QwwBreadCrumb(QWidget *parent = nullptr);
     virtual void setModel(QAbstractItemModel *m);
     void setItemDelegate(QAbstractItemDelegate *deleg);
     virtual QModelIndex indexAt(const QPoint &pt);

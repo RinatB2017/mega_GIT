@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/calcmd5_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_LOG
 DEFINES += NO_MENU
 DEFINES += NO_TOOLBAR
@@ -27,9 +25,9 @@ DEFINES += FIXED_SIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    calcmd5_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    calcmd5_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     calcmd5_mainbox.cpp \

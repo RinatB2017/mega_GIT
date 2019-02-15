@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/Test_Game_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #QT  += serialbus
 
 #DEFINES += LOGO_GL

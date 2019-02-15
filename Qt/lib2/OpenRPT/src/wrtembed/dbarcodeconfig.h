@@ -12,7 +12,7 @@ class DBarcodeConfig : public QWidget
     Q_OBJECT
 
 public:
-    explicit DBarcodeConfig(QWidget *parent = 0);
+    explicit DBarcodeConfig(QWidget *parent = nullptr);
     ~DBarcodeConfig();
 
     int getSliderMaxValue();

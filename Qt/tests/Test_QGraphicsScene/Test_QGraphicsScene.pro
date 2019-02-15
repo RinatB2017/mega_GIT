@@ -14,7 +14,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_QGraphicsScene_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8

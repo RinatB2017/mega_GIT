@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/gy521_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -26,9 +24,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    gy521_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    gy521_mainbox.hpp
 
 SOURCES += \
     gy521_mainbox.cpp \
@@ -40,7 +38,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

@@ -32,7 +32,7 @@ class MySplashScreen : public QSplashScreen
 public:
     MySplashScreen(const QPixmap &pixmap,
                    int max_progress = 100,
-                   QWidget *parent = 0);
+                   QWidget *parent = nullptr);
 
     void set_progress(int value);
 

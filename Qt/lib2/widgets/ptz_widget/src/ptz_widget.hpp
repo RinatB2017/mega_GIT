@@ -52,7 +52,7 @@ class PTZ_widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit PTZ_widget(QWidget *parent = 0);
+    explicit PTZ_widget(QWidget *parent = nullptr);
     ~PTZ_widget();
 
 signals:

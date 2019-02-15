@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/Test_model_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 
@@ -44,9 +42,9 @@ DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    Test_model_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_model_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     Test_model_mainbox.cpp \

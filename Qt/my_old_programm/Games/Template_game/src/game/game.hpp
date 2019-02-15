@@ -49,7 +49,7 @@ class Game : public QGLWidget
 {
     Q_OBJECT
 public:
-    explicit Game(QWidget *parent = 0);
+    explicit Game(QWidget *parent = nullptr);
     
 signals:
     

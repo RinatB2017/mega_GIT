@@ -42,7 +42,7 @@ class LogDock_options : public QDialog
     Q_PROPERTY(bool p_LOG_DEBUG     READ get_LOG_DEBUG      WRITE set_LOG_DEBUG)
 
 public:
-    LogDock_options(QWidget *parent = 0);
+    LogDock_options(QWidget *parent = nullptr);
     ~LogDock_options();
 
 private slots:

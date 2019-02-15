@@ -12,7 +12,7 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 QT      += opengl
 LIBS    += -lglut -lGLU
 

@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------
-#ifndef _LEGEND_H_
-#define _LEGEND_H_
+#ifndef _LEGEND_HPP
+#define _LEGEND_HPP
 //--------------------------------------------------------------------------------
 #include <qwt_abstract_legend.h>
 //--------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ class Legend : public QwtAbstractLegend
     Q_OBJECT
 
 public:
-    explicit Legend(QWidget *parent = NULL);
+    explicit Legend(QWidget *parent = nullptr);
     virtual ~Legend();
 
     virtual void renderLegend(QPainter *,

@@ -21,8 +21,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 QT += network
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
@@ -40,9 +38,9 @@ DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    teacher_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    teacher_mainbox.hpp
 
 SOURCES += \
     teacher_mainbox.cpp \

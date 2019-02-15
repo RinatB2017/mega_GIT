@@ -22,8 +22,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 QT += network
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT += testlib network webkit
 
 DEFINES += NO_STYLETOOLBAR
@@ -34,9 +32,9 @@ DEFINES += SAVE_WIDGETS_SPLITTER
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    proxy_walker_m_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    proxy_walker_m_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     proxy_walker_m_mainbox.cpp \

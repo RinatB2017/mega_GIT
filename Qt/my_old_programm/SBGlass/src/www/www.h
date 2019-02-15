@@ -10,7 +10,7 @@ class www : public QWidget
 	Q_OBJECT
 
 public:
-	www(QWidget *parent = 0);
+	www(QWidget *parent = nullptr);
 	~www();
 	QWidget * testWidget();
 

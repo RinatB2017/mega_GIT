@@ -20,8 +20,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 QT += network
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += NO_TOOLBAR
@@ -30,9 +28,9 @@ DEFINES += NO_LOG
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    double_browser_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    double_browser_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     double_browser_mainbox.cpp \
@@ -44,7 +42,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/mainwindow/mainwindow.pri)

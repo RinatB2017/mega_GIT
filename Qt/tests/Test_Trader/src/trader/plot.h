@@ -12,7 +12,7 @@ class Plot: public QwtPlot
     Q_OBJECT
 
 public:
-    Plot(const QString &ticket_name, QWidget * = 0);
+    Plot(const QString &ticket_name, QWidget* = nullptr);
     QString get_ticket_name(void);
     void update_ticket(void);
 

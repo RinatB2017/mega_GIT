@@ -30,7 +30,7 @@ class SendEmail : public QWidget
     Q_OBJECT
 
 public:
-    explicit SendEmail(QWidget *parent = 0);
+    explicit SendEmail(QWidget *parent = nullptr);
     ~SendEmail();
 
     static EmailAddress * stringToEmail(const QString & str);

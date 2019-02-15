@@ -32,7 +32,7 @@ class Oscilloscope_controls : public QWidget
     Q_OBJECT
 
 public:
-    Oscilloscope_controls(QWidget *parent = 0);
+    Oscilloscope_controls(QWidget *parent = nullptr);
     ~Oscilloscope_controls();
 
 signals:

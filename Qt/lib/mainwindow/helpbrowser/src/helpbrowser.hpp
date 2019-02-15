@@ -34,7 +34,7 @@ class HelpBrowser : public QWidget
     Q_OBJECT
 public: 
     HelpBrowser(QString &page,
-                QWidget *parent = 0);
+                QWidget *parent = nullptr);
 
     static void showPage(QString page,
                          bool is_maximized = true);

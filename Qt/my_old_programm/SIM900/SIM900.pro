@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/sim900_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 DEFINES += RS232_SEND
 DEFINES += RS232_LOG
@@ -25,9 +23,9 @@ DEFINES += PROGRAMM_IN_UTF8
 #DEFINES += NO_LOG
 
 HEADERS += \
+    sim900_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    sim900_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     sim900_mainbox.cpp \
@@ -39,7 +37,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

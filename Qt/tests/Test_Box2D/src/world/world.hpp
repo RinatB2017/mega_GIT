@@ -36,7 +36,7 @@ class World : public MyWidget
     Q_OBJECT
 
 public:
-    World(QWidget *parent = 0);
+    World(QWidget *parent = nullptr);
     ~World();
 
     Object createWall(float32 x,

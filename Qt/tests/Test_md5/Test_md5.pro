@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_md5_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 DEFINES += NO_TRAYICON
 

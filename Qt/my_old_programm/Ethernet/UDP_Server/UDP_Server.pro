@@ -15,15 +15,13 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    udp_server_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    udp_server_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     udp_server_mainbox.cpp \

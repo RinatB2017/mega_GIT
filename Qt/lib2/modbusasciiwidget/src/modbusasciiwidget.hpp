@@ -46,7 +46,7 @@ class ModbusAsciiWidget : public MyWidget
     Q_OBJECT
 
 public:
-    ModbusAsciiWidget(QWidget *parent = 0);
+    ModbusAsciiWidget(QWidget *parent = nullptr);
 
 signals:
     void get_data(const DATA &);

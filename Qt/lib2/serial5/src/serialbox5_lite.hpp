@@ -56,7 +56,7 @@ public:
     SerialBox5_lite(QWidget *parent,
                     const QString &caption,
                     const QString &o_name);
-    SerialBox5_lite(QWidget *parent = 0);
+    SerialBox5_lite(QWidget *parent = nullptr);
     ~SerialBox5_lite();
 
     bool isOpen(void);

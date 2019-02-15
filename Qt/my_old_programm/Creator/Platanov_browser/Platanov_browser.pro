@@ -21,8 +21,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 QT += network
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
@@ -44,7 +42,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/mainwindow/mainwindow.pri)

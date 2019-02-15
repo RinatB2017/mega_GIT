@@ -13,7 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/Test_draw_line_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
+
 
 DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND

@@ -33,7 +33,7 @@ class Processor : public MyWidget
 {
     Q_OBJECT
 public:
-    Processor(QWidget *parent = 0);
+    Processor(QWidget *parent = nullptr);
     
 signals:
     void output(const QByteArray &);

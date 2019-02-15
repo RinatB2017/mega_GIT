@@ -1946,7 +1946,7 @@ public:
                          };
     Q_ENUMS(LayerInsertMode)
 
-    explicit QCustomPlot(QWidget *parent = 0);
+    explicit QCustomPlot(QWidget *parent = nullptr);
     virtual ~QCustomPlot();
 
     // getters:
@@ -2035,7 +2035,7 @@ public:
     // specialized interface for QCPGraph:
     QCPGraph *graph(int index) const;
     QCPGraph *graph() const;
-    QCPGraph *addGraph(QCPAxis *keyAxis=0, QCPAxis *valueAxis=0);
+    QCPGraph *addGraph(QCPAxis *keyAxis=nullptr, QCPAxis *valueAxis=nullptr);
     bool removeGraph(QCPGraph *graph);
     bool removeGraph(int index);
     int clearGraphs();

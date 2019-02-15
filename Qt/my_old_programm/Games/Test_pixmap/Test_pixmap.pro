@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/test_pixmap_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
@@ -32,9 +30,9 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_pixmap_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    test_pixmap_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     test_pixmap_mainbox.cpp \
@@ -52,7 +50,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)

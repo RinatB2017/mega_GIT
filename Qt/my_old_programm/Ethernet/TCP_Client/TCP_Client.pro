@@ -13,17 +13,15 @@ DEPENDPATH  += \
     $$PWD/src/tcp_client_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 #DEFINES += LOGO_GL
 
 HEADERS += \
+    tcp_client_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    tcp_client_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     tcp_client_mainbox.cpp \
@@ -35,7 +33,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 !exists(OBJECTS_DIR) {

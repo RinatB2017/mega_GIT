@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/cards_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT	+= svg
 QT      += xml
 
@@ -27,9 +25,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += SAVE_CARD
 
 HEADERS += \
+    cards_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    cards_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     cards_mainbox.cpp \
@@ -44,6 +42,7 @@ win32 {
 }
 
 LIB_PATH = "../../../lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/card/card.pri)
 

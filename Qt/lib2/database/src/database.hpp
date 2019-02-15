@@ -33,7 +33,7 @@ class Database : public QObject
 public:
     Database(const QString &driver_name,
                       const QString &database_name,
-                      QObject *parent = 0);
+                      QObject *parent = nullptr);
     ~Database();
 
     bool isValid(void);

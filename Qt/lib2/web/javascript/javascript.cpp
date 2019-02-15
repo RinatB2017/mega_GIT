@@ -40,8 +40,6 @@ bool JavaScript::setByName(QWebFrame *main_frame,
                            const QVariant& value)
 {
     Q_CHECK_PTR(main_frame);
-    if(main_frame == 0) return false;
-
     QVariant result = main_frame->evaluateJavaScript(QString("document.getElementsByName('%1')[0].value='%2';")
                                                      .arg(name)
                                                      .arg(value.toString()));
@@ -60,7 +58,6 @@ bool JavaScript::setById(QWebFrame *main_frame,
                          const QVariant& value)
 {
     Q_CHECK_PTR(main_frame);
-    if(main_frame == 0) return false;
 
     QVariant result = main_frame->evaluateJavaScript(QString("document.getElementsById('%1')[0].value='%2';")
                                                      .arg(id)
@@ -80,8 +77,6 @@ void JavaScript::clickByName(QWebFrame *main_frame,
                              const QString& name)
 {
     Q_CHECK_PTR(main_frame);
-    if(main_frame == 0) return;
-
     main_frame->evaluateJavaScript(QString("document.getElementsByName('%1')[0].click();")
                                    .arg(name));
 }
@@ -90,8 +85,6 @@ void JavaScript::clickById(QWebFrame *main_frame,
                            const QString& id)
 {
     Q_CHECK_PTR(main_frame);
-    if(main_frame == 0) return;
-
     main_frame->evaluateJavaScript(QString("document.getElementsById('%1')[0].click();")
                                    .arg(id));
 }

@@ -71,10 +71,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    main_frame(0),
-    leAddress(0),
-    table_view(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -874,7 +871,7 @@ void MainBox::find_and_append(void)
             Waiting::sec(5);
         }
     }
-    emit debug(QString("time.elapsed() = %1 second").arg(time.elapsed() / 1000.f));
+    emit debug(QString("time.elapsed() = %1 second").arg(time.elapsed() / 1000));
     emit info("End!");
 }
 //--------------------------------------------------------------------------------

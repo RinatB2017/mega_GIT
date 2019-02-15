@@ -13,9 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/webkit_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
-
 DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += NO_LOG
@@ -46,7 +43,7 @@ win32 {
 
 RESOURCES += data/names.qrc
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)

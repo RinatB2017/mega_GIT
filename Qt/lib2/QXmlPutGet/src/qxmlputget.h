@@ -192,8 +192,8 @@ public:
     QVector<bool> getAttributeBoolVector(const QString &name, const QVector<bool> &defaultValue=QVector<bool>(), QXmlPutGet::BoolFormats format=QXmlPutGet::bfAll) const;
     QColor getAttributeColor(const QString &name, const QColor &defaultValue=QColor()) const;
 
-    bool fromString(const QString &str, QString *errorMessage=0, int *errorLine=0, int *errorColumn=0);
-    bool load(const QString &fileName, QString *errorMessage=0, int *errorLine=0, int *errorColumn=0);
+    bool fromString(const QString &str, QString *errorMessage=nullptr, int *errorLine=nullptr, int *errorColumn=nullptr);
+    bool load(const QString &fileName, QString *errorMessage=nullptr, int *errorLine=nullptr, int *errorColumn=nullptr);
 
     QXmlGet restricted();
     void descend();
@@ -203,11 +203,11 @@ public:
     QDomElement element() const { return mCurrentElement; }
 
 private:
-    static bool strToBool(QString value, bool *ok=0, QXmlPutGet::BoolFormats formats=QXmlPutGet::bfAll);
-    static QColor strToColor(QString value, bool *ok=0);
-    static QVector<int> strToIntVector(QString value, bool *ok=0);
-    static QVector<double> strToDoubleVector(QString value, bool *ok=0);
-    static QVector<bool> strToBoolVector(QString value, bool *ok=0, QXmlPutGet::BoolFormats formats=QXmlPutGet::bfAll);
+    static bool strToBool(QString value, bool *ok=nullptr, QXmlPutGet::BoolFormats formats=QXmlPutGet::bfAll);
+    static QColor strToColor(QString value, bool *ok=nullptr);
+    static QVector<int> strToIntVector(QString value, bool *ok=nullptr);
+    static QVector<double> strToDoubleVector(QString value, bool *ok=nullptr);
+    static QVector<bool> strToBoolVector(QString value, bool *ok=nullptr, QXmlPutGet::BoolFormats formats=QXmlPutGet::bfAll);
     QDomDocument mDocument;
     QDomElement mBarrierNode; // this instance isn't allowed to rise beyond this node
     QDomElement mCurrentParent;

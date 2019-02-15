@@ -28,7 +28,7 @@ class JavaScript : public QObject
 {
     Q_OBJECT
 public:
-    JavaScript(QObject *parent = 0);
+    JavaScript(QObject *parent = nullptr);
 
     static bool setByName(QWebFrame *main_frame,
                           const QString &name,

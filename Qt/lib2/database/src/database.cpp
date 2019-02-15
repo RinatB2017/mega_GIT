@@ -36,8 +36,7 @@ Database::Database(const QString &driver_name,
                    QObject *parent) :
     QObject(parent),
     driver_name(driver_name),
-    database_name(database_name),
-    table_view(0)
+    database_name(database_name)
 {
     if(parent)
     {

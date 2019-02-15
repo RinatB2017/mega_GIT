@@ -28,7 +28,7 @@ class Waiting : public QObject
 {
     Q_OBJECT
 public:
-    Waiting(QObject *parent = 0);
+    Waiting(QObject *parent = nullptr);
 
     static bool is_loaded(bool *is_loaded, int timeout_msec = MAX_TIMEOUT);
     static void sec(int timeout_sec);

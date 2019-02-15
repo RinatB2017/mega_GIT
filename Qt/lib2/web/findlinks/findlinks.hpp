@@ -30,7 +30,7 @@ class FindLinks : public QDialog
 {
     Q_OBJECT
 public:
-    FindLinks(QWebFrame *frame, QWidget *parent = 0);
+    FindLinks(QWebFrame *frame, QWidget *parent = nullptr);
     
 signals:
     void info(const QString &);

@@ -45,8 +45,6 @@ private slots:
     void test_GUI(void);
     void test_func(void);
 
-    void simple_test(void);
-
 private:
     MyMainWindow *mw = nullptr;
 

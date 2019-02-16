@@ -50,6 +50,9 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
+    void is_open(void);
+    void is_close(void);
+
 private slots:
     void send_text(void);
     void send_bin(void);
@@ -61,8 +64,6 @@ private:
 
     QToolButton *btn_send_text;
     QToolButton *btn_send_bin;
-
-    QCheckBox *cb_SendStenToStep;
 
     QGridLayout *grid;
 };

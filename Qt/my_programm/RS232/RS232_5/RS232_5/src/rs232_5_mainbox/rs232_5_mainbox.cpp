@@ -57,7 +57,7 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    SerialBox5 *serial_widget = new SerialBox5(this, "RS232_5", "RS232_5");
+    serial_widget = new SerialBox5(this, "RS232_5", "RS232_5");
     serial_widget->add_menu(2);
     connect(this,           SIGNAL(send(QByteArray)),   serial_widget,  SLOT(input(QByteArray)));
     connect(serial_widget,  SIGNAL(output(QByteArray)), this,           SLOT(read_data(QByteArray)));

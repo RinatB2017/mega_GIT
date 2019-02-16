@@ -29,7 +29,7 @@
 //--------------------------------------------------------------------------------
 #include "serialbox5.hpp"
 #include "mainwindow.hpp"
-#include "rs232_5_mainbox.hpp"
+#include "pelco_d_485_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
@@ -40,7 +40,7 @@ Test::Test()
 //--------------------------------------------------------------------------------
 void Test::check_serial(void)
 {
-    SerialBox5 *sb1 = mw->findChild<SerialBox5 *>("RS232");
+    SerialBox5 *sb1 = mw->findChild<SerialBox5 *>("serial_widget");
     QVERIFY(sb1);
 
     QPushButton *pb1 = sb1->findChild<QPushButton *>("btn_power");

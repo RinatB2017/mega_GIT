@@ -36,6 +36,8 @@ namespace Ui {
 class MySplashScreen;
 class QToolButton;
 class QToolBar;
+
+class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -56,6 +58,8 @@ private slots:
 private:
     MySplashScreen *splash;
     Ui::MainBox *ui;
+
+    SerialBox5 *serial_widget;
 
     void init(void);
     void createTestBar(void);

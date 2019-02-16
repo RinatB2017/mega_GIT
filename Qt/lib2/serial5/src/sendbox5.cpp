@@ -99,8 +99,6 @@ SendBox5::~SendBox5()
     if(btn_send_text)       btn_send_text->deleteLater();
     if(btn_send_bin)        btn_send_bin->deleteLater();
 
-    if(cb_SendStenToStep)   cb_SendStenToStep->deleteLater();
-
     if(grid)                grid->deleteLater();
 }
 //--------------------------------------------------------------------------------

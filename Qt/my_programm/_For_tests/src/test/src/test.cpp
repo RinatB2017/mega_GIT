@@ -60,23 +60,20 @@ void Test::test_slider(void)
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    //for(int n=1; n<7; n++)
-    //{
-    //    tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
-    //}
+
 }
 //--------------------------------------------------------------------------------
 void Test::test_mainbox(void)
 {
-    //MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    //QVERIFY(mb);
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 
-    //QCOMPARE(mb->test_0(), true);
-    //QCOMPARE(mb->test_1(), true);
-    //QCOMPARE(mb->test_2(), true);
-    //QCOMPARE(mb->test_3(), true);
-    //QCOMPARE(mb->test_4(), true);
-    //QCOMPARE(mb->test_5(), true);
+    QCOMPARE(mb->test_0(), true);
+    QCOMPARE(mb->test_1(), true);
+    QCOMPARE(mb->test_2(), true);
+    QCOMPARE(mb->test_3(), true);
+    QCOMPARE(mb->test_4(), true);
+    QCOMPARE(mb->test_5(), true);
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
@@ -100,13 +97,5 @@ void Test::test_func(void)
     //QByteArray ba;
     //ba.append((char *)&test, sizeof(test));
     //QCOMPARE(mb->test(ba), 5);
-}
-//--------------------------------------------------------------------------------
-void Test::simple_test(void)
-{
-    float x = 0;
-    QBENCHMARK {
-        for(int n=0; n<1e6; n++) x+=sin(n);
-    }
 }
 //--------------------------------------------------------------------------------

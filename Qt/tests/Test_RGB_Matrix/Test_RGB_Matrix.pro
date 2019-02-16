@@ -44,7 +44,7 @@ SOURCES += \
 FORMS   += Test_RGB_Matrix_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 LIB_PATH  = "../../../Qt/lib"

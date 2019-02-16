@@ -36,7 +36,7 @@ SOURCES += \
 FORMS   += rs232_5_bridge_mainbox.ui
 
 win32 {
-    RC_ICONS += ico/RS232.ico
+    RC_ICONS = ico/RS232.ico
 }
 
 LIB_PATH  = "../../../../lib"

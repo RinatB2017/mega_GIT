@@ -52,7 +52,7 @@ SOURCES += \
     main.cpp
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 RESOURCES += images/images.qrc
@@ -63,7 +63,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

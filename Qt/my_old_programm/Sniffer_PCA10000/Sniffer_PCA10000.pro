@@ -43,7 +43,7 @@ SOURCES += \
 FORMS   += sniffer_pca10000_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 include (src/test/test.pri)

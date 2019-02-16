@@ -45,7 +45,7 @@ RESOURCES   += pic/pic.qrc
 OTHER_FILES += doc/notebook.txt
 
 win32 {
-    RC_ICONS += ico/computer.ico
+    RC_ICONS = ico/computer.ico
 }
 
 RESOURCES   += images/images.qrc

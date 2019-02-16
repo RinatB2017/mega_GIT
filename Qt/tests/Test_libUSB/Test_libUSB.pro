@@ -57,7 +57,7 @@ SOURCES += \
 FORMS   += test_libusb_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

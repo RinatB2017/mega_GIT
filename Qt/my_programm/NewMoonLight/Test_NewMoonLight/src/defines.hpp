@@ -1,6 +1,8 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
+#include <inttypes.h>
+//--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_NewMoonLight"
 //--------------------------------------------------------------------------------
@@ -27,7 +29,7 @@ union NewMoonLightPacket
     unsigned char buf[sizeof(BODY)];
 };
 
-union UINT16 {
+union U_UINT16 {
     uint16_t value;
     struct {
         uint8_t c:4;

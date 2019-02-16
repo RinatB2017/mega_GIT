@@ -84,7 +84,7 @@ void MainBox::update(void)
 #if 1
     for(int n=0; n<4; n++)
     {
-        oscilloscope->add_curve_data(n, double(100.0)*qSin(double(index)*double(M_PI)/double(180.0)));
+        oscilloscope->add_curve_data(n, qreal(100.0)*qSin(qreal(index)*qreal(M_PI)/qreal(180.0)));
     }
     index++;
 #else
@@ -92,7 +92,7 @@ void MainBox::update(void)
     {
         for(int n=0; n<4; n++)
         {
-            oscilloscope->add_curve_data(n, double(100.0)*qSin(double(index)*double(M_PI)/double(180.0)));
+            oscilloscope->add_curve_data(n, qreal(100.0)*qSin(qreal(index)*qreal(M_PI)/qreal(180.0)));
         }
         index++;
     }

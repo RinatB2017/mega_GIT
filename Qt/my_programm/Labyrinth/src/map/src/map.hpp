@@ -32,7 +32,7 @@ class Map : public MyWidget
     Q_OBJECT
 
 public:
-    Map(QWidget *parent = 0);
+    Map(QWidget *parent = nullptr);
     ~Map();
 
     void new_map(int max_x, int max_y);
@@ -56,9 +56,10 @@ public:
 
 signals:
     void move_to(int x, int y);
+    void victory(void);
 
 public slots:
-    bool start(unsigned int interval_ms);
+    bool start(int interval_ms);
     void stop(void);
     void refresh(void);
 
@@ -89,6 +90,7 @@ private:
     void createTimer(void);
 
     QPixmap rotate(const QString &filename, int angle);
+    void check_victory(void);
 
     void updateText(void);
 

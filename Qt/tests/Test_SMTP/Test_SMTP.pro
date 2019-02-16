@@ -57,7 +57,7 @@ SOURCES += \
     smtpclient.cpp
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 HEADERS += sendemail.hpp

@@ -83,9 +83,17 @@ void MainBox::init_widgets(void)
     connect(ui->btn_stop,       SIGNAL(clicked(bool)),  this,   SLOT(stop()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 
+    connect(ui->map_widget,     SIGNAL(victory()),      this,   SLOT(update_map()));
+
     connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
     connect(ui->btn_step,       SIGNAL(clicked(bool)),  ui->map_widget, SLOT(update()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::update_map(void)
+{
+    ui->btn_start->setEnabled(true);
+    ui->btn_stop->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
 void MainBox::lock_widgets(void)
@@ -298,7 +306,7 @@ void MainBox::load_map(void)
 #if 0
     ui->map_widget->load_map("map.dat");
 #else
-    QFileDialog *dlg = 0;
+    QFileDialog *dlg;
 
     dlg = new QFileDialog;
     dlg->setNameFilter("DAT files (*.dat)");
@@ -322,7 +330,7 @@ void MainBox::save_map(void)
 #if 0
     ui->map_widget->save_map("map.dat");
 #else
-    QFileDialog *dlg = 0;
+    QFileDialog *dlg;
 
     dlg = new QFileDialog;
     dlg->setAcceptMode(QFileDialog::AcceptSave);

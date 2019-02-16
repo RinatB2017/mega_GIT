@@ -48,7 +48,7 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_ICONS += ico/computer.ico
+    RC_ICONS = ico/computer.ico
 }
 
 RESOURCES	+= images/images.qrc

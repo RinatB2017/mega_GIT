@@ -85,8 +85,8 @@ void Map::new_map(int max_x, int max_y)
     this->max_y = max_y;
 
     //---
-    QLayoutItem *child = 0;
-    while ((child = grid_map->takeAt(0)) != 0)
+    QLayoutItem *child;
+    while ((child = grid_map->takeAt(0)) != nullptr)
     {
         grid_map->removeItem(child);
         if (child->widget())
@@ -215,7 +215,7 @@ bool Map::add_item(int x, int y, int id)
     if(y > MAX_HEIGHT)  return false;
 
     QPixmap pixmap;
-    QLabel *label = 0;
+    QLabel *label;
     bool ok = false;
 
 #ifdef QT_DEBUG
@@ -332,7 +332,7 @@ bool Map::save_map(const QString &filename)
             {
                 emit info("EXIT FOUND");
             }
-            ba.append((char)id);
+            ba.append(static_cast<char>(id));
             temp.append(QString("%1 ").arg(id));
         }
         xmlPut->putString("items", ba.toHex());
@@ -390,7 +390,7 @@ bool Map::find_player(int *x, int *y)
     return (cnt == 1);
 }
 //--------------------------------------------------------------------------------
-bool Map::start(unsigned int interval_ms)
+bool Map::start(int interval_ms)
 {
     bool ok = false;
     int x = 0;
@@ -480,15 +480,21 @@ int Map::columnCount(void)
     //return grid_map->columnCount();
 }
 //--------------------------------------------------------------------------------
+void Map::check_victory(void)
+{
+    QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
+    emit info(temp);
+    QMessageBox::information(this, "Победа!", temp);
+    emit victory();
+}
+//--------------------------------------------------------------------------------
 void Map::player_move_up(void)
 {
     int id_victory = get_id(player_x, player_y-1);
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
-        emit info(temp);
-        QMessageBox::information(this, "Победа!", temp);
+        check_victory();
         return;
     }
 
@@ -523,9 +529,7 @@ void Map::player_move_down(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
-        emit info(temp);
-        QMessageBox::information(this, "Победа!", temp);
+        check_victory();
         return;
     }
 
@@ -560,9 +564,7 @@ void Map::player_move_left(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
-        emit info(temp);
-        QMessageBox::information(this, "Победа!", temp);
+        check_victory();
         return;
     }
 
@@ -597,9 +599,7 @@ void Map::player_move_right(void)
     if(id_victory == EXIT_ID)
     {
         timer->stop();
-        QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
-        emit info(temp);
-        QMessageBox::information(this, "Победа!", temp);
+        check_victory();
         return;
     }
 
@@ -634,7 +634,7 @@ bool Map::eventFilter(QObject *obj, QEvent *event)
     {
         if(id > 0)
         {
-            QLabel *label = (QLabel *)obj;
+            QLabel *label = static_cast<QLabel *>(obj);
             if(label)
             {
                 label->setPixmap(cursor().pixmap());

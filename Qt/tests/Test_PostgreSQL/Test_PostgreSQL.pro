@@ -33,7 +33,7 @@ SOURCES += \
 FORMS   += Test_PostgreSQL_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 LIB_PATH = "../../../Qt/lib"

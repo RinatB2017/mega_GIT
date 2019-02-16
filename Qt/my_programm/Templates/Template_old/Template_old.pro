@@ -69,7 +69,7 @@ SOURCES += \
 FORMS   += template_old_mainbox.ui
 
 win32 {
-    RC_ICONS += ico/computer.ico
+    RC_ICONS = ico/computer.ico
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

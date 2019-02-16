@@ -42,7 +42,7 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_ICONS += ico/RS232.ico
+    RC_ICONS = ico/RS232.ico
 }
 
 LIB_PATH  = "../../../../lib"

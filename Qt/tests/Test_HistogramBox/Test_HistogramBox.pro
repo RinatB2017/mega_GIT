@@ -34,7 +34,7 @@ FORMS   += Test_HistogramBox_mainbox.ui
 OTHER_FILES += doc/notebook.txt
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 CONFIG(debug, debug|release) {
@@ -42,7 +42,7 @@ CONFIG(debug, debug|release) {
 }
 
 #----------------------------------------------
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

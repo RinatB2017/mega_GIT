@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/ico">
+        <file>pda_blue.ico</file>
+    </qresource>
+</RCC>

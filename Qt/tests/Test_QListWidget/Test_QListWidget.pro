@@ -37,7 +37,7 @@ FORMS   += Test_QListWidget_mainbox.ui
 OTHER_FILES += doc/notebook.txt
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 include (src/test/test.pri)

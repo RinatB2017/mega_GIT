@@ -42,7 +42,7 @@ SOURCES += \
 FORMS   += modbus_test_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 RESOURCES += images/images.qrc

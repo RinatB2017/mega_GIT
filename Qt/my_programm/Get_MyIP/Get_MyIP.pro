@@ -32,7 +32,7 @@ SOURCES += \
 FORMS   += get_myip_mainbox.ui
 
 win32 {
-    RC_ICONS += ico/computer.ico
+    RC_ICONS = ico/computer.ico
 }
 
 RESOURCES += \

@@ -216,7 +216,7 @@ void MainBox::read_data(QByteArray ba)
 //--------------------------------------------------------------------------------
 uint16_t MainBox::get_value(NewMoonLightPacket *packet, uint16_t address)
 {
-    union UINT16 temp;
+    union U_UINT16 temp;
     temp.value = address;
 
     uint16_t res = packet->body.data[temp.bytes.a][temp.bytes.b] << 8 | packet->body.data[temp.bytes.c][temp.bytes.d];
@@ -506,7 +506,7 @@ void MainBox::test_0(void)
 {
     emit debug("test_0()");
 
-    UINT16 temp;
+    U_UINT16 temp;
     temp.value = 0x1234;
     emit info(QString("a 0x%1").arg(temp.bytes.a, 0, 16));
     emit info(QString("b 0x%1").arg(temp.bytes.b, 0, 16));

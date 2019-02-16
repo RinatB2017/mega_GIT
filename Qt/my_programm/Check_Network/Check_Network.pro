@@ -37,8 +37,10 @@ SOURCES += \
 FORMS   += check_network_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
+
+RESOURCES += ico/icons.qrc
 
 RESOURCES += \
     images/images.qrc \

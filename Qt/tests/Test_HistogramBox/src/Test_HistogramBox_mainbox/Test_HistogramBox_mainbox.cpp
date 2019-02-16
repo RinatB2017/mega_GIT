@@ -126,7 +126,7 @@ void MainBox::test(void)
     //histogram->clear();
     histogram->push_btn_Horizontal(true);
     histogram->push_btn_Vertical(true);
-    int pos_x = 0;
+    unsigned int pos_x = 0;
     for(int x=0; x<histogram->get_histograms_count(); x++)
     {
         if(all_break) return;

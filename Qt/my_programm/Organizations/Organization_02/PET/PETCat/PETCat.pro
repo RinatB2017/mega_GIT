@@ -130,7 +130,7 @@ OTHER_FILES += \
     !!Хотелки.txt
 
 win32 {
-    RC_FILE = $$PWD/ico/myapp.rc
+    RC_ICONS = ico/PETCAT.ico
 }
 
 include (src/Other/turbo.pri)

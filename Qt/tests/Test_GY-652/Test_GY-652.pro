@@ -49,7 +49,7 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_ICONS += ico/temperature.ico
+    RC_ICONS = ico/temperature.ico
 }
 
 RESOURCES += \

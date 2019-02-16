@@ -48,7 +48,7 @@ SOURCES += \
 FORMS   += src/multimeterbox/ui/multimeterbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 LIB_PATH  = "../../../../lib"

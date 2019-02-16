@@ -34,7 +34,7 @@ SOURCES += \
 FORMS   += mybot_mainbox.ui
 
 win32 {
-    RC_ICONS += ico/computer.ico
+    RC_ICONS = ico/computer.ico
 }
 
 RESOURCES += \

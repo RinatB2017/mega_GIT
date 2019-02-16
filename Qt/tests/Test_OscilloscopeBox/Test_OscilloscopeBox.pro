@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/Test_OscilloscopeBox_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
-
 DEFINES += SAVE_WIDGETS_PROPERTIES
 DEFINES += SAVE_WIDGETS_SLIDER
 
@@ -36,7 +34,7 @@ FORMS   += Test_OscilloscopeBox_mainbox.ui
 OTHER_FILES += doc/notebook.txt
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 LIB_PATH  = "../../../Qt/lib"

@@ -76,7 +76,7 @@ public:
 
 public slots:
     void add_curve_data(int channel,
-                        float data);
+                        qreal data);
 
 private slots:
     void legend_state(int curve_ID, bool state);

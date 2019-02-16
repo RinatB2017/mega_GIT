@@ -43,7 +43,7 @@ SOURCES += \
 FORMS   += proxy_walker_m_mainbox.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 LIB_PATH  = "../../../lib"

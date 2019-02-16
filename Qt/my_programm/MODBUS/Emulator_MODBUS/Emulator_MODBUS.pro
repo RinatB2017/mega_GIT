@@ -45,7 +45,7 @@ SOURCES += settingsdialog.cpp
 FORMS   += settingsdialog.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 QT  += serialbus

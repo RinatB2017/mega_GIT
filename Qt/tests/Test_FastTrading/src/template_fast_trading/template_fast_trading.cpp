@@ -410,7 +410,7 @@ void MainBox::redraw_generate_data(void)
         }
         n++;
 
-        grapher_data->add_curve_data(curve_data, static_cast<float>(price));
+        grapher_data->add_curve_data(curve_data, price);
     }
     dlg->close();
     dlg->deleteLater();
@@ -456,7 +456,7 @@ void MainBox::redraw_calc_data(void)
         }
         n++;
 
-        grapher_profit->add_curve_data(curve_profit, static_cast<float>(price));
+        grapher_profit->add_curve_data(curve_profit, price);
     }
     dlg->close();
     dlg->deleteLater();

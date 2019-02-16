@@ -53,8 +53,8 @@ bool MiniMap::new_map(int new_max_x, int new_max_y)
     if(new_max_y > MAX_HEIGHT)  return false;
 
     // удаляем все объекты
-    QLayoutItem *child = 0;
-    while ((child = grid_map->takeAt(0)) != 0)
+    QLayoutItem *child;
+    while ((child = grid_map->takeAt(0)) != nullptr)
     {
         grid_map->removeItem(child);
         if (child->widget())
@@ -97,7 +97,7 @@ bool MiniMap::add_item(int x, int y, int id)
     if(y > max_y)   return false;
 
     QPixmap pixmap;
-    QLabel *label = 0;
+    QLabel *label;
     bool ok = false;
 
     switch (id)

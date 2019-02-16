@@ -36,7 +36,7 @@ OTHER_FILES += doc/notebook.txt
 LIBS    += -lvlc
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 LIB_PATH = "../../../Qt/lib"

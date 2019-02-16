@@ -75,7 +75,7 @@ FORMS   += for_tests_mainbox.ui
 RESOURCES += ico/icons.qrc
 
 win32 {
-    RC_ICONS += ico/computer.ico
+    RC_ICONS = ico/computer.ico
 }
 
 RESOURCES += \

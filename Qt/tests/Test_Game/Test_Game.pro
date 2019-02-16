@@ -57,7 +57,7 @@ FORMS   += Test_Game_mainbox.ui
 #FORMS   += Test_Game_mainbox_test.ui
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

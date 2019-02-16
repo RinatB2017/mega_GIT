@@ -34,7 +34,7 @@ CONFIG  += c++11
 LIBS    += -lX11 -lXtst
 
 win32 {
-    RC_FILE = ico/myapp.rc
+    RC_ICONS = ico/computer.ico
     error (Only linux)
 }
 

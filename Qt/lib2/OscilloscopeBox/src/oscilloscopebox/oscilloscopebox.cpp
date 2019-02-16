@@ -362,7 +362,7 @@ void OscilloscopeBox::update(void)
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::add_curve_data(int channel,
-                                     float data)
+                                     qreal data)
 {
     if(curves.count() == 0)
     {

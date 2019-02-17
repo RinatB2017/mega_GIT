@@ -112,7 +112,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -224,8 +224,8 @@ void MainBox::read_data(QByteArray data)
 
     for(int n=0; n<21; n++)
     {
-        QString value_str = ((QString)sl.at(n)).replace(',', '.');
-        float value = value_str.toFloat();
+        QString value_str = static_cast<QString>(sl.at(n)).replace(',', '.');
+        double value = value_str.toDouble();
         grapher_widget->add_curve_data(curves[n], value);
     }
 }

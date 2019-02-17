@@ -62,28 +62,23 @@ private slots:
     void skip_forward(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
     QByteArray data_rs232;
 
-    Proto_NMEA_0183 *proto = 0;
+    Proto_NMEA_0183 *proto;
 
     QList<QByteArray> fake_data;
     int index_fake_data = 0;
     int max_index_fake_data = 0;
-    QLineEdit *le_index = 0;
+    QLineEdit *le_index;
 
     void init(void);
     void init_protocol(void);
-
     void createTestBar(void);
-
     void read_fake_data(void);
-
     void analize(void);
-
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

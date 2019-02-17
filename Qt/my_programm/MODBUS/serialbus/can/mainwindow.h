@@ -63,7 +63,7 @@ class QCanBusFrame;
 class QLabel;
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 QT_END_NAMESPACE

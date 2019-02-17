@@ -78,14 +78,14 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
-    SerialBox5_fix_baudrate *serial_widget = 0;
-    GrapherBox *grapher_widget = 0;
+    SerialBox5_fix_baudrate *serial_widget;
+    GrapherBox *grapher_widget;
 
     int curves[21] = { 0 };
 
@@ -94,7 +94,6 @@ private:
     void init_grapher(void);
     void createTestBar(void);
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

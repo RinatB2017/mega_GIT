@@ -85,7 +85,8 @@ void WebCamera::init(void)
     ui->checkBox_mouth->setChecked(true);
     //---
 
-    ui->le_device->setText("rtsp://192.168.0.66:554/av0_1");
+    //ui->le_device->setText("rtsp://192.168.0.66:554/av0_1");
+    ui->le_device->setText("/dev/video0");
 
     set_brightness(1);
     set_contrast(1);
@@ -190,10 +191,10 @@ void WebCamera::start(void)
     //mCapture.open(0);
     if(mCapture.isOpened())
     {
-        ui->sl_brightness->setValue(mCapture.get(CV_CAP_PROP_BRIGHTNESS) * 100.0);
-        ui->sl_contrast->setValue(mCapture.get(CV_CAP_PROP_CONTRAST) * 100.0);
-        ui->sl_saturation->setValue(mCapture.get(CV_CAP_PROP_SATURATION) * 100.0);
-        ui->sl_hue->setValue(mCapture.get(CV_CAP_PROP_HUE) * 100.0);
+        ui->sl_brightness->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_BRIGHTNESS) * 100.0));
+        ui->sl_contrast->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_CONTRAST) * 100.0));
+        ui->sl_saturation->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_SATURATION) * 100.0));
+        ui->sl_hue->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_HUE) * 100.0));
 
         //TODO
         mCapture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
@@ -201,15 +202,15 @@ void WebCamera::start(void)
         //set_autofocus(true);
         mCapture.set(CV_CAP_PROP_AUTOFOCUS, 1);
 
-        int w = mCapture.get(CV_CAP_PROP_FRAME_WIDTH);
-        int h = mCapture.get(CV_CAP_PROP_FRAME_HEIGHT);
+        int w = static_cast<int>(mCapture.get(CV_CAP_PROP_FRAME_WIDTH));
+        int h = static_cast<int>(mCapture.get(CV_CAP_PROP_FRAME_HEIGHT));
 
         emit info(QString("resolution %1*%2").arg(w).arg(h));
 
-        ui->sl_brightness->setDisabled(mCapture.get(CV_CAP_PROP_BRIGHTNESS) == 0);
-        ui->sl_contrast->setDisabled(mCapture.get(CV_CAP_PROP_CONTRAST) == 0);
-        ui->sl_saturation->setDisabled(mCapture.get(CV_CAP_PROP_SATURATION) == 0);
-        ui->sl_hue->setDisabled(mCapture.get(CV_CAP_PROP_HUE) == 0);
+        ui->sl_brightness->setDisabled(mCapture.get(CV_CAP_PROP_BRIGHTNESS) == 0.0);
+        ui->sl_contrast->setDisabled(mCapture.get(CV_CAP_PROP_CONTRAST) == 0.0);
+        ui->sl_saturation->setDisabled(mCapture.get(CV_CAP_PROP_SATURATION) == 0.0);
+        ui->sl_hue->setDisabled(mCapture.get(CV_CAP_PROP_HUE) == 0.0);
 
         ui->cameraWidget->setFixedSize(w, h);
         ui->main_frame->setFixedWidth(ui->cameraWidget->width() + ui->frame->width());
@@ -231,7 +232,7 @@ void WebCamera::set_brightness(int value)
     ui->lbl_brightness->setText(QString("%1").arg(ui->sl_brightness->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_BRIGHTNESS, (double)value / 100.0);
+        mCapture.set(CV_CAP_PROP_BRIGHTNESS, static_cast<double>(value) / 100.0);
     }
 }
 //--------------------------------------------------------------------------------
@@ -244,7 +245,7 @@ void WebCamera::set_contrast(int value)
     ui->lbl_contrast->setText(QString("%1").arg(ui->sl_contrast->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_CONTRAST, (double)value / 100.0);
+        mCapture.set(CV_CAP_PROP_CONTRAST, static_cast<double>(value) / 100.0);
     }
 }
 //--------------------------------------------------------------------------------
@@ -257,7 +258,7 @@ void WebCamera::set_saturation(int value)
     ui->lbl_saturation->setText(QString("%1").arg(ui->sl_saturation->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_SATURATION, (double)value / 100.0);
+        mCapture.set(CV_CAP_PROP_SATURATION, static_cast<double>(value) / 100.0);
     }
 }
 //--------------------------------------------------------------------------------
@@ -270,7 +271,7 @@ void WebCamera::set_hue(int value)
     ui->lbl_hue->setText(QString("%1").arg(ui->sl_hue->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_HUE, (double)value / 100.0);
+        mCapture.set(CV_CAP_PROP_HUE, static_cast<double>(value) / 100.0);
     }
 }
 //--------------------------------------------------------------------------------
@@ -309,7 +310,7 @@ void WebCamera::timerEvent(QTimerEvent *event)
         vector< cv::Rect > faceVec;
         //cv::Rect rectVec;
 
-        float scaleFactor = 3.0f; // Change Scale Factor to change speed
+        double scaleFactor = 3.0; // Change Scale Factor to change speed
         mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
         //mFaceDetector.detectSingleScale(mOrigImage, rectVec);
 
@@ -452,7 +453,7 @@ void WebCamera::test(void)
     mOrigImage = cv::imread(filename.toLocal8Bit().data(), CV_LOAD_IMAGE_COLOR);
     mOrigImage.copyTo(mElabImage);
 
-    float scaleFactor = 3.0f; // Change Scale Factor to change speed
+    double scaleFactor = 3.0; // Change Scale Factor to change speed
     mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
     for(size_t i=0; i<faceVec.size(); i++)
     {
@@ -497,13 +498,13 @@ void WebCamera::test(void)
 #endif
     }
 
-    double k = (double)ui->cameraWidget->height() / (double)mElabImage.rows;
+    double k = static_cast<double>(ui->cameraWidget->height()) / static_cast<double>(mElabImage.rows);
 #ifdef QT_DEBUG
     qDebug() << "mElabImage" << mElabImage.cols << mElabImage.rows;
     qDebug() << "cameraWidget" << ui->cameraWidget->width() << ui->cameraWidget->height();
     qDebug() << "K" << k;
 #endif
-    ui->cameraWidget->setMinimumWidth(k * (double)mElabImage.cols); // ui->cameraWidget->width());
+    ui->cameraWidget->setMinimumWidth(static_cast<int>(k * static_cast<double>(mElabImage.cols))); // ui->cameraWidget->width());
 
     ui->cameraWidget->showImage(mElabImage);
     ui->cameraWidget->adjustSize();
@@ -670,8 +671,8 @@ void WebCamera::test4(void)
 void WebCamera::test5(void)
 {
     emit trace(Q_FUNC_INFO);
-    IplImage* image = 0;
-    IplImage* templ = 0;
+    IplImage* image = nullptr;
+    IplImage* templ = nullptr;
 
     // получаем картинку
     image = cvLoadImage("lena.png", CV_LOAD_IMAGE_COLOR);
@@ -695,7 +696,7 @@ void WebCamera::test5(void)
     // (поиск минимумов и максимумов на изображении)
     double  minval, maxval;
     CvPoint minloc, maxloc;
-    cvMinMaxLoc(res, &minval, &maxval, &minloc, &maxloc, 0);
+    cvMinMaxLoc(res, &minval, &maxval, &minloc, &maxloc, nullptr);
 
     // выделим область прямоугольником
     cvRectangle(image,
@@ -736,9 +737,9 @@ bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName,
     char* imgName   = srcImgName.toLocal8Bit().data();
     char* templName = templImgName.toLocal8Bit().data();
 
-    IplImage *src    = NULL;
-    IplImage *templ  = NULL;
-    IplImage *result = NULL;
+    IplImage *src    = nullptr;
+    IplImage *templ  = nullptr;
+    IplImage *result = nullptr;
 
     src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
     //src = cvLoadImage(imgName, CV_LOAD_IMAGE_COLOR);

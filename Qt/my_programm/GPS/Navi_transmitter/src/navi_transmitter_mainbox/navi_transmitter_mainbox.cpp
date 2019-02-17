@@ -222,9 +222,9 @@ QString MainBox::get_latitude_string(void)
     QString grad = QString("%1").arg(ui->sb_latitude_grad->value(),    2,  10,     QChar('0'));
     //QString min  = QString("%1").arg(ui->dsb_latitude_min->value(),    2,  'f',    4);
 
-    float value = ui->dsb_latitude_min->value();
-    int a = (int)value;
-    int b = (value - (float)a) * 10000;
+    double value = ui->dsb_latitude_min->value();
+    int a = static_cast<int>(value);
+    int b = static_cast<int>((value - static_cast<double>(a)) * 10000.0);
     QString min = QString("%1.%2")
               .arg(a,   2,  10, QChar('0'))
               .arg(b,   4,  10, QChar('0'));
@@ -238,9 +238,9 @@ QString MainBox::get_longitude_string(void)
     QString grad = QString("%1").arg(ui->sb_longitude_grad->value(),    2,  10,     QChar('0'));
     //QString min  = QString("%1").arg(ui->dsb_longitude_min->value(),    2,  'f',    4);
 
-    float value = ui->dsb_longitude_min->value();
-    int a = (int)value;
-    int b = (value - (float)a) * 10000;
+    double value = ui->dsb_longitude_min->value();
+    int a = static_cast<int>(value);
+    int b = static_cast<int>((value - static_cast<double>(a)) * 10000.0);
     QString min = QString("%1.%2")
               .arg(a,   2,  10, QChar('0'))
               .arg(b,   4,  10, QChar('0'));
@@ -288,8 +288,8 @@ void MainBox::test_GGA(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -318,8 +318,8 @@ void MainBox::test_GSA(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -368,8 +368,8 @@ void MainBox::test_RMC(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -401,8 +401,8 @@ void MainBox::test_VTG(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -441,8 +441,8 @@ void MainBox::test_GLL(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -474,8 +474,8 @@ void MainBox::test_ZDA(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -498,8 +498,8 @@ void MainBox::test_PIREA(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -522,8 +522,8 @@ void MainBox::test_PIRFV(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -559,8 +559,8 @@ void MainBox::test_PIRGK(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);
@@ -587,8 +587,8 @@ void MainBox::test_PIRRA(void)
     data.append(message);
     data.append("*");
     data.append(checksum);
-    data.append((char)0x0D);
-    data.append((char)0x0A);
+    data.append(static_cast<char>(0x0D));
+    data.append(static_cast<char>(0x0A));
 
     emit send(data);
     emit info(data);

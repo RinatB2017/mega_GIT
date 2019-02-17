@@ -59,7 +59,7 @@
 QT_BEGIN_NAMESPACE
 
 namespace Ui {
-class ConnectDialog;
+    class ConnectDialog;
 }
 
 QT_END_NAMESPACE

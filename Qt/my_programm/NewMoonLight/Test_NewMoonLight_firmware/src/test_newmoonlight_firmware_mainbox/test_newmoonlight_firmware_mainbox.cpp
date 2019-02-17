@@ -90,7 +90,7 @@ void MainBox::init_widgets(void)
     max_r = ui->lbl_pic->width() / 2.0 - 20.0;
     min_angle = -30.0;
     max_angle = 330.0;
-    inc_r = (int)((max_r - min_r) / 2.4);
+    inc_r = static_cast<int>(((max_r - min_r) / 2.4));
     qreal angle = min_angle;
     int i = 1;
     while(angle < max_angle)
@@ -103,15 +103,15 @@ void MainBox::init_widgets(void)
                       inc_r * (n + 1),
                       &temp_x,
                       &temp_y);
-            Button *btn = new Button(led_r*2,
-                                     led_r*2,
+            Button *btn = new Button(static_cast<int>(led_r*2),
+                                     static_cast<int>(led_r*2),
                                      i,
                                      ui->lbl_pic);
             btn->setCheckable(true);
             pic_buttons.append(btn);
             btn->set_color(Qt::red, Qt::black);
-            btn->move(temp_x-led_r,
-                      temp_y-led_r);
+            btn->move(static_cast<int>(temp_x-led_r),
+                      static_cast<int>(temp_y-led_r));
             // connect(btn,    SIGNAL(toggled(bool)),  this,   SLOT(btn_click_adv(bool)));
             index++;
             i++;
@@ -246,7 +246,7 @@ void MainBox::btn_click(bool state)
 {
     Q_UNUSED(state)
 
-    QToolButton *btn = (QToolButton *)sender();
+    QToolButton *btn = static_cast<QToolButton *>(sender());
     if(!btn) return;
 
     int x = btn->property(PROPERTY_X).toInt();
@@ -307,7 +307,7 @@ void MainBox::btn_click_adv(bool state)
 {
     Q_UNUSED(state)
 
-    QToolButton *btn = (QToolButton *)sender();
+    QToolButton *btn = static_cast<QToolButton *>(sender());
     if(!btn) return;
 
     int x1 = btn->property(PROPERTY_X1).toInt();
@@ -357,7 +357,7 @@ void MainBox::send_grid_question(int value)
             emit debug(QString("[%1:%2]")
                       .arg(x)
                       .arg(y));
-            buf_leds[x][y] = value;
+            buf_leds[x][y] = static_cast<uint8_t>(value);
         }
     }
 
@@ -404,7 +404,7 @@ void MainBox::send_cold_pic_question(int value)
                       .arg(y1)
                       .arg(x2)
                       .arg(y2));
-            buf_leds[x1][y1] = value;
+            buf_leds[x1][y1] = static_cast<uint8_t>(value);
             //buf_leds[x2][y2] = value;
         }
     }
@@ -454,7 +454,7 @@ void MainBox::send_hot_pic_question(int value)
                       .arg(x2)
                       .arg(y2));
             //buf_leds[x1][y1] = value;
-            buf_leds[x2][y2] = value;
+            buf_leds[x2][y2] = static_cast<uint8_t>(value);
         }
     }
 

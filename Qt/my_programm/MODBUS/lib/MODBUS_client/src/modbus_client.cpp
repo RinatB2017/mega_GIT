@@ -93,8 +93,6 @@ void MODBUS_client::stateChanged(QModbusDevice::State state)
     case QModbusDevice::ConnectingState:    emit info("MODBUS_client::stateChanged ConnectingState");   break;
     case QModbusDevice::ConnectedState:     emit info("MODBUS_client::stateChanged ConnectedState");    break;
     case QModbusDevice::ClosingState:       emit info("MODBUS_client::stateChanged ClosingState");      break;
-    default:
-        break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -105,7 +103,7 @@ void MODBUS_client::test_write_coils(void)
     int serverAddress = 1;  //TODO
 
     QVector<quint16> p(1);
-    p[0]=ui->sb_write_value->value();
+    p[0]=static_cast<quint16>(ui->sb_write_value->value());
 
     QModbusDataUnit writeUnit;
     writeUnit.setRegisterType(QModbusDataUnit::Coils);
@@ -136,7 +134,7 @@ void MODBUS_client::test_write_holding_registers(void)
     int serverAddress = 1;  //TODO
 
     QVector<quint16> p(1);
-    p[0]=ui->sb_write_value->value();
+    p[0]=static_cast<quint16>(ui->sb_write_value->value());
 
     QModbusDataUnit writeUnit;
     writeUnit.setRegisterType(QModbusDataUnit::HoldingRegisters);
@@ -368,7 +366,7 @@ void MODBUS_client::readReady(void)
         {
             QString entry = QString("Address: %1, Value: 0x%2")
                     .arg(unit.startAddress())
-                    .arg(QString("%1").arg(unit.value(i), 0, 16));
+                    .arg(QString("%1").arg(unit.value(static_cast<int>(i)), 0, 16));
             emit info(entry);
         }
     }
@@ -386,7 +384,9 @@ QModbusDataUnit MODBUS_client::readRequest() const
     int startAddress = 0;
     int numberOfEntries = 1;
 
-    return QModbusDataUnit(table, startAddress, numberOfEntries);
+    return QModbusDataUnit(table,
+                           startAddress,
+                           static_cast<quint16>(numberOfEntries));
 }
 //--------------------------------------------------------------------------------
 QModbusDataUnit MODBUS_client::writeRequest() const
@@ -395,7 +395,9 @@ QModbusDataUnit MODBUS_client::writeRequest() const
     int startAddress = 0;
     int numberOfEntries = 1;
 
-    return QModbusDataUnit(table, startAddress, numberOfEntries);
+    return QModbusDataUnit(table,
+                           startAddress,
+                           static_cast<quint16>(numberOfEntries));
 }
 //--------------------------------------------------------------------------------
 void MODBUS_client::refresh(void)

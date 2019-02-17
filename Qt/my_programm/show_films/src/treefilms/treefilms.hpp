@@ -33,7 +33,7 @@ class TreeFilms : public QTreeWidget
     Q_OBJECT
 
 public:
-    explicit TreeFilms(QWidget *parent = 0);
+    explicit TreeFilms(QWidget *parent = nullptr);
     ~TreeFilms();
     
 signals:
@@ -87,9 +87,9 @@ private:
     QDomDocument *doc;
 
     void parseFolderElement(const QDomElement &element,
-                            QTreeWidgetItem *parentItem = 0);
+                            QTreeWidgetItem *parentItem = nullptr);
     QTreeWidgetItem *createItem(const QDomElement &element,
-                                QTreeWidgetItem *parentItem = 0);
+                                QTreeWidgetItem *parentItem = nullptr);
     QHash<QTreeWidgetItem *, QDomElement> domElementForItem;
 
     void connect_log(void);

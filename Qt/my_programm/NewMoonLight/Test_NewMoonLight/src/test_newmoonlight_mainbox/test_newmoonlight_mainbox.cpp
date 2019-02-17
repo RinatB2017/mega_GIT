@@ -93,7 +93,7 @@ void MainBox::init_widgets(void)
     max_r = ui->widget->width() / 2.0 - 20.0;
     min_angle = -30.0;
     max_angle = 330.0;
-    inc_r = (int)((max_r - min_r) / 2.4);
+    inc_r = static_cast<int>(((max_r - min_r) / 2.4));
     qreal angle = min_angle;
 
     while(angle < max_angle)
@@ -106,14 +106,14 @@ void MainBox::init_widgets(void)
                       inc_r * (n + 1),
                       &temp_x,
                       &temp_y);
-            Led *led = new Led(led_r*2.0,
-                               led_r*2.0,
+            Led *led = new Led(static_cast<int>(led_r*2.0),
+                               static_cast<int>(led_r*2.0),
                                ui->widget);
 
             led->setProperty("index", number);
             leds.append(led);
-            led->move(temp_x-led_r,
-                      temp_y-led_r);
+            led->move(static_cast<int>(temp_x-led_r),
+                      static_cast<int>(temp_y-led_r));
 #ifndef QT_DEBUG
             led->lock();
 #endif

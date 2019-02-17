@@ -28,8 +28,8 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
-class SettingsDialog;
+    class MainBox;
+    class SettingsDialog;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;

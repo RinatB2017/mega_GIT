@@ -58,7 +58,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = (MainWindow *)parentWidget();
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
     QToolBar *testbar = new QToolBar("testbar");

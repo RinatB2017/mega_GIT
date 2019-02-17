@@ -137,8 +137,8 @@ void MainBox::scan(void)
     dlg->setWindowTitle("Сканирование");
     dlg->setLabelText("Пожалуйста, ждите!");
     dlg->setMinimumSize(500, 100);
-    dlg->setMinimum(min_address);
-    dlg->setMaximum(max_address);
+    dlg->setMinimum(static_cast<int>(min_address));
+    dlg->setMaximum(static_cast<int>(max_address));
     dlg->setWindowModality(Qt::ApplicationModal);
     dlg->show();
 
@@ -152,7 +152,7 @@ void MainBox::scan(void)
     for(quint32 address = min_address; address<max_address; address++)
     {
         dlg->setLabelText(QString("Пожалуйста, ждите! (осталось %1 хостов)").arg(max_address - address));
-        dlg->setValue(address);
+        dlg->setValue(static_cast<int>(address));
 
         if(dlg->wasCanceled())
         {
@@ -160,7 +160,7 @@ void MainBox::scan(void)
         }
         QApplication::processEvents();
         strHost = QHostAddress(address).toString();
-        m_pTcpSocket->connectToHost(QHostAddress(address), nPort);
+        m_pTcpSocket->connectToHost(QHostAddress(address), static_cast<quint16>(nPort));
         ok = m_pTcpSocket->waitForConnected(max_wait);
         if(ok)
         {
@@ -204,7 +204,7 @@ void MainBox::f_connect(void)
     emit info("Connect");
     strHost = model->item(index.row(), 0)->text();
     nPort = model->item(index.row(), 1)->text().toInt();
-    m_pTcpSocket->connectToHost(strHost, nPort);
+    m_pTcpSocket->connectToHost(strHost, static_cast<quint16>(nPort));
     bool ok = m_pTcpSocket->waitForConnected(max_wait);
     if(ok)
     {

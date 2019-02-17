@@ -111,8 +111,6 @@ void MODBUS_server::stateChanged(QModbusDevice::State state)
     case QModbusDevice::ConnectingState:    emit info("MODBUS_server::stateChanged ConnectingState");   break;
     case QModbusDevice::ConnectedState:     emit info("MODBUS_server::stateChanged ConnectedState");    break;
     case QModbusDevice::ClosingState:       emit info("MODBUS_server::stateChanged ClosingState");      break;
-    default:
-        break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -164,27 +162,35 @@ void MODBUS_server::updateWidgets(QModbusDataUnit::RegisterType table,
         switch (table)
         {
         case QModbusDataUnit::Coils:
-            modbusDevice->data(QModbusDataUnit::Coils, address + i, &value);
-            he_coils->set(address+i, value);
+            modbusDevice->data(QModbusDataUnit::Coils,
+                               static_cast<quint16>(address + i),
+                               &value);
+            he_coils->set(static_cast<quint16>(address+i), value);
             emit info(QString("Coils %1").arg(value));
             break;
 
         case QModbusDataUnit::HoldingRegisters:
-            modbusDevice->data(QModbusDataUnit::HoldingRegisters, address + i, &value);
+            modbusDevice->data(QModbusDataUnit::HoldingRegisters,
+                               static_cast<quint16>(address + i),
+                               &value);
             emit info(QString("HoldingRegisters %1").arg(value));
-            he_holding_registers->set(address+i, value);
+            he_holding_registers->set(static_cast<quint16>(address+i), value);
             break;
 
         case QModbusDataUnit::DiscreteInputs:
-            modbusDevice->data(QModbusDataUnit::DiscreteInputs, address + i, &value);
+            modbusDevice->data(QModbusDataUnit::DiscreteInputs,
+                               static_cast<quint16>(address + i),
+                               &value);
             emit info(QString("DiscreteInputs %1").arg(value));
-            he_discrete_inputs->set(address+i, value);
+            he_discrete_inputs->set(static_cast<quint16>(address+i), value);
             break;
 
         case QModbusDataUnit::InputRegisters:
-            modbusDevice->data(QModbusDataUnit::InputRegisters, address + i, &value);
+            modbusDevice->data(QModbusDataUnit::InputRegisters,
+                               static_cast<quint16>(address + i),
+                               &value);
             emit info(QString("InputRegisters %1").arg(value));
-            he_input_registers->set(address+i, value);
+            he_input_registers->set(static_cast<quint16>(address+i), value);
             break;
 
         default:

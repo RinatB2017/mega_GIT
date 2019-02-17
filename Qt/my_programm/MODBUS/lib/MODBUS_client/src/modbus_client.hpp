@@ -40,7 +40,7 @@ class MODBUS_client : public MyWidget
     Q_OBJECT
 
 public:
-    MODBUS_client(QWidget *parent = 0);
+    MODBUS_client(QWidget *parent = nullptr);
     ~MODBUS_client();
 
 private slots:

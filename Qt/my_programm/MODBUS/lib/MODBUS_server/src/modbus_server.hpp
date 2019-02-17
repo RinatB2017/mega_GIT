@@ -43,7 +43,7 @@ class MODBUS_server : public MyWidget
     Q_OBJECT
 
 public:
-    MODBUS_server(QWidget *parent = 0);
+    MODBUS_server(QWidget *parent = nullptr);
     ~MODBUS_server();
 
 private slots:

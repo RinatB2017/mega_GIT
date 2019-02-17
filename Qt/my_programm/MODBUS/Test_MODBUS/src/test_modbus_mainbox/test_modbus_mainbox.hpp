@@ -51,11 +51,8 @@ private:
     Ui::MainBox *ui;
 
     void init(void);
-
     void createTestBar(void);
-
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif

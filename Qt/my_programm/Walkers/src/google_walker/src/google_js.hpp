@@ -32,7 +32,7 @@ class Google_JS : public QWidget
     Q_OBJECT
 
 public:
-    explicit Google_JS(QWidget *parent = 0);
+    explicit Google_JS(QWidget *parent = nullptr);
     ~Google_JS();
 
 signals:

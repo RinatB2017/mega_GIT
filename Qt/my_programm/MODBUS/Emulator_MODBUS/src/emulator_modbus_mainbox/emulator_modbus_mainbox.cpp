@@ -47,8 +47,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -116,7 +115,7 @@ void MainBox::on_connectType_currentIndexChanged(int index)
 
     if (!modbusDevice)
     {
-        MainWindow *mw = (MainWindow *)topLevelWidget();
+        MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
 
         ui->connectButton->setDisabled(true);
         if (type == Serial)
@@ -167,7 +166,7 @@ void MainBox::handleDeviceError(QModbusDevice::Error newError)
     if (newError == QModbusDevice::NoError || !modbusDevice)
         return;
 
-    MainWindow *mw = (MainWindow *)topLevelWidget();
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw) mw->statusBar()->showMessage(modbusDevice->errorString(), 5000);
 }
 //--------------------------------------------------------------------------------
@@ -175,7 +174,7 @@ void MainBox::on_connectButton_clicked()
 {
     bool intendToConnect = (modbusDevice->state() == QModbusDevice::UnconnectedState);
 
-    MainWindow *mw = (MainWindow *)topLevelWidget();
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw) mw->statusBar()->clearMessage();
 
     if (intendToConnect)
@@ -202,7 +201,7 @@ void MainBox::on_connectButton_clicked()
         modbusDevice->setServerAddress(ui->serverEdit->text().toInt());
         if (!modbusDevice->connectDevice())
         {
-            MainWindow *mw = (MainWindow *)topLevelWidget();
+            MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
             if(mw) mw->statusBar()->showMessage(tr("Connect failed: ") + modbusDevice->errorString(), 5000);
         }
         else
@@ -248,8 +247,8 @@ void MainBox::bitChanged(int id, QModbusDataUnit::RegisterType table, bool value
     if (!modbusDevice)
         return;
 
-    MainWindow *mw = (MainWindow *)topLevelWidget();
-    if (!modbusDevice->setData(table, id, value))
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if (!modbusDevice->setData(table, static_cast<quint16>(id), value))
     {
         if(mw) mw->statusBar()->showMessage(tr("Could not set data: ") + modbusDevice->errorString(), 5000);
     }
@@ -260,16 +259,20 @@ void MainBox::setRegister(const QString &value)
     if (!modbusDevice)
         return;
 
-    MainWindow *mw = (MainWindow *)topLevelWidget();
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     const QString objectName = QObject::sender()->objectName();
     if (registers.contains(objectName))
     {
         bool ok = true;
         const int id = QObject::sender()->property("ID").toInt();
         if (objectName.startsWith(QStringLiteral("inReg")))
-            ok = modbusDevice->setData(QModbusDataUnit::InputRegisters, id, value.toInt(&ok, 16));
+            ok = modbusDevice->setData(QModbusDataUnit::InputRegisters,
+                                       static_cast<quint16>(id),
+                                       static_cast<quint16>(value.toInt(&ok, 16)));
         else if (objectName.startsWith(QStringLiteral("holdReg")))
-            ok = modbusDevice->setData(QModbusDataUnit::HoldingRegisters, id, value.toInt(&ok, 16));
+            ok = modbusDevice->setData(QModbusDataUnit::HoldingRegisters,
+                                       static_cast<quint16>(id),
+                                       static_cast<quint16>(value.toInt(&ok, 16)));
 
         if (!ok)
         {
@@ -287,12 +290,12 @@ void MainBox::updateWidgets(QModbusDataUnit::RegisterType table, int address, in
         switch (table)
         {
         case QModbusDataUnit::Coils:
-            modbusDevice->data(QModbusDataUnit::Coils, address + i, &value);
+            modbusDevice->data(QModbusDataUnit::Coils, static_cast<quint16>(address + i), &value);
             coilButtons.button(address + i)->setChecked(value);
             break;
 
         case QModbusDataUnit::HoldingRegisters:
-            modbusDevice->data(QModbusDataUnit::HoldingRegisters, address + i, &value);
+            modbusDevice->data(QModbusDataUnit::HoldingRegisters, static_cast<quint16>(address + i), &value);
             registers.value(QStringLiteral("holdReg_%1").arg(address + i))->setText(text.setNum(value, 16));
             break;
 
@@ -308,11 +311,14 @@ void MainBox::setupDeviceData()
         return;
 
     for (int i = 0; i < coilButtons.buttons().count(); ++i)
-        modbusDevice->setData(QModbusDataUnit::Coils, i, coilButtons.button(i)->isChecked());
+        modbusDevice->setData(QModbusDataUnit::Coils,
+                              static_cast<quint16>(i),
+                              coilButtons.button(i)->isChecked());
 
     for (int i = 0; i < discreteButtons.buttons().count(); ++i)
     {
-        modbusDevice->setData(QModbusDataUnit::DiscreteInputs, i,
+        modbusDevice->setData(QModbusDataUnit::DiscreteInputs,
+                              static_cast<quint16>(i),
                               discreteButtons.button(i)->isChecked());
     }
 
@@ -321,13 +327,15 @@ void MainBox::setupDeviceData()
     {
         if (widget->objectName().startsWith(QStringLiteral("inReg")))
         {
-            modbusDevice->setData(QModbusDataUnit::InputRegisters, widget->property("ID").toInt(),
-                                  widget->text().toInt(&ok, 16));
+            modbusDevice->setData(QModbusDataUnit::InputRegisters,
+                                  static_cast<quint16>(widget->property("ID").toInt()),
+                                  static_cast<quint16>(widget->text().toInt(&ok, 16)));
         }
         else if (widget->objectName().startsWith(QStringLiteral("holdReg")))
         {
-            modbusDevice->setData(QModbusDataUnit::HoldingRegisters, widget->property("ID").toInt(),
-                                  widget->text().toInt(&ok, 16));
+            modbusDevice->setData(QModbusDataUnit::HoldingRegisters,
+                                  static_cast<quint16>(widget->property("ID").toInt()),
+                                  static_cast<quint16>(widget->text().toInt(&ok, 16)));
         }
     }
 }
@@ -363,7 +371,7 @@ void MainBox::setupWidgetContainers()
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = (MainWindow *)parentWidget();
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
     QToolBar *testbar = new QToolBar("testbar");

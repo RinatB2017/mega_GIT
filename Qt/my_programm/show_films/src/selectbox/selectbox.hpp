@@ -33,7 +33,7 @@ class SelectBox : public QDialog
 {
     Q_OBJECT
 public:
-    SelectBox(QWidget *parent = 0,
+    SelectBox(QWidget *parent = nullptr,
               const QString &caption = "no caption",
               const QString &path = "path",
               const QString &filename = "filename",

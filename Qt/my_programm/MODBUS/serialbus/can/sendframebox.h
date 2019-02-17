@@ -67,9 +67,7 @@ class HexIntegerValidator : public QValidator
     Q_OBJECT
 public:
     explicit HexIntegerValidator(QObject *parent = nullptr);
-
     QValidator::State validate(QString &input, int &) const;
-
     void setMaximum(uint maximum);
 
 private:
@@ -82,9 +80,7 @@ class HexStringValidator : public QValidator
 
 public:
     explicit HexStringValidator(QObject *parent = nullptr);
-
     QValidator::State validate(QString &input, int &pos) const;
-
     void setMaxLength(int maxLength);
 
 private:
@@ -103,10 +99,10 @@ signals:
     void sendFrame(const QCanBusFrame &frame);
 
 private:
-    Ui::SendFrameBox *m_ui = nullptr;
+    Ui::SendFrameBox *m_ui;
 
-    HexIntegerValidator *m_hexIntegerValidator = nullptr;
-    HexStringValidator *m_hexStringValidator = nullptr;
+    HexIntegerValidator *m_hexIntegerValidator;
+    HexStringValidator *m_hexStringValidator;
 };
 
 #endif // SENDFRAMEBOX_H

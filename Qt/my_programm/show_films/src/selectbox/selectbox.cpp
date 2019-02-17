@@ -96,7 +96,7 @@ void SelectBox::show_picture(const QString &picture_name)
     float multiplier = 1.0f;
     int width  = MAX_WIDTH;
     int height = MAX_HEIGHT;
-    float ideal_proportion = (float)MAX_WIDTH/(float)MAX_HEIGHT;
+    float ideal_proportion = static_cast<float>(MAX_WIDTH)/static_cast<float>(MAX_HEIGHT);
     float proportion;
     QPixmap picture;
     QPixmap new_picture;
@@ -110,14 +110,14 @@ void SelectBox::show_picture(const QString &picture_name)
     if(!QFile(filename).exists())
         filename = QString(SPACE_FILE);
     picture.load(filename);
-    proportion = (float)picture.width()/(float)picture.height();
+    proportion = static_cast<float>(picture.width())/static_cast<float>(picture.height());
     if(proportion < ideal_proportion)
-        multiplier = (float)MAX_HEIGHT / picture.height();
+        multiplier = static_cast<float>(MAX_HEIGHT) / picture.height();
     else
-        multiplier = (float)MAX_WIDTH / picture.width();
+        multiplier = static_cast<float>(MAX_WIDTH) / picture.width();
 
-    width  = picture.width() * multiplier;
-    height = picture.height() * multiplier;
+    width  = static_cast<int>(picture.width() * multiplier);
+    height = static_cast<int>(picture.height() * multiplier);
     // qDebug() << width << height;
 
     new_picture = picture.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);

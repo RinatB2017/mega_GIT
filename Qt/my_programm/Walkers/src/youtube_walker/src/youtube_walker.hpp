@@ -29,7 +29,7 @@ class Youtube_walker : public QWidget
     Q_OBJECT
 
 public:
-    explicit Youtube_walker(QWidget *parent = 0);
+    explicit Youtube_walker(QWidget *parent = nullptr);
     ~Youtube_walker();
 
     void setUrl(QUrl url);

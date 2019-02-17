@@ -27,7 +27,7 @@ class Mesh_Led : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Mesh_Led(QWidget *parent = 0);
+    explicit Mesh_Led(QWidget *parent = nullptr);
     void setState(bool state); 
 
 private:

@@ -29,7 +29,7 @@ class Google_walker : public QWidget
     Q_OBJECT
 
 public:
-    explicit Google_walker(QWidget *parent = 0);
+    explicit Google_walker(QWidget *parent = nullptr);
     ~Google_walker();
 
     void setUrl(QUrl url);

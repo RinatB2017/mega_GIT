@@ -28,7 +28,7 @@ class MyMainWindow : public MainWindow
     Q_OBJECT
 
 public:
-    MyMainWindow(MainWindow *parent = 0);
+    MyMainWindow(MainWindow *parent = nullptr);
     ~MyMainWindow();
 
     void install_handler(void);

@@ -31,7 +31,7 @@ class MenuDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit MenuDock(QWidget *parent = 0);
+    explicit MenuDock(QWidget *parent = nullptr);
     ~MenuDock();
 
 signals:

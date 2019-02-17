@@ -32,7 +32,7 @@ class LogDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit LogDock(QWidget *parent = 0);
+    explicit LogDock(QWidget *parent = nullptr);
     ~LogDock();
 
 public slots:

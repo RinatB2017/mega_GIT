@@ -106,6 +106,7 @@ void MainWidget_GUI::createTestBar(void)
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     QCheckBox *cb_block = new QCheckBox("block");
+    cb_block->setObjectName("cb_block");
     testbar->addWidget(cb_block);
 
     cb_test = new QComboBox(this);

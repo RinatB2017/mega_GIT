@@ -28,7 +28,7 @@ class NewMainWindow : public MainWindow
     Q_OBJECT
 
 public:
-    NewMainWindow(MainWindow *parent = 0);
+    NewMainWindow(MainWindow *parent = nullptr);
 
 private slots:
     void choice_test(void);

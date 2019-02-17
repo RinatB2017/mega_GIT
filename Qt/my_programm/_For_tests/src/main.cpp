@@ -34,6 +34,7 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
+#include "simple_mw.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"
@@ -87,7 +88,8 @@ int main(int argc, char *argv[])
 
     splash->show();
 
-    MyMainWindow *main_window = new MyMainWindow();
+    //MyMainWindow *main_window = new MyMainWindow();
+    Simple_MW *main_window = new Simple_MW();
     Q_CHECK_PTR(main_window);
 
     // отключает заголовок

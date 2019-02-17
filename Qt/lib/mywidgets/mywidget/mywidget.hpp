@@ -153,9 +153,6 @@ public:
                             const QString &text,
                             const QString &tool_tip);
 
-    //---
-    //virtual bool no_exit(void) = 0;
-
 signals:
     void info(const QString &);
     void debug(const QString &);

@@ -36,12 +36,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    if(test_widget)
-    {
-        test_widget->close();
-        test_widget->deleteLater();
-    }
-    save_widgets("for_test");
+    save_widgets(APPNAME);
 
     delete ui;
 }
@@ -66,7 +61,7 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
-    load_widgets("for_test");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::check_in(void)
@@ -128,14 +123,6 @@ void MainBox::createTestBar(void)
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
-//--------------------------------------------------------------------------------
-#if 0
-//TODO как нибудь потом
-bool MainBox::no_exit(void)
-{
-    return false;
-}
-#endif
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
@@ -215,6 +202,13 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    B b;
+    emit info(b.x0());
+    emit info(b.x1());
+    emit info(b.x2());
+#endif
+
+#if 0
     auto x = 0;
     emit info(QString("%1").arg(sizeof(x)));
 #endif

@@ -132,23 +132,6 @@ void MainWindow::changeEvent(QEvent *event)
 //--------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QMessageBox msgBox;
-
-    //---
-#if 0
-    MyWidget *cw = (MyWidget *)centralWidget();
-    if(cw)
-    {
-        //TODO как нибудь потом
-        if(cw->no_exit())
-        {
-            event->ignore();
-            return;
-        }
-    }
-#endif
-    //---
-
     if(flag_close)
     {
         save_setting();
@@ -156,6 +139,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         return;
     }
 
+    QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Question);
     msgBox.setWindowTitle(tr("Exit the program"));
     msgBox.setText(tr("Exit the program?"));

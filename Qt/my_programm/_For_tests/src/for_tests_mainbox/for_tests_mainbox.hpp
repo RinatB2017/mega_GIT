@@ -36,6 +36,25 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+class A
+{
+public:
+    A() {}
+
+    QString x0(void) { return "A:x0"; }
+    QString x1(void) { return "A:x1"; }
+    QString x2(void) { return "A:x2"; }
+};
+
+class B : public A
+{
+public:
+    //B() {}
+
+    QString x1(void) { return "B:x1"; }
+};
+
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
@@ -92,7 +111,6 @@ private:
     QComboBox *cb_test;
     QList<CMD> commands;
 
-    QWidget *test_widget;
     QComboBox *cb_test2;
 
     //---

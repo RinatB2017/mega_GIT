@@ -162,7 +162,8 @@ int B590::set_UI_parrot(int U, int I)
     bool ok = false;
     powersupply->set_address(ui->sb_address->value());
     //powersupply->set_state_silence(true);
-    ok = powersupply->set_UI_parrot(U, I);
+    ok = powersupply->set_UI_parrot(static_cast<uint16_t>(U),
+                                    static_cast<uint16_t>(I));
     //powersupply->set_state_silence(false);
     if(!ok)
     {
@@ -205,7 +206,7 @@ int B590::set_vent_speed(void)
 {
     bool ok = false;
 
-    ok = powersupply->set_vent_speed(ui->sl_vent_speed->value());
+    ok = powersupply->set_vent_speed(static_cast<uint16_t>(ui->sl_vent_speed->value()));
     if(!ok) return powersupply->print_last_error();
 
     emit info("OK");
@@ -275,16 +276,16 @@ int B590::test_U(void)
     signed long V1 = 0;
     QProgressDialog *pd = new QProgressDialog("Operation in progress.", "Cancel", sb_begin->value(), sb_end->value(), this);
     pd->setWindowModality(Qt::WindowModal);
-    for(new_setting_U = sb_begin->value(); new_setting_U < (unsigned long)sb_end->value(); new_setting_U++)
+    for(new_setting_U = static_cast<unsigned long>(sb_begin->value()); new_setting_U < static_cast<unsigned long>(sb_end->value()); new_setting_U++)
     {
-        pd->setValue(new_setting_U);
+        pd->setValue(static_cast<int>(new_setting_U));
         if(pd->wasCanceled())
         {
             break;
         }
 
         QCoreApplication::processEvents();
-        V1 = powersupply->get_Correct_value_U(new_setting_U);
+        V1 = powersupply->get_Correct_value_U(static_cast<unsigned int>(new_setting_U));
         grapher->add_curve_data(curve_V1, V1);
         grapher->add_curve_data(curve_new_setting_U, new_setting_U);
     }
@@ -328,9 +329,9 @@ int B590::test_I(void)
     signed long V1 = 0;
     QProgressDialog *pd = new QProgressDialog("Operation in progress.", "Cancel", sb_begin->value(), sb_end->value(), this);
     pd->setWindowModality(Qt::WindowModal);
-    for(new_setting_I = sb_begin->value(); new_setting_I < (unsigned long)sb_end->value(); new_setting_I++)
+    for(new_setting_I = static_cast<unsigned long>(sb_begin->value()); new_setting_I < static_cast<unsigned long>(sb_end->value()); new_setting_I++)
     {
-        pd->setValue(new_setting_I);
+        pd->setValue(static_cast<int>(new_setting_I));
         if(pd->wasCanceled())
         {
             break;
@@ -363,19 +364,19 @@ void B590::read_calibration_point_B590(void)
     old_value = 0;
     for(int n=0; n<MAX_CALIBRATION_POINTS_B590_U; n++)
     {
-        ok = powersupply->get_calibration_point_U(n, &value);
+        ok = powersupply->get_calibration_point_U(static_cast<uint8_t>(n), &value);
         if(ok)
         {
             emit info(QString("dac_U[%1]=%2;")
                       .arg(n)
                       .arg(value));
-            grapher->add_curve_data(curve_U, value);
+            grapher->add_curve_data(static_cast<uint16_t>(curve_U), value);
             //???
             if(n)
             {
                 int delta = abs(value - old_value);
                 old_value = value;
-                grapher->add_curve_data(curve_W, delta);
+                grapher->add_curve_data(static_cast<uint16_t>(curve_W), delta);
             }
         }
         else
@@ -388,19 +389,22 @@ void B590::read_calibration_point_B590(void)
     old_value = 0;
     for(int n=0; n<MAX_CALIBRATION_POINTS_B590_I; n++)
     {
-        ok = powersupply->get_calibration_point_I(n, &value);
+        ok = powersupply->get_calibration_point_I(static_cast<uint8_t>(n),
+                                                  &value);
         if(ok)
         {
             emit info(QString("dac_I[%1]=%2;")
                       .arg(n)
                       .arg(value));
-            grapher->add_curve_data(curve_I, value);
+            grapher->add_curve_data(static_cast<uint16_t>(curve_I),
+                                    value);
             //???
             if(n)
             {
                 int delta = abs(value - old_value);
                 old_value = value;
-                grapher->add_curve_data(curve_T, delta);
+                grapher->add_curve_data(static_cast<uint16_t>(curve_T),
+                                        delta);
             }
         }
         else
@@ -669,12 +673,12 @@ void B590::set_UI(void)
     switch(state_powersupply)
     {
     case IN_PARROT:
-        ok = powersupply->set_UI_parrot(ui->knob_U->value(),
-                                        ui->knob_I->value());
+        ok = powersupply->set_UI_parrot(static_cast<uint16_t>(ui->knob_U->value()),
+                                        static_cast<uint16_t>(ui->knob_I->value()));
         break;
     case IN_NORMAL:
-        ok = powersupply->set_UI(ui->knob_U->value() * 1000.0f,
-                                 ui->knob_I->value() * 1000.0f);
+        ok = powersupply->set_UI(static_cast<int32_t>(ui->knob_U->value() * 1000.0),
+                                 static_cast<uint16_t>(ui->knob_I->value() * 1000.0));
         break;
     }
     if(!ok)
@@ -698,7 +702,7 @@ void B590::inc_U(void)
             ui->knob_U->setValue(ui->knob_U->value()+U);
             break;
         case IN_NORMAL:
-            ui->knob_U->setValue(ui->knob_U->value()+(U / 1000.0f));
+            ui->knob_U->setValue(ui->knob_U->value()+(U / 1000.0));
             break;
         default:
             emit error(QString("unknown state_powersupply %1").arg(state_powersupply));
@@ -720,7 +724,7 @@ void B590::inc_I(void)
             ui->knob_I->setValue(ui->knob_I->value()+I);
             break;
         case IN_NORMAL:
-            ui->knob_I->setValue(ui->knob_I->value()+(I / 1000.0f));
+            ui->knob_I->setValue(ui->knob_I->value()+(I / 1000.0));
             break;
         default:
             emit error(QString("unknown state_powersupply %1").arg(state_powersupply));
@@ -742,7 +746,7 @@ void B590::dec_U(void)
             ui->knob_U->setValue(ui->knob_U->value()-U);
             break;
         case IN_NORMAL:
-            ui->knob_U->setValue(ui->knob_U->value()-(U / 1000.0f));
+            ui->knob_U->setValue(ui->knob_U->value()-(U / 1000.0));
             break;
         default:
             emit error(QString("unknown state_powersupply %1").arg(state_powersupply));
@@ -764,7 +768,7 @@ void B590::dec_I(void)
             ui->knob_I->setValue(ui->knob_I->value()-I);
             break;
         case IN_NORMAL:
-            ui->knob_I->setValue(ui->knob_I->value()-(I / 1000.0f));
+            ui->knob_I->setValue(ui->knob_I->value()-(I / 1000.0));
             break;
         default:
             emit error(QString("unknown state_powersupply %1").arg(state_powersupply));
@@ -785,7 +789,7 @@ void B590::find_max_power(void)
     {
         powersupply->set_address(ui->sb_address->value());
         powersupply->set_UI(value,
-                            ui->sb_max_current->value());
+                            static_cast<uint16_t>(ui->sb_max_current->value()));
         switch(powersupply->get_last_error())
         {
         case E_B590_HI_VOLTAGE:
@@ -819,22 +823,24 @@ void B590::extreme(void)
     {
         QCoreApplication::processEvents();
         ok = powersupply->set_UI(ui->sb_first_U->value(),
-                                 ui->sb_first_I->value());
+                                 static_cast<uint16_t>(ui->sb_first_I->value()));
         if(!ok)
         {
             powersupply->print_last_error();
             flag_test_stop = true;
         }
-        if(ui->sb_delay_msec->value()>1) Sleeper::msleep(ui->sb_delay_msec->value());
+        if(ui->sb_delay_msec->value()>1)
+            Sleeper::msleep(static_cast<unsigned long>(ui->sb_delay_msec->value()));
         get_UI();
         ok = powersupply->set_UI(ui->sb_second_U->value(),
-                                 ui->sb_second_I->value());
+                                 static_cast<uint16_t>(ui->sb_second_I->value()));
         if(!ok)
         {
             powersupply->print_last_error();
             flag_test_stop = true;
         }
-        if(ui->sb_delay_msec->value()>1) Sleeper::msleep(ui->sb_delay_msec->value());
+        if(ui->sb_delay_msec->value()>1)
+            Sleeper::msleep(static_cast<unsigned long>(ui->sb_delay_msec->value()));
         get_UI();
     }
 
@@ -992,11 +998,11 @@ void B590::get_UI(void)
         return;
     }
 
-    float u = (double)out_voltage / 1000.0f;
-    float i = (double)out_current / 1000.0f;
-    if(i < 0.000001f) i = 0.000001f;
-    float r = u / i;
-    float w = u * i;
+    double u = static_cast<double>(out_voltage) / 1000.0;
+    double i = static_cast<double>(out_current / 1000.0);
+    if(i < 0.000001) i = 0.000001;
+    double r = u / i;
+    double w = u * i;
 
     if(u > ui->knob_U->value()) ui->lcd_U_in->setStyleSheet("color: red");
     else ui->lcd_U_in->setStyleSheet("");

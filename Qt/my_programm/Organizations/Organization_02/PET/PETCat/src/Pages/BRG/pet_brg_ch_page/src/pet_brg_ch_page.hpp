@@ -39,7 +39,7 @@ class PET_brg_ch_page : public MyWidget
     Q_OBJECT
 
 public:
-    explicit PET_brg_ch_page(uint16_t channel, QWidget *parent = 0);
+    explicit PET_brg_ch_page(uint16_t channel, QWidget *parent = nullptr);
     ~PET_brg_ch_page();
 
     PET_RESULT set_ctrl(pet_brg_ch_ctrl_t p_data);

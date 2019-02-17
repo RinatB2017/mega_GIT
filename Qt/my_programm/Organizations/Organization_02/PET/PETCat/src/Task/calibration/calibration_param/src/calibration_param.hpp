@@ -34,7 +34,7 @@ class Calibration_param : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Calibration_param(QWidget *parent = 0);
+    explicit Calibration_param(QWidget *parent = nullptr);
     ~Calibration_param();
 
 public slots:

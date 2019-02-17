@@ -84,9 +84,22 @@ void MySplashScreen::showMessage(const QString &message,
 //--------------------------------------------------------------------------------
 void MySplashScreen::set_progress(int value)
 {
+    if(value > max_progress)
+    {
+        return;
+    }
     current_progress = value;
     progress->setValue(current_progress);
-    //repaint();
+}
+//--------------------------------------------------------------------------------
+void MySplashScreen::add_progress(void)
+{
+    if(current_progress > max_progress)
+    {
+        return;
+    }
+    current_progress++;
+    progress->setValue(current_progress);
 }
 //--------------------------------------------------------------------------------
 bool MySplashScreen::eventFilter(QObject *target, QEvent *event)

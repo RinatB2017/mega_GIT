@@ -122,7 +122,7 @@ public:
 
 public slots:
     int add_curve(const QString &title,
-                  QwtSymbol *symbol = 0);
+                  QwtSymbol *symbol = nullptr);
     bool add_curve(const QString &title,
                    int curve_ID);
 

@@ -36,7 +36,7 @@ class Viewer : public MyWidget
     Q_OBJECT
 
 public:
-    Viewer(QWidget *parent = 0);
+    Viewer(QWidget *parent = nullptr);
     ~Viewer();
 
 public slots:

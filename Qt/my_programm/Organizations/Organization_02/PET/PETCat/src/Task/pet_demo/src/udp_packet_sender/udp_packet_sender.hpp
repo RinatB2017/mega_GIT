@@ -34,7 +34,7 @@ public:
     explicit UDP_packet_sender(QUdpSocket *socket,
                                QHostAddress host,
                                quint16 port,
-                               QObject *parent = 0);
+                               QObject *parent = nullptr);
     ~UDP_packet_sender();
 
 signals:

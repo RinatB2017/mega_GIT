@@ -190,7 +190,7 @@ class B590_Fram : public QObject
     Q_OBJECT
 
 public:
-    B590_Fram(QObject *parent = 0);
+    B590_Fram(QObject *parent = nullptr);
 
     void init(void);
     bool read_fram_from_file(const QString &filename);

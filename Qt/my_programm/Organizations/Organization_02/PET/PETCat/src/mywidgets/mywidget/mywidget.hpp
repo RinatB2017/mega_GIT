@@ -69,7 +69,7 @@ public:
         ButtonMask         = ~FlagMask          // obsolete
     };
 
-    explicit MyWidget(QWidget *parent = 0);
+    explicit MyWidget(QWidget *parent = nullptr);
     ~MyWidget();
 
     void connect_log(QWidget *parent);

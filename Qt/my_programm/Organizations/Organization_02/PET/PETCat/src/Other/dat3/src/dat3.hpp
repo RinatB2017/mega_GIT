@@ -34,7 +34,7 @@ class DAT3 : public QObject
 {
     Q_OBJECT
 public:
-    explicit DAT3(QObject *parent = 0);
+    explicit DAT3(QObject *parent = nullptr);
 
     bool read_file(const QString filename);
     quint64 get_cnt_read_events(void);

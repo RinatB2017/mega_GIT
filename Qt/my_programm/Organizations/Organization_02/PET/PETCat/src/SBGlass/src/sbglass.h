@@ -25,7 +25,7 @@ class SBGlass : public QObject
 	Q_OBJECT
 
 public:
-	SBGlass(QObject *parent = 0);
+    SBGlass(QObject *parent = nullptr);
 	~SBGlass();
 	virtual void install(QWidget* w);
 	virtual void remove();
@@ -36,10 +36,10 @@ public:
 	void enableOpacity(qreal opacity = 0.5);
 	void disableOpacity();
 
-	void enableInfoBlock(QMovie* movie = 0, const QString& text = QString::null);
+    void enableInfoBlock(QMovie* movie = nullptr, const QString& text = QString::null);
 	void disableInfoBlock();
 
-	void enableAnimationBlock(QMovie* movie = 0);
+    void enableAnimationBlock(QMovie* movie = nullptr);
 	void disableAnimationBlock();
 
 	void enableInfoTextBlock(const QString& text = QString::null);
@@ -52,7 +52,7 @@ protected:
 
 private:
 	void showInfoTextBlock(const QString& text = QString::null);
-	void showAnimationBlock(QMovie* movie = 0);
+    void showAnimationBlock(QMovie* movie = nullptr);
 	void infoBlockPositioning();
 
 private:

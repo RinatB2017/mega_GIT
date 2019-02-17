@@ -13,7 +13,7 @@ public:
                   const QString &tooltip,
                   const QColor &color_off = Qt::gray,
                   const QColor &color_on = Qt::red,
-                  QWidget *parent = 0);
+                  QWidget *parent = nullptr);
     void setState(bool state); 
 
 private:

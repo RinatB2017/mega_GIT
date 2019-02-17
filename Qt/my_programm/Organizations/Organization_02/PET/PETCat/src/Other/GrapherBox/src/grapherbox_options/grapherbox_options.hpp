@@ -36,7 +36,7 @@ public:
                                 double max_axis_X,
                                 double min_axis_Y,
                                 double max_axis_Y,
-                                QWidget *parent = 0);
+                                QWidget *parent = nullptr);
     ~GrapherBox_Options();
 
     int get_min_axis_x(void);

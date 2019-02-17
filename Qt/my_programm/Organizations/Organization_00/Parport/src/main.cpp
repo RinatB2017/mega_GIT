@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     main_window->setCentralWidget(mainBox);
     main_window->show();
 
-    qDebug() << QString("Starting application \"%1\"").arg(APPNAME);
+    qDebug() << QString("Starting application %1").arg(APPNAME);
 
     return app.exec();
 }

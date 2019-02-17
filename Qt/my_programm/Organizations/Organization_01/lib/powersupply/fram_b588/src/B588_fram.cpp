@@ -75,7 +75,7 @@ bool B588_Fram::read_fram_from_file(const QString &filename)
 
     for(int address=0; address<MAX_ADDRESS_FRAM_B588; address++)
     {
-        set_uint8_t(address, ba.at(address));
+        set_uint8_t(static_cast<uint16_t>(address), ba.at(address));
     }
     return true;
 }
@@ -183,7 +183,7 @@ bool B588_Fram::set_user_calibration_point_U(uint16_t index_point, uint16_t valu
 {
     if(index_point > MAX_CALIBRATION_POINTS_B588_U) return false;
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_U) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_U) + (index_point * sizeof(uint16_t)));
     return set_uint16_t(address, value);
 }
 //--------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ bool B588_Fram::set_user_calibration_point_I(uint16_t index_point, uint16_t valu
 {
     if(index_point > MAX_CALIBRATION_POINTS_B588_I) return false;
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_I) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_I) + (index_point * sizeof(uint16_t)));
     return set_uint16_t(address, value);
 }
 //--------------------------------------------------------------------------------
@@ -199,7 +199,7 @@ bool B588_Fram::set_factory_calibration_point_U(uint16_t index_point, uint16_t v
 {
     if(index_point > MAX_CALIBRATION_POINTS_B588_U) return false;
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_U) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_U) + (index_point * sizeof(uint16_t)));
     return set_uint16_t(address, value);
 }
 //--------------------------------------------------------------------------------
@@ -207,13 +207,13 @@ bool B588_Fram::set_factory_calibration_point_I(uint16_t index_point, uint16_t v
 {
     if(index_point > MAX_CALIBRATION_POINTS_B588_I) return false;
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_I) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_I) + (index_point * sizeof(uint16_t)));
     return set_uint16_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_user_calibration_point_U(uint16_t index_point, uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_U) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_U) + (index_point * sizeof(uint16_t)));
     uint16_t temp = 0;
     bool ok = get_uint16_t(address, &temp);
     if(ok)
@@ -225,7 +225,7 @@ bool B588_Fram::get_user_calibration_point_U(uint16_t index_point, uint16_t *val
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_user_calibration_point_I(uint16_t index_point, uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_I) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_I) + (index_point * sizeof(uint16_t)));
     uint16_t temp = 0;
     bool ok = get_uint16_t(address, &temp);
     if(ok)
@@ -237,7 +237,7 @@ bool B588_Fram::get_user_calibration_point_I(uint16_t index_point, uint16_t *val
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_factory_calibration_point_U(uint16_t index_point, uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_U) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_U) + (index_point * sizeof(uint16_t)));
     uint16_t temp = 0;
     bool ok = get_uint16_t(address, &temp);
     if(ok)
@@ -249,7 +249,7 @@ bool B588_Fram::get_factory_calibration_point_U(uint16_t index_point, uint16_t *
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_factory_calibration_point_I(uint16_t index_point, uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_I) + (index_point * sizeof(uint16_t));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_I) + (index_point * sizeof(uint16_t)));
     uint16_t temp = 0;
     bool ok = get_uint16_t(address, &temp);
     if(ok)
@@ -271,7 +271,7 @@ bool B588_Fram::calc_and_save_CRC16_user_calibration_points_U(void)
     }
     uint16_t crc16 = get_CRC16(temp_U.buf_08, MAX_CALIBRATION_POINTS_B588_U*2);
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_crc16_U);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_crc16_U));
     return set_uint16_t(address, crc16);
 }
 //--------------------------------------------------------------------------------
@@ -287,7 +287,7 @@ bool B588_Fram::calc_and_save_CRC16_user_calibration_points_I(void)
     }
     uint16_t crc16 = get_CRC16(temp_I.buf_08, MAX_CALIBRATION_POINTS_B588_I*2);
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_crc16_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_crc16_I));
     return set_uint16_t(address, crc16);
 }
 //--------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ bool B588_Fram::calc_and_save_CRC16_factory_calibration_points_U(void)
     }
     uint16_t crc16 = get_CRC16(temp_U.buf_08, MAX_CALIBRATION_POINTS_B588_U*2);
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_crc16_U);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_crc16_U));
     return set_uint16_t(address, crc16);
 }
 //--------------------------------------------------------------------------------
@@ -319,13 +319,13 @@ bool B588_Fram::calc_and_save_CRC16_factory_calibration_points_I(void)
     }
     uint16_t crc16 = get_CRC16(temp_I.buf_08, MAX_CALIBRATION_POINTS_B588_I*2);
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_crc16_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_crc16_I));
     return set_uint16_t(address, crc16);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_CRC16_user_calibration_points_U(uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_crc16_U);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_crc16_U));
     uint16_t data = 0;
     bool ok = get_uint16_t(address, &data);
     if(ok)
@@ -337,7 +337,7 @@ bool B588_Fram::get_CRC16_user_calibration_points_U(uint16_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_CRC16_user_calibration_points_I(uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, user_points_crc16_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_crc16_I));
     uint16_t data = 0;
     bool ok = get_uint16_t(address, &data);
     if(ok)
@@ -349,7 +349,7 @@ bool B588_Fram::get_CRC16_user_calibration_points_I(uint16_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_CRC16_factory_calibration_points_U(uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_crc16_U);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_crc16_U));
     uint16_t data = 0;
     bool ok = get_uint16_t(address, &data);
     if(ok)
@@ -361,7 +361,7 @@ bool B588_Fram::get_CRC16_factory_calibration_points_U(uint16_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_CRC16_factory_calibration_points_I(uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, factory_points_crc16_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_crc16_I));
     uint16_t data = 0;
     bool ok = get_uint16_t(address, &data);
     if(ok)
@@ -373,13 +373,13 @@ bool B588_Fram::get_CRC16_factory_calibration_points_I(uint16_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_moto_time(uint32_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, moto_time);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, moto_time));
     return set_uint32_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_moto_time(uint32_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, moto_time);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, moto_time));
     uint32_t data = 0;
     bool ok = get_uint32_t(address, &data);
     if(ok)
@@ -391,49 +391,52 @@ bool B588_Fram::get_moto_time(uint32_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Bright(int8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Bright);
-    return set_uint8_t(address, value);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Bright));
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Sound(int8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Sound);
-    return set_uint8_t(address, value);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Sound));
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Adr_GPIB(int8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Adr_GPIB);
-    return set_uint8_t(address, value);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Adr_GPIB));
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Count_Last_U_I(uint8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Count_Last_U_I);
-    return set_uint8_t(address, value);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Count_Last_U_I));
+    return set_uint8_t(address,value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Save_Counts_U_I(uint8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Save_Counts_U_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Save_Counts_U_I));
     return set_uint8_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Speed_UART(uint8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Speed_UART);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Speed_UART));
     return set_uint8_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Adr_ModBus(uint8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Adr_ModBus);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Adr_ModBus));
     return set_uint8_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Bright(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Bright);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Bright));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -445,7 +448,7 @@ bool B588_Fram::get_Bright(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Sound(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Sound);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Sound));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -457,7 +460,7 @@ bool B588_Fram::get_Sound(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Adr_GPIB(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Adr_GPIB);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Adr_GPIB));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -469,7 +472,7 @@ bool B588_Fram::get_Adr_GPIB(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Count_Last_U_I(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Count_Last_U_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Count_Last_U_I));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -481,7 +484,7 @@ bool B588_Fram::get_Count_Last_U_I(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Save_Counts_U_I(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Save_Counts_U_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Save_Counts_U_I));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -493,7 +496,7 @@ bool B588_Fram::get_Save_Counts_U_I(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Speed_UART(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Speed_UART);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Speed_UART));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -505,7 +508,7 @@ bool B588_Fram::get_Speed_UART(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Adr_ModBus(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Adr_ModBus);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Adr_ModBus));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -517,25 +520,25 @@ bool B588_Fram::get_Adr_ModBus(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Year_Factory(uint16_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Year_Factory);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Year_Factory));
     return set_uint16_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Month_Factory(uint8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Month_Factory);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Month_Factory));
     return set_uint16_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_Serial_Factory(uint16_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Serial_Factory);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Serial_Factory));
     return set_uint16_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Year_Factory(uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Year_Factory);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Year_Factory));
     uint16_t data = 0;
     bool ok = get_uint16_t(address, &data);
     if(ok)
@@ -547,7 +550,7 @@ bool B588_Fram::get_Year_Factory(uint16_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Month_Factory(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Month_Factory);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Month_Factory));
     uint8_t data = 0;
     bool ok = get_uint8_t(address, &data);
     if(ok)
@@ -559,7 +562,7 @@ bool B588_Fram::get_Month_Factory(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Serial_Factory(uint16_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Serial_Factory);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Serial_Factory));
     uint16_t data = 0;
     bool ok = get_uint16_t(address, &data);
     if(ok)
@@ -576,7 +579,7 @@ bool B588_Fram::set_profile_point(uint16_t index_profile,
     //TODO
     Q_UNUSED(index_profile)
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, profiles) + (index_point * sizeof(s_point));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, profiles) + (index_point * sizeof(s_point)));
     bool ok = false;
 
     ok = set_uint16_t(address,   point.voltage);
@@ -599,7 +602,7 @@ bool B588_Fram::get_profile_point(uint16_t index_profile,
     Q_UNUSED(index_profile)
     Q_UNUSED(point)
 
-    uint16_t address = offsetof(FRAM_ADDR_B588, profiles) + (index_point * sizeof(s_point));
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, profiles) + (index_point * sizeof(s_point)));
     s_point temp_point;
     bool ok = false;
 
@@ -620,7 +623,7 @@ bool B588_Fram::set_Value_K_Zero_U(int32_t  new_Value_ADC_Zero,
                                    uint16_t new_Value_DAC_MIN,
                                    uint16_t new_Value_DAC_MAX)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Value_K_Zero_U);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Value_K_Zero_U));
     bool ok = false;
 
     union
@@ -648,7 +651,7 @@ bool B588_Fram::set_Value_K_Zero_I(int32_t  new_Value_ADC_Zero,
                                    uint16_t new_Value_DAC_MIN,
                                    uint16_t new_Value_DAC_MAX)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Value_K_Zero_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Value_K_Zero_I));
     bool ok = false;
 
     union
@@ -673,7 +676,7 @@ bool B588_Fram::set_Value_K_Zero_I(int32_t  new_Value_ADC_Zero,
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Value_K_Zero_U(s_zero_b588_U *local_calib_U)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Value_K_Zero_U);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Value_K_Zero_U));
     bool ok = false;
 
     union
@@ -694,7 +697,7 @@ bool B588_Fram::get_Value_K_Zero_U(s_zero_b588_U *local_calib_U)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_Value_K_Zero_I(s_zero_b588_I *local_calib_I)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, Value_K_Zero_I);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, Value_K_Zero_I));
     bool ok = false;
 
     union
@@ -769,10 +772,10 @@ bool B588_Fram::copy_factory_to_user_calibration(void)
     uint16_t data = 0;
     bool ok = false;
     uint16_t n = 0;
-    uint16_t user_points_U = offsetof(FRAM_ADDR_B588, user_points_U);
-    uint16_t user_points_I = offsetof(FRAM_ADDR_B588, user_points_I);
-    uint16_t factory_points_U = offsetof(FRAM_ADDR_B588, factory_points_U);
-    uint16_t factory_points_I = offsetof(FRAM_ADDR_B588, factory_points_I);
+    uint16_t user_points_U = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_U));
+    uint16_t user_points_I = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_I));
+    uint16_t factory_points_U = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_U));
+    uint16_t factory_points_I = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_I));
 
     for(n=0; n<MAX_CALIBRATION_POINTS_B588_U; n++)
     {
@@ -799,10 +802,10 @@ bool B588_Fram::copy_user_to_factory_calibration(void)
     uint16_t data = 0;
     bool ok = false;
     uint16_t n = 0;
-    uint16_t user_points_U = offsetof(FRAM_ADDR_B588, user_points_U);
-    uint16_t user_points_I = offsetof(FRAM_ADDR_B588, user_points_I);
-    uint16_t factory_points_U = offsetof(FRAM_ADDR_B588, factory_points_U);
-    uint16_t factory_points_I = offsetof(FRAM_ADDR_B588, factory_points_I);
+    uint16_t user_points_U = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_U));
+    uint16_t user_points_I = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, user_points_I));
+    uint16_t factory_points_U = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_U));
+    uint16_t factory_points_I = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factory_points_I));
 
     for(n=0; n<MAX_CALIBRATION_POINTS_B588_U; n++)
     {
@@ -992,7 +995,7 @@ bool B588_Fram::get_uint32_t(uint16_t address,
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_factor_k(double value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, factor_k);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factor_k));
     DOUBLE temp;
 
     temp.value = value;
@@ -1006,7 +1009,7 @@ bool B588_Fram::set_factor_k(double value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_factor_k(double *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, factor_k);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, factor_k));
     DOUBLE temp;
     temp.value = 0;
 
@@ -1021,13 +1024,13 @@ bool B588_Fram::get_factor_k(double *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_disable_factor_k(uint8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, disable_factor_k);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, disable_factor_k));
     return set_uint8_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_disable_factor_k(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, disable_factor_k);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, disable_factor_k));
     uint8_t temp = 0;
     bool ok = get_uint8_t(address, &temp);
     if(ok)
@@ -1039,13 +1042,13 @@ bool B588_Fram::get_disable_factor_k(uint8_t *value)
 //--------------------------------------------------------------------------------
 bool B588_Fram::set_cal_temp(uint8_t value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, cal_temp);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, cal_temp));
     return set_uint8_t(address, value);
 }
 //--------------------------------------------------------------------------------
 bool B588_Fram::get_cal_temp(uint8_t *value)
 {
-    uint16_t address = offsetof(FRAM_ADDR_B588, cal_temp);
+    uint16_t address = static_cast<uint16_t>(offsetof(FRAM_ADDR_B588, cal_temp));
     uint8_t temp = 0;
     bool ok = get_uint8_t(address, &temp);
     if(ok)

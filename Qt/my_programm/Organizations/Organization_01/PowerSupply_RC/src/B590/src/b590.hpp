@@ -113,11 +113,11 @@ private:
     bool flag_find_stop = false;
     bool flag_test_stop = false;
 
-    unsigned int curve_U = 0;
-    unsigned int curve_I = 0;
-    unsigned int curve_R = 0;
-    unsigned int curve_W = 0;
-    unsigned int curve_T = 0;
+    int curve_U = 0;
+    int curve_I = 0;
+    int curve_R = 0;
+    int curve_W = 0;
+    int curve_T = 0;
 
     void init(void);
 

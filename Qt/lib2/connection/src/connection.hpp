@@ -47,7 +47,7 @@ public:
     static int32_t  get_int32_value(void);
 
 private:
-    explicit Connection(QObject *parent = 0);
+    explicit Connection(QObject *parent = nullptr);
 
     static double   value_double;
     static float    value_float;

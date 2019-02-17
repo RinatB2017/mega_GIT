@@ -37,7 +37,7 @@ class DebugFrame : public MyWidget
 {
     Q_OBJECT
 public:
-    DebugFrame(TCP_Client *client, QWidget *parent = 0);
+    DebugFrame(TCP_Client *client, QWidget *parent = nullptr);
     
 private slots:
     void test(void);

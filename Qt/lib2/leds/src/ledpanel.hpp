@@ -14,7 +14,10 @@ class LedPanel : public QFrame
 {
     Q_OBJECT
 public:
-    explicit LedPanel(unsigned int max_leds, unsigned int width_leds, unsigned int height_leds, QWidget *parent = 0);
+    explicit LedPanel(unsigned int max_leds,
+                      unsigned int width_leds,
+                      unsigned int height_leds,
+                      QWidget *parent = nullptr);
     ~LedPanel();
 
 signals:

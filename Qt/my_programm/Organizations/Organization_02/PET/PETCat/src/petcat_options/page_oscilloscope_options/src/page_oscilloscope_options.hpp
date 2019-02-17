@@ -34,7 +34,7 @@ class Page_oscilloscope_options : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Page_oscilloscope_options(QWidget *parent = 0);
+    explicit Page_oscilloscope_options(QWidget *parent = nullptr);
     ~Page_oscilloscope_options();
 
 private slots:

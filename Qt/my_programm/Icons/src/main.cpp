@@ -24,6 +24,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "icons_mainbox.hpp"
 #include "defines.hpp"
@@ -44,11 +45,20 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 6);
+    Q_CHECK_PTR(splash);
+
+    splash->show();
+
     MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window->getThis());
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
     main_window->setCentralWidget(mainBox);
     main_window->show();
+
+    splash->finish(main_window);
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 

@@ -30,8 +30,8 @@ class B590_toolbar : public QToolBar
     Q_OBJECT
 
 public:
-    explicit B590_toolbar(const QString &title, QWidget *parent = 0);
-    explicit B590_toolbar(QWidget *parent = 0);
+    explicit B590_toolbar(const QString &title, QWidget *parent = nullptr);
+    explicit B590_toolbar(QWidget *parent = nullptr);
     ~B590_toolbar();
 
 signals:

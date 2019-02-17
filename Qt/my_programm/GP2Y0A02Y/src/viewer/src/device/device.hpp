@@ -32,7 +32,7 @@ class Device : public QFrame
     Q_OBJECT
 
 public:
-    explicit Device(QWidget *parent = 0);
+    explicit Device(QWidget *parent = nullptr);
     ~Device();
 
     void show_value(int value);

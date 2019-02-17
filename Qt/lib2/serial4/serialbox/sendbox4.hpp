@@ -36,7 +36,7 @@ class SendBox4 : public QFrame
     Q_OBJECT
 
 public:
-    SendBox4(QWidget *parent = 0);
+    SendBox4(QWidget *parent = nullptr);
     ~SendBox4();
 
     void block_interface(bool state);

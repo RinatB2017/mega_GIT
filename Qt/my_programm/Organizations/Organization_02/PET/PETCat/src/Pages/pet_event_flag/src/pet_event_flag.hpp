@@ -32,7 +32,7 @@ class PET_event_flag : public QDialog
     Q_OBJECT
 
 public:
-    explicit PET_event_flag(QWidget *parent = 0);
+    explicit PET_event_flag(QWidget *parent = nullptr);
     ~PET_event_flag();
 
     void set(uint8_t value);

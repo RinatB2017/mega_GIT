@@ -15,7 +15,8 @@ QLed::QLed(unsigned int width,
 
     if(width < 16) width = 16;
     if(height < 16) height = 16;
-    setFixedSize(width, height);
+    setFixedSize(static_cast<int>(width),
+                 static_cast<int>(height));
     setToolTip(tooltip);
 
     current_color = color_off;

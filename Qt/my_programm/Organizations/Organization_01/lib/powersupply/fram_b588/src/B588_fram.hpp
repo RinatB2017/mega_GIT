@@ -151,7 +151,7 @@ class B588_Fram : public QObject
     Q_OBJECT
 
 public:
-    explicit B588_Fram(QObject *parent = 0);
+    explicit B588_Fram(QObject *parent = nullptr);
 
     void init(void);
     bool read_fram_from_file(const QString &filename);

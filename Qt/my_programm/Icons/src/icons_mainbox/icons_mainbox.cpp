@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QDirIterator>
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QToolButton>
 #include <QScrollArea>
 #include <QToolBar>
@@ -29,6 +28,7 @@
 //--------------------------------------------------------------------------------
 #include "ui_icons_mainbox.h"
 //--------------------------------------------------------------------------------
+#include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "icons_mainbox.hpp"
 #include "myfiledialog.hpp"
@@ -37,8 +37,9 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-MainBox::MainBox(QWidget *parent) :
+MainBox::MainBox(QWidget *parent, MySplashScreen *splash) :
     MyWidget(parent),
+    splash(splash),
     ui(new Ui::MainBox)
 {
     init();
@@ -71,6 +72,7 @@ void MainBox::init(void)
     tab->addTab(hicolor, "hicolor");
     tab->addTab(lol, "lol");
 
+    splash->add_progress();
     add_icons(gnome, ":/gnome/actions");
     add_icons(gnome, ":/gnome/animations");
     add_icons(gnome, ":/gnome/apps");
@@ -82,11 +84,13 @@ void MainBox::init(void)
     add_icons(gnome, ":/gnome/places");
     add_icons(gnome, ":/gnome/status");
 
+    splash->add_progress();
     add_icons(hicolor, ":/hicolor/actions");
     add_icons(hicolor, ":/hicolor/apps");
     add_icons(hicolor, ":/hicolor/mimetypes");
     add_icons(hicolor, ":/hicolor/places");
 
+    splash->add_progress();
     add_icons(crystal_clear, ":/crystal_clear/actions");
     add_icons(crystal_clear, ":/crystal_clear/apps");
     add_icons(crystal_clear, ":/crystal_clear/devices");
@@ -94,6 +98,7 @@ void MainBox::init(void)
     add_icons(crystal_clear, ":/crystal_clear/kdm");
     add_icons(crystal_clear, ":/crystal_clear/mimetypes");
 
+    splash->add_progress();
     add_icons(oxygen, ":/oxygen/actions");
     add_icons(oxygen, ":/oxygen/animations");
     add_icons(oxygen, ":/oxygen/apps");
@@ -105,6 +110,7 @@ void MainBox::init(void)
     add_icons(oxygen, ":/oxygen/places");
     add_icons(oxygen, ":/oxygen/status");
 
+    splash->add_progress();
     add_icons(nuvola, ":/nuvola/actions");
     add_icons(nuvola, ":/nuvola/apps");
     add_icons(nuvola, ":/nuvola/categories");
@@ -114,6 +120,7 @@ void MainBox::init(void)
     add_icons(nuvola, ":/nuvola/places");
     add_icons(nuvola, ":/nuvola/status");
 
+    splash->add_progress();
     add_icons(lol, ":/lol/actions");
     add_icons(lol, ":/lol/apps");
     add_icons(lol, ":/lol/devices");
@@ -127,8 +134,8 @@ void MainBox::init(void)
 
     layout()->addWidget(tab);
 
-    QPushButton *btn_clean = new QPushButton("Очистить");
-    QPushButton *btn_save  = new QPushButton("Сохранить");
+    QPushButton *btn_clean = new QPushButton("Очистить", this);
+    QPushButton *btn_save  = new QPushButton("Сохранить", this);
 
     connect(btn_clean,  SIGNAL(clicked(bool)),  this,   SLOT(clean()));
     connect(btn_save,   SIGNAL(clicked(bool)),  this,   SLOT(save()));
@@ -136,9 +143,9 @@ void MainBox::init(void)
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->addWidget(btn_clean);
     hbox->addWidget(btn_save);
-    hbox->addStretch(1);
+    hbox->addStretch();
 
-    QWidget *w = new QWidget;
+    QWidget *w = new QWidget(this);
     w->setLayout(hbox);
 
     layout()->addWidget(w);
@@ -180,7 +187,7 @@ void MainBox::save(void)
     }
     if(cnt == 0)
     {
-        QMessageBox::critical(this, tr("Ошибка"), tr("Нет выбранных иконок!"));
+        messagebox_critical(tr("Ошибка"), tr("Нет выбранных иконок!"));
         return;
     }
     MyFileDialog *dlg;

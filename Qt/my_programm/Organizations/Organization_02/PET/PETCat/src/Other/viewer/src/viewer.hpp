@@ -41,7 +41,7 @@ class Viewer : public MyWidget
     Q_OBJECT
 
 public:
-    Viewer(QWidget *parent = 0);
+    Viewer(QWidget *parent = nullptr);
 
     bool set_floodmap_size(int value);
     bool clear_all(void);

@@ -32,13 +32,16 @@ namespace Ui {
 class QToolButton;
 class QTabWidget;
 class QToolBar;
+
+class MySplashScreen;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -48,6 +51,7 @@ private slots:
     void save(void);
 
 private:
+    MySplashScreen *splash;
     Ui::MainBox *ui;
 
     QTabWidget *tab;

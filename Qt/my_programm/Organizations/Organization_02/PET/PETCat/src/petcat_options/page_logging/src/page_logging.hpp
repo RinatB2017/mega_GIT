@@ -35,7 +35,7 @@ class Page_logging : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Page_logging(QWidget *parent = 0);
+    explicit Page_logging(QWidget *parent = nullptr);
     ~Page_logging();
 
 signals:

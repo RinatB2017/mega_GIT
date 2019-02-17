@@ -35,7 +35,7 @@ class Page_main_options : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Page_main_options(QWidget *parent = 0);
+    explicit Page_main_options(QWidget *parent = nullptr);
     ~Page_main_options();
 
 signals:

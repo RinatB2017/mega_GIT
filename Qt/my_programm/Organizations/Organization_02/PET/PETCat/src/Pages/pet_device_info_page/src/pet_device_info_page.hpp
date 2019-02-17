@@ -38,7 +38,7 @@ class PET_device_info_page : public MyWidget
     Q_OBJECT
 
 public:
-    explicit PET_device_info_page(QWidget *parent = 0);
+    explicit PET_device_info_page(QWidget *parent = nullptr);
     ~PET_device_info_page();
 
     PET_RESULT set(pet_device_info_t p_data);

@@ -20,7 +20,7 @@ private:
     QList<QStringList> _lines_list;     // массив полученный в результате разбора CSV-файла
 
 public:
-    CsvReader(QObject *parent = 0, const QString& file_name = QString(""));
+    CsvReader(QObject *parent = nullptr, const QString& file_name = QString(""));
     ~CsvReader();
     void setFileName(const QString& name) { _file.setFileName(name); }  // ycmaнoвka имени файла
     bool Open();                                                        // omkpыmue файла

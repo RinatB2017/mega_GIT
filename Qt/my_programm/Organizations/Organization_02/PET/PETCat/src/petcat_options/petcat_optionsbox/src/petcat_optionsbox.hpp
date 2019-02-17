@@ -44,7 +44,7 @@ class PETCat_optionsBox : public QDialog
     Q_OBJECT
 
 public:
-    explicit PETCat_optionsBox(QWidget *parent = 0);
+    explicit PETCat_optionsBox(QWidget *parent = nullptr);
     ~PETCat_optionsBox();
 
     void set_current_index(int index);

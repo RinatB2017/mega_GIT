@@ -12,7 +12,7 @@ class HexSpinBox : public QSpinBox
 {
     Q_OBJECT
     public:
-    HexSpinBox(QGroupBox *parent = 0);
+    HexSpinBox(QGroupBox *parent = nullptr);
 	
     protected:
 	QValidator::State validate(QString &text, int &pos) const;

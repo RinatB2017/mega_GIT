@@ -54,7 +54,7 @@ void Device::show_value(int value)
 
 #if 1
     float max_value = 500;
-    uint8_t R = (float)value * 255.0 / max_value + 0.5;
+    uint8_t R = static_cast<uint8_t>(static_cast<float>(value * 255.0) / max_value + 0.5);
 #else
     uint8_t R = value;
 #endif

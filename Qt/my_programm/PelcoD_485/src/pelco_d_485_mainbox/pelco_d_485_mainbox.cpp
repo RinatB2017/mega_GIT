@@ -183,15 +183,15 @@ void MainBox::f_move_up(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 8;
     packet.body.data1    = 0;
     packet.body.data2    = speed;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -203,15 +203,15 @@ void MainBox::f_move_down(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0x10;
     packet.body.data1    = 0;
     packet.body.data2    = speed;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -223,15 +223,16 @@ void MainBox::f_move_left(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 4;
     packet.body.data1    = speed;
     packet.body.data2    = 0;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    //ba.append((char *)&packet.buf, sizeof(packet)); //TODO
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -243,15 +244,15 @@ void MainBox::f_move_right(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 2;
     packet.body.data1    = speed;
     packet.body.data2    = 0;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -263,15 +264,15 @@ void MainBox::f_move_up_left(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0x0C;
     packet.body.data1    = speed;
     packet.body.data2    = speed;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -283,15 +284,15 @@ void MainBox::f_move_up_right(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0x0A;
     packet.body.data1    = speed;
     packet.body.data2    = speed;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -303,15 +304,15 @@ void MainBox::f_move_down_left(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0x14;
     packet.body.data1    = speed;
     packet.body.data2    = speed;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -323,15 +324,15 @@ void MainBox::f_move_down_right(uint8_t speed)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0x12;
     packet.body.data1    = speed;
     packet.body.data2    = speed;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -343,15 +344,15 @@ void MainBox::f_zoom_in(void)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0x20;
     packet.body.data1    = 0;
     packet.body.data2    = 0;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -363,15 +364,15 @@ void MainBox::f_zoom_out(void)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0x40;
     packet.body.data1    = 0;
     packet.body.data2    = 0;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -383,15 +384,15 @@ void MainBox::f_move_stop(void)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
     packet.body.cmd1     = 0;
     packet.body.cmd2     = 0;
     packet.body.data1    = 0;
     packet.body.data2    = 0;
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -403,15 +404,15 @@ void MainBox::f_send(void)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
-    packet.body.cmd1     = ui->sb_cmd1->value();
-    packet.body.cmd2     = ui->sb_cmd2->value();
-    packet.body.data1    = ui->sb_data1->value();
-    packet.body.data2    = ui->sb_data2->value();
-    packet.body.crc      = CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5);
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
+    packet.body.cmd1     = static_cast<uint8_t>(ui->sb_cmd1->value());
+    packet.body.cmd2     = static_cast<uint8_t>(ui->sb_cmd2->value());
+    packet.body.data1    = static_cast<uint8_t>(ui->sb_data1->value());
+    packet.body.data2    = static_cast<uint8_t>(ui->sb_data2->value());
+    packet.body.crc      = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5);
 
     QByteArray ba;
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
 
     emit send(ba);
     emit debug(QString("%1: send [%2]")
@@ -423,34 +424,34 @@ void MainBox::refresh(void)
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
-    packet.body.address  = ui->sb_address->value();
-    packet.body.cmd1     = ui->sb_cmd1->value();
-    packet.body.cmd2     = ui->sb_cmd2->value();
-    packet.body.data1    = ui->sb_data1->value();
-    packet.body.data2    = ui->sb_data2->value();
+    packet.body.address  = static_cast<uint8_t>(ui->sb_address->value());
+    packet.body.cmd1     = static_cast<uint8_t>(ui->sb_cmd1->value());
+    packet.body.cmd2     = static_cast<uint8_t>(ui->sb_cmd2->value());
+    packet.body.data1    = static_cast<uint8_t>(ui->sb_data1->value());
+    packet.body.data2    = static_cast<uint8_t>(ui->sb_data2->value());
 
-    ui->sb_chk_sum->setValue(CRC::pelco_crc8((uint8_t *)&packet.buf[1], 5));
+    ui->sb_chk_sum->setValue(CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5));
 }
 //--------------------------------------------------------------------------------
 void MainBox::pressed(void)
 {
-    QToolButton *btn = (QToolButton *)sender();
+    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
     if(btn)
     {
         QString str = btn->property("button").toString();
         int speed = ui->sl_speed->value();
         emit debug(QString("%1 pressed").arg(str));
 
-        if(str == "up_left")    f_move_up_left(speed);
-        if(str == "up")         f_move_up(speed);
-        if(str == "up_right")   f_move_up_right(speed);
+        if(str == "up_left")    f_move_up_left(static_cast<uint8_t>(speed));
+        if(str == "up")         f_move_up(static_cast<uint8_t>(speed));
+        if(str == "up_right")   f_move_up_right(static_cast<uint8_t>(speed));
 
-        if(str == "left")       f_move_left(speed);
-        if(str == "right")      f_move_right(speed);
+        if(str == "left")       f_move_left(static_cast<uint8_t>(speed));
+        if(str == "right")      f_move_right(static_cast<uint8_t>(speed));
 
-        if(str == "down_left")  f_move_down_left(speed);
-        if(str == "down")       f_move_down(speed);
-        if(str == "down_right") f_move_down_right(speed);
+        if(str == "down_left")  f_move_down_left(static_cast<uint8_t>(speed));
+        if(str == "down")       f_move_down(static_cast<uint8_t>(speed));
+        if(str == "down_right") f_move_down_right(static_cast<uint8_t>(speed));
 
         if(str == "zoom_in")    f_zoom_in();
         if(str == "zoom_out")   f_zoom_out();
@@ -487,17 +488,13 @@ void MainBox::f_error(QMediaPlayer::Error err)
     case QMediaPlayer::AccessDeniedError:   emit error("AccessDeniedError");    break;
     case QMediaPlayer::ServiceMissingError: emit error("ServiceMissingError");  break;
     case QMediaPlayer::MediaIsPlaylist:     emit error("MediaIsPlaylist");      break;
-
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
     }
     emit error(player->errorString());
 }
 //--------------------------------------------------------------------------------
 void MainBox::released(void)
 {
-    QToolButton *btn = (QToolButton *)sender();
+    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
     if(btn)
     {
         emit debug(QString("%1 released").arg(btn->property("button").toString()));

@@ -33,7 +33,7 @@ class MetaData : public QObject
     Q_OBJECT
 
 public:
-    explicit MetaData(QObject *parent = 0);
+    explicit MetaData(QObject *parent = nullptr);
     ~MetaData();
 
     typedef struct METADATA

@@ -69,7 +69,7 @@ class ParportBox : public MyWidget
     Q_OBJECT
 
 public:
-    ParportBox(QWidget *parent = 0);
+    ParportBox(QWidget *parent = nullptr);
     ~ParportBox();
 
 private slots:

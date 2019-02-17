@@ -30,8 +30,8 @@ class B588_toolbar : public QToolBar
     Q_OBJECT
 
 public:
-    B588_toolbar(const QString &title, QWidget *parent = 0);
-    B588_toolbar(QWidget *parent = 0);
+    B588_toolbar(const QString &title, QWidget *parent = nullptr);
+    B588_toolbar(QWidget *parent = nullptr);
     ~B588_toolbar();
 
 signals:

@@ -39,7 +39,7 @@ class PET_brg_sim_debug_page : public PET_device_sim
     Q_OBJECT
 
 public:
-    explicit PET_brg_sim_debug_page(QWidget *parent = 0);
+    explicit PET_brg_sim_debug_page(QWidget *parent = nullptr);
     ~PET_brg_sim_debug_page();
 
     PET_RESULT set(pet_brg_ctrl_t p_data);

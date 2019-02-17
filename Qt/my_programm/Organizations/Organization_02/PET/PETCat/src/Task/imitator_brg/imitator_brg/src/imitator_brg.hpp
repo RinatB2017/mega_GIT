@@ -37,7 +37,7 @@ class Imitator_BRG : public QObject
     Q_OBJECT
 
 public:
-    explicit Imitator_BRG(QObject *parent = 0);
+    explicit Imitator_BRG(QObject *parent = nullptr);
     ~Imitator_BRG();
 
     enum ADC_GetVoltage

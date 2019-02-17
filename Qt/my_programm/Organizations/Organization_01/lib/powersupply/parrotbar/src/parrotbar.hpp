@@ -30,7 +30,7 @@ class ParrotBar : public QToolBar
 {
     Q_OBJECT
 public:
-    explicit ParrotBar(QWidget *parent = 0);
+    explicit ParrotBar(QWidget *parent = nullptr);
 
 signals:
     void set_UI(int U, int I);

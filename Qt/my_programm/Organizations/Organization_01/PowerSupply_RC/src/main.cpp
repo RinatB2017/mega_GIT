@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
-        QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
         return -1;
     }
 #else

@@ -54,7 +54,7 @@ class Parport : public QObject
 {
     Q_OBJECT
 public:
-    explicit Parport(QObject *parent = 0);
+    explicit Parport(QObject *parent = nullptr);
     //---
     bool open_parport(void);
     void close_parport(void);

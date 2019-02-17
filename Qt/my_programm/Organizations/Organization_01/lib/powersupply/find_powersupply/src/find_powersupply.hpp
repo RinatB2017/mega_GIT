@@ -35,7 +35,7 @@ class Find_powersupply : public MyWidget
 {
     Q_OBJECT
 public:
-    Find_powersupply(Powersupply_B590 *powersupply, QFrame *parent = 0);
+    Find_powersupply(Powersupply_B590 *powersupply, QFrame *parent = nullptr);
     ~Find_powersupply();
 
 private slots:

@@ -52,7 +52,7 @@ public:
     };
 
     SerialBox4(QWidget *parent, const QString &caption);
-    SerialBox4(QWidget *parent = 0);
+    SerialBox4(QWidget *parent = nullptr);
     ~SerialBox4();
 
     bool isOpen(void);

@@ -75,7 +75,8 @@ bool B590_Fram::read_fram_from_file(const QString &filename)
 
     for(int address=0; address<MAX_ADDRESS_FRAM_B590; address++)
     {
-        set_uint8_t(address, ba.at(address));
+        set_uint8_t(static_cast<uint16_t>(address),
+                    static_cast<uint8_t>(ba.at(address)));
     }
     return true;
 }
@@ -84,7 +85,8 @@ bool B590_Fram::write_user_U(void)
 {
     for(int n=0; n<MAX_CALIBRATION_POINTS_B590_U; n++)
     {
-        bool ok = B590_Fram::set_user_calibration_point_U(n, n*1000);
+        bool ok = B590_Fram::set_user_calibration_point_U(static_cast<uint16_t>(n),
+                                                          static_cast<uint16_t>(n*1000));
         if(!ok) return false;
     }
     return B590_Fram::calc_and_save_CRC16_user_calibration_points_U();
@@ -94,7 +96,8 @@ bool B590_Fram::write_user_I(void)
 {
     for(int n=0; n<MAX_CALIBRATION_POINTS_B590_I; n++)
     {
-        bool ok = B590_Fram::set_user_calibration_point_I(n, n*500);
+        bool ok = B590_Fram::set_user_calibration_point_I(static_cast<uint16_t>(n),
+                                                          static_cast<uint16_t>(n*500));
         if(!ok) return false;
     }
     return B590_Fram::calc_and_save_CRC16_user_calibration_points_I();
@@ -104,7 +107,8 @@ bool B590_Fram::write_factory_U(void)
 {
     for(int n=0; n<MAX_CALIBRATION_POINTS_B590_U; n++)
     {
-        bool ok = B590_Fram::set_factory_calibration_point_U(n, n*1000);
+        bool ok = B590_Fram::set_factory_calibration_point_U(static_cast<uint16_t>(n),
+                                                             static_cast<uint16_t>(n*1000));
         if(!ok) return false;
     }
     return B590_Fram::calc_and_save_CRC16_factory_calibration_points_U();
@@ -114,7 +118,8 @@ bool B590_Fram::write_factory_I(void)
 {
     for(int n=0; n<MAX_CALIBRATION_POINTS_B590_I; n++)
     {
-        bool ok = B590_Fram::set_factory_calibration_point_I(n, n*500);
+        bool ok = B590_Fram::set_factory_calibration_point_I(static_cast<uint16_t>(n),
+                                                             static_cast<uint16_t>(n*500));
         if(!ok) return false;
     }
     return B590_Fram::calc_and_save_CRC16_factory_calibration_points_I();
@@ -172,15 +177,15 @@ bool B590_Fram::read_fram_from_default_data(void)
     s_zero_b590_U value_U;
     s_zero_b590_I value_I;
 
-    double zero_adc = qPow((double)2, (int)23);
+    double zero_adc = qPow(2, 23);
     //double full_adc = qPow((double)2, (int)24);
-    double step = qPow((double)2, (int)23) / (double)0xFFFF;
+    double step = qPow(2, 23) / 0xFFFF;
 
     //---
-    value_U.Value_ADC_U[0] = (int32_t)(zero_adc + 0.5f);
-    value_U.Value_ADC_U[1] = (int32_t)(zero_adc + POINT_U_1 * step + 0.5f);
-    value_U.Value_ADC_U[2] = (int32_t)(zero_adc + POINT_U_2 * step + 0.5f);
-    value_U.Value_ADC_U[3] = (int32_t)(zero_adc + POINT_U_3 * step + 0.5f);
+    value_U.Value_ADC_U[0] = static_cast<int32_t>(zero_adc + 0.5);
+    value_U.Value_ADC_U[1] = static_cast<int32_t>(zero_adc + POINT_U_1 * step + 0.5);
+    value_U.Value_ADC_U[2] = static_cast<int32_t>(zero_adc + POINT_U_2 * step + 0.5);
+    value_U.Value_ADC_U[3] = static_cast<int32_t>(zero_adc + POINT_U_3 * step + 0.5);
 
     value_U.Value_DAC_U[0] = POINT_U_0;
     value_U.Value_DAC_U[1] = POINT_U_1;
@@ -196,19 +201,19 @@ bool B590_Fram::read_fram_from_default_data(void)
     //---
 
     //---
-    value_I.Value_ADC_I[0] = (int32_t)(zero_adc + 0.5f);
-    value_I.Value_ADC_I[1] = (int32_t)(zero_adc + POINT_I_1 * step + 0.5f);
-    value_I.Value_ADC_I[2] = (int32_t)(zero_adc + POINT_I_2 * step + 0.5f);
-    value_I.Value_ADC_I[3] = (int32_t)(zero_adc + POINT_I_3 * step + 0.5f);
-    value_I.Value_ADC_I[4] = (int32_t)(zero_adc + POINT_I_4 * step + 0.5f);
-    value_I.Value_ADC_I[5] = (int32_t)(zero_adc + POINT_I_5 * step + 0.5f);
-    value_I.Value_ADC_I[6] = (int32_t)(zero_adc + POINT_I_6 * step + 0.5f);
-    value_I.Value_ADC_I[7] = (int32_t)(zero_adc + POINT_I_7 * step + 0.5f);
-    value_I.Value_ADC_I[8] = (int32_t)(zero_adc + POINT_I_8 * step + 0.5f);
-    value_I.Value_ADC_I[9] = (int32_t)(zero_adc + POINT_I_9 * step + 0.5f);
-    value_I.Value_ADC_I[10] = (int32_t)(zero_adc + POINT_I_10 * step + 0.5f);
-    value_I.Value_ADC_I[11] = (int32_t)(zero_adc + POINT_I_11 * step + 0.5f);
-    value_I.Value_ADC_I[12] = (int32_t)(zero_adc + POINT_I_12 * step + 0.5f);
+    value_I.Value_ADC_I[0] = static_cast<int32_t>(zero_adc + 0.5);
+    value_I.Value_ADC_I[1] = static_cast<int32_t>(zero_adc + POINT_I_1 * step + 0.5);
+    value_I.Value_ADC_I[2] = static_cast<int32_t>(zero_adc + POINT_I_2 * step + 0.5);
+    value_I.Value_ADC_I[3] = static_cast<int32_t>(zero_adc + POINT_I_3 * step + 0.5);
+    value_I.Value_ADC_I[4] = static_cast<int32_t>(zero_adc + POINT_I_4 * step + 0.5);
+    value_I.Value_ADC_I[5] = static_cast<int32_t>(zero_adc + POINT_I_5 * step + 0.5);
+    value_I.Value_ADC_I[6] = static_cast<int32_t>(zero_adc + POINT_I_6 * step + 0.5);
+    value_I.Value_ADC_I[7] = static_cast<int32_t>(zero_adc + POINT_I_7 * step + 0.5);
+    value_I.Value_ADC_I[8] = static_cast<int32_t>(zero_adc + POINT_I_8 * step + 0.5);
+    value_I.Value_ADC_I[9] = static_cast<int32_t>(zero_adc + POINT_I_9 * step + 0.5);
+    value_I.Value_ADC_I[10] = static_cast<int32_t>(zero_adc + POINT_I_10 * step + 0.5);
+    value_I.Value_ADC_I[11] = static_cast<int32_t>(zero_adc + POINT_I_11 * step + 0.5);
+    value_I.Value_ADC_I[12] = static_cast<int32_t>(zero_adc + POINT_I_12 * step + 0.5);
 
     value_I.Value_DAC_I[0]  = POINT_I_0;
     value_I.Value_DAC_I[1]  = POINT_I_1;
@@ -460,31 +465,36 @@ bool B590_Fram::get_moto_time(uint32_t *value)
 bool B590_Fram::set_Bright(int8_t value)
 {
     uint16_t address = offsetof(FRAM_B590, Bright);
-    return set_uint8_t(address, value);
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B590_Fram::set_Sound(int8_t value)
 {
     uint16_t address = offsetof(FRAM_B590, Sound);
-    return set_uint8_t(address, value);
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B590_Fram::set_Count_Last_U_I(uint8_t value)
 {
     uint16_t address = offsetof(FRAM_B590, count_Last_U_I);
-    return set_uint8_t(address, value);
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B590_Fram::set_Speed_UART(uint8_t value)
 {
     uint16_t address = offsetof(FRAM_B590, Speed_UART);
-    return set_uint8_t(address, value);
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B590_Fram::set_Adr_ModBus(uint8_t value)
 {
     uint16_t address = offsetof(FRAM_B590, Adr_ModBus);
-    return set_uint8_t(address, value);
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B590_Fram::get_Bright(uint8_t *value)
@@ -614,7 +624,8 @@ bool B590_Fram::add_profile_point(uint16_t index_profile,
     for(unsigned int n=0; n<sizeof(s_profile); n++)
     {
         uint8_t data = 0;
-        ok = get_uint8_t(address + n, &data);
+        ok = get_uint8_t(static_cast<uint16_t>(address + n),
+                         &data);
         if(!ok)
         {
             return false;
@@ -633,7 +644,8 @@ bool B590_Fram::add_profile_point(uint16_t index_profile,
 
     for(unsigned int n=0; n<sizeof(s_profile); n++)
     {
-        ok = set_uint8_t(address + n, PROFILE.buf[n]);
+        ok = set_uint8_t(static_cast<uint16_t>(address + n),
+                         PROFILE.buf[n]);
         if(!ok)
         {
             return false;
@@ -657,7 +669,8 @@ bool B590_Fram::get_profile_point(uint16_t index_profile,
     for(unsigned int n=0; n<sizeof(s_profile); n++)
     {
         uint8_t data = 0;
-        ok = get_uint8_t(address + n, &data);
+        ok = get_uint8_t(static_cast<uint16_t>(address + n),
+                         &data);
         if(!ok)
         {
             return false;
@@ -682,7 +695,8 @@ bool B590_Fram::get_profile(uint16_t index_profile,
     for(unsigned int n=0; n<sizeof(s_profile); n++)
     {
         uint8_t data = 0;
-        ok = get_uint8_t(address + n, &data);
+        ok = get_uint8_t(static_cast<uint16_t>(address + n),
+                         &data);
         if(!ok)
         {
             return false;
@@ -691,7 +705,7 @@ bool B590_Fram::get_profile(uint16_t index_profile,
     }
 
     *count_point = PROFILE.profile.points_in_profile;
-    *count_repeat_profile = PROFILE.profile.repeat_count;
+    *count_repeat_profile = static_cast<uint8_t>(PROFILE.profile.repeat_count);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -896,7 +910,7 @@ void B590_Fram::clear_all(void)
 {
     for(int n=0;n<MAX_ADDRESS_FRAM_B590;n++)
     {
-        set_uint8_t(n, 0);
+        set_uint8_t(static_cast<uint16_t>(n), 0);
     }
 }
 //--------------------------------------------------------------------------------
@@ -1036,7 +1050,7 @@ bool B590_Fram::get_int32_t(uint16_t address,
         temp.buf[n] = fram_data[address+n];
     }
 
-    *data = temp.value;
+    *data = static_cast<int32_t>(temp.value);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -1053,7 +1067,7 @@ bool B590_Fram::get_uint32_t(uint16_t address,
         temp.buf[n] = fram_data[address+n];
     }
 
-    *data = temp.value;
+    *data = static_cast<uint32_t>(temp.value);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -1105,7 +1119,8 @@ bool B590_Fram::get_factor_k(double *factor_k_DAC,
 bool B590_Fram::set_cal_temp(int8_t value)
 {
     uint16_t address = offsetof(FRAM_B590, cal_temp);
-    return set_uint8_t(address, value);
+    return set_uint8_t(static_cast<uint16_t>(address),
+                       static_cast<uint8_t>(value));
 }
 //--------------------------------------------------------------------------------
 bool B590_Fram::get_cal_temp(int8_t *value)
@@ -1115,7 +1130,7 @@ bool B590_Fram::get_cal_temp(int8_t *value)
     bool ok = get_uint8_t(address, &temp);
     if(ok)
     {
-        *value = temp;
+        *value = static_cast<int8_t>(temp);
     }
     return ok;
 }
@@ -1128,7 +1143,7 @@ uint16_t B590_Fram::get_CRC16(uint8_t* pcBlock,
 
     for (int pos=0; pos<len; pos++)
     {
-        crc ^= (uint16_t)pcBlock[pos];
+        crc ^= static_cast<uint16_t>(pcBlock[pos]);
 
         for (int i=8; i!=0; i--)
         {

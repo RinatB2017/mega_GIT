@@ -34,7 +34,7 @@ class Page_imitator_BRG_options : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Page_imitator_BRG_options(QWidget *parent = 0);
+    explicit Page_imitator_BRG_options(QWidget *parent = nullptr);
     ~Page_imitator_BRG_options();
 
 private slots:

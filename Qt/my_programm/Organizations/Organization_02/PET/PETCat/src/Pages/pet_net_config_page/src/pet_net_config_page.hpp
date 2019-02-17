@@ -38,7 +38,7 @@ class PET_net_config_page : public MyWidget
     Q_OBJECT
 
 public:
-    explicit PET_net_config_page(QWidget *parent = 0);
+    explicit PET_net_config_page(QWidget *parent = nullptr);
     ~PET_net_config_page();
 
     PET_RESULT set(pet_bos_ctrl_t ctrl);

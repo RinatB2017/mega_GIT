@@ -129,7 +129,7 @@ uint16_t CRC::powersupply_crc16(uint8_t *pcBlock,
 
     for (int pos=0; pos<len; pos++)
     {
-        crc ^= (uint16_t)pcBlock[pos];
+        crc ^= static_cast<uint16_t>(pcBlock[pos]);
 
         for (int i=8; i!=0; i--)
         {

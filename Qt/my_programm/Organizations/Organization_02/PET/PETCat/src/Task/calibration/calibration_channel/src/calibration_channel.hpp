@@ -36,7 +36,7 @@ class Calibration_channel : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Calibration_channel(int num_channel, QWidget *parent = 0);
+    explicit Calibration_channel(int num_channel, QWidget *parent = nullptr);
     ~Calibration_channel();
 
     bool set(pet_brg_ch_calibration data);

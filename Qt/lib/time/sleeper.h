@@ -1,6 +1,6 @@
 
-#ifndef _SLEEPER_H
-#define _SLEEPER_H
+#ifndef SLEEPER_H
+#define SLEEPER_H
 
 #include <QThread>
 

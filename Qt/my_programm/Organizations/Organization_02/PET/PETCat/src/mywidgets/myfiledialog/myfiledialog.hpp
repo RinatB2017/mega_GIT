@@ -30,7 +30,7 @@ class MyFileDialog : public QFileDialog
 public:
     MyFileDialog(const QString gName,
                  const QString oName,
-                 QWidget *parent = 0);
+                 QWidget *parent = nullptr);
 
 public slots:
     int exec(void);

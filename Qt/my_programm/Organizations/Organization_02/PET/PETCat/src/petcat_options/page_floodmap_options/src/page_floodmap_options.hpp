@@ -34,7 +34,7 @@ class Page_floodmap_options : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Page_floodmap_options(QWidget *parent = 0);
+    explicit Page_floodmap_options(QWidget *parent = nullptr);
     ~Page_floodmap_options();
 
     void init(void);

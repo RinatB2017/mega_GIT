@@ -34,7 +34,7 @@ class Page_histogram_consulience_options : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Page_histogram_consulience_options(QWidget *parent = 0);
+    explicit Page_histogram_consulience_options(QWidget *parent = nullptr);
     ~Page_histogram_consulience_options();
 
 private slots:

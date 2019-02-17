@@ -214,6 +214,11 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    auto x = 0;
+    emit info(QString("%1").arg(sizeof(x)));
+#endif
+
 #if 0
     QByteArray ba = QByteArray::fromHex("01 02 03 04 05 06 07 08 09 0a 0B 0C ыыы");
     emit info(QString("ba len %1").arg(ba.length()));

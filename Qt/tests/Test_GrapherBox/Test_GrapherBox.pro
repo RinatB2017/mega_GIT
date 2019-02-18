@@ -8,6 +8,7 @@ TARGET   = Test_GrapherBox
 FOLDER  = tests
 
 DEPENDPATH  += \
+    $$PWD \
     $$PWD/src \
     $$PWD/src/Test_GrapherBox_mainbox \
     $$PWD/src/Test_GrapherBox_mainbox/ui

@@ -785,7 +785,8 @@ bool GrapherBox::add_curve_data(int channel,
     }
     if(channel >= curves.count())
     {
-        emit error(QString(tr("channel > %1"))
+        emit error(QString(tr("channel[%1] >= curves.count[%2]"))
+                   .arg(channel)
                    .arg(curves.count()));
         return false;
     }

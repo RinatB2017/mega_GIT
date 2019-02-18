@@ -47,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -63,6 +64,8 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

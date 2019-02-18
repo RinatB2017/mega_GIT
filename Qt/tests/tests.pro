@@ -20,9 +20,11 @@ SUBDIRS += \
     Test_HID_device \
     Test_HTML \
     Test_QHexEdit \
+    Test_mesh \
     Test_md5 \
     Test_OpenRPT \
     Test_OscilloscopeBox \
+    Test_picture \
     Test_PostgreSQL \
     Test_PropertyBrowser \
     Test_QtPropertyBrowser \
@@ -30,6 +32,9 @@ SUBDIRS += \
     Test_QGraphicsScene \
     Test_QListWidget \
     Test_QsLog \
+    Test_RGB_display \
+    Test_RGB_Matrix \
+    Test_RTSP_widget \
     Test_libUSB \
     Test_model \
     Test_Polar \
@@ -37,12 +42,9 @@ SUBDIRS += \
     Test_SMTP \
     Test_thread \
     Test_triangle \
-    Test_RGB_Matrix \
     Test_PTZ_widget \
-    Test_RTSP_widget \
     Test_Widgets \
     Test_QtCharts \
-#
     Test_OpenCL \
     Test_OpenMP \
     Test_QDBus \
@@ -50,12 +52,10 @@ SUBDIRS += \
     Test_QML \
     Test_QStateMachine \
     Test_QTreeWidget \
-#
     Test_Game \
     Test_OpenGL \
     Test_mouse \
     Test_draw_line \
-#
     Test_YouTube \
     Tester
 

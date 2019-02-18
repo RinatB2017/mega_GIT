@@ -47,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     if(serial)
     {
         serial->deleteLater();
@@ -69,6 +70,8 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)

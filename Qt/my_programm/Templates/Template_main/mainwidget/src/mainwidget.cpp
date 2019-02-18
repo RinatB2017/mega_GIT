@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "mainwidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainWidget::MainWidget(QWidget *parent) :
     QTabWidget(parent)

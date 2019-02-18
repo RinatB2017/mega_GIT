@@ -52,6 +52,7 @@ MainWidget_GUI::MainWidget_GUI(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainWidget_GUI::~MainWidget_GUI()
 {
+    save_widgets(APPNAME);
 #ifdef QT_DEBUG
     qDebug() << "~MainWidget_GUI()";
 #endif
@@ -85,6 +86,8 @@ void MainWidget_GUI::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::createTestBar(void)

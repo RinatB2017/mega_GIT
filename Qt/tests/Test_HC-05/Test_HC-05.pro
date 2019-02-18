@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_HC-05
 
-FOLDER  = _Templates
+FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD \

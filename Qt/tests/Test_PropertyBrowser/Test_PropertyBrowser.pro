@@ -13,9 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/Test_PropertyBrowser_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
-
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
@@ -36,7 +33,7 @@ win32 {
 
 RESOURCES += demo.qrc
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

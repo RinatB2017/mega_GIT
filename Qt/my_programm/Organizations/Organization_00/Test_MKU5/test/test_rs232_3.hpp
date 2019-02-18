@@ -14,7 +14,7 @@ class Test_RS232_3 : public TestThread
     Q_OBJECT
 
 public:
-    Test_RS232_3(QObject*, const QString address, unsigned int port);
+    Test_RS232_3(QObject*, const QString address, int port);
     void run();
 
 private:

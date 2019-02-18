@@ -48,7 +48,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("sb_draw_line");
+    save_widgets(APPNAME);
 
     serialBox->deleteLater();
     delete ui;
@@ -70,7 +70,7 @@ void MainBox::init_widgets(void)
     ui->sb_len_pause->setRange(0, 0xFFFF);
     ui->sb_delay_ms->setRange(10, 0xFFFF);
 
-    load_widgets("sb_draw_line");
+    load_widgets(APPNAME);
 
     QVariant value_R;
     QVariant value_G;

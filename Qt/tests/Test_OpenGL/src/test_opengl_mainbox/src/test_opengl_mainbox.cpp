@@ -47,7 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("OpenGL");
+    save_widgets(APPNAME);
 
     delete ui;
 }
@@ -64,7 +64,7 @@ void MainBox::init(void)
     createTestBar();
     installEventFilter(this);
 
-    load_widgets("OpenGL");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

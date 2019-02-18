@@ -57,7 +57,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("QScintilla");
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -144,7 +144,7 @@ void MainBox::init(void)
     //ui->textEdit->setStyleSheet("background:white;");
 #endif
 
-    load_widgets("QScintilla");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

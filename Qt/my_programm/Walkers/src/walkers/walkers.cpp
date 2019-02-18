@@ -30,6 +30,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "walkers.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "youtube_walker.hpp"
 #include "google_walker.hpp"
@@ -48,7 +49,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("Walkers");
+    save_widgets(APPNAME);
 
     if(youtube_walker)
     {
@@ -128,7 +129,7 @@ void MainBox::init(void)
     tab->addTab(w_test, "Test");
 #endif
 
-    load_widgets("Walkers");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

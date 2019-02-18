@@ -152,7 +152,7 @@ QStandardItem *PropertyEditor::get_item_group(const QString& item_name)
     int role = Qt::DisplayRole;
     Qt::MatchFlags flags = Qt::MatchFixedString | Qt::MatchRecursive;
     QModelIndexList list = model->match(start, role, item_name, 1, flags);
-    if (list.count() == 0) return NULL;
+    if (list.count() == 0) return nullptr;
     return model->itemFromIndex(list.at(0));
 }
 //--------------------------------------------------------------------------------

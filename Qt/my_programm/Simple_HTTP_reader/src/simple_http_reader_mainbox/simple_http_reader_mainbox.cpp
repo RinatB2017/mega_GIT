@@ -49,7 +49,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("HTTP");
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void MainBox::init(void)
     connect(ui->btn_update, SIGNAL(clicked(bool)),  this,   SLOT(f_update()));
     connect(ui->btn_host_to_ip, SIGNAL(clicked(bool)),  this,   SLOT(f_host_to_ip()));
 
-    load_widgets("HTTP");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

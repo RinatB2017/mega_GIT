@@ -73,7 +73,7 @@ MainBox::~MainBox()
     }
 #endif
 
-    save_widgets("test_html");
+    save_widgets(APPNAME);
 
     delete ui;
 }
@@ -148,7 +148,7 @@ void MainBox::init(void)
     highlighter_cpp = new Highlighter(ui->te_text_html->document());
     highlighter_js  = new Highlighter(ui->te_text_js->document());
 
-    load_widgets("test_html");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_run_html(void)

@@ -21,7 +21,7 @@ Generator_Curve::Generator_Curve(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Generator_Curve::~Generator_Curve(void)
 {
-    save_widgets("Generator_curve");
+    save_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::init(void)
@@ -34,7 +34,7 @@ void Generator_Curve::init(void)
     hbox->addWidget(add_grapher());
     setLayout(hbox);
 
-    load_widgets("Generator_curve");
+    load_widgets(APPNAME);
     updateText();
 }
 //--------------------------------------------------------------------------------

@@ -34,7 +34,7 @@ namespace Ui {
 class TCP_Client;
 class Settings;
 #ifdef RS232
-class SerialBox5;
+    class SerialBox5;
 #endif
 class LogBox;
 class Test_RS232_1;

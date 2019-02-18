@@ -72,7 +72,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("pelco_D");
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void MainBox::init(void)
 
     connect(ui->btn_send,   SIGNAL(clicked(bool)),  this,   SLOT(f_send()));
 
-    load_widgets("pelco_D");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

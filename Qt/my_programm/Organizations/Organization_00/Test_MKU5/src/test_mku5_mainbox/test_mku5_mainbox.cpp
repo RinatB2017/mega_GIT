@@ -97,7 +97,7 @@ void MainBox::init_tcp_client(void)
 {
     client = new TCP_Client(this);
     client->setAddress(QHostAddress(ui->lnAddress->text()));
-    client->setPort(ui->spbPort->value());
+    client->setPort(static_cast<unsigned int>(ui->spbPort->value()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::connects(void)
@@ -167,7 +167,7 @@ void MainBox::save_setting(void)
 void MainBox::updateClient(void)
 {
     client->setAddress(QHostAddress(ui->lnAddress->text()));
-    client->setPort(ui->spbPort->value());
+    client->setPort(static_cast<unsigned int>(ui->spbPort->value()));
     save_setting();
 }
 //--------------------------------------------------------------------------------
@@ -198,20 +198,20 @@ void MainBox::build_data(unsigned char cmd)
 
     emit debug(QString("build_data: CMD_0x%1").arg(cmd, 0, 16));
     data.clear();
-    data.append((unsigned char)0x55);   // marker
-    data.append((unsigned char)0xA9);
+    data.append(static_cast<unsigned char>(0x55));  // marker
+    data.append(static_cast<char>(0xA9));
 
-    data.append((char)1);               // length
-    data.append((char)0);
+    data.append(static_cast<unsigned char>(1));     // length
+    data.append(static_cast<unsigned char>(0));
 
-    data.append((unsigned char)0x01);   // address
-    data.append((char)0x02);            // usecase_data
-    data.append((char)0x00);            // null_byte
+    data.append(static_cast<unsigned char>(0x01));  // address
+    data.append(static_cast<unsigned char>(0x02));  // usecase_data
+    data.append(static_cast<unsigned char>(0x00));  // null_byte
 
-    data.append((unsigned char)cmd);    // code_command
+    data.append(static_cast<char>(cmd));   // code_command
 
     for(n=0; n<256; n++)                // *data
-        data.append((char)0x00);
+        data.append(static_cast<unsigned char>(0x00));
 }
 //--------------------------------------------------------------------------------
 void MainBox::build_data_ext(unsigned char cmd, unsigned char cmd_ext)
@@ -223,21 +223,21 @@ void MainBox::build_data_ext(unsigned char cmd, unsigned char cmd_ext)
                .arg(cmd_ext, 0, 16));
 
     data.clear();
-    data.append((unsigned char)0x55);   // marker
-    data.append((unsigned char)0xA9);
+    data.append(static_cast<unsigned char>(0x55));      // marker
+    data.append(static_cast<char>(0xA9));
 
-    data.append((char)1);               // length
-    data.append((char)0);
+    data.append(static_cast<unsigned char>(1));         // length
+    data.append(static_cast<unsigned char>(0));
 
-    data.append((unsigned char)0x01);   // address
-    data.append((char)0x02);            // usecase_data
-    data.append((char)0x00);            // null_byte
+    data.append(static_cast<unsigned char>(0x01));      // address
+    data.append(static_cast<unsigned char>(0x02));      // usecase_data
+    data.append(static_cast<unsigned char>(0x00));      // null_byte
 
-    data.append((unsigned char)cmd);    // code_command
-    data.append((unsigned char)cmd_ext); // code_command (ex)
+    data.append(static_cast<char>(cmd));       // code_command
+    data.append(static_cast<char>(cmd_ext));   // code_command (ex)
 
     for(n=0; n<255; n++)                // *data
-        data.append((char)0x00);
+        data.append(static_cast<unsigned char>(0x00));
 }
 //--------------------------------------------------------------------------------
 bool MainBox::check(uchar test_byte,
@@ -319,7 +319,7 @@ bool MainBox::check_bits(uchar test_byte,
     if(second_bit_value > 1)
         return false;
 
-    uchar mask = ((first_bit_value << first_bit_pos)) | (second_bit_value << second_bit_pos);
+    uchar mask = static_cast<unsigned char>(((first_bit_value << first_bit_pos)) | (second_bit_value << second_bit_pos));
 
     if(test_byte & mask)
     {
@@ -625,7 +625,9 @@ void MainBox::clicked_btn_main_09(void)
     ui->btn_main_9->setStyleSheet(COLOR_BUTTON);
     ui->stackedWidget->setCurrentIndex(1);
     ui->te_Result->clear();
-    test_rs232_1 = new Test_RS232_1(this, ui->lnAddress->text(), ui->spbPort->value());
+    test_rs232_1 = new Test_RS232_1(this,
+                                    ui->lnAddress->text(),
+                                    static_cast<unsigned int>(ui->spbPort->value()));
     test_rs232_1->start();
 }
 //--------------------------------------------------------------------------------
@@ -637,7 +639,9 @@ void MainBox::clicked_btn_main_10(void)
     ui->btn_main_10->setStyleSheet(COLOR_BUTTON);
     ui->stackedWidget->setCurrentIndex(1);
     ui->te_Result->clear();
-    test_rs232_2 = new Test_RS232_2(this, ui->lnAddress->text(), ui->spbPort->value());
+    test_rs232_2 = new Test_RS232_2(this,
+                                    ui->lnAddress->text(),
+                                    static_cast<unsigned int>(ui->spbPort->value()));
     test_rs232_2->start();
 }
 //--------------------------------------------------------------------------------
@@ -649,7 +653,9 @@ void MainBox::clicked_btn_main_11(void)
     ui->btn_main_11->setStyleSheet(COLOR_BUTTON);
     ui->stackedWidget->setCurrentIndex(1);
     ui->te_Result->clear();
-    test_rs232_3 = new Test_RS232_3(this, ui->lnAddress->text(), ui->spbPort->value());
+    test_rs232_3 = new Test_RS232_3(this,
+                                    ui->lnAddress->text(),
+                                    static_cast<int>(ui->spbPort->value()));
     test_rs232_3->start();
 }
 //--------------------------------------------------------------------------------
@@ -661,7 +667,9 @@ void MainBox::clicked_btn_main_12(void)
     ui->btn_main_12->setStyleSheet(COLOR_BUTTON);
     ui->stackedWidget->setCurrentIndex(1);
     ui->te_Result->clear();
-    test_flbi_1 = new Test_FLBI_1(this, ui->lnAddress->text(), ui->spbPort->value());
+    test_flbi_1 = new Test_FLBI_1(this,
+                                  ui->lnAddress->text(),
+                                  static_cast<unsigned int>(ui->spbPort->value()));
     test_flbi_1->start();
 }
 //--------------------------------------------------------------------------------
@@ -673,7 +681,9 @@ void MainBox::clicked_btn_main_13(void)
     ui->btn_main_13->setStyleSheet(COLOR_BUTTON);
     ui->stackedWidget->setCurrentIndex(1);
     ui->te_Result->clear();
-    test_flbi_2 = new Test_FLBI_2(this, ui->lnAddress->text(), ui->spbPort->value());
+    test_flbi_2 = new Test_FLBI_2(this,
+                                  ui->lnAddress->text(),
+                                  static_cast<unsigned int>(ui->spbPort->value()));
     test_flbi_2->start();
 }
 //--------------------------------------------------------------------------------
@@ -685,7 +695,9 @@ void MainBox::clicked_btn_main_14(void)
     ui->btn_main_14->setStyleSheet(COLOR_BUTTON);
     ui->stackedWidget->setCurrentIndex(1);
     ui->te_Result->clear();
-    test_flbi_3 = new Test_FLBI_3(this, ui->lnAddress->text(), ui->spbPort->value());
+    test_flbi_3 = new Test_FLBI_3(this,
+                                  ui->lnAddress->text(),
+                                  static_cast<unsigned int>(ui->spbPort->value()));
     test_flbi_3->start();
 }
 //--------------------------------------------------------------------------------
@@ -1257,31 +1269,34 @@ void MainBox::clicked_btn_in_01(void)
         emit debug("table4-3");
         build_data(CMD_0x2A);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xFE, ui->lbl_in_value_1);
         emit debug(ba.toHex());
         break;
+
     case 3:
         emit debug("table5-3");
         build_data(CMD_0x2D);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xFE, ui->lbl_in_value_1);
         emit debug(ba.toHex());
         break;
+
     case 5:
         emit debug("table6-3");
         build_data(CMD_0x30);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xFE, ui->lbl_in_value_1);
         emit debug(ba.toHex());
         break;
+
     case 7:
         emit debug("table4-2");
         build_data(CMD_0x29);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xBF, ui->lbl_in_value_1);
         emit debug(ba.toHex());
         break;
@@ -1289,10 +1304,11 @@ void MainBox::clicked_btn_in_01(void)
         emit debug("table4-1");
         build_data(CMD_0x28);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0x7F, ui->lbl_in_value_1);
         emit debug(ba.toHex());
         break;
+
     default:
         break;
     }
@@ -1371,50 +1387,56 @@ void MainBox::clicked_btn_in_07(void)
         emit debug("table4-2");
         build_data(CMD_0x29);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xBF, ui->lbl_in_value_7);
         emit debug(ba.toHex());
         break;
+
     case 2:
         emit debug("table8-2");
         build_data(CMD_0x35);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xBF, ui->lbl_in_value_7);
         emit debug(ba.toHex());
         break;
+
     case 3:
         emit debug("table5-2");
         build_data(CMD_0x2C);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xBF, ui->lbl_in_value_7);
         emit debug(ba.toHex());
         break;
+
     case 4:
         emit debug("table10-2");
         build_data(CMD_0x3A);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xBF, ui->lbl_in_value_7);
         emit debug(ba.toHex());
         break;
+
     case 5:
         emit debug("table6-2");
         build_data(CMD_0x2F);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xBF, ui->lbl_in_value_7);
         emit debug(ba.toHex());
         break;
+
     case 6:
         emit debug("table12-2");
         build_data(CMD_0x3F);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0xBF, ui->lbl_in_value_7);
         emit debug(ba.toHex());
         break;
+
     default:
         break;
     }
@@ -1433,50 +1455,56 @@ void MainBox::clicked_btn_in_08(void)
         emit debug("table4-1");
         build_data(CMD_0x28);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0x7F, ui->lbl_in_value_8);
         emit debug(ba.toHex());
         break;
+
     case 2:
         emit debug("table8-1");
         build_data(CMD_0x34);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0x7F, ui->lbl_in_value_8);
         emit debug(ba.toHex());
         break;
+
     case 3:
         emit debug("table5-1");
         build_data(CMD_0x2B);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0x7F, ui->lbl_in_value_8);
         emit debug(ba.toHex());
         break;
+
     case 4:
         emit debug("table10-1");
         build_data(CMD_0x39);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0x7F, ui->lbl_in_value_8);
         emit debug(ba.toHex());
         break;
+
     case 5:
         emit debug("table6-1");
         build_data(CMD_0x2E);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0x7F, ui->lbl_in_value_8);
         emit debug(ba.toHex());
         break;
+
     case 6:
         emit debug("table12-1");
         build_data(CMD_0x3E);
         ba = client->input(data);
-        temp = ba.at(8);
+        temp = static_cast<unsigned char>(ba.at(8));
         check_in(temp, 0x7F, ui->lbl_in_value_8);
         emit debug(ba.toHex());
         break;
+
     default:
         break;
     }
@@ -1496,10 +1524,10 @@ void MainBox::clicked_takt_1(void)
         build_data(CMD_0x40);
         ba = client->input(data);
         //        emit debug(ba.toHex());
-        r1 = check_xF(ba.at(8), 13, 1);
-        r2 = check(ba.at(9), 0xF0, 13, 1);
-        r3 = check_bits(ba.at(10), 0, 1, 4, 1, 13, 1);
-        r4 = check_bits(ba.at(11), 0, 1, 4, 1, 13, 1);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 13, 1);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xF0, 13, 1);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 0, 1, 4, 1, 13, 1);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 0, 1, 4, 1, 13, 1);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_1->setText(tr("Выполнено"));
         else
@@ -1510,15 +1538,16 @@ void MainBox::clicked_takt_1(void)
         emit debug("table14-1");
         build_data(CMD_0x49);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 14, 1);
-        r2 = check(ba.at(9), 0xF0, 14, 1);
-        r3 = check_bits(ba.at(10), 0, 0, 4, 1, 14, 1);
-        r4 = check_bits(ba.at(11), 0, 0, 4, 1, 14, 1);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 14, 1);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xF0, 14, 1);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 0, 0, 4, 1, 14, 1);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 0, 0, 4, 1, 14, 1);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_1->setText(tr("Выполнено"));
         else
             ui->lbl_takt_1->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1538,28 +1567,30 @@ void MainBox::clicked_takt_2(void)
         build_data(CMD_0x41);
         ba = client->input(data);
         emit debug(ba.mid(8).toHex().toUpper());
-        r1 = check_xF(ba.at(8), 13, 2);
-        r2 = check(ba.at(9), 0x0F, 13, 2);
-        r3 = check_bits(ba.at(10), 1, 1, 5, 1, 13, 2);
-        r4 = check_bits(ba.at(11), 1, 1, 5, 1, 13, 2);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 13, 2);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0x0F, 13, 2);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 1, 1, 5, 1, 13, 2);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 1, 1, 5, 1, 13, 2);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_2->setText(tr("Выполнено"));
         else
             ui->lbl_takt_2->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-2");
         build_data(CMD_0x4A);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 14, 2);
-        r2 = check(ba.at(9), 0x0F, 14, 2);
-        r3 = check_bits(ba.at(10), 1, 0, 5, 1, 14, 2);
-        r4 = check_bits(ba.at(11), 1, 0, 5, 1, 14, 2);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 14, 2);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0x0F, 14, 2);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 1, 0, 5, 1, 14, 2);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 1, 0, 5, 1, 14, 2);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_2->setText(tr("Выполнено"));
         else
             ui->lbl_takt_2->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1578,28 +1609,30 @@ void MainBox::clicked_takt_3(void)
         emit debug("table13-3");
         build_data(CMD_0x42);
         ba = client->input(data);
-        r1 = check_x0(ba.at(8), 13, 3);
-        r2 = check(ba.at(9), 0xFF, 13, 3);
-        r3 = check_bits(ba.at(10), 2, 1, 6, 1, 13, 3);
-        r4 = check_bits(ba.at(11), 2, 1, 6, 1, 13, 3);
+        r1 = check_x0(static_cast<unsigned char>(ba.at(8)), 13, 3);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xFF, 13, 3);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 2, 1, 6, 1, 13, 3);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 2, 1, 6, 1, 13, 3);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_3->setText(tr("Выполнено"));
         else
             ui->lbl_takt_3->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-3");
         build_data(CMD_0x4B);
         ba = client->input(data);
-        r1 = check_x0(ba.at(8), 14, 3);
-        r2 = check(ba.at(9), 0xFF, 14, 3);
-        r3 = check_bits(ba.at(10), 2, 0, 6, 1, 14, 3);
-        r4 = check_bits(ba.at(11), 2, 0, 6, 1, 14, 3);
+        r1 = check_x0(static_cast<unsigned char>(ba.at(8)), 14, 3);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xFF, 14, 3);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 2, 0, 6, 1, 14, 3);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 2, 0, 6, 1, 14, 3);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_3->setText(tr("Выполнено"));
         else
             ui->lbl_takt_3->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1618,28 +1651,30 @@ void MainBox::clicked_takt_4(void)
         emit debug("table13-4");
         build_data(CMD_0x43);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 13, 4);
-        r2 = check(ba.at(9), 0xF0, 13, 4);
-        r3 = check_bits(ba.at(10), 0, 1, 4, 1, 13, 4);
-        r4 = check_bits(ba.at(11), 1, 1, 5, 1, 13, 4);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 13, 4);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xF0, 13, 4);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 0, 1, 4, 1, 13, 4);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 1, 1, 5, 1, 13, 4);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_4->setText(tr("Выполнено"));
         else
             ui->lbl_takt_4->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-4");
         build_data(CMD_0x4C);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 14, 4);
-        r2 = check(ba.at(9), 0xF0, 14, 4);
-        r3 = check_bits(ba.at(10), 0, 0, 4, 1, 14, 4);
-        r4 = check_bits(ba.at(11), 0, 0, 4, 1, 14, 4);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 14, 4);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xF0, 14, 4);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 0, 0, 4, 1, 14, 4);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 0, 0, 4, 1, 14, 4);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_4->setText(tr("Выполнено"));
         else
             ui->lbl_takt_4->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1658,28 +1693,30 @@ void MainBox::clicked_takt_5(void)
         emit debug("table13-5");
         build_data(CMD_0x44);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 13, 5);
-        r2 = check(ba.at(9), 0x0F, 13, 5);
-        r3 = check_bits(ba.at(10), 2, 1, 6, 1, 13, 5);
-        r4 = check_bits(ba.at(11), 2, 1, 6, 1, 13, 5);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 13, 5);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0x0F, 13, 5);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 2, 1, 6, 1, 13, 5);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 2, 1, 6, 1, 13, 5);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_5->setText(tr("Выполнено"));
         else
             ui->lbl_takt_5->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-5");
         build_data(CMD_0x4D);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 14, 5);
-        r2 = check(ba.at(9), 0x0F, 14, 5);
-        r3 = check_bits(ba.at(10), 1, 0, 5, 1, 14, 5);
-        r4 = check_bits(ba.at(11), 1, 0, 5, 1, 14, 5);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 14, 5);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0x0F, 14, 5);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 1, 0, 5, 1, 14, 5);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 1, 0, 5, 1, 14, 5);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_5->setText(tr("Выполнено"));
         else
             ui->lbl_takt_5->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1698,28 +1735,30 @@ void MainBox::clicked_takt_6(void)
         emit debug("table13-6");
         build_data(CMD_0x45);
         ba = client->input(data);
-        r1 = check_x0(ba.at(8), 13, 6);
-        r2 = check(ba.at(9), 0xFF, 13, 6);
-        r3 = check_bits(ba.at(10), 2, 1, 6, 1, 13, 6);
-        r4 = check_bits(ba.at(11), 2, 1, 6, 1, 13, 6);
+        r1 = check_x0(static_cast<unsigned char>(ba.at(8)), 13, 6);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xFF, 13, 6);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 2, 1, 6, 1, 13, 6);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 2, 1, 6, 1, 13, 6);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_6->setText(tr("Выполнено"));
         else
             ui->lbl_takt_6->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-6");
         build_data(CMD_0x4E);
         ba = client->input(data);
-        r1 = check_x0(ba.at(8), 14, 6);
-        r2 = check(ba.at(9), 0xFF, 14, 6);
-        r3 = check_bits(ba.at(10), 2, 0, 6, 1, 14, 6);
-        r4 = check_bits(ba.at(11), 2, 0, 6, 1, 14, 6);
+        r1 = check_x0(static_cast<unsigned char>(ba.at(8)), 14, 6);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xFF, 14, 6);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 2, 0, 6, 1, 14, 6);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 2, 0, 6, 1, 14, 6);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_6->setText(tr("Выполнено"));
         else
             ui->lbl_takt_6->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1738,28 +1777,30 @@ void MainBox::clicked_takt_7(void)
         emit debug("table13-7");
         build_data(CMD_0x46);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 13, 7);
-        r2 = check(ba.at(9), 0xF0, 13, 7);
-        r3 = check_bits(ba.at(10), 0, 1, 4, 1, 13, 7);
-        r4 = check_bits(ba.at(11), 0, 1, 4, 1, 13, 7);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 13, 7);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xF0, 13, 7);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 0, 1, 4, 1, 13, 7);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 0, 1, 4, 1, 13, 7);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_7->setText(tr("Выполнено"));
         else
             ui->lbl_takt_7->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-7");
         build_data(CMD_0x4F);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 14, 7);
-        r2 = check(ba.at(9), 0xF0, 14, 7);
-        r3 = check_bits(ba.at(10), 0, 0, 4, 1, 14, 7);
-        r4 = check_bits(ba.at(11), 0, 0, 4, 1, 14, 7);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 14, 7);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xF0, 14, 7);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 0, 0, 4, 1, 14, 7);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 0, 0, 4, 1, 14, 7);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_7->setText(tr("Выполнено"));
         else
             ui->lbl_takt_7->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1778,28 +1819,30 @@ void MainBox::clicked_takt_8(void)
         emit debug("table13-8");
         build_data(CMD_0x47);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 13, 8);
-        r2 = check(ba.at(9), 0x0F, 13, 8);
-        r3 = check_bits(ba.at(10), 1, 1, 5, 1, 13, 8);
-        r4 = check_bits(ba.at(11), 1, 1, 5, 1, 13, 8);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 13, 8);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0x0F, 13, 8);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 1, 1, 5, 1, 13, 8);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 1, 1, 5, 1, 13, 8);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_8->setText(tr("Выполнено"));
         else
             ui->lbl_takt_8->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-8");
         build_data(CMD_0x50);
         ba = client->input(data);
-        r1 = check_xF(ba.at(8), 14, 8);
-        r2 = check(ba.at(9), 0x0F, 14, 8);
-        r3 = check_bits(ba.at(10), 1, 0, 5, 1, 14, 8);
-        r4 = check_bits(ba.at(11), 1, 0, 5, 1, 14, 8);
+        r1 = check_xF(static_cast<unsigned char>(ba.at(8)), 14, 8);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0x0F, 14, 8);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 1, 0, 5, 1, 14, 8);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 1, 0, 5, 1, 14, 8);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_8->setText(tr("Выполнено"));
         else
             ui->lbl_takt_8->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }
@@ -1818,28 +1861,30 @@ void MainBox::clicked_takt_9(void)
         emit debug("table13-9");
         build_data(CMD_0x48);
         ba = client->input(data);
-        r1 = check_x0(ba.at(8), 13, 9);
-        r2 = check(ba.at(9), 0xFF, 13, 9);
-        r3 = check_bits(ba.at(10), 2, 1, 6, 1, 13, 9);
-        r4 = check_bits(ba.at(11), 2, 1, 6, 1, 13, 9);
+        r1 = check_x0(static_cast<unsigned char>(ba.at(8)), 13, 9);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xFF, 13, 9);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 2, 1, 6, 1, 13, 9);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 2, 1, 6, 1, 13, 9);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_9->setText(tr("Выполнено"));
         else
             ui->lbl_takt_9->setText(tr("Ошибка"));
         break;
+
     case 8:
         emit debug("table14-9");
         build_data(CMD_0x51);
         ba = client->input(data);
-        r1 = check_x0(ba.at(8), 14, 9);
-        r2 = check(ba.at(9), 0xFF, 14, 9);
-        r3 = check_bits(ba.at(10), 2, 0, 6, 1, 14, 9);
-        r4 = check_bits(ba.at(11), 2, 0, 6, 1, 14, 9);
+        r1 = check_x0(static_cast<unsigned char>(ba.at(8)), 14, 9);
+        r2 = check(static_cast<unsigned char>(ba.at(9)), 0xFF, 14, 9);
+        r3 = check_bits(static_cast<unsigned char>(ba.at(10)), 2, 0, 6, 1, 14, 9);
+        r4 = check_bits(static_cast<unsigned char>(ba.at(11)), 2, 0, 6, 1, 14, 9);
         if(r1 && r2 && r3 && r4)
             ui->lbl_takt_9->setText(tr("Выполнено"));
         else
             ui->lbl_takt_9->setText(tr("Ошибка"));
         break;
+
     default:
         break;
     }

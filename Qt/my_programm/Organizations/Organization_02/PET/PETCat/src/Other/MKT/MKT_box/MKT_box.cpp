@@ -48,12 +48,12 @@ MKT_box::MKT_box(QWidget *parent) :
     ui(new Ui::MKT_box)
 {
     init();
-    load_widgets("MKT");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 MKT_box::~MKT_box()
 {
-    save_widgets("MKT");
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------

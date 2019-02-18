@@ -18,7 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-//--------------------------------------------------------------------------------
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QStringList>
@@ -71,7 +70,7 @@ DebugFrame::DebugFrame(TCP_Client *client, QWidget *parent) :
 
     setLayout(hbox);
 
-    setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
+    //setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     connect(btnDebug, SIGNAL(clicked()), this, SLOT(test()));
 }
@@ -87,15 +86,15 @@ int DebugFrame::create_ba(QByteArray *data,
                .arg(takt, 0, 16)
                .arg(cmd));
     ba.clear();
-    ba.append((unsigned char)0x55);   // marker
-    ba.append((unsigned char)0xA9);
+    ba.append(static_cast<unsigned char>(0x55));    // marker
+    ba.append(static_cast<char>(0xA9));
 
-    ba.append((char)2);               // length
-    ba.append((char)0);
+    ba.append(static_cast<unsigned char>(2));       // length
+    ba.append(static_cast<unsigned char>(0));
 
-    ba.append((unsigned char)0x01);   // address
-    ba.append((char)0x02);            // usecase_ba
-    ba.append((char)0x00);            // null_byte
+    ba.append(static_cast<unsigned char>(0x01));    // address
+    ba.append(static_cast<unsigned char>(0x02));    // usecase_ba
+    ba.append(static_cast<unsigned char>(0x00));    // null_byte
 
     switch(table)
     {
@@ -116,7 +115,7 @@ int DebugFrame::create_ba(QByteArray *data,
     }
     table += (takt - 1);
 
-    ba.append((unsigned char)table);  // code_command
+    ba.append(static_cast<char>(table));  // code_command
 
     switch(cmd)
     {
@@ -125,10 +124,10 @@ int DebugFrame::create_ba(QByteArray *data,
     default: cmd = 0;    break;
     }
 
-    ba.append((unsigned char)cmd);
+    ba.append(static_cast<char>(cmd));
 
     for(int n=0; n<254; n++)
-        ba.append((char)0x00);
+        ba.append(static_cast<unsigned char>(0x00));
 
     *data = ba;
 

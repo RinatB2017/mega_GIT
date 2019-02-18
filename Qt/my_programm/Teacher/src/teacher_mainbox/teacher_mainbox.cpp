@@ -52,7 +52,7 @@ MainBox::~MainBox()
         note->check_modified();
         note->deleteLater();
     }
-    save_widgets("teacher");
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -278,7 +278,7 @@ void MainBox::init(void)
     createTestBar();
     create_widgets();
 
-    load_widgets("teacher");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

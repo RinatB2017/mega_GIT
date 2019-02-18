@@ -52,12 +52,12 @@ OptionBox::OptionBox(QList<pet_discovery_data> pet_config, QWidget *parent) :
     p_pet_config(pet_config)
 {
     init();
-    load_widgets("OptionBox");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 OptionBox::~OptionBox()
 {
-    save_widgets("OptionBox");
+    save_widgets(APPNAME);
 
     //---
     QSettings *settings = new QSettings(ININAME, QSettings::IniFormat);

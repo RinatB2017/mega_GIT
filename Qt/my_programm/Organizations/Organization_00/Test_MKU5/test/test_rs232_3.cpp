@@ -1,15 +1,12 @@
 //--------------------------------------------------------------------------------
 #include "test_rs232_3.hpp"
 //--------------------------------------------------------------------------------
-const int Max_Pack_Length = 1500;
-const int Max_Pack_Count = 1500;
-
 const uchar Send_info_message = 0x0D;
 const uchar Address_RS232_3 = 0x03;
 //--------------------------------------------------------------------------------
 Test_RS232_3::Test_RS232_3(QObject* parent,
                            const QString address,
-                           unsigned int port) :
+                           int port) :
     TestThread(parent)
 {
     this->address.setAddress(address);
@@ -20,7 +17,8 @@ Test_RS232_3::Test_RS232_3(QObject* parent,
 void Test_RS232_3::run()
 {
     print("<br />Проверка последовательного канала обмена данными по интерфейсу RS-232 N3.<br />", 0, true);
-    if (!init_proto(address.toString(), port))
+    if (!init_proto(address.toString(),
+                    static_cast<unsigned int>(port)))
     {
         delete_proto();
         return;
@@ -60,7 +58,7 @@ void Test_RS232_3::run()
 QByteArray Test_RS232_3::get_filled_array(int size)
 {
     QByteArray array;
-    uchar byte = 1;
+    char byte = 1;
     for (int i = 0; i < size; i++)
         array.append(byte++);
     return array;

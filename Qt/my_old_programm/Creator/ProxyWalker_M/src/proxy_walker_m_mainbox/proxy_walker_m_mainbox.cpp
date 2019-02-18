@@ -64,7 +64,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("ProxyWalker_M");
+    save_widgets(APPNAME);
 
     delete ui;
 }
@@ -124,7 +124,7 @@ void MainBox::init(void)
         proxy_list->setCurrentRow(current_index);
     }
 
-    load_widgets("ProxyWalker_M");
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_menu(void)

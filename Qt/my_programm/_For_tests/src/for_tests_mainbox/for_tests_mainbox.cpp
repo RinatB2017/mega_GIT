@@ -201,16 +201,18 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     B b;
     emit info(b.x0());
     emit info(b.x1());
     emit info(b.x2());
 #endif
 
-#if 0
-    auto x = 0;
-    emit info(QString("%1").arg(sizeof(x)));
+#if 1
+    auto a = 0;
+    auto b = static_cast<uint64_t>(a);
+    emit info(QString("a %1").arg(sizeof(a)));
+    emit info(QString("b %1").arg(sizeof(b)));
 #endif
 
 #if 0

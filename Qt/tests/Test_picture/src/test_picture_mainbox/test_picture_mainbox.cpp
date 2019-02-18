@@ -162,7 +162,7 @@ bool MainBox::load_picture(QString fileName)
         return false;
     }
 
-    ui->picture->setPixmap(picture);
+    ui->orig_picture->setPixmap(picture);
 
     return true;
 }
@@ -271,6 +271,22 @@ void MainBox::redraw_picture(void)
             }
 
             QRgb color = picture.toImage().pixel(x, y);
+
+#if 1
+            int color_R = qRed(color);
+            int color_G = qGreen(color);
+            int color_B = qBlue(color);
+            if((color_G > color_R) && (color_G > color_B))
+            {
+                tmp.setPixel(x, y, color);
+            }
+            else
+            {
+                tmp.setPixelColor(x, y, Qt::white);
+            }
+#endif
+
+#if 0
             if(color != max_color)
             {
                 tmp.setPixelColor(x, y, Qt::white);
@@ -279,20 +295,18 @@ void MainBox::redraw_picture(void)
             {
                 tmp.setPixel(x, y, color);
             }
+#endif
         }
     }
     pd->close();
     pd->deleteLater();
 
-    ui->picture->setPixmap(QPixmap::fromImage(tmp));
+    ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-
-    emit info(QString("grapher_curve %1").arg(grapher_curve));
-
     return true;
 }
 //--------------------------------------------------------------------------------

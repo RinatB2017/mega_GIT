@@ -374,6 +374,11 @@ void MainBox::test4(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+void MainBox::test5(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);

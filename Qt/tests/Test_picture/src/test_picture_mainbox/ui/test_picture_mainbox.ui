@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>148</width>
-    <height>207</height>
+    <width>178</width>
+    <height>164</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,13 +53,13 @@
     </layout>
    </item>
    <item>
-    <widget class="QSplitter" name="splitter">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <widget class="QLabel" name="picture"/>
-     <widget class="GrapherBox" name="grapher_widget" native="true"/>
-    </widget>
+    <widget class="QLabel" name="orig_picture"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="new_picture"/>
+   </item>
+   <item>
+    <widget class="GrapherBox" name="grapher_widget" native="true"/>
    </item>
   </layout>
  </widget>

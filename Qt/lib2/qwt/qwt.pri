@@ -17,8 +17,8 @@ unix {
 }
 
 win32 {
-    QWT_PATH = "qwt-613"
-    QWT_PRI  = "qwt-613.pri"
+    QWT_PATH = "qwt-614"
+    QWT_PRI  = "qwt-614.pri"
 
     DEPENDPATH  += $$PWD/$$QWT_PATH/src/
     INCLUDEPATH = $$DEPENDPATH

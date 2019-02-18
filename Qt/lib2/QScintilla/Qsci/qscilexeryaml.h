@@ -69,7 +69,7 @@ public:
 
     //! Construct a QsciLexerYAML with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerYAML(QObject *parent = 0);
+    QsciLexerYAML(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerYAML instance.
     virtual ~QsciLexerYAML();

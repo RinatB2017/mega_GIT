@@ -60,7 +60,7 @@ class B588 : public MyWidget
     Q_OBJECT
 
 public:
-    B588(QWidget *parent = 0);
+    B588(QWidget *parent = nullptr);
     ~B588();
 
 private slots:

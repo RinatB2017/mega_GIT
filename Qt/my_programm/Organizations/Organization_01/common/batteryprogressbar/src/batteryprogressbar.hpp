@@ -30,9 +30,9 @@ public:
     explicit BatteryProgressBar(int min_value,
                                 int max_value,
                                 bool only_down = false,
-                                QWidget *parent = 0);
+                                QWidget *parent = nullptr);
     explicit BatteryProgressBar(bool only_down = false,
-                                QWidget *parent = 0);
+                                QWidget *parent = nullptr);
 
 signals:
 

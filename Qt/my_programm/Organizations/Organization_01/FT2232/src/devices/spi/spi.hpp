@@ -34,8 +34,10 @@ class FT2232H;
 class SPI : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    SPI(I2C_Freq freq, QWidget *parent = 0);
+    SPI(I2C_Freq freq, 
+        QWidget *parent = nullptr);
 
     BOOL open(void);
     BOOL close(void);

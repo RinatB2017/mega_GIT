@@ -41,7 +41,7 @@ Q_SIGNALS:
     void hasChanged(const QStringList &list);
 
 public:
-    explicit SerialDeviceEnumerator(QObject *parent = 0);
+    explicit SerialDeviceEnumerator(QObject *parent = nullptr);
     virtual ~SerialDeviceEnumerator();
 
     void setEnabled(bool enable);

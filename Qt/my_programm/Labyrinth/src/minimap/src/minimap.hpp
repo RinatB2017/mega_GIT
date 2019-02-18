@@ -33,7 +33,7 @@ class MiniMap : public MyWidget
     Q_OBJECT
 
 public:
-    MiniMap(QWidget *parent = 0);
+    MiniMap(QWidget *parent = nullptr);
     ~MiniMap();
 
     bool set(int x, int y, int id);

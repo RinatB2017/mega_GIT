@@ -39,7 +39,7 @@ class CandleStick_Box : public QWidget
     Q_OBJECT
 
 public:
-    explicit CandleStick_Box(const QString ticket_name, QWidget *parent = 0);
+    explicit CandleStick_Box(const QString ticket_name, QWidget *parent = nullptr);
     ~CandleStick_Box();
 
     void append(QCandlestickSet *set);

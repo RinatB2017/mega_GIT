@@ -33,7 +33,7 @@ class ControlLog : public QObject
     Q_OBJECT
 public:
     explicit ControlLog(const QString log_name,
-                        QObject *parent = 0);
+                        QObject *parent = nullptr);
     ~ControlLog();
 
 #ifndef CALIBRATION_WIRED

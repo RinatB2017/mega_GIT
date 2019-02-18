@@ -56,7 +56,7 @@ class AbstractSerialEngine : public QObject
     Q_OBJECT
 
 public:
-    explicit AbstractSerialEngine(QObject *parent = 0);
+    explicit AbstractSerialEngine(QObject *parent = nullptr);
     virtual ~AbstractSerialEngine();
 
     static AbstractSerialEngine *createSerialEngine(QObject *parent);

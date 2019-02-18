@@ -116,7 +116,7 @@ public:
 
     //! Construct a QsciLexerCoffeeScript with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerCoffeeScript(QObject *parent = 0);
+    QsciLexerCoffeeScript(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerCoffeeScript instance.
     virtual ~QsciLexerCoffeeScript();

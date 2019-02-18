@@ -46,7 +46,7 @@ class MultimeterBox : public MyWidget
 
 public:
     MultimeterBox(const QString &title,
-                  QWidget *parent = 0);
+                  QWidget *parent = nullptr);
     ~MultimeterBox();
 
 signals:

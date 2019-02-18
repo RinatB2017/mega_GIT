@@ -110,7 +110,7 @@ public:
 
     //! Construct a QsciLexerMarkdown with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerMarkdown(QObject *parent = 0);
+    QsciLexerMarkdown(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerMarkdown instance.
     virtual ~QsciLexerMarkdown();

@@ -30,8 +30,9 @@ class FT2232H;
 class Indicator_thread : public QThread
 {
     Q_OBJECT
+    
 public:
-    Indicator_thread(I2C_Freq freq, QWidget *parent = 0);
+    Indicator_thread(I2C_Freq freq, QWidget *parent = nullptr);
     ~Indicator_thread();
     void run(void);
     void stop(void);

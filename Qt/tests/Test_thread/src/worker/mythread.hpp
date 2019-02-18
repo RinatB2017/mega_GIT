@@ -29,7 +29,7 @@ class MyThread : public QObject
     Q_OBJECT
 
 public:
-    MyThread(QObject *parent = 0);
+    MyThread(QObject *parent = nullptr);
     ~MyThread();
 
 signals:

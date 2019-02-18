@@ -36,7 +36,7 @@ class QSCINTILLA_EXPORT QsciLexerJavaScript : public QsciLexerCPP
 public:
     //! Construct a QsciLexerJavaScript with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerJavaScript(QObject *parent = 0);
+    QsciLexerJavaScript(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerJavaScript instance.
     virtual ~QsciLexerJavaScript();

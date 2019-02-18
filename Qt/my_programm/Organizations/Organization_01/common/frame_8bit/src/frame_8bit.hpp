@@ -29,13 +29,9 @@ class Frame_8bit : public QFrame
 {
     Q_OBJECT
 public:
-    explicit Frame_8bit(QWidget *parent = 0);
+    explicit Frame_8bit(QWidget *parent = nullptr);
     void set_value(unsigned char value);
     unsigned char get_value(void);
-
-signals:
-
-public slots:
 
 private:
     QToolButton *btn7;

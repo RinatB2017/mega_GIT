@@ -55,7 +55,7 @@ class SerialBox : public QFrame
 
 public:
     explicit SerialBox(QWidget *parent, const QString &caption);
-    explicit SerialBox(QWidget *parent = 0);
+    explicit SerialBox(QWidget *parent = nullptr);
     ~SerialBox();
 
     bool isOpen(void);

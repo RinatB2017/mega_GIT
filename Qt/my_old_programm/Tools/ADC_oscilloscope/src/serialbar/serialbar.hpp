@@ -32,7 +32,8 @@ class SerialBar : public QToolBar
 {
     Q_OBJECT
 public:
-    explicit SerialBar(const QString &title, QWidget *parent = 0);
+    explicit SerialBar(const QString &title, 
+                       QWidget *parent = nullptr);
 
 private slots:
 

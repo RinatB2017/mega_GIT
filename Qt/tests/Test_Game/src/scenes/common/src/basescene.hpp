@@ -36,7 +36,7 @@ class BaseScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    BaseScene(QObject *parent = 0);
+    BaseScene(QObject *parent = nullptr);
     ~BaseScene();
 
     QGraphicsPixmapItem *get_item(QString filename);

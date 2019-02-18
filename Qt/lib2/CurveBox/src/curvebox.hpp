@@ -30,7 +30,7 @@
 #include "qwt_symbol.h"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class CurveBox;
+    class CurveBox;
 }
 //--------------------------------------------------------------------------------
 class QwtPlotPicker;
@@ -54,7 +54,7 @@ public:
                       const QString &title,
                       const QString &title_axis_X,
                       const QString &title_axis_Y,
-                      QWidget *parent = 0);
+                      QWidget *parent = nullptr);
     ~CurveBox();
     void updateText(void);
 
@@ -90,14 +90,14 @@ private slots:
     void save_curve(void);
 
 private:
-    Ui::CurveBox *ui = 0;
+    Ui::CurveBox *ui;
 
-    QwtPlotPicker *d_picker = 0;
+    QwtPlotPicker *d_picker;
 
-    QwtPlotCurve *plot_curve = 0;
-    CurveData *view_curve = 0;
+    QwtPlotCurve *plot_curve;
+    CurveData *view_curve;
 
-    QwtLegend *legend = 0;
+    QwtLegend *legend;
 
     bool flag_symbol;
     bool is_silence;

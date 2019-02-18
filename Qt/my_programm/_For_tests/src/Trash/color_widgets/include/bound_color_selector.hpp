@@ -35,7 +35,7 @@ class QCP_EXPORT BoundColorSelector : public ColorSelector
 private:
     QColor* ref;
 public:
-    explicit BoundColorSelector(QColor* reference, QWidget *parent = 0);
+    explicit BoundColorSelector(QColor* reference, QWidget *parent = nullptr);
 
 private Q_SLOTS:
     void update_reference(QColor);

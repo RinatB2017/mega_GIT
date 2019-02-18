@@ -35,7 +35,7 @@ class QCP_EXPORT ColorDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    explicit ColorDelegate(QWidget *parent = 0);
+    explicit ColorDelegate(QWidget *parent = nullptr);
 
     virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
                     const QModelIndex &index) const Q_DECL_OVERRIDE;

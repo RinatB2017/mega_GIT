@@ -31,8 +31,9 @@
 class HD44780 : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    HD44780(QWidget *parent = 0);
+    HD44780(QWidget *parent = nullptr);
     ~HD44780();
 
     bool open(void);
@@ -41,7 +42,7 @@ public:
     void test(void);
 
 private:
-    FT_STATUS ftStatus;			//Status defined in D2XX to indicate operation result
+    FT_STATUS ftStatus;		//Status defined in D2XX to indicate operation result
     FT_HANDLE ftHandle;         // Handle of FT2232H device port
 
     DWORD dwClockDivisor;
@@ -50,7 +51,7 @@ private:
     DWORD dwNumBytesToSend;     // Index of output buffer
     DWORD dwNumInputBuffer;
 
-    BYTE InputBuffer[1024];		// Buffer to hold Data bytes to be read from FT2232H
+    BYTE InputBuffer[1024];	// Buffer to hold Data bytes to be read from FT2232H
     DWORD dwNumBytesSent;
     DWORD dwNumBytesRead;
 

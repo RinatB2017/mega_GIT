@@ -43,7 +43,7 @@ class LogDock : public QDockWidget
     Q_OBJECT
 public:
     explicit LogDock(const QString &title,
-                     QWidget *parent = 0);
+                     QWidget *parent = nullptr);
 
     void load_settings(void);
     void save_settings(void);
@@ -61,7 +61,7 @@ public slots:
     void messageLog(const QString &text);
 
 private:
-    LogBox *le = 0;
+    LogBox *le;
 };
 //--------------------------------------------------------------------------------
 #endif // LOGDOCK_HPP

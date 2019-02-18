@@ -37,7 +37,7 @@ class DocumentScene : public QGraphicsScene
   Q_OBJECT
 
   public:
-    DocumentScene(bool newDoc, ReportHandler * handler, QObject * parent = 0);
+    DocumentScene(bool newDoc, ReportHandler * handler, QObject * parent = nullptr);
     ~DocumentScene();
 
     ReportPageOptions * pageOptions() { return _pageOptions; }
@@ -50,14 +50,14 @@ class DocumentScene : public QGraphicsScene
     QuerySourceList * qsList;
     QMap<QString, QColor> _colorMap;
 
-    void sectionEditor(QWidget * parent = 0);
-    void colorList(QWidget * parent = 0);
-    void docInfoEditor(QWidget * parent = 0);
-    void docPageSetup(QWidget * parent = 0);
-    void querySourceList(QWidget * parent = 0);
+    void sectionEditor(QWidget * parent = nullptr);
+    void colorList(QWidget * parent = nullptr);
+    void docInfoEditor(QWidget * parent = nullptr);
+    void docPageSetup(QWidget * parent = nullptr);
+    void querySourceList(QWidget * parent = nullptr);
 
     // Label Definitions
-    void editLabelDefinitions(QWidget * parent = 0);
+    void editLabelDefinitions(QWidget * parent = nullptr);
 
     ORGraphicsSectionItem * getReportHead();
     void removeReportHead();
@@ -121,10 +121,10 @@ class DocumentScene : public QGraphicsScene
     QString reportDescription() const { return _descr; }
     QString reportName() const { return _name; }
 
-    bool save(QWidget * parent = 0);
-    bool save(QIODevice * iod, QWidget * parent = 0);
-    bool saveAs(QWidget * parent = 0);
-    bool saveToDb(QWidget * parent = 0);
+    bool save(QWidget * parent = nullptr);
+    bool save(QIODevice * iod, QWidget * parent = nullptr);
+    bool saveAs(QWidget * parent = nullptr);
+    bool saveToDb(QWidget * parent = nullptr);
 
     QDomDocument document();
 
@@ -183,7 +183,7 @@ class DocumentScene : public QGraphicsScene
     void    setScaledTo(qreal v) { _scaledTo = v; }
 
     void addDefinedParameter(const QString &, const ORParameter &);
-    void editDefinedParameters(QWidget * parent = 0);
+    void editDefinedParameters(QWidget * parent = nullptr);
 
     bool isModified() const { return _modified; }
 
@@ -199,7 +199,7 @@ class DocumentScene : public QGraphicsScene
 	void setSectionsColors(QGraphicsItem *item, QPointF lastPos, QPointF newPos, Qt::KeyboardModifiers keyModifiers);
 	void highlightSections(ORGraphicsSectionItem::Highlight color);
 
-    void checkValidity(QWidget * parent = 0);
+    void checkValidity(QWidget * parent = nullptr);
 
   public slots:
     void setModified(bool = true);

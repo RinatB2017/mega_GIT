@@ -14,7 +14,7 @@ class CQtOpenCVViewerGl : public QGLWidget
     Q_OBJECT
 
 public:
-    explicit CQtOpenCVViewerGl(QWidget *parent = 0);
+    explicit CQtOpenCVViewerGl(QWidget *parent = nullptr);
 
 signals:
     void imageSizeChanged(int outW, int outH); /// Used to resize the image outside the widget

@@ -35,7 +35,7 @@ class QSCINTILLA_EXPORT QsciLexerFortran : public QsciLexerFortran77
 public:
     //! Construct a QsciLexerFortran with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerFortran(QObject *parent = 0);
+    QsciLexerFortran(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerFortran instance.
     virtual ~QsciLexerFortran();

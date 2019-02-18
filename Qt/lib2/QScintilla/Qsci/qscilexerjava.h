@@ -35,7 +35,7 @@ class QSCINTILLA_EXPORT QsciLexerJava : public QsciLexerCPP
 public:
     //! Construct a QsciLexerJava with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerJava(QObject *parent = 0);
+    QsciLexerJava(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerJava instance.
     virtual ~QsciLexerJava();

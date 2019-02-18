@@ -31,7 +31,7 @@ class BitBang : public MyWidget
 {
     Q_OBJECT
 public:
-    BitBang(QWidget *parent = 0);
+    BitBang(QWidget *parent = nullptr);
     ~BitBang();
 
     bool open(void);

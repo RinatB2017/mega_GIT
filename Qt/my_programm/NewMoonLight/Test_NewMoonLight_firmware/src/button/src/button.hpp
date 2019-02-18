@@ -31,7 +31,7 @@ public:
     explicit Button(int width,
                     int height,
                     int index_led,
-                    QWidget *parent = 0);
+                    QWidget *parent = nullptr);
     ~Button();
 
     void set_color(QColor value_ON, QColor value_OFF);

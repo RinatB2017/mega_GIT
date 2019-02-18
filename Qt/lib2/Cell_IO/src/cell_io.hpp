@@ -12,7 +12,7 @@ class Cell_IO : public QGridLayout
 {
     Q_OBJECT
 public:
-    explicit Cell_IO(QWidget *parent = 0);
+    explicit Cell_IO(QWidget *parent = nullptr);
     void create_label(unsigned int x,
                       unsigned int y,
                       const QString &caption);

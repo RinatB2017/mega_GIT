@@ -10,7 +10,7 @@ class LedPanel4 : public QFrame
 {
     Q_OBJECT
 public:
-    explicit LedPanel4(QWidget *parent = 0);
+    explicit LedPanel4(QWidget *parent = nullptr);
     ~LedPanel4();
 
 signals:

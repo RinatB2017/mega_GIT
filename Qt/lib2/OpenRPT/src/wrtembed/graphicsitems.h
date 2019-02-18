@@ -67,8 +67,8 @@ class ORGraphicsRectItem : public QGraphicsRectItem
   public:
     enum { Type = UserType + 100 };
 
-    ORGraphicsRectItem(QGraphicsItem * parent = 0);
-    ORGraphicsRectItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsRectItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsRectItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
@@ -82,7 +82,7 @@ class ORGraphicsRectItem : public QGraphicsRectItem
     static QFont getDefaultEntityFont();
     static void  setDefaultEntityFont(const QFont &);
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
 	qreal rotation() const { return _rotation; }
 	void setRotation(qreal angle); 
@@ -118,8 +118,8 @@ class ORGraphicsLineItem : public QGraphicsLineItem
   public:
     enum { Type = UserType + 104 };
 
-    ORGraphicsLineItem(QGraphicsItem * parent = 0);
-    ORGraphicsLineItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsLineItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsLineItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
@@ -127,7 +127,7 @@ class ORGraphicsLineItem : public QGraphicsLineItem
 
     int type() const { return Type; }
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
     virtual QRectF boundingRect() const;
     virtual QPainterPath shape() const;
 
@@ -150,8 +150,8 @@ class ORGraphicsLabelItem : public ORGraphicsRectItem
   public:
     enum { Type = UserType + 101 };
 
-    ORGraphicsLabelItem(QGraphicsItem * parent = 0);
-    ORGraphicsLabelItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsLabelItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsLabelItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
@@ -168,7 +168,7 @@ class ORGraphicsLabelItem : public ORGraphicsRectItem
     QFont font() const { return _font; }
     int textFlags() const { return _flags; }
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
   protected:
     // label specific data
@@ -183,8 +183,8 @@ class ORGraphicsFieldItem : public ORGraphicsRectItem
   public:
     enum { Type = UserType + 102 };
 
-    ORGraphicsFieldItem(QGraphicsItem * parent = 0);
-    ORGraphicsFieldItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsFieldItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsFieldItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
     QRectF boundingRect () const;
@@ -220,7 +220,7 @@ class ORGraphicsFieldItem : public ORGraphicsRectItem
     qreal triggerPageBreak() const  { return _triggerPageBreak; }
     qreal leftToRight() const  { return _leftToRight; }
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
   protected:
     // Field specific data
@@ -246,8 +246,8 @@ class ORGraphicsTextItem : public ORGraphicsRectItem
   public:
     enum { Type = UserType + 103 };
 
-    ORGraphicsTextItem(QGraphicsItem * parent = 0);
-    ORGraphicsTextItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsTextItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsTextItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
@@ -268,7 +268,7 @@ class ORGraphicsTextItem : public ORGraphicsRectItem
     QFont font() const { return _font; }
     int textFlags() const { return _flags; }
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
   protected:
     // Text specific data
@@ -285,8 +285,8 @@ class ORGraphicsBarcodeItem : public ORGraphicsRectItem
   public:
     enum { Type = UserType + 105 };
 
-    ORGraphicsBarcodeItem(QGraphicsItem * parent = 0);
-    ORGraphicsBarcodeItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsBarcodeItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsBarcodeItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
@@ -309,7 +309,7 @@ class ORGraphicsBarcodeItem : public ORGraphicsRectItem
     int alignment() const { return _align; }
     double narrowBarWidth() const { return _narrowBarWidth; }
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
   protected:
     // Barcode specific data
@@ -334,8 +334,8 @@ class ORGraphicsImageItem : public ORGraphicsRectItem
   public:
     enum { Type = UserType + 106 };
 
-    ORGraphicsImageItem(QGraphicsItem * parent = 0);
-    ORGraphicsImageItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsImageItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsImageItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
@@ -356,7 +356,7 @@ class ORGraphicsImageItem : public ORGraphicsRectItem
     QString column() const { return _clmn; }
     QString mode() const { return _mode; }
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
   protected:
     // Image specific data
@@ -375,8 +375,8 @@ class ORGraphicsGraphItem : public ORGraphicsRectItem
   public:
     enum { Type = UserType + 107 };
 
-    ORGraphicsGraphItem(QGraphicsItem * parent = 0);
-    ORGraphicsGraphItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsGraphItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsGraphItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
@@ -391,7 +391,7 @@ class ORGraphicsGraphItem : public ORGraphicsRectItem
     void setQuery(const QString &);
     QString query() const;
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
   protected:
     // Graph specific data
@@ -404,8 +404,8 @@ class ORGraphicsCrossTabItem : public ORGraphicsRectItem
   public:
     enum { Type = UserType + 108 };
 
-    ORGraphicsCrossTabItem(QGraphicsItem * parent = 0);
-    ORGraphicsCrossTabItem(const QDomNode &, QGraphicsItem * parent = 0);
+    ORGraphicsCrossTabItem(QGraphicsItem * parent = nullptr);
+    ORGraphicsCrossTabItem(const QDomNode &, QGraphicsItem * parent = nullptr);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
  
@@ -438,7 +438,7 @@ class ORGraphicsCrossTabItem : public ORGraphicsRectItem
     bool displayHeaderColumn() const { return m_columnHeaderOnEachPart; }
     bool displayHeaderRow() const { return m_rowHeaderOnEachPart; }
 
-    virtual void properties(QWidget * parent = 0);
+    virtual void properties(QWidget * parent = nullptr);
 
   protected:
     // CrossTab specific data

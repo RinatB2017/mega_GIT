@@ -57,7 +57,7 @@ public:
 
     //! Construct a QsciLexerTeX with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerTeX(QObject *parent = 0);
+    QsciLexerTeX(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerTeX instance.
     virtual ~QsciLexerTeX();

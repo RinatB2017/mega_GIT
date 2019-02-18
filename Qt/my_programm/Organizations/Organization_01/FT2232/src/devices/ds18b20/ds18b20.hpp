@@ -29,8 +29,9 @@
 class DS18B20 : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    DS18B20(I2C_Freq freq, QWidget *parent = 0);
+    DS18B20(I2C_Freq freq, QWidget *parent = nullptr);
     ~DS18B20();
 
     void test(void);

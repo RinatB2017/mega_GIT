@@ -27,7 +27,7 @@ class ReportString : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ReportString(QWidget *parent = 0);
+    explicit ReportString(QWidget *parent = nullptr);
 
     void clear(void);
     void set_title(const QString &title);

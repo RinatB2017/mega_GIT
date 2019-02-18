@@ -85,7 +85,7 @@ public:
 
     //! Construct a QsciLexerCMake with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerCMake(QObject *parent = 0);
+    QsciLexerCMake(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerCMake instance.
     virtual ~QsciLexerCMake();

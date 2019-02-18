@@ -163,7 +163,7 @@ public:
 
     //! Construct a QsciLexerPerl with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerPerl(QObject *parent = 0);
+    QsciLexerPerl(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerPerl instance.
     virtual ~QsciLexerPerl();

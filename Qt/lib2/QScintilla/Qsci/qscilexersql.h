@@ -113,7 +113,7 @@ public:
 
     //! Construct a QsciLexerSQL with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerSQL(QObject *parent = 0);
+    QsciLexerSQL(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerSQL instance.
     virtual ~QsciLexerSQL();

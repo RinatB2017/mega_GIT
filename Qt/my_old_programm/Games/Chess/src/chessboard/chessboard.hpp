@@ -45,7 +45,7 @@ public:
         QUEEN_WHITE,
         ROOK_WHITE
     };
-    explicit ChessBoard(QWidget *parent = 0);
+    explicit ChessBoard(QWidget *parent = nullptr);
     bool set_figure(Figures figure, const QString &coord);
     bool get_figure(Figures *figure, const QString &coord);
     bool get_figure(Figures *figure, int x, int y);

@@ -15,7 +15,7 @@ class CodecBox : public QDialog
     Q_OBJECT
     
 public:
-    explicit CodecBox(QWidget *parent = 0);
+    explicit CodecBox(QWidget *parent = nullptr);
     ~CodecBox();
 
 private slots:

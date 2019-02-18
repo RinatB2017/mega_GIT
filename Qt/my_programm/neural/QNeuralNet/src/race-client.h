@@ -39,7 +39,7 @@ public:
         Error
     };
 
-    RaceClient(QString host, int port, QObject *parent = 0);
+    RaceClient(QString host, int port, QObject *parent = nullptr);
     virtual ~RaceClient();
 
     void setNetWeights();

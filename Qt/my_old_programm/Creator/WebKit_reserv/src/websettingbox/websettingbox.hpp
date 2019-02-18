@@ -39,7 +39,7 @@ class WebSettingBox : public QDialog
 {
     Q_OBJECT
 public:
-    explicit WebSettingBox(QWidget *parent = 0);
+    explicit WebSettingBox(QWidget *parent = nullptr);
     
 signals:
     

@@ -268,7 +268,7 @@ public:
         DEVIATION_2 = 2
     };
 
-    Multimeter_V786_2(QObject *parent = 0);
+    Multimeter_V786_2(QObject *parent = nullptr);
     ~Multimeter_V786_2();
 
     bool find_device(QString *port_name);

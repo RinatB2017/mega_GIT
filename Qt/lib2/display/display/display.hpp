@@ -40,7 +40,7 @@ public:
             unsigned int max_y,
             unsigned int led_width = 32,
             unsigned int led_height = 32,
-            QWidget *parent = 0);
+            QWidget *parent = nullptr);
     ~Display();
 
     bool set_color(unsigned int x,

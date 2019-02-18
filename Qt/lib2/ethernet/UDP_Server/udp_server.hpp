@@ -13,7 +13,7 @@ class UDP_Server : public QWidget
     Q_OBJECT
 
 public:
-    explicit UDP_Server(QWidget *parent = 0);
+    explicit UDP_Server(QWidget *parent = nullptr);
     ~UDP_Server();
 
 signals:

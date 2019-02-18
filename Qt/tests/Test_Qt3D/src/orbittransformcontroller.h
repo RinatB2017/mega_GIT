@@ -68,7 +68,7 @@ class OrbitTransformController : public QObject
     Q_PROPERTY(float angle READ angle WRITE setAngle NOTIFY angleChanged)
 
 public:
-    OrbitTransformController(QObject *parent = 0);
+    OrbitTransformController(QObject *parent = nullptr);
 
     void setTarget(Qt3DCore::QTransform *target);
     Qt3DCore::QTransform *target() const;

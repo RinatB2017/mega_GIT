@@ -66,7 +66,7 @@ class QuerySourceList : public QObject
 {
   Q_OBJECT
   public:
-    QuerySourceList(QObject * parent = 0);
+    QuerySourceList(QObject * parent = nullptr);
     ~QuerySourceList();
 
     unsigned int size();

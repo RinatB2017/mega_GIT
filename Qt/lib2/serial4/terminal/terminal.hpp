@@ -16,7 +16,8 @@ class Terminal : public QObject
     Q_OBJECT
 
 public:
-    explicit Terminal(const QString &filename, QWidget *parent = 0);
+    explicit Terminal(const QString &filename, 
+                      QWidget *parent = nullptr);
     ~Terminal();
 
 private:

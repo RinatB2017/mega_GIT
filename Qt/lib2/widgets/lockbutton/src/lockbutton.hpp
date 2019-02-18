@@ -32,12 +32,12 @@ class LockButton : public QWidget
     Q_OBJECT
 
 public:
-    LockButton(QWidget *parent = 0);
+    LockButton(QWidget *parent = nullptr);
     void setText(QString text);
 
 private:
-    QCheckBox *box   = 0;
-    QPushButton *btn = 0;
+    QCheckBox *box;
+    QPushButton *btn;
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -93,7 +93,7 @@ public:
 
     //! Construct a QsciLexerPOV with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerPOV(QObject *parent = 0);
+    QsciLexerPOV(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerPOV instance.
     virtual ~QsciLexerPOV();

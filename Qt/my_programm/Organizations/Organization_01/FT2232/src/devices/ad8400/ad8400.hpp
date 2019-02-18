@@ -31,8 +31,9 @@ class FT2232H;
 class AD8400 : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    AD8400(I2C_Freq freq, QWidget *parent = 0);
+    AD8400(I2C_Freq freq, QWidget *parent = nullptr);
     ~AD8400();
 
     void test(void);

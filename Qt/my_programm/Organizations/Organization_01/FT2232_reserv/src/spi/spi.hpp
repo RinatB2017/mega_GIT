@@ -33,8 +33,9 @@
 class SPI : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    SPI(QWidget *parent = 0);
+    SPI(QWidget *parent = nullptr);
 
     BOOL open(void);
     BOOL close(void);

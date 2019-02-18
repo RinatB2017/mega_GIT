@@ -28,7 +28,7 @@ class FakeEnumerator : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FakeEnumerator(QWidget *parent = 0);
+    explicit FakeEnumerator(QWidget *parent = nullptr);
     void setEnabled(bool state);
 
 signals:

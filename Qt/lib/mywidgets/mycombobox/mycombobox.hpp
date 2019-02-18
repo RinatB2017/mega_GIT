@@ -29,7 +29,7 @@
 class MyComboBox : public QComboBox
 {
 public:
-    explicit MyComboBox(QWidget *parent = 0) : QComboBox(parent)
+    explicit MyComboBox(QWidget *parent = nullptr) : QComboBox(parent)
     {
         setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
     }

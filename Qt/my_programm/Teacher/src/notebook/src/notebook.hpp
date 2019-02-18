@@ -32,7 +32,7 @@ class Notebook : public MyWidget
 {
     Q_OBJECT
 public:
-    Notebook(QWidget *parent = 0);
+    Notebook(QWidget *parent = nullptr);
     ~Notebook();
 
     void check_modified(void);

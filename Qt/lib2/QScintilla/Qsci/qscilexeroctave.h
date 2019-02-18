@@ -36,7 +36,7 @@ class QSCINTILLA_EXPORT QsciLexerOctave : public QsciLexerMatlab
 public:
     //! Construct a QsciLexerOctave with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerOctave(QObject *parent = 0);
+    QsciLexerOctave(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerOctave instance.
     virtual ~QsciLexerOctave();

@@ -84,7 +84,7 @@ public:
 
     //! Construct a QsciLexerPascal with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerPascal(QObject *parent = 0);
+    QsciLexerPascal(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerPascal instance.
     virtual ~QsciLexerPascal();

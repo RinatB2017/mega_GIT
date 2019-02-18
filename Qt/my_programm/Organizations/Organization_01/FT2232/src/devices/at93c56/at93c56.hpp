@@ -41,7 +41,7 @@ class AT93C56 : public MyWidget
 {
     Q_OBJECT
 public:
-    AT93C56(I2C_Freq freq, QWidget *parent = 0);
+    AT93C56(I2C_Freq freq, QWidget *parent = nullptr);
     ~AT93C56();
 
     void HighSpeedSetI2CStart(void);

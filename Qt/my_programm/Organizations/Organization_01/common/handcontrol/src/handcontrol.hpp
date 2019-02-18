@@ -37,7 +37,7 @@ class HandControl : public QDialog
 public:
     explicit HandControl(Calibrator *calibrator,
                          Multimeter_V786_2 *multimeter,
-                         QWidget *parent = 0);
+                         QWidget *parent = nullptr);
     ~HandControl();
 
     void set_serno(unsigned int value);

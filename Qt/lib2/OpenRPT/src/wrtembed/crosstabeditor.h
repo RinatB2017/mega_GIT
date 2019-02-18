@@ -30,7 +30,7 @@ class CrossTabEditor : public QDialog, public Ui::CrossTabEditor
     Q_OBJECT
 
 public:
-    CrossTabEditor(QWidget* parent = 0);
+    CrossTabEditor(QWidget* parent = nullptr);
     ~CrossTabEditor();
 
     QFont _font;

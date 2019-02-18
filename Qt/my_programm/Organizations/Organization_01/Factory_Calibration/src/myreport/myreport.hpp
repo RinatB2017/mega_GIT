@@ -31,7 +31,7 @@ class MyReport : public MyWidget
 {
     Q_OBJECT
 public:
-    MyReport(QWidget *parent = 0);
+    MyReport(QWidget *parent = nullptr);
     ~MyReport();
 
     void view(int serno, int year);

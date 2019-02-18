@@ -34,7 +34,7 @@ class SerialPort_V780_test : public QObject
     Q_OBJECT
 
 public:
-    explicit SerialPort_V780_test(QObject *parent = 0);
+    explicit SerialPort_V780_test(QObject *parent = nullptr);
     ~SerialPort_V780_test();
 
     bool isOpen(void);

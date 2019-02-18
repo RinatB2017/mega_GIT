@@ -33,7 +33,7 @@ class NativeSerialEngine : public AbstractSerialEngine
 {
     Q_OBJECT
 public:
-    explicit NativeSerialEngine(QObject *parent = 0);
+    explicit NativeSerialEngine(QObject *parent = nullptr);
     virtual ~NativeSerialEngine();
 
     bool open(AbstractSerial::OpenMode mode);

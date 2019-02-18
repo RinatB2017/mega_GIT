@@ -31,8 +31,9 @@ class Indicator_thread;
 class Indicator : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    Indicator(I2C_Freq freq, QWidget *parent = 0);
+    Indicator(I2C_Freq freq, QWidget *parent = nullptr);
 
     void run(void);
     void stop(void);

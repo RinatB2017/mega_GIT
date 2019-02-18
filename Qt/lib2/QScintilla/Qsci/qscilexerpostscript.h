@@ -88,7 +88,7 @@ public:
 
     //! Construct a QsciLexerPostScript with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerPostScript(QObject *parent = 0);
+    QsciLexerPostScript(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerPostScript instance.
     virtual ~QsciLexerPostScript();

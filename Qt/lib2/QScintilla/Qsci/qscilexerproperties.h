@@ -58,7 +58,7 @@ public:
 
     //! Construct a QsciLexerProperties with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerProperties(QObject *parent = 0);
+    QsciLexerProperties(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerProperties instance.
     virtual ~QsciLexerProperties();

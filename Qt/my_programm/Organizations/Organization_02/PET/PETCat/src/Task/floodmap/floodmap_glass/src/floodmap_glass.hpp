@@ -28,7 +28,7 @@
 class FloodMap_glass : public MyWidget
 {
 public:
-    FloodMap_glass(QWidget *parent = 0);
+    FloodMap_glass(QWidget *parent = nullptr);
     void install(QWidget* widget);
 
     void get_circle(QPoint *c, int *r);

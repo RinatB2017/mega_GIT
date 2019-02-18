@@ -36,7 +36,7 @@ class MyMainWindow : public MainWindow
 public:
     explicit MyMainWindow(const QString cfgfile,
                           bool edit_conf,
-                          QWidget *parent = 0);
+                          QWidget *parent = nullptr);
     ~MyMainWindow();
 
 };

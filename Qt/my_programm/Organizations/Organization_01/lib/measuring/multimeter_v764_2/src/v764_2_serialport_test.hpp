@@ -34,7 +34,7 @@ class SerialPort_V764_2_test : public QObject
     Q_OBJECT
 
 public:
-    explicit SerialPort_V764_2_test(QObject *parent = 0);
+    explicit SerialPort_V764_2_test(QObject *parent = nullptr);
     ~SerialPort_V764_2_test();
 
     bool isOpen(void);

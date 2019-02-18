@@ -30,7 +30,7 @@ class Led : public MyWidget
 public:
     explicit Led(int width,
                  int height,
-                 QWidget *parent = 0);
+                 QWidget *parent = nullptr);
     ~Led();
 
     void set_color(uint16_t color);

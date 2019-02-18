@@ -12,7 +12,7 @@ class ListWidget_Site : public QListWidget
     Q_OBJECT
 public:
     explicit ListWidget_Site(QWebView *webview,
-                             QWidget *parent = 0);
+                             QWidget *parent = nullptr);
     void add_item(const QString &name);
     
 signals:

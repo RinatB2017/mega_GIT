@@ -36,7 +36,7 @@ struct page
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class PersistentCookieJar;
@@ -51,7 +51,7 @@ class MainBox : public QWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 signals:

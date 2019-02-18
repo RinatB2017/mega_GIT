@@ -66,7 +66,7 @@ class QSCINTILLA_EXPORT QsciLexer : public QObject
 public:
     //! Construct a QsciLexer with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexer(QObject *parent = 0);
+    QsciLexer(QObject *parent = nullptr);
 
     //! Destroy the QSciLexer.
     virtual ~QsciLexer();

@@ -64,7 +64,7 @@ public:
 
     //! Construct a QsciLexerBatch with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerBatch(QObject *parent = 0);
+    QsciLexerBatch(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerBatch instance.
     virtual ~QsciLexerBatch();

@@ -110,7 +110,7 @@ public:
 
     //! Construct a QsciLexerPython with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerPython(QObject *parent = 0);
+    QsciLexerPython(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerPython instance.
     virtual ~QsciLexerPython();

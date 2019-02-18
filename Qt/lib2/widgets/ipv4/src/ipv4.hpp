@@ -37,7 +37,7 @@ signals:
     void s_get_url(QUrl);
 
 public:
-    explicit IPV4(QWidget *parent = 0);
+    explicit IPV4(QWidget *parent = nullptr);
     ~IPV4();
 
     void setObjectName(const QString &name);
@@ -51,12 +51,12 @@ private slots:
     void work(void);
 
 private:
-    QSpinBox *a = 0;
-    QSpinBox *b = 0;
-    QSpinBox *c = 0;
-    QSpinBox *d = 0;
+    QSpinBox *a;
+    QSpinBox *b;
+    QSpinBox *c;
+    QSpinBox *d;
 
-    QSpinBox *port = 0;
+    QSpinBox *port;
 
     void updateText(void);
 };

@@ -35,7 +35,7 @@ class QSCINTILLA_EXPORT QsciLexerXML : public QsciLexerHTML
 public:
     //! Construct a QsciLexerXML with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerXML(QObject *parent = 0);
+    QsciLexerXML(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerXML instance.
     virtual ~QsciLexerXML();

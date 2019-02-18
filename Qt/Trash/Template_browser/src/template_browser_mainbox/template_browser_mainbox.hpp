@@ -41,7 +41,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
@@ -49,17 +49,15 @@ private slots:
     void finished(bool state);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
     bool flag = false;
 
-    WebView *browser = 0;
-    QProgressBar *progressBar = 0;
-    QLineEdit *address = 0;
+    WebView *browser;
+    QProgressBar *progressBar;
+    QLineEdit *address;
 
     void init(void);
-
     void createTestBar(void);
-
     void updateText(void);
 
 };

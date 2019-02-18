@@ -104,7 +104,7 @@ public:
 
     //! Construct a QsciLexerLua with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerLua(QObject *parent = 0);
+    QsciLexerLua(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerLua instance.
     virtual ~QsciLexerLua();

@@ -84,7 +84,7 @@ public:
 
     //! Construct a QsciLexerPO with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerPO(QObject *parent = 0);
+    QsciLexerPO(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerPO instance.
     virtual ~QsciLexerPO();

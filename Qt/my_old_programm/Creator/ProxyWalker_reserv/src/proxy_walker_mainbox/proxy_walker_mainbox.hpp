@@ -25,7 +25,7 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class QProgressBar;
@@ -40,7 +40,7 @@ class MainBox : public QWidget
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = 0);
+    explicit MainBox(QWidget *parent = nullptr);
     virtual ~MainBox();
 
 protected:

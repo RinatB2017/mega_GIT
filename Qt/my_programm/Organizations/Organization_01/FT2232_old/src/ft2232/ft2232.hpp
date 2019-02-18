@@ -28,8 +28,9 @@
 class FT2232 : public QWidget
 {
     Q_OBJECT
+    
 public:
-    explicit FT2232(QWidget *parent = 0);
+    explicit FT2232(QWidget *parent = nullptr);
 
     bool Open(void);
     FT_STATUS Close(void);

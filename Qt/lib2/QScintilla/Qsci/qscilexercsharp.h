@@ -36,7 +36,7 @@ class QSCINTILLA_EXPORT QsciLexerCSharp : public QsciLexerCPP
 public:
     //! Construct a QsciLexerCSharp with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerCSharp(QObject *parent = 0);
+    QsciLexerCSharp(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerCSharp instance.
     virtual ~QsciLexerCSharp();

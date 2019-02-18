@@ -66,7 +66,7 @@ public:
 
     //! Construct a QsciLexerSpice with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerSpice(QObject *parent = 0);
+    QsciLexerSpice(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerSpice instance.
     virtual ~QsciLexerSpice();

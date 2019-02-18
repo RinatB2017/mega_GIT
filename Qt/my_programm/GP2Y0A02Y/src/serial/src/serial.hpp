@@ -34,7 +34,7 @@ class Serial : public MyWidget
     Q_OBJECT
 
 public:
-    Serial(QWidget *parent = 0);
+    Serial(QWidget *parent = nullptr);
     ~Serial();
 
 signals:

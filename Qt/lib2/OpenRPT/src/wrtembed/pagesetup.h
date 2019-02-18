@@ -32,7 +32,7 @@ class PageSetup : public QDialog, public Ui::PageSetup
     Q_OBJECT
 
 public:
-    PageSetup(QWidget* parent = 0);
+    PageSetup(QWidget* parent = nullptr);
     ~PageSetup();
 
     static const char strLetter[];

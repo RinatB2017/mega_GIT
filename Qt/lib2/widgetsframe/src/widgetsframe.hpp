@@ -29,7 +29,7 @@ class WidgetsFrame : public QFrame
 {
     Q_OBJECT
 public:
-    explicit WidgetsFrame(QWidget *parent = 0);
+    explicit WidgetsFrame(QWidget *parent = nullptr);
     int addWidget(QWidget *w);
 
 signals:

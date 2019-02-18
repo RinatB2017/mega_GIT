@@ -85,7 +85,7 @@ public:
 
     //! Construct a QsciLexerFortran77 with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerFortran77(QObject *parent = 0);
+    QsciLexerFortran77(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerFortran77 instance.
     virtual ~QsciLexerFortran77();

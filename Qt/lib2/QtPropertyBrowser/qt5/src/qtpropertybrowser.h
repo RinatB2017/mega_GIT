@@ -95,7 +95,7 @@ class QtAbstractPropertyManager : public QObject
     Q_OBJECT
 public:
 
-    explicit QtAbstractPropertyManager(QObject *parent = 0);
+    explicit QtAbstractPropertyManager(QObject *parent = nullptr);
     ~QtAbstractPropertyManager();
 
     QSet<QtProperty *> properties() const;

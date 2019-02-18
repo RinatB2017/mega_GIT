@@ -8,8 +8,9 @@ class WebSetting : public QToolBar
 {
     Q_OBJECT
 public:
-    explicit WebSetting(const QString &title, QWidget *parent = 0);
-    explicit WebSetting(QWidget *parent = 0);
+    explicit WebSetting(const QString &title, 
+                        QWidget *parent = nullptr);
+    explicit WebSetting(QWidget *parent = nullptr);
 
 signals:
     void info(const QString &);

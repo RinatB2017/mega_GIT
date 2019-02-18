@@ -121,7 +121,7 @@ public:
 
     //! Construct a QsciLexerVerilog with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerVerilog(QObject *parent = 0);
+    QsciLexerVerilog(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerVerilog instance.
     virtual ~QsciLexerVerilog();

@@ -61,7 +61,7 @@ public:
 
     //! Construct a QsciLexerMakefile with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerMakefile(QObject *parent = 0);
+    QsciLexerMakefile(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerMakefile instance.
     virtual ~QsciLexerMakefile();

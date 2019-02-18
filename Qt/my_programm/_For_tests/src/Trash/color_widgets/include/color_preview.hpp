@@ -50,7 +50,7 @@ public:
     };
     Q_ENUMS(DisplayMode)
 
-    explicit ColorPreview(QWidget *parent = 0);
+    explicit ColorPreview(QWidget *parent = nullptr);
     ~ColorPreview();
 
     /// Get the background visible under transparent colors

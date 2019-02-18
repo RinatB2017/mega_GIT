@@ -32,7 +32,7 @@ class HexView16 : public QWidget
     Q_OBJECT
 
 public:
-    HexView16(QWidget *parent = 0);
+    HexView16(QWidget *parent = nullptr);
     ~HexView16();
 
     void set(uint16_t address, uint16_t value);

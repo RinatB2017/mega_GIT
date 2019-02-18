@@ -31,7 +31,7 @@ public:
              int height,
              int b_width,
              const QString &caption,
-             QWidget *parent = 0);
+             QWidget *parent = nullptr);
 
 signals:
     void clicked(void);

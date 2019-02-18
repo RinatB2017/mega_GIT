@@ -68,7 +68,7 @@ class Oscilloscope_GDS_840C : public MyWidget
     Q_OBJECT
 
 public:
-    Oscilloscope_GDS_840C(QWidget *parent = 0);
+    Oscilloscope_GDS_840C(QWidget *parent = nullptr);
 
     enum Channel {
         A = 1,

@@ -31,7 +31,7 @@ class ListWidget_Link : public QListWidget
     Q_OBJECT
 public:
     explicit ListWidget_Link(QWebView *webview,
-                             QWidget *parent = 0);
+                             QWidget *parent = nullptr);
     
 signals:
     void info(const QString &);

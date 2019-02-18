@@ -12,7 +12,7 @@ class IPCtrl6 : public QFrame
     Q_OBJECT
 
 public:
-    IPCtrl6(QWidget *parent = 0);
+    IPCtrl6(QWidget *parent = nullptr);
     ~IPCtrl6();
 
     virtual bool eventFilter( QObject *obj, QEvent *event );

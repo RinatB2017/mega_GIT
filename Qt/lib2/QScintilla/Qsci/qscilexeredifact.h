@@ -66,7 +66,7 @@ public:
 
     //! Construct a QsciLexerEDIFACT with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerEDIFACT(QObject *parent = 0);
+    QsciLexerEDIFACT(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerEDIFACT instance.
     virtual ~QsciLexerEDIFACT();

@@ -11,7 +11,7 @@ class LedPanel16 : public QFrame
     Q_OBJECT
 
 public:
-    explicit LedPanel16(QWidget *parent = 0);
+    explicit LedPanel16(QWidget *parent = nullptr);
     ~LedPanel16();
 
 signals:

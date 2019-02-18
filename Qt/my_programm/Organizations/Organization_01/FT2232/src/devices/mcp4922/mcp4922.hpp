@@ -33,8 +33,9 @@ class FT2232H;
 class MCP4922 : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    MCP4922(I2C_Freq freq, QWidget *parent = 0);
+    MCP4922(I2C_Freq freq, QWidget *parent = nullptr);
     ~MCP4922();
 
     BOOL init(void);

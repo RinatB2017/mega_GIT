@@ -8,7 +8,7 @@ class Writer : public QWebView
 {
     Q_OBJECT
 public:
-    explicit Writer(QWidget *parent = 0);
+    explicit Writer(QWidget *parent = nullptr);
     
 signals:
     void info(const QString &);

@@ -44,7 +44,7 @@ public:
         Continuous ///< Update color as it's being modified in the dialog
     };
 
-    explicit ColorSelector(QWidget *parent = 0);
+    explicit ColorSelector(QWidget *parent = nullptr);
     ~ColorSelector();
 
     void setUpdateMode(UpdateMode m);

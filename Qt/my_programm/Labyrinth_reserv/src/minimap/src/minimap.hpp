@@ -33,7 +33,7 @@ class MiniMap : public MyWidget
     Q_OBJECT
 
 public:
-    MiniMap(QWidget *parent = 0);
+    MiniMap(QWidget *parent = nullptr);
     ~MiniMap();
 
     bool set(int x, int y, int id);
@@ -44,7 +44,7 @@ public:
 
 private:
     int id_map[MAX_WIDTH][MAX_HEIGHT];
-    QGridLayout *grid_map = 0;
+    QGridLayout *grid_map;
 
     int max_x = MIN_WIDTH;
     int max_y = MIN_HEIGHT;

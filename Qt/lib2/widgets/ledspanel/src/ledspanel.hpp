@@ -14,7 +14,7 @@ class LedsPanel : public QFrame
     Q_OBJECT
     
 public:
-    explicit LedsPanel(QWidget *parent = 0);
+    explicit LedsPanel(QWidget *parent = nullptr);
     ~LedsPanel();
 
     void set_text(unsigned int, const QString &);

@@ -156,7 +156,7 @@ class Multimeter_V780 : public QObject
     Q_OBJECT
 
 public:
-    explicit Multimeter_V780(QObject *parent = 0);
+    explicit Multimeter_V780(QObject *parent = nullptr);
     ~Multimeter_V780();
 
     int init_terminal(void);

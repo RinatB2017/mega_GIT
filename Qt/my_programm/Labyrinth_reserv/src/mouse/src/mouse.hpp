@@ -37,14 +37,14 @@ class Mouse : public MyWidget
     Q_OBJECT
 
 public:
-    Mouse(QWidget *parent = 0);
+    Mouse(QWidget *parent = nullptr);
     ~Mouse();
 
     bool set(int x, int y, int id);
     bool get(int x, int y, int *id);
 
 private:
-    Ui::Mouse *ui = 0;
+    Ui::Mouse *ui;
 
     void init(void);
     void updateText(void);

@@ -32,7 +32,7 @@ class Safe : public MyWidget
     Q_OBJECT
 
 public:
-    Safe(QWidget *parent = 0);
+    Safe(QWidget *parent = nullptr);
     ~Safe();
 
     int get_value(void);
@@ -43,7 +43,7 @@ private slots:
     void s_clear(void);
 
 private:
-    Ui::Safe *ui = 0;
+    Ui::Safe *ui;
     int value = 0;
     QList<QAbstractButton *> widgets;
 

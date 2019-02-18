@@ -26,8 +26,9 @@
 class Test_MPSSE : public QWidget
 {
     Q_OBJECT
+    
 public:
-    explicit Test_MPSSE(QWidget *parent = 0);
+    explicit Test_MPSSE(QWidget *parent = nullptr);
 
     int test_bitbang(void);
     int test_ds1305(void);

@@ -36,7 +36,7 @@ class QSCINTILLA_EXPORT QsciLexerIDL : public QsciLexerCPP
 public:
     //! Construct a QsciLexerIDL with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerIDL(QObject *parent = 0);
+    QsciLexerIDL(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerIDL instance.
     virtual ~QsciLexerIDL();

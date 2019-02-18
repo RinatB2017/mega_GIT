@@ -85,7 +85,7 @@ public:
 
     //! Construct a QsciLexerAVS with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerAVS(QObject *parent = 0);
+    QsciLexerAVS(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerAVS instance.
     virtual ~QsciLexerAVS();

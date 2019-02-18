@@ -32,7 +32,7 @@ class Map : public MyWidget
     Q_OBJECT
 
 public:
-    Map(QWidget *parent = 0);
+    Map(QWidget *parent = nullptr);
     ~Map();
 
     void new_map(int max_x, int max_y);
@@ -67,7 +67,7 @@ public slots:
     void update(void);
 
 private:
-    QGridLayout *grid_map = 0;
+    QGridLayout *grid_map;
 
     int id_map[MAX_WIDTH][MAX_HEIGHT];
 

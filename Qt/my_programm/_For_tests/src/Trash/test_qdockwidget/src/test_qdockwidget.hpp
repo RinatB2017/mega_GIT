@@ -32,7 +32,7 @@ class Test_QDockWidget : public QDockWidget
 
 public:
     Test_QDockWidget(const QString &title,
-                QWidget *parent = 0);
+                QWidget *parent = nullptr);
 
 signals:
     void info(const QString &);
@@ -51,7 +51,7 @@ private slots:
 
 private:
     QList<QToolButton *> widgets;
-    QGridLayout *grid_map = 0;
+    QGridLayout *grid_map;
 
     void create_left_dock(void);
     void create_top_dock(void);

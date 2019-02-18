@@ -153,7 +153,7 @@ class Multimeter_V764_2 : public QObject
     Q_OBJECT
 
 public:
-    explicit Multimeter_V764_2(QObject *parent = 0);
+    explicit Multimeter_V764_2(QObject *parent = nullptr);
     ~Multimeter_V764_2();
 
     int init_modbus(void);

@@ -104,7 +104,7 @@ private:
     QQueue<QString> queue_message;
 
     bool flag = true;
-    LogBox *le = 0;
+    LogBox *le;
 };
 //--------------------------------------------------------------------------------
 class LogDock : public QDockWidget
@@ -112,7 +112,7 @@ class LogDock : public QDockWidget
     Q_OBJECT
 public:
     explicit LogDock(const QString &title,
-                     QWidget *parent = 0);
+                     QWidget *parent = nullptr);
     ~LogDock();
 
     void load_settings(void);
@@ -140,10 +140,8 @@ private slots:
     void update(void);
 
 private:
-    LogBox *le = 0;
-    //QThread *thread = 0;
-    //LogThread *worker = 0;
-    QTimer *timer = 0;
+    LogBox *le;
+    QTimer *timer;
 
     QQueue<QString> queue_info;
     QQueue<QString> queue_debug;

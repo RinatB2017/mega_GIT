@@ -109,7 +109,7 @@ public:
 
 	//! Construct a QsciLexerTCL with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-	QsciLexerTCL(QObject *parent = 0);
+	QsciLexerTCL(QObject *parent = nullptr);
 
 	//! Destroys the QsciLexerTCL instance.
 	virtual ~QsciLexerTCL();

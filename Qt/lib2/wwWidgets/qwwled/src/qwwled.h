@@ -30,7 +30,7 @@ Q_OBJECT
 public:
     enum Shape { Circular, RectangularSunken, RectangularRaised, RectangularPlain};
     QwwLed(QWidget *parent = nullptr);
-    QwwLed(const QColor &col, Shape shap = Circular, QWidget *parent = 0);
+    QwwLed(const QColor &col, Shape shap = Circular, QWidget *parent = nullptr);
     ~QwwLed();
     QSize sizeHint() const;
     QColor color() const;

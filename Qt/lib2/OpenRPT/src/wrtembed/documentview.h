@@ -34,7 +34,7 @@ class DocumentView : public QGraphicsView
 {
   Q_OBJECT
   public:
-    DocumentView(DocumentScene * ds, QWidget * parent = 0);
+    DocumentView(DocumentScene * ds, QWidget * parent = nullptr);
     void zoom(int delta);
 
   protected:

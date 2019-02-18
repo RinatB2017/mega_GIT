@@ -371,7 +371,7 @@ public:
 
     //! Construct a QsciLexerHTML with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerHTML(QObject *parent = 0);
+    QsciLexerHTML(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerHTML instance.
     virtual ~QsciLexerHTML();

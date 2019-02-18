@@ -43,8 +43,8 @@ class QCP_EXPORT GradientSlider : public QSlider
     Q_PROPERTY(QLinearGradient gradient READ gradient WRITE setGradient)
 
 public:
-    explicit GradientSlider(QWidget *parent = 0);
-    explicit GradientSlider(Qt::Orientation orientation, QWidget *parent = 0);
+    explicit GradientSlider(QWidget *parent = nullptr);
+    explicit GradientSlider(Qt::Orientation orientation, QWidget *parent = nullptr);
     ~GradientSlider();
 
     /// Get the background, it's visible for transparent gradient stops

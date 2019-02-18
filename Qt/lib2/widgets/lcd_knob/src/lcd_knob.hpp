@@ -13,7 +13,7 @@ class LCD_Knob : public QFrame
     Q_OBJECT
     
 public:
-    explicit LCD_Knob(QWidget *parent = 0);
+    explicit LCD_Knob(QWidget *parent = nullptr);
     ~LCD_Knob();
 
     void setRange(double, double);
@@ -30,9 +30,9 @@ signals:
     void valueChanged(double);
 
 private:
-    QwtKnob *knob = 0;
-    QLCDNumber *lcd = 0;
-    QVBoxLayout *vbox = 0;
+    QwtKnob *knob;
+    QLCDNumber *lcd;
+    QVBoxLayout *vbox;
 
 };
 //--------------------------------------------------------------------------------

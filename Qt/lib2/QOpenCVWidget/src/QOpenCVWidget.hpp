@@ -18,7 +18,7 @@ private:
     QImage image;
 
 public:
-    QOpenCVWidget(QWidget *parent = 0);
+    QOpenCVWidget(QWidget *parent = nullptr);
     ~QOpenCVWidget(void);
     void putImage(IplImage *);
 }; 

@@ -81,7 +81,7 @@ public:
 
 	//! Construct a QsciLexerBash with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-	QsciLexerBash(QObject *parent = 0);
+	QsciLexerBash(QObject *parent = nullptr);
 
 	//! Destroys the QsciLexerBash instance.
 	virtual ~QsciLexerBash();

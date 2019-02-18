@@ -27,7 +27,7 @@
 class MyComboBox : public QComboBox
 {
 public:
-    explicit MyComboBox(QWidget *parent = 0) : QComboBox(parent)
+    explicit MyComboBox(QWidget *parent = nullptr) : QComboBox(parent)
     {
         setMinimumWidth(100);
         setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);

@@ -33,7 +33,7 @@ class LogDock : public QDockWidget
     Q_OBJECT
 public:
     explicit LogDock(const QString &title,
-                     QWidget *parent = 0);
+                     QWidget *parent = nullptr);
     ~LogDock();
 
     void load_settings(void);
@@ -59,8 +59,8 @@ private slots:
     void update(void);
 
 private:
-    LogBox *le = 0;
-    QTimer *timer = 0;
+    LogBox *le;
+    QTimer *timer;
     bool is_busy = false;
 
     QQueue<QString> queue_info;

@@ -81,7 +81,7 @@ public:
 
     //! Construct a QsciLexerJSON with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerJSON(QObject *parent = 0);
+    QsciLexerJSON(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerJSON instance.
     virtual ~QsciLexerJSON();

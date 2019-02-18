@@ -35,7 +35,7 @@ class Log_options : public QDialog
     Q_OBJECT
     
 public:
-    Log_options(QWidget *parent = 0);
+    Log_options(QWidget *parent = nullptr);
     ~Log_options();
 
     Q_PROPERTY(bool flag_ReadOnly       READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)
@@ -66,9 +66,9 @@ public:
     void set_flag_TextIsWindows(bool value);
 
 private:
-    Ui::Log_options *ui = 0;
+    Ui::Log_options *ui;
     QList<QString> codecs;
-    QTextEdit *logEdit = 0;
+    QTextEdit *logEdit;
 
     void findCodecs(void);
 };

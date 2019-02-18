@@ -14,7 +14,7 @@ class FrameBox : public QFrame
     Q_OBJECT
 
 public:
-    explicit FrameBox(QWidget *parent = 0);
+    explicit FrameBox(QWidget *parent = nullptr);
     ~FrameBox();
 
 public slots:

@@ -35,7 +35,7 @@ class SiteWalker : public QWidget
     Q_OBJECT
 public:
     explicit SiteWalker(QUrl url,
-                        QWidget *parent = 0);
+                        QWidget *parent = nullptr);
     
 signals:
     void info(const QString &);

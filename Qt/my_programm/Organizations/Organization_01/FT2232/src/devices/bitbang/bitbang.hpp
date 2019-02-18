@@ -33,8 +33,10 @@ class FT2232H;
 class BitBang : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    BitBang(I2C_Freq freq, QWidget *parent = 0);
+    BitBang(I2C_Freq freq,
+            QWidget *parent = nullptr);
     ~BitBang();
 
     bool open(void);

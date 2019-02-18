@@ -30,7 +30,8 @@ class FindLinks : public QDialog
 {
     Q_OBJECT
 public:
-    explicit FindLinks(QWebFrame *frame, QWidget *parent = 0);
+    explicit FindLinks(QWebFrame *frame, 
+                       QWidget *parent = nullptr);
     
 signals:
     void info(const QString &);
@@ -42,9 +43,9 @@ private slots:
     void log(const QString &data);
 
 private:
-    QWebFrame *main_frame = 0;
-    QLineEdit *le = 0;
-    QLineEdit *le2 = 0;
+    QWebFrame *main_frame;
+    QLineEdit *le;
+    QLineEdit *le2;
     void init(void);
     void connect_log(void);
     

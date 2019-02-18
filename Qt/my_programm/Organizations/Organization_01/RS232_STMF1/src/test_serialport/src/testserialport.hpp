@@ -30,7 +30,7 @@ class TestSerialPort : public QObject
     Q_OBJECT
 
 public:
-    explicit TestSerialPort(QObject *parent = 0);
+    explicit TestSerialPort(QObject *parent = nullptr);
 
     bool isOpen(void);
     void close(void);

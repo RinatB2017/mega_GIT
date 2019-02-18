@@ -48,7 +48,7 @@ class B588 : public MyWidget
     Q_OBJECT
 
 public:
-    B588(QWidget *parent = 0);
+    B588(QWidget *parent = nullptr);
     ~B588();
 
     bool is_blocked_exit(void);

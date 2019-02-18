@@ -57,7 +57,7 @@ class B590 : public MyWidget
     Q_OBJECT
 
 public:
-    B590(QWidget *parent = 0);
+    B590(QWidget *parent = nullptr);
     ~B590();
 
     bool is_blocked_exit(void);

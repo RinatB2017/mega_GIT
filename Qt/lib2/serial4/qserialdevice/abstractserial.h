@@ -253,7 +253,7 @@ public:
     };
     Q_DECLARE_FLAGS(LineStatus, LineStatusFlag)
 
-    explicit AbstractSerial(QObject *parent = 0);
+    explicit AbstractSerial(QObject *parent = nullptr);
     virtual ~AbstractSerial();
 
     void setDeviceName(const QString &deviceName);

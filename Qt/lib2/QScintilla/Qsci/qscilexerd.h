@@ -111,7 +111,7 @@ public:
 
     //! Construct a QsciLexerD with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerD(QObject *parent = 0);
+    QsciLexerD(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerD instance.
     virtual ~QsciLexerD();

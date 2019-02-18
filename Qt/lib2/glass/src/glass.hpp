@@ -28,7 +28,7 @@ class Glass : public QWidget
     Q_OBJECT
 
 public:
-    explicit Glass(QWidget *parent = 0);
+    explicit Glass(QWidget *parent = nullptr);
     virtual ~Glass();
 
     void install(QWidget* widget);

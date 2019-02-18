@@ -153,7 +153,7 @@ class Multimeter_V764 : public QObject
     Q_OBJECT
 
 public:
-    Multimeter_V764(QObject *parent = 0);
+    Multimeter_V764(QObject *parent = nullptr);
     ~Multimeter_V764();
 
     int print_last_error(void);

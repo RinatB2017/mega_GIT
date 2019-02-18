@@ -105,7 +105,7 @@ class ControlBox : public MyWidget
     Q_OBJECT
 
 public:
-    ControlBox(QWidget *parent = 0);
+    ControlBox(QWidget *parent = nullptr);
     ~ControlBox();
 
     void test(void);

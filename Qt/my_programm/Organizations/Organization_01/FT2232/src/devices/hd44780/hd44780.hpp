@@ -31,7 +31,7 @@ class HD44780 : public MyWidget
 {
     Q_OBJECT
 public:
-    HD44780(I2C_Freq freq, QWidget *parent = 0);
+    HD44780(I2C_Freq freq, QWidget *parent = nullptr);
     ~HD44780();
 
     bool open(int deviceNumber);

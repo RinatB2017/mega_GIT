@@ -34,7 +34,7 @@ class FakeSerial : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FakeSerial(QWidget *parent = 0);
+    explicit FakeSerial(QWidget *parent = nullptr);
 
     QStringList listBaudRate(void);
     QStringList listDataBits(void);

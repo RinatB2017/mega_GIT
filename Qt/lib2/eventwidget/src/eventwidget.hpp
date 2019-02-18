@@ -51,7 +51,7 @@ class EventWidget : public QWidget
     Q_OBJECT
 
 public:
-    EventWidget( QWidget *parent = 0 );
+    EventWidget( QWidget *parent = nullptr );
 
 signals:
     void gotEvent( const QString );

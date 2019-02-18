@@ -23,7 +23,7 @@ class AxesMainWindow : public DummyBase
 	Q_OBJECT
 
 public:
-	AxesMainWindow( QWidget* parent = 0);
+	AxesMainWindow( QWidget* parent = nullptr);
 	~AxesMainWindow();
 	Qwt3D::GridPlot* plot;
 	Qwt3D::Function *rosenbrock;

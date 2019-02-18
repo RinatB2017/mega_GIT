@@ -90,7 +90,7 @@ public:
         E_ERROR_CHECKSUM
     };
 
-    explicit Proto_NMEA_0183(QWidget *parent = 0);
+    explicit Proto_NMEA_0183(QWidget *parent = nullptr);
     QString get_checksum(const QString &data);
     int set_port(QString *result,
                  uchar number_port,

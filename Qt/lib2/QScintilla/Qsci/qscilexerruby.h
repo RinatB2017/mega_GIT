@@ -132,7 +132,7 @@ public:
 
     //! Construct a QsciLexerRuby with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerRuby(QObject *parent = 0);
+    QsciLexerRuby(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerRuby instance.
     virtual ~QsciLexerRuby();

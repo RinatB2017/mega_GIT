@@ -88,7 +88,7 @@ public:
 
     //! Construct a QsciLexerVHDL with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerVHDL(QObject *parent = 0);
+    QsciLexerVHDL(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerVHDL instance.
     virtual ~QsciLexerVHDL();

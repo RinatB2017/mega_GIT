@@ -36,7 +36,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     void loadFile(QString filename);
@@ -58,7 +58,7 @@ protected:
     void changeEvent(QEvent *e);
 
 private:
-    Ui::MainWindow *ui = 0;
+    Ui::MainWindow *ui;
 
     int m_iteration;                        ///Current iteration (increases after the whole train.set has been processed)
     QList<QStringList> m_inputsList;        ///Names of inputs
@@ -74,7 +74,7 @@ private:
     //QWeakPointer<Network> m_network;        ///The net itself
     Network *m_network;        ///The net itself
 
-    RaceClient *m_raceClient = 0;           ///Race client
+    RaceClient *m_raceClient;           ///Race client
 
     bool m_netForRecognition;               ///True if the net was trained for number recognition
 };

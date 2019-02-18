@@ -46,7 +46,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = 0);
+    MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
@@ -60,13 +60,13 @@ private slots:
     void find_links(const QString &selectorQuery);
 
 private:
-    Ui::MainBox *ui = 0;
+    Ui::MainBox *ui;
 
     bool is_loaded = false;
     QList<QUrl> urls_collection;
     int urls_index;
     QVector<page> pages;
-    QWebFrame *frame = 0;
+    QWebFrame *frame;
     QString jQuery;
 
     QSqlDatabase db;

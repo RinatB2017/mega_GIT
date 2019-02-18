@@ -56,7 +56,7 @@ class Proto_MNP_binary : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Proto_MNP_binary(QWidget *parent = 0);
+    explicit Proto_MNP_binary(QWidget *parent = nullptr);
     void test(void);
 
 signals:

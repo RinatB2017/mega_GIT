@@ -53,7 +53,7 @@ class Database : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Database(QWidget *parent = 0);
+    explicit Database(QWidget *parent = nullptr);
     ~Database();
 
     PET_RESULT set(pet_discovery_info data);
@@ -95,7 +95,7 @@ public:
                       int propertyType);
 
 private:
-    Ui::Database *ui = 0;
+    Ui::Database *ui;
 
     void init(void);
 };

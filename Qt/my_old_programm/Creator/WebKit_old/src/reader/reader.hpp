@@ -9,7 +9,7 @@ class Reader : public QWebView
 {
     Q_OBJECT
 public:
-    explicit Reader(QWidget *parent = 0);
+    explicit Reader(QWidget *parent = nullptr);
 
     void set_main_url(const QUrl &url);
 

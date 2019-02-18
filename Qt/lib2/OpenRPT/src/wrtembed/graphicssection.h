@@ -35,7 +35,7 @@ class ORSectionHandle : public QGraphicsRectItem
   public:
     enum { Type = UserType + 49 };
 
-    ORSectionHandle(QGraphicsItem * parent = 0);
+    ORSectionHandle(QGraphicsItem * parent = nullptr);
 
     int type() const { return Type; }
 
@@ -55,7 +55,7 @@ class ORGraphicsSectionItem : public QGraphicsRectItem
       Destination
     };
 
-    ORGraphicsSectionItem(QGraphicsItem * parent = 0);
+    ORGraphicsSectionItem(QGraphicsItem * parent = nullptr);
 
     void setTitle(const QString & s);
     QString title() const;

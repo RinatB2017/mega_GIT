@@ -31,7 +31,7 @@ class Tester : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Tester(QWidget *parent = 0);
+    explicit Tester(QWidget *parent = nullptr);
     
 protected:
     void keyPressEvent(QKeyEvent *event);

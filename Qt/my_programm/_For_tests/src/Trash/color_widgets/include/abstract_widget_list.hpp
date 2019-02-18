@@ -31,7 +31,7 @@ class QCP_EXPORT AbstractWidgetList : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AbstractWidgetList(QWidget *parent = 0);
+    explicit AbstractWidgetList(QWidget *parent = nullptr);
     ~AbstractWidgetList();
     
     /**

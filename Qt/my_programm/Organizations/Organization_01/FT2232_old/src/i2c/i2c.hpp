@@ -40,7 +40,7 @@ class I2C : public MyWidget
 {
     Q_OBJECT
 public:
-    I2C(I2C_Freq freq, QWidget *parent = 0);
+    I2C(I2C_Freq freq, QWidget *parent = nullptr);
 
     void HighSpeedSetI2CStart(void);
     void HighSpeedSetI2CStop(void);

@@ -35,7 +35,7 @@ class QCP_EXPORT ColorListWidget : public AbstractWidgetList
     Q_PROPERTY(ColorWheel::DisplayFlags wheelFlags READ wheelFlags WRITE setWheelFlags NOTIFY wheelFlagsChanged)
 
 public:
-    explicit ColorListWidget(QWidget *parent = 0);
+    explicit ColorListWidget(QWidget *parent = nullptr);
     ~ColorListWidget();
 
     QList<QColor> colors() const;

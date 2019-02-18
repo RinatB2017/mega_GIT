@@ -39,8 +39,9 @@ enum I2C_Freq {
 class I2C : public MyWidget
 {
     Q_OBJECT
+    
 public:
-    I2C(I2C_Freq freq, QWidget *parent = 0);
+    I2C(I2C_Freq freq, QWidget *parent = nullptr);
 
     void HighSpeedSetI2CStart(void);
     void HighSpeedSetI2CStop(void);
@@ -64,7 +65,7 @@ public:
     void close(void);
 
 private:
-    FT_STATUS ftStatus;			// Status defined in D2XX to indicate operation result
+    FT_STATUS ftStatus;		// Status defined in D2XX to indicate operation result
     FT_HANDLE ftHandle;         // Handle of FT2232H device port
 
     DWORD dwClockDivisor;
@@ -72,7 +73,7 @@ private:
     BYTE OutputBuffer[1024];    // Buffer to hold MPSSE commands and data to be sent to FT2232H
     DWORD dwNumBytesToSend;     // Index of output buffer
 
-    BYTE InputBuffer[1024];		// Buffer to hold Data bytes to be read from FT2232H
+    BYTE InputBuffer[1024];	// Buffer to hold Data bytes to be read from FT2232H
     DWORD dwNumInputBuffer;
     DWORD dwNumBytesSent;
     DWORD dwNumBytesRead;

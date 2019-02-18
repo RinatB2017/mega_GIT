@@ -31,7 +31,7 @@ class SerialPort_H4_X_test : public QObject
     Q_OBJECT
 
 public:
-    explicit SerialPort_H4_X_test(QObject *parent = 0);
+    explicit SerialPort_H4_X_test(QObject *parent = nullptr);
 
     bool isOpen(void);
     void close(void);

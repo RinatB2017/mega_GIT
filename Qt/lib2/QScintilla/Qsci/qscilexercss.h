@@ -119,7 +119,7 @@ public:
 
     //! Construct a QsciLexerCSS with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.
-    QsciLexerCSS(QObject *parent = 0);
+    QsciLexerCSS(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerCSS instance.
     virtual ~QsciLexerCSS();

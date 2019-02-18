@@ -64,7 +64,7 @@ public:
 
     //! Construct a QsciLexerDiff with parent \a parent.  \a parent is
     //! typically the QsciScintilla instance.
-    QsciLexerDiff(QObject *parent = 0);
+    QsciLexerDiff(QObject *parent = nullptr);
 
     //! Destroys the QsciLexerDiff instance.
     virtual ~QsciLexerDiff();

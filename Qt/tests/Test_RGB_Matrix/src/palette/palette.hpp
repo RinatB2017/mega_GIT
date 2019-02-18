@@ -33,7 +33,7 @@ class MyPalette : public QGroupBox
 public:
     MyPalette(int max_x,
               int max_y,
-              QWidget *parent = 0);
+              QWidget *parent = nullptr);
     ~MyPalette();
 
     void set_data(QByteArray data);

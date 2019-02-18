@@ -40,7 +40,7 @@ signals:
     void s_get_url(QUrl);
 
 public:
-    explicit IPV6_wo_port(QWidget *parent = 0);
+    explicit IPV6_wo_port(QWidget *parent = nullptr);
     ~IPV6_wo_port();
 
     void setObjectName(const QString &name);
@@ -54,12 +54,12 @@ private slots:
     void work(void);
 
 private:
-    HexSpinBox *a = 0;
-    HexSpinBox *b = 0;
-    HexSpinBox *c = 0;
-    HexSpinBox *d = 0;
-    HexSpinBox *e = 0;
-    HexSpinBox *f = 0;
+    HexSpinBox *a;
+    HexSpinBox *b;
+    HexSpinBox *c;
+    HexSpinBox *d;
+    HexSpinBox *e;
+    HexSpinBox *f;
 
     void updateText(void);
 };

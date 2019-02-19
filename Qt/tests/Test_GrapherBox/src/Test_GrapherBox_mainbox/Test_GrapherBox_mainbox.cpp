@@ -29,8 +29,10 @@
 #endif
 //--------------------------------------------------------------------------------
 #include <qwt_picker_machine.h>
+#include <qwt_curve_fitter.h>
 #include <qwt_plot_picker.h>
 #include <qwt_scale_draw.h>
+#include <qwt_text.h>
 #include <qwt_plot.h>
 //--------------------------------------------------------------------------------
 #include "ui_Test_GrapherBox_mainbox.h"

@@ -26,7 +26,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -56,6 +56,10 @@ private slots:
     void load_picture(void);
     void find_max_color(void);
     void redraw_picture(void);
+
+    void show_only_R(void);
+    void show_only_G(void);
+    void show_only_B(void);
 
 private:
     enum {

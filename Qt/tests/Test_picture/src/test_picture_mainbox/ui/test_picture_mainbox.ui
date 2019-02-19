@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>178</width>
-    <height>164</height>
+    <height>302</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,27 @@
       <widget class="QPushButton" name="btn_redraw_picture">
        <property name="text">
         <string>redraw picture</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_show_only_R">
+       <property name="text">
+        <string>show_only_R</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_show_only_G">
+       <property name="text">
+        <string>show_only_G</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_show_only_B">
+       <property name="text">
+        <string>show_only_B</string>
        </property>
       </widget>
      </item>

@@ -70,6 +70,10 @@ void MainBox::init(void)
     connect(ui->btn_find_max_color, SIGNAL(clicked(bool)),  this,   SLOT(find_max_color()));
     connect(ui->btn_redraw_picture, SIGNAL(clicked(bool)),  this,   SLOT(redraw_picture()));
 
+    connect(ui->btn_show_only_R,    SIGNAL(clicked(bool)),  this,   SLOT(show_only_R()));
+    connect(ui->btn_show_only_G,    SIGNAL(clicked(bool)),  this,   SLOT(show_only_G()));
+    connect(ui->btn_show_only_B,    SIGNAL(clicked(bool)),  this,   SLOT(show_only_B()));
+
     load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
@@ -271,8 +275,99 @@ void MainBox::redraw_picture(void)
             }
 
             QRgb color = picture.toImage().pixel(x, y);
+            if(color != max_color)
+            {
+                tmp.setPixelColor(x, y, Qt::white);
+            }
+            else
+            {
+                tmp.setPixel(x, y, color);
+            }
+        }
+    }
+    pd->close();
+    pd->deleteLater();
 
-#if 1
+    ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_only_R(void)
+{
+    if(picture.isNull())
+    {
+        emit error("picture is null!");
+        return;
+    }
+
+    int max_x = picture.width();
+    int max_y = picture.height();
+    int max_cnt = max_x * max_y;
+    int cnt = 0;
+
+    QImage tmp = picture.toImage();
+
+    QProgressDialog *pd = new QProgressDialog("Operation in progress.", "Cancel", 0, max_cnt);
+    pd->setWindowModality(Qt::WindowModal);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            pd->setValue(cnt++);
+            if(pd->wasCanceled())
+            {
+                break;
+            }
+
+            QRgb color = picture.toImage().pixel(x, y);
+
+            int color_R = qRed(color);
+            int color_G = qGreen(color);
+            int color_B = qBlue(color);
+            if((color_R > color_G) && (color_R > color_B))
+            {
+                tmp.setPixel(x, y, color);
+            }
+            else
+            {
+                tmp.setPixelColor(x, y, Qt::white);
+            }
+        }
+    }
+    pd->close();
+    pd->deleteLater();
+
+    ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_only_G(void)
+{
+    if(picture.isNull())
+    {
+        emit error("picture is null!");
+        return;
+    }
+
+    int max_x = picture.width();
+    int max_y = picture.height();
+    int max_cnt = max_x * max_y;
+    int cnt = 0;
+
+    QImage tmp = picture.toImage();
+
+    QProgressDialog *pd = new QProgressDialog("Operation in progress.", "Cancel", 0, max_cnt);
+    pd->setWindowModality(Qt::WindowModal);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            pd->setValue(cnt++);
+            if(pd->wasCanceled())
+            {
+                break;
+            }
+
+            QRgb color = picture.toImage().pixel(x, y);
+
             int color_R = qRed(color);
             int color_G = qGreen(color);
             int color_B = qBlue(color);
@@ -284,18 +379,54 @@ void MainBox::redraw_picture(void)
             {
                 tmp.setPixelColor(x, y, Qt::white);
             }
-#endif
+        }
+    }
+    pd->close();
+    pd->deleteLater();
 
-#if 0
-            if(color != max_color)
+    ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_only_B(void)
+{
+    if(picture.isNull())
+    {
+        emit error("picture is null!");
+        return;
+    }
+
+    int max_x = picture.width();
+    int max_y = picture.height();
+    int max_cnt = max_x * max_y;
+    int cnt = 0;
+
+    QImage tmp = picture.toImage();
+
+    QProgressDialog *pd = new QProgressDialog("Operation in progress.", "Cancel", 0, max_cnt);
+    pd->setWindowModality(Qt::WindowModal);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            pd->setValue(cnt++);
+            if(pd->wasCanceled())
             {
-                tmp.setPixelColor(x, y, Qt::white);
+                break;
             }
-            else
+
+            QRgb color = picture.toImage().pixel(x, y);
+
+            int color_R = qRed(color);
+            int color_G = qGreen(color);
+            int color_B = qBlue(color);
+            if((color_B > color_R) && (color_B > color_G))
             {
                 tmp.setPixel(x, y, color);
             }
-#endif
+            else
+            {
+                tmp.setPixelColor(x, y, Qt::white);
+            }
         }
     }
     pd->close();

@@ -36,6 +36,16 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#pragma pack (push, 1)
+
+struct HEADER {
+    uint8_t address;
+    uint8_t command;
+    uint8_t cnt_data;
+};
+
+#pragma pack(pop)
+//--------------------------------------------------------------------------------
 class A
 {
 public:

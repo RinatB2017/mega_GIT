@@ -42,6 +42,7 @@ public:
 
     static uint8_t  crc8(uint8_t *pcBlock, uint8_t len);
     static uint16_t crc16(uint8_t *pcBlock, uint16_t len);
+    static uint32_t crc32(const char *buf, size_t len);
     static uint16_t modbus_crc16(uint8_t *pcBlock, uint16_t len);
     static uint16_t multimeter_crc16(uint8_t *pcBlock, uint16_t len);
     static uint16_t powersupply_crc16(uint8_t *pcBlock, uint16_t len);

@@ -122,6 +122,42 @@ uint16_t CRC::crc16(uint8_t *pcBlock, uint16_t len)
 #endif
 }
 //--------------------------------------------------------------------------------
+uint32_t CRC::crc32(const char *buf, size_t len)
+{
+    static uint32_t table[256];
+    static int have_table = 0;
+    uint32_t rem;
+    uint8_t octet;
+    int i, j;
+    uint32_t crc = 0;
+    const char *p, *q;
+
+    /* This check is not thread safe; there is no mutex. */
+    if (have_table == 0) {
+        /* Calculate CRC table. */
+        for (i = 0; i < 256; i++) {
+            rem = static_cast<uint32_t>(i);  /* remainder from polynomial division */
+            for (j = 0; j < 8; j++) {
+                if (rem & 1) {
+                    rem >>= 1;
+                    rem ^= 0xedb88320;
+                } else
+                    rem >>= 1;
+            }
+            table[i] = rem;
+        }
+        have_table = 1;
+    }
+
+    crc = ~crc;
+    q = buf + len;
+    for (p = buf; p < q; p++) {
+        octet = static_cast<uint8_t>(*p);  /* Cast to unsigned octet. */
+        crc = (crc >> 8) ^ table[(crc & 0xff) ^ octet];
+    }
+    return ~crc;
+}
+//--------------------------------------------------------------------------------
 uint16_t CRC::powersupply_crc16(uint8_t *pcBlock,
                                 uint16_t len)
 {

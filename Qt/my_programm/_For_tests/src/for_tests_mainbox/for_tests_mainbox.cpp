@@ -196,10 +196,24 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include "crc.h"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    //QByteArray ba = QByteArray::fromHex("AB 01 05 0102030405 E596D05D");
+    QByteArray ba = QByteArray::fromHex("AA BB 05 0102030405 AD39C02D");
+
+    HEADER *header = reinterpret_cast<HEADER *>(ba.data());
+    emit info(QString("addr %1").arg(header->address, 2, 16, QChar('0')).toUpper());
+    emit info(QString("cmd  %1").arg(header->command, 2, 16, QChar('0')).toUpper());
+    emit info(QString("cnt  %1").arg(header->cnt_data));
+
+    emit info(QString("crc32 %1").arg(CRC::crc32(reinterpret_cast<char *>(header), sizeof(HEADER) + 5), 0, 16));
+
+#endif
 
 #if 0
     B b;
@@ -208,7 +222,7 @@ bool MainBox::test_0(void)
     emit info(b.x2());
 #endif
 
-#if 1
+#if 0
     auto a = 0;
     auto b = static_cast<uint64_t>(a);
     emit info(QString("a %1").arg(sizeof(a)));

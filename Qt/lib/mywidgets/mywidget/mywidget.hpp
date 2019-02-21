@@ -177,6 +177,9 @@ private:
 
     QSettings *settings;
 
+    void load_QRadioButton(QString group_name);
+    void save_QRadioButton(QString group_name);
+
     void load_QCheckBox(QString group_name);
     void load_QComboBox(QString group_name);
     void load_QPushButton(QString group_name);

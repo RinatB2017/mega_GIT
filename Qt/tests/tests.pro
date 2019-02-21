@@ -22,6 +22,7 @@ SUBDIRS += \
     Test_QHexEdit \
     Test_mesh \
     Test_md5 \
+    Test_modbus \
     Test_OpenRPT \
     Test_OscilloscopeBox \
     Test_picture \

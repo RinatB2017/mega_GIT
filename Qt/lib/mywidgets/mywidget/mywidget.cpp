@@ -342,6 +342,50 @@ QStringList MyWidget::get_all_param_name(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
+void MyWidget::load_QRadioButton(QString group_name)
+{
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QRadioButton *> widgets = topLevelWidget()->findChildren<QRadioButton *>();
+#else
+    QList<QRadioButton *> widgets = findChildren<QRadioButton *>();
+#endif
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach (QRadioButton *obj, widgets)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            obj->setChecked(settings->value("checked", false).toBool());
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_QRadioButton(QString group_name)
+{
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QRadioButton *> allobj = topLevelWidget()->findChildren<QRadioButton *>();
+#else
+    QList<QRadioButton *> allobj = findChildren<QRadioButton *>();
+#endif
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach(QRadioButton *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            settings->setValue("checked", QVariant(obj->isChecked()));
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
+}
+//--------------------------------------------------------------------------------
 void MyWidget::load_QCheckBox(QString group_name)
 {
 #ifdef USE_TOPLEVELWIDGETS
@@ -856,6 +900,9 @@ void MyWidget::save_QSplitter(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_widgets(QString group_name)
 {
+#ifdef SAVE_WIDGETS_RADIOBUTTON
+    load_QRadioButton(group_name);
+#endif
 #ifdef SAVE_WIDGETS_CHECKBOX
     load_QCheckBox(group_name);
 #endif
@@ -894,6 +941,9 @@ void MyWidget::load_widgets(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(QString group_name)
 {
+#ifdef SAVE_WIDGETS_RADIOBUTTON
+    save_QRadioButton(group_name);
+#endif
 #ifdef SAVE_WIDGETS_CHECKBOX
     save_QCheckBox(group_name);
 #endif

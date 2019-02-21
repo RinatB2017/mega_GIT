@@ -205,9 +205,23 @@ bool MainBox::test_0(void)
 #if 1
     //QByteArray ba = QByteArray::fromHex("AB 01 05 0102030405 E596D05D");
     //QByteArray ba = QByteArray::fromHex("AA BB 05 0102030405 AD39C02D");
-    QByteArray ba = QByteArray::fromHex("01 00 07 01020304050607 EB05BDA7");
+    //QByteArray ba = QByteArray::fromHex("01 00 07 01020304050607 EB05BDA7");
+    QByteArray ba = QByteArray::fromHex("01 01 00 E7988264");
+
+    if(ba.length() < sizeof(HEADER))
+    {
+        emit error("packer too small!");
+        return false;
+    }
 
     HEADER *header = reinterpret_cast<HEADER *>(ba.data());
+
+    if(ba.length() != (sizeof(HEADER) + header->cnt_data + 4))
+    {
+        emit error("bad size packet!");
+        return false;
+    }
+
     emit info(QString("addr %1").arg(header->address, 2, 16, QChar('0')).toUpper());
     emit info(QString("cmd  %1").arg(header->command, 2, 16, QChar('0')).toUpper());
     emit info(QString("cnt  %1").arg(header->cnt_data));

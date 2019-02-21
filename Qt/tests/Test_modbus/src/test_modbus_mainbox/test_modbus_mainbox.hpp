@@ -94,7 +94,11 @@ private:
     QList<CMD> commands;
 
     void init(void);
+    void init_serial(void);
     void createTestBar(void);
+
+    bool get_le_name(int index, QString *result);
+    bool le_answer(int index, QString *result);
 
     void analize_packet(void);
     void send_answer(void);

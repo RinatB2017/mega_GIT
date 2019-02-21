@@ -57,9 +57,29 @@ void MainBox::init(void)
     ui->setupUi(this);
     createTestBar();
 
-    ui->serial_widget->set_fix_baudrate(115200);
-    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
+    init_serial();
+
+    //---
+    for(int n=0; n<10; n++)
+    {
+        QRadioButton *rb = new QRadioButton(this);
+        rb->setObjectName(QString("rb_%1").arg(n));
+        rb->setProperty("index", n);
+        rb->setText(QString("%1").arg(n));
+
+        QLineEdit *le_name = new QLineEdit(this);
+        le_name->setObjectName(QString("le_name_%1").arg(n));
+        le_name->setProperty("index", n);
+
+        QLineEdit *le_answer = new QLineEdit(this);
+        le_answer->setObjectName(QString("le_answer_%1").arg(n));
+        le_answer->setProperty("index", n);
+
+        ui->grid->addWidget(rb,          n, 0);
+        ui->grid->addWidget(le_name,     n, 1);
+        ui->grid->addWidget(le_answer,   n, 2);
+    }
+    //---
 
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -71,6 +91,51 @@ void MainBox::init(void)
 #endif
 
     load_widgets(APPNAME);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::get_le_name(int index, QString *result)
+{
+    QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
+    foreach(QLineEdit *obj, allobj)
+    {
+        bool ok = false;
+        int f_index = obj->property("index").toInt(&ok);
+        if(ok)
+        {
+            if(index == f_index)
+            {
+                (*result) = obj->text();
+                return true;
+            }
+        }
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::le_answer(int index, QString *result)
+{
+    QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
+    foreach(QLineEdit *obj, allobj)
+    {
+        bool ok = false;
+        int f_index = obj->property("index").toInt(&ok);
+        if(ok)
+        {
+            if(index == f_index)
+            {
+                (*result) = obj->text();
+                return true;
+            }
+        }
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_serial(void)
+{
+    ui->serial_widget->set_fix_baudrate(115200);
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -143,6 +208,9 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    send_answer();
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -216,7 +284,18 @@ void MainBox::analize_packet(void)
 //--------------------------------------------------------------------------------
 void MainBox::send_answer(void)
 {
+    QList<QRadioButton *> allobj = findChildren<QRadioButton *>();
+    foreach(QRadioButton *btn, allobj)
+    {
+        if(btn->isChecked())
+        {
+            emit info(btn->objectName());
+            return;
+        }
+    }
+
     QByteArray packet;
+#if 0
     if(ui->rb_1->isChecked())
     {
         packet.clear();
@@ -252,6 +331,7 @@ void MainBox::send_answer(void)
         packet.append(ui->le_5->text());
         packet.append(0x0D);
     }
+#endif
     emit send(packet);
 }
 //--------------------------------------------------------------------------------

@@ -24,76 +24,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="3" column="0">
-         <widget class="QRadioButton" name="rb_4">
-          <property name="text">
-           <string>4</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLineEdit" name="le_1"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QRadioButton" name="rb_3">
-          <property name="text">
-           <string>3</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="rb_2">
-          <property name="text">
-           <string>2</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QRadioButton" name="rb_5">
-          <property name="text">
-           <string>5</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="le_2"/>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLineEdit" name="le_3"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QRadioButton" name="rb_1">
-          <property name="text">
-           <string>1</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QLineEdit" name="le_4"/>
-        </item>
-        <item row="4" column="2">
-         <widget class="QLineEdit" name="le_5"/>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="le_name_1"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="le_name_2"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="le_name_3"/>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="le_name_4"/>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="le_name_5"/>
-        </item>
-       </layout>
+       <layout class="QGridLayout" name="grid"/>
       </item>
       <item>
        <spacer name="verticalSpacer">
@@ -121,23 +52,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>rb_1</tabstop>
-  <tabstop>le_name_1</tabstop>
-  <tabstop>le_1</tabstop>
-  <tabstop>rb_2</tabstop>
-  <tabstop>le_name_2</tabstop>
-  <tabstop>le_2</tabstop>
-  <tabstop>rb_3</tabstop>
-  <tabstop>le_name_3</tabstop>
-  <tabstop>le_3</tabstop>
-  <tabstop>rb_4</tabstop>
-  <tabstop>le_name_4</tabstop>
-  <tabstop>le_4</tabstop>
-  <tabstop>rb_5</tabstop>
-  <tabstop>le_name_5</tabstop>
-  <tabstop>le_5</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

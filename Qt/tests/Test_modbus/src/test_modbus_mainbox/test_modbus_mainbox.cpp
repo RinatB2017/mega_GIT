@@ -60,6 +60,7 @@ void MainBox::init(void)
     init_serial();
 
     //---
+    int index = ui->grid->rowCount();
     for(int n=0; n<10; n++)
     {
         QRadioButton *rb = new QRadioButton(this);
@@ -75,9 +76,14 @@ void MainBox::init(void)
         le_answer->setObjectName(QString("le_answer_%1").arg(n));
         le_answer->setProperty("index", n);
 
-        ui->grid->addWidget(rb,          n, 0);
-        ui->grid->addWidget(le_name,     n, 1);
-        ui->grid->addWidget(le_answer,   n, 2);
+        connect(rb, SIGNAL(toggled(bool)),  le_name,    SLOT(setEnabled(bool)));
+        connect(rb, SIGNAL(toggled(bool)),  le_answer,  SLOT(setEnabled(bool)));
+        le_name->setEnabled(false);
+        le_answer->setEnabled(false);
+
+        ui->grid->addWidget(rb,          index + n, 0);
+        ui->grid->addWidget(le_name,     index + n, 1);
+        ui->grid->addWidget(le_answer,   index + n, 2);
     }
     //---
 

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -98,34 +98,24 @@ bool MainBox::get_le_name(int index, QString *result)
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
     foreach(QLineEdit *obj, allobj)
     {
-        bool ok = false;
-        int f_index = obj->property("index").toInt(&ok);
-        if(ok)
+        if(obj->objectName() == QString("le_name_%1").arg(index))
         {
-            if(index == f_index)
-            {
-                (*result) = obj->text();
-                return true;
-            }
+            (*result) = obj->text();
+            return true;
         }
     }
     return false;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::le_answer(int index, QString *result)
+bool MainBox::get_le_answer(int index, QString *result)
 {
     QList<QLineEdit *> allobj = findChildren<QLineEdit *>();
     foreach(QLineEdit *obj, allobj)
     {
-        bool ok = false;
-        int f_index = obj->property("index").toInt(&ok);
-        if(ok)
+        if(obj->objectName() == QString("le_answer_%1").arg(index))
         {
-            if(index == f_index)
-            {
-                (*result) = obj->text();
-                return true;
-            }
+            (*result) = obj->text();
+            return true;
         }
     }
     return false;
@@ -217,6 +207,33 @@ bool MainBox::test_0(void)
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    //---
+    HEADER header;
+    header.address = 0;
+    header.command = 1;
+    header.cnt_data = 0;
+
+    uint32_t crc32 = CRC::crc32(reinterpret_cast<char *>(&header), sizeof(HEADER));
+    emit info(QString("%1").arg(crc32, 0, 16).toUpper());
+
+    QByteArray ba;
+    ba.append(reinterpret_cast<char *>(&header), sizeof(HEADER));
+    ba.append(reinterpret_cast<char *>(&crc32)+3,   1);
+    ba.append(reinterpret_cast<char *>(&crc32)+2,   1);
+    ba.append(reinterpret_cast<char *>(&crc32)+1,   1);
+    ba.append(reinterpret_cast<char *>(&crc32),     1);
+
+    emit info(QString(":%1").arg(ba.toHex().data()).toUpper());
+    /*
+    :000000FF41D912
+    :000100E65AE853
+    :000200CD77BB90
+    :000300D46C8AD1
+    :0004009B2D1C16
+     */
+    //---
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -276,62 +293,85 @@ void MainBox::read_data(QByteArray ba_data)
     }
 }
 //--------------------------------------------------------------------------------
+bool MainBox::check_packet(void)
+{
+    emit info("check_packet");
+
+    QByteArray ba_temp;
+    ba_temp.clear();
+    ba_temp.append(clean_packet);
+
+    QByteArray ba_packet;
+    ba_packet.clear();
+    ba_packet.append(QByteArray::fromHex(ba_temp));
+
+    if(ba_packet.length() < static_cast<int>(sizeof(HEADER)))
+    {
+        emit error("packet too small");
+        return false;
+    }
+
+    HEADER *header = reinterpret_cast<HEADER *>(ba_packet.data());
+    int addr = header->address;
+    int cmd  = header->command;
+    int cnt  = header->cnt_data;
+
+    if(ba_packet.length() < (static_cast<int>(sizeof(HEADER)) + cnt))
+    {
+        emit error("packet bad size");
+        return false;
+    }
+
+    emit info(QString("addr: %1").arg(addr));
+    emit info(QString("cmd:  %1").arg(cmd));
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainBox::analize_packet(void)
 {
     emit info("analize_packet");
-    send_answer();
+    if(check_packet())
+    {
+        send_answer();
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::send_answer(void)
 {
+    int index = -1;
+    QString name;
+    QString answer;
+
     QList<QRadioButton *> allobj = findChildren<QRadioButton *>();
     foreach(QRadioButton *btn, allobj)
     {
         if(btn->isChecked())
         {
-            emit info(btn->objectName());
-            return;
+            emit debug(btn->objectName());
+            index = btn->property("index").toInt();
         }
+    }
+    if(index < 0)
+    {
+        return;
+    }
+
+    get_le_name(index, &name);
+    get_le_answer(index, &answer);
+
+    emit debug(name);
+    emit debug(answer);
+
+    if(answer.isEmpty())
+    {
+        return;
     }
 
     QByteArray packet;
-#if 0
-    if(ui->rb_1->isChecked())
-    {
-        packet.clear();
-        packet.append(":");
-        packet.append(ui->le_1->text());
-        packet.append(0x0D);
-    }
-    if(ui->rb_2->isChecked())
-    {
-        packet.clear();
-        packet.append(":");
-        packet.append(ui->le_2->text());
-        packet.append(0x0D);
-    }
-    if(ui->rb_3->isChecked())
-    {
-        packet.clear();
-        packet.append(":");
-        packet.append(ui->le_3->text());
-        packet.append(0x0D);
-    }
-    if(ui->rb_4->isChecked())
-    {
-        packet.clear();
-        packet.append(":");
-        packet.append(ui->le_4->text());
-        packet.append(0x0D);
-    }
-    if(ui->rb_5->isChecked())
-    {
-        packet.clear();
-        packet.append(":");
-        packet.append(ui->le_5->text());
-        packet.append(0x0D);
-    }
-#endif
+    packet.append(":");
+    packet.append(answer);
+    packet.append(0x0D);
     emit send(packet);
 }
 //--------------------------------------------------------------------------------

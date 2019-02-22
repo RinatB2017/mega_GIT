@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -98,8 +98,9 @@ private:
     void createTestBar(void);
 
     bool get_le_name(int index, QString *result);
-    bool le_answer(int index, QString *result);
+    bool get_le_answer(int index, QString *result);
 
+    bool check_packet(void);
     void analize_packet(void);
     void send_answer(void);
 

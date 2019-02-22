@@ -102,6 +102,7 @@ private:
 
     bool check_packet(void);
     void analize_packet(void);
+    void prepare_packet(void);
     void send_answer(void);
 
     void updateText(void);

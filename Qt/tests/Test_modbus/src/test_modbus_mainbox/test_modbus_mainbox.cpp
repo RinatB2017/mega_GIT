@@ -60,6 +60,9 @@ void MainBox::init(void)
     init_serial();
 
     //---
+    connect(ui->rb_auto,    SIGNAL(toggled(bool)),  ui->cb_flag_error,  SLOT(setEnabled(bool)));
+    ui->cb_flag_error->setEnabled(false);
+
     int index = ui->grid->rowCount();
     for(int n=0; n<10; n++)
     {
@@ -343,11 +346,62 @@ void MainBox::analize_packet(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::prepare_packet(void)
+{
+    QByteArray packet;
+
+    QByteArray ba_temp;
+    ba_temp.clear();
+    ba_temp.append(clean_packet);
+
+    QByteArray ba_packet;
+    ba_packet.clear();
+    ba_packet.append(QByteArray::fromHex(ba_temp));
+
+    HEADER *i_header = reinterpret_cast<HEADER *>(ba_packet.data());
+    uint8_t addr  = i_header->command;
+    uint8_t cmd   = i_header->command;
+    uint8_t cnt   = i_header->command;
+
+    if(ui->cb_flag_error->isChecked())
+    {
+        cmd = cmd & 0x80;
+    }
+
+    //---
+    HEADER o_header;
+    o_header.address  = addr;
+    o_header.command  = cmd;
+    o_header.cnt_data = cnt;
+
+    uint32_t crc32 = CRC::crc32(reinterpret_cast<char *>(&o_header), sizeof(HEADER));
+    emit info(QString("%1").arg(crc32, 0, 16).toUpper());
+
+    QByteArray ba;
+    ba.append(reinterpret_cast<char *>(&o_header),  sizeof(HEADER));
+    ba.append(reinterpret_cast<char *>(&crc32)+3,   1);
+    ba.append(reinterpret_cast<char *>(&crc32)+2,   1);
+    ba.append(reinterpret_cast<char *>(&crc32)+1,   1);
+    ba.append(reinterpret_cast<char *>(&crc32),     1);
+    //---
+
+    packet.append(":");
+    packet.append(ba.toHex().toUpper());
+    packet.append(0x0D);
+    emit send(packet);
+}
+//--------------------------------------------------------------------------------
 void MainBox::send_answer(void)
 {
     int index = -1;
     QString name;
     QString answer;
+
+    if(ui->rb_auto->isChecked())
+    {
+        prepare_packet();
+        return;
+    }
 
     QList<QRadioButton *> allobj = findChildren<QRadioButton *>();
     foreach(QRadioButton *btn, allobj)

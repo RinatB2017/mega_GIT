@@ -89,6 +89,7 @@ void MainBox::init(void)
         ui->grid->addWidget(le_answer,   index + n, 2);
     }
     //---
+    connect(ui->btn_send,   SIGNAL(clicked(bool)),  this,   SLOT(send_packet()));
 
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -388,7 +389,11 @@ void MainBox::prepare_packet(void)
     packet.append(":");
     packet.append(ba.toHex().toUpper());
     packet.append(0x0D);
-    emit send(packet);
+
+    if(ui->serial_widget->isOpen())
+    {
+        emit send(packet);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::send_answer(void)
@@ -432,7 +437,43 @@ void MainBox::send_answer(void)
     packet.append(":");
     packet.append(answer);
     packet.append(0x0D);
-    emit send(packet);
+
+    emit debug(packet.toHex().toUpper());
+
+    if(ui->serial_widget->isOpen())
+    {
+        emit send(packet);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::send_packet(void)
+{
+    emit info("send_packet");
+
+    HEADER header;
+    header.address = static_cast<uint8_t>(ui->sb_address->value());
+    header.command = static_cast<uint8_t>(ui->sb_cmd->value());
+    header.cnt_data = 0;
+
+    uint32_t crc32 = CRC::crc32(reinterpret_cast<char *>(&header), sizeof(HEADER));
+
+    QByteArray ba;
+    ba.append(reinterpret_cast<char *>(&header), sizeof(HEADER));
+    ba.append(reinterpret_cast<char *>(&crc32)+3,   1);
+    ba.append(reinterpret_cast<char *>(&crc32)+2,   1);
+    ba.append(reinterpret_cast<char *>(&crc32)+1,   1);
+    ba.append(reinterpret_cast<char *>(&crc32),     1);
+
+    QByteArray packet;
+    packet.append(":");
+    packet.append(ba.toHex().toUpper());
+    packet.append(0x0D);
+
+    emit debug(packet);
+    if(ui->serial_widget->isOpen())
+    {
+        emit send(packet);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

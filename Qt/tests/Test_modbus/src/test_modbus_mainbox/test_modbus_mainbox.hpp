@@ -67,6 +67,7 @@ private slots:
     bool test_5(void);
 
     void read_data(QByteArray ba_data);
+    void send_packet(void);
 
 private:
     enum {

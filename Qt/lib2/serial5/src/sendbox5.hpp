@@ -21,8 +21,11 @@
 #ifndef SENDBOX_HPP
 #define SENDBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QByteArray>
-#include <QFrame>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class QGridLayout;
 class QHBoxLayout;

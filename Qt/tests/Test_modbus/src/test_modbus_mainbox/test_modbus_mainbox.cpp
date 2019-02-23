@@ -63,6 +63,31 @@ void MainBox::init(void)
     connect(ui->rb_auto,    SIGNAL(toggled(bool)),  ui->cb_flag_error,  SLOT(setEnabled(bool)));
     ui->cb_flag_error->setEnabled(false);
 
+    ui->sl_brightness->setRange(0, 0xFF);
+    ui->sl_color_R->setRange(0, 0xFF);
+    ui->sl_color_G->setRange(0, 0xFF);
+    ui->sl_color_B->setRange(0, 0xFF);
+
+    ui->sb_brightness->setRange(0, 0xFF);
+    ui->sb_color_R->setRange(0, 0xFF);
+    ui->sb_color_G->setRange(0, 0xFF);
+    ui->sb_color_B->setRange(0, 0xFF);
+
+//    ui->sb_brightness->setReadOnly(true);
+//    ui->sb_color_R->setReadOnly(true);
+//    ui->sb_color_G->setReadOnly(true);
+//    ui->sb_color_B->setReadOnly(true);
+
+    connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  ui->sb_brightness,  SLOT(setValue(int)));
+    connect(ui->sl_color_R,     SIGNAL(valueChanged(int)),  ui->sb_color_R,     SLOT(setValue(int)));
+    connect(ui->sl_color_G,     SIGNAL(valueChanged(int)),  ui->sb_color_G,     SLOT(setValue(int)));
+    connect(ui->sl_color_B,     SIGNAL(valueChanged(int)),  ui->sb_color_B,     SLOT(setValue(int)));
+
+    connect(ui->sb_brightness,  SIGNAL(valueChanged(int)),  ui->sl_brightness,  SLOT(setValue(int)));
+    connect(ui->sb_color_R,     SIGNAL(valueChanged(int)),  ui->sl_color_R,     SLOT(setValue(int)));
+    connect(ui->sb_color_G,     SIGNAL(valueChanged(int)),  ui->sl_color_G,     SLOT(setValue(int)));
+    connect(ui->sb_color_B,     SIGNAL(valueChanged(int)),  ui->sl_color_B,     SLOT(setValue(int)));
+
     int index = ui->grid->rowCount();
     for(int n=0; n<10; n++)
     {
@@ -279,7 +304,7 @@ void MainBox::read_data(QByteArray ba_data)
     }
 
     QString temp = QString("%1").arg(ba_data.data()).replace("\r", "").replace("\n", "");
-    emit info(QString("read_data [%1]").arg(temp));
+    emit debug(QString("read_data [%1]").arg(temp));
 
     for(int n=0; n<ba_data.length(); n++)
     {
@@ -453,12 +478,20 @@ void MainBox::send_packet(void)
     HEADER header;
     header.address = static_cast<uint8_t>(ui->sb_address->value());
     header.command = static_cast<uint8_t>(ui->sb_cmd->value());
-    header.cnt_data = 0;
+    header.cnt_data = sizeof(CMD_1);
 
-    uint32_t crc32 = CRC::crc32(reinterpret_cast<char *>(&header), sizeof(HEADER));
+    CMD_1 command_1;
+    command_1.brightness = static_cast<uint8_t>(ui->sl_brightness->value());
+    command_1.color_R = static_cast<uint8_t>(ui->sl_color_R->value());
+    command_1.color_G = static_cast<uint8_t>(ui->sl_color_G->value());
+    command_1.color_B = static_cast<uint8_t>(ui->sl_color_B->value());
 
     QByteArray ba;
-    ba.append(reinterpret_cast<char *>(&header), sizeof(HEADER));
+    ba.append(reinterpret_cast<char *>(&header),    sizeof(HEADER));
+    ba.append(reinterpret_cast<char *>(&command_1), sizeof(CMD_1));
+
+    uint32_t crc32 = CRC::crc32(reinterpret_cast<char *>(ba.data()), static_cast<size_t>(ba.length()));
+
     ba.append(reinterpret_cast<char *>(&crc32)+3,   1);
     ba.append(reinterpret_cast<char *>(&crc32)+2,   1);
     ba.append(reinterpret_cast<char *>(&crc32)+1,   1);

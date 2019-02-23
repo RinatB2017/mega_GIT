@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>312</height>
+    <height>490</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,6 +65,20 @@
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <layout class="QGridLayout" name="gridLayout">
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>R:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Cmd:</string>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label">
           <property name="sizePolicy">
@@ -78,18 +92,72 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>G:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Brightness:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSlider" name="sl_brightness">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="1">
          <widget class="QSpinBox" name="sb_address"/>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Cmd:</string>
+        <item row="4" column="1">
+         <widget class="QSlider" name="sl_color_R">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
          <widget class="QSpinBox" name="sb_cmd"/>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>B:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSlider" name="sl_color_G">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QSlider" name="sl_color_B">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QSpinBox" name="sb_brightness"/>
+        </item>
+        <item row="4" column="2">
+         <widget class="QSpinBox" name="sb_color_R"/>
+        </item>
+        <item row="5" column="2">
+         <widget class="QSpinBox" name="sb_color_G"/>
+        </item>
+        <item row="6" column="2">
+         <widget class="QSpinBox" name="sb_color_B"/>
         </item>
        </layout>
       </item>
@@ -113,6 +181,17 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>rb_auto</tabstop>
+  <tabstop>cb_flag_error</tabstop>
+  <tabstop>sb_address</tabstop>
+  <tabstop>sb_cmd</tabstop>
+  <tabstop>sl_brightness</tabstop>
+  <tabstop>sl_color_R</tabstop>
+  <tabstop>sl_color_G</tabstop>
+  <tabstop>sl_color_B</tabstop>
+  <tabstop>btn_send</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

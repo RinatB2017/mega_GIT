@@ -33,6 +33,13 @@ struct HEADER {
     uint8_t cnt_data;
 };
 
+struct CMD_1 {
+    uint8_t brightness;
+    uint8_t color_R;
+    uint8_t color_G;
+    uint8_t color_B;
+};
+
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
 namespace Ui {

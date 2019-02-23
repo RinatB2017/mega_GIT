@@ -22,9 +22,6 @@ int index_modbus_buf = 0;
 int imcomingByte = 0;
 
 int i_brightness = 20;
-int i_color_R = 0;
-int i_color_G = 0;
-int i_color_B = 0;
 //---------------------------------------------------------------
 #pragma pack (push, 1)
 
@@ -32,6 +29,7 @@ struct HEADER {
   uint8_t address;
   uint8_t command;
   uint8_t cnt_data;
+  uint8_t data[];
 };
 
 struct CMD_1 {
@@ -39,6 +37,14 @@ struct CMD_1 {
   uint8_t color_R;
   uint8_t color_G;
   uint8_t color_B;
+};
+
+union U_UINT32 {
+  uint32_t value;
+  uint8_t a;
+  uint8_t b;
+  uint8_t c;
+  uint8_t d;
 };
 
 #pragma pack(pop)
@@ -147,14 +153,32 @@ uint8_t convert_ascii_to_value(uint8_t hi, uint8_t lo)
   return r_byte;
 }
 //---------------------------------------------------------------
-bool check_crc(void)
+bool check_crc32(void)
 {
+  uint32_t calc_crc32 = crc32((char *)&modbus_buf[sizeof(HEADER)], sizeof(uint32_t));
+
+  U_UINT32 temp;
+  temp.a = modbus_buf[index_modbus_buf - 3];
+  temp.b = modbus_buf[index_modbus_buf - 2];
+  temp.c = modbus_buf[index_modbus_buf - 1];
+  temp.d = modbus_buf[index_modbus_buf];
+  uint32_t packet_crc32 = temp.value;
+
+  if (calc_crc32 != packet_crc32)
+  {
+    debug(" calc_crc32 ");
+    work_serial.println(calc_crc32,   HEX);
+    debug(" packet_crc32 ");
+    work_serial.println(packet_crc32, HEX);
+    
+    return false;
+  }
   return true;
 }
 //---------------------------------------------------------------
 void command(void)
 {
-  debug("command");
+  debug("command ");
   if (index_ascii_buf == 0)
   {
     debug("index_ascii_buf == 0");
@@ -188,9 +212,29 @@ void command(void)
   uint8_t command  = packet->command;
   uint8_t cnt_data = packet->cnt_data;
 
+  uint8_t brightness = 0;
+  uint8_t color_R = 0;
+  uint8_t color_G = 0;
+  uint8_t color_B = 0;
+
+  if (cnt_data == sizeof(CMD_1))
+  {
+    struct CMD_1 *data_cmd_1 = (struct CMD_1 *)&packet->data;
+    brightness = data_cmd_1->brightness;
+    color_R = data_cmd_1->color_R;
+    color_G = data_cmd_1->color_G;
+    color_B = data_cmd_1->color_B;
+  }
+
   if (index_modbus_buf != (sizeof(HEADER) + cnt_data + 4))
   {
     debug("bad len");
+    return;
+  }
+
+  if (!check_crc32())
+  {
+    debug(" bad CRC32 ");
     return;
   }
 
@@ -204,8 +248,16 @@ void command(void)
   {
     case 0:
       debug("cmd_0");
+      i_brightness = brightness;
+      for (int n = 0; n < LEDS_PER_STRIP; n++)
+      {
+        line_leds[n].r = color_R;
+        line_leds[n].g = color_G;
+        line_leds[n].b = color_B;
+      }
+      show_leds();
       break;
-      
+
     case 1:
       debug("cmd_1");
       for (int n = 0; n < LEDS_PER_STRIP; n++)
@@ -248,65 +300,12 @@ void command(void)
     default:
       break;
   }
-
-  //---
-#if 0
-  String brightness = getValue(application_command, ';', 0);
-  String color_R = getValue(application_command, ';', 1);
-  String color_G = getValue(application_command, ';', 2);
-  String color_B = getValue(application_command, ';', 3);
-
-  i_brightness = brightness.toInt();
-  i_color_R = color_R.toInt();
-  i_color_G = color_G.toInt();
-  i_color_B = color_B.toInt();
-
-  work_serial.println(" == = ");
-  //work_serial.println(application_command);
-  work_serial.println("B " + String(i_brightness));
-  work_serial.println("R " + String(i_color_R));
-  work_serial.println("G " + String(i_color_G));
-  work_serial.println("B " + String(i_color_B));
-
-  for (int n = 0; n < LEDS_PER_STRIP; n++)
-  {
-    line_leds[n].r = i_color_R;
-    line_leds[n].g = i_color_G;
-    line_leds[n].b = i_color_B;
-  }
-  show_leds();
-#endif
-}
-//---------------------------------------------------------------
-//
-// https://stackoverflow.com/questions/9072320/split-string-into-string-array
-//
-String getValue(String data, char separator, int index)
-{
-  int found = 0;
-  int strIndex[] = {0, -1};
-  int maxIndex = data.length() - 1;
-
-  for (int i = 0; i <= maxIndex && found <= index; i++)
-  {
-    if (data.charAt(i) == separator || i == maxIndex)
-    {
-      found++;
-      strIndex[0] = strIndex[1] + 1;
-      strIndex[1] = (i == maxIndex) ? i + 1 : i;
-    }
-  }
-
-  return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 //---------------------------------------------------------------
 void setup()
 {
   work_serial.begin(BAUDRATE);
-  //work_serial.println("example: brightness; color_R; color_G; color_B");
-
   init_leds();
-
   clear_leds();
   show_leds();
 }

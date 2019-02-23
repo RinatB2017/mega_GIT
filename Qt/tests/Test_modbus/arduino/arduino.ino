@@ -41,10 +41,12 @@ struct CMD_1 {
 
 union U_UINT32 {
   uint32_t value;
-  uint8_t a;
-  uint8_t b;
-  uint8_t c;
-  uint8_t d;
+  struct {
+    uint8_t d;
+    uint8_t c;
+    uint8_t b;
+    uint8_t a;
+  } bytes;
 };
 
 #pragma pack(pop)
@@ -155,13 +157,13 @@ uint8_t convert_ascii_to_value(uint8_t hi, uint8_t lo)
 //---------------------------------------------------------------
 bool check_crc32(void)
 {
-  uint32_t calc_crc32 = crc32((char *)&modbus_buf[sizeof(HEADER)], sizeof(uint32_t));
+  uint32_t calc_crc32 = crc32((char *)&modbus_buf, sizeof(HEADER) + sizeof(CMD_1));
 
   U_UINT32 temp;
-  temp.a = modbus_buf[index_modbus_buf - 3];
-  temp.b = modbus_buf[index_modbus_buf - 2];
-  temp.c = modbus_buf[index_modbus_buf - 1];
-  temp.d = modbus_buf[index_modbus_buf];
+  temp.bytes.a = modbus_buf[index_modbus_buf - 4];
+  temp.bytes.b = modbus_buf[index_modbus_buf - 3];
+  temp.bytes.c = modbus_buf[index_modbus_buf - 2];
+  temp.bytes.d = modbus_buf[index_modbus_buf - 1];
   uint32_t packet_crc32 = temp.value;
 
   if (calc_crc32 != packet_crc32)
@@ -170,7 +172,7 @@ bool check_crc32(void)
     work_serial.println(calc_crc32,   HEX);
     debug(" packet_crc32 ");
     work_serial.println(packet_crc32, HEX);
-    
+
     return false;
   }
   return true;
@@ -190,7 +192,7 @@ void command(void)
     return;
   }
 
-  int index_modbus_buf = 0;
+  index_modbus_buf = 0;
   for (int n = 0; n < index_ascii_buf; n += 2)
   {
     modbus_buf[index_modbus_buf] = convert_ascii_to_value(ascii_buf[n], ascii_buf[n + 1]);
@@ -229,6 +231,8 @@ void command(void)
   if (index_modbus_buf != (sizeof(HEADER) + cnt_data + 4))
   {
     debug("bad len");
+    work_serial.println(index_modbus_buf);
+    work_serial.println(sizeof(HEADER) + cnt_data + 4);
     return;
   }
 

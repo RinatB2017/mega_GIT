@@ -9,11 +9,13 @@
 BluetoothSerial SerialBT;
 const char* ble_name = "Halo";
 //---------------------------------------------------------------
-#define BAUDRATE    115200
-#define debug_serial Serial
-#define bt_serial   SerialBT
+#define BAUDRATE      115200
+#define debug_serial  Serial
+#define bt_serial     SerialBT
 //---------------------------------------------------------------
-#define LEDS_PER_STRIP  6 //52
+//#define LEDS_PER_STRIP  6
+#define LEDS_PER_STRIP  52
+
 #define LED_PIN         16
 //---------------------------------------------------------------
 CRGB line_leds[LEDS_PER_STRIP];

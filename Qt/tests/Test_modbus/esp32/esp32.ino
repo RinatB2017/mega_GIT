@@ -172,9 +172,9 @@ bool check_crc32(void)
 
   if (calc_crc32 != packet_crc32)
   {
-    debug_serial.println(" calc_crc32 ");
+    debug_serial.println("calc_crc32");
     debug_serial.println(calc_crc32,   HEX);
-    debug_serial.println(" packet_crc32 ");
+    debug_serial.println("packet_crc32");
     debug_serial.println(packet_crc32, HEX);
 
     return false;
@@ -184,7 +184,7 @@ bool check_crc32(void)
 //---------------------------------------------------------------
 void command(void)
 {
-  debug_serial.println("command ");
+  debug_serial.println("command");
   if (index_ascii_buf == 0)
   {
     debug_serial.println("index_ascii_buf == 0");
@@ -242,7 +242,7 @@ void command(void)
 
   if (!check_crc32())
   {
-    debug_serial.println(" bad CRC32 ");
+    debug_serial.println("bad CRC32");
     return;
   }
 
@@ -325,8 +325,7 @@ void setup()
   show_leds();
 }
 //---------------------------------------------------------------
-void serialEvent()
-{
+void loop() {
   while (bt_serial.available())
   {
     imcomingByte = bt_serial.read();
@@ -351,10 +350,6 @@ void serialEvent()
         break;
     }
   }
-}
-//---------------------------------------------------------------
-void loop() {
-
 }
 //---------------------------------------------------------------
 

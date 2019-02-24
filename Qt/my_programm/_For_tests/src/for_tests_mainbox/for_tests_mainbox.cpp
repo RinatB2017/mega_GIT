@@ -203,6 +203,18 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    HEADER header;
+    header.address = 0;
+    header.command = 1;
+    header.cnt_data = 2;
+
+    char *arr = reinterpret_cast<char *>(&header);
+    emit info(QString("0: %1").arg(static_cast<int>(*arr)));
+    emit info(QString("1: %1").arg(static_cast<int>(*arr+1)));
+    emit info(QString("2: %1").arg(static_cast<int>(*arr+2)));
+#endif
+
+#if 0
     //QByteArray ba = QByteArray::fromHex("AB 01 05 0102030405 E596D05D");
     //QByteArray ba = QByteArray::fromHex("AA BB 05 0102030405 AD39C02D");
     //QByteArray ba = QByteArray::fromHex("01 00 07 01020304050607 EB05BDA7");

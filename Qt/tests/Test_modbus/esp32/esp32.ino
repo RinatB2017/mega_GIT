@@ -1,11 +1,20 @@
 //---------------------------------------------------------------
 #include "FastLED.h"
+#include "BluetoothSerial.h"
+//---------------------------------------------------------------
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
+#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
+#endif
+//---------------------------------------------------------------
+BluetoothSerial SerialBT;
+const char* ble_name = "Halo";
 //---------------------------------------------------------------
 #define BAUDRATE    115200
-#define work_serial Serial
+#define debug_serial Serial
+#define bt_serial   SerialBT
 //---------------------------------------------------------------
-#define LEDS_PER_STRIP  52
-#define LED_PIN 8
+#define LEDS_PER_STRIP  6 //52
+#define LED_PIN         16
 //---------------------------------------------------------------
 CRGB line_leds[LEDS_PER_STRIP];
 //---------------------------------------------------------------
@@ -114,11 +123,6 @@ uint32_t crc32(const char *buf, size_t len)
   return ~crc;
 }
 //---------------------------------------------------------------
-void debug(String text)
-{
-  work_serial.println(text);
-}
-//---------------------------------------------------------------
 uint8_t convert(uint8_t x)
 {
   uint8_t res = 0;
@@ -168,10 +172,10 @@ bool check_crc32(void)
 
   if (calc_crc32 != packet_crc32)
   {
-    debug(" calc_crc32 ");
-    work_serial.println(calc_crc32,   HEX);
-    debug(" packet_crc32 ");
-    work_serial.println(packet_crc32, HEX);
+    debug_serial.println(" calc_crc32 ");
+    debug_serial.println(calc_crc32,   HEX);
+    debug_serial.println(" packet_crc32 ");
+    debug_serial.println(packet_crc32, HEX);
 
     return false;
   }
@@ -180,15 +184,15 @@ bool check_crc32(void)
 //---------------------------------------------------------------
 void command(void)
 {
-  debug("command ");
+  debug_serial.println("command ");
   if (index_ascii_buf == 0)
   {
-    debug("index_ascii_buf == 0");
+    debug_serial.println("index_ascii_buf == 0");
     return;
   }
   if (index_ascii_buf % 2)
   {
-    debug("index_ascii_buf % 2");
+    debug_serial.println("index_ascii_buf % 2");
     return;
   }
 
@@ -199,13 +203,13 @@ void command(void)
     index_modbus_buf++;
     if (index_modbus_buf > MAX_MODBUS_BUF)
     {
-      debug("index_modbus_buf > MAX_MODBUS_BUF");
+      debug_serial.println("index_modbus_buf > MAX_MODBUS_BUF");
       return;
     }
   }
   if (index_modbus_buf < sizeof(HEADER))
   {
-    debug("index_modbus_buf < sizeof(HEADER)");
+    debug_serial.println("index_modbus_buf < sizeof(HEADER)");
     return;
   }
 
@@ -230,28 +234,28 @@ void command(void)
 
   if (index_modbus_buf != (sizeof(HEADER) + cnt_data + 4))
   {
-    debug("bad len");
-    work_serial.println(index_modbus_buf);
-    work_serial.println(sizeof(HEADER) + cnt_data + 4);
+    debug_serial.println("bad len");
+    debug_serial.println(index_modbus_buf);
+    debug_serial.println(sizeof(HEADER) + cnt_data + 4);
     return;
   }
 
   if (!check_crc32())
   {
-    debug(" bad CRC32 ");
+    debug_serial.println(" bad CRC32 ");
     return;
   }
 
   if (address != 0)
   {
-    debug("bad address");
+    debug_serial.println("bad address");
     return;
   }
 
   switch (command)
   {
     case 0:
-      debug("cmd_0");
+      debug_serial.println("cmd_0");
       i_brightness = brightness;
       for (int n = 0; n < LEDS_PER_STRIP; n++)
       {
@@ -263,7 +267,7 @@ void command(void)
       break;
 
     case 1:
-      debug("cmd_1");
+      debug_serial.println("cmd_1");
       for (int n = 0; n < LEDS_PER_STRIP; n++)
       {
         line_leds[n].r = 255;
@@ -274,7 +278,7 @@ void command(void)
       break;
 
     case 2:
-      debug("cmd_2");
+      debug_serial.println("cmd_2");
       for (int n = 0; n < LEDS_PER_STRIP; n++)
       {
         line_leds[n].r = 0;
@@ -285,7 +289,7 @@ void command(void)
       break;
 
     case 3:
-      debug("cmd_3");
+      debug_serial.println("cmd_3");
       for (int n = 0; n < LEDS_PER_STRIP; n++)
       {
         line_leds[n].r = 0;
@@ -296,7 +300,7 @@ void command(void)
       break;
 
     case 4:
-      debug("cmd_4");
+      debug_serial.println("cmd_4");
       for (int n = 0; n < LEDS_PER_STRIP; n++)
       {
         line_leds[n].r = 255;
@@ -313,7 +317,9 @@ void command(void)
 //---------------------------------------------------------------
 void setup()
 {
-  work_serial.begin(BAUDRATE);
+  Serial.begin(BAUDRATE);
+  SerialBT.begin(ble_name); //Bluetooth device name
+
   init_leds();
   clear_leds();
   show_leds();
@@ -321,9 +327,9 @@ void setup()
 //---------------------------------------------------------------
 void serialEvent()
 {
-  while (work_serial.available())
+  while (bt_serial.available())
   {
-    imcomingByte = work_serial.read();
+    imcomingByte = bt_serial.read();
     switch (imcomingByte)
     {
       case ':':
@@ -347,8 +353,7 @@ void serialEvent()
   }
 }
 //---------------------------------------------------------------
-void loop(void)
-{
+void loop() {
 
 }
 //---------------------------------------------------------------

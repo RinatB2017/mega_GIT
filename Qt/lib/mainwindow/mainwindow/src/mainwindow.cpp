@@ -90,9 +90,6 @@ void MainWindow::setCentralWidget(QWidget *widget)
 #endif
 
     show_docs();
-
-    //TODO
-    load_setting();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::changeEvent(QEvent *event)
@@ -197,8 +194,7 @@ void MainWindow::init(void)
     createSysLog_dock();
 #endif
 
-    //TODO
-    //load_setting();
+    load_setting();
 
 #ifndef NO_MENU
     createMenus();

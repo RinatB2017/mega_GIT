@@ -44,6 +44,9 @@ MyMainWindow::MyMainWindow(MainWindow *parent) :
 
     create_local_menus();
     create_toolbars();
+
+    //TODO
+    load_setting();
 }
 //--------------------------------------------------------------------------------
 MyMainWindow::~MyMainWindow()
@@ -267,23 +270,7 @@ void MyMainWindow::setCentralWidget(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MyMainWindow::closeEvent(QCloseEvent *event)
 {
-    if(flag_close)
-    {
-        event->accept();
-        return;
-    }
-
-    int btn =  QMessageBox::question(this,
-                                     "Выход из программы",
-                                     "Вы уверены, что хотите выйти из программы?",
-                                     QMessageBox::Yes | QMessageBox::No);
-    if(btn == QMessageBox::Yes)
-    {
-        event->accept();
-    }
-    else
-    {
-        event->ignore();
-    }
+    //type here
+    MainWindow::closeEvent(event);
 }
 //--------------------------------------------------------------------------------

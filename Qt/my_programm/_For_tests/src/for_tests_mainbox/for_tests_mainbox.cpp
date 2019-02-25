@@ -204,14 +204,21 @@ bool MainBox::test_0(void)
 
 #if 1
     HEADER header;
-    header.address = 0;
-    header.command = 1;
-    header.cnt_data = 2;
+    header.address  = 0xF0;
+    header.command  = 0xF1;
+    header.cnt_data = 0xF2;
 
-    char *arr = reinterpret_cast<char *>(&header);
-    emit info(QString("0: %1").arg(static_cast<int>(*arr)));
-    emit info(QString("1: %1").arg(static_cast<int>(*arr+1)));
-    emit info(QString("2: %1").arg(static_cast<int>(*arr+2)));
+    uchar *arr = reinterpret_cast<uchar *>(&header);
+    emit info(QString("0: %1").arg(static_cast<int>(*arr),     0, 16));
+    emit info(QString("1: %1").arg(static_cast<int>(*(arr+1)), 0, 16));
+    emit info(QString("2: %1").arg(static_cast<int>(*(arr+2)), 0, 16));
+
+    uint16_t value = 0xAABB;
+    uchar *arr2 = reinterpret_cast<uchar *>(&value);
+    int hi = *(arr2);
+    int lo = *(arr2+1);
+    emit info(QString("hi 0x%1").arg(hi, 0, 16));
+    emit info(QString("lo 0x%1").arg(lo, 0, 16));
 #endif
 
 #if 0

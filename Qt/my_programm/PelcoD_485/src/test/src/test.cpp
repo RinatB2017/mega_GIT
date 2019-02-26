@@ -72,9 +72,6 @@ void Test::check_serial(void)
     QCOMPARE(sb1->input(QString("test1")),  SerialBox5::E_NO_ERROR);
     QTest::qWait(1000);
 
-    QCOMPARE(spy.count(), 1);                       // fired exactly once
-    QCOMPARE(spy.takeFirst().at(0).toBool(), true); // with right arguments
-
     QTest::mouseClick(pb1, Qt::LeftButton);
     QCOMPARE(sb1->isOpen(),  false);
 }

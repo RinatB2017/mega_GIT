@@ -196,17 +196,10 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include "crc.h"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
-
-#if 1
-    qreal value = 1.5;
-    int x = static_cast<int>(value + 0.5);
-    emit info(QString("value %1").arg(x));
-#endif
 
 #if 0
     HEADER header;
@@ -225,59 +218,6 @@ bool MainBox::test_0(void)
     int lo = *(arr2+1);
     emit info(QString("hi 0x%1").arg(hi, 0, 16));
     emit info(QString("lo 0x%1").arg(lo, 0, 16));
-#endif
-
-#if 0
-    //QByteArray ba = QByteArray::fromHex("AB 01 05 0102030405 E596D05D");
-    //QByteArray ba = QByteArray::fromHex("AA BB 05 0102030405 AD39C02D");
-    //QByteArray ba = QByteArray::fromHex("01 00 07 01020304050607 EB05BDA7");
-    QByteArray ba = QByteArray::fromHex("01 01 00 E7988264");
-
-    if(ba.length() < sizeof(HEADER))
-    {
-        emit error("packer too small!");
-        return false;
-    }
-
-    HEADER *header = reinterpret_cast<HEADER *>(ba.data());
-
-    if(ba.length() != (sizeof(HEADER) + header->cnt_data + 4))
-    {
-        emit error("bad size packet!");
-        return false;
-    }
-
-    emit info(QString("addr %1").arg(header->address, 2, 16, QChar('0')).toUpper());
-    emit info(QString("cmd  %1").arg(header->command, 2, 16, QChar('0')).toUpper());
-    emit info(QString("cnt  %1").arg(header->cnt_data));
-
-    emit info(QString("crc32 %1")
-              .arg(CRC::crc32(reinterpret_cast<char *>(header), sizeof(HEADER) + header->cnt_data), 0, 16)
-              .toUpper());
-
-#endif
-
-#if 0
-    B b;
-    emit info(b.x0());
-    emit info(b.x1());
-    emit info(b.x2());
-#endif
-
-#if 0
-    auto a = 0;
-    auto b = static_cast<uint64_t>(a);
-    emit info(QString("a %1").arg(sizeof(a)));
-    emit info(QString("b %1").arg(sizeof(b)));
-#endif
-
-#if 0
-    QByteArray ba = QByteArray::fromHex("01 02 03 04 05 06 07 08 09 0a 0B 0C ыыы");
-    emit info(QString("ba len %1").arg(ba.length()));
-    for(int n=0; n<ba.length(); n++)
-    {
-        emit info(QString("0x%1").arg(ba.at(n), 2, 16, QChar('0')));
-    }
 #endif
 
     return true;

@@ -26,7 +26,6 @@
 #include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
-//#include "test_function.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #define private public
@@ -42,20 +41,7 @@ Test::Test()
 //--------------------------------------------------------------------------------
 Test::~Test()
 {
-}
-//--------------------------------------------------------------------------------
-void Test::test_slider(void)
-{
-    QSlider *slider = mw->findChild<QSlider *>("verticalSlider");
-    QVERIFY(slider);
 
-    QSignalSpy spy(slider, SIGNAL(valueChanged(int)));
-    QCOMPARE(spy.isValid(), true); // signal exists
-
-    slider->setValue(10);
-
-    QCOMPARE(spy.count(), 1);                    // fired exactly once
-    QCOMPARE(spy.takeFirst().at(0).toInt(), 10); // with right arguments
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
@@ -78,24 +64,6 @@ void Test::test_mainbox(void)
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    //test_mainbox();
 
-    //MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    //QVERIFY(mb);
-
-    //QCOMPARE(mb->test(QByteArray::fromHex("000102030405")), 15);
-    //QCOMPARE(mb->test(QByteArray::fromHex("1F1F1F1F1F1F")), 6*0x1F);
-
-    //TEST test;
-    //test.reserved = 0;
-    //test.addr = 1;
-    //test.cmd  = 2;
-    //test.data = 3;
-
-    //QCOMPARE(sizeof(TEST), 5);
-
-    //QByteArray ba;
-    //ba.append((char *)&test, sizeof(test));
-    //QCOMPARE(mb->test(ba), 5);
 }
 //--------------------------------------------------------------------------------

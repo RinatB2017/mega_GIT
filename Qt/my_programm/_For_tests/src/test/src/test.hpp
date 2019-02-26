@@ -46,9 +46,8 @@ private slots:
     void test_func(void);
 
 private:
-    MyMainWindow *mw = nullptr;
+    MyMainWindow *mw;
 
-    void test_slider(void);
     void test_mainbox(void);
 };
 //--------------------------------------------------------------------------------

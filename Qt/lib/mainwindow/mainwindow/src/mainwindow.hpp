@@ -164,7 +164,9 @@ public slots:
     void set_status2_text(const QString &data);
 
     void set_focus(const QString &);
+#ifndef NO_LOG
     void set_log_font(void);
+#endif
 
     void showMinimized(void);
     void showMaximized(void);
@@ -274,10 +276,14 @@ private:
 
     QDockWidget *sd;
 
+#ifndef NO_LOG
     LogDock *ld;
+#endif
     SysLog_dock *syslog_dock;
 
+#ifndef NO_LOG
     void createLog(void);
+#endif
     void createSysLog_dock(void);
 
     int state_theme = DARK_THEME;

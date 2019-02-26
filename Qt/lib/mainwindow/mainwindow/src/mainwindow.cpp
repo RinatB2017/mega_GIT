@@ -69,10 +69,12 @@ MainWindow::~MainWindow()
 #ifndef NO_LOG_TRACE
     MyWidget::set_param("Main", "flag_show_trace",  flag_show_trace);
 #endif
+#ifndef NO_LOG
     if(ld)
     {
         ld->deleteLater();
     }
+#endif
 
     if(settings)
     {
@@ -116,10 +118,12 @@ void MainWindow::changeEvent(QEvent *event)
             styletoolbar->setWindowTitle(tr("styletoolbar"));
         }
 #endif
+#ifndef NO_LOG
         if(ld)
         {
             ld->setWindowTitle(tr("log"));
         }
+#endif
         break;
 
     default:
@@ -684,6 +688,7 @@ void MainWindow::show_docs(void)
     }
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG
 void MainWindow::createLog(void)
 {
     ld = new LogDock(tr("log"), this);
@@ -714,6 +719,7 @@ void MainWindow::createLog(void)
                         Qt::BottomDockWidgetArea);
     addDockWidget(Qt::BottomDockWidgetArea, ld);
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::createSysLog_dock(void)
 {
@@ -1278,6 +1284,7 @@ void MainWindow::set_app_font(void)
     }
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG
 void MainWindow::set_log_font(void)
 {
     bool ok = false;
@@ -1287,6 +1294,7 @@ void MainWindow::set_log_font(void)
         ld->set_font(font);
     }
 }
+#endif
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG_INFO
 void MainWindow::slot_is_shows_info(bool state)

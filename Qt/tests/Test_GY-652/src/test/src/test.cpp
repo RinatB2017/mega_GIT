@@ -29,7 +29,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "Test_GY-652_mainbox.hpp"
+#include "test_GY-652_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER
@@ -70,7 +70,7 @@ void Test::test_grapher(void)
         QCOMPARE(gb->add_curve_data(0, n),  true);
     }
 
-    float x = 0;
+    qreal x = 0;
     for(int n=0; n<1000; n++)
     {
         gb->get_curve_data(0, n, &x);

@@ -144,16 +144,16 @@ void MainBox::data_gy652(QByteArray data)
     float altitude = sl.at(3).toFloat();
 
 #ifndef NO_GRAPHER
-    ui->grapher_widget->add_curve_data(curve_temperature,   temperature);
-    ui->grapher_widget->add_curve_data(curve_pressure,      pressure);
-    ui->grapher_widget->add_curve_data(curve_atm,           atm);
-    ui->grapher_widget->add_curve_data(curve_altitude,      altitude);
+    ui->grapher_widget->add_curve_data(curve_temperature,   static_cast<double>(temperature));
+    ui->grapher_widget->add_curve_data(curve_pressure,      static_cast<double>(pressure));
+    ui->grapher_widget->add_curve_data(curve_atm,           static_cast<double>(atm));
+    ui->grapher_widget->add_curve_data(curve_altitude,      static_cast<double>(altitude));
 #endif
 
-    ui->display_temperature->display(temperature);
-    ui->display_pressure->display(pressure * 0.75006375541921f / 100.0f);
-    ui->display_atm->display(atm);
-    ui->display_altitude->display(altitude);
+    ui->display_temperature->display(static_cast<double>(temperature));
+    ui->display_pressure->display(static_cast<double>(pressure * 0.75006375541921f / 100.0f));
+    ui->display_atm->display(static_cast<double>(atm));
+    ui->display_altitude->display(static_cast<double>(altitude));
 
     //emit info(data);
 }

@@ -203,6 +203,12 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    qreal value = 1.5;
+    int x = static_cast<int>(value + 0.5);
+    emit info(QString("value %1").arg(x));
+#endif
+
+#if 0
     HEADER header;
     header.address  = 0xF0;
     header.command  = 0xF1;

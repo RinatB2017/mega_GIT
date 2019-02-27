@@ -11,12 +11,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MoveGraphicsItem
 TEMPLATE = app
 
+SOURCES += \
+    src/main.cpp \
+    src/widget.cpp \
+    src/moveitem.cpp
 
-SOURCES += main.cpp\
-        widget.cpp \
-    moveitem.cpp
+HEADERS  += \
+    src/widget.h \
+    src/moveitem.h
 
-HEADERS  += widget.h \
-    moveitem.h
-
-FORMS    += widget.ui
+FORMS    += src/ui/widget.ui

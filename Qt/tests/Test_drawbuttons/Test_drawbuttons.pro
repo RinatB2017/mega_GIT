@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_drawbuttons_mainbox \
-    $$PWD/src/Test_drawbuttons_mainbox/ui
+    $$PWD/src/test_drawbuttons_mainbox \
+    $$PWD/src/test_drawbuttons_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 
@@ -29,13 +29,13 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    Test_drawbuttons_mainbox.hpp
+    test_drawbuttons_mainbox.hpp
 
 SOURCES += \
-    Test_drawbuttons_mainbox.cpp \
+    test_drawbuttons_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_drawbuttons_mainbox.ui
+FORMS   += test_drawbuttons_mainbox.ui
 
 RESOURCES += icons/temp.qrc
 

@@ -13,6 +13,7 @@ SUBDIRS += \
     Test_digits \
     Test_database \
     Test_drawbuttons \
+    Test_draw_line \
     Test_event_filter \
     Test_GrapherBox \
     Test_GY-652 \
@@ -38,6 +39,7 @@ SUBDIRS += \
     Test_RTSP_widget \
     Test_libUSB \
     Test_model \
+    Test_pixmap \
     Test_Polar \
     Test_SQL \
     Test_SMTP \
@@ -56,7 +58,8 @@ SUBDIRS += \
     Test_Game \
     Test_OpenGL \
     Test_mouse \
-    Test_draw_line \
+    Test_SDL \
+    Test_SDLWidget \
     Test_YouTube \
     Tester
 

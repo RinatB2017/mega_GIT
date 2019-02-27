@@ -25,7 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "Test_QCustomPlot_mainbox.hpp"
+#include "test_QCustomPlot_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

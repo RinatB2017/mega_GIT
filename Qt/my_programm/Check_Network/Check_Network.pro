@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/check_network_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT  += network
 
 DEFINES += NO_STYLETOOLBAR
@@ -26,9 +24,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 HEADERS += \
+    check_network_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    check_network_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     check_network_mainbox.cpp \

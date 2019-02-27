@@ -18,16 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QFileDialog>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QToolBar>
-#include <QComboBox>
-#include <QProcess>
-#include <QTimer>
-//--------------------------------------------------------------------------------
 #include "ui_mtc_runner_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -56,8 +46,6 @@ void MainBox::init(void)
 
     createRunBar();
     createScriptBar();
-
-    proccess = 0;
 }
 //--------------------------------------------------------------------------------
 void MainBox::createRunBar(void)
@@ -196,7 +184,6 @@ void MainBox::finished(int result)
     }
 
     delete proccess;
-    proccess = 0;
 }
 //--------------------------------------------------------------------------------
 void MainBox::process_error(QProcess::ProcessError p_error)

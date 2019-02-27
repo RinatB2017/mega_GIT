@@ -47,7 +47,7 @@
 QT_BEGIN_NAMESPACE
 
 namespace Ui {
-class SettingsDialog;
+    class SettingsDialog;
 }
 
 QT_END_NAMESPACE

@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_Box2D_mainbox \
-    $$PWD/src/Test_Box2D_mainbox/ui \
+    $$PWD/src/test_Box2D_mainbox \
+    $$PWD/src/test_Box2D_mainbox/ui \
     $$PWD/src/world
 INCLUDEPATH = $$DEPENDPATH
 
@@ -28,19 +28,19 @@ DEFINES += SAVE_WIDGETS_CHECKBOX
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_Box2D_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_Box2D_mainbox.hpp \
     listener.hpp \
     world.hpp
 
 SOURCES += \
-    Test_Box2D_mainbox.cpp \
+    test_Box2D_mainbox.cpp \
     listener.cpp \
     world.cpp \
     main.cpp
 
-FORMS   += Test_Box2D_mainbox.ui
+FORMS   += test_Box2D_mainbox.ui
 
 #RESOURCES += icons/temp.qrc
 

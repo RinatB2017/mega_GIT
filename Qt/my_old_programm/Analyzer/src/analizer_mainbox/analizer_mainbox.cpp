@@ -41,8 +41,7 @@ MainBox::MainBox(QWidget *parent,
     MyWidget(parent),
     splash(splash),
     ui(new Ui::MainBox),
-    parent(parent),
-    grapher(0)
+    parent(parent)
 {
     init();
 }
@@ -147,7 +146,7 @@ void MainBox::test(void)
     connect(thread, SIGNAL(info(QString)),  this, SIGNAL(info(QString)));
     connect(thread, SIGNAL(debug(QString)), this, SIGNAL(debug(QString)));
     connect(thread, SIGNAL(error(QString)), this, SIGNAL(error(QString)));
-    connect(thread, SIGNAL(send_value(int,unsigned short)), this, SLOT(draw_value(int,unsigned short)));
+    connect(thread, SIGNAL(send_value(int, unsigned short)), this, SLOT(draw_value(int,unsigned short)));
 
     thread->start();
 

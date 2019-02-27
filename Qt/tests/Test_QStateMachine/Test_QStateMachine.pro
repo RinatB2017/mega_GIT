@@ -10,26 +10,24 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_QStateMachine_mainbox \
-    $$PWD/src/Test_QStateMachine_mainbox/ui
+    $$PWD/src/test_QStateMachine_mainbox \
+    $$PWD/src/test_QStateMachine_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_QStateMachine_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_QStateMachine_mainbox.hpp
 
 SOURCES += \
-    Test_QStateMachine_mainbox.cpp \
+    test_QStateMachine_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_QStateMachine_mainbox.ui
+FORMS   += test_QStateMachine_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

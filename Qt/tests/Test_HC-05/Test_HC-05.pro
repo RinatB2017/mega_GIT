@@ -14,7 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/test_hc05_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
 QT  += serialport
 
 DEFINES += NO_STYLETOOLBAR

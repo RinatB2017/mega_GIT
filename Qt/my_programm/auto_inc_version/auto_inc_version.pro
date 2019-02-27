@@ -8,8 +8,6 @@ TARGET   = auto_inc_version
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 SOURCES += main.cpp
 
 LIB_PATH = "../../lib"

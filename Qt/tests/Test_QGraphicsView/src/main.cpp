@@ -27,7 +27,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "Test_QGraphicsView_mainbox.hpp"
+#include "test_QGraphicsView_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -60,44 +60,10 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    //---
-#if 0
-    QPushButton *btn = new QPushButton;
-    btn->setFixedSize(320, 200);
-    btn->setText("test");
-    btn->show();
-#endif
-    //---
-
     MainWindow *main_window = new MainWindow;
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    //---
-#if 0
-    QPalette palette;
-
-    palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    palette.setBrush(QPalette::Button,      QBrush(QColor(32, 64, 96),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Light,       QBrush(QColor(24, 48, 44),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Text,        QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    palette.setBrush(QPalette::BrightText,  QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
-    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    palette.setBrush(QPalette::Base,        QBrush(QColor(24, 48, 64),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Window,      QBrush(QColor(12, 24, 32),      Qt::SolidPattern));
-    palette.setBrush(QPalette::Shadow,      QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-
-    main_window->setPalette(palette);
-#endif
-    //---
-
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-
-    //---
-    //qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    //QGLFormat format;
-    //format.setVersion(4, 3);
-    //QGLFormat::setDefaultFormat(format);
-    //---
 
     main_window->setCentralWidget(mainBox);
 
@@ -111,7 +77,6 @@ int main(int argc, char *argv[])
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

@@ -9,11 +9,9 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_WebKit_mainbox \
-    $$PWD/src/Test_WebKit_mainbox/ui
+    $$PWD/src/test_WebKit_mainbox \
+    $$PWD/src/test_WebKit_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -30,20 +28,20 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += network
 
 HEADERS += \
+    test_WebKit_mainbox.hpp \
     defines.hpp \
-    Test_WebKit_mainbox.hpp
 
 SOURCES += \
-    main.cpp \
-    Test_WebKit_mainbox.cpp
+    test_WebKit_mainbox.cpp \
+    main.cpp
 
-FORMS   += Test_WebKit_mainbox.ui
+FORMS   += test_WebKit_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

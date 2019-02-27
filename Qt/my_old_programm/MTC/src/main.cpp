@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
     main_window->setCentralWidget(mainBox);
 
     main_window->show();
-
     main_window->setFixedSize(main_window->sizeHint());
 
     splash->finish(main_window);

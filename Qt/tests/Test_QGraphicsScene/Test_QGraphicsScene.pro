@@ -10,26 +10,24 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_QGraphicsScene_mainbox \
-    $$PWD/src/Test_QGraphicsScene_mainbox/ui
+    $$PWD/src/test_QGraphicsScene_mainbox \
+    $$PWD/src/test_QGraphicsScene_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    test_QGraphicsScene_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_QGraphicsScene_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_QGraphicsScene_mainbox.cpp \
+    test_QGraphicsScene_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_QGraphicsScene_mainbox.ui
+FORMS   += test_QGraphicsScene_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

@@ -62,11 +62,8 @@ private:
     SerialBox5 *serialBox;
 
     void init(void);
-
     void createTestBar(void);
-
     int calc_SINR(int value);
-
     void updateText(void);
 
 };

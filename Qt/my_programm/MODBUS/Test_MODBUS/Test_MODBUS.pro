@@ -15,7 +15,6 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport
-#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_TESTBAR_GRAPHER
 DEFINES += NO_STYLETOOLBAR
@@ -23,9 +22,9 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_modbus_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    test_modbus_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     test_modbus_mainbox.cpp \

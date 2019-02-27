@@ -12,8 +12,6 @@ DEPENDPATH  += \
     $$PWD/src/gp2y0a02y_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -25,9 +23,9 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    gp2y0a02y_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    gp2y0a02y_mainbox.hpp
 
 SOURCES += \
     gp2y0a02y_mainbox.cpp \

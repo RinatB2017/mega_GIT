@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/test_newmoonlight_firmware_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -30,9 +28,9 @@ DEFINES += NO_TRAYICON
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 HEADERS += \
+    test_newmoonlight_firmware_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    test_newmoonlight_firmware_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     test_newmoonlight_firmware_mainbox.cpp \

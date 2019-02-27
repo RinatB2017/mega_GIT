@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/template_old_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #QT  += serialbus
 
 #DEFINES += LOGO_GL
@@ -60,9 +58,9 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    template_old_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    template_old_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     template_old_mainbox.cpp \

@@ -13,7 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/webkit_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
 #QMAKE_CXXFLAGS += -std=c++11
 
 DEFINES += PROGRAMM_IN_UTF8
@@ -30,12 +29,12 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += network sql
 
 HEADERS += \
-    defines.hpp \
-    webkit_mainbox.hpp
+    webkit_mainbox.hpp \
+    defines.hpp
 
 SOURCES += \
-    main.cpp \
-    webkit_mainbox.cpp
+    webkit_mainbox.cpp \
+    main.cpp
 
 FORMS   += webkit_mainbox.ui
 
@@ -45,7 +44,7 @@ win32 {
 
 RESOURCES += jquery/jquery.qrc
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)

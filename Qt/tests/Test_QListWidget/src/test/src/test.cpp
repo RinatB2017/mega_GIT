@@ -27,7 +27,7 @@
 #include <QTest>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "Test_QListWidget_mainbox.hpp"
+#include "test_QListWidget_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

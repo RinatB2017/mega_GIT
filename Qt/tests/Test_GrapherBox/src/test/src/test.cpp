@@ -30,7 +30,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "grapherbox.hpp"
-#include "Test_GrapherBox_mainbox.hpp"
+#include "test_GrapherBox_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

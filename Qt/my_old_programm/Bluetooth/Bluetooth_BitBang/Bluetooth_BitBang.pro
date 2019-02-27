@@ -24,9 +24,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    bluetooth_bitbang_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    bluetooth_bitbang_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     bluetooth_bitbang_mainbox.cpp \

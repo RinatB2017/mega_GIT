@@ -12,8 +12,6 @@ DEPENDPATH  += \
     $$PWD/src/simple_http_reader_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT  += network
 
 DEFINES += NO_STYLETOOLBAR

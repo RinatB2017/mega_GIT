@@ -16,8 +16,7 @@
 //--------------------------------------------------------------------------------
 #include <QTimer>
 QSDLScreenWidget::QSDLScreenWidget(QWidget *parent) :
-    QWidget(parent),
-    screen(0)
+    QWidget(parent)
 {
     // Turn off double buffering for this widget. Double buffering
     // interferes with the ability for SDL to be properly displayed
@@ -37,17 +36,16 @@ QSDLScreenWidget::QSDLScreenWidget(QWidget *parent) :
     //connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     //timer->start(100);
 
-    //background = IMG_Load(":/image/game_back.jpg");
-    background = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/game_back.jpg");
+    background = IMG_Load(":/image/game_back.jpg");
 
-    image_1 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/1.png");
-    image_2 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/2.png");
-    image_3 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/3.png");
-    image_4 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/4.png");
-    image_5 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/5.png");
-    image_6 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/6.png");
-    image_7 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/7.png");
-    image_8 = IMG_Load("/home/boss/Programming/my_programm/Games/Test_SDLWidget/image/8.png");
+    image_1 = IMG_Load(":/image/1.png");
+    image_2 = IMG_Load(":/image/2.png");
+    image_3 = IMG_Load(":/image/3.png");
+    image_4 = IMG_Load(":/image/4.png");
+    image_5 = IMG_Load(":/image/5.png");
+    image_6 = IMG_Load(":/image/6.png");
+    image_7 = IMG_Load(":/image/7.png");
+    image_8 = IMG_Load(":/image/8.png");
 
     current_image = image_1;
 
@@ -75,7 +73,6 @@ void QSDLScreenWidget::resizeEvent(QResizeEvent *)
     // the SDL region synchronized inside the Qt widget and the subsequent
     // application.
     //
-    screen = 0;
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
     // Set the new video mode with the new window size
@@ -106,11 +103,11 @@ void QSDLScreenWidget::draw_image(SDL_Surface *image, int pos_x, int pos_y)
     if(!image)  return;
 
     SDL_Rect dst;
-    dst.x = pos_x;
-    dst.y = pos_y;
-    dst.w = image->w;
-    dst.h = image->h;
-    SDL_BlitSurface(image, NULL, screen, &dst);
+    dst.x = static_cast<Sint16>(pos_x);
+    dst.y = static_cast<Sint16>(pos_y);
+    dst.w = static_cast<Uint16>(image->w);
+    dst.h = static_cast<Uint16>(image->h);
+    SDL_BlitSurface(image, nullptr, screen, &dst);
 }
 //--------------------------------------------------------------------------------
 void QSDLScreenWidget::keyReleaseEvent(QKeyEvent *event)
@@ -221,7 +218,7 @@ void QSDLScreenWidget::test(void)
     {
         //SDL_FillRect(screen, NULL, 0);
 
-        SDL_BlitSurface(background, NULL, screen, 0);
+        SDL_BlitSurface(background, nullptr, screen, nullptr);
 #if 1
         if(player_move_up)    player_y-=10;
         if(player_move_down)  player_y+=10;
@@ -241,7 +238,7 @@ void QSDLScreenWidget::test(void)
         draw_image(image_8, pos_x, 0);  pos_x += image_8->w;
 #endif
         SDL_Flip(screen);
-        SDL_GetKeyState(NULL);
+        SDL_GetKeyState(nullptr);
     }
 }
 //--------------------------------------------------------------------------------
@@ -258,9 +255,9 @@ void QSDLScreenWidget::paintEvent(QPaintEvent *)
 #ifdef QT_DEBUG
         qDebug() << "paintEvent";
 #endif
-        SDL_FillRect(screen, NULL, 0);
+        SDL_FillRect(screen, nullptr, 0);
 
-        SDL_BlitSurface(background, NULL, screen, 0);
+        SDL_BlitSurface(background, nullptr, screen, nullptr);
 #if 1
         if(player_move_up)    player_y-=10;
         if(player_move_down)  player_y+=10;

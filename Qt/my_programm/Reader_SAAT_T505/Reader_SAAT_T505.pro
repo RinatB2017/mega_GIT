@@ -12,8 +12,6 @@ DEPENDPATH  += \
     $$PWD/src/reader_saat_t505_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -48,7 +46,7 @@ RESOURCES += \
 OTHER_FILES += doc/notebook.txt
 
 #----------------------------------------------
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

@@ -24,9 +24,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    bluetooth_6x8_matrix_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    bluetooth_6x8_matrix_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     bluetooth_6x8_matrix_mainbox.cpp \

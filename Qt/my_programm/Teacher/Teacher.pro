@@ -15,8 +15,6 @@ INCLUDEPATH = $$DEPENDPATH
 QT += webenginewidgets
 QT += network
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
@@ -32,9 +30,9 @@ linux {
 }
 
 HEADERS += \
+    teacher_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    teacher_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     teacher_mainbox.cpp \

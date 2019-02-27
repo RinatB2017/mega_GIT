@@ -11,8 +11,6 @@ DEPENDPATH  += \
     $$PWD/src/icons_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 
 #DEFINES += FIXED_SIZE
@@ -21,9 +19,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    icons_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    icons_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     icons_mainbox.cpp \

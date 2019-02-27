@@ -13,7 +13,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += serialport network
-#QMAKE_CXXFLAGS += -fno-show-column
+QT  += serialbus
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -65,11 +65,8 @@ CONFIG(debug, debug|release) {
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
 include ($$LIB_PATH2/widgets/hexview16/hexview16.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
-
-QT  += serialbus
 
 include (../lib/MODBUS_server/MODBUS_server.pri)
 

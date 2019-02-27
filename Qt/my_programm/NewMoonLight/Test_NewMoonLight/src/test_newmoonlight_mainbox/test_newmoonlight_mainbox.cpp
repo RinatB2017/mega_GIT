@@ -18,22 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QGridLayout>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QTime>
-
-#include <QAction>
-#include <QtMath>
-#include <QMenu>
-
-#include <QPushButton>
-#include <QToolButton>
-#include <QToolBar>
-#include <QSpinBox>
-#include <QTimer>
-#include <QLabel>
-//--------------------------------------------------------------------------------
 #include "ui_test_newmoonlight_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -60,7 +44,10 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    if(serialBox)   serialBox->deleteLater();
+    if(serialBox)
+    {
+        serialBox->deleteLater();
+    }
 
     foreach (Led *led, leds) {
         led->deleteLater();
@@ -219,7 +206,7 @@ uint16_t MainBox::get_value(NewMoonLightPacket *packet, uint16_t address)
     union U_UINT16 temp;
     temp.value = address;
 
-    uint16_t res = packet->body.data[temp.bytes.a][temp.bytes.b] << 8 | packet->body.data[temp.bytes.c][temp.bytes.d];
+    uint16_t res = static_cast<uint16_t>(packet->body.data[temp.bytes.a][temp.bytes.b] << 8 | packet->body.data[temp.bytes.c][temp.bytes.d]);
     emit debug(QString("address %1 value %2")
                .arg(address, 4, 16, QChar('0'))
                .arg(res, 4, 16, QChar('0')));
@@ -238,7 +225,7 @@ void MainBox::analize(void)
                    .arg(sizeof(NewMoonLightPacket)));
         return;
     }
-    NewMoonLightPacket *packet = (NewMoonLightPacket *)clean_data.data();
+    NewMoonLightPacket *packet = reinterpret_cast<NewMoonLightPacket *>(clean_data.data());
     emit debug(QString("address 0x%1").arg(packet->body.address));
     emit debug(QString("command 0x%1").arg(packet->body.command));
     emit debug(QString("cnt_data %1").arg(packet->body.cnt_data));
@@ -277,7 +264,7 @@ void MainBox::f_get(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_set(void)
 {
-    NewMoonLightPacket *packet = (NewMoonLightPacket *)clean_data.data();
+    NewMoonLightPacket *packet = reinterpret_cast<NewMoonLightPacket *>(clean_data.data());
     if(packet->body.cnt_data != (MAX_LED * 2))
     {
         emit error(QString("error cnt_data %1").arg(packet->body.cnt_data));
@@ -469,7 +456,7 @@ uint8_t MainBox::convert_ascii_to_value(char hi, char lo)
         break;
     }
     //---
-    uint8_t r_byte = (b_hi << 4) | b_lo;
+    uint8_t r_byte = static_cast<uint8_t>((b_hi << 4) | b_lo);
     return r_byte;
 }
 //--------------------------------------------------------------------------------

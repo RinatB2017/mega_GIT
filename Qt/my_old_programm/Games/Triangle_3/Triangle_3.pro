@@ -11,14 +11,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Triangle_3
 TEMPLATE = app
 
-
 SOURCES += \
-    main.cpp \
-    widget.cpp \
-    triangle.cpp
+    src/main.cpp \
+    src/widget.cpp \
+    src/triangle.cpp
 
 HEADERS  += \
-    widget.h \
-    triangle.h
+    src/widget.h \
+    src/triangle.h
 
-FORMS    += widget.ui
+FORMS    += src/ui/widget.ui

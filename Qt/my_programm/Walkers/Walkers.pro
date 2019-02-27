@@ -11,7 +11,6 @@ DEPENDPATH  += \
     $$PWD/src/walkers/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
 QT  += webenginewidgets
 
 DEFINES += PROGRAMM_IN_UTF8

@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_QHexEdit_mainbox \
-    $$PWD/src/Test_QHexEdit_mainbox/ui
+    $$PWD/src/test_QHexEdit_mainbox \
+    $$PWD/src/test_QHexEdit_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 
@@ -22,15 +22,15 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_QHexEdit_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_QHexEdit_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_QHexEdit_mainbox.cpp \
+    test_QHexEdit_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_QHexEdit_mainbox.ui
+FORMS   += test_QHexEdit_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -38,7 +38,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

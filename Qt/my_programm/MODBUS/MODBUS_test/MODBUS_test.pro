@@ -19,8 +19,6 @@ QT  += \
     serialbus \
     network
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
@@ -31,9 +29,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += HEX16
 
 HEADERS += \
+    modbus_test_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    modbus_test_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     modbus_test_mainbox.cpp \
@@ -53,7 +51,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

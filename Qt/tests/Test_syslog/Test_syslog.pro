@@ -10,11 +10,9 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_syslog_mainbox \
-    $$PWD/src/Test_syslog_mainbox/ui
+    $$PWD/src/test_syslog_mainbox \
+    $$PWD/src/test_syslog_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -24,15 +22,15 @@ DEFINES += SYSLOG_LOG
 DEFINES += UNDER_CONSTRUCTION
 
 HEADERS += \
+    test_syslog_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_syslog_mainbox.hpp
 
 SOURCES += \
-    Test_syslog_mainbox.cpp \
+    test_syslog_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_syslog_mainbox.ui
+FORMS   += test_syslog_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

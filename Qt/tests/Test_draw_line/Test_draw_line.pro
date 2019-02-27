@@ -9,11 +9,9 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_draw_line_mainbox \
-    $$PWD/src/Test_draw_line_mainbox/ui
+    $$PWD/src/test_draw_line_mainbox \
+    $$PWD/src/test_draw_line_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
@@ -27,15 +25,15 @@ DEFINES += NO_TRAYICON
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 HEADERS += \
+    test_draw_line_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_draw_line_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_draw_line_mainbox.cpp \
+    test_draw_line_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_draw_line_mainbox.ui
+FORMS   += test_draw_line_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -43,7 +41,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

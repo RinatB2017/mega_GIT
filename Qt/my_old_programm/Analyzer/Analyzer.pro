@@ -12,7 +12,7 @@ DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/analizer_mainbox \
     $$PWD/src/analizer_mainbox/ui \
-    $$PWD/src/ft2232h_thread \
+    $$PWD/src/ft2232h_thread
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -20,15 +20,15 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    defines.hpp \
-    version.hpp \
     analizer_mainbox.hpp \
-    ft2232h_thread.hpp
+    ft2232h_thread.hpp \
+    defines.hpp \
+    version.hpp
 
 SOURCES += \
     analizer_mainbox.cpp \
-    main.cpp \
-    ft2232h_thread.cpp
+    ft2232h_thread.cpp \
+    main.cpp
 
 FORMS += analizer_mainbox.ui
 

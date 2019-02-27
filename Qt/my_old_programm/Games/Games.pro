@@ -8,12 +8,5 @@ CONFIG   *= ordered
 SUBDIRS += \
     Cards \
     Chess \
-    Game_15 \
-    Test_pixmap \
+    Game_15
 
-unix {
-SUBDIRS += \
-    Test_SDL \
-    Test_SDLWidget \
-    Template_game
-}

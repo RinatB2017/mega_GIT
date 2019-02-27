@@ -12,11 +12,9 @@ DEPENDPATH  += \
     $$PWD/src/diod \
     $$PWD/src/display \
     $$PWD/src/palette \
-    $$PWD/src/Test_RGB_Matrix_mainbox \
-    $$PWD/src/Test_RGB_Matrix_mainbox/ui
+    $$PWD/src/test_RGB_Matrix_mainbox \
+    $$PWD/src/test_RGB_Matrix_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
@@ -31,17 +29,17 @@ DEFINES += NO_TRAYICON
 DEFINES += MODBUS
 
 HEADERS += \
+    test_RGB_Matrix_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_RGB_Matrix_mainbox.hpp \
     palette.hpp
 
 SOURCES += \
-    Test_RGB_Matrix_mainbox.cpp \
+    test_RGB_Matrix_mainbox.cpp \
     palette.cpp \
     main.cpp \
 
-FORMS   += Test_RGB_Matrix_mainbox.ui
+FORMS   += test_RGB_Matrix_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

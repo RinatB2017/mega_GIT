@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_wwWidgets_mainbox \
-    $$PWD/src/Test_wwWidgets_mainbox/ui
+    $$PWD/src/test_wwWidgets_mainbox \
+    $$PWD/src/test_wwWidgets_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 
@@ -47,16 +47,16 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_wwWidgets_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_wwWidgets_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_wwWidgets_mainbox.cpp \
+    test_wwWidgets_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_wwWidgets_mainbox.ui
-#FORMS   += Test_wwWidgets_mainbox_test.ui
+FORMS   += test_wwWidgets_mainbox.ui
+#FORMS   += test_wwWidgets_mainbox_test.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

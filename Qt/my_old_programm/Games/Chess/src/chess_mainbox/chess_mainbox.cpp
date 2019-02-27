@@ -18,18 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QToolButton>
-#include <QLineEdit>
-#include <QPainter>
-#include <QToolBar>
-#include <QPicture>
-#include <QWidget>
-#include <QPixmap>
-#include <QLabel>
-#include <QProcess>
-//--------------------------------------------------------------------------------
 #include "ui_chess_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"

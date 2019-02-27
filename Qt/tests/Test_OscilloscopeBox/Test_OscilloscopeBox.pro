@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_OscilloscopeBox_mainbox \
-    $$PWD/src/Test_OscilloscopeBox_mainbox/ui
+    $$PWD/src/test_OscilloscopeBox_mainbox \
+    $$PWD/src/test_OscilloscopeBox_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += SAVE_WIDGETS_PROPERTIES
@@ -21,15 +21,15 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    test_OscilloscopeBox_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_OscilloscopeBox_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_OscilloscopeBox_mainbox.cpp \
+    test_OscilloscopeBox_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_OscilloscopeBox_mainbox.ui
+FORMS   += test_OscilloscopeBox_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

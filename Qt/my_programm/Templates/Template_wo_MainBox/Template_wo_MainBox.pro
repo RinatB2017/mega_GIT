@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/newmainwindow
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #QT  += serialbus
 
 #DEFINES += LOGO_GL

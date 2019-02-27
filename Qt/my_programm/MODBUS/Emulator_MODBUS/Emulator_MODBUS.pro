@@ -16,7 +16,6 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport network
-#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
@@ -29,9 +28,9 @@ DEFINES += USE_CRC16
 DEFINES += TEST
 
 HEADERS += \
+    emulator_modbus_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    emulator_modbus_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     emulator_modbus_mainbox.cpp \

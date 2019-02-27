@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/rs232_5_bridge_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 DEFINES += RS232_LOG
@@ -25,9 +23,9 @@ DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
 
 HEADERS += \
+    rs232_5_bridge_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    rs232_5_bridge_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     rs232_5_bridge_mainbox.cpp \

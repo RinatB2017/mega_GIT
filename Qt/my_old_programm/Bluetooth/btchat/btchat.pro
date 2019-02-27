@@ -1,5 +1,6 @@
-TEMPLATE = app
-TARGET = btchat
+
+TEMPLATE    = app
+TARGET      = btchat
 
 DEPENDPATH  += \
     $$PWD/src \

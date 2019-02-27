@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_game_15_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -266,7 +260,7 @@ void MainBox::move_left(QObject *obj)
 
     obj->setProperty("property_x", x / bone_width);
     obj->setProperty("property_y", y / bone_height);
-    QWidget *bone = (QWidget *)obj;
+    QWidget *bone = reinterpret_cast<QWidget *>(obj);
     bone->move(x, y);
     bone_move(property_id, x / bone_width, y / bone_height);
 
@@ -285,7 +279,7 @@ void MainBox::move_right(QObject *obj)
 
     obj->setProperty("property_x", x / bone_width);
     obj->setProperty("property_y", y / bone_height);
-    QWidget *bone = (QWidget *)obj;
+    QWidget *bone = reinterpret_cast<QWidget *>(obj);
     bone->move(x, y);
     bone_move(property_id, x / bone_width, y / bone_height);
 
@@ -304,7 +298,7 @@ void MainBox::move_top(QObject *obj)
 
     obj->setProperty("property_x", x / bone_width);
     obj->setProperty("property_y", y / bone_height);
-    QWidget *bone = (QWidget *)obj;
+    QWidget *bone = reinterpret_cast<QWidget *>(obj);
     bone->move(x, y);
     bone_move(property_id, x / bone_width, y / bone_height);
 
@@ -323,7 +317,7 @@ void MainBox::move_bottom(QObject *obj)
 
     obj->setProperty("property_x", x / bone_width);
     obj->setProperty("property_y", y / bone_height);
-    QWidget *bone = (QWidget *)obj;
+    QWidget *bone = reinterpret_cast<QWidget *>(obj);
     bone->move(x, y);
     bone_move(property_id, x / bone_width, y / bone_height);
 

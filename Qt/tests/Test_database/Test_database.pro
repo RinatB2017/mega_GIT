@@ -10,11 +10,9 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_database_mainbox \
-    $$PWD/src/Test_database_mainbox/ui
+    $$PWD/src/test_database_mainbox \
+    $$PWD/src/test_database_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -24,15 +22,15 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += SAVE_WIDGETS_COMBOBOX
 
 HEADERS += \
+    test_database_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_database_mainbox.hpp
 
 SOURCES += \
-    Test_database_mainbox.cpp \
+    test_database_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_database_mainbox.ui
+FORMS   += test_database_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

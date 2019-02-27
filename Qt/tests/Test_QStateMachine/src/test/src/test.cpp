@@ -30,7 +30,7 @@
 #define private public
 
 #include "mainwindow.hpp"
-#include "Test_QStateMachine_mainbox.hpp"
+#include "test_QStateMachine_mainbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {

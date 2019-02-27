@@ -21,8 +21,11 @@
 #ifndef CHESSBOARD_HPP
 #define CHESSBOARD_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QFrame>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "mywidget.hpp"

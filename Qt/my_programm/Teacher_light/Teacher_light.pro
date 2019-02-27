@@ -12,8 +12,6 @@ DEPENDPATH  += \
     $$PWD/src/teacher_light_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
@@ -36,9 +34,9 @@ DEFINES += NO_RESIZE
 DEFINES += USE_DOCKS
 
 HEADERS += \
+    teacher_light_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    teacher_light_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     teacher_light_mainbox.cpp \

@@ -9,11 +9,9 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_digits_mainbox \
-    $$PWD/src/Test_digits_mainbox/ui
+    $$PWD/src/test_digits_mainbox \
+    $$PWD/src/test_digits_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -21,15 +19,15 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_LOG
 
 HEADERS += \
+    test_digits_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_digits_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_digits_mainbox.cpp \
+    test_digits_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_digits_mainbox.ui
+FORMS   += test_digits_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -37,7 +35,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

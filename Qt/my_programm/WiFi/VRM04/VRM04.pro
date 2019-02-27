@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/VRM04_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -26,9 +24,9 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
+    VRM04_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    VRM04_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     VRM04_mainbox.cpp \
@@ -40,7 +38,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

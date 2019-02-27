@@ -9,11 +9,9 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_arduino_modbus_mainbox \
-    $$PWD/src/Test_arduino_modbus_mainbox/ui
+    $$PWD/src/test_arduino_modbus_mainbox \
+    $$PWD/src/test_arduino_modbus_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += RS232_FIXED_SIZE
 DEFINES += RS232_SEND
@@ -26,21 +24,21 @@ DEFINES += PROGRAMM_IN_UTF8
 #DEFINES += NO_LOG
 
 HEADERS += \
+    test_arduino_modbus_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_arduino_modbus_mainbox.hpp
 
 SOURCES += \
-    Test_arduino_modbus_mainbox.cpp \
+    test_arduino_modbus_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_arduino_modbus_mainbox.ui
+FORMS   += test_arduino_modbus_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH  = "../../../Qt/lib"
 LIB_PATH2 = "../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

@@ -12,8 +12,6 @@ DEPENDPATH  += \
     $$PWD/src/labyrinth_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
@@ -22,9 +20,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 HEADERS += \
+    labyrinth_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    labyrinth_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     labyrinth_mainbox.cpp \
@@ -42,7 +40,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../lib"
+LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)

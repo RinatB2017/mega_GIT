@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/rs232_5_echo_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 DEFINES += RS232_LOG

@@ -21,12 +21,6 @@
 #include <QSvgRenderer>
 #include <QSvgGenerator>
 //--------------------------------------------------------------------------------
-#include <QPushButton>
-#include <QToolButton>
-#include <QToolBar>
-#include <QComboBox>
-#include <QPainter>
-//--------------------------------------------------------------------------------
 #include "ui_cards_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -186,7 +180,6 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-int cnt = 0;
 void MainBox::show_node(QDomNode node, QString space)
 {
     if(node.isNull())   return;

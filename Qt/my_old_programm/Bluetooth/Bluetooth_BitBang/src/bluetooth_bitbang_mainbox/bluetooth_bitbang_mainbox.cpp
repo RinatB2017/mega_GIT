@@ -18,17 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QMessageBox>
-#include <QTime>
-
-#include <QAction>
-#include <QMenu>
-
-#include <QToolButton>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_bluetooth_bitbang_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -45,8 +34,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
-    ui(new Ui::MainBox),
-    serialBox(0)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -132,7 +120,7 @@ void MainBox::read_modbus(void)
         return;
     }
 
-    CMD_0x01_QUESTION *question = (CMD_0x01_QUESTION *)packet.data();
+    CMD_0x01_QUESTION *question = reinterpret_cast<CMD_0x01_QUESTION *>(packet.data());
 #if 1
     emit trace(QString("address %1").arg(question->body.header.address));
     emit trace(QString("cmd %1").arg(question->body.header.cmd));
@@ -176,7 +164,7 @@ void MainBox::send_answer_data(void)
     answer.body.crc8 = 0;
 
     ba.clear();
-    ba.append((char *)answer.buf, sizeof(CMD_0x01_ANSWER));
+    ba.append(reinterpret_cast<char *>(answer.buf), sizeof(CMD_0x01_ANSWER));
 
     QByteArray output;
 

@@ -9,12 +9,10 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_thread_mainbox \
-    $$PWD/src/Test_thread_mainbox/ui \
+    $$PWD/src/test_thread_mainbox \
+    $$PWD/src/test_thread_mainbox/ui \
     $$PWD/src/worker
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -22,17 +20,17 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_LOG
 
 HEADERS += \
+    test_thread_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_thread_mainbox.hpp \
     mythread.hpp
 
 SOURCES += \
-    Test_thread_mainbox.cpp \
+    test_thread_mainbox.cpp \
     main.cpp \
     mythread.cpp
 
-FORMS   += Test_thread_mainbox.ui
+FORMS   += test_thread_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/tester
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
-
 QT += testlib network webkit webkitwidgets
 
 DEFINES += NO_STYLETOOLBAR
@@ -22,9 +20,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    proxy_walker_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    proxy_walker_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     proxy_walker_mainbox.cpp \
@@ -36,7 +34,7 @@ win32 {
     RC_FILE = ico/myapp.rc
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)

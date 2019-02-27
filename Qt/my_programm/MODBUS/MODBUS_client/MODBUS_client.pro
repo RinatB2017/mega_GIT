@@ -13,7 +13,6 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += serialport network
-#QMAKE_CXXFLAGS += -fno-show-column
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE

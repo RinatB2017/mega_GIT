@@ -25,7 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "Test_Box2D_mainbox.hpp"
+#include "test_Box2D_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

@@ -30,7 +30,7 @@
 //--------------------------------------------------------------------------------
 #include "histogrambox.hpp"
 #include "mainwindow.hpp"
-#include "Test_HistogramBox_mainbox.hpp"
+#include "test_HistogramBox_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

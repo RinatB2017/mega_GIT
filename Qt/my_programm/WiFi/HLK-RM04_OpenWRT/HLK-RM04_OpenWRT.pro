@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/HLK-RM04_OpenWRT_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
-
 QT      += serialport
 
 DEFINES += NO_STYLETOOLBAR
@@ -22,9 +20,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    HLK-RM04_OpenWRT_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    HLK-RM04_OpenWRT_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     HLK-RM04_OpenWRT_mainbox.cpp \

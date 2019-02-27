@@ -30,7 +30,7 @@
 #define private public
 
 #include "mainwindow.hpp"
-#include "Test_Game_mainbox.hpp"
+#include "test_Game_mainbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {

@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_model_mainbox \
-    $$PWD/src/Test_model_mainbox/ui
+    $$PWD/src/test_model_mainbox \
+    $$PWD/src/test_model_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += LOGO_GL
@@ -42,15 +42,15 @@ DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    Test_model_mainbox.hpp \
+    test_model_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    Test_model_mainbox.cpp \
+    test_model_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_model_mainbox.ui
+FORMS   += test_model_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

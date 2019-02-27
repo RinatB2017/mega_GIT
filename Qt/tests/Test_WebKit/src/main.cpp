@@ -25,7 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "Test_WebKit_mainbox.hpp"
+#include "test_WebKit_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

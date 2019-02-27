@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_Game_mainbox \
-    $$PWD/src/Test_Game_mainbox/ui
+    $$PWD/src/test_Game_mainbox \
+    $$PWD/src/test_Game_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 #QT  += serialbus
@@ -45,16 +45,16 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_Game_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_Game_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_Game_mainbox.cpp \
+    test_Game_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_Game_mainbox.ui
-#FORMS   += Test_Game_mainbox_test.ui
+FORMS   += test_Game_mainbox.ui
+#FORMS   += test_Game_mainbox_test.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

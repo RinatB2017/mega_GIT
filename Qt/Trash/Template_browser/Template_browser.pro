@@ -13,7 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/template_browser_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-#QMAKE_CXXFLAGS += -fno-show-column
 QT += webkit webkitwidgets network
 
 DEFINES += NO_STYLETOOLBAR
@@ -25,10 +24,10 @@ DEFINES += BLOCK_WHEEL
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    template_browser_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    posix.hpp \
-    template_browser_mainbox.hpp
+    posix.hpp
 
 SOURCES += \
     template_browser_mainbox.cpp \

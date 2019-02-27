@@ -10,13 +10,11 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_QtCharts_mainbox \
-    $$PWD/src/Test_QtCharts_mainbox/ui
+    $$PWD/src/test_QtCharts_mainbox \
+    $$PWD/src/test_QtCharts_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += charts
-
-
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -46,15 +44,15 @@ DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_QtCharts_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_QtCharts_mainbox.hpp
 
 SOURCES += \
-    Test_QtCharts_mainbox.cpp \
+    test_QtCharts_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_QtCharts_mainbox.ui
+FORMS   += test_QtCharts_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

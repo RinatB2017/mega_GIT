@@ -9,11 +9,9 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_HLK_RM04_mainbox \
-    $$PWD/src/Test_HLK_RM04_mainbox/ui
+    $$PWD/src/test_HLK_RM04_mainbox \
+    $$PWD/src/test_HLK_RM04_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-#QMAKE_CXXFLAGS += -fno-show-column
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -25,15 +23,15 @@ DEFINES += NO_LOG
 QT      += serialport
 
 HEADERS += \
+    test_HLK_RM04_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_HLK_RM04_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_HLK_RM04_mainbox.cpp \
+    test_HLK_RM04_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_HLK_RM04_mainbox.ui
+FORMS   += test_HLK_RM04_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -41,7 +39,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)

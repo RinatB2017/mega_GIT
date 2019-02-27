@@ -30,7 +30,7 @@
 #define private public
 
 #include "mainwindow.hpp"
-#include "Test_wwWidgets_mainbox.hpp"
+#include "test_wwWidgets_mainbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {

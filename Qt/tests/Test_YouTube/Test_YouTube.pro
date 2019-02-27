@@ -13,7 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/test_youtube_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
 QT  += webenginewidgets
 
 DEFINES += PROGRAMM_IN_UTF8

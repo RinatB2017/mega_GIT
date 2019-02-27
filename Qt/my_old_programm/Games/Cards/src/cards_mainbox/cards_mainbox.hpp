@@ -21,14 +21,18 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QDomDocument>
-#include <QProcess>
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include <QDomNode>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -61,6 +65,8 @@ private:
 
     QComboBox *cb_test;
 
+    int cnt = 0;
+
     void init(void);
 
     void createTestBar(void);
@@ -70,7 +76,6 @@ private:
 
 protected:
     virtual void closeEvent(QCloseEvent *event);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

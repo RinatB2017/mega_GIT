@@ -597,7 +597,7 @@ void QXmlPut::putByteArray(const QString &tagName, const QByteArray &value, int 
 
     QString newLine = "\n";
     QByteArray sepData;
-    sepData.reserve(data.size() + (int)(data.size()/(double)blockWidth+0.5)*newLine.size());
+    sepData.reserve(data.size() + static_cast<int>(data.size()/static_cast<double>(blockWidth+0.5))*newLine.size());
     int p = 0;
     while (p < data.size())
     {

@@ -9,11 +9,9 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_HistogramBox_mainbox \
-    $$PWD/src/Test_HistogramBox_mainbox/ui
+    $$PWD/src/test_HistogramBox_mainbox \
+    $$PWD/src/test_HistogramBox_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -21,15 +19,15 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_HistogramBox_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_HistogramBox_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_HistogramBox_mainbox.cpp \
+    test_HistogramBox_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_HistogramBox_mainbox.ui
+FORMS   += test_HistogramBox_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

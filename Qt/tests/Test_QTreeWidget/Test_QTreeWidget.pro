@@ -10,26 +10,24 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_QTreeWidget_mainbox \
-    $$PWD/src/Test_QTreeWidget_mainbox/ui
+    $$PWD/src/test_QTreeWidget_mainbox \
+    $$PWD/src/test_QTreeWidget_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_QTreeWidget_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_QTreeWidget_mainbox.hpp
 
 SOURCES += \
-    Test_QTreeWidget_mainbox.cpp \
+    test_QTreeWidget_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_QTreeWidget_mainbox.ui
+FORMS   += test_QTreeWidget_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico

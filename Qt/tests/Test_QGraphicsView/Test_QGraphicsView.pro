@@ -10,12 +10,10 @@ FOLDER  = tests
 PROGRAMM_PATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_QGraphicsView_mainbox \
-    $$PWD/src/Test_QGraphicsView_mainbox/ui
+    $$PWD/src/test_QGraphicsView_mainbox \
+    $$PWD/src/test_QGraphicsView_mainbox/ui
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
-
-
 
 #QT  += serialbus
 
@@ -47,15 +45,15 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_QGraphicsView_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_QGraphicsView_mainbox.hpp
 
 SOURCES += \
-    Test_QGraphicsView_mainbox.cpp \
+    test_QGraphicsView_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_QGraphicsView_mainbox.ui
+FORMS   += test_QGraphicsView_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -72,6 +70,7 @@ CONFIG(debug, debug|release) {
 }
 
 LIB_PATH = "../../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {

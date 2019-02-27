@@ -10,26 +10,24 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_LibVLC_mainbox \
-    $$PWD/src/Test_LibVLC_mainbox/ui
+    $$PWD/src/test_LibVLC_mainbox \
+    $$PWD/src/test_LibVLC_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_LibVLC_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    Test_LibVLC_mainbox.hpp
 
 SOURCES += \
-    Test_LibVLC_mainbox.cpp \
+    test_LibVLC_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_LibVLC_mainbox.ui
+FORMS   += test_LibVLC_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

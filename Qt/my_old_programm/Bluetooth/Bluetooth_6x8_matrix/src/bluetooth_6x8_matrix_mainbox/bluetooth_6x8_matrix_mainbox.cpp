@@ -18,17 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QMessageBox>
-#include <QTime>
-
-#include <QAction>
-#include <QMenu>
-
-#include <QToolButton>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_bluetooth_6x8_matrix_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
@@ -155,7 +144,7 @@ void MainBox::read_modbus(void)
         return;
     }
 
-    CMD_0x01_QUESTION *question = (CMD_0x01_QUESTION *)packet.data();
+    CMD_0x01_QUESTION *question = reinterpret_cast<CMD_0x01_QUESTION *>(packet.data());
     emit debug(QString("address %1").arg(question->body.header.address));
     emit debug(QString("cmd %1").arg(question->body.header.cmd));
     emit debug(QString("count_data %1").arg(question->body.header.count_data));
@@ -172,7 +161,7 @@ void MainBox::read_modbus(void)
     {
         for(int x=0; x<NUM_LEDS_PER_STRIP; x++)
         {
-            buf_led[y][x]->set_color(question->body.data.led[x][y]);
+            buf_led[y][x]->set_color(static_cast<char>(question->body.data.led[x][y]));
         }
     }
 
@@ -191,7 +180,7 @@ void MainBox::send_answer_data(void)
     answer.body.crc8 = 0;
 
     ba.clear();
-    ba.append((char *)answer.buf, sizeof(CMD_0x01_ANSWER));
+    ba.append(reinterpret_cast<char *>(answer.buf), sizeof(CMD_0x01_ANSWER));
 
     QByteArray output;
 

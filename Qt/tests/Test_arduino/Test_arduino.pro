@@ -9,11 +9,9 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/Test_arduino_mainbox \
-    $$PWD/src/Test_arduino_mainbox/ui
+    $$PWD/src/test_arduino_mainbox \
+    $$PWD/src/test_arduino_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -23,15 +21,15 @@ DEFINES += SAVE_WIDGETS_PROPERTIES
 DEFINES += SAVE_WIDGETS_SLIDER
 
 HEADERS += \
+    test_arduino_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_arduino_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_arduino_mainbox.cpp \
-    main.cpp \
+    test_arduino_mainbox.cpp \
+    main.cpp
 
-FORMS   += Test_arduino_mainbox.ui
+FORMS   += test_arduino_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

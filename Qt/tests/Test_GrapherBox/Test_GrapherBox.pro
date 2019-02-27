@@ -10,8 +10,8 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_GrapherBox_mainbox \
-    $$PWD/src/Test_GrapherBox_mainbox/ui
+    $$PWD/src/test_GrapherBox_mainbox \
+    $$PWD/src/test_GrapherBox_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -25,15 +25,15 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    Test_GrapherBox_mainbox.hpp \
+    test_GrapherBox_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    Test_GrapherBox_mainbox.cpp \
+    test_GrapherBox_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_GrapherBox_mainbox.ui
+FORMS   += test_GrapherBox_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

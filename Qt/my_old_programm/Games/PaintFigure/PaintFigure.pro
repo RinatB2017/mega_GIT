@@ -11,20 +11,21 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = PaintFigure
 TEMPLATE = app
 
+SOURCES += \
+    src/main.cpp\
+    src/mainwindow.cpp \
+    src/romb.cpp \
+    src/paintscene.cpp \
+    src/figure.cpp \
+    src/triangle.cpp \
+    src/square.cpp
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    romb.cpp \
-    paintscene.cpp \
-    figure.cpp \
-    triangle.cpp \
-    square.cpp
+HEADERS  += \
+    src/mainwindow.h \
+    src/romb.h \
+    src/paintscene.h \
+    src/figure.h \
+    src/triangle.h \
+    src/square.h
 
-HEADERS  += mainwindow.h \
-    romb.h \
-    paintscene.h \
-    figure.h \
-    triangle.h \
-    square.h
-
-FORMS    += mainwindow.ui
+FORMS    += src/ui/mainwindow.ui

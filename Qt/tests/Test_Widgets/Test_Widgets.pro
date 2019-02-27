@@ -10,11 +10,9 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src \
-    $$PWD/src/Test_Widgets_mainbox \
-    $$PWD/src/Test_Widgets_mainbox/ui
+    $$PWD/src/test_Widgets_mainbox \
+    $$PWD/src/test_Widgets_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -45,15 +43,15 @@ DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_Widgets_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    Test_Widgets_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    Test_Widgets_mainbox.cpp \
+    test_Widgets_mainbox.cpp \
     main.cpp
 
-FORMS   += Test_Widgets_mainbox.ui
+FORMS   += test_Widgets_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

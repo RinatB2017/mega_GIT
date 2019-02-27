@@ -13,20 +13,20 @@
 
 #define cvCopyImage( src, dst )         cvCopy( src, dst, 0 )
 
-IplImage* image = 0;
-IplImage* dst = 0;
+IplImage* image;
+IplImage* dst;
 
 // для хранения каналов RGB
-IplImage* rgb = 0;
-IplImage* r_plane = 0;
-IplImage* g_plane = 0;
-IplImage* b_plane = 0;
+IplImage* rgb;
+IplImage* r_plane;
+IplImage* g_plane;
+IplImage* b_plane;
 // для хранения каналов RGB после преобразования
-IplImage* r_range = 0;
-IplImage* g_range = 0;
-IplImage* b_range = 0;
+IplImage* r_range;
+IplImage* g_range;
+IplImage* b_range;
 // для хранения суммарной картинки
-IplImage* rgb_and = 0;
+IplImage* rgb_and;
 
 int Rmin = 0;
 int Rmax = 256;
@@ -76,12 +76,12 @@ int main(int argc, char* argv[])
 {
 	// имя картинки задаётся первым параметром
     //const char* filename = argc == 2 ? argv[1] : "Image0.jpg";
-    const char* filename = argc == 2 ? argv[1] : "scg1.jpg";
+    const char* filename = argc == 2 ? argv[1] : "images/scg1.jpg";
     // получаем картинку
 	image = cvLoadImage(filename,1);
 
 	printf("[i] image: %s\n", filename);
-	assert( image != 0 );
+    assert( image != nullptr );
 
 	// создаём картинки
 	rgb = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 3 );
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 	//  копируем
 	cvCopyImage(image, rgb);
 	// разбиваем на отельные каналы
-	cvSplit( rgb, b_plane, g_plane, r_plane, 0 );
+    cvSplit( rgb, b_plane, g_plane, r_plane, nullptr );
 
 	//
 	// определяем минимальное и максимальное значение
@@ -170,7 +170,7 @@ int main(int argc, char* argv[])
 		// показываем результат
 		cvShowImage( "rgb and", rgb_and );
 
-		char c = cvWaitKey(33);
+        char c = static_cast<char>(cvWaitKey(33));
 		if (c == 27) { // если нажата ESC - выходим
 			break;
 		}

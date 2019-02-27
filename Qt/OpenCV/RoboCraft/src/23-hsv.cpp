@@ -78,7 +78,7 @@ void myTrackbarVmax(int pos)
 	cvInRangeS(v_plane, cvScalar(Vmin), cvScalar(Vmax), v_range);
 }
 
-int main(int argc, char* argv[])
+int main(void)
 {
 	// имя картинки задаётся первым параметром
     const char* filename = "images/scg1.jpg";
@@ -86,21 +86,21 @@ int main(int argc, char* argv[])
 	image = cvLoadImage(filename,1);
 
 	printf("[i] image: %s\n", filename);
-	assert( image != 0 );
+    assert( image != nullptr );
 
 	// создаём картинки
-	hsv = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 3 );
-	h_plane = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 1 );
-	s_plane = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 1 );
-	v_plane = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 1 );
-	h_range = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 1 );
-	s_range = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 1 );
-	v_range = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 1 );
-	hsv_and = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 1 );
+    hsv = cvCreateImage( cvGetSize(image),      IPL_DEPTH_8U, 3 );
+    h_plane = cvCreateImage( cvGetSize(image),  IPL_DEPTH_8U, 1 );
+    s_plane = cvCreateImage( cvGetSize(image),  IPL_DEPTH_8U, 1 );
+    v_plane = cvCreateImage( cvGetSize(image),  IPL_DEPTH_8U, 1 );
+    h_range = cvCreateImage( cvGetSize(image),  IPL_DEPTH_8U, 1 );
+    s_range = cvCreateImage( cvGetSize(image),  IPL_DEPTH_8U, 1 );
+    v_range = cvCreateImage( cvGetSize(image),  IPL_DEPTH_8U, 1 );
+    hsv_and = cvCreateImage( cvGetSize(image),  IPL_DEPTH_8U, 1 );
 	//  конвертируем в HSV 
 	cvCvtColor( image, hsv, CV_BGR2HSV ); 
 	// разбиваем на отельные каналы
-	cvCvtPixToPlane( hsv, h_plane, s_plane, v_plane, 0 );
+    cvCvtPixToPlane( hsv, h_plane, s_plane, v_plane, nullptr );
 
 	//
 	// определяем минимальное и максимальное значение
@@ -110,16 +110,16 @@ int main(int argc, char* argv[])
 
 	cvMinMaxLoc(h_plane, &framemin, &framemax);
 	printf("[H] %f x %f\n", framemin, framemax );
-	Hmin = framemin;
-	Hmax = framemax;
+    Hmin = static_cast<int>(framemin);
+    Hmax = static_cast<int>(framemax);
 	cvMinMaxLoc(s_plane, &framemin, &framemax);
 	printf("[S] %f x %f\n", framemin, framemax );
-	Smin = framemin;
-	Smax = framemax;
+    Smin = static_cast<int>(framemin);
+    Smax = static_cast<int>(framemax);
 	cvMinMaxLoc(v_plane, &framemin, &framemax);
 	printf("[V] %f x %f\n", framemin, framemax );
-	Vmin = framemin;
-	Vmax = framemax;
+    Vmin = static_cast<int>(framemin);
+    Vmax = static_cast<int>(framemax);
 
 	// окна для отображения картинки
 	cvNamedWindow("original",CV_WINDOW_AUTOSIZE);
@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
 
 		cvShowImage( "hsv and", hsv_and );
 
-		char c = cvWaitKey(33);
+        char c = static_cast<char>(cvWaitKey(33));
         if (c == 27) // если нажата ESC - выходим
         {
 			break;

@@ -8,7 +8,7 @@ using std::endl;
 
 //IplImage* image = 0;
 
-int main(int argc, char **argv)
+int main(void)
 {
     char mainWindow[] = "Main";
     char trackbarWindow[] = "Trackbar";

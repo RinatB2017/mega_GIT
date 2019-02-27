@@ -13,22 +13,20 @@
 
 #define cvCvtPixToPlane cvSplit
 
-IplImage* image = 0;
-
+IplImage* image;
 // для хранения каналов HSV
-IplImage* hsv = 0;
-
-IplImage *frame = 0;
+IplImage* hsv;
+IplImage *frame;
 
 int main(void)
 {
     // имя картинки задаётся первым параметром
-    const char* filename = "scg1.jpg";
+    const char* filename = "images/scg1.jpg";
     // получаем картинку
     image = cvLoadImage(filename,1);
 
     printf("[i] image: %s\n", filename);
-    assert( image != 0 );
+    assert( image != nullptr );
 
     // создаём картинки
     hsv = cvCreateImage( cvGetSize(image), IPL_DEPTH_8U, 3 );

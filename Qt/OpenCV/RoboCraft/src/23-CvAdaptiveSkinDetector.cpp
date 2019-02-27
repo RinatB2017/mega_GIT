@@ -13,15 +13,15 @@
 
 int main(int argc, char* argv[])
 {
-	IplImage* image=0, *dst=0, *mask=0;
+    IplImage* image, *dst, *mask;
 
 	// имя картинки задаётся первым параметром
-    const char* filename = argc >= 2 ? argv[1] : "Image0.jpg";
+    const char* filename = argc >= 2 ? argv[1] : "images/Image0.jpg";
 	// получаем картинку
 	image = cvLoadImage(filename, 1);
 
 	printf("[i] image: %s\n", filename);
-	assert( image != 0 );
+    assert( image != nullptr );
 
 	// покажем изображение
 	cvNamedWindow( "original");

@@ -13,11 +13,11 @@ CONFIG      += link_pkgconfig
 
 LIBS        += -lOpenCL
 
-#SOURCES += src/test.cpp
+SOURCES += src/test.cpp
 #SOURCES += src/test2.cpp
 #SOURCES += src/22-rgb.cpp
 #SOURCES += src/23-CvAdaptiveSkinDetector.cpp
-SOURCES += src/23-hsv.cpp
+#SOURCES += src/23-hsv.cpp
 
 #LIBS        += -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_contrib
 #SOURCES += src/23-CvAdaptiveSkinDetector.cpp

@@ -18,18 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QProcess>
-#include <QToolBar>
-#include <QScreen>
-#include <QDebug>
-//--------------------------------------------------------------------------------
 #include "ui_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -75,8 +63,8 @@ QToolButton *MainBox::add_button(QToolBar *tool_bar,
                                  const QString &text,
                                  const QString &tool_tip)
 {
-    if(!tool_bar) return NULL;
-    if(!tool_button) return NULL;
+    if(!tool_bar)       return nullptr;
+    if(!tool_button)    return nullptr;
 
     tool_button->setIcon(icon);
     tool_button->setText(text);
@@ -96,11 +84,11 @@ void MainBox::createTestBar(void)
     }
 
     commands.clear();
-    commands.append({ 1000, "run_kmines", &MainBox::run_kmines });
-    commands.append({ 1001, "find_circles", &MainBox::find_circles });
-    commands.append({ 1002, "find_rectangles", &MainBox::find_rectangles });
-    commands.append({ 1003, "find_contours", &MainBox::find_contours });
-    commands.append({ 1004, "compare_pic", &MainBox::compare_pic });
+    commands.append({ 1000, "run_kmines",       &MainBox::run_kmines });
+    commands.append({ 1001, "find_circles",     &MainBox::find_circles });
+    commands.append({ 1002, "find_rectangles",  &MainBox::find_rectangles });
+    commands.append({ 1003, "find_contours",    &MainBox::find_contours });
+    commands.append({ 1004, "compare_pic",      &MainBox::compare_pic });
 
     commands.append({ 2001, "test 0", &MainBox::test_0 });
     commands.append({ 2002, "test 1", &MainBox::test_1 });
@@ -108,7 +96,7 @@ void MainBox::createTestBar(void)
     commands.append({ 2004, "test 3", &MainBox::test_3 });
     commands.append({ 2005, "test 4", &MainBox::test_4 });
     commands.append({ 2006, "test 5", &MainBox::test_5 });
-    commands.append({ 2007, "test 6", 0 });
+    commands.append({ 2007, "test 6", nullptr });
 
     QToolBar *toolBar = new QToolBar(tr("testbar"));
     toolBar->setObjectName("testbar");
@@ -251,7 +239,7 @@ bool MainBox::find_circles(void)
 
     // хранилище памяти для контуров
     CvMemStorage* storage = cvCreateMemStorage(0);
-    CvSeq* contours=0;
+    CvSeq* contours;
 
     // находим контуры
     int contoursCount = cvFindContours( image,
@@ -262,12 +250,12 @@ bool MainBox::find_circles(void)
                                         CV_CHAIN_APPROX_SIMPLE,
                                         cvPoint(0,0));
 
-    assert(contours!=0);
+    assert(contours != nullptr);
 
     emit info(QString("contoursCont %1").arg(contoursCount));
 
     // обходим все контуры
-    for( CvSeq* current = contours; current != NULL; current = current->h_next )
+    for( CvSeq* current = contours; current != nullptr; current = current->h_next )
     {
         double area = fabs(cvContourArea(current));
         double perim = cvContourPerimeter(current);
@@ -344,7 +332,7 @@ QImage *MainBox::IplImageToQImage(const IplImage *iplImage,
                                   double mini,
                                   double maxi)
 {
-    uchar *qImageBuffer = NULL;
+    uchar *qImageBuffer = nullptr;
     int width = iplImage->width;
 
     // Note here that OpenCV image is stored so that each lined is
@@ -612,7 +600,7 @@ bool MainBox::find_rectangles(void)
 
     // хранилище памяти для контуров
     CvMemStorage* storage = cvCreateMemStorage(0);
-    CvSeq* contours=0;
+    CvSeq* contours;
 
     // находим контуры
     int contoursCount = cvFindContours( image,
@@ -621,9 +609,9 @@ bool MainBox::find_rectangles(void)
                                         sizeof(CvContour),
                                         CV_RETR_LIST,
                                         CV_CHAIN_APPROX_SIMPLE,
-                                        cvPoint(0,0));
+                                        cvPoint(0,0) );
 
-    assert(contours!=0);
+    assert(contours != nullptr);
 
     emit info(QString("contoursCount %1").arg(contoursCount));
 
@@ -763,7 +751,7 @@ bool MainBox::find_contours(void)
 
     // хранилище памяти для контуров
     CvMemStorage* storage = cvCreateMemStorage(0);
-    CvSeq* contours=0;
+    CvSeq* contours;
 
     // находим контуры
     int contoursCount = cvFindContours( image,
@@ -774,7 +762,7 @@ bool MainBox::find_contours(void)
                                         CV_CHAIN_APPROX_SIMPLE,
                                         cvPoint(0,0));
 
-    if(contours == 0)
+    if(contours == nullptr)
     {
         messagebox_critical("Error", "contours == 0");
         return false;
@@ -848,9 +836,9 @@ bool MainBox::analize(QPixmap *pixmap,
 //--------------------------------------------------------------------------------
 bool MainBox::compare_pic(void)
 {
-    IplImage *src = 0;
-    IplImage *templ = 0;
-    IplImage *ftmp = 0;
+    IplImage *src;
+    IplImage *templ;
+    IplImage *ftmp;
 
     //---
     src = cvLoadImage("images/1.png", CV_LOAD_IMAGE_COLOR);
@@ -1093,7 +1081,11 @@ void MainBox::get_color(QRgb rgb,
 
 }
 //--------------------------------------------------------------------------------
-bool MainBox::find_window(const QString programm_title, int *x, int *y, int *width, int *heigth)
+bool MainBox::find_window(const QString programm_title,
+                          int *x,
+                          int *y,
+                          int *width,
+                          int *heigth)
 {
     Display* display = XOpenDisplay( nullptr );
     if( display == nullptr )

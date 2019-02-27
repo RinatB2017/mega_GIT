@@ -3,10 +3,10 @@
 // сравнение изображение с шаблоном
 //
 
-#include <cv.h>
 #include <highgui.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <cv.h>
 
 #include <QDebug>
 
@@ -19,10 +19,10 @@ void test_0(void)
     image = cvLoadImage("images/1.png", CV_LOAD_IMAGE_COLOR);
     templ = cvLoadImage("images/2.png", CV_LOAD_IMAGE_COLOR);
 
-    cvNamedWindow("origianl", CV_WINDOW_AUTOSIZE);
-    cvNamedWindow("template", CV_WINDOW_AUTOSIZE);
-    cvNamedWindow("Match", CV_WINDOW_AUTOSIZE);
-    cvNamedWindow("res", CV_WINDOW_AUTOSIZE);
+    cvNamedWindow("origianl",   CV_WINDOW_AUTOSIZE);
+    cvNamedWindow("template",   CV_WINDOW_AUTOSIZE);
+    cvNamedWindow("Match",      CV_WINDOW_AUTOSIZE);
+    cvNamedWindow("res",        CV_WINDOW_AUTOSIZE);
 
     // размер шаблона
     //int width = templ->width;

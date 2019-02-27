@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -32,7 +36,7 @@
 #include </usr/include/opencv2/opencv.hpp>
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -74,10 +78,10 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
-    QComboBox *cb_test = 0;
+    QComboBox *cb_test;
     QList<CMD> commands;
 
     void init(void);
@@ -93,7 +97,11 @@ private:
     void mouse_click(unsigned int button, QPoint pos);
     void mouse_release(unsigned int button);
     void mouse_move_to(QPoint pos);
-    bool find_window(const QString programm_title, int *x, int *y, int *width, int *heigth);
+    bool find_window(const QString programm_title,
+                     int *x,
+                     int *y,
+                     int *width,
+                     int *heigth);
 
     int x = 0;
     int y = 0;

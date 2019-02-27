@@ -12,16 +12,14 @@ DEPENDPATH  += \
     $$PWD/src/mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QMAKE_CXXFLAGS += -fno-show-column
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    mainbox.hpp \
     defines.hpp \
     version.hpp \
-    mainbox.hpp \
     other.hpp
 
 SOURCES += \
@@ -46,7 +44,7 @@ LIBS    += -lX11 -lXtst
 PKGCONFIG   += opencv
 CONFIG      += link_pkgconfig
 
-LIB_PATH = "../lib"
+LIB_PATH = "../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

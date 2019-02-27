@@ -21,8 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QProcess>
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -105,7 +108,11 @@ private:
     void mouse_click(unsigned int button, QPoint pos);
     void mouse_release(unsigned int button);
     void mouse_move_to(QPoint pos);
-    bool find_window(const QString programm_title, int *x, int *y, int *width, int *heigth);
+    bool find_window(const QString programm_title,
+                     int *x,
+                     int *y,
+                     int *width,
+                     int *heigth);
 
     void updateText(void);
 

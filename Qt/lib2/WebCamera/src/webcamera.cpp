@@ -441,10 +441,18 @@ void WebCamera::test(void)
     vector< cv::Rect > noseVec;
     vector< cv::Rect > mouthVec;
 
-    QString filename = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File"),
-                                                    QDir::currentPath(),
-                                                    tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
+    QString filename ;
+    QFileDialog *dlg;
+
+    dlg = new QFileDialog;
+    dlg->setNameFilter("Image Files (*.png *.jpg *.jpeg *.bmp)");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(QDir::currentPath());
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        filename = files.at(0);
+    }
     if(filename.isEmpty())
     {
         return;

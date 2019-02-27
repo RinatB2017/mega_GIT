@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_mybot_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -100,9 +94,6 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QCheckBox *cb_block = new QCheckBox("block");
-    testbar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -119,9 +110,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -250,7 +238,11 @@ void MainBox::run_program(const QString program,
     ui->le_programm->setText(program_name);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::find_window(const QString programm_title, int *x, int *y, int *width, int *heigth)
+bool MainBox::find_window(const QString programm_title,
+                          int *x,
+                          int *y,
+                          int *width,
+                          int *heigth)
 {
 #ifdef Q_OS_LINUX
     Display* display = XOpenDisplay( nullptr );
@@ -436,24 +428,24 @@ bool MainBox::test_5(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_card(void)
 {
-    suits[SUIT_HEARTS]      = imread("cards/hearts.png");
-    suits[SUIT_DIAMONDS]    = imread("cards/diamonds.png");
-    suits[SUIT_SPADES]      = imread("cards/spades.png");
-    suits[SUIT_CLUBS]       = imread("cards/clubs.png");
+    suits[SUIT_HEARTS]      = imread(":/cards/hearts.png");
+    suits[SUIT_DIAMONDS]    = imread(":/cards/diamonds.png");
+    suits[SUIT_SPADES]      = imread(":/cards/spades.png");
+    suits[SUIT_CLUBS]       = imread(":/cards/clubs.png");
 
-    ranks[RANK_ACE]         = imread("cards/ace.png");
-    ranks[RANK_TWO]         = imread("cards/2.png");
-    ranks[RANK_THREE]       = imread("cards/3.png");
-    ranks[RANK_FOUR]        = imread("cards/4.png");
-    ranks[RANK_FIVE]        = imread("cards/5.png");
-    ranks[RANK_SIX]         = imread("cards/6.png");
-    ranks[RANK_SEVEN]       = imread("cards/7.png");
-    ranks[RANK_EIGHT]       = imread("cards/8.png");
-    ranks[RANK_NINE]        = imread("cards/9.png");
-    ranks[RANK_TEN]         = imread("cards/10.png");
-    ranks[RANK_JACK]        = imread("cards/jack.png");
-    ranks[RANK_QUEEN]       = imread("cards/queen.png");
-    ranks[RANK_KING]        = imread("cards/king.png");
+    ranks[RANK_ACE]         = imread(":/cards/ace.png");
+    ranks[RANK_TWO]         = imread(":/cards/2.png");
+    ranks[RANK_THREE]       = imread(":/cards/3.png");
+    ranks[RANK_FOUR]        = imread(":/cards/4.png");
+    ranks[RANK_FIVE]        = imread(":/cards/5.png");
+    ranks[RANK_SIX]         = imread(":/cards/6.png");
+    ranks[RANK_SEVEN]       = imread(":/cards/7.png");
+    ranks[RANK_EIGHT]       = imread(":/cards/8.png");
+    ranks[RANK_NINE]        = imread(":/cards/9.png");
+    ranks[RANK_TEN]         = imread(":/cards/10.png");
+    ranks[RANK_JACK]        = imread(":/cards/jack.png");
+    ranks[RANK_QUEEN]       = imread(":/cards/queen.png");
+    ranks[RANK_KING]        = imread(":/cards/king.png");
 
     ColorConversionCodes cardConvert = COLOR_BGR2GRAY;
 

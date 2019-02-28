@@ -21,6 +21,19 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include <QWebEngineCookieStore>
+#include <QWebEngineProfile>
+#include <QWebEngineSettings>
+#include <QWebEnginePage>
+#include <QWebEngineView>
+#include <QNetworkProxy>
+
 #include <QNetworkCookie>
 #include <QWidget>
 //--------------------------------------------------------------------------------

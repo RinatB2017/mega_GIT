@@ -24,7 +24,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_Test_OscilloscopeBox_mainbox.h"
+#include "ui_test_OscilloscopeBox_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "oscilloscopebox.hpp"

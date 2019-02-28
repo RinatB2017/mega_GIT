@@ -1170,6 +1170,7 @@ bool MainWindow::add_dock_widget(QString title,
 
     addDockWidget(area, dw);
     add_windowsmenu_action(dw, dw->toggleViewAction());
+    load_setting();
 
     return true;
 }

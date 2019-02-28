@@ -24,7 +24,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_Test_digits_mainbox.h"
+#include "ui_test_digits_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"

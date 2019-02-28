@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include <QRect>
 //--------------------------------------------------------------------------------
-#include "aboutbox.hpp"
 #include "ui_aboutbox.h"
 #ifdef LOGO_GL
     #include "glwidget.h"
@@ -32,6 +31,7 @@
 #   define ICON_ABOUT_QT   ":/qt-project.org/qmessagebox/images/qtlogo-64.png"
 #endif
 //--------------------------------------------------------------------------------
+#include "aboutbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG

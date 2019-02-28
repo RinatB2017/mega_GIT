@@ -79,6 +79,8 @@ private slots:
     void js_load(void);
     void js_save(void);
 
+    void refresh_url(const QUrl url);
+
     void analize(const QString data);
 
     void handleCookieAdded(const QNetworkCookie &cookie);
@@ -87,7 +89,6 @@ private slots:
 
 private:
     Ui::MainBox *ui;
-    QWidget *parent;
     enum {
         ID_TEST_0 = 1000,
         ID_TEST_1,

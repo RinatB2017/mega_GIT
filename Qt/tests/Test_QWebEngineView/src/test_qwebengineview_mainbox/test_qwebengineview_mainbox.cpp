@@ -36,8 +36,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    parent(parent)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -111,6 +110,9 @@ void MainBox::init(void)
             ui->progressBar,    SLOT(setValue(int)));
     connect(new_page,           SIGNAL(loadFinished(bool)),
             this,               SLOT(run_JS(bool)));
+    connect(new_page,           SIGNAL(urlChanged(const QUrl &)),
+            this,               SLOT(refresh_url(QUrl)));
+
     connect(ui->btn_run,        SIGNAL(clicked(bool)),
             this,               SLOT(s_run()));
     connect(ui->btn_default_js, SIGNAL(clicked(bool)),
@@ -169,6 +171,11 @@ void MainBox::init(void)
     ui->progressBar->setValue(0);
 
     load_widgets(SAVE_WIDGETS_NAME);
+}
+//--------------------------------------------------------------------------------
+void MainBox::refresh_url(const QUrl url)
+{
+    ui->le_address->setText(url.toString());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::containsCookie(const QNetworkCookie &cookie)
@@ -578,7 +585,7 @@ bool MainBox::test_0(void)
     emit info(QString("ken = %1").arg(sl->count()));
 #endif
 
-#if 0
+#if 1
     QPlainTextEdit *te = new QPlainTextEdit();
     new_page->toHtml([te](QString const &s)
     {

@@ -290,8 +290,8 @@ void MainBox::save_js(const QString &filename)
     {
         return;
     }
-    file.write(ui->te_js->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
-    //file.write(ui->te_js->toPlainText().toLocal8Bit()); //.toAscii());
+    file.write(ui->te_js->toPlainText().replace("\r\n", "\n").toLocal8Bit());
+    //file.write(ui->te_js->toPlainText().replace('\n', "\r\n").toLocal8Bit());
 
     file.close();
 }
@@ -578,7 +578,7 @@ bool MainBox::test_0(void)
     emit info(QString("ken = %1").arg(sl->count()));
 #endif
 
-#if 1
+#if 0
     QPlainTextEdit *te = new QPlainTextEdit();
     new_page->toHtml([te](QString const &s)
     {

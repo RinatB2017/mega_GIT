@@ -24,7 +24,7 @@
 #include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -58,11 +58,8 @@ private:
     WIFI_frame *wf;
 
     void init(void);
-
     void createTestBar(void);
-
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Test_HLK_RM04
 
-FOLDER  = old_programm
+FOLDER  = WiFi
 
 DEPENDPATH  += \
     $$PWD/src \

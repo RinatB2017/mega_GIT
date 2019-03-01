@@ -201,15 +201,6 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
-    //QString text;
-    QString text = "1";
-    //QString text = "1 2 3 4 5 6 7 8 9 10";
-
-    QStringList sl = text.split(" ");
-    emit info(QString("cnt %1").arg(sl.count()));
-#endif
-
 #if 0
     HEADER header;
     header.address  = 0xF0;

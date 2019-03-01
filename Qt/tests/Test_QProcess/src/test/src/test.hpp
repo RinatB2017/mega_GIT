@@ -18,69 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-
-class QCheckBox;
-class QLineEdit;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    Test();
 
 private slots:
-    void run(void);
-
-    void procfunc(void);
-    void read_data(void);
-    void read_error(void);
-
-    void started(void);
-    void finished(int result);
-
-    void process_error(QProcess::ProcessError p_error);
-
-    void choice_script(void);
-    void auto_run(bool state);
-
+    void test_GUI(void);
+    void test_func(void);
+    
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    void init(void);
-
-    QCheckBox *cb_auto_run;
-    QToolButton *btn_script;
-    QLineEdit *le_script_filename;
-    QToolButton *btn_run;
-    QProcess *process;
-
-    void createRunBar(void);
-    void createScriptBar(void);
-
-    void updateText(void);
+    MainWindow *mw;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

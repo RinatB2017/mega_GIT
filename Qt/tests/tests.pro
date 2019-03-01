@@ -33,6 +33,7 @@ SUBDIRS += \
     Test_QCustomPlot \
     Test_QGraphicsScene \
     Test_QListWidget \
+    Test_QProcess \
     Test_QsLog \
     Test_RGB_display \
     Test_RGB_Matrix \

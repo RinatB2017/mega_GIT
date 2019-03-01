@@ -1,5 +1,5 @@
-#ifndef _DEFINES_H
-#define _DEFINES_H
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "MTC"

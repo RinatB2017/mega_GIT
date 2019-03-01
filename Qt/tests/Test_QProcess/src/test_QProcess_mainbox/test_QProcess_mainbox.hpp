@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -37,9 +37,7 @@ class MySplashScreen;
 class QToolButton;
 class QToolBar;
 class QComboBox;
-
 class QCheckBox;
-class QLineEdit;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -51,34 +49,56 @@ public:
     ~MainBox();
 
 private slots:
-    void run(void);
+    void choice_test(void);
+    bool test_0(void);
+    bool test_1(void);
+    bool test_2(void);
+    bool test_3(void);
+    bool test_4(void);
+    bool test_5(void);
 
-    void procfunc(void);
+    void run_sh(void);
+    void run_gcc(void);
+    void run_kate(void);
+    void run_command(void);
+
     void read_data(void);
     void read_error(void);
 
     void started(void);
-    void finished(int result);
+    void finished(int result, QProcess::ExitStatus exitStatus);
 
     void process_error(QProcess::ProcessError p_error);
 
-    void choice_script(void);
-    void auto_run(bool state);
-
 private:
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+
     MySplashScreen *splash;
     Ui::MainBox *ui;
 
-    void init(void);
+    QComboBox *cb_test;
+    QList<CMD> commands;
 
-    QCheckBox *cb_auto_run;
-    QToolButton *btn_script;
-    QLineEdit *le_script_filename;
-    QToolButton *btn_run;
     QProcess *process;
 
-    void createRunBar(void);
-    void createScriptBar(void);
+    void init(void);
+    void createTestBar(void);
+
+    void prepare_QProcess(void);
 
     void updateText(void);
 };

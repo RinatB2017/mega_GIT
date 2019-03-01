@@ -37,6 +37,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -46,6 +47,13 @@ void MainBox::init(void)
 
     createRunBar();
     createScriptBar();
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    if(mw)
+    {
+        mw->load_setting();
+    }
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createRunBar(void)
@@ -121,7 +129,7 @@ void MainBox::auto_run(bool state)
 //--------------------------------------------------------------------------------
 void MainBox::run(void)
 {
-    if(proccess)
+    if(process)
     {
         emit error(tr("Процесс уже запущен!"));
         return;
@@ -136,37 +144,37 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 void MainBox::procfunc(void)
 {
-    proccess = new QProcess();
-    proccess->setProcessChannelMode(QProcess::SeparateChannels);
-    //proccess->setReadChannel(QProcess::StandardOutput);
+    process = new QProcess();
+    process->setProcessChannelMode(QProcess::SeparateChannels);
+    //process->setReadChannel(QProcess::StandardOutput);
 
-    connect(proccess, SIGNAL(started()),                 this, SLOT(started()));
-    connect(proccess, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
-    connect(proccess, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
-    connect(proccess, SIGNAL(finished(int)),             this, SLOT(finished(int)));
-    connect(proccess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
+    connect(process, SIGNAL(started()),                 this, SLOT(started()));
+    connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
+    connect(process, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
+    connect(process, SIGNAL(finished(int)),             this, SLOT(finished(int)));
+    connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
 
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
     QString fullPath = env.value("PATH")+ ":/home/boss/bin";
     env.insert("PATH", fullPath);
-    proccess->setProcessEnvironment(env);
+    process->setProcessEnvironment(env);
 
     if(le_script_filename->text().isEmpty() == false)
     {
-        proccess->start("sh", QStringList() << le_script_filename->text());
+        process->start("sh", QStringList() << le_script_filename->text());
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(void)
 {
-    QByteArray data = proccess->readAllStandardOutput();
+    QByteArray data = process->readAllStandardOutput();
     emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_error(void)
 {
-    QByteArray data = proccess->readAllStandardError();
+    QByteArray data = process->readAllStandardError();
     emit error(data);
 }
 //--------------------------------------------------------------------------------
@@ -183,7 +191,7 @@ void MainBox::finished(int result)
         emit error(QString(tr("code %1")).arg(result));
     }
 
-    delete proccess;
+    delete process;
 }
 //--------------------------------------------------------------------------------
 void MainBox::process_error(QProcess::ProcessError p_error)

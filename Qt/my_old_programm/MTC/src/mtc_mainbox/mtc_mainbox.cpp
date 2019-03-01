@@ -18,16 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QTime>
-
-#include <QAction>
-#include <QMenu>
-
-#include <QToolButton>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_mtc_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"

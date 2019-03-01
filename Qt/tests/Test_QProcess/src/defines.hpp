@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#define ORGNAME "Work"
+#define APPNAME "Test_QProcess"
+//--------------------------------------------------------------------------------
+#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
+#define QMAKE_TARGET_COMPANY    ORGNAME
+#define QMAKE_TARGET_PRODUCT    APPNAME
+#define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
+#define RC_ICONS                ":/images/computer.ico"
+//--------------------------------------------------------------------------------
+#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_FILEVERSION_STR         VER_STR
+#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_PRODUCTVERSION_STR      VER_STR
+#define VER_FILEDESCRIPTION_STR     APPNAME
+#define VER_INTERNALNAME_STR        APPNAME
+#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
+#define VER_ORIGINALFILENAME_STR    APPNAME
+#define VER_PRODUCTNAME_STR         APPNAME
+//--------------------------------------------------------------------------------
+#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+//--------------------------------------------------------------------------------
 #endif
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-
-class QCheckBox;
-class QLineEdit;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void run(void);
-
-    void procfunc(void);
-    void read_data(void);
-    void read_error(void);
-
-    void started(void);
-    void finished(int result);
-
-    void process_error(QProcess::ProcessError p_error);
-
-    void choice_script(void);
-    void auto_run(bool state);
-
-private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    void init(void);
-
-    QCheckBox *cb_auto_run;
-    QToolButton *btn_script;
-    QLineEdit *le_script_filename;
-    QToolButton *btn_run;
-    QProcess *process;
-
-    void createRunBar(void);
-    void createScriptBar(void);
-
-    void updateText(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

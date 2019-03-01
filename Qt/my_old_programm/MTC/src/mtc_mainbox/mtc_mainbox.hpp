@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -53,7 +57,6 @@ signals:
 
 private slots:
     void read_usb_modem(QByteArray ba);
-
     void test(void);
 
 private:
@@ -65,7 +68,6 @@ private:
     void createTestBar(void);
     int calc_SINR(int value);
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

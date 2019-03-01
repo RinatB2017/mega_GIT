@@ -18,69 +18,48 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include <QTest>
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#define private public
+//--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
+#include "test_QProcess_mainbox.hpp"
+#include "test.hpp"
+//--------------------------------------------------------------------------------
+Test::Test()
+{
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-
-class QCheckBox;
-class QLineEdit;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void Test::test_GUI(void)
 {
-    Q_OBJECT
+    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
+    QVERIFY(cb);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
 
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void run(void);
-
-    void procfunc(void);
-    void read_data(void);
-    void read_error(void);
-
-    void started(void);
-    void finished(int result);
-
-    void process_error(QProcess::ProcessError p_error);
-
-    void choice_script(void);
-    void auto_run(bool state);
-
-private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    void init(void);
-
-    QCheckBox *cb_auto_run;
-    QToolButton *btn_script;
-    QLineEdit *le_script_filename;
-    QToolButton *btn_run;
-    QProcess *process;
-
-    void createRunBar(void);
-    void createScriptBar(void);
-
-    void updateText(void);
-};
+    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
+    QVERIFY(tb);
+    QTest::mouseClick(tb, Qt::LeftButton);
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Test::test_func(void)
+{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
+
+    QCOMPARE(mb->test_0(), true);
+    QCOMPARE(mb->test_1(), true);
+    QCOMPARE(mb->test_2(), true);
+    QCOMPARE(mb->test_3(), true);
+    QCOMPARE(mb->test_4(), true);
+    QCOMPARE(mb->test_5(), true);
+}
+//--------------------------------------------------------------------------------

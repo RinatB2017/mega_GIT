@@ -216,7 +216,8 @@ void MainBox::run_sh(void)
     prepare_QProcess();
     if(ui->le_script_filename->text().isEmpty() == false)
     {
-        process->start("sh", QStringList() << ui->le_script_filename->text());
+        QStringList params = ui->le_script_filename->text().split(" ");
+        process->start("sh", params);
     }
 }
 //--------------------------------------------------------------------------------
@@ -225,7 +226,8 @@ void MainBox::run_gcc(void)
     prepare_QProcess();
     if(ui->le_gcc_param->text().isEmpty() == false)
     {
-        process->start("gcc", QStringList() << "-O2" << ui->le_gcc_param->text());
+        QStringList params = ui->le_gcc_param->text().split(" ");
+        process->start("gcc", params);
     }
 }
 //--------------------------------------------------------------------------------
@@ -234,7 +236,8 @@ void MainBox::run_kate(void)
     prepare_QProcess();
     if(ui->le_kate_param->text().isEmpty() == false)
     {
-        process->start("kate", QStringList() << ui->le_kate_param->text());
+        QStringList params = ui->le_kate_param->text().split(" ");
+        process->start("kate", params);
     }
 }
 //--------------------------------------------------------------------------------

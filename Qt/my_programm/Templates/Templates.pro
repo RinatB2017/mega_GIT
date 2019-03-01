@@ -11,4 +11,4 @@ SUBDIRS += \
     Template_main \
     Template_old \
     Template_RS232 \
-    Template_wo_MainBox \
+    Template_wo_MainBox

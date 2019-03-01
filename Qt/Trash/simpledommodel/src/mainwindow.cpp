@@ -38,50 +38,52 @@
 **
 ****************************************************************************/
 
-#include "domitem.h"
+#include "dommodel.h"
+#include "mainwindow.h"
 
-#include <QtXml>
+#include <QDomDocument>
+#include <QTreeView>
+#include <QMenuBar>
+#include <QFileDialog>
 
-DomItem::DomItem(QDomNode &node, int row, DomItem *parent)
+MainWindow::MainWindow() : 
+    QMainWindow()
 {
-    domNode = node;
-    rowNumber = row;
-    parentItem = parent;
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->addAction(tr("&Open..."), this, SLOT(openFile()), QKeySequence::Open);
+    fileMenu->addAction(tr("E&xit"), this, SLOT(close()), QKeySequence::Quit);
+
+    model = new DomModel(QDomDocument(), this);
+    view = new QTreeView(this);
+    view->setModel(model);
+
+    setCentralWidget(view);
+    setWindowTitle(tr("Simple DOM Model"));
 }
 
-DomItem::~DomItem()
+void MainWindow::openFile()
 {
-    QHash<int,DomItem*>::iterator it;
-    for (it = childItems.begin(); it != childItems.end(); ++it)
-        delete it.value();
-}
+    QString filePath = QFileDialog::getOpenFileName(this,
+                                                    tr("Open File"),
+                                                    xmlPath,
+                                                    tr("XML files (*.xml);;HTML files (*.html);;"
+                                                                "SVG files (*.svg);;User Interface files (*.ui)"));
 
-QDomNode DomItem::node() const
-{
-    return domNode;
-}
-
-DomItem *DomItem::parent()
-{
-    return parentItem;
-}
-
-DomItem *DomItem::child(int i)
-{
-    if (childItems.contains(i))
-        return childItems[i];
-
-    if (i >= 0 && i < domNode.childNodes().count())
+    if (!filePath.isEmpty())
     {
-        QDomNode childNode = domNode.childNodes().item(i);
-        DomItem *childItem = new DomItem(childNode, i, this);
-        childItems[i] = childItem;
-        return childItem;
+        QFile file(filePath);
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QDomDocument document;
+            if (document.setContent(&file))
+            {
+                DomModel *newModel = new DomModel(document, this);
+                view->setModel(newModel);
+                delete model;
+                model = newModel;
+                xmlPath = filePath;
+            }
+            file.close();
+        }
     }
-    return 0;
-}
-
-int DomItem::row()
-{
-    return rowNumber;
 }

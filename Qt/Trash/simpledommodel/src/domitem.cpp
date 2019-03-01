@@ -38,36 +38,50 @@
 **
 ****************************************************************************/
 
-#ifndef DOMMODEL_H
-#define DOMMODEL_H
+#include "domitem.h"
 
-#include <QAbstractItemModel>
-#include <QDomDocument>
-#include <QModelIndex>
+#include <QtXml>
 
-class DomItem;
-
-class DomModel : public QAbstractItemModel
+DomItem::DomItem(QDomNode &node, int row, DomItem *parent)
 {
-    Q_OBJECT
+    domNode = node;
+    rowNumber = row;
+    parentItem = parent;
+}
 
-public:
-    explicit DomModel(QDomDocument document, QObject *parent = 0);
-    ~DomModel();
+DomItem::~DomItem()
+{
+    QHash<int,DomItem*>::iterator it;
+    for (it = childItems.begin(); it != childItems.end(); ++it)
+        delete it.value();
+}
 
-    QVariant data(const QModelIndex &index, int role) const;
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
-    QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex &child) const;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+QDomNode DomItem::node() const
+{
+    return domNode;
+}
 
-private:
-    QDomDocument domDocument;
-    DomItem *rootItem;
-};
+DomItem *DomItem::parent()
+{
+    return parentItem;
+}
 
-#endif // DOMMODEL_H
+DomItem *DomItem::child(int i)
+{
+    if (childItems.contains(i))
+        return childItems[i];
+
+    if (i >= 0 && i < domNode.childNodes().count())
+    {
+        QDomNode childNode = domNode.childNodes().item(i);
+        DomItem *childItem = new DomItem(childNode, i, this);
+        childItems[i] = childItem;
+        return childItem;
+    }
+    return nullptr;
+}
+
+int DomItem::row()
+{
+    return rowNumber;
+}

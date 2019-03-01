@@ -38,53 +38,36 @@
 **
 ****************************************************************************/
 
-#include "dommodel.h"
-#include "mainwindow.h"
+#ifndef DOMMODEL_H
+#define DOMMODEL_H
 
+#include <QAbstractItemModel>
 #include <QDomDocument>
-#include <QTreeView>
-#include <QMenuBar>
-#include <QFileDialog>
+#include <QModelIndex>
 
-MainWindow::MainWindow() : 
-    QMainWindow(), 
-    model(0)
+class DomItem;
+
+class DomModel : public QAbstractItemModel
 {
-    fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(tr("&Open..."), this, SLOT(openFile()), QKeySequence::Open);
-    fileMenu->addAction(tr("E&xit"), this, SLOT(close()), QKeySequence::Quit);
+    Q_OBJECT
 
-    model = new DomModel(QDomDocument(), this);
-    view = new QTreeView(this);
-    view->setModel(model);
+public:
+    explicit DomModel(QDomDocument document, QObject *parent = nullptr);
+    ~DomModel();
 
-    setCentralWidget(view);
-    setWindowTitle(tr("Simple DOM Model"));
-}
+    QVariant data(const QModelIndex &index, int role) const;
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const;
+    QModelIndex index(int row, int column,
+                      const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex &child) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
-void MainWindow::openFile()
-{
-    QString filePath = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File"),
-                                                    xmlPath,
-                                                    tr("XML files (*.xml);;HTML files (*.html);;"
-                                                                "SVG files (*.svg);;User Interface files (*.ui)"));
+private:
+    QDomDocument domDocument;
+    DomItem *rootItem;
+};
 
-    if (!filePath.isEmpty())
-    {
-        QFile file(filePath);
-        if (file.open(QIODevice::ReadOnly))
-        {
-            QDomDocument document;
-            if (document.setContent(&file))
-            {
-                DomModel *newModel = new DomModel(document, this);
-                view->setModel(newModel);
-                delete model;
-                model = newModel;
-                xmlPath = filePath;
-            }
-            file.close();
-        }
-    }
-}
+#endif // DOMMODEL_H

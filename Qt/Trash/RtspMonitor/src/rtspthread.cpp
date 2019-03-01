@@ -1,11 +1,10 @@
 #include "rtspthread.h"
 
+#include <stdio.h>
 #include <time.h>
 #include <QDebug>
 #include <QList>
 #include <QByteArray>
-
-
 
 #include "/usr/include/liveMedia/liveMedia.hh"
 #include "/usr/include/BasicUsageEnvironment/BasicUsageEnvironment.hh"
@@ -16,7 +15,7 @@
 static char* readSDPFile(const char* path)
 {
 	char* text;
-    FILE* fp;
+    const char* fp;
     int err;
     err = fopen(&fp, path, "r");
     if (err != 0)

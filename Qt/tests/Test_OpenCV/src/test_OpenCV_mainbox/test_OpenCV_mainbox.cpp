@@ -44,9 +44,12 @@ MainBox::MainBox(QWidget* parent) :
 
     ui->sl_scale_factor->setRange(10, 50);
     ui->dsb_scalefactor->setSingleStep(0.01);
+    ui->sl_minNeighbors->setRange(1, 10);
 
     connect(ui->sl_scale_factor,    SIGNAL(sliderMoved(int)),       SLOT(set_scaleFactor(int)));
     connect(ui->dsb_scalefactor,    SIGNAL(valueChanged(double)),   SLOT(set_scaleFactor(double)));
+
+    connect(ui->sl_minNeighbors,    SIGNAL(sliderMoved(int)),       SLOT(set_minNeighbors(int)));
 
     connect(ui->bnLoad, SIGNAL(clicked(bool)), SLOT(onLoad()));
 
@@ -278,11 +281,11 @@ void MainBox::find_faces(void)
     }
 
     //faceCade.detectMultiScale(grayFrames, faces, 1.01, 3.0);
-    faceCade.detectMultiScale(grayFrames, faces, scaleFactor);
+    faceCade.detectMultiScale(grayFrames, faces, scaleFactor, minNeighbors);
     
     //---
     // https://docs.opencv.org/2.4/doc/tutorials/objdetect/cascade_classifier/cascade_classifier.html
-    // eyes_cascade.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+    //faceCade.detectMultiScale(grayFrames, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
     //---
 
     for(unsigned int i=0; i<faces.size(); i++)
@@ -322,6 +325,14 @@ void MainBox::set_scaleFactor(double value)
 {
     scaleFactor = value;
     ui->sl_scale_factor->setValue(static_cast<int>(scaleFactor * 10.0));
+
+    find_faces();
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_minNeighbors(int value)
+{
+    minNeighbors = value;
+    ui->sb_minNeighbors->setValue(minNeighbors);
 
     find_faces();
 }

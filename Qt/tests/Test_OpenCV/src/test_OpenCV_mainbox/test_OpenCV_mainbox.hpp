@@ -33,6 +33,7 @@ private slots:
 
     void set_scaleFactor(int value);
     void set_scaleFactor(double value);
+    void set_minNeighbors(int value);
 
     void find_faces(void);
 
@@ -53,6 +54,7 @@ private:
     vector<Rect> faces;
 
     qreal scaleFactor = 1.0;
+    int minNeighbors = 0;
 
     cv::CascadeClassifier mFaceDetector;
     cv::CascadeClassifier mEyeDetector;

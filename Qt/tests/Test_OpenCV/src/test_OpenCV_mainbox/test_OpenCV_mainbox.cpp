@@ -1,8 +1,8 @@
 //--------------------------------------------------------------------------------
 //
 //--------------------------------------------------------------------------------
-#include "mainwidget.h"
-#include "ui_mainwidget.h"
+#include "test_OpenCV_mainbox.hpp"
+#include "ui_test_OpenCV_mainbox.h"
 //--------------------------------------------------------------------------------
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
@@ -10,17 +10,21 @@
 #include <QFileDialog>
 #include <QPixmap>
 #include <QPainter>
-#include <QDebug>
+//--------------------------------------------------------------------------------
+#define FEAT_FACE_FILE  "xml/haarcascade_frontalface_default.xml"
+#define FEAT_EYE_FILE   "xml/haarcascade_mcs_eyepair_big.xml"
+#define FEAT_NOSE_FILE  "xml/haarcascade_mcs_nose.xml"
+#define FEAT_MOUTH_FILE "xml/haarcascade_mcs_mouth.xml"
 //--------------------------------------------------------------------------------
 static const char* CONFIG_FILE_NAME = "config.ini";
 //--------------------------------------------------------------------------------
-MainWidget::MainWidget( QWidget* parent ) :
-    QWidget( parent ),
-    ui( new Ui::MainWidget ),
-    m_lastLoadPath( "." ),
-    m_settings( CONFIG_FILE_NAME, QSettings::IniFormat )
+MainBox::MainBox(QWidget* parent) :
+    MyWidget(parent),
+    ui(new Ui::MainBox),
+    m_lastLoadPath("."),
+    m_settings(CONFIG_FILE_NAME, QSettings::IniFormat)
 {
-    ui->setupUi( this );
+    ui->setupUi(this);
 
     foreach( QSlider* slider, findChildren< QSlider* >() )
     {
@@ -43,23 +47,26 @@ MainWidget::MainWidget( QWidget* parent ) :
 
     connect( ui->bnLoad, SIGNAL( clicked( bool ) ), SLOT( onLoad() ) );
 
+    connect(ui->btn_default,    SIGNAL(clicked(bool)),  SLOT(s_default()));
+    connect(ui->btn_test,       SIGNAL(clicked(bool)),  SLOT(s_test()));
+
     restoreGeometry(m_settings.value("geometry").toByteArray());
 }
 //--------------------------------------------------------------------------------
-MainWidget::~MainWidget()
+MainBox::~MainBox()
 {
     m_settings.setValue("geometry", saveGeometry());
 
-    foreach( const QSlider* slider, findChildren< QSlider* >() )
+    foreach(const QSlider* slider, findChildren< QSlider* >())
     {
         QString sliderName = slider->objectName();
-        m_settings.setValue( sliderName, slider->value() );
+        m_settings.setValue(sliderName, slider->value());
     }
 
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainWidget::onLoad()
+void MainBox::onLoad(void)
 {
     QString imgName = QFileDialog::getOpenFileName( this,
                                                     "Load image",
@@ -81,7 +88,7 @@ void MainWidget::onLoad()
     refreshHSV();
 }
 //--------------------------------------------------------------------------------
-void MainWidget::refreshHSV()
+void MainBox::refreshHSV(void)
 {
     if( mOrigImage.empty() )
     {
@@ -212,5 +219,99 @@ void MainWidget::refreshHSV()
                     Qt::SmoothTransformation
                     )
                 );
+}
+//--------------------------------------------------------------------------------
+bool MainBox::create_detectors(void)
+{
+    QString file;
+
+    if(mFaceDetector.empty())
+    {
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_FACE_FILE);
+        if(!mFaceDetector.load(file.toLatin1().constData()))
+        {
+            emit error(QString("error load %1").arg(file));
+            return false;
+        }
+    }
+
+    if(mEyeDetector.empty())
+    {
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_EYE_FILE);
+        if(!mEyeDetector.load(file.toLatin1().constData()))
+        {
+            emit error(QString("error load %1").arg(file));
+            return false;
+        }
+    }
+
+    if(mNoseDetector.empty())
+    {
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_NOSE_FILE);
+        if(!mNoseDetector.load(file.toLatin1().constData()))
+        {
+            emit error(QString("error load %1").arg(file));
+            return false;
+        }
+    }
+
+    if(mMouthDetector.empty())
+    {
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_MOUTH_FILE);
+        if(!mMouthDetector.load(file.toLatin1().constData()))
+        {
+            emit error(QString("error load %1").arg(file));
+            return false;
+        }
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_default(void)
+{
+    qDebug() << "default";
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_test(void)
+{
+    mOrigImage.copyTo(mElabImage);
+
+    cvtColor(mOrigImage, grayFrames, CV_BGR2GRAY);
+    equalizeHist(grayFrames, grayFrames);
+
+    bool ok = faceCade.load(FEAT_FACE_FILE);
+    if(!ok)
+    {
+        emit error(QString("error load %1").arg(FEAT_FACE_FILE));
+        return;
+    }
+
+    faceCade.detectMultiScale(grayFrames, faces, 3.0);
+
+    for(unsigned int i = 0; i < faces.size(); i++)
+    {
+        cv::rectangle(mElabImage, faces[i], CV_RGB(255,0,0), 5);
+    }
+
+    //---
+    QImage resultImg = QImage(
+                mElabImage.data,
+                mElabImage.cols,
+                mElabImage.rows,
+                static_cast<int>(mElabImage.step),
+                QImage::Format_RGB888 ).copy();
+
+    ui->lbView->setPixmap(
+                QPixmap::fromImage( resultImg ).scaled(
+                    ui->lbView->size(),
+                    Qt::KeepAspectRatio,
+                    Qt::SmoothTransformation
+                    )
+                );
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+
 }
 //--------------------------------------------------------------------------------

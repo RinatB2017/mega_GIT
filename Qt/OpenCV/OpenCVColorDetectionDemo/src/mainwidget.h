@@ -29,29 +29,12 @@ private slots:
     void onLoad();
     void refreshHSV();
 
-    void s_default(void);
-    void s_test(void);
-
 private:
     Ui::MainWidget* ui;
     Mat mOrigImage;
-    Mat mElabImage;
 
     QString m_lastLoadPath;
     QSettings m_settings;
-
-    // ---> Face detectors
-    bool create_detectors(void);
-
-    Mat grayFrames;
-    CascadeClassifier faceCade;
-    vector<Rect> faces;
-
-    cv::CascadeClassifier mFaceDetector;
-    cv::CascadeClassifier mEyeDetector;
-    cv::CascadeClassifier mMouthDetector;
-    cv::CascadeClassifier mNoseDetector;
-    // <--- Face detectors
 };
 //--------------------------------------------------------------------------------
 #endif // MAINWIDGET_H

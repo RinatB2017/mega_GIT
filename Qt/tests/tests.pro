@@ -50,6 +50,7 @@ SUBDIRS += \
     Test_Widgets \
     Test_QtCharts \
     Test_OpenCL \
+    Test_OpenCV \
     Test_OpenMP \
     Test_QDBus \
     Test_QGraphicsView \

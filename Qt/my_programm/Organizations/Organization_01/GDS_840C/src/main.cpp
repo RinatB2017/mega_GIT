@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
-        QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
         return -1;
     }
 #else
@@ -65,9 +65,7 @@ int main(int argc, char *argv[])
     main_window->show();
 
     splash->finish(main_window);
-
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-
     return app.exec();
 }
 //--------------------------------------------------------------------------------

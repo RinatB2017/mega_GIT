@@ -59,7 +59,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     Q_CHECK_PTR(parent);
-    MainWindow *mw = (MainWindow *)parent;
+    MainWindow *mw = dynamic_cast<MainWindow *>(parent);
     Q_CHECK_PTR(mw);
 
     QToolButton *btnTest = new QToolButton(this);

@@ -119,7 +119,7 @@ int R4Serial::open_device()
     cfsetispeed( &ter, speed );
     cfsetospeed( &ter, speed );
     // --- set the number of data bits
-    ter.c_cflag &= ~CSIZE;
+    ter.c_cflag &= static_cast<unsigned int>(~CSIZE);
     switch (settings.data)
     {
     case 5: ter.c_cflag |= CS5; break;
@@ -128,36 +128,42 @@ int R4Serial::open_device()
     case 8: ter.c_cflag |= CS8; break;
     default:
         return -3;
-        break;
     }
     // --- set the number of stop bits
     switch(settings.stop)
     {
     // -- 1 stop bit
-    case 1: ter.c_cflag &= ~CSTOPB; break;
+    case 1:
+        ter.c_cflag &= static_cast<unsigned int>(~CSTOPB);
+        break;
+
         // --- 2 stop bit
-    case 2: ter.c_cflag |= CSTOPB; break;
+    case 2:
+        ter.c_cflag |= CSTOPB;
+        break;
+
     default:
         return -4;
-        break;
     }
     // --- set a sign of parity
     switch(settings.parity)
     {
     // --- parity
     case Parity_Enb:
-        ter.c_cflag |= PARENB; ter.c_cflag &= ~PARODD;
+        ter.c_cflag |= PARENB;
+        ter.c_cflag &= static_cast<unsigned int>(~PARODD);
         break;
+
         // --- odd
     case Parity_Odd:
-        ter.c_cflag &= ~PARENB; ter.c_cflag |= PARODD;
+        ter.c_cflag &= static_cast<unsigned int>(~PARENB);
+        ter.c_cflag |= PARODD;
         break;
+
         // --- off
     case Parity_Off:
-        ter.c_cflag &= ~PARENB; ter.c_cflag &= ~PARODD;
-        break;
-    default:
-        return -5;
+        ter.c_cflag &= static_cast<unsigned int>(~PARENB);
+        ter.c_cflag &= static_cast<unsigned int>(~PARODD);
         break;
     }
     // set the stream control
@@ -168,29 +174,30 @@ int R4Serial::open_device()
         ter.c_cflag &= ~CRTSCTS;
         ter.c_iflag |= ( IXON | IXOFF | IXANY );
         break;
+
         // --- hard control
     case Stream_Hard:
         ter.c_cflag |= CRTSCTS;
-        ter.c_iflag &= ~( IXON | IXOFF | IXANY );
+        ter.c_iflag &= static_cast<unsigned int>(~( IXON | IXOFF | IXANY ));
         break;
+
         // --- off
     case Stream_Off:
         ter.c_cflag &= ~CRTSCTS;
-        ter.c_iflag &= ~( IXON | IXOFF | IXANY );
-        break;
-    default:
-        return -6;
+        ter.c_iflag &= static_cast<unsigned int>(~( IXON | IXOFF | IXANY ));
         break;
     }
     // --- read on/off
     switch(settings.read)
     {
     // --- on
-    case Read_On: ter.c_cflag |= CREAD; break;
+    case Read_On:
+        ter.c_cflag |= CREAD;
+        break;
+
         // --- off
-    case Read_Off: ter.c_cflag &= ~CREAD; break;
-    default:
-        return -7;
+    case Read_Off:
+        ter.c_cflag &= static_cast<unsigned int>(~CREAD);
         break;
     }
 

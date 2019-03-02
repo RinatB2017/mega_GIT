@@ -1,5 +1,5 @@
-#ifndef _R4_SERIAL_H
-#define _R4_SERIAL_H
+#ifndef R4_SERIAL_H
+#define R4_SERIAL_H
 
 #include <QStringList>
 

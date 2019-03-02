@@ -97,6 +97,14 @@ void Fake_oscilloscope_GDS_840C::write(QByteArray data)
     input.clear();
     input.append(data);
 
+    if(data == "*IDN?\n")
+    {
+        output.clear();
+        output.append("*IDN=000\n");
+    }
+
+    //emit trace(data);
+
 #if 0
     if(data.length() < 2) return;
     switch(data.at(1))
@@ -125,7 +133,7 @@ void Fake_oscilloscope_GDS_840C::write(const char *data, int len)
 //--------------------------------------------------------------------------------
 void Fake_oscilloscope_GDS_840C::receive(const QVariant &data)
 {
-    Q_UNUSED(data); //???
+    emit trace(data.toString());
 }
 //--------------------------------------------------------------------------------
 void Fake_oscilloscope_GDS_840C::updateText(void)

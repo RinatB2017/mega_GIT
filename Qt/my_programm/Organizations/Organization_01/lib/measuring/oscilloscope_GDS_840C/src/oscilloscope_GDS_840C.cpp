@@ -51,9 +51,6 @@ void Oscilloscope_GDS_840C::init(void)
 {
     ui->setupUi(this);
 
-#ifdef FAKE
-#endif
-
     connect(&serial, SIGNAL(readyRead()), this, SLOT(port_read()));
     //connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
 
@@ -101,9 +98,6 @@ void Oscilloscope_GDS_840C::port_error(QSerialPort::SerialPortError serial_error
     case QSerialPort::UnknownError:         emit error("Error: UnknownError"); break;
     case QSerialPort::TimeoutError:         emit error("Error: TimeoutError"); break;
     case QSerialPort::NotOpenError:         emit error("Error: NotOpenError"); break;
-    default:
-        emit error(QString("Unknown error %1").arg(serial_error));
-        break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -235,7 +229,7 @@ bool Oscilloscope_GDS_840C::get_ESE(unsigned char *value)
         emit debug(QString("error [%1] toInt").arg(output.data()));
         return false;
     }
-    *value = temp;
+    *value = static_cast<unsigned char>(temp);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -369,7 +363,7 @@ bool Oscilloscope_GDS_840C::get_SRE(unsigned char *value)
         emit debug(QString("error [%1] toInt").arg(output.data()));
         return false;
     }
-    *value = temp;
+    *value = static_cast<unsigned char>(temp);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -814,21 +808,23 @@ bool Oscilloscope_GDS_840C::set_CHANnel_SCALe(Channel channel, VScale scale)
     float temp = 0.0f;
     switch(scale)
     {
-    case VScale_2mV: temp = 0.002; break;
-    case VScale_5mV: temp = 0.005; break;
-    case VScale_10mV: temp = 0.01; break;
-    case VScale_20mV: temp = 0.02; break;
-    case VScale_50mV: temp = 0.05; break;
-    case VScale_100mV: temp = 0.1; break;
-    case VScale_200mV: temp = 0.2; break;
-    case VScale_500mV: temp = 0.5; break;
+    case VScale_2mV: temp = 0.002f; break;
+    case VScale_5mV: temp = 0.005f; break;
+    case VScale_10mV: temp = 0.01f; break;
+    case VScale_20mV: temp = 0.02f; break;
+    case VScale_50mV: temp = 0.05f; break;
+    case VScale_100mV: temp = 0.1f; break;
+    case VScale_200mV: temp = 0.2f; break;
+    case VScale_500mV: temp = 0.5f; break;
     case VScale_1V: temp = 1; break;
     case VScale_2V: temp = 2; break;
     case VScale_5V: temp = 5; break;
     }
 
     QByteArray input;
-    input.append(QString(":CHANnel%1:SCALe %2\n").arg(channel).arg(temp));
+    input.append(QString(":CHANnel%1:SCALe %2\n")
+                 .arg(channel)
+                 .arg(static_cast<double>(temp)));
     QByteArray output;
     send(input, &output);
     return true;
@@ -1565,7 +1561,8 @@ bool Oscilloscope_GDS_840C::set_SYSTem_UNLock(void)
 bool Oscilloscope_GDS_840C::set_TIMebase_DELay(float delay)
 {
     QByteArray input;
-    input.append(QString(":TIMebase:DELay %1\n").arg(delay));
+    input.append(QString(":TIMebase:DELay %1\n")
+                 .arg(static_cast<double>(delay)));
     QByteArray output;
     send(input, &output);
     return true;
@@ -2607,7 +2604,7 @@ bool Oscilloscope_GDS_840C::measuring_channel_1(void)
         return false;
     }
 
-    OSC_HEADER *packet = (OSC_HEADER *)output.data();
+    OSC_HEADER *packet = reinterpret_cast<OSC_HEADER *>(output.data());
     for(int n=0; n<500; n++)
     {
         oscilloscope->add_curve_data(channel_1, packet->data[n]);
@@ -2630,7 +2627,7 @@ bool Oscilloscope_GDS_840C::measuring_channel_2(void)
         return false;
     }
 
-    OSC_HEADER *packet = (OSC_HEADER *)output.data();
+    OSC_HEADER *packet = reinterpret_cast<OSC_HEADER *>(output.data());
     for(int n=0; n<500; n++)
     {
         oscilloscope->add_curve_data(channel_2, packet->data[n]);
@@ -2724,7 +2721,7 @@ bool Oscilloscope_GDS_840C::test(unsigned int test_number)
 
     switch(test_number)
     {
-    case 0: ok = CLS(); break; break;
+    case 0: ok = CLS(); break;
     case 1: ok = set_ESE(value); break;
     case 2: ok = get_ESE(&value); break;
     case 3: ok = get_ESR(&int_value); break;
@@ -2762,8 +2759,8 @@ bool Oscilloscope_GDS_840C::test(unsigned int test_number)
     case 35: ok = get_CHANnel_PROBe(channel, &int_value); break;
     case 36: ok = set_CHANnel_SCALe(channel, VScale_1V); break;
     case 37: ok = get_CHANnel_SCALe(channel, &int_value); break;
-    case 38: ok = set_CURSor_XPosition(channel, pos); break;
-    case 39: ok = set_CURSor_YPosition(channel, pos); break;
+    case 38: ok = set_CURSor_XPosition(channel, static_cast<unsigned int>(pos)); break;
+    case 39: ok = set_CURSor_YPosition(channel, static_cast<unsigned int>(pos)); break;
     case 40: ok = get_CURSor_DELta(channel, &int_value); break;
     case 41: ok = set_CURSor_XDISplay(state); break;
     case 42: ok = set_CURSor_YDISplay(state); break;
@@ -2871,7 +2868,7 @@ bool Oscilloscope_GDS_840C::test_all(void)
         if(n == 102) continue;
         if(n == 104) continue;
         emit info(QString("test %1 of 125").arg(n));
-        ok = test(n);
+        ok = test(static_cast<unsigned int>(n));
         if(!ok)
         {
             emit error(QString("test %1 failed!").arg(n));

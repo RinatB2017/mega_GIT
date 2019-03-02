@@ -5,7 +5,7 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QAction>
-#include "gui/displaywidget.h"
+#include "displaywidget.h"
 
 class MainWindow : public QMainWindow
 {

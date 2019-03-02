@@ -23,12 +23,12 @@ DEFINES += NO_TRAYICON
 DEFINES += SAVE_WIDGETS_PROPERTIES
 DEFINES += SAVE_WIDGETS_SPINBOX
 
-#DEFINES += FAKE
+DEFINES += FAKE
 
 HEADERS += \
+    gds_840c_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    gds_840c_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     gds_840c_mainbox.cpp \

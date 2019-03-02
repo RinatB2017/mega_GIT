@@ -14,7 +14,7 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "gui/imageviewer.h"
+#include "imageviewer.h"
 #include "camera.h"
 #include "faceDetector.h"
 

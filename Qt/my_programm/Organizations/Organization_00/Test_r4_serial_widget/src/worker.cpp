@@ -33,7 +33,6 @@
 Worker::Worker()
 {
     descriptor = -1;
-    serial = 0;
 
     init_device();
     init_timer();
@@ -62,7 +61,9 @@ void Worker::write_data(void)
 
     if(descriptor > 0)
     {
-        ssize_t s = write(descriptor, (char *)write_buf.data(), write_buf.length());
+        ssize_t s = write(descriptor,
+                          static_cast<char *>(write_buf.data()),
+                          static_cast<size_t>(write_buf.length()));
         emit debug(QString("write %1 bytes").arg(s));
     }
 }

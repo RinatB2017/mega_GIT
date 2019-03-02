@@ -6,7 +6,7 @@
 #include <opencv2/core/cuda_types.hpp>
 #include <opencv2/core/cuda.inl.hpp>
 
-#include "gui/mainwindow.h"
+#include "mainwindow.h"
 
 Q_DECLARE_METATYPE(cv::Mat)
 /** @function main */

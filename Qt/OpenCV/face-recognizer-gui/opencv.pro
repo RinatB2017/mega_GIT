@@ -14,14 +14,14 @@ TEMPLATE = app
 
 DESTDIR = $$PWD
 INCLUDEPATH += \
+    $$PWD/src \
+    $$PWD/gui \
     /usr/include/opencv \
     ./resources
 
 LIBS += -L/lib
 LIBS += -I/usr/include/opencv
 LIBS += -lopencv_core
-#LIBS += -lopencv_cudaimgproc
-#LIBS += -lopencv_cudaobjdetect
 LIBS += -lopencv_imgcodecs
 LIBS += -lopencv_imgproc
 LIBS += -lopencv_objdetect
@@ -29,17 +29,22 @@ LIBS += -lopencv_video
 LIBS += -lopencv_videoio
 LIBS += -lopencv_videostab
 
+#LIBS += -lopencv_cudaimgproc
+#LIBS += -lopencv_cudaobjdetect
+
 SOURCES += \
     main.cpp \
-    gui/mainwindow.cpp \
+    mainwindow.cpp \
     camera.cpp \
-    gui/displaywidget.cpp \
+    displaywidget.cpp \
     faceDetector.cpp \
-    gui/imageviewer.cpp
+    imageviewer.cpp
 
 HEADERS += \
-    gui/mainwindow.h \
+    mainwindow.h \
     camera.h \
-    gui/displaywidget.h \
+    displaywidget.h \
     faceDetector.h \
-    gui/imageviewer.h
+    imageviewer.h
+
+VPATH = $$INCLUDEPATH

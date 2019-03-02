@@ -279,6 +279,11 @@ void MainBox::find_faces(void)
 
     //faceCade.detectMultiScale(grayFrames, faces, 1.01, 3.0);
     faceCade.detectMultiScale(grayFrames, faces, scaleFactor);
+    
+    //---
+    // https://docs.opencv.org/2.4/doc/tutorials/objdetect/cascade_classifier/cascade_classifier.html
+    // eyes_cascade.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+    //---
 
     for(unsigned int i=0; i<faces.size(); i++)
     {

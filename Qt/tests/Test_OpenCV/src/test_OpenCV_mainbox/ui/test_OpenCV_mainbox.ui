@@ -317,22 +317,11 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <widget class="QPushButton" name="btn_default">
-       <property name="text">
-        <string>default</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_test">
-       <property name="text">
-        <string>test</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QPushButton" name="btn_test">
+     <property name="text">
+      <string>test</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -357,8 +346,6 @@
   <tabstop>sb_ValueTo</tabstop>
   <tabstop>sl_scale_factor</tabstop>
   <tabstop>dsb_scalefactor</tabstop>
-  <tabstop>btn_default</tabstop>
-  <tabstop>btn_test</tabstop>
  </tabstops>
  <resources/>
  <connections>

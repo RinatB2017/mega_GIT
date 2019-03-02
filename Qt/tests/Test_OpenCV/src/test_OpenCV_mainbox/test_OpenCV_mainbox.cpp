@@ -37,19 +37,20 @@ MainBox::MainBox(QWidget* parent) :
         }
     }
 
-    foreach( const QRadioButton* rb, findChildren< QRadioButton* >())
+    foreach(const QRadioButton* rb, findChildren< QRadioButton* >())
     {
         connect(rb, SIGNAL(clicked(bool)), SLOT(refreshHSV()));
     }
 
     ui->sl_scale_factor->setRange(10, 50);
+    ui->dsb_scalefactor->setSingleStep(0.01);
+
     connect(ui->sl_scale_factor,    SIGNAL(sliderMoved(int)),       SLOT(set_scaleFactor(int)));
     connect(ui->dsb_scalefactor,    SIGNAL(valueChanged(double)),   SLOT(set_scaleFactor(double)));
 
     connect(ui->bnLoad, SIGNAL(clicked(bool)), SLOT(onLoad()));
 
-    connect(ui->btn_default,    SIGNAL(clicked(bool)),  SLOT(s_default()));
-    connect(ui->btn_test,       SIGNAL(clicked(bool)),  SLOT(s_test()));
+    connect(ui->btn_test,   SIGNAL(clicked(bool)),  SLOT(s_test()));
 
     load_widgets(APPNAME);
 }
@@ -250,13 +251,20 @@ bool MainBox::create_detectors(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_default(void)
+void MainBox::find_faces(void)
 {
-    qDebug() << "default";
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_test(void)
-{
+    if(mOrigImage.data == nullptr)
+    {
+        emit error("no data");
+        return;
+    }
+
+    if(scaleFactor == 1.0)
+    {
+        emit error("FIXME: scaleFactor == 1.0");
+        return;
+    }
+
     mOrigImage.copyTo(mElabImage);
 
     cvtColor(mOrigImage, grayFrames, CV_BGR2GRAY);
@@ -292,16 +300,25 @@ void MainBox::s_test(void)
                           );
 }
 //--------------------------------------------------------------------------------
+void MainBox::s_test(void)
+{
+    find_faces();
+}
+//--------------------------------------------------------------------------------
 void MainBox::set_scaleFactor(int value)
 {
     scaleFactor = static_cast<double>(value) / 10.0;
     ui->dsb_scalefactor->setValue(scaleFactor);
+
+    find_faces();
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_scaleFactor(double value)
 {
     scaleFactor = value;
     ui->sl_scale_factor->setValue(static_cast<int>(scaleFactor * 10.0));
+
+    find_faces();
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

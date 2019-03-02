@@ -34,7 +34,8 @@ private slots:
     void set_scaleFactor(int value);
     void set_scaleFactor(double value);
 
-    void s_default(void);
+    void find_faces(void);
+
     void s_test(void);
 
 private:

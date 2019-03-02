@@ -32,6 +32,7 @@ private slots:
     void refreshHSV(void);
 
     void set_scaleFactor(int value);
+    void set_scaleFactor(double value);
 
     void s_default(void);
     void s_test(void);

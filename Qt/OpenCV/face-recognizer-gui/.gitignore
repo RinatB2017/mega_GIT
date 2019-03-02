@@ -1,5 +1,0 @@
-*.o
-*.user
-Makefile
-moc_*
-opencv

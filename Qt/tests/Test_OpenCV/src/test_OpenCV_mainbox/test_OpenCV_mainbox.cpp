@@ -43,7 +43,8 @@ MainBox::MainBox(QWidget* parent) :
     }
 
     ui->sl_scale_factor->setRange(10, 50);
-    connect(ui->sl_scale_factor,    SIGNAL(sliderMoved(int)), SLOT(set_scaleFactor(int)));
+    connect(ui->sl_scale_factor,    SIGNAL(sliderMoved(int)),       SLOT(set_scaleFactor(int)));
+    connect(ui->dsb_scalefactor,    SIGNAL(valueChanged(double)),   SLOT(set_scaleFactor(double)));
 
     connect(ui->bnLoad, SIGNAL(clicked(bool)), SLOT(onLoad()));
 
@@ -72,7 +73,6 @@ void MainBox::onLoad(void)
     }
 
     m_lastLoadPath = QFileInfo(imgName).absolutePath();
-
     mOrigImage = cv::imread(imgName.toStdString());
     if(!mOrigImage.empty())
     {
@@ -296,6 +296,12 @@ void MainBox::set_scaleFactor(int value)
 {
     scaleFactor = static_cast<double>(value) / 10.0;
     ui->dsb_scalefactor->setValue(scaleFactor);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_scaleFactor(double value)
+{
+    scaleFactor = value;
+    ui->sl_scale_factor->setValue(static_cast<int>(scaleFactor * 10.0));
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

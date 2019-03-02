@@ -47,6 +47,8 @@ void MainBox::init(void)
 
     createTestBar();
 
+    ui->horizontalSlider->setRange(0, 1000);
+
     connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
     connect(ui->sb_2,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
     connect(ui->sb_res, SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
@@ -200,6 +202,15 @@ bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    QPushButton *btn = new QPushButton();
+    if(btn)
+    {
+        btn->setText("iButton");
+        btn->show();
+    }
+#endif
 
 #if 0
     HEADER header;

@@ -35,7 +35,7 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-    mw = dynamic_cast<MyMainWindow *>(qApp->activeWindow());
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
@@ -65,5 +65,18 @@ void Test::test_mainbox(void)
 void Test::test_func(void)
 {
 
+}
+//--------------------------------------------------------------------------------
+void Test::test_slider(void)
+{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
+
+    QSlider *slider = mb->findChild<QSlider *>("horizontalSlider");
+    QVERIFY(slider);
+
+    int value = 250;
+    slider->setValue(value);
+    QCOMPARE(slider->value(),   value);
 }
 //--------------------------------------------------------------------------------

@@ -44,9 +44,10 @@ public:
 private slots:
     void test_GUI(void);
     void test_func(void);
+    void test_slider(void);
 
 private:
-    MyMainWindow *mw;
+    MainWindow *mw;
 
     void test_mainbox(void);
 };

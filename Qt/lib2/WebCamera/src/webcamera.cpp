@@ -117,7 +117,7 @@ bool WebCamera::create_detectors(void)
 
     if(mFaceDetector.empty())
     {
-        file = tr("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_FACE_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_FACE_FILE);
         if(!mFaceDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("Cannot find %1").arg(file));
@@ -127,7 +127,7 @@ bool WebCamera::create_detectors(void)
 
     if(mEyeDetector.empty())
     {
-        file = tr("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_EYE_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_EYE_FILE);
         if(!mEyeDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("Cannot find %1").arg(file));
@@ -137,7 +137,7 @@ bool WebCamera::create_detectors(void)
 
     if(mNoseDetector.empty())
     {
-        file = tr("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_NOSE_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_NOSE_FILE);
         if(!mNoseDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("Cannot find %1").arg(file));
@@ -147,7 +147,7 @@ bool WebCamera::create_detectors(void)
 
     if(mMouthDetector.empty())
     {
-        file = tr("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_MOUTH_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_MOUTH_FILE);
         if(!mMouthDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("Cannot find %1").arg(file));
@@ -447,7 +447,7 @@ void WebCamera::test(void)
     dlg = new QFileDialog;
     dlg->setNameFilter("Image Files (*.png *.jpg *.jpeg *.bmp)");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(QDir::currentPath());
+    //dlg->setDirectory(QDir::currentPath());
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
@@ -458,6 +458,7 @@ void WebCamera::test(void)
         return;
     }
 
+    emit info(QString("filename [%1]").arg(filename.toLocal8Bit().data()));
     mOrigImage = cv::imread(filename.toLocal8Bit().data(), CV_LOAD_IMAGE_COLOR);
     mOrigImage.copyTo(mElabImage);
 

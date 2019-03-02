@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>485</width>
-    <height>654</height>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -293,9 +293,48 @@
      </item>
     </layout>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="btn_default">
+       <property name="text">
+        <string>default</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_test">
+       <property name="text">
+        <string>test</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>bnLoad</tabstop>
+  <tabstop>rbOriginal</tabstop>
+  <tabstop>rbThresholded</tabstop>
+  <tabstop>rbCanny</tabstop>
+  <tabstop>rbResult</tabstop>
+  <tabstop>slHueFrom</tabstop>
+  <tabstop>spHueFrom</tabstop>
+  <tabstop>slHueTo</tabstop>
+  <tabstop>spHueTo</tabstop>
+  <tabstop>slSaturationFrom</tabstop>
+  <tabstop>spSaturationFrom</tabstop>
+  <tabstop>slSaturationTo</tabstop>
+  <tabstop>spSaturationTo</tabstop>
+  <tabstop>slValueFrom</tabstop>
+  <tabstop>spValueFrom</tabstop>
+  <tabstop>slValueTo</tabstop>
+  <tabstop>spValueTo</tabstop>
+  <tabstop>btn_default</tabstop>
+  <tabstop>btn_test</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

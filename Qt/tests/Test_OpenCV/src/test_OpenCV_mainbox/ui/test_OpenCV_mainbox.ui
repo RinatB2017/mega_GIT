@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>485</width>
-    <height>757</height>
+    <height>796</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,14 +64,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rbOriginal">
+      <widget class="QRadioButton" name="rb_Original">
        <property name="text">
         <string>Original</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rbThresholded">
+      <widget class="QRadioButton" name="rb_Thresholded">
        <property name="text">
         <string>Thresholded</string>
        </property>
@@ -81,7 +81,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rbCanny">
+      <widget class="QRadioButton" name="rb_Canny">
        <property name="text">
         <string>Canny</string>
        </property>
@@ -117,8 +117,120 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="1" column="1">
-      <widget class="QSlider" name="slSaturationFrom">
+     <item row="0" column="1">
+      <widget class="QSlider" name="sl_HueFrom">
+       <property name="maximum">
+        <number>179</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hue</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>to</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="5">
+      <widget class="QSpinBox" name="sb_SaturationTo"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QSpinBox" name="sb_HueFrom"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Saturation</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="4">
+      <widget class="QSlider" name="sl_ValueTo">
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="value">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QSpinBox" name="sb_HueTo"/>
+     </item>
+     <item row="2" column="5">
+      <widget class="QSpinBox" name="sb_ValueTo"/>
+     </item>
+     <item row="0" column="4">
+      <widget class="QSlider" name="sl_HueTo">
+       <property name="maximum">
+        <number>179</number>
+       </property>
+       <property name="value">
+        <number>179</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QSlider" name="sl_SaturationTo">
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="value">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSlider" name="sl_ValueFrom">
        <property name="maximum">
         <number>255</number>
        </property>
@@ -130,10 +242,16 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QSlider" name="slHueFrom">
+     <item row="1" column="2">
+      <widget class="QSpinBox" name="sb_SaturationFrom"/>
+     </item>
+     <item row="2" column="2">
+      <widget class="QSpinBox" name="sb_ValueFrom"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSlider" name="sl_SaturationFrom">
        <property name="maximum">
-        <number>179</number>
+        <number>255</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -166,117 +284,6 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QSpinBox" name="spValueFrom"/>
-     </item>
-     <item row="1" column="2">
-      <widget class="QSpinBox" name="spSaturationFrom"/>
-     </item>
-     <item row="0" column="5">
-      <widget class="QSpinBox" name="spHueTo"/>
-     </item>
-     <item row="2" column="5">
-      <widget class="QSpinBox" name="spValueTo"/>
-     </item>
-     <item row="1" column="5">
-      <widget class="QSpinBox" name="spSaturationTo"/>
-     </item>
-     <item row="0" column="4">
-      <widget class="QSlider" name="slHueTo">
-       <property name="maximum">
-        <number>179</number>
-       </property>
-       <property name="value">
-        <number>179</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="4">
-      <widget class="QSlider" name="slValueTo">
-       <property name="maximum">
-        <number>255</number>
-       </property>
-       <property name="value">
-        <number>255</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QSpinBox" name="spHueFrom"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QSlider" name="slValueFrom">
-       <property name="maximum">
-        <number>255</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Saturation</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Hue</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QSlider" name="slSaturationTo">
-       <property name="maximum">
-        <number>255</number>
-       </property>
-       <property name="value">
-        <number>255</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="3">
       <widget class="QLabel" name="label_5">
        <property name="text">
@@ -284,12 +291,28 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="3">
-      <widget class="QLabel" name="label_9">
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>to</string>
+        <string>ScaleFactor</string>
        </property>
       </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSlider" name="sl_scale_factor">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QDoubleSpinBox" name="dsb_scalefactor"/>
      </item>
     </layout>
    </item>
@@ -316,31 +339,33 @@
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>bnLoad</tabstop>
-  <tabstop>rbOriginal</tabstop>
-  <tabstop>rbThresholded</tabstop>
-  <tabstop>rbCanny</tabstop>
+  <tabstop>rb_Original</tabstop>
+  <tabstop>rb_Thresholded</tabstop>
+  <tabstop>rb_Canny</tabstop>
   <tabstop>rbResult</tabstop>
-  <tabstop>slHueFrom</tabstop>
-  <tabstop>spHueFrom</tabstop>
-  <tabstop>slHueTo</tabstop>
-  <tabstop>spHueTo</tabstop>
-  <tabstop>slSaturationFrom</tabstop>
-  <tabstop>spSaturationFrom</tabstop>
-  <tabstop>slSaturationTo</tabstop>
-  <tabstop>spSaturationTo</tabstop>
-  <tabstop>slValueFrom</tabstop>
-  <tabstop>spValueFrom</tabstop>
-  <tabstop>slValueTo</tabstop>
-  <tabstop>spValueTo</tabstop>
+  <tabstop>sl_HueFrom</tabstop>
+  <tabstop>sb_HueFrom</tabstop>
+  <tabstop>sl_HueTo</tabstop>
+  <tabstop>sb_HueTo</tabstop>
+  <tabstop>sl_SaturationFrom</tabstop>
+  <tabstop>sb_SaturationFrom</tabstop>
+  <tabstop>sl_SaturationTo</tabstop>
+  <tabstop>sb_SaturationTo</tabstop>
+  <tabstop>sl_ValueFrom</tabstop>
+  <tabstop>sb_ValueFrom</tabstop>
+  <tabstop>sl_ValueTo</tabstop>
+  <tabstop>sb_ValueTo</tabstop>
+  <tabstop>sl_scale_factor</tabstop>
+  <tabstop>dsb_scalefactor</tabstop>
   <tabstop>btn_default</tabstop>
   <tabstop>btn_test</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>slHueFrom</sender>
+   <sender>sl_HueFrom</sender>
    <signal>sliderMoved(int)</signal>
-   <receiver>spHueFrom</receiver>
+   <receiver>sb_HueFrom</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -354,9 +379,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>spHueFrom</sender>
+   <sender>sb_HueFrom</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>slHueFrom</receiver>
+   <receiver>sl_HueFrom</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -370,9 +395,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>slSaturationFrom</sender>
+   <sender>sl_SaturationFrom</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>spSaturationFrom</receiver>
+   <receiver>sb_SaturationFrom</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -386,9 +411,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>spSaturationFrom</sender>
+   <sender>sb_SaturationFrom</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>slSaturationFrom</receiver>
+   <receiver>sl_SaturationFrom</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -402,9 +427,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>slValueFrom</sender>
+   <sender>sl_ValueFrom</sender>
    <signal>sliderMoved(int)</signal>
-   <receiver>spValueFrom</receiver>
+   <receiver>sb_ValueFrom</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -418,9 +443,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>spValueFrom</sender>
+   <sender>sb_ValueFrom</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>slValueFrom</receiver>
+   <receiver>sl_ValueFrom</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -434,9 +459,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>slHueTo</sender>
+   <sender>sl_HueTo</sender>
    <signal>sliderMoved(int)</signal>
-   <receiver>spHueTo</receiver>
+   <receiver>sb_HueTo</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -450,9 +475,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>spHueTo</sender>
+   <sender>sb_HueTo</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>slHueTo</receiver>
+   <receiver>sl_HueTo</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -466,9 +491,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>slSaturationTo</sender>
+   <sender>sl_SaturationTo</sender>
    <signal>sliderMoved(int)</signal>
-   <receiver>spSaturationTo</receiver>
+   <receiver>sb_SaturationTo</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -482,9 +507,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>spSaturationTo</sender>
+   <sender>sb_SaturationTo</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>slSaturationTo</receiver>
+   <receiver>sl_SaturationTo</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -498,9 +523,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>slValueTo</sender>
+   <sender>sl_ValueTo</sender>
    <signal>sliderMoved(int)</signal>
-   <receiver>spValueTo</receiver>
+   <receiver>sb_ValueTo</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -514,9 +539,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>spValueTo</sender>
+   <sender>sb_ValueTo</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>slValueTo</receiver>
+   <receiver>sl_ValueTo</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">

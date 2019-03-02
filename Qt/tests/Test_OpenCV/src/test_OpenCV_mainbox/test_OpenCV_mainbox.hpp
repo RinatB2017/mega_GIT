@@ -31,6 +31,8 @@ private slots:
     void onLoad(void);
     void refreshHSV(void);
 
+    void set_scaleFactor(int value);
+
     void s_default(void);
     void s_test(void);
 
@@ -40,7 +42,6 @@ private:
     Mat mElabImage;
 
     QString m_lastLoadPath;
-    QSettings m_settings;
 
     // ---> Face detectors
     bool create_detectors(void);
@@ -48,6 +49,8 @@ private:
     Mat grayFrames;
     CascadeClassifier faceCade;
     vector<Rect> faces;
+
+    qreal scaleFactor = 1.0;
 
     cv::CascadeClassifier mFaceDetector;
     cv::CascadeClassifier mEyeDetector;

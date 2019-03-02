@@ -118,7 +118,7 @@ void Geometry::appendSmooth(const QVector3D &a, const QVector3D &n, int from)
     // (working backwards, since most often the points shared are between faces
     // recently added).
     int v = vertices.count() - 1;
-    for ( ; v >= from; --v)
+    for (; v >= from; --v)
     {
         if (qFuzzyCompare(vertices[v], a))
         {

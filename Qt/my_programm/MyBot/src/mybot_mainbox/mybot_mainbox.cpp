@@ -730,6 +730,7 @@ void MainBox::process_error(QProcess::ProcessError p_error)
     }
 }
 //--------------------------------------------------------------------------------
+#if 0
 bool MainBox::eventFilter(QObject*, QEvent* event)
 {
     QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
@@ -740,13 +741,14 @@ bool MainBox::eventFilter(QObject*, QEvent* event)
     //---
     if(mouseEvent->type() == QMouseEvent::MouseButtonPress)
     {
-        emit info(QString("%1 %2")
+        emit info(QString("x:%1 y:%2")
                   .arg(mouseEvent->pos().x())
                   .arg(mouseEvent->pos().y()));
         return true;
     }
     return false;
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {

@@ -1,8 +1,14 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 //--------------------------------------------------------------------------------
-#include <opencv2/opencv.hpp>
+#include <opencv2/objdetect.hpp>
+#include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
+
+#include <opencv2/opencv.hpp>
+
+using namespace std;
+using namespace cv;
 //--------------------------------------------------------------------------------
 #include <QWidget>
 #include <QSettings>
@@ -28,13 +34,19 @@ private slots:
 
 private:
     Ui::MainWidget* ui;
-    cv::Mat m_mat;
+    Mat mOrigImage;
+    Mat mElabImage;
 
     QString m_lastLoadPath;
     QSettings m_settings;
 
     // ---> Face detectors
     bool create_detectors(void);
+
+    Mat grayFrames;
+    CascadeClassifier faceCade;
+    vector<Rect> faces;
+
     cv::CascadeClassifier mFaceDetector;
     cv::CascadeClassifier mEyeDetector;
     cv::CascadeClassifier mMouthDetector;

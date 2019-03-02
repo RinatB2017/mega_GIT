@@ -117,7 +117,7 @@ private:
     void updateText(void);
 
 protected:
-    bool eventFilter(QObject*, QEvent* event);
+    //bool eventFilter(QObject*, QEvent* event);
 
 };
 //--------------------------------------------------------------------------------

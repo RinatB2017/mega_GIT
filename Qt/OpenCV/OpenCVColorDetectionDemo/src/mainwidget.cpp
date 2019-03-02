@@ -16,7 +16,7 @@
 #define FEAT_EYE_FILE   "xml/haarcascade_mcs_eyepair_big.xml"
 #define FEAT_NOSE_FILE  "xml/haarcascade_mcs_nose.xml"
 #define FEAT_MOUTH_FILE "xml/haarcascade_mcs_mouth.xml"
-
+//--------------------------------------------------------------------------------
 static const char* CONFIG_FILE_NAME = "config.ini";
 //--------------------------------------------------------------------------------
 MainWidget::MainWidget( QWidget* parent ) :
@@ -52,7 +52,7 @@ MainWidget::MainWidget( QWidget* parent ) :
     connect(ui->btn_test,       SIGNAL(clicked(bool)),  SLOT(s_test()));
 
     //TODO
-    create_detectors();
+    //create_detectors();
     //---
 
     restoreGeometry(m_settings.value("geometry").toByteArray());
@@ -84,10 +84,10 @@ void MainWidget::onLoad()
 
     m_lastLoadPath = QFileInfo( imgName ).absolutePath();
 
-    m_mat = cv::imread( imgName.toStdString() );
-    if( !m_mat.empty() )
+    mOrigImage = cv::imread( imgName.toStdString() );
+    if( !mOrigImage.empty() )
     {
-        cv::cvtColor( m_mat, m_mat, cv::COLOR_BGR2RGB );
+        cv::cvtColor( mOrigImage, mOrigImage, cv::COLOR_BGR2RGB );
     }
 
     refreshHSV();
@@ -95,7 +95,7 @@ void MainWidget::onLoad()
 //--------------------------------------------------------------------------------
 void MainWidget::refreshHSV()
 {
-    if( m_mat.empty() )
+    if( mOrigImage.empty() )
     {
         return;
     }
@@ -105,10 +105,10 @@ void MainWidget::refreshHSV()
     if( ui->rbOriginal->isChecked() )
     {
         resultImg = QImage(
-                    m_mat.data,
-                    m_mat.cols,
-                    m_mat.rows,
-                    static_cast<int>(m_mat.step),
+                    mOrigImage.data,
+                    mOrigImage.cols,
+                    mOrigImage.rows,
+                    static_cast<int>(mOrigImage.step),
                     QImage::Format_RGB888 ).copy();
     }
     else
@@ -123,7 +123,7 @@ void MainWidget::refreshHSV()
         int valueTo = std::max( valueFrom, ui->slValueTo->value() );
 
         cv::Mat thresholdedMat;
-        cv::cvtColor( m_mat, thresholdedMat, cv::COLOR_RGB2HSV );
+        cv::cvtColor( mOrigImage, thresholdedMat, cv::COLOR_RGB2HSV );
         // Отфильтровываем только то, что нужно, по диапазону цветов
         cv::inRange(
                     thresholdedMat,
@@ -188,10 +188,10 @@ void MainWidget::refreshHSV()
             }
 
             resultImg = QImage(
-                        m_mat.data,
-                        m_mat.cols,
-                        m_mat.rows,
-                        static_cast<int>(m_mat.step),
+                        mOrigImage.data,
+                        mOrigImage.cols,
+                        mOrigImage.rows,
+                        static_cast<int>(mOrigImage.step),
                         QImage::Format_RGB888
                         ).copy();
 
@@ -274,10 +274,44 @@ bool MainWidget::create_detectors(void)
 //--------------------------------------------------------------------------------
 void MainWidget::s_default(void)
 {
-
+    qDebug() << "default";
 }
 //--------------------------------------------------------------------------------
 void MainWidget::s_test(void)
 {
+    mOrigImage.copyTo(mElabImage);
+
+    cvtColor(mOrigImage, grayFrames, CV_BGR2GRAY);
+    equalizeHist(grayFrames, grayFrames);
+
+    bool ok = faceCade.load(FEAT_FACE_FILE);
+    if(!ok)
+    {
+        qDebug() << "error load" << FEAT_FACE_FILE;
+        return;
+    }
+
+    faceCade.detectMultiScale(grayFrames, faces, 3.0);
+
+    for(unsigned int i = 0; i < faces.size(); i++)
+    {
+        cv::rectangle(mElabImage, faces[i], CV_RGB(255,0,0), 5);
+    }
+
+    //---
+    QImage resultImg = QImage(
+                mElabImage.data,
+                mElabImage.cols,
+                mElabImage.rows,
+                static_cast<int>(mElabImage.step),
+                QImage::Format_RGB888 ).copy();
+
+    ui->lbView->setPixmap(
+                QPixmap::fromImage( resultImg ).scaled(
+                    ui->lbView->size(),
+                    Qt::KeepAspectRatio,
+                    Qt::SmoothTransformation
+                    )
+                );
 }
 //--------------------------------------------------------------------------------

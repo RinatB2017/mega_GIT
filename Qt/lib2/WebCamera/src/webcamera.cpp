@@ -448,6 +448,7 @@ void WebCamera::test(void)
     dlg->setNameFilter("Image Files (*.png *.jpg *.jpeg *.bmp)");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     //dlg->setDirectory(QDir::currentPath());
+    dlg->setDirectory("/dev/shm/0");
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();

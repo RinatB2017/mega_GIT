@@ -24,7 +24,7 @@ void CQtOpenCVViewerGl::initializeGL(void)
 void CQtOpenCVViewerGl::resizeGL(int width, int height)
 {
     makeCurrent();
-    glViewport(0, 0, (GLint)width, (GLint)height);
+    glViewport(0, 0, static_cast<GLint>(width), static_cast<GLint>(height));
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -34,12 +34,12 @@ void CQtOpenCVViewerGl::resizeGL(int width, int height)
     glMatrixMode(GL_MODELVIEW);
 
     // ---> Scaled Image Sizes
-    mOutH = width/mImgRatio;
+    mOutH = static_cast<int>(width/mImgRatio);
     mOutW = width;
 
     if(mOutH>height)
     {
-        mOutW = height*mImgRatio;
+        mOutW = static_cast<int>(height*mImgRatio);
         mOutH = height;
     }
 
@@ -124,23 +124,27 @@ void CQtOpenCVViewerGl::renderImage(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool CQtOpenCVViewerGl::showImage(cv::Mat image)
+bool CQtOpenCVViewerGl::showImage(Mat image)
 {
     image.copyTo(mOrigImage);
 
-    mImgRatio = (float)image.cols/(float)image.rows;
+    mImgRatio = static_cast<float>(image.cols)/static_cast<float>(image.rows);
 
     if(mOrigImage.channels() == 3)
     {
-        mRenderQtImg = QImage((const unsigned char*)(mOrigImage.data),
-                              mOrigImage.cols, mOrigImage.rows,
-                              mOrigImage.step, QImage::Format_RGB888).rgbSwapped();
+        mRenderQtImg = QImage(static_cast<const unsigned char*>(mOrigImage.data),
+                              mOrigImage.cols,
+                              mOrigImage.rows,
+                              static_cast<int>(mOrigImage.step),
+                              QImage::Format_RGB888).rgbSwapped();
     }
     else if( mOrigImage.channels() == 1)
     {
-        mRenderQtImg = QImage((const unsigned char*)(mOrigImage.data),
-                              mOrigImage.cols, mOrigImage.rows,
-                              mOrigImage.step, QImage::Format_Indexed8);
+        mRenderQtImg = QImage(static_cast<const unsigned char*>(mOrigImage.data),
+                              mOrigImage.cols,
+                              mOrigImage.rows,
+                              static_cast<int>(mOrigImage.step),
+                              QImage::Format_Indexed8);
     }
     else
     {

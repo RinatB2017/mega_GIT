@@ -307,8 +307,8 @@ void WebCamera::timerEvent(QTimerEvent *event)
 
         mOrigImage.copyTo(mElabImage);
 
-        vector< cv::Rect > faceVec;
-        //cv::Rect rectVec;
+        vector< Rect > faceVec;
+        //Rect rectVec;
 
         double scaleFactor = 3.0; // Change Scale Factor to change speed
         mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
@@ -326,24 +326,24 @@ void WebCamera::timerEvent(QTimerEvent *event)
         }
         for(size_t i=0; i<faceVec.size(); i++)
         {
-            cv::rectangle(mElabImage, faceVec[i], CV_RGB(255,0,0), 2);
+            rectangle(mElabImage, faceVec[i], CV_RGB(255,0,0), 2);
 
-            cv::Mat face = mOrigImage(faceVec[i]);
+            Mat face = mOrigImage(faceVec[i]);
 
             // ---> Eye Detection
             if(ui->checkBox_eyes->isChecked())
             {
-                vector< cv::Rect > eyeVec;
+                vector< Rect > eyeVec;
 
                 mEyeDetector.detectMultiScale(face, eyeVec);
 
                 for(size_t j=0; j<eyeVec.size(); j++)
                 {
-                    cv::Rect rect = eyeVec[j];
+                    Rect rect = eyeVec[j];
                     rect.x += faceVec[i].x;
                     rect.y += faceVec[i].y;
 
-                    cv::rectangle(mElabImage, rect, CV_RGB(0,255,0), 2);
+                    rectangle(mElabImage, rect, CV_RGB(0,255,0), 2);
                 }
             }
             // <--- Eye Detection
@@ -351,17 +351,17 @@ void WebCamera::timerEvent(QTimerEvent *event)
             // ---> Nose Detection
             if(ui->checkBox_nose->isChecked())
             {
-                vector< cv::Rect > noseVec;
+                vector< Rect > noseVec;
 
                 mNoseDetector.detectMultiScale(face, noseVec, 3);
 
                 for(size_t j=0; j<noseVec.size(); j++)
                 {
-                    cv::Rect rect = noseVec[j];
+                    Rect rect = noseVec[j];
                     rect.x += faceVec[i].x;
                     rect.y += faceVec[i].y;
 
-                    cv::rectangle(mElabImage, rect, CV_RGB(0,0,255), 2);
+                    rectangle(mElabImage, rect, CV_RGB(0,0,255), 2);
                 }
             }
             // <--- Nose Detection
@@ -370,22 +370,22 @@ void WebCamera::timerEvent(QTimerEvent *event)
             // [Searched in the bottom half face]
             if(ui->checkBox_mouth->isChecked())
             {
-                vector< cv::Rect > mouthVec;
-                cv::Rect halfRect = faceVec[i];
+                vector< Rect > mouthVec;
+                Rect halfRect = faceVec[i];
                 halfRect.height /= 2;
                 halfRect.y += halfRect.height;
 
-                cv::Mat halfFace = mOrigImage(halfRect);
+                Mat halfFace = mOrigImage(halfRect);
 
                 mMouthDetector.detectMultiScale(halfFace, mouthVec, 3);
 
                 for(size_t j=0; j<mouthVec.size(); j++)
                 {
-                    cv::Rect rect = mouthVec[j];
+                    Rect rect = mouthVec[j];
                     rect.x += halfRect.x;
                     rect.y += halfRect.y;
 
-                    cv::rectangle(mElabImage, rect, CV_RGB(255,255,255), 2);
+                    rectangle(mElabImage, rect, CV_RGB(255,255,255), 2);
                 }
             }
             // <--- Mouth Detection
@@ -436,10 +436,10 @@ void WebCamera::show_image_hw(void)
 void WebCamera::test(void)
 {
     emit trace(Q_FUNC_INFO);
-    vector< cv::Rect > faceVec;
-    vector< cv::Rect > eyeVec;
-    vector< cv::Rect > noseVec;
-    vector< cv::Rect > mouthVec;
+    vector< Rect > faceVec;
+    vector< Rect > eyeVec;
+    vector< Rect > noseVec;
+    vector< Rect > mouthVec;
 
     QString filename ;
     QFileDialog *dlg;
@@ -460,50 +460,50 @@ void WebCamera::test(void)
     }
 
     emit info(QString("filename [%1]").arg(filename.toLocal8Bit().data()));
-    mOrigImage = cv::imread(filename.toLocal8Bit().data(), CV_LOAD_IMAGE_COLOR);
+    mOrigImage = imread(filename.toLocal8Bit().data(), CV_LOAD_IMAGE_COLOR);
     mOrigImage.copyTo(mElabImage);
 
     double scaleFactor = 3.0; // Change Scale Factor to change speed
     mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
     for(size_t i=0; i<faceVec.size(); i++)
     {
-        cv::rectangle(mElabImage, faceVec[i], CV_RGB(255,0,0), 5);
-        cv::Mat face = mOrigImage(faceVec[i]);
+        rectangle(mElabImage, faceVec[i], CV_RGB(255,0,0), 5);
+        Mat face = mOrigImage(faceVec[i]);
 
         //---
         mEyeDetector.detectMultiScale(face, eyeVec);
 
         for(size_t j=0; j<eyeVec.size(); j++)
         {
-            cv::Rect rect = eyeVec[j];
+            Rect rect = eyeVec[j];
             rect.x += faceVec[i].x;
             rect.y += faceVec[i].y;
 
-            cv::rectangle(mElabImage, rect, CV_RGB(0,255,0), 5);
+            rectangle(mElabImage, rect, CV_RGB(0,255,0), 5);
         }
         //---
         mNoseDetector.detectMultiScale(face, noseVec, 3);
 
         for(size_t j=0; j<noseVec.size(); j++)
         {
-            cv::Rect rect = noseVec[j];
+            Rect rect = noseVec[j];
             rect.x += faceVec[i].x;
             rect.y += faceVec[i].y;
 
-            cv::rectangle(mElabImage, rect, CV_RGB(0,0,255), 5);
+            rectangle(mElabImage, rect, CV_RGB(0,0,255), 5);
         }
 #if 1
-        cv::Rect halfRect = faceVec[i];
-        cv::Mat halfFace = mOrigImage(halfRect);
+        Rect halfRect = faceVec[i];
+        Mat halfFace = mOrigImage(halfRect);
         mMouthDetector.detectMultiScale(halfFace, mouthVec, 3);
 
         for(size_t j=0; j<mouthVec.size(); j++)
         {
-            cv::Rect rect = mouthVec[j];
+            Rect rect = mouthVec[j];
             rect.x += halfRect.x;
             rect.y += halfRect.y;
 
-            cv::rectangle(mElabImage, rect, CV_RGB(255,255,255), 2);
+            rectangle(mElabImage, rect, CV_RGB(255,255,255), 2);
         }
 #endif
     }

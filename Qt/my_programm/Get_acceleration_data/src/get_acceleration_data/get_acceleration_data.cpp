@@ -50,6 +50,8 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -70,6 +72,13 @@ void MainBox::init(void)
     //box->addLayout(vbox);
     box->addWidget(grapher_widget);
     setLayout(box);
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->load_setting();
+    }
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)

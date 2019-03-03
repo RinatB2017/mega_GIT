@@ -39,6 +39,8 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+using namespace cv;
+//--------------------------------------------------------------------------------
 namespace Ui {
     class WebCamera;
 }
@@ -72,17 +74,17 @@ private:
 
     int mCameraEventId = 0;
 
-    cv::Mat mOrigImage;
-    cv::Mat mElabImage;
+    Mat mOrigImage;
+    Mat mElabImage;
 
-    cv::VideoCapture mCapture;
+    VideoCapture mCapture;
 
     // ---> Face detectors
     bool create_detectors(void);
-    cv::CascadeClassifier mFaceDetector;
-    cv::CascadeClassifier mEyeDetector;
-    cv::CascadeClassifier mMouthDetector;
-    cv::CascadeClassifier mNoseDetector;
+    CascadeClassifier mFaceDetector;
+    CascadeClassifier mEyeDetector;
+    CascadeClassifier mMouthDetector;
+    CascadeClassifier mNoseDetector;
     // <--- Face detectors
 
     void init(void);

@@ -9,6 +9,8 @@
 #   include <opencv2/core/core.hpp>
 #endif
 
+using namespace cv;
+
 class CQtOpenCVViewerGl : public QGLWidget
 {
     Q_OBJECT
@@ -20,7 +22,7 @@ signals:
     void imageSizeChanged(int outW, int outH); /// Used to resize the image outside the widget
 
 public slots:
-    bool showImage(cv::Mat image); /// Used to set the image to be viewed
+    bool showImage(Mat image); /// Used to set the image to be viewed
 
 protected:
     void initializeGL(void);                // OpenGL initialization
@@ -34,7 +36,7 @@ private:
     bool mSceneChanged;     // Indicates when OpenGL view is to be redrawn
 
     QImage  mRenderQtImg;   // Qt image to be rendered
-    cv::Mat mOrigImage;     // original OpenCV image to be shown
+    Mat mOrigImage;     // original OpenCV image to be shown
 
     QColor mBgColor;		// Background color
 

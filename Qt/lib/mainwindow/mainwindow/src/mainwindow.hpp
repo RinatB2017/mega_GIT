@@ -64,7 +64,7 @@ public:
         QWidget* pWidget = new QWidget (nullptr);
 
         QHBoxLayout* pLayout = new QHBoxLayout();
-        //pLayout->setMargin(0);
+        pLayout->setMargin(0);
         pLayout->setSpacing(0);
 
         QLabel* pLabel = new QLabel(action->text());  //bug fixed here, pointer was missing

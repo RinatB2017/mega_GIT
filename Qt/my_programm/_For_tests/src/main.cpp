@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
 
     splash->show();
 
-    //MyMainWindow *main_window = new MyMainWindow();
-    Simple_MW *main_window = new Simple_MW();
+    MyMainWindow *main_window = new MyMainWindow();
+    //Simple_MW *main_window = new Simple_MW();
     Q_CHECK_PTR(main_window);
 
     // отключает заголовок

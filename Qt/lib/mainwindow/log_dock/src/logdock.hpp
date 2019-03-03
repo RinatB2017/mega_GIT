@@ -33,8 +33,8 @@ class LogDock : public QDockWidget
 {
     Q_OBJECT
 public:
-    LogDock(const QString &title,
-            QWidget *parent = nullptr);
+    explicit LogDock(const QString &title,
+                     QWidget *parent = nullptr);
     ~LogDock();
 
     void  set_font(QFont font);

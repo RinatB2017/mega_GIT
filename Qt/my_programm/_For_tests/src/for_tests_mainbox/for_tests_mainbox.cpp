@@ -198,15 +198,25 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include <QMediaPlayer>
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QMediaPlayer *player = new QMediaPlayer;
+    player->setMedia(QUrl::fromLocalFile("/users/somebody/somewhere/demo.mp4")); 
+    player->setVolume(10);
+    player->play(); 
+#endif
+    
+#if 0
     QPushButton *btn = new QPushButton();
     if(btn)
     {
+        connect(btn,    SIGNAL(clicked(bool)),
+                btn,    SLOT(close()));
         btn->setText("iButton");
         btn->show();
     }

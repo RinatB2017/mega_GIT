@@ -497,7 +497,6 @@ bool MainBox::test_card(void)
 
 #if 1
         bool success = cap.read(frame);
-
         if (!success)
         {
             emit error("Failed to read frame");

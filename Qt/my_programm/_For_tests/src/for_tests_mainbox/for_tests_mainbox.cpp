@@ -206,7 +206,7 @@ bool MainBox::test_0(void)
 
 #if 1
     QMediaPlayer *player = new QMediaPlayer;
-    player->setMedia(QUrl::fromLocalFile("/users/somebody/somewhere/demo.mp4")); 
+    player->setMedia(QUrl::fromLocalFile("/users/somebody/somewhere/demo.mp4"));
     player->setVolume(10);
     player->play(); 
 #endif

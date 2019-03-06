@@ -73,10 +73,10 @@ void MainBox::init(void)
     ui->sb_color_G->setRange(0, 0xFF);
     ui->sb_color_B->setRange(0, 0xFF);
 
-//    ui->sb_brightness->setReadOnly(true);
-//    ui->sb_color_R->setReadOnly(true);
-//    ui->sb_color_G->setReadOnly(true);
-//    ui->sb_color_B->setReadOnly(true);
+    //    ui->sb_brightness->setReadOnly(true);
+    //    ui->sb_color_R->setReadOnly(true);
+    //    ui->sb_color_G->setReadOnly(true);
+    //    ui->sb_color_B->setReadOnly(true);
 
     connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  ui->sb_brightness,  SLOT(setValue(int)));
     connect(ui->sl_color_R,     SIGNAL(valueChanged(int)),  ui->sb_color_R,     SLOT(setValue(int)));
@@ -359,6 +359,80 @@ bool MainBox::check_packet(void)
 
     emit info(QString("addr: %1").arg(addr));
     emit info(QString("cmd:  %1").arg(cmd));
+    emit info(QString("cnt:  %1").arg(cnt));
+
+    DATA_CMD_1 *i_data_1;
+    DATA_CMD_2 *i_data_2;
+    DATA_CMD_3 *i_data_3;
+    DATA_CMD_4 *i_data_4;
+    DATA_CMD_5 *i_data_5;
+
+    switch(cmd)
+    {
+    case CMD_1:
+        i_data_1 = reinterpret_cast<DATA_CMD_1 *>(header->data);
+        if(i_data_1)
+        {
+            emit info(QString("%1").arg(i_data_1->v_speed));
+            emit info(QString("color_R %1").arg(i_data_1->v_color_R));
+            emit info(QString("color_G %1").arg(i_data_1->v_color_G));
+            emit info(QString("color_B %1").arg(i_data_1->v_color_B));
+        }
+        break;
+
+    case CMD_2:
+        i_data_2 = reinterpret_cast<DATA_CMD_2 *>(header->data);
+        if(i_data_2)
+        {
+            emit info(QString("v_speed %1").arg(i_data_2->v_speed));
+            emit info(QString("v_spot_width %1").arg(i_data_2->v_spot_width));
+            emit info(QString("v_brightness %1").arg(i_data_2->v_brightness));
+            emit info(QString("color_R %1").arg(i_data_2->v_color_R));
+            emit info(QString("color_G %1").arg(i_data_2->v_color_G));
+            emit info(QString("color_B %1").arg(i_data_2->v_color_B));
+        }
+        break;
+
+    case CMD_3:
+        i_data_3 = reinterpret_cast<DATA_CMD_3 *>(header->data);
+        if(i_data_3)
+        {
+            emit info(QString("v_speed %1").arg(i_data_3->v_speed));
+            emit info(QString("v_spot_width %1").arg(i_data_3->v_spot_width));
+            emit info(QString("v_brightness %1").arg(i_data_3->v_brightness));
+            emit info(QString("color_R %1").arg(i_data_3->v_color_R));
+            emit info(QString("color_G %1").arg(i_data_3->v_color_G));
+            emit info(QString("color_B %1").arg(i_data_3->v_color_B));
+        }
+        break;
+
+    case CMD_4:
+        i_data_4 = reinterpret_cast<DATA_CMD_4 *>(header->data);
+        if(i_data_4)
+        {
+            emit info(QString("v_brightness %1").arg(i_data_4->v_brightness));
+            emit info(QString("color_R %1").arg(i_data_4->v_color_R));
+            emit info(QString("color_G %1").arg(i_data_4->v_color_G));
+            emit info(QString("color_B %1").arg(i_data_4->v_color_B));
+        }
+        break;
+
+    case CMD_5:
+        i_data_5 = reinterpret_cast<DATA_CMD_5 *>(header->data);
+        if(i_data_5)
+        {
+            emit info(QString("v_pixel_separately %1").arg(i_data_5->v_pixel_separately));
+            emit info(QString("color_R %1").arg(i_data_5->v_color_R));
+            emit info(QString("color_G %1").arg(i_data_5->v_color_G));
+            emit info(QString("color_B %1").arg(i_data_5->v_color_B));
+        }
+        break;
+
+    default:
+        emit error(QString("unknown cmd: %1").arg(cmd));
+        break;
+
+    }
 
     return true;
 }
@@ -478,17 +552,17 @@ void MainBox::send_packet(void)
     HEADER header;
     header.address = static_cast<uint8_t>(ui->sb_address->value());
     header.command = static_cast<uint8_t>(ui->sb_cmd->value());
-    header.cnt_data = sizeof(CMD_1);
+    header.cnt_data = sizeof(DATA_CMD_0);
 
-    CMD_1 command_1;
-    command_1.brightness = static_cast<uint8_t>(ui->sl_brightness->value());
-    command_1.color_R = static_cast<uint8_t>(ui->sl_color_R->value());
-    command_1.color_G = static_cast<uint8_t>(ui->sl_color_G->value());
-    command_1.color_B = static_cast<uint8_t>(ui->sl_color_B->value());
+    DATA_CMD_0 command_0;
+    command_0.brightness = static_cast<uint8_t>(ui->sl_brightness->value());
+    command_0.color_R = static_cast<uint8_t>(ui->sl_color_R->value());
+    command_0.color_G = static_cast<uint8_t>(ui->sl_color_G->value());
+    command_0.color_B = static_cast<uint8_t>(ui->sl_color_B->value());
 
     QByteArray ba;
     ba.append(reinterpret_cast<char *>(&header),    sizeof(HEADER));
-    ba.append(reinterpret_cast<char *>(&command_1), sizeof(CMD_1));
+    ba.append(reinterpret_cast<char *>(&command_0), sizeof(DATA_CMD_0));
 
     uint32_t crc32 = CRC::crc32(reinterpret_cast<char *>(ba.data()), static_cast<size_t>(ba.length()));
 

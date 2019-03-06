@@ -55,7 +55,7 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
-    //createTestBar();
+    createTestBar();
 
     connect(ui->btn_calc,   SIGNAL(clicked(bool)),  this,   SLOT(run_crc()));
 

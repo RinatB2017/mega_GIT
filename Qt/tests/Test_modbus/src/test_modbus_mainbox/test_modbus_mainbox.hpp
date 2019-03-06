@@ -31,19 +31,68 @@ struct HEADER {
     uint8_t address;
     uint8_t command;
     uint8_t cnt_data;
+    uint8_t data[];
 };
 
-struct CMD_1 {
+struct DATA_CMD_0 {
     uint8_t brightness;
     uint8_t color_R;
     uint8_t color_G;
     uint8_t color_B;
 };
 
+struct DATA_CMD_1 {
+    uint8_t v_speed;
+    uint8_t v_color_R;
+    uint8_t v_color_G;
+    uint8_t v_color_B;
+};
+
+struct DATA_CMD_2 {
+    uint8_t v_speed;
+    uint8_t v_spot_width;
+    uint8_t v_brightness;
+    uint8_t v_color_R;
+    uint8_t v_color_G;
+    uint8_t v_color_B;
+};
+
+struct DATA_CMD_3 {
+    uint8_t v_speed;
+    uint8_t v_spot_width;
+    uint8_t v_brightness;
+    uint8_t v_color_R;
+    uint8_t v_color_G;
+    uint8_t v_color_B;
+};
+
+struct DATA_CMD_4 {
+    uint8_t v_brightness;
+    uint8_t v_color_R;
+    uint8_t v_color_G;
+    uint8_t v_color_B;
+};
+
+struct DATA_CMD_5 {
+    uint8_t v_pixel_separately;
+    uint8_t v_color_R;
+    uint8_t v_color_G;
+    uint8_t v_color_B;
+};
+
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
+enum
+{
+    CMD_1 = 1,
+    CMD_2,
+    CMD_3,
+    CMD_4,
+    CMD_5
+};
+//--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;

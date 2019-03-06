@@ -9,6 +9,7 @@ SUBDIRS += \
     Test_arduino \
     Test_arduino_modbus \
     Test_CandleStick_Box \
+    Test_CRC \
     Test_curvetracker \
     Test_digits \
     Test_database \

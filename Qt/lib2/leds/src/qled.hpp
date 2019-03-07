@@ -14,7 +14,8 @@ public:
                   const QColor &color_off = Qt::gray,
                   const QColor &color_on = Qt::red,
                   QWidget *parent = nullptr);
-    void setState(bool state); 
+    void setState(bool state);
+    void set_color(QColor color);
 
 private:
     QColor color_off;

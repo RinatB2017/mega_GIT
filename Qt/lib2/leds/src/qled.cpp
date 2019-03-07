@@ -36,6 +36,12 @@ void QLed::setState(bool state)
     update();
 }
 //--------------------------------------------------------------------------------
+void QLed::set_color(QColor color)
+{
+    current_color = color;
+    update();
+}
+//--------------------------------------------------------------------------------
 void QLed::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);

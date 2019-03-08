@@ -306,7 +306,11 @@ private:
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
     void app_menu_add_font_programm(QMenu *menu);
+
+#ifndef NO_LOG
     void app_menu_add_font_log(QMenu *menu);
+#endif
+
     void app_menu_add_log_filter(QMenu *menu);
     void app_menu_add_theme(QMenu *menu);
     void app_menu_add_lang(QMenu *menu);
@@ -318,7 +322,9 @@ private:
 
     void app_toolbar_add_separator(void);
     void app_toolbar_add_exit(void);
+#ifndef NO_LOG
     void app_toolbar_add_font(void);
+#endif
     void app_toolbar_add_lang(void);
     void app_toolbar_add_style(void);
     void app_toolbar_add_about(void);

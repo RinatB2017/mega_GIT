@@ -900,6 +900,12 @@ void MyWidget::save_QSplitter(QString group_name)
 //--------------------------------------------------------------------------------
 void MyWidget::load_widgets(QString group_name)
 {
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->load_setting();
+    }
+
 #ifdef SAVE_WIDGETS_RADIOBUTTON
     load_QRadioButton(group_name);
 #endif

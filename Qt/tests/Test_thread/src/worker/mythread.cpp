@@ -84,9 +84,9 @@ void MyThread::process(void)
 //--------------------------------------------------------------------------------
 void MyThread::set_time(QDateTime dt)
 {
-    hour = dt.time().hour();
-    min  = dt.time().minute();
-    sec  = dt.time().second();
+    hour = static_cast<uint8_t>(dt.time().hour());
+    min  = static_cast<uint8_t>(dt.time().minute());
+    sec  = static_cast<uint8_t>(dt.time().second());
 }
 //--------------------------------------------------------------------------------
 void MyThread::start(void)

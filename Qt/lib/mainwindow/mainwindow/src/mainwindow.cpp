@@ -372,7 +372,9 @@ void MainWindow::createMenus(void)
     app_menu_add_exit(m_app_filemenu);
 
     app_menu_add_font_programm(m_app_optionsmenu);
+#ifndef NO_LOG
     app_menu_add_font_log(m_app_optionsmenu);
+#endif
     app_menu_add_separator(m_app_optionsmenu);
     app_menu_add_log_filter(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
@@ -755,7 +757,9 @@ void MainWindow::createToolBar(void)
 #endif
 
 #ifndef NO_TOOLBAR_BUTTON_FONT
+#ifndef NO_LOG
     app_toolbar_add_font();
+#endif
 #ifndef NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
@@ -1592,6 +1596,7 @@ void MainWindow::app_menu_add_font_programm(QMenu *menu)
     menu->addAction(font_programm);
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG
 void MainWindow::app_menu_add_font_log(QMenu *menu)
 {
     Q_CHECK_PTR(menu);
@@ -1608,6 +1613,7 @@ void MainWindow::app_menu_add_font_log(QMenu *menu)
 
     menu->addAction(font_log);
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_log_filter(QMenu *menu)
 {
@@ -1892,6 +1898,7 @@ void MainWindow::app_toolbar_add_exit(void)
     app_buttons.append(btnExit);
 }
 //--------------------------------------------------------------------------------
+#ifndef NO_LOG
 void MainWindow::app_toolbar_add_font(void)
 {
     QToolButton *btnAppFont = new QToolButton(this);
@@ -1919,6 +1926,7 @@ void MainWindow::app_toolbar_add_font(void)
     app_buttons.append(btnAppFont);
     app_buttons.append(btnLogFont);
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_lang(void)
 {

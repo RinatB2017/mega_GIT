@@ -42,6 +42,18 @@ void QLed::set_color(QColor color)
     update();
 }
 //--------------------------------------------------------------------------------
+void QLed::set_color_on(QColor color)
+{
+    color_on = color;
+    update();
+}
+//--------------------------------------------------------------------------------
+void QLed::set_color_off(QColor color)
+{
+    color_off = color;
+    update();
+}
+//--------------------------------------------------------------------------------
 void QLed::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);

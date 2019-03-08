@@ -13,16 +13,14 @@ DEPENDPATH  += \
     $$PWD/src/test_md5_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
-
 DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    test_md5_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    test_md5_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     test_md5_mainbox.cpp \

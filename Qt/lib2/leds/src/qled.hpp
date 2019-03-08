@@ -16,6 +16,8 @@ public:
                   QWidget *parent = nullptr);
     void setState(bool state);
     void set_color(QColor color);
+    void set_color_on(QColor color);
+    void set_color_off(QColor color);
 
 private:
     QColor color_off;

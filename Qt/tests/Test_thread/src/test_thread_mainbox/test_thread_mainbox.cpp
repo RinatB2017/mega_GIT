@@ -111,15 +111,14 @@ void MainBox::thread_start(void)
     worker->moveToThread(thread);
 
     thread->start();
+
+    //---
+    worker->set_time(QDateTime::currentDateTime());
 }
 //--------------------------------------------------------------------------------
 void MainBox::thread_is_finished(void)
 {
     emit info("thread_is_finished");
-
-    worker = 0;
-    thread = 0;
-
     qApp->exit();
 }
 //--------------------------------------------------------------------------------

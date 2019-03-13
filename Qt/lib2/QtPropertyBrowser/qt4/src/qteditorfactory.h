@@ -53,7 +53,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtSpinBoxFactory : public QtAbstractEditorFact
 {
     Q_OBJECT
 public:
-    QtSpinBoxFactory(QObject *parent = 0);
+    QtSpinBoxFactory(QObject *parent = nullptr);
     ~QtSpinBoxFactory();
 protected:
     void connectPropertyManager(QtIntPropertyManager *manager);
@@ -77,7 +77,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtSliderFactory : public QtAbstractEditorFacto
 {
     Q_OBJECT
 public:
-    QtSliderFactory(QObject *parent = 0);
+    QtSliderFactory(QObject *parent = nullptr);
     ~QtSliderFactory();
 protected:
     void connectPropertyManager(QtIntPropertyManager *manager);
@@ -101,7 +101,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtScrollBarFactory : public QtAbstractEditorFa
 {
     Q_OBJECT
 public:
-    QtScrollBarFactory(QObject *parent = 0);
+    QtScrollBarFactory(QObject *parent = nullptr);
     ~QtScrollBarFactory();
 protected:
     void connectPropertyManager(QtIntPropertyManager *manager);
@@ -125,7 +125,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtCheckBoxFactory : public QtAbstractEditorFac
 {
     Q_OBJECT
 public:
-    QtCheckBoxFactory(QObject *parent = 0);
+    QtCheckBoxFactory(QObject *parent = nullptr);
     ~QtCheckBoxFactory();
 protected:
     void connectPropertyManager(QtBoolPropertyManager *manager);
@@ -147,7 +147,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtDoubleSpinBoxFactory : public QtAbstractEdit
 {
     Q_OBJECT
 public:
-    QtDoubleSpinBoxFactory(QObject *parent = 0);
+    QtDoubleSpinBoxFactory(QObject *parent = nullptr);
     ~QtDoubleSpinBoxFactory();
 protected:
     void connectPropertyManager(QtDoublePropertyManager *manager);
@@ -172,7 +172,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtLineEditFactory : public QtAbstractEditorFac
 {
     Q_OBJECT
 public:
-    QtLineEditFactory(QObject *parent = 0);
+    QtLineEditFactory(QObject *parent = nullptr);
     ~QtLineEditFactory();
 protected:
     void connectPropertyManager(QtStringPropertyManager *manager);
@@ -196,7 +196,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtDateEditFactory : public QtAbstractEditorFac
 {
     Q_OBJECT
 public:
-    QtDateEditFactory(QObject *parent = 0);
+    QtDateEditFactory(QObject *parent = nullptr);
     ~QtDateEditFactory();
 protected:
     void connectPropertyManager(QtDatePropertyManager *manager);
@@ -220,7 +220,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtTimeEditFactory : public QtAbstractEditorFac
 {
     Q_OBJECT
 public:
-    QtTimeEditFactory(QObject *parent = 0);
+    QtTimeEditFactory(QObject *parent = nullptr);
     ~QtTimeEditFactory();
 protected:
     void connectPropertyManager(QtTimePropertyManager *manager);
@@ -242,7 +242,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtDateTimeEditFactory : public QtAbstractEdito
 {
     Q_OBJECT
 public:
-    QtDateTimeEditFactory(QObject *parent = 0);
+    QtDateTimeEditFactory(QObject *parent = nullptr);
     ~QtDateTimeEditFactory();
 protected:
     void connectPropertyManager(QtDateTimePropertyManager *manager);
@@ -264,7 +264,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtKeySequenceEditorFactory : public QtAbstract
 {
     Q_OBJECT
 public:
-    QtKeySequenceEditorFactory(QObject *parent = 0);
+    QtKeySequenceEditorFactory(QObject *parent = nullptr);
     ~QtKeySequenceEditorFactory();
 protected:
     void connectPropertyManager(QtKeySequencePropertyManager *manager);
@@ -286,7 +286,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtCharEditorFactory : public QtAbstractEditorF
 {
     Q_OBJECT
 public:
-    QtCharEditorFactory(QObject *parent = 0);
+    QtCharEditorFactory(QObject *parent = nullptr);
     ~QtCharEditorFactory();
 protected:
     void connectPropertyManager(QtCharPropertyManager *manager);
@@ -308,7 +308,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtEnumEditorFactory : public QtAbstractEditorF
 {
     Q_OBJECT
 public:
-    QtEnumEditorFactory(QObject *parent = 0);
+    QtEnumEditorFactory(QObject *parent = nullptr);
     ~QtEnumEditorFactory();
 protected:
     void connectPropertyManager(QtEnumPropertyManager *manager);
@@ -334,7 +334,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtCursorEditorFactory : public QtAbstractEdito
 {
     Q_OBJECT
 public:
-    QtCursorEditorFactory(QObject *parent = 0);
+    QtCursorEditorFactory(QObject *parent = nullptr);
     ~QtCursorEditorFactory();
 protected:
     void connectPropertyManager(QtCursorPropertyManager *manager);
@@ -356,7 +356,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtColorEditorFactory : public QtAbstractEditor
 {
     Q_OBJECT
 public:
-    QtColorEditorFactory(QObject *parent = 0);
+    QtColorEditorFactory(QObject *parent = nullptr);
     ~QtColorEditorFactory();
 protected:
     void connectPropertyManager(QtColorPropertyManager *manager);
@@ -378,7 +378,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtFontEditorFactory : public QtAbstractEditorF
 {
     Q_OBJECT
 public:
-    QtFontEditorFactory(QObject *parent = 0);
+    QtFontEditorFactory(QObject *parent = nullptr);
     ~QtFontEditorFactory();
 protected:
     void connectPropertyManager(QtFontPropertyManager *manager);

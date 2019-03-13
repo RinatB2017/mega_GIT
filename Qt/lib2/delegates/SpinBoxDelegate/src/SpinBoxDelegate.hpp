@@ -54,7 +54,7 @@ class SpinBoxDelegate : public QItemDelegate
 public:
     SpinBoxDelegate(int min,
                     int max,
-                    QObject *parent = 0);
+                    QObject *parent = nullptr);
 
     QWidget *createEditor(QWidget *parent,
                           const QStyleOptionViewItem &option,

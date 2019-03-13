@@ -34,7 +34,7 @@ public:
                              const QString display,
                              unsigned short voltage,
                              unsigned short current,
-                             QObject *parent = 0);
+                             QObject *parent = nullptr);
 
     void set_question(QByteArray question);
     QByteArray get_answer(void);

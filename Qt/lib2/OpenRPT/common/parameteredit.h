@@ -37,7 +37,7 @@ class ParameterEdit : public QWidget, public Ui::ParameterEdit
     ParameterEdit(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~ParameterEdit();
 
-    Q_INVOKABLE static  QDialog      *ParameterEditDialog(ParameterEdit *p, QWidget *parent = 0, Qt::WindowFlags f = Qt::Dialog);
+    Q_INVOKABLE static  QDialog      *ParameterEditDialog(ParameterEdit *p, QWidget *parent = nullptr, Qt::WindowFlags f = Qt::Dialog);
     Q_INVOKABLE virtual ParameterList getParameterList();
     Q_INVOKABLE         bool          setDocument(const QDomDocument & doc);
 

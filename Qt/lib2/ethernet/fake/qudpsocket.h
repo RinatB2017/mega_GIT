@@ -37,12 +37,12 @@ class QUdpSocket : public QObject
 {
     Q_OBJECT
 public:
-    explicit QUdpSocket(QWidget *parent = 0);
+    explicit QUdpSocket(QWidget *parent = nullptr);
     bool bind(const QHostAddress &address, quint16 port);
     bool bind(quint16 port = 0);
     bool bind(const QHostAddress &address, quint16 port, BindMode mode);
     bool bind(quint16 port, BindMode mode);
-    qint64 readDatagram(char *data, qint64 maxlen, QHostAddress *host = 0, quint16 *port = 0);
+    qint64 readDatagram(char *data, qint64 maxlen, QHostAddress *host = nullptr, quint16 *port = nullptr);
     qint64 writeDatagram(const char *data, qint64 len, const QHostAddress &host, quint16 port);
     qint64 writeDatagram(const QByteArray &datagram, const QHostAddress &host, quint16 port);
     QString errorString(void);

@@ -36,7 +36,7 @@ protected slots:
     void slotLanguageChanged(QAction *action);
 
 public:
-    explicit SQLiteBrowser(QWidget *parent = 0);
+    explicit SQLiteBrowser(QWidget *parent = nullptr);
     ~SQLiteBrowser();
 
 private:

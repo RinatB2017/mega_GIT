@@ -69,7 +69,7 @@ public:
   \brief Constructor
   \param parent Parent Widget
 */    
-    QMeter(QWidget *parent = 0);
+    QMeter(QWidget *parent = nullptr);
 /*!
   \return The current displayed value
 */    

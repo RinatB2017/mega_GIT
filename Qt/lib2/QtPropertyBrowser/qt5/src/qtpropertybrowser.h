@@ -129,7 +129,7 @@ class QtAbstractEditorFactoryBase : public QObject
 public:
     virtual QWidget *createEditor(QtProperty *property, QWidget *parent) = 0;
 protected:
-    explicit QtAbstractEditorFactoryBase(QObject *parent = 0)
+    explicit QtAbstractEditorFactoryBase(QObject *parent = nullptr)
         : QObject(parent) {}
 
     virtual void breakConnection(QtAbstractPropertyManager *manager) = 0;

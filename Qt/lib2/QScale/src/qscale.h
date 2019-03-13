@@ -27,7 +27,7 @@ class QScale : public QWidget
     Q_OBJECT
 
 public:
-    QScale(QWidget *parent = 0);
+    QScale(QWidget *parent = nullptr);
     ~QScale();
 
     double minimum() const;

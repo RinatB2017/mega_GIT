@@ -70,7 +70,7 @@ class QMeterTaskMenuFactory : public QExtensionFactory
     Q_OBJECT
 
 public:
-    QMeterTaskMenuFactory(QExtensionManager *parent = 0);
+    QMeterTaskMenuFactory(QExtensionManager *parent = nullptr);
 
 protected:
     QObject *createExtension(QObject *object, const QString &iid, QObject *parent) const;

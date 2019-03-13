@@ -30,7 +30,7 @@ class RawData : public QObject
 {
     Q_OBJECT
 public:
-    explicit RawData(QObject *parent = 0,
+    explicit RawData(QObject *parent = nullptr,
                      unsigned char begin_simvol = '$',
                      unsigned char end_simvol = '\n',
                      bool append_end_simvol = true);

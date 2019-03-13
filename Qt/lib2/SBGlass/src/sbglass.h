@@ -22,7 +22,7 @@ class SBGlass : public QObject
 	Q_OBJECT
 
 public:
-	SBGlass(QObject *parent = 0);
+	SBGlass(QObject *parent = nullptr);
 	~SBGlass();
 	virtual void install(QWidget* w);
 	virtual void remove();

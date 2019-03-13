@@ -20,7 +20,7 @@ class Preferences : public QObject
 	Q_OBJECT
 
 	public:
-		Preferences(QObject *parent = 0);
+		Preferences(QObject *parent = nullptr);
 		~Preferences();
 
 		static Preferences* instance();

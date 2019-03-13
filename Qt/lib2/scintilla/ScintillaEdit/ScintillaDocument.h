@@ -31,7 +31,7 @@ class EXPORT_IMPORT_API ScintillaDocument : public QObject
     WatcherHelper *docWatcher;
 
 public:
-    explicit ScintillaDocument(QObject *parent = 0, void *pdoc_=0);
+    explicit ScintillaDocument(QObject *parent = nullptr, void *pdoc_=nullptr);
     virtual ~ScintillaDocument();
     void *pointer();
 

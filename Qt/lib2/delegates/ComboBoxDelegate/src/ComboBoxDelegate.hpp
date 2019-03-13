@@ -15,7 +15,7 @@ class ComboBoxDelegate : public QItemDelegate
     Q_OBJECT
 public:
     ComboBoxDelegate(QStringList sl,
-                     QObject *parent = 0);
+                     QObject *parent = nullptr);
 
     QWidget *createEditor(QWidget *parent,
                           const QStyleOptionViewItem &option,

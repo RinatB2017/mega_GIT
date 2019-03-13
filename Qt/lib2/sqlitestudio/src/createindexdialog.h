@@ -14,16 +14,19 @@ class CreateIndexDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CreateIndexDialog(QWidget *parent = 0);
+    explicit CreateIndexDialog(QWidget *parent = nullptr);
     ~CreateIndexDialog();
     QSqlDatabase db;
     void setTableName(QString tableName);
+    
 signals:
     void emitLog(QString, QString);
+    
 private:
     Ui::CreateIndexDialog *ui;
     QString getSQL();
     QString indexTable;
+    
 private slots:
     void on_buttonBox_rejected();
     void on_buttonBox_accepted();

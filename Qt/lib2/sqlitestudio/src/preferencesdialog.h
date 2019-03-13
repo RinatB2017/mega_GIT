@@ -14,7 +14,7 @@ class PreferencesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PreferencesDialog(QWidget *parent = 0);
+    explicit PreferencesDialog(QWidget *parent = nullptr);
     ~PreferencesDialog();
     QFont queryEditorFont;
     int queryEditorFontSize;
@@ -24,6 +24,7 @@ public:
 
     QFont databaseExplorerFont;
     int databaseExplorerFontSize;
+    
 private:
     Ui::PreferencesDialog *ui;
         QSettings *sett;

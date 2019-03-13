@@ -50,7 +50,7 @@ class EXPORT_IMPORT_API ScintillaEditBase : public QAbstractScrollArea {
 	Q_OBJECT
 
 public:
-	explicit ScintillaEditBase(QWidget *parent = 0);
+	explicit ScintillaEditBase(QWidget *parent = nullptr);
 	virtual ~ScintillaEditBase();
 
 	virtual sptr_t send(

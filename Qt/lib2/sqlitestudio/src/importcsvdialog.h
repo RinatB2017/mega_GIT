@@ -14,7 +14,7 @@ class ImportCSVDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportCSVDialog(QWidget *parent = 0, QSqlDatabase DbToUse = QSqlDatabase(), QString fileName = "");
+    explicit ImportCSVDialog(QWidget *parent = nullptr, QSqlDatabase DbToUse = QSqlDatabase(), QString fileName = "");
     ~ImportCSVDialog();
 
 private:

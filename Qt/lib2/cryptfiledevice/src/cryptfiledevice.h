@@ -26,16 +26,16 @@ public:
         kAesKeyLength256
     };
 
-    explicit CryptFileDevice(QObject *parent = 0);
-    explicit CryptFileDevice(QFileDevice *device, QObject *parent = 0);
+    explicit CryptFileDevice(QObject *parent = nullptr);
+    explicit CryptFileDevice(QFileDevice *device, QObject *parent = nullptr);
     explicit CryptFileDevice(QFileDevice *device,
                              const QByteArray &password,
                              const QByteArray &salt,
-                             QObject *parent = 0);
+                             QObject *parent = nullptr);
     explicit CryptFileDevice(const QString &fileName,
                              const QByteArray &password,
                              const QByteArray &salt,
-                             QObject *parent = 0);
+                             QObject *parent = nullptr);
     ~CryptFileDevice();
 
     bool open(OpenMode flags);

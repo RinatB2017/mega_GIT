@@ -51,7 +51,7 @@ class GLWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLWidget(QWidget *parent = 0);
+    GLWidget(QWidget *parent = nullptr);
     ~GLWidget();
 
     QSize minimumSizeHint() const;

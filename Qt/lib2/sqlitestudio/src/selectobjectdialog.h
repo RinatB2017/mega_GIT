@@ -12,10 +12,11 @@ class SelectObjectDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SelectObjectDialog(QWidget *parent = 0, QString title = tr("Select Object"), QString label = tr("Select Object"));
+    explicit SelectObjectDialog(QWidget *parent = nullptr, QString title = tr("Select Object"), QString label = tr("Select Object"));
     ~SelectObjectDialog();
     void setItems(QStringList items);    
     QString returnValue();
+    
 private:
     Ui::SelectObjectDialog *ui;
 };

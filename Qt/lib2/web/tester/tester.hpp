@@ -30,7 +30,7 @@ class Tester : public QObject
 {
     Q_OBJECT
 public:
-    explicit Tester(int index, QObject *parent = 0);
+    explicit Tester(int index, QObject *parent = nullptr);
 
     void init(const QString &proxy_str);
     void run(const QUrl &url);

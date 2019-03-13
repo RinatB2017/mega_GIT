@@ -31,7 +31,7 @@ class QDESIGNER_WIDGET_EXPORT QLock : public QWidget
     Q_OBJECT
 
 public:
-    QLock(QWidget *parent = 0);
+    QLock(QWidget *parent = nullptr);
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 

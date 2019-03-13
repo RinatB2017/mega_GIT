@@ -74,7 +74,7 @@ class QT_QTMMLWIDGET_EXPORT QtMmlWidget : public QFrame
 	enum MmlFont { NormalFont, FrakturFont, SansSerifFont, ScriptFont,
 				    MonospaceFont, DoublestruckFont };
 
-	QtMmlWidget(QWidget *parent = 0);
+	QtMmlWidget(QWidget *parent = nullptr);
 	~QtMmlWidget();
 
 	QString fontName(MmlFont type) const;

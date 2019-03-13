@@ -31,7 +31,7 @@ class MetaSQLSaveParameters : public QDialog, public Ui::MetaSQLSaveParameters
   Q_OBJECT
 
   public:
-    MetaSQLSaveParameters(QWidget *parent = 0, Qt::WindowFlags fl = 0);
+    MetaSQLSaveParameters(QWidget *parent = nullptr, Qt::WindowFlags fl = 0);
     ~MetaSQLSaveParameters();
 
     int     grade()     const;

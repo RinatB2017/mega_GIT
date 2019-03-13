@@ -222,7 +222,7 @@ class Q_CORE_EXPORT QEventDispatcherSymbian : public QAbstractEventDispatcher
     Q_DECLARE_PRIVATE(QAbstractEventDispatcher)
 
 public:
-    QEventDispatcherSymbian(QObject *parent = 0);
+    QEventDispatcherSymbian(QObject *parent = nullptr);
     ~QEventDispatcherSymbian();
 
     void flush();

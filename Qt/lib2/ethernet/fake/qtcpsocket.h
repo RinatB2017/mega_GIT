@@ -68,7 +68,7 @@ public:
 #endif
     };
 
-    explicit QTcpSocket(QObject *parent = 0);
+    explicit QTcpSocket(QObject *parent = nullptr);
     virtual ~QTcpSocket();
     void connectToHost(const QHostAddress &address, quint16 port, OpenMode mode = ReadWrite);
     void connectToHost(const QString & hostName, quint16 port, OpenMode openMode = ReadWrite);

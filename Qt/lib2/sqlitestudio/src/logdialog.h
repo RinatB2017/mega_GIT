@@ -12,14 +12,17 @@ class LogDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LogDialog(QWidget *parent = 0);
+    explicit LogDialog(QWidget *parent = nullptr);
     ~LogDialog();
     QStringList userLogs;
     QStringList appLogs;
+    
 private:
     Ui::LogDialog *ui;
+    
 signals:
     void closed(bool);
+    
 public slots:
     virtual void closeEvent( QCloseEvent * );
     void refreshLog(QString section, QString newLog);

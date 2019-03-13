@@ -60,7 +60,7 @@ void qScrollEffect(QWidget*, QEffects::DirFlags dir = QEffects::DownScroll, int 
  */
 class ColorDelegate : public QAbstractItemDelegate {
 public:
-    ColorDelegate(QObject *parent = 0) : QAbstractItemDelegate(parent) {}
+    ColorDelegate(QObject *parent = nullptr) : QAbstractItemDelegate(parent) {}
     void paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const {
         if (!index.isValid()) return;
         QColor c = qvariant_cast<QColor>(index.data(Qt::DecorationRole));
@@ -87,7 +87,7 @@ public:
  */
 class QwwColorPopup : public QWidget {
 public:
-    QwwColorPopup(ColorModel *model, QWidget *parent = 0) : QWidget(parent, Qt::Popup) {
+    QwwColorPopup(ColorModel *model, QWidget *parent = nullptr) : QWidget(parent, Qt::Popup) {
         QVBoxLayout *l = new QVBoxLayout(this);
         l->setSpacing(0);
         l->setMargin(0);

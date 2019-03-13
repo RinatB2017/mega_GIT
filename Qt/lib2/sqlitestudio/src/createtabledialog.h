@@ -16,10 +16,11 @@ class CreateTableDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CreateTableDialog(QWidget *parent = 0);
+    explicit CreateTableDialog(QWidget *parent = nullptr);
     ~CreateTableDialog();
     QSqlDatabase db;
     void startAlterTable(QString tableName);
+    
 private:
     Ui::CreateTableDialog *ui;
     void addField(DatabaseTableField f);
@@ -32,6 +33,7 @@ private:
     FieldList f_originalColumnList;
     QStringList columnList;
     QStringList gridColumns;
+    
 private slots:
     void on_buttonBox_rejected();
     void on_buttonBox_accepted();

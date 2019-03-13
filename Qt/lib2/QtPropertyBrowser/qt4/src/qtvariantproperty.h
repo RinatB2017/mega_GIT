@@ -78,7 +78,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtVariantPropertyManager : public QtAbstractPr
 {
     Q_OBJECT
 public:
-    QtVariantPropertyManager(QObject *parent = 0);
+    QtVariantPropertyManager(QObject *parent = nullptr);
     ~QtVariantPropertyManager();
 
     virtual QtVariantProperty *addProperty(int propertyType, const QString &name = QString());
@@ -164,7 +164,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtVariantEditorFactory : public QtAbstractEdit
 {
     Q_OBJECT
 public:
-    QtVariantEditorFactory(QObject *parent = 0);
+    QtVariantEditorFactory(QObject *parent = nullptr);
     ~QtVariantEditorFactory();
 protected:
     void connectPropertyManager(QtVariantPropertyManager *manager);

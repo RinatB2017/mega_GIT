@@ -33,24 +33,17 @@ class QDESIGNER_WIDGET_EXPORT QFreq : public QWidget
 {
     Q_OBJECT
 
-
 public:
 
-    QFreq(QWidget *parent = 0);
+    QFreq(QWidget *parent = nullptr);
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
-
-
 signals:
-
-
 
 public slots:
 
-
 protected:
-
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
     void paintBorder();
@@ -63,7 +56,6 @@ protected:
     void initColor();
    
 private:
-
     int zoom_point;
     int start_point;
     int end_point;
@@ -89,8 +81,6 @@ private:
     QColor col4096;
     QColor colLock;
     QString wavFile;
-
-    
     
 };
 

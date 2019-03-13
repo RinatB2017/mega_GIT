@@ -34,7 +34,7 @@ class QDESIGNER_WIDGET_EXPORT Q7seg : public QWidget
 
 public:
 
-    Q7seg(QWidget *parent = 0);
+    Q7seg(QWidget *parent = nullptr);
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
     QColor pen() const;

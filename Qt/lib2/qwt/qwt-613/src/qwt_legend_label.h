@@ -25,7 +25,7 @@ class QWT_EXPORT QwtLegendLabel: public QwtTextLabel
 {
     Q_OBJECT
 public:
-    explicit QwtLegendLabel( QWidget *parent = 0 );
+    explicit QwtLegendLabel( QWidget *parent = nullptr );
     virtual ~QwtLegendLabel();
 
     void setData( const QwtLegendData & );

@@ -15,10 +15,11 @@ class CreateViewDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CreateViewDialog(QWidget *parent = 0);
+    explicit CreateViewDialog(QWidget *parent = nullptr);
     ~CreateViewDialog();
     QSqlDatabase db;
     void setViewName(QString viewName);
+    
 private:
     Ui::CreateViewDialog *ui;
     QString getSQL();

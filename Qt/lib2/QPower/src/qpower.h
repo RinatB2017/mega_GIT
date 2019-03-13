@@ -33,7 +33,7 @@ class QDESIGNER_WIDGET_EXPORT QPower : public QWidget
 
 public:
 
-    QPower(QWidget *parent = 0);
+    QPower(QWidget *parent = nullptr);
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
     QColor color() const

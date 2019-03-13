@@ -16,7 +16,7 @@ class QDESIGNER_WIDGET_EXPORT QSwitch : public QWidget
 
 public: 
     enum SwitchType {Horizontal,Vertical};
-    QSwitch(QWidget *parent = 0);
+    QSwitch(QWidget *parent = nullptr);
     bool value() const { return m_value; }
     SwitchType type() const { return m_type; }
 public slots:

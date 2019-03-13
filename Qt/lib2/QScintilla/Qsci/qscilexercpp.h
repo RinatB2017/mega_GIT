@@ -156,7 +156,7 @@ public:
     //! Construct a QsciLexerCPP with parent \a parent.  \a parent is typically
     //! the QsciScintilla instance.  \a caseInsensitiveKeywords is true if the
     //! lexer ignores the case of keywords.
-    QsciLexerCPP(QObject *parent = 0, bool caseInsensitiveKeywords = false);
+    QsciLexerCPP(QObject *parent = nullptr, bool caseInsensitiveKeywords = false);
 
     //! Destroys the QsciLexerCPP instance.
     virtual ~QsciLexerCPP();

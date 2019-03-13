@@ -106,7 +106,7 @@ public:
     /*! Creates an instance of QHexEdit.
     \param parent Parent widget of QHexEdit.
     */
-    QHexEdit(QWidget *parent = 0);
+    QHexEdit(QWidget *parent = nullptr);
 
     /*! Returns the index position of the first occurrence
     of the byte array ba in this byte array, searching forward from index position

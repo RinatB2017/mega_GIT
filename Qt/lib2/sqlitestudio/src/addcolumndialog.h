@@ -13,12 +13,13 @@ class AddColumnDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddColumnDialog(QWidget *parent = 0, QString fieldName = "", QString dataType = "Text");
+    explicit AddColumnDialog(QWidget *parent = nullptr, QString fieldName = "", QString dataType = "Text");
     ~AddColumnDialog();
     QString fieldName;
     QString dataType;
     DatabaseTableField getFieldSpec();
     void setField(DatabaseTableField f);
+    
 private:
     Ui::AddColumnDialog *ui;
 

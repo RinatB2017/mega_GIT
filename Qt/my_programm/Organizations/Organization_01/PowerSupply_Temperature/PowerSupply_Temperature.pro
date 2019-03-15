@@ -27,7 +27,7 @@ DEFINES += SAVE_WIDGETS_COMBOBOX
 DEFINES += SAVE_WIDGETS_SPINBOX
 
 DEFINES += FAST_COMMAND
-#DEFINES += FAKE
+DEFINES += FAKE
 DEFINES += ADD_TOOLBAR
 
 #CONFIG  += use_b588
@@ -50,11 +50,11 @@ LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/power_knock/power_knock.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/crc/crc.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
+include ($$LIB_PATH2/power_knock/power_knock.pri)
 include ($$LIB_PATH2/connection/connection.pri)
 
 use_b588 {

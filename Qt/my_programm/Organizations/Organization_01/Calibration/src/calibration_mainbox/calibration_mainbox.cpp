@@ -18,32 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTreeWidgetItemIterator>
-#include <QDialogButtonBox>
-#include <QDesktopWidget>
-#include <QSqlDatabase>
-#include <QRadioButton>
-#include <QHBoxLayout>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QTextStream>
-#include <QTableView>
-#include <QByteArray>
-#include <QLineEdit>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QKeyEvent>
-#include <QSplitter>
-#include <QSpinBox>
-#include <QToolBar>
-#include <QString>
-#include <QDialog>
-#include <QSound>
-#include <QTimer>
-#include <QDate>
-#include <QTime>
-#include <QList>
-#include <QDir>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -628,12 +607,14 @@ bool MainBox::find_two_device(void)
     }
 #endif
 
+#ifndef FAKE
     QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
     if(ports.count() < 2)
     {
         emit error(tr("Нужно МИНИМУМ 2 порта (калибратор и USB приемо-передатчик)"));
         return false;
     }
+#endif
 
 #ifdef CALIBRATION_WIRED
     ok = multimeter->find_wired_device(&port_name);
@@ -925,22 +906,22 @@ void MainBox::wired_off(void)
 
     emit info(V764_2_CMD_0x1D_TEXT);
 #ifdef CALIBRATION_WIRED
-    multimeter->set_serno(ui->sb_SerNo->value());
-    multimeter->set_year(ui->sb_Year->value());
-    multimeter->set_address(FIXED_ADDRESS);
-    multimeter->set_channel(FIXED_CHANNEL);
+    multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+    multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+    multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+    multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
     multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
     multimeter->set_all(ui->sb_SerNo->value(),
                         ui->sb_Year->value(),
                         ui->sb_address->value(),
-                        ui->sb_channel->value());
+                        ui->sb_channel->value()));
 #endif
 
-    multimeter->set_serno(ui->sb_SerNo->value());
-    multimeter->set_year(ui->sb_Year->value());
-    multimeter->set_address(FIXED_ADDRESS);
-    multimeter->set_channel(FIXED_CHANNEL);
+    multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+    multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+    multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+    multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
     multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
     multimeter->print_cmd_text(V764_2_CMD_0x1D);
     bool ok = multimeter->wired_off();
@@ -1446,7 +1427,7 @@ void MainBox::test_calibration_3500(bool state)
     bool ok = multimeter->remote_control_on();
     if(!ok)
     {
-        QToolButton *btn = (QToolButton *)sender();
+        QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
         if(btn) btn->setChecked(false);
         return;
     }
@@ -1483,15 +1464,15 @@ void MainBox::test(void)
                                       multimeter,
                                       this);
     hc->setWindowTitle(tr("Ручное управление"));
-    hc->set_serno(ui->sb_SerNo->value());
-    hc->set_year(ui->sb_Year->value());
+    hc->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+    hc->set_year(static_cast<uint>(ui->sb_Year->value()));
 
 #ifdef CALIBRATION_WIRED
     hc->set_address(FIXED_ADDRESS);
     hc->set_channel(FIXED_CHANNEL);
 #else
-    hc->set_address(ui->sb_address->value());
-    hc->set_channel(ui->sb_channel->value());
+    hc->set_address(static_cast<uint>(ui->sb_address->value()));
+    hc->set_channel(static_cast<uint>(ui->sb_channel->value()));
 #endif
 
     hc->setFixedSize(hc->sizeHint());
@@ -1509,16 +1490,16 @@ void MainBox::test_connect_v786(void)
 
     emit info(tr("Проверка радиоканала"));
 #ifdef CALIBRATION_WIRED
-    multimeter->set_serno(ui->sb_SerNo->value());
-    multimeter->set_year(ui->sb_Year->value());
-    multimeter->set_address(FIXED_ADDRESS);
-    multimeter->set_channel(FIXED_CHANNEL);
+    multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+    multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+    multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+    multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
     multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-    multimeter->set_serno(ui->sb_SerNo->value());
-    multimeter->set_year(ui->sb_Year->value());
-    multimeter->set_address(ui->sb_address->value());
-    multimeter->set_channel(ui->sb_channel->value());
+    multimeter->set_serno(static_cast<uint>(static_cast<uint>(ui->sb_SerNo->value())));
+    multimeter->set_year(static_cast<uint>(static_cast<uint>(ui->sb_Year->value())));
+    multimeter->set_address(static_cast<uint>(static_cast<uint>(ui->sb_address->value())));
+    multimeter->set_channel(static_cast<uint>(static_cast<uint>(ui->sb_channel->value())));
     multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -1690,7 +1671,7 @@ void MainBox::check_cable(int index, bool send_UD0)
 
     if(send_UD0)
     {
-        calibrator->set_timeout(sb_time_calibration->value());
+        calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
         calibrator->reset_U();
     }
 
@@ -1702,7 +1683,7 @@ void MainBox::check_cable(int index, bool send_UD0)
     text.append(tr("Будет произведено переключение режима калибровки.\n"));
     text.append(tr("Нажмите ОК"));
 
-    calibrator->set_timeout(sb_time_calibration->value());
+    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
     calibrator->reset_U();
     msgInfo(text);
 }
@@ -1829,16 +1810,16 @@ bool MainBox::calibration(void)
         if(is_worked == false) return false;
 
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -1859,16 +1840,16 @@ bool MainBox::calibration(void)
 
         if(is_worked == false) return false;
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
         multimeter->print_cmd_text(V764_2_CMD_0x02);
@@ -1959,7 +1940,7 @@ bool MainBox::calibration(void)
                 control_log->save();
 
                 message_critical(this, tr("Ошибка"), tr("Калибровка отменена!"));
-                calibrator->set_timeout(sb_time_calibration->value());
+                calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                 calibrator->reset_U();
                 return false;
             }
@@ -1988,7 +1969,7 @@ bool MainBox::calibration(void)
                     control_log->save();
 
                     message_critical(this, tr("Ошибка"), tr("Калибровка завершена с ошибкой!"));
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     return false;
                 }
@@ -2044,16 +2025,16 @@ bool MainBox::calibration(void)
             if(ui->cb_AutoSave->isChecked() && answers.at(n).last_point)
             {
 #ifdef CALIBRATION_WIRED
-                multimeter->set_serno(ui->sb_SerNo->value());
-                multimeter->set_year(ui->sb_Year->value());
-                multimeter->set_address(FIXED_ADDRESS);
-                multimeter->set_channel(FIXED_CHANNEL);
+                multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+                multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+                multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+                multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
                 multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-                multimeter->set_serno(ui->sb_SerNo->value());
-                multimeter->set_year(ui->sb_Year->value());
-                multimeter->set_address(ui->sb_address->value());
-                multimeter->set_channel(ui->sb_channel->value());
+                multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+                multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+                multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+                multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
                 multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
                 multimeter->print_cmd_text(V764_2_CMD_0x1B);
@@ -2067,7 +2048,7 @@ bool MainBox::calibration(void)
     }
     int full_time_msec = full_time.elapsed();
 
-    calibrator->set_timeout(sb_time_calibration->value());
+    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
     calibrator->reset_U();
 
 #ifdef CALIBRATION_WIRED
@@ -2078,16 +2059,16 @@ bool MainBox::calibration(void)
     {
         if(is_worked == false) return false;
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
         multimeter->print_cmd_text(V764_2_CMD_0x1B);
@@ -2099,16 +2080,16 @@ bool MainBox::calibration(void)
 
         if(is_worked == false) return false;
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
         multimeter->print_cmd_text(V764_2_CMD_0x03);
@@ -2119,9 +2100,9 @@ bool MainBox::calibration(void)
         }
 
         emit info(QString(tr("Прошло времени: %1 сек."))
-                  .arg(full_time_msec / 1000.0f));
+                  .arg(full_time_msec / 1000.0));
         emit info(QString(tr("Затрачено времени на шаг (среднее): %1 сек."))
-                  .arg(full_time_msec / answers.count() / 1000.0f));
+                  .arg(full_time_msec / answers.count() / 1000.0));
         emit info(QString(tr("Ошибок: %1 "))
                   .arg(cnt_error));
 
@@ -4407,7 +4388,7 @@ int MainBox::check_DC_mV(float value_mV,
     }
     //---
 
-    calibrator->set_timeout(sb_time_calibration->value());
+    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
     ok = calibrator->set_U_V(value_mV / 1000.0f);
     if(!ok)
     {
@@ -4418,16 +4399,16 @@ int MainBox::check_DC_mV(float value_mV,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -4507,23 +4488,23 @@ int MainBox::check_DC_V(float value_V,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
         multimeter->set_deviation(0);
         multimeter->set_retention(0);
         multimeter->set_auto_limit(false);
-        multimeter->set_limit(limit);
+        multimeter->set_limit(static_cast<uint>(limit));
         multimeter->print_cmd_text(V764_2_CMD_0x06);
         double value = 0;
         bool ok = multimeter->measuring_UDC(&value);
@@ -4585,7 +4566,7 @@ int MainBox::check_AC_mV(float value_mV,
     }
     //---
 
-    calibrator->set_timeout(sb_time_calibration->value());
+    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
     ok = calibrator->set_U_V(value_mV / 1000.0f, freq_kHz);
     if(!ok)
     {
@@ -4598,23 +4579,23 @@ int MainBox::check_AC_mV(float value_mV,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
         multimeter->set_deviation(0);
         multimeter->set_retention(0);
         multimeter->set_auto_limit(false);
-        multimeter->set_limit(limit);
+        multimeter->set_limit(static_cast<uint>(limit));
         multimeter->print_cmd_text(V764_2_CMD_0x07);
         double value = 0;
         bool ok = multimeter->measuring_UAC(&value);
@@ -4677,7 +4658,7 @@ int MainBox::check_AC_V(float value_V,
     }
     //---
 
-    calibrator->set_timeout(sb_time_calibration->value());
+    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
     ok = calibrator->set_U_V(value_V, freq_kHz);
     if(!ok)
     {
@@ -4691,23 +4672,23 @@ int MainBox::check_AC_V(float value_V,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
         multimeter->set_deviation(0);
         multimeter->set_retention(0);
         multimeter->set_auto_limit(false);
-        multimeter->set_limit(limit);
+        multimeter->set_limit(static_cast<uint>(limit));
         multimeter->print_cmd_text(V764_2_CMD_0x07);
         double value = 0;
         bool ok = multimeter->measuring_UAC(&value);
@@ -4715,7 +4696,7 @@ int MainBox::check_AC_V(float value_V,
         {
             return multimeter->get_last_error();
         }
-        *result_delta_mV = (value - value_V) * 1000.0f;
+        *result_delta_mV = (value - value_V) * 1000.0;
 
         int m_limit = multimeter->get_limit(V764_2_CMD_0x07, &ok);
         if(m_limit != limit)
@@ -4772,7 +4753,7 @@ int MainBox::check_DC_mkA(float value_mkA,
     }
     //---
 
-    calibrator->set_timeout(sb_time_calibration->value());
+    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
     ok = calibrator->set_I_mA(value_mkA / 1000.0f);
     if(!ok)
     {
@@ -4786,16 +4767,16 @@ int MainBox::check_DC_mkA(float value_mkA,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -4885,23 +4866,23 @@ int MainBox::check_DC_mA(float value_mA,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
         multimeter->set_deviation(0);
         multimeter->set_retention(0);
         multimeter->set_auto_limit(false);
-        multimeter->set_limit(limit);
+        multimeter->set_limit(static_cast<uint>(limit));
         multimeter->print_cmd_text(V764_2_CMD_0x08);
         double value = 0;
         ok = multimeter->measuring_IDC(&value);
@@ -4963,7 +4944,7 @@ int MainBox::check_AC_mA(float value_mA,
     }
     //---
 
-    calibrator->set_timeout(sb_time_calibration->value());
+    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
     ok = calibrator->set_I_mA(value_mA, freq_kHz);
     if(!ok)
     {
@@ -4976,23 +4957,23 @@ int MainBox::check_AC_mA(float value_mA,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
         multimeter->set_deviation(0);
         multimeter->set_retention(0);
         multimeter->set_auto_limit(false);
-        multimeter->set_limit(limit);
+        multimeter->set_limit(static_cast<uint>(limit));
         multimeter->print_cmd_text(V764_2_CMD_0x09);
         double value = 0;
         bool ok = multimeter->measuring_IAC(&value);
@@ -5111,23 +5092,23 @@ int MainBox::check_AC_A(float value_A,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
         multimeter->set_deviation(0);
         multimeter->set_retention(0);
         multimeter->set_auto_limit(false);
-        multimeter->set_limit(limit);
+        multimeter->set_limit(static_cast<uint>(limit));
         multimeter->print_cmd_text(V764_2_CMD_0x09);
         double value = 0;
         bool ok = multimeter->measuring_IAC(&value);
@@ -5222,7 +5203,7 @@ int MainBox::check_DC_A(float value_A,
     }
     if(type_calibrator == H4_7)
     {
-        calibrator->set_timeout(sb_time_calibration->value());
+        calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
         bool ok = calibrator->set_U_V(value_A);
         if(!ok)
         {
@@ -5237,16 +5218,16 @@ int MainBox::check_DC_A(float value_A,
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -5316,16 +5297,16 @@ int MainBox::check_other_measuring(const QString &prefix,
     {
         bool ok;
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -6761,16 +6742,16 @@ int MainBox::control_UDC_1000V(MyReport *report)
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -6861,16 +6842,16 @@ int MainBox::control_UDC_minus_1000V(MyReport *report)
     if(is_auto_check)
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -7066,16 +7047,16 @@ int MainBox::control_UAC_199V_1kHz(MyReport *report)
         float value_V = 199.0f;
         float max_delta_V = 0.72f;
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -7118,7 +7099,7 @@ int MainBox::control_UAC_199V_1kHz(MyReport *report)
                                          tr("Проверьте показание мультиметра (должно быть 199В 1кГц)"));
         if(button != QMessageBox::Ok)
         {
-            calibrator->set_timeout(sb_time_calibration->value());
+            calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
             calibrator->reset_U();
             return E_BREAK_MEASURING;
         }
@@ -7193,16 +7174,16 @@ int MainBox::control_UAC_400V_1kHz(MyReport *report)
         float max_delta_V = 2.4f;
         double value = 0;
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
         multimeter->set_deviation(0);
@@ -7243,7 +7224,7 @@ int MainBox::control_UAC_400V_1kHz(MyReport *report)
                                          tr("Проверьте показание мультиметра (должно быть 400В 1кГц)"));
         if(button != QMessageBox::Ok)
         {
-            calibrator->set_timeout(sb_time_calibration->value());
+            calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
             calibrator->reset_U();
             return E_BREAK_MEASURING;
         }
@@ -7397,7 +7378,7 @@ int MainBox::control_IAC_10A_1kHz(MyReport *report)
 
     if(cable_in != TEST_CABLE_A)
     {
-        calibrator->set_timeout(sb_time_calibration->value());
+        calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
         calibrator->reset_I(); // сделано по просьбе регуляторов
 
         cable_in = TEST_CABLE_A;
@@ -7422,7 +7403,7 @@ int MainBox::control_IAC_10A_1kHz(MyReport *report)
     }
     if(type_calibrator == H4_7)
     {
-        calibrator->set_timeout(sb_time_calibration->value());
+        calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
         bool ok = calibrator->set_U_V(value_A, 1.0f);
         if(!ok)
         {
@@ -7436,23 +7417,23 @@ int MainBox::control_IAC_10A_1kHz(MyReport *report)
             float max_delta_A = 0.24f;
             bool ok = false;
 #ifdef CALIBRATION_WIRED
-            multimeter->set_serno(ui->sb_SerNo->value());
-            multimeter->set_year(ui->sb_Year->value());
-            multimeter->set_address(FIXED_ADDRESS);
-            multimeter->set_channel(FIXED_CHANNEL);
+            multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+            multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+            multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+            multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
             multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-            multimeter->set_serno(ui->sb_SerNo->value());
-            multimeter->set_year(ui->sb_Year->value());
-            multimeter->set_address(ui->sb_address->value());
-            multimeter->set_channel(ui->sb_channel->value());
+            multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+            multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+            multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+            multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
             multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
             multimeter->set_deviation(0);
             multimeter->set_retention(0);
             multimeter->set_auto_limit(false);
-            multimeter->set_limit(limit);
+            multimeter->set_limit(static_cast<char>(limit));
             multimeter->print_cmd_text(V764_2_CMD_0x09);
             double value = 0;
             ok = multimeter->measuring_IAC(&value);
@@ -7469,7 +7450,7 @@ int MainBox::control_IAC_10A_1kHz(MyReport *report)
                 return E_INVALID_LIMIT;
             }
 
-            float delta_A = qAbs(value_A - value);
+            qreal delta_A = qAbs(value_A - value);
             if(delta_A > max_delta_A)
             {
                 emit debug(QString(tr("value = %1")).arg(value));
@@ -9147,7 +9128,7 @@ int MainBox::check_treeWidget_controls_U(MyReport *report)
                 }
                 if((*it_U)->text(0) == CONTROL_UDC_170V_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_UDC_199V(report);
                     calibrator->reset_U();
@@ -9264,7 +9245,7 @@ int MainBox::check_treeWidget_controls_U(MyReport *report)
                 }
                 if((*it_U)->text(0) == CONTROL_UAC_100V_1kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_UAC_100V_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9274,7 +9255,7 @@ int MainBox::check_treeWidget_controls_U(MyReport *report)
                 }
                 if((*it_U)->text(0) == CONTROL_UAC_100V_20kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_UAC_100V_20kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9296,7 +9277,7 @@ int MainBox::check_treeWidget_controls_U(MyReport *report)
                 //Требуется усилитель напряжения
                 if((*it_U)->text(0) == CONTROL_UDC_1000V_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_UDC_1000V(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9306,7 +9287,7 @@ int MainBox::check_treeWidget_controls_U(MyReport *report)
                 }
                 if((*it_U)->text(0) == CONTROL_UDC_minus_1000V_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_UDC_minus_1000V(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9317,7 +9298,7 @@ int MainBox::check_treeWidget_controls_U(MyReport *report)
 
                 if((*it_U)->text(0) == CONTROL_UAC_170V_1kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_UAC_199V_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9327,7 +9308,7 @@ int MainBox::check_treeWidget_controls_U(MyReport *report)
                 }
                 if((*it_U)->text(0) == CONTROL_UAC_400V_1kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_UAC_400V_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9415,7 +9396,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 }
                 if((*it_I)->text(0) == CONTROL_IDC_1000mA_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IDC_1000mA(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9425,7 +9406,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 }
                 if((*it_I)->text(0) == CONTROL_IDC_minus_1000mA_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IDC_minus_1000mA(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9437,7 +9418,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 //A
                 if((*it_I)->text(0) == CONTROL_IAC_1mA_1_kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IAC_1mA_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9447,7 +9428,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 }
                 if((*it_I)->text(0) == CONTROL_IAC_10mA_1_kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IAC_10mA_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9457,7 +9438,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 }
                 if((*it_I)->text(0) == CONTROL_IAC_100mA_1_kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IAC_100mA_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9467,7 +9448,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 }
                 if((*it_I)->text(0) == CONTROL_IAC_1000mA_1_kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IAC_1000mA_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9479,7 +9460,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 //Требуется усилитель тока
                 if((*it_I)->text(0) == CONTROL_IDC_19A_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IDC_19A(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9489,7 +9470,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 }
                 if((*it_I)->text(0) == CONTROL_IDC_minus_19A_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IDC_minus_19A(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9499,7 +9480,7 @@ int MainBox::check_treeWidget_controls_I(MyReport *report)
                 }
                 if((*it_I)->text(0) == CONTROL_IAC_10A_1_kHz_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_IAC_10A_1kHz(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9752,7 +9733,7 @@ int MainBox::check_treeWidget_controls_Hi_Low_U(MyReport *report)
 
                 if((*it_HLU)->text(0) == CONTROL_HI_IDC_10A_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_hi_IDC_10A(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9839,7 +9820,7 @@ int MainBox::check_treeWidget_controls_Hi_Low_U(MyReport *report)
 
                 if((*it_HLU)->text(0) == CONTROL_LO_IDC_10A_TEXT)
                 {
-                    calibrator->set_timeout(sb_time_calibration->value());
+                    calibrator->set_timeout(static_cast<uint>(sb_time_calibration->value()));
                     calibrator->reset_U();
                     err = control_lo_IDC_10A(report);
                     if(err != E_NO_ERROR) multimeter->print_last_error();
@@ -9910,16 +9891,16 @@ void MainBox::check_multemeter(bool state)
 #endif
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -10010,16 +9991,16 @@ void MainBox::check_multemeter(bool state)
 #endif
     {
 #ifdef CALIBRATION_WIRED
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(FIXED_ADDRESS);
-        multimeter->set_channel(FIXED_CHANNEL);
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(FIXED_ADDRESS);
+        multimeter->set_channel(static_cast<uint>(FIXED_CHANNEL);
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #else
-        multimeter->set_serno(ui->sb_SerNo->value());
-        multimeter->set_year(ui->sb_Year->value());
-        multimeter->set_address(ui->sb_address->value());
-        multimeter->set_channel(ui->sb_channel->value());
+        multimeter->set_serno(static_cast<uint>(ui->sb_SerNo->value()));
+        multimeter->set_year(static_cast<uint>(ui->sb_Year->value()));
+        multimeter->set_address(static_cast<uint>(ui->sb_address->value()));
+        multimeter->set_channel(static_cast<uint>(ui->sb_channel->value()));
         multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 #endif
 
@@ -10199,10 +10180,10 @@ void MainBox::fake(void)
     emit debug(QString("channel %1").arg(channel->value()));
 #endif
 
-    multimeter->set_fake_serno(serno->value());
-    multimeter->set_fake_year(year->value());
-    multimeter->set_fake_address(address->value());
-    multimeter->set_fake_channel(channel->value());
+    multimeter->set_fake_serno(static_cast<uint16_t>(serno->value()));
+    multimeter->set_fake_year(static_cast<uint16_t>(year->value()));
+    multimeter->set_fake_address(static_cast<uint8_t>(address->value()));
+    multimeter->set_fake_channel(static_cast<uint8_t>(channel->value()));
 }
 #endif
 //--------------------------------------------------------------------------------

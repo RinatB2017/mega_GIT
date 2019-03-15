@@ -27,7 +27,7 @@ DEFINES += SAVE_WIDGETS_SPINBOX
 DEFINES += MEASURING_CURRENT_IN_SHUNT
 
 DEFINES += FAST_COMMAND
-#DEFINES += FAKE
+DEFINES += FAKE
 
 QT      += serialport
 
@@ -55,14 +55,14 @@ win32 {
 LIB_PATH  = "../../../../lib"
 LIB_PATH2 = "../../../../lib2"
 
-include ($$LIB_PATH/power_knock/power_knock.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/time/time.pri)
-include ($$LIB_PATH2/crc/crc.pri)
 
+include ($$LIB_PATH2/power_knock/power_knock.pri)
 include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)
+include ($$LIB_PATH2/crc/crc.pri)
 
 use_v764 {
     DEFINES += V764

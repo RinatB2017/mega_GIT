@@ -205,6 +205,19 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    uchar a = 0x85;
+    uchar b = '\x85';
+    if(a == b)
+    {
+        emit info("OK");
+    }
+    else
+    {
+        emit error("FAIL");
+    }
+#endif
+
+#if 0
     QMediaPlayer *player = new QMediaPlayer;
     player->setMedia(QUrl::fromLocalFile("/users/somebody/somewhere/demo.mp4"));
     player->setVolume(10);

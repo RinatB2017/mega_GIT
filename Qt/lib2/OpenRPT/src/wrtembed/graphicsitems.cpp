@@ -1943,7 +1943,7 @@ void ORGraphicsBarcodeItem::properties(QWidget * parent)
     this->setFormat(le->format());
     //Seb Infflux
 
-    //setMaxLength(le->sliderMaxVal->value());
+    //setMaxLength(le->sliderMaxVal->value()));
     this->setMaxLength(le->getCBSlideMaxValue());
 
     double dt;

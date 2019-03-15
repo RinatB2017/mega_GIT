@@ -56,7 +56,7 @@ private:
     QByteArray input;
     QByteArray output;
 
-    bool is_open;
+    bool is_open = false;
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -65,7 +65,7 @@ private:
     QSqlDatabase db;
     QString driver_name;
     QString database_name;
-    QTableView *table_view;
+    QTableView *table_view = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif // DATABASE_HPP

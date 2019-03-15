@@ -8,7 +8,7 @@ DMatrixSquareConfig::DMatrixSquareConfig(QWidget *parent) :
     ui->setupUi(this);
 
     this->_preview = new DMatrixPreview(this);
-    this->_preview->generePreview(this->ui->_Format->value());
+    this->_preview->generePreview(ui->_Format->value());
     this->_preview->setVisible(false);
 
     connect(this->ui->_Format,  SIGNAL(sliderMoved(int)),   this,           SLOT(capacityRefresh(int)));

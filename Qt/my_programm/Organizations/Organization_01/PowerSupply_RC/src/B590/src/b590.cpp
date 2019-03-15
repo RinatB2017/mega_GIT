@@ -784,9 +784,20 @@ void B590::find_max_power(void)
 
     QCoreApplication::processEvents();
 
+    int cnt = 0;
     flag_find_stop = false;
     while(!flag_find_stop)
     {
+        QCoreApplication::processEvents();
+
+        //---
+        cnt++;
+        if(cnt > 1e6)
+        {
+            flag_find_stop = true;
+        }
+        //---
+
         powersupply->set_address(ui->sb_address->value());
         powersupply->set_UI(value,
                             static_cast<uint16_t>(ui->sb_max_current->value()));

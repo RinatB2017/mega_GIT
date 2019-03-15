@@ -3198,10 +3198,10 @@ bool Multimeter_V786_2::choice_options(int cmd,
     channel->setMinimum(1);
     channel->setMaximum(15);
 
-    set_serno(serno->value());
-    set_year(year->value());
-    set_address(address->value());
-    set_channel(channel->value());
+    set_serno(static_cast<uint>(serno->value()));
+    set_year(static_cast<uint>(year->value()));
+    set_address(static_cast<uint>(address->value()));
+    set_channel(static_cast<uint>(channel->value()));
     set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 
     QPushButton *btn_ok = new QPushButton("OK");
@@ -3262,10 +3262,10 @@ int Multimeter_V786_2::send_cmd(int cmd)
     ok = choice_options(cmd, &serno_value, &year_value, &address_value, &channel_value);
     if(ok)
     {
-        set_serno(serno_value);
-        set_year(year_value);
-        set_address(address_value);
-        set_channel(channel_value);
+        set_serno(static_cast<uint>(serno_value));
+        set_year(static_cast<uint>(year_value));
+        set_address(static_cast<uint>(address_value));
+        set_channel(static_cast<uint>(channel_value));
 
         print_cmd_text(cmd);
         ok = find_cmd(cmd);

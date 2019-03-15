@@ -29,17 +29,17 @@
 //--------------------------------------------------------------------------------
 union B_BYTE
 {
-    unsigned char value;
+    uchar value;
     struct
     {
-        unsigned bit0:1;
-        unsigned bit1:1;
-        unsigned bit2:1;
-        unsigned bit3:1;
-        unsigned bit4:1;
-        unsigned bit5:1;
-        unsigned bit6:1;
-        unsigned bit7:1;
+        uchar bit0:1;
+        uchar bit1:1;
+        uchar bit2:1;
+        uchar bit3:1;
+        uchar bit4:1;
+        uchar bit5:1;
+        uchar bit6:1;
+        uchar bit7:1;
     } bites;
 };
 //--------------------------------------------------------------------------------
@@ -125,8 +125,10 @@ bool BitBang::open(void)
         return true;
     }
 
-    ftStatus = FT_ListDevices(&numDevs, NULL, FT_LIST_NUMBER_ONLY);
-    ftStatus = FT_ListDevices((PVOID)devIndex ,&Buf, FT_LIST_BY_INDEX | FT_OPEN_BY_SERIAL_NUMBER);
+    ftStatus = FT_ListDevices(&numDevs, nullptr, FT_LIST_NUMBER_ONLY);
+    ftStatus = FT_ListDevices(reinterpret_cast<PVOID>(devIndex),
+                              &Buf,
+                              FT_LIST_BY_INDEX | FT_OPEN_BY_SERIAL_NUMBER);
 
     ftStatus = FT_Open(1, &ftHandle);
     if (ftStatus != FT_OK)
@@ -173,7 +175,7 @@ bool BitBang::VerifyMPSSE(void)
     // Synchronize the MPSSE interface by sending bad command '0xAA'
     //////////////////////////////////////////////////////////////////
     DWORD dwCount;
-    OutputBuffer[dwNumBytesToSend++] = '\xAA';		//Add BAD command '0xAA'
+    OutputBuffer[dwNumBytesToSend++] = 0xAA;		//Add BAD command '0xAA'
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);	// Send off the BAD commands
     if(ftStatus != FT_OK)
     {
@@ -216,7 +218,7 @@ bool BitBang::VerifyMPSSE(void)
     // Synchronize the MPSSE interface by sending bad command '0xAB'
     //////////////////////////////////////////////////////////////////
     //dwNumBytesToSend = 0;                     //Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\xAB';	//Send BAD command '0xAB'
+    OutputBuffer[dwNumBytesToSend++] = 0xAB;	//Send BAD command '0xAB'
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);	// Send off the BAD commands
     if(ftStatus != FT_OK)
     {
@@ -256,9 +258,9 @@ void BitBang::ConfigureMPSSE(void)
     ////////////////////////////////////////////////////////////////////
     // Configure the MPSSE for I2C communication with 24LC02B
     //////////////////////////////////////////////////////////////////
-    OutputBuffer[dwNumBytesToSend++] = '\x8A';  //Ensure disable clock divide by 5 for 60Mhz master clock
-    OutputBuffer[dwNumBytesToSend++] = '\x97';	//Ensure turn off adaptive clocking
-    OutputBuffer[dwNumBytesToSend++] = '\x8D'; 	//Enable 3 phase data clock, used by I2C to allow data on both clock edges
+    OutputBuffer[dwNumBytesToSend++] = 0x8A;    //Ensure disable clock divide by 5 for 60Mhz master clock
+    OutputBuffer[dwNumBytesToSend++] = 0x97;	//Ensure turn off adaptive clocking
+    OutputBuffer[dwNumBytesToSend++] = 0x8D; 	//Enable 3 phase data clock, used by I2C to allow data on both clock edges
     // Send off the commands
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);
     if(ftStatus != FT_OK)
@@ -266,14 +268,14 @@ void BitBang::ConfigureMPSSE(void)
         print_error("ConfigureMPSSE: FT_Write(1)", ftStatus);
     }
     dwNumBytesToSend = 0;                       //Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\x80';	// Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x03'; 	//Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
-    OutputBuffer[dwNumBytesToSend++] = '\x13';  //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;	// Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x03; 	//Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x13;    //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     // The SK clock frequency can be worked out by below algorithm with divide by 5 set as off
     // SK frequency  = 60MHz /((1 +  [(1 +0xValueH*256) OR 0xValueL])*2)
-    OutputBuffer[dwNumBytesToSend++] = '\x86';                            //Command to set clock divisor
-    OutputBuffer[dwNumBytesToSend++] = dwClockDivisor & '\xFF';           //Set 0xValueL of clock divisor
-    OutputBuffer[dwNumBytesToSend++] = (dwClockDivisor >> 8) & '\xFF';	  //Set 0xValueH of clock divisor
+    OutputBuffer[dwNumBytesToSend++] = 0x86;                            //Command to set clock divisor
+    OutputBuffer[dwNumBytesToSend++] = dwClockDivisor & 0xFF;           //Set 0xValueL of clock divisor
+    OutputBuffer[dwNumBytesToSend++] = (dwClockDivisor >> 8) & 0xFF;	  //Set 0xValueH of clock divisor
     // Send off the commands
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);
     if(ftStatus != FT_OK)
@@ -284,7 +286,7 @@ void BitBang::ConfigureMPSSE(void)
     Sleeper::msleep(20);		//Delay for a while
 
     //Turn off loop back in case
-    OutputBuffer[dwNumBytesToSend++] = '\x85';		//Command to turn off loop back of TDI/TDO connection
+    OutputBuffer[dwNumBytesToSend++] = 0x85;		//Command to turn off loop back of TDI/TDO connection
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);	// Send off the commands
     if(ftStatus != FT_OK)
     {
@@ -298,7 +300,9 @@ void BitBang::close(void)
 {
     ftStatus = FT_Close(ftHandle);
     if(ftStatus == FT_OK)
-        ftHandle = 0;
+    {
+        ftHandle = nullptr;
+    }
 }
 //--------------------------------------------------------------------------------
 void BitBang::print_error(const QString &function,

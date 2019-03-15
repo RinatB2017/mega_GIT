@@ -86,7 +86,6 @@ int main(int argc, char *argv[])
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-    
 
     return app.exec();
 }

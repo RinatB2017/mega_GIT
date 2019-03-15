@@ -46,6 +46,7 @@ void HandControl::connect_log(void)
     connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
     connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
     connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
+    connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
 }
 //--------------------------------------------------------------------------------
 void HandControl::init(void)
@@ -146,10 +147,10 @@ void HandControl::send_cmd_to_multimeter(void)
     int cmd = ui->cb_multimeter_cmd->itemData(ui->cb_multimeter_cmd->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
 
-    multimeter->set_serno(serno);
-    multimeter->set_year(year);
-    multimeter->set_address(address);
-    multimeter->set_channel(channel);
+    multimeter->set_serno(static_cast<uint>(serno));
+    multimeter->set_year(static_cast<uint>(year));
+    multimeter->set_address(static_cast<uint>(address));
+    multimeter->set_channel(static_cast<uint>(channel));
     multimeter->set_timeout(MAX_TIMEOUT_MULTIMETER_CONTROL_UI);
 
     ui->btn_multimeter_run_cmd->setEnabled(false);

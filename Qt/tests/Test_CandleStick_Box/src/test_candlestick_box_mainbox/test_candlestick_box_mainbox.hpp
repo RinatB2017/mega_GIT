@@ -79,7 +79,7 @@ private:
 
     bool create_set(QStringList sl, QCandlestickSet *set);
 
-    QVector<QPointF> circle(float x, float y, float r);
+    QVector<QPointF> circle(qreal x, qreal y, qreal r);
     QVector<QLine> circle_line(float x, float y, float r);
 
     void updateText(void);

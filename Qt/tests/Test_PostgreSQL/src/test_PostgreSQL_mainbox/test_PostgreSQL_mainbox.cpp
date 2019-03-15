@@ -41,8 +41,6 @@ MainBox::MainBox(QWidget *parent) :
     ui(new Ui::MainBox),
     parent(parent)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -53,6 +51,8 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
     if(QSqlDatabase::contains(QSqlDatabase::defaultConnection))
     {
         db = QSqlDatabase::database();

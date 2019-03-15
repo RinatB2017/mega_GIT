@@ -70,6 +70,7 @@ private slots:
     void choice(void);
     void f_error(QMediaPlayer::Error err);
     void s_error(QAbstractSocket::SocketError err);
+    void s_state(QAbstractSocket::SocketState state);
 
     void read_data(void);
 

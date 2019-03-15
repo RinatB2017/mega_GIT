@@ -30,11 +30,9 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-#   define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
-#   define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
+#   define htons(n) static_cast<uint16_t>((static_cast<uint16_t>(n) << 8)  | (static_cast<uint16_t>(n) >> 8))
+#   define htonl(n) static_cast<uint32_t>((static_cast<uint32_t>(n) << 16) | (static_cast<uint32_t>(n) >> 16))
 #endif
-//--------------------------------------------------------------------------------
-#pragma pack (push, 1)
 //--------------------------------------------------------------------------------
 #define MAX_EEPROM_BYTES    512
 #define BEGIN_BYTE          0x55
@@ -63,6 +61,9 @@ enum {
     CMD_SET_ALL = 9
 };
 
+//--------------------------------------------------------------------------------
+#pragma pack (push, 1)
+
 union MODBUS_FULL
 {
     struct {
@@ -82,6 +83,8 @@ union MODBUS_FULL
     } data;
     unsigned char buf[sizeof(data)];
 };
+
+#pragma pack (pop)
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class QHexEdit;
@@ -91,8 +94,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -123,7 +126,7 @@ private:
     Ui::MainBox *ui;
     QWidget *parent;
 
-    char eeprom_buffer[MAX_EEPROM_BYTES+1];
+    uchar eeprom_buffer[MAX_EEPROM_BYTES+1];
     QByteArray sending_array;
     QByteArray received_array;
     bool data_is_ready = false;
@@ -145,11 +148,8 @@ private:
 
     void send_data(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
-    unsigned char calculateCRC_8(char *pcBlock, unsigned int len);
-    unsigned int  calculateCRC_16(unsigned char *frame, unsigned char bufferSize);
+    unsigned char calculateCRC_8(char *pcBlock, uint len);
+    unsigned int  calculateCRC_16(uchar *frame, uchar bufferSize);
 
     void prepare_modbus_command(unsigned short cmd);
 

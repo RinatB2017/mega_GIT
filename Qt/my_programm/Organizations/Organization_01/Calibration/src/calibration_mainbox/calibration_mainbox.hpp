@@ -245,18 +245,14 @@ private slots:
 
 private:
     Ui::MainBox *ui;
-
     ControlLog *control_log;
 
+    CURRENT_STATE current_state;
+    bool flag_is_measuring;
     int type_calibrator;
 
     QPushButton *btn_find_devices;
-
     MySplashScreen *splash;
-
-    CURRENT_STATE current_state;
-
-    bool flag_is_measuring;
 
     QTreeWidgetItem *item_UDC;
     QTreeWidgetItem *item_UAC;

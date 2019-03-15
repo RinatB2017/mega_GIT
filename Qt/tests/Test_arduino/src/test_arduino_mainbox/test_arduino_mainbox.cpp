@@ -140,7 +140,7 @@ void MainBox::color_changed(int)
 {
     if(ui->cb_Tie->isChecked())
     {
-        QSlider *slider = (QSlider *)sender();
+        QSlider *slider = reinterpret_cast<QSlider *>(sender());
         if(slider->objectName() == "Slider_R")
         {
             ui->Slider_G->setValue(ui->Slider_R->value());
@@ -294,7 +294,7 @@ void MainBox::set_color(void)
     }
 }
 //--------------------------------------------------------------------------------
-unsigned char MainBox::calculateCRC_8(char *pcBlock, unsigned int len)
+unsigned char MainBox::calculateCRC_8(char *pcBlock, uint len)
 {
     unsigned char crc = 0xFF;
     unsigned int i;
@@ -310,7 +310,7 @@ unsigned char MainBox::calculateCRC_8(char *pcBlock, unsigned int len)
     return crc;
 }
 //--------------------------------------------------------------------------------
-unsigned int MainBox::calculateCRC_16(unsigned char *frame, unsigned char bufferSize)
+unsigned int MainBox::calculateCRC_16(uchar *frame, uchar bufferSize)
 {
     unsigned int temp, temp2, flag;
     temp = 0xFFFF;
@@ -403,9 +403,10 @@ void MainBox::prepare_modbus_set_all(void)
 //--------------------------------------------------------------------------------
 void MainBox::append_crc(void)
 {
-    unsigned int crc16 = calculateCRC_16((unsigned char *)sending_array.data(), sending_array.size());
-    sending_array.append((char)((crc16 >> 8) & 0xFF));
-    sending_array.append((char)(crc16 & 0xFF));
+    uint crc16 = calculateCRC_16(reinterpret_cast<uchar *>(sending_array.data()),
+                                 static_cast<uchar>(sending_array.size()));
+    sending_array.append(static_cast<char>((crc16 >> 8) & 0xFF));
+    sending_array.append(static_cast<char>(crc16 & 0xFF));
     //emit debug(QString("CRC %1").arg(crc16, 0, 16));
 }
 //--------------------------------------------------------------------------------
@@ -531,15 +532,5 @@ void MainBox::command_run_motors(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

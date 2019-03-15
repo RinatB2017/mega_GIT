@@ -4,10 +4,12 @@
 //--------------------------------------------------------------------------------
 #include <Box2D/Box2D.h>
 //--------------------------------------------------------------------------------
+using namespace std;
+//--------------------------------------------------------------------------------
 class MyContactListener : public b2ContactListener
 {
 public:
-    std::vector<b2ContactListener> _contacts;
+    vector<b2ContactListener> _contacts;
 
     MyContactListener(b2World *world);
     ~MyContactListener();

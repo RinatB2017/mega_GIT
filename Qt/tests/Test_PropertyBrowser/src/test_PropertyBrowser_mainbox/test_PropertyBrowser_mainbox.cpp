@@ -284,8 +284,8 @@ void MainBox::test(void)
     layout->addWidget(scroll4, 1, 3);
     layout->addWidget(scroll5, 1, 4);
     w->show();
-    return;
 
+#if 0
     QList<QtProperty *> pl = editor->properties();
     foreach (QtProperty *property, pl)
     {
@@ -296,6 +296,7 @@ void MainBox::test(void)
     bool r = editor->setProperty("databits", "2");
     emit info(r ? "true" : "false");
     emit debug(editor->property("databits").toString());
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

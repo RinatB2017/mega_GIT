@@ -30,7 +30,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
-//--------------------------------------------------------------------------------
+
 union QUESTION
 {
     struct BODY{
@@ -54,6 +54,8 @@ union ANSWER
     } body;
     unsigned char buf[sizeof(BODY)];
 };
+
+#pragma pack (pop)
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class SerialBox5;
@@ -65,8 +67,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 signals:

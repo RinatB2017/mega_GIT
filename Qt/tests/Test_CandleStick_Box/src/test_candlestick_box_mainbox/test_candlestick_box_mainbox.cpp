@@ -59,10 +59,10 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-QVector<QPointF> MainBox::circle(float x, float y, float r)
+QVector<QPointF> MainBox::circle(qreal x, qreal y, qreal r)
 {
     QVector<QPointF> vector1;
-    for (float i = 0; i <= 3.14/2; i += 0.1)
+    for (qreal i = 0; i <= 3.14/2; i += 0.1)
     {
         double sin = qSin(i);
         double cos = qCos(i);
@@ -294,7 +294,7 @@ void MainBox::load(void)
     //QString filename = "011109.txt";
     QString filename = "140618.txt";
 #else
-    QFileDialog *dlg = 0;
+    QFileDialog *dlg;
     QString filename;
 
     dlg = new QFileDialog;
@@ -319,7 +319,7 @@ void MainBox::load(void)
 #endif
 
     QStringList t_sl;
-    CsvReader *csv = new CsvReader(0, filename);
+    CsvReader *csv = new CsvReader(nullptr, filename);
     csv->set_new_separator(',');
     if(csv->Open())
     {
@@ -381,7 +381,7 @@ void MainBox::save(void)
 #include "qcandlestickset.h"
 void MainBox::test(void)
 {
-#if 1
+#if 0
     CandleStick_Box *box = new CandleStick_Box("USDEUR");
     box->setMinimumSize(800, 600);
     box->show();

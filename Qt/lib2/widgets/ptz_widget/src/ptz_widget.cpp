@@ -312,7 +312,7 @@ void PTZ_widget::add_slider(int index,
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_push_button(void)
 {
-    QPushButton *btn = (QPushButton *)sender();
+    QPushButton *btn = reinterpret_cast<QPushButton *>(sender());
     if(btn == nullptr)
     {
         return;
@@ -334,7 +334,7 @@ void PTZ_widget::f_push_button(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_move_slider(void)
 {
-    QSlider *slider = (QSlider *)sender();
+    QSlider *slider = reinterpret_cast<QSlider *>(sender());
     if(slider == nullptr)
     {
         return;
@@ -387,17 +387,13 @@ void PTZ_widget::f_error(QMediaPlayer::Error err)
     case QMediaPlayer::AccessDeniedError:   emit error("AccessDeniedError");    break;
     case QMediaPlayer::ServiceMissingError: emit error("ServiceMissingError");  break;
     case QMediaPlayer::MediaIsPlaylist:     emit error("MediaIsPlaylist");      break;
-
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
     }
     emit error(player->errorString());
 }
 //--------------------------------------------------------------------------------
-void PTZ_widget::s_error(QAbstractSocket::SocketError err)
+void PTZ_widget::s_state(QAbstractSocket::SocketState state)
 {
-    switch (err)
+    switch (state)
     {
     case QAbstractSocket::UnconnectedState: emit error("UnconnectedState"); break;
     case QAbstractSocket::HostLookupState:  emit error("HostLookupState");  break;
@@ -406,10 +402,37 @@ void PTZ_widget::s_error(QAbstractSocket::SocketError err)
     case QAbstractSocket::BoundState:       emit error("BoundState");       break;
     case QAbstractSocket::ListeningState:   emit error("ListeningState");   break;
     case QAbstractSocket::ClosingState:     emit error("ClosingState");     break;
-
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
+    }
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::s_error(QAbstractSocket::SocketError err)
+{
+    switch (err)
+    {
+    case QAbstractSocket::ConnectionRefusedError:           emit error("ConnectionRefusedError");           break;
+    case QAbstractSocket::RemoteHostClosedError:            emit error("RemoteHostClosedError");            break;
+    case QAbstractSocket::HostNotFoundError:                emit error("HostNotFoundError");                break;
+    case QAbstractSocket::SocketAccessError:                emit error("SocketAccessError");                break;
+    case QAbstractSocket::SocketResourceError:              emit error("SocketResourceError");              break;
+    case QAbstractSocket::SocketTimeoutError:               emit error("SocketTimeoutError");               break;
+    case QAbstractSocket::DatagramTooLargeError:            emit error("DatagramTooLargeError");            break;
+    case QAbstractSocket::NetworkError:                     emit error("NetworkError");                     break;
+    case QAbstractSocket::AddressInUseError:                emit error("AddressInUseError");                break;
+    case QAbstractSocket::SocketAddressNotAvailableError:   emit error("SocketAddressNotAvailableError");   break;
+    case QAbstractSocket::UnsupportedSocketOperationError:  emit error("UnsupportedSocketOperationError");  break;
+    case QAbstractSocket::UnfinishedSocketOperationError:   emit error("UnfinishedSocketOperationError");   break;
+    case QAbstractSocket::ProxyAuthenticationRequiredError: emit error("ProxyAuthenticationRequiredError"); break;
+    case QAbstractSocket::SslHandshakeFailedError:          emit error("SslHandshakeFailedError");          break;
+    case QAbstractSocket::ProxyConnectionRefusedError:      emit error("ProxyConnectionRefusedError");      break;
+    case QAbstractSocket::ProxyConnectionClosedError:       emit error("ProxyConnectionClosedError");       break;
+    case QAbstractSocket::ProxyConnectionTimeoutError:      emit error("ProxyConnectionTimeoutError");      break;
+    case QAbstractSocket::ProxyNotFoundError:               emit error("ProxyNotFoundError");               break;
+    case QAbstractSocket::ProxyProtocolError:               emit error("ProxyProtocolError");               break;
+    case QAbstractSocket::OperationError:                   emit error("OperationError");                   break;
+    case QAbstractSocket::SslInternalError:                 emit error("SslInternalError");                 break;
+    case QAbstractSocket::SslInvalidUserDataError:          emit error("SslInvalidUserDataError");          break;
+    case QAbstractSocket::TemporaryError:                   emit error("TemporaryError");                   break;
+    case QAbstractSocket::UnknownSocketError:               emit error("UnknownSocketError");               break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -636,7 +659,7 @@ bool PTZ_widget::f_connect(void)
                .arg(ip)
                .arg(port));
 
-    tcpSocket->connectToHost(ip, port);
+    tcpSocket->connectToHost(ip, static_cast<quint16>(port));
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -660,7 +683,7 @@ void PTZ_widget::load_widgets(QString group_name)
         if(!obj->objectName().isEmpty())
         {
             settings->beginGroup(obj->objectName());
-            obj->setSliderPosition(settings->value("position", 0).toDouble());
+            obj->setSliderPosition(settings->value("position", 0).toInt());
             settings->endGroup();
         }
     }

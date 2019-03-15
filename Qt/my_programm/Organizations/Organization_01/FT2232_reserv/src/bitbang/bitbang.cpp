@@ -202,7 +202,7 @@ bool BitBang::VerifyMPSSE(void)
     }
     for (dwCount = 0; dwCount < dwNumBytesRead - 1; dwCount++)                      //Check if Bad command and echo command received
     {
-        if ((InputBuffer[dwCount] == BYTE('\xFA')) && (InputBuffer[dwCount+1] == BYTE('\xAA')))
+        if ((InputBuffer[dwCount] == BYTE(0xFA)) && (InputBuffer[dwCount+1] == BYTE(0xAA)))
         {
             bCommandEchod = true;
             break;
@@ -236,7 +236,7 @@ bool BitBang::VerifyMPSSE(void)
     ftStatus = FT_Read(ftHandle, &InputBuffer, dwNumInputBuffer, &dwNumBytesRead);  //Read out the data from input buffer
     for(dwCount = 0; dwCount<dwNumBytesRead-1; dwCount++)                           //Check if Bad command and echo command received
     {
-        if ((InputBuffer[dwCount] == BYTE('\xFA')) && (InputBuffer[dwCount+1] == BYTE('\xAB')))
+        if ((InputBuffer[dwCount] == BYTE(0xFA)) && (InputBuffer[dwCount+1] == BYTE(0xAB)))
         {
             bCommandEchod = true;
             break;

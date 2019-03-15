@@ -327,13 +327,14 @@ int Multimeter_V780::send_cmd_0x47(int *value_uV)
     int cnt_error = 0;
     while(!data_is_ready)
     {
+        QCoreApplication::processEvents();
+
         cnt_error++;
         if(cnt_error>100)
         {
             last_error = E_V780_ERROR_NO_ANSWER;
             return last_error;
         }
-        QCoreApplication::processEvents();
 #ifndef FAKE
         Sleeper::msleep(100);
 #endif

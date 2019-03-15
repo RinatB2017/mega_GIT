@@ -29,16 +29,16 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-const BYTE MSB_VEDGE_CLOCK_IN_BIT = '\x22';
-const BYTE MSB_EDGE_CLOCK_OUT_BYTE = '\x11';
-const BYTE MSB_EDGE_CLOCK_IN_BYTE = '\x24';
+const BYTE MSB_VEDGE_CLOCK_IN_BIT = 0x22;
+const BYTE MSB_EDGE_CLOCK_OUT_BYTE = 0x11;
+const BYTE MSB_EDGE_CLOCK_IN_BYTE = 0x24;
 
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN = '\x24';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT = '\x11';
-const BYTE MSB_DOWN_EDGE_CLOCK_BIT_IN = '\x26';
-const BYTE MSB_UP_EDGE_CLOCK_BYTE_IN = '\x20';
-const BYTE MSB_UP_EDGE_CLOCK_BYTE_OUT = '\x10';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN = '\x22';
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN = 0x24;
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT = 0x11;
+const BYTE MSB_DOWN_EDGE_CLOCK_BIT_IN = 0x26;
+const BYTE MSB_UP_EDGE_CLOCK_BYTE_IN = 0x20;
+const BYTE MSB_UP_EDGE_CLOCK_BYTE_OUT = 0x10;
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN = 0x22;
 //--------------------------------------------------------------------------------
 I2C::I2C(I2C_Freq freq,
          QWidget *parent) :
@@ -71,19 +71,19 @@ void I2C::HighSpeedSetI2CStart(void)
     DWORD dwCount;
     for(dwCount=0; dwCount<4; dwCount++)	// Repeat commands to ensure the minimum period of the start hold time ie 600ns is achieved
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // Command to set directions of lower 8 pins and force value on bits set as output
-        OutputBuffer[dwNumBytesToSend++] = '\x03';  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
-        OutputBuffer[dwNumBytesToSend++] = '\x13';  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // Command to set directions of lower 8 pins and force value on bits set as output
+        OutputBuffer[dwNumBytesToSend++] = 0x03;  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x13;  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
     for(dwCount=0; dwCount < 4; dwCount++)	// Repeat commands to ensure the minimum period of the start setup time ie 600ns is achieved
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // Command to set directions of lower 8 pins and force value on bits set as output
-        OutputBuffer[dwNumBytesToSend++] = '\x01';  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
-        OutputBuffer[dwNumBytesToSend++] = '\x13';  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // Command to set directions of lower 8 pins and force value on bits set as output
+        OutputBuffer[dwNumBytesToSend++] = 0x01;  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x13;  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
-    OutputBuffer[dwNumBytesToSend++] = '\x80';      // Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x00';      // Set SDA, SCL low high, WP disabled by SK, DO, GPIOL0 at bit '0'
-    OutputBuffer[dwNumBytesToSend++] = '\x13';      // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;      // Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x00;      // Set SDA, SCL low high, WP disabled by SK, DO, GPIOL0 at bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x13;      // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
 }
 //--------------------------------------------------------------------------------
 void I2C::HighSpeedSetI2CStop(void)
@@ -91,37 +91,37 @@ void I2C::HighSpeedSetI2CStop(void)
     DWORD dwCount;
     for(dwCount=0; dwCount<4; dwCount++)	// Repeat commands to ensure the minimum period of the stop setup time ie 600ns is achieved
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // Command to set directions of lower 8 pins and force value on bits set as output
-        OutputBuffer[dwNumBytesToSend++] = '\x01';  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
-        OutputBuffer[dwNumBytesToSend++] = '\x13';  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // Command to set directions of lower 8 pins and force value on bits set as output
+        OutputBuffer[dwNumBytesToSend++] = 0x01;  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x13;  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
     for(dwCount=0; dwCount<4; dwCount++)	// Repeat commands to ensure the minimum period of the stop hold time ie 600ns is achieved
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // Command to set directions of lower 8 pins and force value on bits set as output
-        OutputBuffer[dwNumBytesToSend++] = '\x03';  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
-        OutputBuffer[dwNumBytesToSend++] = '\x13';  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // Command to set directions of lower 8 pins and force value on bits set as output
+        OutputBuffer[dwNumBytesToSend++] = 0x03;  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
+        OutputBuffer[dwNumBytesToSend++] = 0x13;  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
     // Tristate the SCL, SDA pins
-    OutputBuffer[dwNumBytesToSend++] = '\x80';      // Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x00';      // Set WP disabled by GPIOL0 at bit 0'
-    OutputBuffer[dwNumBytesToSend++] = '\x10';      // Set GPIOL0 pins as output with bit '1', SK, DO and other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;      // Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x00;      // Set WP disabled by GPIOL0 at bit 0'
+    OutputBuffer[dwNumBytesToSend++] = 0x10;      // Set GPIOL0 pins as output with bit '1', SK, DO and other pins as input with bit '0'
 }
 //--------------------------------------------------------------------------------
 BOOL I2C::SendByteAndCheckACK(BYTE dwDataSend)
 {
     FT_STATUS ftStatus = FT_OK;
     OutputBuffer[dwNumBytesToSend++] = MSB_FALLING_EDGE_CLOCK_BYTE_OUT; 	//clock data byte out on -ve Clock Edge MSB first
-    OutputBuffer[dwNumBytesToSend++] = '\x00';
-    OutputBuffer[dwNumBytesToSend++] = '\x00';      // Data length of 0x0000 means 1 byte data to clock out
+    OutputBuffer[dwNumBytesToSend++] = 0x00;
+    OutputBuffer[dwNumBytesToSend++] = 0x00;      // Data length of 0x0000 means 1 byte data to clock out
     OutputBuffer[dwNumBytesToSend++] = dwDataSend;	// Set control byte, bit 4-7 of '1010' as 24LC02 control code, bit 1-3 as block select bits  //which is don't care here, bit 0 of '0' represent Write operation
     //Get Acknowledge bit from EEPROM
-    OutputBuffer[dwNumBytesToSend++] = '\x80';      // Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x00';      // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
-    OutputBuffer[dwNumBytesToSend++] = '\x11';      // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;      // Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x00;      // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x11;      // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
     OutputBuffer[dwNumBytesToSend++] = MSB_RISING_EDGE_CLOCK_BIT_IN; 	//Command to scan in acknowledge bit , -ve clock Edge MSB first
-    OutputBuffer[dwNumBytesToSend++] = '\x00';      // Length of 0x0 means to scan in 1 bit
+    OutputBuffer[dwNumBytesToSend++] = 0x00;      // Length of 0x0 means to scan in 1 bit
 
-    OutputBuffer[dwNumBytesToSend++] = '\x87';        //Send answer back immediate command
+    OutputBuffer[dwNumBytesToSend++] = 0x87;        //Send answer back immediate command
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);		//Send off the commands
     dwNumBytesToSend = 0;                           //Clear output buffer
     //Check if ACK bit received, may need to read more times to get ACK bit or fail if timeout
@@ -133,16 +133,16 @@ BOOL I2C::SendByteAndCheckACK(BYTE dwDataSend)
     }
     else
     {
-        if(((InputBuffer[0] & BYTE('\x1')) != BYTE('\x0')))	//Check ACK bit 0 on data byte read out
+        if(((InputBuffer[0] & BYTE(0x1)) != BYTE(0x0)))	//Check ACK bit 0 on data byte read out
         {
             print_error("fail to get ACK when send control byte 2 [Program Section]", ftStatus);
             return FALSE; //Error, can't get the ACK bit from EEPROM
         }
     }
 
-    OutputBuffer[dwNumBytesToSend++] = '\x80';	// Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x02'; 	//Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
-    OutputBuffer[dwNumBytesToSend++] = '\x13';  //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;	// Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x02; 	//Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
+    OutputBuffer[dwNumBytesToSend++] = 0x13;  //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     return TRUE;
 }
 //--------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ bool I2C::VerifyMPSSE(void)
     // Synchronize the MPSSE interface by sending bad command '0xAA'
     //////////////////////////////////////////////////////////////////
     DWORD dwCount;
-    OutputBuffer[dwNumBytesToSend++] = '\xAA';		//Add BAD command '0xAA'
+    OutputBuffer[dwNumBytesToSend++] = 0xAA;		//Add BAD command '0xAA'
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);	// Send off the BAD commands
     if(ftStatus != FT_OK)
     {
@@ -179,7 +179,7 @@ bool I2C::VerifyMPSSE(void)
     }
     for (dwCount = 0; dwCount < dwNumBytesRead - 1; dwCount++)                      //Check if Bad command and echo command received
     {
-        if ((InputBuffer[dwCount] == BYTE('\xFA')) && (InputBuffer[dwCount+1] == BYTE('\xAA')))
+        if ((InputBuffer[dwCount] == BYTE(0xFA)) && (InputBuffer[dwCount+1] == BYTE(0xAA)))
         {
             bCommandEchod = true;
             break;
@@ -195,7 +195,7 @@ bool I2C::VerifyMPSSE(void)
     // Synchronize the MPSSE interface by sending bad command '0xAB'
     //////////////////////////////////////////////////////////////////
     //dwNumBytesToSend = 0;                     //Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\xAB';	//Send BAD command '0xAB'
+    OutputBuffer[dwNumBytesToSend++] = 0xAB;	//Send BAD command '0xAB'
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);	// Send off the BAD commands
     if(ftStatus != FT_OK)
     {
@@ -213,7 +213,7 @@ bool I2C::VerifyMPSSE(void)
     ftStatus = FT_Read(ftHandle, &InputBuffer, dwNumInputBuffer, &dwNumBytesRead);  //Read out the data from input buffer
     for(dwCount = 0; dwCount<dwNumBytesRead-1; dwCount++)                           //Check if Bad command and echo command received
     {
-        if ((InputBuffer[dwCount] == BYTE('\xFA')) && (InputBuffer[dwCount+1] == BYTE('\xAB')))
+        if ((InputBuffer[dwCount] == BYTE(0xFA)) && (InputBuffer[dwCount+1] == BYTE(0xAB)))
         {
             bCommandEchod = true;
             break;
@@ -235,9 +235,9 @@ void I2C::ConfigureMPSSE(void)
     ////////////////////////////////////////////////////////////////////
     // Configure the MPSSE for I2C communication with 24LC02B
     //////////////////////////////////////////////////////////////////
-    OutputBuffer[dwNumBytesToSend++] = '\x8A';  //Ensure disable clock divide by 5 for 60Mhz master clock
-    OutputBuffer[dwNumBytesToSend++] = '\x97';	//Ensure turn off adaptive clocking
-    OutputBuffer[dwNumBytesToSend++] = '\x8D'; 	//Enable 3 phase data clock, used by I2C to allow data on both clock edges
+    OutputBuffer[dwNumBytesToSend++] = 0x8A;  //Ensure disable clock divide by 5 for 60Mhz master clock
+    OutputBuffer[dwNumBytesToSend++] = 0x97;	//Ensure turn off adaptive clocking
+    OutputBuffer[dwNumBytesToSend++] = 0x8D; 	//Enable 3 phase data clock, used by I2C to allow data on both clock edges
     // Send off the commands
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);
     if(ftStatus != FT_OK)
@@ -245,14 +245,14 @@ void I2C::ConfigureMPSSE(void)
         print_error("ConfigureMPSSE: FT_Write(1)", ftStatus);
     }
     dwNumBytesToSend = 0;                       //Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\x80';	// Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x03'; 	//Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
-    OutputBuffer[dwNumBytesToSend++] = '\x13';  //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;	// Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x03; 	//Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x13;  //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     // The SK clock frequency can be worked out by below algorithm with divide by 5 set as off
     // SK frequency  = 60MHz /((1 +  [(1 +0xValueH*256) OR 0xValueL])*2)
-    OutputBuffer[dwNumBytesToSend++] = '\x86';                            //Command to set clock divisor
-    OutputBuffer[dwNumBytesToSend++] = dwClockDivisor & '\xFF';           //Set 0xValueL of clock divisor
-    OutputBuffer[dwNumBytesToSend++] = (dwClockDivisor >> 8) & '\xFF';	  //Set 0xValueH of clock divisor
+    OutputBuffer[dwNumBytesToSend++] = 0x86;                            //Command to set clock divisor
+    OutputBuffer[dwNumBytesToSend++] = dwClockDivisor & 0xFF;           //Set 0xValueL of clock divisor
+    OutputBuffer[dwNumBytesToSend++] = (dwClockDivisor >> 8) & 0xFF;	  //Set 0xValueH of clock divisor
     // Send off the commands
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);
     if(ftStatus != FT_OK)
@@ -263,7 +263,7 @@ void I2C::ConfigureMPSSE(void)
     Sleeper::msleep(20);		//Delay for a while
 
     //Turn off loop back in case
-    OutputBuffer[dwNumBytesToSend++] = '\x85';		//Command to turn off loop back of TDI/TDO connection
+    OutputBuffer[dwNumBytesToSend++] = 0x85;		//Command to turn off loop back of TDI/TDO connection
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);	// Send off the commands
     if(ftStatus != FT_OK)
     {
@@ -425,17 +425,17 @@ bool I2C::read(unsigned char id,
     //////////////////////////////////////////////////////////
     // Read the data from 24LC02B with no ACK bit check
     //////////////////////////////////////////////////////////
-    OutputBuffer[dwNumBytesToSend++] = '\x80';        // Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x00';        // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
-    OutputBuffer[dwNumBytesToSend++] = '\x11';        // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;        // Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x00;        // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x11;        // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
     OutputBuffer[dwNumBytesToSend++] = MSB_FALLING_EDGE_CLOCK_BYTE_IN; 	//Command to clock data byte in on -ve Clock Edge MSB first
-    OutputBuffer[dwNumBytesToSend++] = '\x00';
-    OutputBuffer[dwNumBytesToSend++] = '\x00';        // Data length of 0x0000 means 1 byte data to clock in
-    //OutputBuffer[dwNumBytesToSend++] = '\x87';      // Send answer back immediate command
+    OutputBuffer[dwNumBytesToSend++] = 0x00;
+    OutputBuffer[dwNumBytesToSend++] = 0x00;        // Data length of 0x0000 means 1 byte data to clock in
+    //OutputBuffer[dwNumBytesToSend++] = 0x87;      // Send answer back immediate command
 
     OutputBuffer[dwNumBytesToSend++] = MSB_RISING_EDGE_CLOCK_BIT_IN; 	//Command to scan in acknowledge bit , -ve clock Edge MSB first
-    OutputBuffer[dwNumBytesToSend++] = '\x00';        // Length of 0 means to scan in 1 bit
-    OutputBuffer[dwNumBytesToSend++] = '\x87';        // Send answer back immediate command
+    OutputBuffer[dwNumBytesToSend++] = 0x00;        // Length of 0 means to scan in 1 bit
+    OutputBuffer[dwNumBytesToSend++] = 0x87;        // Send answer back immediate command
 
     // Send off the commands
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);
@@ -458,9 +458,9 @@ bool I2C::read(unsigned char id,
     //qDebug() << "InputBuffer[0]" << InputBuffer[0] << "InputBuffer[1]" << InputBuffer[1];
     *data = InputBuffer[0]; // return the data read from EEPROM
 
-    OutputBuffer[dwNumBytesToSend++] = '\x80';     // Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x02';     // Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
-    OutputBuffer[dwNumBytesToSend++] = '\x13';     // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    OutputBuffer[dwNumBytesToSend++] = 0x80;     // Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x02;     // Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
+    OutputBuffer[dwNumBytesToSend++] = 0x13;     // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
 
     HighSpeedSetI2CStop();
 

@@ -53,23 +53,23 @@ union TEMPERATURE
 };
 
 //declare for MPSSE command
-const BYTE MSB_RISING_EDGE_CLOCK_BYTE_OUT   = '\x10';
-const BYTE MSB_RISING_EDGE_CLOCK_BYTE_IN    = '\x20';
+const BYTE MSB_RISING_EDGE_CLOCK_BYTE_OUT   = 0x10;
+const BYTE MSB_RISING_EDGE_CLOCK_BYTE_IN    = 0x20;
 
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_OUT    = '\x12';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN     = '\x22';
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_OUT    = 0x12;
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN     = 0x22;
 
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT  = '\x11';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN   = '\x24';
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT  = 0x11;
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN   = 0x24;
 
-const BYTE MSB_FALLING_EDGE_CLOCK_BIT_OUT   = '\x13';
-const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = '\x26';
+const BYTE MSB_FALLING_EDGE_CLOCK_BIT_OUT   = 0x13;
+const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = 0x26;
 
-const BYTE SET_DATA_BITS_LO_BYTE            = '\x80';
-const BYTE SET_DATA_BITS_HI_BYTE            = '\x82';
+const BYTE SET_DATA_BITS_LO_BYTE            = 0x80;
+const BYTE SET_DATA_BITS_HI_BYTE            = 0x82;
 
-const BYTE GET_DATA_BITS_LO_BYTE            = '\x81';
-const BYTE GET_DATA_BITS_HI_BYTE            = '\x83';
+const BYTE GET_DATA_BITS_LO_BYTE            = 0x81;
+const BYTE GET_DATA_BITS_HI_BYTE            = 0x83;
 
 
 const BYTE READ_ROM                         = 0x33;
@@ -226,9 +226,9 @@ float DS18B20::convert_12bit(unsigned short temp_ds18b20)
 #if 1
 void DS18B20::prepare_data(void)
 {
-    ft2232h->append_data('\x8A');  // Ensure disable clock divide by 5 for 60Mhz master clock
-    ft2232h->append_data('\x97');  // Ensure turn off adaptive clocking
-    ft2232h->append_data('\x8D');  // disable 3 phase data clock
+    ft2232h->append_data(0x8A);  // Ensure disable clock divide by 5 for 60Mhz master clock
+    ft2232h->append_data(0x97);  // Ensure turn off adaptive clocking
+    ft2232h->append_data(0x8D);  // disable 3 phase data clock
 
     ft2232h->append_data(MSB_FALLING_EDGE_CLOCK_BIT_OUT);
     ft2232h->append_data(7);

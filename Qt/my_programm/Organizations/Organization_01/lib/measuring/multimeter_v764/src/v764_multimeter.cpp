@@ -291,13 +291,14 @@ int Multimeter_V764::send_cmd_0x47(int *value_uV)
     data_is_ready = false;
     while(!data_is_ready)
     {
+        QCoreApplication::processEvents();
+
         cnt_error++;
         if(cnt_error>100)
         {
             last_error = E_V764_ILLEGAL_DATA_VALUE;
             return last_error;
         }
-        QCoreApplication::processEvents();
         Sleeper::msleep(100);
     }
     //---

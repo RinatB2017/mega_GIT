@@ -31,20 +31,20 @@
 //--------------------------------------------------------------------------------
 //declare parameters for 93C56
 const BYTE SPIDATALENGTH = 11;  // 3 digit command + 8 digit address
-const BYTE READ  = '\xC0';      // 110xxxxx
-const BYTE WRITE = '\xA0';      // 101xxxxx
-const BYTE WREN  = '\x98';      // 10011xxx
-const BYTE ERAL  = '\x90';      // 10010xxx
+const BYTE READ  = 0xC0;      // 110xxxxx
+const BYTE WRITE = 0xA0;      // 101xxxxx
+const BYTE WREN  = 0x98;      // 10011xxx
+const BYTE ERAL  = 0x90;      // 10010xxx
 
 //declare for MPSSE command
-const BYTE MSB_RISING_EDGE_CLOCK_BYTE_OUT   = '\x10';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT  = '\x11';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_OUT    = '\x12';
-const BYTE MSB_FALLING_EDGE_CLOCK_BIT_OUT   = '\x13';
-const BYTE MSB_RISING_EDGE_CLOCK_BYTE_IN    = '\x20';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN     = '\x22';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN   = '\x24';
-const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = '\x26';
+const BYTE MSB_RISING_EDGE_CLOCK_BYTE_OUT   = 0x10;
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT  = 0x11;
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_OUT    = 0x12;
+const BYTE MSB_FALLING_EDGE_CLOCK_BIT_OUT   = 0x13;
+const BYTE MSB_RISING_EDGE_CLOCK_BYTE_IN    = 0x20;
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN     = 0x22;
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN   = 0x24;
+const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = 0x26;
 //--------------------------------------------------------------------------------
 SPI::SPI(QWidget *parent) :
     MyWidget(parent)
@@ -64,9 +64,9 @@ void SPI::SPI_CSEnable(void)
 {
     for(int loop=0; loop<5; loop++) // one 0x80 command can keep 0.2us, do 5 times to stay in this situation for 1us
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // GPIO command for ADBUS
-        OutputBuffer[dwNumBytesToSend++] = '\x08';  // set CS high, MOSI and SCL low
-        OutputBuffer[dwNumBytesToSend++] = '\x0b';  // bit3:CS, bit2:MISO, bit1:MOSI, bit0:SCK
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // GPIO command for ADBUS
+        OutputBuffer[dwNumBytesToSend++] = 0x08;  // set CS high, MOSI and SCL low
+        OutputBuffer[dwNumBytesToSend++] = 0x0b;  // bit3:CS, bit2:MISO, bit1:MOSI, bit0:SCK
     }
 }
 //--------------------------------------------------------------------------------
@@ -75,9 +75,9 @@ void SPI::SPI_CSDisable(void)
 {
     for(int loop=0; loop<5; loop++) // one 0x80 command can keep 0.2us, do 5 times to stay in this situation for 1us
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // GPIO command for ADBUS
-        OutputBuffer[dwNumBytesToSend++] = '\x00';  // set CS, MOSI and SCL low
-        OutputBuffer[dwNumBytesToSend++] = '\x0b';  // bit3:CS, bit2:MISO, bit1:MOSI, bit0:SCK
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // GPIO command for ADBUS
+        OutputBuffer[dwNumBytesToSend++] = 0x00;  // set CS, MOSI and SCL low
+        OutputBuffer[dwNumBytesToSend++] = 0x0b;  // bit3:CS, bit2:MISO, bit1:MOSI, bit0:SCK
     }
 }
 //--------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ FT_STATUS SPI::WriteEECmd(FT_HANDLE ftHandle, BYTE command)
     OutputBuffer[dwNumBytesToSend++] = command;
     OutputBuffer[dwNumBytesToSend++] = MSB_FALLING_EDGE_CLOCK_BIT_OUT;
     OutputBuffer[dwNumBytesToSend++] = SPIDATALENGTH - (8+1);
-    OutputBuffer[dwNumBytesToSend++] = '\xFF';
+    OutputBuffer[dwNumBytesToSend++] = 0xFF;
     SPI_CSDisable();
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // send MPSSE command to MPSSE engine.
     if (ftStatus != FT_OK)
@@ -129,7 +129,7 @@ BOOL SPI::SPI_Initial(FT_HANDLE ftHandle)
     // Synchronize the MPSSE interface by sending bad command &xAA*
     //////////////////////////////////////////////////////////////////
     dwNumBytesToSend = 0;
-    OutputBuffer[dwNumBytesToSend++] = '\xAA';  // Add BAD command &xAA*
+    OutputBuffer[dwNumBytesToSend++] = 0xAA;  // Add BAD command &xAA*
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send off the BAD commands
     dwNumBytesToSend = 0;   // Clear output buffer
     do{
@@ -139,7 +139,7 @@ BOOL SPI::SPI_Initial(FT_HANDLE ftHandle)
     ftStatus = FT_Read(ftHandle, InputBuffer, dwNumInputBuffer, &dwNumBytesRead); // Read out the data from input buffer
     for (dwCount = 0; dwCount < (dwNumBytesRead - 1); dwCount++)    // Check if Bad command and echo command received
     {
-        if ((InputBuffer[dwCount] == BYTE('\xFA')) && (InputBuffer[dwCount+1] == BYTE('\xAA')))
+        if ((InputBuffer[dwCount] == BYTE(0xFA)) && (InputBuffer[dwCount+1] == BYTE(0xAA)))
         {
             bCommandEchod = true;
             break;
@@ -154,7 +154,7 @@ BOOL SPI::SPI_Initial(FT_HANDLE ftHandle)
     // Synchronize the MPSSE interface by sending bad command &xAB*
     //////////////////////////////////////////////////////////////////
     //dwNumBytesToSend = 0; // Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\xAB';  // Send BAD command &xAB*
+    OutputBuffer[dwNumBytesToSend++] = 0xAB;  // Send BAD command &xAB*
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send off the BAD commands
     dwNumBytesToSend = 0;   // Clear output buffer
     do{
@@ -164,7 +164,7 @@ BOOL SPI::SPI_Initial(FT_HANDLE ftHandle)
     ftStatus = FT_Read(ftHandle, InputBuffer, dwNumInputBuffer, &dwNumBytesRead);   // Read out the data from input buffer
     for (dwCount = 0;dwCount < (dwNumBytesRead - 1); dwCount++)                     // Check if Bad command and echo command received
     {
-        if ((InputBuffer[dwCount] == BYTE('\xFA')) && (InputBuffer[dwCount+1] == BYTE( '\xAB')))
+        if ((InputBuffer[dwCount] == BYTE(0xFA)) && (InputBuffer[dwCount+1] == BYTE(0xAB)))
         {
             bCommandEchod = true;
             break;
@@ -179,9 +179,9 @@ BOOL SPI::SPI_Initial(FT_HANDLE ftHandle)
     ////////////////////////////////////////////////////////////////////
     //Configure the MPSSE for SPI communication with EEPROM
     //////////////////////////////////////////////////////////////////
-    OutputBuffer[dwNumBytesToSend++] = '\x8A';  // Ensure disable clock divide by 5 for 60Mhz master clock
-    OutputBuffer[dwNumBytesToSend++] = '\x97';  // Ensure turn off adaptive clocking
-    OutputBuffer[dwNumBytesToSend++] = '\x8D';  // disable 3 phase data clock
+    OutputBuffer[dwNumBytesToSend++] = 0x8A;  // Ensure disable clock divide by 5 for 60Mhz master clock
+    OutputBuffer[dwNumBytesToSend++] = 0x97;  // Ensure turn off adaptive clocking
+    OutputBuffer[dwNumBytesToSend++] = 0x8D;  // disable 3 phase data clock
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send out the commands
     if(ftStatus != FT_OK)
     {
@@ -189,13 +189,13 @@ BOOL SPI::SPI_Initial(FT_HANDLE ftHandle)
     }
 
     dwNumBytesToSend = 0;   // Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\x80';  // Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x00';  // Set SDA, SCL high, WP disabled by SK, DO at bit &*, GPIOL0 at bit &*
-    OutputBuffer[dwNumBytesToSend++] = '\x0b';  // Set SK,DO,GPIOL0 pins as output with bit **, other pins as input with bit &*
+    OutputBuffer[dwNumBytesToSend++] = 0x80;  // Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x00;  // Set SDA, SCL high, WP disabled by SK, DO at bit &*, GPIOL0 at bit &*
+    OutputBuffer[dwNumBytesToSend++] = 0x0b;  // Set SK,DO,GPIOL0 pins as output with bit **, other pins as input with bit &*
     // The SK clock frequency can be worked out by below algorithm with divide by 5 set as off
     // SK frequency = 60MHz /((1 + [(1 +0xValueH*256) OR 0xValueL])*2)
-    OutputBuffer[dwNumBytesToSend++] = '\x86';  // Command to set clock divisor
-    OutputBuffer[dwNumBytesToSend++] = BYTE(dwClockDivisor & '\xFF');   // Set 0xValueL of clock divisor
+    OutputBuffer[dwNumBytesToSend++] = 0x86;  // Command to set clock divisor
+    OutputBuffer[dwNumBytesToSend++] = BYTE(dwClockDivisor & 0xFF);   // Set 0xValueL of clock divisor
     OutputBuffer[dwNumBytesToSend++] = BYTE(dwClockDivisor >> 8);       // Set 0xValueH of clock divisor
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send out the commands
     if(ftStatus != FT_OK)
@@ -206,7 +206,7 @@ BOOL SPI::SPI_Initial(FT_HANDLE ftHandle)
     Sleeper::msleep(20);    // Delay for a while
     //Turn off loop back in case
     dwNumBytesToSend = 0;   // Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\x85';  // Command to turn off loop back of TDI/TDO connection
+    OutputBuffer[dwNumBytesToSend++] = 0x85;  // Command to turn off loop back of TDI/TDO connection
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send out the commands
     if(ftStatus != FT_OK)
     {
@@ -263,8 +263,8 @@ BOOL SPI::SPI_ReadByteRandomAddr(FT_HANDLE ftHandle, WORD address, WORD* bdata)
     OutputBuffer[dwNumBytesToSend++] = (BYTE)(address);
     //read data
     OutputBuffer[dwNumBytesToSend++] = MSB_FALLING_EDGE_CLOCK_BYTE_IN;
-    OutputBuffer[dwNumBytesToSend++] = '\x01';
-    OutputBuffer[dwNumBytesToSend++] = '\x00'; //Data length of 0x0001 means 2 byte data to clock in
+    OutputBuffer[dwNumBytesToSend++] = 0x01;
+    OutputBuffer[dwNumBytesToSend++] = 0x00; //Data length of 0x0001 means 2 byte data to clock in
     SPI_CSDisable();
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);// send out MPSSE command to MPSSE engine
     dwNumBytesToSend = 0;   // Clear output buffer
@@ -382,7 +382,7 @@ BOOL SPI::close(void)
         print_error("close", ftStatus);
         return FALSE;
     }
-    ftdiHandle = 0;
+    ftdiHandle = nullptr;
     return TRUE;
 }
 //--------------------------------------------------------------------------------

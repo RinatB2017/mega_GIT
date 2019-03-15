@@ -30,14 +30,14 @@
 #endif
 //--------------------------------------------------------------------------------
 //declare for MPSSE command
-const BYTE MSB_RISING_EDGE_CLOCK_BYTE_OUT   = '\x10';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT  = '\x11';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_OUT    = '\x12';
-const BYTE MSB_FALLING_EDGE_CLOCK_BIT_OUT   = '\x13';
-const BYTE MSB_RISING_EDGE_CLOCK_BYTE_IN    = '\x20';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN     = '\x22';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN   = '\x24';
-const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = '\x26';
+const BYTE MSB_RISING_EDGE_CLOCK_BYTE_OUT   = 0x10;
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT  = 0x11;
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_OUT    = 0x12;
+const BYTE MSB_FALLING_EDGE_CLOCK_BIT_OUT   = 0x13;
+const BYTE MSB_RISING_EDGE_CLOCK_BYTE_IN    = 0x20;
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN     = 0x22;
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN   = 0x24;
+const BYTE MSB_FALLING_EDGE_CLOCK_BIT_IN    = 0x26;
 //--------------------------------------------------------------------------------
 AD8400::AD8400(I2C_Freq freq,
                QWidget *parent) :
@@ -74,7 +74,7 @@ BOOL AD8400::write(BYTE data)
 
     ft2232h->append_data(MSB_FALLING_EDGE_CLOCK_BIT_OUT);
     ft2232h->append_data(7);                    // 7+1 = 8
-    ft2232h->append_data(BYTE(data & '\xFF'));  // Set 0xValueL
+    ft2232h->append_data(BYTE(data & 0xFF));    // Set 0xValueL
 
     return ft2232h->write_data();
 }

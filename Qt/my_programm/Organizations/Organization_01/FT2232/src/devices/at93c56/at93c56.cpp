@@ -28,16 +28,16 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-const BYTE MSB_VEDGE_CLOCK_IN_BIT = '\x22';
-const BYTE MSB_EDGE_CLOCK_OUT_BYTE = '\x11';
-const BYTE MSB_EDGE_CLOCK_IN_BYTE = '\x24';
+const BYTE MSB_VEDGE_CLOCK_IN_BIT = 0x22;
+const BYTE MSB_EDGE_CLOCK_OUT_BYTE = 0x11;
+const BYTE MSB_EDGE_CLOCK_IN_BYTE = 0x24;
 
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN = '\x24';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT = '\x11';
-const BYTE MSB_DOWN_EDGE_CLOCK_BIT_IN = '\x26';
-const BYTE MSB_UP_EDGE_CLOCK_BYTE_IN = '\x20';
-const BYTE MSB_UP_EDGE_CLOCK_BYTE_OUT = '\x10';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN = '\x22';
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN = 0x24;
+const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT = 0x11;
+const BYTE MSB_DOWN_EDGE_CLOCK_BIT_IN = 0x26;
+const BYTE MSB_UP_EDGE_CLOCK_BYTE_IN = 0x20;
+const BYTE MSB_UP_EDGE_CLOCK_BYTE_OUT = 0x10;
+const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN = 0x22;
 //--------------------------------------------------------------------------------
 AT93C56::AT93C56(I2C_Freq freq,
                  QWidget *parent) :
@@ -57,19 +57,19 @@ void AT93C56::HighSpeedSetI2CStart(void)
     DWORD dwCount;
     for(dwCount=0; dwCount<4; dwCount++)	// Repeat commands to ensure the minimum period of the start hold time ie 600ns is achieved
     {
-        ft2232h->append_data('\x80');  // Command to set directions of lower 8 pins and force value on bits set as output
-        ft2232h->append_data('\x03');  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
-        ft2232h->append_data('\x13');  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        ft2232h->append_data(0x80);  // Command to set directions of lower 8 pins and force value on bits set as output
+        ft2232h->append_data(0x03);  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
+        ft2232h->append_data(0x13);  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
     for(dwCount=0; dwCount < 4; dwCount++)	// Repeat commands to ensure the minimum period of the start setup time ie 600ns is achieved
     {
-        ft2232h->append_data('\x80');  // Command to set directions of lower 8 pins and force value on bits set as output
-        ft2232h->append_data('\x01');  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
-        ft2232h->append_data('\x13');  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        ft2232h->append_data(0x80);  // Command to set directions of lower 8 pins and force value on bits set as output
+        ft2232h->append_data(0x01);  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
+        ft2232h->append_data(0x13);  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
-    ft2232h->append_data('\x80');      // Command to set directions of lower 8 pins and force value on bits set as output
-    ft2232h->append_data('\x00');      // Set SDA, SCL low high, WP disabled by SK, DO, GPIOL0 at bit '0'
-    ft2232h->append_data('\x13');      // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    ft2232h->append_data(0x80);      // Command to set directions of lower 8 pins and force value on bits set as output
+    ft2232h->append_data(0x00);      // Set SDA, SCL low high, WP disabled by SK, DO, GPIOL0 at bit '0'
+    ft2232h->append_data(0x13);      // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
 }
 //--------------------------------------------------------------------------------
 void AT93C56::HighSpeedSetI2CStop(void)
@@ -77,20 +77,20 @@ void AT93C56::HighSpeedSetI2CStop(void)
     DWORD dwCount;
     for(dwCount=0; dwCount<4; dwCount++)	// Repeat commands to ensure the minimum period of the stop setup time ie 600ns is achieved
     {
-        ft2232h->append_data('\x80');  // Command to set directions of lower 8 pins and force value on bits set as output
-        ft2232h->append_data('\x01');  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
-        ft2232h->append_data('\x13');  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        ft2232h->append_data(0x80);  // Command to set directions of lower 8 pins and force value on bits set as output
+        ft2232h->append_data(0x01);  // Set SDA low, SCL high, WP disabled by SK at bit '1', DO, GPIOL0 at bit '0'
+        ft2232h->append_data(0x13);  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
     for(dwCount=0; dwCount<4; dwCount++)	// Repeat commands to ensure the minimum period of the stop hold time ie 600ns is achieved
     {
-        ft2232h->append_data('\x80');  // Command to set directions of lower 8 pins and force value on bits set as output
-        ft2232h->append_data('\x03');  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
-        ft2232h->append_data('\x13');  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+        ft2232h->append_data(0x80);  // Command to set directions of lower 8 pins and force value on bits set as output
+        ft2232h->append_data(0x03);  // Set SDA, SCL high, WP disabled by SK, DO at bit '1', GPIOL0 at bit '0'
+        ft2232h->append_data(0x13);  // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     }
     // Tristate the SCL, SDA pins
-    ft2232h->append_data('\x80');      // Command to set directions of lower 8 pins and force value on bits set as output
-    ft2232h->append_data('\x00');      // Set WP disabled by GPIOL0 at bit 0'
-    ft2232h->append_data('\x10');      // Set GPIOL0 pins as output with bit '1', SK, DO and other pins as input with bit '0'
+    ft2232h->append_data(0x80);      // Command to set directions of lower 8 pins and force value on bits set as output
+    ft2232h->append_data(0x00);      // Set WP disabled by GPIOL0 at bit 0'
+    ft2232h->append_data(0x10);      // Set GPIOL0 pins as output with bit '1', SK, DO and other pins as input with bit '0'
 }
 //--------------------------------------------------------------------------------
 BOOL AT93C56::SendByteAndCheckACK(BYTE dwDataSend)
@@ -100,17 +100,17 @@ BOOL AT93C56::SendByteAndCheckACK(BYTE dwDataSend)
     BYTE buf[1024];
 
     ft2232h->append_data(MSB_FALLING_EDGE_CLOCK_BYTE_OUT); 	//clock data byte out on -ve Clock Edge MSB first
-    ft2232h->append_data('\x00');
-    ft2232h->append_data('\x00');       // Data length of 0x0000 means 1 byte data to clock out
+    ft2232h->append_data(0x00);
+    ft2232h->append_data(0x00);       // Data length of 0x0000 means 1 byte data to clock out
     ft2232h->append_data(dwDataSend);   // Set control byte, bit 4-7 of '1010' as 24LC02 control code, bit 1-3 as block select bits  //which is don't care here, bit 0 of '0' represent Write operation
     //Get Acknowledge bit from EEPROM
-    ft2232h->append_data('\x80');       // Command to set directions of lower 8 pins and force value on bits set as output
-    ft2232h->append_data('\x00');       // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
-    ft2232h->append_data('\x11');       // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
+    ft2232h->append_data(0x80);       // Command to set directions of lower 8 pins and force value on bits set as output
+    ft2232h->append_data(0x00);       // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
+    ft2232h->append_data(0x11);       // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
     ft2232h->append_data(MSB_RISING_EDGE_CLOCK_BIT_IN); 	//Command to scan in acknowledge bit , -ve clock Edge MSB first
-    ft2232h->append_data('\x00');       // Length of 0x0 means to scan in 1 bit
+    ft2232h->append_data(0x00);       // Length of 0x0 means to scan in 1 bit
 
-    ft2232h->append_data('\x87');       //Send answer back immediate command
+    ft2232h->append_data(0x87);       //Send answer back immediate command
     ft2232h->write_data();
 
     ft2232h->clear_data();              //Clear output buffer
@@ -123,16 +123,16 @@ BOOL AT93C56::SendByteAndCheckACK(BYTE dwDataSend)
     }
     else
     {
-        if(((buf[0] & BYTE('\x1')) != BYTE('\x0')))	//Check ACK bit 0 on data byte read out
+        if(((buf[0] & BYTE(0x1)) != BYTE(0x0)))	//Check ACK bit 0 on data byte read out
         {
             ft2232h->print_error("fail to get ACK when send control byte 2 [Program Section]", ftStatus);
             return FALSE; //Error, can't get the ACK bit from EEPROM
         }
     }
 
-    ft2232h->append_data('\x80');	// Command to set directions of lower 8 pins and force value on bits set as output
-    ft2232h->append_data('\x02'); 	//Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
-    ft2232h->append_data('\x13');   //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    ft2232h->append_data(0x80);	// Command to set directions of lower 8 pins and force value on bits set as output
+    ft2232h->append_data(0x02); 	//Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
+    ft2232h->append_data(0x13);   //Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
     return TRUE;
 }
 //--------------------------------------------------------------------------------
@@ -283,17 +283,17 @@ FT_STATUS AT93C56::read(unsigned char id,
     //////////////////////////////////////////////////////////
     // Read the data from 24LC02B with no ACK bit check
     //////////////////////////////////////////////////////////
-    ft2232h->append_data('\x80');        // Command to set directions of lower 8 pins and force value on bits set as output
-    ft2232h->append_data('\x00');        // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
-    ft2232h->append_data('\x11');        // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
+    ft2232h->append_data(0x80);        // Command to set directions of lower 8 pins and force value on bits set as output
+    ft2232h->append_data(0x00);        // Set SCL low, WP disabled by SK, GPIOL0 at bit '0'
+    ft2232h->append_data(0x11);        // Set SK, GPIOL0 pins as output with bit '1', DO and other pins as input with bit '0'
     ft2232h->append_data(MSB_FALLING_EDGE_CLOCK_BYTE_IN); 	//Command to clock data byte in on -ve Clock Edge MSB first
-    ft2232h->append_data('\x00');
-    ft2232h->append_data('\x00');        // Data length of 0x0000 means 1 byte data to clock in
-    //ft2232h->append_data('\x87');      // Send answer back immediate command
+    ft2232h->append_data(0x00);
+    ft2232h->append_data(0x00);        // Data length of 0x0000 means 1 byte data to clock in
+    //ft2232h->append_data(0x87);      // Send answer back immediate command
 
     ft2232h->append_data(MSB_RISING_EDGE_CLOCK_BIT_IN); 	//Command to scan in acknowledge bit , -ve clock Edge MSB first
-    ft2232h->append_data('\x00');        // Length of 0 means to scan in 1 bit
-    ft2232h->append_data('\x87');        // Send answer back immediate command
+    ft2232h->append_data(0x00);        // Length of 0 means to scan in 1 bit
+    ft2232h->append_data(0x87);        // Send answer back immediate command
 
     // Send off the commands
     ftStatus = ft2232h->write_data();
@@ -316,9 +316,9 @@ FT_STATUS AT93C56::read(unsigned char id,
     //qDebug() << "InputBuffer[0]" << InputBuffer[0] << "InputBuffer[1]" << InputBuffer[1];
     *data = buf[0]; // return the data read from EEPROM
 
-    ft2232h->append_data('\x80');     // Command to set directions of lower 8 pins and force value on bits set as output
-    ft2232h->append_data('\x02');     // Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
-    ft2232h->append_data('\x13');     // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
+    ft2232h->append_data(0x80);     // Command to set directions of lower 8 pins and force value on bits set as output
+    ft2232h->append_data(0x02);     // Set SDA high, SCL low, WP disabled by SK at bit '0', DO, GPIOL0 at bit '1'
+    ft2232h->append_data(0x13);     // Set SK,DO,GPIOL0 pins as output with bit '1', other pins as input with bit '0'
 
     HighSpeedSetI2CStop();
 

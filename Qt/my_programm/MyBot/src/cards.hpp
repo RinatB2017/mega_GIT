@@ -6,7 +6,9 @@
 #   include </usr/include/opencv2/highgui/highgui.hpp>
 #else
 #   include <opencv2/opencv.hpp>
+#   include <opencv2/highgui/highgui_c.h>
 #   include <opencv2/highgui/highgui.hpp>
+#   include <opencv2/videoio/videoio_c.h>
 #endif
 
 #include <iostream>

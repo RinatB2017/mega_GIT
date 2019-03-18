@@ -41,8 +41,8 @@
 #   include <QDebug>
 #endif
 
-#include <opencv2/imgcodecs/imgcodecs_c.h>
-
+//#include <opencv2/imgcodecs/imgcodecs_c.h>
+#include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs/legacy/constants_c.h>
 #include <opencv2/videoio/videoio_c.h>
 

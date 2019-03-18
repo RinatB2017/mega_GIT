@@ -29,7 +29,7 @@ win32 {
     LIBS    += -LC:\\OpenCV\\x86\\mingw\\bin
     LIBS    += -lopencv_core$${OPENCV_VER}
     LIBS    += -lopencv_highgui$${OPENCV_VER}
-    LIBS    += -lopencv_imgcodecs$${OPENCV_VER}
+    #LIBS    += -lopencv_imgcodecs$${OPENCV_VER}
     LIBS    += -lopencv_imgproc$${OPENCV_VER}
     LIBS    += -lopencv_features2d$${OPENCV_VER}
     LIBS    += -lopencv_calib3d$${OPENCV_VER}

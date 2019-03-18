@@ -8,7 +8,7 @@ DEPENDPATH += \
     $$PWD/Collision/Shapes \
     $$PWD/Dynamics/Contacts \
     $$PWD/Dynamics/Joints
-INCLUDEPATH = $$DEPENDPATH
+INCLUDEPATH += $$DEPENDPATH
 
 HEADERS += \
     Box2D.h \

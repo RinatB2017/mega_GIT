@@ -29,7 +29,6 @@ SUBDIRS += \
 unix {
 SUBDIRS += \
     MyBot \
-    #ImageRotation \
     QRCodeGenerator \
     Teacher \
     Teacher_light \

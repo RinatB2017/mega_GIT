@@ -54,6 +54,9 @@ public:
     void player_move_right(void);
 
     int get_id(int x, int y);
+
+    QString get_id_string(int id);
+
     bool add_item(int x, int y, int id);
     bool put_picture(int id, int x, int y);
 

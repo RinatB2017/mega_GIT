@@ -390,6 +390,24 @@ bool Map::find_player(int *x, int *y)
     return (cnt == 1);
 }
 //--------------------------------------------------------------------------------
+QString Map::get_id_string(int id)
+{
+    QString temp;
+    switch(id)
+    {
+    case PLAYER_ID: temp = QString("PLAYER (%1)").arg(id);  break;
+    case WALL_ID:   temp = QString("WALL (%1)").arg(id);    break;
+    case SPACE_ID:  temp = QString("SPACE (%1)").arg(id);   break;
+    case START_ID:  temp = QString("START (%1)").arg(id);   break;
+    case EXIT_ID:   temp = QString("EXIT (%1)").arg(id);    break;
+
+    default:
+        temp = QString("ID %1").arg(id);
+        break;
+    }
+    return temp;
+}
+//--------------------------------------------------------------------------------
 bool Map::start(int interval_ms)
 {
     bool ok = false;
@@ -399,13 +417,13 @@ bool Map::start(int interval_ms)
     ok = find_start(&x, &y);
     if(!ok)
     {
-        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(START_ID));
+        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(get_id_string(START_ID)));
         return false;
     }
     ok = find_player(&x, &y);
     if(!ok)
     {
-        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(PLAYER_ID));
+        QMessageBox::critical(this, "Ошибка!", QString("Объект %1 не найден!").arg(get_id_string(PLAYER_ID)));
         return false;
     }
     timer->start(interval_ms);

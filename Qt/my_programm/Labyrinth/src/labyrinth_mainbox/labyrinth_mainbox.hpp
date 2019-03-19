@@ -56,6 +56,7 @@ private slots:
 
     void update_map(void);
 
+    void show_minimap(void);
     void test(void);
 
 private:

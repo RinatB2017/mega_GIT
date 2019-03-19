@@ -23,9 +23,9 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
+    adns_2610_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    adns_2610_mainbox.hpp \
     screen.hpp
 
 SOURCES += \

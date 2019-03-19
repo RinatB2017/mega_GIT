@@ -269,9 +269,9 @@ bool Map::put_picture(int id, int x, int y)
     Q_CHECK_PTR(label);
 
     emit debug(QString("put_picture: PROPERTY_X %1 PROPERTY_Y %2 PROPERTY_ID %3")
-              .arg(label->property(PROPERTY_X).toInt())
-              .arg(label->property(PROPERTY_Y).toInt())
-              .arg(label->property(PROPERTY_ID).toInt()));
+               .arg(label->property(PROPERTY_X).toInt())
+               .arg(label->property(PROPERTY_Y).toInt())
+               .arg(label->property(PROPERTY_ID).toInt()));
 
     QString filename = QString(":/images/%1.png").arg(id);
     emit debug(filename);
@@ -471,13 +471,11 @@ void Map::refresh(void)
 int Map::rowCount(void)
 {
     return max_y;
-    //return grid_map->rowCount();
 }
 //--------------------------------------------------------------------------------
 int Map::columnCount(void)
 {
     return max_x;
-    //return grid_map->columnCount();
 }
 //--------------------------------------------------------------------------------
 void Map::check_victory(void)
@@ -680,6 +678,42 @@ QPixmap Map::rotate(const QString &filename, int angle)
     p.end();
     shipPixels = rotatePixmap;
     return shipPixels;
+}
+//--------------------------------------------------------------------------------
+void Map::remove_player(void)
+{
+    for(int y=0; y<rowCount(); y++)
+    {
+        for(int x=0; x<columnCount(); x++)
+        {
+            int id = get_id(x, y);
+            if(id == PLAYER_ID)
+            {
+                emit trace(QString("find player %1 %2")
+                           .arg(x)
+                           .arg(y));
+                put_picture(SPACE_ID, x, y);
+            }
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+bool Map::set_player(int pos_x, int pos_y)
+{
+    if(get_id(pos_x, pos_y) != SPACE_ID)
+    {
+        emit error(QString("set_player: id_map %1")
+                   .arg(get_id(pos_x, pos_y)));
+        return false;
+    }
+
+    player_x = pos_x;
+    player_y = pos_y;
+
+    id_map[player_x][player_y] = PLAYER_ID;
+    put_picture(PLAYER_ID, player_x, player_y);
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void Map::updateText(void)

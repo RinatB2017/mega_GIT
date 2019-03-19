@@ -110,9 +110,9 @@ void MainBox::create_sniffer(void)
     sniffer = new PCA10000();
 
     connect(sniffer, SIGNAL(info(QString)),     this, SIGNAL(info(QString)));
-    connect(sniffer, SIGNAL(debug(QString)),    this, SIGNAL(info(QString)));
-    connect(sniffer, SIGNAL(error(QString)),    this, SIGNAL(info(QString)));
-    connect(sniffer, SIGNAL(message(QString)),  this, SIGNAL(info(QString)));
+    connect(sniffer, SIGNAL(debug(QString)),    this, SIGNAL(debug(QString)));
+    connect(sniffer, SIGNAL(error(QString)),    this, SIGNAL(error(QString)));
+    connect(sniffer, SIGNAL(trace(QString)),    this, SIGNAL(trace(QString)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_0(void)

@@ -41,7 +41,7 @@ void PCA10000::init(void)
     connect(&serial, SIGNAL(info(QString)),     this, SIGNAL(info(QString)));
     connect(&serial, SIGNAL(debug(QString)),    this, SIGNAL(debug(QString)));
     connect(&serial, SIGNAL(error(QString)),    this, SIGNAL(error(QString)));
-    connect(&serial, SIGNAL(message(QString)),  this, SIGNAL(message(QString)));
+    connect(&serial, SIGNAL(trace(QString)),    this, SIGNAL(trace(QString)));
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -137,9 +137,6 @@ void PCA10000::port_error(QSerialPort::SerialPortError serial_error)
     case QSerialPort::UnknownError:         emit error("Error: UnknownError"); break;
     case QSerialPort::TimeoutError:         emit error("Error: TimeoutError"); break;
     case QSerialPort::NotOpenError:         emit error("Error: NotOpenError"); break;
-    default:
-        emit error(QString("Unknown error %1").arg(serial_error));
-        break;
     }
 }
 //--------------------------------------------------------------------------------

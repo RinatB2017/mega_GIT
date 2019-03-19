@@ -1,10 +1,10 @@
 #include "sbcontrol.h"
 
 SBControl::SBControl(QWidget * inTestWidget, QWidget *parent)
-	: QWidget(parent)
-	, testWidget_(inTestWidget)
+    : QWidget(parent)
+    , testWidget_(inTestWidget)
 {
-	ui.setupUi(this);
+    ui.setupUi(this);
 }
 
 SBControl::~SBControl()
@@ -14,13 +14,13 @@ SBControl::~SBControl()
 
 void SBControl::closeEvent(QCloseEvent* )
 {
-	qApp->quit();
+    qApp->quit();
 }
 
 // enableColor...
 void SBControl::on_pushButton_control_clicked ()
 {
-	glass_.enableColor(QColorDialog::getColor());
+    glass_.enableColor(QColorDialog::getColor());
 }
 
 
@@ -28,7 +28,7 @@ void SBControl::on_pushButton_control_clicked ()
 // disableColor
 void SBControl::on_pushButton_control_2_clicked ()
 {
-	glass_.disableColor();
+    glass_.disableColor();
 }
 
 
@@ -36,7 +36,7 @@ void SBControl::on_pushButton_control_2_clicked ()
 // enableOpacity...
 void SBControl::on_pushButton_control_3_clicked ()
 {
-	glass_.enableOpacity(QInputDialog::getDouble(this, "Set opacity", "Set opacity", 0,0,1));
+    glass_.enableOpacity(QInputDialog::getDouble(this, "Set opacity", "Set opacity", 0,0,1));
 }
 
 
@@ -44,7 +44,7 @@ void SBControl::on_pushButton_control_3_clicked ()
 // disableOpacity
 void SBControl::on_pushButton_control_4_clicked ()
 {
-	glass_.disableOpacity();
+    glass_.disableOpacity();
 }
 
 
@@ -52,11 +52,13 @@ void SBControl::on_pushButton_control_4_clicked ()
 // enableInfoBlock...
 void SBControl::on_pushButton_control_5_clicked ()
 {
-	QString path = QFileDialog::getOpenFileName(this, "Change animation file", ".", "Animation file (*.gif)");
-	QMovie * movie = new QMovie(path);
-	if (!movie->isValid())
-		movie = 0; 
-	glass_.enableInfoBlock(movie,QInputDialog::getText(this, "Enter text", "Enter text"));
+    QString path = QFileDialog::getOpenFileName(this, "Change animation file", ".", "Animation file (*.gif)");
+    QMovie * movie = new QMovie(path);
+    if (!movie->isValid())
+    {
+        movie = nullptr;
+    }
+    glass_.enableInfoBlock(movie,QInputDialog::getText(this, "Enter text", "Enter text"));
 }
 
 
@@ -64,7 +66,7 @@ void SBControl::on_pushButton_control_5_clicked ()
 // disableInfoBlock
 void SBControl::on_pushButton_control_6_clicked ()
 {
-	glass_.disableInfoBlock();
+    glass_.disableInfoBlock();
 }
 
 
@@ -72,12 +74,12 @@ void SBControl::on_pushButton_control_6_clicked ()
 // enableAnimationBlock...
 void SBControl::on_pushButton_control_7_clicked ()
 {
-	QString path = QFileDialog::getOpenFileName(this, "", ".", "Animation file (*.gif)");
-	QMovie * movie = new QMovie(path);
-	if (movie->isValid())
-		glass_.setMovie(movie);
-	else
-		QMessageBox::warning(this, "Error", QString("%1 not animation file(not valid QMovie).").arg(QDir::toNativeSeparators(path)));
+    QString path = QFileDialog::getOpenFileName(this, "", ".", "Animation file (*.gif)");
+    QMovie * movie = new QMovie(path);
+    if (movie->isValid())
+        glass_.setMovie(movie);
+    else
+        QMessageBox::warning(this, "Error", QString("%1 not animation file(not valid QMovie).").arg(QDir::toNativeSeparators(path)));
 }
 
 
@@ -85,7 +87,7 @@ void SBControl::on_pushButton_control_7_clicked ()
 // disableAnimationBlock
 void SBControl::on_pushButton_control_8_clicked ()
 {
-	glass_.disableAnimationBlock();
+    glass_.disableAnimationBlock();
 }
 
 
@@ -93,7 +95,7 @@ void SBControl::on_pushButton_control_8_clicked ()
 // enableInfoTextBlock...
 void SBControl::on_pushButton_control_9_clicked ()
 {
-	glass_.enableInfoTextBlock(QInputDialog::getText(this, "Enter text", "Enter text"));
+    glass_.enableInfoTextBlock(QInputDialog::getText(this, "Enter text", "Enter text"));
 }
 
 
@@ -101,7 +103,7 @@ void SBControl::on_pushButton_control_9_clicked ()
 // disableInfoTextBlock
 void SBControl::on_pushButton_control_10_clicked ()
 {
-	glass_.disableInfoTextBlock();
+    glass_.disableInfoTextBlock();
 }
 
 
@@ -109,11 +111,11 @@ void SBControl::on_pushButton_control_10_clicked ()
 // Install SBGlass
 void SBControl::on_pushButton_control_11_clicked ()
 {
-	glass_.install(testWidget_);
-	glass_.enableOpacity();
-	glass_.enableColor();
+    glass_.install(testWidget_);
+    glass_.enableOpacity();
+    glass_.enableColor();
     QMovie * movie = new QMovie(":/SBGlass/1627.gif");
-	glass_.enableInfoBlock(movie, "Test Test");
+    glass_.enableInfoBlock(movie, "Test Test");
 }
 
 
@@ -121,6 +123,6 @@ void SBControl::on_pushButton_control_11_clicked ()
 // Remove SBGlass
 void SBControl::on_pushButton_control_12_clicked ()
 {
-	glass_.remove();
+    glass_.remove();
 }
 

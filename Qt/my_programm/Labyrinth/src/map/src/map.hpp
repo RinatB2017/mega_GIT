@@ -35,6 +35,9 @@ public:
     Map(QWidget *parent = nullptr);
     ~Map();
 
+    void remove_player(void);
+    bool set_player(int pos_x, int pos_y);
+
     void new_map(int max_x, int max_y);
     bool load_map(const QString &filename);
     bool save_map(const QString &filename);

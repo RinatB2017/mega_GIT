@@ -96,7 +96,6 @@ private:
     void create_engine(void);
 
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

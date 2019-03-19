@@ -31,6 +31,7 @@
 #include "mainwindow.hpp"
 #include "qxmlputget.h"
 #include "labyrinth_mainbox.hpp"
+#include "minimap.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -44,7 +45,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(GROUP_NAME);
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -57,7 +58,7 @@ void MainBox::init(void)
 
     ui->map_widget->load_map(":/test_map.dat");
 
-    load_widgets(GROUP_NAME);
+    load_widgets(APPNAME);
     unlock_widgets();
 
     setFixedSize(sizeHint());
@@ -88,12 +89,15 @@ void MainBox::init_widgets(void)
     connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
     connect(ui->btn_step,       SIGNAL(clicked(bool)),  ui->map_widget, SLOT(update()));
+    connect(ui->btn_step,       SIGNAL(clicked(bool)),  this,           SLOT(show_minimap()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::update_map(void)
 {
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setDisabled(true);
+
+    unlock_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::lock_widgets(void)
@@ -184,10 +188,14 @@ void MainBox::refresh(void)
     ui->map_widget->refresh();
 }
 //--------------------------------------------------------------------------------
-#include "minimap.hpp"
 void MainBox::test(void)
 {
     emit info("test");
+
+#if 1
+    ui->map_widget->remove_player();
+    ui->map_widget->set_player(1, 1);
+#endif
 
 #if 0
     for(int y=0; y<5; y++)
@@ -218,8 +226,10 @@ void MainBox::test(void)
     }
     map->show();
 #endif
-
-#if 1
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_minimap(void)
+{
     bool ok = false;
     int player_x = 0;
     int player_y = 0;
@@ -254,7 +264,6 @@ void MainBox::test(void)
             }
         }
     }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::new_map(void)

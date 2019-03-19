@@ -28,16 +28,16 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-const BYTE MSB_VEDGE_CLOCK_IN_BIT = '\x22';
-const BYTE MSB_EDGE_CLOCK_OUT_BYTE = '\x11';
-const BYTE MSB_EDGE_CLOCK_IN_BYTE = '\x24';
+//const BYTE MSB_VEDGE_CLOCK_IN_BIT = 0x22;
+//const BYTE MSB_EDGE_CLOCK_OUT_BYTE = 0x11;
+//const BYTE MSB_EDGE_CLOCK_IN_BYTE = 0x24;
 
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN = '\x24';
-const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT = '\x11';
-const BYTE MSB_DOWN_EDGE_CLOCK_BIT_IN = '\x26';
-const BYTE MSB_UP_EDGE_CLOCK_BYTE_IN = '\x20';
-const BYTE MSB_UP_EDGE_CLOCK_BYTE_OUT = '\x10';
-const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN = '\x22';
+//const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_IN = 0x24;
+//const BYTE MSB_FALLING_EDGE_CLOCK_BYTE_OUT = 0x11;
+//const BYTE MSB_DOWN_EDGE_CLOCK_BIT_IN = 0x26;
+//const BYTE MSB_UP_EDGE_CLOCK_BYTE_IN = 0x20;
+//const BYTE MSB_UP_EDGE_CLOCK_BYTE_OUT = 0x10;
+//const BYTE MSB_RISING_EDGE_CLOCK_BIT_IN = 0x22;
 //--------------------------------------------------------------------------------
 #define DIR_SPI '\x13'  // bit4:CS, bit3:XXX, bit2:MISO, bit1:MOSI, bit0:SCK
 //--------------------------------------------------------------------------------
@@ -74,9 +74,9 @@ void FT2232H_thread::run(void)
     while(1)
     {
         dwNumBytesToSend = 0;
-        OutputBuffer[dwNumBytesToSend++] = '\x83';
-        OutputBuffer[dwNumBytesToSend++] = '\x81';
-        OutputBuffer[dwNumBytesToSend++] = '\x87';
+        OutputBuffer[dwNumBytesToSend++] = 0x83;
+        OutputBuffer[dwNumBytesToSend++] = 0x81;
+        OutputBuffer[dwNumBytesToSend++] = 0x87;
         ftStatus = FT_Write(ftdiHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send off the BAD commands
         if(ftStatus != FT_OK)
         {
@@ -118,8 +118,8 @@ void FT2232H_thread::SPI_CSEnable(void)
 {
     for(int loop=0; loop<5; loop++) // one 0x80 command can keep 0.2us, do 5 times to stay in this situation for 1us
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // GPIO command for ADBUS
-        OutputBuffer[dwNumBytesToSend++] = '\x10';  // set CS high, MOSI and SCL low
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // GPIO command for ADBUS
+        OutputBuffer[dwNumBytesToSend++] = 0x10;  // set CS high, MOSI and SCL low
         OutputBuffer[dwNumBytesToSend++] = DIR_SPI;
     }
 }
@@ -129,8 +129,8 @@ void FT2232H_thread::SPI_CSDisable(void)
 {
     for(int loop=0; loop<5; loop++) // one 0x80 command can keep 0.2us, do 5 times to stay in this situation for 1us
     {
-        OutputBuffer[dwNumBytesToSend++] = '\x80';  // GPIO command for ADBUS
-        OutputBuffer[dwNumBytesToSend++] = '\x00';  // set CS, MOSI and SCL low
+        OutputBuffer[dwNumBytesToSend++] = 0x80;  // GPIO command for ADBUS
+        OutputBuffer[dwNumBytesToSend++] = 0x00;  // set CS, MOSI and SCL low
         OutputBuffer[dwNumBytesToSend++] = DIR_SPI;
     }
 }
@@ -161,7 +161,7 @@ BOOL FT2232H_thread::SPI_Initial(FT_HANDLE ftHandle)
     // Synchronize the MPSSE interface by sending bad command &xAA*
     //////////////////////////////////////////////////////////////////
     dwNumBytesToSend = 0;
-    OutputBuffer[dwNumBytesToSend++] = '\xAA'; // Add BAD command &xAA*
+    OutputBuffer[dwNumBytesToSend++] = 0xAA; // Add BAD command &xAA*
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send off the BAD commands
     dwNumBytesToSend = 0; // Clear output buffer
     do{
@@ -187,7 +187,7 @@ BOOL FT2232H_thread::SPI_Initial(FT_HANDLE ftHandle)
     // Synchronize the MPSSE interface by sending bad command &xAB*
     //////////////////////////////////////////////////////////////////
     dwNumBytesToSend = 0; // Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\xAB';  // Send BAD command &xAB*
+    OutputBuffer[dwNumBytesToSend++] = 0xAB;  // Send BAD command &xAB*
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send off the BAD commands
 
     dwNumBytesToSend = 0;   // Clear output buffer
@@ -213,18 +213,18 @@ BOOL FT2232H_thread::SPI_Initial(FT_HANDLE ftHandle)
     ////////////////////////////////////////////////////////////////////
     //Configure the MPSSE for SPI communication with EEPROM
     //////////////////////////////////////////////////////////////////
-    OutputBuffer[dwNumBytesToSend++] = '\x8A';  // Ensure disable clock divide by 5 for 60Mhz master clock
-    OutputBuffer[dwNumBytesToSend++] = '\x97';  // Ensure turn off adaptive clocking
-    OutputBuffer[dwNumBytesToSend++] = '\x8D';  // disable 3 phase data clock
+    OutputBuffer[dwNumBytesToSend++] = 0x8A;  // Ensure disable clock divide by 5 for 60Mhz master clock
+    OutputBuffer[dwNumBytesToSend++] = 0x97;  // Ensure turn off adaptive clocking
+    OutputBuffer[dwNumBytesToSend++] = 0x8D;  // disable 3 phase data clock
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send out the commands
     dwNumBytesToSend = 0;   // Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\x80';  // Command to set directions of lower 8 pins and force value on bits set as output
-    OutputBuffer[dwNumBytesToSend++] = '\x00';  // Set SDA, SCL high, WP disabled by SK, DO at bit &*, GPIOL0 at bit &*
+    OutputBuffer[dwNumBytesToSend++] = 0x80;  // Command to set directions of lower 8 pins and force value on bits set as output
+    OutputBuffer[dwNumBytesToSend++] = 0x00;  // Set SDA, SCL high, WP disabled by SK, DO at bit &*, GPIOL0 at bit &*
     OutputBuffer[dwNumBytesToSend++] = DIR_SPI;  // Set SK,DO,GPIOL0 pins as output with bit **, other pins as input with bit &*
     // The SK clock frequency can be worked out by below algorithm with divide by 5 set as off
     // SK frequency = 60MHz /((1 + [(1 +0xValueH*256) OR 0xValueL])*2)
-    OutputBuffer[dwNumBytesToSend++] = '\x86';  // Command to set clock divisor
-    OutputBuffer[dwNumBytesToSend++] = BYTE(dwClockDivisor & '\xFF');   // Set 0xValueL of clock divisor
+    OutputBuffer[dwNumBytesToSend++] = 0x86;  // Command to set clock divisor
+    OutputBuffer[dwNumBytesToSend++] = BYTE(dwClockDivisor & 0xFF);   // Set 0xValueL of clock divisor
     OutputBuffer[dwNumBytesToSend++] = BYTE(dwClockDivisor >> 8);       // Set 0xValueH of clock divisor
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send out the commands
     if(ftStatus != FT_OK)
@@ -235,7 +235,7 @@ BOOL FT2232H_thread::SPI_Initial(FT_HANDLE ftHandle)
 
     //Turn off loop back in case
     dwNumBytesToSend = 0;                       // Clear output buffer
-    OutputBuffer[dwNumBytesToSend++] = '\x85';  // Command to turn off loop back of TDI/TDO connection
+    OutputBuffer[dwNumBytesToSend++] = 0x85;  // Command to turn off loop back of TDI/TDO connection
     ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send out the commands
     if(ftStatus != FT_OK)
     {
@@ -275,7 +275,7 @@ BOOL FT2232H_thread::open(int deviceNumber)
     }
 
     // allocate storage for list based on numDevs
-    devInfo = (FT_DEVICE_LIST_INFO_NODE*)malloc(sizeof(FT_DEVICE_LIST_INFO_NODE)*numDevs);
+    devInfo = reinterpret_cast<FT_DEVICE_LIST_INFO_NODE*>(malloc(sizeof(FT_DEVICE_LIST_INFO_NODE)*numDevs));
     // get the device information list
     ftStatus = FT_GetDeviceInfoList(devInfo,&numDevs);
     if (ftStatus != FT_OK)
@@ -305,7 +305,7 @@ BOOL FT2232H_thread::close(void)
         print_error("close", ftStatus);
         return FALSE;
     }
-    ftdiHandle = 0;
+    ftdiHandle = nullptr;
     return TRUE;
 }
 //--------------------------------------------------------------------------------

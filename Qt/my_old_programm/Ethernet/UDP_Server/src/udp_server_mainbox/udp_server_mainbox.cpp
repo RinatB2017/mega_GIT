@@ -63,7 +63,7 @@ void MainBox::processPendingDatagrams()
     datagram.clear();
     while (udpSocket->hasPendingDatagrams())
     {
-        datagram.resize(udpSocket->pendingDatagramSize());
+        datagram.resize(static_cast<int>(udpSocket->pendingDatagramSize()));
         udpSocket->readDatagram(datagram.data(), datagram.size());
         emit info(QString("Received datagram: %1 bytes").arg(datagram.size()));
     }

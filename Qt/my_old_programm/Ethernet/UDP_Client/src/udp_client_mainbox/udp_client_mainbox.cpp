@@ -77,7 +77,7 @@ void MainBox::create_fast_client(void)
     connect(client, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
     connect(client, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
     connect(client, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(client, SIGNAL(message(QString)),   this, SIGNAL(message(QString)));
+    connect(client, SIGNAL(trace(QString)),     this, SIGNAL(trace(QString)));
 
     connect(client, SIGNAL(finished()), thread_client, SLOT(quit()));
     connect(thread_client, SIGNAL(finished()), thread_client, SLOT(deleteLater()));

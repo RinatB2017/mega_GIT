@@ -98,8 +98,8 @@ void Client::send_data(int size_packet,
     emit info(QString("max_num_packet %1").arg(max_num_packet));
     emit info("---");
     emit info(QString("send data %1").arg(data_size));
-    emit info(QString("data %1 in 1 msec").arg((float)data_size / (float)te));
-    emit info(QString("speed %1 MBit/s").arg((float)data_size / (float)te * 8000.0f / 1000000.0f));
+    emit info(QString("data %1 in 1 msec").arg(static_cast<qreal>(data_size) / static_cast<qreal>(te)));
+    emit info(QString("speed %1 MBit/s").arg(static_cast<qreal>(data_size) / static_cast<qreal>(te) * 8000.0 / 1000000.0));
     emit info(QString("packet_cnt %1").arg(packet_cnt - packet_err));
     if(packet_err > 0)
     {
@@ -132,7 +132,7 @@ void Client::send_raw_data(int max_num_packet,
     datagram.clear();
     for(int n=0; n<packet_size; n++)
     {
-        datagram.append(packet.buf[n]);
+        datagram.append(static_cast<char>(packet.buf[n]));
     }
 
     QTime timer;
@@ -157,8 +157,8 @@ void Client::send_raw_data(int max_num_packet,
     emit info(QString("max_num_packet %1").arg(max_num_packet));
     emit info("---");
     emit info(QString("send data %1").arg(data_size));
-    emit info(QString("data %1 in 1 msec").arg((float)data_size / (float)te));
-    emit info(QString("speed %1 MBit/s").arg((float)data_size / (float)te * 8000.0f / 1024.0f / 1024.f));
+    emit info(QString("data %1 in 1 msec").arg(static_cast<qreal>(data_size) / static_cast<qreal>(te)));
+    emit info(QString("speed %1 MBit/s").arg(static_cast<qreal>(data_size) / static_cast<qreal>(te) * 8000.0 / 1024.0 / 1024.0));
     emit info(QString("packet_cnt %1").arg(packet_cnt - packet_err));
     if(packet_err > 0)
     {

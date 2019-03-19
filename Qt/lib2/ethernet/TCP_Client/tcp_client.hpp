@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TCP_CLIENT_H
-#define TCP_CLIENT_H
+#ifndef TCP_CLIENT_HPP
+#define TCP_CLIENT_HPP
 //--------------------------------------------------------------------------------
 #include <QHostAddress>
 #include <QWidget>
@@ -52,7 +52,7 @@ private slots:
 private:
     QTcpSocket *tcpSocket;
     QString address;
-    int port = 0;
+    uint port = 0;
     void init(void);
 
     void updateText(void);

@@ -25,6 +25,7 @@
 //--------------------------------------------------------------------------------
 #include "tcp_client.hpp"
 #include "tcp_client_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -41,7 +42,11 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    if(client)  delete client;
+    save_widgets(APPNAME);
+    if(client)
+    {
+        delete client;
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -49,20 +54,22 @@ void MainBox::init(void)
 {
     init_widgets();
     init_client();
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
 {
-    ui->lne_Data->setText("test");
-    ui->lne_Address->setText(QHostAddress(QHostAddress::LocalHost).toString());
-    ui->sb_Port->setValue(10000);
+    ui->le_data->setText("test");
+    ui->le_address->setText(QHostAddress(QHostAddress::LocalHost).toString());
+    ui->sb_port->setValue(10000);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_client(void)
 {
     client = new TCP_Client(this);
-    client->setAddress(QHostAddress(ui->lne_Address->text()));
-    client->setPort(ui->sb_Port->value());
+    client->setAddress(QHostAddress(ui->le_address->text()));
+    client->setPort(static_cast<uint>(ui->sb_port->value()));
 
     connect(ui->btn_Send, SIGNAL(clicked()), this, SLOT(send()));
 }
@@ -77,14 +84,15 @@ void MainBox::send(void)
     QByteArray data;
     QByteArray res_data;
 
-    if(ui->lne_Address->text().isEmpty()) return;
-    client->setAddress(QHostAddress(ui->lne_Address->text()));
-    client->setPort(ui->sb_Port->value());
+    if(ui->le_address->text().isEmpty()) return;
+    client->setAddress(QHostAddress(ui->le_address->text()));
+    client->setPort(static_cast<uint>(ui->sb_port->value()));
 
     data.clear();
-    data.append(ui->lne_Data->text());
+    data.append(ui->le_data->text());
     emit debug(QString("send(%1)").arg(data.data()));
     res_data = client->input(data);
-    emit debug(res_data.toHex());
+    //emit debug(res_data.toHex());
+    emit info(res_data);
 }
 //--------------------------------------------------------------------------------

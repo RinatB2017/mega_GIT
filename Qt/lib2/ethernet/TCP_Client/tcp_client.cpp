@@ -62,11 +62,12 @@ QByteArray TCP_Client::send_data(const QByteArray block)
 
     tmp.clear();
     emit info(QString("connect to host %1:%2").arg(address).arg(port));
-    tcpSocket->connectToHost(address, port);
+    tcpSocket->connectToHost(address,
+                             static_cast<quint16>(port));
     if (!tcpSocket->waitForConnected(3000))
     {
         emit error(tr("Сервер не отвечает!"));
-        return NULL;
+        return nullptr;
     }
 #ifdef DEBUG_FRAME
     emit debug(block.toHex().toUpper());
@@ -80,16 +81,18 @@ QByteArray TCP_Client::send_data(const QByteArray block)
     {
         emit error(tr("Данные передать не удалось!"));
     }
+
     if(tcpSocket->waitForReadyRead (5000))
     {
         tmp = tcpSocket->readAll();
         emit info(tr("Данные получены!"));
-        emit trace(tmp.data());
+        //emit trace(tmp.data());
     }
     else
     {
         emit error(tr("Данные получить не удалось!"));
     }
+
     tcpSocket->disconnectFromHost();
     return tmp;
 }

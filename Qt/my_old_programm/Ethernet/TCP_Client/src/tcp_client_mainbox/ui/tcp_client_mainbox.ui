@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>49</height>
+    <width>511</width>
+    <height>60</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lne_Address">
+       <widget class="QLineEdit" name="le_address">
         <property name="minimumSize">
          <size>
           <width>100</width>
@@ -48,7 +48,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="sb_Port">
+       <widget class="QSpinBox" name="sb_port">
         <property name="minimum">
          <number>1</number>
         </property>
@@ -61,7 +61,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lne_Data">
+       <widget class="QLineEdit" name="le_data">
         <property name="minimumSize">
          <size>
           <width>100</width>

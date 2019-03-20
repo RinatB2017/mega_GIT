@@ -4,8 +4,16 @@
 <context>
     <name>MainBox</name>
     <message>
+        <source>Map</source>
+        <translation>Карта</translation>
+    </message>
+    <message>
         <source>new game</source>
         <translation>Новая игра</translation>
+    </message>
+    <message>
+        <source>new map</source>
+        <translation>Новая карта</translation>
     </message>
     <message>
         <source>load map</source>

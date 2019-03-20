@@ -37,6 +37,7 @@ public:
 
     void remove_player(void);
     bool set_player(int pos_x, int pos_y);
+    bool set_begin_player(void);
 
     void new_map(int max_x, int max_y);
     bool load_map(const QString &filename);
@@ -85,8 +86,13 @@ private:
 
     int id = 0;
     int direction_move = 0;
+
     int player_x = 0;
     int player_y = 0;
+
+    int begin_player_x = -1;
+    int begin_player_y = -1;
+
     int start_x = 0;
     int start_y = 0;
     QTimer *timer;

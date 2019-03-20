@@ -66,7 +66,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)
 {
-    ui->btn_new_game->setIcon(qApp->style()->standardIcon(QStyle::SP_FileDialogNewFolder));
+    ui->btn_new_map->setIcon(qApp->style()->standardIcon(QStyle::SP_FileDialogNewFolder));
     ui->btn_load_map->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton));
     ui->btn_save_map->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
@@ -77,16 +77,17 @@ void MainBox::init_widgets(void)
     ui->sb_interval->setRange(MIN_INTERVAL_MS, MAX_INTERVAL_MS);
     ui->sb_interval->setObjectName("sb_interval");
 
-    connect(ui->btn_new_game,   SIGNAL(clicked(bool)),  this,   SLOT(new_map()));
+    connect(ui->btn_new_map,   SIGNAL(clicked(bool)),  this,    SLOT(new_map()));
     connect(ui->btn_load_map,   SIGNAL(clicked(bool)),  this,   SLOT(load_map()));
     connect(ui->btn_save_map,   SIGNAL(clicked(bool)),  this,   SLOT(save_map()));
+
+    connect(ui->btn_new_game,       SIGNAL(clicked(bool)),  this,   SLOT(new_game()));
+
     connect(ui->btn_start,      SIGNAL(clicked(bool)),  this,   SLOT(start()));
     connect(ui->btn_stop,       SIGNAL(clicked(bool)),  this,   SLOT(stop()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 
     connect(ui->map_widget,     SIGNAL(victory()),      this,   SLOT(update_map()));
-
-    connect(ui->btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
     connect(ui->btn_step,       SIGNAL(clicked(bool)),  ui->map_widget, SLOT(update()));
     connect(ui->btn_step,       SIGNAL(clicked(bool)),  this,           SLOT(show_minimap()));
@@ -102,9 +103,12 @@ void MainBox::update_map(void)
 //--------------------------------------------------------------------------------
 void MainBox::lock_widgets(void)
 {
+    ui->btn_new_map->setDisabled(true);
     ui->btn_load_map->setDisabled(true);
-    ui->btn_new_game->setDisabled(true);
     ui->btn_save_map->setDisabled(true);
+
+    ui->btn_new_game->setDisabled(true);
+
     ui->btn_start->setDisabled(true);
     ui->btn_stop->setDisabled(false);
     ui->btn_refresh->setDisabled(true);
@@ -114,9 +118,12 @@ void MainBox::lock_widgets(void)
 //--------------------------------------------------------------------------------
 void MainBox::unlock_widgets(void)
 {
+    ui->btn_new_map->setEnabled(true);
     ui->btn_load_map->setEnabled(true);
-    ui->btn_new_game->setEnabled(true);
     ui->btn_save_map->setEnabled(true);
+
+    ui->btn_new_game->setEnabled(true);
+
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setEnabled(false);
     ui->btn_refresh->setEnabled(true);
@@ -128,7 +135,11 @@ QToolButton * MainBox::create_button(const QString &name,
                                      int id)
 {
     QPixmap pixmap;
-    pixmap.load(name);
+    bool ok = pixmap.load(name);
+    if(!ok)
+    {
+        return nullptr;
+    }
 
     QIcon icon(pixmap);
 
@@ -153,17 +164,15 @@ void MainBox::createImagesDock(void)
     QToolBar *image_bar = new QToolBar("image_bar");
     image_bar->setObjectName("image_bar");
 
-    QString i_player    = QString(":/images/%1.png").arg(PLAYER_ID);
-    QString i_wall      = QString(":/images/%1.png").arg(WALL_ID);
-    QString i_space     = QString(":/images/%1.png").arg(SPACE_ID);
-    QString i_start     = QString(":/images/%1.png").arg(START_ID);
-    QString i_exit      = QString(":/images/%1.png").arg(EXIT_ID);
-
-    image_bar->addWidget(create_button(i_player,    PLAYER_ID));
-    image_bar->addWidget(create_button(i_wall,      WALL_ID));
-    image_bar->addWidget(create_button(i_space,     SPACE_ID));
-    image_bar->addWidget(create_button(i_start,     START_ID));
-    image_bar->addWidget(create_button(i_exit,      EXIT_ID));
+    for(int i=0; i<32; i++)
+    {
+        QString temp = QString(":/images/%1.png").arg(i);
+        QToolButton *tb = create_button(temp, i);
+        if(tb)
+        {
+            image_bar->addWidget(tb);
+        }
+    }
 
     mw->addToolBar(Qt::TopToolBarArea, image_bar);
 }
@@ -192,9 +201,9 @@ void MainBox::test(void)
 {
     emit info("test");
 
-#if 1
+#if 0
     ui->map_widget->remove_player();
-    ui->map_widget->set_player(1, 1);
+    ui->map_widget->set_begin_player();
 #endif
 
 #if 0
@@ -321,7 +330,7 @@ void MainBox::load_map(void)
     dlg->setNameFilter("DAT files (*.dat)");
     dlg->setDefaultSuffix("dat");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
+    //dlg->setDirectory(".");
     dlg->selectFile("noname");
     if(dlg->exec())
     {
@@ -361,6 +370,12 @@ void MainBox::save_map(void)
     }
     delete dlg;
 #endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::new_game(void)
+{
+    ui->map_widget->remove_player();
+    ui->map_widget->set_begin_player();
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

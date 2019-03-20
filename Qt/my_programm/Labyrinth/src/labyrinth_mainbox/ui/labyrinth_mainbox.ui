@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>310</width>
-    <height>379</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,31 +30,33 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QPushButton" name="btn_new_game">
-        <property name="text">
-         <string>new game</string>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>Map</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_load_map">
-        <property name="text">
-         <string>load map</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_save_map">
-        <property name="text">
-         <string>save map</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_test">
-        <property name="text">
-         <string>test</string>
-        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="btn_new_map">
+           <property name="text">
+            <string>new map</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_load_map">
+           <property name="text">
+            <string>load map</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_save_map">
+           <property name="text">
+            <string>save map</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -69,6 +71,13 @@
          <string>game</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="btn_new_game">
+           <property name="text">
+            <string>new game</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <property name="leftMargin">
@@ -175,14 +184,15 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>btn_new_game</tabstop>
+  <tabstop>btn_new_map</tabstop>
   <tabstop>btn_load_map</tabstop>
   <tabstop>btn_save_map</tabstop>
-  <tabstop>btn_test</tabstop>
+  <tabstop>btn_new_game</tabstop>
   <tabstop>sb_interval</tabstop>
   <tabstop>btn_start</tabstop>
   <tabstop>btn_stop</tabstop>
   <tabstop>btn_refresh</tabstop>
+  <tabstop>btn_step</tabstop>
  </tabstops>
  <resources/>
  <connections/>

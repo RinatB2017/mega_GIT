@@ -161,7 +161,6 @@ void MyWidget::lock_interface(void)
         btn->setProperty("state", btn->isEnabled());
         btn->setDisabled(true);
     }
-
 #else
     for(int n=0; n<w_lists.count(); n++)
     {

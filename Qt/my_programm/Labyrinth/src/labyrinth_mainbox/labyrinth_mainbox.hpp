@@ -54,6 +54,8 @@ private slots:
     void load_map(void);
     void save_map(void);
 
+    void new_game(void);
+
     void update_map(void);
 
     void show_minimap(void);

@@ -193,6 +193,14 @@ bool Map::load_map(const QString &filename)
         //emit trace(ba.toHex());
         for(int x=0; x<ba.length(); x++)
         {
+            if(ba.at(x) ==  PLAYER_ID)
+            {
+                player_x = x;
+                player_y = y;
+
+                begin_player_x = x;
+                begin_player_y = y;
+            }
             add_item(x, y, ba.at(x));
         }
 
@@ -218,24 +226,9 @@ bool Map::add_item(int x, int y, int id)
     QLabel *label;
     bool ok = false;
 
-#ifdef QT_DEBUG
-    switch (id)
+    ok = pixmap.load(QString(":/images/%1.png").arg(id));
+    if(ok)
     {
-    case PLAYER_ID: emit error("PLAYER_ID found!"); break;
-    case START_ID:  emit error("START_ID found!");  break;
-    case EXIT_ID:   emit error("EXIT_ID found!");   break;
-    }
-#endif
-
-    switch (id)
-    {
-    case PLAYER_ID:
-    case WALL_ID:
-    case SPACE_ID:
-    case START_ID:
-    case EXIT_ID:
-        pixmap.load(QString(":/images/%1.png").arg(id));
-
         label = new QLabel();
         label->setProperty(PROPERTY_ID, id);
         label->setProperty(PROPERTY_X, x);
@@ -245,13 +238,8 @@ bool Map::add_item(int x, int y, int id)
 
         id_map[x][y] = id;
         grid_map->addWidget(label, y, x);
-        ok = true;
-        break;
-
-    default:
-        emit error(QString("item %1 is not valid").arg(id));
-        break;
     }
+
     return ok;
 }
 //--------------------------------------------------------------------------------
@@ -261,7 +249,7 @@ bool Map::put_picture(int id, int x, int y)
                .arg(id)
                .arg(x)
                .arg(y));
-#if 1
+
     QLayoutItem *item = grid_map->itemAtPosition(y, x);
     Q_CHECK_PTR(item);
 
@@ -283,10 +271,7 @@ bool Map::put_picture(int id, int x, int y)
     label->setProperty(PROPERTY_ID, id);
     label->setProperty(PROPERTY_X, x);
     label->setProperty(PROPERTY_Y, y);
-    id_map[x][y] = id;
-#else
     add_item(x, y, id);
-#endif
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -727,6 +712,20 @@ bool Map::set_player(int pos_x, int pos_y)
 
     player_x = pos_x;
     player_y = pos_y;
+
+    id_map[player_x][player_y] = PLAYER_ID;
+    put_picture(PLAYER_ID, player_x, player_y);
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Map::set_begin_player(void)
+{
+    emit debug(QString("begin_player_x %1").arg(begin_player_x));
+    emit debug(QString("begin_player_y %1").arg(begin_player_y));
+
+    player_x = begin_player_x;
+    player_y = begin_player_y;
 
     id_map[player_x][player_y] = PLAYER_ID;
     put_picture(PLAYER_ID, player_x, player_y);

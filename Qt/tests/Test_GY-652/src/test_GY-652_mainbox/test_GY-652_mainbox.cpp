@@ -102,7 +102,10 @@ void MainBox::init(void)
     //---
 
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_gy652(QByteArray)));
+
+#ifdef Q_OS_WIN
     setFixedSize(sizeHint());
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

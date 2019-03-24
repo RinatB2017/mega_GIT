@@ -25,6 +25,8 @@ win32 {
 
     CONFIG -= debug_and_release #debug_and_release_target
     CONFIG += no_fixpath
+
+    DEFINES += WIN32_LEAN_AND_MEAN
 }
 ###############################################################################
 unix:!macx {

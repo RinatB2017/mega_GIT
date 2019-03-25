@@ -14,7 +14,6 @@ SUBDIRS += \
     GP2Y0A02Y \
     imageviewer \
     Icons \
-    Organizations \
     PelcoD_485 \
     Reader_SAAT_T505 \
     Simple_HTTP_reader \

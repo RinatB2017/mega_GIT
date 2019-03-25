@@ -1,1 +1,0 @@
-/home/tux/Programming/my_programm/Impulse/E6-27/e6-27_adc/build/CMakeFiles/e6-27_adc.elf.dir

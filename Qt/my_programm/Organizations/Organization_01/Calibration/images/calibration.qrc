@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/programm">
-        <file alias="pda_blue.png">pda_blue.png</file>
-        <file alias="printer.png">printer.png</file>
-        <file>media-playback-start.png</file>
-        <file>media-playback-stop.png</file>
-    </qresource>
-</RCC>

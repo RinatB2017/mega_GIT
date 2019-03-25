@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/fram">
-        <file>fram.dat</file>
-    </qresource>
-</RCC>

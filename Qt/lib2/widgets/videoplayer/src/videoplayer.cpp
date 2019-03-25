@@ -20,7 +20,8 @@
 **********************************************************************************/
 #include "videoplayer.hpp"
 //--------------------------------------------------------------------------------
-VideoPlayer::VideoPlayer(void)
+VideoPlayer::VideoPlayer(QWidget *parent) :
+    QVideoWidget(parent)
 {
     player = new QMediaPlayer(this);
     player->setVideoOutput(this);
@@ -45,17 +46,38 @@ void VideoPlayer::set_url(QUrl new_url)
 //--------------------------------------------------------------------------------
 void VideoPlayer::play(void)
 {
-    player->play();
+    if(player->isAvailable())
+    {
+        player->play();
+    }
+    else
+    {
+        emit error("Player is not available!");
+    }
 }
 //--------------------------------------------------------------------------------
 void VideoPlayer::pause(void)
 {
-    player->pause();
+    if(player->isAvailable())
+    {
+        player->pause();
+    }
+    else
+    {
+        emit error("Player is not available!");
+    }
 }
 //--------------------------------------------------------------------------------
 void VideoPlayer::stop(void)
 {
-    player->stop();
+    if(player->isAvailable())
+    {
+        player->stop();
+    }
+    else
+    {
+        emit error("Player is not available!");
+    }
 }
 //--------------------------------------------------------------------------------
 void VideoPlayer::s_error(QMediaPlayer::Error err)
@@ -73,5 +95,6 @@ void VideoPlayer::s_error(QMediaPlayer::Error err)
         emit error(QString("unknown error %1").arg(err));
         break;
     }
+    emit error(player->errorString());
 }
 //--------------------------------------------------------------------------------

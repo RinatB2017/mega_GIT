@@ -18,31 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef RTSP_DIALOG_HPP
-#define RTSP_DIALOG_HPP
+#ifndef CONTROL_LOG_HPP
+#define CONTROL_LOG_HPP
 //--------------------------------------------------------------------------------
-#include <QDialog>
-#include <QUrl>
+#include <QObject>
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class RTSP_dialog;
-}
-//--------------------------------------------------------------------------------
-class RTSP_dialog : public QDialog
+class Control_LOG : public QObject
 {
     Q_OBJECT
-
 public:
-    explicit RTSP_dialog(QWidget *parent = 0);
-    ~RTSP_dialog();
+    explicit Control_LOG(QString f_name,
+                         QObject *parent = 0);
 
-    void set_url(QUrl url);
-    QString get_address(void);
+public slots:
+    void info(const  QString text);
+    void debug(const QString text);
+    void error(const QString text);
+    void trace(const QString text);
 
 private:
-    Ui::RTSP_dialog *ui;
+    QString filename;
 
-    void init(void);
+    void save(QString text);
 };
 //--------------------------------------------------------------------------------
-#endif // RTSP_DIALOG_HPP
+#endif // CONTROL_LOG_HPP

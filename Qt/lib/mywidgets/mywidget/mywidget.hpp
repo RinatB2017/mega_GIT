@@ -164,12 +164,12 @@ signals:
 public slots:
     void block_interface(bool state);
     void check_tooltips(void);
+    void block_wheel(void);
 
 private slots:
     void log(const QString data);
 
     void debug(void);
-    void block_wheel(void);
     void show_objectname(void);
 
 private:

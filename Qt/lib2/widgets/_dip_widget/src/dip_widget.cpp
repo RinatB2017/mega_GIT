@@ -18,7 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtWidgets>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include "dip_widget.hpp"
 //--------------------------------------------------------------------------------
 DIP_widget::DIP_widget(QWidget *parent) :
@@ -51,7 +56,6 @@ void DIP_widget::init(void)
         pos_x += (DIP_WIDTH + 4);
     }
 
-    setToolTip(QString("Адрес = %1").arg(dip_value));
     setFixedSize(MAX_WIDTH, MAX_HEIGHT);
 }
 //--------------------------------------------------------------------------------
@@ -88,12 +92,21 @@ void DIP_widget::set_value(int value)
     //buttons[7].state = b.bites.bit_7;
 
     repaint();
-    setToolTip(QString("Адрес = %1").arg(dip_value));
 }
 //--------------------------------------------------------------------------------
 int DIP_widget::get_value(void)
 {
     return dip_value;
+}
+//--------------------------------------------------------------------------------
+bool DIP_widget::check_pos(QRect rect, QPoint pos)
+{
+    if(pos.x() < rect.x())      return false;
+    if(pos.x() > rect.right())  return false;
+    if(pos.y() < rect.y())      return false;
+    if(pos.y() > rect.bottom()) return false;
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void DIP_widget::block_interface(bool state)
@@ -110,21 +123,6 @@ void DIP_widget::block_interface(bool state)
     repaint();
 }
 //--------------------------------------------------------------------------------
-void DIP_widget::unlock_interface(bool state)
-{
-    block_interface(!state);
-}
-//--------------------------------------------------------------------------------
-bool DIP_widget::check_pos(QRect rect, QPoint pos)
-{
-    if(pos.x() < rect.x())      return false;
-    if(pos.x() > rect.right())  return false;
-    if(pos.y() < rect.y())      return false;
-    if(pos.y() > rect.bottom()) return false;
-
-    return true;
-}
-//--------------------------------------------------------------------------------
 void DIP_widget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -137,23 +135,6 @@ void DIP_widget::paintEvent(QPaintEvent *event)
     font.setBold(true);
     painter.setFont(font);
     painter.setPen(QPen(Qt::white));
-#ifdef FLIP_DIP_WIDGET
-    painter.drawText(8,
-                     DIP_BEGIN_Y + 5,
-                     "ON");
-    painter.drawLine(15,
-                     DIP_BEGIN_Y + 7,
-                     15,
-                     DIP_BEGIN_Y + DIP_HEIGHT);
-    painter.drawLine(15,
-                     DIP_BEGIN_Y + 7,
-                     10,
-                     DIP_BEGIN_Y + 15);
-    painter.drawLine(15,
-                     DIP_BEGIN_Y + 7,
-                     20,
-                     DIP_BEGIN_Y + 15);
-#else
     painter.drawText(8,
                      DIP_BEGIN_Y + DIP_HEIGHT,
                      "ON");
@@ -169,7 +150,6 @@ void DIP_widget::paintEvent(QPaintEvent *event)
                      DIP_BEGIN_Y + 10,
                      15,
                      DIP_BEGIN_Y + 15);
-#endif
 
     foreach (auto button, buttons)
     {
@@ -177,25 +157,14 @@ void DIP_widget::paintEvent(QPaintEvent *event)
         painter.drawRect(button.rect);
 
         painter.setBrush(QBrush(Qt::gray));
-#ifdef FLIP_DIP_WIDGET
         QRect pos_slider_on = QRect(button.rect.x(),
-                                    button.rect.y(),
-                                    button.rect.width(),
-                                    8);
-        QRect pos_slider_off = QRect(button.rect.x(),
-                                     button.rect.bottom() - 8,
-                                     button.rect.width(),
-                                     8);
-#else
-        QRect pos_slider_on = QRect(button.rect.x(),
-                                    button.rect.bottom() - 8,
+                                    button.rect.bottom()-8,
                                     button.rect.width(),
                                     8);
         QRect pos_slider_off = QRect(button.rect.x(),
                                      button.rect.y(),
                                      button.rect.width(),
                                      8);
-#endif
         if(button.state)
         {
             painter.drawRect(pos_slider_on);
@@ -207,7 +176,7 @@ void DIP_widget::paintEvent(QPaintEvent *event)
 
         painter.setFont(font);
         painter.setPen(QPen(Qt::white));
-        painter.drawText(button.rect.x() + 2,
+        painter.drawText(button.rect.x()+2,
                          button.rect.y() + button.rect.bottom() + 2,
                          QString("%1").arg(button.num+1));
     }
@@ -225,11 +194,15 @@ void DIP_widget::mousePressEvent(QMouseEvent *event)
     {
         int x = event->x();
         int y = event->y();
+        //emit debug(QString("X=%1 Y=%2")
+        //           .arg(x)
+        //           .arg(y));
         for(int n=0; n<buttons.size(); n++)
         {
             if(check_pos(buttons[n].rect, QPoint(x,y)))
             {
                 buttons[n].state = !buttons[n].state;
+                //emit error(QString("%1").arg(buttons[n].state ? "true" : "false"));
                 int val = 0;
                 foreach (auto btn, buttons)
                 {
@@ -241,7 +214,6 @@ void DIP_widget::mousePressEvent(QMouseEvent *event)
                 dip_value = val;
                 emit value(val);
                 repaint();
-                setToolTip(QString("Адрес = %1").arg(dip_value));
             }
         }
     }

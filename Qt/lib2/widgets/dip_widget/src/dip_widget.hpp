@@ -21,7 +21,7 @@
 #ifndef DIP_WIDGET_HPP
 #define DIP_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QtWidgets>
 //--------------------------------------------------------------------------------
 #define MAX_WIDTH   100
 #define MAX_HEIGHT  50
@@ -46,7 +46,7 @@ class DIP_widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit DIP_widget(QWidget *parent = nullptr);
+    explicit DIP_widget(QWidget *parent = 0);
     ~DIP_widget();
 
 signals:
@@ -62,6 +62,7 @@ public slots:
     int  get_value(void);
 
     void block_interface(bool state);
+    void unlock_interface(bool state);
 
 private:
     struct DIP_button {
@@ -71,9 +72,11 @@ private:
     };
 
     bool is_blocked = false;
+
+    QColor color = Qt::blue;
+
     int dip_value = 0;
     QList<DIP_button> buttons;
-    QColor color = Qt::blue;
 
     void init(void);
     bool check_pos(QRect rect, QPoint pos);

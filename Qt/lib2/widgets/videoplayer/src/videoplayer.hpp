@@ -29,7 +29,7 @@ class VideoPlayer : public QVideoWidget
     Q_OBJECT
 
 public:
-    VideoPlayer(void);
+    explicit VideoPlayer(QWidget *parent = 0);
     ~VideoPlayer(void);
 
     void set_url(QUrl new_url);

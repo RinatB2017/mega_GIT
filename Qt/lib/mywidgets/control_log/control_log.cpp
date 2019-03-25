@@ -18,31 +18,71 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef RTSP_DIALOG_HPP
-#define RTSP_DIALOG_HPP
+#include <QIODevice>
+#include <QDateTime>
+#include <QFile>
 //--------------------------------------------------------------------------------
-#include <QDialog>
-#include <QUrl>
+#include "control_log.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class RTSP_dialog;
+Control_LOG::Control_LOG(QString f_name,
+                         QObject *parent) :
+    QObject(parent)
+{
+    filename = f_name;
 }
 //--------------------------------------------------------------------------------
-class RTSP_dialog : public QDialog
+void Control_LOG::info(const QString text)
 {
-    Q_OBJECT
+    QString temp;
+    temp.append(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
+    temp.append(" INFO ");
+    temp.append(text);
+    temp.append("\n");
 
-public:
-    explicit RTSP_dialog(QWidget *parent = 0);
-    ~RTSP_dialog();
-
-    void set_url(QUrl url);
-    QString get_address(void);
-
-private:
-    Ui::RTSP_dialog *ui;
-
-    void init(void);
-};
+    save(temp);
+}
 //--------------------------------------------------------------------------------
-#endif // RTSP_DIALOG_HPP
+void Control_LOG::debug(const QString text)
+{
+    QString temp;
+    temp.append(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
+    temp.append(" DEBUG ");
+    temp.append(text);
+    temp.append("\n");
+
+    save(temp);
+}
+//--------------------------------------------------------------------------------
+void Control_LOG::error(const QString text)
+{
+    QString temp;
+    temp.append(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
+    temp.append(" ERROR ");
+    temp.append(text);
+    temp.append("\n");
+
+    save(temp);
+}
+//--------------------------------------------------------------------------------
+void Control_LOG::trace(const QString text)
+{
+    QString temp;
+    temp.append(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
+    temp.append(" TRACE ");
+    temp.append(text);
+    temp.append("\n");
+
+    save(temp);
+}
+//--------------------------------------------------------------------------------
+void Control_LOG::save(QString text)
+{
+    QFile file(filename);
+    if (file.open(QIODevice::Append | QIODevice::Text))
+    {
+        file.write(text.toLocal8Bit());
+        file.close();
+    }
+}
+//--------------------------------------------------------------------------------

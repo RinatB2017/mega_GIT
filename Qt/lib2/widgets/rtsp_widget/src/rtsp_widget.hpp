@@ -33,7 +33,7 @@ class RTSP_widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit RTSP_widget(QWidget *parent = nullptr);
+    explicit RTSP_widget(QWidget *parent = 0);
     ~RTSP_widget();
 
 signals:
@@ -53,7 +53,7 @@ private slots:
 
 private:
     Ui::RTSP_widget *ui;
-    QMediaPlayer *player;
+    QMediaPlayer *player = 0;
 
     void init(void);
     void updateText(void);

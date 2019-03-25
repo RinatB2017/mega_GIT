@@ -18,31 +18,35 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef RTSP_DIALOG_HPP
-#define RTSP_DIALOG_HPP
+#ifndef VIDEO_PLAYER
+#define VIDEO_PLAYER
 //--------------------------------------------------------------------------------
-#include <QDialog>
-#include <QUrl>
+#include <QVideoWidget>
+#include <QMediaPlayer>
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class RTSP_dialog;
-}
-//--------------------------------------------------------------------------------
-class RTSP_dialog : public QDialog
+class VideoPlayer : public QVideoWidget
 {
     Q_OBJECT
 
 public:
-    explicit RTSP_dialog(QWidget *parent = 0);
-    ~RTSP_dialog();
+    VideoPlayer(void);
+    ~VideoPlayer(void);
 
-    void set_url(QUrl url);
-    QString get_address(void);
+    void set_url(QUrl new_url);
+
+signals:
+    void error(const QString &);
+
+public slots:
+    void play(void);
+    void pause(void);
+    void stop(void);
+
+private slots:
+    void s_error(QMediaPlayer::Error);
 
 private:
-    Ui::RTSP_dialog *ui;
-
-    void init(void);
+    QMediaPlayer *player = 0;
 };
 //--------------------------------------------------------------------------------
-#endif // RTSP_DIALOG_HPP
+#endif

@@ -18,31 +18,60 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef RTSP_DIALOG_HPP
-#define RTSP_DIALOG_HPP
+#include "videoplayer.hpp"
 //--------------------------------------------------------------------------------
-#include <QDialog>
-#include <QUrl>
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class RTSP_dialog;
+VideoPlayer::VideoPlayer(void)
+{
+    player = new QMediaPlayer(this);
+    player->setVideoOutput(this);
+
+    connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(s_error(QMediaPlayer::Error)));
 }
 //--------------------------------------------------------------------------------
-class RTSP_dialog : public QDialog
+VideoPlayer::~VideoPlayer()
 {
-    Q_OBJECT
-
-public:
-    explicit RTSP_dialog(QWidget *parent = 0);
-    ~RTSP_dialog();
-
-    void set_url(QUrl url);
-    QString get_address(void);
-
-private:
-    Ui::RTSP_dialog *ui;
-
-    void init(void);
-};
+    if(player)
+    {
+        player->deleteLater();
+    }
+}
 //--------------------------------------------------------------------------------
-#endif // RTSP_DIALOG_HPP
+void VideoPlayer::set_url(QUrl new_url)
+{
+    const QNetworkRequest requestRtsp(new_url);
+    player->setMedia(requestRtsp);
+    player->play();
+}
+//--------------------------------------------------------------------------------
+void VideoPlayer::play(void)
+{
+    player->play();
+}
+//--------------------------------------------------------------------------------
+void VideoPlayer::pause(void)
+{
+    player->pause();
+}
+//--------------------------------------------------------------------------------
+void VideoPlayer::stop(void)
+{
+    player->stop();
+}
+//--------------------------------------------------------------------------------
+void VideoPlayer::s_error(QMediaPlayer::Error err)
+{
+    switch(err)
+    {
+    case QMediaPlayer::NoError:             emit error("NoError");              break;
+    case QMediaPlayer::ResourceError:       emit error("ResourceError");        break;
+    case QMediaPlayer::FormatError:         emit error("FormatError");          break;
+    case QMediaPlayer::NetworkError:        emit error("NetworkError");         break;
+    case QMediaPlayer::AccessDeniedError:   emit error("AccessDeniedError");    break;
+    case QMediaPlayer::ServiceMissingError: emit error("ServiceMissingError");  break;
+    case QMediaPlayer::MediaIsPlaylist:     emit error("MediaIsPlaylist");      break;
+    default:
+        emit error(QString("unknown error %1").arg(err));
+        break;
+    }
+}
+//--------------------------------------------------------------------------------

@@ -22,7 +22,6 @@
 #define RTSP_DIALOG_HPP
 //--------------------------------------------------------------------------------
 #include <QDialog>
-#include <QUrl>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class RTSP_dialog;
@@ -33,7 +32,7 @@ class RTSP_dialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RTSP_dialog(QWidget *parent = 0);
+    explicit RTSP_dialog(QWidget *parent = nullptr);
     ~RTSP_dialog();
 
     void set_url(QUrl url);

@@ -24,10 +24,6 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-//#include <QMediaPlayer>
-//#include <QMultimedia>
-//#include <QtMultimediaWidgets>
-//--------------------------------------------------------------------------------
 #include "rtsp_widget.hpp"
 #include "rtsp_dialog.hpp"
 //--------------------------------------------------------------------------------
@@ -57,7 +53,7 @@ void RTSP_widget::init(void)
     player->setVideoOutput(ui->video_widget);
 
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
-    
+
     ui->video_widget->setMinimumSize(320, 200);
 
 #ifdef Q_OS_LINUX
@@ -111,20 +107,6 @@ void RTSP_widget::play(void)
     else
     {
         emit error("Player is not available!");
-
-        QMediaPlayer::MediaStatus status = player->mediaStatus();
-        switch (status)
-        {
-        case QMediaPlayer::UnknownMediaStatus:    emit error("UnknownMediaStatus");    break;
-        case QMediaPlayer::NoMedia:               emit error("NoMedia");          break;
-        case QMediaPlayer::LoadingMedia:          emit error("LoadingMedia");     break;
-        case QMediaPlayer::LoadedMedia:           emit error("LoadedMedia");      break;
-        case QMediaPlayer::StalledMedia:          emit error("StalledMedia");     break;
-        case QMediaPlayer::BufferingMedia:        emit error("BufferingMedia");   break;
-        case QMediaPlayer::BufferedMedia:         emit error("BufferedMedia");    break;
-        case QMediaPlayer::EndOfMedia:            emit error("EndOfMedia");       break;
-        case QMediaPlayer::InvalidMedia:          emit error("InvalidMedia");     break;
-        }
     }
 }
 //--------------------------------------------------------------------------------

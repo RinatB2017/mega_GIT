@@ -18,31 +18,47 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef RTSP_DIALOG_HPP
-#define RTSP_DIALOG_HPP
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#include <QDialog>
-#include <QUrl>
+#include "rtsp_dialog.hpp"
+#include "ui_rtsp_dialog.h"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class RTSP_dialog;
+RTSP_dialog::RTSP_dialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::RTSP_dialog)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class RTSP_dialog : public QDialog
+RTSP_dialog::~RTSP_dialog()
 {
-    Q_OBJECT
-
-public:
-    explicit RTSP_dialog(QWidget *parent = 0);
-    ~RTSP_dialog();
-
-    void set_url(QUrl url);
-    QString get_address(void);
-
-private:
-    Ui::RTSP_dialog *ui;
-
-    void init(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // RTSP_DIALOG_HPP
+void RTSP_dialog::init(void)
+{
+    ui->setupUi(this);
+
+    ui->le_add->setText("av0_0");
+}
+//--------------------------------------------------------------------------------
+void RTSP_dialog::set_url(QUrl url)
+{
+    ui->ip4_widget->set_url(url);
+}
+//--------------------------------------------------------------------------------
+QString RTSP_dialog::get_address(void)
+{
+    QString address;
+    address.append("rtsp://");
+    address.append(QString("%1").arg(ui->ip4_widget->get_url().host()));
+    address.append("/");
+    address.append(ui->le_add->text());
+
+    return address;
+}
+//--------------------------------------------------------------------------------

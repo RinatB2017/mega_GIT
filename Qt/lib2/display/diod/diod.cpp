@@ -43,9 +43,9 @@ Diod::Diod(int led_width,
 //--------------------------------------------------------------------------------
 void Diod::set_color(QColor color)
 {
-    set_color(color.red(),
-              color.green(),
-              color.blue());
+    set_color(static_cast<uint8_t>(color.red()),
+              static_cast<uint8_t>(color.green()),
+              static_cast<uint8_t>(color.blue()));
 }
 //--------------------------------------------------------------------------------
 void Diod::set_color(uint8_t R_value,
@@ -134,8 +134,8 @@ bool Diod::resize(int w, int h)
 //--------------------------------------------------------------------------------
 void Diod::mousePressEvent(QMouseEvent *event)
 {
-    QColorDialog *dlg = 0;
-    QImage *img = 0;
+    QColorDialog *dlg;
+    QImage *img;
 
     switch(event->button())
     {

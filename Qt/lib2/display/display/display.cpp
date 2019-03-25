@@ -37,7 +37,7 @@ Display::Display(unsigned int max_x,
     {
         for(int x=0; x<MAX_DISPLAY_X; x++)
         {
-            diod[x][y] = 0;
+            diod[x][y] = nullptr;
         }
     }
 
@@ -69,13 +69,15 @@ bool Display::create_display(unsigned int w,
     {
         for(unsigned int x=0; x<max_x; x++)
         {
-            diod[x][y] = new Diod(led_width,
-                                  led_height,
+            diod[x][y] = new Diod(static_cast<int>(led_width),
+                                  static_cast<int>(led_height),
                                   this);
             diod[x][y]->set_left_btn_active(true);
             diod[x][y]->set_right_btn_active(false);
 
-            grid->addWidget(diod[x][y], y, x);
+            grid->addWidget(diod[x][y],
+                            static_cast<int>(y),
+                            static_cast<int>(x));
         }
     }
 
@@ -115,7 +117,7 @@ void Display::set_right_btn_active(bool value)
 //--------------------------------------------------------------------------------
 void Display::set_data(QByteArray data)
 {
-    if((unsigned int)data.length() != (max_x * max_y * 3))
+    if(static_cast<uint>(data.length()) != (max_x * max_y * 3))
     {
         emit error("Display::set_data bad data size!");
         return;
@@ -126,9 +128,9 @@ void Display::set_data(QByteArray data)
     {
         for(unsigned int x=0; x<max_x; x++)
         {
-            diod[x][y]->set_color((uint8_t)data[index],
-                                  (uint8_t)data[index+1],
-                    (uint8_t)data[index+2]);
+            diod[x][y]->set_color(static_cast<uint8_t>(data[index]),
+                                  static_cast<uint8_t>(data[index+1]),
+                    static_cast<uint8_t>(data[index+2]));
             index+=3;
         }
     }
@@ -149,9 +151,9 @@ QByteArray Display::get_data(void)
             G = diod[x][y]->get_G();
             B = diod[x][y]->get_B();
 
-            ba.append((uint8_t)R);
-            ba.append((uint8_t)G);
-            ba.append((uint8_t)B);
+            ba.append(static_cast<char>(R));
+            ba.append(static_cast<char>(G));
+            ba.append(static_cast<char>(B));
         }
     }
     return ba;
@@ -210,12 +212,12 @@ bool Display::set_color(unsigned int x,
     return true;
 }
 //--------------------------------------------------------------------------------
-int Display::get_max_x(void)
+uint Display::get_max_x(void)
 {
     return max_x;
 }
 //--------------------------------------------------------------------------------
-int Display::get_max_y(void)
+uint Display::get_max_y(void)
 {
     return max_y;
 }
@@ -338,7 +340,9 @@ bool Display::resize(unsigned int w, unsigned int h)
 
     qDeleteAll(children());
 
-    bool ok = create_display(w, h, diod[0][0]->width(), diod[0][0]->height());
+    bool ok = create_display(w, h,
+                             static_cast<uint>(diod[0][0]->width()),
+            static_cast<uint>(diod[0][0]->height()));
     if(ok)
     {
         adjustSize();
@@ -359,7 +363,8 @@ bool Display::resize_led(unsigned int w, unsigned int h)
         {
             if(diod[x][y])
             {
-                diod[x][y]->resize(w, h);
+                diod[x][y]->resize(static_cast<int>(w),
+                                   static_cast<int>(h));
             }
         }
     }

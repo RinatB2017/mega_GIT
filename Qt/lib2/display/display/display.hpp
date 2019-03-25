@@ -52,8 +52,8 @@ public:
                    uint8_t G_value,
                    uint8_t B_value);
 
-    int get_max_x(void);
-    int get_max_y(void);
+    uint get_max_x(void);
+    uint get_max_y(void);
 
     bool get_R(unsigned int x,
                unsigned int y,

@@ -35,6 +35,7 @@ class QToolButton;
 class QComboBox;
 class QToolBar;
 class QTcpSocket;
+class RTSP_widget;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -65,6 +66,10 @@ private:
     QTcpSocket* m_pTcpSocket;
 
     QStandardItemModel *model;
+
+#ifdef USE_RTSP
+    RTSP_widget *rtsp_widget = nullptr;
+#endif
 
     void init(void);
     void updateText(void);

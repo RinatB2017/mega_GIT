@@ -33,6 +33,8 @@
 //--------------------------------------------------------------------------------
 #include "ui_check_network_mainbox.h"
 //--------------------------------------------------------------------------------
+#include "rtsp_widget.hpp"
+//--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -54,12 +56,23 @@ MainBox::~MainBox()
     {
         m_pTcpSocket->deleteLater();
     }
+#ifdef USE_RTSP
+    if(rtsp_widget)
+    {
+        rtsp_widget->deleteLater();
+    }
+#endif
     delete ui;
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef USE_RTSP
+    rtsp_widget = new RTSP_widget(this);
+    ui->layout_rtsp->addWidget(rtsp_widget);
+#endif
 
     ui->sb_src_a->setRange(0, 0xFF);
     ui->sb_src_b->setRange(0, 0xFF);

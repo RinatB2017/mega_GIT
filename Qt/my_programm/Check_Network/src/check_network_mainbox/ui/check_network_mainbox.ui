@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
+    <width>398</width>
     <height>430</height>
    </rect>
   </property>
@@ -148,6 +148,9 @@
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layout_rtsp"/>
    </item>
   </layout>
  </widget>

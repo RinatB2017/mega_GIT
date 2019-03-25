@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
-        QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
         return -1;
     }
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
     qApp->processEvents();
 
-    MainWindow *main_window = new MainWindow;
+    MainWindow *main_window = new MainWindow();
 
     RTSP_widget *mainBox = new RTSP_widget(main_window->getThis());
     QObject::connect(mainBox,    SIGNAL(info(QString)),     main_window->getThis(), SIGNAL(info(QString)));

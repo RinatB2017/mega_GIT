@@ -22,7 +22,7 @@ cl_context CreateContext()
     cl_int errNum;
     cl_uint numPlatforms;
     cl_platform_id firstPlatformId;
-    cl_context context = NULL;
+    cl_context context = nullptr;
 
     // First, select an OpenCL platform to run on.  For this example, we
     // simply choose the first available platform.  Normally, you would
@@ -31,7 +31,7 @@ cl_context CreateContext()
     if (errNum != CL_SUCCESS || numPlatforms <= 0)
     {
         std::cerr << "Failed to find any OpenCL platforms." << std::endl;
-        return NULL;
+        return nullptr;
     }
 
     // Next, create an OpenCL context on the platform.  Attempt to
@@ -44,16 +44,16 @@ cl_context CreateContext()
         0
     };
     context = clCreateContextFromType(contextProperties, CL_DEVICE_TYPE_GPU,
-                                      NULL, NULL, &errNum);
+                                      nullptr, nullptr, &errNum);
     if (errNum != CL_SUCCESS)
     {
         std::cout << "Could not create GPU context, trying CPU..." << std::endl;
         context = clCreateContextFromType(contextProperties, CL_DEVICE_TYPE_CPU,
-                                          NULL, NULL, &errNum);
+                                          nullptr, nullptr, &errNum);
         if (errNum != CL_SUCCESS)
         {
             std::cerr << "Failed to create an OpenCL GPU or CPU context." << std::endl;
-            return NULL;
+            return nullptr;
         }
     }
 
@@ -68,42 +68,42 @@ cl_command_queue CreateCommandQueue(cl_context context, cl_device_id *device)
 {
     cl_int errNum;
     cl_device_id *devices;
-    cl_command_queue commandQueue = NULL;
+    cl_command_queue commandQueue = nullptr;
     size_t deviceBufferSize = -1;
 
     // First get the size of the devices buffer
-    errNum = clGetContextInfo(context, CL_CONTEXT_DEVICES, 0, NULL, &deviceBufferSize);
+    errNum = clGetContextInfo(context, CL_CONTEXT_DEVICES, 0, nullptr, &deviceBufferSize);
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Failed call to clGetContextInfo(...,GL_CONTEXT_DEVICES,...)";
-        return NULL;
+        return nullptr;
     }
 
     if (deviceBufferSize <= 0)
     {
         std::cerr << "No devices available.";
-        return NULL;
+        return nullptr;
     }
 
     // Allocate memory for the devices buffer
     devices = new cl_device_id[deviceBufferSize / sizeof(cl_device_id)];
-    errNum = clGetContextInfo(context, CL_CONTEXT_DEVICES, deviceBufferSize, devices, NULL);
+    errNum = clGetContextInfo(context, CL_CONTEXT_DEVICES, deviceBufferSize, devices, nullptr);
     if (errNum != CL_SUCCESS)
     {
         delete [] devices;
         std::cerr << "Failed to get device IDs";
-        return NULL;
+        return nullptr;
     }
 
     // In this example, we just choose the first available device.  In a
     // real program, you would likely use all available devices or choose
     // the highest performance device based on OpenCL device queries
-    commandQueue = clCreateCommandQueue(context, devices[0], 0, NULL);
-    if (commandQueue == NULL)
+    commandQueue = clCreateCommandQueue(context, devices[0], 0, nullptr);
+    if (commandQueue == nullptr)
     {
         delete [] devices;
         std::cerr << "Failed to create commandQueue for device 0";
-        return NULL;
+        return nullptr;
     }
 
     *device = devices[0];
@@ -123,7 +123,7 @@ cl_program CreateProgram(cl_context context, cl_device_id, const char* fileName)
     if (!kernelFile.is_open())
     {
         std::cerr << "Failed to open file for reading: " << fileName << std::endl;
-        return NULL;
+        return nullptr;
     }
 
     std::ostringstream oss;
@@ -133,11 +133,11 @@ cl_program CreateProgram(cl_context context, cl_device_id, const char* fileName)
     const char *srcStr = srcStdStr.c_str();
     program = clCreateProgramWithSource(context, 1,
                                         (const char**)&srcStr,
-                                        NULL, NULL);
-    if (program == NULL)
+                                        nullptr, nullptr);
+    if (program == nullptr)
     {
         std::cerr << "Failed to create CL program from source." << std::endl;
-        return NULL;
+        return nullptr;
     }
 
     return program;
@@ -152,13 +152,13 @@ bool CreateMemObjects(cl_context context, cl_mem memObjects[3],
                       float *a, float *b)
 {
     memObjects[0] = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-                                   sizeof(float) * ARRAY_SIZE, a, NULL);
+                                   sizeof(float) * ARRAY_SIZE, a, nullptr);
     memObjects[1] = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-                                   sizeof(float) * ARRAY_SIZE, b, NULL);
+                                   sizeof(float) * ARRAY_SIZE, b, nullptr);
     memObjects[2] = clCreateBuffer(context, CL_MEM_READ_WRITE,
-                                   sizeof(float) * ARRAY_SIZE, NULL, NULL);
+                                   sizeof(float) * ARRAY_SIZE, nullptr, nullptr);
 
-    if (memObjects[0] == NULL || memObjects[1] == NULL || memObjects[2] == NULL)
+    if (memObjects[0] == nullptr || memObjects[1] == nullptr || memObjects[2] == nullptr)
     {
         std::cerr << "Error creating memory objects." << std::endl;
         return false;
@@ -207,7 +207,7 @@ int main(void)
 
     // Create an OpenCL context on first available platform
     context = CreateContext();
-    if (context == NULL)
+    if (context == nullptr)
     {
         std::cerr << "Failed to create OpenCL context." << std::endl;
         return 1;
@@ -216,7 +216,7 @@ int main(void)
     // Create a command-queue on the first device available
     // on the created context
     commandQueue = CreateCommandQueue(context, &device);
-    if (commandQueue == NULL)
+    if (commandQueue == nullptr)
     {
         Cleanup(context, commandQueue, program, kernel, memObjects);
         return 1;
@@ -224,7 +224,7 @@ int main(void)
 
     // Create OpenCL program from HelloWorld.cl kernel source
     program = CreateProgram(context, device, "opencl/HelloWorld.cl");
-    if (program == NULL)
+    if (program == nullptr)
     {
         Cleanup(context, commandQueue, program, kernel, memObjects);
         return 1;
@@ -232,11 +232,11 @@ int main(void)
 
     /* Build Kernel Program */
     cl_int ret;
-    ret = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
+    ret = clBuildProgram(program, 1, &device, nullptr, nullptr, nullptr);
 
     // Create OpenCL kernel
     kernel = clCreateKernel(program, "hello_kernel", &ret);
-    if (kernel == NULL)
+    if (kernel == nullptr)
     {
         std::cerr << "Failed to create kernel: err " << ret << std::endl;
         Cleanup(context, commandQueue, program, kernel, memObjects);
@@ -276,9 +276,9 @@ int main(void)
     size_t localWorkSize[1] = { 1 };
 
     // Queue the kernel up for execution across the array
-    errNum = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL,
+    errNum = clEnqueueNDRangeKernel(commandQueue, kernel, 1, nullptr,
                                     globalWorkSize, localWorkSize,
-                                    0, NULL, NULL);
+                                    0, nullptr, nullptr);
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error queuing kernel for execution." << std::endl;
@@ -289,7 +289,7 @@ int main(void)
     // Read the output buffer back to the Host
     errNum = clEnqueueReadBuffer(commandQueue, memObjects[2], CL_TRUE,
                                  0, ARRAY_SIZE * sizeof(float), result,
-                                 0, NULL, NULL);
+                                 0, nullptr, nullptr);
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error reading result buffer." << std::endl;

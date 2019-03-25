@@ -9,6 +9,7 @@ CONFIG -= qt
 #INCLUDEPATH += /usr/include/
 
 PROGRAMM_PATH  += \
+    /opt/cuda/include \
     $$PWD \
     $$PWD/src \
     $$PWD/opencl

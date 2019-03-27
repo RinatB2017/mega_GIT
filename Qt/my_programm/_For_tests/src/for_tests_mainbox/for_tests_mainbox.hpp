@@ -126,6 +126,13 @@ private:
     //---
     void test_validator(void);
     //---
+    template<typename T>
+    void temp_test(T *obj, int x)
+    {
+        obj->setText(QString("x = %1").arg(x));
+        cb_test->setCurrentIndex(2);
+    }
+    //---
 
     void init(void);
     void createTestBar(void);

@@ -203,6 +203,12 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    QPushButton *btn = new QPushButton();
+    temp_test(btn, 5);
+    btn->show();
+#endif
+
 #if 0
     HEADER header;
     header.address  = 0xF0;

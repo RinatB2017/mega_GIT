@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_HID_device
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD \
     $$PWD/src

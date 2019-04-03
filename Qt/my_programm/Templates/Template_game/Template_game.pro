@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET   = Template_game
 
-FOLDER  = _Template
+FOLDER  = _Templates
 
 DEPENDPATH  += \
     $$PWD/src \

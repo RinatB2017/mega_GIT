@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_broadcast_UDP
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_broadcast_udp_mainbox \
@@ -39,7 +41,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH = "../../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

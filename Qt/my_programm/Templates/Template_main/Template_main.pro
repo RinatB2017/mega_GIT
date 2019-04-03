@@ -7,6 +7,8 @@
 TARGET      = Template_main
 TEMPLATE    = app
 
+FOLDER  = _Templates
+
 QT       += core gui
 
 unix:!macx {

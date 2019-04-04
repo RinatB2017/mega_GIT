@@ -61,6 +61,7 @@ void RTSP_widget::init(void)
     ui->video_widget->setMinimumSize(320, 200);
 
 #ifdef Q_OS_LINUX
+    //ui->le_address->setText("rtsp://185.10.80.33:8082/");
     ui->le_address->setText("rtsp://192.168.1.66/av0_0");
 #else
     ui->le_address->setText("rtsp://192.168.1.88/HD");

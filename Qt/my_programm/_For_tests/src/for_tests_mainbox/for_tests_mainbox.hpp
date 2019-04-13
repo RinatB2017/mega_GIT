@@ -36,34 +36,146 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-
-struct HEADER {
-    uint8_t address;
-    uint8_t command;
-    uint8_t cnt_data;
-};
-
-#pragma pack(pop)
-//--------------------------------------------------------------------------------
-class A
+class TestWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
-    A() {}
+    explicit TestWidget(QWidget *parent) : QWidget(parent)
+    {
+        setFixedSize(250, 250);
+    }
 
-    QString x0(void) { return "A:x0"; }
-    QString x1(void) { return "A:x1"; }
-    QString x2(void) { return "A:x2"; }
+    void save(QString filename)
+    {
+        QPixmap *pixmap = new QPixmap(this->size());
+        this->render(pixmap);
+        pixmap->save(filename);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        //---
+        QColor begin_color = Qt::lightGray;
+        QColor end_color   = Qt::darkGray;
+        //---
+        QColor begin_border_color = Qt::lightGray;
+        QColor end_border_color   = Qt::darkGray;
+        //---
+        int border = 50;
+        //---
+
+        QPainter painter(this);
+
+        painter.setBrush(QBrush(begin_color));
+        painter.drawRect(0, 0, width(), height());
+
+        painter.setBrush(QBrush(end_color));
+        painter.drawRect(border, border, width() - border, height() - border);
+
+        //---
+        QLinearGradient shader_left(QPointF(0, height() / 2.0),
+                                    QPointF(border, height() / 2.0));
+        shader_left.setColorAt(0, begin_border_color);
+        shader_left.setColorAt(1, end_border_color);
+        //---
+        QLinearGradient shader_up(QPointF(width() / 2.0, 0),
+                                  QPointF(width() / 2.0, border));
+        shader_up.setColorAt(0, begin_border_color);
+        shader_up.setColorAt(1, end_border_color);
+        //---
+        QLinearGradient shader_right(QPointF(width(), height() / 2.0),
+                                     QPointF(width() - border, height() / 2.0));
+        shader_right.setColorAt(0, begin_border_color);
+        shader_right.setColorAt(1, end_border_color);
+        //---
+        QLinearGradient shader_down(QPointF(width() / 2.0, height()),
+                                    QPointF(width() / 2.0, height() - border));
+        shader_down.setColorAt(0, begin_border_color);
+        shader_down.setColorAt(1, end_border_color);
+        //---
+
+        //---
+        QLinearGradient shader_ul(QPointF(0, 0),
+                                  QPointF(border, border));
+        shader_ul.setColorAt(0, begin_border_color);
+        shader_ul.setColorAt(1, end_border_color);
+        //---
+        QLinearGradient shader_ur(QPointF(border, 0),
+                                  QPointF(0, border));
+        shader_ur.setColorAt(0, begin_border_color);
+        shader_ur.setColorAt(1, end_border_color);
+        //---
+        QLinearGradient shader_dl(QPointF(0, border),
+                                  QPointF(border, 0));
+        shader_dl.setColorAt(0, begin_border_color);
+        shader_dl.setColorAt(1, end_border_color);
+        //---
+        QLinearGradient shader_dr(QPointF(border, border),
+                                  QPointF(0, 0));
+        shader_dr.setColorAt(0, begin_border_color);
+        shader_dr.setColorAt(1, end_border_color);
+        //---
+
+        //---
+        // left
+        painter.fillRect(0,
+                         border,
+                         border,
+                         height() - 2 * border,
+                         shader_left);
+        //---
+        // right
+        painter.fillRect(width() - border,
+                         border,
+                         width() - border,
+                         height() - 2 * border,
+                         shader_right);
+        //---
+        // up
+        painter.fillRect(border,
+                         0,
+                         width() - 2 * border,
+                         border,
+                         shader_up);
+        //---
+        // down
+        painter.fillRect(border,
+                         height() - border,
+                         width() - 2 * border,
+                         border,
+                         shader_down);
+        //---
+        // ul
+        painter.fillRect(0,
+                         0,
+                         border,
+                         border,
+                         shader_ul);
+        //---
+        // ur
+        painter.fillRect(width() - border,
+                         0,
+                         border,
+                         border,
+                         shader_ur);
+        //---
+        // dl
+        painter.fillRect(0,
+                         width() - border,
+                         border,
+                         border,
+                         shader_dl);
+        //---
+        // dr
+        painter.fillRect(width() - border,
+                         width() - border,
+                         border,
+                         border,
+                         shader_dr);
+    }
 };
-
-class B : public A
-{
-public:
-    //B() {}
-
-    QString x1(void) { return "B:x1"; }
-};
-
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;

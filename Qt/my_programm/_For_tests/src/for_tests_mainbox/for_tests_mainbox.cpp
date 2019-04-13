@@ -204,6 +204,13 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    TestWidget *tw = new TestWidget(this);
+    layout()->addWidget(tw);
+
+    //tw->save("/dev/shm/0/test.png");
+#endif
+
+#if 0
     QPushButton *btn = new QPushButton();
     temp_test(btn, 5);
     btn->show();

@@ -72,7 +72,7 @@ protected:
         painter.drawRect(0, 0, width(), height());
 
         painter.setBrush(QBrush(end_color));
-        painter.drawRect(border, border, width() - border, height() - border);
+        painter.drawRect(border, border, width() - 2 * border, height() - 2 * border);
 
         //---
         QLinearGradient shader_left(QPointF(0, height() / 2.0),
@@ -96,84 +96,40 @@ protected:
         shader_down.setColorAt(1, end_border_color);
         //---
 
-        //---
-        QLinearGradient shader_ul(QPointF(0, 0),
-                                  QPointF(border, border));
-        shader_ul.setColorAt(0, begin_border_color);
-        shader_ul.setColorAt(1, end_border_color);
-        //---
-        QLinearGradient shader_ur(QPointF(border, 0),
-                                  QPointF(0, border));
-        shader_ur.setColorAt(0, begin_border_color);
-        shader_ur.setColorAt(1, end_border_color);
-        //---
-        QLinearGradient shader_dl(QPointF(0, border),
-                                  QPointF(border, 0));
-        shader_dl.setColorAt(0, begin_border_color);
-        shader_dl.setColorAt(1, end_border_color);
-        //---
-        QLinearGradient shader_dr(QPointF(border, border),
-                                  QPointF(0, 0));
-        shader_dr.setColorAt(0, begin_border_color);
-        shader_dr.setColorAt(1, end_border_color);
-        //---
-
+        QPainterPath path;
         //---
         // left
-        painter.fillRect(0,
-                         border,
-                         border,
-                         height() - 2 * border,
-                         shader_left);
+        path = QPainterPath();
+        path.moveTo(0, 0);
+        path.lineTo(border, border);
+        path.lineTo(border, height() - border);
+        path.lineTo(0, height());
+        painter.fillPath(path, shader_left);
         //---
         // right
-        painter.fillRect(width() - border,
-                         border,
-                         width() - border,
-                         height() - 2 * border,
-                         shader_right);
+        path = QPainterPath();
+        path.moveTo(width(), 0);
+        path.lineTo(width() - border, border);
+        path.lineTo(width() - border, height() - border);
+        path.lineTo(width(), height());
+        painter.fillPath(path, shader_right);
         //---
         // up
-        painter.fillRect(border,
-                         0,
-                         width() - 2 * border,
-                         border,
-                         shader_up);
+        path = QPainterPath();
+        path.moveTo(0, 0);
+        path.lineTo(border, border);
+        path.lineTo(width() - border, border);
+        path.lineTo(width(), 0);
+        painter.fillPath(path, shader_up);
         //---
         // down
-        painter.fillRect(border,
-                         height() - border,
-                         width() - 2 * border,
-                         border,
-                         shader_down);
+        path = QPainterPath();
+        path.moveTo(0, height());
+        path.lineTo(border, height() - border);
+        path.lineTo(width() - border, height() - border);
+        path.lineTo(width(), height());
+        painter.fillPath(path, shader_down);
         //---
-        // ul
-        painter.fillRect(0,
-                         0,
-                         border,
-                         border,
-                         shader_ul);
-        //---
-        // ur
-        painter.fillRect(width() - border,
-                         0,
-                         border,
-                         border,
-                         shader_ur);
-        //---
-        // dl
-        painter.fillRect(0,
-                         width() - border,
-                         border,
-                         border,
-                         shader_dl);
-        //---
-        // dr
-        painter.fillRect(width() - border,
-                         width() - border,
-                         border,
-                         border,
-                         shader_dr);
     }
 };
 //--------------------------------------------------------------------------------

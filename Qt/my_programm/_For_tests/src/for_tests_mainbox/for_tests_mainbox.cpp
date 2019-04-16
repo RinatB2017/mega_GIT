@@ -198,12 +198,26 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include "labirint.hpp"
+#include "world.hpp"
+#include "cell.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    Labirint *lt = new Labirint(this);
+    //lt->show();
+    layout()->addWidget(lt);
+#endif
+
+#if 0
+    World *world = new World();
+    world->show();
+#endif
+
+#if 0
     CELL cell;
     cell.value = 0;
     cell.bites.b_left  = 0;

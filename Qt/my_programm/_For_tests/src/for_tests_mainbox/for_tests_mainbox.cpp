@@ -204,6 +204,44 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    CELL cell;
+    cell.value = 0;
+    cell.bites.b_left  = 0;
+    cell.bites.b_right = 1;
+    cell.bites.b_up    = 0;
+    cell.bites.b_down  = 0;
+
+    emit info(QString("value %1").arg(cell.value));
+
+#if 0
+    Cell *cw = new Cell(cell, 250, this);
+    layout()->addWidget(cw);
+#else
+    QGridLayout *grid = new QGridLayout();
+    //grid->setMargin(0);
+    //grid->setSpacing(0);
+
+    uint8_t value = 0;
+    for(int y=0; y<4; y++)
+    {
+        for(int x=0; x<4; x++)
+        {
+            cell.value = value;
+            Cell *cw = new Cell(cell, 70, this);
+            grid->addWidget(cw, y, x);
+            value++;
+        }
+    }
+    QWidget *w = new QWidget(this);
+    w->setLayout(grid);
+    w->setFixedSize(w->sizeHint());
+
+    layout()->addWidget(w);
+#endif
+
+#endif
+
+#if 0
     TestWidget *tw = new TestWidget(this);
     layout()->addWidget(tw);
 

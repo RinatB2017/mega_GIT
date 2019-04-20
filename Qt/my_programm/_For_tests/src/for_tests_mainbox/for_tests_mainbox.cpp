@@ -207,12 +207,20 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    QImage px(64 * 22, 64, QImage::Format_RGBA8888);
+    //QImage px(64 * 22, 64, QImage::Format_RGBA8888);
+    QImage px(32 * 10, 32, QImage::Format_RGBA8888);
     px.fill(Qt::transparent);
 
     QPainter p(&px);
 
     int pos_x = 0;
+#if 1
+    for(int n=0; n<=9; n++)
+    {
+        p.drawPixmap(pos_x, 0, QPixmap(QString(":/white/%1.png").arg(n)));
+        pos_x += 32;
+    }
+#else
     for(int n=1; n<=11; n++)
     {
         p.drawPixmap(pos_x, 0, QPixmap(QString(":/bones/white%1.png").arg(n)));
@@ -223,8 +231,10 @@ bool MainBox::test_0(void)
         p.drawPixmap(pos_x, 0, QPixmap(QString(":/bones/black%1.png").arg(n)));
         pos_x += 64;
     }
+#endif
     p.end();
-    px.save("bones.png");
+    //px.save("bones.png");
+    px.save("digits.png");
 
     QLabel *label = new QLabel();
     label->setPixmap(QPixmap::fromImage(px));

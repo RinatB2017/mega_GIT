@@ -207,6 +207,22 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    display = new QLCDNumber();
+    display->setStyleSheet("background: black; color: green;");
+    display->setSegmentStyle(QLCDNumber::Flat);
+    display->setDigitCount(10);
+    display->setFixedWidth(310);
+    display->setFixedHeight(64);
+    display->display("0123456789");
+    //display->display("0000000000");
+    //display->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    display->show();
+
+    QPixmap px = display->grab(QRect(4, 0, display->width() - 9, display->height()));
+    px.save("display.png");
+#endif
+
+#if 0
     //QImage px(64 * 22, 64, QImage::Format_RGBA8888);
     QImage px(32 * 10, 32, QImage::Format_RGBA8888);
     px.fill(Qt::transparent);
@@ -329,6 +345,12 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
+
+#if 1
+    emit info(QString("%1 %2")
+              .arg(display->width())
+              .arg(display->height()));
+#endif
 
 #if 0
     emit info("Текст <font style=\"color:red\">красный</font>");

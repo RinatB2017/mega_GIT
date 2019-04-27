@@ -200,6 +200,7 @@ private:
         obj->setText(QString("x = %1").arg(x));
         cb_test->setCurrentIndex(2);
     }
+    QLCDNumber *display;
     //---
 
     void init(void);

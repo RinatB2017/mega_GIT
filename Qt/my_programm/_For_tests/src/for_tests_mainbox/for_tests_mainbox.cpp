@@ -208,18 +208,19 @@ bool MainBox::test_0(void)
 
 #if 1
     display = new QLCDNumber();
-    display->setStyleSheet("background: black; color: green;");
+    display->setStyleSheet("background: black; color: lightgreen;");
     display->setSegmentStyle(QLCDNumber::Flat);
     display->setDigitCount(10);
     display->setFixedWidth(310);
     display->setFixedHeight(64);
     display->display("0123456789");
+    //display->setMinimumWidth(display->width());
     //display->display("0000000000");
     //display->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     display->show();
 
     QPixmap px = display->grab(QRect(4, 0, display->width() - 9, display->height()));
-    px.save("display.png");
+    //px.save("display.png");
 #endif
 
 #if 0

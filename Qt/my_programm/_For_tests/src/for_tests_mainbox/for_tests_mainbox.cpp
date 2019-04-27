@@ -213,10 +213,10 @@ bool MainBox::test_0(void)
     display->setDigitCount(10);
     display->setFixedWidth(310);
     display->setFixedHeight(64);
+    //display->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     display->display("0123456789");
-    //display->setMinimumWidth(display->width());
     //display->display("0000000000");
-    //display->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //display->adjustSize();
     display->show();
 
     QPixmap px = display->grab(QRect(4, 0, display->width() - 9, display->height()));

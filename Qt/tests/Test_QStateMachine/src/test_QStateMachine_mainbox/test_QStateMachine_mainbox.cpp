@@ -71,7 +71,7 @@ void MainBox::init(void)
     button->setGeometry(QRect(0, 0, 200, 30));
     button->show();
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(button);
     vbox->addWidget(btn_test);
     vbox->addStretch(1);

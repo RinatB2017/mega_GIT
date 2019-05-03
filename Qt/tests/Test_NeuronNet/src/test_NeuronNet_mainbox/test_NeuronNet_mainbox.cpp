@@ -139,7 +139,7 @@ void MainBox::init_widgets(void)
     display_number = new QLCDNumber;
     display_number->setFixedHeight(32);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
 #if 0
     vbox->setSpacing(0);
     vbox->setMargin(0);

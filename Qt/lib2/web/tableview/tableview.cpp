@@ -107,7 +107,7 @@ void TableView::doubleClicked(QModelIndex index)
     dialog->setWindowTitle("dialog");
     dialog->setMinimumSize(800, 600);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     QLineEdit *title = new QLineEdit(this);
     QTextBrowser *content = new QTextBrowser(this);
 

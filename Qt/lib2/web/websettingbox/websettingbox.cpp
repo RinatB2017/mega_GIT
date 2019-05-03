@@ -50,7 +50,7 @@ void WebSettingBox::init(void)
 {
     setWindowTitle(tr("WebSettings"));
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->setSpacing(0);
 
     for(int n=0; n<attributes.count(); n++)
@@ -85,7 +85,7 @@ void WebSettingBox::init(void)
 
     vbox->addWidget(buttonBox);
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(btn_select_all);
     hbox->addWidget(btn_clear_all);
 

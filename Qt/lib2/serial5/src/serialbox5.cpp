@@ -180,8 +180,7 @@ void SerialBox5::createWidgets(void)
 void SerialBox5::add_frame_text(QFrame *parent,
                                 const QString &text)
 {
-    QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->setMargin(0);
+    QHBoxLayout *hbox = new QHBoxLayout();    hbox->setMargin(0);
     hbox->setSpacing(0);
     QLabel *label = new QLabel(text);
     label->setAlignment(Qt::AlignHCenter);

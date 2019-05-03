@@ -21,9 +21,9 @@ HelpBrowser::HelpBrowser(QString &page,
     backButton  = new QPushButton(QObject::tr("Back"), this);
     closeButton = new QPushButton(QObject::tr("Close"), this);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout();
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(homeButton);
     buttonLayout->addWidget(backButton);
     buttonLayout->addStretch(1);

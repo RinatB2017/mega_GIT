@@ -171,24 +171,24 @@ void MainBox::createDisplayBox(void)
 //--------------------------------------------------------------------------------
 void MainBox::createDockWidgets(void)
 {
-    QHBoxLayout *hbox_serial1 = new QHBoxLayout;
+    QHBoxLayout *hbox_serial1 = new QHBoxLayout();
     hbox_serial1->addWidget(main_serialBox);
     hbox_serial1->addStretch(1);
 
-    QHBoxLayout *hbox_serial2 = new QHBoxLayout;
+    QHBoxLayout *hbox_serial2 = new QHBoxLayout();
     hbox_serial2->addWidget(control_serialBox);
     hbox_serial2->addStretch(1);
 
-    QHBoxLayout *hbox_display = new QHBoxLayout;
+    QHBoxLayout *hbox_display = new QHBoxLayout();
     hbox_display->addWidget(palette);
     hbox_display->addWidget(display);
     hbox_display->addStretch(1);
 
-    QVBoxLayout *vbox1 = new QVBoxLayout;
+    QVBoxLayout *vbox1 = new QVBoxLayout();
     vbox1->addLayout(hbox_serial1);
     vbox1->addLayout(hbox_display);
 
-    QVBoxLayout *vbox2 = new QVBoxLayout;
+    QVBoxLayout *vbox2 = new QVBoxLayout();
     vbox2->addLayout(hbox_serial2);
     vbox2->addWidget(control_display);
 

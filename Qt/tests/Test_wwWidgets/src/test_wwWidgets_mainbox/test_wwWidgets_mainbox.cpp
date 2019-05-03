@@ -241,7 +241,7 @@ void MainBox::f_qwwcolorbutton(int col, int row)
     btn_qwwcolorbutton->setText("qwwcolorbutton");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -273,7 +273,7 @@ void MainBox::f_qwwhuesatradialpicker(int col, int row)
     btn_qwwhuesatradialpicker->setText("qwwhuesatradialpicker");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -305,7 +305,7 @@ void MainBox::f_qwwlongspinbox(int col, int row)
     btn_qwwlongspinbox->setText("qwwlongspinbox");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -335,7 +335,7 @@ void MainBox::f_qwwrichtextedit(int col, int row)
     btn_qwwrichtextedit->setText("qwwrichtextedit");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -366,7 +366,7 @@ void MainBox::f_qwwcolorcombobox(int col, int row)
     btn_qwwcolorcombobox->setText("qwwcolorcombobox");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -397,7 +397,7 @@ void MainBox::f_qwwled(int col, int row)
     btn_qwwled->setText("qwwled");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -431,7 +431,7 @@ void MainBox::f_qwwnavigationbar(int col, int row)
     btn_qwwnavigationbar->setText("qwwnavigationbar");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -461,12 +461,12 @@ void MainBox::f_qwwtaskpanel(int col, int row)
     btn_qwwtaskpanel->setText("qwwtaskpanel");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
     QWidget *w1 = new QWidget;
-    QVBoxLayout *vbox1 = new QVBoxLayout;
+    QVBoxLayout *vbox1 = new QVBoxLayout();
     vbox1->addWidget(new QLabel("0"));
     vbox1->addWidget(new QLabel("1"));
     vbox1->addWidget(new QLabel("2"));
@@ -502,7 +502,7 @@ void MainBox::f_qwwbreadcrumb(int col, int row)
     btn_qwwbreadcrumb->setText("qwwbreadcrumb");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -532,12 +532,12 @@ void MainBox::f_qwwconfigwidget(int col, int row)
     btn_qwwconfigwidget->setText("qwwconfigwidget");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
     QWidget * w1 = new QWidget;
-    QVBoxLayout *vbox1 = new QVBoxLayout;
+    QVBoxLayout *vbox1 = new QVBoxLayout();
     vbox1->addWidget(new QLabel("0"));
     vbox1->addWidget(new QLabel("1"));
     vbox1->addWidget(new QLabel("2"));
@@ -545,7 +545,7 @@ void MainBox::f_qwwconfigwidget(int col, int row)
     w1->setLayout(vbox1);
 
     QWidget * w2 = new QWidget;
-    QVBoxLayout *vbox2 = new QVBoxLayout;
+    QVBoxLayout *vbox2 = new QVBoxLayout();
     vbox2->addWidget(new QLabel("4"));
     vbox2->addWidget(new QLabel("5"));
     vbox2->addWidget(new QLabel("6"));
@@ -580,7 +580,7 @@ void MainBox::f_qwwlistnavigator(int col, int row)
     btn_qwwlistnavigator->setText("qwwlistnavigator");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -610,7 +610,7 @@ void MainBox::f_qwwnumpad(int col, int row)
     btn_qwwnumpad->setText("qwwnumpad");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -640,7 +640,7 @@ void MainBox::f_qwwtextspinbox(int col, int row)
     btn_qwwtextspinbox->setText("qwwtextspinbox");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -670,7 +670,7 @@ void MainBox::f_qwwbuttonlineedit(int col, int row)
     btn_qwwbuttonlineedit->setText("qwwbuttonlineedit");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -700,7 +700,7 @@ void MainBox::f_qwwfilechooser(int col, int row)
     btn_qwwfilechooser->setText("qwwfilechooser");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -730,7 +730,7 @@ void MainBox::f_qwwlistwidget(int col, int row)
     btn_qwwlistwidget->setText("qwwlistwidget");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -760,7 +760,7 @@ void MainBox::f_qwwresetlineedit(int col, int row)
     btn_qwwresetlineedit->setText("qwwresetlineedit");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -790,7 +790,7 @@ void MainBox::f_qwwtipwidget(int col, int row)
     btn_qwwtipwidget->setText("qwwtipwidget");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -823,7 +823,7 @@ void MainBox::f_qwwclearlineedit(int col, int row)
     btn_qwwclearlineedit->setText("qwwclearlineedit");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -853,7 +853,7 @@ void MainBox::f_qwwhuesatpicker(int col, int row)
     btn_qwwhuesatpicker->setText("qwwhuesatpicker");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -883,7 +883,7 @@ void MainBox::f_qwwloginbox(int col, int row)
     btn_qwwloginbox->setText("qwwloginbox");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -913,7 +913,7 @@ void MainBox::f_qwwrichtextbutton(int col, int row)
     btn_qwwrichtextbutton->setText("qwwrichtextbutton");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---
@@ -943,7 +943,7 @@ void MainBox::f_qwwtwocolorindicator(int col, int row)
     btn_qwwtwocolorindicator->setText("qwwtwocolorindicator");
 
     QWidget *main_widget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     main_widget->setLayout(vbox);
 
     //---

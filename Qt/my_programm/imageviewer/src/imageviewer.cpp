@@ -60,7 +60,7 @@ ImageViewer::ImageViewer()
     scrollArea->setWidget(imageLabel);
 #else
     //TODO
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(imageLabel);
     scrollArea->setLayout(hbox);
 #endif

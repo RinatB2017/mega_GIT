@@ -239,7 +239,7 @@ QtBoolEdit::QtBoolEdit(QWidget *parent) :
     m_checkBox(new QCheckBox(this)),
     m_textVisible(true)
 {
-    QHBoxLayout *lt = new QHBoxLayout;
+    QHBoxLayout *lt = new QHBoxLayout();
     if (QApplication::layoutDirection() == Qt::LeftToRight)
         lt->setContentsMargins(4, 0, 0, 0);
     else

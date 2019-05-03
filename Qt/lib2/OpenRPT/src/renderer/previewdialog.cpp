@@ -65,7 +65,7 @@ PreviewDialog::PreviewDialog(ORODocument *document,
     buttonbox->addButton(tr("Cancel"), QDialogButtonBox::RejectRole);
 
     // layouts
-    QVBoxLayout *mainlayout = new QVBoxLayout(this);
+    QVBoxLayout *mainlayout = new QVBoxLayout();
     QHBoxLayout *buttonlayout = new QHBoxLayout();
     
     buttonlayout->addWidget(zoominbutton);

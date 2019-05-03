@@ -44,7 +44,7 @@ Google_JS::Google_JS(QWidget *parent) :
     te->append("myFunction();");
 #endif
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(te);
 
     QPushButton *btn_run = new QPushButton(this);

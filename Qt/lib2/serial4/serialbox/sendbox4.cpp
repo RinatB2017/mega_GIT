@@ -41,9 +41,9 @@ SendBox4::SendBox4(QWidget *parent) :
         connect(this, SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
     }
 
-    hbox_text = new QHBoxLayout;
+    hbox_text = new QHBoxLayout();
     hbox_text->setMargin(0);
-    hbox_bin  = new QHBoxLayout;
+    hbox_bin  = new QHBoxLayout();
     hbox_bin->setMargin(0);
 
     btn_send_text = new QToolButton(this);

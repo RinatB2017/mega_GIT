@@ -1553,7 +1553,7 @@ private:
 QtCharEdit::QtCharEdit(QWidget *parent)
     : QWidget(parent),  m_lineEdit(new QLineEdit(this))
 {
-    QHBoxLayout *layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(m_lineEdit);
     layout->setMargin(0);
     m_lineEdit->installEventFilter(this);
@@ -2176,7 +2176,7 @@ QtColorEditWidget::QtColorEditWidget(QWidget *parent) :
     m_label(new QLabel),
     m_button(new QToolButton)
 {
-    QHBoxLayout *lt = new QHBoxLayout(this);
+    QHBoxLayout *lt = new QHBoxLayout();
     setupTreeViewEditorMargin(lt);
     lt->setSpacing(0);
     lt->addWidget(m_pixmapLabel);
@@ -2374,7 +2374,7 @@ QtFontEditWidget::QtFontEditWidget(QWidget *parent) :
     m_label(new QLabel),
     m_button(new QToolButton)
 {
-    QHBoxLayout *lt = new QHBoxLayout(this);
+    QHBoxLayout *lt = new QHBoxLayout();
     setupTreeViewEditorMargin(lt);
     lt->setSpacing(0);
     lt->addWidget(m_pixmapLabel);

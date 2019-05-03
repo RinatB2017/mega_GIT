@@ -55,7 +55,7 @@ MyPalette::MyPalette(int max_x,
             grid->addWidget(diod, y, x);
         }
     }
-    QVBoxLayout *box = new QVBoxLayout;
+    QVBoxLayout *box = new QVBoxLayout();
     box->addLayout(grid);
     box->addStretch(1);
 

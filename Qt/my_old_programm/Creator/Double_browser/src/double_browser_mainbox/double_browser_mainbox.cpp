@@ -70,7 +70,7 @@ void MainBox::init(void)
 
     splitter->show();
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(splitter);
     //vbox->addWidget(other_browser);
     //vbox->addWidget(my_browser);

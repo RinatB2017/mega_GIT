@@ -116,7 +116,7 @@ QwwNavigationBar::QwwNavigationBar(QWidget *parent)
 //     splitter->setObjectName("__qt__passive_splitter");
     d->splitter->addWidget(d->stack);
     d->splitter->addWidget(bw);
-    QVBoxLayout *l = new QVBoxLayout(this);
+    QVBoxLayout *l = new QVBoxLayout();
     d->topButton = new QPushButton;
     d->topButton->setObjectName("TopButton");
     l->addWidget(d->topButton);

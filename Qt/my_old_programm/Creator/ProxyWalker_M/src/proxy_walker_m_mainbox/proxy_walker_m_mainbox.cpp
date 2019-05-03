@@ -92,7 +92,7 @@ void MainBox::init(void)
         connect(web.webview, SIGNAL(statusBarMessage(QString)), mw, SLOT(set_status1_text(QString)));
 
         QFrame *frame = new QFrame(this);
-        QVBoxLayout *vbox = new QVBoxLayout;
+        QVBoxLayout *vbox = new QVBoxLayout();
         vbox->addWidget(web.progressBar);
         vbox->addWidget(web.webview);
         frame->setLayout(vbox);

@@ -145,7 +145,7 @@ void MainBox::createTestBar(void)
     testbar->addWidget(btn_facebook);
     testbar->addWidget(btn_platanov);
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(browser);
     setLayout(hbox);
 }

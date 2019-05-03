@@ -82,7 +82,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::draw_my_buttons(void)
 {
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setSpacing(0);
 
     MyDisplay *d[16];

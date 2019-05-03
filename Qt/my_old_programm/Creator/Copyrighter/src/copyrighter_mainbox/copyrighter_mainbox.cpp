@@ -57,7 +57,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
 
     srcTextEdit = new MyTextEdit(this);
     dstTextEdit = new MyTextEdit(this);

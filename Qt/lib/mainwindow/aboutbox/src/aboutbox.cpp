@@ -64,7 +64,7 @@ AboutBox::AboutBox(const QString &orgName,
 
 #ifdef LOGO_GL
     GLWidget *glWidget = new GLWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(glWidget);
 
     ui->labelLogo->clear();

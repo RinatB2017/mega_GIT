@@ -92,7 +92,7 @@ void MainBox::init(void)
     tab->addTab(google_walker, "Google");
     tab->addTab(youtube_walker, "Youtube");
 
-    QHBoxLayout *box = new QHBoxLayout;
+    QHBoxLayout *box = new QHBoxLayout();
     box->addWidget(tab);
     setLayout(box);
 

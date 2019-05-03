@@ -68,8 +68,8 @@ void MainBox::init_tree_widget(void)
     lblFilmPicture = new QLabel(this);
     lblFilmPicture->setMinimumSize(MAX_WIDTH, MAX_HEIGHT);
 
-    picture_vbox = new QVBoxLayout;
-    picture_hbox = new QHBoxLayout;
+    picture_vbox = new QVBoxLayout();
+    picture_hbox = new QHBoxLayout();
     picture_vbox->setMargin(0);
     picture_vbox->setSpacing(0);
     picture_hbox->setMargin(0);

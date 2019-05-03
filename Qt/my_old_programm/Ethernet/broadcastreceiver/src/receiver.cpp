@@ -59,7 +59,7 @@ Receiver::Receiver(QWidget *parent)
     connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch(1);
     buttonLayout->addWidget(quitButton);
     buttonLayout->addStretch(1);

@@ -431,7 +431,7 @@ void MainBox::show_image(QImage *image,
     QWidget *widget = new QWidget;
     widget->setMinimumSize(min_x, min_y);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(area);
     widget->setLayout(vbox);
     widget->show();

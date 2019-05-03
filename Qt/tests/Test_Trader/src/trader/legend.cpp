@@ -191,7 +191,7 @@ Legend::Legend(QWidget *parent) :
 {
     d_treeView = new LegendTreeView(this);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout();
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d_treeView);
 

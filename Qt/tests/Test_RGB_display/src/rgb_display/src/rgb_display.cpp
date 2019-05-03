@@ -108,14 +108,14 @@ void RGB_display::init(void)
     btn_l->addWidget(btn_get);
     btn_l->addWidget(btn_set);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addLayout(grid_buttons);
     vbox->addLayout(btn_l);
     vbox->addWidget(btn_default);
     vbox->addStretch(1);
     //---
 
-    QVBoxLayout *vbox2 = new QVBoxLayout;
+    QVBoxLayout *vbox2 = new QVBoxLayout();
     vbox2->addLayout(grid);
     vbox2->addStretch(1);
 
@@ -124,7 +124,7 @@ void RGB_display::init(void)
     frame->setLayout(vbox);
     frame->setFixedWidth(frame->sizeHint().width());
 
-    QHBoxLayout *box = new QHBoxLayout;
+    QHBoxLayout *box = new QHBoxLayout();
     box->addWidget(frame);
     box->addLayout(vbox2);
 

@@ -88,7 +88,7 @@ public:
 class QwwColorPopup : public QWidget {
 public:
     QwwColorPopup(ColorModel *model, QWidget *parent = nullptr) : QWidget(parent, Qt::Popup) {
-        QVBoxLayout *l = new QVBoxLayout(this);
+        QVBoxLayout *l = new QVBoxLayout();
         l->setSpacing(0);
         l->setMargin(0);
         view = new QListView;

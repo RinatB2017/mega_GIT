@@ -39,7 +39,7 @@ Tester::Tester(QWidget *parent) :
     QWidget(parent),
     state(0)
 {
-    vbox = new QVBoxLayout;
+    vbox = new QVBoxLayout();
     tab = new QStackedWidget(this);
 
     vbox->setMargin(0);

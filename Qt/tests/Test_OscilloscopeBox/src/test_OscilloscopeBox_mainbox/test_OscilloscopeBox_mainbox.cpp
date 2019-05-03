@@ -63,7 +63,7 @@ void MainBox::init(void)
     btn_start->setText("start");
     btn_stop->setText("stop");
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(btn_start);
     hbox->addWidget(btn_stop);
     hbox->addStretch(1);

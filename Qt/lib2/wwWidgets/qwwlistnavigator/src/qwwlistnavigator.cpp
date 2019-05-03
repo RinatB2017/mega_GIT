@@ -133,7 +133,7 @@ QwwListNavigator::QwwListNavigator(QWidget * parent) : QAbstractSlider(parent), 
     Q_D(QwwListNavigator);
     setOrientation(Qt::Horizontal);
     d->buttons = (Buttons)(FirstButton|PrevButton|Slider|NextButton|LastButton);
-    QHBoxLayout *l = new QHBoxLayout(this);
+    QHBoxLayout *l = new QHBoxLayout();
     l->setMargin(0);
     QToolButton *fir = new QToolButton;
     fir->setIcon(wwWidgets::icon("go-first", QPixmap(":/go-first.png")));
@@ -225,7 +225,7 @@ void QwwListNavigator::sliderChange(SliderChange change) {
         delete layout();
         switch (orientation()) {
         case Qt::Horizontal:
-            l = new QHBoxLayout(this);
+            l = new QHBoxLayout();
             ((QSlider*)d->widgets[Slider])->setInvertedAppearance(false);
             ((QSlider*)d->widgets[Slider])->setInvertedControls(false);
             ((QToolButton*)d->widgets[FirstButton])->setIcon(wwWidgets::icon("go-first", QPixmap(":/go-first.png")));
@@ -234,7 +234,7 @@ void QwwListNavigator::sliderChange(SliderChange change) {
             ((QToolButton*)d->widgets[LastButton])->setIcon(wwWidgets::icon("go-last", QPixmap(":/go-last.png")));
             break;
         case Qt::Vertical:
-            l = new QVBoxLayout(this);
+            l = new QVBoxLayout();
             ((QSlider*)d->widgets[Slider])->setInvertedAppearance(true);
             ((QSlider*)d->widgets[Slider])->setInvertedControls(true);
             ((QToolButton*)d->widgets[FirstButton])->setIcon(wwWidgets::icon("go-top", QPixmap(":/go-top.png")));

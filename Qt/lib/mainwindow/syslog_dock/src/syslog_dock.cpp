@@ -102,7 +102,7 @@ SysLog_dock::SysLog_dock(const QString &title,
         connect(topLevelWidget(),   SIGNAL(trace(QString)), this,   SLOT(syslog_trace(QString)));
     }
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setSpacing(0);
     hbox->setMargin(0);
 
@@ -121,7 +121,7 @@ SysLog_dock::SysLog_dock(const QString &title,
     hbox->addWidget(btn_next);
     hbox->addWidget(btn_last);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(table);
     vbox->addLayout(hbox);
 

@@ -149,7 +149,7 @@ void SerialBox5_fix_baudrate::createWidgets(void)
 void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
                                              const QString &text)
 {
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setMargin(0);
     hbox->setSpacing(0);
     QLabel *label = new QLabel(text);

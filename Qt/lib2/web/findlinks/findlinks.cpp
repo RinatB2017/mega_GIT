@@ -172,7 +172,7 @@ void FindLinks::init(void)
 
     setWindowTitle(tr("Find"));
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
 
     QLabel *label = new QLabel(tr("selector"));
     le  = new QLineEdit("div[id=search]");

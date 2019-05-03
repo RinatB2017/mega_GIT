@@ -143,9 +143,9 @@ void LogBox::create_widgets(void)
     progressBar = new QProgressBar;
     progressBar->setVisible(false);
 
-    hbox = new QHBoxLayout;
-    vbox = new QVBoxLayout;
-    mainbox = new QHBoxLayout;
+    hbox = new QHBoxLayout();
+    vbox = new QVBoxLayout();
+    mainbox = new QHBoxLayout();
 
 #ifndef LOG_READ_ONLY
     hbox->setMargin(0);
@@ -164,7 +164,7 @@ void LogBox::create_widgets(void)
     logBox->setTextInteractionFlags(Qt::NoTextInteraction);
 
 #ifndef LOG_READ_ONLY
-    hbox = new QHBoxLayout;
+    hbox = new QHBoxLayout();
     hbox->addStretch(1);
     hbox->addWidget(progressBar);
 #endif

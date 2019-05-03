@@ -26,7 +26,7 @@ Generator_Curve::~Generator_Curve(void)
 //--------------------------------------------------------------------------------
 void Generator_Curve::init(void)
 {
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setMargin(0);
     hbox->setSpacing(0);
 
@@ -74,7 +74,7 @@ QWidget *Generator_Curve::add_frame(void)
 QWidget *Generator_Curve::add_grapher(void)
 {
     QWidget *w = new QWidget(this);
-    QHBoxLayout *sl = new QHBoxLayout;
+    QHBoxLayout *sl = new QHBoxLayout();
     for(int n=0; n<MAX_SLIDER; n++)
     {
         QSlider *slider = new QSlider(Qt::Vertical);

@@ -42,7 +42,7 @@ void Youtube_walker::init(void)
     viewer = new QWebEngineView(this);
     viewer->page()->setAudioMuted(true);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(viewer);
     setLayout(vbox);
 

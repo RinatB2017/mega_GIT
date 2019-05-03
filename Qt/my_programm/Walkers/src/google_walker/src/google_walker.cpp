@@ -57,7 +57,7 @@ void Google_walker::init(void)
     splitter->setStretchFactor(0, 1);
     splitter->setStretchFactor(1, 0);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(splitter);
     setLayout(vbox);
 

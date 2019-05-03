@@ -108,7 +108,7 @@ void MainBox::init()
 
     LogBox *log = new LogBox("Creator", this);
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(sites);
     hbox->addWidget(links);
     hbox->addWidget(log);
@@ -327,7 +327,7 @@ void MainBox::show_pages(void)
     for(int n=0; n<pages.count(); n++)
     {
         QWidget *frame = new QWidget;
-        QVBoxLayout *vbox = new QVBoxLayout;
+        QVBoxLayout *vbox = new QVBoxLayout();
         QLineEdit *le_title = new QLineEdit;
         QTextEdit *te_content = new QTextEdit;
 

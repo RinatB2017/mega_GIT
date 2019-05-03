@@ -69,6 +69,11 @@ void MainBox::init(void)
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 100);
 
+    ui->grapher_widget->set_visible_btn_Options(false);
+    ui->grapher_widget->set_visible_btn_Load(false);
+    ui->grapher_widget->set_visible_btn_Save(false);
+    ui->grapher_widget->set_visible_btn_Statistic(false);
+
     curve_temperature   = ui->grapher_widget->add_curve("temperature");
     curve_pressure      = ui->grapher_widget->add_curve("pressure");
     curve_atm           = ui->grapher_widget->add_curve("atm");

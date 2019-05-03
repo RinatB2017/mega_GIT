@@ -57,7 +57,7 @@ void MainBox::init(void)
     //createTestBar();
 
     QListWidget *lstWgt = new QListWidget;
-    QLayout *l = new QVBoxLayout;
+    QLayout *l = new QVBoxLayout();
     l->addWidget(lstWgt);
     setLayout(l);
 
@@ -83,7 +83,7 @@ void MainBox::onBtnClicked(void)
 void MainBox::makeItem(QListWidget* lstWgt)
 {
     QWidget* wgt = new QWidget;
-    QLayout* l = new QHBoxLayout;
+    QLayout* l = new QHBoxLayout();
     l->addWidget(new QLineEdit );
     QPushButton* btn = new QPushButton("Click me");
     connect(btn, SIGNAL(clicked()), SLOT( onBtnClicked()));

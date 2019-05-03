@@ -68,11 +68,11 @@ void MainBox::init(void)
     lw_link = new ListWidget_Link(webview, this);
     connect(lw_site, SIGNAL(ready(QModelIndex)), lw_link, SLOT(get_links(QModelIndex)));
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(lw_site);
     hbox->addWidget(lw_link);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(webview);
     vbox->addLayout(hbox);
 

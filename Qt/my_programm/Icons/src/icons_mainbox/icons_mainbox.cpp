@@ -129,7 +129,7 @@ void MainBox::init(void)
 
     Q_CHECK_PTR(tab);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     setLayout(vbox);
 
     layout()->addWidget(tab);
@@ -140,7 +140,7 @@ void MainBox::init(void)
     connect(btn_clean,  SIGNAL(clicked(bool)),  this,   SLOT(clean()));
     connect(btn_save,   SIGNAL(clicked(bool)),  this,   SLOT(save()));
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(btn_clean);
     hbox->addWidget(btn_save);
     hbox->addStretch();
@@ -285,11 +285,11 @@ void MainBox::add_icons(QTabWidget *page,
     gbox->setMargin(0);
     gbox->setSpacing(0);
 
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addLayout(gbox);
     hbox->addStretch();
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addLayout(hbox);
     vbox->addStretch();
 

@@ -83,7 +83,7 @@ void MainBox::init(void)
     sp_2->addWidget(sp_0);
     sp_2->addWidget(sp_1);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(sp_2);
 
     setLayout(vbox);

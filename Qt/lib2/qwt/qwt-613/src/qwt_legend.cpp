@@ -425,7 +425,7 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
             connect(btn,    SIGNAL(clicked()),
                     parent, SLOT(click_legend()));
 
-            QHBoxLayout *hbox = new QHBoxLayout;
+            QHBoxLayout *hbox = new QHBoxLayout();
             hbox->setMargin(0);
             hbox->addWidget(btn);
             hbox->addWidget(widget);

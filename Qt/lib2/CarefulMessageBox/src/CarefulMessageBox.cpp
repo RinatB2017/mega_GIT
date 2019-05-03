@@ -38,8 +38,8 @@ CarefulMessageBox::CarefulMessageBox(const QString &caption,
 {
     QLabel *msg_label = new QLabel(message);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    QHBoxLayout *buttons_box = new QHBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
+    QHBoxLayout *buttons_box = new QHBoxLayout();
 
     buttons_box->addStretch();
     for(unsigned int n=0; n<MAX_BUTTONS; n++)

@@ -103,7 +103,7 @@ private:
 
     void create_borders(void);
 
-    float pixel_to_pt(float value);
+    qreal pixel_to_pt(qreal value);
 
     void updateText(void);
 

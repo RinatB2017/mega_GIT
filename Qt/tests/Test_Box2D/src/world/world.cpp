@@ -10,8 +10,8 @@
 #include "defines.hpp"
 #include "world.hpp"
 //--------------------------------------------------------------------------------
-#define DEGTORAD 0.0174532925199432957f
-#define RADTODEG 57.295779513082320876f
+#define DEGTORAD 0.0174532925199432957
+#define RADTODEG 57.295779513082320876
 //--------------------------------------------------------------------------------
 World::World(QWidget *parent) :
     MyWidget(parent),
@@ -26,8 +26,8 @@ World::World(QWidget *parent) :
     b2Vec2 gravity(0.0f, 0.0f);
     _world = new b2World(gravity);
 
-    _transform.scale(10.0f, -10.0f);
-    _transform.translate(0.0f, -pixel_to_pt(HEIGHT));
+    _transform.scale(10.0, -10.0);
+    _transform.translate(0.0, -pixel_to_pt(HEIGHT));
 }
 //--------------------------------------------------------------------------------
 World::~World()
@@ -35,9 +35,9 @@ World::~World()
     emit info("~World()");
 }
 //--------------------------------------------------------------------------------
-float World::pixel_to_pt(float value)
+qreal World::pixel_to_pt(qreal value)
 {
-    return (value / 10.0f);
+    return (value / 10.0);
 }
 //--------------------------------------------------------------------------------
 Object World::createWall(float32 x,
@@ -164,7 +164,7 @@ void World::paintEvent(QPaintEvent *)
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #else
     QPen pen;
-    pen.setWidthF(0.07f);
+    pen.setWidthF(0.07);
     painter.setBrush(QBrush(Qt::green));
     painter.setPen(pen);
 #endif
@@ -381,13 +381,13 @@ void World::create_scene_1(void)
     if(is_busy == false)
     {
         is_busy = true;
-        Object ball = createBall(b2Vec2(pixel_to_pt(10.0f), pixel_to_pt(10.0f)), pixel_to_pt(10.0f), 0);
+        Object ball = createBall(b2Vec2(pixel_to_pt(10.0), pixel_to_pt(10.0)), pixel_to_pt(10.0), 0);
         _objects.append(ball);
 
         ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
         ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f), true);   //TODO
 
-        _objects.append(createWall(50, 20, 1.0f, 12.0f, 90.0f*M_PI/180.0f, b2_dynamicBody));
+        _objects.append(createWall(50, 20, 1.0, 12.0, 90.0*M_PI/180.0, b2_dynamicBody));
 
         for(int n=250; n<WIDTH; n+=50)
         {
@@ -427,13 +427,13 @@ void World::create_scene_3(void)
         is_busy = true;
         for(int n=0; n<360; n++)
         {
-            Object ball = createBall(b2Vec2(pixel_to_pt(WIDTH / 2), pixel_to_pt(HEIGHT / 2)), pixel_to_pt(3.0f), 0);
+            Object ball = createBall(b2Vec2(pixel_to_pt(WIDTH / 2), pixel_to_pt(HEIGHT / 2)), pixel_to_pt(3.0), 0);
 
-            float angle = n;
-            float x = qSin(angle * DEGTORAD) * 1000.0f;
-            float y = qCos(angle * DEGTORAD) * 1000.0f;
+            qreal angle = n;
+            qreal x = qSin(angle * DEGTORAD) * 1000.0;
+            qreal y = qCos(angle * DEGTORAD) * 1000.0;
             ball.body->SetLinearVelocity(b2Vec2(x, y));
-            //ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f));
+            //ball.body->ApplyLinearImpulse(b2Vec2(1.0, 1.0), b2Vec2(1.0, 1.0));
 
             _objects.append(ball);
         }

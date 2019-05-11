@@ -206,7 +206,7 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     display = new QLCDNumber();
     display->setStyleSheet("background: black; color: lightgreen;");
     display->setSegmentStyle(QLCDNumber::Flat);
@@ -307,11 +307,25 @@ bool MainBox::test_0(void)
 
 #endif
 
-#if 0
-    TestWidget *tw = new TestWidget(this);
-    layout()->addWidget(tw);
+#if 1
+    QWidget *w_digits = new QWidget();
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->setMargin(0);
+    hbox->setSpacing(0);
 
-    //tw->save("/dev/shm/0/test.png");
+    for(int number = 0; number < 16; number++) {
+        TestWidget *tw = new TestWidget(number, 64, 24);
+        hbox->addWidget(tw);
+    }
+    w_digits->setLayout(hbox);
+    w_digits->adjustSize();
+    //w_digits->show();
+
+    QPixmap *pixmap = new QPixmap(w_digits->size());
+    w_digits->render(pixmap);
+
+    //w_digits->show();
+    pixmap->save("/dev/shm/0/bones64.png");
 #endif
 
 #if 0

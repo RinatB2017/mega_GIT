@@ -41,9 +41,17 @@ class TestWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit TestWidget(QWidget *parent) : QWidget(parent)
+    explicit TestWidget(int number,
+                        int size,
+                        int font_size,
+                        QWidget *parent = nullptr) : QWidget(parent)
     {
-        setFixedSize(250, 250);
+        this->number = number;
+        this->width = size;
+        this->height = size;
+        this->font_size = font_size;
+        this->border = width / 5;
+        setFixedSize(width, height);
     }
 
     void save(QString filename)
@@ -53,45 +61,50 @@ public:
         pixmap->save(filename);
     }
 
+private:
+    int width = 0;
+    int height = 0;
+    int border = 0;
+    int number = 0;
+    int font_size = 0;
+
+    QColor begin_color = Qt::lightGray;
+    QColor end_color   = Qt::darkGray;
+
+    QColor begin_border_color = Qt::lightGray;
+    QColor end_border_color   = Qt::darkGray;
+
+    QColor number_color = Qt::white;
+
 protected:
     void paintEvent(QPaintEvent *)
     {
-        //---
-        QColor begin_color = Qt::lightGray;
-        QColor end_color   = Qt::darkGray;
-        //---
-        QColor begin_border_color = Qt::lightGray;
-        QColor end_border_color   = Qt::darkGray;
-        //---
-        int border = 50;
-        //---
-
         QPainter painter(this);
 
         painter.setBrush(QBrush(begin_color));
-        painter.drawRect(0, 0, width(), height());
+        painter.drawRect(0, 0, width, height);
 
         painter.setBrush(QBrush(end_color));
-        painter.drawRect(border, border, width() - 2 * border, height() - 2 * border);
+        painter.drawRect(border -1, border - 1, width - border, height - border);
 
         //---
-        QLinearGradient shader_left(QPointF(0, height() / 2.0),
-                                    QPointF(border, height() / 2.0));
+        QLinearGradient shader_left(QPointF(0, height / 2.0),
+                                    QPointF(border, height / 2.0));
         shader_left.setColorAt(0, begin_border_color);
         shader_left.setColorAt(1, end_border_color);
         //---
-        QLinearGradient shader_up(QPointF(width() / 2.0, 0),
-                                  QPointF(width() / 2.0, border));
+        QLinearGradient shader_up(QPointF(width / 2.0, 0),
+                                  QPointF(width / 2.0, border));
         shader_up.setColorAt(0, begin_border_color);
         shader_up.setColorAt(1, end_border_color);
         //---
-        QLinearGradient shader_right(QPointF(width(), height() / 2.0),
-                                     QPointF(width() - border, height() / 2.0));
+        QLinearGradient shader_right(QPointF(width, height / 2.0),
+                                     QPointF(width - border, height / 2.0));
         shader_right.setColorAt(0, begin_border_color);
         shader_right.setColorAt(1, end_border_color);
         //---
-        QLinearGradient shader_down(QPointF(width() / 2.0, height()),
-                                    QPointF(width() / 2.0, height() - border));
+        QLinearGradient shader_down(QPointF(width / 2.0, height),
+                                    QPointF(width / 2.0, height - border));
         shader_down.setColorAt(0, begin_border_color);
         shader_down.setColorAt(1, end_border_color);
         //---
@@ -102,33 +115,41 @@ protected:
         path = QPainterPath();
         path.moveTo(0, 0);
         path.lineTo(border, border);
-        path.lineTo(border, height() - border);
-        path.lineTo(0, height());
+        path.lineTo(border, height - border);
+        path.lineTo(0, height);
         painter.fillPath(path, shader_left);
         //---
         // right
         path = QPainterPath();
-        path.moveTo(width(), 0);
-        path.lineTo(width() - border, border);
-        path.lineTo(width() - border, height() - border);
-        path.lineTo(width(), height());
+        path.moveTo(width, 0);
+        path.lineTo(width - border, border);
+        path.lineTo(width - border, height - border);
+        path.lineTo(width, height);
         painter.fillPath(path, shader_right);
         //---
         // up
         path = QPainterPath();
         path.moveTo(0, 0);
         path.lineTo(border, border);
-        path.lineTo(width() - border, border);
-        path.lineTo(width(), 0);
+        path.lineTo(width - border, border);
+        path.lineTo(width, 0);
         painter.fillPath(path, shader_up);
         //---
         // down
         path = QPainterPath();
-        path.moveTo(0, height());
-        path.lineTo(border, height() - border);
-        path.lineTo(width() - border, height() - border);
-        path.lineTo(width(), height());
+        path.moveTo(0, height);
+        path.lineTo(border, height - border);
+        path.lineTo(width - border, height - border);
+        path.lineTo(width, height);
         painter.fillPath(path, shader_down);
+        //---
+        QFont font("Courier", font_size);
+        painter.setFont(font);
+        painter.setPen(number_color);
+        QRectF rect = QRectF(0, 0, width, height);
+        painter.drawText(rect,
+                         Qt::AlignCenter,
+                         QString("%1").arg(number));
         //---
     }
 };

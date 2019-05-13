@@ -153,6 +153,58 @@ protected:
         //---
     }
 };
+
+class Gem_widget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Gem_widget(qreal angle,
+                        QWidget *parent = nullptr) : QWidget(parent)
+    {
+        //TODO начальный угол gem_green = -40
+        this->angle = angle + 40;
+        if(this->angle >= 360)
+        {
+            this->angle -= 360;
+        }
+
+        setFixedSize(256, 256);
+    }
+
+private:
+    qreal angle = 0;
+    QTimer *timer;
+
+    void init_timer(void)
+    {
+        timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(t_update()));
+        timer->start(10);
+    }
+
+private slots:
+    void t_update(void)
+    {
+        angle++;
+        if(angle >= 360) angle = 0;
+        update();
+    }
+
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QPainter painter(this);
+        QPixmap pixmap(":/gem_green.png");
+
+        QSize size = pixmap.size();
+        painter.translate(size.height()/2, size.height()/2);
+        painter.rotate(angle);
+        painter.translate(-size.height()/2, -size.height()/2);
+
+        painter.drawPixmap(0, 0, pixmap, 0, 0, 256, 256);
+    }
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;

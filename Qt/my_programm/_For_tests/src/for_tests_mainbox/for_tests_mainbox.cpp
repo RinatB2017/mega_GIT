@@ -198,29 +198,41 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-#include "labirint.hpp"
-#include "world.hpp"
-#include "cell.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 0
-    display = new QLCDNumber();
-    display->setStyleSheet("background: black; color: lightgreen;");
-    display->setSegmentStyle(QLCDNumber::Flat);
-    display->setDigitCount(10);
-    display->setFixedWidth(310);
-    display->setFixedHeight(64);
-    //display->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    display->display("0123456789");
-    //display->display("0000000000");
-    //display->adjustSize();
-    display->show();
+#if 1
+    QWidget *widget = new QWidget();
+    QGridLayout *grid = new QGridLayout();
+    grid->setSpacing(0);
+    grid->setMargin(0);
 
-    QPixmap px = display->grab(QRect(4, 0, display->width() - 9, display->height()));
-    //px.save("display.png");
+    qreal angle = 0;
+    int x = 0;
+    int y = 0;
+    while(angle < 360)
+    {
+        Gem_widget *gw = new Gem_widget(angle);
+        grid->addWidget(gw, y, x);
+
+        x++;
+        if(x >= 6)
+        {
+            x=0;
+            y++;
+        }
+
+        angle+=10;
+    }
+
+    widget->setLayout(grid);
+    widget->adjustSize();
+    //widget->show();
+
+    QPixmap px = widget->grab(QRect(0, 0, widget->width(), widget->height()));
+    px.save("/dev/shm/0/gems.png");
 #endif
 
 #if 0
@@ -256,101 +268,6 @@ bool MainBox::test_0(void)
     QLabel *label = new QLabel();
     label->setPixmap(QPixmap::fromImage(px));
     label->show();
-#endif
-
-#if 0
-    Labirint *lt = new Labirint(this);
-    //lt->show();
-    layout()->addWidget(lt);
-#endif
-
-#if 0
-    World *world = new World();
-    world->show();
-#endif
-
-#if 0
-    CELL cell;
-    cell.value = 0;
-    cell.bites.b_left  = 0;
-    cell.bites.b_right = 1;
-    cell.bites.b_up    = 0;
-    cell.bites.b_down  = 0;
-
-    emit info(QString("value %1").arg(cell.value));
-
-#if 0
-    Cell *cw = new Cell(cell, 250, this);
-    layout()->addWidget(cw);
-#else
-    QGridLayout *grid = new QGridLayout();
-    //grid->setMargin(0);
-    //grid->setSpacing(0);
-
-    uint8_t value = 0;
-    for(int y=0; y<4; y++)
-    {
-        for(int x=0; x<4; x++)
-        {
-            cell.value = value;
-            Cell *cw = new Cell(cell, 70, this);
-            grid->addWidget(cw, y, x);
-            value++;
-        }
-    }
-    QWidget *w = new QWidget(this);
-    w->setLayout(grid);
-    w->setFixedSize(w->sizeHint());
-
-    layout()->addWidget(w);
-#endif
-
-#endif
-
-#if 1
-    QWidget *w_digits = new QWidget();
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->setMargin(0);
-    hbox->setSpacing(0);
-
-    for(int number = 0; number < 16; number++) {
-        TestWidget *tw = new TestWidget(number, 64, 24);
-        hbox->addWidget(tw);
-    }
-    w_digits->setLayout(hbox);
-    w_digits->adjustSize();
-    //w_digits->show();
-
-    QPixmap *pixmap = new QPixmap(w_digits->size());
-    w_digits->render(pixmap);
-
-    //w_digits->show();
-    pixmap->save("/dev/shm/0/bones64.png");
-#endif
-
-#if 0
-    QPushButton *btn = new QPushButton();
-    temp_test(btn, 5);
-    btn->show();
-#endif
-
-#if 0
-    HEADER header;
-    header.address  = 0xF0;
-    header.command  = 0xF1;
-    header.cnt_data = 0xF2;
-
-    uchar *arr = reinterpret_cast<uchar *>(&header);
-    emit info(QString("0: %1").arg(static_cast<int>(*arr),     0, 16));
-    emit info(QString("1: %1").arg(static_cast<int>(*(arr+1)), 0, 16));
-    emit info(QString("2: %1").arg(static_cast<int>(*(arr+2)), 0, 16));
-
-    uint16_t value = 0xAABB;
-    uchar *arr2 = reinterpret_cast<uchar *>(&value);
-    int hi = *(arr2);
-    int lo = *(arr2+1);
-    emit info(QString("hi 0x%1").arg(hi, 0, 16));
-    emit info(QString("lo 0x%1").arg(lo, 0, 16));
 #endif
 
     return true;

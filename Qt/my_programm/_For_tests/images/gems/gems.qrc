@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/bones"/>
+    <qresource prefix="/">
+        <file>gem_blue.png</file>
+        <file>gem_green.png</file>
+        <file>gem_purple.png</file>
+        <file>gem_red.png</file>
+        <file>gem_white.png</file>
+        <file>gem_yellow.png</file>
+    </qresource>
+</RCC>

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,99 +18,46 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "gem_widget.hpp"
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include "for_tests_mainbox.hpp"
-#include "ui_for_tests_mainbox.h"
+Gem_widget::Gem_widget(qreal angle,
+                       QWidget *parent)
+    :QWidget(parent)
+{
+    //TODO начальный угол gem_green = -40
+    this->angle = angle + 40;
+    if(this->angle >= 360)
+    {
+        this->angle -= 360;
+    }
 
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+    setFixedSize(256, 256);
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void Gem_widget::init_timer(void)
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    void s_inFunc(void);
-
-    void check_in(void);
-    void victory(void);
-
-private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QComboBox *cb_test;
-    QList<CMD> commands;
-
-    QComboBox *cb_test2;
-
-    //---
-    void test_validator(void);
-    //---
-    template<typename T>
-    void temp_test(T *obj, int x)
-    {
-        obj->setText(QString("x = %1").arg(x));
-        cb_test->setCurrentIndex(2);
-    }
-    QLCDNumber *display;
-    //---
-
-    void init(void);
-    void createTestBar(void);
-    void updateText(void);
-
-    int get_cnt(void);
-};
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(t_update()));
+    timer->start(10);
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Gem_widget::t_update(void)
+{
+    angle++;
+    if(angle >= 360) angle = 0;
+    update();
+}
+//--------------------------------------------------------------------------------
+void Gem_widget::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    QPixmap pixmap(":/gem_green.png");
+
+    QSize size = pixmap.size();
+    painter.translate(size.height()/2, size.height()/2);
+    painter.rotate(angle);
+    painter.translate(-size.height()/2, -size.height()/2);
+
+    painter.drawPixmap(0, 0, pixmap, 0, 0, 256, 256);
+}
+//--------------------------------------------------------------------------------

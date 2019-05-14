@@ -198,12 +198,19 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+#include "tile_widget.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    Tile_widget *tw = new Tile_widget(Horizontal);
+    //Tile_widget *tw = new Tile_widget(Vertical);
+    tw->show();
+#endif
+
+#if 0
     QWidget *widget = new QWidget();
     QGridLayout *grid = new QGridLayout();
     grid->setSpacing(0);

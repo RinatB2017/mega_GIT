@@ -79,7 +79,8 @@ win32 {
 RESOURCES += \
     images/images.qrc \
     images/bones/bones.qrc \
-    images/gems/gems.qrc
+    images/gems/gems.qrc \
+    images/puzzle/puzzle.qrc
 
 #можно поставить новое logo
 RESOURCES += about/about.qrc

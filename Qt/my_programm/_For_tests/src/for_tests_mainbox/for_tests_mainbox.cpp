@@ -205,6 +205,16 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    //QPixmap pixmap(":/s0.png");
+    QPixmap pixmap(":/s1.png");
+
+    QLabel *label = new QLabel();
+    label->setPixmap(pixmap);
+    label->setFixedSize(720, 1280);
+    label->show();
+#endif
+
+#if 0
     Tile_widget *tw = new Tile_widget(Horizontal);
     //Tile_widget *tw = new Tile_widget(Vertical);
     tw->show();

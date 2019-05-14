@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/bones"/>
+    <qresource prefix="/">
+        <file>s0.png</file>
+        <file>s1.png</file>
+    </qresource>
+</RCC>

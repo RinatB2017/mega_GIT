@@ -118,6 +118,9 @@ public:
     void load_widgets(QString group_name);
     void save_widgets(QString group_name);
 
+    QString load_string(QString name);
+    void save_string(QString name, QString value);
+
     void load_checkBox(QList<check_box> data);
     void load_comboBox(QList<combo_box> data);
     void load_spinBox(QList<spin_box> data);

@@ -985,6 +985,16 @@ void MyWidget::save_widgets(QString group_name)
     Q_UNUSED(group_name);
 }
 //--------------------------------------------------------------------------------
+QString MyWidget::load_string(QString name)
+{
+    return settings->value(name).toString();
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_string(QString name, QString value)
+{
+    settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
 void MyWidget::block_close(bool state)
 {
     setProperty("flag_no_close", state);

@@ -154,7 +154,9 @@ void MainBox::init(void)
             this,   SLOT(grapher_refresh()));
 
     //---
-    test_data();
+    //test_data();
+    test_data2();
+
     grapher_widget->push_btn_Horizontal(true);
     grapher_widget->push_btn_Vertical(true);
     //---
@@ -162,6 +164,7 @@ void MainBox::init(void)
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
+
     mw->add_dock_widget("График", "grapher", Qt::LeftDockWidgetArea, grapher_widget);
 }
 //--------------------------------------------------------------------------------
@@ -207,6 +210,25 @@ void MainBox::test_data(void)
     foreach(temp_f temp, l_temp)
     {
         grapher_widget->add_curve_data(curve_0, temp.x, temp.y);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_data2(void)
+{
+    qreal begin_y = 1000;
+
+    qreal delta = 0.1;
+    for(int n=0; n<10000; n++)
+    {
+        int temp = rand() % 10;
+        if(temp >= 5)
+        {
+            begin_y+=delta;
+        }
+        else {
+            begin_y-=delta;
+        }
+        grapher_widget->add_curve_data(curve_0, n, begin_y);
     }
 }
 //--------------------------------------------------------------------------------

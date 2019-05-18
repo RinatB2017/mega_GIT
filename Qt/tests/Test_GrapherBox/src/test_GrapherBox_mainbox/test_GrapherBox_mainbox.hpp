@@ -77,6 +77,7 @@ private:
     void updateText(void);
 
     void test_data(void);
+    void test_data2(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

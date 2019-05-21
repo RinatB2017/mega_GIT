@@ -24,7 +24,7 @@ World::World(QWidget *parent) :
 
     //b2Vec2 gravity(0.0f, -10.0f);
     //b2Vec2 gravity(0.0f, -0.0f);
-    b2Vec2 gravity(0.0f, -98.0f);
+    b2Vec2 gravity(0.0f, -9.8f);
     _world = new b2World(gravity);
 
     _transform.scale(10.0, -10.0);

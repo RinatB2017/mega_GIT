@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using OpenQA.Selenium.Firefox;
 
 namespace WebWhatsappAPI.Firefox

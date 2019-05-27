@@ -1,4 +1,4 @@
-﻿namespace NeiroNet1
+namespace NeiroNet1
 {
     partial class MainForm
     {

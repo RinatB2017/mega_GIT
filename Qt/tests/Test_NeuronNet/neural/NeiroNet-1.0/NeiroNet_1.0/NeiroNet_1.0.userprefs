@@ -1,4 +1,4 @@
-﻿<Properties StartupItem="NeiroNet_1.0.csproj">
+<Properties StartupItem="NeiroNet_1.0.csproj">
   <MonoDevelop.Ide.Workbench ActiveDocument="NeiroWeb.cs">
     <Files>
       <File FileName="NeiroWeb.cs" Line="100" Column="55" />

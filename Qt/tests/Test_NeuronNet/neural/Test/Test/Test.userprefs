@@ -1,4 +1,4 @@
-﻿<Properties StartupItem="Test.csproj">
+<Properties StartupItem="Test.csproj">
   <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
       <File FileName="Program.cs" Line="89" Column="6" />

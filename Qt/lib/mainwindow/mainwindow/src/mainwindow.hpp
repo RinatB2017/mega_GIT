@@ -296,10 +296,10 @@ private:
     QList<QAction *> app_actions;
     QList<QAbstractButton *> app_buttons;
 
-    QMenu *m_app_filemenu;
-    QMenu *m_app_optionsmenu;
-    QMenu *m_app_windowsmenu;
-    QMenu *m_app_helpmenu;
+    QMenu *m_app_filemenu = nullptr;
+    QMenu *m_app_optionsmenu = nullptr;
+    QMenu *m_app_windowsmenu = nullptr;
+    QMenu *m_app_helpmenu = nullptr;
 
     QList<QWidget *> l_docs;
 

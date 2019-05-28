@@ -207,7 +207,9 @@ void MainWindow::init(void)
 #ifndef NO_LOG
     //FIXME костыль, надо убрать
     // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
+#ifndef NO_MENU
     add_windowsmenu_action(ld, ld->toggleViewAction());
+#endif
 #endif
 #ifdef SYSLOG_LOG
     //FIXME костыль, надо убрать

@@ -135,7 +135,6 @@ int baudrate = 57600;
 #define MPU6050_FIFO_R_W           0x74   // R/W
 #define MPU6050_WHO_AM_I           0x75   // R
 
-
 // Defines for the bits, to be able to change
 // between bit number and binary definition.
 // By using the bit number, programming the sensor
@@ -614,13 +613,11 @@ int baudrate = 57600;
 #define MPU6050_LP_WAKE_5HZ    MPU6050_LP_WAKE_CTRL_2
 #define MPU6050_LP_WAKE_10HZ   MPU6050_LP_WAKE_CTRL_3
 
-
 // Default I2C address for the MPU-6050 is 0x68.
 // But only if the AD0 pin is low.
 // Some sensor boards have AD0 high, and the
 // I2C address thus becomes 0x69.
 #define MPU6050_I2C_ADDRESS 0x68
-
 
 // Declaring an union for the registers and the axis values.
 // The byte order does not match the byte order of
@@ -714,7 +711,6 @@ float    base_x_gyro;
 float    base_y_gyro;
 float    base_z_gyro;
 
-
 int read_gyro_accel_vals(uint8_t* accel_t_gyro_ptr) {
   // Read the raw values.
   // Read 14 bytes at once,
@@ -790,7 +786,6 @@ void calibrate_sensors() {
 
   //Serial.println("Finishing Calibration");
 }
-
 
 void setup()
 {
@@ -946,19 +941,19 @@ void loop()
   // Send the data to the serial port
   Serial.print(F("DEL:"));              //Delta T
   Serial.print(dt, DEC);
-  Serial.print(F("#ACC:"));              //Accelerometer angle
+  Serial.print(F("#ACC:"));             //Accelerometer angle
   Serial.print(accel_angle_x, 2);
   Serial.print(F(","));
   Serial.print(accel_angle_y, 2);
   Serial.print(F(","));
   Serial.print(accel_angle_z, 2);
   Serial.print(F("#GYR:"));
-  Serial.print(unfiltered_gyro_angle_x, 2);        //Gyroscope angle
+  Serial.print(unfiltered_gyro_angle_x, 2); //Gyroscope angle
   Serial.print(F(","));
   Serial.print(unfiltered_gyro_angle_y, 2);
   Serial.print(F(","));
   Serial.print(unfiltered_gyro_angle_z, 2);
-  Serial.print(F("#FIL:"));             //Filtered angle
+  Serial.print(F("#FIL:"));                 //Filtered angle
   Serial.print(angle_x, 2);
   Serial.print(F(","));
   Serial.print(angle_y, 2);

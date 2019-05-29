@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>536</width>
+    <width>716</width>
     <height>328</height>
    </rect>
   </property>
@@ -77,7 +77,7 @@
          <widget class="QLCDNumber" name="display_x_accel">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>128</width>
             <height>48</height>
            </size>
           </property>
@@ -107,7 +107,7 @@
          <widget class="QLCDNumber" name="display_y_accel">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>128</width>
             <height>48</height>
            </size>
           </property>
@@ -127,7 +127,7 @@
          <widget class="QLCDNumber" name="display_z_accel">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>128</width>
             <height>48</height>
            </size>
           </property>

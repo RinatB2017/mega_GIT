@@ -1,23 +1,23 @@
 /**
-   Show GY521 Data.
-
-   Reads the serial port to get x- and y- axis rotational data from an accelerometer,
-   a gyroscope, and comeplementary-filtered combination of the two, and displays the
-   orientation data as it applies to three different colored rectangles.
-   It gives the z-orientation data as given by the gyroscope, but since the accelerometer
-   can't provide z-orientation, we don't use this data.
-
-*/
+ Show GY521 Data.
+ 
+ Reads the serial port to get x- and y- axis rotational data from an accelerometer,
+ a gyroscope, and comeplementary-filtered combination of the two, and displays the
+ orientation data as it applies to three different colored rectangles.
+ It gives the z-orientation data as given by the gyroscope, but since the accelerometer
+ can't provide z-orientation, we don't use this data.
+ 
+ */
 
 import processing.serial.*;
 
 Serial  myPort;
-short   portIndex = 2;
+short   portIndex = 4;
 int     lf = 10;       //ASCII linefeed
 String  inString;      //String for testing serial communication
 int     calibrating;
 
-int baudrate = 57600;
+int baudrate = 115200;
 
 float   dt;
 float   x_gyr;  //Gyroscope data
@@ -216,7 +216,7 @@ void serialEvent(Serial p)
         /*
           print("Dt:");
           println(dt);
-        */
+         */
       } else if (type.equals("ACC:")) {
         String data[] = split(dataval, ',');
         x_acc = float(data[0]);
@@ -229,7 +229,7 @@ void serialEvent(Serial p)
           print(y_acc);
           print(",");
           println(z_acc);
-        */
+         */
       } else if (type.equals("GYR:")) {
         String data[] = split(dataval, ',');
         x_gyr = float(data[0]);

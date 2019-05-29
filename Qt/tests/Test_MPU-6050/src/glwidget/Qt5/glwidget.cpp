@@ -284,11 +284,16 @@ void GLWidget::resizeGL(int w, int h)
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
+#ifndef NO_MOUSE
     m_lastPos = event->pos();
+#else
+    Q_UNUSED(event)
+#endif
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
+#ifndef NO_MOUSE
     int dx = event->x() - m_lastPos.x();
     int dy = event->y() - m_lastPos.y();
 
@@ -300,4 +305,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         setZRotation(m_zRot + 8 * dx);
     }
     m_lastPos = event->pos();
+#else
+    Q_UNUSED(event)
+#endif
 }

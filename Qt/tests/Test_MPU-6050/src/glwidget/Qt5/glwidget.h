@@ -58,6 +58,8 @@
 #include <QMatrix4x4>
 #include "logo.h"
 
+#define NO_MOUSE
+
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions

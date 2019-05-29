@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/ico">
         <file>computer.ico</file>
-        <file>temperature.ico</file>
-		<file>temperature.png</file>
+        <file>accelerometer.png</file>
     </qresource>
 </RCC>

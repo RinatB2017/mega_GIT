@@ -85,6 +85,8 @@ QSize GLWidget::sizeHint() const
 
 static void qNormalizeAngle(int &angle)
 {
+    angle *= 16; //TODO коррекция
+
     while (angle < 0)
         angle += 360 * 16;
     while (angle > 360 * 16)

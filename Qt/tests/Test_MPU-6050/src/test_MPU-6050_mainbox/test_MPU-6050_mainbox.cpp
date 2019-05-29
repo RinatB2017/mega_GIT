@@ -85,29 +85,30 @@ void MainBox::init(void)
 #else
     ui->grapher_widget->setVisible(false);
 #endif
+
+#if 1
+    ui->sl_X->setRange(0, 359);
+    ui->sl_Y->setRange(0, 359);
+    ui->sl_Z->setRange(0, 359);
+
+    ui->sb_X->setRange(0, 359);
+    ui->sb_Y->setRange(0, 359);
+    ui->sb_Z->setRange(0, 359);
+
+    connect(ui->sl_X,   SIGNAL(valueChanged(int)),  ui->sb_X,   SLOT(setValue(int)));
+    connect(ui->sl_Y,   SIGNAL(valueChanged(int)),  ui->sb_Y,   SLOT(setValue(int)));
+    connect(ui->sl_Z,   SIGNAL(valueChanged(int)),  ui->sb_Z,   SLOT(setValue(int)));
+
+    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->sl_X,   SLOT(setValue(int)));
+    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->sl_Y,   SLOT(setValue(int)));
+    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->sl_Z,   SLOT(setValue(int)));
+
+    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setXRotation(int)));
+    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setYRotation(int)));
+    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setZRotation(int)));
+#endif
+
     ui->serial_widget->set_fix_baudrate(57600);
-
-    //---
-#ifdef NO_SHOW_TEMPERATURE
-    ui->label_temp->setVisible(false);
-    ui->display_temperature->setVisible(false);
-#endif
-
-#ifdef NO_SHOW_PRESSURE
-    ui->label_press->setVisible(false);
-    ui->display_pressure->setVisible(false);
-#endif
-
-#ifdef NO_SHOW_ATM
-    ui->label_atm->setVisible(false);
-    ui->display_atm->setVisible(false);
-#endif
-
-#ifdef NO_SHOW_ALTITUDE
-    ui->label_alt->setVisible(false);
-    ui->display_altitude->setVisible(false);
-#endif
-    //---
 
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_mpu6050(QByteArray)));
 

@@ -4,6 +4,6 @@
 #define ORGNAME "Work"
 #define APPNAME "Test_MPU-6050"
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/ico/temperature.png"
+#define ICON_PROGRAMM   ":/ico/accelerometer.png"
 //--------------------------------------------------------------------------------
 #endif

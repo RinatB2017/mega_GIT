@@ -10,14 +10,17 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_MPU-6050_mainbox \
-    $$PWD/src/test_MPU-6050_mainbox/ui \
+    $$PWD/src/test_MPU-6050_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-DEFINES += NO_TOOLBAR
 DEFINES += NO_RESIZE
-DEFINES += NO_MENU
+
+#DEFINES += NO_TOOLBAR
+#DEFINES += NO_MENU
+
+#DEFINES += LOGO_GL
 
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -25,11 +28,6 @@ DEFINES += PROGRAMM_IN_UTF8
 
 win32 {
     DEFINES += NO_GRAPHER
-
-    #DEFINES += NO_SHOW_TEMPERATURE
-    #DEFINES += NO_SHOW_PRESSURE
-    DEFINES += NO_SHOW_ATM
-    DEFINES += NO_SHOW_ALTITUDE
 }
 
 HEADERS += \
@@ -45,7 +43,9 @@ FORMS   += test_MPU-6050_mainbox.ui
 
 OTHER_FILES += \
     doc/notebook.txt \
-    arduino/MPU-6050/MPU-6050.ino
+    arduino/MPU-6050/MPU-6050.ino \
+    example/gy_521_send_serial/gy_521_send_serial.ino \
+    example/ShowGY521Data/ShowGY521Data.pde
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
@@ -54,6 +54,10 @@ CONFIG(debug, debug|release) {
 win32 {
     RC_ICONS = ico/temperature.ico
 }
+
+include (src/glwidget/glwidget_qt5.pri)
+
+QT *= opengl
 
 RESOURCES += \
     ico/icons.qrc

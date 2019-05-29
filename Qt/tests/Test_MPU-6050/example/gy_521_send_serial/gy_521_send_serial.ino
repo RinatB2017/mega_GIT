@@ -7,8 +7,8 @@
 // Open Source / Public Domain
 //
 // Using Arduino 1.0.1
-// It will not work with an older version, 
-// since Wire.endTransmission() uses a parameter 
+// It will not work with an older version,
+// since Wire.endTransmission() uses a parameter
 // to hold or release the I2C bus.
 //
 // Documentation:
@@ -19,7 +19,7 @@
 //     RM-MPU-6000A.pdf or RS-MPU-6000A.pdf
 //   - "MPU-6000/MPU-6050 9-Axis Evaluation Board User Guide"
 //     AN-MPU-6000EVB.pdf
-// 
+//
 // The accuracy is 16-bits.
 //
 // Temperature sensor from -40 to +85 degrees Celsius
@@ -28,25 +28,25 @@
 // At power-up, all registers are zero, except these two:
 //      Register 0x6B (PWR_MGMT_2) = 0x40  (I read zero).
 //      Register 0x75 (WHO_AM_I)   = 0x68.
-// 
+//
 
 #include <Wire.h>
 
 int baudrate = 57600;
 
 // The name of the sensor is "MPU-6050".
-// For program code, I omit the '-', 
+// For program code, I omit the '-',
 // therefor I use the name "MPU6050....".
 
 
 // Register names according to the datasheet.
-// According to the InvenSense document 
-// "MPU-6000 and MPU-6050 Register Map 
+// According to the InvenSense document
+// "MPU-6000 and MPU-6050 Register Map
 // and Descriptions Revision 3.2", there are no registers
-// at 0x02 ... 0x18, but according other information 
-// the registers in that unknown area are for gain 
+// at 0x02 ... 0x18, but according other information
+// the registers in that unknown area are for gain
 // and offsets.
-// 
+//
 #define MPU6050_AUX_VDDIO          0x01   // R/W
 #define MPU6050_SMPLRT_DIV         0x19   // R/W
 #define MPU6050_CONFIG             0x1A   // R/W
@@ -136,11 +136,11 @@ int baudrate = 57600;
 #define MPU6050_WHO_AM_I           0x75   // R
 
 
-// Defines for the bits, to be able to change 
+// Defines for the bits, to be able to change
 // between bit number and binary definition.
-// By using the bit number, programming the sensor 
+// By using the bit number, programming the sensor
 // is like programming the AVR microcontroller.
-// But instead of using "(1<<X)", or "_BV(X)", 
+// But instead of using "(1<<X)", or "_BV(X)",
 // the Arduino "bit(X)" is used.
 #define MPU6050_D0 0
 #define MPU6050_D1 1
@@ -623,13 +623,13 @@ int baudrate = 57600;
 
 
 // Declaring an union for the registers and the axis values.
-// The byte order does not match the byte order of 
+// The byte order does not match the byte order of
 // the compiler and AVR chip.
-// The AVR chip (on the Arduino board) has the Low Byte 
+// The AVR chip (on the Arduino board) has the Low Byte
 // at the lower address.
 // But the MPU-6050 has a different order: High Byte at
 // lower address, so that has to be corrected.
-// The register part "reg" is only used internally, 
+// The register part "reg" is only used internally,
 // and are swapped in code.
 typedef union accel_t_gyro_union
 {
@@ -650,7 +650,7 @@ typedef union accel_t_gyro_union
     uint8_t z_gyro_h;
     uint8_t z_gyro_l;
   } reg;
-  struct 
+  struct
   {
     int x_accel;
     int y_accel;
@@ -667,7 +667,7 @@ typedef union accel_t_gyro_union
 unsigned long last_read_time;
 float         last_x_angle;  // These are the filtered angles
 float         last_y_angle;
-float         last_z_angle;  
+float         last_z_angle;
 float         last_gyro_x_angle;  // Store the gyro angles to compare drift
 float         last_gyro_y_angle;
 float         last_gyro_z_angle;
@@ -682,13 +682,27 @@ void set_last_read_angle_data(unsigned long time, float x, float y, float z, flo
   last_gyro_z_angle = z_gyro;
 }
 
-inline unsigned long get_last_time() {return last_read_time;}
-inline float get_last_x_angle() {return last_x_angle;}
-inline float get_last_y_angle() {return last_y_angle;}
-inline float get_last_z_angle() {return last_z_angle;}
-inline float get_last_gyro_x_angle() {return last_gyro_x_angle;}
-inline float get_last_gyro_y_angle() {return last_gyro_y_angle;}
-inline float get_last_gyro_z_angle() {return last_gyro_z_angle;}
+inline unsigned long get_last_time() {
+  return last_read_time;
+}
+inline float get_last_x_angle() {
+  return last_x_angle;
+}
+inline float get_last_y_angle() {
+  return last_y_angle;
+}
+inline float get_last_z_angle() {
+  return last_z_angle;
+}
+inline float get_last_gyro_x_angle() {
+  return last_gyro_x_angle;
+}
+inline float get_last_gyro_y_angle() {
+  return last_gyro_y_angle;
+}
+inline float get_last_gyro_z_angle() {
+  return last_gyro_z_angle;
+}
 
 //  Use the following global variables and access functions
 //  to calibrate the acceleration sensor
@@ -703,22 +717,22 @@ float    base_z_gyro;
 
 int read_gyro_accel_vals(uint8_t* accel_t_gyro_ptr) {
   // Read the raw values.
-  // Read 14 bytes at once, 
+  // Read 14 bytes at once,
   // containing acceleration, temperature and gyro.
   // With the default settings of the MPU-6050,
   // there is no filter enabled, and the values
   // are not very stable.  Returns the error value
-  
+
   accel_t_gyro_union* accel_t_gyro = (accel_t_gyro_union *) accel_t_gyro_ptr;
-   
+
   int error = MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) accel_t_gyro, sizeof(*accel_t_gyro));
 
   // Swap all high and low bytes.
-  // After this, the registers values are swapped, 
-  // so the structure name like x_accel_l does no 
+  // After this, the registers values are swapped,
+  // so the structure name like x_accel_l does no
   // longer contain the lower byte.
   uint8_t swap;
-  #define SWAP(x,y) swap = x; x = y; y = swap
+#define SWAP(x,y) swap = x; x = y; y = swap
 
   SWAP ((*accel_t_gyro).reg.x_accel_h, (*accel_t_gyro).reg.x_accel_l);
   SWAP ((*accel_t_gyro).reg.y_accel_h, (*accel_t_gyro).reg.y_accel_l);
@@ -731,7 +745,7 @@ int read_gyro_accel_vals(uint8_t* accel_t_gyro_ptr) {
   return error;
 }
 
-// The sensor should be motionless on a horizontal surface 
+// The sensor should be motionless on a horizontal surface
 //  while calibration is happening
 void calibrate_sensors() {
   int                   num_readings = 10;
@@ -742,12 +756,12 @@ void calibrate_sensors() {
   float                 y_gyro = 0;
   float                 z_gyro = 0;
   accel_t_gyro_union    accel_t_gyro;
-  
+
   //Serial.println("Starting Calibration");
 
   // Discard the first set of values read from the IMU
   read_gyro_accel_vals((uint8_t *) &accel_t_gyro);
-  
+
   // Read and average the raw values from the IMU
   for (int i = 0; i < num_readings; i++) {
     read_gyro_accel_vals((uint8_t *) &accel_t_gyro);
@@ -765,7 +779,7 @@ void calibrate_sensors() {
   x_gyro /= num_readings;
   y_gyro /= num_readings;
   z_gyro /= num_readings;
-  
+
   // Store the raw calibration values globally
   base_x_accel = x_accel;
   base_y_accel = y_accel;
@@ -773,20 +787,20 @@ void calibrate_sensors() {
   base_x_gyro = x_gyro;
   base_y_gyro = y_gyro;
   base_z_gyro = z_gyro;
-  
+
   //Serial.println("Finishing Calibration");
 }
 
 
 void setup()
-{      
+{
   int error;
   uint8_t c;
 
   Serial.begin(baudrate);
   /*
-  Serial.println(F("InvenSense MPU-6050"));
-  Serial.println(F("June 2012"));
+    Serial.println(F("InvenSense MPU-6050"));
+    Serial.println(F("June 2012"));
   */
   // Initialize the 'Wire' class for the I2C-bus.
   Wire.begin();
@@ -800,10 +814,10 @@ void setup()
 
   error = MPU6050_read (MPU6050_WHO_AM_I, &c, 1);
   /*
-  Serial.print(F("WHO_AM_I : "));
-  Serial.print(c,HEX);
-  Serial.print(F(", error = "));
-  Serial.println(error,DEC);
+    Serial.print(F("WHO_AM_I : "));
+    Serial.print(c,HEX);
+    Serial.print(F(", error = "));
+    Serial.println(error,DEC);
   */
 
   // According to the datasheet, the 'sleep' bit
@@ -813,17 +827,17 @@ void setup()
   // bit reads '0'.
   error = MPU6050_read (MPU6050_PWR_MGMT_2, &c, 1);
   /*
-  Serial.print(F("PWR_MGMT_2 : "));
-  Serial.print(c,HEX);
-  Serial.print(F(", error = "));
-  Serial.println(error,DEC);
+    Serial.print(F("PWR_MGMT_2 : "));
+    Serial.print(c,HEX);
+    Serial.print(F(", error = "));
+    Serial.println(error,DEC);
   */
 
   // Clear the 'sleep' bit to start the sensor.
   MPU6050_write_reg (MPU6050_PWR_MGMT_1, 0);
-  
+
   //Initialize the angles
-  calibrate_sensors();  
+  calibrate_sensors();
   set_last_read_angle_data(millis(), 0, 0, 0, 0, 0, 0);
 }
 
@@ -834,101 +848,101 @@ void loop()
   accel_t_gyro_union accel_t_gyro;
 
   /*
-  Serial.println(F(""));
-  Serial.println(F("MPU-6050"));
+    Serial.println(F(""));
+    Serial.println(F("MPU-6050"));
   */
-  
+
   // Read the raw values.
   error = read_gyro_accel_vals((uint8_t*) &accel_t_gyro);
-  
+
   // Get the time of reading for rotation computations
   unsigned long t_now = millis();
-   
-/*
-  Serial.print(F("Read accel, temp and gyro, error = "));
-  Serial.println(error,DEC);
-  
 
-  // Print the raw acceleration values
-  Serial.print(F("accel x,y,z: "));
-  Serial.print(accel_t_gyro.value.x_accel, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.y_accel, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.z_accel, DEC);
-  Serial.println(F(""));
-*/ 
+  /*
+    Serial.print(F("Read accel, temp and gyro, error = "));
+    Serial.println(error,DEC);
+
+
+    // Print the raw acceleration values
+    Serial.print(F("accel x,y,z: "));
+    Serial.print(accel_t_gyro.value.x_accel, DEC);
+    Serial.print(F(", "));
+    Serial.print(accel_t_gyro.value.y_accel, DEC);
+    Serial.print(F(", "));
+    Serial.print(accel_t_gyro.value.z_accel, DEC);
+    Serial.println(F(""));
+  */
 
   // The temperature sensor is -40 to +85 degrees Celsius.
   // It is a signed integer.
-  // According to the datasheet: 
+  // According to the datasheet:
   //   340 per degrees Celsius, -512 at 35 degrees.
   // At 0 degrees: -512 - (340 * 35) = -12412
-/*  
-  Serial.print(F("temperature: "));
-  dT = ( (double) accel_t_gyro.value.temperature + 12412.0) / 340.0;
-  Serial.print(dT, 3);
-  Serial.print(F(" degrees Celsius"));
-  Serial.println(F(""));
-  
+  /*
+    Serial.print(F("temperature: "));
+    dT = ( (double) accel_t_gyro.value.temperature + 12412.0) / 340.0;
+    Serial.print(dT, 3);
+    Serial.print(F(" degrees Celsius"));
+    Serial.println(F(""));
 
-  // Print the raw gyro values.
-  Serial.print(F("raw gyro x,y,z : "));
-  Serial.print(accel_t_gyro.value.x_gyro, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.y_gyro, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.z_gyro, DEC);
-  Serial.print(F(", "));
-  Serial.println(F(""));
-*/
+
+    // Print the raw gyro values.
+    Serial.print(F("raw gyro x,y,z : "));
+    Serial.print(accel_t_gyro.value.x_gyro, DEC);
+    Serial.print(F(", "));
+    Serial.print(accel_t_gyro.value.y_gyro, DEC);
+    Serial.print(F(", "));
+    Serial.print(accel_t_gyro.value.z_gyro, DEC);
+    Serial.print(F(", "));
+    Serial.println(F(""));
+  */
 
   // Convert gyro values to degrees/sec
   float FS_SEL = 131;
   /*
-  float gyro_x = (accel_t_gyro.value.x_gyro - base_x_gyro)/FS_SEL;
-  float gyro_y = (accel_t_gyro.value.y_gyro - base_y_gyro)/FS_SEL;
-  float gyro_z = (accel_t_gyro.value.z_gyro - base_z_gyro)/FS_SEL;
+    float gyro_x = (accel_t_gyro.value.x_gyro - base_x_gyro)/FS_SEL;
+    float gyro_y = (accel_t_gyro.value.y_gyro - base_y_gyro)/FS_SEL;
+    float gyro_z = (accel_t_gyro.value.z_gyro - base_z_gyro)/FS_SEL;
   */
-  float gyro_x = (accel_t_gyro.value.x_gyro - base_x_gyro)/FS_SEL;
-  float gyro_y = (accel_t_gyro.value.y_gyro - base_y_gyro)/FS_SEL;
-  float gyro_z = (accel_t_gyro.value.z_gyro - base_z_gyro)/FS_SEL;
-  
+  float gyro_x = (accel_t_gyro.value.x_gyro - base_x_gyro) / FS_SEL;
+  float gyro_y = (accel_t_gyro.value.y_gyro - base_y_gyro) / FS_SEL;
+  float gyro_z = (accel_t_gyro.value.z_gyro - base_z_gyro) / FS_SEL;
+
   // Get raw acceleration values
   //float G_CONVERT = 16384;
   float accel_x = accel_t_gyro.value.x_accel;
   float accel_y = accel_t_gyro.value.y_accel;
   float accel_z = accel_t_gyro.value.z_accel;
-  
+
   // Get angle values from accelerometer
-  float RADIANS_TO_DEGREES = 180/3.14159;
-//  float accel_vector_length = sqrt(pow(accel_x,2) + pow(accel_y,2) + pow(accel_z,2));
-  float accel_angle_y = atan(-1*accel_x/sqrt(pow(accel_y,2) + pow(accel_z,2)))*RADIANS_TO_DEGREES;
-  float accel_angle_x = atan(accel_y/sqrt(pow(accel_x,2) + pow(accel_z,2)))*RADIANS_TO_DEGREES;
+  float RADIANS_TO_DEGREES = 180 / 3.14159;
+  //  float accel_vector_length = sqrt(pow(accel_x,2) + pow(accel_y,2) + pow(accel_z,2));
+  float accel_angle_y = atan(-1 * accel_x / sqrt(pow(accel_y, 2) + pow(accel_z, 2))) * RADIANS_TO_DEGREES;
+  float accel_angle_x = atan(accel_y / sqrt(pow(accel_x, 2) + pow(accel_z, 2))) * RADIANS_TO_DEGREES;
 
   float accel_angle_z = 0;
-  
+
   // Compute the (filtered) gyro angles
-  float dt =(t_now - get_last_time())/1000.0;
-  float gyro_angle_x = gyro_x*dt + get_last_x_angle();
-  float gyro_angle_y = gyro_y*dt + get_last_y_angle();
-  float gyro_angle_z = gyro_z*dt + get_last_z_angle();
-  
+  float dt = (t_now - get_last_time()) / 1000.0;
+  float gyro_angle_x = gyro_x * dt + get_last_x_angle();
+  float gyro_angle_y = gyro_y * dt + get_last_y_angle();
+  float gyro_angle_z = gyro_z * dt + get_last_z_angle();
+
   // Compute the drifting gyro angles
-  float unfiltered_gyro_angle_x = gyro_x*dt + get_last_gyro_x_angle();
-  float unfiltered_gyro_angle_y = gyro_y*dt + get_last_gyro_y_angle();
-  float unfiltered_gyro_angle_z = gyro_z*dt + get_last_gyro_z_angle();
-  
+  float unfiltered_gyro_angle_x = gyro_x * dt + get_last_gyro_x_angle();
+  float unfiltered_gyro_angle_y = gyro_y * dt + get_last_gyro_y_angle();
+  float unfiltered_gyro_angle_z = gyro_z * dt + get_last_gyro_z_angle();
+
   // Apply the complementary filter to figure out the change in angle - choice of alpha is
   // estimated now.  Alpha depends on the sampling rate...
   float alpha = 0.96;
-  float angle_x = alpha*gyro_angle_x + (1.0 - alpha)*accel_angle_x;
-  float angle_y = alpha*gyro_angle_y + (1.0 - alpha)*accel_angle_y;
+  float angle_x = alpha * gyro_angle_x + (1.0 - alpha) * accel_angle_x;
+  float angle_y = alpha * gyro_angle_y + (1.0 - alpha) * accel_angle_y;
   float angle_z = gyro_angle_z;  //Accelerometer doesn't give z-angle
-  
+
   // Update the saved data with the latest values
   set_last_read_angle_data(t_now, angle_x, angle_y, angle_z, unfiltered_gyro_angle_x, unfiltered_gyro_angle_y, unfiltered_gyro_angle_z);
-  
+
   // Send the data to the serial port
   Serial.print(F("DEL:"));              //Delta T
   Serial.print(dt, DEC);
@@ -951,7 +965,7 @@ void loop()
   Serial.print(F(","));
   Serial.print(angle_z, 2);
   Serial.println(F(""));
-  
+
   // Delay so we don't swamp the serial port
   delay(5);
 }
@@ -959,14 +973,14 @@ void loop()
 // --------------------------------------------------------
 // MPU6050_read
 //
-// This is a common function to read multiple bytes 
+// This is a common function to read multiple bytes
 // from an I2C device.
 //
 // It uses the boolean parameter for Wire.endTransMission()
-// to be able to hold or release the I2C-bus. 
+// to be able to hold or release the I2C-bus.
 // This is implemented in Arduino 1.0.1.
 //
-// Only this function is used to read. 
+// Only this function is used to read.
 // There is no function for a single byte.
 //
 int MPU6050_read(int start, uint8_t *buffer, int size)
@@ -985,9 +999,9 @@ int MPU6050_read(int start, uint8_t *buffer, int size)
   // Third parameter is true: relase I2C-bus after data is read.
   Wire.requestFrom(MPU6050_I2C_ADDRESS, size, true);
   i = 0;
-  while(Wire.available() && i<size)
+  while (Wire.available() && i < size)
   {
-    buffer[i++]=Wire.read();
+    buffer[i++] = Wire.read();
   }
   if ( i != size)
     return (-11);

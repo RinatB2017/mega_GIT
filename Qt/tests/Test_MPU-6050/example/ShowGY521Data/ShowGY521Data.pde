@@ -1,13 +1,13 @@
 /**
- * Show GY521 Data.
- * 
- * Reads the serial port to get x- and y- axis rotational data from an accelerometer,
- * a gyroscope, and comeplementary-filtered combination of the two, and displays the
- * orientation data as it applies to three different colored rectangles.
- * It gives the z-orientation data as given by the gyroscope, but since the accelerometer
- * can't provide z-orientation, we don't use this data.
- * 
- */
+   Show GY521 Data.
+
+   Reads the serial port to get x- and y- axis rotational data from an accelerometer,
+   a gyroscope, and comeplementary-filtered combination of the two, and displays the
+   orientation data as it applies to three different colored rectangles.
+   It gives the z-orientation data as given by the gyroscope, but since the accelerometer
+   can't provide z-orientation, we don't use this data.
+
+*/
 
 import processing.serial.*;
 
@@ -30,12 +30,12 @@ float   x_fil;  //Filtered data
 float   y_fil;
 float   z_fil;
 
-void setup()  
-{ 
-  //  size(640, 360, P3D); 
+void setup()
+{
+  //  size(640, 360, P3D);
   size(1400, 800, P3D);
   noStroke();
-  colorMode(RGB, 256); 
+  colorMode(RGB, 256);
 
   //  println("in setup");
   String portName = Serial.list()[portIndex];
@@ -44,71 +44,71 @@ void setup()
   myPort = new Serial(this, portName, baudrate);
   myPort.clear();
   myPort.bufferUntil(lf);
-} 
+}
 
 void draw_rect_rainbow()
 {
   scale(90);
   beginShape(QUADS);
 
-  fill(0, 1, 1); 
+  fill(0, 1, 1);
   vertex(-1, 1.5, 0.25);
-  fill(1, 1, 1); 
+  fill(1, 1, 1);
   vertex( 1, 1.5, 0.25);
-  fill(1, 0, 1); 
+  fill(1, 0, 1);
   vertex( 1, -1.5, 0.25);
-  fill(0, 0, 1); 
+  fill(0, 0, 1);
   vertex(-1, -1.5, 0.25);
 
-  fill(1, 1, 1); 
+  fill(1, 1, 1);
   vertex( 1, 1.5, 0.25);
-  fill(1, 1, 0); 
+  fill(1, 1, 0);
   vertex( 1, 1.5, -0.25);
-  fill(1, 0, 0); 
+  fill(1, 0, 0);
   vertex( 1, -1.5, -0.25);
-  fill(1, 0, 1); 
+  fill(1, 0, 1);
   vertex( 1, -1.5, 0.25);
 
-  fill(1, 1, 0); 
+  fill(1, 1, 0);
   vertex( 1, 1.5, -0.25);
-  fill(0, 1, 0); 
+  fill(0, 1, 0);
   vertex(-1, 1.5, -0.25);
-  fill(0, 0, 0); 
+  fill(0, 0, 0);
   vertex(-1, -1.5, -0.25);
-  fill(1, 0, 0); 
+  fill(1, 0, 0);
   vertex( 1, -1.5, -0.25);
 
-  fill(0, 1, 0); 
+  fill(0, 1, 0);
   vertex(-1, 1.5, -0.25);
-  fill(0, 1, 1); 
+  fill(0, 1, 1);
   vertex(-1, 1.5, 0.25);
-  fill(0, 0, 1); 
+  fill(0, 0, 1);
   vertex(-1, -1.5, 0.25);
-  fill(0, 0, 0); 
+  fill(0, 0, 0);
   vertex(-1, -1.5, -0.25);
 
-  fill(0, 1, 0); 
+  fill(0, 1, 0);
   vertex(-1, 1.5, -0.25);
-  fill(1, 1, 0); 
+  fill(1, 1, 0);
   vertex( 1, 1.5, -0.25);
-  fill(1, 1, 1); 
+  fill(1, 1, 1);
   vertex( 1, 1.5, 0.25);
-  fill(0, 1, 1); 
+  fill(0, 1, 1);
   vertex(-1, 1.5, 0.25);
 
-  fill(0, 0, 0); 
+  fill(0, 0, 0);
   vertex(-1, -1.5, -0.25);
-  fill(1, 0, 0); 
+  fill(1, 0, 0);
   vertex( 1, -1.5, -0.25);
-  fill(1, 0, 1); 
+  fill(1, 0, 1);
   vertex( 1, -1.5, 0.25);
-  fill(0, 0, 1); 
+  fill(0, 0, 1);
   vertex(-1, -1.5, 0.25);
 
   endShape();
 }
 
-void draw_rect(int r, int g, int b) 
+void draw_rect(int r, int g, int b)
 {
   scale(90);
   beginShape(QUADS);
@@ -147,8 +147,8 @@ void draw_rect(int r, int g, int b)
   endShape();
 }
 
-void draw()  
-{ 
+void draw()
+{
   background(0);
   lights();
 
@@ -157,17 +157,17 @@ void draw()
   int x_rotation = 90;
 
   //Show gyro data
-  pushMatrix(); 
-  translate(width/6, height/2, -50); 
+  pushMatrix();
+  translate(width / 6, height / 2, -50);
   rotateX(radians(-x_gyr - x_rotation));
   rotateY(radians(-y_gyr));
   draw_rect(249, 250, 50);
 
-  popMatrix(); 
+  popMatrix();
 
   //Show accel data
   pushMatrix();
-  translate(width/2, height/2, -50);
+  translate(width / 2, height / 2, -50);
   rotateX(radians(-x_acc - x_rotation));
   rotateY(radians(-y_acc));
   draw_rect(56, 140, 206);
@@ -175,7 +175,7 @@ void draw()
 
   //Show combined data
   pushMatrix();
-  translate(5*width/6, height/2, -50);
+  translate(5 * width / 6, height / 2, -50);
   rotateX(radians(-x_fil - x_rotation));
   rotateY(radians(-y_fil));
   draw_rect(93, 175, 83);
@@ -188,19 +188,19 @@ void draw()
 
 
   fill(249, 250, 50);
-  text("Gyroscope", (int) width/6.0 - 60, 25);
-  text(gyrStr, (int) (width/6.0) - 40, 50);
+  text("Gyroscope", (int) width / 6.0 - 60, 25);
+  text(gyrStr, (int) (width / 6.0) - 40, 50);
 
   fill(56, 140, 206);
-  text("Accelerometer", (int) width/2.0 - 50, 25);
-  text(accStr, (int) (width/2.0) - 30, 50); 
+  text("Accelerometer", (int) width / 2.0 - 50, 25);
+  text(accStr, (int) (width / 2.0) - 30, 50);
 
   fill(83, 175, 93);
-  text("Combination", (int) (5.0*width/6.0) - 40, 25);
-  text(filStr, (int) (5.0*width/6.0) - 20, 50);
-} 
+  text("Combination", (int) (5.0 * width / 6.0) - 40, 25);
+  text(filStr, (int) (5.0 * width / 6.0) - 20, 50);
+}
 
-void serialEvent(Serial p) 
+void serialEvent(Serial p)
 {
   inString = (myPort.readString());
 
@@ -210,26 +210,26 @@ void serialEvent(Serial p)
     for (int i = 0; i < dataStrings.length; i++) {
       String type = dataStrings[i].substring(0, 4);
       String dataval = dataStrings[i].substring(4);
-      if (type.equals("DEL:")) 
+      if (type.equals("DEL:"))
       {
         dt = float(dataval);
         /*
-        print("Dt:");
-         println(dt);
-         */
+          print("Dt:");
+          println(dt);
+        */
       } else if (type.equals("ACC:")) {
         String data[] = split(dataval, ',');
         x_acc = float(data[0]);
         y_acc = float(data[1]);
         z_acc = float(data[2]);
         /*
-        print("Acc:");
-         print(x_acc);
-         print(",");
-         print(y_acc);
-         print(",");
-         println(z_acc);
-         */
+          print("Acc:");
+          print(x_acc);
+          print(",");
+          print(y_acc);
+          print(",");
+          println(z_acc);
+        */
       } else if (type.equals("GYR:")) {
         String data[] = split(dataval, ',');
         x_gyr = float(data[0]);
@@ -242,7 +242,7 @@ void serialEvent(Serial p)
         z_fil = float(data[2]);
       }
     }
-  } 
+  }
   catch (Exception e) {
     println("Caught Exception");
   }

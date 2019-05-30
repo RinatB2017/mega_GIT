@@ -38,6 +38,7 @@
 
 #include <Wire.h>
 
+int baudrate = 57600;
 
 // The name of the sensor is "MPU-6050".
 // For program code, I omit the '-',
@@ -757,10 +758,7 @@ int MPU6050_write(int start, const uint8_t *pData, int size)
 //
 int MPU6050_write_reg(int reg, uint8_t data)
 {
-  int error;
-
-  error = MPU6050_write(reg, &data, 1);
-
+  int error = MPU6050_write(reg, &data, 1);
   return (error);
 }
 
@@ -769,7 +767,7 @@ void setup()
   int error;
   uint8_t c;
 
-  Serial.begin(57600);
+  Serial.begin(baudrate);
   
   //Serial.println(F("InvenSense MPU-6050"));
   //Serial.println(F("June 2012"));
@@ -823,7 +821,6 @@ void loop()
   //Serial.print(F("Read accel, temp and gyro, error = "));
   //Serial.println(error, DEC);
 
-
   // Swap all high and low bytes.
   // After this, the registers values are swapped,
   // so the structure name like x_accel_l does no
@@ -848,7 +845,6 @@ void loop()
   //Serial.print(F(", "));
   //Serial.print(accel_t_gyro.value.z_accel, DEC);
   //Serial.println(F(""));
-
 
   // The temperature sensor is -40 to +85 degrees Celsius.
   // It is a signed integer.

@@ -177,6 +177,7 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_z_gyro,        z_gyro);
 #endif
 
+    ui->display_error->display(err);
     ui->display_x_accel->display(x_accel);
     ui->display_y_accel->display(y_accel);
     ui->display_z_accel->display(z_accel);

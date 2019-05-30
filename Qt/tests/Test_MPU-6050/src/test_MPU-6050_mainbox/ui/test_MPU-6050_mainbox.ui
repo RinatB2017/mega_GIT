@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>716</width>
-    <height>328</height>
+    <width>631</width>
+    <height>293</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,129 +35,156 @@
        </widget>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="2" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Accel:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>Z</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <widget class="QLCDNumber" name="display_z_gyro">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>48</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Y</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLCDNumber" name="display_x_accel">
-          <property name="minimumSize">
-           <size>
-            <width>128</width>
-            <height>48</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>X</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLCDNumber" name="display_x_gyro">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>48</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLCDNumber" name="display_y_accel">
-          <property name="minimumSize">
-           <size>
-            <width>128</width>
-            <height>48</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QLCDNumber" name="display_y_gyro">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>48</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QLCDNumber" name="display_z_accel">
-          <property name="minimumSize">
-           <size>
-            <width>128</width>
-            <height>48</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Gyro:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Temp:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLCDNumber" name="display_temperature">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>48</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>Device 0</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="2" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Accel:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="label_10">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Z</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLCDNumber" name="display_z_gyro">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="label_9">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Y</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLCDNumber" name="display_x_accel">
+             <property name="minimumSize">
+              <size>
+               <width>128</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_8">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>X</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLCDNumber" name="display_x_gyro">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLCDNumber" name="display_y_accel">
+             <property name="minimumSize">
+              <size>
+               <width>128</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLCDNumber" name="display_y_gyro">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLCDNumber" name="display_z_accel">
+             <property name="minimumSize">
+              <size>
+               <width>128</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Gyro:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Temp:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLCDNumber" name="display_temperature">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
        <spacer name="verticalSpacer">

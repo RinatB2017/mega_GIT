@@ -108,7 +108,7 @@ void MainBox::init(void)
     connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setZRotation(int)));
 #endif
 
-    ui->serial_widget->set_fix_baudrate(57600);
+    ui->serial_widget->set_fix_baudrate(BAUDRATE);
 
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_mpu6050(QByteArray)));
 
@@ -160,7 +160,7 @@ void MainBox::data_mpu6050(QByteArray data)
     qreal y_gyro        = sl.at(6).toDouble();
     qreal z_gyro        = sl.at(7).toDouble();
 
-    //emit debug(QString("x_accel %1").arg(x_accel));
+    emit debug(QString("%1").arg(temp));
 
     if(err != 0)
     {

@@ -140,7 +140,6 @@ int baudrate = 57600;
 #define MPU6050_FIFO_R_W           0x74   // R/W
 #define MPU6050_WHO_AM_I           0x75   // R
 
-
 // Defines for the bits, to be able to change
 // between bit number and binary definition.
 // By using the bit number, programming the sensor

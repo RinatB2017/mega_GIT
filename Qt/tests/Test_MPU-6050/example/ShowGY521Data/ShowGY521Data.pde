@@ -30,22 +30,6 @@ float   x_fil;  //Filtered data
 float   y_fil;
 float   z_fil;
 
-void setup()
-{
-  //  size(640, 360, P3D);
-  size(1400, 800, P3D);
-  noStroke();
-  colorMode(RGB, 256);
-
-  //  println("in setup");
-  String portName = Serial.list()[portIndex];
-  //  println(Serial.list());
-  //  println(" Connecting to -> " + Serial.list()[portIndex]);
-  myPort = new Serial(this, portName, baudrate);
-  myPort.clear();
-  myPort.bufferUntil(lf);
-}
-
 void draw_rect_rainbow()
 {
   scale(90);
@@ -246,4 +230,20 @@ void serialEvent(Serial p)
   catch (Exception e) {
     println("Caught Exception");
   }
+}
+
+void setup()
+{
+  //  size(640, 360, P3D);
+  size(1400, 800, P3D);
+  noStroke();
+  colorMode(RGB, 256);
+
+  //  println("in setup");
+  String portName = Serial.list()[portIndex];
+  //  println(Serial.list());
+  //  println(" Connecting to -> " + Serial.list()[portIndex]);
+  myPort = new Serial(this, portName, baudrate);
+  myPort.clear();
+  myPort.bufferUntil(lf);
 }

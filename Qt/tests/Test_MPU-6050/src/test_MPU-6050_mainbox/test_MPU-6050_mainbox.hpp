@@ -59,6 +59,8 @@ private:
     MySplashScreen *splash;
     Ui::MainBox *ui;
 
+    QByteArray dirty_array;
+
     int curve_x_accel = 0;
     int curve_y_accel = 0;
     int curve_z_accel = 0;

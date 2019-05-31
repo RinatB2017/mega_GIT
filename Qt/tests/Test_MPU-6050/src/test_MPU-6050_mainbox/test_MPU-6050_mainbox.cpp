@@ -139,15 +139,32 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::data_mpu6050(QByteArray data)
 {
-    QString temp = data;
-    if(temp.isEmpty())
+    if(data.isEmpty())
     {
         return;
     }
+
+    dirty_array.append(data);
+    bool found = false;
+    for(int n=0; n<dirty_array.length(); n++)
+    {
+        if(dirty_array[n] == '\n')
+        {
+            found = true;
+        }
+    }
+    if(!found)
+    {
+        return;
+    }
+
+    QString temp = dirty_array;
+    emit info(temp);
     QStringList sl = temp.split("|");
     if(sl.count() != 9)
     {
         emit error(QString("sl.count = %1").arg(sl.count()));
+        dirty_array.clear();
         return;
     }
 
@@ -185,6 +202,8 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->display_x_gyro->display(x_gyro);
     ui->display_y_gyro->display(y_gyro);
     ui->display_z_gyro->display(z_gyro);
+
+    dirty_array.clear();
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

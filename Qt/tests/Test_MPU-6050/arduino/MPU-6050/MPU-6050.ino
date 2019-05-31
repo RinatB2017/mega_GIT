@@ -44,7 +44,6 @@ int baudrate = 57600;
 // For program code, I omit the '-',
 // therefor I use the name "MPU6050....".
 
-
 // Register names according to the datasheet.
 // According to the InvenSense document
 // "MPU-6000 and MPU-6050 Register Map
@@ -620,13 +619,11 @@ int baudrate = 57600;
 #define MPU6050_LP_WAKE_5HZ    MPU6050_LP_WAKE_CTRL_2
 #define MPU6050_LP_WAKE_10HZ   MPU6050_LP_WAKE_CTRL_3
 
-
 // Default I2C address for the MPU-6050 is 0x68.
 // But only if the AD0 pin is low.
 // Some sensor boards have AD0 high, and the
 // I2C address thus becomes 0x69.
 #define MPU6050_I2C_ADDRESS 0x68
-
 
 // Declaring an union for the registers and the axis values.
 // The byte order does not match the byte order of
@@ -668,7 +665,6 @@ typedef union accel_t_gyro_union
   } value;
 };
 
-
 // --------------------------------------------------------
 // MPU6050_read
 //
@@ -707,7 +703,6 @@ int MPU6050_read(int start, uint8_t *buffer, int size)
 
   return (0);  // return : no error
 }
-
 
 // --------------------------------------------------------
 // MPU6050_write
@@ -762,13 +757,123 @@ int MPU6050_write_reg(int reg, uint8_t data)
   return (error);
 }
 
+// --------------------------------------------------------
+// Use the following global variables and access functions to help store the overall
+// rotation angle of the sensor
+unsigned long last_read_time;
+float         last_x_angle;  // These are the filtered angles
+float         last_y_angle;
+float         last_z_angle;
+float         last_gyro_x_angle;  // Store the gyro angles to compare drift
+float         last_gyro_y_angle;
+float         last_gyro_z_angle;
+
+void set_last_read_angle_data(unsigned long time, float x, float y, float z, float x_gyro, float y_gyro, float z_gyro) {
+  last_read_time = time;
+  last_x_angle = x;
+  last_y_angle = y;
+  last_z_angle = z;
+  last_gyro_x_angle = x_gyro;
+  last_gyro_y_angle = y_gyro;
+  last_gyro_z_angle = z_gyro;
+}
+
+// --------------------------------------------------------
+//  Use the following global variables and access functions
+//  to calibrate the acceleration sensor
+float    base_x_accel;
+float    base_y_accel;
+float    base_z_accel;
+
+float    base_x_gyro;
+float    base_y_gyro;
+float    base_z_gyro;
+
+int read_gyro_accel_vals(uint8_t* accel_t_gyro_ptr) {
+  // Read the raw values.
+  // Read 14 bytes at once,
+  // containing acceleration, temperature and gyro.
+  // With the default settings of the MPU-6050,
+  // there is no filter enabled, and the values
+  // are not very stable.  Returns the error value
+
+  accel_t_gyro_union* accel_t_gyro = (accel_t_gyro_union *) accel_t_gyro_ptr;
+
+  int error = MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) accel_t_gyro, sizeof(*accel_t_gyro));
+
+  // Swap all high and low bytes.
+  // After this, the registers values are swapped,
+  // so the structure name like x_accel_l does no
+  // longer contain the lower byte.
+  uint8_t swap;
+#define SWAP(x,y) swap = x; x = y; y = swap
+
+  SWAP ((*accel_t_gyro).reg.x_accel_h, (*accel_t_gyro).reg.x_accel_l);
+  SWAP ((*accel_t_gyro).reg.y_accel_h, (*accel_t_gyro).reg.y_accel_l);
+  SWAP ((*accel_t_gyro).reg.z_accel_h, (*accel_t_gyro).reg.z_accel_l);
+  SWAP ((*accel_t_gyro).reg.t_h, (*accel_t_gyro).reg.t_l);
+  SWAP ((*accel_t_gyro).reg.x_gyro_h, (*accel_t_gyro).reg.x_gyro_l);
+  SWAP ((*accel_t_gyro).reg.y_gyro_h, (*accel_t_gyro).reg.y_gyro_l);
+  SWAP ((*accel_t_gyro).reg.z_gyro_h, (*accel_t_gyro).reg.z_gyro_l);
+
+  return error;
+}
+
+// --------------------------------------------------------
+// The sensor should be motionless on a horizontal surface
+//  while calibration is happening
+void calibrate_sensors() {
+  int                   num_readings = 10;
+  float                 x_accel = 0;
+  float                 y_accel = 0;
+  float                 z_accel = 0;
+  float                 x_gyro = 0;
+  float                 y_gyro = 0;
+  float                 z_gyro = 0;
+  accel_t_gyro_union    accel_t_gyro;
+
+  //Serial.println("Starting Calibration");
+
+  // Discard the first set of values read from the IMU
+  read_gyro_accel_vals((uint8_t *) &accel_t_gyro);
+
+  // Read and average the raw values from the IMU
+  for (int i = 0; i < num_readings; i++) {
+    read_gyro_accel_vals((uint8_t *) &accel_t_gyro);
+    x_accel += accel_t_gyro.value.x_accel;
+    y_accel += accel_t_gyro.value.y_accel;
+    z_accel += accel_t_gyro.value.z_accel;
+    x_gyro += accel_t_gyro.value.x_gyro;
+    y_gyro += accel_t_gyro.value.y_gyro;
+    z_gyro += accel_t_gyro.value.z_gyro;
+    delay(100);
+  }
+  x_accel /= num_readings;
+  y_accel /= num_readings;
+  z_accel /= num_readings;
+  x_gyro /= num_readings;
+  y_gyro /= num_readings;
+  z_gyro /= num_readings;
+
+  // Store the raw calibration values globally
+  base_x_accel = x_accel;
+  base_y_accel = y_accel;
+  base_z_accel = z_accel;
+  base_x_gyro = x_gyro;
+  base_y_gyro = y_gyro;
+  base_z_gyro = z_gyro;
+
+  //Serial.println("Finishing Calibration");
+}
+
+// --------------------------------------------------------
 void setup()
 {
   int error;
   uint8_t c;
 
   Serial.begin(baudrate);
-  
+
   //Serial.println(F("InvenSense MPU-6050"));
   //Serial.println(F("June 2012"));
 
@@ -783,25 +888,30 @@ void setup()
   //
 
   error = MPU6050_read (MPU6050_WHO_AM_I, &c, 1);
-  //Serial.print(F("WHO_AM_I : "));
-  //Serial.print(c, HEX);
-  //Serial.print(F(", error = "));
-  //Serial.println(error, DEC);
+  Serial.print(F("WHO_AM_I : "));
+  Serial.print(c, HEX);
+  Serial.print(F(", error = "));
+  Serial.println(error, DEC);
 
   // According to the datasheet, the 'sleep' bit
   // should read a '1'.
   // That bit has to be cleared, since the sensor
   // is in sleep mode at power-up.
   error = MPU6050_read (MPU6050_PWR_MGMT_1, &c, 1);
-  //Serial.print(F("PWR_MGMT_1 : "));
-  //Serial.print(c, HEX);
-  //Serial.print(F(", error = "));
-  //Serial.println(error, DEC);
+  Serial.print(F("PWR_MGMT_1 : "));
+  Serial.print(c, HEX);
+  Serial.print(F(", error = "));
+  Serial.println(error, DEC);
 
   // Clear the 'sleep' bit to start the sensor.
   MPU6050_write_reg (MPU6050_PWR_MGMT_1, 0);
+
+  //Initialize the angles
+  calibrate_sensors();
+  set_last_read_angle_data(millis(), 0, 0, 0, 0, 0, 0);
 }
 
+// --------------------------------------------------------
 void loop()
 {
   int error;
@@ -890,6 +1000,7 @@ void loop()
   Serial.print("|");
   Serial.println();
   //---
-  
-  delay(1000);
+
+  delay(10);
 }
+// --------------------------------------------------------

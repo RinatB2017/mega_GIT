@@ -69,6 +69,10 @@ private:
     int curve_y_gyro = 0;
     int curve_z_gyro = 0;
 
+    qreal s_x_gyro = 0;
+    qreal s_y_gyro = 0;
+    qreal s_z_gyro = 0;
+
     void init(void);
     void createTestBar(void);
     void updateText(void);

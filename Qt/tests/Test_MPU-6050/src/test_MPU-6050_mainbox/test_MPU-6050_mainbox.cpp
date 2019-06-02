@@ -159,9 +159,9 @@ void MainBox::data_mpu6050(QByteArray data)
     }
 
     QString temp = dirty_array;
-    emit info(temp);
+    emit debug(temp);
     QStringList sl = temp.split("|");
-    if(sl.count() != 9)
+    if(sl.count() != (9 + 3))
     {
         emit error(QString("sl.count = %1").arg(sl.count()));
         dirty_array.clear();
@@ -177,7 +177,15 @@ void MainBox::data_mpu6050(QByteArray data)
     qreal y_gyro        = sl.at(6).toDouble();
     qreal z_gyro        = sl.at(7).toDouble();
 
-    emit debug(QString("%1").arg(temp));
+    qreal s_x_gyro      = sl.at(8).toDouble();
+    qreal s_y_gyro      = sl.at(9).toDouble();
+    qreal s_z_gyro      = sl.at(10).toDouble();
+
+    //---
+    ui->display_s_x_gyro->display(s_x_gyro);
+    ui->display_s_y_gyro->display(s_y_gyro);
+    ui->display_s_z_gyro->display(s_z_gyro);
+    //---
 
     if(err != 0)
     {

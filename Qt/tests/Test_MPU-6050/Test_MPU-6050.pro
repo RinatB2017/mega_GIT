@@ -45,7 +45,15 @@ OTHER_FILES += \
     doc/notebook.txt \
     arduino/MPU-6050/MPU-6050.ino \
     example/gy_521_send_serial/gy_521_send_serial.ino \
-    example/ShowGY521Data/ShowGY521Data.pde
+    example/ShowGY521Data/ShowGY521Data.pde \
+    example/43/43.c \
+    example/43/bcd.c \
+    example/43/bcd.h \
+    example/43/compilers_4.h \
+    example/43/i2c.h \
+    example/43/lcd_lib_2.c \
+    example/43/lcd_lib_2.h \
+    example/43/port_macros.h
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

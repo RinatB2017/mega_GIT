@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
+    <width>503</width>
     <height>469</height>
    </rect>
   </property>
@@ -59,6 +59,17 @@
          <number>3</number>
         </property>
         <item>
+         <widget class="QToolButton" name="btn_Options">
+          <property name="text">
+           <string>options</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../icons/grapher.qrc">
+            <normaloff>:/grapher/advancedsettings.png</normaloff>:/grapher/advancedsettings.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QToolButton" name="btn_all_on">
           <property name="text">
            <string>1</string>
@@ -69,17 +80,6 @@
          <widget class="QToolButton" name="btn_all_off">
           <property name="text">
            <string>0</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_Options">
-          <property name="text">
-           <string>options</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../icons/grapher.qrc">
-            <normaloff>:/grapher/advancedsettings.png</normaloff>:/grapher/advancedsettings.png</iconset>
           </property>
          </widget>
         </item>

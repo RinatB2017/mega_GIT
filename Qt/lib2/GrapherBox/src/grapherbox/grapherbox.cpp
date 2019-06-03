@@ -44,6 +44,7 @@
 #include "ui_grapherbox.h"
 
 #include "mainwindow.hpp"
+#include "grapherbox_options.hpp"
 #include "grapherbox.hpp"
 #include "curvedata.hpp"
 #include "csvreader.hpp"
@@ -56,7 +57,7 @@ public:
         baseTime(base)
     {
     }
-    virtual QwtText label(double v) const
+    virtual QwtText label(qreal v) const
     {
         QDateTime upDateTime;
         upDateTime.setTime_t(v);
@@ -461,8 +462,8 @@ void GrapherBox::create_widgets(void)
     connect(ui->btn_Load,       SIGNAL(clicked()), this, SLOT(load_curves()));
     connect(ui->btn_Save,       SIGNAL(clicked()), this, SLOT(save_curves()));
 
-    connect(ui->btn_Horizontal, SIGNAL(toggled(bool)), this, SLOT(tune_horizontal_axis(bool)));
-    connect(ui->btn_Vertical,   SIGNAL(toggled(bool)), this, SLOT(tune_vertical_axis(bool)));
+    connect(ui->btn_Horizontal, SIGNAL(toggled(bool)), this, SLOT(set_horizontal_alignment(bool)));
+    connect(ui->btn_Vertical,   SIGNAL(toggled(bool)), this, SLOT(set_vertical_alignment(bool)));
 
     connect(ui->btn_Statistic,  SIGNAL(clicked()), this, SLOT(statistic()));
 
@@ -509,7 +510,7 @@ void GrapherBox::set_panning(bool x_state, bool y_state)
 #endif
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::set_axis_scale_x(double new_axis_X_min, double new_axis_X_max)
+void GrapherBox::set_axis_scale_x(qreal new_axis_X_min, qreal new_axis_X_max)
 {
     //    emit info(QString("set_axis_scale_x: %1 %2")
     //              .arg(new_axis_X_min)
@@ -518,7 +519,7 @@ void GrapherBox::set_axis_scale_x(double new_axis_X_min, double new_axis_X_max)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::set_axis_scale_y(double new_axis_Y_min, double new_axis_Y_max)
+void GrapherBox::set_axis_scale_y(qreal new_axis_Y_min, qreal new_axis_Y_max)
 {
     //    emit info(QString("set_axis_scale_y: %1 %2")
     //              .arg(new_axis_Y_min)
@@ -581,8 +582,8 @@ void GrapherBox::legend_checked(const QVariant &itemInfo, bool on)
 {
     QwtPlotItem *item = itemInfo.value<QwtPlotItem *>();
     item->setVisible(on);
-    tune_horizontal_axis(ui->btn_Horizontal->isChecked());
-    tune_vertical_axis(ui->btn_Vertical->isChecked());
+    set_horizontal_alignment(ui->btn_Horizontal->isChecked());
+    set_vertical_alignment(ui->btn_Vertical->isChecked());
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
@@ -750,8 +751,8 @@ void GrapherBox::add_curve_data(int channel,
     }
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
-    tune_horizontal_axis(ui->btn_Horizontal->isChecked());
-    tune_vertical_axis(ui->btn_Vertical->isChecked());
+    set_horizontal_alignment(ui->btn_Horizontal->isChecked());
+    set_vertical_alignment(ui->btn_Vertical->isChecked());
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
@@ -809,8 +810,8 @@ bool GrapherBox::add_curve_data(int channel,
     curves[channel].pos_x++;
 #endif
 
-    tune_horizontal_axis(ui->btn_Horizontal->isChecked());
-    tune_vertical_axis(ui->btn_Vertical->isChecked());
+    set_horizontal_alignment(ui->btn_Horizontal->isChecked());
+    set_vertical_alignment(ui->btn_Vertical->isChecked());
     updateGraphics();
 
     return true;
@@ -851,8 +852,8 @@ bool GrapherBox::add_curve_array(int channel,
         curves[channel].pos_x++;
     }
 #endif
-    tune_horizontal_axis(ui->btn_Horizontal->isChecked());
-    tune_vertical_axis(ui->btn_Vertical->isChecked());
+    set_horizontal_alignment(ui->btn_Horizontal->isChecked());
+    set_vertical_alignment(ui->btn_Vertical->isChecked());
     updateGraphics();
 
     return true;
@@ -873,19 +874,154 @@ void GrapherBox::updateText()
     }
 }
 //--------------------------------------------------------------------------------
+void GrapherBox::set_device_RECORDER(void)
+{
+    flag_device_RECORDER = true;
+    flag_device_OSCILLOSCOPE = false;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::set_device_OSCILLOSCOPE(void)
+{
+    flag_device_RECORDER = false;
+    flag_device_OSCILLOSCOPE = true;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::set_type_curve_DOTS(void)
+{
+    flag_type_curve_DOTS = true;
+    flag_type_curve_LINES = false;
+    flag_type_curve_SPLINE_LINES = false;
+
+    bool flag_v = get_vertical_alignment();
+    bool flag_h = get_horizontal_alignment();
+
+    for(int n=0; n<get_curves_count(); n++)
+    {
+        QwtSymbol *symbol = new QwtSymbol();
+        symbol->setStyle(QwtSymbol::Ellipse);
+        symbol->setPen(get_curve_color(n));
+        symbol->setSize(4);    //TODO
+
+        set_curve_symbol(n, symbol);
+        set_curve_style(n, QwtPlotCurve::Dots);
+        set_curve_fitter(n, nullptr);
+    }
+    updateGraphics();
+
+    set_vertical_alignment(flag_v);
+    set_horizontal_alignment(flag_h);
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::set_type_curve_LINES(void)
+{
+    flag_type_curve_DOTS = false;
+    flag_type_curve_LINES = true;
+    flag_type_curve_SPLINE_LINES = false;
+
+    bool flag_v = get_vertical_alignment();
+    bool flag_h = get_horizontal_alignment();
+
+    for(int n=0; n<get_curves_count(); n++)
+    {
+        set_curve_symbol(n, nullptr);
+        set_curve_style(n, QwtPlotCurve::Lines);
+        set_curve_fitter(n, nullptr);
+    }
+    updateGraphics();
+
+    set_vertical_alignment(flag_v);
+    set_horizontal_alignment(flag_h);
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::set_type_curve_SPLINE_LINES(void)
+{
+    flag_type_curve_DOTS = false;
+    flag_type_curve_LINES = false;
+    flag_type_curve_SPLINE_LINES = true;
+
+    bool flag_v = get_vertical_alignment();
+    bool flag_h = get_horizontal_alignment();
+
+    for(int n=0; n<get_curves_count(); n++)
+    {
+        QwtSplineCurveFitter *fitter=new QwtSplineCurveFitter;
+        fitter->setFitMode(QwtSplineCurveFitter::Spline);
+
+        set_curve_symbol(n, nullptr);
+        set_curve_style(n, QwtPlotCurve::Lines);
+
+        set_curve_attribute(n, QwtPlotCurve::Fitted);
+        set_curve_fitter(n, fitter);
+    }
+    updateGraphics();
+
+    set_vertical_alignment(flag_v);
+    set_horizontal_alignment(flag_h);
+}
+//--------------------------------------------------------------------------------
 void GrapherBox::options(void)
 {
-    //    GrapherBox_Options *dlg = new GrapherBox_Options(axis_X_min,
-    //                                                     axis_X_max,
-    //                                                     axis_Y_min,
-    //                                                     axis_Y_max);
-    //    int button = dlg->exec();
-    //    if(button == QDialog::Accepted)
-    //    {
-    //        ui->qwtPlot->setAxisScale(QwtPlot::xBottom, dlg->get_min_axis_x(), dlg->get_max_axis_x());
-    //        ui->qwtPlot->setAxisScale(QwtPlot::yLeft,   dlg->get_min_axis_y(), dlg->get_max_axis_y());
-    //        updateGraphics();
-    //    }
+    GrapherBox_Options *dlg = new GrapherBox_Options();
+    dlg->set_min_axis_X(static_cast<int>(axis_X_min));
+    dlg->set_max_axis_X(static_cast<int>(axis_X_max));
+    dlg->set_min_axis_Y(static_cast<int>(axis_Y_min));
+    dlg->set_max_axis_Y(static_cast<int>(axis_Y_max));
+    if(flag_device_RECORDER)
+    {
+        dlg->set_type_device(GrapherBox_Options::RECORDER);
+    }
+    if(flag_device_OSCILLOSCOPE)
+    {
+        dlg->set_type_device(GrapherBox_Options::OSCILLOSCOPE);
+    }
+    if(flag_type_curve_DOTS)
+    {
+        dlg->set_type_curve(GrapherBox_Options::DOTS);
+    }
+    if(flag_type_curve_LINES)
+    {
+        dlg->set_type_curve(GrapherBox_Options::LINES);
+    }
+    if(flag_type_curve_SPLINE_LINES)
+    {
+        dlg->set_type_curve(GrapherBox_Options::SPLINE_LINES);
+    }
+
+    int button = dlg->exec();
+    if(button == QDialog::Accepted)
+    {
+        GrapherBox_Options::Device device = dlg->get_type_device();
+        switch (device)
+        {
+        case GrapherBox_Options::RECORDER:
+            set_device_RECORDER();
+            break;
+
+        case GrapherBox_Options::OSCILLOSCOPE:
+            set_device_OSCILLOSCOPE();
+            break;
+        }
+
+        GrapherBox_Options::TypeCurve type = dlg->get_type_curve();
+        switch(type)
+        {
+        case GrapherBox_Options::DOTS:
+            set_type_curve_DOTS();
+            break;
+
+        case GrapherBox_Options::LINES:
+            set_type_curve_LINES();
+            break;
+
+        case GrapherBox_Options::SPLINE_LINES:
+            set_type_curve_SPLINE_LINES();
+            break;
+        }
+
+        ui->qwtPlot->setAxisScale(QwtPlot::xBottom, dlg->get_min_axis_x(), dlg->get_max_axis_x());
+        ui->qwtPlot->setAxisScale(QwtPlot::yLeft,   dlg->get_min_axis_y(), dlg->get_max_axis_y());
+        updateGraphics();
+    }
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::load_curves(void)
@@ -1020,8 +1156,9 @@ void GrapherBox::save_curves(void)
     }
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::tune_vertical_axis(bool state)
+void GrapherBox::set_vertical_alignment(bool state)
 {
+    flag_vertical_alignment = state;
     if(!state) return;
 
     if(curves.isEmpty())
@@ -1030,8 +1167,8 @@ void GrapherBox::tune_vertical_axis(bool state)
         return;
     }
 
-    double max_y = INT_MIN;
-    double min_y = INT_MAX;
+    qreal max_y = INT_MIN;
+    qreal min_y = INT_MAX;
 
     for(int n=0; n<curves.count(); n++)
     {
@@ -1039,7 +1176,7 @@ void GrapherBox::tune_vertical_axis(bool state)
         {
             if(curves.at(n).plot_curve->isVisible())
             {
-                double temp_y = curves.at(n).view_curve->sample(static_cast<size_t>(x)).y();
+                qreal temp_y = curves.at(n).view_curve->sample(static_cast<size_t>(x)).y();
                 if(temp_y > max_y) max_y = temp_y;
                 if(temp_y < min_y) min_y = temp_y;
             }
@@ -1049,8 +1186,9 @@ void GrapherBox::tune_vertical_axis(bool state)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::tune_horizontal_axis(bool state)
+void GrapherBox::set_horizontal_alignment(bool state)
 {
+    flag_horizontal_alignment = state;
     if(!state) return;
 
     if(curves.isEmpty())
@@ -1059,20 +1197,30 @@ void GrapherBox::tune_horizontal_axis(bool state)
         return;
     }
 
-    double max_x = INT_MIN;
-    double min_x = INT_MAX;
+    qreal max_x = INT_MIN;
+    qreal min_x = INT_MAX;
 
     for(int n=0; n<curves.count(); n++)
     {
         for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
         {
-            double temp_x = curves.at(n).view_curve->sample(static_cast<size_t>(x)).x();
+            qreal temp_x = curves.at(n).view_curve->sample(static_cast<size_t>(x)).x();
             if(temp_x > max_x) max_x = temp_x;
             if(temp_x < min_x) min_x = temp_x;
         }
     }
     ui->qwtPlot->setAxisScale(QwtPlot::xBottom, min_x, max_x);
     updateGraphics();
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::get_vertical_alignment(void)
+{
+    return flag_vertical_alignment;
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::get_horizontal_alignment(void)
+{
+    return  flag_horizontal_alignment;
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::correct(int channel,
@@ -1119,7 +1267,7 @@ void GrapherBox::statistic(void)
             emit info(QString("   График %1, кол-во точек %2").arg(n).arg(cnt));
             if(cnt > 0)
             {
-                average /= static_cast<double>(cnt);
+                average /= static_cast<qreal>(cnt);
                 emit info(QString("     min %1").arg(min_value));
                 emit info(QString("     max %1").arg(max_value));
                 emit info(QString("     average %1").arg(average));
@@ -1201,13 +1349,13 @@ void GrapherBox::set_visible_btn_Clear(bool state)
 void GrapherBox::push_btn_Horizontal(bool state)
 {
     ui->btn_Horizontal->setChecked(state);
-    tune_horizontal_axis(state);
+    set_horizontal_alignment(state);
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::push_btn_Vertical(bool state)
 {
     ui->btn_Vertical->setChecked(state);
-    tune_vertical_axis(state);
+    set_vertical_alignment(state);
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::test(void)
@@ -1230,7 +1378,7 @@ void GrapherBox::test(void)
         for(int index=0; index<get_curves_count(); index++)
         {
             int size_y = index*100;
-            add_curve_data(index, double(308.0 + size_y)*qSin(double(n+(index * 10))*double(M_PI)/double(180.0)));
+            add_curve_data(index, qreal(308.0 + size_y)*qSin(qreal(n+(index * 10))*qreal(M_PI)/qreal(180.0)));
         }
     }
     push_btn_Horizontal(true);
@@ -1302,10 +1450,10 @@ void GrapherBox::test_draw_circle(void)
     push_btn_Vertical(false);
     for(int n=0; n<360; n++)
     {
-        double x = double(154.0)*qCos(double(n)*double(M_PI)/double(180.0));
-        double y = double(308.0)*qSin(double(n)*double(M_PI)/double(180.0));
-        //double x = qCos(double(n)*double(M_PI)/double(180.0));
-        //double y = qSin(double(n)*double(M_PI)/double(180.0));
+        qreal x = qreal(154.0)*qCos(qreal(n)*qreal(M_PI)/qreal(180.0));
+        qreal y = qreal(308.0)*qSin(qreal(n)*qreal(M_PI)/qreal(180.0));
+        //qreal x = qCos(qreal(n)*qreal(M_PI)/qreal(180.0));
+        //qreal y = qSin(qreal(n)*qreal(M_PI)/qreal(180.0));
         curves[0].view_curve->append(QPointF(x, y));
     }
     push_btn_Horizontal(true);
@@ -1324,9 +1472,9 @@ void GrapherBox::test_sinus(void)
         for(int n=0; n<360; n++)
         {
             if(!(n % 60)) QCoreApplication::processEvents();
-            double height = double(axis_Y_max - axis_Y_min) * 0.5;
-            double shift_x = index * 50;
-            add_curve_data(index, height*qSin(double(n + shift_x)*double(M_PI)/double(180.0)));
+            qreal height = qreal(axis_Y_max - axis_Y_min) * 0.5;
+            qreal shift_x = index * 50;
+            add_curve_data(index, height*qSin(qreal(n + shift_x)*qreal(M_PI)/qreal(180.0)));
         }
     }
     push_btn_Horizontal(true);
@@ -1339,7 +1487,7 @@ void GrapherBox::test_single_sinus(void)
     push_btn_Vertical(false);
     for(int n=0; n<360; n++)
     {
-        add_curve_data(0, 128 + 127*qSin(double(n)*double(M_PI)/double(180.0)));
+        add_curve_data(0, 128 + 127*qSin(qreal(n)*qreal(M_PI)/qreal(180.0)));
     }
     push_btn_Horizontal(true);
     push_btn_Vertical(true);

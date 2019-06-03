@@ -22,17 +22,9 @@
 #include "grapherbox_options.hpp"
 #include "ui_grapherbox_options.h"
 //--------------------------------------------------------------------------------
-GrapherBox_Options::GrapherBox_Options(double min_axis_X,
-                                       double max_axis_X,
-                                       double min_axis_Y,
-                                       double max_axis_Y,
-                                       QWidget *parent) :
+GrapherBox_Options::GrapherBox_Options(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::GrapherBox_Options),
-    min_axis_X(min_axis_X),
-    max_axis_X(max_axis_X),
-    min_axis_Y(min_axis_Y),
-    max_axis_Y(max_axis_Y)
+    ui(new Ui::GrapherBox_Options)
 {
     init();
 }
@@ -51,15 +43,92 @@ void GrapherBox_Options::init(void)
     ui->sb_maxX->setRange(-INT_MAX, INT_MAX);
     ui->sb_maxY->setRange(-INT_MAX, INT_MAX);
 
-    ui->sb_minX->setValue(min_axis_X);
-    ui->sb_maxX->setValue(max_axis_X);
-    ui->sb_minY->setValue(min_axis_Y);
-    ui->sb_maxY->setValue(max_axis_Y);
-
     setFixedSize(sizeHint());
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+}
+//--------------------------------------------------------------------------------
+void GrapherBox_Options::set_type_device(GrapherBox_Options::Device device)
+{
+    switch (device)
+    {
+    case GrapherBox_Options::RECORDER:
+        ui->rb_recorder->setChecked(true);
+        break;
+
+    case GrapherBox_Options::OSCILLOSCOPE:
+        ui->rb_oscilloscope->setChecked(true);
+        break;
+    }
+}
+//--------------------------------------------------------------------------------
+GrapherBox_Options::Device GrapherBox_Options::get_type_device(void)
+{
+    if(ui->rb_recorder->isChecked())
+    {
+        return GrapherBox_Options::RECORDER;
+    }
+    if(ui->rb_oscilloscope->isChecked())
+    {
+        return GrapherBox_Options::OSCILLOSCOPE;
+    }
+    return GrapherBox_Options::RECORDER;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox_Options::set_type_curve(GrapherBox_Options::TypeCurve type)
+{
+    switch (type)
+    {
+    case GrapherBox_Options::DOTS:
+        ui->rb_dots->setChecked(true);
+        break;
+
+    case GrapherBox_Options::LINES:
+        ui->rb_lines->setChecked(true);
+        break;
+
+    case GrapherBox_Options::SPLINE_LINES:
+        ui->rb_spline_lines->setChecked(true);
+        break;
+    }
+}
+//--------------------------------------------------------------------------------
+GrapherBox_Options::TypeCurve GrapherBox_Options::get_type_curve(void)
+{
+    if(ui->rb_dots->isChecked())
+    {
+        return GrapherBox_Options::DOTS;
+    }
+    if(ui->rb_lines->isChecked())
+    {
+        return GrapherBox_Options::LINES;
+    }
+    if(ui->rb_spline_lines->isChecked())
+    {
+        return GrapherBox_Options::SPLINE_LINES;
+    }
+    return GrapherBox_Options::DOTS;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox_Options::set_min_axis_X(int value)
+{
+    ui->sb_minX->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void GrapherBox_Options::set_max_axis_X(int value)
+{
+    ui->sb_maxX->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void GrapherBox_Options::set_min_axis_Y(int value)
+{
+    ui->sb_minY->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void GrapherBox_Options::set_max_axis_Y(int value)
+{
+    ui->sb_maxY->setValue(value);
 }
 //--------------------------------------------------------------------------------
 int GrapherBox_Options::get_min_axis_x(void)

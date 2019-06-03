@@ -79,11 +79,11 @@ class GrapherBox : public MyWidget
     Q_OBJECT
 
 public:
-    GrapherBox(QWidget *parent);
+    explicit GrapherBox(QWidget *parent);
     ~GrapherBox();
 
-    void set_axis_scale_x(double new_axis_X_min, double new_axis_X_max);
-    void set_axis_scale_y(double new_axis_Y_min, double new_axis_Y_max);
+    void set_axis_scale_x(qreal new_axis_X_min, qreal new_axis_X_max);
+    void set_axis_scale_y(qreal new_axis_Y_min, qreal new_axis_Y_max);
 
     void set_title(const QString &title);
     void set_title_axis_X(const QString &title);
@@ -113,6 +113,9 @@ public:
     void set_zoom(bool x_state, bool y_state);
 
     void set_panning(bool x_state, bool y_state);
+
+    bool get_vertical_alignment(void);
+    bool get_horizontal_alignment(void);
 
 public slots:
     int add_curve(const QString &title,
@@ -188,8 +191,8 @@ private slots:
     void load_curves(void);
     void save_curves(void);
 
-    void tune_vertical_axis(bool state = true);
-    void tune_horizontal_axis(bool state = true);
+    void set_vertical_alignment(bool state = true);
+    void set_horizontal_alignment(bool state = true);
 
     void popup(QPoint);
 
@@ -214,20 +217,37 @@ private:
     bool flag_symbol = false;
     bool is_silence = false;
 
-    double axis_X_min = 0;
-    double axis_X_max = 0;
-    double axis_Y_min = 0;
-    double axis_Y_max = 0;
+    qreal axis_X_min = 0;
+    qreal axis_X_max = 0;
+    qreal axis_Y_min = 0;
+    qreal axis_Y_max = 0;
 
     QString title;
     QString title_axis_X;
     QString title_axis_Y;
+
+    bool flag_vertical_alignment = false;
+    bool flag_horizontal_alignment = false;
+
+    bool flag_device_RECORDER = false;
+    bool flag_device_OSCILLOSCOPE = false;
+
+    bool flag_type_curve_DOTS = false;
+    bool flag_type_curve_LINES = false;
+    bool flag_type_curve_SPLINE_LINES = false;
 
     void init(void);
     void create_widgets(void);
 
     QVariant itemToInfo(QwtPlotItem *plotItem) const;
     void showCurve( QwtPlotItem *, bool on );
+
+    void set_device_RECORDER(void);
+    void set_device_OSCILLOSCOPE(void);
+
+    void set_type_curve_DOTS(void);
+    void set_type_curve_LINES(void);
+    void set_type_curve_SPLINE_LINES(void);
 
 #ifndef GRAPHER_NOT_PANNING
     // panning with the left mouse button
@@ -248,7 +268,6 @@ private:
     void test_get_info(void);
 
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif

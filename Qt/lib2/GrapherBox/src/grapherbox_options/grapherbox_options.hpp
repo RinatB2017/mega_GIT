@@ -32,12 +32,28 @@ class GrapherBox_Options : public QDialog
     Q_OBJECT
 
 public:
-    explicit GrapherBox_Options(double min_axis_X,
-                                double max_axis_X,
-                                double min_axis_Y,
-                                double max_axis_Y,
-                                QWidget *parent = nullptr);
+    enum Device {
+        RECORDER = 0,
+        OSCILLOSCOPE
+    };
+    enum TypeCurve {
+        DOTS = 0,
+        LINES,
+        SPLINE_LINES
+    };
+
+    explicit GrapherBox_Options(QWidget *parent = nullptr);
     ~GrapherBox_Options();
+
+    void set_type_device(GrapherBox_Options::Device device);
+    GrapherBox_Options::Device get_type_device(void);
+    void set_type_curve(GrapherBox_Options::TypeCurve type);
+    GrapherBox_Options::TypeCurve get_type_curve(void);
+
+    void set_min_axis_X(int value);
+    void set_max_axis_X(int value);
+    void set_min_axis_Y(int value);
+    void set_max_axis_Y(int value);
 
     int get_min_axis_x(void);
     int get_max_axis_x(void);
@@ -46,11 +62,6 @@ public:
 
 private:
     Ui::GrapherBox_Options *ui;
-
-    double min_axis_X = 0;
-    double max_axis_X = 0;
-    double min_axis_Y = 0;
-    double max_axis_Y = 0;
 
     void init(void);
 };

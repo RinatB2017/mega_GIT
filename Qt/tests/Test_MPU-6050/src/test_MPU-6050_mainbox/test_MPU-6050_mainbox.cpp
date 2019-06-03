@@ -69,7 +69,7 @@ void MainBox::init(void)
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 100);
 
-    ui->grapher_widget->set_visible_btn_Options(false);
+    ui->grapher_widget->set_visible_btn_Options(true);
     ui->grapher_widget->set_visible_btn_Load(false);
     ui->grapher_widget->set_visible_btn_Save(false);
     ui->grapher_widget->set_visible_btn_Statistic(false);
@@ -81,6 +81,10 @@ void MainBox::init(void)
     curve_x_gyro        = ui->grapher_widget->add_curve("x_gyro");
     curve_y_gyro        = ui->grapher_widget->add_curve("y_gyro");
     curve_z_gyro        = ui->grapher_widget->add_curve("z_gyro");
+
+    curve_x_angle        = ui->grapher_widget->add_curve("x_angle");
+    curve_y_angle        = ui->grapher_widget->add_curve("y_angle");
+    curve_z_angle        = ui->grapher_widget->add_curve("z_angle");
 
 #else
     ui->grapher_widget->setVisible(false);
@@ -163,7 +167,7 @@ void MainBox::data_mpu6050(QByteArray data)
     QStringList sl = temp.split("|");
     if(sl.count() != (9 + 3))
     {
-        emit error(QString("sl.count = %1").arg(sl.count()));
+        //emit error(QString("sl.count = %1").arg(sl.count()));
         dirty_array.clear();
         return;
     }
@@ -177,14 +181,22 @@ void MainBox::data_mpu6050(QByteArray data)
     qreal y_gyro        = sl.at(6).toDouble();
     qreal z_gyro        = sl.at(7).toDouble();
 
-    qreal s_x_gyro      = sl.at(8).toDouble();
-    qreal s_y_gyro      = sl.at(9).toDouble();
-    qreal s_z_gyro      = sl.at(10).toDouble();
+    qreal x_angle      = sl.at(8).toDouble();
+    qreal y_angle      = sl.at(9).toDouble();
+    qreal z_angle      = sl.at(10).toDouble();
+
+    if(x_angle < 0) x_angle += 360.0;
+    if(y_angle < 0) y_angle += 360.0;
+    if(z_angle < 0) z_angle += 360.0;
 
     //---
-    ui->display_s_x_gyro->display(s_x_gyro);
-    ui->display_s_y_gyro->display(s_y_gyro);
-    ui->display_s_z_gyro->display(s_z_gyro);
+    ui->display_x_angle->display(x_angle);
+    ui->display_y_angle->display(y_angle);
+    ui->display_z_angle->display(z_angle);
+
+    ui->gl_widget->setXRotation(static_cast<int>(x_angle));
+    ui->gl_widget->setYRotation(static_cast<int>(y_angle));
+    ui->gl_widget->setZRotation(static_cast<int>(z_angle));
     //---
 
     if(err != 0)
@@ -200,6 +212,10 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_x_gyro,        x_gyro);
     ui->grapher_widget->add_curve_data(curve_y_gyro,        y_gyro);
     ui->grapher_widget->add_curve_data(curve_z_gyro,        z_gyro);
+
+    ui->grapher_widget->add_curve_data(curve_x_angle,       x_angle);
+    ui->grapher_widget->add_curve_data(curve_y_angle,       y_angle);
+    ui->grapher_widget->add_curve_data(curve_z_angle,       z_angle);
 #endif
 
     ui->display_error->display(err);
@@ -210,6 +226,14 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->display_x_gyro->display(x_gyro);
     ui->display_y_gyro->display(y_gyro);
     ui->display_z_gyro->display(z_gyro);
+
+//    16384 - 9.8
+//    x - y
+//    y = x * 9.8 / 16384;
+
+    ui->display_x_real_accel->display(x_accel * 9.8 / 16384.0);
+    ui->display_y_real_accel->display(y_accel * 9.8 / 16384.0);
+    ui->display_z_real_accel->display(z_accel * 9.8 / 16384.0);
 
     dirty_array.clear();
 }

@@ -12,7 +12,8 @@ CryptWindow::CryptWindow(QWidget * p) :
     ui(new Ui::CryptWindow)
 {
     ui->setupUi(this);
-    QFont mono; mono.setFamily("Bitstream Vera Sans Mono");
+    QFont mono;
+    mono.setFamily("Bitstream Vera Sans Mono");
     QTextCharFormat fmt = ui->pte_src->currentCharFormat();
     fmt.setFont(mono);
     ui->pte_dst->setCurrentCharFormat(fmt);

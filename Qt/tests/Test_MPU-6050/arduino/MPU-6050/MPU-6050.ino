@@ -911,6 +911,10 @@ void setup()
 }
 
 // --------------------------------------------------------
+float x_angle = 0;
+float y_angle = 0;
+float z_angle = 0;
+
 void loop()
 {
   int error;
@@ -978,6 +982,10 @@ void loop()
   //Serial.print(F(", "));
   //Serial.println(F(""));
 
+  x_angle = 57.295 * atan((float) - accel_t_gyro.value.x_accel / sqrt(pow((float)accel_t_gyro.value.y_accel, 2) + pow((float)accel_t_gyro.value.z_accel, 2)));
+  y_angle = 57.295 * atan((float) - accel_t_gyro.value.y_accel / sqrt(pow((float)accel_t_gyro.value.x_accel, 2) + pow((float)accel_t_gyro.value.z_accel, 2)));
+  z_angle = 57.295 * atan((float) - accel_t_gyro.value.z_accel / sqrt(pow((float)accel_t_gyro.value.x_accel, 2) + pow((float)accel_t_gyro.value.y_accel, 2)));
+
   //---
   //Serial.println();
   //---
@@ -997,9 +1005,17 @@ void loop()
   Serial.print("|");
   Serial.print(accel_t_gyro.value.z_gyro, DEC);
   Serial.print("|");
+
+  Serial.print(x_angle, 3);
+  Serial.print("|");
+  Serial.print(y_angle, 3);
+  Serial.print("|");
+  Serial.print(z_angle, 3);
+  Serial.print("|");
+
   Serial.println();
   //---
 
-  delay(10);
+  delay(100);
 }
 // --------------------------------------------------------

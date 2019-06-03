@@ -135,24 +135,15 @@ void MainBox::init(void)
 #endif
 
     //grapher->set_legend_is_visible(false);
-#if 1
+#if 0
     curve_0 = grapher_widget->add_curve("test");
 #else
     for(int n=0; n<MAX_CHANNELS; n++)
     {
-        grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
+        curves[n] = grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
     }
 #endif
     grapher_widget->legends_all_on();
-    //---
-    ui->cb_type_curve->clear();
-    ui->cb_type_curve->addItem("точечный", DOTS);
-    ui->cb_type_curve->addItem("линейный", LINES);
-    ui->cb_type_curve->addItem("линейный (сглаживание)", SPLINE_LINES);
-
-    connect(ui->cb_type_curve, SIGNAL(currentIndexChanged(int)),
-            this,   SLOT(grapher_refresh()));
-
     //---
     //test_data();
     test_data2();
@@ -160,7 +151,6 @@ void MainBox::init(void)
     grapher_widget->push_btn_Horizontal(true);
     grapher_widget->push_btn_Vertical(true);
     //---
-    grapher_refresh();
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
@@ -209,7 +199,7 @@ void MainBox::test_data(void)
 
     foreach(temp_f temp, l_temp)
     {
-        grapher_widget->add_curve_data(curve_0, temp.x, temp.y);
+        grapher_widget->add_curve_data(curves[0], temp.x, temp.y);
     }
 }
 //--------------------------------------------------------------------------------
@@ -228,60 +218,7 @@ void MainBox::test_data2(void)
         else {
             begin_y-=delta;
         }
-        grapher_widget->add_curve_data(curve_0, n, begin_y);
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::grapher_refresh(void)
-{
-    int type = ui->cb_type_curve->itemData(ui->cb_type_curve->currentIndex()).toInt();
-    switch(type)
-    {
-    case DOTS:
-        for(int n=0; n<grapher_widget->get_curves_count(); n++)
-        {
-            QwtSymbol *symbol = new QwtSymbol();
-            symbol->setStyle(QwtSymbol::Ellipse);
-            symbol->setPen(grapher_widget->get_curve_color(n));
-            symbol->setSize(4);    //TODO
-
-            grapher_widget->set_curve_symbol(n, symbol);
-            grapher_widget->set_curve_style(n, QwtPlotCurve::Dots);
-            grapher_widget->set_curve_fitter(n, nullptr);
-        }
-        grapher_widget->updateGraphics();
-
-        emit debug("set_curve_style(curve, QwtPlotCurve::Dots);");
-        break;
-
-    case LINES:
-        for(int n=0; n<grapher_widget->get_curves_count(); n++)
-        {
-            grapher_widget->set_curve_symbol(n, nullptr);
-            grapher_widget->set_curve_style(n, QwtPlotCurve::Lines);
-            grapher_widget->set_curve_fitter(n, nullptr);
-        }
-        grapher_widget->updateGraphics();
-
-        emit debug("set_curve_style(curve, QwtPlotCurve::Lines);");
-        break;
-
-    case SPLINE_LINES:
-        for(int n=0; n<grapher_widget->get_curves_count(); n++)
-        {
-            QwtSplineCurveFitter *fitter=new QwtSplineCurveFitter;
-            fitter->setFitMode(QwtSplineCurveFitter::Spline);
-
-            grapher_widget->set_curve_symbol(n, nullptr);
-            grapher_widget->set_curve_style(n, QwtPlotCurve::Lines);
-
-            grapher_widget->set_curve_attribute(n, QwtPlotCurve::Fitted);
-            grapher_widget->set_curve_fitter(n, fitter);
-        }
-        grapher_widget->updateGraphics();
-
-        emit debug("spline");
-        break;
+        grapher_widget->add_curve_data(curves[0], n, begin_y);
     }
 }
 //--------------------------------------------------------------------------------
@@ -350,7 +287,6 @@ void MainBox::test(void)
 #endif
 #if 1
     grapher_widget->test();
-    grapher_refresh();
 #endif
 
     block_interface(false);
@@ -360,7 +296,6 @@ void MainBox::test1(void)
 {
     block_interface(true);
     grapher_widget->test_sinus();
-    grapher_refresh();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
@@ -368,7 +303,6 @@ void MainBox::test2(void)
 {
     block_interface(true);
     grapher_widget->test_single_sinus();
-    grapher_refresh();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
@@ -376,7 +310,6 @@ void MainBox::test3(void)
 {
     block_interface(true);
     grapher_widget->setAxisScaleDraw(QwtPlot::xBottom, new MyScaleDraw(100.0));
-    grapher_refresh();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
@@ -394,7 +327,6 @@ void MainBox::test4(void)
     {
         grapher_widget->add_curve_data(0, n, buf[n]);
     }
-    grapher_refresh();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------

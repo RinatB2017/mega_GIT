@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include "grapherbox.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 enum CURVE {
@@ -55,8 +56,6 @@ private slots:
     void load(void);
     void save(void);
 
-    void grapher_refresh(void);
-
     void test(void);
     void test1(void);
     void test2(void);
@@ -70,7 +69,12 @@ private:
     bool all_break = false;
 
     GrapherBox *grapher_widget;
+
+#if 0
     int curve_0 = 0;
+#else
+    int curves[MAX_CHANNELS];
+#endif
 
     void init(void);
     void createTestBar(void);

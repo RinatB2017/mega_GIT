@@ -32,7 +32,7 @@ enum CURVE {
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -46,8 +46,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -69,9 +69,13 @@ private:
     int curve_y_gyro = 0;
     int curve_z_gyro = 0;
 
-    qreal s_x_gyro = 0;
-    qreal s_y_gyro = 0;
-    qreal s_z_gyro = 0;
+    int curve_x_angle = 0;
+    int curve_y_angle = 0;
+    int curve_z_angle = 0;
+
+    qreal x_angle = 0;
+    qreal y_angle = 0;
+    qreal z_angle = 0;
 
     void init(void);
     void createTestBar(void);

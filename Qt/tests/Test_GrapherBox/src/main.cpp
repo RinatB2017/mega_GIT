@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     //unsigned short x = 1;
     //qDebug() << (((unsigned char *) &x) == 0 ? "big-endian" : "little-endian");
 
-#ifdef QT_DEBUG
+#ifdef QT_DEBUG2
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

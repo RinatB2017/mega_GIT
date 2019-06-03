@@ -44,6 +44,7 @@ FORMS   += test_MPU-6050_mainbox.ui
 OTHER_FILES += \
     doc/notebook.txt \
     arduino/MPU-6050/MPU-6050.ino \
+    example/scepter/scepter.ino \
     example/gy_521_send_serial/gy_521_send_serial.ino \
     example/ShowGY521Data/ShowGY521Data.pde \
     example/43/43.c \

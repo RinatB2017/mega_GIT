@@ -67,7 +67,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    GLWidget(QWidget *parent = nullptr);
+    explicit GLWidget(QWidget *parent = nullptr);
     ~GLWidget();
 
     QSize minimumSizeHint() const override;

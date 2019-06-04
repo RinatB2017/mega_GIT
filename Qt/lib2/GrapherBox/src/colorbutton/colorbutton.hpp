@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,75 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef COLORBUTTON_HPP
+#define COLORBUTTON_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class ColorButton;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class ColorButton : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    explicit ColorButton(QWidget *parent = nullptr);
+    ~ColorButton();
+
+    void setText(const QString &text);
+    bool isCheckable(void);
+    void setCheckable(bool state);
 
 private slots:
-    void test(void);
-
-    void data_mpu6050(QByteArray data);
+    void set_color(void);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QList<QLCDNumber *> display_widgets;
-
-    QByteArray dirty_array;
-
-    int curve_x_accel = 0;
-    int curve_y_accel = 0;
-    int curve_z_accel = 0;
-    int curve_temperature = 0;
-    int curve_x_gyro = 0;
-    int curve_y_gyro = 0;
-    int curve_z_gyro = 0;
-
-    int curve_x_angle = 0;
-    int curve_y_angle = 0;
-    int curve_z_angle = 0;
-
-    qreal x_angle = 0;
-    qreal y_angle = 0;
-    qreal z_angle = 0;
+    QPushButton *btn_text;
+    QToolButton *btn_color;
+    QColor color;
 
     void init(void);
-    void createTestBar(void);
-    void init_gl_widget(void);
-    void init_serial_widget(void);
-    void init_grapher_widget(void);
-    void init_display_widgets(void);
-    void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // COLORBUTTON_HPP

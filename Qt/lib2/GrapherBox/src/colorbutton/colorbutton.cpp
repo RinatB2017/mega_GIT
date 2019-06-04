@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,75 +18,77 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "colorbutton.hpp"
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
-//--------------------------------------------------------------------------------
-namespace Ui {
-class MainBox;
+ColorButton::ColorButton(QWidget *parent) :
+    QWidget(parent)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+void ColorButton::setText(const QString &text)
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void test(void);
-
-    void data_mpu6050(QByteArray data);
-
-private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QList<QLCDNumber *> display_widgets;
-
-    QByteArray dirty_array;
-
-    int curve_x_accel = 0;
-    int curve_y_accel = 0;
-    int curve_z_accel = 0;
-    int curve_temperature = 0;
-    int curve_x_gyro = 0;
-    int curve_y_gyro = 0;
-    int curve_z_gyro = 0;
-
-    int curve_x_angle = 0;
-    int curve_y_angle = 0;
-    int curve_z_angle = 0;
-
-    qreal x_angle = 0;
-    qreal y_angle = 0;
-    qreal z_angle = 0;
-
-    void init(void);
-    void createTestBar(void);
-    void init_gl_widget(void);
-    void init_serial_widget(void);
-    void init_grapher_widget(void);
-    void init_display_widgets(void);
-    void updateText(void);
-
-};
+    btn_text->setText(text);
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+bool ColorButton::isCheckable(void)
+{
+    return btn_text->isCheckable();
+}
+//--------------------------------------------------------------------------------
+void ColorButton::setCheckable(bool state)
+{
+    btn_text->setCheckable(state);
+}
+//--------------------------------------------------------------------------------
+ColorButton::~ColorButton()
+{
+
+}
+//--------------------------------------------------------------------------------
+void ColorButton::init(void)
+{
+    btn_text = new QPushButton(this);
+    btn_color = new QToolButton(this);
+
+    QHBoxLayout *box = new QHBoxLayout();
+//    box->setMargin(0)
+    box->addWidget(btn_text);
+    box->addWidget(btn_color);
+
+    color = QColor(Qt::black);
+
+    int R = color.red();
+    int G = color.green();
+    int B = color.blue();
+    btn_color->setStyleSheet(QString("background:#%1%2%3")
+                             .arg(R, 2, 16, QChar('0'))
+                             .arg(G, 2, 16, QChar('0'))
+                             .arg(B, 2, 16, QChar('0')));
+
+    setLayout(box);
+
+    connect(btn_color,  SIGNAL(clicked(bool)), this, SLOT(set_color()));
+}
+//--------------------------------------------------------------------------------
+void ColorButton::set_color(void)
+{
+    QColorDialog *dlg = new QColorDialog();
+    dlg->setCurrentColor(color);
+
+    int btn = dlg->exec();
+    if(btn == QColorDialog::Accepted)
+    {
+        color = dlg->selectedColor();
+
+        int R = color.red();
+        int G = color.green();
+        int B = color.blue();
+
+        btn_color->setStyleSheet(QString("background:#%1%2%3")
+                                 .arg(R, 2, 16, QChar('0'))
+                                 .arg(G, 2, 16, QChar('0'))
+                                 .arg(B, 2, 16, QChar('0')));
+    }
+}
+//--------------------------------------------------------------------------------

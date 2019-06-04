@@ -58,8 +58,49 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+    createTestBar();
 
+    init_grapher_widget();
+    init_gl_widget();
+    init_serial_widget();
+    init_display_widgets();
+
+#ifdef Q_OS_WIN
+    setFixedSize(sizeHint());
+#endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_gl_widget(void)
+{
+    ui->sl_X->setRange(0, 359);
+    ui->sl_Y->setRange(0, 359);
+    ui->sl_Z->setRange(0, 359);
+
+    ui->sb_X->setRange(0, 359);
+    ui->sb_Y->setRange(0, 359);
+    ui->sb_Z->setRange(0, 359);
+
+    connect(ui->sl_X,   SIGNAL(valueChanged(int)),  ui->sb_X,   SLOT(setValue(int)));
+    connect(ui->sl_Y,   SIGNAL(valueChanged(int)),  ui->sb_Y,   SLOT(setValue(int)));
+    connect(ui->sl_Z,   SIGNAL(valueChanged(int)),  ui->sb_Z,   SLOT(setValue(int)));
+
+    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->sl_X,   SLOT(setValue(int)));
+    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->sl_Y,   SLOT(setValue(int)));
+    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->sl_Z,   SLOT(setValue(int)));
+
+    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setXRotation(int)));
+    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setYRotation(int)));
+    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setZRotation(int)));
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_serial_widget(void)
+{
+    ui->serial_widget->set_fix_baudrate(BAUDRATE);
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_mpu6050(QByteArray)));
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_grapher_widget(void)
+{
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
@@ -85,40 +126,33 @@ void MainBox::init(void)
     curve_x_angle        = ui->grapher_widget->add_curve("x_angle");
     curve_y_angle        = ui->grapher_widget->add_curve("y_angle");
     curve_z_angle        = ui->grapher_widget->add_curve("z_angle");
-
 #else
     ui->grapher_widget->setVisible(false);
 #endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_display_widgets(void)
+{
+    display_widgets.append(ui->display_x_accel);
+    display_widgets.append(ui->display_y_accel);
+    display_widgets.append(ui->display_z_accel);
+    display_widgets.append(ui->display_x_gyro);
+    display_widgets.append(ui->display_y_gyro);
+    display_widgets.append(ui->display_z_gyro);
+    display_widgets.append(ui->display_x_angle);
+    display_widgets.append(ui->display_y_angle);
+    display_widgets.append(ui->display_z_angle);
+    display_widgets.append(ui->display_x_real_accel);
+    display_widgets.append(ui->display_y_real_accel);
+    display_widgets.append(ui->display_z_real_accel);
+    display_widgets.append(ui->display_temperature);
+    display_widgets.append(ui->display_error);
 
-#if 1
-    ui->sl_X->setRange(0, 359);
-    ui->sl_Y->setRange(0, 359);
-    ui->sl_Z->setRange(0, 359);
-
-    ui->sb_X->setRange(0, 359);
-    ui->sb_Y->setRange(0, 359);
-    ui->sb_Z->setRange(0, 359);
-
-    connect(ui->sl_X,   SIGNAL(valueChanged(int)),  ui->sb_X,   SLOT(setValue(int)));
-    connect(ui->sl_Y,   SIGNAL(valueChanged(int)),  ui->sb_Y,   SLOT(setValue(int)));
-    connect(ui->sl_Z,   SIGNAL(valueChanged(int)),  ui->sb_Z,   SLOT(setValue(int)));
-
-    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->sl_X,   SLOT(setValue(int)));
-    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->sl_Y,   SLOT(setValue(int)));
-    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->sl_Z,   SLOT(setValue(int)));
-
-    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setXRotation(int)));
-    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setYRotation(int)));
-    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setZRotation(int)));
-#endif
-
-    ui->serial_widget->set_fix_baudrate(BAUDRATE);
-
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_mpu6050(QByteArray)));
-
-#ifdef Q_OS_WIN
-    setFixedSize(sizeHint());
-#endif
+    foreach (QLCDNumber *display, display_widgets)
+    {
+        display->setFixedWidth(220);
+        display->setDigitCount(9);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -190,10 +224,6 @@ void MainBox::data_mpu6050(QByteArray data)
     if(z_angle < 0) z_angle += 360.0;
 
     //---
-    ui->display_x_angle->display(x_angle);
-    ui->display_y_angle->display(y_angle);
-    ui->display_z_angle->display(z_angle);
-
     ui->gl_widget->setXRotation(static_cast<int>(x_angle));
     ui->gl_widget->setYRotation(static_cast<int>(y_angle));
     ui->gl_widget->setZRotation(static_cast<int>(z_angle));
@@ -222,25 +252,44 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->display_x_accel->display(x_accel);
     ui->display_y_accel->display(y_accel);
     ui->display_z_accel->display(z_accel);
-    ui->display_temperature->display(temperature);
     ui->display_x_gyro->display(x_gyro);
     ui->display_y_gyro->display(y_gyro);
     ui->display_z_gyro->display(z_gyro);
 
-//    16384 - 9.8
-//    x - y
-//    y = x * 9.8 / 16384;
+//    16384.0 - 9.8
+//    x       - y
 
-    ui->display_x_real_accel->display(x_accel * 9.8 / 16384.0);
-    ui->display_y_real_accel->display(y_accel * 9.8 / 16384.0);
-    ui->display_z_real_accel->display(z_accel * 9.8 / 16384.0);
+//    y = x * 9.8 / 16384.0;
+
+    if(x_accel > 16384.0) x_accel -= 16384.0;
+    if(y_accel > 16384.0) y_accel -= 16384.0;
+    if(z_accel > 16384.0) z_accel -= 16384.0;
+
+    if(x_accel < -16384.0) x_accel += 16384.0;
+    if(y_accel < -16384.0) y_accel += 16384.0;
+    if(z_accel < -16384.0) z_accel += 16384.0;
+
+    ui->display_x_angle->display(QString("%1").arg(x_angle, 0, 'f', 2));
+    ui->display_y_angle->display(QString("%1").arg(y_angle, 0, 'f', 2));
+    ui->display_z_angle->display(QString("%1").arg(z_angle, 0, 'f', 2));
+    ui->display_temperature->display(QString("%1").arg(temperature, 0, 'f', 2));
+    ui->display_x_real_accel->display(QString("%1").arg(x_accel * 9.8 / 16384.0, 0, 'f', 2));
+    ui->display_y_real_accel->display(QString("%1").arg(y_accel * 9.8 / 16384.0, 0, 'f', 2));
+    ui->display_z_real_accel->display(QString("%1").arg(z_accel * 9.8 / 16384.0, 0, 'f', 2));
 
     dirty_array.clear();
 }
 //--------------------------------------------------------------------------------
+#include "qwt_legend_label.h"
+
 void MainBox::test(void)
 {
     emit info("test");
+
+    foreach (QLCDNumber *display, display_widgets)
+    {
+        display->display(-16384.99);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

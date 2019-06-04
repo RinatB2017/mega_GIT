@@ -976,7 +976,7 @@ void QwtPlot::insertLegend( QwtAbstractLegend *legend,
                 }
             }
 
-            QWidget *previousInChain = NULL;
+            QWidget *previousInChain = nullptr;
             switch ( d_data->layout->legendPosition() )
             {
                 case LeftLegend:
@@ -1032,7 +1032,7 @@ void QwtPlot::updateLegend()
  */
 void QwtPlot::updateLegend( const QwtPlotItem *plotItem )
 {
-    if ( plotItem == NULL )
+    if ( plotItem == nullptr )
         return;
 
     QList<QwtLegendData> legendData;

@@ -105,7 +105,7 @@ QwtLegendLabel::QwtLegendLabel( QWidget *parent ):
 QwtLegendLabel::~QwtLegendLabel()
 {
     delete d_data;
-    d_data = NULL;
+    d_data = nullptr;
 }
 
 /*!

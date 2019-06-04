@@ -209,7 +209,7 @@ QFont QwtPlotScaleItem::font() const
 */
 void QwtPlotScaleItem::setScaleDraw( QwtScaleDraw *scaleDraw )
 {
-    if ( scaleDraw == NULL )
+    if ( scaleDraw == nullptr )
         return;
 
     if ( scaleDraw != d_data->scaleDraw )
@@ -388,7 +388,7 @@ void QwtPlotScaleItem::draw( QPainter *painter,
         sd->move( canvasRect.left(), y );
         sd->setLength( canvasRect.width() - 1 );
 
-        QwtTransform *transform = NULL;
+        QwtTransform *transform = nullptr;
         if ( xMap.transformation() )
             transform = xMap.transformation()->copy();
 
@@ -416,7 +416,7 @@ void QwtPlotScaleItem::draw( QPainter *painter,
         sd->move( x, canvasRect.top() );
         sd->setLength( canvasRect.height() - 1 );
 
-        QwtTransform *transform = NULL;
+        QwtTransform *transform = nullptr;
         if ( yMap.transformation() )
             transform = yMap.transformation()->copy();
 
@@ -451,7 +451,7 @@ void QwtPlotScaleItem::updateScaleDiv( const QwtScaleDiv& xScaleDiv,
             scaleDraw->orientation() == Qt::Horizontal ? xScaleDiv : yScaleDiv;
 
         const QwtPlot *plt = plot();
-        if ( plt != NULL )
+        if ( plt != nullptr )
         {
             const QRectF canvasRect = plt->canvas()->contentsRect();
 

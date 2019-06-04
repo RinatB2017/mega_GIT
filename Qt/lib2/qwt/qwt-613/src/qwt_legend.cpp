@@ -127,7 +127,7 @@ class QwtLegend::PrivateData
 public:
     PrivateData():
         itemMode( QwtLegendData::ReadOnly ),
-        view( NULL )
+        view( nullptr )
     {
     }
 
@@ -414,7 +414,7 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
         {
             QWidget *widget = createWidget( data[i] );
 #if 0
-            //TODO //???
+            //TODO добавить кнопку
             //---
             QwtLegendLabel *btn = new QwtLegendLabel;
             btn->setItemMode( QwtLegendData::Clickable );
@@ -489,7 +489,7 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
  */
 QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
 {
-    Q_UNUSED( data );
+    Q_UNUSED( data )
 
     QwtLegendLabel *label = new QwtLegendLabel();
     label->setItemMode( defaultItemMode() );
@@ -799,7 +799,7 @@ QWidget *QwtLegend::legendWidget( const QVariant &itemInfo ) const
 {
     const QList<QWidget *> list = d_data->itemMap.legendWidgets( itemInfo );
     if ( list.isEmpty() )
-        return NULL;
+        return nullptr;
 
     return list[0];
 }

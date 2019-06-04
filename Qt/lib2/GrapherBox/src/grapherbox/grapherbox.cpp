@@ -372,7 +372,9 @@ void GrapherBox::showCurve(QwtPlotItem *item, bool on)
             QwtLegendLabel *legendLabel = qobject_cast<QwtLegendLabel *>(legendWidgets[0]);
 
             if(legendLabel)
+            {
                 legendLabel->setChecked(on);
+            }
         }
     }
 
@@ -749,6 +751,8 @@ void GrapherBox::add_curve_data(int channel,
                    .arg(curves.count()));
         return;
     }
+    data_channels[channel].append(QPointF(x, data));    //TODO добавление данных
+
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
     set_horizontal_alignment(ui->btn_Horizontal->isChecked());
@@ -809,6 +813,8 @@ bool GrapherBox::add_curve_data(int channel,
     curves[channel].view_curve->append(QPointF(curves[channel].pos_x, data));
     curves[channel].pos_x++;
 #endif
+
+    data_channels[channel].append(QPointF(curves[channel].pos_x, data));    //TODO добавление данных
 
     set_horizontal_alignment(ui->btn_Horizontal->isChecked());
     set_vertical_alignment(ui->btn_Vertical->isChecked());
@@ -1392,6 +1398,22 @@ void GrapherBox::test(void)
 void GrapherBox::test2(void)
 {
     emit info("begin test2");
+
+    int max_x = static_cast<int>(axis_X_max - axis_X_min);
+    for(int channel=0; channel<get_curves_count(); channel++)
+    {
+        curves[channel].pos_x = 0;
+        for(int n=0; n<max_x; n++)
+        {
+            curves[channel].view_curve->append(QPointF(n, channel));
+            curves[channel].pos_x++;
+        }
+    }
+
+    ui->btn_Horizontal->setChecked(true);
+    ui->btn_Vertical->setChecked(true);
+    set_horizontal_alignment(true);
+    set_vertical_alignment(true);
 
     emit info("end test2");
 }

@@ -65,7 +65,7 @@ public:
     PrivateData():
         style( QwtPlotCurve::Lines ),
         baseline( 0.0 ),
-        symbol( NULL ),
+        symbol( nullptr ),
         attributes( 0 ),
         paintAttributes( 
             QwtPlotCurve::ClipPolygons | QwtPlotCurve::FilterPoints ),

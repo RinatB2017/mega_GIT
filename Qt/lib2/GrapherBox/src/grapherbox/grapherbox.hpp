@@ -226,6 +226,11 @@ private:
     QString title_axis_X;
     QString title_axis_Y;
 
+    //---
+    typedef QList<QPointF> data_channel;
+    data_channel data_channels[MAX_CHANNELS];
+    //---
+
     bool flag_vertical_alignment = false;
     bool flag_horizontal_alignment = false;
 

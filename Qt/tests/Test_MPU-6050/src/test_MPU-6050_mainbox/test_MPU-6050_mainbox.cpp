@@ -65,9 +65,23 @@ void MainBox::init(void)
     init_serial_widget();
     init_display_widgets();
 
-#ifdef Q_OS_WIN
-    setFixedSize(sizeHint());
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+
+    mw->add_dock_widget("GL widget",
+                        "gl_widget",
+                        Qt::RightDockWidgetArea,
+                        ui->gl_frame);
+    mw->add_dock_widget("Grapher widget",
+                        "grapher_widget",
+                        Qt::RightDockWidgetArea,
+                        ui->grapher_widget);
 #endif
+
+//#ifdef Q_OS_WIN
+//    setFixedSize(sizeHint());
+//#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_gl_widget(void)
@@ -150,7 +164,7 @@ void MainBox::init_display_widgets(void)
 
     foreach (QLCDNumber *display, display_widgets)
     {
-        display->setFixedWidth(220);
+        display->setFixedSize(220, 48);
         display->setDigitCount(9);
     }
 }
@@ -256,10 +270,10 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->display_y_gyro->display(y_gyro);
     ui->display_z_gyro->display(z_gyro);
 
-//    16384.0 - 9.8
-//    x       - y
+    //    16384.0 - 9.8
+    //    x       - y
 
-//    y = x * 9.8 / 16384.0;
+    //    y = x * 9.8 / 16384.0;
 
     if(x_accel > 16384.0) x_accel -= 16384.0;
     if(y_accel > 16384.0) y_accel -= 16384.0;
@@ -273,9 +287,17 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->display_y_angle->display(QString("%1").arg(y_angle, 0, 'f', 2));
     ui->display_z_angle->display(QString("%1").arg(z_angle, 0, 'f', 2));
     ui->display_temperature->display(QString("%1").arg(temperature, 0, 'f', 2));
+
+    //https://electronics.stackexchange.com/questions/39714/how-to-read-a-gyro-accelerometer
+#if 1
+    ui->display_x_real_accel->display(QString("%1").arg(x_accel / 16384.0, 0, 'f', 2));
+    ui->display_y_real_accel->display(QString("%1").arg(y_accel / 16384.0, 0, 'f', 2));
+    ui->display_z_real_accel->display(QString("%1").arg(z_accel / 16384.0, 0, 'f', 2));
+#else
     ui->display_x_real_accel->display(QString("%1").arg(x_accel * 9.8 / 16384.0, 0, 'f', 2));
     ui->display_y_real_accel->display(QString("%1").arg(y_accel * 9.8 / 16384.0, 0, 'f', 2));
     ui->display_z_real_accel->display(QString("%1").arg(z_accel * 9.8 / 16384.0, 0, 'f', 2));
+#endif
 
     dirty_array.clear();
 }
@@ -286,10 +308,16 @@ void MainBox::test(void)
 {
     emit info("test");
 
+#if 1
+    ui->grapher_widget->test2();
+#endif
+
+#if 0
     foreach (QLCDNumber *display, display_widgets)
     {
         display->display(-16384.99);
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

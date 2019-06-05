@@ -86,7 +86,6 @@ private:
     void init_grapher_widget(void);
     void init_display_widgets(void);
     void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

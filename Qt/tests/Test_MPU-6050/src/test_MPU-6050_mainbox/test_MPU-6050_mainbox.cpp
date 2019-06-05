@@ -303,12 +303,18 @@ void MainBox::data_mpu6050(QByteArray data)
 }
 //--------------------------------------------------------------------------------
 #include "qwt_legend_label.h"
+#include "test_glwidget.hpp"
 
 void MainBox::test(void)
 {
     emit info("test");
 
 #if 1
+    Test_GLWidget *tw = new Test_GLWidget();
+    tw->show();
+#endif
+
+#if 0
     ui->grapher_widget->test2();
 #endif
 

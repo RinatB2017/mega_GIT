@@ -198,6 +198,29 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
+bool MainBox::create_color_block(int width,
+                                 int height,
+                                 int w_border,
+                                 QColor color_border,
+                                 QColor color,
+                                 QString filename)
+{
+    QPixmap *pixmap = new QPixmap(width, height);
+    QPainter *painter = new QPainter(pixmap);
+    painter->fillRect(0,
+                      0,
+                      pixmap->width(),
+                      pixmap->height(),
+                      QBrush(color_border));
+    painter->fillRect(w_border,
+                      w_border,
+                      pixmap->width()-w_border*2,
+                      pixmap->height()-w_border*2,
+                      QBrush(color));
+
+    return pixmap->save(filename);
+}
+//--------------------------------------------------------------------------------
 #include "tile_widget.hpp"
 bool MainBox::test_0(void)
 {
@@ -205,6 +228,17 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    create_color_block(32, 32, 1, Qt::white, Qt::gray,      "/dev/shm/0/block_gray.png");
+    create_color_block(32, 32, 1, Qt::white, Qt::red,       "/dev/shm/0/block_red.png");
+    create_color_block(32, 32, 1, Qt::white, Qt::green,     "/dev/shm/0/block_green.png");
+    create_color_block(32, 32, 1, Qt::white, Qt::blue,      "/dev/shm/0/block_blue.png");
+    create_color_block(32, 32, 1, Qt::white, Qt::cyan,      "/dev/shm/0/block_cyan.png");
+    create_color_block(32, 32, 1, Qt::white, Qt::magenta,   "/dev/shm/0/block_magenta.png");
+    create_color_block(32, 32, 1, Qt::white, Qt::yellow,    "/dev/shm/0/block_yellow.png");
+
+#endif
+
+#if 0
     //QPixmap pixmap(":/s0.png");
     QPixmap pixmap(":/s1.png");
 

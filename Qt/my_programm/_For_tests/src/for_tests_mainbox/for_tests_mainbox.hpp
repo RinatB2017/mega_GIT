@@ -110,6 +110,8 @@ private:
     void createTestBar(void);
     void updateText(void);
 
+    bool create_color_block(int width, int height, int w_border, QColor color_border, QColor color, QString filename);
+
     int get_cnt(void);
 };
 //--------------------------------------------------------------------------------

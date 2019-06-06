@@ -28,9 +28,7 @@
 #include "tcp_server.hpp"
 //--------------------------------------------------------------------------------
 TCP_Server::TCP_Server(QWidget *parent) :
-    MyWidget(parent),
-    processor(0),
-    tcpServer(0)
+    MyWidget(parent)
 {
     processor = new Processor;
     connect(this, SIGNAL(output(QByteArray)), processor, SLOT(input(QByteArray)));
@@ -42,13 +40,12 @@ TCP_Server::~TCP_Server()
     delete tcpServer;
 }
 //--------------------------------------------------------------------------------
-bool TCP_Server::createServerOnPort(const QHostAddress address, unsigned int port)
+bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
 {
     emit info(QString("Создание сервера %1:%2")
               .arg(address.toString())
               .arg(port));
 
-    clientConnection = 0;
     tcpServer = new QTcpServer(this);
     if (!tcpServer->listen(address, port))
     {

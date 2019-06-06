@@ -59,7 +59,7 @@ void MainBox::f_connect(void)
 {
     if(server)
     {
-        server->createServerOnPort(QHostAddress::LocalHost, ui->sb_port->value());
+        server->createServerOnPort(QHostAddress::AnyIPv4, ui->sb_port->value());
     }
 }
 //--------------------------------------------------------------------------------

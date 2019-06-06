@@ -38,14 +38,14 @@ class TCP_Server : public MyWidget
     Q_OBJECT
 
 public:
-    TCP_Server(QWidget *parent = nullptr);
+    explicit TCP_Server(QWidget *parent = nullptr);
     ~TCP_Server();
 
 signals:
     void output(const QByteArray &);
 
 public slots:    
-    bool createServerOnPort(const QHostAddress address, unsigned int);
+    bool createServerOnPort(const QHostAddress address, quint16);
     void closeServer(void);
     void input(const QByteArray &data);
 
@@ -55,9 +55,9 @@ private slots:
     void clientDisconnected(void);
 
 private:
-    Processor *processor;
-    QTcpServer *tcpServer;
-    QTcpSocket *clientConnection;
+    Processor *processor = nullptr;
+    QTcpServer *tcpServer = nullptr;
+    QTcpSocket *clientConnection = nullptr;
 
     void updateText(void);
 };

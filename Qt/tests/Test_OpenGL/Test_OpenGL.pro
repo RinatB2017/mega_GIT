@@ -12,7 +12,6 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
-
 QT      += opengl
 LIBS    += -lglut -lGLU
 

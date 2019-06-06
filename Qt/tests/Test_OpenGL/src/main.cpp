@@ -50,15 +50,13 @@ int main(int argc, char *argv[])
 #else
     MyApplication app(argc, argv);
 #endif
-
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     MainWindow *main_window = new MainWindow;
-
-    MainBox *mainBox = new MainBox(main_window->getThis(), 0);
+    MainBox *mainBox = new MainBox(main_window->getThis(), nullptr);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

@@ -456,14 +456,14 @@ void SerialBox5::btnOpenPortClicked()
             if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
 
             get_parameter();
-            emit is_open();
+            emit state(true);
         }
         else
         {
             emit error(QString("ERROR: serial [%1] not open (%2)")
                        .arg(serial5->portName())
                        .arg(serial5->errorString()));
-            emit is_close();
+            emit state(false);
         }
     }
 
@@ -476,14 +476,14 @@ int SerialBox5::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit is_close();
+        emit state(false);
         emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit is_close();
+        emit state(false);
         emit not_working();
         return E_PORT_NOT_OPEN;
     }
@@ -523,14 +523,14 @@ int SerialBox5::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit is_close();
+        emit state(false);
         emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit is_close();
+        emit state(false);
         emit not_working();
         return E_PORT_NOT_OPEN;
     }

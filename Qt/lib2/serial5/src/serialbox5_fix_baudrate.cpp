@@ -257,7 +257,6 @@ void SerialBox5_fix_baudrate::setCloseState(void)
     ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
-//    emit is_close();
     emit state(false);
     ui->btn_power->setToolTip("Старт");
 }
@@ -269,7 +268,6 @@ void SerialBox5_fix_baudrate::setOpenState()
     ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
-//    emit is_open();
     emit state(true);
     ui->btn_power->setToolTip("Стоп");
 }
@@ -282,7 +280,6 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
         if (result)
         {
             serial5->close();
-//            emit is_close();
             emit state(false);
             result = false;
         }
@@ -308,7 +305,6 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
                     emit error(QString("Не удалось установить baudrate %1").arg(fix_baudrate));
                 }
                 get_parameter();
-//                emit is_open();
                 emit state(true);
             }
             else
@@ -316,7 +312,6 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
                 emit error(QString("ERROR: serial [%1] not open (%2)")
                            .arg(serial5->portName())
                            .arg(serial5->errorString()));
-//                emit is_close();
                 emit state(false);
             }
         }
@@ -330,14 +325,12 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-//        emit is_close();
         emit state(false);
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-//        emit is_close();
         emit state(false);
         return E_PORT_NOT_OPEN;
     }
@@ -374,14 +367,12 @@ int SerialBox5_fix_baudrate::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-//        emit is_close();
         emit state(false);
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-//        emit is_close();
         emit state(false);
         return E_PORT_NOT_OPEN;
     }

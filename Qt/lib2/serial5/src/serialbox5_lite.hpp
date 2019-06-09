@@ -108,8 +108,7 @@ signals:
     void readyRead(void);
     void readChannelFinished(void);
 
-    void is_open(void);
-    void is_close(void);
+    void state(bool);
 
 public slots:
     int input(const QByteArray &sending_data);

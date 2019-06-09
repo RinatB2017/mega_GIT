@@ -307,7 +307,7 @@ void SerialBox5_lite::btnOpenPortClicked()
         if (result)
         {
             serial5->close();
-            emit is_close();
+            emit state(false);
             result = false;
         }
         else
@@ -330,14 +330,14 @@ void SerialBox5_lite::btnOpenPortClicked()
                 if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
                 get_parameter();
-                emit is_open();
+                emit state(true);
             }
             else
             {
                 emit error(QString("ERROR: serial [%1] not open (%2)")
                            .arg(serial5->portName())
                            .arg(serial5->errorString()));
-                emit is_close();
+                emit state(false);
             }
         }
 

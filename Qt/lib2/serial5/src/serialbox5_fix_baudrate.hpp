@@ -105,8 +105,6 @@ signals:
     void output(const QByteArray &data);
 
     void state(bool);
-//    void is_open(void);
-//    void is_close(void);
 
 public slots:
     int input(const QByteArray &sending_data);

@@ -53,8 +53,7 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-    void is_open(void);
-    void is_close(void);
+    void state(bool);
 
 private slots:
     void send_text(void);

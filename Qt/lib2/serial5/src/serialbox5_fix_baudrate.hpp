@@ -45,7 +45,6 @@ namespace Ui
 class SerialBox5_fix_baudrate : public MyWidget
 {
     Q_OBJECT
-
     Q_PROPERTY(bool p_test      READ get_test       WRITE set_test)
 
 public:
@@ -105,8 +104,9 @@ signals:
 
     void output(const QByteArray &data);
 
-    void is_open(void);
-    void is_close(void);
+    void state(bool);
+//    void is_open(void);
+//    void is_close(void);
 
 public slots:
     int input(const QByteArray &sending_data);

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>307</height>
+    <width>550</width>
+    <height>368</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
      <item>
       <widget class="QLabel" name="labelLogo">
        <property name="pixmap">
-        <pixmap resource="../../images/aboutbox.qrc">:/logo/logo.png</pixmap>
+        <pixmap resource="../../../../../my_programm/_For_tests/about/about.qrc">:/logo/logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -74,7 +74,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../images/aboutbox.qrc"/>
+  <include location="../../../../../my_programm/_For_tests/about/about.qrc"/>
  </resources>
  <connections/>
 </ui>

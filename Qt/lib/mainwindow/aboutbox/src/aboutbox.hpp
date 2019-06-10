@@ -22,7 +22,6 @@ public:
 
 private slots:
     void send_mail(QString link);
-
     void show_env(void);
 
 private:

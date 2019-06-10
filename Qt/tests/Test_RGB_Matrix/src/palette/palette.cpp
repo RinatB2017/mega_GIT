@@ -109,9 +109,9 @@ void MyPalette::set_data(QByteArray data)
     int index = 0;
     foreach (Diod *diod, buttons)
     {
-        diod->set_color((uint8_t)data[index],
-                        (uint8_t)data[index+1],
-                        (uint8_t)data[index+2]);
+        diod->set_color(static_cast<uint8_t>(data[index]),
+                        static_cast<uint8_t>(data[index+1]),
+                        static_cast<uint8_t>(data[index+2]));
         index+=3;
     }
 }
@@ -122,9 +122,9 @@ QByteArray MyPalette::get_data(void)
 
     foreach (Diod *diod, buttons)
     {
-        ba.append((uint8_t)diod->get_R());
-        ba.append((uint8_t)diod->get_G());
-        ba.append((uint8_t)diod->get_B());
+        ba.append(static_cast<char>(diod->get_R()));
+        ba.append(static_cast<char>(diod->get_G()));
+        ba.append(static_cast<char>(diod->get_B()));
     }
     return ba;
 }

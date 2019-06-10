@@ -31,7 +31,7 @@ class Diod : public QToolButton
     Q_OBJECT
 
 public:
-    Diod(int led_width, int led_height, QWidget *parent);
+    explicit Diod(int led_width, int led_height, QWidget *parent);
 
     void set_color(QColor color);
     void set_color(uint8_t R_value,

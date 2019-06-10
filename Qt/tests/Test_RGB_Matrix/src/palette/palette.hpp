@@ -31,9 +31,9 @@ class MyPalette : public QGroupBox
     Q_OBJECT
 
 public:
-    MyPalette(int max_x,
-              int max_y,
-              QWidget *parent = nullptr);
+    explicit MyPalette(int max_x,
+                       int max_y,
+                       QWidget *parent = nullptr);
     ~MyPalette();
 
     void set_data(QByteArray data);

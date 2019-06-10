@@ -232,6 +232,7 @@ bool MainBox::create_color_block(int width,
 }
 //--------------------------------------------------------------------------------
 #include "tile_widget.hpp"
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);

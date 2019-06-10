@@ -223,7 +223,8 @@ uint Display::get_max_y(void)
 }
 //--------------------------------------------------------------------------------
 bool Display::get_R(unsigned int x,
-                    unsigned int y, uint8_t *value)
+                    unsigned int y,
+                    uint8_t *value)
 {
     if(x > max_x)
     {

@@ -69,9 +69,9 @@ AboutBox::AboutBox(const QString &orgName,
 
     ui->labelLogo->clear();
     ui->labelLogo->setLayout(vbox);
-#endif
-
+#else
     setFixedSize(sizeHint());
+#endif
 
     ui->btn_about_qt->setIcon(QPixmap(QLatin1String(ICON_ABOUT_QT)));
     ui->btn_about_qt->setToolTip(tr("About Qt"));

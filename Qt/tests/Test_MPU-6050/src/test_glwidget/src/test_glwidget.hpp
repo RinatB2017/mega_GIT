@@ -47,27 +47,21 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
 #ifndef TEST_GLWIDGET_HPP
 #define TEST_GLWIDGET_HPP
-
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <QOpenGLVertexArrayObject>
-#include <QOpenGLBuffer>
-#include <QMatrix4x4>
+//--------------------------------------------------------------------------------
+#include <QGLWidget>
+//--------------------------------------------------------------------------------
 #include "logo.h"
-
+//--------------------------------------------------------------------------------
 #define NO_MOUSE
-
-QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
-
-class Test_GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
+//--------------------------------------------------------------------------------
+class Test_GLWidget : public QGLWidget
 {
     Q_OBJECT
 
 public:
-    Test_GLWidget(QWidget *parent = nullptr);
+    explicit Test_GLWidget(QWidget *parent = nullptr);
     ~Test_GLWidget();
 
 public slots:
@@ -85,5 +79,5 @@ protected:
     void resizeGL(int width, int height) override;
     void paintGL(void) override;
 };
-
+//--------------------------------------------------------------------------------
 #endif

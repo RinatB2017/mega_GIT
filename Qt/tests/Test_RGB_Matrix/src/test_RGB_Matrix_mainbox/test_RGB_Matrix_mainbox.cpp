@@ -279,11 +279,11 @@ void MainBox::update(void)
             {
                 temp_x -= MAX_SCREEN_X;
             }
-            display->get_R(temp_x, y, &value_R);
+            display->get_R(static_cast<unsigned int>(temp_x), static_cast<unsigned int>(y), &value_R);
 
-            display->get_R(temp_x, y, &value_R);
-            display->get_G(temp_x, y, &value_G);
-            display->get_B(temp_x, y, &value_B);
+            display->get_R(static_cast<unsigned int>(temp_x), static_cast<unsigned int>(y), &value_R);
+            display->get_G(static_cast<unsigned int>(temp_x), static_cast<unsigned int>(y), &value_G);
+            display->get_B(static_cast<unsigned int>(temp_x), static_cast<unsigned int>(y), &value_B);
 
             question.body.data[x][y].R = value_R;
             question.body.data[x][y].G = value_G;
@@ -291,7 +291,7 @@ void MainBox::update(void)
         }
     }
 
-    question.body.crc16 = CRC::crc16((uint8_t *)&question.buf, sizeof(question) - 2);
+    question.body.crc16 = CRC::crc16(reinterpret_cast<uint8_t *>(&question.buf), sizeof(question) - 2);
 
 #ifdef MODBUS
     QByteArray ba;
@@ -375,14 +375,16 @@ void MainBox::test(void)
         }
     }
 #else
-    control_display->resize(w, h);
+    control_display->resize(static_cast<unsigned int>(w), static_cast<unsigned int>(h));
     control_display->resize_led(8, 8);
     control_display->clear();
     for(int y=1; y<h; y++)
     {
         for(int x=0; x<w; x++)
         {
-            control_display->set_color(x, y, picture.pixelColor(x, y));
+            control_display->set_color(static_cast<unsigned int>(x),
+                                       static_cast<unsigned int>(y),
+                                       picture.pixelColor(x, y));
         }
     }
 #endif
@@ -437,16 +439,18 @@ void MainBox::read_display_data(QByteArray ba)
             data = QByteArray::fromHex(display_data_rs232);
             if(data.length() == 5)
             {
-                int x = (int)data.at(0);
-                int y = (int)data.at(1);
-                uint8_t r = (uint8_t)data.at(2);
-                uint8_t g = (uint8_t)data.at(3);
-                uint8_t b = (uint8_t)data.at(4);
+                int x = static_cast<int>(data.at(0));
+                int y = static_cast<int>(data.at(1));
+                uint8_t r = static_cast<uint8_t>(data.at(2));
+                uint8_t g = static_cast<uint8_t>(data.at(3));
+                uint8_t b = static_cast<uint8_t>(data.at(4));
                 if((r!=0) && (g!=0) && (b!=0))
                 {
                     emit info("found");
                 }
-                control_display->set_color(x, y, r, g, b);
+                control_display->set_color(static_cast<unsigned int>(x),
+                                           static_cast<unsigned int>(y),
+                                           r, g, b);
             }
             else
             {

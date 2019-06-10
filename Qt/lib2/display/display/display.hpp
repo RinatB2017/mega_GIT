@@ -36,11 +36,11 @@ class Display : public MyWidget
     Q_OBJECT
 
 public:
-    Display(unsigned int max_x,
-            unsigned int max_y,
-            unsigned int led_width = 32,
-            unsigned int led_height = 32,
-            QWidget *parent = nullptr);
+    explicit Display(unsigned int max_x,
+                     unsigned int max_y,
+                     unsigned int led_width = 32,
+                     unsigned int led_height = 32,
+                     QWidget *parent = nullptr);
     ~Display();
 
     bool set_color(unsigned int x,

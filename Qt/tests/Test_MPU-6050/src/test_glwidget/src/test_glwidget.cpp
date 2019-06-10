@@ -47,39 +47,38 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
 #include <QMouseEvent>
-#include <QOpenGLShaderProgram>
+#include <QGLWidget>
 #include <QCoreApplication>
-
+//--------------------------------------------------------------------------------
 #include "test_glwidget.hpp"
-
+//--------------------------------------------------------------------------------
 Test_GLWidget::Test_GLWidget(QWidget *parent)
-    : QOpenGLWidget(parent)
+    : QGLWidget(parent)
 {
 
 }
-
+//--------------------------------------------------------------------------------
 Test_GLWidget::~Test_GLWidget()
 {
 
 }
-
+//--------------------------------------------------------------------------------
 void Test_GLWidget::setXRotation(int angle)
 {
     Q_UNUSED(angle)
 }
-
+//--------------------------------------------------------------------------------
 void Test_GLWidget::setYRotation(int angle)
 {
     Q_UNUSED(angle)
 }
-
+//--------------------------------------------------------------------------------
 void Test_GLWidget::setZRotation(int angle)
 {
     Q_UNUSED(angle)
 }
-
+//--------------------------------------------------------------------------------
 void Test_GLWidget::initializeGL(void)
 {
     glClearColor(0,0,0,1);
@@ -89,13 +88,17 @@ void Test_GLWidget::initializeGL(void)
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
 }
-
+//--------------------------------------------------------------------------------
 void Test_GLWidget::resizeGL(int w, int h)
 {
-    Q_UNUSED(w)
-    Q_UNUSED(h)
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    GLfloat x = GLfloat(w) / h;
+    glFrustum(-x, +x, -1.0, +1.0, 4.0, 15.0);
+    glMatrixMode(GL_MODELVIEW);
 }
-
+//--------------------------------------------------------------------------------
 void Test_GLWidget::paintGL(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -109,3 +112,4 @@ void Test_GLWidget::paintGL(void)
         glVertex3f( 0.0,  0.5, 0);
     glEnd();
 }
+//--------------------------------------------------------------------------------

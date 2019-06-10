@@ -26,6 +26,7 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 #DEFINES += SAVE_WIDGETS_CHECKBOX
 #DEFINES += SAVE_WIDGETS_COMBOBOX
+#DEFINES += SAVE_WIDGETS_RADIOBUTTON
 #DEFINES += SAVE_WIDGETS_PUSHBUTTON
 #DEFINES += SAVE_WIDGETS_TOOLBUTTON
 #DEFINES += SAVE_WIDGETS_SPINBOX
@@ -99,9 +100,9 @@ include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simple_mw/simple_mw.pri)
-include (src/labirint/labirint.pri)
-include (src/test_widget/test_widget.pri)
-include (src/gem_widget/gem_widget.pri)
+#include (src/labirint/labirint.pri)
+#include (src/test_widget/test_widget.pri)
+#include (src/gem_widget/gem_widget.pri)
 include (src/tile_widget/tile_widget.pri)
 
 !exists(OBJECTS_DIR) {

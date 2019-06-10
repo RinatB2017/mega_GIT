@@ -67,17 +67,17 @@ Test_GLWidget::~Test_GLWidget()
 
 void Test_GLWidget::setXRotation(int angle)
 {
-
+    Q_UNUSED(angle)
 }
 
 void Test_GLWidget::setYRotation(int angle)
 {
-
+    Q_UNUSED(angle)
 }
 
 void Test_GLWidget::setZRotation(int angle)
 {
-
+    Q_UNUSED(angle)
 }
 
 void Test_GLWidget::initializeGL(void)
@@ -92,7 +92,8 @@ void Test_GLWidget::initializeGL(void)
 
 void Test_GLWidget::resizeGL(int w, int h)
 {
-
+    Q_UNUSED(w)
+    Q_UNUSED(h)
 }
 
 void Test_GLWidget::paintGL(void)

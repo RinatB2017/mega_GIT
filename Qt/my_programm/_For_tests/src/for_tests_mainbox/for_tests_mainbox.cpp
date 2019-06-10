@@ -203,6 +203,7 @@ bool MainBox::create_color_block(int width,
                                  int w_border,
                                  QColor color_border,
                                  QColor color,
+                                 QString path,
                                  QString filename)
 {
     QPixmap *pixmap = new QPixmap(width, height);
@@ -218,7 +219,16 @@ bool MainBox::create_color_block(int width,
                       pixmap->height()-w_border*2,
                       QBrush(color));
 
-    return pixmap->save(filename);
+    bool ok = pixmap->save(path + filename);
+    if(ok)
+    {
+        emit info(QString("File %1 successfully created").arg(path + filename));
+    }
+    else
+    {
+        emit error(QString("Error create %1").arg(path + filename));
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
 #include "tile_widget.hpp"
@@ -228,13 +238,22 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    create_color_block(32, 32, 1, Qt::white, Qt::gray,      "/dev/shm/0/block_gray.png");
-    create_color_block(32, 32, 1, Qt::white, Qt::red,       "/dev/shm/0/block_red.png");
-    create_color_block(32, 32, 1, Qt::white, Qt::green,     "/dev/shm/0/block_green.png");
-    create_color_block(32, 32, 1, Qt::white, Qt::blue,      "/dev/shm/0/block_blue.png");
-    create_color_block(32, 32, 1, Qt::white, Qt::cyan,      "/dev/shm/0/block_cyan.png");
-    create_color_block(32, 32, 1, Qt::white, Qt::magenta,   "/dev/shm/0/block_magenta.png");
-    create_color_block(32, 32, 1, Qt::white, Qt::yellow,    "/dev/shm/0/block_yellow.png");
+    bool ok = false;
+    QString path = "/dev/shm/0/";
+    ok = create_color_block(32, 32, 1, Qt::white, Qt::gray,     path, "block_gray.png");
+    if(!ok) return false;
+    ok = create_color_block(32, 32, 1, Qt::white, Qt::red,      path, "block_red.png");
+    if(!ok) return false;
+    ok = create_color_block(32, 32, 1, Qt::white, Qt::green,    path, "block_green.png");
+    if(!ok) return false;
+    ok = create_color_block(32, 32, 1, Qt::white, Qt::blue,     path, "block_blue.png");
+    if(!ok) return false;
+    ok = create_color_block(32, 32, 1, Qt::white, Qt::cyan,     path, "block_cyan.png");
+    if(!ok) return false;
+    ok = create_color_block(32, 32, 1, Qt::white, Qt::magenta,  path, "block_magenta.png");
+    if(!ok) return false;
+    ok = create_color_block(32, 32, 1, Qt::white, Qt::yellow,   path, "block_yellow.png");
+    if(!ok) return false;
 
 #endif
 
@@ -254,73 +273,6 @@ bool MainBox::test_0(void)
     tw->show();
 #endif
 
-#if 0
-    QWidget *widget = new QWidget();
-    QGridLayout *grid = new QGridLayout();
-    grid->setSpacing(0);
-    grid->setMargin(0);
-
-    qreal angle = 0;
-    int x = 0;
-    int y = 0;
-    while(angle < 360)
-    {
-        Gem_widget *gw = new Gem_widget(angle);
-        grid->addWidget(gw, y, x);
-
-        x++;
-        if(x >= 6)
-        {
-            x=0;
-            y++;
-        }
-
-        angle+=10;
-    }
-
-    widget->setLayout(grid);
-    widget->adjustSize();
-    //widget->show();
-
-    QPixmap px = widget->grab(QRect(0, 0, widget->width(), widget->height()));
-    px.save("/dev/shm/0/gems.png");
-#endif
-
-#if 0
-    //QImage px(64 * 22, 64, QImage::Format_RGBA8888);
-    QImage px(32 * 10, 32, QImage::Format_RGBA8888);
-    px.fill(Qt::transparent);
-
-    QPainter p(&px);
-
-    int pos_x = 0;
-#if 1
-    for(int n=0; n<=9; n++)
-    {
-        p.drawPixmap(pos_x, 0, QPixmap(QString(":/white/%1.png").arg(n)));
-        pos_x += 32;
-    }
-#else
-    for(int n=1; n<=11; n++)
-    {
-        p.drawPixmap(pos_x, 0, QPixmap(QString(":/bones/white%1.png").arg(n)));
-        pos_x += 64;
-    }
-    for(int n=1; n<=11; n++)
-    {
-        p.drawPixmap(pos_x, 0, QPixmap(QString(":/bones/black%1.png").arg(n)));
-        pos_x += 64;
-    }
-#endif
-    p.end();
-    //px.save("bones.png");
-    px.save("digits.png");
-
-    QLabel *label = new QLabel();
-    label->setPixmap(QPixmap::fromImage(px));
-    label->show();
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -328,12 +280,6 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
-
-#if 1
-    emit info(QString("%1 %2")
-              .arg(display->width())
-              .arg(display->height()));
-#endif
 
 #if 0
     emit info("Текст <font style=\"color:red\">красный</font>");

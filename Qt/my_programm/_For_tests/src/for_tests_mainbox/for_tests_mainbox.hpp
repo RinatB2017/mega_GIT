@@ -103,14 +103,19 @@ private:
         obj->setText(QString("x = %1").arg(x));
         cb_test->setCurrentIndex(2);
     }
-    QLCDNumber *display;
     //---
 
     void init(void);
     void createTestBar(void);
     void updateText(void);
 
-    bool create_color_block(int width, int height, int w_border, QColor color_border, QColor color, QString filename);
+    bool create_color_block(int width,
+                            int height,
+                            int w_border,
+                            QColor color_border,
+                            QColor color,
+                            QString path,
+                            QString filename);
 
     int get_cnt(void);
 };

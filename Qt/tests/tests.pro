@@ -17,14 +17,12 @@ SUBDIRS += \
     Test_draw_line \
     Test_event_filter \
     Test_GrapherBox \
-    Test_GY-652 \
     Test_HistogramBox \
     Test_HID_device \
     Test_HTML \
     Test_QHexEdit \
     Test_mesh \
     Test_md5 \
-    Test_MPU-6050 \
     Test_OpenRPT \
     Test_OscilloscopeBox \
     Test_picture \
@@ -65,6 +63,11 @@ SUBDIRS += \
     Test_SDLWidget \
     Test_YouTube \
     Tester
+    
+SUBDIRS += \
+    Test_ADXL345 \
+    Test_GY-652 \
+    Test_MPU-6050
 
 unix {
 SUBDIRS += \

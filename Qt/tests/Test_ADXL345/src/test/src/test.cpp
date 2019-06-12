@@ -29,7 +29,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_MPU-6050_mainbox.hpp"
+#include "test_ADXL345_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER

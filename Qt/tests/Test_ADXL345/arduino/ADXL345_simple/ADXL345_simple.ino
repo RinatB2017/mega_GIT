@@ -9,7 +9,7 @@
 #include <Wire.h>
 #include <ADXL345.h>
 
-int baudrate = 57600;
+#define baudrate 57600
 
 ADXL345 accelerometer;
 

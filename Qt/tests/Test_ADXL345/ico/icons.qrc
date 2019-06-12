@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/ico">
+        <file>computer.ico</file>
+        <file>accelerometer.png</file>
+    </qresource>
+</RCC>

@@ -133,6 +133,11 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
+QString MainBox::convert(qreal value)
+{
+    return QString("%1").arg(value, 0, 'f', 2);
+}
+//--------------------------------------------------------------------------------
 void MainBox::data_gy652(QByteArray data)
 {
     QString temp = data;
@@ -146,10 +151,10 @@ void MainBox::data_gy652(QByteArray data)
         return;
     }
 
-    float temperature = sl.at(0).toFloat();
-    float pressure = sl.at(1).toFloat();
-    float atm = sl.at(2).toFloat();
-    float altitude = sl.at(3).toFloat();
+    qreal temperature = sl.at(0).toDouble();
+    qreal pressure = sl.at(1).toDouble();
+    qreal atm = sl.at(2).toDouble();
+    qreal altitude = sl.at(3).toDouble();
 
 #ifndef NO_GRAPHER
     ui->grapher_widget->add_curve_data(curve_temperature,   static_cast<double>(temperature));
@@ -158,10 +163,10 @@ void MainBox::data_gy652(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_altitude,      static_cast<double>(altitude));
 #endif
 
-    ui->display_temperature->display(static_cast<double>(temperature));
-    ui->display_pressure->display(static_cast<double>(pressure * 0.75006375541921f / 100.0f));
-    ui->display_atm->display(static_cast<double>(atm));
-    ui->display_altitude->display(static_cast<double>(altitude));
+    ui->display_temperature->display(convert(temperature));
+    ui->display_pressure->display(convert(pressure * 0.75006375541921 / 100.0));
+    ui->display_atm->display(convert(atm));
+    ui->display_altitude->display(convert(altitude));
 
     //emit info(data);
 }

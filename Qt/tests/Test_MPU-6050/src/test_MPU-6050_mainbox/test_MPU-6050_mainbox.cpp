@@ -189,6 +189,11 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
+QString MainBox::convert(qreal value)
+{
+    return QString("%1").arg(value, 0, 'f', 2);
+}
+//--------------------------------------------------------------------------------
 void MainBox::data_mpu6050(QByteArray data)
 {
     if(data.isEmpty())
@@ -263,12 +268,12 @@ void MainBox::data_mpu6050(QByteArray data)
 #endif
 
     ui->display_error->display(err);
-    ui->display_x_accel->display(x_accel);
-    ui->display_y_accel->display(y_accel);
-    ui->display_z_accel->display(z_accel);
-    ui->display_x_gyro->display(x_gyro);
-    ui->display_y_gyro->display(y_gyro);
-    ui->display_z_gyro->display(z_gyro);
+    ui->display_x_accel->display(convert(x_accel));
+    ui->display_y_accel->display(convert(y_accel));
+    ui->display_z_accel->display(convert(z_accel));
+    ui->display_x_gyro->display(convert(x_gyro));
+    ui->display_y_gyro->display(convert(y_gyro));
+    ui->display_z_gyro->display(convert(z_gyro));
 
     //    16384.0 - 9.8
     //    x       - y

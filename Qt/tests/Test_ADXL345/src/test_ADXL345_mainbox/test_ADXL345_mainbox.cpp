@@ -136,6 +136,11 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
+QString MainBox::convert(qreal value)
+{
+    return QString("%1").arg(value, 0, 'f', 2);
+}
+//--------------------------------------------------------------------------------
 void MainBox::data_adxl345(QByteArray data)
 {
     if(data.isEmpty())
@@ -184,13 +189,13 @@ void MainBox::data_adxl345(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_z_norm_accel,      z_norm_accel);
 #endif
 
-    ui->display_x_raw_accel->display(x_raw_accel);
-    ui->display_y_raw_accel->display(y_raw_accel);
-    ui->display_z_raw_accel->display(z_raw_accel);
+    ui->display_x_raw_accel->display(convert(x_raw_accel));
+    ui->display_y_raw_accel->display(convert(y_raw_accel));
+    ui->display_z_raw_accel->display(convert(z_raw_accel));
 
-    ui->display_x_norm_accel->display(x_norm_accel);
-    ui->display_y_norm_accel->display(y_norm_accel);
-    ui->display_z_norm_accel->display(z_norm_accel);
+    ui->display_x_norm_accel->display(convert(x_norm_accel));
+    ui->display_y_norm_accel->display(convert(y_norm_accel));
+    ui->display_z_norm_accel->display(convert(z_norm_accel));
 
     dirty_array.clear();
 }

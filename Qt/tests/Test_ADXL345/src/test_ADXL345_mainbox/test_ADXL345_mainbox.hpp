@@ -71,6 +71,8 @@ private:
     int curve_y_norm_accel = 0;
     int curve_z_norm_accel = 0;
 
+    QString convert(qreal value);
+
     void init(void);
     void createTestBar(void);
     void init_serial_widget(void);

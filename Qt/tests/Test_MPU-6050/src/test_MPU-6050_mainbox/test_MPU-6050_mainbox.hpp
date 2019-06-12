@@ -79,6 +79,8 @@ private:
     qreal y_angle = 0;
     qreal z_angle = 0;
 
+    QString convert(qreal value);
+
     void init(void);
     void createTestBar(void);
     void init_gl_widget(void);

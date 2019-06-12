@@ -64,6 +64,8 @@ private:
     int curve_atm = 0;
     int curve_altitude = 0;
 
+    QString convert(qreal value);
+
     void init(void);
     void createTestBar(void);
     void updateText(void);

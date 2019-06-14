@@ -82,10 +82,13 @@ MainWindow::~MainWindow()
     }
 }
 //--------------------------------------------------------------------------------
-void MainWindow::setCentralWidget(QWidget *widget)
+void MainWindow::setCentralWidget(MyWidget *widget)
 {
     Q_CHECK_PTR(widget);
-    QMainWindow::setCentralWidget(widget);
+    c_widget = widget;
+
+    c_widget->load_setting();
+    QMainWindow::setCentralWidget(c_widget);
 
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
@@ -133,6 +136,13 @@ void MainWindow::changeEvent(QEvent *event)
 //--------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    c_widget->save_setting();
+    if(!c_widget->programm_is_exit())
+    {
+        event->ignore();
+        return;
+    }
+
     if(flag_close)
     {
         save_setting();

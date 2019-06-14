@@ -624,3 +624,18 @@ void SerialBox5_fix_baudrate::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool SerialBox5_fix_baudrate::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------

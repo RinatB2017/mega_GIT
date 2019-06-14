@@ -45,9 +45,9 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 
 #ifndef RS232_LOG
-//    if(parent)
-//        connect_log(parent);
-//    else
+    if(parent)
+        connect_log(parent);
+    else
         connect_log(topLevelWidget());
 #endif
 #ifdef QT_DEBUG
@@ -85,12 +85,27 @@ void MyWidget::connect_log(QWidget *parent)
 #else
     if(parent)
     {
+#if 1
+        int m_info = parent->metaObject()->indexOfMethod("info(QString)");
+        int m_debug = parent->metaObject()->indexOfMethod("debug(QString)");
+        int m_error = parent->metaObject()->indexOfMethod("error(QString)");
+        int m_trace = parent->metaObject()->indexOfMethod("trace(QString)");
+        int m_colorlog = parent->metaObject()->indexOfMethod("colorLog(QString,QColor,QColor)");
+
+        if(m_info != -1)  connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
+        if(m_debug != -1) connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
+        if(m_error != -1) connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
+        if(m_trace != -1) connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
+
+        if(m_colorlog != -1) connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
+#else
         connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
         connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
         connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
+#endif
     }
     else
     {

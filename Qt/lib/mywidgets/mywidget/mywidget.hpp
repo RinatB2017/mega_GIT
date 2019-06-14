@@ -156,6 +156,11 @@ public:
                             const QString &text,
                             const QString &tool_tip);
 
+    virtual void updateText(void) = 0;
+    virtual bool programm_is_exit(void) = 0;
+    virtual void load_setting(void) = 0;
+    virtual void save_setting(void) = 0;
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -210,7 +215,6 @@ private:
     QList<QWidget *> w_lists;
 
 protected:
-    virtual void updateText(void) = 0;
     void changeEvent(QEvent *event);
 #ifndef BLOCK_WHEEL
     bool eventFilter(QObject*, QEvent* event);

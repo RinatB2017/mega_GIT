@@ -96,7 +96,7 @@ public:
     explicit MainWindow(QMainWindow* parent = nullptr);
     ~MainWindow();
 
-    void setCentralWidget(QWidget *widget);
+    void setCentralWidget(MyWidget *widget);
     MainWindow *getThis(void);
 
     void setWindowTitle(const QString &title);
@@ -251,6 +251,9 @@ private:
     QMenu *trayIconMenu;
 
     QSettings *settings;
+
+    //TODO тест
+    MyWidget *c_widget = nullptr;
 
     void load_main(void);
     void save_main(void);

@@ -211,9 +211,9 @@ void MyMainWindow::help_action_click(void)
     MyWidget::messagebox_info(title, text);
 }
 //--------------------------------------------------------------------------------
-void MyMainWindow::setCentralWidget(QWidget *widget)
+void MyMainWindow::setCentralWidget(MyWidget *widget)
 {
-    QWidget *w = new QWidget;
+    MyMainBox *w = new MyMainBox();
 
     HorizontalWidget *t_widget = new HorizontalWidget;
     t_widget->setFixedHeight(W_SIZE);

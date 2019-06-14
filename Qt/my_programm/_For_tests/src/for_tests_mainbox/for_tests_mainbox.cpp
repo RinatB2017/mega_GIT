@@ -126,11 +126,6 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
-{
-    ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
 {
     bool ok = false;
@@ -239,6 +234,21 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    // max sectors 848
+    // т.е. 848 * 4 * 1024 = 3473408 байт
+    // т.е. 3473408 / 32 / 3 = 36181,33333333333 столбцов по 32 пикселя
+
+    TestWidget *tw = new TestWidget(36181, 32);
+    tw->set_color(2, 3, Qt::red);
+
+    QScrollArea *area = new QScrollArea();
+    area->setWidget(tw);
+    area->setFixedSize(800, 600);
+
+    area->show();
+#endif
+
+#if 0
     bool ok = false;
     QString path = "/dev/shm/0/";
     ok = create_color_block(32, 32, 1, Qt::white, Qt::gray,     path, "block_gray.png");
@@ -319,5 +329,25 @@ bool MainBox::test_5(void)
     emit info("Test_5()");
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

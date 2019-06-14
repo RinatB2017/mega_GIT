@@ -42,6 +42,95 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
+class TestWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit TestWidget(int l_width,
+                        int l_height,
+                        QWidget *parent = nullptr)
+        : QWidget(parent)
+    {
+        cnt_x = l_width;
+        cnt_y = l_height;
+
+        d_width  = l_width  * led_width;
+        d_height = l_height * led_height;
+
+        for(int n=0; n<l_width * l_height; n++)
+        {
+            leds.append(Qt::black);
+        }
+
+        setFixedSize(d_width, d_height);
+        update();
+    }
+
+    void set_color(int x, int y, QColor color)
+    {
+        if(x > cnt_x)
+        {
+            return;
+        }
+        if(y > cnt_y)
+        {
+            return;
+        }
+        int index = y*cnt_x + x;
+        leds[index] = color;
+
+        update();
+    }
+
+private:
+    int d_width = 0;
+    int d_height = 0;
+
+    int cnt_x = 0;
+    int cnt_y = 0;
+
+    int led_width = 16;
+    int led_height = 16;
+    int led_border = 1;
+
+    QList<QColor> leds;
+
+    QColor led_color = Qt::black;
+    QColor border_color = Qt::gray;
+
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QPainter painter(this);
+        painter.setBrush(QBrush(led_color));
+        painter.drawRect(0, 0, width(), height());
+
+        painter.setPen(border_color);
+        for(int y=0; y<cnt_y; y++)
+        {
+            painter.drawLine(0, y * led_height, width(), y * led_height);
+        }
+        for(int x=0; x<cnt_x; x++)
+        {
+            painter.drawLine(x * led_width, 0, x * led_width, height());
+        }
+
+        for(int y=0; y<cnt_y; y++)
+        {
+            for(int x=0; x<cnt_x; x++)
+            {
+                int index = y*cnt_x + x;
+                painter.setBrush(QBrush(leds[index]));
+                painter.drawRect(x*led_width,
+                                 y*led_height,
+                                 led_width,
+                                 led_height);
+            }
+        }
+    }
+};
+//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
@@ -107,7 +196,6 @@ private:
 
     void init(void);
     void createTestBar(void);
-    void updateText(void);
 
     bool create_color_block(int width,
                             int height,
@@ -118,6 +206,11 @@ private:
                             QString filename);
 
     int get_cnt(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

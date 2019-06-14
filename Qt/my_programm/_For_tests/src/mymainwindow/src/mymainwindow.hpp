@@ -113,6 +113,21 @@ protected:
     }
 };
 //--------------------------------------------------------------------------------
+class MyMainBox : public MyWidget
+{
+    Q_OBJECT
+
+public:
+    void updateText(void) {}
+    void load_setting(void) {}
+    void save_setting(void) {}
+
+    bool programm_is_exit(void)
+    {
+        return true;
+    }
+};
+//--------------------------------------------------------------------------------
 class MyMainWindow : public MainWindow
 {
     Q_OBJECT
@@ -121,7 +136,7 @@ public:
     explicit MyMainWindow(MainWindow *parent = nullptr);
     ~MyMainWindow();
 
-    void setCentralWidget(QWidget *widget);
+    void setCentralWidget(MyWidget *widget);
 
 #ifdef HAVE_QT5
     static void messageHandler(QtMsgType type,

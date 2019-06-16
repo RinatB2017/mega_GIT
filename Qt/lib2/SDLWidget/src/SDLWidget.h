@@ -7,17 +7,23 @@
 #else
 #   include <QtGui>
 #endif
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 struct SDL_Surface;
 
 class QKeyEvent;
 //--------------------------------------------------------------------------------
-class QSDLScreenWidget : public QWidget
+class QSDLScreenWidget : public MyWidget
 {
     Q_OBJECT
 public:
     QSDLScreenWidget(QWidget *parent = nullptr);
     void draw_image(SDL_Surface *image, int pos_x, int pos_y);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 private slots:
     void update(void);

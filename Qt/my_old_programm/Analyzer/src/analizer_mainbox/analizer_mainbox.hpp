@@ -71,11 +71,10 @@ private:
     void append_data(int x,
                      unsigned short data);
 
+    void updateText(void);
+    bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
-
-    void updateText(void);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -65,7 +65,9 @@ private:
     QString convert_dec_to_ansi(unsigned char data);
 
     void updateText(void);
-
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

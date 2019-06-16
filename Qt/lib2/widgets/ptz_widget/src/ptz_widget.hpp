@@ -28,6 +28,7 @@
 //--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 struct PTZ_PARAM
 {
@@ -47,7 +48,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MainBox;
 //--------------------------------------------------------------------------------
-class PTZ_widget : public QWidget
+class PTZ_widget : public MyWidget
 {
     Q_OBJECT
 
@@ -134,7 +135,11 @@ private:
     void save_widgets(QString group_name);
 
     void init(void);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // PTZ_WIDGET_HPP

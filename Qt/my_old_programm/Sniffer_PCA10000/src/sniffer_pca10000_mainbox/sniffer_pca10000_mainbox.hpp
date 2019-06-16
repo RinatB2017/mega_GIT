@@ -44,9 +44,6 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
-    void load_setting(void);
-    void save_setting(void);
-
     int xxx(int x);
 
 private slots:
@@ -70,6 +67,9 @@ private:
     void create_sniffer(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

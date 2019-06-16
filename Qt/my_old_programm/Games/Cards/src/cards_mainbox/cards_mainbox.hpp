@@ -73,6 +73,9 @@ private:
     void prepare_and_show_cards(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     virtual void closeEvent(QCloseEvent *event);

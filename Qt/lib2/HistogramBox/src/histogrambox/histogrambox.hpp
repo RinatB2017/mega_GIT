@@ -151,12 +151,12 @@ private:
     int getPositionStep(void);
     int getSizeStep(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
     void test_get_info(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif

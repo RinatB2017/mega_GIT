@@ -102,10 +102,12 @@ private:
     void createTestBar(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     void closeEvent(QCloseEvent *event);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

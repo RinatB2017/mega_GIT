@@ -51,6 +51,9 @@ private:
     void init_client(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

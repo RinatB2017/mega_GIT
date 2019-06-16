@@ -34,7 +34,7 @@
 #include "ui_rtsp_widget.h"
 //--------------------------------------------------------------------------------
 RTSP_widget::RTSP_widget(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::RTSP_widget)
 {
     init();
@@ -169,5 +169,20 @@ void RTSP_widget::choice(void)
 void RTSP_widget::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool RTSP_widget::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void RTSP_widget::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void RTSP_widget::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

@@ -53,7 +53,9 @@ private:
     bool add_item(int x, int y, int id);
 
     void updateText(void);
-
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MINIMAP_HPP

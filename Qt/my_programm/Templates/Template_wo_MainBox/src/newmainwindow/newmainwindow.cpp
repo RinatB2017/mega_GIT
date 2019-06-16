@@ -44,7 +44,7 @@ NewMainWindow::NewMainWindow(MainWindow *parent)
     // cw->hide() не работает
     QWidget *cw = new QWidget(this);
     cw->setFixedSize(0, 0);
-    setCentralWidget(cw);
+    //FIXME setCentralWidget(cw);
     //---
 
     load_setting();

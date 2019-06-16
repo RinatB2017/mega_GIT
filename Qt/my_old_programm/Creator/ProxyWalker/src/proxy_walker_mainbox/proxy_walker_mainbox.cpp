@@ -99,7 +99,7 @@ void MainBox::init(void)
     ui->hbox->addWidget(webview, 7);
 #endif
 
-    load_setting();
+    //load_setting();
     if(current_index > 0)
         proxy_list->setCurrentRow(current_index);
 
@@ -571,5 +571,10 @@ void MainBox::save_setting(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
 }
 //--------------------------------------------------------------------------------

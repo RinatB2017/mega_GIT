@@ -75,9 +75,6 @@ private:
 
     void createTestBar(void);
 
-    void load_setting(void);
-    void save_setting(void);
-
     void load_url(const QString &address,
                   bool show_address = false);
     void get_proxies(QStringList *proxies,
@@ -85,7 +82,9 @@ private:
     bool append_proxy(const QString &ip_and_port);
 
     void updateText(void);
-
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

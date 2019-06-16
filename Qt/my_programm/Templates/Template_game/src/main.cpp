@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
     Game *mainBox = new Game();
     mainBox->setFocusPolicy(Qt::StrongFocus);
-    main_window->setCentralWidget(mainBox);
+    //FIXME main_window->setCentralWidget(mainBox);
 
     main_window->show();
 #else

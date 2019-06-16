@@ -147,6 +147,9 @@ private:
     void set_panning(bool x_state, bool y_state);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif

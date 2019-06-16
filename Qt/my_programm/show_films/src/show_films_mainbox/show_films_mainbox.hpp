@@ -82,7 +82,11 @@ private:
 
     void load_translations(void);
     void create_menu(void);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

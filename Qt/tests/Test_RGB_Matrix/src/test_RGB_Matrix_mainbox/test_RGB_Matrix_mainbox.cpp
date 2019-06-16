@@ -143,13 +143,11 @@ void MainBox::createDisplayBox(void)
 {
     display = new Display(MAX_SCREEN_X, MAX_SCREEN_Y, LED_SIZE, LED_SIZE, this);
     display->setObjectName("display");
-    display->load_setting();
     display->set_left_btn_active(true);
     display->set_right_btn_active(false);
 
     control_display = new Display(NUM_LEDS_PER_STRIP, NUM_STRIPS, LED_SIZE, LED_SIZE, this);
     control_display->setObjectName("control_display");
-    control_display->load_setting();
     control_display->set_left_btn_active(false);
     control_display->set_right_btn_active(false);
 
@@ -493,5 +491,20 @@ void MainBox::read_data(QByteArray ba)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

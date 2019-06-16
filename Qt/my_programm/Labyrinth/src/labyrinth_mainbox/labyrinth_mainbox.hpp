@@ -78,6 +78,9 @@ private:
     QToolButton *create_button(const QString &name, int id);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

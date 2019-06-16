@@ -41,6 +41,9 @@ public:
     void unlock(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 private:
     QPoint lastPoint;

@@ -112,6 +112,9 @@ private:
     bool check_coordinate(const QString &coord, int *x, int *y);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // CHESSBOARD_HPP

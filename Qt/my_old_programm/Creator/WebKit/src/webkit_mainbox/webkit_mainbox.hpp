@@ -134,7 +134,9 @@ private:
     QStringList get_links(QWebElementCollection collection);
 
     void updateText(void);
-
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

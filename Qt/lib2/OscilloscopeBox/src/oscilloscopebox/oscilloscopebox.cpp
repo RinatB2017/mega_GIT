@@ -396,6 +396,21 @@ void OscilloscopeBox::updateText()
     }
 }
 //--------------------------------------------------------------------------------
+bool OscilloscopeBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void OscilloscopeBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void OscilloscopeBox::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 void OscilloscopeBox::test(void)
 {
 

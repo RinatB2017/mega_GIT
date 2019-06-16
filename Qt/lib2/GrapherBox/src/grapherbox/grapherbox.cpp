@@ -724,7 +724,7 @@ void GrapherBox::init()
     curve_colors[15] = QColor(Qt::darkGray);
 
     create_widgets();
-    load_setting();
+    //load_setting();
     updateGraphics();
     updateText();
 }
@@ -878,6 +878,21 @@ void GrapherBox::updateText()
     {
         curves.at(n).plot_curve->setTitle(curves.at(n).title);
     }
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_device_RECORDER(void)
@@ -1533,15 +1548,5 @@ void GrapherBox::clicked(QVariant v, int i)
 void GrapherBox::checked(QVariant v, bool b, int i)
 {
     qDebug() << "checked" << v << b << i;
-}
-//--------------------------------------------------------------------------------
-void GrapherBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void GrapherBox::save_setting(void)
-{
-
 }
 //--------------------------------------------------------------------------------

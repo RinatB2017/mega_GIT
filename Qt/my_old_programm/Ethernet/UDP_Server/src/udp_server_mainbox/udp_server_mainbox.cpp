@@ -74,6 +74,21 @@ void MainBox::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 void MainBox::get_data(const QByteArray &data)
 {
     emit debug(data.data());

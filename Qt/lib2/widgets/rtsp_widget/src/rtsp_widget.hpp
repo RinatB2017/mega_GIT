@@ -23,17 +23,18 @@
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
 #include <QWidget>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class RTSP_widget;
 }
 //--------------------------------------------------------------------------------
-class RTSP_widget : public QWidget
+class RTSP_widget : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit RTSP_widget(QWidget *parent = 0);
+    explicit RTSP_widget(QWidget *parent = nullptr);
     ~RTSP_widget();
 
 signals:
@@ -53,10 +54,14 @@ private slots:
 
 private:
     Ui::RTSP_widget *ui;
-    QMediaPlayer *player = 0;
+    QMediaPlayer *player;
 
     void init(void);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // RTSP_WIDGET_HPP

@@ -276,6 +276,21 @@ void MainBox::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 void MainBox::load_url(const QString &address,
                        bool show_address)
 {

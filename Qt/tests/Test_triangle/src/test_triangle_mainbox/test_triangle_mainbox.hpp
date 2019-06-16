@@ -60,6 +60,9 @@ private:
     bool calc(double A, double B, double C, double angle_grad);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

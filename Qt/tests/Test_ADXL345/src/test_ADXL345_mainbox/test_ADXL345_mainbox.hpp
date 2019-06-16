@@ -78,7 +78,11 @@ private:
     void init_serial_widget(void);
     void init_grapher_widget(void);
     void init_display_widgets(void);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

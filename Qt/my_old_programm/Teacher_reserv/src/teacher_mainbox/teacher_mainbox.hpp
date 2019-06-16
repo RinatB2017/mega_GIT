@@ -59,6 +59,9 @@ private:
     void prepare_browsers(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

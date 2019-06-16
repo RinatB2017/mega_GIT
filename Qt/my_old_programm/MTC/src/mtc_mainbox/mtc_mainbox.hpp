@@ -67,7 +67,11 @@ private:
     void init(void);
     void createTestBar(void);
     int calc_SINR(int value);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

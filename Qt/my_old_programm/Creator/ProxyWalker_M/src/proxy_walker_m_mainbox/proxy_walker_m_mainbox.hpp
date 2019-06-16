@@ -70,8 +70,6 @@ private slots:
     void web_started(void);
     void web_finished(bool state);
 
-    void save_setting(void);
-
 private:
     Ui::MainBox *ui;
     QList <web_struct> webviews;
@@ -86,8 +84,6 @@ private:
     void create_menu(void);
 
     void createTestBar(void);
-
-    void load_setting(void);
 
     void load_url(int index,
                   const QString &address,
@@ -108,7 +104,9 @@ private:
                       QUrl url);
 
     void updateText(void);
-
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

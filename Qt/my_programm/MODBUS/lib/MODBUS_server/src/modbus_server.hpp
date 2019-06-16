@@ -79,7 +79,11 @@ private:
     void init(void);
     void init_modbusDevice(void);
     void init_tab_widget(void);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif

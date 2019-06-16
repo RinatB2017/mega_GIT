@@ -122,6 +122,9 @@ private:
     void create_scene_2(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     bool eventFilter(QObject *, QEvent *e);

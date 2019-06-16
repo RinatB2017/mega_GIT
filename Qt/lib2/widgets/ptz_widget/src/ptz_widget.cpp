@@ -31,7 +31,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 PTZ_widget::PTZ_widget(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::PTZ_widget)
 {
     init();
@@ -711,5 +711,20 @@ void PTZ_widget::save_widgets(QString group_name)
 void PTZ_widget::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool PTZ_widget::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

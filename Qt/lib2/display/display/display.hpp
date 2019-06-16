@@ -71,9 +71,6 @@ public:
     void set_left_btn_active(bool value);
     void set_right_btn_active(bool value);
 
-    void load_setting(void);
-    void save_setting(void);
-
     void clear(void);
 
     bool resize(unsigned int w,
@@ -93,6 +90,9 @@ private:
                         unsigned int led_width,
                         unsigned int led_height);
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif

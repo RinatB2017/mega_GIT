@@ -96,7 +96,11 @@ private:
     void clean_grid(void);
     void create_new_display(void);
     bool load_picture(QString fileName);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // RGB_DISLPAY_HPP

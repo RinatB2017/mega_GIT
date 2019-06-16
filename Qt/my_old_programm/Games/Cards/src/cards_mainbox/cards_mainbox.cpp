@@ -300,6 +300,21 @@ void MainBox::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 void MainBox::closeEvent(QCloseEvent *event)
 {
     QWidget::closeEvent(event);

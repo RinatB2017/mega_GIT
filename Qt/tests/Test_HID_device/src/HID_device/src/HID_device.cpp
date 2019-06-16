@@ -370,6 +370,21 @@ void HID_device::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool HID_device::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void HID_device::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void HID_device::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 void HID_device::changeEvent(QEvent *event)
 {
     QWidget::changeEvent(event);

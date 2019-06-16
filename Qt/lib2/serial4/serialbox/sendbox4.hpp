@@ -48,6 +48,7 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 private slots:
     void send_text(void);

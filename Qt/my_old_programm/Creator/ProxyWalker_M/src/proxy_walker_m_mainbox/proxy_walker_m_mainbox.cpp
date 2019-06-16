@@ -821,6 +821,11 @@ void MainBox::updateText(void)
     }
 }
 //--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainBox::load_url(int index,
                        const QString &address,
                        bool show_address,

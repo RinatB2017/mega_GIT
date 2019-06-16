@@ -98,10 +98,12 @@ private:
     bool searchObjectByTemplate(QString srcImgName, QString templImgName, QRect *rect);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     void timerEvent(QTimerEvent *);
-
 };
 //--------------------------------------------------------------------------------
 #endif // WEBCAMERA_HPP

@@ -148,6 +148,21 @@ void MainBox::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 bool MainBox::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::MouseButtonPress)

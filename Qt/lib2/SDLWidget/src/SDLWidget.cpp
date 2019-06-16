@@ -16,7 +16,7 @@
 //--------------------------------------------------------------------------------
 #include <QTimer>
 QSDLScreenWidget::QSDLScreenWidget(QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
     // Turn off double buffering for this widget. Double buffering
     // interferes with the ability for SDL to be properly displayed
@@ -278,5 +278,25 @@ void QSDLScreenWidget::paintEvent(QPaintEvent *)
 #endif
         SDL_Flip(screen);
     }
+}
+//--------------------------------------------------------------------------------
+void QSDLScreenWidget::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+bool QSDLScreenWidget::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void QSDLScreenWidget::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void QSDLScreenWidget::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

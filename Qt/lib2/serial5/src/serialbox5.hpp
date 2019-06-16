@@ -178,6 +178,9 @@ private slots:
     void timer_stop(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALBOX_HPP

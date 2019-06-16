@@ -495,6 +495,21 @@ void HistogramBox::updateText()
     }
 }
 //--------------------------------------------------------------------------------
+bool HistogramBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void HistogramBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void HistogramBox::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
 void HistogramBox::options(void)
 {
     //qDebug() << axis_X_min << axis_X_max << axis_Y_min << axis_Y_max;
@@ -782,13 +797,5 @@ void HistogramBox::test_get_info(void)
                   .arg(histogram.plot_histogram->pen().color().green())
                   .arg(histogram.plot_histogram->pen().color().blue()));
     }
-}
-//--------------------------------------------------------------------------------
-void HistogramBox::load_setting(void)
-{
-}
-//--------------------------------------------------------------------------------
-void HistogramBox::save_setting(void)
-{
 }
 //--------------------------------------------------------------------------------

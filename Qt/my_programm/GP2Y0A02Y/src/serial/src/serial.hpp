@@ -55,6 +55,9 @@ private:
     uint8_t convert_ascii_to_value(char hi, char lo);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // SERIAL_HPP

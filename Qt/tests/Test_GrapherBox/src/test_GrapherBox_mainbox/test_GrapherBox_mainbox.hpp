@@ -78,7 +78,11 @@ private:
 
     void init(void);
     void createTestBar(void);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
     void test_data(void);
     void test_data2(void);

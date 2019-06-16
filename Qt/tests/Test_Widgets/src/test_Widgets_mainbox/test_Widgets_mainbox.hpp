@@ -43,9 +43,6 @@ public:
             MySplashScreen *splash);
     ~MainBox();
 
-    void load_setting(void);
-    void save_setting(void);
-
     int xxx(int x);
 
 private slots:
@@ -69,6 +66,9 @@ private:
     void block_interface(bool state);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     void paintEvent(QPaintEvent *);

@@ -90,6 +90,9 @@ private:
     void list_devices(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // FT2232_HPP

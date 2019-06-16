@@ -55,9 +55,9 @@ typedef struct
     //nothing
 #elif defined USE_SCALE_POINT_TIME
     //nothing
-#else
-    long pos_x;
 #endif
+    long pos_x;
+
     QString title;
     QColor color;
 

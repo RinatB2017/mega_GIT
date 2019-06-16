@@ -97,6 +97,7 @@ public:
     ~MainWindow();
 
     void setCentralWidget(MyWidget *widget);
+    void setCentralWidget(QWidget *widget);
     MainWindow *getThis(void);
 
     void setWindowTitle(const QString &title);

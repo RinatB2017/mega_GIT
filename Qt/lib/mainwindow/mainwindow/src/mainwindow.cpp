@@ -97,6 +97,19 @@ void MainWindow::setCentralWidget(MyWidget *widget)
     show_docs();
 }
 //--------------------------------------------------------------------------------
+void MainWindow::setCentralWidget(QWidget *widget)
+{
+    Q_CHECK_PTR(widget);
+
+    QMainWindow::setCentralWidget(widget);
+
+#ifdef FIXED_SIZE
+    setFixedSize(sizeHint());
+#endif
+
+    show_docs();
+}
+//--------------------------------------------------------------------------------
 void MainWindow::changeEvent(QEvent *event)
 {
     if(event == nullptr)
@@ -136,11 +149,14 @@ void MainWindow::changeEvent(QEvent *event)
 //--------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    c_widget->save_setting();
-    if(!c_widget->programm_is_exit())
+    if(c_widget)
     {
-        event->ignore();
-        return;
+        c_widget->save_setting();
+        if(!c_widget->programm_is_exit())
+        {
+            event->ignore();
+            return;
+        }
     }
 
     if(flag_close)

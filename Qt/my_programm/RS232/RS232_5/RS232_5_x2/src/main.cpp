@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     //cw->setStyleSheet("background:green;");
     cw->setFixedSize(0, 0);
 
-    //FIXME main_window->setCentralWidget(cw);
+    main_window->setCentralWidget(cw);
     main_window->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  serial);
     main_window->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, serial2);
     //main_window->add_dock_widget("RS232_1", "rs232_1", Qt::TopDockWidgetArea,       serial);

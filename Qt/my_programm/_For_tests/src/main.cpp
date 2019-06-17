@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
 
     splash->show();
 
-//    MyMainWindow *main_window = new MyMainWindow();
-    MainWindow *main_window = new MainWindow();
+    MyMainWindow *main_window = new MyMainWindow();
+//    MainWindow *main_window = new MainWindow();
     //Simple_MW *main_window = new Simple_MW();
     Q_CHECK_PTR(main_window);
 

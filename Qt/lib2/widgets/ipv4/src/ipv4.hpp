@@ -27,9 +27,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class IPV4 : public MyWidget
+class IPV4 : public QWidget
 {
     Q_OBJECT
 
@@ -45,8 +43,6 @@ public:
     QUrl get_url(void);
     void set_url(QUrl url);
 
-    bool no_exit(void);
-
 private slots:
     void work(void);
 
@@ -58,7 +54,7 @@ private:
 
     QSpinBox *port;
 
-    void updateText(void);
+    void init(void);
 };
 //--------------------------------------------------------------------------------
 #endif // IPV4_HPP

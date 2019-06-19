@@ -22,7 +22,17 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 IPV4::IPV4(QWidget *parent) :
-    MyWidget(parent)
+    QWidget(parent)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+IPV4::~IPV4()
+{
+
+}
+//--------------------------------------------------------------------------------
+void IPV4::init(void)
 {
     a = new QSpinBox(this);
     b = new QSpinBox(this);
@@ -69,11 +79,6 @@ IPV4::IPV4(QWidget *parent) :
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
-IPV4::~IPV4()
-{
-
-}
-//--------------------------------------------------------------------------------
 void IPV4::setObjectName(const QString &name)
 {
     a->setObjectName(QString("%1_IPV4_a").arg(name));
@@ -81,7 +86,7 @@ void IPV4::setObjectName(const QString &name)
     c->setObjectName(QString("%1_IPV4_c").arg(name));
     d->setObjectName(QString("%1_IPV4_d").arg(name));
 
-    MyWidget::setObjectName(name);
+    QWidget::setObjectName(name);
 }
 //--------------------------------------------------------------------------------
 void IPV4::work(void)
@@ -114,15 +119,5 @@ void IPV4::set_url(QUrl url)
         d->setValue(QString(sl[3]).toInt());
     }
     port->setValue(url.port());
-}
-//--------------------------------------------------------------------------------
-bool IPV4::no_exit(void)
-{
-    return false;
-}
-//--------------------------------------------------------------------------------
-void IPV4::updateText(void)
-{
-
 }
 //--------------------------------------------------------------------------------

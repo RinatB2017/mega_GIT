@@ -22,7 +22,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
-    MyWidget(parent)
+    QWidget(parent)
 {
     a = new QSpinBox(this);
     b = new QSpinBox(this);
@@ -71,7 +71,7 @@ void IPV4_wo_port::setObjectName(const QString &name)
     c->setObjectName(QString("%1_IPV4_wo_port_c").arg(name));
     d->setObjectName(QString("%1_IPV4_wo_port_d").arg(name));
 
-    MyWidget::setObjectName(name);
+    QWidget::setObjectName(name);
 }
 //--------------------------------------------------------------------------------
 void IPV4_wo_port::work(void)
@@ -108,10 +108,5 @@ void IPV4_wo_port::set_url(QUrl url)
 bool IPV4_wo_port::no_exit(void)
 {
     return false;
-}
-//--------------------------------------------------------------------------------
-void IPV4_wo_port::updateText(void)
-{
-
 }
 //--------------------------------------------------------------------------------

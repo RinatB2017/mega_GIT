@@ -27,11 +27,9 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
 #define DEFAULT_IPV4_PORT   80
 //--------------------------------------------------------------------------------
-class IPV4_wo_port : public MyWidget
+class IPV4_wo_port : public QWidget
 {
     Q_OBJECT
 
@@ -57,8 +55,6 @@ private:
     QSpinBox *b;
     QSpinBox *c;
     QSpinBox *d;
-
-    void updateText(void);
 };
 //--------------------------------------------------------------------------------
 #endif // IPV4_WO_PORT_HPP

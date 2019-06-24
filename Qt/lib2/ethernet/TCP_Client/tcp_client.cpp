@@ -112,6 +112,7 @@ void TCP_Client::disconnect_from_host(void)
 {
     if(tcpSocket)
     {
+        emit info("disconnect_from_host");
         tcpSocket->disconnectFromHost();
     }
 }

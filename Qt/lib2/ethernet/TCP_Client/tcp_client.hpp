@@ -40,7 +40,13 @@ public:
     void setAddress(const QHostAddress &);
     void setPort(unsigned int);
 
+    void connect_to_host(QString address, quint16 port);
+    void disconnect_from_host(void);
+    void write_data(QByteArray data);
+    QByteArray readAll(void);
+
 signals:
+    void readyRead(void);
     void output(const QByteArray &);
 
 public slots:
@@ -59,6 +65,8 @@ private:
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+    void readyData(void);
 };
 //--------------------------------------------------------------------------------
 #endif

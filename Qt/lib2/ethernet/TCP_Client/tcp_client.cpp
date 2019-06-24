@@ -38,6 +38,12 @@ TCP_Client::TCP_Client(QWidget* parent)
 void TCP_Client::init(void)
 {
     tcpSocket = new QTcpSocket();
+    connect(tcpSocket, &QTcpSocket::readyRead, this, &TCP_Client::readyData);
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::readyData(void)
+{
+    emit readyRead();
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::setAddress(const QHostAddress &address)
@@ -69,9 +75,6 @@ QByteArray TCP_Client::send_data(const QByteArray block)
         emit error(tr("Сервер не отвечает!"));
         return nullptr;
     }
-#ifdef DEBUG_FRAME
-    emit debug(block.toHex().toUpper());
-#endif
     tcpSocket->write(block);
     if (tcpSocket->waitForBytesWritten(3000))
     {
@@ -86,7 +89,6 @@ QByteArray TCP_Client::send_data(const QByteArray block)
     {
         tmp = tcpSocket->readAll();
         emit info(tr("Данные получены!"));
-        //emit trace(tmp.data());
     }
     else
     {
@@ -95,6 +97,36 @@ QByteArray TCP_Client::send_data(const QByteArray block)
 
     tcpSocket->disconnectFromHost();
     return tmp;
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::connect_to_host(QString address, quint16 port)
+{
+    emit info(QString("connect to host %1:%2").arg(address).arg(port));
+    if(tcpSocket)
+    {
+        tcpSocket->connectToHost(address, port);
+    }
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::disconnect_from_host(void)
+{
+    if(tcpSocket)
+    {
+        tcpSocket->disconnectFromHost();
+    }
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::write_data(QByteArray data)
+{
+    if(tcpSocket)
+    {
+        tcpSocket->write(data);
+    }
+}
+//--------------------------------------------------------------------------------
+QByteArray TCP_Client::readAll(void)
+{
+    return tcpSocket->readAll();
 }
 //--------------------------------------------------------------------------------
 QByteArray TCP_Client::input(const QByteArray &data)

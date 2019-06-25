@@ -22,6 +22,7 @@
 #define TCP_CLIENT_HPP
 //--------------------------------------------------------------------------------
 #include <QHostAddress>
+#include <QTcpSocket>
 #include <QWidget>
 #include <QString>
 //--------------------------------------------------------------------------------
@@ -42,11 +43,16 @@ public:
 
     void connect_to_host(QString address, quint16 port);
     void disconnect_from_host(void);
-    void write_data(QByteArray data);
+    qint64 write_data(QByteArray data);
+    QTcpSocket::SocketState get_state(void);
     QByteArray readAll(void);
+    QString get_errorString(void);
 
 signals:
     void readyRead(void);
+    void disconnected(void);
+    void socket_error(QAbstractSocket::SocketError);
+    void state_changed(QAbstractSocket::SocketState);
     void output(const QByteArray &);
 
 public slots:

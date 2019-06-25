@@ -38,7 +38,10 @@ TCP_Client::TCP_Client(QWidget* parent)
 void TCP_Client::init(void)
 {
     tcpSocket = new QTcpSocket();
-    connect(tcpSocket, &QTcpSocket::readyRead, this, &TCP_Client::readyData);
+    connect(tcpSocket,  &QTcpSocket::readyRead,     this,   &TCP_Client::readyData);
+    connect(tcpSocket,  &QTcpSocket::disconnected,  this,   &TCP_Client::disconnected);
+    connect(tcpSocket,  SIGNAL(error(QAbstractSocket::SocketError)),        this,   SIGNAL(socket_error(QAbstractSocket::SocketError)));
+    connect(tcpSocket,  SIGNAL(stateChanged(QAbstractSocket::SocketState)), this,   SIGNAL(state_changed(QAbstractSocket::SocketState)));
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::readyData(void)
@@ -117,17 +120,36 @@ void TCP_Client::disconnect_from_host(void)
     }
 }
 //--------------------------------------------------------------------------------
-void TCP_Client::write_data(QByteArray data)
+qint64 TCP_Client::write_data(QByteArray data)
 {
     if(tcpSocket)
     {
-        tcpSocket->write(data);
+        return tcpSocket->write(data);
     }
+    return 0;
 }
 //--------------------------------------------------------------------------------
 QByteArray TCP_Client::readAll(void)
 {
-    return tcpSocket->readAll();
+    if(tcpSocket)
+    {
+        return tcpSocket->readAll();
+    }
+    return nullptr;
+}
+//--------------------------------------------------------------------------------
+QString TCP_Client::get_errorString(void)
+{
+    if(tcpSocket)
+    {
+        return tcpSocket->errorString();
+    }
+    return "tcpSocket not open";
+}
+//--------------------------------------------------------------------------------
+QTcpSocket::SocketState TCP_Client::get_state(void)
+{
+    return tcpSocket->state();
 }
 //--------------------------------------------------------------------------------
 QByteArray TCP_Client::input(const QByteArray &data)

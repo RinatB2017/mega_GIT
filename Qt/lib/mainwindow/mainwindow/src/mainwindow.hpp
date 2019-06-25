@@ -356,7 +356,7 @@ protected:
 
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);
-#ifndef NO_RESIZE
+#ifndef SHOW_SIZE
     void resizeEvent (QResizeEvent * event);
 #endif
 };

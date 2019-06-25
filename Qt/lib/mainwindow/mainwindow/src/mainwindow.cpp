@@ -185,7 +185,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_RESIZE
+#ifndef SHOW_SIZE
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
 #ifndef NO_STATUSBAR

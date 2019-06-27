@@ -1000,14 +1000,54 @@ void MyWidget::save_widgets(QString group_name)
     Q_UNUSED(group_name);
 }
 //--------------------------------------------------------------------------------
+int MyWidget::load_int(QString name)
+{
+    return settings->value(name).toInt();
+}
+//--------------------------------------------------------------------------------
 QString MyWidget::load_string(QString name)
 {
     return settings->value(name).toString();
 }
 //--------------------------------------------------------------------------------
+void MyWidget::save_int(QString name, int value)
+{
+    settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
 void MyWidget::save_string(QString name, QString value)
 {
     settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
+QVariant MyWidget::load_value(QString name)
+{
+    return settings->value(name);
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_value(QString name, QVariant value)
+{
+    settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
+void MyWidget::beginWriteArray(const QString &prefix, int size)
+{
+    settings->beginWriteArray(prefix, size);
+}
+//--------------------------------------------------------------------------------
+int MyWidget::beginReadArray(const QString &prefix)
+{
+    return settings->beginReadArray(prefix);
+}
+//--------------------------------------------------------------------------------
+void MyWidget::endArray(void)
+{
+    settings->endArray();
+}
+//--------------------------------------------------------------------------------
+void MyWidget::setArrayIndex(int i)
+{
+    settings->setArrayIndex(i);
 }
 //--------------------------------------------------------------------------------
 void MyWidget::block_close(bool state)

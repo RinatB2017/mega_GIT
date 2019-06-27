@@ -118,8 +118,18 @@ public:
     void load_widgets(QString group_name);
     void save_widgets(QString group_name);
 
+    int load_int(QString name);
     QString load_string(QString name);
+    void save_int(QString name, int value);
     void save_string(QString name, QString value);
+
+    QVariant load_value(QString name);
+    void save_value(QString name, QVariant value);
+
+    void beginWriteArray(const QString &prefix, int size = -1);
+    int beginReadArray(const QString &prefix);
+    void endArray(void);
+    void setArrayIndex(int i);
 
     void load_checkBox(QList<check_box> data);
     void load_comboBox(QList<combo_box> data);

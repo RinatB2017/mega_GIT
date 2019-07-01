@@ -234,6 +234,15 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QString temp_str = "value=0";
+    QStringList sl = temp_str.split('=');
+    foreach(QString str, sl)
+    {
+        emit info(str);
+    }
+#endif
+
+#if 0
     // max sectors 848
     // т.е. 848 * 4 * 1024 = 3473408 байт
     // т.е. 3473408 / 32 / 3 = 36181,33333333333 столбцов по 32 пикселя

@@ -234,6 +234,47 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QPixmap pixmap(200, 200);
+    pixmap.fill(QColor(Qt::red));
+
+    QImage image = pixmap.toImage();
+    QColor color = image.pixelColor(100, 100);
+
+    int hue;
+    int saturation;
+    int lightness;
+    color.getHsl(&hue, &saturation, &lightness);
+
+    emit info(QString("H %1").arg(hue));
+    emit info(QString("S %1").arg(saturation));
+    emit info(QString("L %1").arg(lightness));
+
+    int offset_x = 50;
+    int offset_y = 50;
+    for(int y=0; y<100; y++)
+    {
+        for(int x=0; x<100; x++)
+        {
+            QColor color = image.pixelColor(x + offset_x, y + offset_y);
+            int hue;
+            int saturation;
+            int lightness;
+            color.getHsl(&hue, &saturation, &lightness);
+            color.setHsl(hue, saturation, lightness * 0.5);
+
+            image.setPixelColor(x + offset_x,
+                                y + offset_y,
+                                color);
+        }
+    }
+
+    QLabel *label = new QLabel();
+//    label->setPixmap(pixmap);
+    label->setPixmap(QPixmap::fromImage(image));
+    label->show();
+#endif
+
+#if 0
     QString temp_str = "value=0";
     QStringList sl = temp_str.split('=');
     foreach(QString str, sl)

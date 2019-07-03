@@ -48,8 +48,6 @@ void Display_widget::set_color(int x, int y, QColor color)
         return;
     }
     leds[index] = color;
-
-    update();
 }
 //--------------------------------------------------------------------------------
 void Display_widget::add_color(QColor color)

@@ -27,9 +27,20 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#define MAX_MP_BUF  3473408
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Display_widget : public QWidget
+#define MAX_MP_BUF      3473408
+
+#define MIN_SIZE_LED    4
+#define MAX_SIZE_LED    32
+
+#define MIN_SIZE_X      800
+#define MAX_SIZE_X      800
+
+#define MIN_SIZE_Y      16
+#define MAX_SIZE_Y      256
+//--------------------------------------------------------------------------------
+class Display_widget : public MyWidget
 {
     Q_OBJECT
 
@@ -38,6 +49,9 @@ public:
 
     void set_color(int x, int y, QColor color);
     void add_color(QColor color);
+    bool set_size_x(int value);
+    bool set_size_y(int value);
+    bool set_size_led(int value);
 
 public slots:
     void go_first(void);
@@ -65,6 +79,11 @@ private:
 
     QColor led_color = Qt::black;
     QColor border_color = Qt::gray;
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     void paintEvent(QPaintEvent *);

@@ -21,7 +21,7 @@
 #include "display_widget.hpp"
 //--------------------------------------------------------------------------------
 Display_widget::Display_widget(QWidget *parent)
-    : QWidget(parent)
+    : MyWidget(parent)
 {
     cnt_x = 64;
     cnt_y = 32;
@@ -60,6 +60,67 @@ void Display_widget::add_color(QColor color)
     }
     leds[index_add] = color;
     index_add++;
+}
+//--------------------------------------------------------------------------------
+bool Display_widget::set_size_x(int value)
+{
+    if(value < 0)
+    {
+        emit error("size_x < 0");
+        return false;
+    }
+    if(value > MAX_SIZE_X)
+    {
+        emit error("size_x too large");
+        return false;
+    }
+
+    cnt_x = value;
+    d_width  = cnt_x * led_width;
+    d_height = cnt_y * led_height;
+    setFixedSize(d_width, d_height);
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Display_widget::set_size_y(int value)
+{
+    if(value < 0)
+    {
+        emit error("size_y < 0");
+        return false;
+    }
+    if(value > MAX_SIZE_Y)
+    {
+        emit error("size_y too large");
+        return false;
+    }
+
+    cnt_y = value;
+    d_width  = cnt_x * led_width;
+    d_height = cnt_y * led_height;
+    setFixedSize(d_width, d_height);
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Display_widget::set_size_led(int value)
+{
+    if(value < 0)
+    {
+        emit error("size_led < 0");
+        return false;
+    }
+    if(value > MAX_SIZE_LED)
+    {
+        emit error("size_led too large");
+        return false;
+    }
+
+    led_width  = value;
+    led_height = value;
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void Display_widget::go_first(void)
@@ -130,5 +191,25 @@ void Display_widget::paintEvent(QPaintEvent *)
                              led_height);
         }
     }
+}
+//--------------------------------------------------------------------------------
+void Display_widget::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+bool Display_widget::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void Display_widget::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Display_widget::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

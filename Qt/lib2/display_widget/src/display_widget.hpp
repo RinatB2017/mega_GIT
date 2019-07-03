@@ -48,10 +48,15 @@ public:
     explicit Display_widget(QWidget *parent = nullptr);
 
     void set_color(int x, int y, QColor color);
+    QColor get_color(int x, int y);
+
     void add_color(QColor color);
     bool set_size_x(int value);
     bool set_size_y(int value);
     bool set_size_led(int value);
+
+    int get_size_x(void);
+    int get_size_y(void);
 
 public slots:
     void go_first(void);
@@ -59,6 +64,7 @@ public slots:
     void go_prev(void);
     void go_next(void);
 
+    void save_image(void);
     void clear(void);
 
 private:

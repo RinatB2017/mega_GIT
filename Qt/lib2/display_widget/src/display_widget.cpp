@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "display_widget.hpp"
+#include "myfiledialog.hpp"
 //--------------------------------------------------------------------------------
 Display_widget::Display_widget(QWidget *parent)
     : MyWidget(parent)
@@ -45,9 +46,21 @@ void Display_widget::set_color(int x, int y, QColor color)
     int index = x*cnt_y + y;
     if(index > MAX_MP_BUF)
     {
+        emit error("set_color: index too large");
         return;
     }
     leds[index] = color;
+}
+//--------------------------------------------------------------------------------
+QColor Display_widget::get_color(int x, int y)
+{
+    int index = x*cnt_y + y;
+    if(index > MAX_MP_BUF)
+    {
+        emit error("get_color: index too large");
+        return Qt::black;
+    }
+    return leds[index];
 }
 //--------------------------------------------------------------------------------
 void Display_widget::add_color(QColor color)
@@ -121,6 +134,16 @@ bool Display_widget::set_size_led(int value)
     return true;
 }
 //--------------------------------------------------------------------------------
+int Display_widget::get_size_x(void)
+{
+    return cnt_x;
+}
+//--------------------------------------------------------------------------------
+int Display_widget::get_size_y(void)
+{
+    return cnt_y;
+}
+//--------------------------------------------------------------------------------
 void Display_widget::go_first(void)
 {
     show_begin_address = 0;
@@ -149,6 +172,61 @@ void Display_widget::go_next(void)
         show_begin_address+=cnt_y;
         update();
     }
+}
+//--------------------------------------------------------------------------------
+void Display_widget::save_image(void)
+{
+    QImage *image = new QImage(cnt_x, cnt_y, QImage::Format_RGBA8888);
+    //QImage *image = new QImage(cnt_x, cnt_y, QImage::Format_RGB888);
+    for(int y=0; y<cnt_y; y++)
+    {
+        for(int x=0; x<cnt_x; x++)
+        {
+            QColor color = get_color(x, cnt_y - 1 - y);
+            image->setPixelColor(x, y, color);
+        }
+    }
+
+#if 1
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(*image));
+    label->show();
+#else
+    MyFileDialog *dlg = nullptr;
+
+    dlg = new MyFileDialog("display_widget", "display_widget");
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setNameFilter("Графические файлы");
+    dlg->setNameFilters(QStringList()
+                        << "*.png"
+                        << "*.jpg"
+                        << "*.bmp"
+                        << "*.gif");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("picture");
+    dlg->setConfirmOverwrite(true);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+        bool ok = image->save(filename);
+        if(ok)
+        {
+            messagebox_info("Info", QString("Файл %1 успешно создан").arg(filename));
+        }
+        else
+        {
+            messagebox_critical("Error", QString("Файл %1 не удалось создать").arg(filename));
+        }
+    }
+    dlg->deleteLater();
+    if(image != nullptr)
+    {
+        delete image;
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void Display_widget::clear(void)

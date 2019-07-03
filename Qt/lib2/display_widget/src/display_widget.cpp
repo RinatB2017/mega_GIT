@@ -187,7 +187,7 @@ void Display_widget::save_image(void)
         }
     }
 
-#if 1
+#if 0
     QLabel *label = new QLabel();
     label->setPixmap(QPixmap::fromImage(*image));
     label->show();
@@ -204,7 +204,7 @@ void Display_widget::save_image(void)
                         << "*.gif");
     dlg->setDefaultSuffix("png");
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
+    //dlg->setDirectory(".");
     dlg->selectFile("picture");
     dlg->setConfirmOverwrite(true);
     if(dlg->exec())

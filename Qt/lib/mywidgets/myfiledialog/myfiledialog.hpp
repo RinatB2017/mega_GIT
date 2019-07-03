@@ -21,7 +21,11 @@
 #ifndef MYFILEDIALOG_HPP
 #define MYFILEDIALOG_HPP
 //--------------------------------------------------------------------------------
-#include <QFileDialog>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class MyFileDialog : public QFileDialog
 {
@@ -38,6 +42,8 @@ public slots:
 private:
     QString gName;
     QString oName;
+
+    QSettings *settings;
 };
 //--------------------------------------------------------------------------------
 #endif // MYFILEDIALOG_HPP

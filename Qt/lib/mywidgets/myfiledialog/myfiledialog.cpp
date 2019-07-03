@@ -34,7 +34,11 @@ MyFileDialog::MyFileDialog(const QString gName,
     setOption(MyFileDialog::DontUseNativeDialog, false);
     setObjectName(oName);
     //---
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#ifndef SAVE_INI
+    settings = new QSettings(ORGNAME, APPNAME);
+#else
+    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
     if(settings)
     {
         settings->beginGroup(gName);
@@ -54,7 +58,11 @@ int MyFileDialog::exec(void)
 
     if(res == Accepted)
     {
-        QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#ifndef SAVE_INI
+        settings = new QSettings(ORGNAME, APPNAME);
+#else
+        settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+#endif
         if(settings)
         {
             settings->beginGroup(gName);

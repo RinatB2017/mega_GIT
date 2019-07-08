@@ -135,7 +135,7 @@ void MainBox::init(void)
 #endif
 
     //grapher->set_legend_is_visible(false);
-#if 0
+#if 1
     curve_0 = grapher_widget->add_curve("test");
 #else
     for(int n=0; n<MAX_CHANNELS; n++)
@@ -199,7 +199,11 @@ void MainBox::test_data(void)
 
     foreach(temp_f temp, l_temp)
     {
+#if 1
+        grapher_widget->add_curve_data(curve_0, temp.x, temp.y);
+#else
         grapher_widget->add_curve_data(curves[0], temp.x, temp.y);
+#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -218,7 +222,11 @@ void MainBox::test_data2(void)
         else {
             begin_y-=delta;
         }
+#if 1
+        grapher_widget->add_curve_data(curve_0, n, begin_y);
+#else
         grapher_widget->add_curve_data(curves[0], n, begin_y);
+#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -275,9 +283,29 @@ void MainBox::save(void)
 
 }
 //--------------------------------------------------------------------------------
+#include <QtMath>
+//y = -3*x*log(x)+(0.03)*exp(-(36*x -36/e)^4)
+//y = 3*x*log(x)-(0.13)*exp(-(36*x -36/e)^4)
+
 void MainBox::test(void)
 {
     block_interface(true);
+
+#if 0
+    for(qreal x=0; x<100; x+=0.01)
+    {
+        qreal y = -3*x*qLn(x)+(0.03)*exp(-qPow(36*x - 36/M_E,4));
+        grapher_widget->add_curve_data(curve_0, x, y);
+    }
+#endif
+
+#if 1
+    for(qreal x=0; x<100; x+=0.01)
+    {
+        qreal y = 3*x*qLn(x)-(0.13)*exp(-qPow(36*x-36/M_E,4));
+        grapher_widget->add_curve_data(curve_0, x, y);
+    }
+#endif
 
 #if 0
     for(int n=0; n<MAX_CHANNELS; n++)
@@ -285,7 +313,7 @@ void MainBox::test(void)
         ui->grapher_widget->set_curve_color(n, QColor(Qt::blue));
     }
 #endif
-#if 1
+#if 0
     grapher_widget->test();
 #endif
 

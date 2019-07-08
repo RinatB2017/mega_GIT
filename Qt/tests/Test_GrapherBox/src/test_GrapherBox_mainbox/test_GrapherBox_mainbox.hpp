@@ -70,7 +70,7 @@ private:
 
     GrapherBox *grapher_widget;
 
-#if 0
+#if 1
     int curve_0 = 0;
 #else
     int curves[MAX_CHANNELS];

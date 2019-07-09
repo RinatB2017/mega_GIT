@@ -174,6 +174,38 @@ void Display_widget::go_next(void)
     }
 }
 //--------------------------------------------------------------------------------
+void Display_widget::load_image(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("dlg_temp", "dlg_temp");
+    dlg->setNameFilter("Графические фвйлы (*.jpg)");
+    dlg->setDefaultSuffix("jpg");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QPixmap pixmap(files.at(0));
+
+        QPixmap new_pixmap = pixmap.scaled(get_size_x(),
+                                           get_size_y(),
+                                           Qt::KeepAspectRatio);
+        QImage image = new_pixmap.toImage();
+
+        int w = new_pixmap.width();
+        int h = new_pixmap.height();
+
+        emit info(QString("w %1").arg(w));
+        emit info(QString("h %1").arg(h));
+
+        for(int y=0; y<h; y++)
+        {
+            for(int x=0; x<w; x++)
+            {
+                set_color(x, y, image.pixelColor(x, y));
+            }
+        }
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
 void Display_widget::save_image(void)
 {
     QImage *image = new QImage(cnt_x, cnt_y, QImage::Format_RGBA8888);

@@ -64,7 +64,9 @@ public slots:
     void go_prev(void);
     void go_next(void);
 
+    void load_image(void);
     void save_image(void);
+
     void clear(void);
 
 private:

@@ -119,9 +119,13 @@ public:
     void save_widgets(QString group_name);
 
     int load_int(QString name);
-    QString load_string(QString name);
     void save_int(QString name, int value);
+
+    QString load_string(QString name);
     void save_string(QString name, QString value);
+
+    QByteArray load_bytearray(QString name);
+    void save_bytearray(QString name, QByteArray value);
 
     QVariant load_value(QString name);
     void save_value(QString name, QVariant value);

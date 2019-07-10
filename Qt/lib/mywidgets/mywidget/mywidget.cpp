@@ -1020,6 +1020,16 @@ void MyWidget::save_string(QString name, QString value)
     settings->setValue(name, value);
 }
 //--------------------------------------------------------------------------------
+QByteArray MyWidget::load_bytearray(QString name)
+{
+    return settings->value(name).toByteArray();
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_bytearray(QString name, QByteArray value)
+{
+    settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
 QVariant MyWidget::load_value(QString name)
 {
     return settings->value(name);

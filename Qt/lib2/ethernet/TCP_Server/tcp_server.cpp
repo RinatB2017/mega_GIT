@@ -24,15 +24,17 @@
 #include <QObject>
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include "processor.hpp"
+//#include "processor.hpp"
 #include "tcp_server.hpp"
 //--------------------------------------------------------------------------------
 TCP_Server::TCP_Server(QWidget *parent) :
     MyWidget(parent)
 {
-    processor = new Processor;
-    connect(this, SIGNAL(output(QByteArray)), processor, SLOT(input(QByteArray)));
-    connect(processor, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
+//    processor = new Processor;
+//    connect(this, SIGNAL(output(QByteArray)), processor, SLOT(input(QByteArray)));
+//    connect(processor, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
+
+    setFixedSize(1, 1);
 }
 //--------------------------------------------------------------------------------
 TCP_Server::~TCP_Server()
@@ -42,9 +44,7 @@ TCP_Server::~TCP_Server()
 //--------------------------------------------------------------------------------
 bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
 {
-    emit info(QString("Создание сервера %1:%2")
-              .arg(address.toString())
-              .arg(port));
+    emit info(QString("Создание сервера на порту %1").arg(port));
 
     tcpServer = new QTcpServer(this);
     if (!tcpServer->listen(address, port))
@@ -67,8 +67,8 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     if (ipAddress.isEmpty())
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
 
-    emit debug(QString("IP: %1").arg(ipAddress));
-    emit debug(QString("Port: %1").arg(tcpServer->serverPort()));
+    emit info(QString("IP: %1").arg(ipAddress));
+    emit info(QString("Port: %1").arg(tcpServer->serverPort()));
 
     connect(tcpServer, SIGNAL(newConnection()), this, SLOT(newConnect()));
     return true;
@@ -76,8 +76,7 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
 //--------------------------------------------------------------------------------
 void TCP_Server::closeServer(void)
 {
-    clientConnection = 0;
-    delete tcpServer;
+    clientConnection = nullptr;
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::newConnect(void)

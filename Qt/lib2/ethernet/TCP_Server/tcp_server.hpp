@@ -23,8 +23,6 @@
 //--------------------------------------------------------------------------------
 #include <QHostAddress>
 #include <QByteArray>
-#include <QWidget>
-#include <QString>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -45,7 +43,7 @@ signals:
     void output(const QByteArray &);
 
 public slots:    
-    bool createServerOnPort(const QHostAddress address, quint16);
+    bool createServerOnPort(const QHostAddress address, quint16 port);
     void closeServer(void);
     void input(const QByteArray &data);
 
@@ -55,7 +53,7 @@ private slots:
     void clientDisconnected(void);
 
 private:
-    Processor *processor = nullptr;
+    //Processor *processor = nullptr;
     QTcpServer *tcpServer = nullptr;
     QTcpSocket *clientConnection = nullptr;
 

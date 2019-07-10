@@ -131,7 +131,11 @@ qint64 TCP_Client::write_data(QByteArray data)
 //--------------------------------------------------------------------------------
 QByteArray TCP_Client::readAll(void)
 {
-    if(tcpSocket)
+    if(tcpSocket == nullptr)
+    {
+        return nullptr;
+    }
+    if(tcpSocket->isOpen())
     {
         return tcpSocket->readAll();
     }
@@ -140,7 +144,11 @@ QByteArray TCP_Client::readAll(void)
 //--------------------------------------------------------------------------------
 QString TCP_Client::get_errorString(void)
 {
-    if(tcpSocket)
+    if(tcpSocket == nullptr)
+    {
+        return "";
+    }
+    if(tcpSocket->isOpen())
     {
         return tcpSocket->errorString();
     }

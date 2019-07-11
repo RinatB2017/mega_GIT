@@ -43,7 +43,7 @@ MyFileDialog::MyFileDialog(const QString gName,
     {
         settings->beginGroup(gName);
 
-        QString dir = settings->value(oName, ".").toString();
+        QString dir = settings->value(oName, QDir::homePath()).toString();
         setDirectory(dir);
 
         settings->endGroup();

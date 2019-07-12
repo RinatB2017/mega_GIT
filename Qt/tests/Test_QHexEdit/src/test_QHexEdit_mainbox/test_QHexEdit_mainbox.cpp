@@ -116,7 +116,7 @@ void MainBox::test_0(void)
 {
     QByteArray ba;
     ba.clear();
-    for(int n=0; n<=0xFF; n++) ba.append((char)n);
+    for(int n=0; n<=0xFF; n++) ba.append(static_cast<char>(n));
 
     QHexEditData *data = QHexEditData::fromMemory(ba);
 

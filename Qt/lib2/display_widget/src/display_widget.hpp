@@ -29,16 +29,13 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define MAX_MP_BUF      3473408
-
 #define MIN_SIZE_LED    4
 #define MAX_SIZE_LED    32
 
-#define MIN_SIZE_X      800
-#define MAX_SIZE_X      800
+#define SIZE_X      64
+#define SIZE_Y      32
 
-#define MIN_SIZE_Y      16
-#define MAX_SIZE_Y      256
+#define MAX_BUF (SIZE_X * SIZE_Y)
 //--------------------------------------------------------------------------------
 class Display_widget : public MyWidget
 {
@@ -50,20 +47,12 @@ public:
     void set_color(int x, int y, QColor color);
     QColor get_color(int x, int y);
 
-    void add_color(QColor color);
-    bool set_size_x(int value);
-    bool set_size_y(int value);
     bool set_size_led(int value);
 
     int get_size_x(void);
     int get_size_y(void);
 
 public slots:
-    void go_first(void);
-    void go_last(void);
-    void go_prev(void);
-    void go_next(void);
-
     void load_image(void);
     void save_image(void);
 
@@ -73,17 +62,14 @@ private:
     int d_width = 0;
     int d_height = 0;
 
-    int cnt_x = 0;
-    int cnt_y = 0;
+    int max_x = 0;
+    int max_y = 0;
 
     int led_width = 16;
     int led_height = 16;
     int led_border = 1;
 
-    int index_add = 0;
-    int show_begin_address = 0;
-    int show_last_address = 0;
-    QColor leds[MAX_MP_BUF];
+    QColor leds[MAX_BUF];
 
     QColor led_color = Qt::black;
     QColor border_color = Qt::gray;

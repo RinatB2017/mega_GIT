@@ -24,18 +24,11 @@
 Display_widget::Display_widget(QWidget *parent)
     : MyWidget(parent)
 {
-    cnt_x = 64;
-    cnt_y = 32;
+    max_x = SIZE_X;
+    max_y = SIZE_Y;
 
-    d_width  = cnt_x * led_width;
-    d_height = cnt_y * led_height;
-
-    for(int n=0; n<MAX_MP_BUF; n++)
-    {
-        leds[n] = Qt::black;
-    }
-
-    show_last_address = MAX_MP_BUF - cnt_x * cnt_y * 3;
+    d_width  = max_x * led_width;
+    d_height = max_y * led_height;
 
     setFixedSize(d_width, d_height);
     update();
@@ -43,10 +36,13 @@ Display_widget::Display_widget(QWidget *parent)
 //--------------------------------------------------------------------------------
 void Display_widget::set_color(int x, int y, QColor color)
 {
+#ifdef ROTATE_DISPLAY
     int index = x*cnt_y + y;
-    if(index > MAX_MP_BUF)
+#else
+    int index = y*max_x + x;
+#endif
+    if(index > MAX_BUF)
     {
-        emit error("set_color: index too large");
         return;
     }
     leds[index] = color;
@@ -54,72 +50,23 @@ void Display_widget::set_color(int x, int y, QColor color)
 //--------------------------------------------------------------------------------
 QColor Display_widget::get_color(int x, int y)
 {
+#ifdef ROTATE_DISPLAY
     int index = x*cnt_y + y;
-    if(index > MAX_MP_BUF)
+#else
+    int index = y*max_x + x;
+#endif
+    if(index > MAX_BUF)
     {
-        emit error("get_color: index too large");
         return Qt::black;
     }
     return leds[index];
 }
 //--------------------------------------------------------------------------------
-void Display_widget::add_color(QColor color)
-{
-    if(index_add > cnt_x * cnt_y * 3)
-    {
-        index_add = 0;
-    }
-    leds[index_add] = color;
-    index_add++;
-}
-//--------------------------------------------------------------------------------
-bool Display_widget::set_size_x(int value)
-{
-    if(value < 0)
-    {
-        emit error("size_x < 0");
-        return false;
-    }
-    if(value > MAX_SIZE_X)
-    {
-        emit error("size_x too large");
-        return false;
-    }
-
-    cnt_x = value;
-    d_width  = cnt_x * led_width;
-    d_height = cnt_y * led_height;
-    setFixedSize(d_width, d_height);
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool Display_widget::set_size_y(int value)
-{
-    if(value < 0)
-    {
-        emit error("size_y < 0");
-        return false;
-    }
-    if(value > MAX_SIZE_Y)
-    {
-        emit error("size_y too large");
-        return false;
-    }
-
-    cnt_y = value;
-    d_width  = cnt_x * led_width;
-    d_height = cnt_y * led_height;
-    setFixedSize(d_width, d_height);
-
-    return true;
-}
-//--------------------------------------------------------------------------------
 bool Display_widget::set_size_led(int value)
 {
-    if(value < 0)
+    if(value < MIN_SIZE_LED)
     {
-        emit error("size_led < 0");
+        emit error("size_led < MIN_SIZE_LED");
         return false;
     }
     if(value > MAX_SIZE_LED)
@@ -136,42 +83,12 @@ bool Display_widget::set_size_led(int value)
 //--------------------------------------------------------------------------------
 int Display_widget::get_size_x(void)
 {
-    return cnt_x;
+    return max_x;
 }
 //--------------------------------------------------------------------------------
 int Display_widget::get_size_y(void)
 {
-    return cnt_y;
-}
-//--------------------------------------------------------------------------------
-void Display_widget::go_first(void)
-{
-    show_begin_address = 0;
-    update();
-}
-//--------------------------------------------------------------------------------
-void Display_widget::go_last(void)
-{
-    show_begin_address = show_last_address;
-    update();
-}
-//--------------------------------------------------------------------------------
-void Display_widget::go_prev(void)
-{
-    if(show_begin_address >= cnt_y)
-    {
-        show_begin_address-=cnt_y;
-        update();
-    }
-}
-//--------------------------------------------------------------------------------
-void Display_widget::go_next(void)
-{
-    if(show_begin_address < show_last_address - cnt_y)
-    {
-        show_begin_address+=cnt_y;
-        update();
-    }
+    return max_y;
 }
 //--------------------------------------------------------------------------------
 void Display_widget::load_image(void)
@@ -208,13 +125,13 @@ void Display_widget::load_image(void)
 //--------------------------------------------------------------------------------
 void Display_widget::save_image(void)
 {
-    QImage *image = new QImage(cnt_x, cnt_y, QImage::Format_RGBA8888);
+    QImage *image = new QImage(max_x, max_y, QImage::Format_RGBA8888);
     //QImage *image = new QImage(cnt_x, cnt_y, QImage::Format_RGB888);
-    for(int y=0; y<cnt_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(int x=0; x<cnt_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-            QColor color = get_color(x, cnt_y - 1 - y);
+            QColor color = get_color(x, max_y - 1 - y);
             image->setPixelColor(x, y, color);
         }
     }
@@ -263,7 +180,7 @@ void Display_widget::save_image(void)
 //--------------------------------------------------------------------------------
 void Display_widget::clear(void)
 {
-    for(int n=0; n<MAX_MP_BUF; n++)
+    for(int n=0; n<MAX_BUF; n++)
     {
         leds[n] = Qt::black;
     }
@@ -277,22 +194,26 @@ void Display_widget::paintEvent(QPaintEvent *)
     painter.drawRect(0, 0, width(), height());
 
     painter.setPen(border_color);
-    for(int y=0; y<cnt_y; y++)
+    for(int y=0; y<max_y; y++)
     {
         painter.drawLine(0, y * led_height, width(), y * led_height);
     }
-    for(int x=0; x<cnt_x; x++)
+    for(int x=0; x<max_x; x++)
     {
         painter.drawLine(x * led_width, 0, x * led_width, height());
     }
 
-    for(int y=0; y<cnt_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(int x=0; x<cnt_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-//            int index = y*cnt_x + x;
+#ifdef ROTATE_DISPLAY
             int index = show_begin_address + x*cnt_y + (cnt_y - 1 - y);
+#else
+            int index = (y*max_x + x);
+#endif
             painter.setBrush(QBrush(leds[index]));
+            painter.setBrush(QBrush(get_color(x, y)));
             painter.drawRect(x*led_width,
                              y*led_height,
                              led_width,

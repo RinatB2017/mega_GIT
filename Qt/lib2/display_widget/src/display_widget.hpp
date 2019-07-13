@@ -53,9 +53,6 @@ public:
     int get_size_y(void);
 
 public slots:
-    void load_image(void);
-    void save_image(void);
-
     void clear(void);
 
 private:

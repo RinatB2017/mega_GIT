@@ -14,7 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/test_html_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
 QT += webenginewidgets
 CONFIG += c++11
 

@@ -85,7 +85,7 @@ void MainBox::init(void)
 
     ui->cb_user_agent->setFixedWidth(200);
 
-    profile = QWebEngineProfile::defaultProfile();;
+    profile = QWebEngineProfile::defaultProfile();
 
     //TODO печеньки
     QString path_cookies = QCoreApplication::applicationDirPath() + QLatin1String("/storage");
@@ -137,10 +137,11 @@ void MainBox::init(void)
     //ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
-    ui->le_address->setText("https://www.avito.ru/krasnodar");
+    // ui->le_address->setText("https://www.avito.ru/krasnodar");
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
     //ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
     //ui->le_address->setText("http://fgramota.org/game/");
+    ui->le_address->setText("https://free-socks.in");
 
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 

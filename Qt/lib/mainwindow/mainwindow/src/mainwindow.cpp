@@ -185,7 +185,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-#ifndef SHOW_SIZE
+#ifdef SHOW_SIZE
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
 #ifndef NO_STATUSBAR
@@ -1442,15 +1442,15 @@ void MainWindow::set_light_palette(void)
     QPalette palette;
 
 #ifdef Q_OS_LINUX
-    palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-    palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
-    palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-    palette.setBrush(QPalette::Text,        QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-    palette.setBrush(QPalette::BrightText,  QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-    palette.setBrush(QPalette::ButtonText,  QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-    palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-    palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
-    palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040), Qt::SolidPattern));
+    palette.setBrush(QPalette::WindowText,  QBrush(QColor(static_cast<QRgb>(0x000000)), Qt::SolidPattern));
+    palette.setBrush(QPalette::Button,      QBrush(QColor(static_cast<QRgb>(0xd4d4d4)), Qt::SolidPattern));
+    palette.setBrush(QPalette::Light,       QBrush(QColor(static_cast<QRgb>(0xffffff)), Qt::SolidPattern));
+    palette.setBrush(QPalette::Text,        QBrush(QColor(static_cast<QRgb>(0x000000)), Qt::SolidPattern));
+    palette.setBrush(QPalette::BrightText,  QBrush(QColor(static_cast<QRgb>(0xffffff)), Qt::SolidPattern));
+    palette.setBrush(QPalette::ButtonText,  QBrush(QColor(static_cast<QRgb>(0x000000)), Qt::SolidPattern));
+    palette.setBrush(QPalette::Base,        QBrush(QColor(static_cast<QRgb>(0xffffff)), Qt::SolidPattern));
+    palette.setBrush(QPalette::Window,      QBrush(QColor(static_cast<QRgb>(0xd4d4d4)), Qt::SolidPattern));
+    palette.setBrush(QPalette::Shadow,      QBrush(QColor(static_cast<QRgb>(0x404040)), Qt::SolidPattern));
 #endif
 
 #ifdef Q_OS_WIN

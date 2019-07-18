@@ -226,7 +226,8 @@ bool MainBox::create_color_block(int width,
     return ok;
 }
 //--------------------------------------------------------------------------------
-#include "tile_widget.hpp"
+//#include "tile_widget.hpp"
+#include "bone_15.hpp"
 
 bool MainBox::test_0(void)
 {
@@ -234,6 +235,15 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    for(int n=1; n<=15; n++)
+    {
+        Bone_15 *bone = new Bone_15(n, 64, 32);
+        bone->save(QString("/dev/shm/0/bone_%1.png").arg(n));
+    }
+    emit info("OK");
+#endif
+
+#if 0
     QPixmap pixmap(200, 200);
     pixmap.fill(QColor(Qt::red));
 

@@ -226,122 +226,20 @@ bool MainBox::create_color_block(int width,
     return ok;
 }
 //--------------------------------------------------------------------------------
-//#include "tile_widget.hpp"
-#include "bone_15.hpp"
+//#include "bone_15.hpp"
 
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     for(int n=1; n<=15; n++)
     {
         Bone_15 *bone = new Bone_15(n, 64, 32);
         bone->save(QString("/dev/shm/0/bone_%1.png").arg(n));
     }
     emit info("OK");
-#endif
-
-#if 0
-    QPixmap pixmap(200, 200);
-    pixmap.fill(QColor(Qt::red));
-
-    QImage image = pixmap.toImage();
-    QColor color = image.pixelColor(100, 100);
-
-    int hue;
-    int saturation;
-    int lightness;
-    color.getHsl(&hue, &saturation, &lightness);
-
-    emit info(QString("H %1").arg(hue));
-    emit info(QString("S %1").arg(saturation));
-    emit info(QString("L %1").arg(lightness));
-
-    int offset_x = 50;
-    int offset_y = 50;
-    for(int y=0; y<100; y++)
-    {
-        for(int x=0; x<100; x++)
-        {
-            QColor color = image.pixelColor(x + offset_x, y + offset_y);
-            int hue;
-            int saturation;
-            int lightness;
-            color.getHsl(&hue, &saturation, &lightness);
-            color.setHsl(hue, saturation, lightness * 0.5);
-
-            image.setPixelColor(x + offset_x,
-                                y + offset_y,
-                                color);
-        }
-    }
-
-    QLabel *label = new QLabel();
-//    label->setPixmap(pixmap);
-    label->setPixmap(QPixmap::fromImage(image));
-    label->show();
-#endif
-
-#if 0
-    QString temp_str = "value=0";
-    QStringList sl = temp_str.split('=');
-    foreach(QString str, sl)
-    {
-        emit info(str);
-    }
-#endif
-
-#if 0
-    // max sectors 848
-    // т.е. 848 * 4 * 1024 = 3473408 байт
-    // т.е. 3473408 / 32 / 3 = 36181,33333333333 столбцов по 32 пикселя
-
-    TestWidget *tw = new TestWidget(36181, 32);
-    tw->set_color(2, 3, Qt::red);
-
-    QScrollArea *area = new QScrollArea();
-    area->setWidget(tw);
-    area->setFixedSize(800, 600);
-
-    area->show();
-#endif
-
-#if 0
-    bool ok = false;
-    QString path = "/dev/shm/0/";
-    ok = create_color_block(32, 32, 1, Qt::white, Qt::gray,     path, "block_gray.png");
-    if(!ok) return false;
-    ok = create_color_block(32, 32, 1, Qt::white, Qt::red,      path, "block_red.png");
-    if(!ok) return false;
-    ok = create_color_block(32, 32, 1, Qt::white, Qt::green,    path, "block_green.png");
-    if(!ok) return false;
-    ok = create_color_block(32, 32, 1, Qt::white, Qt::blue,     path, "block_blue.png");
-    if(!ok) return false;
-    ok = create_color_block(32, 32, 1, Qt::white, Qt::cyan,     path, "block_cyan.png");
-    if(!ok) return false;
-    ok = create_color_block(32, 32, 1, Qt::white, Qt::magenta,  path, "block_magenta.png");
-    if(!ok) return false;
-    ok = create_color_block(32, 32, 1, Qt::white, Qt::yellow,   path, "block_yellow.png");
-    if(!ok) return false;
-
-#endif
-
-#if 0
-    //QPixmap pixmap(":/s0.png");
-    QPixmap pixmap(":/s1.png");
-
-    QLabel *label = new QLabel();
-    label->setPixmap(pixmap);
-    label->setFixedSize(720, 1280);
-    label->show();
-#endif
-
-#if 0
-    Tile_widget *tw = new Tile_widget(Horizontal);
-    //Tile_widget *tw = new Tile_widget(Vertical);
-    tw->show();
 #endif
 
     return true;

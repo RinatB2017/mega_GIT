@@ -59,17 +59,14 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     init_serial();
     init_grapher();
 
-    //QVBoxLayout *vbox = new QVBoxLayout;
-    //vbox->addWidget(serial_widget);
-    //vbox->addStretch(1);
-
     QHBoxLayout *box = new QHBoxLayout;
-    //box->addLayout(vbox);
     box->addWidget(grapher_widget);
     setLayout(box);
 
@@ -242,5 +239,20 @@ void MainBox::read_data(QByteArray data)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

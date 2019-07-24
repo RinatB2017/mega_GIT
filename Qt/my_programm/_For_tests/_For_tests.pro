@@ -104,7 +104,7 @@ include (src/simple_mw/simple_mw.pri)
 #include (src/test_widget/test_widget.pri)
 #include (src/gem_widget/gem_widget.pri)
 #include (src/tile_widget/tile_widget.pri)
-include (src/bone_15/bone_15.pri)
+#include (src/bone_15/bone_15.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

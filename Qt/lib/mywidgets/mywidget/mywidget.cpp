@@ -85,7 +85,6 @@ void MyWidget::connect_log(QWidget *parent)
 #else
     if(parent)
     {
-#if 1
         int m_info = parent->metaObject()->indexOfMethod("info(QString)");
         int m_debug = parent->metaObject()->indexOfMethod("debug(QString)");
         int m_error = parent->metaObject()->indexOfMethod("error(QString)");
@@ -98,14 +97,6 @@ void MyWidget::connect_log(QWidget *parent)
         if(m_trace != -1) connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
         if(m_colorlog != -1) connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
-#else
-        connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
-
-        connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   parent, SIGNAL(colorLog(QString,QColor,QColor)));
-#endif
     }
     else
     {
@@ -124,7 +115,7 @@ void MyWidget::log(const QString data)
 #ifdef QT_DEBUG
     qDebug() << data;
 #else
-    Q_UNUSED(data);
+    Q_UNUSED(data)
 #endif
 }
 //--------------------------------------------------------------------------------

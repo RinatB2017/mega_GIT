@@ -10,6 +10,7 @@ SUBDIRS += \
     auto_inc_version \
     Check_Network \
     hello_speak \
+    Get_acceleration_data \
     Get_MyIP \
     GP2Y0A02Y \
     imageviewer \

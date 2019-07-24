@@ -199,6 +199,8 @@ private:
 
     QSettings *settings;
 
+    bool check_exists_signals(QWidget *parent);
+
     void load_QRadioButton(QString group_name);
     void save_QRadioButton(QString group_name);
 

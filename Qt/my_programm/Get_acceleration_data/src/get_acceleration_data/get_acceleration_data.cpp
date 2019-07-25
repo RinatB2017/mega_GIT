@@ -108,6 +108,12 @@ void MainBox::init_grapher(void)
     curve_valuesMagnet_x = ui->grapher_widget->add_curve("Magnet_x");
     curve_valuesMagnet_y = ui->grapher_widget->add_curve("Magnet_y");
     curve_valuesMagnet_z = ui->grapher_widget->add_curve("Magnet_z");
+
+    ui->grapher_widget->set_title_axis_X("time");
+    ui->grapher_widget->set_title_axis_Y("value");
+
+    ui->grapher_widget->set_axis_scale_x(0, 100);
+    ui->grapher_widget->set_axis_scale_y(-100, 100);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_gl_widget(void)
@@ -255,11 +261,14 @@ void MainBox::read_data(QByteArray data)
     QString text;
     text.append(data);
 
+    text = text.replace(',', '.');  //TODO надо поправить в исходнике на android
+
     QStringList sl = text.split(';');
     //emit info(QString("count %1").arg(sl.count()));
 
     if(sl.count() != 21)
     {
+        //emit error("sl.count() != 21");
         return;
     }
 
@@ -316,11 +325,11 @@ void MainBox::read_data(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_valuesMagnet_z, valuesMagnet_z);
     //---
 
+    //---
     if(valuesAccel_x < 0) valuesAccel_x += 360.0;
     if(valuesAccel_y < 0) valuesAccel_y += 360.0;
     if(valuesAccel_z < 0) valuesAccel_z += 360.0;
 
-    //---
     ui->gl_widget->setXRotation(static_cast<int>(valuesAccel_x));
     ui->gl_widget->setYRotation(static_cast<int>(valuesAccel_y));
     ui->gl_widget->setZRotation(static_cast<int>(valuesAccel_z));

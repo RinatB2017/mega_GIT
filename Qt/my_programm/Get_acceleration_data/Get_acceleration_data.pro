@@ -16,6 +16,8 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += NO_RESIZE
 
+DEFINES += SAVE_WIDGETS_SPLITTER
+
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
@@ -51,6 +53,8 @@ LIB_PATH2   = "../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+
+include (src/glwidget/glwidget_qt5.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

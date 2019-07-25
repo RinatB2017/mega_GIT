@@ -225,18 +225,18 @@ void MainBox::data_mpu6050(QByteArray data)
         return;
     }
 
-    int err             = sl.at(0).toInt();
-    qreal x_accel       = sl.at(1).toDouble();
-    qreal y_accel       = sl.at(2).toDouble();
-    qreal z_accel       = sl.at(3).toDouble();
-    qreal temperature   = sl.at(4).toDouble();
-    qreal x_gyro        = sl.at(5).toDouble();
-    qreal y_gyro        = sl.at(6).toDouble();
-    qreal z_gyro        = sl.at(7).toDouble();
-
-    qreal x_angle      = sl.at(8).toDouble();
-    qreal y_angle      = sl.at(9).toDouble();
-    qreal z_angle      = sl.at(10).toDouble();
+    int index = 0;
+    int err             = sl.at(index++).toInt();
+    qreal x_accel       = sl.at(index++).toDouble();
+    qreal y_accel       = sl.at(index++).toDouble();
+    qreal z_accel       = sl.at(index++).toDouble();
+    qreal temperature   = sl.at(index++).toDouble();
+    qreal x_gyro        = sl.at(index++).toDouble();
+    qreal y_gyro        = sl.at(index++).toDouble();
+    qreal z_gyro        = sl.at(index++).toDouble();
+    qreal x_angle       = sl.at(index++).toDouble();
+    qreal y_angle       = sl.at(index++).toDouble();
+    qreal z_angle       = sl.at(index++).toDouble();
 
     if(x_angle < 0) x_angle += 360.0;
     if(y_angle < 0) y_angle += 360.0;

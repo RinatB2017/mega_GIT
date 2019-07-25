@@ -27,12 +27,12 @@
 #include "ui_get_acceleration_data.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "get_acceleration_data.hpp"
 #include "defines.hpp"
 
 #include "serialbox5_fix_baudrate.hpp"
+#include "glwidget.h"
 #include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -65,45 +65,72 @@ void MainBox::init(void)
 
     init_serial();
     init_grapher();
+    init_gl_widget();
 
-    QHBoxLayout *box = new QHBoxLayout;
-    box->addWidget(grapher_widget);
-    setLayout(box);
-
+#if -0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         mw->load_setting();
     }
+#endif
     load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
-
-    serial_widget = new SerialBox5_fix_baudrate(this, "RS232", "RS232");
-    serial_widget->set_fix_baudrate(115200);
-    serial_widget->add_menu(2);
-    connect(this,           SIGNAL(send(QByteArray)),   serial_widget,  SLOT(input(QByteArray)));
-    connect(serial_widget,  SIGNAL(output(QByteArray)), this,           SLOT(read_data(QByteArray)));
-
-    //mw->add_dock_widget("serial", "serial_widget", Qt::TopDockWidgetArea, serial_widget);
-
-    QToolBar *serial_bar = new QToolBar("serial_bar");
-    serial_bar->setObjectName("serial_bar");
-    mw->addToolBar(Qt::TopToolBarArea, serial_bar);
-    serial_bar->addWidget(serial_widget);
+    ui->serial_widget->set_fix_baudrate(115200);
+    ui->serial_widget->add_menu(2);
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_grapher(void)
 {
-    grapher_widget = new GrapherBox(this);
-    for(int n=0; n<21; n++)
-    {
-        curves[n] = grapher_widget->add_curve(QString("curse_%1").arg(n));
-    }
+    curve_valuesAccel_x = ui->grapher_widget->add_curve("Accel_x");
+    curve_valuesAccel_y = ui->grapher_widget->add_curve("Accel_y");
+    curve_valuesAccel_z = ui->grapher_widget->add_curve("Accel_z");
+    curve_valuesResult_x = ui->grapher_widget->add_curve("Result_x");
+    curve_valuesResult_y = ui->grapher_widget->add_curve("Result_y");
+    curve_valuesResult_z = ui->grapher_widget->add_curve("Result_z");
+    curve_valuesAccelMotion_x = ui->grapher_widget->add_curve("AccelMotion_x");
+    curve_valuesAccelMotion_y = ui->grapher_widget->add_curve("AccelMotion_y");
+    curve_valuesAccelMotion_z = ui->grapher_widget->add_curve("AccelMotion_z");
+    curve_valuesAccelGravity_x = ui->grapher_widget->add_curve("AccelGravity_x");
+    curve_valuesAccelGravity_y = ui->grapher_widget->add_curve("AccelGravity_y");
+    curve_valuesAccelGravity_z = ui->grapher_widget->add_curve("AccelGravity_z");
+    curve_valuesLinAccel_x = ui->grapher_widget->add_curve("LinAccel_x");
+    curve_valuesLinAccel_y = ui->grapher_widget->add_curve("LinAccel_y");
+    curve_valuesLinAccel_z = ui->grapher_widget->add_curve("LinAccel_z");
+    curve_valuesGravity_x = ui->grapher_widget->add_curve("Gravity_x");
+    curve_valuesGravity_y = ui->grapher_widget->add_curve("Gravity_y");
+    curve_valuesGravity_z = ui->grapher_widget->add_curve("Gravity_z");
+    curve_valuesMagnet_x = ui->grapher_widget->add_curve("Magnet_x");
+    curve_valuesMagnet_y = ui->grapher_widget->add_curve("Magnet_y");
+    curve_valuesMagnet_z = ui->grapher_widget->add_curve("Magnet_z");
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_gl_widget(void)
+{
+    ui->sl_X->setRange(0, 359);
+    ui->sl_Y->setRange(0, 359);
+    ui->sl_Z->setRange(0, 359);
+
+    ui->sb_X->setRange(0, 359);
+    ui->sb_Y->setRange(0, 359);
+    ui->sb_Z->setRange(0, 359);
+
+    connect(ui->sl_X,   SIGNAL(valueChanged(int)),  ui->sb_X,   SLOT(setValue(int)));
+    connect(ui->sl_Y,   SIGNAL(valueChanged(int)),  ui->sb_Y,   SLOT(setValue(int)));
+    connect(ui->sl_Z,   SIGNAL(valueChanged(int)),  ui->sb_Z,   SLOT(setValue(int)));
+
+    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->sl_X,   SLOT(setValue(int)));
+    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->sl_Y,   SLOT(setValue(int)));
+    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->sl_Z,   SLOT(setValue(int)));
+
+    connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setXRotation(int)));
+    connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setYRotation(int)));
+    connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setZRotation(int)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -175,6 +202,14 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+    int index = 0;
+    int a = index++;
+    int b = ++index;
+    int c = index++;
+    emit info(QString("%1").arg(a));
+    emit info(QString("%1").arg(b));
+    emit info(QString("%1").arg(c));
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -228,12 +263,68 @@ void MainBox::read_data(QByteArray data)
         return;
     }
 
-    for(int n=0; n<21; n++)
-    {
-        QString value_str = static_cast<QString>(sl.at(n)).replace(',', '.');
-        double value = value_str.toDouble();
-        grapher_widget->add_curve_data(curves[n], value);
-    }
+    int index = 0;
+    qreal valuesAccel_x = sl.at(index++).toDouble();
+    qreal valuesAccel_y = sl.at(index++).toDouble();
+    qreal valuesAccel_z = sl.at(index++).toDouble();
+
+    qreal valuesResult_x = sl.at(index++).toDouble();
+    qreal valuesResult_y = sl.at(index++).toDouble();
+    qreal valuesResult_z = sl.at(index++).toDouble();
+
+    qreal valuesAccelMotion_x = sl.at(index++).toDouble();
+    qreal valuesAccelMotion_y = sl.at(index++).toDouble();
+    qreal valuesAccelMotion_z = sl.at(index++).toDouble();
+
+    qreal valuesAccelGravity_x = sl.at(index++).toDouble();
+    qreal valuesAccelGravity_y = sl.at(index++).toDouble();
+    qreal valuesAccelGravity_z = sl.at(index++).toDouble();
+
+    qreal valuesLinAccel_x = sl.at(index++).toDouble();
+    qreal valuesLinAccel_y = sl.at(index++).toDouble();
+    qreal valuesLinAccel_z = sl.at(index++).toDouble();
+
+    qreal valuesGravity_x = sl.at(index++).toDouble();
+    qreal valuesGravity_y = sl.at(index++).toDouble();
+    qreal valuesGravity_z = sl.at(index++).toDouble();
+
+    qreal valuesMagnet_x = sl.at(index++).toDouble();
+    qreal valuesMagnet_y = sl.at(index++).toDouble();
+    qreal valuesMagnet_z = sl.at(index++).toDouble();
+
+    //---
+    ui->grapher_widget->add_curve_data(curve_valuesAccel_x, valuesAccel_x);
+    ui->grapher_widget->add_curve_data(curve_valuesAccel_y, valuesAccel_y);
+    ui->grapher_widget->add_curve_data(curve_valuesAccel_z, valuesAccel_y);
+    ui->grapher_widget->add_curve_data(curve_valuesResult_x, valuesResult_x);
+    ui->grapher_widget->add_curve_data(curve_valuesResult_y, valuesResult_y);
+    ui->grapher_widget->add_curve_data(curve_valuesResult_z, valuesResult_z);
+    ui->grapher_widget->add_curve_data(curve_valuesAccelMotion_x, valuesAccelMotion_x);
+    ui->grapher_widget->add_curve_data(curve_valuesAccelMotion_y, valuesAccelMotion_y);
+    ui->grapher_widget->add_curve_data(curve_valuesAccelMotion_z, valuesAccelMotion_z);
+    ui->grapher_widget->add_curve_data(curve_valuesAccelGravity_x, valuesAccelGravity_x);
+    ui->grapher_widget->add_curve_data(curve_valuesAccelGravity_y, valuesAccelGravity_y);
+    ui->grapher_widget->add_curve_data(curve_valuesAccelGravity_z, valuesAccelGravity_z);
+    ui->grapher_widget->add_curve_data(curve_valuesLinAccel_x, valuesLinAccel_x);
+    ui->grapher_widget->add_curve_data(curve_valuesLinAccel_y, valuesLinAccel_y);
+    ui->grapher_widget->add_curve_data(curve_valuesLinAccel_z, valuesLinAccel_z);
+    ui->grapher_widget->add_curve_data(curve_valuesGravity_x, valuesGravity_x);
+    ui->grapher_widget->add_curve_data(curve_valuesGravity_y, valuesGravity_y);
+    ui->grapher_widget->add_curve_data(curve_valuesGravity_z, valuesGravity_z);
+    ui->grapher_widget->add_curve_data(curve_valuesMagnet_x, valuesMagnet_x);
+    ui->grapher_widget->add_curve_data(curve_valuesMagnet_y, valuesMagnet_y);
+    ui->grapher_widget->add_curve_data(curve_valuesMagnet_z, valuesMagnet_z);
+    //---
+
+    if(valuesAccel_x < 0) valuesAccel_x += 360.0;
+    if(valuesAccel_y < 0) valuesAccel_y += 360.0;
+    if(valuesAccel_z < 0) valuesAccel_z += 360.0;
+
+    //---
+    ui->gl_widget->setXRotation(static_cast<int>(valuesAccel_x));
+    ui->gl_widget->setYRotation(static_cast<int>(valuesAccel_y));
+    ui->gl_widget->setZRotation(static_cast<int>(valuesAccel_z));
+    //---
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

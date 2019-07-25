@@ -21,22 +21,18 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
+#include "mysplashscreen.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-
-class SerialBox5_fix_baudrate;
-class GrapherBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -84,14 +80,33 @@ private:
     QComboBox *cb_test;
     QList<CMD> commands;
 
-    SerialBox5_fix_baudrate *serial_widget;
-    GrapherBox *grapher_widget;
-
-    int curves[21] = { 0 };
+    int curve_valuesAccel_x = 0;
+    int curve_valuesAccel_y = 0;
+    int curve_valuesAccel_z = 0;
+    int curve_valuesResult_x = 0;
+    int curve_valuesResult_y = 0;
+    int curve_valuesResult_z = 0;
+    int curve_valuesAccelMotion_x = 0;
+    int curve_valuesAccelMotion_y = 0;
+    int curve_valuesAccelMotion_z = 0;
+    int curve_valuesAccelGravity_x = 0;
+    int curve_valuesAccelGravity_y = 0;
+    int curve_valuesAccelGravity_z = 0;
+    int curve_valuesLinAccel_x = 0;
+    int curve_valuesLinAccel_y = 0;
+    int curve_valuesLinAccel_z = 0;
+    int curve_valuesGravity_x = 0;
+    int curve_valuesGravity_y = 0;
+    int curve_valuesGravity_z = 0;
+    int curve_valuesMagnet_x = 0;
+    int curve_valuesMagnet_y = 0;
+    int curve_valuesMagnet_z = 0;
 
     void init(void);
     void init_serial(void);
     void init_grapher(void);
+    void init_gl_widget(void);
+
     void createTestBar(void);
 
     void updateText(void);

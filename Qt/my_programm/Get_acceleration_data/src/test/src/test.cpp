@@ -27,7 +27,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "get_sensors_data.hpp"
+#include "get_acceleration_data.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

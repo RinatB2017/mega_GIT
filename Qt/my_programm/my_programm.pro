@@ -20,7 +20,6 @@ SUBDIRS += \
     Simple_HTTP_reader \
     neural/QNeuralNet \
     Labyrinth \
-    NewMoonLight \
     MODBUS \
     show_films \
     Templates \

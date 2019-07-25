@@ -330,9 +330,19 @@ void MainBox::read_data(QByteArray data)
     if(valuesAccel_y < 0) valuesAccel_y += 360.0;
     if(valuesAccel_z < 0) valuesAccel_z += 360.0;
 
+#if 1
     ui->gl_widget->setXRotation(static_cast<int>(valuesAccel_x));
     ui->gl_widget->setYRotation(static_cast<int>(valuesAccel_y));
     ui->gl_widget->setZRotation(static_cast<int>(valuesAccel_z));
+#else
+    qreal real_valuesAccel_x = valuesAccel_x * 9.8 / 16384.0;
+    qreal real_valuesAccel_y = valuesAccel_y * 9.8 / 16384.0;
+    qreal real_valuesAccel_z = valuesAccel_z * 9.8 / 16384.0;
+
+    ui->gl_widget->setXRotation(static_cast<int>(real_valuesAccel_x));
+    ui->gl_widget->setYRotation(static_cast<int>(real_valuesAccel_y));
+    ui->gl_widget->setZRotation(static_cast<int>(real_valuesAccel_z));
+#endif
     //---
 }
 //--------------------------------------------------------------------------------

@@ -102,10 +102,13 @@ private:
     int curve_valuesMagnet_y = 0;
     int curve_valuesMagnet_z = 0;
 
+    QList<QLCDNumber *> display_widgets;
+
     void init(void);
     void init_serial(void);
     void init_grapher(void);
     void init_gl_widget(void);
+    void init_display_widgets(void);
 
     void createTestBar(void);
 

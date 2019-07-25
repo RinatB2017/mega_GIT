@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>616</width>
+    <width>500</width>
     <height>388</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="verticalLayout_6">
       <item>
        <widget class="QSplitter" name="splitter">
         <property name="orientation">
@@ -134,7 +134,199 @@
           </item>
          </layout>
         </widget>
-        <widget class="GrapherBox" name="grapher_widget" native="true"/>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="grapher_tab">
+          <attribute name="title">
+           <string>Grapher</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="GrapherBox" name="grapher_widget" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="sensors_tab">
+          <attribute name="title">
+           <string>Sensors</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QFrame" name="frame_2">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <layout class="QGridLayout" name="gridLayout">
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_5">
+                  <property name="text">
+                   <string>AccelMotion</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>AccelGravity</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="0">
+                 <widget class="QLabel" name="label_10">
+                  <property name="text">
+                   <string>Magnet</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label">
+                  <property name="text">
+                   <string>Accel</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_12">
+                  <property name="text">
+                   <string>X</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="label_11">
+                  <property name="text">
+                   <string>Y</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>LinAccel</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_9">
+                  <property name="text">
+                   <string>Gravity</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>Result</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QLabel" name="label_13">
+                  <property name="text">
+                   <string>Z</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLCDNumber" name="lcd_accel_x"/>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLCDNumber" name="lcd_accel_y"/>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QLCDNumber" name="lcd_accel_z"/>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLCDNumber" name="lcd_result_x"/>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QLCDNumber" name="lcd_result_y"/>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QLCDNumber" name="lcd_result_z"/>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLCDNumber" name="lcd_accelmotion_x"/>
+                </item>
+                <item row="3" column="2">
+                 <widget class="QLCDNumber" name="lcd_accelmotion_y"/>
+                </item>
+                <item row="3" column="3">
+                 <widget class="QLCDNumber" name="lcd_accelmotion_z"/>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QLCDNumber" name="lcd_accelgravity_x"/>
+                </item>
+                <item row="4" column="2">
+                 <widget class="QLCDNumber" name="lcd_accelgravity_y"/>
+                </item>
+                <item row="4" column="3">
+                 <widget class="QLCDNumber" name="lcd_accelgravity_z"/>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLCDNumber" name="lcd_linaccel_x"/>
+                </item>
+                <item row="5" column="2">
+                 <widget class="QLCDNumber" name="lcd_linaccel_y"/>
+                </item>
+                <item row="5" column="3">
+                 <widget class="QLCDNumber" name="lcd_linaccel_z"/>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QLCDNumber" name="lcd_gravity_x"/>
+                </item>
+                <item row="6" column="2">
+                 <widget class="QLCDNumber" name="lcd_gravity_y"/>
+                </item>
+                <item row="6" column="3">
+                 <widget class="QLCDNumber" name="lcd_gravity_z"/>
+                </item>
+                <item row="7" column="1">
+                 <widget class="QLCDNumber" name="lcd_magnet_x"/>
+                </item>
+                <item row="7" column="2">
+                 <widget class="QLCDNumber" name="lcd_magnet_y"/>
+                </item>
+                <item row="7" column="3">
+                 <widget class="QLCDNumber" name="lcd_magnet_z"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
        </widget>
       </item>
      </layout>

@@ -66,6 +66,7 @@ void MainBox::init(void)
     init_serial();
     init_grapher();
     init_gl_widget();
+    init_display_widgets();
 
 #if -0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -137,6 +138,37 @@ void MainBox::init_gl_widget(void)
     connect(ui->sb_X,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setXRotation(int)));
     connect(ui->sb_Y,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setYRotation(int)));
     connect(ui->sb_Z,   SIGNAL(valueChanged(int)),  ui->gl_widget,  SLOT(setZRotation(int)));
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_display_widgets(void)
+{
+    display_widgets.append(ui->lcd_accel_x);
+    display_widgets.append(ui->lcd_accel_y);
+    display_widgets.append(ui->lcd_accel_z);
+    display_widgets.append(ui->lcd_result_x);
+    display_widgets.append(ui->lcd_result_y);
+    display_widgets.append(ui->lcd_result_z);
+    display_widgets.append(ui->lcd_accelmotion_x);
+    display_widgets.append(ui->lcd_accelmotion_y);
+    display_widgets.append(ui->lcd_accelmotion_z);
+    display_widgets.append(ui->lcd_accelgravity_x);
+    display_widgets.append(ui->lcd_accelgravity_y);
+    display_widgets.append(ui->lcd_accelgravity_z);
+    display_widgets.append(ui->lcd_linaccel_x);
+    display_widgets.append(ui->lcd_linaccel_y);
+    display_widgets.append(ui->lcd_linaccel_z);
+    display_widgets.append(ui->lcd_gravity_x);
+    display_widgets.append(ui->lcd_gravity_y);
+    display_widgets.append(ui->lcd_gravity_z);
+    display_widgets.append(ui->lcd_magnet_x);
+    display_widgets.append(ui->lcd_magnet_y);
+    display_widgets.append(ui->lcd_magnet_z);
+
+    foreach (QLCDNumber *display, display_widgets)
+    {
+        display->setFixedSize(220, 48);
+        display->setDigitCount(6);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -323,6 +355,30 @@ void MainBox::read_data(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_valuesMagnet_x, valuesMagnet_x);
     ui->grapher_widget->add_curve_data(curve_valuesMagnet_y, valuesMagnet_y);
     ui->grapher_widget->add_curve_data(curve_valuesMagnet_z, valuesMagnet_z);
+    //---
+    
+    //---
+    ui->lcd_accel_x->display(valuesAccel_x);
+    ui->lcd_accel_y->display(valuesAccel_y);
+    ui->lcd_accel_z->display(valuesAccel_z);
+    ui->lcd_result_x->display(valuesResult_x);
+    ui->lcd_result_y->display(valuesResult_y);
+    ui->lcd_result_z->display(valuesResult_z);
+    ui->lcd_accelmotion_x->display(valuesAccelMotion_x);
+    ui->lcd_accelmotion_y->display(valuesAccelMotion_y);
+    ui->lcd_accelmotion_z->display(valuesAccelMotion_z);
+    ui->lcd_accelgravity_x->display(valuesAccelGravity_x);
+    ui->lcd_accelgravity_y->display(valuesAccelGravity_y);
+    ui->lcd_accelgravity_z->display(valuesAccelGravity_z);
+    ui->lcd_linaccel_x->display(valuesLinAccel_x);
+    ui->lcd_linaccel_y->display(valuesLinAccel_y);
+    ui->lcd_linaccel_z->display(valuesLinAccel_z);
+    ui->lcd_gravity_x->display(valuesGravity_x);
+    ui->lcd_gravity_y->display(valuesGravity_y);
+    ui->lcd_gravity_z->display(valuesGravity_z);
+    ui->lcd_magnet_x->display(valuesMagnet_x);
+    ui->lcd_magnet_y->display(valuesMagnet_y);
+    ui->lcd_magnet_z->display(valuesMagnet_z);
     //---
 
     //---

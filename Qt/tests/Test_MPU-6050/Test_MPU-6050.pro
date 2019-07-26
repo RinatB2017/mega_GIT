@@ -63,6 +63,7 @@ win32 {
 
 include (src/glwidget/glwidget_qt5.pri)
 include (src/test_glwidget/test_glwidget.pri)
+include (src/lcd_widget/lcd_widget.pri)
 
 RESOURCES += \
     ico/icons.qrc

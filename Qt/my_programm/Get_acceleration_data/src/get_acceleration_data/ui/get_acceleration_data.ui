@@ -163,150 +163,7 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <layout class="QGridLayout" name="gridLayout">
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>AccelMotion</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>AccelGravity</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="0">
-                 <widget class="QLabel" name="label_10">
-                  <property name="text">
-                   <string>Magnet</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>Accel</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="label_12">
-                  <property name="text">
-                   <string>X</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLabel" name="label_11">
-                  <property name="text">
-                   <string>Y</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>LinAccel</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="0">
-                 <widget class="QLabel" name="label_9">
-                  <property name="text">
-                   <string>Gravity</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Result</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QLabel" name="label_13">
-                  <property name="text">
-                   <string>Z</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLCDNumber" name="lcd_accel_x"/>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QLCDNumber" name="lcd_accel_y"/>
-                </item>
-                <item row="1" column="3">
-                 <widget class="QLCDNumber" name="lcd_accel_z"/>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QLCDNumber" name="lcd_result_x"/>
-                </item>
-                <item row="2" column="2">
-                 <widget class="QLCDNumber" name="lcd_result_y"/>
-                </item>
-                <item row="2" column="3">
-                 <widget class="QLCDNumber" name="lcd_result_z"/>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QLCDNumber" name="lcd_accelmotion_x"/>
-                </item>
-                <item row="3" column="2">
-                 <widget class="QLCDNumber" name="lcd_accelmotion_y"/>
-                </item>
-                <item row="3" column="3">
-                 <widget class="QLCDNumber" name="lcd_accelmotion_z"/>
-                </item>
-                <item row="4" column="1">
-                 <widget class="QLCDNumber" name="lcd_accelgravity_x"/>
-                </item>
-                <item row="4" column="2">
-                 <widget class="QLCDNumber" name="lcd_accelgravity_y"/>
-                </item>
-                <item row="4" column="3">
-                 <widget class="QLCDNumber" name="lcd_accelgravity_z"/>
-                </item>
-                <item row="5" column="1">
-                 <widget class="QLCDNumber" name="lcd_linaccel_x"/>
-                </item>
-                <item row="5" column="2">
-                 <widget class="QLCDNumber" name="lcd_linaccel_y"/>
-                </item>
-                <item row="5" column="3">
-                 <widget class="QLCDNumber" name="lcd_linaccel_z"/>
-                </item>
-                <item row="6" column="1">
-                 <widget class="QLCDNumber" name="lcd_gravity_x"/>
-                </item>
-                <item row="6" column="2">
-                 <widget class="QLCDNumber" name="lcd_gravity_y"/>
-                </item>
-                <item row="6" column="3">
-                 <widget class="QLCDNumber" name="lcd_gravity_z"/>
-                </item>
-                <item row="7" column="1">
-                 <widget class="QLCDNumber" name="lcd_magnet_x"/>
-                </item>
-                <item row="7" column="2">
-                 <widget class="QLCDNumber" name="lcd_magnet_y"/>
-                </item>
-                <item row="7" column="3">
-                 <widget class="QLCDNumber" name="lcd_magnet_z"/>
-                </item>
-               </layout>
+               <widget class="LCD_widget" name="lcd_widget" native="true"/>
               </item>
               <item>
                <spacer name="verticalSpacer">
@@ -364,6 +221,12 @@
    <class>GLWidget</class>
    <extends>QWidget</extends>
    <header>glwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LCD_widget</class>
+   <extends>QWidget</extends>
+   <header>lcd_widget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

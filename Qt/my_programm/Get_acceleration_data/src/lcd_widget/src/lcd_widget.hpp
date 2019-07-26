@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,79 +18,34 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef LCD_WIDGET_HPP
+#define LCD_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class LCD_widget;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class LCD_widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    explicit LCD_widget(QWidget *parent = nullptr);
+    ~LCD_widget();
 
-private slots:
-    void test(void);
-
-    void data_mpu6050(QByteArray data);
+    bool display(QString object_name, qreal value);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QList<QLCDNumber *> display_widgets;
-
-    QByteArray dirty_array;
-
-    int curve_x_accel = 0;
-    int curve_y_accel = 0;
-    int curve_z_accel = 0;
-    int curve_temperature = 0;
-    int curve_x_gyro = 0;
-    int curve_y_gyro = 0;
-    int curve_z_gyro = 0;
-
-    int curve_x_angle = 0;
-    int curve_y_angle = 0;
-    int curve_z_angle = 0;
-
-    qreal x_angle = 0;
-    qreal y_angle = 0;
-    qreal z_angle = 0;
-
-    QString convert(qreal value);
+    Ui::LCD_widget *ui;
+    QList<QLCDNumber *> l_lcd;
 
     void init(void);
-    void createTestBar(void);
-    void init_gl_widget(void);
-    void init_serial_widget(void);
-    void init_grapher_widget(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // LCD_WIDGET_HPP

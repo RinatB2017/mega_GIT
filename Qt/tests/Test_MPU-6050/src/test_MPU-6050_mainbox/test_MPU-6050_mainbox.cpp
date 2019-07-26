@@ -63,7 +63,6 @@ void MainBox::init(void)
     init_grapher_widget();
     init_gl_widget();
     init_serial_widget();
-    init_display_widgets();
 
 #if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -143,30 +142,6 @@ void MainBox::init_grapher_widget(void)
 #else
     ui->grapher_widget->setVisible(false);
 #endif
-}
-//--------------------------------------------------------------------------------
-void MainBox::init_display_widgets(void)
-{
-    display_widgets.append(ui->display_x_accel);
-    display_widgets.append(ui->display_y_accel);
-    display_widgets.append(ui->display_z_accel);
-    display_widgets.append(ui->display_x_gyro);
-    display_widgets.append(ui->display_y_gyro);
-    display_widgets.append(ui->display_z_gyro);
-    display_widgets.append(ui->display_x_angle);
-    display_widgets.append(ui->display_y_angle);
-    display_widgets.append(ui->display_z_angle);
-    display_widgets.append(ui->display_x_real_accel);
-    display_widgets.append(ui->display_y_real_accel);
-    display_widgets.append(ui->display_z_real_accel);
-    display_widgets.append(ui->display_temperature);
-    display_widgets.append(ui->display_error);
-
-    foreach (QLCDNumber *display, display_widgets)
-    {
-        display->setFixedSize(220, 48);
-        display->setDigitCount(9);
-    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -267,13 +242,13 @@ void MainBox::data_mpu6050(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_z_angle,       z_angle);
 #endif
 
-    ui->display_error->display(err);
-    ui->display_x_accel->display(convert(x_accel));
-    ui->display_y_accel->display(convert(y_accel));
-    ui->display_z_accel->display(convert(z_accel));
-    ui->display_x_gyro->display(convert(x_gyro));
-    ui->display_y_gyro->display(convert(y_gyro));
-    ui->display_z_gyro->display(convert(z_gyro));
+    ui->lcd_widget->display("display_error", err);
+    ui->lcd_widget->display("display_x_accel", convert(x_accel));
+    ui->lcd_widget->display("display_y_accel", convert(y_accel));
+    ui->lcd_widget->display("display_z_accel", convert(z_accel));
+    ui->lcd_widget->display("display_x_gyro", convert(x_gyro));
+    ui->lcd_widget->display("display_y_gyro", convert(y_gyro));
+    ui->lcd_widget->display("display_z_gyro", convert(z_gyro));
 
     //    16384.0 - 9.8
     //    x       - y
@@ -288,20 +263,20 @@ void MainBox::data_mpu6050(QByteArray data)
     if(y_accel < -16384.0) y_accel += 16384.0;
     if(z_accel < -16384.0) z_accel += 16384.0;
 
-    ui->display_x_angle->display(QString("%1").arg(x_angle, 0, 'f', 2));
-    ui->display_y_angle->display(QString("%1").arg(y_angle, 0, 'f', 2));
-    ui->display_z_angle->display(QString("%1").arg(z_angle, 0, 'f', 2));
-    ui->display_temperature->display(QString("%1").arg(temperature, 0, 'f', 2));
+    ui->lcd_widget->display("display_x_angle", QString("%1").arg(x_angle, 0, 'f', 2));
+    ui->lcd_widget->display("display_y_angle", QString("%1").arg(y_angle, 0, 'f', 2));
+    ui->lcd_widget->display("display_z_angle", QString("%1").arg(z_angle, 0, 'f', 2));
+    ui->lcd_widget->display("display_temperature", QString("%1").arg(temperature, 0, 'f', 2));
 
     //https://electronics.stackexchange.com/questions/39714/how-to-read-a-gyro-accelerometer
 #if 1
-    ui->display_x_real_accel->display(QString("%1").arg(x_accel / 16384.0, 0, 'f', 2));
-    ui->display_y_real_accel->display(QString("%1").arg(y_accel / 16384.0, 0, 'f', 2));
-    ui->display_z_real_accel->display(QString("%1").arg(z_accel / 16384.0, 0, 'f', 2));
+    ui->lcd_widget->display("display_x_real_accel", QString("%1").arg(x_accel / 16384.0, 0, 'f', 2));
+    ui->lcd_widget->display("display_y_real_accel", QString("%1").arg(y_accel / 16384.0, 0, 'f', 2));
+    ui->lcd_widget->display("display_z_real_accel", QString("%1").arg(z_accel / 16384.0, 0, 'f', 2));
 #else
-    ui->display_x_real_accel->display(QString("%1").arg(x_accel * 9.8 / 16384.0, 0, 'f', 2));
-    ui->display_y_real_accel->display(QString("%1").arg(y_accel * 9.8 / 16384.0, 0, 'f', 2));
-    ui->display_z_real_accel->display(QString("%1").arg(z_accel * 9.8 / 16384.0, 0, 'f', 2));
+    ui->lcd_widget->display("display_x_real_accel", QString("%1").arg(x_accel * 9.8 / 16384.0, 0, 'f', 2));
+    ui->lcd_widget->display("display_y_real_accel", QString("%1").arg(y_accel * 9.8 / 16384.0, 0, 'f', 2));
+    ui->lcd_widget->display("display_z_real_accel", QString("%1").arg(z_accel * 9.8 / 16384.0, 0, 'f', 2));
 #endif
 
     dirty_array.clear();

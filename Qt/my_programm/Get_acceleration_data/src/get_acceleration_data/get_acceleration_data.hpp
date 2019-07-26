@@ -108,7 +108,6 @@ private:
     void init_serial(void);
     void init_grapher(void);
     void init_gl_widget(void);
-    void init_display_widgets(void);
 
     void createTestBar(void);
 

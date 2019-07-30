@@ -46,3 +46,17 @@ void Knob_lcd::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
+void Knob_lcd::resizeEvent(QResizeEvent *event)
+{
+#if 1
+    int w = event->size().width();
+    int h = event->size().height();
+
+    int d_h = h / 3;
+
+    ui->dislay->resize(w, d_h);
+    ui->knob->resize(h - d_h, h - d_h);
+    ui->knob->move(w / 2 - (h - d_h) / 2, d_h);
+#endif
+}
+//--------------------------------------------------------------------------------

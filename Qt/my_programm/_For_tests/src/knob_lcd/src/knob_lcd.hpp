@@ -43,6 +43,9 @@ private:
     Ui::Knob_lcd *ui;
 
     void init(void);
+
+protected:
+    void resizeEvent (QResizeEvent * event);
 };
 //--------------------------------------------------------------------------------
 #endif // KNOB_LCD_HPP

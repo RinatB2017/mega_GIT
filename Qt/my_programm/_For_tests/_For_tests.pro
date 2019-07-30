@@ -106,6 +106,9 @@ include (src/simple_mw/simple_mw.pri)
 #include (src/tile_widget/tile_widget.pri)
 #include (src/bone_15/bone_15.pri)
 
+include ($$LIB_PATH2/qwt/qwt.pri)
+include (src/knob_lcd/knob_lcd.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

@@ -227,11 +227,17 @@ bool MainBox::create_color_block(int width,
 }
 //--------------------------------------------------------------------------------
 //#include "bone_15.hpp"
+#include "knob_lcd.hpp"
 
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    Knob_lcd *w = new Knob_lcd();
+    w->show();
+#endif
 
 #if 0
     for(int n=1; n<=15; n++)

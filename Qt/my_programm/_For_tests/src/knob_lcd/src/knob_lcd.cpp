@@ -46,15 +46,30 @@ void Knob_lcd::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
+void Knob_lcd::set_value(qreal value)
+{
+    ui->knob->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void Knob_lcd::setUpperBound(qreal value)
+{
+    ui->knob->setUpperBound(value);
+}
+//--------------------------------------------------------------------------------
 void Knob_lcd::resizeEvent(QResizeEvent *event)
 {
 #if 1
     int w = event->size().width();
     int h = event->size().height();
+    int left = 0;
+    int top = 0;
+    int right = 0;
+    int bottom = 0;
 
+    layout()->getContentsMargins(&left, &top, &right, &bottom);
     int d_h = h / 3;
 
-    ui->dislay->resize(w, d_h);
+    ui->dislay->resize(w - left - right, d_h);
     ui->knob->resize(h - d_h, h - d_h);
     ui->knob->move(w / 2 - (h - d_h) / 2, d_h);
 #endif

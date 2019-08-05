@@ -39,6 +39,9 @@ public:
     explicit Knob_lcd(QWidget *parent = nullptr);
     ~Knob_lcd();
 
+    void set_value(qreal value);
+    void setUpperBound(qreal value);
+
 private:
     Ui::Knob_lcd *ui;
 

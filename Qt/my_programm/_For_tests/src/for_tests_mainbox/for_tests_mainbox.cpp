@@ -236,6 +236,8 @@ bool MainBox::test_0(void)
 
 #if 1
     Knob_lcd *w = new Knob_lcd();
+    w->setUpperBound(3000);
+    w->set_value(1500);
     w->show();
 #endif
 

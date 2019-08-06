@@ -7,6 +7,7 @@ unix {
 TARGET = twain_app_sample01
 LIBS += -lfreeimage
 QT  += widgets
+LIBS    += -ldl
 
 INCLUDEPATH = \
     /usr/local/include \

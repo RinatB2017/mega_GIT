@@ -20,7 +20,9 @@ INCLUDEPATH = /usr/local/include \
     ../../pub/external/include \
     ../../pub/include \
     ../../common
-SOURCES += ../../common/CTiffWriter.cpp \
+
+SOURCES += \
+    ../../common/CTiffWriter.cpp \
     ../../common/CommonTWAIN.cpp \
     CommonDS.cpp \
     CScanner_FreeImage.cpp \
@@ -40,7 +42,9 @@ SOURCES += ../../common/CTiffWriter.cpp \
     Qt_MainForm.cpp \
     Qt_About.cpp \
     Qt_ProfileName.cpp
-HEADERS += ../../common/Common.h \
+
+HEADERS += \
+    ../../common/Common.h \
     ../../common/CommonTWAIN.h \
     ../../common/CTiffWriter.h \
     CScanner_FreeImage.h \

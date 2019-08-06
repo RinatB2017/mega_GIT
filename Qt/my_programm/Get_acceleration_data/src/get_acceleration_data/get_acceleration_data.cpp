@@ -204,16 +204,9 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-#include "lcd_widget.hpp"
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-
-#if 0
-    LCD_widget *lw = new LCD_widget();
-    lw->display("lcd_accelgravity_y", 666);
-    lw->show();
-#endif
 
     return true;
 }
@@ -349,30 +342,13 @@ void MainBox::read_data(QByteArray data)
     //---
 
     //---
-#if 1
     if(valuesResult_x < 0) valuesResult_x += 360.0;
     if(valuesResult_y < 0) valuesResult_y += 360.0;
     if(valuesResult_z < 0) valuesResult_z += 360.0;
-#else
-    if(valuesAccel_x < 0) valuesAccel_x += 360.0;
-    if(valuesAccel_y < 0) valuesAccel_y += 360.0;
-    if(valuesAccel_z < 0) valuesAccel_z += 360.0;
-#endif
-    //---
 
-#if 1
-    ui->gl_widget->setXRotation(static_cast<int>(valuesResult_x));
-    ui->gl_widget->setYRotation(static_cast<int>(valuesResult_y));
-    ui->gl_widget->setZRotation(static_cast<int>(valuesResult_z));
-#else
-    qreal real_valuesResult_x = valuesResult_x * 9.8 / 16384.0;
-    qreal real_valuesResult_y = valuesResult_y * 9.8 / 16384.0;
-    qreal real_valuesResult_z = valuesResult_z * 9.8 / 16384.0;
-
-    ui->gl_widget->setXRotation(static_cast<int>(real_valuesResult_x));
-    ui->gl_widget->setYRotation(static_cast<int>(real_valuesResult_y));
-    ui->gl_widget->setZRotation(static_cast<int>(real_valuesResult_z));
-#endif
+    ui->sl_X->setValue(static_cast<int>(valuesResult_x));
+    ui->sl_Y->setValue(static_cast<int>(valuesResult_y));
+    ui->sl_Z->setValue(static_cast<int>(valuesResult_z));
     //---
 }
 //--------------------------------------------------------------------------------

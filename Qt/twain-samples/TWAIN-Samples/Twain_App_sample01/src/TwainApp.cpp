@@ -1,5 +1,5 @@
 /***************************************************************************
-* Copyright © 2007 TWAIN Working Group:  
+* Copyright Â© 2007 TWAIN Working Group:  
 *   Adobe Systems Incorporated, AnyDoc Software Inc., Eastman Kodak Company, 
 *   Fujitsu Computer Products of America, JFL Peripheral Solutions Inc., 
 *   Ricoh Corporation, and Xerox Corporation.
@@ -49,6 +49,8 @@
 #include <cstdlib>
 #include <assert.h>
 #include <stdio.h>
+
+#include <QtGlobal>
 
 #include "TwainApp.h"
 #include "CTiffWriter.h"
@@ -1251,7 +1253,7 @@ void TwainApp::updateEXTIMAGEINFO()
               else
               {
                 // This is an unknown type so check to see if it is printable
-                for ( int i=0; i < (int)(min(StrLen-1, 255)); i++ )
+                for ( int i=0; i < (int)(qMin(StrLen-1, 255)); i++ )
                 {
                   if ( !isprint( (int) pStrData[i] ) )
                   {
@@ -1263,7 +1265,7 @@ void TwainApp::updateEXTIMAGEINFO()
 
               if(bNonPrintableData)
               {
-                for ( int i=0; i < (int)(min(StrLen, 60)); i++ )
+                for ( int i=0; i < (int)(qMin(StrLen, 60)); i++ )
                 {
                   SSNPRINTF(buff, 256, 256, "%2.2X ", pStrData[i]);
                   m_strExImageInfo += buff;
@@ -1271,7 +1273,7 @@ void TwainApp::updateEXTIMAGEINFO()
               }
               else
               {
-                SSTRNCPY(buff, 256, pStrData, min(StrLen, 255));
+                SSTRNCPY(buff, 256, pStrData, qMin(StrLen, 255));
                 m_strExImageInfo += buff;
               }
             }

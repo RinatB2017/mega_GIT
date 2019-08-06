@@ -5,4 +5,3 @@ unix {
 }
 
 SUBDIRS = src
-

@@ -6,11 +6,16 @@ unix {
 }
 TARGET = twain_app_sample01
 LIBS += -lfreeimage
-INCLUDEPATH = /usr/local/include \
+QT  += widgets
+
+INCLUDEPATH = \
+    /usr/local/include \
     ../../pub/external/include \
     ../../pub/include \
     ../../common
-SOURCES += ../../common/CTiffWriter.cpp \
+
+SOURCES += \
+    ../../common/CTiffWriter.cpp \
     ../../common/CommonTWAIN.cpp \
     DSMInterface.cpp \
     main.cpp \
@@ -18,12 +23,15 @@ SOURCES += ../../common/CTiffWriter.cpp \
     TwainApp_ui.cpp \
     ../../common/TwainString.cpp \
     TwainAppCMD.cpp
-HEADERS += ../../common/Common.h \
+
+HEADERS += \
+    ../../common/Common.h \
     ../../common/CTiffWriter.h \
     ../../common/CommonTWAIN.h \
     DSMInterface.h \
     TwainApp.h \
     TwainApp_ui.h
+
 CONFIG += warn_off \
     debug
 

@@ -349,22 +349,29 @@ void MainBox::read_data(QByteArray data)
     //---
 
     //---
+#if 1
+    if(valuesResult_x < 0) valuesResult_x += 360.0;
+    if(valuesResult_y < 0) valuesResult_y += 360.0;
+    if(valuesResult_z < 0) valuesResult_z += 360.0;
+#else
     if(valuesAccel_x < 0) valuesAccel_x += 360.0;
     if(valuesAccel_y < 0) valuesAccel_y += 360.0;
     if(valuesAccel_z < 0) valuesAccel_z += 360.0;
+#endif
+    //---
 
 #if 1
-    ui->gl_widget->setXRotation(static_cast<int>(valuesAccel_x));
-    ui->gl_widget->setYRotation(static_cast<int>(valuesAccel_y));
-    ui->gl_widget->setZRotation(static_cast<int>(valuesAccel_z));
+    ui->gl_widget->setXRotation(static_cast<int>(valuesResult_x));
+    ui->gl_widget->setYRotation(static_cast<int>(valuesResult_y));
+    ui->gl_widget->setZRotation(static_cast<int>(valuesResult_z));
 #else
-    qreal real_valuesAccel_x = valuesAccel_x * 9.8 / 16384.0;
-    qreal real_valuesAccel_y = valuesAccel_y * 9.8 / 16384.0;
-    qreal real_valuesAccel_z = valuesAccel_z * 9.8 / 16384.0;
+    qreal real_valuesResult_x = valuesResult_x * 9.8 / 16384.0;
+    qreal real_valuesResult_y = valuesResult_y * 9.8 / 16384.0;
+    qreal real_valuesResult_z = valuesResult_z * 9.8 / 16384.0;
 
-    ui->gl_widget->setXRotation(static_cast<int>(real_valuesAccel_x));
-    ui->gl_widget->setYRotation(static_cast<int>(real_valuesAccel_y));
-    ui->gl_widget->setZRotation(static_cast<int>(real_valuesAccel_z));
+    ui->gl_widget->setXRotation(static_cast<int>(real_valuesResult_x));
+    ui->gl_widget->setYRotation(static_cast<int>(real_valuesResult_y));
+    ui->gl_widget->setZRotation(static_cast<int>(real_valuesResult_z));
 #endif
     //---
 }

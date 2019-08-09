@@ -235,6 +235,16 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    char state = 0;
+
+    state = (char)0x01;
+    emit info(QString("%1").arg(state, 2, 16, QChar('0')));
+
+    state = ~(char)0x01;
+    emit info(QString("%1").arg(state, 2, 16, QChar('0')));
+#endif
+
+#if 0
     Knob_lcd *w = new Knob_lcd();
     w->setUpperBound(3000);
     w->set_value(1500);

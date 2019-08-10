@@ -21,8 +21,11 @@
 #ifndef HLINE_H
 #define HLINE_H
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QPoint>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class HLine : public QWidget
 {

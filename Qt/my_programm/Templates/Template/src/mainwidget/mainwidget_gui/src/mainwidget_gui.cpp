@@ -18,15 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_mainwidget_gui.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"

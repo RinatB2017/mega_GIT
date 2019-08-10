@@ -21,8 +21,11 @@
 #ifndef VLINE_H
 #define VLINE_H
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QPoint>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class VLine : public QWidget
 {

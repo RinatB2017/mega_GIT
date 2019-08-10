@@ -18,13 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QIODevice>
-#include <QDateTime>
-#include <QWidget>
-#include <QEvent>
-#include <QMenu>
-#include <QTimer>
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif

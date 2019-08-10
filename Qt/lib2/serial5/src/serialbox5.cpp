@@ -18,13 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QIODevice>
-#include <QDateTime>
-#include <QWidget>
-#include <QEvent>
-#include <QMenu>
-#include <QTimer>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
 

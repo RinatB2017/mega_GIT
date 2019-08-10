@@ -21,7 +21,11 @@
 #ifndef GRAPHERBOX_OPTIONS_HPP
 #define GRAPHERBOX_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#include <QDialog>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class GrapherBox_Options;

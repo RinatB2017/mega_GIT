@@ -18,16 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QProgressBar>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QToolButton>
 #include <QWebFrame>
-#include <QLineEdit>
-#include <QToolBar>
-#include <QWidget>
-#include <QTimer>
 //--------------------------------------------------------------------------------
 #include "ui_platanov_browser_mainbox.h"
 //--------------------------------------------------------------------------------

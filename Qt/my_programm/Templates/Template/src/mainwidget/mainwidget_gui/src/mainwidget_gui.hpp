@@ -21,7 +21,11 @@
 #ifndef MAINWIDGET_GUI_HPP
 #define MAINWIDGET_GUI_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -40,8 +44,8 @@ class MainWidget_GUI : public MyWidget
     Q_OBJECT
 
 public:
-    MainWidget_GUI(QWidget *parent,
-                   MySplashScreen *splash);
+    explicit MainWidget_GUI(QWidget *parent,
+                            MySplashScreen *splash);
     ~MainWidget_GUI();
 
 private slots:

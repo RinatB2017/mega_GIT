@@ -21,12 +21,16 @@
 #ifndef MAINBOX_H
 #define MAINBOX_H
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+
 #include <QWebElement>
-#include <QToolButton>
-#include <QToolBar>
-#include <QWidget>
-#include <QtSql>
-#include <QUrl>
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QSqlQuery>
 //--------------------------------------------------------------------------------
 struct page
 {

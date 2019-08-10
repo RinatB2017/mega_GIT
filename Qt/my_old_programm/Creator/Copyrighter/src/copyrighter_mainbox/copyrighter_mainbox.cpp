@@ -20,16 +20,6 @@
 **********************************************************************************/
 #include <QContextMenuEvent>
 #include <QLibraryInfo>
-#include <QTableWidget>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QFileDialog>
-#include <QProcess>
-#include <QToolBar>
-#include <QWidget>
-#include <QTimer>
-#include <QMenu>
 //--------------------------------------------------------------------------------
 #include "ui_copyrighter_mainbox.h"
 //--------------------------------------------------------------------------------

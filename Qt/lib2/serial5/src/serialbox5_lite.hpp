@@ -24,11 +24,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QByteArray>
-#   include <QDateTime>
-#   include <QWidget>
-#   include <QString>
-#   include <QFrame>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>

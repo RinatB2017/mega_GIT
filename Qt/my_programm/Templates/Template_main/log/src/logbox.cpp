@@ -18,25 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QProgressBar>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QToolButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QFileDialog>
-#include <QDateTime>
-#include <QCheckBox>
-#include <QTextEdit>
 #include <QSettings>
-#include <QWidget>
-#include <QLocale>
 #include <QEvent>
-#include <QStyle>
-#include <QMenu>
-#include <QFile>
-#include <QFont>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------

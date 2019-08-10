@@ -18,15 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QProgressBar>
-#include <QVBoxLayout>
-#include <QToolButton>
-#include <QLineEdit>
-#include <QSplitter>
-#include <QToolBar>
-#include <QWidget>
-#include <QTimer>
-//--------------------------------------------------------------------------------
 #include "ui_double_browser_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"

@@ -18,15 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QLibraryInfo>
-#include <QTableWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QToolBar>
-#include <QWidget>
-//--------------------------------------------------------------------------------
 #include "ui_aggregator_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "listwidget_link.hpp"

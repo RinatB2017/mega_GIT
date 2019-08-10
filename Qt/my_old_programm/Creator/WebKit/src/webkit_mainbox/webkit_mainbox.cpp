@@ -23,29 +23,11 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QNetworkProxy>
-
 #include <QWebElementCollection>
-#include <QStringListModel>
-#include <QInputDialog>
-#include <QProgressBar>
 #include <QWebSettings>
-#include <QTextBrowser>
-#include <QMessageBox>
 #include <QWebHistory>
 #include <QWebElement>
-#include <QHeaderView>
-#include <QToolButton>
-#include <QPushButton>
-#include <QByteArray>
-#include <QTableView>
-#include <QLineEdit>
 #include <QWebFrame>
-#include <QTextEdit>
-#include <QToolBar>
-#include <QWidget>
-#include <QTest>
-#include <QtSql>
-#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "persistentcookiejar.hpp"
 #include "helpbrowser.hpp"
@@ -67,6 +49,7 @@
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
+#   include <Qtest>
 #endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
@@ -1087,7 +1070,9 @@ void MainBox::always_yes(void)
         {
             if(btn->text() == "&Да")
             {
+#ifdef QT_DEBUG
                 QTest::keyClick(btn, Qt::Key_Space);
+#endif
             }
         }
     }

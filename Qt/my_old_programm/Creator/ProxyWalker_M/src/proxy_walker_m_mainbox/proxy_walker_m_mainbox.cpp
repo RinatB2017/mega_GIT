@@ -23,22 +23,6 @@
 #include <QNetworkProxy>
 #include <QWebElement>
 #include <QWebFrame>
-
-#include <QProgressBar>
-#include <QLibraryInfo>
-#include <QTableWidget>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QListWidget>
-#include <QLCDNumber>
-#include <QTabWidget>
-#include <QProcess>
-#include <QToolBar>
-#include <QWidget>
-#include <QTimer>
-#include <QMenu>
-#include <QTest>
 //--------------------------------------------------------------------------------
 #include "ui_proxy_walker_m_mainbox.h"
 //--------------------------------------------------------------------------------

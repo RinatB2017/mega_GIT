@@ -21,11 +21,11 @@
 #ifndef SERIALBOX4_HPP
 #define SERIALBOX4_HPP
 //--------------------------------------------------------------------------------
-#include <QByteArray>
-#include <QDateTime>
-#include <QWidget>
-#include <QString>
-#include <QFrame>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class SerialDeviceEnumerator;
 class AbstractSerial;

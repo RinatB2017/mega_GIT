@@ -21,6 +21,12 @@
 #ifndef RTSP_WIDGET_HPP
 #define RTSP_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+
 #include <QMediaPlayer>
 #include <QWidget>
 #include "mywidget.hpp"

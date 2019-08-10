@@ -19,9 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QTextCodec>
-#include <QTextEdit>
-#include <QDialog>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 #include "log_options.hpp"
 #include "ui_log_options.h"

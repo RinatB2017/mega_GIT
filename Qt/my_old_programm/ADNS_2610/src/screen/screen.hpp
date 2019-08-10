@@ -21,7 +21,11 @@
 #ifndef SCREEN_HPP
 #define SCREEN_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 #include "defines.hpp"

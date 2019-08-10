@@ -21,14 +21,18 @@
 #ifndef MAINWIDGET_HPP
 #define MAINWIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class MainWidget : public QObject
 {
     Q_OBJECT
 
 public:
-    MainWidget(QObject *parent = nullptr);
+    explicit MainWidget(QObject *parent = nullptr);
     ~MainWidget();
 
 signals:

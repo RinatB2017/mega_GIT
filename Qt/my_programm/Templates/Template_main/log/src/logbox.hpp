@@ -21,8 +21,11 @@
 #ifndef LOGBOX_H
 #define LOGBOX_H
 //--------------------------------------------------------------------------------
-#include <QFrame>
-#include <QList>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class QProgressBar;
 class QPushButton;

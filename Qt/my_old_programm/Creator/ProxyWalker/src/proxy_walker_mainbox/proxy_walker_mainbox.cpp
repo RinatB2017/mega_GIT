@@ -25,19 +25,8 @@
 #include <QWebElement>
 #include <QWebFrame>
 
-#include <QProgressBar>
-#include <QLibraryInfo>
-#include <QTableWidget>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QToolButton>
-#include <QListWidget>
 #include <QLCDNumber>
 #include <QProcess>
-#include <QToolBar>
-#include <QWidget>
-#include <QTimer>
-#include <QTest>
 //--------------------------------------------------------------------------------
 #include "ui_proxy_walker_mainbox.h"
 //--------------------------------------------------------------------------------

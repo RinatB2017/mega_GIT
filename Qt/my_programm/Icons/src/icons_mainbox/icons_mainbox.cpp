@@ -19,11 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QDirIterator>
-#include <QFileDialog>
-#include <QToolButton>
-#include <QScrollArea>
-#include <QToolBar>
-#include <QWidget>
 #include <QEvent>
 //--------------------------------------------------------------------------------
 #include "ui_icons_mainbox.h"

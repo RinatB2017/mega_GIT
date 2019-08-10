@@ -90,6 +90,6 @@ include (src/mainwidget/mainwidget.pri)
 }
 #----------------------------------------------
 
-message ($$DEFINES)
+#message ($$DEFINES)
 
 VPATH = $$INCLUDEPATH

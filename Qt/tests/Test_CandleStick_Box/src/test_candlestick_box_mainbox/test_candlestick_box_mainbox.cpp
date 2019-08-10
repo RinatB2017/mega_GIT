@@ -18,16 +18,9 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-
 #ifdef Q_OS_LINUX
 #   include <sys/sysinfo.h>
 #endif
-
 #include <qmath.h>
 //--------------------------------------------------------------------------------
 #include "ui_test_candlestick_box_mainbox.h"

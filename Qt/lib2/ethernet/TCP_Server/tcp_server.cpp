@@ -21,8 +21,6 @@
 #include <QNetworkInterface>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QObject>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 //#include "processor.hpp"
 #include "tcp_server.hpp"

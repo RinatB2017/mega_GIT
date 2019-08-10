@@ -143,6 +143,8 @@ public:
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
 
+    bool test_assert(int value);
+
 public slots:
     void choice_test(void);
     bool test_0(void);

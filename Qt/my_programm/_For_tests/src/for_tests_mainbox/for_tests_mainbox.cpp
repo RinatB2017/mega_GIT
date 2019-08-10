@@ -226,15 +226,24 @@ bool MainBox::create_color_block(int width,
     return ok;
 }
 //--------------------------------------------------------------------------------
+bool MainBox::test_assert(int value)
+{
+    Q_ASSERT(value > 5);    // если значение > 5, то всё нормально
+    return value != 0;
+}
+//--------------------------------------------------------------------------------
 //#include "bone_15.hpp"
 #include "knob_lcd.hpp"
-
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
+    emit info(test_assert(-10) ? "true" : "false");
+#endif
+
+#if 0
     char state = 0;
 
     state = (char)0x01;

@@ -131,6 +131,21 @@ protected:
     }
 };
 //--------------------------------------------------------------------------------
+class B
+{
+public:
+    virtual void xxx(void) = 0;
+};
+
+class A : public B
+{
+public:
+    void xxx(void)
+    {
+        qDebug() << "A:xxx();";
+    }
+};
+//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT

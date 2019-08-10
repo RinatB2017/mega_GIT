@@ -239,6 +239,11 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    B *b = new A();
+    b->xxx();
+#endif
+
 #if 0
     emit info(test_assert(-10) ? "true" : "false");
 #endif

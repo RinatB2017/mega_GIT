@@ -240,6 +240,13 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QString str = "AB";
+    bool ok;
+    int hex = str.toInt(&ok, 16);
+    emit info(QString("%1").arg(hex));
+#endif
+
+#if 0
     B *b = new A();
     b->xxx();
 #endif

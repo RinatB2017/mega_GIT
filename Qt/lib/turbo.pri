@@ -30,11 +30,11 @@ win32 {
 }
 ###############################################################################
 unix:!macx {
-        DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
-    }
+    DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
+}
 macx {
-        DESTDIR = bin
-    }
+    DESTDIR = bin
+}
 
 win32 {
     CONFIG(debug, debug|release) {

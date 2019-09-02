@@ -27,7 +27,6 @@
 
 /*
  * Генератор кода взят отсюда: https://github.com/abinghu/qt_rc
- *
 */
 
 int main(int argc, char *argv[])

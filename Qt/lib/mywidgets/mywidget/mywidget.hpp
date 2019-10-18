@@ -216,6 +216,8 @@ private:
     void load_QSlider(QString group_name);
     void load_QSplitter(QString group_name);
 
+    void load_QTimeEdit(QString group_name);
+
     void save_QCheckBox(QString group_name);
     void save_QComboBox(QString group_name);
     void save_QPushButton(QString group_name);
@@ -227,6 +229,8 @@ private:
     void save_QDoubleSpinBox(QString group_name);
     void save_QSlider(QString group_name);
     void save_QSplitter(QString group_name);
+
+    void save_QTimeEdit(QString group_name);
 
     QList<QWidget *> w_lists;
 

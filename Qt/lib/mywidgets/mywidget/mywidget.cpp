@@ -960,6 +960,50 @@ void MyWidget::save_QSplitter(QString group_name)
     settings->endGroup();
 }
 //--------------------------------------------------------------------------------
+void MyWidget::load_QTimeEdit(QString group_name)
+{
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QTimeEdit *> allobj = topLevelWidget()->findChildren<QTimeEdit *>();
+#else
+    QList<QTimeEdit *> allobj = findChildren<QTimeEdit *>();
+#endif
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach (QTimeEdit *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            obj->setDateTime(settings->value("datetime", 0).toDateTime());
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_QTimeEdit(QString group_name)
+{
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QTimeEdit *> allobj = topLevelWidget()->findChildren<QTimeEdit *>();
+#else
+    QList<QTimeEdit *> allobj = findChildren<QTimeEdit *>();
+#endif
+    Q_CHECK_PTR(settings);
+
+    settings->beginGroup(group_name);
+    foreach(QTimeEdit *obj, allobj)
+    {
+        if(!obj->objectName().isEmpty())
+        {
+            settings->beginGroup(obj->objectName());
+            settings->setValue("datetime", QVariant(obj->dateTime()));
+            settings->endGroup();
+        }
+    }
+    settings->endGroup();
+}
+//--------------------------------------------------------------------------------
 void MyWidget::load_widgets(QString group_name)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -994,6 +1038,9 @@ void MyWidget::load_widgets(QString group_name)
 #endif
 #ifdef SAVE_WIDGETS_SPLITTER
     load_QSplitter(group_name);
+#endif
+#ifdef SAVE_WIDGETS_TIMEEDIT
+    load_QTimeEdit(group_name);
 #endif
 #ifdef SAVE_WIDGETS_PLAINTEXTEDIT
     load_QPlainTextEdit(group_name);
@@ -1035,6 +1082,9 @@ void MyWidget::save_widgets(QString group_name)
 #endif
 #ifdef SAVE_WIDGETS_SPLITTER
     save_QSplitter(group_name);
+#endif
+#ifdef SAVE_WIDGETS_TIMEEDIT
+    save_QTimeEdit(group_name);
 #endif
 #ifdef SAVE_WIDGETS_PLAINTEXTEDIT
     save_QPlainTextEdit(group_name);

@@ -17,7 +17,6 @@ SUBDIRS += \
     MTC_runner \
     QTextToSpeech \
     SBGlass \
-    SIM900 \
     Sniffer_PCA10000 \
     Tools \
 

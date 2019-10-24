@@ -117,6 +117,12 @@ void SerialBox5_fix_baudrate::init(void)
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_refresh->setToolTip("Обновить список портов");
 
+#ifdef RS232_SEND
+    sendBox5 = new SendBox5(this);
+    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
+    ui->layout_SEND->addWidget(sendBox5);
+#endif
+
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     //setFixedWidth(sizeHint().width());
     setFixedHeight(sizeHint().height());

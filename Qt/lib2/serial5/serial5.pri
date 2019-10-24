@@ -9,7 +9,9 @@ QT  *=  serialport
 
 HEADERS += serialbox5.hpp
 SOURCES += serialbox5.cpp
-FORMS	+= serialbox5.ui
+FORMS	+= \
+    serialbox5.ui \
+    sendbox5.ui
 
 HEADERS += sendbox5.hpp
 SOURCES += sendbox5.cpp

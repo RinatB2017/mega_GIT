@@ -27,6 +27,10 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+namespace Ui {
+    class SendBox5;
+}
+//--------------------------------------------------------------------------------
 class QGridLayout;
 class QHBoxLayout;
 class QToolButton;
@@ -60,14 +64,8 @@ private slots:
     void send_bin(void);
 
 private:
-    QComboBox *cb_send_text;
-    QComboBox *cb_send_bin;
-    QComboBox *append_comboBox;
+    Ui::SendBox5 *ui;
 
-    QToolButton *btn_send_text;
-    QToolButton *btn_send_bin;
-
-    QGridLayout *grid;
 };
 //--------------------------------------------------------------------------------
 #endif // SENDBOX_HPP

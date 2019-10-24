@@ -18,28 +18,21 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QMessageBox>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QPixmap>
-#include <QStyle>
-#include <QFrame>
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+#include "ui_sendbox5.h"
 //--------------------------------------------------------------------------------
 #include "sendbox5.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 SendBox5::SendBox5(QWidget *parent) :
-    QFrame(parent)
+    QFrame(parent),
+    ui(new Ui::SendBox5)
 {
+    ui->setupUi(this);
+
     if(parent)
     {
         connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
@@ -48,58 +41,37 @@ SendBox5::SendBox5(QWidget *parent) :
         connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
     }
 
-    btn_send_text = new QToolButton(this);
-    btn_send_text->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    btn_send_text->setObjectName("btn_send_text");
+    ui->btn_send_text->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_send_text->setObjectName("btn_send_text");
 
-    btn_send_bin  = new QToolButton(this);
-    btn_send_bin->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    btn_send_bin->setObjectName("btn_send_bin");
+    ui->btn_send_bin->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_send_bin->setObjectName("btn_send_bin");
 
-    cb_send_text = new QComboBox(this);
-    cb_send_text->setEditable(true);
-    cb_send_text->setObjectName("cb_send_text");
+    ui->cb_send_text->setEditable(true);
+    ui->cb_send_text->setObjectName("cb_send_text");
 
-    cb_send_bin  = new QComboBox(this);
-    cb_send_bin->setEditable(true);
-    cb_send_bin->setObjectName("le_send_bin");
+    ui->cb_send_bin->setEditable(true);
+    ui->cb_send_bin->setObjectName("le_send_bin");
 
-    cb_send_text->addItem("test");
-    cb_send_bin->addItem("0A0B0C0D");
+    ui->cb_send_text->addItem("test");
+    ui->cb_send_bin->addItem("0A0B0C0D");
 
-    append_comboBox = new QComboBox(this);
-    append_comboBox->setObjectName("append_comboBox");
+    ui->append_comboBox->setObjectName("append_comboBox");
 
-    append_comboBox->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);
+    ui->append_comboBox->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);
 
-    grid = new QGridLayout;
-    grid->addWidget(cb_send_text,       0, 0);
-    grid->addWidget(append_comboBox,    0, 1);
-    grid->addWidget(btn_send_text,      0, 2);
-    grid->addWidget(cb_send_bin,        1, 0);
-    grid->addWidget(btn_send_bin,       1, 2);
+    connect(ui->btn_send_text,  SIGNAL(clicked()),  this,   SLOT(send_text()));
+    connect(ui->btn_send_bin,   SIGNAL(clicked()),  this,   SLOT(send_bin()));
 
-    setLayout(grid);
-
-    connect(btn_send_text,  SIGNAL(clicked()),  this,   SLOT(send_text()));
-    connect(btn_send_bin,   SIGNAL(clicked()),  this,   SLOT(send_bin()));
-
-    connect(cb_send_text->lineEdit(),   SIGNAL(editingFinished()),  this,   SLOT(send_text()));
-    connect(cb_send_bin->lineEdit(),    SIGNAL(editingFinished()),  this,   SLOT(send_bin()));
+    connect(ui->cb_send_text->lineEdit(),   SIGNAL(editingFinished()),  this,   SLOT(send_text()));
+    connect(ui->cb_send_bin->lineEdit(),    SIGNAL(editingFinished()),  this,   SLOT(send_bin()));
 
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
 //--------------------------------------------------------------------------------
 SendBox5::~SendBox5()
 {
-    if(cb_send_text)        cb_send_text->deleteLater();
-    if(cb_send_bin)         cb_send_bin->deleteLater();
-    if(append_comboBox)     append_comboBox->deleteLater();
-
-    if(btn_send_text)       btn_send_text->deleteLater();
-    if(btn_send_bin)        btn_send_bin->deleteLater();
-
-    if(grid)                grid->deleteLater();
+    delete ui;
 }
 //--------------------------------------------------------------------------------
 void SendBox5::send_text(void)
@@ -107,7 +79,7 @@ void SendBox5::send_text(void)
     QString data;
     QByteArray ba;
 
-    data = cb_send_text->currentText();
+    data = ui->cb_send_text->currentText();
     if(data.isEmpty())
     {
         QMessageBox msgBox;
@@ -119,7 +91,7 @@ void SendBox5::send_text(void)
     }
     ba.clear();
     ba.append(data);
-    switch(append_comboBox->currentIndex())
+    switch(ui->append_comboBox->currentIndex())
     {
     case 0: // tr("no add")
         break;
@@ -150,7 +122,7 @@ void SendBox5::send_bin(void)
     QByteArray output_data;
 
     input_data.clear();
-    input_data.append(cb_send_bin->currentText());
+    input_data.append(ui->cb_send_bin->currentText());
     if(input_data.isEmpty())
     {
         QMessageBox msgBox;
@@ -179,24 +151,24 @@ void SendBox5::send_bin(void)
 //--------------------------------------------------------------------------------
 void SendBox5::block_interface(bool state)
 {
-    cb_send_text->setDisabled(state);
-    cb_send_bin->setDisabled(state);
-    append_comboBox->setDisabled(state);
+    ui->cb_send_text->setDisabled(state);
+    ui->cb_send_bin->setDisabled(state);
+    ui->append_comboBox->setDisabled(state);
 
-    btn_send_text->setDisabled(state);
-    btn_send_bin->setDisabled(state);
+    ui->btn_send_text->setDisabled(state);
+    ui->btn_send_bin->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void SendBox5::updateText(void)
 {
-    btn_send_text->setText(tr("send"));
-    btn_send_bin->setText(tr("send"));
+    ui->btn_send_text->setText(tr("send"));
+    ui->btn_send_bin->setText(tr("send"));
 
-    append_comboBox->clear();
-    append_comboBox->addItems(QStringList() << tr("no add")
-                              << tr("0x00")
-                              << tr("0x0D")
-                              << tr("0x0A")
-                              << tr("0x0D 0x0A") );
+    ui->append_comboBox->clear();
+    ui->append_comboBox->addItems(QStringList() << tr("no add")
+                                  << tr("0x00")
+                                  << tr("0x0D")
+                                  << tr("0x0A")
+                                  << tr("0x0D 0x0A") );
 }
 //--------------------------------------------------------------------------------

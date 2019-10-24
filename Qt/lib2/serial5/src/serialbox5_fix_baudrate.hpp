@@ -91,6 +91,10 @@ private:
                         const QString &text);
 #endif
 
+#ifdef RS232_SEND
+    SendBox5 *sendBox5;
+#endif
+
     void init(void);
     void createWidgets(void);
     void initSerial(void);

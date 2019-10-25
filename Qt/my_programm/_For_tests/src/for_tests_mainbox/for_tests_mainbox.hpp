@@ -96,20 +96,21 @@ private:
         ID_TEST_6
     };
 
+    //---
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
         bool (MainBox::*func)(void);
     } CMD_t;
+    QList<CMD> commands;
+    //---
 
     MySplashScreen *splash;
     Ui::MainBox *ui;
 
     QComboBox *cb_test;
-    QList<CMD> commands;
-
-    QComboBox *cb_test2;
+//    QComboBox *cb_test2;
 
     //---
     void test_validator(void);

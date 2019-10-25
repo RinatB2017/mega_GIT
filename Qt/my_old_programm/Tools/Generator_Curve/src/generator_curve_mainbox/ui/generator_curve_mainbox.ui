@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>458</width>
-    <height>98</height>
+    <width>172</width>
+    <height>46</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,13 +15,27 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QVBoxLayout" name="layout_serial"/>
+    <widget class="SerialBox5" name="serial_widget" native="true"/>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="layout_generator"/>
+    <widget class="Generator_Curve" name="generator_widget" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SerialBox5</class>
+   <extends>QWidget</extends>
+   <header>serialbox5.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Generator_Curve</class>
+   <extends>QWidget</extends>
+   <header>generator_curve.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

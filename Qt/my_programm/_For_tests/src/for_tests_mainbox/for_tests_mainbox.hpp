@@ -27,7 +27,6 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "for_tests_mainbox.hpp"
 #include "ui_for_tests_mainbox.h"
 
 #include "mywidget.hpp"
@@ -41,21 +40,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-//--------------------------------------------------------------------------------
-class B
-{
-public:
-    virtual void xxx(void) = 0;
-};
-
-class A : public B
-{
-public:
-    void xxx(void)
-    {
-        qDebug() << "A:xxx();";
-    }
-};
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -110,7 +94,6 @@ private:
     Ui::MainBox *ui;
 
     QComboBox *cb_test;
-//    QComboBox *cb_test2;
 
     //---
     void test_validator(void);

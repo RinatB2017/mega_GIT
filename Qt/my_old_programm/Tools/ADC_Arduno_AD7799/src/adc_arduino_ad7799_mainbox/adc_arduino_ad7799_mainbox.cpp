@@ -60,20 +60,16 @@ void MainBox::init()
     //y[n] = double(308.0)*qSin(double(n)*double(M_PI)/double(180.0));
     ui->setupUi(this);
 
-    serial = new SerialBox5(this, tr("RS-232"));
-    connect(serial, SIGNAL(output(QByteArray)), this, SLOT(raw_data(QByteArray)));
+    ui->serial_widget->set_caption("RS-232");
+    connect(ui->serial_widget, SIGNAL(output(QByteArray)), this, SLOT(raw_data(QByteArray)));
 
-    grapher = new GrapherBox(parentWidget());
-    grapher->set_title("ADC");
-    grapher->set_axis_scale_x(0, 1e6);
-    grapher->set_axis_scale_y(0, 1024);
+    ui->grapher_widget->set_title("ADC");
+    ui->grapher_widget->set_axis_scale_x(0, 1e6);
+    ui->grapher_widget->set_axis_scale_y(0, 1024);
 
-    curve_ch0 = grapher->add_curve("ch0");
-    curve_ch1 = grapher->add_curve("ch1");
-    curve_ch2 = grapher->add_curve("ch2");
-
-    ui->hbox->addWidget(serial);
-    ui->hbox->addWidget(grapher);
+    curve_ch0 = ui->grapher_widget->add_curve("ch0");
+    curve_ch1 = ui->grapher_widget->add_curve("ch1");
+    curve_ch2 = ui->grapher_widget->add_curve("ch2");
 
     updateText();
 
@@ -116,10 +112,12 @@ void MainBox::analize_packet(void)
         return;
     }
 
+//    PACKET *packet = reinterpret_cast<PACKET *>(clean_data.constData());
     PACKET *packet = (PACKET *)clean_data.constData();
-    grapher->add_curve_data(curve_ch0, packet->data.ch0);
-    grapher->add_curve_data(curve_ch1, packet->data.ch1);
-    grapher->add_curve_data(curve_ch2, packet->data.ch2);
+
+    ui->grapher_widget->add_curve_data(curve_ch0, packet->data.ch0);
+    ui->grapher_widget->add_curve_data(curve_ch1, packet->data.ch1);
+    ui->grapher_widget->add_curve_data(curve_ch2, packet->data.ch2);
 }
 //--------------------------------------------------------------------------------
 unsigned char MainBox::convert_ansi_to_dec(char data)

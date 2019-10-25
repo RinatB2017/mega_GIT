@@ -232,73 +232,10 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
-//#include "bone_15.hpp"
-#include "knob_lcd.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
-
-    // https://alex-exe.ru/radio/wireless/gsm-sim900-at-command/
-
-#if 0
-    QByteArray ba;
-
-    ba.clear();
-    ba.append(QByteArray::fromHex("004F0043005400410054004F004B0020003100360034002E0030003000200070002E0020042104400430043704430020004000500052005F0044004100540041005F00560041004C0055004500400020041304110020043704300020004000500052005F0041005000400020044004430431002E002F043C04350441002E0020041F043E043B0443044704380442044C003A00200031"));
-    emit info(ba);
-#endif
-
-#if 0
-    QString inQString = "004F0043005400410054004F004B0020003100360034002E0030003000200070002E0020042104400430043704430020004000500052005F0044004100540041005F00560041004C0055004500400020041304110020043704300020004000500052005F0041005000400020044004430431002E002F043C04350441002E0020041F043E043B0443044704380442044C003A00200031";
-
-    QByteArray ar1 = inQString.toLatin1();
-    QByteArray ar2 = QByteArray::fromHex(ar1);
-    QString outQString = QString::fromUtf8(ar2.data(), ar2.size());
-    emit info(outQString);
-#endif
-
-#if 0
-    QString str = "AB";
-    bool ok;
-    int hex = str.toInt(&ok, 16);
-    emit info(QString("%1").arg(hex));
-#endif
-
-#if 0
-    B *b = new A();
-    b->xxx();
-#endif
-
-#if 0
-    emit info(test_assert(-10) ? "true" : "false");
-#endif
-
-#if 0
-    char state = 0;
-
-    state = (char)0x01;
-    emit info(QString("%1").arg(state, 2, 16, QChar('0')));
-
-    state = ~(char)0x01;
-    emit info(QString("%1").arg(state, 2, 16, QChar('0')));
-#endif
-
-#if 0
-    Knob_lcd *w = new Knob_lcd();
-    w->setUpperBound(3000);
-    w->set_value(1500);
-    w->show();
-#endif
-
-#if 0
-    for(int n=1; n<=15; n++)
-    {
-        Bone_15 *bone = new Bone_15(n, 64, 32);
-        bone->save(QString("/dev/shm/0/bone_%1.png").arg(n));
-    }
-    emit info("OK");
-#endif
 
     return true;
 }

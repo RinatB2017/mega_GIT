@@ -38,38 +38,20 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    if(generator)
-    {
-        generator->deleteLater();
-    }
-    if(serial)
-    {
-        serial->deleteLater();
-    }
-
-    delete ui;
 #ifdef QT_DEBUG
     qDebug() << "~MainBox()";
 #endif
+    delete ui;
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    generator = new Generator_Curve(this);
-    serial = new SerialBox5(this, "RS-232");
+    ui->serial_widget->set_caption("RS-232");
 
-    Q_CHECK_PTR(generator);
-    Q_CHECK_PTR(serial);
-
-    ui->layout_generator->addWidget(generator);
-    ui->layout_serial->addWidget(serial);
-
-    //TODO
-    connect(generator,  SIGNAL(send(QString)),  serial, SLOT(input(QString)));
-
-    connect(serial, SIGNAL(output(QByteArray)), this, SLOT(temp(QByteArray)));
+    connect(ui->generator_widget,   SIGNAL(send(QString)),      ui->serial_widget,  SLOT(input(QString)));
+    connect(ui->serial_widget,      SIGNAL(output(QByteArray)), this,               SLOT(temp(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::temp(QByteArray data)

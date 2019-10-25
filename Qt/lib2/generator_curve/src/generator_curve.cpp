@@ -99,7 +99,7 @@ QWidget *Generator_Curve::add_grapher(void)
 //--------------------------------------------------------------------------------
 void Generator_Curve::set_slider_tooltip(int value)
 {
-    QSlider *slider = (QSlider *)sender();
+    QSlider *slider = reinterpret_cast<QSlider *>(sender());
     if(slider)
     {
         slider->setToolTip(QString("%1").arg(value));
@@ -117,7 +117,7 @@ void Generator_Curve::start(void)
     temp = ":";
     foreach (QSlider *slider, sliders)
     {
-        uint16_t value = slider->value();
+        int value = slider->value();
         QString data = QString("%1").arg(value, 4, 16, QChar('0')).toUpper();
         temp.append(data);
     }
@@ -143,7 +143,7 @@ void Generator_Curve::gen_sinus(void)
     foreach (QSlider *slider, sliders)
     {
         y = double(slider->maximum() / 2)*qSin(double(n)*double(M_PI)/double(16));
-        slider->setValue(y+(slider->maximum() / 2)+0.5f);
+        slider->setValue(static_cast<int>(y+(slider->maximum() / 2.0)+0.5));
         n++;
     }
 }
@@ -163,7 +163,7 @@ void Generator_Curve::gen_triangle(void)
         else
             y -= delta;
         n++;
-        slider->setValue(y);
+        slider->setValue(static_cast<int>(y));
     }
 }
 //--------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ void Generator_Curve::gen_saw(void)
     {
         delta = slider->maximum() / MAX_SLIDER;
         y += delta;
-        slider->setValue(y);
+        slider->setValue(static_cast<int>(y));
     }
 }
 //--------------------------------------------------------------------------------
@@ -192,7 +192,7 @@ void Generator_Curve::gen_meandr(void)
             y = 0;
         else
             y = slider->maximum();
-        slider->setValue(y);
+        slider->setValue(static_cast<int>(y));
         n++;
     }
 }

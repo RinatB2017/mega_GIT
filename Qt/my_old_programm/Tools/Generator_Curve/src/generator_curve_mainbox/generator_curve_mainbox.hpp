@@ -33,9 +33,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Generator_Curve;
-class SerialBox5;
-//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
@@ -49,9 +46,6 @@ private slots:
 
 private:
     Ui::MainBox *ui;
-
-    Generator_Curve *generator;
-    SerialBox5 *serial;
 
     void init(void);
 

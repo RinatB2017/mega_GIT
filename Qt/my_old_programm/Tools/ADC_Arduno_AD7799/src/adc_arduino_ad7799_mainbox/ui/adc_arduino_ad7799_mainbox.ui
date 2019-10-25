@@ -6,19 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>444</height>
+    <width>333</width>
+    <height>74</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QHBoxLayout" name="hbox"/>
+    <widget class="SerialBox5" name="serial_widget" native="true"/>
+   </item>
+   <item>
+    <widget class="GrapherBox" name="grapher_widget" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SerialBox5</class>
+   <extends>QWidget</extends>
+   <header>serialbox5.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GrapherBox</class>
+   <extends>QWidget</extends>
+   <header>grapherbox.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

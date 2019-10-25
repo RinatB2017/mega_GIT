@@ -61,9 +61,6 @@
         </item>
        </layout>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="layout_send"/>
-      </item>
      </layout>
     </widget>
    </item>

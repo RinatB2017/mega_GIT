@@ -68,6 +68,15 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
 {
+#ifdef RS232_SEND
+    if(sendBox5)
+    {
+        sendBox5->disconnect();
+        sendBox5->close();
+        sendBox5->deleteLater();
+    }
+#endif
+
     if(serial5)
     {
         serial5->disconnect();
@@ -117,12 +126,6 @@ void SerialBox5_fix_baudrate::init(void)
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_refresh->setToolTip("Обновить список портов");
 
-#ifdef RS232_SEND
-    sendBox5 = new SendBox5(this);
-    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
-    ui->layout_SEND->addWidget(sendBox5);
-#endif
-
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     //setFixedWidth(sizeHint().width());
     setFixedHeight(sizeHint().height());
@@ -142,6 +145,12 @@ void SerialBox5_fix_baudrate::createWidgets(void)
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 
     connect(this, SIGNAL(output(QByteArray)), this, SLOT(drawData(QByteArray)));
+
+#ifdef RS232_SEND
+    sendBox5 = new SendBox5(this);
+    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
+    ui->layout_SEND->addWidget(sendBox5);
+#endif
 }
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
@@ -257,6 +266,9 @@ void SerialBox5_fix_baudrate::setCloseState(void)
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
     emit state(false);
+#ifdef RS232_SEND
+    sendBox5->block_interface(true);
+#endif
     ui->btn_power->setToolTip("Старт");
 }
 //--------------------------------------------------------------------------------
@@ -268,6 +280,9 @@ void SerialBox5_fix_baudrate::setOpenState()
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
     emit state(true);
+#ifdef RS232_SEND
+    sendBox5->block_interface(false);
+#endif
     ui->btn_power->setToolTip("Стоп");
 }
 //--------------------------------------------------------------------------------
@@ -621,6 +636,10 @@ bool SerialBox5_fix_baudrate::get_test(void)
 void SerialBox5_fix_baudrate::updateText(void)
 {
     ui->retranslateUi(this);
+
+#ifdef RS232_SEND
+    sendBox5->updateText();
+#endif
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5_fix_baudrate::programm_is_exit(void)

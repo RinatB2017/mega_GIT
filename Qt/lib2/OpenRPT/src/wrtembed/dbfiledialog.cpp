@@ -95,7 +95,7 @@ QString DBFileDialog::getSource()
     if(src_qry.first())
       return src_qry.value("report_source").toString();
   }
-  return QString::null;
+  return QString();
 }
 
 QString DBFileDialog::getNameById()
@@ -110,7 +110,7 @@ QString DBFileDialog::getNameById()
 	  if(src_qry.first())
 	    return src_qry.value("report_name").toString();
   }
-  return QString::null;
+  return QString();
 }
 
 int DBFileDialog::getGradeById()

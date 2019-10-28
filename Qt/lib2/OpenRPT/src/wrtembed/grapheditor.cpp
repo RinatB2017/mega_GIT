@@ -57,8 +57,8 @@ GraphEditor::GraphEditor(QWidget* parent, Qt::WindowFlags fl)
     connect(_cbSeries, SIGNAL(activated(const QString&)), this, SLOT(_cbSeries_activated(const QString&)));
     connect(_cbColors, SIGNAL(activated(const QString&)), this, SLOT(_cbColors_activated(const QString&)));
 
-    _colorMap = 0;
-    _seriesData = 0;
+    _colorMap = nullptr;
+    _seriesData = nullptr;
 
     leXPos->setValidator(new QDoubleValidator(0.0,100.0,3,leXPos));
     leYPos->setValidator(new QDoubleValidator(0.0,100.0,3,leYPos));
@@ -344,8 +344,8 @@ void GraphEditor::_btnNewSeries_clicked()
     
     ORSeriesData * sd = new ORSeriesData();
     sd->name = sname;
-    sd->color = QString::null;
-    sd->column = QString::null;
+    sd->color = QString();
+    sd->column = QString();
     sd->style.bar = true;
     sd->style.line = false;
     sd->style.point = false;

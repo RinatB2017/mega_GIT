@@ -118,7 +118,7 @@ PageSizeInfo::PageSizeInfo(const QString & n, int qpv, int w, int h)
 
 PageSizeInfo::PageSizeInfo()
 {
-  _name = QString::null;
+  _name = QString();
   _qpValue = QPrinter::Custom;
   _width = 0;
   _height = 0;

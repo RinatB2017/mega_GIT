@@ -38,11 +38,11 @@ QString QUUEncode(QIODevice & iod, const QString & _remote, int mode)
         if(!iod.open(QIODevice::ReadOnly))
         {
             qDebug("Could not open the QIODevice for reading.");
-            return QString::null;
+            return QString();
         }
     }
 
-    if(remote == QString::null) remote = "internal";
+    if(remote == QString()) remote = "internal";
     if(mode == 0) mode = 0644;
 
     value = QString().sprintf("begin %o %s\n", mode, remote.toLatin1().data());
@@ -89,7 +89,7 @@ QByteArray QUUDecode(const QString & _source, QString * name, int * mode)
 
     QString l;
     // find the start of the UUEncoded data
-    while( ((l = in.readLine()) != QString::null) && (!l.startsWith("begin ")) );
+    while( ((l = in.readLine()) != QString()) && (!l.startsWith("begin ")) );
     if(!l.startsWith("begin "))
     {
         return b; // not UUEncoded data, returns empty array
@@ -129,7 +129,7 @@ QByteArray QUUDecode(const QString & _source, QString * name, int * mode)
 
     int num = 0;
     char c0, c1, c2, c3;
-    while( ((l = in.readLine()) != QString::null) && (!l.startsWith("end")) )
+    while( ((l = in.readLine()) != QString()) && (!l.startsWith("end")) )
     {
         qc = l[0];
         c = qc.toLatin1();

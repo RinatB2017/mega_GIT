@@ -64,7 +64,8 @@ void MainBox::load_data(void)
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     dlg->setDirectory(".");
     dlg->selectFile("noname");
-    dlg->setConfirmOverwrite(true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();

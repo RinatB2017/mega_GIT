@@ -24,6 +24,7 @@
 #include <QApplication>
 #include <QProgressBar>
 #include <QVBoxLayout>
+#include <QScreen>
 #include <QLabel>
 #include <QRect>
 //--------------------------------------------------------------------------------
@@ -57,7 +58,8 @@ MySplashScreen::MySplashScreen(const QPixmap &pixmap,
     setCursor(Qt::BusyCursor);
 
     adjustSize();
-    QRect available_geom = QDesktopWidget().availableGeometry();
+    QRect available_geom = QGuiApplication::screens()[0]->geometry();
+    // QRect available_geom = QDesktopWidget().availableGeometry();
 
     int app_left = available_geom.width() / 2 - width() / 2;
     int app_top  = available_geom.height() / 2 - height() / 2;

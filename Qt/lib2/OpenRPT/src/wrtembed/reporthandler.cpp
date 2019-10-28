@@ -607,7 +607,7 @@ void ReportHandler::updateSelectedEntity()
 {
   if(selectionCount() > 0)
   {
-    QString message = QString::null;
+    QString message = QString();
     if(selectionCount() == 1)
     {
       DocumentWindow * gw = activeDocumentWindow();
@@ -719,7 +719,7 @@ void ReportHandler::fileOpen()
   // ok first we need to get a file to open.
   QString file = QFileDialog::getOpenFileName(
         0, tr("Open File"),
-        QString::null, tr("XML (*.xml)") );
+        QString(), tr("XML (*.xml)") );
   fileOpen(file);
 }
 

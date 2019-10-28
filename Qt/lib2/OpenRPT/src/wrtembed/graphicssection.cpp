@@ -397,7 +397,7 @@ void ORGraphicsSectionDetail::initFromXML(QDomNode & section)
 
   // some code to handle old style defs
   QString o_name = "unnamed";
-  QString o_column = QString::null;
+  QString o_column = QString();
   bool old_head = false;
   QDomNode o_head;
   bool old_foot = false;

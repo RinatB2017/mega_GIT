@@ -106,7 +106,7 @@ QString SelectMQL::group() const
     if (_list->currentIndex().isValid())
         return _list->currentIndex().sibling(_list->currentIndex().row(),
                                              _model->fieldIndex("metasql_group")).data().toString();
-    return QString::null;
+    return QString();
 }
 
 int SelectMQL::id() const
@@ -122,7 +122,7 @@ QString SelectMQL::name() const
     if (_list->currentIndex().isValid())
         return _list->currentIndex().sibling(_list->currentIndex().row(),
                                              _model->fieldIndex("metasql_name")).data().toString();
-    return QString::null;
+    return QString();
 }
 
 QString SelectMQL::notes() const
@@ -130,7 +130,7 @@ QString SelectMQL::notes() const
     if (_list->currentIndex().isValid())
         return _list->currentIndex().sibling(_list->currentIndex().row(),
                                              _model->fieldIndex("metasql_notes")).data().toString();
-    return QString::null;
+    return QString();
 }
 
 QString SelectMQL::query() const
@@ -138,7 +138,7 @@ QString SelectMQL::query() const
     if (_list->currentIndex().isValid())
         return _list->currentIndex().sibling(_list->currentIndex().row(),
                                              _model->fieldIndex("metasql_query")).data().toString();
-    return QString::null;
+    return QString();
 }
 
 QString SelectMQL::schema()

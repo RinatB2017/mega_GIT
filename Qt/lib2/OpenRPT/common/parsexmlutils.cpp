@@ -41,15 +41,15 @@ bool ORObject::isImage() { return false; }
 bool ORObject::isGraph() { return false; }
 bool ORObject::isCrossTab() { return false; }
 
-ORLineData * ORObject::toLine() { return 0; }
-ORRectData * ORObject::toRect() { return 0; }
-ORLabelData * ORObject::toLabel() { return 0; }
-ORFieldData * ORObject::toField() { return 0; }
-ORTextData * ORObject::toText() { return 0; }
-ORBarcodeData * ORObject::toBarcode() { return 0; }
-ORImageData * ORObject::toImage() { return 0; }
-ORGraphData * ORObject::toGraph() { return 0; }
-ORCrossTabData * ORObject::toCrossTab() { return 0; }
+ORLineData * ORObject::toLine() { return nullptr; }
+ORRectData * ORObject::toRect() { return nullptr; }
+ORLabelData * ORObject::toLabel() { return nullptr; }
+ORFieldData * ORObject::toField() { return nullptr; }
+ORTextData * ORObject::toText() { return nullptr; }
+ORBarcodeData * ORObject::toBarcode() { return nullptr; }
+ORImageData * ORObject::toImage() { return nullptr; }
+ORGraphData * ORObject::toGraph() { return nullptr; }
+ORCrossTabData * ORObject::toCrossTab() { return nullptr; }
 
 
 //
@@ -84,27 +84,27 @@ ORCrossTabData * ORCrossTabData::toCrossTab() { return this; }
 
 ORDetailGroupSectionData::ORDetailGroupSectionData()
 {
-    name = QString::null;
-    column = QString::null;
+    name = QString();
+    column = QString();
     pagebreak = BreakNone;
     _subtotCheckPoints.clear();
-    head = 0;
-    foot = 0;
+    head = nullptr;
+    foot = nullptr;
 }
 
 ORDetailGroupSectionData::~ORDetailGroupSectionData()
 {
-    if (head != 0)
+    if (head != nullptr)
         delete head;
-    if (foot != 0)
+    if (foot != nullptr)
         delete foot;
 }
 
 ORDetailSectionData::ORDetailSectionData()
 {
-    name = QString::null;
+    name = QString();
     pagebreak = BreakNone;
-    detail = 0;
+    detail = nullptr;
 }
 
 ORDetailSectionData::~ORDetailSectionData()
@@ -114,14 +114,14 @@ ORDetailSectionData::~ORDetailSectionData()
 
 ORReportData::ORReportData()
 {
-    title = QString::null;
-    name = QString::null;
+    title = QString();
+    name = QString();
 
     //queries = QuerySourceList();
 
-    pghead_first = pghead_odd = pghead_even = pghead_last = pghead_any = NULL;
-    pgfoot_first = pgfoot_odd = pgfoot_even = pgfoot_last = pgfoot_any = NULL;
-    rpthead = rptfoot = NULL;
+    pghead_first = pghead_odd = pghead_even = pghead_last = pghead_any = nullptr;
+    pgfoot_first = pgfoot_odd = pgfoot_even = pgfoot_last = pgfoot_any = nullptr;
+    rpthead = rptfoot = nullptr;
 }
 
 ORReportData::~ORReportData()
@@ -159,7 +159,7 @@ ORWatermarkData::ORWatermarkData()
     useDefaultFont = true;
     font = QFont("Arial");
     staticText = true;
-    text = QString::null;
+    text = QString();
     valid = false;
 }
 
@@ -167,7 +167,7 @@ ORBackgroundData::ORBackgroundData()
 {
     enabled = false;
     staticImage = true;
-    image = QString::null;
+    image = QString();
     opacity = 25;
     mode = "clip";
     align = Qt::AlignLeft | Qt::AlignTop;
@@ -190,22 +190,22 @@ bool parseReportRect(const QDomElement & elemSource, ORRectData & rectTarget)
 
         if (elemParam.tagName() == "x")
         {
-            rectTarget.x = (int)elemParam.text().toDouble();
+            rectTarget.x = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "y")
         {
-            rectTarget.y = (int)elemParam.text().toDouble();
+            rectTarget.y = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "width")
         {
-            rectTarget.width = (int)elemParam.text().toDouble();
+            rectTarget.width = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "height")
         {
-            rectTarget.height = (int)elemParam.text().toDouble();
+            rectTarget.height = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "weight")
@@ -227,7 +227,7 @@ bool parseReportRect(const QDomElement & elemSource, ORRectData & rectTarget)
         }
         else if (elemParam.tagName() == "rotation")
         {
-            rectTarget.setRotation(elemParam.text().toFloat());
+            rectTarget.setRotation(elemParam.text().toDouble());
         }
         else
             qDebug("Tag not Parsed at <line>:%s\n", elemParam.tagName().toLatin1().data());
@@ -405,22 +405,22 @@ bool parseReportLine(const QDomElement & elemSource, ORLineData & lineTarget)
 
         if (elemParam.tagName() == "xstart")
         {
-            lineTarget.xStart = (int)elemParam.text().toDouble();
+            lineTarget.xStart = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "ystart")
         {
-            lineTarget.yStart = (int)elemParam.text().toDouble();
+            lineTarget.yStart = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "xend")
         {
-            lineTarget.xEnd = (int)elemParam.text().toDouble();
+            lineTarget.xEnd = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "yend")
         {
-            lineTarget.yEnd = (int)elemParam.text().toDouble();
+            lineTarget.yEnd = static_cast<int>(elemParam.text().toDouble());
             coorCounter++;
         }
         else if (elemParam.tagName() == "weight")
@@ -490,7 +490,7 @@ bool parseReportField(const QDomElement & elemSource, ORFieldData & fieldTarget)
     fieldTarget.trackTotal = false;
     fieldTarget.sub_total = false;
     fieldTarget.builtinFormat = false;
-    fieldTarget.format = QString::null;
+    fieldTarget.format = QString();
     fieldTarget.lines = 1;
     fieldTarget.columns = 1;
     fieldTarget.xSpacing = 0;
@@ -676,7 +676,7 @@ bool parseReportColorDefData(const QDomElement & elemSource, ORColorDefData & co
     if(elemSource.tagName() != "colordef")
         return false;
 
-    coldefTarget.name = QString::null;
+    coldefTarget.name = QString();
     coldefTarget.red = coldefTarget.green = coldefTarget.blue = 0;
 
     QDomNodeList nlist = elemSource.childNodes();
@@ -704,7 +704,7 @@ bool parseReportTitleData(const QDomElement & elemSource, ORTitleData & titleTar
     if(elemSource.tagName() != "title")
         return false;
 
-    titleTarget.string = QString::null;
+    titleTarget.string = QString();
     titleTarget.font_defined = false;
 
     QDomNodeList nlist = elemSource.childNodes();
@@ -754,9 +754,9 @@ bool parseReportDataAxisData(const QDomElement & elemSource, ORDataAxisData & ax
     if(elemSource.tagName() != "dataaxis")
         return false;
 
-    axisTarget.title.string = QString::null;
+    axisTarget.title.string = QString();
     axisTarget.title.font_defined = false;
-    axisTarget.column = QString::null;
+    axisTarget.column = QString();
     axisTarget.font_defined = false;
 
     QDomNodeList nlist = elemSource.childNodes();
@@ -784,7 +784,7 @@ bool parseReportValueAxisData(const QDomElement & elemSource, ORValueAxisData & 
     double ival = 0.0;
     bool valid = false;
 
-    axisTarget.title.string = QString::null;
+    axisTarget.title.string = QString();
     axisTarget.title.font_defined = false;
     axisTarget.min = 0.0;
     axisTarget.max = 100.0;
@@ -831,9 +831,9 @@ bool parseReportSeriesData(const QDomElement & elemSource, ORSeriesData & series
     if(elemSource.tagName() != "series")
         return false;
 
-    seriesTarget.name = QString::null;
-    seriesTarget.color = QString::null;
-    seriesTarget.column = QString::null;
+    seriesTarget.name = QString();
+    seriesTarget.color = QString();
+    seriesTarget.column = QString();
     seriesTarget.style.bar = true;
     seriesTarget.style.line = false;
     seriesTarget.style.point = false;
@@ -878,12 +878,12 @@ bool parseReportGraphData(const QDomElement & elemSource, ORGraphData & graphTar
     bool have_rect = false;
     bool have_series = false;
 
-    graphTarget.title.string = QString::null;
-    graphTarget.dataaxis.title.string = QString::null;
+    graphTarget.title.string = QString();
+    graphTarget.dataaxis.title.string = QString();
     graphTarget.dataaxis.title.font_defined = false;
-    graphTarget.dataaxis.column = QString::null;
+    graphTarget.dataaxis.column = QString();
     graphTarget.dataaxis.font_defined = false;
-    graphTarget.valueaxis.title.string = QString::null;
+    graphTarget.valueaxis.title.string = QString();
     graphTarget.valueaxis.min = 0;
     graphTarget.valueaxis.max = 100;
     graphTarget.valueaxis.autominmax = true;
@@ -907,9 +907,9 @@ bool parseReportGraphData(const QDomElement & elemSource, ORGraphData & graphTar
         {
             if(!parseReportDataAxisData(elemThis, graphTarget.dataaxis))
             {
-                graphTarget.dataaxis.title.string = QString::null;
+                graphTarget.dataaxis.title.string = QString();
                 graphTarget.dataaxis.title.font_defined = false;
-                graphTarget.dataaxis.column = QString::null;
+                graphTarget.dataaxis.column = QString();
                 graphTarget.dataaxis.font_defined = false;
             }
         }
@@ -917,7 +917,7 @@ bool parseReportGraphData(const QDomElement & elemSource, ORGraphData & graphTar
         {
             if(!parseReportValueAxisData(elemThis, graphTarget.valueaxis))
             {
-                graphTarget.valueaxis.title.string = QString::null;
+                graphTarget.valueaxis.title.string = QString();
                 graphTarget.valueaxis.min = 0;
                 graphTarget.valueaxis.max = 100;
                 graphTarget.valueaxis.autominmax = true;
@@ -934,7 +934,7 @@ bool parseReportGraphData(const QDomElement & elemSource, ORGraphData & graphTar
             }
             else
                 delete orsd;
-            orsd = 0;
+            orsd = nullptr;
         }
         else
             qDebug("While parsing graph encountered an unknown element: %s",elemThis.tagName().toLatin1().data());
@@ -953,9 +953,9 @@ bool parseReportCrossTabElementData(const QString& elementName,
     if(elemSource.tagName() != elementName)
         return false;
 
-    queryData.m_query  = QString::null;
-    queryData.m_hAlign = QString::null;
-    queryData.m_vAlign = QString::null;
+    queryData.m_query  = QString();
+    queryData.m_hAlign = QString();
+    queryData.m_vAlign = QString();
 
     QDomNodeList nlist = elemSource.childNodes();
     for(int nodeCounter = 0; nodeCounter < nlist.count(); nodeCounter++)
@@ -1109,27 +1109,27 @@ bool parseReportCrossTabData(const QDomElement & elemSource,
         {
             if(!parseReportCrossTabElementData("column", elemThis, crossTabTarget.m_column))
             {
-                crossTabTarget.m_column.m_query  = QString::null;
-                crossTabTarget.m_column.m_hAlign = QString::null;
-                crossTabTarget.m_column.m_vAlign = QString::null;
+                crossTabTarget.m_column.m_query  = QString();
+                crossTabTarget.m_column.m_hAlign = QString();
+                crossTabTarget.m_column.m_vAlign = QString();
             }
         }
         else if(elemThis.tagName() == "row")
         {
             if(!parseReportCrossTabElementData("row", elemThis, crossTabTarget.m_row))
             {
-                crossTabTarget.m_row.m_query  = QString::null;
-                crossTabTarget.m_row.m_hAlign = QString::null;
-                crossTabTarget.m_row.m_vAlign = QString::null;
+                crossTabTarget.m_row.m_query  = QString();
+                crossTabTarget.m_row.m_hAlign = QString();
+                crossTabTarget.m_row.m_vAlign = QString();
             }
         }
         else if(elemThis.tagName() == "value")
         {
             if(!parseReportCrossTabElementData("value", elemThis, crossTabTarget.m_value))
             {
-                crossTabTarget.m_value.m_query  = QString::null;
-                crossTabTarget.m_value.m_hAlign = QString::null;
-                crossTabTarget.m_value.m_vAlign = QString::null;
+                crossTabTarget.m_value.m_query  = QString();
+                crossTabTarget.m_value.m_hAlign = QString();
+                crossTabTarget.m_value.m_vAlign = QString();
             }
         }
         else
@@ -1146,9 +1146,9 @@ bool parseReportBackground(const QDomElement & elemSource, ORBackgroundData & bg
 
     bgTarget.enabled = false;
     bgTarget.staticImage = true;
-    bgTarget.image = QString::null;
-    bgTarget.data.query = QString::null;
-    bgTarget.data.column = QString::null;
+    bgTarget.image = QString();
+    bgTarget.data.query = QString();
+    bgTarget.data.column = QString();
     bgTarget.opacity = 25;
     bgTarget.mode = "clip";
     bgTarget.rect = QRect();
@@ -1210,7 +1210,7 @@ bool parseReportWatermark(const QDomElement & elemSource,
     if(elemSource.tagName() != "watermark")
         return false;
 
-    wmTarget.text = QString::null;
+    wmTarget.text = QString();
     wmTarget.opacity = 25;
     wmTarget.staticText = true;
     wmTarget.useDefaultFont = true;
@@ -1261,7 +1261,7 @@ bool parseReportSection(const QDomElement & elemSource, ORSectionData & sectionT
             sectionTarget.name != "detail" )
         return false;
 
-    sectionTarget.extra = QString::null;
+    sectionTarget.extra = QString();
     sectionTarget.height = 0.0;
 
     QDomNodeList section = elemSource.childNodes();
@@ -1393,8 +1393,8 @@ bool parseReportDetailSection(const QDomElement & elemSource,
     bool have_detail = false;
     bool have_key = false;
 
-    ORSectionData * old_head = 0;
-    ORSectionData * old_foot = 0;
+    ORSectionData * old_head = nullptr;
+    ORSectionData * old_foot = nullptr;
 
     QDomNodeList section = elemSource.childNodes();
     for(int nodeCounter = 0; nodeCounter < section.count(); nodeCounter++)
@@ -1658,7 +1658,7 @@ bool parseReport(const QDomElement &elemSource,
                     reportTarget.pghead_even = sd;
                 else if(sd->extra == "lastpage")
                     reportTarget.pghead_last = sd;
-                else if(sd->extra == QString::null)
+                else if(sd->extra == QString())
                     reportTarget.pghead_any = sd;
                 else
                 {
@@ -1682,7 +1682,7 @@ bool parseReport(const QDomElement &elemSource,
                     reportTarget.pgfoot_even = sd;
                 else if(sd->extra == "lastpage")
                     reportTarget.pgfoot_last = sd;
-                else if(sd->extra == QString::null)
+                else if(sd->extra == QString())
                     reportTarget.pgfoot_any = sd;
                 else
                 {

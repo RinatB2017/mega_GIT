@@ -133,7 +133,7 @@ XSqlQuery::XSqlQuery(QSqlResult * r) :
 }
 
 XSqlQuery::XSqlQuery(const QString &pSql, QSqlDatabase db) :
-    QSqlQuery(QString::null, db)
+    QSqlQuery(QString(), db)
 {
     _data = new XSqlQueryPrivate(this);
     qApp->setOverrideCursor(Qt::WaitCursor);
@@ -159,7 +159,7 @@ XSqlQuery::~XSqlQuery()
 {
     if (_data)
         delete _data;
-    _data = 0;
+    _data = nullptr;
 }
 
 XSqlQuery & XSqlQuery::operator=(const XSqlQuery & other)

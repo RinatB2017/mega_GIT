@@ -96,9 +96,9 @@ bool MQLUtil::rewriteMetadata(QString &query,      const QString &group,
 bool MQLUtil::extractMetadata(const QString &query,
                               QString &group, QString &name, QString &notes)
 {
-  group = QString::null;
-  name  = QString::null;
-  notes = QString::null;
+  group = QString();
+  name  = QString();
+  notes = QString();
 
   if(! query.isEmpty())
   {
@@ -126,7 +126,7 @@ QString MQLUtil::mqlLoad(const QString &name, QString &errmsg, bool *valid)
   if (valid)
     *valid = false;
 
-  QString fsrc = QString::null;
+  QString fsrc = QString();
   QFile fin(name);
   if (fin.open(QIODevice::ReadOnly))
   {
@@ -150,8 +150,8 @@ QString MQLUtil::mqlLoad(const QString &group, const QString &name, QString &err
   if (valid)
     *valid = false;
 
-  QString fsrc = QString::null;
-  errmsg = QString::null;
+  QString fsrc = QString();
+  errmsg = QString();
 
   XSqlQuery qry;
   QString sql;
@@ -182,7 +182,7 @@ QString MQLUtil::mqlLoad(const QString &group, const QString &name, QString &err
 static QString _lastError;
 
 QString mqlLastError() { return _lastError; }
-void    mqlClearLastError() { _lastError = QString::null; }
+void    mqlClearLastError() { _lastError = QString(); }
 
 MetaSQLQuery mqlLoad(const QString &name, bool *valid)
 {

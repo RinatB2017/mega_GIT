@@ -86,7 +86,7 @@ class MetaSQLInfoQt : public MetaSQLInfo {
 
 MetaSQLQuery::MetaSQLQuery(const QString & query) {
     _data = new MetaSQLQueryParser();
-    _source = QString::null;
+    _source = QString();
 
     if(!query.isEmpty()) {
         setQuery(query);
@@ -96,7 +96,7 @@ MetaSQLQuery::MetaSQLQuery(const QString & query) {
 MetaSQLQuery::~MetaSQLQuery() {
     if(_data) {
         delete _data;
-        _data = 0;
+        _data = nullptr;
     }
 }
 
@@ -128,5 +128,5 @@ XSqlQuery MetaSQLQuery::toQuery(const ParameterList & params, QSqlDatabase pDb, 
     return qry;
 }
 
-QString MetaSQLQuery::parseLog() { return (_data ? QString::fromStdString(_data->errors()) : QString::null); }
+QString MetaSQLQuery::parseLog() { return (_data ? QString::fromStdString(_data->errors()) : QString()); }
 

@@ -86,16 +86,16 @@ void DocumentScene::initData()
     _wmFont = QFont("Arial");
     _wmUseDefaultFont = true;
     _wmUseStaticText = true;
-    _wmText = QString::null;
-    _wmColumn = QString::null;
-    _wmQuery = QString::null;
+    _wmText = QString();
+    _wmColumn = QString();
+    _wmQuery = QString();
 
     // Set default Background Properties
     _bgEnabled = false;
     _bgStatic = true;
-    _bgImage = QString::null;
-    _bgQuery = QString::null;
-    _bgColumn = QString::null;
+    _bgImage = QString();
+    _bgQuery = QString();
+    _bgColumn = QString();
     _bgResizeMode = "clip";
     _bgAlign = Qt::AlignLeft | Qt::AlignTop;
     _bgBoundsX = 0;
@@ -2139,7 +2139,7 @@ void DocumentScene::loadDocument(const QDomElement &root, QWidget *parent, bool 
                 qsList->add(new QuerySource(qname,qsql, lfdb, qmgroup, qmname));
             } else if(n == "colordef") {
                 QDomNodeList qnl = it.childNodes();
-                QString cname = QString::null;
+                QString cname = QString();
                 int red = 0, green = 0, blue = 0;
                 QDomNode qit;
                 for(int qi = 0; qi < qnl.count(); qi++) {

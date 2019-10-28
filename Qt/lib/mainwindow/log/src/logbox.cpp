@@ -481,7 +481,8 @@ void LogBox::save_to(void)
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     dlg->setDirectory(".");
     dlg->selectFile("без имени");
-    dlg->setConfirmOverwrite(true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();

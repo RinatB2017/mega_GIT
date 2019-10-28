@@ -161,10 +161,10 @@ void MQLEdit::fileOpen()
                 _text->document()->setModified(false);
                 _fileName = fileName;
                 _mqlGrade = -1;
-                _mqlGroup = QString::null;
-                _mqlName  = QString::null;
-                _mqlNotes = QString::null;
-                _mqlSchema= QString::null;
+                _mqlGroup = QString();
+                _mqlName  = QString();
+                _mqlNotes = QString();
+                _mqlSchema= QString();
                 setWindowTitle(getTitleString(MQLFile));
                 setDestType(MQLFile);
             }
@@ -244,12 +244,12 @@ void MQLEdit::clear()
     _text->clear();
     _text->document()->setModified(false);
     setWindowModified(false);
-    _fileName = QString::null;
+    _fileName = QString();
     _mqlGrade   = -1;
-    _mqlGroup = QString::null;
-    _mqlName  = QString::null;
-    _mqlNotes = QString::null;
-    _mqlSchema= QString::null;
+    _mqlGroup = QString();
+    _mqlName  = QString();
+    _mqlNotes = QString();
+    _mqlSchema= QString();
 }
 
 void MQLEdit::editFind()
@@ -430,7 +430,7 @@ void MQLEdit::sMQLSelected(int id)
     {
         _text->setText(_mqlSelector->query());
         _text->document()->setModified(false);
-        _fileName = QString::null;
+        _fileName = QString();
         _mqlGrade = _mqlSelector->grade();
         _mqlGroup = _mqlSelector->group();
         _mqlName  = _mqlSelector->name();
@@ -461,7 +461,7 @@ void MQLEdit::fileDatabaseOpen(const int id)
         {
             _text->setText(getq.value("metasql_query").toString());
             _text->document()->setModified(false);
-            _fileName = QString::null;
+            _fileName = QString();
             _mqlGrade = getq.value("metasql_grade").toInt();
             _mqlGroup = getq.value("metasql_group").toString();
             _mqlName  = getq.value("metasql_name").toString();

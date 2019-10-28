@@ -25,8 +25,8 @@
 
 class QIODevice;
 
-QString    QUUEncode(QIODevice &, const QString & = QString::null, int mode = 0);
-QByteArray QUUDecode(const QString &, QString * = 0, int * = 0);
+QString    QUUEncode(QIODevice &, const QString & = QString(), int mode = 0);
+QByteArray QUUDecode(const QString &, QString * = nullptr, int * = nullptr);
 
 #endif
 

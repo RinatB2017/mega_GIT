@@ -27,10 +27,10 @@ QString OpenRPT::copyright = QObject::tr("Copyright (c) 2002-2011, OpenMFG, LLC.
 bool    OpenRPT::loggedIn  = false;
 QString OpenRPT::version   = QObject::tr("3.3.1BETA");
 
-LanguageOptions OpenRPT::languages(0);
+LanguageOptions OpenRPT::languages(nullptr);
 
 /* set the values for these in each main() or
    in the constructor for the primary UI of embedded components:
  */
-QString OpenRPT::databaseURL = QString::null;
-QString OpenRPT::name = QString::null;
+QString OpenRPT::databaseURL = QString();
+QString OpenRPT::name = QString();

@@ -31,7 +31,7 @@ class QSqlDatabase;
 class MetaSQLQueryParser;
 class MetaSQLQuery {
     public:
-        MetaSQLQuery(const QString & = QString::null);
+        MetaSQLQuery(const QString & = QString());
         virtual ~MetaSQLQuery();
 
         bool setQuery(const QString &);

@@ -60,7 +60,7 @@ void QueryComboBox::init (QuerySourceList * qsl, const QString &query, bool para
 QString QueryComboBox::currentQuery ()
 {
   QString qrystr = currentText();
-  if(qrystr == tr("-- Select Query --")) qrystr = QString::null;
+  if(qrystr == tr("-- Select Query --")) qrystr = QString();
   if(qrystr == tr("Parameter Query")) qrystr = "Parameter Query";
   if(qrystr == tr("Context Query")) qrystr = "Context Query";
 

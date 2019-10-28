@@ -2347,19 +2347,19 @@ ORGraphicsGraphItem::ORGraphicsGraphItem(QGraphicsItem * parent)
 {
   setZValue(defaultZvalue); 
   _graphData.font = getDefaultEntityFont();
-  _graphData.data.query = QString::null;
-  _graphData.data.column = QString::null;
-  _graphData.title.string = QString::null;
+  _graphData.data.query = QString();
+  _graphData.data.column = QString();
+  _graphData.title.string = QString();
   _graphData.title.font_defined = false;
-  _graphData.dataaxis.column = QString::null;
+  _graphData.dataaxis.column = QString();
   _graphData.dataaxis.font_defined = false;
-  _graphData.dataaxis.title.string = QString::null;
+  _graphData.dataaxis.title.string = QString();
   _graphData.dataaxis.title.font_defined = false;
   _graphData.valueaxis.min = 0;
   _graphData.valueaxis.max = 100;
   _graphData.valueaxis.autominmax = true;
   _graphData.valueaxis.font_defined = false;
-  _graphData.valueaxis.title.string = QString::null;
+  _graphData.valueaxis.title.string = QString();
   _graphData.valueaxis.title.font_defined = false;
 }
 

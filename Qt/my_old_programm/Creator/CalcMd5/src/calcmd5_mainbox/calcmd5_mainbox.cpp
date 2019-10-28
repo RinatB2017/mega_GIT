@@ -58,7 +58,8 @@ void MainBox::calc_md5(void)
     dlg->setNameFilter(tr("All files (*.*)"));
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     dlg->setDirectory(".");
-    dlg->setConfirmOverwrite(true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
         ui->leMd5->clear();

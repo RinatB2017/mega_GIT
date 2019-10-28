@@ -130,8 +130,8 @@ public:
 ORPreRenderPrivate::ORPreRenderPrivate()
 {
     _valid = false;
-    _reportData = 0;
-    _document = 0;
+    _reportData = nullptr;
+    _document = nullptr;
     _page = 0;
     _yOffset = 0.0;
     _topMargin = _bottomMargin = 0.0;
@@ -140,23 +140,23 @@ ORPreRenderPrivate::ORPreRenderPrivate()
     _maxHeight = _maxWidth = 0.0;
 
     _wmStatic = true;
-    _wmText = QString::null;
-    _wmData.query = QString::null;
-    _wmData.column = QString::null;
+    _wmText = QString();
+    _wmData.query = QString();
+    _wmData.column = QString();
     _wmFont = QFont("Helvetic");
     _wmOpacity = 25;
 
     _bgStatic = true;
     _bgImage = QImage();
-    _bgData.query = QString::null;
-    _bgData.column = QString::null;
+    _bgData.query = QString();
+    _bgData.column = QString();
     _bgOpacity = 25;
     _bgAlign = Qt::AlignLeft | Qt::AlignTop;
     _bgScale = false;
     _bgScaleMode = Qt::IgnoreAspectRatio;
 
-    _subtotContextMap = 0;
-    _subtotContextDetail = 0;
+    _subtotContextMap = nullptr;
+    _subtotContextDetail = nullptr;
     _subtotContextPageFooter = false;
 
     _detailQuery = 0;
@@ -164,10 +164,10 @@ ORPreRenderPrivate::ORPreRenderPrivate()
 
 ORPreRenderPrivate::~ORPreRenderPrivate()
 {
-    if(_reportData != 0)
+    if(_reportData != nullptr)
     {
         delete _reportData;
-        _reportData = 0;
+        _reportData = nullptr;
     }
 
     while(!_lstQueries.isEmpty())
@@ -211,7 +211,7 @@ void ORPreRenderPrivate::renderBackground(OROPage * p)
     bool dynamicBg = (!_bgStatic && !_bgData.query.isEmpty() && !_bgData.column.isEmpty());
     bool doBg = (_bgOpacity != 0 && _bgRect.isValid() && (staticBg || dynamicBg));
 
-    if(_reportData != 0 && doBg) {
+    if(_reportData != nullptr && doBg) {
         QImage img = _bgImage;
         if(dynamicBg) {
             orData dataThis;
@@ -294,15 +294,15 @@ void ORPreRenderPrivate::createNewPage()
 
     _yOffset = _topMargin;
 
-    if(_pageCounter == 1 && _reportData->pghead_first != 0)
+    if(_pageCounter == 1 && _reportData->pghead_first != nullptr)
         renderSection(*(_reportData->pghead_first));
-    else if(lastPage == true && _reportData->pghead_last != 0)
+    else if(lastPage == true && _reportData->pghead_last != nullptr)
         renderSection(*(_reportData->pghead_last));
-    else if((_pageCounter % 2) == 1 && _reportData->pghead_odd != 0)
+    else if((_pageCounter % 2) == 1 && _reportData->pghead_odd != nullptr)
         renderSection(*(_reportData->pghead_odd));
-    else if((_pageCounter % 2) == 0 && _reportData->pghead_even != 0)
+    else if((_pageCounter % 2) == 0 && _reportData->pghead_even != nullptr)
         renderSection(*(_reportData->pghead_even));
-    else if(_reportData->pghead_any != 0)
+    else if(_reportData->pghead_any != nullptr)
         renderSection(*(_reportData->pghead_any));
 }
 
@@ -346,7 +346,7 @@ qreal ORPreRenderPrivate::calculateRemainingPageSize(bool lastPage)
 
     // Add footers
     _subtotContextPageFooter = true;
-    if(lastPage && _reportData->pgfoot_last != 0)
+    if(lastPage && _reportData->pgfoot_last != nullptr)
     {
         total += renderSectionSize(*(_reportData->pgfoot_last));
     }
@@ -404,7 +404,7 @@ qreal ORPreRenderPrivate::finishCurPage(bool lastPage)
         _yOffset = offset - renderSectionSize(*(_reportData->pgfoot_even));
         retval = renderSection(*(_reportData->pgfoot_even));
     }
-    else if(_reportData->pgfoot_any != 0)
+    else if(_reportData->pgfoot_any != nullptr)
     {
         _yOffset = offset - renderSectionSize(*(_reportData->pgfoot_any));
         retval = renderSection(*(_reportData->pgfoot_any));
@@ -447,7 +447,7 @@ void ORPreRenderPrivate::renderDetailSection(ORDetailSectionData & detailData)
             QStringList keyValues;
             bool    status;
             int i = 0, pos = 0, cnt = 0;
-            ORDetailGroupSectionData * grp = 0;
+            ORDetailGroupSectionData * grp = nullptr;
 
             // Go through the groups
             for(i = 0; i < (int)detailData.groupList.count(); i++)
@@ -526,7 +526,7 @@ void ORPreRenderPrivate::renderDetailSection(ORDetailSectionData & detailData)
                                         createNewPage();
                                     renderSection(*(grp->foot));
                                 }
-                                _subtotContextMap = 0;
+                                _subtotContextMap = nullptr;
                                 // reset the sub-total values for this group
                                 QMapIterator<ORDataData,double> it(grp->_subtotCheckPoints);
                                 while(it.hasNext())
@@ -563,7 +563,7 @@ void ORPreRenderPrivate::renderDetailSection(ORDetailSectionData & detailData)
                                         }
                                         renderSection(*(grp->head));
                                     }
-                                    _subtotContextMap = 0;
+                                    _subtotContextMap = nullptr;
                                     if(!keys[i].isEmpty())
                                         keyValues[i] = query->value(keys[i]).toString();
                                 }
@@ -614,8 +614,8 @@ void ORPreRenderPrivate::renderDetailSection(ORDetailSectionData & detailData)
                 }
             }
         }
-        _detailQuery = 0;
-        _subtotContextDetail = 0;
+        _detailQuery = nullptr;
+        _subtotContextDetail = nullptr;
         if(ORDetailSectionData::BreakAtEnd == detailData.pagebreak)
             createNewPage();
     }
@@ -889,7 +889,7 @@ qreal ORPreRenderPrivate::renderSection(const ORSectionData & sectionData)
         {
             ORImageData * im = elemThis->toImage();
             QString uudata = im->inline_data;
-            if(uudata == QString::null)
+            if(uudata == QString())
             {
                 orData dataThis;
                 populateData(im->data, dataThis);
@@ -1237,7 +1237,7 @@ QString ORPreRenderPrivate::evaluateField(ORFieldData* f)
 {
     orData       dataThis;
 
-    QString str = QString::null;
+    QString str = QString();
     double d_val = 0;
     bool isFloat = false;
 
@@ -1293,7 +1293,7 @@ QString ORPreRenderPrivate::evaluateField(ORFieldData* f)
             if(q.first())
                 str = q.value(0).toString();
             else
-                str = QString::null;
+                str = QString();
         }
     }
 
@@ -1319,7 +1319,7 @@ double ORPreRenderPrivate::getNearestSubTotalCheckPoint(const ORDataData & d)
             return _subtotPageCheckPoints[d];
 
     }
-    else if(_subtotContextMap != 0)
+    else if(_subtotContextMap != nullptr)
     {
         // next if an explicit map is set then we are probably
         // rendering a group head/foot now so we will use the
@@ -1328,7 +1328,7 @@ double ORPreRenderPrivate::getNearestSubTotalCheckPoint(const ORDataData & d)
         if(_subtotContextMap->contains(d))
             return (*_subtotContextMap)[d];
 
-    } else if(_subtotContextDetail != 0) {
+    } else if(_subtotContextDetail != nullptr) {
         // finally if we are in a detail section then we will simply
         // traverse that details sections groups from the most inner
         // to the most outer and use the first check point we find
@@ -1382,7 +1382,7 @@ ORPreRender::~ORPreRender()
     if(_internal)
     {
         delete _internal;
-        _internal = 0;
+        _internal = nullptr;
     }
 }
 
@@ -1390,7 +1390,7 @@ ORODocument* ORPreRender::generate()
 {
 
     if (_internal == 0 || !_internal->_valid || _internal->_reportData == 0)
-        return 0;
+        return nullptr;
 
     // Do this check now so we don't have to undo alot of work later if it fails
     LabelSizeInfo label;
@@ -1473,7 +1473,7 @@ ORODocument* ORPreRender::generate()
 
     QString tQuery = getSqlFromTag("fmt01",_internal->_database.driverName() );	// MANU
 
-    QString val = QString::null;
+    QString val = QString();
     QRegExp re("'");
     for(int t = 0; t < _internal->_lstParameters.count(); t++)
     {
@@ -1495,7 +1495,7 @@ ORODocument* ORPreRender::generate()
     }
     _internal->_lstQueries.append(new orQuery("Parameter Query", tQuery, ParameterList(), true, _internal->_database));
 
-    QuerySource * qs = 0;
+    QuerySource * qs = nullptr;
     for(unsigned int i = 0; i < _internal->_reportData->queries.size(); i++) {
         qs = _internal->_reportData->queries.get(i);
         _internal->_lstQueries.append(new orQuery(qs->name(), qs->query(_internal->_database), _internal->_lstParameters, true, _internal->_database));
@@ -1548,7 +1548,7 @@ ORODocument* ORPreRender::generate()
             if(_internal->_reportData->sections.at(i))
             {
                 ORDetailSectionData * detailData = _internal->_reportData->sections.at(i);
-                if(detailData->detail != 0)
+                if(detailData->detail != nullptr)
                 {
                     orQuery *orqThis = _internal->getQuerySource(detailData->key.query);
                     XSqlQuery *query;
@@ -1617,13 +1617,13 @@ ORODocument* ORPreRender::generate()
     _internal->_postProcText.clear();
 
     ORODocument * pDoc = _internal->_document;
-    _internal->_document = 0;
+    _internal->_document = nullptr;
     return pDoc;
 }
 
 void ORPreRender::setDatabase(QSqlDatabase pDb)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
     {
         _internal->_database = pDb;
         if(!_internal->_database.isValid())
@@ -1633,7 +1633,7 @@ void ORPreRender::setDatabase(QSqlDatabase pDb)
 
 QSqlDatabase ORPreRender::database() const
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         return _internal->_database;
     return QSqlDatabase();
 }
@@ -1654,9 +1654,9 @@ bool ORPreRender::setDom(const QDomDocument & docReport)
 
             // make sure all the watermark values are at their defaults
             _internal->_wmStatic = true;
-            _internal->_wmText = QString::null;
-            _internal->_wmData.query = QString::null;
-            _internal->_wmData.column = QString::null;
+            _internal->_wmText = QString();
+            _internal->_wmData.query = QString();
+            _internal->_wmData.column = QString();
             _internal->_wmFont = QFont("Arial");
             _internal->_wmOpacity = 25;
 
@@ -1678,8 +1678,8 @@ bool ORPreRender::setDom(const QDomDocument & docReport)
             // mark sure all the background values are at their defaults
             _internal->_bgStatic = true;
             _internal->_bgImage = QImage();
-            _internal->_bgData.query = QString::null;
-            _internal->_bgData.column = QString::null;
+            _internal->_bgData.query = QString();
+            _internal->_bgData.column = QString();
             _internal->_bgOpacity = 25;
             _internal->_bgAlign = Qt::AlignLeft | Qt::AlignTop;
             _internal->_bgScale = false;
@@ -1760,7 +1760,7 @@ bool ORPreRender::doParamsSatisfy() const
 
 QString ORPreRender::watermarkText() const
 {
-    return ( _internal != 0 ? _internal->_wmText : QString::null );
+    return ( _internal != 0 ? _internal->_wmText : QString() );
 }
 
 void ORPreRender::setWatermarkText(const QString & txt)

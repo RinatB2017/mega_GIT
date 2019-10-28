@@ -43,7 +43,8 @@ HelpBrowser::HelpBrowser(QString &page,
     setGeometry(QStyle::alignedRect(Qt::LeftToRight,
                                     Qt::AlignCenter,
                                     size(),
-                                    qApp->desktop()->availableGeometry()));
+                                    QGuiApplication::screens()[0]->geometry()));
+//                                    qApp->desktop()->availableGeometry()));
 }
 //--------------------------------------------------------------------------------
 void HelpBrowser::updateCaption(QUrl)

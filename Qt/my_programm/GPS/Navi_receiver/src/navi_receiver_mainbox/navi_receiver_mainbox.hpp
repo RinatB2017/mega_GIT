@@ -78,7 +78,11 @@ private:
     void createTestBar(void);
     void read_fake_data(void);
     void analize(void);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

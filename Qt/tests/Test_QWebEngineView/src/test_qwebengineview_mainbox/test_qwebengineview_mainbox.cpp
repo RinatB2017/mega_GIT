@@ -266,7 +266,8 @@ void MainBox::js_save(void)
 #endif
 
     dlg->selectFile("noname");
-    dlg->setConfirmOverwrite(true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();

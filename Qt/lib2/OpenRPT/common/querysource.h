@@ -32,7 +32,7 @@ class QuerySource
 {
   public:
     QuerySource();
-    QuerySource(const QString & n, const QString & q = QString::null, bool fromDb = false, const QString & mg = QString::null, const QString & mn = QString::null);
+    QuerySource(const QString & n, const QString & q = QString(), bool fromDb = false, const QString & mg = QString(), const QString & mn = QString());
     ~QuerySource();
 
     void setName(const QString &);

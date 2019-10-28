@@ -33,7 +33,7 @@ ORODocument::~ORODocument()
     while(!_pages.isEmpty())
     {
         OROPage * p = _pages.takeFirst();
-        p->_document = 0;
+        p->_document = nullptr;
         delete p;
     }
 }
@@ -50,7 +50,7 @@ OROPage* ORODocument::page(int pnum)
 
 void ORODocument::addPage(OROPage* p)
 {
-    if(p == 0)
+    if(p == nullptr)
         return;
 
     // check that this page is not already in another document
@@ -81,23 +81,23 @@ OROPage::OROPage(ORODocument * pDocument)
 
 OROPage::~OROPage()
 {
-    if(_document != 0)
+    if(_document != nullptr)
     {
         _document->_pages.removeAt(page());
-        _document = 0;
+        _document = nullptr;
     }
 
     while(!_primitives.isEmpty())
     {
         OROPrimitive* p = _primitives.takeFirst();
-        p->_page = 0;
+        p->_page = nullptr;
         delete p;
     }
 }
 
 int OROPage::page() const
 {
-    if(_document != 0)
+    if(_document != nullptr)
     {
         for(int i = 0; i < _document->_pages.size(); i++)
         {
@@ -115,7 +115,7 @@ OROPrimitive* OROPage::primitive(int idx)
 
 void OROPage::addPrimitive(OROPrimitive* p)
 {
-    if(p == 0)
+    if(p == nullptr)
         return;
 
     // check that this primitve is not already in another page
@@ -180,15 +180,15 @@ void OROPage::setBackgroundOpacity(unsigned char o)
 OROPrimitive::OROPrimitive(ORObject *o, int pType)
     : _type(pType), _pen(o->pen()), _brush(o->brush()), _rotation(o->rotation())
 {
-    _page = 0;
+    _page = nullptr;
 }
 
 OROPrimitive::~OROPrimitive()
 {
-    if(_page != 0)
+    if(_page != nullptr)
     {
         _page->_primitives.removeAt(_page->_primitives.indexOf(this));
-        _page = 0;
+        _page = nullptr;
     }
 }
 

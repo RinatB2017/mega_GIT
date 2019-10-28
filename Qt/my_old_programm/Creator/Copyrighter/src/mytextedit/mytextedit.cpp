@@ -91,7 +91,8 @@ void MyTextEdit::open_file(void)
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     dlg->setDirectory(".");
     dlg->selectFile("noname.txt");
-    dlg->setConfirmOverwrite(true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
@@ -124,7 +125,8 @@ void MyTextEdit::save_file(void)
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     dlg->setDirectory(".");
     dlg->selectFile("noname.txt");
-    dlg->setConfirmOverwrite(true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();

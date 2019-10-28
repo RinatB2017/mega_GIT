@@ -74,14 +74,14 @@ private slots:
     void update(void);
 
 private:
-    MySplashScreen *splash = 0;
-    Ui::MainBox *ui = 0;
+    MySplashScreen *splash;
+    Ui::MainBox *ui;
 
     QList<QByteArray> fake_data;
     int index_fake_data = 0;
     int max_index_fake_data = 0;
 
-    QTimer *timer = 0;
+    QTimer *timer = nullptr;
 
     void init(void);
     void createTestBar(void);
@@ -93,6 +93,9 @@ private:
     QString get_longitude_string(void);
 
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

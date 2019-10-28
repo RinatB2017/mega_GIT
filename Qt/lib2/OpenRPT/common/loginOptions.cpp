@@ -27,9 +27,9 @@
 class DriverInfo {
 public:
     DriverInfo(const QString & pDriver, const QString & pName,
-               const QString & pAlias1 = QString::null,
-               const QString & pAlias2 = QString::null,
-               const QString & pAlias3 = QString::null)
+               const QString & pAlias1 = QString(),
+               const QString & pAlias2 = QString(),
+               const QString & pAlias3 = QString())
     {
         driver = pDriver;
         name = pName;
@@ -54,7 +54,7 @@ const DriverInfo _driverInfoList[] = {
     DriverInfo("QPSQL",  "PostgreSQL", "psql", "pgsql"),
     DriverInfo("QPSQL7", "PostgreSQL"), // same as QPSQL
 
-    DriverInfo(QString::null, QString::null) // NULL record
+    DriverInfo(QString(), QString()) // NULL record
 };
 
 /*

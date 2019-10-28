@@ -53,7 +53,7 @@ XVariant::~XVariant() {}
 
 QString XVariant::encode(const QVariant & v)
 {
-    QString str = QString::null;
+    QString str = QString();
     switch(v.type())
     {
     case QVariant::BitArray:
@@ -82,7 +82,7 @@ QString XVariant::encode(const QVariant & v)
     case QVariant::Region:
     case QVariant::Size:
     case QVariant::SizePolicy:
-        return QString::null;
+        return QString();
 
         // handled by the fallthrough
     case QVariant::Invalid:
@@ -296,7 +296,7 @@ QString mapToString(const QMap<QString, QVariant> &)
 {
     // TODO
 
-    return QString::null;
+    return QString();
 }
 
 QMap<QString, QVariant> stringToMap(const QString &)

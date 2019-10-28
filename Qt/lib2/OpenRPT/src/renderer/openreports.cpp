@@ -56,7 +56,7 @@ public:
 orReportPrivate::orReportPrivate()
 {
     _reportExists = false;
-    _genDoc = 0;
+    _genDoc = nullptr;
 }
 
 orReportPrivate::~orReportPrivate()
@@ -64,7 +64,7 @@ orReportPrivate::~orReportPrivate()
     if (_genDoc)
     {
         delete _genDoc;
-        _genDoc = 0;
+        _genDoc = nullptr;
     }
 }
 
@@ -80,10 +80,10 @@ orReport::orReport(QSqlDatabase pDb)
 
 #include <QDebug>
 orReport::orReport(const QString &qstrDomname, QSqlDatabase pDb)
-    : _internal(0)
+    : _internal(nullptr)
 {
     _internal = new orReportPrivate();
-    if(_internal != 0)
+    if(_internal != nullptr)
     {
         setDatabase(pDb);
         constructor(qstrDomname);
@@ -91,11 +91,11 @@ orReport::orReport(const QString &qstrDomname, QSqlDatabase pDb)
 }
 
 orReport::orReport(const QString &qstrDomname, const QStringList &lstPParameters, QSqlDatabase pDb)
-    : _internal(0)
+    : _internal(nullptr)
 {
     _internal = new orReportPrivate();
 
-    if(_internal != 0) {
+    if(_internal != nullptr) {
         setDatabase(pDb);
         setParamList(lstPParameters);
 
@@ -104,11 +104,11 @@ orReport::orReport(const QString &qstrDomname, const QStringList &lstPParameters
 }
 
 orReport::orReport(const QString &qstrDomname, const ParameterList &pParams, QSqlDatabase pDb)
-    : _internal(0)
+    : _internal(nullptr)
 {
     _internal = new orReportPrivate();
 
-    if(_internal != 0) {
+    if(_internal != nullptr) {
         setDatabase(pDb);
         setParamList(pParams);
 
@@ -117,11 +117,11 @@ orReport::orReport(const QString &qstrDomname, const ParameterList &pParams, QSq
 }
 
 orReport::orReport(const char *pReportName, const ParameterList &pParams, QSqlDatabase pDb)
-    : _internal(0)
+    : _internal(nullptr)
 {
     _internal = new orReportPrivate();
 
-    if(_internal != 0) {
+    if(_internal != nullptr) {
         setDatabase(pDb);
         setParamList(pParams);
 
@@ -154,21 +154,21 @@ void orReport::constructor(const QString &pReportName)
 
 orReport::~orReport()
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
     {
         delete _internal;
-        _internal = 0;
+        _internal = nullptr;
     }
 }
 
-QPrinter* orReport::multiPrinter = 0;
-QPainter* orReport::multiPainter = 0;
+QPrinter* orReport::multiPrinter = nullptr;
+QPainter* orReport::multiPainter = nullptr;
 
 bool orReport::beginMultiPrint(QPrinter *pPrinter)
 {
-    if (pPrinter == 0)
+    if (pPrinter == nullptr)
         return false;
-    else if (multiPrinter != 0 && pPrinter != multiPrinter)
+    else if (multiPrinter != nullptr && pPrinter != multiPrinter)
         return false;
 
     multiPrinter = pPrinter;
@@ -180,9 +180,9 @@ bool orReport::beginMultiPrint(QPrinter *pPrinter)
 bool orReport::beginMultiPrint(QPrinter *pPrinter, bool & userCanceled)
 {
     userCanceled = false;
-    if (pPrinter == 0)
+    if (pPrinter == nullptr)
         return false;
-    else if (multiPrinter != 0 && pPrinter != multiPrinter)
+    else if (multiPrinter != nullptr && pPrinter != multiPrinter)
         return false;
 
     QPrintDialog printerSetup(pPrinter);
@@ -219,8 +219,8 @@ bool orReport::print(QPrinter *prtThis, bool boolSetupPrinter, bool showPreview,
                     if (retval == false)
                     {
                         delete multiPainter;
-                        multiPrinter = 0;
-                        multiPainter = 0;
+                        multiPrinter = nullptr;
+                        multiPainter = nullptr;
                     }
                 }
                 else                      // 2nd or later print call
@@ -229,15 +229,15 @@ bool orReport::print(QPrinter *prtThis, bool boolSetupPrinter, bool showPreview,
                     retval = render(multiPainter, multiPrinter);
 
                 delete _internal->_genDoc;
-                _internal->_genDoc = 0;
+                _internal->_genDoc = nullptr;
             }
         }
     }
     else
     {
-        if(_internal != 0)
+        if(_internal != nullptr)
         {
-            if (prtThis == 0)
+            if (prtThis == nullptr)
             {
                 prtThis = new QPrinter(QPrinter::HighResolution);
                 localPrinter = true;
@@ -267,14 +267,14 @@ bool orReport::print(QPrinter *prtThis, bool boolSetupPrinter, bool showPreview,
                     }
 
                     if(retval == true)
-                        retval = render(0, prtThis);
+                        retval = render(nullptr, prtThis);
 
                     delete _internal->_genDoc;
-                    _internal->_genDoc = 0;
+                    _internal->_genDoc = nullptr;
                 }
             }
 
-            if (localPrinter && prtThis != 0)
+            if (localPrinter && prtThis != nullptr)
                 delete prtThis;
         }
     }
@@ -284,7 +284,7 @@ bool orReport::print(QPrinter *prtThis, bool boolSetupPrinter, bool showPreview,
 
 bool orReport::endMultiPrint(QPrinter *pPrinter)
 {
-    if (pPrinter != multiPrinter || pPrinter == 0)
+    if (pPrinter != multiPrinter || pPrinter == nullptr)
         return false;
 
     if (multiPainter)
@@ -294,8 +294,8 @@ bool orReport::endMultiPrint(QPrinter *pPrinter)
         delete multiPainter;
     }
 
-    multiPainter = 0;
-    multiPrinter =  0;
+    multiPainter = nullptr;
+    multiPrinter = nullptr;
 
     return true;
 }
@@ -306,10 +306,10 @@ bool orReport::render(QPainter *pPainter, QPrinter *pPrinter)
     QApplication::setOverrideCursor( Qt::WaitCursor );
     bool retval = false;
 
-    if(_internal != 0 && pPrinter != 0)
+    if(_internal != nullptr && pPrinter != nullptr)
     {
         bool localAlloc = false;
-        if(_internal->_genDoc == 0)
+        if(_internal->_genDoc == nullptr)
         {
             _internal->_genDoc = _internal->_prerenderer.generate();
             localAlloc = true;
@@ -326,7 +326,7 @@ bool orReport::render(QPainter *pPainter, QPrinter *pPrinter)
             if (localAlloc)
             {
                 delete _internal->_genDoc;
-                _internal->_genDoc = 0;
+                _internal->_genDoc = nullptr;
             }
         }
     }
@@ -374,51 +374,51 @@ bool orReport::exportToPDF( const QString& fileName )
 
 QString orReport::watermarkText()
 {
-    return ( _internal != 0 ? _internal->_prerenderer.watermarkText() : QString::null );
+    return ( _internal != nullptr ? _internal->_prerenderer.watermarkText() : QString() );
 }
 
 void orReport::setWatermarkText(const QString & txt)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setWatermarkText(txt);
 }
 
 QFont orReport::watermarkFont()
 {
-    return (_internal != 0 ? _internal->_prerenderer.watermarkFont() : QFont() );
+    return (_internal != nullptr ? _internal->_prerenderer.watermarkFont() : QFont() );
 }
 
 void orReport::setWatermarkFont(const QFont & fnt)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setWatermarkFont(fnt);
 }
 
 unsigned char orReport::watermarkOpacity()
 {
-    return ( _internal != 0 ? _internal->_prerenderer.watermarkOpacity() : 0 );
+    return ( _internal != nullptr ? _internal->_prerenderer.watermarkOpacity() : 0 );
 }
 
 void orReport::setWatermarkOpacity(unsigned char o)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setWatermarkOpacity(o);
 }
 
 QImage orReport::backgroundImage()
 {
-    return ( _internal != 0 ? _internal->_prerenderer.backgroundImage() : QImage() );
+    return ( _internal != nullptr ? _internal->_prerenderer.backgroundImage() : QImage() );
 }
 
 void orReport::setBackgroundImage(const QImage & img)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setBackgroundImage(img);
 }
 
 QRect orReport::backgroundRect()
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
     {
         QRectF rf = _internal->_prerenderer.backgroundRect();
         if(rf.isValid())
@@ -434,69 +434,69 @@ void orReport::setBackgroundRect(const QRect & r)
 
 void orReport::setBackgroundRect(int x, int y, int w, int h)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setBackgroundRect(x/100.0, y/100.0, w/100.0, h/100.0);
 }
 
 unsigned char orReport::backgroundOpacity()
 {
-    return ( _internal != 0 ? _internal->_prerenderer.backgroundOpacity() : 0 );
+    return ( _internal != nullptr ? _internal->_prerenderer.backgroundOpacity() : 0 );
 }
 
 void orReport::setBackgroundOpacity(unsigned char o)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setBackgroundOpacity(o);
 }
 
 int orReport::backgroundAlignment()
 {
-    return ( _internal != 0 ? _internal->_prerenderer.backgroundAlignment() : 0 );
+    return ( _internal != nullptr ? _internal->_prerenderer.backgroundAlignment() : 0 );
 }
 
 void orReport::setBackgroundAlignment(int a) {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setBackgroundAlignment(a);
 }
 
 bool orReport::backgroundScale()
 {
-    return ( _internal != 0 ? _internal->_prerenderer.backgroundScale() : false );
+    return ( _internal != nullptr ? _internal->_prerenderer.backgroundScale() : false );
 }
 
 void orReport::setBackgroundScale(bool scale)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setBackgroundScale(scale);
 }
 
 Qt::AspectRatioMode orReport::backgroundScaleMode()
 {
-    return ( _internal != 0 ? _internal->_prerenderer.backgroundScaleMode() : Qt::IgnoreAspectRatio );
+    return ( _internal != nullptr ? _internal->_prerenderer.backgroundScaleMode() : Qt::IgnoreAspectRatio );
 }
 
 void orReport::setBackgroundScaleMode(Qt::AspectRatioMode mode)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setBackgroundScaleMode(mode);
 }
 
 bool orReport::isValid()
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         return _internal->_prerenderer.isValid();
     return false;
 }
 
 void orReport::setDatabase(QSqlDatabase pDb)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setDatabase(pDb);
 }
 
 bool orReport::setDom(const QDomDocument & docPReport)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
     {
         _internal->_reportExists = true;
         return _internal->_prerenderer.setDom(docPReport);
@@ -515,28 +515,28 @@ void orReport::setParamList(const QStringList & lstPParameters)
 
 void orReport::setParamList(const ParameterList & pParamList)
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         _internal->_prerenderer.setParamList(pParamList);
 }
 
 ParameterList orReport::getParamList()
 {
     ParameterList plist;
-    if(_internal != 0)
+    if(_internal != nullptr)
         plist = _internal->_prerenderer.paramList();
     return plist;
 }
 
 bool orReport::doParamsSatisfy()
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         return _internal->_prerenderer.doParamsSatisfy();
     return true;
 }
 
 bool orReport::doesReportExist()
 {
-    if(_internal != 0)
+    if(_internal != nullptr)
         return _internal->_reportExists;
     return false;
 }
@@ -562,10 +562,10 @@ bool orReport::satisfyParams(QWidget * /*widget*/)
   if(mlist.count() == 0) return true; // if the params satisfy then no reason to go further
 
   bool ok = false;
-  QString ret = QString::null;
+  QString ret = QString();
   for(it = mlist.begin(); it != mlist.end(); it++) {
       ret = QInputDialog::getText(QObject::tr("Missing Report Parameter"), QString(QObject::tr("Enter in a value for the parameter \"%1\":")).arg(*it),
-                                   QLineEdit::Normal, QString::null, &ok, widget);
+                                   QLineEdit::Normal, QString(), &ok, widget);
       if(!ok || ret.isEmpty()) return false;
       _internal->_lstParameters.append(Parameter(*it, ret));
   }

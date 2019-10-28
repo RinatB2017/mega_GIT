@@ -610,7 +610,8 @@ void HistogramBox::save_histograms(void)
     dlg->setDirectory(".");
     dlg->selectFile(QString("%1")
                     .arg(histograms.at(0).title));
-    dlg->setConfirmOverwrite(true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();

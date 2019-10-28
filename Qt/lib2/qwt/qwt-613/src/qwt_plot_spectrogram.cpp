@@ -287,7 +287,8 @@ bool QwtPlotSpectrogram::testConrecFlag(
 void QwtPlotSpectrogram::setContourLevels( const QList<double> &levels )
 {
     d_data->contourLevels = levels;
-    qSort( d_data->contourLevels );
+    std::sort(d_data->contourLevels.begin(), d_data->contourLevels.end());
+//    qSort( d_data->contourLevels );
 
     legendChanged();
     itemChanged();

@@ -550,7 +550,7 @@ void QwtThermo::drawLiquid(
 
     QRect liquidRect = fillRect( pipeRect );
 
-    if ( d_data->colorMap != NULL )
+    if ( d_data->colorMap != nullptr )
     {
         const QwtInterval interval = scaleDiv().interval().normalized();
 
@@ -560,9 +560,11 @@ void QwtThermo::drawLiquid(
         QVector<double> values = qwtTickList( scaleDraw()->scaleDiv() );
 
         if ( scaleMap.isInverting() )
-            qSort( values.begin(), values.end(), qGreater<double>() );
+            std::sort( values.begin(), values.end(), std::greater<double>() );
+//            qSort( values.begin(), values.end(), qGreater<double>() );
         else
-            qSort( values.begin(), values.end(), qLess<double>() );
+            std::sort( values.begin(), values.end(), std::less<double>() );
+//            qSort( values.begin(), values.end(), qLess<double>() );
 
         int from;
         if ( !values.isEmpty() )

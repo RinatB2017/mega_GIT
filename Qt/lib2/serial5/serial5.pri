@@ -13,6 +13,9 @@ FORMS	+= \
     serialbox5.ui \
     sendbox5.ui
 
+HEADERS += fake_serialbox5.hpp
+SOURCES += fake_serialbox5.cpp
+    
 HEADERS += sendbox5.hpp
 SOURCES += sendbox5.cpp
 

@@ -179,7 +179,11 @@ void SerialBox5_fix_baudrate::refresh(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::initSerial(void)
 {
+#ifdef FAKE
+    serial5 = new FakeSerialBox5(this);
+#else
     serial5 = new QSerialPort(this);
+#endif
     Q_CHECK_PTR(serial5);
 
     connect(serial5,    SIGNAL(readyRead()),            this,   SIGNAL(readyRead(void)));

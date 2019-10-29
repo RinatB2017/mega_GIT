@@ -27,6 +27,10 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#ifdef FAKE
+#   include "fake_serialbox5.hpp"
+#endif
+//--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
@@ -70,7 +74,13 @@ public:
 private:
     Ui::SerialBox5_fix_baudrate *ui;
     QWidget *parent;
+
+#ifdef FAKE
+    FakeSerialBox5 *serial5;
+#else
     QSerialPort *serial5;
+#endif
+
     QString caption;
     QString o_name;
 

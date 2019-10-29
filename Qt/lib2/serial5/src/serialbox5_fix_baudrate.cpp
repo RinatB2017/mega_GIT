@@ -181,6 +181,11 @@ void SerialBox5_fix_baudrate::initSerial(void)
 {
 #ifdef FAKE
     serial5 = new FakeSerialBox5(this);
+
+    connect(serial5,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(serial5,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(serial5,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(serial5,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 #else
     serial5 = new QSerialPort(this);
 #endif

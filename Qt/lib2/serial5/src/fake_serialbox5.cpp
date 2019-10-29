@@ -56,39 +56,47 @@ QString FakeSerialBox5::errorString(void)
 //--------------------------------------------------------------------------------
 bool FakeSerialBox5::isOpen(void)
 {
+    return is_open;
+}
+//--------------------------------------------------------------------------------
+bool FakeSerialBox5::close(void)
+{
+    is_open = false;
     return true;
 }
 //--------------------------------------------------------------------------------
 bool FakeSerialBox5::open(QIODevice::OpenMode mode)
 {
     Q_UNUSED(mode)
-    return true;
+    is_open = true;
+    return is_open;
 }
 //--------------------------------------------------------------------------------
 qint64 FakeSerialBox5::write(const char *data, qint64 maxSize)
 {
-    Q_UNUSED(data)
-    Q_UNUSED(maxSize)
+    fake_data.clear();
+    fake_data.append(data, static_cast<int>(maxSize));
 
     return 0;
 }
 //--------------------------------------------------------------------------------
 qint64 FakeSerialBox5::write(const char *data)
 {
-    Q_UNUSED(data)
-
+    fake_data.clear();
+    fake_data.append(data);
     return 0;
 }
 //--------------------------------------------------------------------------------
 qint64 FakeSerialBox5::write(const QByteArray &byteArray)
 {
-    Q_UNUSED(byteArray)
+    fake_data.clear();
+    fake_data.append(byteArray);
     return 0;
 }
 //--------------------------------------------------------------------------------
 QByteArray FakeSerialBox5::readAll(void)
 {
-    return  QByteArray();
+    return fake_data;
 }
 //--------------------------------------------------------------------------------
 qint32 FakeSerialBox5::baudRate(QSerialPort::Directions directions)
@@ -115,5 +123,21 @@ QSerialPort::StopBits FakeSerialBox5::stopBits(void)
 QSerialPort::FlowControl FakeSerialBox5::flowControl(void)
 {
     return QSerialPort::NoFlowControl;
+}
+//--------------------------------------------------------------------------------
+int FakeSerialBox5::fake_input(const QByteArray &sending_data)
+{
+    fake_data.clear();
+    fake_data.append(sending_data);
+
+    return 0;   //E_NO_ERROR;
+}
+//--------------------------------------------------------------------------------
+int FakeSerialBox5::fake_input(const QString &data)
+{
+    fake_data.clear();
+    fake_data.append(data);
+
+    return 0;   //E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------

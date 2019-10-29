@@ -41,6 +41,19 @@ signals:
     void readChannelFinished(void);
     void error(QSerialPort::SerialPortError);
 
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+    //TODO
+    void fake_output(const QByteArray &data);
+
+public slots:
+    //TODO
+    int fake_input(const QByteArray &sending_data);
+    int fake_input(const QString &data);
+
 public:
     FakeSerialBox5(QWidget *parent = nullptr);
 
@@ -52,6 +65,7 @@ public:
     QString errorString(void);
 
     bool isOpen(void);
+    bool close(void);
     bool open(QIODevice::OpenMode mode);
     qint64 write(const char *data, qint64 maxSize);
     qint64 write(const char *data);
@@ -62,6 +76,10 @@ public:
     QSerialPort::Parity	parity(void);
     QSerialPort::StopBits stopBits(void);
     QSerialPort::FlowControl flowControl(void);
+
+private:
+    bool is_open = false;
+    QByteArray fake_data;
 };
 //--------------------------------------------------------------------------------
 #endif

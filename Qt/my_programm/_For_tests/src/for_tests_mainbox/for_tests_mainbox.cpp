@@ -135,7 +135,7 @@ void MainBox::choice_test(void)
     {
         if(command.cmd == cmd)
         {
-            typedef bool (MainBox::*function)(void);
+            typedef void (MainBox::*function)(void);
             function x;
             x = command.func;
             if(x)
@@ -232,15 +232,13 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+void MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
-
-    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+void MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
@@ -248,40 +246,30 @@ bool MainBox::test_1(void)
 #if 0
     emit info("Текст <font style=\"color:red\">красный</font>");
 #endif
-
-    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+void MainBox::test_2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_2()");
-
-    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
+void MainBox::test_3(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_3()");
-
-    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
+void MainBox::test_4(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_4()");
-
-    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
+void MainBox::test_5(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_5()");
-
-    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

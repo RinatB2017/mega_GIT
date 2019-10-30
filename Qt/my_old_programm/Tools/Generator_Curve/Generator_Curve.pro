@@ -13,6 +13,8 @@ DEPENDPATH  += \
     $$PWD/src/generator_curve_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
+QT      += multimedia
+
 DEFINES += SAVE_WIDGETS_SLIDER
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -41,6 +43,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include ($$LIB_PATH2/generator_curve/generator_curve.pri)
+
+include (src/widgets/widgets.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2019                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,63 +18,39 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_generator_curve_mainbox.h"
+#include "rs232_widget.hpp"
+#include "ui_rs232_widget.h"
 //--------------------------------------------------------------------------------
-#include "generator_curve.hpp"
-#include "mainwindow.hpp"
-#include "serialbox5.hpp"
-#include "generator_curve_mainbox.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-MainBox::MainBox(QWidget *parent) :
+RS232_widget::RS232_widget(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox)
-{
-    init();
-}
-//--------------------------------------------------------------------------------
-MainBox::~MainBox()
-{
-#ifdef QT_DEBUG
-    qDebug() << "~MainBox()";
-#endif
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void MainBox::init(void)
+    ui(new Ui::RS232_widget)
 {
     ui->setupUi(this);
 
-//    ui->serial_widget->set_caption("RS-232");
-
-//    connect(ui->generator_widget,   SIGNAL(send(QString)),      ui->serial_widget,  SLOT(input(QString)));
-//    connect(ui->serial_widget,      SIGNAL(output(QByteArray)), this,               SLOT(temp(QByteArray)));
+    ui->rs232_widget->set_caption("RS232");
 }
 //--------------------------------------------------------------------------------
-void MainBox::temp(QByteArray data)
+RS232_widget::~RS232_widget()
 {
-    emit error(data.data());
+    delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void RS232_widget::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool RS232_widget::programm_is_exit(void)
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void RS232_widget::load_setting(void)
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void RS232_widget::save_setting(void)
 {
 
 }

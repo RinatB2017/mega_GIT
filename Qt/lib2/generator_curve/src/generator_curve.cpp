@@ -42,8 +42,8 @@ QWidget *Generator_Curve::add_frame(void)
 {
     QFrame *frame = new QFrame(this);
 
-    btnPower = new QPushButton(this);
-    connect(btnPower,   SIGNAL(clicked(bool)),  this,   SLOT(start()));
+//    btnPower = new QPushButton(this);
+//    connect(btnPower,   SIGNAL(clicked(bool)),  this,   SLOT(start()));
 
     btnSinus    = new QPushButton(this);
     btnTriangle = new QPushButton(this);
@@ -56,7 +56,7 @@ QWidget *Generator_Curve::add_frame(void)
     connect(btnMeandr,      SIGNAL(clicked()),  this,   SLOT(gen_meandr()));
 
     QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(btnPower);
+//    vbox->addWidget(btnPower);
     vbox->addWidget(btnSinus);
     vbox->addWidget(btnTriangle);
     vbox->addWidget(btnSaw);
@@ -103,36 +103,19 @@ void Generator_Curve::set_slider_tooltip(int value)
     if(slider)
     {
         slider->setToolTip(QString("%1").arg(value));
-        start();
     }
 }
 //--------------------------------------------------------------------------------
-void Generator_Curve::start(void)
+QByteArray Generator_Curve::get_data(void)
 {
-    //emit info("Start");
-    emit trace(Q_FUNC_INFO);
-
-    QString temp;
-
-    temp = ":";
+    QByteArray temp;
     foreach (QSlider *slider, sliders)
     {
-        int value = slider->value();
-        QString data = QString("%1").arg(value, 4, 16, QChar('0')).toUpper();
-        temp.append(data);
+        uint16_t value = static_cast<uint16_t>(slider->value());
+        temp.append(static_cast<char>((value >> 8) & 0xFF));
+        temp.append(static_cast<char>(value & 0xFF));
     }
-    temp.append("\n");
-
-    if(temp.length() != (1 + (MAX_SLIDER * 4) + 1))
-    {
-        emit error(QString("ERROR: len=%1").arg(temp.length()));
-        return;
-    }
-
-    emit debug(temp);
-    emit debug(QString("send len=%1").arg(temp.length()));
-
-    emit send(temp);
+    return temp;
 }
 //--------------------------------------------------------------------------------
 void Generator_Curve::gen_sinus(void)
@@ -204,7 +187,6 @@ void Generator_Curve::close_gen(void)
 //--------------------------------------------------------------------------------
 void Generator_Curve::updateText()
 {
-    btnPower->setText(tr("Start"));
     btnSinus->setText(tr("Sinus"));
     btnTriangle->setText(tr("Triangle"));
     btnSaw->setText(tr("Saw"));

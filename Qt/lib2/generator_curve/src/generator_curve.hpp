@@ -21,7 +21,9 @@ class Generator_Curve : public MyWidget
 public:
     Generator_Curve(QWidget *parent = nullptr);
     ~Generator_Curve(void);
-    
+
+    QByteArray get_data(void);
+
 signals:
     void send(const QString &data);
     
@@ -36,10 +38,7 @@ private slots:
 
     void set_slider_tooltip(int value);
 
-    void start(void);
-
 private:
-    QPushButton *btnPower;
     QPushButton *btnSinus;
     QPushButton *btnTriangle;
     QPushButton *btnSaw;

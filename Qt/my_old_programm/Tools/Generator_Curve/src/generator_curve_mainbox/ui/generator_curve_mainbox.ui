@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>172</width>
-    <height>46</height>
+    <width>355</width>
+    <height>162</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,14 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="SerialBox5" name="serial_widget" native="true"/>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="RS232_widget" name="rs232_widget" native="true"/>
+     </item>
+     <item>
+      <widget class="Sound_widget" name="sound_widget" native="true"/>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="Generator_Curve" name="generator_widget" native="true"/>
@@ -24,15 +31,21 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SerialBox5</class>
-   <extends>QWidget</extends>
-   <header>serialbox5.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Generator_Curve</class>
    <extends>QWidget</extends>
    <header>generator_curve.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RS232_widget</class>
+   <extends>QWidget</extends>
+   <header>rs232_widget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Sound_widget</class>
+   <extends>QWidget</extends>
+   <header>sound_widget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

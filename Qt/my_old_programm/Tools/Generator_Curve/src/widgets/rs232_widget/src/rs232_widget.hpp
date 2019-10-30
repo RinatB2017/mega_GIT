@@ -37,12 +37,23 @@ class RS232_widget : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void send(QByteArray);
+
 public:
     explicit RS232_widget(QWidget *parent = nullptr);
     ~RS232_widget();
 
+private slots:
+    void start(void);
+    void stop(void);
+
 private:
     Ui::RS232_widget *ui;
+
+    QString send_text;
+
+    void init(void);
 
     void updateText(void);
     bool programm_is_exit(void);

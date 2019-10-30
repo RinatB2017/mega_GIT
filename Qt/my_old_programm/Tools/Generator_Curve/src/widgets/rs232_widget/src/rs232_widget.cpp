@@ -25,14 +25,37 @@ RS232_widget::RS232_widget(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::RS232_widget)
 {
-    ui->setupUi(this);
-
-    ui->rs232_widget->set_caption("RS232");
+    init();
 }
 //--------------------------------------------------------------------------------
 RS232_widget::~RS232_widget()
 {
     delete ui;
+}
+//--------------------------------------------------------------------------------
+void RS232_widget::init(void)
+{
+    ui->setupUi(this);
+
+    ui->rs232_widget->set_caption("RS232");
+
+    ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
+
+    connect(ui->btn_start,  SIGNAL(clicked()),  this,   SLOT(start()));
+    connect(ui->btn_stop,   SIGNAL(clicked()),  this,   SLOT(stop()));
+
+    connect(this, SIGNAL(send(QByteArray)),    ui->rs232_widget,   SLOT(input(QByteArray)));
+}
+//--------------------------------------------------------------------------------
+void RS232_widget::start(void)
+{
+    emit error("start");
+}
+//--------------------------------------------------------------------------------
+void RS232_widget::stop(void)
+{
+    emit error("stop");
 }
 //--------------------------------------------------------------------------------
 void RS232_widget::updateText()

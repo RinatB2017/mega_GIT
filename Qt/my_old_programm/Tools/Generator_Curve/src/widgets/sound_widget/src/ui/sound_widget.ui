@@ -22,13 +22,16 @@
      <property name="title">
       <string>Freq</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QSlider" name="m_freq">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="sb_freq"/>
       </item>
      </layout>
     </widget>

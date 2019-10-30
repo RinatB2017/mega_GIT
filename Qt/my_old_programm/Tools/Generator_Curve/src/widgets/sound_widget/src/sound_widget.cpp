@@ -92,6 +92,11 @@ void Sound_widget::initializeWindow(void)
     ui->m_right_volume->setRange(0, 100);
 
     ui->m_freq->setRange(10, 20000);
+
+    ui->sb_freq->setRange(10, 20000);
+    connect(ui->m_freq,     SIGNAL(valueChanged(int)),  ui->sb_freq,    SLOT(setValue(int)));
+    connect(ui->sb_freq,    SIGNAL(valueChanged(int)),  ui->m_freq,     SLOT(setValue(int)));
+
     ui->m_freq->setValue(1000);
 
     connect(ui->m_freq,         SIGNAL(valueChanged(int)),  this,   SLOT(regenerate()));
@@ -114,7 +119,6 @@ void Sound_widget::regenerate(void)
     {
         m_generator->generateData(m_format,
                                   DurationSeconds*1000000,
-                                  ui->m_freq->value(),
                                   ui->m_freq->value(),
                                   ui->m_left_volume->value(),
                                   ui->m_right_volume->value());
@@ -195,7 +199,6 @@ void Sound_widget::initializeAudio(void)
     load_QDoubleSpinBox("audio");
     m_generator = new Generator(m_format,
                                 DurationSeconds*1000000,
-                                ui->m_freq->value(),
                                 ui->m_freq->value(),
                                 ui->m_left_volume->value(),
                                 ui->m_right_volume->value(),

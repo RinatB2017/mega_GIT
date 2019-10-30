@@ -50,8 +50,7 @@ class Generator : public QIODevice
 public:
     Generator(const QAudioFormat &format,
               qint64 durationUs,
-              double sampleRate1,
-              double sampleRate2,
+              double sampleRate,
               int left_value,
               int right_value,
               QObject *parent);
@@ -65,8 +64,7 @@ public:
 
     void generateData(const QAudioFormat &format,
                       qint64 durationUs,
-                      double sampleRate1,
-                      double sampleRate2,
+                      double sampleRate,
                       int left_value,
                       int right_value);
 

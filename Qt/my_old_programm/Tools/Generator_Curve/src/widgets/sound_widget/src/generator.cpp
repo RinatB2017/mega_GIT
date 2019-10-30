@@ -46,8 +46,7 @@
 //---------------------------------------------------------------------------
 Generator::Generator(const QAudioFormat &format,
                      qint64 durationUs,
-                     double sampleRate1,
-                     double sampleRate2,
+                     double sampleRate,
                      int left_value,
                      int right_value,
                      QObject *parent)
@@ -58,8 +57,7 @@ Generator::Generator(const QAudioFormat &format,
     {
         generateData(format,
                      durationUs,
-                     sampleRate1,
-                     sampleRate2,
+                     sampleRate,
                      left_value,
                      right_value);
     }
@@ -83,8 +81,7 @@ void Generator::stop(void)
 //---------------------------------------------------------------------------
 void Generator::generateData(const QAudioFormat &format,
                              qint64 durationUs,
-                             double sampleRate1,
-                             double sampleRate2,
+                             double sampleRate,
                              int left_value,
                              int right_value)
 {
@@ -97,17 +94,18 @@ void Generator::generateData(const QAudioFormat &format,
     Q_ASSERT(length % sampleBytes == 0);
     Q_UNUSED(sampleBytes) // suppress warning in release builds
 
-    m_buffer.resize(length);
+    m_buffer.resize(static_cast<int>(length));
     unsigned char *ptr = reinterpret_cast<unsigned char *>(m_buffer.data());
     int sampleIndex = 0;
 
-    qreal lv = (qreal)left_value / 100.0;
-    qreal rv = (qreal)right_value / 100.0;
+    qreal lv = static_cast<qreal>(left_value / 100.0);
+    qreal rv = static_cast<qreal>(right_value / 100.0);
+    qDebug() << "length" << length;
     while (length)
     {
         for (int i=0; i<format.channelCount(); ++i)
         {
-            qreal x = qSin(2 * M_PI * (i ? sampleRate2 : sampleRate1) * qreal(sampleIndex % format.sampleRate()) / format.sampleRate());
+            qreal x = qSin(2 * M_PI * sampleRate * qreal(sampleIndex % format.sampleRate()) / format.sampleRate());
             if(!i)
                 x *= lv;
             else
@@ -121,7 +119,7 @@ void Generator::generateData(const QAudioFormat &format,
             else if (format.sampleSize() == 8 && format.sampleType() == QAudioFormat::SignedInt)
             {
                 const qint8 value = static_cast<qint8>(x * 127);
-                *reinterpret_cast<quint8*>(ptr) = value;
+                *reinterpret_cast<quint8*>(ptr) = static_cast<quint8>(value);
             }
             else if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::UnSignedInt)
             {
@@ -145,6 +143,7 @@ void Generator::generateData(const QAudioFormat &format,
         }
         ++sampleIndex;
     }
+    qDebug() << "sampleIndex" << sampleIndex;
 }
 //---------------------------------------------------------------------------
 qint64 Generator::readData(char *data,
@@ -156,7 +155,7 @@ qint64 Generator::readData(char *data,
         while (len - total > 0)
         {
             const qint64 chunk = qMin((m_buffer.size() - m_pos), len - total);
-            memcpy(data + total, m_buffer.constData() + m_pos, chunk);
+            memcpy(data + total, m_buffer.constData() + m_pos, static_cast<size_t>(chunk));
             m_pos = (m_pos + chunk) % m_buffer.size();
             total += chunk;
         }
@@ -167,8 +166,8 @@ qint64 Generator::readData(char *data,
 qint64 Generator::writeData(const char *data,
                             qint64 len)
 {
-    Q_UNUSED(data);
-    Q_UNUSED(len);
+    Q_UNUSED(data)
+    Q_UNUSED(len)
 
     return 0;
 }

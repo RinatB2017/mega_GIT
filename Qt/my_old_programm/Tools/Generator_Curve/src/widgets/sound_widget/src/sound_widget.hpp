@@ -54,6 +54,7 @@
 #include <QTimer>
 //--------------------------------------------------------------------------------
 #include "generator.h"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Sound_widget;
@@ -61,7 +62,7 @@ namespace Ui {
 //---------------------------------------------------------------------------
 class Generator_Curve;
 //---------------------------------------------------------------------------
-class Sound_widget : public QWidget
+class Sound_widget : public MyWidget
 {
     Q_OBJECT
 
@@ -77,6 +78,17 @@ private:
     void initializeAudio(void);
     void createAudioOutput(void);
 
+private slots:
+    void pushTimerExpired(void);
+    void deviceChanged(int index);
+
+    void calc_freq(void);
+    void regenerate(void);
+    void start(void);
+    void stop(void);
+
+    void test(void);
+
 private:
     Ui::Sound_widget *ui;
     QTimer *m_pushTimer = nullptr;
@@ -89,21 +101,15 @@ private:
     QIODevice *m_output = nullptr; // not owned
     QAudioFormat m_format;
 
+    QByteArray m_buffer;
+
     void load_QDoubleSpinBox(QString group_name);
     void save_QDoubleSpinBox(QString group_name);
 
-    QByteArray m_buffer;
-
-private slots:
-    void pushTimerExpired(void);
-    void deviceChanged(int index);
-
-    void calc_freq(void);
-    void regenerate(void);
-    void start(void);
-    void stop(void);
-
-    void test(void);
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //---------------------------------------------------------------------------
 #endif // SOUND_WIDGET_HPP

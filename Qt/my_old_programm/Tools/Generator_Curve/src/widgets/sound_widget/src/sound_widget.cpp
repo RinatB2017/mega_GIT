@@ -60,7 +60,7 @@ const int BufferSize        = 32768;
 #include "ui_sound_widget.h"
 //---------------------------------------------------------------------------
 Sound_widget::Sound_widget(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::Sound_widget)
 {
     ui->setupUi(this);
@@ -264,41 +264,56 @@ QByteArray Sound_widget::get_m_buffer(void)
 #include "grapherbox.hpp"
 void Sound_widget::test(void)
 {
-//    emit info("test");
-    
     GrapherBox *grapher_widget = new GrapherBox();
     int curve_0 = grapher_widget->add_curve("test");
-    
-    //---
+
     struct TEMP {
         uint16_t data[BufferSize / 2];
     };
 
-//    union DATA_INT16 {
-//        uint16_t value;
-//        struct {
-//            uint8_t a;
-//            uint8_t b;
-//        } bytes;
-//    };
-//    DATA_INT16 src;
-//    DATA_INT16 dst;
+#if 0
+    QByteArray ba = generator->get_data();
+    TEMP* temp = reinterpret_cast<TEMP *>(ba.data());
 
-    TEMP* temp = reinterpret_cast<TEMP *>(m_buffer.data());
-    for(int n=0; n<m_buffer.count(); n++)
+    for(int n=0; n<(ba.size() / 2); n++)
     {
-        // emit info(QString("%1").arg(temp->data[n]));
-
-//        src.value = temp->data[n];
-//        dst.bytes.a = src.bytes.b;
-//        dst.bytes.b = src.bytes.a;
-//        grapher_widget->add_curve_data(curve_0, dst.value);
-
+        emit debug(QString("%1").arg(temp->data[n]));
         grapher_widget->add_curve_data(curve_0, temp->data[n]);
     }
-    //---
+
+#endif
+
+#if 1
+    TEMP* temp = reinterpret_cast<TEMP *>(m_buffer.data());
+
+    for(int n=0; n<(m_buffer.count() / 2); n++)
+    {
+        emit debug(QString("%1").arg(temp->data[n]));
+        grapher_widget->add_curve_data(curve_0, temp->data[n]);
+    }
+#endif
     
     grapher_widget->show();
+}
+//--------------------------------------------------------------------------------
+void Sound_widget::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool Sound_widget::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void Sound_widget::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Sound_widget::save_setting(void)
+{
+
 }
 //---------------------------------------------------------------------------
 void Sound_widget::pushTimerExpired(void)

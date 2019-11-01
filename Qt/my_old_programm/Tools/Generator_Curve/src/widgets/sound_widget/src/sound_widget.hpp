@@ -59,6 +59,8 @@ namespace Ui {
     class Sound_widget;
 }
 //---------------------------------------------------------------------------
+class Generator_Curve;
+//---------------------------------------------------------------------------
 class Sound_widget : public QWidget
 {
     Q_OBJECT
@@ -66,6 +68,9 @@ class Sound_widget : public QWidget
 public:
     Sound_widget(QWidget *parent = nullptr);
     ~Sound_widget();
+
+    void set_generator(Generator_Curve *gen);
+    QByteArray get_m_buffer(void);
 
 private:
     void initializeWindow(void);
@@ -76,8 +81,10 @@ private:
     Ui::Sound_widget *ui;
     QTimer *m_pushTimer = nullptr;
 
+    Generator_Curve *generator = nullptr;
+
     QAudioDeviceInfo m_device;
-    Generator *m_generator = 0;
+    Generator *m_generator = nullptr;
     QAudioOutput *m_audioOutput = nullptr;
     QIODevice *m_output = nullptr; // not owned
     QAudioFormat m_format;
@@ -95,6 +102,8 @@ private slots:
     void regenerate(void);
     void start(void);
     void stop(void);
+
+    void test(void);
 };
 //---------------------------------------------------------------------------
 #endif // SOUND_WIDGET_HPP

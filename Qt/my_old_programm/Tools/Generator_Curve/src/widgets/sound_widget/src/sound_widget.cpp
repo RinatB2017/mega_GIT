@@ -42,8 +42,6 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "sound_widget.hpp"
-
 #define PUSH_MODE_LABEL "Enable push mode"
 #define PULL_MODE_LABEL "Enable pull mode"
 #define SUSPEND_LABEL   "Suspend playback"
@@ -56,6 +54,9 @@ const int BufferSize        = 32768;
 //---------------------------------------------------------------------------
 #define APPNAME "audiooutput"
 //---------------------------------------------------------------------------
+#include "generator_curve.hpp"
+#include "grapherbox.hpp"
+#include "sound_widget.hpp"
 #include "ui_sound_widget.h"
 //---------------------------------------------------------------------------
 Sound_widget::Sound_widget(QWidget *parent) :
@@ -66,7 +67,10 @@ Sound_widget::Sound_widget(QWidget *parent) :
 
     m_pushTimer = new QTimer(this);
     m_device = QAudioDeviceInfo::defaultOutputDevice();
+
     m_buffer.resize(BufferSize);
+
+    connect(ui->btn_test,   SIGNAL(clicked(void)),  this,   SLOT(test(void)));
 
     initializeWindow();
     initializeAudio();
@@ -117,11 +121,8 @@ void Sound_widget::regenerate(void)
 {
     if(m_generator)
     {
-        m_generator->generateData(m_format,
-                                  DurationSeconds*1000000,
-                                  ui->m_freq->value(),
-                                  ui->m_left_volume->value(),
-                                  ui->m_right_volume->value());
+        QByteArray temp = generator->get_data();
+        m_generator->generateData(temp);
     }
 }
 //---------------------------------------------------------------------------
@@ -197,14 +198,25 @@ void Sound_widget::initializeAudio(void)
     }
 
     load_QDoubleSpinBox("audio");
-    m_generator = new Generator(m_format,
-                                DurationSeconds*1000000,
-                                ui->m_freq->value(),
-                                ui->m_left_volume->value(),
-                                ui->m_right_volume->value(),
-                                this);
+    if(generator == nullptr)
+    {
+        QByteArray ba;
+        char x = 0;
+        ba.append(x);
+        ba.append(x);
+        m_generator = new Generator(ba, this);
+    }
+    else
+    {
+        m_generator = new Generator(generator->get_data(), this);
+    }
 
     createAudioOutput();
+}
+//--------------------------------------------------------------------------------
+void Sound_widget::set_generator(Generator_Curve *gen)
+{
+    generator = gen;
 }
 //---------------------------------------------------------------------------
 void Sound_widget::createAudioOutput(void)
@@ -237,11 +249,56 @@ Sound_widget::~Sound_widget()
 void Sound_widget::deviceChanged(int index)
 {
     m_pushTimer->stop();
-    // m_generator->stop();
+    m_generator->stop();
     m_audioOutput->stop();
     m_audioOutput->disconnect(this);
     m_device = ui->m_deviceBox->itemData(index).value<QAudioDeviceInfo>();
     createAudioOutput();
+}
+//---------------------------------------------------------------------------
+QByteArray Sound_widget::get_m_buffer(void)
+{
+    return m_buffer;
+}
+//---------------------------------------------------------------------------
+#include "grapherbox.hpp"
+void Sound_widget::test(void)
+{
+//    emit info("test");
+    
+    GrapherBox *grapher_widget = new GrapherBox();
+    int curve_0 = grapher_widget->add_curve("test");
+    
+    //---
+    struct TEMP {
+        uint16_t data[BufferSize / 2];
+    };
+
+//    union DATA_INT16 {
+//        uint16_t value;
+//        struct {
+//            uint8_t a;
+//            uint8_t b;
+//        } bytes;
+//    };
+//    DATA_INT16 src;
+//    DATA_INT16 dst;
+
+    TEMP* temp = reinterpret_cast<TEMP *>(m_buffer.data());
+    for(int n=0; n<m_buffer.count(); n++)
+    {
+        // emit info(QString("%1").arg(temp->data[n]));
+
+//        src.value = temp->data[n];
+//        dst.bytes.a = src.bytes.b;
+//        dst.bytes.b = src.bytes.a;
+//        grapher_widget->add_curve_data(curve_0, dst.value);
+
+        grapher_widget->add_curve_data(curve_0, temp->data[n]);
+    }
+    //---
+    
+    grapher_widget->show();
 }
 //---------------------------------------------------------------------------
 void Sound_widget::pushTimerExpired(void)
@@ -251,15 +308,15 @@ void Sound_widget::pushTimerExpired(void)
         int chunks = m_audioOutput->bytesFree()/m_audioOutput->periodSize();
         while (chunks)
         {
-            //            const qint64 len = m_generator->read(m_buffer.data(), m_audioOutput->periodSize());
-            //            if (len)
-            //            {
-            //                m_output->write(m_buffer.data(), len);
-            //            }
-            //            if (len != m_audioOutput->periodSize())
-            //            {
-            //                break;
-            //            }
+            const qint64 len = m_generator->readData(m_buffer.data(), m_audioOutput->periodSize());
+            if (len)
+            {
+                m_output->write(m_buffer.data(), len);
+            }
+            if (len != m_audioOutput->periodSize())
+            {
+                break;
+            }
             --chunks;
         }
     }

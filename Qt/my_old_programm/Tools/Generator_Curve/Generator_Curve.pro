@@ -15,9 +15,13 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT      += multimedia
 
+DEFINES += SAVE_WIDGETS_SPINBOX
 DEFINES += SAVE_WIDGETS_SLIDER
+
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
+
+#DEFINES += RS232_FIXED_SIZE
 
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -40,6 +44,7 @@ LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include ($$LIB_PATH2/generator_curve/generator_curve.pri)

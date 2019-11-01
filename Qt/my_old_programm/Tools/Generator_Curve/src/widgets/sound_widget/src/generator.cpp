@@ -44,22 +44,15 @@
 //---------------------------------------------------------------------------
 #include "generator.h"
 //---------------------------------------------------------------------------
-Generator::Generator(const QAudioFormat &format,
-                     qint64 durationUs,
-                     double sampleRate,
-                     int left_value,
-                     int right_value,
+Generator::Generator(QByteArray data,
                      QObject *parent)
     : QIODevice(parent)
     , m_pos(0)
 {
-    if (format.isValid())
+    m_buffer.clear();
+    while(m_buffer.size() < 32768)
     {
-        generateData(format,
-                     durationUs,
-                     sampleRate,
-                     left_value,
-                     right_value);
+        m_buffer.append(data);
     }
 }
 //---------------------------------------------------------------------------
@@ -79,71 +72,14 @@ void Generator::stop(void)
     close();
 }
 //---------------------------------------------------------------------------
-void Generator::generateData(const QAudioFormat &format,
-                             qint64 durationUs,
-                             double sampleRate,
-                             int left_value,
-                             int right_value)
+void Generator::generateData(QByteArray data)
 {
-    const int channelBytes = format.sampleSize() / 8;
-    const int sampleBytes = format.channelCount() * channelBytes;
-
-    qint64 length = (format.sampleRate() * format.channelCount() * (format.sampleSize() / 8))
-            * durationUs / 100000;
-
-    Q_ASSERT(length % sampleBytes == 0);
-    Q_UNUSED(sampleBytes) // suppress warning in release builds
-
-    m_buffer.resize(static_cast<int>(length));
-    unsigned char *ptr = reinterpret_cast<unsigned char *>(m_buffer.data());
-    int sampleIndex = 0;
-
-    qreal lv = static_cast<qreal>(left_value / 100.0);
-    qreal rv = static_cast<qreal>(right_value / 100.0);
-    qDebug() << "length" << length;
-    while (length)
+    m_buffer.clear();
+    while(m_buffer.size() < 32768)
     {
-        for (int i=0; i<format.channelCount(); ++i)
-        {
-            qreal x = qSin(2 * M_PI * sampleRate * qreal(sampleIndex % format.sampleRate()) / format.sampleRate());
-            if(!i)
-                x *= lv;
-            else
-                x *= rv;
-
-            if (format.sampleSize() == 8 && format.sampleType() == QAudioFormat::UnSignedInt)
-            {
-                const quint8 value = static_cast<quint8>((1.0 + x) / 2 * 255);
-                *reinterpret_cast<quint8*>(ptr) = value;
-            }
-            else if (format.sampleSize() == 8 && format.sampleType() == QAudioFormat::SignedInt)
-            {
-                const qint8 value = static_cast<qint8>(x * 127);
-                *reinterpret_cast<quint8*>(ptr) = static_cast<quint8>(value);
-            }
-            else if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::UnSignedInt)
-            {
-                quint16 value = static_cast<quint16>((1.0 + x) / 2 * 65535);
-                if (format.byteOrder() == QAudioFormat::LittleEndian)
-                    qToLittleEndian<quint16>(value, ptr);
-                else
-                    qToBigEndian<quint16>(value, ptr);
-            }
-            else if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt)
-            {
-                qint16 value = static_cast<qint16>(x * 32767);
-                if (format.byteOrder() == QAudioFormat::LittleEndian)
-                    qToLittleEndian<qint16>(value, ptr);
-                else
-                    qToBigEndian<qint16>(value, ptr);
-            }
-
-            ptr += channelBytes;
-            length -= channelBytes;
-        }
-        ++sampleIndex;
+        m_buffer.append(data);
     }
-    qDebug() << "sampleIndex" << sampleIndex;
+//    m_buffer.append(data);
 }
 //---------------------------------------------------------------------------
 qint64 Generator::readData(char *data,
@@ -166,10 +102,13 @@ qint64 Generator::readData(char *data,
 qint64 Generator::writeData(const char *data,
                             qint64 len)
 {
-    Q_UNUSED(data)
-    Q_UNUSED(len)
-
-    return 0;
+    m_buffer.append(data, static_cast<int>(len));
+    return len;
+}
+//---------------------------------------------------------------------------
+void Generator::clear_buffer(void)
+{
+    m_buffer.clear();
 }
 //---------------------------------------------------------------------------
 qint64 Generator::bytesAvailable(void) const

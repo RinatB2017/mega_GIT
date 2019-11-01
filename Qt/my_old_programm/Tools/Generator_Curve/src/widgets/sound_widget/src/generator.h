@@ -43,16 +43,25 @@
 #include <QAudioFormat>
 #include <QIODevice>
 //---------------------------------------------------------------------------
+//int sr = format.sampleRate();
+//int cc = format.channelCount();
+//int ss = format.sampleSize();
+
+//sr = 44100
+//cc = 2
+//ss = 16
+//length = 1764000
+//sampleIndex = 44100
+//cnt = 10
+
+//qint64 length = (format.sampleRate() * format.channelCount() * (format.sampleSize() / 8)) * durationUs / 100000;
+//---------------------------------------------------------------------------
 class Generator : public QIODevice
 {
     Q_OBJECT
 
 public:
-    Generator(const QAudioFormat &format,
-              qint64 durationUs,
-              double sampleRate,
-              int left_value,
-              int right_value,
+    Generator(QByteArray data,
               QObject *parent);
     ~Generator();
 
@@ -61,12 +70,9 @@ public:
     qint64 writeData(const char *data,
                      qint64 len);
     qint64 bytesAvailable() const;
+    void clear_buffer(void);
 
-    void generateData(const QAudioFormat &format,
-                      qint64 durationUs,
-                      double sampleRate,
-                      int left_value,
-                      int right_value);
+    void generateData(QByteArray data);
 
 public slots:
     void start(void);
@@ -75,7 +81,6 @@ public slots:
 private:
     qint64 m_pos;
     QByteArray m_buffer;
-
 };
 //---------------------------------------------------------------------------
 #endif

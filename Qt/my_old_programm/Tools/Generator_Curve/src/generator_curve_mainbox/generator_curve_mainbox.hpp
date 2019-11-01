@@ -42,12 +42,38 @@ public:
     ~MainBox();
 
 private slots:
-    void temp(QByteArray data);
+    void choice_test(void);
+    void test_0(void);
+    void test_1(void);
+    void test_2(void);
+    void test_3(void);
+    void test_4(void);
+    void test_5(void);
 
 private:
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        void (MainBox::*func)(void);
+    } CMD_t;
+
     Ui::MainBox *ui;
 
+    QComboBox *cb_test;
+    QList<CMD> commands;
+
     void init(void);
+    void createTestBar(void);
 
     void updateText(void);
     bool programm_is_exit(void);

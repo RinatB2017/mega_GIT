@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "generator_curve.hpp"
 #include "rs232_widget.hpp"
 #include "ui_rs232_widget.h"
 //--------------------------------------------------------------------------------
@@ -42,20 +43,56 @@ void RS232_widget::init(void)
     ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
 
+    ui->sb_interval->setRange(0, 10000);
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+
     connect(ui->btn_start,  SIGNAL(clicked()),  this,   SLOT(start()));
     connect(ui->btn_stop,   SIGNAL(clicked()),  this,   SLOT(stop()));
 
     connect(this, SIGNAL(send(QByteArray)),    ui->rs232_widget,   SLOT(input(QByteArray)));
 }
 //--------------------------------------------------------------------------------
+void RS232_widget::set_generator(Generator_Curve *gen)
+{
+    generator = gen;
+}
+//--------------------------------------------------------------------------------
 void RS232_widget::start(void)
 {
     emit error("start");
+
+    if(generator == nullptr)
+    {
+        emit error("Generator not init");
+        return;
+    }
+
+    send_data.clear();
+    send_data.append(":");
+    send_data.append(generator->get_data().toHex());
+    send_data.append("\n");
+
+    timer->start(ui->sb_interval->value());
 }
 //--------------------------------------------------------------------------------
 void RS232_widget::stop(void)
 {
     emit error("stop");
+    timer->stop();
+}
+//--------------------------------------------------------------------------------
+void RS232_widget::update(void)
+{
+    if(ui->rs232_widget->isOpen())
+    {
+        emit send(send_data);
+    }
+    else
+    {
+        timer->stop();
+    }
 }
 //--------------------------------------------------------------------------------
 void RS232_widget::updateText()

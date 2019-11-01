@@ -60,7 +60,7 @@ unix:!macx {
         OPTIMIZE = -pipe -O0
     }
     else {
-        PTIMIZE = -pipe -O2
+        OPTIMIZE = -pipe -O2
     }
     QMAKE_CFLAGS   += $${OPTIMIZE}
     QMAKE_CXXFLAGS += $${OPTIMIZE}

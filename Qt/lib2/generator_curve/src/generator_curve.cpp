@@ -112,8 +112,8 @@ QByteArray Generator_Curve::get_data(void)
     foreach (QSlider *slider, sliders)
     {
         uint16_t value = static_cast<uint16_t>(slider->value());
-        temp.append(static_cast<char>((value >> 8) & 0xFF));
         temp.append(static_cast<char>(value & 0xFF));
+        temp.append(static_cast<char>((value >> 8) & 0xFF));
     }
     return temp;
 }

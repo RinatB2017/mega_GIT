@@ -33,6 +33,8 @@ namespace Ui {
     class RS232_widget;
 }
 //--------------------------------------------------------------------------------
+class Generator_Curve;
+//--------------------------------------------------------------------------------
 class RS232_widget : public MyWidget
 {
     Q_OBJECT
@@ -44,14 +46,21 @@ public:
     explicit RS232_widget(QWidget *parent = nullptr);
     ~RS232_widget();
 
+    void set_generator(Generator_Curve *gen);
+
 private slots:
     void start(void);
     void stop(void);
 
+    void update(void);
+
 private:
     Ui::RS232_widget *ui;
 
-    QString send_text;
+    Generator_Curve *generator = nullptr;
+    QTimer *timer = nullptr;
+
+    QByteArray send_data;
 
     void init(void);
 

@@ -253,7 +253,7 @@ void MainBox::test_1(void)
     load_public_file("keypublic.pem");
     load_private_file("keyprivate.pem", "pass phrase");
 
-    QCA::SecureArray ba = QByteArray::fromHex("30d578732e99de1e0d6e13959cf827f4eb8cb074b20483e61f2f0427fb702ab61fda4c10b82bd28e61e4d1851e00d8101e6bb7805591bccc57b067ed0bce03364300b7581b71d2fe387c79cf3a31d872dfde6f0a01521ac636effb53467ac1d9e868c9068f66fbc4fc60a3a30dc585a6f7c538a50af4c9c66069d35ef0fe6f68");
+    QCA::SecureArray ba = QByteArray::fromHex("356bd675e7cbc58f70dfcd9de1c06c7f957131700c1506b565094f4264f678234e15403e1b6f0a2a383a0105e0c5f41da596b5185c76be5d71e2051de9b66664b938061221f1a8c648fc12ea1fe14b44f82c795a1a4fa05ec227eecb79fc2c9c06665a057506292c25746a199af065d28ac2f37ef51aaa2a9e428f58087226c2");
     QByteArray result;
     ok = decrypt(ba, &result);
     if(!ok)
@@ -296,6 +296,29 @@ void MainBox::test_2(void)
 void MainBox::test_3(void)
 {
     emit info("Test_3()");
+
+    bool ok = false;
+
+    QCA::Initializer init;
+    load_public_file("keypublic.pem");
+    load_private_file("keyprivate.pem", "pass phrase");
+
+    QCA::SecureArray ba = QByteArray::fromHex("356bd675e7cbc58f70dfcd9de1c06c7f957131700c1506b565094f4264f678234e15403e1b6f0a2a383a0105e0c5f41da596b5185c76be5d71e2051de9b66664b938061221f1a8c648fc12ea1fe14b44f82c795a1a4fa05ec227eecb79fc2c9c06665a057506292c25746a199af065d28ac2f37ef51aaa2a9e428f58087226c2");
+    QByteArray result;
+
+    QElapsedTimer timer;
+    timer.start();
+    for(int n=0; n<10000; n++)
+    {
+        ok = decrypt(ba, &result);
+        if(!ok)
+        {
+            emit error("Error decrypt");
+            return;
+        }
+    }
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_4(void)

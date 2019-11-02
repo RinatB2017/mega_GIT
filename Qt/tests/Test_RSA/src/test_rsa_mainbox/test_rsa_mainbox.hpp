@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include <QtCrypto>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -76,8 +78,21 @@ private:
     QComboBox *cb_test;
     QList<CMD> commands;
 
+    QCA::PrivateKey seckey;
+    QCA::PublicKey  pubkey;
+
+    QCA::SecureArray crypt_data;
+
     void init(void);
     void createTestBar(void);
+
+    bool generate_keys(void);
+    bool load_private_file(QString filename, QCA::SecureArray passPhrase);
+    bool load_public_file(QString filename);
+    bool save_private_file(QString filename, QCA::SecureArray passPhrase);
+    bool save_public_file(QString filename);
+    bool crypt(QCA::SecureArray data, QCA::SecureArray &result);
+    bool decrypt(QCA::SecureArray data, QByteArray *result);
 
     void updateText(void);
     bool programm_is_exit(void);

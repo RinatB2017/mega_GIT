@@ -76,7 +76,9 @@ RESOURCES += \
     images/images.qrc \
     doc/doc.qrc
 
-OTHER_FILES += doc/notebook.txt
+OTHER_FILES += \
+    doc/notebook.txt \
+    orig/rsatest.cpp
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

@@ -126,19 +126,171 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+bool MainBox::generate_keys(void)
+{
+    QCA::SecureArray arg = "hello";
+
+    if(!QCA::isSupported("pkey") || !QCA::PKey::supportedIOTypes().contains(QCA::PKey::RSA))
+    {
+        emit error("RSA not supported!");
+        return false;
+    }
+    else
+    {
+        // When creating a public / private key pair, you make the
+        // private key, and then extract the public key component from it
+        // Using RSA is very common, however DSA can provide equivalent
+        // signature/verification. This example applies to DSA to the
+        // extent that the operations work on that key type.
+
+        // QCA provides KeyGenerator as a convenient source of new keys,
+        // however you could also import an existing key instead.
+        seckey = QCA::KeyGenerator().createRSA(1024);
+        if(seckey.isNull())
+        {
+            emit error("Failed to make private RSA key");
+            return false;
+        }
+
+        pubkey = seckey.toPublicKey();
+
+        // check if the key can encrypt
+        if(!pubkey.canEncrypt())
+        {
+            emit error("Error: this kind of key cannot encrypt");
+            return false;
+        }
+    }
+    emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::load_private_file(QString filename, QCA::SecureArray passPhrase)
+{
+    QCA::ConvertResult conversionResult;
+    seckey = QCA::PrivateKey::fromPEMFile(filename,
+                                          passPhrase,
+                                          &conversionResult);
+    if (! (QCA::ConvertGood == conversionResult) )
+    {
+        emit error("Private key read failed");
+        return false;
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::load_public_file(QString filename)
+{
+    pubkey = QCA::PublicKey::fromPEMFile(filename);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::save_private_file(QString filename, QCA::SecureArray passPhrase)
+{
+    seckey.toPEMFile(filename, passPhrase);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::save_public_file(QString filename)
+{
+    pubkey.toPEMFile(filename);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::crypt(QCA::SecureArray data, QCA::SecureArray &result)
+{
+    result = pubkey.encrypt(data, QCA::EME_PKCS1_OAEP);
+    if(data.isEmpty())
+    {
+        emit error("Error encrypting");
+        return false;
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::decrypt(QCA::SecureArray data, QByteArray *result)
+{
+    QCA::SecureArray decrypt;
+    if(0 == seckey.decrypt(data, &decrypt, QCA::EME_PKCS1_OAEP))
+    {
+        emit error("Error decrypting.");
+        return false;
+    }
+    (*result).clear();
+    (*result).append(decrypt.data());
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    bool ok = false;
+
+    QCA::Initializer init;
+    generate_keys();
+    save_public_file("keypublic.pem");
+    save_private_file("keyprivate.pem", "pass phrase");
+
+    QCA::SecureArray ba = "hello";
+    QCA::SecureArray result;
+    ok = crypt(ba, result);
+    if(!ok)
+    {
+        emit error("Error crypt");
+        return;
+    }
+    emit info(QString("%1").arg(result.toByteArray().toHex().data()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    bool ok = false;
+
+    QCA::Initializer init;
+    load_public_file("keypublic.pem");
+    load_private_file("keyprivate.pem", "pass phrase");
+
+    QCA::SecureArray ba = QByteArray::fromHex("30d578732e99de1e0d6e13959cf827f4eb8cb074b20483e61f2f0427fb702ab61fda4c10b82bd28e61e4d1851e00d8101e6bb7805591bccc57b067ed0bce03364300b7581b71d2fe387c79cf3a31d872dfde6f0a01521ac636effb53467ac1d9e868c9068f66fbc4fc60a3a30dc585a6f7c538a50af4c9c66069d35ef0fe6f68");
+    QByteArray result;
+    ok = decrypt(ba, &result);
+    if(!ok)
+    {
+        emit error("Error crypt");
+        return;
+    }
+    emit info(QString("Result = [%1]").arg(result.data()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)
 {
     emit info("Test_2()");
+
+    bool ok = false;
+
+    QCA::Initializer init;
+    load_public_file("keypublic.pem");
+    load_private_file("keyprivate.pem", "pass phrase");
+
+    QCA::SecureArray ba;
+    ba.resize(100000);
+    QCA::SecureArray result;
+
+    QElapsedTimer timer;
+    timer.start();
+    for(int n=0; n<10000; n++)
+    {
+        ok = crypt(ba, result);
+        if(!ok)
+        {
+            emit error("Error crypt");
+            return;
+        }
+    }
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_3(void)

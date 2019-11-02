@@ -23,6 +23,8 @@
 #include <QtCrypto>
 #include <QCoreApplication>
 
+#include <QByteArray>
+
 #include <iostream>
 
 #ifdef QT_STATICPLUGIN
@@ -44,7 +46,10 @@ int main(int argc, char **argv)
     // We demonstrate PEM usage here, so we need to test for
     // supportedIOTypes, not just supportedTypes
     if(!QCA::isSupported("pkey") || !QCA::PKey::supportedIOTypes().contains(QCA::PKey::RSA))
+    {
         std::cout << "RSA not supported!\n";
+        return 1;
+    }
     else
     {
         // When creating a public / private key pair, you make the
@@ -71,9 +76,20 @@ int main(int argc, char **argv)
             return 1;
         }
 
+        //---
+        pubkey.toPEMFile("keypublic.pem");
+        //---
+
         // encrypt some data - note that only the public key is required
         // you must also choose the algorithm to be used
+#if 1
         QCA::SecureArray result = pubkey.encrypt(arg, QCA::EME_PKCS1_OAEP);
+#else
+        QByteArray ba;
+        ba.append("привет");
+        QCA::SecureArray sa = ba.data();
+        QCA::SecureArray result = pubkey.encrypt(sa, QCA::EME_PKCS1_OAEP);
+#endif
         if(result.isEmpty())
         {
             std::cout << "Error encrypting" << std::endl;
@@ -99,6 +115,7 @@ int main(int argc, char **argv)
         if (! (QCA::ConvertGood == conversionResult) )
         {
             std::cout << "Private key read failed" << std::endl;
+            return 1;
         }
 
         // now decrypt that encrypted data using the private key that

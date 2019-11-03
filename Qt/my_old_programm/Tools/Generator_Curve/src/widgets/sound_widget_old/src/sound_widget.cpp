@@ -286,7 +286,7 @@ void Sound_widget::test(void)
 
     for(int n=0; n<(m_buffer.count() / 2); n++)
     {
-        emit debug(QString("%1").arg(temp->data[n]));
+        // emit debug(QString("%1").arg(temp->data[n]));
         grapher_widget->add_curve_data(curve_0, temp->data[n]);
     }
 #endif

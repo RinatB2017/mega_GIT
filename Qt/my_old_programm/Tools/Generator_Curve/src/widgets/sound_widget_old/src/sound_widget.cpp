@@ -121,7 +121,12 @@ void Sound_widget::regenerate(void)
 {
     if(m_generator)
     {
-        m_generator->generateData(generator->get_data());
+        m_generator->generateData(m_format,
+                                  DurationSeconds*1000000,
+                                  ui->m_freq->value(),
+                                  ui->m_freq->value(),
+                                  ui->m_left_volume->value(),
+                                  ui->m_right_volume->value());
     }
 }
 //---------------------------------------------------------------------------
@@ -197,12 +202,13 @@ void Sound_widget::initializeAudio(void)
     }
 
     load_QDoubleSpinBox("audio");
-    QByteArray ba;
-    char x = 0;
-    ba.append(x);
-    ba.append(x);
-    m_generator = new Generator(ba, this);
-
+    m_generator = new Generator(m_format,
+                                DurationSeconds*1000000,
+                                ui->sb_freq->value(),
+                                ui->sb_freq->value(),
+                                ui->m_left_volume->value(),
+                                ui->m_right_volume->value(),
+                                this);
     createAudioOutput();
 }
 //--------------------------------------------------------------------------------

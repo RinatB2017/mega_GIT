@@ -3,4 +3,6 @@
 #**********************************************************************************
 
 include (rs232_widget/rs232_widget.pri)
-include (sound_widget/sound_widget.pri)
+
+#include (sound_widget/sound_widget.pri)
+include (sound_widget_old/sound_widget.pri)

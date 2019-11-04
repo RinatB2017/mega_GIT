@@ -55,6 +55,7 @@
 //cnt = 10
 
 //qint64 length = (format.sampleRate() * format.channelCount() * (format.sampleSize() / 8)) * durationUs / 100000;
+// 1764000
 //---------------------------------------------------------------------------
 class Generator : public QIODevice
 {
@@ -80,7 +81,11 @@ public slots:
 
 private:
     qint64 m_pos;
+    int length = 1764000;
+    int cnt = 10;
     QByteArray m_buffer;
+
+    void init_m_buffer(QByteArray data);
 };
 //---------------------------------------------------------------------------
 #endif

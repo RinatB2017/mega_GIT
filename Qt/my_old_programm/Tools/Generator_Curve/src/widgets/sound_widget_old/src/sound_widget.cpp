@@ -287,7 +287,26 @@ void Sound_widget::test(void)
     for(int n=0; n<(m_buffer.count() / 2); n++)
     {
         // emit debug(QString("%1").arg(temp->data[n]));
+#if 0
+        union UINT16 {
+            uint16_t value;
+            struct {
+                uint8_t a;
+                uint8_t b;
+            } bytes;
+        };
+
+        UINT16 temp1;
+        UINT16 temp2;
+
+        temp1.value = temp->data[n];
+        temp2.bytes.a = temp1.bytes.b;
+        temp2.bytes.b = temp1.bytes.a;
+
+        grapher_widget->add_curve_data(curve_0, temp2.value);
+#else
         grapher_widget->add_curve_data(curve_0, temp->data[n]);
+#endif
     }
 #endif
     

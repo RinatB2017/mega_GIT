@@ -49,11 +49,7 @@ Generator::Generator(QByteArray data,
     : QIODevice(parent)
     , m_pos(0)
 {
-    m_buffer.clear();
-    while(m_buffer.size() < 32768)
-    {
-        m_buffer.append(data);
-    }
+    init_m_buffer(data);
 }
 //---------------------------------------------------------------------------
 Generator::~Generator()
@@ -74,12 +70,27 @@ void Generator::stop(void)
 //---------------------------------------------------------------------------
 void Generator::generateData(QByteArray data)
 {
-    m_buffer.clear();
-    while(m_buffer.size() < 32768)
+    init_m_buffer(data);
+}
+//---------------------------------------------------------------------------
+void Generator::init_m_buffer(QByteArray data)
+{
+    if(data.isEmpty())
     {
-        m_buffer.append(data);
+        return;
     }
-//    m_buffer.append(data);
+
+    m_buffer.clear();
+#if 0
+    int temp_len = length / cnt;
+    float inc = static_cast<float>(data.length()) / static_cast<float>(temp_len);
+    float index = 0;
+    while(index < temp_len)
+    {
+        m_buffer.append(data[static_cast<int>(index)]);
+        index += inc;
+    }
+#endif
 }
 //---------------------------------------------------------------------------
 qint64 Generator::readData(char *data,

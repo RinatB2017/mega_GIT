@@ -74,6 +74,8 @@ Sound_widget::Sound_widget(QWidget *parent) :
 
     initializeWindow();
     initializeAudio();
+
+//    regenerate();
 }
 //---------------------------------------------------------------------------
 void Sound_widget::initializeWindow(void)
@@ -121,6 +123,7 @@ void Sound_widget::regenerate(void)
 {
     if(m_generator)
     {
+        //TODO
         m_generator->generateData(generator->get_data());
     }
 }
@@ -197,6 +200,8 @@ void Sound_widget::initializeAudio(void)
     }
 
     load_QDoubleSpinBox("audio");
+
+    //TODO
     QByteArray ba;
     char x = 0;
     ba.append(x);

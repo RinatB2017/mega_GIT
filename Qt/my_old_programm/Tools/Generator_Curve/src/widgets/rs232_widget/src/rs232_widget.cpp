@@ -71,7 +71,7 @@ void RS232_widget::start(void)
 
     send_data.clear();
     send_data.append(":");
-    send_data.append(generator->get_data().toHex());
+    send_data.append(generator->get_data().toHex(64));
     send_data.append("\n");
 
     timer->start(ui->sb_interval->value());

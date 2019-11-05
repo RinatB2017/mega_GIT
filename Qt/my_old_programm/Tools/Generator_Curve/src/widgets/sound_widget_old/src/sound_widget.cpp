@@ -266,7 +266,7 @@ void Sound_widget::test(void)
     int curve_0 = grapher_widget->add_curve("test");
 
     struct TEMP {
-        uint16_t data[BufferSize / 2];
+        int16_t data[BufferSize / 2];
     };
 
 #if 0
@@ -281,10 +281,13 @@ void Sound_widget::test(void)
 
 #endif
 
+    m_buffer = m_generator->get_m_buffer();
+
 #if 1
     TEMP* temp = reinterpret_cast<TEMP *>(m_buffer.data());
 
-    for(int n=0; n<(m_buffer.count() / 2); n++)
+//    for(int n=0; n<(m_buffer.count() / 2); n++)
+    for(int n=0; n<1000; n++)
     {
         // emit debug(QString("%1").arg(temp->data[n]));
 #if 0
@@ -310,6 +313,10 @@ void Sound_widget::test(void)
     }
 #endif
     
+//    grapher_widget->set_zoom(true, true);
+//    grapher_widget->set_panning(true, true);
+    grapher_widget->push_btn_Vertical(true);
+    grapher_widget->push_btn_Horizontal(true);
     grapher_widget->show();
 }
 //--------------------------------------------------------------------------------

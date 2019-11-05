@@ -481,6 +481,7 @@ void GrapherBox::set_zoom(bool x_state, bool y_state)
 #ifndef GRAPHER_NOT_ZOOM
     if(plot_magnifier == nullptr)
     {
+        emit error("plot_magnifier is NULL");
         return;
     }
     plot_magnifier->setAxisEnabled(QwtPlot::yLeft, y_state);

@@ -70,6 +70,8 @@ public:
                       int left_value,
                       int right_value);
 
+    QByteArray get_m_buffer(void);
+
 public slots:
     void start(void);
     void stop(void);

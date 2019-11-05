@@ -1173,7 +1173,7 @@ void MyWidget::closeEvent(QCloseEvent *)
 void MyWidget::debug(void)
 {
     show_objectname();
-    block_wheel();
+    // block_wheel();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::block_wheel(void)

@@ -194,6 +194,11 @@ qint64 Generator::writeData(const char *data,
     return 0;
 }
 //---------------------------------------------------------------------------
+QByteArray Generator::get_m_buffer(void)
+{
+    return m_buffer;
+}
+//---------------------------------------------------------------------------
 qint64 Generator::bytesAvailable(void) const
 {
     return m_buffer.size() + QIODevice::bytesAvailable();

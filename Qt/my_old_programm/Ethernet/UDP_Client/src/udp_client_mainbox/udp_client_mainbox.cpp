@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2016                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,13 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QtNetwork>
+#include <QHostAddress>
 //--------------------------------------------------------------------------------
 #include "ui_udp_client_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
+#include "udp_client.hpp"
 #include "udp_client_mainbox.hpp"
-#include "client.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -35,105 +34,43 @@ MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MainBox)
 {
+    ui->setupUi(this);
+
     init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
+    if(client)
+    {
+        delete client;
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
+    init_widgets();
+    init_client();
 
-    createTestBar();
-#if 0
-    create_slow_client();
-#else
-    create_fast_client();
-#endif
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_slow_client(void)
+void MainBox::init_widgets(void)
 {
-    timer = new QTimer(this);
-    udpSocket = new QUdpSocket(this);
-    messageNo = 1;
-
-    connect(timer, SIGNAL(timeout()), this, SLOT(broadcastDatagram()));
+    ui->le_data->setText("test");
+    ui->le_address->setText(QHostAddress(QHostAddress::LocalHost).toString());
+    ui->sb_port->setValue(10000);
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_fast_client(void)
+void MainBox::init_client(void)
 {
-    QThread *thread_client = new QThread;
+    client = new UDP_Client(this);
+    client->setAddress(QHostAddress(ui->le_address->text()));
+    client->setPort(static_cast<uint>(ui->sb_port->value()));
 
-    Client *client = new Client;
-    connect(client, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
-    connect(client, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
-    connect(client, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(client, SIGNAL(trace(QString)),     this, SIGNAL(trace(QString)));
-
-    connect(client, SIGNAL(finished()), thread_client, SLOT(quit()));
-    connect(thread_client, SIGNAL(finished()), thread_client, SLOT(deleteLater()));
-
-    connect(thread_client, SIGNAL(started()),  client, SLOT(process()));
-    connect(client, SIGNAL(finished()), client, SLOT(deleteLater()));
-
-    connect(thread_client, SIGNAL(finished()), this, SLOT(client_thread_is_finished()));
-
-    client->moveToThread(thread_client);
-
-    thread_client->start();
-}
-//--------------------------------------------------------------------------------
-void MainBox::client_thread_is_finished(void)
-{
-    emit info("client_thread_is_finished");
-}
-//--------------------------------------------------------------------------------
-void MainBox::startBroadcasting(void)
-{
-    startButton->setEnabled(false);
-    if(!timer)
-    {
-        emit error("no init timer");
-        return;
-    }
-    timer->start(1000);
-}
-//--------------------------------------------------------------------------------
-void MainBox::broadcastDatagram(void)
-{
-    emit info(QString("Now broadcasting datagram %1").arg(messageNo));
-    QByteArray datagram = "Broadcast message " + QByteArray::number(messageNo);
-    udpSocket->writeDatagram(datagram.data(), datagram.size(),
-                             QHostAddress::Broadcast, PORT);
-    ++messageNo;
-}
-//--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    startButton = add_button(testbar,
-                             new QToolButton(this),
-                             qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                             "startBroadcasting",
-                             "startBroadcasting");
-    QToolButton *start_fast_client = add_button(testbar,
-                                                new QToolButton(this),
-                                                qApp->style()->standardIcon(QStyle::SP_CommandLink),
-                                                "start fast client",
-                                                "start fast client");
-
-    connect(startButton, SIGNAL(clicked()), this, SLOT(startBroadcasting()));
-    connect(start_fast_client, SIGNAL(clicked()), this, SLOT(create_fast_client()));
+    connect(ui->btn_Send, SIGNAL(clicked()), this, SLOT(send()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
@@ -154,5 +91,22 @@ void MainBox::load_setting(void)
 void MainBox::save_setting(void)
 {
 
+}
+//--------------------------------------------------------------------------------
+void MainBox::send(void)
+{
+    QByteArray data;
+    QByteArray res_data;
+
+    if(ui->le_address->text().isEmpty()) return;
+    client->setAddress(QHostAddress(ui->le_address->text()));
+    client->setPort(static_cast<uint>(ui->sb_port->value()));
+
+    data.clear();
+    data.append(ui->le_data->text());
+    emit debug(QString("send(%1)").arg(data.data()));
+    res_data = client->input(data);
+    //emit debug(res_data.toHex());
+    emit info(res_data);
 }
 //--------------------------------------------------------------------------------

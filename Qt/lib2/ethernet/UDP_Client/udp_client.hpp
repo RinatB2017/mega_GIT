@@ -2,8 +2,9 @@
 #ifndef UDP_CLIENT_HPP
 #define UDP_CLIENT_HPP
 //--------------------------------------------------------------------------------
+#include <QHostAddress>
 #include <QWidget>
-
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QByteArray;
@@ -15,11 +16,15 @@ class UDP_Client : public MyWidget
     Q_OBJECT
 
 public:
-    UDP_Client(QWidget *parent = nullptr);
+    explicit UDP_Client(QWidget *parent = nullptr);
     ~UDP_Client();
 
+    void setAddress(const QHostAddress &address);
+    void setPort(quint16 port);
+    QByteArray input(const QByteArray &data);
+
 public slots:
-    void send(const QString &data);
+    QByteArray send_data(const QByteArray &data);
 
 private slots:
     void readPendingDatagrams(void);
@@ -29,9 +34,8 @@ private:
     QUdpSocket *udpSocket;
     QString fileName;
     QString address;
-    unsigned int port;
+    quint16 port;
 
-    void send_data(QByteArray);
     QString getLocalAddress(void);
     void init(void);
 

@@ -13,6 +13,8 @@ DEPENDPATH  += \
     $$PWD/src/udp_client_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
+QT  += network
+
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
@@ -35,8 +37,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH  = "../../../lib"
-LIB_PATH2 = "../../../lib2"
+LIB_PATH = "../../../lib"
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
@@ -45,10 +46,9 @@ LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
-include ($$LIB_PATH2/ethernet/udp_client.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 
-#include ($$LIB_PATH/ethernet/fake/fake.pri)
+include (src/worker/worker.pri)
 
 VPATH = $$INCLUDEPATH

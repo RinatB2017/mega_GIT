@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2016                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,46 +18,43 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#include "mainwindow.hpp"
+#include "udp_client_mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    set_codecs();
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(QLatin1String(":/mainwindow/computer.png")));
+
+    MainWindow *main_window = new MainWindow();
+    main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+
+    MainBox *mainBox = new MainBox(main_window->getThis());
+
+    main_window->setCentralWidget(mainBox);
+
+    main_window->show();
+
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class UDP_Client;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
-
-private slots:
-    void send(void);
-
-private:
-    Ui::MainBox *ui;
-    UDP_Client *client;
-
-    void init(void);
-    void init_widgets(void);
-    void init_client(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_H

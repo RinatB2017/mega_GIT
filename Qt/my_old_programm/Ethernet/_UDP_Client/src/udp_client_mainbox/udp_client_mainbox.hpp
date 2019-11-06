@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2016                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -33,26 +33,39 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class UDP_Client;
+class QToolButton;
+class QToolBar;
+class QUdpSocket;
+class QTimer;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent = nullptr);
+    MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
-    void send(void);
+    void startBroadcasting(void);
+    void broadcastDatagram(void);
+
+    void create_slow_client(void);
+    void create_fast_client(void);
+
+    void client_thread_is_finished(void);
 
 private:
     Ui::MainBox *ui;
-    UDP_Client *client;
+
+    int messageNo = 0;
+    QTimer *timer;
+    QUdpSocket *udpSocket;
+    QToolButton *startButton;
+
+    void createTestBar(void);
 
     void init(void);
-    void init_widgets(void);
-    void init_client(void);
 
     void updateText(void);
     bool programm_is_exit(void);

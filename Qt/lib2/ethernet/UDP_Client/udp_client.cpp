@@ -40,21 +40,6 @@ QString UDP_Client::getLocalAddress(void)
     return ipAddress;
 }
 //--------------------------------------------------------------------------------
-void UDP_Client::send_data(QByteArray data)
-{
-    qint64 res;
-
-    res = udpSocket->writeDatagram(data, QHostAddress(address), port);
-    if(res == -1)
-    {
-        emit info(udpSocket->errorString());
-    }
-    else
-    {
-        emit info(tr("Данные переданы успешно"));
-    }
-}
-//--------------------------------------------------------------------------------
 void UDP_Client::init()
 {
     bool res = false;
@@ -87,13 +72,62 @@ UDP_Client::~UDP_Client()
 {
 }
 //--------------------------------------------------------------------------------
-void UDP_Client::send(const QString &data)
+void UDP_Client::setAddress(const QHostAddress &address)
 {
-    QByteArray ba;
+#ifdef DEBUG
+    emit debug(QString("set address %1").arg(address.toString()));
+#endif
+    this->address = address.toString();
+}
+//--------------------------------------------------------------------------------
+void UDP_Client::setPort(quint16 port)
+{
+#ifdef DEBUG
+    emit debug(QString("set port %1").arg(port));
+#endif
+    this->port = port;
+}
+//--------------------------------------------------------------------------------
+QByteArray UDP_Client::input(const QByteArray &data)
+{
+    return send_data(data);
+}
+//--------------------------------------------------------------------------------
+QByteArray UDP_Client::send_data(const QByteArray &data)
+{
+    QByteArray tmp;
 
-    ba.clear();
-    ba.append(data);
-    send_data(ba);
+    tmp.clear();
+    emit info(QString("connect to host %1:%2").arg(address).arg(port));
+    udpSocket->connectToHost(address,
+                             static_cast<quint16>(port));
+    if (!udpSocket->waitForConnected(3000))
+    {
+        emit error(tr("Сервер не отвечает!"));
+        return nullptr;
+    }
+    udpSocket->write(data);
+    if (udpSocket->waitForBytesWritten(3000))
+    {
+        emit info(tr("Данные переданы!"));
+    }
+    else
+    {
+        emit error(tr("Данные передать не удалось!"));
+    }
+
+    if(udpSocket->waitForReadyRead (5000))
+    {
+        tmp = udpSocket->readAll();
+        emit info(tr("Данные получены!"));
+    }
+    else
+    {
+        emit error(tr("Данные получить не удалось!"));
+    }
+
+    udpSocket->disconnectFromHost();
+    return tmp;
 }
 //--------------------------------------------------------------------------------
 void UDP_Client::updateText(void)

@@ -73,6 +73,23 @@ void MainBox::init(void)
     sl.append("https://www.youtube.com/watch?v=fV9xoCIjeDg");
     sl.append("https://www.youtube.com/watch?v=AJqthEHmli4");
 
+#if 1
+    QTabWidget *tw = new QTabWidget;
+
+    int cnt = 0;
+    foreach (QString site, sl)
+    {
+        QWebEngineView *webView = new QWebEngineView();
+        webView->setUrl(QUrl(site));
+        webView->page()->setAudioMuted(true);
+
+        tw->addTab(webView, QString("Page %1").arg(cnt++));
+    }
+
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(tw);
+    setLayout(hbox);
+#else
     QGridLayout *grid = new QGridLayout;
     int x = 0;
     int y = 0;
@@ -94,6 +111,7 @@ void MainBox::init(void)
         }
     }
     setLayout(grid);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

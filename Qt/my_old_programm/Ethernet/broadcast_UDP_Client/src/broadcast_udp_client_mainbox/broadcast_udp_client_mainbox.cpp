@@ -77,6 +77,6 @@ void MainBox::send(void)
     ba.clear();
     ba.append("xxx");
 
-    client->send(ba);
+    client->send_data(ba);
 }
 //--------------------------------------------------------------------------------

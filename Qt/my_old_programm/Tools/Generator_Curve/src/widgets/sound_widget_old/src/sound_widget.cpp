@@ -263,7 +263,8 @@ QByteArray Sound_widget::get_m_buffer(void)
 void Sound_widget::test(void)
 {
     GrapherBox *grapher_widget = new GrapherBox();
-    int curve_0 = grapher_widget->add_curve("test");
+    int curve_0 = grapher_widget->add_curve("data");
+    int curve_1 = grapher_widget->add_curve("temp");
 
     struct TEMP {
         int16_t data[BufferSize / 2];
@@ -285,36 +286,34 @@ void Sound_widget::test(void)
 
 #if 1
     TEMP* temp = reinterpret_cast<TEMP *>(m_buffer.data());
-
-//    for(int n=0; n<(m_buffer.count() / 2); n++)
-    for(int n=0; n<1000; n++)
+    int cnt = 0;
+    int old_pos = 0;
+    int val = 0;
+    for(int n=0; n<(m_buffer.count() / 2 - 1); n++)
     {
         // emit debug(QString("%1").arg(temp->data[n]));
-#if 0
-        union UINT16 {
-            uint16_t value;
-            struct {
-                uint8_t a;
-                uint8_t b;
-            } bytes;
-        };
+        if(n<1000)
+        {
+            grapher_widget->add_curve_data(curve_0, temp->data[n]);
+            int x1 = temp->data[n];
+            int x2 = temp->data[n + 1];
+            if((x1 <= 0) && (x2 > 0))
+            {
+                val = x2 - old_pos;
+                old_pos = x2;
 
-        UINT16 temp1;
-        UINT16 temp2;
+                emit info(QString("val %1").arg(val));
+                grapher_widget->add_curve_data(curve_1, val);
 
-        temp1.value = temp->data[n];
-        temp2.bytes.a = temp1.bytes.b;
-        temp2.bytes.b = temp1.bytes.a;
-
-        grapher_widget->add_curve_data(curve_0, temp2.value);
-#else
-        grapher_widget->add_curve_data(curve_0, temp->data[n]);
-#endif
+                cnt++;
+            }
+        }
     }
+    emit info(QString("cnt %1").arg(cnt));
 #endif
     
-//    grapher_widget->set_zoom(true, true);
-//    grapher_widget->set_panning(true, true);
+    //    grapher_widget->set_zoom(true, true);
+    //    grapher_widget->set_panning(true, true);
     grapher_widget->push_btn_Vertical(true);
     grapher_widget->push_btn_Horizontal(true);
     grapher_widget->show();

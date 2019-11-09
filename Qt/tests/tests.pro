@@ -20,6 +20,7 @@ SUBDIRS += \
     Test_HistogramBox \
     Test_HID_device \
     Test_HTML \
+    Test_HTU21D \
     Test_QHexEdit \
     Test_mesh \
     Test_md5 \

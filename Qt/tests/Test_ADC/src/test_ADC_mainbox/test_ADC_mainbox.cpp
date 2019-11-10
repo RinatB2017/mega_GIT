@@ -162,12 +162,12 @@ void MainBox::data_ADC(QByteArray data)
     ui->grapher_widget->add_curve_data(curve_A5,    convert_adc(A5));
 #endif
 
-    ui->display_A0->display(convert(A0));
-    ui->display_A1->display(convert(A1));
-    ui->display_A2->display(convert(A2));
-    ui->display_A3->display(convert(A3));
-    ui->display_A4->display(convert(A4));
-    ui->display_A5->display(convert(A5));
+    ui->display_A0->display(convert(convert_adc(A0)));
+    ui->display_A1->display(convert(convert_adc(A1)));
+    ui->display_A2->display(convert(convert_adc(A2)));
+    ui->display_A3->display(convert(convert_adc(A3)));
+    ui->display_A4->display(convert(convert_adc(A4)));
+    ui->display_A5->display(convert(convert_adc(A5)));
 
     //emit info(data);
 }

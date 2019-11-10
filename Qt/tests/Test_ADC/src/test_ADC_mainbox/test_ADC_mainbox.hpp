@@ -53,15 +53,18 @@ public:
 private slots:
     void test(void);
 
-    void data_htu21d(QByteArray data);
+    void data_ADC(QByteArray data);
 
 private:
     MySplashScreen *splash;
     Ui::MainBox *ui;
 
-    int curve_temperature = 0;
-    int curve_humidity = 0;
-    int curve_compensatedHumidity = 0;
+    int curve_A0 = 0;
+    int curve_A1 = 0;
+    int curve_A2 = 0;
+    int curve_A3 = 0;
+    int curve_A4 = 0;
+    int curve_A5 = 0;
 
     QString convert(qreal value);
 

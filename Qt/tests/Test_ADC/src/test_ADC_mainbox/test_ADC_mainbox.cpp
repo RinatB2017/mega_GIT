@@ -28,13 +28,13 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_test_HTU21D_mainbox.h"
+#include "ui_test_ADC_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "test_HTU21D_mainbox.hpp"
+#include "test_ADC_mainbox.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER
 #   include "grapherbox.hpp"
@@ -63,7 +63,7 @@ void MainBox::init(void)
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
-    ui->grapher_widget->set_title("тест");
+    ui->grapher_widget->set_title("ADC");
     ui->grapher_widget->set_title_axis_X("X");
     ui->grapher_widget->set_title_axis_Y("Y");
     ui->grapher_widget->set_axis_scale_x(0, 100);
@@ -74,16 +74,19 @@ void MainBox::init(void)
     ui->grapher_widget->set_visible_btn_Save(false);
     ui->grapher_widget->set_visible_btn_Statistic(false);
 
-    curve_temperature   = ui->grapher_widget->add_curve("Temperature");
-    curve_humidity      = ui->grapher_widget->add_curve("Humidity");
-    curve_compensatedHumidity   = ui->grapher_widget->add_curve("CompensatedHumidity");
-
+    curve_A0 = ui->grapher_widget->add_curve("A0");
+    curve_A1 = ui->grapher_widget->add_curve("A1");
+    curve_A2 = ui->grapher_widget->add_curve("A2");
+    curve_A3 = ui->grapher_widget->add_curve("A3");
+    curve_A4 = ui->grapher_widget->add_curve("A4");
+    curve_A5 = ui->grapher_widget->add_curve("A5");
 #else
     ui->grapher_widget->setVisible(false);
 #endif
+
     ui->serial_widget->set_fix_baudrate(57600);
 
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_htu21d(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_ADC(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -111,7 +114,7 @@ QString MainBox::convert(qreal value)
     return QString("%1").arg(value, 0, 'f', 2);
 }
 //--------------------------------------------------------------------------------
-void MainBox::data_htu21d(QByteArray data)
+void MainBox::data_ADC(QByteArray data)
 {
     QString temp = data;
     if(temp.isEmpty())
@@ -119,24 +122,33 @@ void MainBox::data_htu21d(QByteArray data)
         return;
     }
     QStringList sl = temp.split("|");
-    if(sl.count() != 3)
+    if(sl.count() != 6)
     {
         return;
     }
 
-    qreal temperature = sl.at(0).toDouble();
-    qreal humidity = sl.at(1).toDouble();
-    qreal compensatedHumidity = sl.at(2).toDouble();
+    qreal A0 = sl.at(0).toDouble();
+    qreal A1 = sl.at(1).toDouble();
+    qreal A2 = sl.at(2).toDouble();
+    qreal A3 = sl.at(3).toDouble();
+    qreal A4 = sl.at(4).toDouble();
+    qreal A5 = sl.at(5).toDouble();
 
 #ifndef NO_GRAPHER
-    ui->grapher_widget->add_curve_data(curve_temperature,           static_cast<double>(temperature));
-    ui->grapher_widget->add_curve_data(curve_humidity,              static_cast<double>(humidity));
-    ui->grapher_widget->add_curve_data(curve_compensatedHumidity,   static_cast<double>(compensatedHumidity));
+    ui->grapher_widget->add_curve_data(curve_A0,    A0);
+    ui->grapher_widget->add_curve_data(curve_A1,    A1);
+    ui->grapher_widget->add_curve_data(curve_A2,    A2);
+    ui->grapher_widget->add_curve_data(curve_A3,    A3);
+    ui->grapher_widget->add_curve_data(curve_A4,    A4);
+    ui->grapher_widget->add_curve_data(curve_A5,    A5);
 #endif
 
-    ui->display_temperature->display(convert(temperature));
-    ui->display_humidity->display(convert(humidity));
-    ui->display_compensatedHumidity->display(convert(compensatedHumidity));
+    ui->display_A0->display(convert(A0));
+    ui->display_A1->display(convert(A1));
+    ui->display_A2->display(convert(A2));
+    ui->display_A3->display(convert(A3));
+    ui->display_A4->display(convert(A4));
+    ui->display_A5->display(convert(A5));
 
     //emit info(data);
 }

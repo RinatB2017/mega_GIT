@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2019                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,60 +18,62 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include <QMessageBox>
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "test_ADC_mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+int main(int argc, char *argv[])
+{
+    set_codecs();
+
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        return -1;
+    }
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    splash->show();
+
+    qApp->processEvents();
+
+    MainWindow *main_window = new MainWindow;
+
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void test(void);
-
-    void data_htu21d(QByteArray data);
-
-private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    int curve_temperature = 0;
-    int curve_humidity = 0;
-    int curve_compensatedHumidity = 0;
-
-    QString convert(qreal value);
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

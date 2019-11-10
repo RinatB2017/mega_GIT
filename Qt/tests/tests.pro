@@ -6,6 +6,7 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
+	Test_ADC \
     Test_arduino \
     Test_arduino_modbus \
     Test_broadcast_UDP \

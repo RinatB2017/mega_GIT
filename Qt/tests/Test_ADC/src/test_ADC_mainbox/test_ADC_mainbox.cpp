@@ -121,6 +121,18 @@ QString MainBox::convert(qreal value)
     return QString("%1").arg(value, 0, 'f', 2);
 }
 //--------------------------------------------------------------------------------
+qreal MainBox::convert_adc(int value)
+{
+    // 5V
+    // 10 bit
+
+    // 1024 - 5V
+    // x    - y
+
+    qreal res = static_cast<qreal>(value) * 5.0 / 1024.0;
+    return res;
+}
+//--------------------------------------------------------------------------------
 void MainBox::data_ADC(QByteArray data)
 {
     QString temp = data;
@@ -134,20 +146,20 @@ void MainBox::data_ADC(QByteArray data)
         return;
     }
 
-    qreal A0 = sl.at(0).toDouble();
-    qreal A1 = sl.at(1).toDouble();
-    qreal A2 = sl.at(2).toDouble();
-    qreal A3 = sl.at(3).toDouble();
-    qreal A4 = sl.at(4).toDouble();
-    qreal A5 = sl.at(5).toDouble();
+    int A0 = sl.at(0).toInt();
+    int A1 = sl.at(1).toInt();
+    int A2 = sl.at(2).toInt();
+    int A3 = sl.at(3).toInt();
+    int A4 = sl.at(4).toInt();
+    int A5 = sl.at(5).toInt();
 
 #ifndef NO_GRAPHER
-    ui->grapher_widget->add_curve_data(curve_A0,    A0);
-    ui->grapher_widget->add_curve_data(curve_A1,    A1);
-    ui->grapher_widget->add_curve_data(curve_A2,    A2);
-    ui->grapher_widget->add_curve_data(curve_A3,    A3);
-    ui->grapher_widget->add_curve_data(curve_A4,    A4);
-    ui->grapher_widget->add_curve_data(curve_A5,    A5);
+    ui->grapher_widget->add_curve_data(curve_A0,    convert_adc(A0));
+    ui->grapher_widget->add_curve_data(curve_A1,    convert_adc(A1));
+    ui->grapher_widget->add_curve_data(curve_A2,    convert_adc(A2));
+    ui->grapher_widget->add_curve_data(curve_A3,    convert_adc(A3));
+    ui->grapher_widget->add_curve_data(curve_A4,    convert_adc(A4));
+    ui->grapher_widget->add_curve_data(curve_A5,    convert_adc(A5));
 #endif
 
     ui->display_A0->display(convert(A0));

@@ -67,6 +67,7 @@ private:
     int curve_A5 = 0;
 
     QString convert(qreal value);
+    qreal convert_adc(int value);
 
     void init(void);
     void createTestBar(void);

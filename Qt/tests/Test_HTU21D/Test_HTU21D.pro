@@ -42,7 +42,7 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    RC_ICONS = ico/temperature.ico
+    RC_ICONS = ico/I2c_logo.ico
 }
 
 RESOURCES += \

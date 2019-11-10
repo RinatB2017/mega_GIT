@@ -80,6 +80,13 @@ void MainBox::init(void)
     curve_A3 = ui->grapher_widget->add_curve("A3");
     curve_A4 = ui->grapher_widget->add_curve("A4");
     curve_A5 = ui->grapher_widget->add_curve("A5");
+
+    QList<QLCDNumber *> allobj = findChildren<QLCDNumber *>();
+    foreach (QLCDNumber *obj, allobj)
+    {
+        obj->setFixedSize(220, 48);
+        obj->setDigitCount(6);
+    }
 #else
     ui->grapher_widget->setVisible(false);
 #endif

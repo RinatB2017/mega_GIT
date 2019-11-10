@@ -4,6 +4,6 @@
 #define ORGNAME "Work"
 #define APPNAME "Test_HTU21D"
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/ico/temperature.png"
+#define ICON_PROGRAMM   ":/ico/I2c_logo.png"
 //--------------------------------------------------------------------------------
 #endif

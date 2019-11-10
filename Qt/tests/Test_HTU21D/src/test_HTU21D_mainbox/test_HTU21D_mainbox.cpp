@@ -63,7 +63,7 @@ void MainBox::init(void)
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
-    ui->grapher_widget->set_title("тест");
+    ui->grapher_widget->set_title("HTU21D");
     ui->grapher_widget->set_title_axis_X("X");
     ui->grapher_widget->set_title_axis_Y("Y");
     ui->grapher_widget->set_axis_scale_x(0, 100);
@@ -77,6 +77,13 @@ void MainBox::init(void)
     curve_temperature   = ui->grapher_widget->add_curve("Temperature");
     curve_humidity      = ui->grapher_widget->add_curve("Humidity");
     curve_compensatedHumidity   = ui->grapher_widget->add_curve("CompensatedHumidity");
+
+    QList<QLCDNumber *> allobj = findChildren<QLCDNumber *>();
+    foreach (QLCDNumber *obj, allobj)
+    {
+        obj->setFixedSize(220, 48);
+        obj->setDigitCount(6);
+    }
 
 #else
     ui->grapher_widget->setVisible(false);

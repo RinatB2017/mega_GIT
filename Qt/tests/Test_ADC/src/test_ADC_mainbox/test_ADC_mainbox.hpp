@@ -53,7 +53,7 @@ public:
 private slots:
     void test(void);
 
-    void data_ADC(QByteArray data);
+    void data_ADC(const QByteArray &data);
 
 private:
     MySplashScreen *splash;

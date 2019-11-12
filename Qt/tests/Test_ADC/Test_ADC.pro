@@ -10,7 +10,7 @@ FOLDER  = tests
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_ADC_mainbox \
-    $$PWD/src/test_ADC_mainbox/ui \
+    $$PWD/src/test_ADC_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR

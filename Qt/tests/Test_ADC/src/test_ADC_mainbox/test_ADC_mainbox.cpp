@@ -138,13 +138,12 @@ void MainBox::data_ADC(const QByteArray &data)
     QString temp = data;
     if(temp.isEmpty())
     {
-        emit error("No data");
         return;
     }
     QStringList sl = temp.split("|");
     if(sl.count() != 6)
     {
-        emit error(QString("Bad cnt %1").arg(sl.count()));
+        // emit error(QString("Bad cnt %1").arg(sl.count()));
         return;
     }
 

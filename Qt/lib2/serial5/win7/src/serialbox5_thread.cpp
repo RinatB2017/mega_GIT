@@ -50,7 +50,8 @@ void SerialBox5_thread::process(void)
     {
         if(serial5->waitForReadyRead(5000))
         {
-            serial_data = serial5->read(10000); //TODO maxSize
+//            serial_data = serial5->read(10000); //TODO maxSize
+            serial_data = serial5->readAll(); //TODO maxSize
             if(!serial_data.isEmpty())
             {
                 emit info(serial_data);

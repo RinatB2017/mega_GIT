@@ -30,7 +30,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="SerialBox5_fix_baudrate" name="serial_widget" native="true">
+       <widget class="SerialBox5_fix_baudrate_win7" name="serial_widget" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_2"/>
        </widget>
       </item>
@@ -169,15 +169,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SerialBox5_fix_baudrate</class>
-   <extends>QWidget</extends>
-   <header>serialbox5_fix_baudrate.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>GrapherBox</class>
    <extends>QWidget</extends>
    <header>grapherbox.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SerialBox5_fix_baudrate_win7</class>
+   <extends>QWidget</extends>
+   <header>serialbox5_fix_baudrate_win7.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

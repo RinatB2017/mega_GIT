@@ -30,7 +30,8 @@ SOURCES += \
 FORMS   += test_ADC_mainbox.ui
 
 OTHER_FILES += \
-    doc/notebook.txt
+    doc/notebook.txt \
+    arduino/arduino.ino
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

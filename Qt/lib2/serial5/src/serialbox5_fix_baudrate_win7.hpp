@@ -34,6 +34,7 @@
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
+#include "serialbox5_thread.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QHBoxLayout;
@@ -75,10 +76,11 @@ private:
     Ui::SerialBox5_fix_baudrate_win7 *ui;
     QWidget *parent;
 
+    //TODO В win7 надо по-другому
 #ifdef FAKE
-    FakeSerialBox5 *serial5;
+    // FakeSerialBox5 *serial5;
 #else
-    QSerialPort *serial5;
+    // QSerialPort *serial5;
 #endif
 
     QString caption;
@@ -89,12 +91,15 @@ private:
 
     QTimer *timer;
 
-    int fix_baudrate = 9600;
-
     //TODO
     bool p_test = false;
     void set_test(bool value);
     bool get_test(void);
+
+    QThread *thread;
+    SerialBox5_thread *worker;
+    int fix_baudrate = 9600;
+    void initThread(void);
 
 #ifndef RS232_NO_FRAME
     void add_frame_text(QFrame *parent,
@@ -134,7 +139,6 @@ private slots:
     void refresh(void);
     void procSerialDataReceive(void);
     void getStatus(const QString &status, QDateTime current);
-    void serial5_error(QSerialPort::SerialPortError err);
     void get_parameter(void);
     void timer_stop(void);
 

@@ -24,6 +24,9 @@
 #include <QDateTime>
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include <QSerialPortInfo>
+#include <QSerialPort>
+//--------------------------------------------------------------------------------
 class SerialBox5_thread : public QObject
 {
     Q_OBJECT
@@ -31,6 +34,25 @@ class SerialBox5_thread : public QObject
 public:
     SerialBox5_thread(QObject *parent = nullptr);
     ~SerialBox5_thread();
+
+    bool set_fix_baudrate(int value);
+    qint64 bytesAvailable(void);
+    qint64 write(const char *data);
+    qint64 write(const char *data, qint64 len);
+    bool isOpen(void);
+    void close(void);
+    void setPortName(const QString &name);
+    bool setBaudRate(qint32 baudRate);
+    bool open(QIODevice::OpenMode mode);
+    QString portName(void);
+    QString errorString(void);
+    QByteArray readAll(void);
+
+    qint32 baudRate(void);
+    QSerialPort::DataBits dataBits(void);
+    QSerialPort::Parity	parity(void);
+    QSerialPort::StopBits stopBits(void);
+    QSerialPort::FlowControl flowControl(void);
 
 signals:
     void info(const QString &);
@@ -40,24 +62,20 @@ signals:
 
     void finished(void);
 
-    void set_hour(unsigned char hour);
-    void set_min(unsigned char min);
-    void set_sec(unsigned char sec);
-
 public slots:
     void process(void);
 
     void start(void);
     void stop(void);
 
-    void set_time(QDateTime dt);
+private slots:
+    void serial5_error(QSerialPort::SerialPortError err);
 
 private:
-    unsigned char hour = 0;
-    unsigned char min  = 0;
-    unsigned char sec  = 0;
-
     bool flag_exit = false;
+    int fix_baudrate = 9600;
+
+    QSerialPort *serial5 = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALBOX5_THREAD_HPP

@@ -37,56 +37,150 @@ SerialBox5_thread::~SerialBox5_thread()
 void SerialBox5_thread::process(void)
 {
     emit info("process");
-    QTime time;
+
+    serial5 = new QSerialPort();
+    if(serial5 == nullptr)
+    {
+        emit finished();
+        return;
+    }
+
     while(!flag_exit)
     {
-        time.start();
-        while(time.elapsed() < 1000)
-        {
-            if(flag_exit)
-            {
-                emit finished();
-                return;
-            }
-        }
 
-        if(sec<59)
-        {
-            sec++;
-        }
-        else
-        {
-            sec = 0;
-            if(min<59)
-            {
-                min++;
-            }
-            else
-            {
-                min = 0;
-                if(hour<23)
-                {
-                    hour++;
-                }
-                else
-                {
-                    hour = 0;
-                }
-            }
-        }
-
-        emit set_hour(hour);
-        emit set_min(min);
-        emit set_sec(sec);
     }
     emit finished();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_thread::set_time(QDateTime dt)
+void SerialBox5_thread::serial5_error(QSerialPort::SerialPortError err)
 {
-    hour = static_cast<uint8_t>(dt.time().hour());
-    min  = static_cast<uint8_t>(dt.time().minute());
-    sec  = static_cast<uint8_t>(dt.time().second());
+    if(err == QSerialPort::NoError)
+    {
+        return;
+    }
+
+    switch(err)
+    {
+    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
+    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
+    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
+    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
+    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
+    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
+    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
+    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
+    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
+    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
+    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
+    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
+    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
+
+    default:
+        emit error(QString("unknown error %1").arg(err));
+        break;
+    }
+
+    if(err != QSerialPort::NoError)
+    {
+        if(serial5->isOpen())
+        {
+            serial5->close();
+        }
+    }
+
+//    setCloseState();
+//    refresh();
+}
+//--------------------------------------------------------------------------------
+bool SerialBox5_thread::set_fix_baudrate(int value)
+{
+    bool ok = false;
+    fix_baudrate = value;
+    if(serial5)
+    {
+        ok = serial5->setBaudRate(value);
+    }
+    return ok;
+}
+//--------------------------------------------------------------------------------
+qint64 SerialBox5_thread::bytesAvailable(void)
+{
+    return serial5->bytesAvailable();
+}
+//--------------------------------------------------------------------------------
+qint64 SerialBox5_thread::write(const char *data)
+{
+    return serial5->write(data);
+}
+//--------------------------------------------------------------------------------
+qint64 SerialBox5_thread::write(const char *data, qint64 len)
+{
+    return serial5->write(data, len);
+}
+//--------------------------------------------------------------------------------
+bool SerialBox5_thread::isOpen(void)
+{
+    return serial5->isOpen();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::close(void)
+{
+    serial5->close();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::setPortName(const QString &name)
+{
+    serial5->setPortName(name);
+}
+//--------------------------------------------------------------------------------
+bool SerialBox5_thread::setBaudRate(qint32 baudRate)
+{
+    return serial5->setBaudRate(baudRate);
+}
+//--------------------------------------------------------------------------------
+bool SerialBox5_thread::open(QIODevice::OpenMode mode)
+{
+    return serial5->open(mode);
+}
+//--------------------------------------------------------------------------------
+QString SerialBox5_thread::portName(void)
+{
+    return serial5->portName();
+}
+//--------------------------------------------------------------------------------
+QString SerialBox5_thread::errorString(void)
+{
+    return serial5->errorString();
+}
+//--------------------------------------------------------------------------------
+QByteArray SerialBox5_thread::readAll(void)
+{
+    return serial5->readAll();
+}
+//--------------------------------------------------------------------------------
+qint32 SerialBox5_thread::baudRate(void)
+{
+    return serial5->baudRate();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::DataBits SerialBox5_thread::dataBits(void)
+{
+    return serial5->dataBits();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::Parity	SerialBox5_thread::parity(void)
+{
+    return serial5->parity();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::StopBits SerialBox5_thread::stopBits(void)
+{
+    return serial5->stopBits();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::FlowControl SerialBox5_thread::flowControl(void)
+{
+    return serial5->flowControl();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_thread::start(void)

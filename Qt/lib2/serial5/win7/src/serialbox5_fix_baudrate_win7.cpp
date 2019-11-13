@@ -77,14 +77,6 @@ SerialBox5_fix_baudrate_win7::~SerialBox5_fix_baudrate_win7()
         sendBox5->deleteLater();
     }
 #endif
-
-    //TODO В win7 надо по-другому
-    //    if(serial5)
-    //    {
-    //        serial5->disconnect();
-    //        serial5->close();
-    //        delete serial5;
-    //    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -198,11 +190,16 @@ void SerialBox5_fix_baudrate_win7::initSerial(void)
     //    connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
     //    connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
 
-    //    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
+    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
 
     initThread();
 
     refresh();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::thread_is_finished(void)
+{
+    emit info("thread_is_finished");
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::change_icon(bool state)
@@ -587,18 +584,7 @@ QByteArray SerialBox5_fix_baudrate_win7::readAll(void)
     return worker->readAll();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate_win7::set_test(bool value)
-{
-    p_test = value;
-}
-//--------------------------------------------------------------------------------
-bool SerialBox5_fix_baudrate_win7::get_test(void)
-{
-    emit error("Зачем жать куда попало?");
-    return p_test;
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate_win7::initThread()
+void SerialBox5_fix_baudrate_win7::initThread(void)
 {
     emit info("thread_is_started");
 
@@ -611,9 +597,9 @@ void SerialBox5_fix_baudrate_win7::initThread()
     connect(worker, SIGNAL(trace(QString)),     this, SIGNAL(trace(QString)));
 
     connect(thread, SIGNAL(started()),  worker, SLOT(process()));
-    connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
-    connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
-    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+//    connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
+//    connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
+//    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
     connect(thread, SIGNAL(finished()), this, SLOT(thread_is_finished()));
 

@@ -50,7 +50,6 @@ namespace Ui
 class SerialBox5_fix_baudrate_win7 : public MyWidget
 {
     Q_OBJECT
-    Q_PROPERTY(bool p_test      READ get_test       WRITE set_test)
 
 public:
     SerialBox5_fix_baudrate_win7(QWidget *parent,
@@ -90,11 +89,6 @@ private:
     bool flag_byte_by_byte = false;
 
     QTimer *timer;
-
-    //TODO
-    bool p_test = false;
-    void set_test(bool value);
-    bool get_test(void);
 
     QThread *thread;
     SerialBox5_thread *worker;
@@ -141,6 +135,8 @@ private slots:
     void getStatus(const QString &status, QDateTime current);
     void get_parameter(void);
     void timer_stop(void);
+
+    void thread_is_finished(void);
 
     void change_icon(bool state);
 

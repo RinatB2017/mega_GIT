@@ -11,7 +11,8 @@ int a4 = 0;
 int a5 = 0;
 
 void setup() {
-   Serial.begin(57600);
+   //Serial.begin(57600);
+   Serial.begin(9600);
 }
 
 void loop() {

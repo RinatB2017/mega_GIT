@@ -45,9 +45,19 @@ void SerialBox5_thread::process(void)
         return;
     }
 
+//    serial_data.resize(100);
     while(!flag_exit)
     {
-
+        if(serial5->waitForReadyRead(5000))
+        {
+            serial_data = serial5->read(10000); //TODO maxSize
+            if(!serial_data.isEmpty())
+            {
+                emit info(serial_data);
+//                emit readyRead();
+//                emit readChannelFinished();
+            }
+        }
     }
     emit finished();
 }

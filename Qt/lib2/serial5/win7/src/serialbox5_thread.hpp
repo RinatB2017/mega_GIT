@@ -62,6 +62,9 @@ signals:
 
     void finished(void);
 
+    void readyRead(void);
+    void readChannelFinished(void);
+
 public slots:
     void process(void);
 
@@ -74,6 +77,8 @@ private slots:
 private:
     bool flag_exit = false;
     int fix_baudrate = 9600;
+
+    QByteArray serial_data;
 
     QSerialPort *serial5 = nullptr;
 };

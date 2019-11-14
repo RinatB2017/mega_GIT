@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2019                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,68 +18,27 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    Test();
 
 private slots:
-    void test(void);
-
-    void data_ADC(const QByteArray &ba);
-    void show_data_ADC(QStringList sl);
+#ifndef NO_GRAPHER
+    void test_grapher(void);
+#endif
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QString data_str;
-    bool flag_good_data = false;
-
-    int curve_A0 = 0;
-    int curve_A1 = 0;
-    int curve_A2 = 0;
-    int curve_A3 = 0;
-    int curve_A4 = 0;
-    int curve_A5 = 0;
-
-    QString convert(qreal value);
-    qreal convert_adc(int value);
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    MainWindow *mw;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

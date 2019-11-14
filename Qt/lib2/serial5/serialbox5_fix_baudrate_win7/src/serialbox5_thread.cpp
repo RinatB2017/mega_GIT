@@ -45,62 +45,28 @@ void SerialBox5_thread::process(void)
         return;
     }
 
-//    serial_data.resize(100);
     while(!flag_exit)
     {
-        if(serial5->waitForReadyRead(5000))
+        if (serial5->error() != QSerialPort::NoError)
         {
-//            serial_data = serial5->read(10000); //TODO maxSize
-            serial_data = serial5->readAll(); //TODO maxSize
-            if(!serial_data.isEmpty())
+            emit error(serial5->error());
+        }
+        if(serial5->isOpen())
+        {
+            if(serial5->waitForReadyRead())
             {
-                emit info(serial_data);
-//                emit readyRead();
-//                emit readChannelFinished();
+                // serial_data = serial5->read(10000); //TODO maxSize
+                serial_data = serial5->readAll(); //TODO maxSize
+                if(!serial_data.isEmpty())
+                {
+                    emit info(serial_data);
+                    emit readyRead();
+                    emit readChannelFinished();
+                }
             }
         }
     }
     emit finished();
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_thread::serial5_error(QSerialPort::SerialPortError err)
-{
-    if(err == QSerialPort::NoError)
-    {
-        return;
-    }
-
-    switch(err)
-    {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
-    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
-    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
-    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
-    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
-    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
-    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
-    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
-
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
-    }
-
-    if(err != QSerialPort::NoError)
-    {
-        if(serial5->isOpen())
-        {
-            serial5->close();
-        }
-    }
-
-//    setCloseState();
-//    refresh();
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5_thread::set_fix_baudrate(int value)
@@ -166,7 +132,8 @@ QString SerialBox5_thread::errorString(void)
 //--------------------------------------------------------------------------------
 QByteArray SerialBox5_thread::readAll(void)
 {
-    return serial5->readAll();
+    return serial_data;
+    // return serial5->readAll();
 }
 //--------------------------------------------------------------------------------
 qint32 SerialBox5_thread::baudRate(void)

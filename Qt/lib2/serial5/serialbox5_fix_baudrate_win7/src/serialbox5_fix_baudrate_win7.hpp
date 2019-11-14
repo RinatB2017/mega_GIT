@@ -92,7 +92,7 @@ private:
 
     QThread *thread;
     SerialBox5_thread *worker;
-    int fix_baudrate = 9600;
+    int fix_baudrate = 57600;
     void initThread(void);
 
 #ifndef RS232_NO_FRAME
@@ -135,6 +135,7 @@ private slots:
     void getStatus(const QString &status, QDateTime current);
     void get_parameter(void);
     void timer_stop(void);
+    void serial5_error(QSerialPort::SerialPortError err);
 
     void thread_is_finished(void);
 

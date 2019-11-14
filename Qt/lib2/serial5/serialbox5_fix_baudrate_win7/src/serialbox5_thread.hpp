@@ -18,68 +18,67 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef SERIALBOX5_THREAD_HPP
+#define SERIALBOX5_THREAD_HPP
 //--------------------------------------------------------------------------------
+#include <QDateTime>
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include <QSerialPortInfo>
+#include <QSerialPort>
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class SerialBox5_thread : public QObject
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    SerialBox5_thread(QObject *parent = nullptr);
+    ~SerialBox5_thread();
 
-private slots:
-    void test(void);
+    bool set_fix_baudrate(int value);
+    qint64 bytesAvailable(void);
+    qint64 write(const char *data);
+    qint64 write(const char *data, qint64 len);
+    bool isOpen(void);
+    void close(void);
+    void setPortName(const QString &name);
+    bool setBaudRate(qint32 baudRate);
+    bool open(QIODevice::OpenMode mode);
+    QString portName(void);
+    QString errorString(void);
+    QByteArray readAll(void);
 
-    void data_ADC(const QByteArray &ba);
-    void show_data_ADC(QStringList sl);
+    qint32 baudRate(void);
+    QSerialPort::DataBits dataBits(void);
+    QSerialPort::Parity	parity(void);
+    QSerialPort::StopBits stopBits(void);
+    QSerialPort::FlowControl flowControl(void);
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+    void finished(void);
+
+    void readyRead(void);
+    void readChannelFinished(void);
+    void error(QSerialPort::SerialPortError);
+
+public slots:
+    void process(void);
+
+    void start(void);
+    void stop(void);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
+    bool flag_exit = false;
+    int fix_baudrate = 9600;
 
-    QString data_str;
-    bool flag_good_data = false;
+    QByteArray serial_data;
 
-    int curve_A0 = 0;
-    int curve_A1 = 0;
-    int curve_A2 = 0;
-    int curve_A3 = 0;
-    int curve_A4 = 0;
-    int curve_A5 = 0;
-
-    QString convert(qreal value);
-    qreal convert_adc(int value);
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    QSerialPort *serial5 = nullptr;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // SERIALBOX5_THREAD_HPP

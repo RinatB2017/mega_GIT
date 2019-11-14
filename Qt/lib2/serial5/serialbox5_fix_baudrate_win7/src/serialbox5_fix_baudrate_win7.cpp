@@ -169,32 +169,28 @@ void SerialBox5_fix_baudrate_win7::initSerial(void)
 {
     //TODO В win7 надо по-другому
 #ifdef FAKE
-    //    serial5 = new FakeSerialBox5(this);
+    serial5 = new FakeSerialBox5(this);
 
-    //    connect(serial5,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    //    connect(serial5,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    //    connect(serial5,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    //    connect(serial5,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    connect(serial5,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(serial5,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(serial5,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(serial5,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 #else
-    //    serial5 = new QSerialPort(this);
-#endif
-    //    Q_CHECK_PTR(serial5);
+    initThread();
 
-    //    connect(serial5,    SIGNAL(readyRead()),            this,   SIGNAL(readyRead(void)));
-    //    connect(serial5,    SIGNAL(readChannelFinished()),  this,   SIGNAL(readChannelFinished(void)));
+    connect(worker,    SIGNAL(readyRead()),            this,   SIGNAL(readyRead()));
+    connect(worker,    SIGNAL(readChannelFinished()),  this,   SIGNAL(readChannelFinished()));
 
-    //TODO
-    //    timer = new QTimer();
-    //    connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
+    timer = new QTimer();
+    connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
 
-    //    connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    //    connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
+    connect(worker, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
+    connect(worker, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
 
     connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
 
-    initThread();
-
     refresh();
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::thread_is_finished(void)
@@ -392,6 +388,38 @@ void SerialBox5_fix_baudrate_win7::procSerialDataReceive(void)
 void SerialBox5_fix_baudrate_win7::timer_stop(void)
 {
     emit output(worker->readAll());
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::serial5_error(QSerialPort::SerialPortError err)
+{
+    if(err == QSerialPort::NoError)
+    {
+        return;
+    }
+
+    switch(err)
+    {
+    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
+    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
+    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
+    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
+    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
+    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
+    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
+    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
+    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
+    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
+    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
+    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
+    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
+
+    default:
+        emit error(QString("unknown error %1").arg(err));
+        break;
+    }
+
+    //    setCloseState();
+    //    refresh();
 }
 //--------------------------------------------------------------------------------
 QString SerialBox5_fix_baudrate_win7::ByteArrayToHex(const QByteArray &data)
@@ -597,9 +625,9 @@ void SerialBox5_fix_baudrate_win7::initThread(void)
     connect(worker, SIGNAL(trace(QString)),     this, SIGNAL(trace(QString)));
 
     connect(thread, SIGNAL(started()),  worker, SLOT(process()));
-//    connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
-//    connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
-//    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    //    connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
+    //    connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
+    //    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
     connect(thread, SIGNAL(finished()), this, SLOT(thread_is_finished()));
 

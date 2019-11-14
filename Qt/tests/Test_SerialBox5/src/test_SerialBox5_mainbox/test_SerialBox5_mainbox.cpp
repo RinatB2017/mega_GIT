@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2019                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -28,17 +28,13 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_test_ADC_mainbox.h"
+#include "ui_test_SerialBox5_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "test_ADC_mainbox.hpp"
-//--------------------------------------------------------------------------------
-#ifndef NO_GRAPHER
-#   include "grapherbox.hpp"
-#endif
+#include "test_SerialBox5_mainbox.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -58,42 +54,20 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+    createTestBar();
 
-#ifndef NO_GRAPHER
-    ui->grapher_widget->setObjectName("GrapherBox");
+    init_serial_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_serial_widgets(void)
+{
+    ui->serial_widget_fix_baudrate->set_fix_baudrate(BAUDRATE);
+    ui->serial_widget_fix_baudrate_win7->set_fix_baudrate(BAUDRATE);
 
-    ui->grapher_widget->set_title("ADC");
-    ui->grapher_widget->set_title_axis_X("X");
-    ui->grapher_widget->set_title_axis_Y("Y");
-    ui->grapher_widget->set_axis_scale_x(0, 100);
-    ui->grapher_widget->set_axis_scale_y(0, 5);
-
-    ui->grapher_widget->set_visible_btn_Options(false);
-    ui->grapher_widget->set_visible_btn_Load(false);
-    ui->grapher_widget->set_visible_btn_Save(false);
-    ui->grapher_widget->set_visible_btn_Statistic(false);
-
-    curve_A0 = ui->grapher_widget->add_curve("A0");
-    curve_A1 = ui->grapher_widget->add_curve("A1");
-    curve_A2 = ui->grapher_widget->add_curve("A2");
-    curve_A3 = ui->grapher_widget->add_curve("A3");
-    curve_A4 = ui->grapher_widget->add_curve("A4");
-    curve_A5 = ui->grapher_widget->add_curve("A5");
-
-    QList<QLCDNumber *> allobj = findChildren<QLCDNumber *>();
-    foreach (QLCDNumber *obj, allobj)
-    {
-        obj->setFixedSize(220, 48);
-        obj->setDigitCount(6);
-    }
-#else
-    ui->grapher_widget->setVisible(false);
-#endif
-
-    ui->serial_widget->set_fix_baudrate(57600);
-
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_ADC(QByteArray)));
+    connect(ui->serial_widget,                      SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
+    connect(ui->serial_widget_lite,                 SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
+    connect(ui->serial_widget_fix_baudrate,         SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
+    connect(ui->serial_widget_fix_baudrate_win7,    SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -116,95 +90,13 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-QString MainBox::convert(qreal value)
+void MainBox::serial_data(QByteArray data)
 {
-    return QString("%1").arg(value, 0, 'f', 2);
-}
-//--------------------------------------------------------------------------------
-qreal MainBox::convert_adc(int value)
-{
-    // 5V
-    // 10 bit
-
-    // 1024 - 5V
-    // x    - y
-
-    qreal res = static_cast<qreal>(value) * 5.0 / 1024.0;
-    return res;
-}
-//--------------------------------------------------------------------------------
-void MainBox::data_ADC(const QByteArray &ba)
-{
-    QString temp = ba.data();
-    if(temp.isEmpty())
+    if(data.isEmpty())
     {
         return;
     }
-
-    emit trace(ba);
-    for(int n=0; n<ba.length(); n++)
-    {
-        char s = ba.at(n);
-        switch(s)
-        {
-        case ':':
-            data_str.clear();
-            flag_good_data = true;
-            break;
-
-        case '\r':
-        case '\n':
-            if(flag_good_data)
-            {
-                show_data_ADC(data_str.split("|"));
-                data_str.clear();
-                flag_good_data = false;
-            }
-            break;
-
-        default:
-            if(flag_good_data)
-            {
-                data_str.append(s);
-            }
-            break;
-        }
-    }
-
-}
-//--------------------------------------------------------------------------------
-void MainBox::show_data_ADC(QStringList sl)
-{
-    if(sl.count() != 6)
-    {
-        emit error(QString("Bad cnt %1").arg(sl.count()));
-        emit debug(QString("data_str [%1]").arg(data_str));
-        return;
-    }
-    int A0 = sl.at(0).toInt();
-    int A1 = sl.at(1).toInt();
-    int A2 = sl.at(2).toInt();
-    int A3 = sl.at(3).toInt();
-    int A4 = sl.at(4).toInt();
-    int A5 = sl.at(5).toInt();
-
-#ifndef NO_GRAPHER
-    ui->grapher_widget->add_curve_data(curve_A0,    convert_adc(A0));
-    ui->grapher_widget->add_curve_data(curve_A1,    convert_adc(A1));
-    ui->grapher_widget->add_curve_data(curve_A2,    convert_adc(A2));
-    ui->grapher_widget->add_curve_data(curve_A3,    convert_adc(A3));
-    ui->grapher_widget->add_curve_data(curve_A4,    convert_adc(A4));
-    ui->grapher_widget->add_curve_data(curve_A5,    convert_adc(A5));
-#endif
-
-    ui->display_A0->display(convert(convert_adc(A0)));
-    ui->display_A1->display(convert(convert_adc(A1)));
-    ui->display_A2->display(convert(convert_adc(A2)));
-    ui->display_A3->display(convert(convert_adc(A3)));
-    ui->display_A4->display(convert(convert_adc(A4)));
-    ui->display_A5->display(convert(convert_adc(A5)));
-
-    //emit info(data);
+    emit info(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

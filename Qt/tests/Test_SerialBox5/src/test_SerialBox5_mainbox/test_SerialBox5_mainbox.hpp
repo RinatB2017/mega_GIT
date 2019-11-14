@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2019                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -25,12 +25,6 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
@@ -46,35 +40,22 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private slots:
     void test(void);
 
-    void data_ADC(const QByteArray &ba);
-    void show_data_ADC(QStringList sl);
+    void serial_data(QByteArray data);
 
 private:
     MySplashScreen *splash;
     Ui::MainBox *ui;
 
-    QString data_str;
-    bool flag_good_data = false;
-
-    int curve_A0 = 0;
-    int curve_A1 = 0;
-    int curve_A2 = 0;
-    int curve_A3 = 0;
-    int curve_A4 = 0;
-    int curve_A5 = 0;
-
-    QString convert(qreal value);
-    qreal convert_adc(int value);
-
     void init(void);
     void createTestBar(void);
+    void init_serial_widgets(void);
 
     void updateText(void);
     bool programm_is_exit(void);

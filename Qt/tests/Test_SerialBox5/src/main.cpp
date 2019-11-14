@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2019                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,69 +18,60 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SERIALBOX5_THREAD_HPP
-#define SERIALBOX5_THREAD_HPP
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "test_SerialBox5_mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-#include <QDateTime>
-#include <QWidget>
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-#include <QSerialPortInfo>
-#include <QSerialPort>
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
-class SerialBox5_thread : public QObject
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
+    set_codecs();
 
-public:
-    SerialBox5_thread(QObject *parent = nullptr);
-    ~SerialBox5_thread();
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        return -1;
+    }
 
-    bool set_fix_baudrate(int value);
-    qint64 bytesAvailable(void);
-    qint64 write(const char *data);
-    qint64 write(const char *data, qint64 len);
-    bool isOpen(void);
-    void close(void);
-    void setPortName(const QString &name);
-    bool setBaudRate(qint32 baudRate);
-    bool open(QIODevice::OpenMode mode);
-    QString portName(void);
-    QString errorString(void);
-    QByteArray readAll(void);
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    qint32 baudRate(void);
-    QSerialPort::DataBits dataBits(void);
-    QSerialPort::Parity	parity(void);
-    QSerialPort::StopBits stopBits(void);
-    QSerialPort::FlowControl flowControl(void);
+    QPixmap pixmap(":/logo/logo.png");
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    splash->show();
 
-    void finished(void);
+    qApp->processEvents();
 
-    void readyRead(void);
-    void readChannelFinished(void);
+    MainWindow *main_window = new MainWindow;
 
-public slots:
-    void process(void);
+    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-    void start(void);
-    void stop(void);
+    splash->finish(main_window);
 
-private slots:
-    void serial5_error(QSerialPort::SerialPortError err);
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 
-private:
-    bool flag_exit = false;
-    int fix_baudrate = 9600;
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
 
-    QByteArray serial_data;
-
-    QSerialPort *serial5 = nullptr;
-};
+    return app.exec();
+}
 //--------------------------------------------------------------------------------
-#endif // SERIALBOX5_THREAD_HPP

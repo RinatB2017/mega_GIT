@@ -59,7 +59,7 @@ void SerialBox5_thread::process(void)
                 serial_data = serial5->readAll(); //TODO maxSize
                 if(!serial_data.isEmpty())
                 {
-                    emit info(serial_data);
+                    // emit info(serial_data);
                     emit readyRead();
                     emit readChannelFinished();
                 }

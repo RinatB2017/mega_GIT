@@ -64,8 +64,8 @@ void MainBox::init(void)
     ui->grapher_widget->setObjectName("GrapherBox");
 
     ui->grapher_widget->set_title("ADC");
-    ui->grapher_widget->set_title_axis_X("X");
-    ui->grapher_widget->set_title_axis_Y("Y");
+    ui->grapher_widget->set_title_axis_X("time");
+    ui->grapher_widget->set_title_axis_Y("voltage");
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 5);
 
@@ -141,7 +141,7 @@ void MainBox::data_ADC(const QByteArray &ba)
         return;
     }
 
-    emit trace(ba);
+    // emit trace(ba);
     for(int n=0; n<ba.length(); n++)
     {
         char s = ba.at(n);

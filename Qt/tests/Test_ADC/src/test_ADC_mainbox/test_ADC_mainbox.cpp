@@ -63,6 +63,8 @@ void MainBox::init(void)
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
+    // ui->grapher_widget->set_legend_is_visible(true);
+
     ui->grapher_widget->set_title("ADC");
     ui->grapher_widget->set_title_axis_X("time");
     ui->grapher_widget->set_title_axis_Y("voltage");

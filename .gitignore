@@ -1,0 +1,4 @@
+*.user
+Makefile
+object_script.*
+.qmake.stash

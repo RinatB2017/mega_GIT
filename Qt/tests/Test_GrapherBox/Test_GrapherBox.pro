@@ -24,6 +24,8 @@ DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
+DEFINES += ONE_CURVE
+
 HEADERS += \
     test_GrapherBox_mainbox.hpp \
     defines.hpp \

@@ -135,7 +135,7 @@ void MainBox::init(void)
 #endif
 
     grapher_widget->set_legend_is_visible(true);
-#if 1
+#ifdef ONE_CURVE
     curve_0 = grapher_widget->add_curve("test");
 #else
     for(int n=0; n<MAX_CHANNELS; n++)
@@ -150,6 +150,8 @@ void MainBox::init(void)
 
     grapher_widget->push_btn_Horizontal(true);
     grapher_widget->push_btn_Vertical(true);
+
+    setFixedSize(1, 1); //TODO не забудь про это
     //---
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
@@ -199,7 +201,7 @@ void MainBox::test_data(void)
 
     foreach(temp_f temp, l_temp)
     {
-#if 1
+#ifdef ONE_CURVE
         grapher_widget->add_curve_data(curve_0, temp.x, temp.y);
 #else
         grapher_widget->add_curve_data(curves[0], temp.x, temp.y);
@@ -222,7 +224,7 @@ void MainBox::test_data2(void)
         else {
             begin_y-=delta;
         }
-#if 1
+#ifdef ONE_CURVE
         grapher_widget->add_curve_data(curve_0, n, begin_y);
 #else
         grapher_widget->add_curve_data(curves[0], n, begin_y);
@@ -295,7 +297,7 @@ void MainBox::test(void)
     for(qreal x=0; x<100; x+=0.01)
     {
         qreal y = -3*x*qLn(x)+(0.03)*exp(-qPow(36*x - 36/M_E,4));
-        grapher_widget->add_curve_data(curve_0, x, y);
+        grapher_widget->add_curve_data(curve_0, static_cast<int>(x), y);
     }
 #endif
 
@@ -303,7 +305,11 @@ void MainBox::test(void)
     for(qreal x=0; x<100; x+=0.01)
     {
         qreal y = 3*x*qLn(x)-(0.13)*exp(-qPow(36*x-36/M_E,4));
-        grapher_widget->add_curve_data(curve_0, x, y);
+#ifdef ONE_CURVE
+        grapher_widget->add_curve_data(curve_0, static_cast<int>(x), y);
+#else
+        grapher_widget->add_curve_data(curves[0], static_cast<int>(x), y);
+#endif
     }
 #endif
 
@@ -313,6 +319,7 @@ void MainBox::test(void)
         ui->grapher_widget->set_curve_color(n, QColor(Qt::blue));
     }
 #endif
+
 #if 0
     grapher_widget->test();
 #endif

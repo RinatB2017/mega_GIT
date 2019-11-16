@@ -40,10 +40,11 @@ include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
+
+include ($$LIB_PATH2/serial5/serialbox5/serialbox5.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

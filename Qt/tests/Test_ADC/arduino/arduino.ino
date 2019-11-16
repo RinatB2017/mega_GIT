@@ -25,5 +25,5 @@ void loop() {
   String temp = ":" + String(a0) + "|" + String(a1) + "|" + String(a2) + "|" + String(a3) + "|" + String(a4) + "|" + String(a5);
   Serial.println(temp);
 
-  delay(1000);
+  delay(100);
 }

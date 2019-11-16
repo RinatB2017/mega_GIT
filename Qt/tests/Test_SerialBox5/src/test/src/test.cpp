@@ -29,25 +29,12 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_ADXL345_mainbox.hpp"
+#include "test_SerialBox5_mainbox.hpp"
 #include "test.hpp"
-//--------------------------------------------------------------------------------
-#ifndef NO_GRAPHER
-#   include "grapherbox.hpp"
-#endif
 //--------------------------------------------------------------------------------
 Test::Test()
 {
     mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 }
-//--------------------------------------------------------------------------------
-#ifndef NO_GRAPHER
-void Test::test_grapher(void)
-{
-#ifdef NO_GRAPHER
-    return;
-#endif
-}
-#endif
 //--------------------------------------------------------------------------------

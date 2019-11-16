@@ -38,7 +38,7 @@ void SerialBox5_thread::process(void)
 {
     emit info("process");
 
-    serial5 = new QSerialPort();
+    serial5 = new QSerialPort(this);
     if(serial5 == nullptr)
     {
         emit finished();
@@ -47,19 +47,96 @@ void SerialBox5_thread::process(void)
 
     while(!flag_exit)
     {
+        if(flag_port_open)
+        {
+//            emit trace(Q_FUNC_INFO);
+//            Q_CHECK_PTR(serial5);
+            if(serial5)
+            {
+                emit debug("open:");
+                bool state = serial5->open(QIODevice::ReadWrite);
+                emit port_get_state(state);
+
+//                if(state)
+//                {
+//                    emit port_get_name(serial5->portName());
+//                    emit port_get_baudrate(serial5->baudRate());
+//                    emit port_get_bits(serial5->dataBits());
+//                    emit port_get_patity(serial5->parity());
+//                    emit port_get_stop_bits(serial5->stopBits());
+//                    emit port_get_flow_control(serial5->flowControl());
+//                }
+            }
+            flag_port_open = false;
+        }
+        if(flag_port_close)
+        {
+            //    emit trace(Q_FUNC_INFO);
+            //    Q_CHECK_PTR(serial5);
+            if(serial5)
+            {
+                emit debug("close:");
+                serial5->close();
+                emit port_get_state(false);
+            }
+            flag_port_close = false;
+        }
         if (serial5->error() != QSerialPort::NoError)
         {
-            emit error(serial5->error());
+//            emit port_error(serial5->error());
         }
+        if(flag_port_name)
+        {
+            serial5->setPortName(port_name);
+            flag_port_name = false;
+        }
+        if(flag_baudrate)
+        {
+            serial5->setBaudRate(baudrate);
+            flag_baudrate = false;
+        }
+        if(flag_data_bits)
+        {
+            serial5->setDataBits(data_bits);
+            flag_data_bits = false;
+        }
+        if(flag_stop_bits)
+        {
+            serial5->setStopBits(stop_bits);
+            flag_stop_bits = false;
+        }
+        if(flag_parity)
+        {
+            serial5->setParity(parity);
+            flag_parity = false;
+        }
+        if(flag_flow_control)
+        {
+            serial5->setFlowControl(flow_control);
+            flag_flow_control = false;
+        }
+
         if(serial5->isOpen())
         {
             if(serial5->waitForReadyRead())
             {
+#if 0
+                emit trace("---");
+                emit trace(QString("%1").arg(serial5->portName()));
+                emit trace(QString("%1").arg(serial5->baudRate()));
+                emit trace(QString("%1").arg(serial5->dataBits()));
+                emit trace(QString("%1").arg(serial5->parity()));
+                emit trace(QString("%1").arg(serial5->stopBits()));
+                emit trace(QString("%1").arg(serial5->flowControl()));
+                emit trace("---");
+#endif
+
                 // serial_data = serial5->read(10000); //TODO maxSize
-                serial_data = serial5->readAll(); //TODO maxSize
+                serial_data = serial5->readAll();
                 if(!serial_data.isEmpty())
                 {
                     // emit info(serial_data);
+                    emit port_read_all(serial_data);
                     emit readyRead();
                     emit readChannelFinished();
                 }
@@ -69,96 +146,68 @@ void SerialBox5_thread::process(void)
     emit finished();
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_thread::set_fix_baudrate(int value)
+void SerialBox5_thread::port_open(void)
 {
-    bool ok = false;
-    fix_baudrate = value;
+    flag_port_open = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_close(void)
+{
+    flag_port_close = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_set_name(QString name)
+{
+    port_name = name;
+    flag_port_name = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_set_baudrate(qint32 value)
+{
+    baudrate = value;
+    flag_baudrate = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_set_bits(QSerialPort::DataBits value)
+{
+    data_bits = value;
+    flag_data_bits = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_set_stop_bits(QSerialPort::StopBits value)
+{
+    stop_bits = value;
+    flag_stop_bits = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_set_parity(QSerialPort::Parity value)
+{
+    parity = value;
+    flag_parity = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_set_flow_control(QSerialPort::FlowControl value)
+{
+    flow_control = value;
+    flag_flow_control = true;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_thread::port_write(const char *data)
+{
+    Q_CHECK_PTR(serial5);
     if(serial5)
     {
-        ok = serial5->setBaudRate(value);
+        serial5->write(data);
     }
-    return ok;
 }
 //--------------------------------------------------------------------------------
-qint64 SerialBox5_thread::bytesAvailable(void)
+void SerialBox5_thread::port_write(const char *data, qint64 maxSize)
 {
-    return serial5->bytesAvailable();
-}
-//--------------------------------------------------------------------------------
-qint64 SerialBox5_thread::write(const char *data)
-{
-    return serial5->write(data);
-}
-//--------------------------------------------------------------------------------
-qint64 SerialBox5_thread::write(const char *data, qint64 len)
-{
-    return serial5->write(data, len);
-}
-//--------------------------------------------------------------------------------
-bool SerialBox5_thread::isOpen(void)
-{
-    return serial5->isOpen();
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_thread::close(void)
-{
-    serial5->close();
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_thread::setPortName(const QString &name)
-{
-    serial5->setPortName(name);
-}
-//--------------------------------------------------------------------------------
-bool SerialBox5_thread::setBaudRate(qint32 baudRate)
-{
-    return serial5->setBaudRate(baudRate);
-}
-//--------------------------------------------------------------------------------
-bool SerialBox5_thread::open(QIODevice::OpenMode mode)
-{
-    return serial5->open(mode);
-}
-//--------------------------------------------------------------------------------
-QString SerialBox5_thread::portName(void)
-{
-    return serial5->portName();
-}
-//--------------------------------------------------------------------------------
-QString SerialBox5_thread::errorString(void)
-{
-    return serial5->errorString();
-}
-//--------------------------------------------------------------------------------
-QByteArray SerialBox5_thread::readAll(void)
-{
-    return serial_data;
-    // return serial5->readAll();
-}
-//--------------------------------------------------------------------------------
-qint32 SerialBox5_thread::baudRate(void)
-{
-    return serial5->baudRate();
-}
-//--------------------------------------------------------------------------------
-QSerialPort::DataBits SerialBox5_thread::dataBits(void)
-{
-    return serial5->dataBits();
-}
-//--------------------------------------------------------------------------------
-QSerialPort::Parity	SerialBox5_thread::parity(void)
-{
-    return serial5->parity();
-}
-//--------------------------------------------------------------------------------
-QSerialPort::StopBits SerialBox5_thread::stopBits(void)
-{
-    return serial5->stopBits();
-}
-//--------------------------------------------------------------------------------
-QSerialPort::FlowControl SerialBox5_thread::flowControl(void)
-{
-    return serial5->flowControl();
+    Q_CHECK_PTR(serial5);
+    if(serial5)
+    {
+        serial5->write(data, maxSize);
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_thread::start(void)

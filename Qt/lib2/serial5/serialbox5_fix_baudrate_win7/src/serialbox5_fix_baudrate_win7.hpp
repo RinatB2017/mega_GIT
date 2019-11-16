@@ -63,24 +63,56 @@ public:
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
 
+    void set_caption(QString value);
+
+    void set_fix_baudrate(int value);
+    void write(const char *data);
     QByteArray readAll(void);
 
-    void set_caption(QString value);
-    bool set_fix_baudrate(int value);
+signals:
+    void readyRead(void);
+    void readChannelFinished(void);
 
-    qint64 bytesAvailable(void);
-    qint64 write ( const char *data );
+    void output(const QByteArray &data);
+
+    void state(bool);
+
+    //---
+signals:
+    void port_open(void);
+    void port_close(void);
+    void port_set_name(QString name);
+    void port_set_baudrate(qint32 baudrate);
+    void port_set_bits(QSerialPort::DataBits);
+    void port_set_stop_bits(QSerialPort::StopBits);
+    void port_set_parity(QSerialPort::Parity);
+    void port_set_flow_control(QSerialPort::FlowControl);
+    void port_write(const char *data);
+    void port_write(const char *data, qint64 maxSize);
+
+private slots:
+    void port_bytes_avialable(void);
+    void port_get_state(bool state);
+    void port_get_name(QString port_name);
+    void port_get_baudrate(qint32 value);
+    void port_getbits(QSerialPort::DataBits value);
+    void port_get_stop_bits(QSerialPort::StopBits value);
+    void port_get_patity(QSerialPort::Parity value);
+    void port_get_flow_control(QSerialPort::FlowControl value);
+    void port_read_all(QByteArray ba);
+    void port_ready_read(bool state);
+    void port_error(QSerialPort::SerialPortError err);
+    //---
+
+public slots:
+    int input(const QByteArray &sending_data);
+    int input(const QString &data);
+
+    void set_flag_in_hex(bool state);
+    void set_flag_byte_by_byte(bool state);
 
 private:
     Ui::SerialBox5_fix_baudrate_win7 *ui;
-    QWidget *parent;
-
-    //TODO В win7 надо по-другому
-#ifdef FAKE
-    // FakeSerialBox5 *serial5;
-#else
-    // QSerialPort *serial5;
-#endif
 
     QString caption;
     QString o_name;
@@ -88,11 +120,9 @@ private:
     bool flag_in_hex = false;
     bool flag_byte_by_byte = false;
 
-    QTimer *timer;
-
-    QThread *thread;
-    SerialBox5_thread *worker;
     int fix_baudrate = 57600;
+    bool is_open = false;
+    QByteArray serial_data;
     void initThread(void);
 
 #ifndef RS232_NO_FRAME
@@ -106,25 +136,9 @@ private:
 
     void init(void);
     void createWidgets(void);
-    void initSerial(void);
     void setOpenState(void);
     void setCloseState(void);
     QString ByteArrayToHex(const QByteArray &data);
-
-signals:
-    void readyRead(void);
-    void readChannelFinished(void);
-
-    void output(const QByteArray &data);
-
-    void state(bool);
-
-public slots:
-    int input(const QByteArray &sending_data);
-    int input(const QString &data);
-
-    void set_flag_in_hex(bool state);
-    void set_flag_byte_by_byte(bool state);
 
 private slots:
     void drawData(const QByteArray &data);
@@ -135,9 +149,10 @@ private slots:
     void getStatus(const QString &status, QDateTime current);
     void get_parameter(void);
     void timer_stop(void);
-    void serial5_error(QSerialPort::SerialPortError err);
 
+    //---
     void thread_is_finished(void);
+    //---
 
     void change_icon(bool state);
 

@@ -19,7 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QTime>
+#include <QElapsedTimer>
 //--------------------------------------------------------------------------------
 #include "mythread.hpp"
 //--------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ MyThread::~MyThread()
 void MyThread::process(void)
 {
     emit info("process");
-    QTime time;
+    QElapsedTimer time;
     while(!flag_exit)
     {
         time.start();

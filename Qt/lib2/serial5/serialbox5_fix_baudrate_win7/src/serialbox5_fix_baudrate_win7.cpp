@@ -33,7 +33,7 @@
 //--------------------------------------------------------------------------------
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
-#define MAX_TIME_MSEC   100
+//#define MAX_TIME_MSEC   100
 //--------------------------------------------------------------------------------
 typedef enum
 {
@@ -45,7 +45,6 @@ typedef enum
 SerialBox5_fix_baudrate_win7::SerialBox5_fix_baudrate_win7(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::SerialBox5_fix_baudrate_win7),
-    parent(parent),
     caption("no name"),
     flag_in_hex(false),
     flag_byte_by_byte(false)
@@ -58,7 +57,6 @@ SerialBox5_fix_baudrate_win7::SerialBox5_fix_baudrate_win7(QWidget *parent,
                                                            const QString &o_name) :
     MyWidget(parent),
     ui(new Ui::SerialBox5_fix_baudrate_win7),
-    parent(parent),
     caption(caption),
     o_name(o_name),
     flag_in_hex(false),
@@ -86,19 +84,14 @@ void SerialBox5_fix_baudrate_win7::set_caption(QString value)
     o_name = value;
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_fix_baudrate_win7::set_fix_baudrate(int value)
+void SerialBox5_fix_baudrate_win7::set_fix_baudrate(int value)
 {
-    return worker->set_fix_baudrate(value);
+    emit port_set_baudrate(value);
 }
 //--------------------------------------------------------------------------------
-qint64 SerialBox5_fix_baudrate_win7::bytesAvailable(void)
+void SerialBox5_fix_baudrate_win7::write(const char *data)
 {
-    return worker->bytesAvailable();
-}
-//--------------------------------------------------------------------------------
-qint64 SerialBox5_fix_baudrate_win7::write(const char *data)
-{
-    return worker->write(data);
+    emit port_write(data);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::init(void)
@@ -106,13 +99,8 @@ void SerialBox5_fix_baudrate_win7::init(void)
     ui->setupUi(this);
 
     createWidgets();
-    initSerial();
+    initThread();
     setCloseState();
-
-    ui->PortBox->setMinimumWidth(150);
-
-    ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
-    ui->btn_refresh->setToolTip("Обновить список портов");
 
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     //setFixedWidth(sizeHint().width());
@@ -125,9 +113,14 @@ void SerialBox5_fix_baudrate_win7::createWidgets(void)
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
 
+    ui->PortBox->setProperty(NO_BLOCK, true);
+    ui->PortBox->setMinimumWidth(150);
+
     ui->btn_power->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
-    ui->PortBox->setProperty(NO_BLOCK, true);
+    ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
+
+    ui->btn_refresh->setToolTip("Обновить список портов");
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
@@ -163,34 +156,6 @@ void SerialBox5_fix_baudrate_win7::refresh(void)
     {
         ui->PortBox->addItem(p_info.portName());
     }
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate_win7::initSerial(void)
-{
-    //TODO В win7 надо по-другому
-#ifdef FAKE
-    serial5 = new FakeSerialBox5(this);
-
-    connect(serial5,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(serial5,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(serial5,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(serial5,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-#else
-    initThread();
-
-    connect(worker,    SIGNAL(readyRead()),            this,   SIGNAL(readyRead()));
-    connect(worker,    SIGNAL(readChannelFinished()),  this,   SIGNAL(readChannelFinished()));
-
-    timer = new QTimer();
-    connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
-
-    connect(worker, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    connect(worker, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
-
-    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
-
-    refresh();
-#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::thread_is_finished(void)
@@ -249,68 +214,31 @@ void SerialBox5_fix_baudrate_win7::setOpenState()
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::btnOpenPortClicked()
 {
-    bool result = worker->isOpen();
-    if (result)
+    // emit trace(Q_FUNC_INFO);
+
+    if(is_open)
     {
-        worker->close();
-        emit state(false);
-        result = false;
+        emit port_close();
     }
     else
     {
-        QString text = ui->PortBox->currentText();
-        if(text.isEmpty())
-        {
-            if(worker->isOpen())
-            {
-                worker->close();
-            }
-            setCloseState();
-            return;
-        }
-        worker->setPortName(text);
-        result = worker->open(QIODevice::ReadWrite);
-        if(result)
-        {
-            bool ok = worker->setBaudRate(fix_baudrate);
-            if(!ok)
-            {
-                emit error(QString("Не удалось установить baudrate %1").arg(fix_baudrate));
-            }
-            get_parameter();
-            emit state(true);
-        }
-        else
-        {
-            emit error(QString("ERROR: serial [%1] not open (%2)")
-                       .arg(worker->portName())
-                       .arg(worker->errorString()));
-            emit state(false);
-        }
+        emit port_set_name(ui->PortBox->currentText());
+        emit port_open();
+        emit port_set_baudrate(fix_baudrate);
+        emit port_set_bits(QSerialPort::Data8);
+        emit port_set_parity(QSerialPort::NoParity);
+        emit port_set_stop_bits(QSerialPort::OneStop);
+        emit port_set_flow_control(QSerialPort::NoFlowControl);
     }
-
-    (result) ? setOpenState() : setCloseState();
 }
 //--------------------------------------------------------------------------------
 int SerialBox5_fix_baudrate_win7::input(const QByteArray &sending_data)
 {
-    if(!worker)
-    {
-        emit error("E_PORT_NOT_INIT");
-        emit state(false);
-        return E_PORT_NOT_INIT;
-    }
-    if(!worker->isOpen())
-    {
-        emit error("E_PORT_NOT_OPEN");
-        emit state(false);
-        return E_PORT_NOT_OPEN;
-    }
     if(flag_byte_by_byte)
     {
         emit debug("flag_byte_by_byte");
         for(int n=0; n<sending_data.length(); n++)
-            worker->write(sending_data.constData()+n, 1);
+            emit port_write(sending_data.constData()+n, 1);
     }
     else
     {
@@ -328,26 +256,13 @@ int SerialBox5_fix_baudrate_win7::input(const QByteArray &sending_data)
         {
             emit debug(QString("send [%1]").arg(sending_data.toHex().toUpper().data()));
         }
-        worker->write(sending_data);
+        emit port_write(sending_data);
     }
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 int SerialBox5_fix_baudrate_win7::input(const QString &data)
 {
-    qDebug() << data;
-    if(!worker)
-    {
-        emit error("E_PORT_NOT_INIT");
-        emit state(false);
-        return E_PORT_NOT_INIT;
-    }
-    if(!worker->isOpen())
-    {
-        emit error("E_PORT_NOT_OPEN");
-        emit state(false);
-        return E_PORT_NOT_OPEN;
-    }
     QByteArray sending_data;
     sending_data.clear();
     sending_data.append(data);
@@ -355,115 +270,37 @@ int SerialBox5_fix_baudrate_win7::input(const QString &data)
     {
         for(int n=0; n<sending_data.length(); n++)
         {
-            worker->write(sending_data.constData()+n, 1);
+            emit port_write(sending_data.constData()+n, 1);
         }
     }
     else
     {
-        worker->write(sending_data);
+        emit port_write(sending_data);
     }
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::procSerialDataReceive(void)
 {
-    if(!worker)
-    {
-        return;
-    }
-    if(!worker->isOpen())
-    {
-        return;
-    }
+//    //TODO было
+//    // emit output(serial5->readAll());
 
-    //TODO было
-    // emit output(serial5->readAll());
+    emit output(serial_data);
 
-    if (!timer->isActive())
-        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
-    else
-        timer->stop();
+//    if (!timer->isActive())
+//        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
+//    else
+//        timer->stop();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::timer_stop(void)
 {
-    emit output(worker->readAll());
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate_win7::serial5_error(QSerialPort::SerialPortError err)
-{
-    if(err == QSerialPort::NoError)
-    {
-        return;
-    }
-
-    switch(err)
-    {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
-    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
-    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
-    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
-    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
-    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
-    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
-    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
-
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
-    }
-
-    //    setCloseState();
-    //    refresh();
+    emit output(serial_data);
 }
 //--------------------------------------------------------------------------------
 QString SerialBox5_fix_baudrate_win7::ByteArrayToHex(const QByteArray &data)
 {
-#if 0
-    QByteArray temp_addr;
-    QByteArray temp;
-    QString str;
-    int i,n;
-
-    int addr=0;
-
-    temp_addr.append(((unsigned char*)&addr)[3]);
-    temp_addr.append(((unsigned char*)&addr)[2]);
-    temp_addr.append(((unsigned char*)&addr)[1]);
-    temp_addr.append(((unsigned char*)&addr)[0]);
-    str.append(temp_addr.toHex().toUpper());
-    str.append("  ");
-    temp = data.toHex().toUpper();
-    n=0;
-    for(i=0;i<temp.length();i+=2)
-    {
-        str.append(temp.at(i));
-        str.append(temp.at(i+1));
-        str.append(" ");
-        n++;
-        if(n>15 && i!=(temp.length()-2))
-        {
-            n=0;
-            addr+=16;
-            str.append("\n");
-            temp_addr.clear();
-            temp_addr.append(((unsigned char*)&addr)[3]);
-            temp_addr.append(((unsigned char*)&addr)[2]);
-            temp_addr.append(((unsigned char*)&addr)[1]);
-            temp_addr.append(((unsigned char*)&addr)[0]);
-            str.append(temp_addr.toHex().toUpper());
-            str.append("  ");
-        }
-    }
-    return str;
-#else
     return data.toHex();
-#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::sendData(const QByteArray &sending_data)
@@ -472,12 +309,12 @@ void SerialBox5_fix_baudrate_win7::sendData(const QByteArray &sending_data)
     {
         for(int n=0; n<sending_data.length(); n++)
         {
-            worker->write(sending_data.constData()+n, 1);
+            emit port_write(sending_data.constData()+n, 1);
         }
     }
     else
     {
-        worker->write(sending_data);
+        emit port_write(sending_data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -508,7 +345,7 @@ void SerialBox5_fix_baudrate_win7::drawData(const QByteArray &data)
 //--------------------------------------------------------------------------------
 bool SerialBox5_fix_baudrate_win7::isOpen(void)
 {
-    return worker->isOpen();
+    return is_open;
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5_fix_baudrate_win7::add_menu(int index)
@@ -583,57 +420,163 @@ void SerialBox5_fix_baudrate_win7::set_flag_byte_by_byte(bool state)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::get_parameter(void)
 {
-    if(worker->isOpen() == false)
-    {
-        return;
-    }
-
-    QString temp;
-    temp.clear();
-#if 1
-    emit info(QString("baudRate %1").arg(worker->baudRate()));
-    emit info(QString("dataBits %1").arg(worker->dataBits()));
-    emit info(QString("parity %1").arg(worker->parity()));
-    emit info(QString("stopBits %1").arg(worker->stopBits()));
-    emit info(QString("flowControl %1").arg(worker->flowControl()));
-#else
-    temp = QString("%1, %2, %3, %4, %5")
-            .arg(serial5->baudRate())
-            .arg(serial5->dataBits())
-            .arg(serial5->parity())
-            .arg(serial5->stopBits())
-            .arg(serial5->flowControl());
-#endif
-    emit info(temp);
+//    QString temp;
+//    temp.clear();
+//#if 1
+//    emit info(QString("baudRate %1").arg(worker->baudRate()));
+//    emit info(QString("dataBits %1").arg(worker->dataBits()));
+//    emit info(QString("parity %1").arg(worker->parity()));
+//    emit info(QString("stopBits %1").arg(worker->stopBits()));
+//    emit info(QString("flowControl %1").arg(worker->flowControl()));
+//#else
+//    temp = QString("%1, %2, %3, %4, %5")
+//            .arg(serial5->baudRate())
+//            .arg(serial5->dataBits())
+//            .arg(serial5->parity())
+//            .arg(serial5->stopBits())
+//            .arg(serial5->flowControl());
+//#endif
+//    emit info(temp);
 }
 //--------------------------------------------------------------------------------
 QByteArray SerialBox5_fix_baudrate_win7::readAll(void)
 {
-    return worker->readAll();
+    return serial_data;
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::initThread(void)
 {
     emit info("thread_is_started");
 
-    thread = new QThread;
+    QThread *thread = new QThread;
+    SerialBox5_thread *worker = new SerialBox5_thread;
+    worker->moveToThread(thread);
 
-    worker = new SerialBox5_thread;
     connect(worker, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
     connect(worker, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
     connect(worker, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
     connect(worker, SIGNAL(trace(QString)),     this, SIGNAL(trace(QString)));
 
+    connect(this,   SIGNAL(port_open()),                                        worker, SLOT(port_open()),                                      Qt::DirectConnection);
+    connect(this,   SIGNAL(port_close()),                                       worker, SLOT(port_close()),                                     Qt::DirectConnection);
+    connect(this,   SIGNAL(port_set_name(QString)),                             worker, SLOT(port_set_name(QString)),                           Qt::DirectConnection);
+    connect(this,   SIGNAL(port_set_baudrate(qint32)),                          worker, SLOT(port_set_baudrate(qint32)),                        Qt::DirectConnection);
+    connect(this,   SIGNAL(port_set_bits(QSerialPort::DataBits)),               worker, SLOT(port_set_bits(QSerialPort::DataBits)),             Qt::DirectConnection);
+    connect(this,   SIGNAL(port_set_stop_bits(QSerialPort::StopBits)),          worker, SLOT(port_set_stop_bits(QSerialPort::StopBits)),        Qt::DirectConnection);
+    connect(this,   SIGNAL(port_set_parity(QSerialPort::Parity)),               worker, SLOT(port_set_parity(QSerialPort::Parity)),             Qt::DirectConnection);
+    connect(this,   SIGNAL(port_set_flow_control(QSerialPort::FlowControl)),    worker, SLOT(port_set_flow_control(QSerialPort::FlowControl)),  Qt::DirectConnection);
+    connect(this,   SIGNAL(port_write(const char *)),                           worker, SLOT(port_write(const char*)),                          Qt::DirectConnection);
+    connect(this,   SIGNAL(port_write(const char *, qint64)),                   worker, SLOT(port_write(const char *, qint64)),                 Qt::DirectConnection);
+
+    connect(worker, SIGNAL(port_bytes_avialable()),                             this,   SLOT(port_bytes_avialable(void)));
+    connect(worker, SIGNAL(port_get_state(bool)),                               this,   SLOT(port_get_state(bool)));
+    connect(worker, SIGNAL(port_get_name(QString)),                             this,   SLOT(port_get_name(QString)));
+    connect(worker, SIGNAL(port_get_baudrate(qint32)),                          this,   SLOT(port_get_baudrate(qint32)));
+    connect(worker, SIGNAL(port_get_bits(QSerialPort::DataBits)),               this,   SLOT(port_getbits(QSerialPort::DataBits)));
+    connect(worker, SIGNAL(port_get_stop_bits(QSerialPort::StopBits)),          this,   SLOT(port_get_stop_bits(QSerialPort::StopBits)));
+    connect(worker, SIGNAL(port_get_patity(QSerialPort::Parity)),               this,   SLOT(port_get_patity(QSerialPort::Parity)));
+    connect(worker, SIGNAL(port_get_flow_control(QSerialPort::FlowControl)),    this,   SLOT(port_get_flow_control(QSerialPort::FlowControl)));
+    connect(worker, SIGNAL(port_read_all(QByteArray)),                          this,   SLOT(port_read_all(QByteArray)));
+    connect(worker, SIGNAL(port_ready_read(bool)),                              this,   SLOT(port_ready_read(bool)));
+    connect(worker, SIGNAL(port_error(QSerialPort::SerialPortError)),           this,   SLOT(port_error(QSerialPort::SerialPortError)));
+
     connect(thread, SIGNAL(started()),  worker, SLOT(process()));
-    //    connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
-    //    connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
-    //    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+
+    connect(worker, SIGNAL(readyRead()),            this,   SIGNAL(readyRead()));
+    connect(worker, SIGNAL(readChannelFinished()),  this,   SIGNAL(readChannelFinished()));
+
+    connect(worker, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
+//    connect(worker, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
 
     connect(thread, SIGNAL(finished()), this, SLOT(thread_is_finished()));
 
-    worker->moveToThread(thread);
-
     thread->start();
+
+    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
+
+    refresh();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_bytes_avialable(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_get_state(bool state)
+{
+    is_open = state;
+    emit debug(QString("State: %1").arg(state ? "true" : "false"));
+
+    if(is_open)
+    {
+        setOpenState();
+    }
+    else
+    {
+        setCloseState();
+    }
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_get_name(QString port_name)
+{
+    emit info(QString("Name: %1").arg(port_name));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_get_baudrate(qint32 value)
+{
+    emit info(QString("BaudRate: %1").arg(value));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_getbits(QSerialPort::DataBits value)
+{
+    emit info(QString("DataBits: %1").arg(value));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_get_stop_bits(QSerialPort::StopBits value)
+{
+    emit info(QString("StopBits: %1").arg(value));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_get_patity(QSerialPort::Parity value)
+{
+    emit info(QString("Parity: %1").arg(value));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_get_flow_control(QSerialPort::FlowControl value)
+{
+    emit info(QString("FlowControl: %1").arg(value));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_read_all(QByteArray ba)
+{
+    // emit debug(QString("ReadAll: [%1]").arg(ba.data()));
+    serial_data = ba;
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_ready_read(bool state)
+{
+    emit info(QString("ReadRead: %1").arg(state ? "true" : "false"));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate_win7::port_error(QSerialPort::SerialPortError err)
+{
+    switch(err)
+    {
+    case QSerialPort::NoError:                      emit error("NoError");                      break;
+    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
+    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
+    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
+    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
+    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
+    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
+    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
+    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
+    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
+    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
+    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
+    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
+    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::updateText(void)

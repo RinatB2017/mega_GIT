@@ -346,7 +346,8 @@ QVariant GrapherBox::itemToInfo(QwtPlotItem *plotItem) const
     Q_CHECK_PTR(plotItem);
 
     QVariant itemInfo;
-    qVariantSetValue(itemInfo, plotItem);
+    //qVariantSetValue(itemInfo, plotItem); //TODO deprecated
+    itemInfo.setValue(plotItem);
 
     return itemInfo;
 }

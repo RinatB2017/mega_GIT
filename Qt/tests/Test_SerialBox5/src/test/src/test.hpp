@@ -33,9 +33,6 @@ public:
     Test();
 
 private slots:
-#ifndef NO_GRAPHER
-    void test_grapher(void);
-#endif
 
 private:
     MainWindow *mw;

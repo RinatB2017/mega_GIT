@@ -61,6 +61,8 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_serial_widgets(void)
 {
+    ui->serial_widget->set_caption("RS-232");
+
     ui->serial_widget_fix_baudrate->set_fix_baudrate(BAUDRATE);
     ui->serial_widget_fix_baudrate_win7->set_fix_baudrate(BAUDRATE);
 

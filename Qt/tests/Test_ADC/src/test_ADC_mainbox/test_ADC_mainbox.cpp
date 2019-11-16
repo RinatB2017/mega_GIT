@@ -137,9 +137,12 @@ qreal MainBox::convert_adc(int value)
 //--------------------------------------------------------------------------------
 void MainBox::data_ADC(const QByteArray &ba)
 {
+    // emit trace(Q_FUNC_INFO);
+
     QString temp = ba.data();
     if(temp.isEmpty())
     {
+        emit trace("temp.isEmpty");
         return;
     }
 
@@ -180,7 +183,7 @@ void MainBox::show_data_ADC(QStringList sl)
     if(sl.count() != 6)
     {
         emit error(QString("Bad cnt %1").arg(sl.count()));
-        emit debug(QString("data_str [%1]").arg(data_str));
+        emit error(QString("data_str [%1]").arg(data_str));
         return;
     }
     int A0 = sl.at(0).toInt();

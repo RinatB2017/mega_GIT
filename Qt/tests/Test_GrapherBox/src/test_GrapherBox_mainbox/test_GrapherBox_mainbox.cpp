@@ -134,7 +134,7 @@ void MainBox::init(void)
     grapher_widget->set_axis_scale_y(0, 100);
 #endif
 
-//    grapher_widget->set_legend_is_visible(true);
+    grapher_widget->set_legend_is_visible(true);
 #if 1
     curve_0 = grapher_widget->add_curve("test");
 #else

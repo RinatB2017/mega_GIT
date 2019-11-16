@@ -412,8 +412,7 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
 
         for ( int i = widgetList.size(); i < data.size(); i++ )
         {
-            //QWidget *widget = createWidget( data[i] );
-            QWidget *widget = new QWidget(); //TODO добавить кнопку
+            QWidget *widget = createWidget( data[i] );  //FIXME внимательнее надо
 #if 0
             //TODO добавить кнопку
             //---

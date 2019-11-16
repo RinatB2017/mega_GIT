@@ -225,6 +225,7 @@ int GrapherBox::add_curve(const QString &title,
 
     curve.is_active = true;
     curve.title = title;
+    // emit debug(QString("curves.count = %1").arg(curves.count()));
     curve.color = curve_colors[curves.count()];
 #ifdef USE_SCALE_POINT_DATETIME
 #elif defined(USE_SCALE_POINT_TIME)
@@ -358,17 +359,28 @@ void GrapherBox::showCurve(QwtPlotItem *item, bool on)
 
     item->setVisible(on);
 
+    // emit debug(QString("showCurve: legend_is_visible is %1").arg(legend_is_visible ? "true" : "false"));
     if(legend_is_visible)
     {
         QList<QWidget *> legendWidgets = legend->legendWidgets(itemToInfo(item));
 
         if(legendWidgets.size() == 1)
         {
-            QwtLegendLabel *legendLabel = qobject_cast<QwtLegendLabel *>(legendWidgets[0]);
+            // QwtLegendLabel *legendLabel = qobject_cast<QwtLegendLabel *>(legendWidgets.at(0));
 
-            if(legendLabel)
+            QWidget *lw = legendWidgets.at(0);
+            if(lw)
             {
-                legendLabel->setChecked(on);
+                QwtLegendLabel *legendLabel = reinterpret_cast<QwtLegendLabel *>(lw);
+
+                if(legendLabel)
+                {
+                    legendLabel->setChecked(on);
+                }
+                else
+                {
+                    emit error("legendLabel not found");
+                }
             }
         }
     }
@@ -397,6 +409,7 @@ void GrapherBox::create_widgets(void)
     plot_magnifier = new QwtPlotMagnifier(ui->qwtPlot->canvas());
 #endif
 
+    // emit debug(QString("create_widgets: legend_is_visible is %1").arg(legend_is_visible ? "true" : "false"));
     if(legend_is_visible)
     {
         legend = new QwtLegend(this);

@@ -446,7 +446,7 @@ QByteArray SerialBox5_fix_baudrate_win7::readAll(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::initThread(void)
 {
-    emit info("thread_is_started");
+    // emit trace(Q_FUNC_INFO);
 
     QThread *thread = new QThread;
     SerialBox5_thread *worker = new SerialBox5_thread;
@@ -505,7 +505,7 @@ void SerialBox5_fix_baudrate_win7::port_bytes_avialable(void)
 void SerialBox5_fix_baudrate_win7::port_get_state(bool state)
 {
     is_open = state;
-    emit debug(QString("State: %1").arg(state ? "true" : "false"));
+    // emit debug(QString("State: %1").arg(state ? "true" : "false"));
 
     if(is_open)
     {

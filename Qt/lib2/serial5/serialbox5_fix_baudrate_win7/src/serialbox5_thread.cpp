@@ -36,7 +36,7 @@ SerialBox5_thread::~SerialBox5_thread()
 //--------------------------------------------------------------------------------
 void SerialBox5_thread::process(void)
 {
-    emit info("process");
+    // emit trace("process");
 
     serial5 = new QSerialPort(this);
     if(serial5 == nullptr)
@@ -49,33 +49,29 @@ void SerialBox5_thread::process(void)
     {
         if(flag_port_open)
         {
-//            emit trace(Q_FUNC_INFO);
-//            Q_CHECK_PTR(serial5);
             if(serial5)
             {
-                emit debug("open:");
+                // emit debug("open:");
                 bool state = serial5->open(QIODevice::ReadWrite);
                 emit port_get_state(state);
 
-//                if(state)
-//                {
-//                    emit port_get_name(serial5->portName());
-//                    emit port_get_baudrate(serial5->baudRate());
-//                    emit port_get_bits(serial5->dataBits());
-//                    emit port_get_patity(serial5->parity());
-//                    emit port_get_stop_bits(serial5->stopBits());
-//                    emit port_get_flow_control(serial5->flowControl());
-//                }
+                if(state)
+                {
+                    emit port_get_name(serial5->portName());
+                    emit port_get_baudrate(serial5->baudRate());
+                    emit port_get_bits(serial5->dataBits());
+                    emit port_get_patity(serial5->parity());
+                    emit port_get_stop_bits(serial5->stopBits());
+                    emit port_get_flow_control(serial5->flowControl());
+                }
             }
             flag_port_open = false;
         }
         if(flag_port_close)
         {
-            //    emit trace(Q_FUNC_INFO);
-            //    Q_CHECK_PTR(serial5);
             if(serial5)
             {
-                emit debug("close:");
+                // emit debug("close:");
                 serial5->close();
                 emit port_get_state(false);
             }
@@ -83,7 +79,7 @@ void SerialBox5_thread::process(void)
         }
         if (serial5->error() != QSerialPort::NoError)
         {
-//            emit port_error(serial5->error());
+            emit port_error(serial5->error());
         }
         if(flag_port_name)
         {
@@ -131,7 +127,6 @@ void SerialBox5_thread::process(void)
                 emit trace("---");
 #endif
 
-                // serial_data = serial5->read(10000); //TODO maxSize
                 serial_data = serial5->readAll();
                 if(!serial_data.isEmpty())
                 {

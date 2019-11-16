@@ -76,6 +76,9 @@ void MainBox::init(void)
     ui->grapher_widget->set_visible_btn_Save(false);
     ui->grapher_widget->set_visible_btn_Statistic(false);
 
+    ui->grapher_widget->push_btn_Horizontal(true);
+    ui->grapher_widget->push_btn_Vertical(true);
+
     curve_A0 = ui->grapher_widget->add_curve("A0");
     curve_A1 = ui->grapher_widget->add_curve("A1");
     curve_A2 = ui->grapher_widget->add_curve("A2");

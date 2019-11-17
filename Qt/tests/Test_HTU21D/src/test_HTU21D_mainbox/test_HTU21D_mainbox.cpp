@@ -87,7 +87,6 @@ void MainBox::init(void)
         obj->setFixedSize(220, 48);
         obj->setDigitCount(6);
     }
-
 #else
     ui->grapher_widget->setVisible(false);
 #endif

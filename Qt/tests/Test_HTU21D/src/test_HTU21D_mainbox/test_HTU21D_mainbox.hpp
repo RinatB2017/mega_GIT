@@ -53,7 +53,7 @@ public:
 private slots:
     void test(void);
 
-    void data_htu21d(QByteArray data);
+    void data_htu21d(QByteArray ba);
 
 private:
     MySplashScreen *splash;

@@ -88,7 +88,10 @@ void PTZ_widget::init(void)
     ui->sl_speed->setValue(50);
 
 #ifdef Q_OS_LINUX
-    ui->le_address->setText("rtsp://192.168.1.66/av0_0");
+    // ui->le_address->setText("rtsp://192.168.1.66/av0_0");
+    // ui->le_address->setText("rtsp://admin:admin@192.168.1.11:8001/0/video0");
+    ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
+    // ui->le_address->setText("rtsp://192.168.1.11:554/user=admin&password=admind&channel=1&stream=0.cgi");
 #else
     ui->le_address->setText("rtsp://192.168.1.88/HD");
 #endif

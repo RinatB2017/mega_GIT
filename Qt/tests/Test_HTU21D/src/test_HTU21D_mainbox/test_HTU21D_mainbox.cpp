@@ -64,8 +64,8 @@ void MainBox::init(void)
     ui->grapher_widget->setObjectName("GrapherBox");
 
     ui->grapher_widget->set_title("HTU21D");
-    ui->grapher_widget->set_title_axis_X("X");
-    ui->grapher_widget->set_title_axis_Y("Y");
+    ui->grapher_widget->set_title_axis_X("time");
+    ui->grapher_widget->set_title_axis_Y("value");
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 100);
 
@@ -73,6 +73,9 @@ void MainBox::init(void)
     ui->grapher_widget->set_visible_btn_Load(false);
     ui->grapher_widget->set_visible_btn_Save(false);
     ui->grapher_widget->set_visible_btn_Statistic(false);
+
+    ui->grapher_widget->push_btn_Vertical(true);
+    ui->grapher_widget->push_btn_Horizontal(true);
 
     curve_temperature   = ui->grapher_widget->add_curve("Temperature");
     curve_humidity      = ui->grapher_widget->add_curve("Humidity");
@@ -118,9 +121,9 @@ QString MainBox::convert(qreal value)
     return QString("%1").arg(value, 0, 'f', 2);
 }
 //--------------------------------------------------------------------------------
-void MainBox::data_htu21d(QByteArray data)
+void MainBox::data_htu21d(QByteArray ba)
 {
-    QString temp = data;
+    QString temp = ba;
     if(temp.isEmpty())
     {
         return;

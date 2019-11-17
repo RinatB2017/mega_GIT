@@ -22,7 +22,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
     a = new QSpinBox(this);
     b = new QSpinBox(this);
@@ -103,10 +103,42 @@ void IPV4_wo_port::set_url(QUrl url)
         c->setValue(QString(sl[2]).toInt());
         d->setValue(QString(sl[3]).toInt());
     }
+    else
+    {
+        emit error(QString("ip.count = %1").arg(sl.count()));
+    }
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::setReadOnly(bool state)
+{
+    a->setReadOnly(state);
+    b->setReadOnly(state);
+    c->setReadOnly(state);
+    d->setReadOnly(state);
 }
 //--------------------------------------------------------------------------------
 bool IPV4_wo_port::no_exit(void)
 {
     return false;
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+bool IPV4_wo_port::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

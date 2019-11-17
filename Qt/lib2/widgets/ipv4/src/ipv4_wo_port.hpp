@@ -26,10 +26,11 @@
 #else
 #   include <QtGui>
 #endif
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #define DEFAULT_IPV4_PORT   80
 //--------------------------------------------------------------------------------
-class IPV4_wo_port : public QWidget
+class IPV4_wo_port : public MyWidget
 {
     Q_OBJECT
 
@@ -45,6 +46,8 @@ public:
     QUrl get_url(void);
     void set_url(QUrl url);
 
+    void setReadOnly(bool state);
+
     bool no_exit(void);
 
 private slots:
@@ -55,6 +58,11 @@ private:
     QSpinBox *b;
     QSpinBox *c;
     QSpinBox *d;
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // IPV4_WO_PORT_HPP

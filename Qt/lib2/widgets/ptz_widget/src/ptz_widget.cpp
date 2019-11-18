@@ -54,6 +54,7 @@ PTZ_widget::~PTZ_widget()
 void PTZ_widget::create_player(void)
 {
     player = new QMediaPlayer(this);
+    player->setVolume(0);   //TODO выключить звук
     player->setVideoOutput(ui->video_widget);
 
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
@@ -92,6 +93,7 @@ void PTZ_widget::init(void)
     // ui->le_address->setText("rtsp://admin:admin@192.168.1.11:8001/0/video0");
     // ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
     // ui->le_address->setText("rtsp://192.168.1.11:554/user=admin&password=admind&channel=1&stream=0.cgi");
+    //ui->le_address->setText("rtsp://admin:admin@192.168.1.11");
     ui->le_address->setText("rtsp://admin:admin@192.168.1.14:81");
 #else
     ui->le_address->setText("rtsp://192.168.1.88/HD");
@@ -102,7 +104,7 @@ void PTZ_widget::init(void)
     QByteArray ba;
     ba.append(ui->le_address->text());
     url = QUrl::fromEncoded(ba);
-    url.setPort(81);
+    url.setPort(port);
     emit info(QString("IP %1").arg(url.host()));
     //---
 
@@ -509,7 +511,7 @@ void PTZ_widget::choice(void)
         QByteArray ba;
         ba.append(ui->le_address->text());
         url = QUrl::fromEncoded(ba);
-        url.setPort(81);
+        url.setPort(port);
     }
     dlg->deleteLater();
 }
@@ -585,6 +587,7 @@ void PTZ_widget::send_cmd(QString  cmd,
     param.append("http://");
     param.append("admin:admin@");
     param.append(QString("%1").arg(url.host()));
+    param.append(":81");
     param.append("/cgi-bin/senddata.cgi?");
 
     param.append(QString("cmd=%1;").arg(cmd));

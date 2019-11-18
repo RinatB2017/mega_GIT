@@ -109,6 +109,7 @@ private slots:
 private:
     Ui::PTZ_widget *ui;
     QMediaPlayer *player;
+    int port = 81;
 
     QSettings *settings;
 

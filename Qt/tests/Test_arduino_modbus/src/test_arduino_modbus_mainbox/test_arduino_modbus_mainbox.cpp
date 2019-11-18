@@ -142,7 +142,7 @@ void MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::wait(int max_time_ms)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
     while(time.elapsed() < max_time_ms)
     {

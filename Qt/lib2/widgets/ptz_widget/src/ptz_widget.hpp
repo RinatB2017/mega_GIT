@@ -125,6 +125,8 @@ private:
                   QString func,
                   QVariant param_1,
                   QVariant param_2);
+    void send_cmd2(QString cmd);
+
     bool f_connect(void);
     void f_disconnect(void);
 

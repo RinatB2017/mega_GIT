@@ -214,7 +214,7 @@ void MainBox::clear_receive_array(void)
 //--------------------------------------------------------------------------------
 void MainBox::wait_msec(int timeout_msec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     time.start();
     while(true)

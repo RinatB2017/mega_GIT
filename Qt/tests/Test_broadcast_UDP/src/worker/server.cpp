@@ -50,7 +50,7 @@ void Server::process(void)
 
     connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
-    QTime time;
+    QElapsedTimer time;
     while(1)
     {
         //emit info("---");
@@ -67,7 +67,7 @@ void Server::processPendingDatagrams(void)
     while (udpSocket->hasPendingDatagrams())
     {
         QByteArray datagram;
-        datagram.resize(udpSocket->pendingDatagramSize());
+        datagram.resize(static_cast<int>(udpSocket->pendingDatagramSize()));
         udpSocket->readDatagram(datagram.data(), datagram.size());
         emit info(QString("Received datagram: \"%1\"").arg(datagram.data()));
     }

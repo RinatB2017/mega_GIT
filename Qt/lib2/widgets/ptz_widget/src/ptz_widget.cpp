@@ -518,7 +518,8 @@ void PTZ_widget::choice(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_stop(void)
 {
-    send_cmd("ptz", "STOP", 0, 0);
+    //send_cmd("ptz", "STOP", 0, 0);
+    send_cmd2("stop");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_up(void)
@@ -533,22 +534,26 @@ void PTZ_widget::f_right_up(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left(void)
 {
-    send_cmd("ptz", "L", ui->sl_speed->value(), 0);
+    //send_cmd("ptz", "L", ui->sl_speed->value(), 0);
+    send_cmd2("left");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right(void)
 {
-    send_cmd("ptz", "R", ui->sl_speed->value(), 0);
+    //send_cmd("ptz", "R", ui->sl_speed->value(), 0);
+    send_cmd2("right");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_up(void)
 {
-    send_cmd("ptz", "U", 0, ui->sl_speed->value());
+    //send_cmd("ptz", "U", 0, ui->sl_speed->value());
+    send_cmd2("up");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_down(void)
 {
     send_cmd("ptz", "D", 0, ui->sl_speed->value());
+    send_cmd2("down");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_down(void)
@@ -648,7 +653,73 @@ void PTZ_widget::send_cmd(QString  cmd,
         f_disconnect();
         return;
     }
-#if 1
+#if 0
+    ok = tcpSocket->waitForReadyRead(1000);
+    if(!ok)
+    {
+        emit error("waitForReadyRead");
+        f_disconnect();
+        return;
+    }
+#endif
+    f_disconnect();
+
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+//http://192.168.1.14:81/moveptz.xml?dir=left
+//http://192.168.1.14:81/moveptz.xml?dir=right
+//http://192.168.1.14:81/moveptz.xml?dir=leftright
+//http://192.168.1.14:81/moveptz.xml?dir=updown
+void PTZ_widget::send_cmd2(QString  cmd)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QString param;
+    param.append(QString("http://%1:%2/moveptz.xml?dir=%3")
+                 .arg(url.host())
+                 .arg(port)
+                 .arg(cmd));
+
+    emit trace(QString("param = %1").arg(param));
+
+    bool ok = false;
+    ok = tcpSocket->isOpen();
+    if(ok == false)
+    {
+        ok = f_connect();
+        if(ok == false)
+        {
+            return;
+        }
+    }
+
+    QByteArray reqStr;
+    reqStr.append(QString("GET %1 HTTP/1.1\r\n")
+                  .arg(param));
+
+    reqStr.append(QString("Host: %1\r\n").arg(url.host()));
+    reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
+    reqStr.append("Accept: */*\r\n");
+    reqStr.append("Referer: http://192.168.1.14:81/stream.htm\r\n");
+    //reqStr.append("Connection: close\r\n");
+    reqStr.append("\r\n");
+
+    qint64 bytes = tcpSocket->write(reqStr);
+    if(bytes < 0)
+    {
+        emit error(QString("write bytes %1").arg(bytes));
+        f_disconnect();
+        return;
+    }
+    ok = tcpSocket->waitForBytesWritten(1000);
+    if(!ok)
+    {
+        emit error("waitForBytesWritten");
+        f_disconnect();
+        return;
+    }
+#if 0
     ok = tcpSocket->waitForReadyRead(1000);
     if(!ok)
     {

@@ -61,7 +61,8 @@ void RTSP_widget::init(void)
     ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
 #else
     //ui->le_address->setText("rtsp://192.168.1.88/HD");
-    ui->le_address->setText("rtsp://192.168.10.101:8001/0/video0");
+    //ui->le_address->setText("rtsp://192.168.10.101:8001/0/video0");
+    ui->le_address->setText("rtsp://192.168.10.159");
 #endif
     ui->le_address->setEnabled(false);
 

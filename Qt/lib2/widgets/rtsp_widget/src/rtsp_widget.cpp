@@ -58,7 +58,8 @@ void RTSP_widget::init(void)
     //ui->le_address->setText("rtsp://185.10.80.33:8082/");
     //ui->le_address->setText("rtsp://192.168.1.66/av0_0");
     //ui->le_address->setText("rtsp://admin:admin@192.168.1.11:8001/0/video0");
-    ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
+    //ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
+    ui->le_address->setText("rtsp://admin:admin@192.168.1.14:81");
 #else
     //ui->le_address->setText("rtsp://192.168.1.88/HD");
     //ui->le_address->setText("rtsp://192.168.10.101:8001/0/video0");
@@ -150,7 +151,7 @@ void RTSP_widget::stop(void)
 void RTSP_widget::choice(void)
 {
     RTSP_dialog *dlg = new RTSP_dialog;
-    dlg->set_url(QUrl("192.168.1.66"));
+    dlg->set_url(QUrl("192.168.1.14"));
     int btn = dlg->exec();
     if(btn == RTSP_dialog::Accepted)
     {

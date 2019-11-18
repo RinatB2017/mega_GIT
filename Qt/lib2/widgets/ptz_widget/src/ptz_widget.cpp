@@ -90,8 +90,9 @@ void PTZ_widget::init(void)
 #ifdef Q_OS_LINUX
     // ui->le_address->setText("rtsp://192.168.1.66/av0_0");
     // ui->le_address->setText("rtsp://admin:admin@192.168.1.11:8001/0/video0");
-    ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
+    // ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
     // ui->le_address->setText("rtsp://192.168.1.11:554/user=admin&password=admind&channel=1&stream=0.cgi");
+    ui->le_address->setText("rtsp://admin:admin@192.168.1.14:81");
 #else
     ui->le_address->setText("rtsp://192.168.1.88/HD");
 #endif
@@ -101,7 +102,7 @@ void PTZ_widget::init(void)
     QByteArray ba;
     ba.append(ui->le_address->text());
     url = QUrl::fromEncoded(ba);
-    url.setPort(80);
+    url.setPort(81);
     emit info(QString("IP %1").arg(url.host()));
     //---
 
@@ -498,7 +499,7 @@ void PTZ_widget::stop(void)
 void PTZ_widget::choice(void)
 {
     PTZ_dialog *dlg = new PTZ_dialog;
-    dlg->set_url(QUrl("192.168.1.66"));
+    dlg->set_url(QUrl("192.168.1.14"));
     int btn = dlg->exec();
     if(btn == PTZ_dialog::Accepted)
     {
@@ -508,7 +509,7 @@ void PTZ_widget::choice(void)
         QByteArray ba;
         ba.append(ui->le_address->text());
         url = QUrl::fromEncoded(ba);
-        url.setPort(80);
+        url.setPort(81);
     }
     dlg->deleteLater();
 }
@@ -577,7 +578,15 @@ void PTZ_widget::send_cmd(QString  cmd,
     emit trace(Q_FUNC_INFO);
 
     QString param;
-    param.append(QString("http://%1/cgi-bin/senddata.cgi?").arg(url.host()));
+
+    //param.append(QString("https://admin:admin@%1:81/cgi-bin/senddata.cgi?").arg(url.host()));
+
+    //param.append(QString("http://%1/cgi-bin/senddata.cgi?").arg(url.host()));
+    param.append("http://");
+    param.append("admin:admin@");
+    param.append(QString("%1").arg(url.host()));
+    param.append("/cgi-bin/senddata.cgi?");
+
     param.append(QString("cmd=%1;").arg(cmd));
     param.append(QString("func=%1;").arg(func));
 
@@ -598,6 +607,8 @@ void PTZ_widget::send_cmd(QString  cmd,
     {
         param.append(QString("value2=%1;").arg(param_2.toString()));
     }
+
+    emit trace(QString("param = %1").arg(param));
 
     bool ok = false;
     ok = tcpSocket->isOpen();
@@ -634,7 +645,7 @@ void PTZ_widget::send_cmd(QString  cmd,
         f_disconnect();
         return;
     }
-#if 0
+#if 1
     ok = tcpSocket->waitForReadyRead(1000);
     if(!ok)
     {
@@ -658,7 +669,7 @@ bool PTZ_widget::f_connect(void)
     }
     int port = url.port();
 
-    emit debug(QString("%1:%2")
+    emit debug(QString("f_connect: %1:%2")
                .arg(ip)
                .arg(port));
 

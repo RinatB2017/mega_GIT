@@ -104,7 +104,7 @@ void mouseCallback(int event, int x, int y, int flags, void* userdata)
     }
 }
 
-void buttonCallback(int state, void* userdata)
+void buttonCallback(int state, void *userdata)
 {
     cout << "Button" << endl;
 }

@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include </usr/include/stdlib.h>
 #endif
@@ -86,7 +80,8 @@ void WebCamera::init(void)
     //---
 
     //ui->le_device->setText("rtsp://192.168.0.66:554/av0_1");
-    ui->le_device->setText("/dev/video0");
+    ui->le_device->setText("rtsp://admin:admin@192.168.1.14:81");
+    //ui->le_device->setText("/dev/video0");
 
     set_brightness(1);
     set_contrast(1);
@@ -212,7 +207,7 @@ void WebCamera::start(void)
         ui->sl_saturation->setDisabled(mCapture.get(CV_CAP_PROP_SATURATION) == 0.0);
         ui->sl_hue->setDisabled(mCapture.get(CV_CAP_PROP_HUE) == 0.0);
 
-        ui->cameraWidget->setFixedSize(w, h);
+        //TODO ui->cameraWidget->setFixedSize(w, h);
         ui->main_frame->setFixedWidth(ui->cameraWidget->width() + ui->frame->width());
 
         mCameraEventId = startTimer(0);    //50

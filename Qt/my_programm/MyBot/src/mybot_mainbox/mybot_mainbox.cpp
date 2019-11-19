@@ -59,7 +59,7 @@ void MainBox::init(void)
     connect(ui->btn_kdiamond,       SIGNAL(clicked(bool)),  this,   SLOT(run_kdiamond()));
     connect(ui->btn_find_programm,  SIGNAL(clicked(bool)),  this,   SLOT(find_programm()));
 
-    setFixedHeight(sizeHint().height());
+    //TODO setFixedHeight(sizeHint().height());
 
     camera = new WebCamera(this);
 
@@ -361,7 +361,9 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
+#if 0
     test_card();
+#endif
 
 #if 0
     QRect available_geom = QDesktopWidget().availableGeometry();
@@ -475,13 +477,11 @@ bool MainBox::test_card(void)
     namedWindow("Original", CV_WINDOW_AUTOSIZE);
     //namedWindow("Card", CV_WINDOW_AUTOSIZE);
 
-    //??? setMouseCallback("Processed", mouseCallback, NULL);
+    //TODO setMouseCallback("Processed", mouseCallback, NULL);
 
     createTrackbar("Threshold", "Original", &threshholdValue, 255);
 
-
     createTrackbar("Min canny threshold", "Original", &minCannyThreshold, maxCannyThreshold);
-
 
     createTrackbar("rho", "Original", &rho, 100);
     createTrackbar("line threshold", "Original", &linesThreshold, 255);

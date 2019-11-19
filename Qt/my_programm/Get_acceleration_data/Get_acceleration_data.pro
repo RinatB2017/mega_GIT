@@ -52,7 +52,8 @@ LIB_PATH2   = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
+
+include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 
 include (src/glwidget/glwidget_qt5.pri)
 include (src/lcd_widget/lcd_widget.pri)

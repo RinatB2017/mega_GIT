@@ -65,13 +65,6 @@ private slots:
     void onFinished( QNetworkReply* reply );
 
     void f_error(QMediaPlayer::Error err);
-    void s_error(QAbstractSocket::SocketError err);
-    void s_state(QAbstractSocket::SocketState state);
-
-    void read_data(void);
-
-    void f_connected(void);
-    void f_disconnected(void);
 
     void f_stop(void);
 
@@ -83,9 +76,10 @@ private slots:
 private:
     Ui::Simple_PTZ_widget *ui;
     QMediaPlayer *player = nullptr;
-    int port = 554;
 
-    QTcpSocket *tcpSocket = nullptr;
+    //int port = 554;
+    int port = 81;
+
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
 
@@ -99,7 +93,7 @@ private:
     void f_disconnect(void);
 
     void create_player(void);
-    void create_tcp_socket(void);
+    //void create_tcp_socket(void);
     void connect_position_widgets(void);
 
     void init(void);

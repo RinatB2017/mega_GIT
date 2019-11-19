@@ -102,6 +102,7 @@ void RTSP_widget::play(void)
         const QUrl url = QUrl(ui->le_address->text());
         const QNetworkRequest requestRtsp(url);
         player->setMedia(requestRtsp);
+        player->setVolume(0);   //TODO установить громкость
         player->play();
     }
     else

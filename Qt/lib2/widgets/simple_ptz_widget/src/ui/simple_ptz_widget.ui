@@ -93,6 +93,20 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="btn_left_right">
+        <property name="text">
+         <string>left-right</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_up_down">
+        <property name="text">
+         <string>up-down</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -283,6 +297,18 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>sb_port</tabstop>
+  <tabstop>le_login</tabstop>
+  <tabstop>le_password</tabstop>
+  <tabstop>btn_run</tabstop>
+  <tabstop>btn_left_right</tabstop>
+  <tabstop>btn_up_down</tabstop>
+  <tabstop>btn_u</tabstop>
+  <tabstop>btn_l</tabstop>
+  <tabstop>btn_r</tabstop>
+  <tabstop>btn_d</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../../icons/arrows/arrows.qrc"/>
  </resources>

@@ -21,26 +21,18 @@
 #ifndef SIMPLE_PTZ_WIDGET_HPP
 #define SIMPLE_PTZ_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QMediaPlayer>
-#include <QToolButton>
-#include <QSettings>
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include "mywidget.hpp"
+#include <QNetworkReply>
+#include <QMediaPlayer>
 //--------------------------------------------------------------------------------
-struct PTZ_PARAM
-{
-    QString cmd;
-    QString func;
-    QVariant param1;
-    QVariant param2;
-
-    QString btn_caption;
-    int min_value;
-    int max_value;
-};
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Simple_PTZ_widget;
@@ -73,6 +65,9 @@ private slots:
     void f_up(void);
     void f_down(void);
 
+    void f_left_right(void);
+    void f_up_down(void);
+
 private:
     Ui::Simple_PTZ_widget *ui;
     QMediaPlayer *player = nullptr;
@@ -85,15 +80,8 @@ private:
 
     QUrl url;
 
-    QList<PTZ_PARAM> l_params;
-
     void send_cmd(QString cmd);
-
-    bool f_connect(void);
-    void f_disconnect(void);
-
     void create_player(void);
-    //void create_tcp_socket(void);
     void connect_position_widgets(void);
 
     void init(void);

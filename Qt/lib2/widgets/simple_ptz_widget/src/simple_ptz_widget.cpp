@@ -18,13 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-#include <QNetworkReply>
-//--------------------------------------------------------------------------------
 #include "simple_ptz_widget.hpp"
 //--------------------------------------------------------------------------------
 #include "ui_simple_ptz_widget.h"
@@ -98,6 +91,9 @@ void Simple_PTZ_widget::connect_position_widgets(void)
     connect(ui->btn_r,  SIGNAL(released()), this,   SLOT(f_stop()));
     connect(ui->btn_u,  SIGNAL(released()), this,   SLOT(f_stop()));
     connect(ui->btn_d,  SIGNAL(released()), this,   SLOT(f_stop()));
+
+    connect(ui->btn_left_right, SIGNAL(clicked()),  this,   SLOT(f_left_right()));
+    connect(ui->btn_up_down,    SIGNAL(clicked()),  this,   SLOT(f_up_down()));
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -118,18 +114,16 @@ void Simple_PTZ_widget::f_error(QMediaPlayer::Error err)
 void Simple_PTZ_widget::onFinished( QNetworkReply* reply )
 {
     emit trace(Q_FUNC_INFO);
-    if( reply->error() == QNetworkReply::NoError )
+    if(reply->error() == QNetworkReply::NoError)
     {
-        QString data = QString::fromUtf8( reply->readAll() );
+        QString data = QString::fromUtf8(reply->readAll());
         emit debug(data);
     }
     else
     {
-        emit error( reply->errorString() );
+        emit error(reply->errorString());
     }
 
-    // Мы сами должны освободить память для reply
-    // Однако делать это через delete нельзя
     reply->deleteLater();
 }
 //--------------------------------------------------------------------------------
@@ -235,6 +229,16 @@ void Simple_PTZ_widget::f_down(void)
     send_cmd("down");
 }
 //--------------------------------------------------------------------------------
+void Simple_PTZ_widget::f_left_right(void)
+{
+    send_cmd("leftright");
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::f_up_down(void)
+{
+    send_cmd("updown");
+}
+//--------------------------------------------------------------------------------
 //http://192.168.1.14:81/moveptz.xml?dir=left
 //http://192.168.1.14:81/moveptz.xml?dir=right
 //http://192.168.1.14:81/moveptz.xml?dir=leftright
@@ -242,6 +246,7 @@ void Simple_PTZ_widget::f_down(void)
 
 //http://192.168.1.14:81/moveptz.xml?dir=down
 //http://192.168.1.14:81/videostream.cgi?stream=1
+
 void Simple_PTZ_widget::send_cmd(QString  cmd)
 {
     emit trace(Q_FUNC_INFO);
@@ -255,46 +260,15 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
     emit debug(QString("concatenated = [%1]").arg(concatenated));
 
-#if 0
-    QNetworkRequest request=QNetworkRequest(QUrl( param ));
-#else
     QByteArray data = concatenated.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
     QNetworkRequest request=QNetworkRequest(QUrl( param ));
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
     request.setRawHeader("Connection:", "keep-alive");
-#endif
     networkManager.get(request);
 
     emit trace(QString("param = %1").arg(param));
     emit info("OK");
-}
-//--------------------------------------------------------------------------------
-bool Simple_PTZ_widget::f_connect(void)
-{
-//    QString ip = url.host();
-//    if(ip.isEmpty())
-//    {
-//        emit error("ip is empty!");
-//        return false;
-//    }
-//    int port = url.port();
-
-//    emit debug(QString("f_connect: %1:%2")
-//               .arg(ip)
-//               .arg(port));
-
-//    tcpSocket->connectToHost(ip, static_cast<quint16>(port));
-    return true;
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::f_disconnect(void)
-{
-//    if(tcpSocket->isOpen())
-//    {
-//        tcpSocket->close();
-//    }
-//    tcpSocket->disconnectFromHost();
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::updateText(void)

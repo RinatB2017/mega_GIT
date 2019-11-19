@@ -40,6 +40,7 @@ SUBDIRS += \
     Test_RGB_Matrix \
     Test_RTSP_widget \
     Test_SerialBox5 \
+    Test_Simple_PTZ_widget \
     Test_libUSB \
     Test_model \
     Test_pixmap \

@@ -40,10 +40,6 @@ PTZ_widget::PTZ_widget(QWidget *parent) :
 PTZ_widget::~PTZ_widget()
 {
     save_widgets(APPNAME);
-    if(settings)
-    {
-        settings->deleteLater();
-    }
     if(player)
     {
         player->deleteLater();
@@ -73,12 +69,6 @@ void PTZ_widget::init(void)
 {
     ui->setupUi(this);
 
-#ifndef SAVE_INI
-    settings = new QSettings(ORGNAME, APPNAME);
-#else
-    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-#endif
-
     create_tcp_socket();
     create_player();
     connect_position_widgets();
@@ -96,7 +86,7 @@ void PTZ_widget::init(void)
     //ui->le_address->setText("rtsp://admin:admin@192.168.1.11");
     ui->le_address->setText("rtsp://admin:admin@192.168.1.14:81");
 #else
-    ui->le_address->setText("rtsp://192.168.1.88/HD");
+    ui->le_address->setText("rtsp://192.168.10.101");
 #endif
     ui->le_address->setEnabled(false);
 
@@ -518,8 +508,7 @@ void PTZ_widget::choice(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_stop(void)
 {
-    //send_cmd("ptz", "STOP", 0, 0);
-    send_cmd2("stop");
+    send_cmd("ptz", "STOP", 0, 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_up(void)
@@ -534,26 +523,22 @@ void PTZ_widget::f_right_up(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left(void)
 {
-    //send_cmd("ptz", "L", ui->sl_speed->value(), 0);
-    send_cmd2("left");
+    send_cmd("ptz", "L", ui->sl_speed->value(), 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right(void)
 {
-    //send_cmd("ptz", "R", ui->sl_speed->value(), 0);
-    send_cmd2("right");
+    send_cmd("ptz", "R", ui->sl_speed->value(), 0);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_up(void)
 {
-    //send_cmd("ptz", "U", 0, ui->sl_speed->value());
-    send_cmd2("up");
+    send_cmd("ptz", "U", 0, ui->sl_speed->value());
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_down(void)
 {
     send_cmd("ptz", "D", 0, ui->sl_speed->value());
-    send_cmd2("down");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_down(void)
@@ -667,72 +652,6 @@ void PTZ_widget::send_cmd(QString  cmd,
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-//http://192.168.1.14:81/moveptz.xml?dir=left
-//http://192.168.1.14:81/moveptz.xml?dir=right
-//http://192.168.1.14:81/moveptz.xml?dir=leftright
-//http://192.168.1.14:81/moveptz.xml?dir=updown
-void PTZ_widget::send_cmd2(QString  cmd)
-{
-    emit trace(Q_FUNC_INFO);
-
-    QString param;
-    param.append(QString("http://%1:%2/moveptz.xml?dir=%3")
-                 .arg(url.host())
-                 .arg(port)
-                 .arg(cmd));
-
-    emit trace(QString("param = %1").arg(param));
-
-    bool ok = false;
-    ok = tcpSocket->isOpen();
-    if(ok == false)
-    {
-        ok = f_connect();
-        if(ok == false)
-        {
-            return;
-        }
-    }
-
-    QByteArray reqStr;
-    reqStr.append(QString("GET %1 HTTP/1.1\r\n")
-                  .arg(param));
-
-    reqStr.append(QString("Host: %1\r\n").arg(url.host()));
-    reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
-    reqStr.append("Accept: */*\r\n");
-    reqStr.append("Referer: http://192.168.1.14:81/stream.htm\r\n");
-    //reqStr.append("Connection: close\r\n");
-    reqStr.append("\r\n");
-
-    qint64 bytes = tcpSocket->write(reqStr);
-    if(bytes < 0)
-    {
-        emit error(QString("write bytes %1").arg(bytes));
-        f_disconnect();
-        return;
-    }
-    ok = tcpSocket->waitForBytesWritten(1000);
-    if(!ok)
-    {
-        emit error("waitForBytesWritten");
-        f_disconnect();
-        return;
-    }
-#if 0
-    ok = tcpSocket->waitForReadyRead(1000);
-    if(!ok)
-    {
-        emit error("waitForReadyRead");
-        f_disconnect();
-        return;
-    }
-#endif
-    f_disconnect();
-
-    emit info("OK");
-}
-//--------------------------------------------------------------------------------
 bool PTZ_widget::f_connect(void)
 {
     QString ip = url.host();
@@ -758,42 +677,6 @@ void PTZ_widget::f_disconnect(void)
         tcpSocket->close();
     }
     tcpSocket->disconnectFromHost();
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::load_widgets(QString group_name)
-{
-    QList<QSlider *> allobj = findChildren<QSlider *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-    foreach (QSlider *obj, allobj)
-    {
-        if(!obj->objectName().isEmpty())
-        {
-            settings->beginGroup(obj->objectName());
-            obj->setSliderPosition(settings->value("position", 0).toInt());
-            settings->endGroup();
-        }
-    }
-    settings->endGroup();
-}
-//--------------------------------------------------------------------------------
-void PTZ_widget::save_widgets(QString group_name)
-{
-    QList<QSlider *> allobj = findChildren<QSlider *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-    foreach(QSlider *obj, allobj)
-    {
-        if(!obj->objectName().isEmpty())
-        {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("position", QVariant(obj->value()));
-            settings->endGroup();
-        }
-    }
-    settings->endGroup();
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::updateText(void)

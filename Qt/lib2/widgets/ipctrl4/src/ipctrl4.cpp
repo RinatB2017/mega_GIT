@@ -91,7 +91,7 @@ bool IPCtrl4::eventFilter(QObject *obj, QEvent *event)
         QKeyEvent* pEvent = dynamic_cast<QKeyEvent*>( event );
         if ( pEvent )
         {
-            for ( unsigned int i = 0; i != QTUTL_IP_SIZE; ++i )
+            for ( int i = 0; i != QTUTL_IP_SIZE; ++i )
             {
                 QLineEdit* pEdit = m_pLineEdit[i];
                 if ( pEdit == obj )

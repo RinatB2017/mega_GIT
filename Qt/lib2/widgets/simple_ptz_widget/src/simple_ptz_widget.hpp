@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef PTZ_WIDGET_HPP
-#define PTZ_WIDGET_HPP
+#ifndef SIMPLE_PTZ_WIDGET_HPP
+#define SIMPLE_PTZ_WIDGET_HPP
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
 #include <QToolButton>
@@ -43,24 +43,18 @@ struct PTZ_PARAM
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class PTZ_widget;
+    class Simple_PTZ_widget;
 }
 //--------------------------------------------------------------------------------
 class MainBox;
 //--------------------------------------------------------------------------------
-class PTZ_widget : public MyWidget
+class Simple_PTZ_widget : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit PTZ_widget(QWidget *parent = nullptr);
-    ~PTZ_widget();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    explicit Simple_PTZ_widget(QWidget *parent = nullptr);
+    ~Simple_PTZ_widget();
 
 public slots:
     void play(void);
@@ -68,7 +62,8 @@ public slots:
     void stop(void);
 
 private slots:
-    void choice(void);
+    void onFinished( QNetworkReply* reply );
+
     void f_error(QMediaPlayer::Error err);
     void s_error(QAbstractSocket::SocketError err);
     void s_state(QAbstractSocket::SocketState state);
@@ -80,34 +75,13 @@ private slots:
 
     void f_stop(void);
 
-    void f_left_up(void);
-    void f_right_up(void);
-
     void f_left(void);
     void f_right(void);
     void f_up(void);
     void f_down(void);
 
-    void f_left_down(void);
-    void f_right_down(void);
-
-    void f_test(void);
-
-    void f_push_button(void);
-    void f_move_slider(void);
-
-    //---
-    void add_buttons(int index,
-                     QString name,
-                     PTZ_PARAM param1,
-                     PTZ_PARAM param2);
-    void add_slider(int index,
-                    QString name,
-                    PTZ_PARAM params);
-    //---
-
 private:
-    Ui::PTZ_widget *ui;
+    Ui::Simple_PTZ_widget *ui;
     QMediaPlayer *player = nullptr;
     int port = 554;
 
@@ -119,10 +93,7 @@ private:
 
     QList<PTZ_PARAM> l_params;
 
-    void send_cmd(QString cmd,
-                  QString func,
-                  QVariant param_1,
-                  QVariant param_2);
+    void send_cmd(QString cmd);
 
     bool f_connect(void);
     void f_disconnect(void);

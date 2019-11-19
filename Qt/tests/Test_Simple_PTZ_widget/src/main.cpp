@@ -24,7 +24,7 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "ptz_widget.hpp"
+#include "simple_ptz_widget.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow;
 
-    PTZ_widget *mainBox = new PTZ_widget(main_window->getThis());
+    Simple_PTZ_widget *mainBox = new Simple_PTZ_widget(main_window->getThis());
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

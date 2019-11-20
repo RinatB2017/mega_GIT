@@ -65,6 +65,7 @@ SUBDIRS += \
     Test_mouse \
     Test_SDL \
     Test_SDLWidget \
+    Test_TCP_UDP_bridge \
     Test_YouTube \
     Tester
     

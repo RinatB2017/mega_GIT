@@ -80,7 +80,8 @@ void WebCamera::init(void)
     //---
 
     //ui->le_device->setText("rtsp://192.168.0.66:554/av0_1");
-    ui->le_device->setText("rtsp://admin:admin@192.168.1.14:81");
+    //ui->le_device->setText("rtsp://admin:admin@192.168.1.14:81");
+    ui->le_device->setText("rtsp://admin:admin@192.168.1.11:81");
     //ui->le_device->setText("/dev/video0");
 
     set_brightness(1);
@@ -103,6 +104,25 @@ void WebCamera::init(void)
     connect(ui->sl_saturation,  SIGNAL(valueChanged(int)),  this,   SLOT(set_saturation(int)));
     connect(ui->sl_hue,         SIGNAL(valueChanged(int)),  this,   SLOT(set_hue(int)));
     //connect(ui->cb_autofocus,   SIGNAL(toggled(bool)),      this,   SLOT(set_autofocus(bool)));
+    connect(ui->btn_set_device, SIGNAL(clicked(bool)),      this,   SLOT(set_device()));
+}
+//--------------------------------------------------------------------------------
+void WebCamera::set_device(void)
+{
+    QInputDialog *dlg = new QInputDialog(this);
+    dlg->setTextValue(ui->le_device->text());
+    dlg->setLabelText("URL");
+    dlg->resize(400, 50);
+
+    int btn = dlg->exec();
+    if(btn == QInputDialog::Accepted)
+    {
+        QString device = dlg->textValue();
+        if(!device.isEmpty())
+        {
+            ui->le_device->setText(device);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 bool WebCamera::create_detectors(void)

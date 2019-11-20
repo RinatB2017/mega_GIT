@@ -76,6 +76,7 @@ private slots:
     void set_saturation(int value);
     void set_hue(int value);
     void set_autofocus(bool state);
+    void set_device(void);
 
 private:
     Ui::WebCamera *ui;

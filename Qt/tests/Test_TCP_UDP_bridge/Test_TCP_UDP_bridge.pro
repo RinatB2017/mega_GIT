@@ -9,8 +9,8 @@ FOLDER  = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/test_thread_mainbox \
-    $$PWD/src/test_thread_mainbox/ui \
+    $$PWD/src/test_tcp_udp_thread_mainbox \
+    $$PWD/src/test_tcp_udp_thread_mainbox/ui \
     $$PWD/src/worker
 INCLUDEPATH = $$DEPENDPATH
 
@@ -19,18 +19,20 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 #DEFINES += NO_LOG
 
+QT  += network
+
 HEADERS += \
-    test_thread_mainbox.hpp \
+    test_tcp_udp_thread_mainbox.hpp \
     defines.hpp \
     version.hpp \
     mythread.hpp
 
 SOURCES += \
-    test_thread_mainbox.cpp \
-    main.cpp \
-    mythread.cpp
+    test_tcp_udp_thread_mainbox.cpp \
+    mythread.cpp \
+    main.cpp
 
-FORMS   += test_thread_mainbox.ui
+FORMS   += test_tcp_udp_thread_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 

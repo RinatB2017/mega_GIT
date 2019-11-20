@@ -21,6 +21,8 @@
 #ifndef MYTHREAD_HPP
 #define MYTHREAD_HPP
 //--------------------------------------------------------------------------------
+#include <QTcpServer>
+#include <QUdpSocket>
 #include <QDateTime>
 #include <QWidget>
 //--------------------------------------------------------------------------------
@@ -43,11 +45,22 @@ signals:
 public slots:
     void process(void);
 
+    void set_port1(quint16 value);
+    void set_port2(quint16 value);
+
     void start(void);
     void stop(void);
 
 private:
     bool flag_exit = false;
+
+    QUdpSocket *udp_socket1 = nullptr;
+    QUdpSocket *udp_socket2 = nullptr;
+
+    quint16 port1 = 0;
+    quint16 port2 = 0;
+
+    void init(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MYTHREAD_HPP

@@ -26,12 +26,13 @@
 MyThread::MyThread(QObject *parent) :
     QObject(parent)
 {
-
+    init();
 }
 //--------------------------------------------------------------------------------
 MyThread::~MyThread()
 {
-
+    if(udp_socket1) udp_socket1->deleteLater();
+    if(udp_socket2) udp_socket2->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MyThread::process(void)
@@ -42,6 +43,22 @@ void MyThread::process(void)
 
     }
     emit finished();
+}
+//--------------------------------------------------------------------------------
+void MyThread::init(void)
+{
+    udp_socket1 = new QUdpSocket(this);
+    udp_socket2 = new QUdpSocket(this);
+}
+//--------------------------------------------------------------------------------
+void MyThread::set_port1(quint16 value)
+{
+    port1 = value;
+}
+//--------------------------------------------------------------------------------
+void MyThread::set_port2(quint16 value)
+{
+    port2 = value;
 }
 //--------------------------------------------------------------------------------
 void MyThread::start(void)

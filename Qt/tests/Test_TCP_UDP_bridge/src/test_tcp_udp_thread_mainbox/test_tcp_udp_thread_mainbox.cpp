@@ -18,12 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_test_thread_mainbox.h"
+#include "ui_test_tcp_udp_thread_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "test_thread_mainbox.hpp"
+#include "test_tcp_udp_thread_mainbox.hpp"
 #include "mythread.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG

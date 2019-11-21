@@ -456,7 +456,7 @@ void WebCamera::test(void)
     vector< Rect > noseVec;
     vector< Rect > mouthVec;
 
-    QString filename ;
+    QString filename;
     QFileDialog *dlg;
 
     dlg = new QFileDialog;
@@ -471,6 +471,7 @@ void WebCamera::test(void)
     }
     if(filename.isEmpty())
     {
+        emit error("Filename is empty");
         return;
     }
 

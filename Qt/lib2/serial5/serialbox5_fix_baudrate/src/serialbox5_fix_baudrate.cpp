@@ -128,7 +128,7 @@ void SerialBox5_fix_baudrate::init(void)
 
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     //setFixedWidth(sizeHint().width());
-    setFixedHeight(sizeHint().height());
+    //setFixedHeight(sizeHint().height());
     updateText();
 }
 //--------------------------------------------------------------------------------

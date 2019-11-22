@@ -178,6 +178,7 @@ void WebCamera::start(void)
     bool ok = create_detectors();
     if(ok == false)
     {
+        emit error("create_detectors return FALSE");
         return;
     }
 
@@ -197,13 +198,35 @@ void WebCamera::start(void)
     }
     else
     {
-        mCapture.open(dev_name.toLatin1().data());
+        if(ui->rb_usb->isChecked())
+        {
+            QString usb_device = ui->le_usb_device->text();
+            if(usb_device.isEmpty())
+            {
+                emit error("USB device is empty");
+                return;
+            }
+            mCapture.open(usb_device.toLatin1().data());
+        }
+        else
+        {
+            QString rtsp_device = dev_name;
+            if(rtsp_device.isEmpty())
+            {
+                    emit error("RTSP device is empty");
+                    return;
+            }
+            mCapture.open(rtsp_device.toLatin1().data());
+        }
     }
 
     //mCapture.open("rtsp://192.168.0.66:554/av0_0");
     //mCapture.open("rtsp://192.168.0.66:554/av0_1");
     //mcapture("rtsp://USER:PASS@xxx.xxx.xxx.xxx/axis-media/media.amp?camera=2");
     //mCapture.open(0);
+
+    // gst-launch-1.0 rtspsrc latency=0
+
     if(mCapture.isOpened())
     {
         ui->sl_brightness->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_BRIGHTNESS) * 100.0));

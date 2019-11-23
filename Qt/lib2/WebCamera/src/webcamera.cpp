@@ -240,6 +240,9 @@ void WebCamera::start(void)
         //set_autofocus(true);
         mCapture.set(CV_CAP_PROP_AUTOFOCUS, 1);
 
+        //TODO пробуем убрать ошибку
+        //mCapture.set(CV_CAP_PROP_BUFFERSIZE, 3); // internal buffer will now store only 3 frames
+
         int w = static_cast<int>(mCapture.get(CV_CAP_PROP_FRAME_WIDTH));
         int h = static_cast<int>(mCapture.get(CV_CAP_PROP_FRAME_HEIGHT));
 
@@ -473,6 +476,18 @@ void WebCamera::show_image_hw(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test(void)
 {
+#if 1
+    //mCapture.set(CV_CAP_PROP_BRIGHTNESS, 100.0);
+
+    if(mCapture.isOpened())
+    {
+        emit info(QString("brightness %1").arg(mCapture.get(CV_CAP_PROP_BRIGHTNESS)));
+    }
+    else
+    {
+        emit error("Camera not opened!");
+    }
+#else
     emit trace(Q_FUNC_INFO);
     vector< Rect > faceVec;
     vector< Rect > eyeVec;
@@ -557,6 +572,7 @@ void WebCamera::test(void)
 
     ui->cameraWidget->showImage(mElabImage);
     ui->cameraWidget->adjustSize();
+#endif
 }
 //--------------------------------------------------------------------------------
 void WebCamera::test2(void)

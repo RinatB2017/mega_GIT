@@ -35,6 +35,7 @@
 #include "mainwindow.hpp"
 #include "defines.hpp"
 #include "test_ADC_mainbox.hpp"
+#include "adc_label.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER
 #   include "grapherbox.hpp"
@@ -58,12 +59,10 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+    createTestBar();
 
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
-
-    // ui->grapher_widget->set_legend_is_visible(true);
 
     ui->grapher_widget->set_title("ADC");
     ui->grapher_widget->set_title_axis_X("time");
@@ -78,23 +77,34 @@ void MainBox::init(void)
 
     ui->grapher_widget->push_btn_Horizontal(true);
     ui->grapher_widget->push_btn_Vertical(true);
-
-    curve_A0 = ui->grapher_widget->add_curve("A0");
-    curve_A1 = ui->grapher_widget->add_curve("A1");
-    curve_A2 = ui->grapher_widget->add_curve("A2");
-    curve_A3 = ui->grapher_widget->add_curve("A3");
-    curve_A4 = ui->grapher_widget->add_curve("A4");
-    curve_A5 = ui->grapher_widget->add_curve("A5");
-
-    QList<QLCDNumber *> allobj = findChildren<QLCDNumber *>();
-    foreach (QLCDNumber *obj, allobj)
-    {
-        obj->setFixedSize(220, 48);
-        obj->setDigitCount(6);
-    }
 #else
     ui->grapher_widget->setVisible(false);
 #endif
+
+    curves.clear();
+    //---
+    //TODO криво, надо переделать
+    ui->lcd_layout->setMargin(0);
+    ui->lcd_layout->setSpacing(0);
+    curves.clear();
+    CURVES cur;
+    for(int n=0; n<6; n++)
+    {
+        QString curve_name = QString("A%1:").arg(n);
+        ADC_label *adc_label = new ADC_label(curve_name, this);
+
+        cur.name = QString("A%1:").arg(n);
+        cur.obj = adc_label;
+#ifndef NO_GRAPHER
+        cur.curve_index = ui->grapher_widget->add_curve(curve_name);
+#else
+        cur.curve_index = 0;
+#endif
+
+        curves.append(cur);
+        ui->lcd_layout->addWidget(curves.at(n).obj);
+    }
+    //---
 
     ui->serial_widget->set_fix_baudrate(57600);
 
@@ -103,21 +113,34 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
-    QToolBar *testbar = new QToolBar(tr("testbar"));
-    testbar->setObjectName("testbar");
+    commands.clear();
+    commands.append({ ID_TEST_0, "create curves", &MainBox::test_0 });
+    commands.append({ ID_TEST_1, "resize curves", &MainBox::test_1 });
 
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                       "test",
-                                       "test");
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
 
-    connect(btn_test,   SIGNAL(clicked()),  this,   SLOT(test()));
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
@@ -183,41 +206,80 @@ void MainBox::data_ADC(const QByteArray &ba)
 //--------------------------------------------------------------------------------
 void MainBox::show_data_ADC(QStringList sl)
 {
-    if(sl.count() != 6)
+    if(sl.count() != curves.count())
     {
         emit error(QString("Bad cnt %1").arg(sl.count()));
         emit error(QString("data_str [%1]").arg(data_str));
         return;
     }
-    int A0 = sl.at(0).toInt();
-    int A1 = sl.at(1).toInt();
-    int A2 = sl.at(2).toInt();
-    int A3 = sl.at(3).toInt();
-    int A4 = sl.at(4).toInt();
-    int A5 = sl.at(5).toInt();
-
+    int max_index = sl.count();
+    for(int index=0; index<max_index; index++)
+    {
+        int value = sl.at(index).toInt();
 #ifndef NO_GRAPHER
-    ui->grapher_widget->add_curve_data(curve_A0,    convert_adc(A0));
-    ui->grapher_widget->add_curve_data(curve_A1,    convert_adc(A1));
-    ui->grapher_widget->add_curve_data(curve_A2,    convert_adc(A2));
-    ui->grapher_widget->add_curve_data(curve_A3,    convert_adc(A3));
-    ui->grapher_widget->add_curve_data(curve_A4,    convert_adc(A4));
-    ui->grapher_widget->add_curve_data(curve_A5,    convert_adc(A5));
+        ui->grapher_widget->add_curve_data(curves.at(index).curve_index,    convert_adc(value));
 #endif
-
-    ui->display_A0->display(convert(convert_adc(A0)));
-    ui->display_A1->display(convert(convert_adc(A1)));
-    ui->display_A2->display(convert(convert_adc(A2)));
-    ui->display_A3->display(convert(convert_adc(A3)));
-    ui->display_A4->display(convert(convert_adc(A4)));
-    ui->display_A5->display(convert(convert_adc(A5)));
-
-    //emit info(data);
+        curves.at(index).obj->display(convert(convert_adc(value)));
+    }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::choice_test(void)
 {
-    emit info("test");
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef void (MainBox::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_0(void)
+{
+    emit info("Test_0()");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_1(void)
+{
+    emit info("Test_1()");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_2(void)
+{
+    emit info("Test_2()");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_3(void)
+{
+    emit info("Test_3()");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_4(void)
+{
+    emit info("Test_4()");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_5(void)
+{
+    emit info("Test_5()");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

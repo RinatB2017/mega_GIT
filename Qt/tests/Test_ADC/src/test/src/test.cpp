@@ -49,6 +49,7 @@ void Test::test_grapher(void)
     return;
 #endif
 
+#if 0
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
 
@@ -76,6 +77,7 @@ void Test::test_grapher(void)
         gb->get_curve_data(0, n, &x);
         QCOMPARE((int)x, n);
     }
+#endif
 }
 #endif
 //--------------------------------------------------------------------------------

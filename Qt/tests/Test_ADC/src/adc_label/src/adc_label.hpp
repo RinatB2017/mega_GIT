@@ -18,91 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef ADC_LABEL_HPP
+#define ADC_LABEL_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#include "adc_label.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
-
-struct CURVES
-{
-    QString name;
-    ADC_label *obj;
-    int curve_index;
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class ADC_label;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class ADC_label : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    explicit ADC_label(QString lbl_name, QWidget *parent = nullptr);
+    ~ADC_label();
 
-private slots:
-    void data_ADC(const QByteArray &ba);
-    void show_data_ADC(QStringList sl);
-
-    void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
-    void test_4(void);
-    void test_5(void);
+    void display(double num);
+    void display(int num);
+    void display(const QString &s);
 
 private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        void (MainBox::*func)(void);
-    } CMD_t;
-
-    QComboBox *cb_test;
-    QList<CMD> commands;
-
-    QString data_str;
-    bool flag_good_data = false;
-
-    QList<CURVES> curves;
-
-    QString convert(qreal value);
-    qreal convert_adc(int value);
+    Ui::ADC_label *ui;
+    QString label;
 
     void init(void);
-    void createTestBar(void);
 
     void updateText(void);
     bool programm_is_exit(void);
@@ -110,4 +57,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // ADC_LABEL_HPP

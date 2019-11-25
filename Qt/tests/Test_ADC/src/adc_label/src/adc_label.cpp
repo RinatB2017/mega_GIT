@@ -18,96 +18,64 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
 #include "adc_label.hpp"
-#include "mywidget.hpp"
+#include "ui_adc_label.h"
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
-
-struct CURVES
+ADC_label::ADC_label(QString lbl_name, QWidget *parent) :
+    MyWidget(parent),
+    ui(new Ui::ADC_label)
 {
-    QString name;
-    ADC_label *obj;
-    int curve_index;
-};
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+    label = lbl_name;
+
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+ADC_label::~ADC_label()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void data_ADC(const QByteArray &ba);
-    void show_data_ADC(QStringList sl);
-
-    void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
-    void test_4(void);
-    void test_5(void);
-
-private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        void (MainBox::*func)(void);
-    } CMD_t;
-
-    QComboBox *cb_test;
-    QList<CMD> commands;
-
-    QString data_str;
-    bool flag_good_data = false;
-
-    QList<CURVES> curves;
-
-    QString convert(qreal value);
-    qreal convert_adc(int value);
-
-    void init(void);
-    void createTestBar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void ADC_label::init(void)
+{
+    ui->setupUi(this);
+
+    ui->lbl_name->setText(label);
+    ui->lcd_value->setFixedSize(220, 48);
+    ui->lcd_value->setDigitCount(6);
+}
+//--------------------------------------------------------------------------------
+void ADC_label::display(double num)
+{
+    ui->lcd_value->display(num);
+}
+//--------------------------------------------------------------------------------
+void ADC_label::display(int num)
+{
+    ui->lcd_value->display(num);
+}
+//--------------------------------------------------------------------------------
+void ADC_label::display(const QString &s)
+{
+    ui->lcd_value->display(s);
+}
+//--------------------------------------------------------------------------------
+void ADC_label::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+bool ADC_label::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void ADC_label::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void ADC_label::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------

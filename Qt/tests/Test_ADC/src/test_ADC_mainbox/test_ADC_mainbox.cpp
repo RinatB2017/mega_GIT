@@ -254,32 +254,57 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 void MainBox::test_0(void)
 {
-    emit info("Test_0()");
+    emit trace(Q_FUNC_INFO);
+
+    ui->grapher_widget->remove_all_curve();
+    for(int n=0; n<curves.count(); n++)
+    {
+        curves[n].obj->deleteLater();
+    }
+    curves.clear();
+
+    CURVES cur;
+    for(int n=0; n<5; n++)
+    {
+        QString curve_name = QString("A%1:").arg(n);
+        ADC_label *adc_label = new ADC_label(curve_name, this);
+
+        cur.name = QString("A%1:").arg(n);
+        cur.obj = adc_label;
+#ifndef NO_GRAPHER
+        cur.curve_index = ui->grapher_widget->add_curve(curve_name);
+#else
+        cur.curve_index = 0;
+#endif
+
+        curves.append(cur);
+        ui->lcd_layout->addWidget(curves.at(n).obj);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
-    emit info("Test_1()");
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)
 {
-    emit info("Test_2()");
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_3(void)
 {
-    emit info("Test_3()");
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_4(void)
 {
-    emit info("Test_4()");
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_5(void)
 {
-    emit info("Test_5()");
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

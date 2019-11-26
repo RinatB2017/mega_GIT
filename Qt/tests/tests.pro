@@ -21,7 +21,6 @@ SUBDIRS += \
     Test_HistogramBox \
     Test_HID_device \
     Test_HTML \
-    Test_HTU21D \
     Test_QHexEdit \
     Test_mesh \
     Test_md5 \
@@ -69,11 +68,6 @@ SUBDIRS += \
     Test_YouTube \
     Tester
     
-SUBDIRS += \
-    Test_ADXL345 \
-    Test_GY-652 \
-    Test_MPU-6050
-
 unix {
 SUBDIRS += \
     Test_Box2D \

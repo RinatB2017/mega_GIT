@@ -81,28 +81,15 @@ void MainBox::init(void)
     ui->grapher_widget->setVisible(false);
 #endif
 
-    curves.clear();
-    //---
     //TODO криво, надо переделать
     ui->lcd_layout->setMargin(0);
     ui->lcd_layout->setSpacing(0);
-    curves.clear();
-    CURVES cur;
+
+    clr_curves();
     for(int n=0; n<6; n++)
     {
-        QString curve_name = QString("A%1:").arg(n);
-        ADC_label *adc_label = new ADC_label(curve_name, this);
-
-        cur.name = QString("A%1:").arg(n);
-        cur.obj = adc_label;
-#ifndef NO_GRAPHER
-        cur.curve_index = ui->grapher_widget->add_curve(curve_name);
-#else
-        cur.curve_index = 0;
-#endif
-
-        curves.append(cur);
-        ui->lcd_layout->addWidget(curves.at(n).obj);
+        QString curve_name = QString("A%1").arg(n);
+        add_curve(curve_name);
     }
     //---
 
@@ -117,8 +104,12 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear();
-    commands.append({ ID_TEST_0, "create curves", &MainBox::test_0 });
-    commands.append({ ID_TEST_1, "resize curves", &MainBox::test_1 });
+    commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
+    commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
+    commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
+    commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
+    commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
+    commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -187,7 +178,7 @@ void MainBox::data_ADC(const QByteArray &ba)
         case '\n':
             if(flag_good_data)
             {
-                show_data_ADC(data_str.split("|"));
+                analize_packet(data_str.split("|"));
                 data_str.clear();
                 flag_good_data = false;
             }
@@ -204,14 +195,38 @@ void MainBox::data_ADC(const QByteArray &ba)
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_data_ADC(QStringList sl)
+void MainBox::analize_packet(QStringList sl)
 {
-    if(sl.count() != curves.count())
+    int cnt = sl.count();
+    if(cnt < 1)
     {
-        emit error(QString("Bad cnt %1").arg(sl.count()));
-        emit error(QString("data_str [%1]").arg(data_str));
         return;
     }
+    // emit trace(sl.at(0));
+    if(sl.at(0) == "curves")
+    {
+        sl.removeFirst();
+        clr_curves();
+        add_curves(sl);
+    }
+    if(sl.at(0) == "data")
+    {
+        sl.removeFirst();
+        show_data_ADC(sl);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::add_curves(QStringList sl)
+{
+    // emit trace(Q_FUNC_INFO);
+    foreach(QString curve_name, sl)
+    {
+        add_curve(curve_name);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_data_ADC(QStringList sl)
+{
     int max_index = sl.count();
     for(int index=0; index<max_index; index++)
     {
@@ -252,39 +267,48 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+void MainBox::add_curve(QString curve_name)
 {
-    emit trace(Q_FUNC_INFO);
+    // emit trace(Q_FUNC_INFO);
 
+    ADC_label *adc_label = new ADC_label(curve_name, this);
+    CURVES cur;
+
+    cur.name = curve_name;
+    cur.obj = adc_label;
+#ifndef NO_GRAPHER
+    cur.curve_index = ui->grapher_widget->add_curve(curve_name);
+#else
+    cur.curve_index = 0;
+#endif
+
+    curves.append(cur);
+    ui->lcd_layout->addWidget(adc_label);
+}
+//--------------------------------------------------------------------------------
+void MainBox::clr_curves(void)
+{
+    // emit trace(Q_FUNC_INFO);
     ui->grapher_widget->remove_all_curve();
     for(int n=0; n<curves.count(); n++)
     {
         curves[n].obj->deleteLater();
     }
     curves.clear();
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_0(void)
+{
+    emit trace(Q_FUNC_INFO);
 
-    CURVES cur;
-    for(int n=0; n<5; n++)
-    {
-        QString curve_name = QString("A%1:").arg(n);
-        ADC_label *adc_label = new ADC_label(curve_name, this);
-
-        cur.name = QString("A%1:").arg(n);
-        cur.obj = adc_label;
-#ifndef NO_GRAPHER
-        cur.curve_index = ui->grapher_widget->add_curve(curve_name);
-#else
-        cur.curve_index = 0;
-#endif
-
-        curves.append(cur);
-        ui->lcd_layout->addWidget(curves.at(n).obj);
-    }
+    clr_curves();
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
+
+    add_curve("ADC1");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)

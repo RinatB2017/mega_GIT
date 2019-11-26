@@ -60,7 +60,6 @@ public:
 
 private slots:
     void data_ADC(const QByteArray &ba);
-    void show_data_ADC(QStringList sl);
 
     void choice_test(void);
     void test_0(void);
@@ -101,8 +100,16 @@ private:
     QString convert(qreal value);
     qreal convert_adc(int value);
 
+    void analize_packet(QStringList sl);
+
     void init(void);
     void createTestBar(void);
+
+    void add_curves(QStringList sl);
+    void show_data_ADC(QStringList sl);
+
+    void add_curve(QString curve_name);
+    void clr_curves(void);
 
     void updateText(void);
     bool programm_is_exit(void);

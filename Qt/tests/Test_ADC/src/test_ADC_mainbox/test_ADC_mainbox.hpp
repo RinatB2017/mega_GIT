@@ -98,7 +98,8 @@ private:
     QList<CURVES> curves;
 
     QString convert(qreal value);
-    qreal convert_adc(int value);
+    qreal convert_adc(QVariant value);
+    QVariant convert_string(QString str_value);
 
     void analize_packet(QStringList sl);
 

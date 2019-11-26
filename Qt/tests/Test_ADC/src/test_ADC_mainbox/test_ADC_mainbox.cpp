@@ -68,7 +68,7 @@ void MainBox::init(void)
 
     ui->grapher_widget->set_title("ADC");
     ui->grapher_widget->set_title_axis_X("time");
-    ui->grapher_widget->set_title_axis_Y("voltage");
+    ui->grapher_widget->set_title_axis_Y("value");
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 5);
 
@@ -83,7 +83,6 @@ void MainBox::init(void)
     ui->grapher_widget->setVisible(false);
 #endif
 
-    //TODO криво, надо переделать
     ui->lcd_layout->setMargin(0);
     ui->lcd_layout->setSpacing(0);
 
@@ -93,7 +92,6 @@ void MainBox::init(void)
         QString curve_name = QString("A%1").arg(n);
         add_curve(curve_name);
     }
-    //---
 
     ui->serial_widget->set_fix_baudrate(57600);
 
@@ -142,7 +140,7 @@ QString MainBox::convert(qreal value)
     return QString("%1").arg(value, 0, 'f', 2);
 }
 //--------------------------------------------------------------------------------
-qreal MainBox::convert_adc(int value)
+qreal MainBox::convert_adc(QVariant value)
 {
     // 5V
     // 10 bit
@@ -150,7 +148,20 @@ qreal MainBox::convert_adc(int value)
     // 1024 - 5V
     // x    - y
 
-    qreal res = static_cast<qreal>(value) * 5.0 / 1024.0;
+    qreal res = -1;
+
+    bool ok = false;
+
+    int i_value = value.toInt(&ok);
+    if(ok) res = i_value;   // * 5 / 1024;
+
+    double d_value = value.toDouble(&ok);
+    if(ok) res = d_value;   // * 5.0 / 1024.0;
+
+    float f_value = value.toFloat(&ok);
+    if(ok) res = static_cast<qreal>(f_value);   // * 5.0f / 1024.0f);
+
+    //static_cast<qreal>(value) * 5.0 / 1024.0;
     return res;
 }
 //--------------------------------------------------------------------------------
@@ -202,6 +213,7 @@ void MainBox::analize_packet(QStringList sl)
     int cnt = sl.count();
     if(cnt < 1)
     {
+        emit error("cnt < 1");
         return;
     }
     // emit trace(sl.at(0));
@@ -227,16 +239,44 @@ void MainBox::add_curves(QStringList sl)
     }
 }
 //--------------------------------------------------------------------------------
+QVariant MainBox::convert_string(QString str_value)
+{
+    bool ok = false;
+    QVariant value = -1;
+
+    value = str_value.toInt(&ok);
+    if(ok)
+    {
+        return value;
+    }
+
+    value = str_value.toDouble(&ok);
+    if(ok)
+    {
+        return value;
+    }
+
+    value = str_value.toFloat(&ok);
+    if(ok)
+    {
+        return value;
+    }
+
+    emit error("unknown format");
+    return value;
+}
+//--------------------------------------------------------------------------------
 void MainBox::show_data_ADC(QStringList sl)
 {
     int max_index = sl.count();
     if(curves.length() != max_index)
     {
+        emit error("curves.length() != max_index");
         return;
     }
     for(int index=0; index<max_index; index++)
     {
-        int value = sl.at(index).toInt();
+        QVariant value = convert_string(sl.at(index));
 #ifndef NO_GRAPHER
         ui->grapher_widget->add_curve_data(curves.at(index).curve_index,    convert_adc(value));
 #endif

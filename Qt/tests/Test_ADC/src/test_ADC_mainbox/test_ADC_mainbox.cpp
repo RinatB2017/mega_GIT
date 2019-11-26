@@ -59,7 +59,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
@@ -228,6 +230,10 @@ void MainBox::add_curves(QStringList sl)
 void MainBox::show_data_ADC(QStringList sl)
 {
     int max_index = sl.count();
+    if(curves.length() != max_index)
+    {
+        return;
+    }
     for(int index=0; index<max_index; index++)
     {
         int value = sl.at(index).toInt();

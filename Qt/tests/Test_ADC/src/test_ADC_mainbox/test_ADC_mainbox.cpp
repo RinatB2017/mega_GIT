@@ -66,7 +66,7 @@ void MainBox::init(void)
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
-    ui->grapher_widget->set_title("ADC");
+    ui->grapher_widget->set_title("Sensors");
     ui->grapher_widget->set_title_axis_X("time");
     ui->grapher_widget->set_title_axis_Y("value");
     ui->grapher_widget->set_axis_scale_x(0, 100);
@@ -153,15 +153,14 @@ qreal MainBox::convert_adc(QVariant value)
     bool ok = false;
 
     int i_value = value.toInt(&ok);
-    if(ok) res = i_value;   // * 5 / 1024;
+    if(ok) res = i_value;
 
     double d_value = value.toDouble(&ok);
-    if(ok) res = d_value;   // * 5.0 / 1024.0;
+    if(ok) res = d_value;
 
     float f_value = value.toFloat(&ok);
-    if(ok) res = static_cast<qreal>(f_value);   // * 5.0f / 1024.0f);
+    if(ok) res = static_cast<qreal>(f_value);
 
-    //static_cast<qreal>(value) * 5.0 / 1024.0;
     return res;
 }
 //--------------------------------------------------------------------------------

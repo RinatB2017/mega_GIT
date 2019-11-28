@@ -141,7 +141,8 @@ void MainBox::init(void)
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
     //ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
     //ui->le_address->setText("http://fgramota.org/game/");
-    ui->le_address->setText("https://free-socks.in");
+    // ui->le_address->setText("https://free-socks.in");
+    ui->le_address->setText("https://whatismyipaddress.com/");
 
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 

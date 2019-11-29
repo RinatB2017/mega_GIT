@@ -126,7 +126,7 @@ extern "C" {
 		    @returns
 		    	This function returns a pointer to a linked list of type
 		    	struct #hid_device, containing information about the HID devices
-		    	attached to the system, or NULL in the case of failure. Free
+		    	attached to the system, or nullptr in the case of failure. Free
 		    	this linked list by calling hid_free_enumeration().
 		*/
 		struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned short vendor_id, unsigned short product_id);
@@ -144,18 +144,18 @@ extern "C" {
 		/** @brief Open a HID device using a Vendor ID (VID), Product ID
 			(PID) and optionally a serial number.
 
-			If @p serial_number is NULL, the first device with the
+			If @p serial_number is nullptr, the first device with the
 			specified VID and PID is opened.
 
 			@ingroup API
 			@param vendor_id The Vendor ID (VID) of the device to open.
 			@param product_id The Product ID (PID) of the device to open.
 			@param serial_number The Serial Number of the device to open
-				               (Optionally NULL).
+				               (Optionally nullptr).
 
 			@returns
 				This function returns a pointer to a #hid_device object on
-				success or NULL on failure.
+				success or nullptr on failure.
 		*/
 		HID_API_EXPORT hid_device * HID_API_CALL hid_open(unsigned short vendor_id, unsigned short product_id, const wchar_t *serial_number);
 
@@ -170,7 +170,7 @@ extern "C" {
 
 			@returns
 				This function returns a pointer to a #hid_device object on
-				success or NULL on failure.
+				success or nullptr on failure.
 		*/
 		HID_API_EXPORT hid_device * HID_API_CALL hid_open_path(const char *path);
 
@@ -379,7 +379,7 @@ extern "C" {
 
 			@returns
 				This function returns a string containing the last error
-				which occurred or NULL if none has occurred.
+				which occurred or nullptr if none has occurred.
 		*/
 		HID_API_EXPORT const wchar_t* HID_API_CALL hid_error(hid_device *device);
 

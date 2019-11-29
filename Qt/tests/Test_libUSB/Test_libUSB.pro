@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/test_libusb_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 

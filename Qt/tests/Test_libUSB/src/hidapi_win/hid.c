@@ -127,7 +127,7 @@ extern "C" {
 	static HidP_GetCaps_ HidP_GetCaps;
 	static HidD_SetNumInputBuffers_ HidD_SetNumInputBuffers;
 
-	static HMODULE lib_handle = NULL;
+	static HMODULE lib_handle = nullptr;
 	static BOOLEAN initialized = FALSE;
 #endif /* HIDAPI_USE_DDK */
 
@@ -150,12 +150,12 @@ static hid_device *new_hid_device()
 	dev->blocking = TRUE;
 	dev->output_report_length = 0;
 	dev->input_report_length = 0;
-	dev->last_error_str = NULL;
+	dev->last_error_str = nullptr;
 	dev->last_error_num = 0;
 	dev->read_pending = FALSE;
-	dev->read_buf = NULL;
+	dev->read_buf = nullptr;
 	memset(&dev->ol, 0, sizeof(dev->ol));
-	dev->ol.hEvent = CreateEvent(NULL, FALSE, FALSE /*initial state f=nonsignaled*/, NULL);
+	dev->ol.hEvent = CreateEvent(nullptr, FALSE, FALSE /*initial state f=nonsignaled*/, nullptr);
 
 	return dev;
 }
@@ -176,11 +176,11 @@ static void register_error(hid_device *device, const char *op)
 	FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER |
 		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL,
+		nullptr,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		(LPVOID)&msg, 0/*sz*/,
-		NULL);
+		nullptr);
 	
 	/* Get rid of the CR and LF that FormatMessage() sticks at the
 	   end of the message. Thanks Microsoft! */
@@ -234,7 +234,7 @@ static HANDLE open_device(const char *path, BOOL enumerate)
 	handle = CreateFileA(path,
 		desired_access,
 		share_mode,
-		NULL,
+		nullptr,
 		OPEN_EXISTING,
 		FILE_FLAG_OVERLAPPED,/*FILE_ATTRIBUTE_NORMAL,*/
 		0);
@@ -261,7 +261,7 @@ int HID_API_EXPORT hid_exit(void)
 #ifndef HIDAPI_USE_DDK
 	if (lib_handle)
 		FreeLibrary(lib_handle);
-	lib_handle = NULL;
+	lib_handle = nullptr;
 	initialized = FALSE;
 #endif
 	return 0;
@@ -270,20 +270,20 @@ int HID_API_EXPORT hid_exit(void)
 struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned short vendor_id, unsigned short product_id)
 {
 	BOOL res;
-	struct hid_device_info *root = NULL; /* return object */
-	struct hid_device_info *cur_dev = NULL;
+	struct hid_device_info *root = nullptr; /* return object */
+	struct hid_device_info *cur_dev = nullptr;
 
 	/* Windows objects for interacting with the driver. */
 	GUID InterfaceClassGuid = {0x4d1e55b2, 0xf16f, 0x11cf, {0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30} };
 	SP_DEVINFO_DATA devinfo_data;
 	SP_DEVICE_INTERFACE_DATA device_interface_data;
-	SP_DEVICE_INTERFACE_DETAIL_DATA_A *device_interface_detail_data = NULL;
+	SP_DEVICE_INTERFACE_DETAIL_DATA_A *device_interface_detail_data = nullptr;
 	HDEVINFO device_info_set = INVALID_HANDLE_VALUE;
 	int device_index = 0;
 	int i;
 
 	if (hid_init() < 0)
-		return NULL;
+		return nullptr;
 
 	/* Initialize the Windows objects. */
 	memset(&devinfo_data, 0x0, sizeof(devinfo_data));
@@ -291,7 +291,7 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 	device_interface_data.cbSize = sizeof(SP_DEVICE_INTERFACE_DATA);
 
 	/* Get information for all the devices belonging to the HID class. */
-	device_info_set = SetupDiGetClassDevsA(&InterfaceClassGuid, NULL, NULL, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
+	device_info_set = SetupDiGetClassDevsA(&InterfaceClassGuid, nullptr, nullptr, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
 	
 	/* Iterate over each device in the HID class, looking for the right one. */
 	
@@ -301,7 +301,7 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 		HIDD_ATTRIBUTES attrib;
 
 		res = SetupDiEnumDeviceInterfaces(device_info_set,
-			NULL,
+			nullptr,
 			&InterfaceClassGuid,
 			device_index,
 			&device_interface_data);
@@ -317,10 +317,10 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 		   size is put in &required_size. */
 		res = SetupDiGetDeviceInterfaceDetailA(device_info_set,
 			&device_interface_data,
-			NULL,
+			nullptr,
 			0,
 			&required_size,
-			NULL);
+			nullptr);
 
 		/* Allocate a long enough structure for device_interface_detail_data. */
 		device_interface_detail_data = (SP_DEVICE_INTERFACE_DETAIL_DATA_A*) malloc(required_size);
@@ -333,8 +333,8 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 			&device_interface_data,
 			device_interface_detail_data,
 			required_size,
-			NULL,
-			NULL);
+			nullptr,
+			nullptr);
 
 		if (!res) {
 			/* register_error(dev, "Unable to call SetupDiGetDeviceInterfaceDetail");
@@ -354,14 +354,14 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 				goto cont;
 
 			res = SetupDiGetDeviceRegistryPropertyA(device_info_set, &devinfo_data,
-			               SPDRP_CLASS, NULL, (PBYTE)driver_name, sizeof(driver_name), NULL);
+			               SPDRP_CLASS, nullptr, (PBYTE)driver_name, sizeof(driver_name), nullptr);
 			if (!res)
 				goto cont;
 
 			if (strcmp(driver_name, "HIDClass") == 0) {
 				/* See if there's a driver bound. */
 				res = SetupDiGetDeviceRegistryPropertyA(device_info_set, &devinfo_data,
-				           SPDRP_DRIVER, NULL, (PBYTE)driver_name, sizeof(driver_name), NULL);
+				           SPDRP_DRIVER, nullptr, (PBYTE)driver_name, sizeof(driver_name), nullptr);
 				if (res)
 					break;
 			}
@@ -393,7 +393,7 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 			#define WSTR_LEN 512
 			const char *str;
 			struct hid_device_info *tmp;
-			PHIDP_PREPARSED_DATA pp_data = NULL;
+			PHIDP_PREPARSED_DATA pp_data = nullptr;
 			HIDP_CAPS caps;
 			BOOLEAN res;
 			NTSTATUS nt_res;
@@ -423,7 +423,7 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 			}
 			
 			/* Fill out the record */
-			cur_dev->next = NULL;
+			cur_dev->next = nullptr;
 			str = device_interface_detail_data->DevicePath;
 			if (str) {
 				len = strlen(str);
@@ -432,7 +432,7 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 				cur_dev->path[len] = '\0';
 			}
 			else
-				cur_dev->path = NULL;
+				cur_dev->path = nullptr;
 
 			/* Serial Number */
 			res = HidD_GetSerialNumberString(write_handle, wstr, sizeof(wstr));
@@ -472,7 +472,7 @@ struct hid_device_info HID_API_EXPORT * HID_API_CALL hid_enumerate(unsigned shor
 				char *interface_component = strstr(cur_dev->path, "&mi_");
 				if (interface_component) {
 					char *hex_str = interface_component + 4;
-					char *endptr = NULL;
+					char *endptr = nullptr;
 					cur_dev->interface_number = strtol(hex_str, &endptr, 16);
 					if (endptr == hex_str) {
 						/* The parsing failed. Set interface_number to -1. */
@@ -519,8 +519,8 @@ HID_API_EXPORT hid_device * HID_API_CALL hid_open(unsigned short vendor_id, unsi
 {
 	/* TODO: Merge this functions with the Linux version. This function should be platform independent. */
 	struct hid_device_info *devs, *cur_dev;
-	const char *path_to_open = NULL;
-	hid_device *handle = NULL;
+	const char *path_to_open = nullptr;
+	hid_device *handle = nullptr;
 	
 	devs = hid_enumerate(vendor_id, product_id);
 	cur_dev = devs;
@@ -555,12 +555,12 @@ HID_API_EXPORT hid_device * HID_API_CALL hid_open_path(const char *path)
 {
 	hid_device *dev;
 	HIDP_CAPS caps;
-	PHIDP_PREPARSED_DATA pp_data = NULL;
+	PHIDP_PREPARSED_DATA pp_data = nullptr;
 	BOOLEAN res;
 	NTSTATUS nt_res;
 
 	if (hid_init() < 0) {
-		return NULL;
+		return nullptr;
 	}
 
 	dev = new_hid_device();
@@ -605,7 +605,7 @@ err_pp_data:
 		HidD_FreePreparsedData(pp_data);
 err:	
 		free_hid_device(dev);
-		return NULL;
+		return nullptr;
 }
 
 int HID_API_EXPORT HID_API_CALL hid_write(hid_device *dev, const unsigned char *data, size_t length)
@@ -635,7 +635,7 @@ int HID_API_EXPORT HID_API_CALL hid_write(hid_device *dev, const unsigned char *
 		length = dev->output_report_length;
 	}
 
-	res = WriteFile(dev->device_handle, buf, length, NULL, &ol);
+	res = WriteFile(dev->device_handle, buf, length, nullptr, &ol);
 	
 	if (!res) {
 		if (GetLastError() != ERROR_IO_PENDING) {

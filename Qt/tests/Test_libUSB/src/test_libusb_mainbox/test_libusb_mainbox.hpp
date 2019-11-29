@@ -64,8 +64,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -102,7 +102,6 @@ private:
     Ui::MainBox *ui;
 
     QComboBox *cb_test;
-    QCheckBox *cb_block;
     QList<CMD> commands;
 
     void init(void);
@@ -114,7 +113,7 @@ private:
     void save_setting(void);
 
     //---
-    hid_device *dev = 0;
+    hid_device *dev = nullptr;
 
     void dev_open(void);
     void dev_close(void);

@@ -83,14 +83,11 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -108,9 +105,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());    //TODO странно
 }
@@ -192,13 +186,13 @@ bool MainBox::f_list(void)
     int r;
     ssize_t cnt;
 
-    r = libusb_init(NULL);
+    r = libusb_init(nullptr);
     if (r < 0)
     {
         return false;
     }
 
-    cnt = libusb_get_device_list(NULL, &devs);
+    cnt = libusb_get_device_list(nullptr, &devs);
     if (cnt < 0)
     {
         return false;
@@ -207,19 +201,19 @@ bool MainBox::f_list(void)
     print_devs(devs);
     libusb_free_device_list(devs, 1);
 
-    libusb_exit(NULL);
+    libusb_exit(nullptr);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_read(void)
 {
-    libusb_init(NULL);   // инициализация
+    libusb_init(nullptr);   // инициализация
 
-    //libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
-    libusb_set_option(NULL, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
+    //libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 
-    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, get_VID(), get_PID());
-    if (handle == NULL)
+    libusb_device_handle *handle = libusb_open_device_with_vid_pid(nullptr, get_VID(), get_PID());
+    if (handle == nullptr)
     {
         emit error("Устройство не подключено");
         return false;
@@ -256,19 +250,19 @@ bool MainBox::f_read(void)
 
     libusb_attach_kernel_driver(handle, DEV_INTF);
     libusb_close(handle);
-    libusb_exit(NULL);
+    libusb_exit(nullptr);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_write(void)
 {
-    libusb_init(NULL);   // инициализация
+    libusb_init(nullptr);   // инициализация
 
-    //libusb_set_debug(NULL, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
-    libusb_set_option(NULL, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
+    //libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 
-    libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, get_VID(), get_PID());
-    if (handle == NULL)
+    libusb_device_handle *handle = libusb_open_device_with_vid_pid(nullptr, get_VID(), get_PID());
+    if (handle == nullptr)
     {
         emit error("Устройство не подключено");
         return false;
@@ -311,16 +305,16 @@ bool MainBox::f_write(void)
 
     libusb_attach_kernel_driver(handle, DEV_INTF);
     libusb_close(handle);
-    libusb_exit(NULL);
+    libusb_exit(nullptr);
     return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::print_devs(libusb_device **devs)
 {
-    libusb_device *dev = 0;
+    libusb_device *dev = nullptr;
     int i = 0;
 
-    while ((dev = devs[i++]) != NULL)
+    while ((dev = devs[i++]) != nullptr)
     {
         struct libusb_device_descriptor desc;
         int r = libusb_get_device_descriptor(dev, &desc);
@@ -330,7 +324,7 @@ void MainBox::print_devs(libusb_device **devs)
             return;
         }
 
-        libusb_device_handle *handle = 0;
+        libusb_device_handle *handle = nullptr;
         QString iProduct;
 
         int res = libusb_open(dev, &handle);
@@ -340,23 +334,23 @@ void MainBox::print_devs(libusb_device **devs)
             res = libusb_get_string_descriptor_ascii(handle, desc.iManufacturer, strDesc, 256);
             if(res > 0)
             {
-                emit error(QString("\tiManufacturer: %1").arg((char *)strDesc));
+                emit error(QString("\tiManufacturer: %1").arg(reinterpret_cast<char *>(strDesc)));
             }
-            res = libusb_get_string_descriptor_ascii(handle, desc.idProduct, strDesc, 256);
+            res = libusb_get_string_descriptor_ascii(handle,    static_cast<uint8_t>(desc.idProduct),   strDesc,    256);
             if(res > 0)
             {
-                emit error(QString("\tidProduct: %1").arg((char *)strDesc));
+                emit error(QString("\tidProduct: %1").arg(reinterpret_cast<char *>(strDesc)));
             }
             res = libusb_get_string_descriptor_ascii(handle, desc.iProduct, strDesc, 256);
             if(res > 0)
             {
-                emit error(QString("\tiProduct: %1").arg((char *)strDesc));
-                iProduct.append(QString("%1").arg((char *)strDesc));
+                emit error(QString("\tiProduct: %1").arg(reinterpret_cast<char *>(strDesc)));
+                iProduct.append(QString("%1").arg(reinterpret_cast<char *>(strDesc)));
             }
             res = libusb_get_string_descriptor_ascii(handle, desc.iSerialNumber, strDesc, 256);
             if(res > 0)
             {
-                emit error(QString("\tiSerialNumber: %1").arg((char *)strDesc));
+                emit error(QString("\tiSerialNumber: %1").arg(reinterpret_cast<char *>(strDesc)));
             }
             libusb_close(handle);
         }
@@ -376,15 +370,15 @@ void MainBox::dev_open(void)
 
     int res;
     wchar_t wstr[MAX_STR];
-    int iVID = 0x0a12;
-    int iPID = 0x0042;
+    uint16_t iVID = 0x0a12;
+    uint16_t iPID = 0x0042;
 
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;
 
     devs = hid_enumerate(iVID, iPID);
     cur_dev = devs;
-    if(cur_dev == NULL)
+    if(cur_dev == nullptr)
     {
         messagebox_critical("Ошибка", "Устройство не найдено!");
         return;
@@ -406,10 +400,10 @@ void MainBox::dev_open(void)
     // Open the device using the VID, PID,
     // and optionally the Serial number.
     int cnt_err = 0;
-    while(dev == 0)
+    while(dev == nullptr)
     {
-        dev = hid_open(get_VID(), get_PID(), NULL);
-        if(dev == 0)
+        dev = hid_open(get_VID(), get_PID(), nullptr);
+        if(dev == nullptr)
         {
             cnt_err++;
         }
@@ -456,10 +450,10 @@ void MainBox::dev_open(void)
 //--------------------------------------------------------------------------------
 void MainBox::dev_close(void)
 {
-    if(dev != 0)
+    if(dev != nullptr)
     {
         hid_close(dev);
-        dev = 0;
+        dev = nullptr;
     }
 }
 //--------------------------------------------------------------------------------
@@ -474,7 +468,7 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
 
     struct timeval start, end;
     long mtime, seconds, useconds;
-    gettimeofday(&start, NULL);
+    gettimeofday(&start, nullptr);
 
     while (i--)
     {
@@ -484,7 +478,7 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
         {
             for (short i=0; i < DATA_SIZE; i++)
             {
-                emit info(QString("buf[%1] = %2").arg(i).arg((int)buf[i]));
+                emit info(QString("buf[%1] = %2").arg(i).arg(static_cast<int>(buf[i])));
                 cc++;
             }
         }
@@ -496,12 +490,12 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
 
     emit info(QString("Считано: %1").arg(cc));
 
-    gettimeofday(&end, NULL);
+    gettimeofday(&end, nullptr);
 
     seconds  = end.tv_sec  - start.tv_sec;
     useconds = end.tv_usec - start.tv_usec;
 
-    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+    mtime = static_cast<long>(((seconds) * 1000.0 + useconds/1000.0) + 0.5);
 
     emit info(QString("Прошло: %1 мс").arg(mtime));
 }
@@ -520,7 +514,7 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
 
     struct timeval start, end;
     long mtime, seconds, useconds;
-    gettimeofday(&start, NULL);
+    gettimeofday(&start, nullptr);
 
     while(i--)
     {
@@ -531,7 +525,7 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
         {
             for (short i=0; i < DATA_SIZE; i++)
             {
-                emit info(QString("buf[%1] = %2").arg(i).arg((int)buf[i]));
+                emit info(QString("buf[%1] = %2").arg(i).arg(static_cast<int>(buf[i])));
                 cc++;
             }
         }
@@ -543,24 +537,24 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
 
     emit info(QString("Считано: %1").arg(cc));
 
-    gettimeofday(&end, NULL);
+    gettimeofday(&end, nullptr);
 
     seconds  = end.tv_sec  - start.tv_sec;
     useconds = end.tv_usec - start.tv_usec;
 
-    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+    mtime = static_cast<long>(((seconds) * 1000 + useconds/1000.0) + 0.5);
 
     emit info(QString("Прошло: %1 мс").arg(mtime));
 }
 //--------------------------------------------------------------------------------
 uint16_t MainBox::get_VID(void)
 {
-    return ui->sb_VID->value();
+    return static_cast<uint16_t>(ui->sb_VID->value());
 }
 //--------------------------------------------------------------------------------
 uint16_t MainBox::get_PID(void)
 {
-    return ui->sb_PID->value();
+    return static_cast<uint16_t>(ui->sb_PID->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_VID(uint16_t value)

@@ -26,12 +26,6 @@
 #include "adc_label.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-enum CURVE {
-    DOTS = 0,
-    LINES,
-    SPLINE_LINES
-};
-
 struct CURVES
 {
     QString name;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>126</width>
-    <height>81</height>
+    <width>163</width>
+    <height>131</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,9 +30,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="SerialBox5_fix_baudrate_win7" name="serial_widget" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_2"/>
-       </widget>
+       <widget class="SerialBox5_fix_baudrate_win7" name="serial_widget" native="true"/>
       </item>
       <item>
        <layout class="QVBoxLayout" name="lcd_layout"/>
@@ -60,15 +58,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GrapherBox</class>
-   <extends>QWidget</extends>
-   <header>grapherbox.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SerialBox5_fix_baudrate_win7</class>
    <extends>QWidget</extends>
    <header>serialbox5_fix_baudrate_win7.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GrapherBox</class>
+   <extends>QWidget</extends>
+   <header>grapherbox.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

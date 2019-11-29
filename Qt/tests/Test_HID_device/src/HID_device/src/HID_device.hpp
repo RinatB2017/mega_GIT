@@ -63,8 +63,6 @@ private slots:
     void test_4(void);
     void test_5(void);
 
-    void show_led1(bool state);
-    void show_led2(bool state);
     void show_state(void);
 
     //---
@@ -92,7 +90,7 @@ private:
     Ui::HID_device *ui;
 
     //---
-    hid_device *dev;
+    hid_device *dev = nullptr;
 
     uint8_t output_buf[0x40];
 
@@ -100,6 +98,8 @@ private:
 
     QComboBox *cb_test;
     QList<CMD> commands;
+
+    wchar_t wstr[MAX_STR];
 
     void init(void);
 

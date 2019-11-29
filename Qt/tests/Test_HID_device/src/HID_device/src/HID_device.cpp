@@ -73,60 +73,10 @@ void HID_device::init(void)
 
     connect(ui->btn_open,   SIGNAL(clicked()), this, SLOT(dev_open()));
     connect(ui->btn_close,  SIGNAL(clicked()), this, SLOT(dev_close()));
-    connect(ui->btn_send,   SIGNAL(clicked()), this, SLOT(show_state()));
-
-    connect(ui->btn_led1,   SIGNAL(toggled(bool)), this, SLOT(show_led1(bool)));
-    connect(ui->btn_led2,   SIGNAL(toggled(bool)), this, SLOT(show_led2(bool)));
+    connect(ui->btn_send,   SIGNAL(clicked()), this, SLOT(dev_send()));
+    connect(ui->btn_show,   SIGNAL(clicked()), this, SLOT(show_state()));
 
     setFixedSize(sizeHint());
-}
-//--------------------------------------------------------------------------------
-void HID_device::show_led1(bool state)
-{
-    if(state)
-    {
-        memset(output_buf, 0, sizeof(output_buf));
-
-        output_buf[0] = 0x01;
-        output_buf[1] = 0xFF;
-        output_buf[2] = 0x00;
-
-        dev_send();
-    }
-    else
-    {
-        memset(output_buf, 0, sizeof(output_buf));
-
-        output_buf[0] = 0x01;
-        output_buf[1] = 0x00;
-        output_buf[2] = 0x00;
-
-        dev_send();
-    }
-}
-//--------------------------------------------------------------------------------
-void HID_device::show_led2(bool state)
-{
-    if(state)
-    {
-        memset(output_buf, 0, sizeof(output_buf));
-
-        output_buf[0] = 0x02;
-        output_buf[1] = 0xFF;
-        output_buf[2] = 0x00;
-
-        dev_send();
-    }
-    else
-    {
-        memset(output_buf, 0, sizeof(output_buf));
-
-        output_buf[0] = 0x02;
-        output_buf[1] = 0x00;
-        output_buf[2] = 0x00;
-
-        dev_send();
-    }
 }
 //--------------------------------------------------------------------------------
 void HID_device::createTestBar(void)
@@ -223,9 +173,12 @@ void HID_device::test_5(void)
 void HID_device::dev_open(void)
 {
     int res;
-    wchar_t wstr[MAX_STR];
-    uint16_t VID = 0x0483;
-    uint16_t PID = 0x5711;
+    //wchar_t wstr[MAX_STR];
+    // uint16_t VID = 0x0483;
+    // uint16_t PID = 0x5711;
+
+    uint16_t VID = 0x08bb;
+    uint16_t PID = 0x2704;
 
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;
@@ -268,6 +221,8 @@ void HID_device::dev_open(void)
             return;
         }
     }
+
+    for(int n=0; n<MAX_STR; n++) wstr[n] = 0;
 
     // Read the Manufacturer String
     res = hid_get_manufacturer_string(dev, wstr, MAX_STR);
@@ -320,18 +275,26 @@ void HID_device::dev_send(void)
         return;
     }
 
-    size_t len = sizeof(output_buf);
+    int len = sizeof(output_buf);
+
+    //---
+    for(int n=0; n<len; n++)
+    {
+        output_buf[n] = 0;
+    }
+    //---
+
     int res = 0;
-    res = hid_send_feature_report(dev, output_buf, len);
+    res = hid_send_feature_report(dev,  output_buf, static_cast<size_t>(len));
     if(res < 0)
     {
         emit error(QString("hid_send_feature_report return %1").arg(res));
         return;
     }
 
-    //QByteArray ba;
-    //ba.append((char *)&output_buf, len);
-    //emit info(ba.toHex().data());
+    QByteArray ba;
+    ba.append(reinterpret_cast<char *>(&output_buf),    static_cast<int>(len));
+    emit debug(ba.toHex().data());
 
     emit info("OK");
 }
@@ -358,7 +321,7 @@ void HID_device::show_state(void)
     }
 
     QByteArray ba;
-    ba.append((char *)&output_buf, static_cast<int>(len));
+    ba.append(reinterpret_cast<char *>(&output_buf), static_cast<int>(len));
     emit info(ba.toHex().data());
 
     emit info("OK");

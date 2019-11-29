@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QElapsedTimer>
 #include <QUdpSocket>
 #include <QTime>
 //--------------------------------------------------------------------------------
@@ -42,7 +43,7 @@ void Client::process(void)
     udpSocket = new QUdpSocket(this);
     int messageNo = 0;
 
-    QTime time;
+    QElapsedTimer time;
     int cnt = 0;
     while(cnt < 10000)
     {
@@ -60,7 +61,7 @@ void Client::process(void)
 #endif
         messageNo++;
 
-#if 0
+#if 1
         time.start();
         while(time.elapsed() < 1000)
         {

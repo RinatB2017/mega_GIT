@@ -98,12 +98,12 @@ void MainBox::test(void)
         return;
     }
 
-    libvlc_instance_t *inst = 0;
-    libvlc_media_player_t *mp = 0;
-    libvlc_media_t *m = 0;
+    libvlc_instance_t *inst = nullptr;
+    libvlc_media_player_t *mp = nullptr;
+    libvlc_media_t *m = nullptr;
 
     /* Load the VLC engine */
-    inst = libvlc_new (0, NULL);
+    inst = libvlc_new (0, nullptr);
 
     /* Create a new item */
     m = libvlc_media_new_path (inst, fileName.toLocal8Bit());
@@ -123,18 +123,18 @@ void MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::test_rtsp(void)
 {
-    libvlc_instance_t *inst = 0;
-    libvlc_media_player_t *mp = 0;
-    libvlc_media_t *m = 0;
+    libvlc_instance_t *inst = nullptr;
+    libvlc_media_player_t *mp = nullptr;
+    libvlc_media_t *m = nullptr;
 
-    inst = libvlc_new (0, NULL);
+    inst = libvlc_new (0, nullptr);
     mp = libvlc_media_player_new(inst);
     m = libvlc_media_new_location(inst, "rtsp://192.168.0.66:554/av0_0");
     Q_CHECK_PTR(m);
 
     libvlc_media_player_set_media (mp, m);
 
-    libvlc_media_player_set_xwindow (mp, ui->widget->winId() );
+    libvlc_media_player_set_xwindow (mp, static_cast<uint32_t>(ui->widget->winId()));
     libvlc_media_player_play (mp);
 }
 //--------------------------------------------------------------------------------

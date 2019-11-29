@@ -86,6 +86,8 @@ bool MyWidget::check_exists_signals(QWidget *parent)
     connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
     connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
+    connect(this,   SIGNAL(colorLog(QString, QColor, QColor)),  parent, SIGNAL(colorLog(QString, QColor, QColor)));
+
     return true;
 }
 //--------------------------------------------------------------------------------

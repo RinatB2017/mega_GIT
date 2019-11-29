@@ -190,7 +190,7 @@ bool CanvasPicker::eventFilter( QObject *object, QEvent *event )
 
 void CanvasPicker::select( const QPoint &pos )
 {
-    QwtPlotCurve *curve = NULL;
+    QwtPlotCurve *curve = nullptr;
     double dist = 10e10;
     int index = -1;
 
@@ -214,7 +214,7 @@ void CanvasPicker::select( const QPoint &pos )
     }
 
     showCursor( false );
-    d_selectedCurve = NULL;
+    d_selectedCurve = nullptrL;
     d_selectedPoint = -1;
 
     if ( curve && dist < 10 ) // 10 pixels tolerance

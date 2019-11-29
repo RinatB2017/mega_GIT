@@ -66,7 +66,16 @@ void MainBox::init(void)
     db.setUserName("postgres");
     db.setPassword("postgres");
     bool ok = db.open();
-    emit debug(ok ? "db open" : "db failed");
+
+    if(ok)
+    {
+        emit info("db open");
+    }
+    else
+    {
+        emit error("db failed");
+        return;
+    }
 
     QSqlQueryModel *model = new QSqlQueryModel;
     model->setQuery("SELECT * FROM pg_type");

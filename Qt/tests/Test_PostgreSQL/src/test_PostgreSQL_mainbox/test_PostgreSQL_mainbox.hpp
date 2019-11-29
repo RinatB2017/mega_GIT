@@ -19,8 +19,8 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 //--------------------------------------------------------------------------------
-#ifndef MAINBOX_H
-#define MAINBOX_H
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QSqlDatabase>
 #include <QWidget>
@@ -36,7 +36,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private:
@@ -52,4 +52,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_H
+#endif // MAINBOX_HPP

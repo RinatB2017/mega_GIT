@@ -385,17 +385,17 @@ void LogBox::colorLog(const QString &text,
     }
 
     //#ifdef Q_OS_LINUX
-    //    //TODO белый цвет, если тема темная
-    //    QColor cb = QColor(Qt::white);
+    // //TODO белый цвет, если тема темная
+    // QColor cb = QColor(Qt::white);
     //#else
-    //    QColor cb = logBox->textBackgroundColor();
+    // QColor cb = logBox->textBackgroundColor();
     //#endif
 
     flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
     flagColor ? logBox->setTextColor(text_color) : logBox->setTextColor(QColor(Qt::black));
 
     // восстанавливаем цвет фона
-    //    logBox->setTextBackgroundColor(cb);
+    // logBox->setTextBackgroundColor(cb);
 
     if(flagNoCRLF)
         logBox->insertPlainText(temp);

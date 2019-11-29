@@ -236,6 +236,8 @@ void MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+    emit colorLog("YELLOW", Qt::yellow, Qt::blue);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)

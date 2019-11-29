@@ -17,7 +17,7 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 #DEFINES += SHOW_SIZE
-DEFINES += NO_LOG
+#DEFINES += NO_LOG
 
 #DEFINES += SAVE_INI
 
@@ -57,7 +57,7 @@ LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 
 include (src/mesh_control/mesh_control.pri)
 include (src/mesh_led/mesh_led.pri)

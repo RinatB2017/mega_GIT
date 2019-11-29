@@ -214,16 +214,16 @@ void LogBox::infoLog(const QString &text)
         return;
     }
 
-    QString temp;
-
     if(text.isEmpty())
     {
         return;
     }
 
+    QString temp;
+
     if(flagAddDateTime)
     {
-        temp = QString("%1 INFO  %2")
+        temp = QString("%1\tINFO\t%2")
                 .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                 .arg(text);
     }
@@ -249,16 +249,16 @@ void LogBox::debugLog(const QString &text)
         return;
     }
 
-    QString temp;
-
     if(text.isEmpty())
     {
         return;
     }
 
+    QString temp;
+
     if(flagAddDateTime)
     {
-        temp = QString("%1 DEBUG %2")
+        temp = QString("%1\tDEBUG\t%2")
                 .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                 .arg(text);
     }
@@ -284,16 +284,16 @@ void LogBox::errorLog(const QString &text)
         return;
     }
 
-    QString temp;
-
     if(text.isEmpty())
     {
         return;
     }
 
+    QString temp;
+
     if(flagAddDateTime)
     {
-        temp = QString("%1 ERROR %2")
+        temp = QString("%1\tERROR\t%2")
                 .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                 .arg(text);
     }
@@ -329,16 +329,16 @@ void LogBox::traceLog(const QString &text)
         return;
     }
 
-    QString temp;
-
     if(text.isEmpty())
     {
         return;
     }
 
+    QString temp;
+
     if(flagAddDateTime)
     {
-        temp = QString("%1 MESSAGE %2")
+        temp = QString("%1\tMESSAGE\t%2")
                 .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                 .arg(text);
     }
@@ -375,7 +375,7 @@ void LogBox::colorLog(const QString &text,
 
     if(flagAddDateTime)
     {
-        temp = QString("%1 MESSAGE %2")
+        temp = QString("%1\tMESSAGE\t%2")
                 .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                 .arg(text);
     }

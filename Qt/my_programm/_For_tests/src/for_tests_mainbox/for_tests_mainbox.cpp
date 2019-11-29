@@ -237,7 +237,20 @@ void MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    for(int n=0; n<10; n++)
+    {
+        //emit info("0\t1\t2\t3");
+        emit info("info");
+        emit debug("debug");
+        emit error("error");
+        emit trace("trace");
+    }
+#endif
+
+#if 0
     emit colorLog("YELLOW", Qt::yellow, Qt::blue);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)

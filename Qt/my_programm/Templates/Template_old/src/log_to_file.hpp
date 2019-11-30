@@ -59,7 +59,6 @@ void log_to_file(QtMsgType type, const char *msg)
         fprintf(file, "Fatal: (%s)\n", msg);
 #endif
         abort();
-        break;
 
     default:
 #if (QT_VERSION >= 0x50000)
@@ -70,7 +69,6 @@ void log_to_file(QtMsgType type, const char *msg)
         fprintf(file, "Trace: (%s)\n", msg);
 #endif
         abort();
-        break;
     }
     fclose(file);
 }

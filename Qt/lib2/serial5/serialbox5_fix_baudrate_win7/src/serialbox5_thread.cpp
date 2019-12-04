@@ -54,6 +54,7 @@ void SerialBox5_thread::process(void)
                 // emit debug("open:");
                 bool state = serial5->open(QIODevice::ReadWrite);
                 emit port_get_state(state);
+                flag_port_open = state;
 
                 if(state)
                 {
@@ -65,17 +66,16 @@ void SerialBox5_thread::process(void)
                     emit port_get_flow_control(serial5->flowControl());
                 }
             }
-            flag_port_open = false;
         }
-        if(flag_port_close)
+        else
         {
             if(serial5)
             {
                 // emit debug("close:");
                 serial5->close();
                 emit port_get_state(false);
+                flag_port_name = false;
             }
-            flag_port_close = false;
         }
         if (serial5->error() != QSerialPort::NoError)
         {
@@ -148,7 +148,7 @@ void SerialBox5_thread::port_open(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_thread::port_close(void)
 {
-    flag_port_close = true;
+    flag_port_open = false;
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_thread::port_set_name(QString name)

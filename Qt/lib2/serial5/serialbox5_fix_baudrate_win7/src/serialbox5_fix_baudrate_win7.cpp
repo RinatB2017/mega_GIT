@@ -218,10 +218,12 @@ void SerialBox5_fix_baudrate_win7::btnOpenPortClicked()
 
     if(is_open)
     {
+        //setCloseState();
         emit port_close();
     }
     else
     {
+//        setOpenState();
         emit port_set_name(ui->PortBox->currentText());
         emit port_open();
         emit port_set_baudrate(fix_baudrate);
@@ -230,6 +232,8 @@ void SerialBox5_fix_baudrate_win7::btnOpenPortClicked()
         emit port_set_stop_bits(QSerialPort::OneStop);
         emit port_set_flow_control(QSerialPort::NoFlowControl);
     }
+
+//    (is_open) ? setOpenState() : setCloseState();
 }
 //--------------------------------------------------------------------------------
 int SerialBox5_fix_baudrate_win7::input(const QByteArray &sending_data)

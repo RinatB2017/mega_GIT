@@ -87,7 +87,6 @@ private:
     QSerialPort::FlowControl flow_control;
 
     bool flag_port_open = false;
-    bool flag_port_close = false;
 
     bool flag_port_name = false;
     bool flag_baudrate = false;

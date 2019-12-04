@@ -223,7 +223,7 @@ void SerialBox5_fix_baudrate_win7::btnOpenPortClicked()
     }
     else
     {
-//        setOpenState();
+        //setOpenState();
         emit port_set_name(ui->PortBox->currentText());
         emit port_open();
         emit port_set_baudrate(fix_baudrate);

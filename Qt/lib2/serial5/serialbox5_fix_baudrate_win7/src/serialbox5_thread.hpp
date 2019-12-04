@@ -76,6 +76,13 @@ public slots:
     void stop(void);
 
 private:
+    enum STATES {
+        OPEN = 0,
+        CLOSE,
+        IDLE
+    };
+    int state = IDLE;
+
     bool flag_exit = false;
     int fix_baudrate = 9600;
 

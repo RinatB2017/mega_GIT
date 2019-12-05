@@ -32,9 +32,9 @@ class MyFileDialog : public QFileDialog
     Q_OBJECT
 
 public:
-    MyFileDialog(const QString gName,
-                 const QString oName,
-                 QWidget *parent = nullptr);
+    explicit MyFileDialog(const QString gName,
+                          const QString oName,
+                          QWidget *parent = nullptr);
 
 public slots:
     int exec(void);

@@ -60,6 +60,8 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 DEFINES += PROGRAMM_IN_UTF8
 
+#DEFINES += NEED_CODEC
+
 HEADERS += \
     for_tests_mainbox.hpp \
     defines.hpp \
@@ -107,8 +109,10 @@ include (src/simple_mw/simple_mw.pri)
 #include (src/bone_15/bone_15.pri)
 #include (src/test_widget/test_widget.pri)
 
-include ($$LIB_PATH2/qwt/qwt.pri)
-include (src/knob_lcd/knob_lcd.pri)
+#include ($$LIB_PATH2/qwt/qwt.pri)
+#include (src/knob_lcd/knob_lcd.pri)
+
+include ($$LIB_PATH/mywidgets/myfiledialog.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

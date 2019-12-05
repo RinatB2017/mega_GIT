@@ -135,7 +135,7 @@ void MainBox::choice_test(void)
     {
         if(command.cmd == cmd)
         {
-            typedef void (MainBox::*function)(void);
+            typedef bool (MainBox::*function)(void);
             function x;
             x = command.func;
             if(x)
@@ -232,10 +232,75 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+#include "myfiledialog.hpp"
+bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 0
+    QTextCodec *codec = QTextCodec::codecForLocale();
+    if(codec != nullptr)
+    {
+        emit info(codec->name());
+    }
+#endif
+
+#if 1
+    MyFileDialog *dlg = new MyFileDialog("c_file", "c_file");
+    dlg->setNameFilter(tr("TXT files (*.txt)"));
+    dlg->setDefaultSuffix(tr("txt"));
+#ifdef Q_OS_LINUX
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+#endif
+    int res = dlg->exec();
+    if(res == QFileDialog::Accepted)
+    {
+        QString filename = dlg->selectedFiles().at(0);
+        if(!filename.isEmpty())
+        {
+            QFile file(filename);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                QByteArray ba = file.readAll();
+
+#if 1
+                QTextCodec* code = QTextCodec::codecForName("CP1251");
+                //QTextCodec* code = QTextCodec::codecForName("KOI8R");
+                //QTextCodec* code = QTextCodec::codecForName("UTF8");
+                QString str = code->toUnicode(ba);
+                emit info(str);
+#else
+                emit info(ba);
+#endif
+
+                file.close();
+            }
+        }
+    }
+#endif
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
+    emit trace(Q_FUNC_INFO);
+    emit info("Test_1()");
+
+#if 1
+    emit info("Тест");
+#endif
+
+#if 0
+    emit info("Текст <font style=\"color:red\">красный</font>");
+#endif
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_2(void)
+{
+    emit trace(Q_FUNC_INFO);
+    emit info("Test_2()");
 
 #if 1
     for(int n=0; n<10; n++)
@@ -247,44 +312,32 @@ void MainBox::test_0(void)
         emit trace("trace");
     }
 #endif
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_3(void)
+{
+    emit trace(Q_FUNC_INFO);
+    emit info("Test_3()");
 
 #if 0
     emit colorLog("YELLOW", Qt::yellow, Qt::blue);
 #endif
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_1()");
-
-#if 0
-    emit info("Текст <font style=\"color:red\">красный</font>");
-#endif
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_2(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_2()");
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_3(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_3()");
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_4(void)
+bool MainBox::test_4(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_4()");
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_5(void)
+bool MainBox::test_5(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_5()");
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

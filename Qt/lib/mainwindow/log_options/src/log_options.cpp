@@ -41,6 +41,18 @@ Log_options::Log_options(QWidget *parent):
 
     findCodecs();
 
+    //TODO пробуем
+    QTextCodec *codec = QTextCodec::codecForLocale();
+    for(int n=0; n<ui->cb_CodecForCStrings->count(); n++)
+    {
+        ui->cb_CodecForCStrings->setCurrentIndex(n);
+        if(ui->cb_CodecForCStrings->currentText() == codec->name())
+        {
+            break;
+        }
+    }
+    //---
+
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     ui->cb_CodecForCStrings->setCurrentIndex(ui->cb_CodecForCStrings->findText(QTextCodec::codecForCStrings()->name()));
 #endif
@@ -68,6 +80,18 @@ void Log_options::findCodecs(void)
 //    qSort(codecs);
 
     ui->cb_CodecForCStrings->addItems(codecs);
+}
+//--------------------------------------------------------------------------------
+QTextCodec *Log_options::get_text_codec(void)
+{
+    QString codec_name = ui->cb_CodecForCStrings->currentText();
+    if(codec_name.isEmpty())
+    {
+        return QTextCodec::codecForMib(QTextCodec::availableMibs().first());
+    }
+    QByteArray ba;
+    ba.append(codec_name);
+    return QTextCodec::codecForName(ba);
 }
 //--------------------------------------------------------------------------------
 bool Log_options::get_flag_ReadOnly(void)

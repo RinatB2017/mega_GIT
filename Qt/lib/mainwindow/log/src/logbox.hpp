@@ -102,6 +102,10 @@ private:
     bool flag_is_shows_error = true;
     bool flag_is_shows_trace = true;
 
+#ifdef NEED_CODEC
+    QTextCodec *current_codec = nullptr; //TODO проверить надо
+#endif
+
     QProgressBar *progressBar;
     QHBoxLayout *hbox;
     QVBoxLayout *vbox;

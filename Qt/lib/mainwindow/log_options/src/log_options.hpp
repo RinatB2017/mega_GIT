@@ -47,6 +47,8 @@ public:
     Log_options(QWidget *parent = nullptr);
     ~Log_options();
 
+    QTextCodec *get_text_codec(void);
+
 private:
     Ui::Log_options *ui;
     QList<QString> codecs;

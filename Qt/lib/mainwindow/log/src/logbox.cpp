@@ -79,6 +79,11 @@ void LogBox::init(void)
 {
     setObjectName("logbox");
 
+#ifdef NEED_CODEC
+    //TODO проверить надо
+    current_codec = QTextCodec::codecForLocale();
+#endif
+
     create_widgets();
 
     if(o_name.isEmpty() == false)
@@ -234,10 +239,31 @@ void LogBox::infoLog(const QString &text)
 
     flagColor ? logBox->setTextColor(QColor(Qt::blue)) : logBox->setTextColor(QColor(Qt::black));
 
+#ifdef NEED_CODEC
+    //TODO проверить надо
+    QByteArray ba;
+    ba.append(temp.toStdString().c_str());
+    //ba.append(temp);
+#endif
+
     if(flagNoCRLF)
+    {
+#ifdef NEED_CODEC
+        //TODO проверить надо
+        logBox->insertPlainText(current_codec->toUnicode(ba));
+#else
         logBox->insertPlainText(temp);
+#endif
+    }
     else
+    {
+#ifdef NEED_CODEC
+        //TODO проверить надо
+        logBox->append(current_codec->toUnicode(ba));
+#else
         logBox->append(temp);
+#endif
+    }
 
     logBox->moveCursor(QTextCursor::End);
 }
@@ -547,6 +573,14 @@ void LogBox::changeOptions(void)
     int res = optionsBox->exec();
     if(res == QDialog::Accepted)
     {
+        QTextCodec::setCodecForLocale(optionsBox->get_text_codec());
+#ifdef NEED_CODEC
+        //TODO проверить надо
+        current_codec = optionsBox->get_text_codec();
+        QTextCodec::setCodecForLocale(current_codec);
+        emit debugLog(QString("new codec is %1").arg(current_codec->name().data()));
+#endif
+
         logBox->setReadOnly(optionsBox->property("flag_ReadOnly").toBool());
         logBox->setAcceptRichText(optionsBox->property("flag_AcceptRichText").toBool());
         flagNoCRLF          = optionsBox->property("flag_NoCRLF").toBool();

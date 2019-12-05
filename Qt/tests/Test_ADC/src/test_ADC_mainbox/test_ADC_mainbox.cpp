@@ -96,6 +96,8 @@ void MainBox::init(void)
     ui->serial_widget->set_fix_baudrate(57600);
 
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_ADC(QByteArray)));
+    //---
+    layout()->setMargin(0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

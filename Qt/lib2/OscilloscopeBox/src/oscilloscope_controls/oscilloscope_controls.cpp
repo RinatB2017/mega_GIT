@@ -42,6 +42,11 @@ void Oscilloscope_controls::init(void)
     ui->tb_CH3->setPalette(QPalette(Qt::blue));
     ui->tb_CH4->setPalette(QPalette(Qt::magenta));
 
+    connect(ui->tb_CH1,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH1()));
+    connect(ui->tb_CH2,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH2()));
+    connect(ui->tb_CH3,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH3()));
+    connect(ui->tb_CH4,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH4()));
+
     connect(ui->btn_CH1,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH1()));
     connect(ui->btn_CH2,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH2()));
     connect(ui->btn_CH3,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH3()));
@@ -118,6 +123,26 @@ void Oscilloscope_controls::set_background_channel(int channel, bool state)
 void Oscilloscope_controls::set_state_RUN(bool state)
 {
     ui->btn_RUN->setText(state ? "STOP" : "RUN");
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::click_color_CH1(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::click_color_CH2(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::click_color_CH3(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::click_color_CH4(void)
+{
+
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::click_CH1(void)

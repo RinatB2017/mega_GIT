@@ -55,6 +55,11 @@ public slots:
     void set_state_RUN(bool state);
 
 private slots:
+    void click_color_CH1(void);
+    void click_color_CH2(void);
+    void click_color_CH3(void);
+    void click_color_CH4(void);
+
     void click_CH1(void);
     void click_CH2(void);
     void click_CH3(void);

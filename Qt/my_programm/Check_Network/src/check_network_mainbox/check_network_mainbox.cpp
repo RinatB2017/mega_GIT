@@ -108,6 +108,9 @@ void MainBox::init(void)
     connect(ui->btn_scan,       SIGNAL(clicked(bool)),  this,   SLOT(scan()));
     connect(ui->btn_connect,    SIGNAL(clicked(bool)),  this,   SLOT(f_connect()));
     connect(ui->btn_disconnect, SIGNAL(clicked(bool)),  this,   SLOT(f_disconnect()));
+
+    //TODO layout = 0
+    layout()->setMargin(0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::scan(void)

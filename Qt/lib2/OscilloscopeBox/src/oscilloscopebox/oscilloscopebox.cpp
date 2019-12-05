@@ -124,7 +124,8 @@ int OscilloscopeBox::add_curve(int index_curve,
 QVariant OscilloscopeBox::itemToInfo(QwtPlotItem *plotItem) const
 {
     QVariant itemInfo;
-    qVariantSetValue(itemInfo, plotItem);
+    //qVariantSetValue(itemInfo, plotItem);
+    itemInfo.setValue(plotItem);
 
     return itemInfo;
 }
@@ -236,8 +237,8 @@ void OscilloscopeBox::click_channel(int channel)
         state_current_channel = true;
 
         ui->widget_controls->set_background_channel(channel, true);
-        ui->widget_controls->set_position(curves[channel].correction_pos_y);
-        ui->widget_controls->set_multiply(curves[channel].correction_multiply);
+        ui->widget_controls->set_position(static_cast<double>(curves[channel].correction_pos_y));
+        ui->widget_controls->set_multiply(static_cast<double>(curves[channel].correction_multiply));
         legend_state(channel, true);
         return;
     }
@@ -270,12 +271,12 @@ void OscilloscopeBox::click_RUN(void)
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::position_changed(double value)
 {
-    curves[current_channel].correction_pos_y = value;
+    curves[current_channel].correction_pos_y = static_cast<float>(value);
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::multiply_changed(double value)
 {
-    curves[current_channel].correction_multiply = value;
+    curves[current_channel].correction_multiply = static_cast<float>(value);
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::legend_checked(const QVariant &itemInfo, bool on)
@@ -341,10 +342,10 @@ void OscilloscopeBox::update(void)
     {
         QPointF point;
         point.setX(axis_X_max);
-        point.setY(curves[channel].last_value);
-        curves[channel].last_value = curves[channel].correction_pos_y;
+        point.setY(static_cast<qreal>(curves[static_cast<int>(channel)].last_value));
+        curves[static_cast<int>(channel)].last_value = curves[static_cast<int>(channel)].correction_pos_y;
 
-        QVector<QPointF> samples = curves[channel].data_curve->samples();
+        QVector<QPointF> samples = curves[static_cast<int>(channel)].data_curve->samples();
         samples.remove(0);
         samples.append(point);
         int n = 0;
@@ -355,7 +356,7 @@ void OscilloscopeBox::update(void)
             n++;
             //cnt++;
         }
-        curves[channel].data_curve->setSamples(samples);
+        curves[static_cast<int>(channel)].data_curve->setSamples(samples);
     }
     //emit info(QString("cnt %1").arg(cnt));    // 4000
     updateGraphics();
@@ -376,9 +377,9 @@ void OscilloscopeBox::add_curve_data(int channel,
         return;
     }
 
-    data *= curves[channel].correction_multiply;
-    data += curves[channel].correction_pos_y;
-    curves[channel].last_value = data;
+    data *= static_cast<qreal>(curves[channel].correction_multiply);
+    data += static_cast<qreal>(curves[channel].correction_pos_y);
+    curves[channel].last_value = static_cast<float>(data);
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::updateGraphics(void)

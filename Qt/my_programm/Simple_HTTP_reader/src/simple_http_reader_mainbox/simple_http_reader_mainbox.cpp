@@ -65,8 +65,8 @@ void MainBox::init(void)
     ui->sb_port->setRange(0, 0xFFFF);
     ui->sb_port->setValue(80);
 
-    connect(ui->btn_run,    SIGNAL(clicked(bool)),  this,   SLOT(f_run()));
-    connect(ui->btn_update, SIGNAL(clicked(bool)),  this,   SLOT(f_update()));
+    connect(ui->btn_run,        SIGNAL(clicked(bool)),  this,   SLOT(f_run()));
+    connect(ui->btn_update,     SIGNAL(clicked(bool)),  this,   SLOT(f_update()));
     connect(ui->btn_host_to_ip, SIGNAL(clicked(bool)),  this,   SLOT(f_host_to_ip()));
 
     load_widgets(APPNAME);
@@ -159,17 +159,31 @@ void MainBox::s_error(QAbstractSocket::SocketError err)
 {
     switch (err)
     {
-    case QAbstractSocket::UnconnectedState: emit error("UnconnectedState"); break;
-    case QAbstractSocket::HostLookupState:  emit error("HostLookupState");  break;
-    case QAbstractSocket::ConnectingState:  emit error("ConnectingState");  break;
-    case QAbstractSocket::ConnectedState:   emit error("ConnectedState");   break;
-    case QAbstractSocket::BoundState:       emit error("BoundState");       break;
-    case QAbstractSocket::ListeningState:   emit error("ListeningState");   break;
-    case QAbstractSocket::ClosingState:     emit error("ClosingState");     break;
+    case QAbstractSocket::ConnectionRefusedError:           emit error("ConnectionRefusedError");           break;
+    case QAbstractSocket::RemoteHostClosedError:            emit error("RemoteHostClosedError");            break;
+    case QAbstractSocket::HostNotFoundError:                emit error("HostNotFoundError");                break;
+    case QAbstractSocket::SocketAccessError:                emit error("SocketAccessError");                break;
+    case QAbstractSocket::SocketResourceError:              emit error("SocketResourceError");              break;
+    case QAbstractSocket::SocketTimeoutError:               emit error("SocketTimeoutError");               break;
+    case QAbstractSocket::DatagramTooLargeError:            emit error("DatagramTooLargeError");            break;
+    case QAbstractSocket::NetworkError:                     emit error("NetworkError");                     break;
+    case QAbstractSocket::AddressInUseError:                emit error("AddressInUseError");                break;
+    case QAbstractSocket::SocketAddressNotAvailableError:   emit error("SocketAddressNotAvailableError");   break;
+    case QAbstractSocket::UnsupportedSocketOperationError:  emit error("UnsupportedSocketOperationError");  break;
+    case QAbstractSocket::UnfinishedSocketOperationError:   emit error("UnfinishedSocketOperationError");   break;
+    case QAbstractSocket::ProxyAuthenticationRequiredError: emit error("ProxyAuthenticationRequiredError"); break;
+    case QAbstractSocket::SslHandshakeFailedError:          emit error("SslHandshakeFailedError");          break;
+    case QAbstractSocket::ProxyConnectionRefusedError:      emit error("ProxyConnectionRefusedError");      break;
+    case QAbstractSocket::ProxyConnectionClosedError:       emit error("ProxyConnectionClosedError");       break;
+    case QAbstractSocket::ProxyConnectionTimeoutError:      emit error("ProxyConnectionTimeoutError");      break;
+    case QAbstractSocket::ProxyNotFoundError:               emit error("ProxyNotFoundError");               break;
+    case QAbstractSocket::ProxyProtocolError:               emit error("ProxyProtocolError");               break;
+    case QAbstractSocket::OperationError:                   emit error("OperationError");                   break;
+    case QAbstractSocket::SslInternalError:                 emit error("SslInternalError");                 break;
+    case QAbstractSocket::SslInvalidUserDataError:          emit error("SslInvalidUserDataError");          break;
+    case QAbstractSocket::TemporaryError:                   emit error("TemporaryError");                   break;
 
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
+    case QAbstractSocket::UnknownSocketError:               emit error("UnknownSocketError");               break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -198,7 +212,7 @@ bool MainBox::f_connect(void)
                .arg(ip)
                .arg(port));
 
-    tcpSocket->connectToHost(ip, port);
+    tcpSocket->connectToHost(ip, static_cast<quint16>(port));
     return true;
 }
 //--------------------------------------------------------------------------------

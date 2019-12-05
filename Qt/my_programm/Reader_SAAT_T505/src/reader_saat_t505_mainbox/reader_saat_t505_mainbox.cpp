@@ -112,7 +112,7 @@ void MainBox::read_data(QByteArray data)
     {
         return;
     }
-    PACKET *packet = (PACKET *)data.data();
+    PACKET *packet = reinterpret_cast<PACKET *>(data.data());
 
     if(packet->id != 0xA9C0)
     {
@@ -145,7 +145,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

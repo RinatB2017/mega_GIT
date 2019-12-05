@@ -244,6 +244,9 @@ void LogBox::infoLog(const QString &text)
     QByteArray ba;
     ba.append(temp.toStdString().c_str());
     //ba.append(temp);
+
+    //logBox->append(QString("temp len %1").arg(temp.length()));
+    //logBox->append(QString("ba   len %1").arg(ba.length()));
 #endif
 
     if(flagNoCRLF)

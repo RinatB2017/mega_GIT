@@ -214,7 +214,7 @@ void CanvasPicker::select( const QPoint &pos )
     }
 
     showCursor( false );
-    d_selectedCurve = nullptrL;
+    d_selectedCurve = nullptr;
     d_selectedPoint = -1;
 
     if ( curve && dist < 10 ) // 10 pixels tolerance

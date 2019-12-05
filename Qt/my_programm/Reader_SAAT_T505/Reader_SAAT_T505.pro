@@ -24,7 +24,6 @@ DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     reader_saat_t505_mainbox.hpp \
-    ascii_data.hpp \
     defines.hpp \
     version.hpp
 

@@ -3,7 +3,6 @@ DEPENDPATH      += $$PWD/headers
 INCLUDEPATH	= $$DEPENDPATH
 HEADERS += ascii_data.hpp
 
-
 include (fake_serialbox5/fake_serialbox5.pri)
 include (sendbox5/sendbox5.pri)
 include (serialbox5/serialbox5.pri)

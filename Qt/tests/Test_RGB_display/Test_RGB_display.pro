@@ -29,7 +29,6 @@ DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     test_rgb_display_mainbox.hpp \
-    ascii_data.hpp \
     defines.hpp \
     version.hpp \
 

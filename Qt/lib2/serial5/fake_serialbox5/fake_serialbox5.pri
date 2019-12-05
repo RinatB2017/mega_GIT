@@ -4,7 +4,7 @@ DEPENDPATH 	+= \
     $$PWD/src/ui
 INCLUDEPATH	= $$DEPENDPATH
 
-QT  *=  serialport
+QT  *=  serialport network
 
 HEADERS += fake_serialbox5.hpp
 SOURCES += fake_serialbox5.cpp

@@ -238,12 +238,53 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    QByteArray bai;
+    QDataStream out(&bai, QIODevice::WriteOnly);
+    QString str_cp1251;
+    str_cp1251.append(static_cast<char>(0xCF));
+    str_cp1251.append(static_cast<char>(0xF0));
+    str_cp1251.append(static_cast<char>(0xE8));
+    str_cp1251.append(static_cast<char>(0xE2));
+    str_cp1251.append(static_cast<char>(0xE5));
+    str_cp1251.append(static_cast<char>(0xF2));
+
+    out << str_cp1251;
+
+#endif
+
 #if 0
-    QTextCodec *codec = QTextCodec::codecForLocale();
-    if(codec != nullptr)
-    {
-        emit info(codec->name());
-    }
+    QString str_cp1251;
+    str_cp1251.append(static_cast<char>(0xCF));
+    str_cp1251.append(static_cast<char>(0xF0));
+    str_cp1251.append(static_cast<char>(0xE8));
+    str_cp1251.append(static_cast<char>(0xE2));
+    str_cp1251.append(static_cast<char>(0xE5));
+    str_cp1251.append(static_cast<char>(0xF2));
+
+    QByteArray ba_cp1251;
+    ba_cp1251.append(str_cp1251);
+
+    emit info(str_cp1251);
+    emit info(ba_cp1251);
+#endif
+
+#if 0
+    QByteArray ba_cp1251;
+    ba_cp1251.append(static_cast<char>(0xCF));
+    ba_cp1251.append(static_cast<char>(0xF0));
+    ba_cp1251.append(static_cast<char>(0xE8));
+    ba_cp1251.append(static_cast<char>(0xE2));
+    ba_cp1251.append(static_cast<char>(0xE5));
+    ba_cp1251.append(static_cast<char>(0xF2));
+
+    QTextCodec* code = QTextCodec::codecForName("CP1251");
+    QString str = code->toUnicode(ba_cp1251);
+    emit info(str);
+
+    QString temp;
+    temp.append(ba_cp1251.data());
+    emit info(QString("len %1").arg(temp.length()));
 #endif
 
 #if 1
@@ -264,7 +305,7 @@ bool MainBox::test_0(void)
             {
                 QByteArray ba = file.readAll();
 
-#if 1
+#if 0
                 QTextCodec* code = QTextCodec::codecForName("CP1251");
                 //QTextCodec* code = QTextCodec::codecForName("KOI8R");
                 //QTextCodec* code = QTextCodec::codecForName("UTF8");

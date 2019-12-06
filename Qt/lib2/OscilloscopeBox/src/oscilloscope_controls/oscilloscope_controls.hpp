@@ -66,6 +66,8 @@ private slots:
     void click_color_CH3(void);
     void click_color_CH4(void);
 
+    void set_color(void);
+
     void click_CH1(void);
     void click_CH2(void);
     void click_CH3(void);

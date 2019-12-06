@@ -21,13 +21,19 @@
 #ifndef OSCILLOSCOPE_CONTROLS_HPP
 #define OSCILLOSCOPE_CONTROLS_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Oscilloscope_controls;
 }
 //--------------------------------------------------------------------------------
-class Oscilloscope_controls : public QWidget
+class Oscilloscope_controls : public MyWidget
 {
     Q_OBJECT
 
@@ -68,7 +74,12 @@ private slots:
 private:
     Ui::Oscilloscope_controls *ui;
 
-    void init(void);
+    void init(void);    
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // OSCILLOSCOPE_CONTROLS_HPP

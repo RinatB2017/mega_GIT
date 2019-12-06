@@ -22,7 +22,7 @@
 #include "ui_oscilloscope_controls.h"
 //--------------------------------------------------------------------------------
 Oscilloscope_controls::Oscilloscope_controls(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::Oscilloscope_controls)
 {
     init();
@@ -127,22 +127,22 @@ void Oscilloscope_controls::set_state_RUN(bool state)
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::click_color_CH1(void)
 {
-
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::click_color_CH2(void)
 {
-
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::click_color_CH3(void)
 {
-
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::click_color_CH4(void)
 {
-
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::click_CH1(void)
@@ -163,5 +163,25 @@ void Oscilloscope_controls::click_CH3(void)
 void Oscilloscope_controls::click_CH4(void)
 {
     emit click_channel(3);
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool Oscilloscope_controls::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

@@ -18,25 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_test_OscilloscopeBox_mainbox.h"
+#include <QCryptographicHash>
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "oscilloscopebox.hpp"
-#include "mysplashscreen.hpp"
+#include "ui_calcmd5_mainbox.h"
+//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_OscilloscopeBox_mainbox.hpp"
+#include "calcmd5_mainbox.hpp"
+#include "myfiledialog.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-MainBox::MainBox(QWidget *parent,
-                 MySplashScreen *splash) :
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    splash(splash),
-    ui(new Ui::MainBox)
+    ui(new Ui::MainBox),
+    parent(parent)
 {
     init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -44,76 +49,52 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    createTestBar();
+    connect(ui->BtnOpen, SIGNAL(clicked()), this, SLOT(calc_md5()));
 
-    index=0;
-    main_timer = new QTimer(this);
-    connect(main_timer, SIGNAL(timeout()), this, SLOT(update()));
-    main_timer->start();
-
-    connect(ui->btn_start,  SIGNAL(clicked(bool)),  main_timer, SLOT(start()));
-    connect(ui->btn_stop,   SIGNAL(clicked(bool)),  main_timer, SLOT(stop()));
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
-void MainBox::update(void)
+void MainBox::calc_md5(void)
 {
-#if 1
-    for(int n=0; n<4; n++)
+    QFileDialog *dlg;
+    QString temp;
+
+    dlg = new MyFileDialog("md5_dlg", "md5_dlg");
+    dlg->setNameFilter(tr("All files (*.*)"));
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    //dlg->setDirectory(".");
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    if(dlg->exec())
     {
-        ui->oscilloscope_widget->add_curve_data(n, qreal(100.0)*qSin(qreal(index)*qreal(M_PI)/qreal(180.0)));
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+        QString md5_str = get_md5(filename);
+        emit info(QString("%1 %2")
+                  .arg(filename)
+                  .arg(md5_str));
+        messagebox_info(filename, md5_str);
     }
-    index++;
-#else
-    for(int i=0; i<10; i++)
+}
+//--------------------------------------------------------------------------------
+QString MainBox::get_md5(const QString &filename)
+{
+    QString md5_string = "";
+    QFile file(filename);
+
+    if (file.open(QIODevice::ReadOnly))
     {
-        for(int n=0; n<4; n++)
-        {
-            ui->oscilloscope_widget->add_curve_data(n, qreal(100.0)*qSin(qreal(index)*qreal(M_PI)/qreal(180.0)));
-        }
-        index++;
+        QCryptographicHash *md5 = new QCryptographicHash(QCryptographicHash::Md5);
+        md5->addData(file.readAll());
+        md5_string = QString("%1").arg(md5->result().toHex().toUpper().data());
+        delete md5;
     }
-#endif
-}
-//--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-
-    QToolBar *testbar = new QToolBar(tr("testbar"));
-    testbar->setObjectName("toolBar");
-
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                       "test",
-                                       "test");
-    
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
-}
-//--------------------------------------------------------------------------------
-void MainBox::load(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-}
-//--------------------------------------------------------------------------------
-void MainBox::save(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test(void)
-{
-    emit info("Test");
+    return md5_string;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
+    ui->BtnOpen->setText(QObject::tr("Open"));
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)

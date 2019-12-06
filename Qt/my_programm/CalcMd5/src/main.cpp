@@ -18,54 +18,42 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "mainwindow.hpp"
+#include "calcmd5_mainbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    set_codecs();
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    MainWindow *main_window = new MainWindow();
+    // main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+
+    MainBox *mainBox = new MainBox(main_window->getThis());
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void load(void);
-    void save(void);
-    void test(void);
-
-    void update(void);
-
-private:
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QTimer *main_timer = nullptr;
-    int index = 0;
-
-    void init(void);
-
-    void createTestBar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

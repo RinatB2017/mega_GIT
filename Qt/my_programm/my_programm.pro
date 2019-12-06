@@ -8,6 +8,7 @@ CONFIG   += ordered
 SUBDIRS += \
     _For_tests \
     auto_inc_version \
+    CalcMd5 \
     Check_Network \
     hello_speak \
     Get_acceleration_data \

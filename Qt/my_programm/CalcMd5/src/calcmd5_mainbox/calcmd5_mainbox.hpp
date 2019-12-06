@@ -33,35 +33,27 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
+    MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
-private slots:
-    void load(void);
-    void save(void);
-    void test(void);
+public slots:
+    QString get_md5(const QString &filename);
 
-    void update(void);
+private slots:
+    void calc_md5(void);
 
 private:
-    MySplashScreen *splash;
     Ui::MainBox *ui;
-
-    QTimer *main_timer = nullptr;
-    int index = 0;
+    QWidget *parent;
 
     void init(void);
 
-    void createTestBar(void);
-
+protected:
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

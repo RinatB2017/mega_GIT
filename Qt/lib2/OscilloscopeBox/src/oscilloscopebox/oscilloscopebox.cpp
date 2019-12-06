@@ -21,23 +21,7 @@
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
-#   include <QDialogButtonBox>
-#   include <QGridLayout>
-#   include <QVBoxLayout>
-#   include <QFileDialog>
-#   include <QMessageBox>
-#   include <QPushButton>
-#   include <QToolButton>
-#   include <QCheckBox>
-#   include <QToolBar>
-#   include <QDialog>
-#   include <QSlider>
-#   include <QLabel>
-#   include <QFrame>
-#   include <QTimer>
-
-#   include <QFile>
-#   include <QMenu>
+#   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
 #include <limits.h>

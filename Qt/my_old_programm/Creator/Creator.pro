@@ -7,7 +7,6 @@ CONFIG   *= ordered
 
 SUBDIRS += \
     Aggregator \
-    CalcMd5 \
     Double_browser \
     Platanov_browser \
     ProxyWalker \

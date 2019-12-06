@@ -17,11 +17,11 @@ macx {
 }
 
 win32 {
-    TEMP_PATH = "C:"
-    OBJECTS_DIR = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\obj
-    MOC_DIR     = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\moc
-    UI_DIR      = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\ui
-    RCC_DIR     = $$TEMP_PATH\\my_programm\\$$FOLDER\\$$TARGET\\rc
+    TEMP_PATH = "D:"
+    OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
+    MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc
+    UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\ui
+    RCC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\rc
 
     CONFIG -= debug_and_release #debug_and_release_target
     CONFIG += no_fixpath

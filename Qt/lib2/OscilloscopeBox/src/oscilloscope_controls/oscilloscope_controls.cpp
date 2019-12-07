@@ -37,10 +37,10 @@ void Oscilloscope_controls::init(void)
 {
     ui->setupUi(this);
 
-    ui->tb_CH1->setPalette(QPalette(Qt::red));
-    ui->tb_CH2->setPalette(QPalette(Qt::green));
-    ui->tb_CH3->setPalette(QPalette(Qt::blue));
-    ui->tb_CH4->setPalette(QPalette(Qt::magenta));
+    ui->tb_CH1->setStyleSheet("background:red;");
+    ui->tb_CH2->setStyleSheet("background:green;");
+    ui->tb_CH3->setStyleSheet("background:blue;");
+    ui->tb_CH4->setStyleSheet("background:magenta;");
 
 //    connect(ui->tb_CH1,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH1()));
 //    connect(ui->tb_CH2,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH2()));
@@ -143,26 +143,15 @@ void Oscilloscope_controls::set_color(void)
         return;
     }
     emit debug(QString("ID %1").arg(button->property("curve_ID").toInt()));
-}
-//--------------------------------------------------------------------------------
-void Oscilloscope_controls::click_color_CH1(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void Oscilloscope_controls::click_color_CH2(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void Oscilloscope_controls::click_color_CH3(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void Oscilloscope_controls::click_color_CH4(void)
-{
-    emit trace(Q_FUNC_INFO);
+
+    QColorDialog *dlg = new QColorDialog();
+    dlg->setCurrentColor(Qt::red);
+
+    int btn = dlg->exec();
+    if(btn == QColorDialog::Accepted)
+    {
+
+    }
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::click_CH1(void)

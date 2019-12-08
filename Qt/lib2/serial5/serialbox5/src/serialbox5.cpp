@@ -563,7 +563,7 @@ void SerialBox5::procSerialDataReceive(void)
 //--------------------------------------------------------------------------------
 void SerialBox5::timer_stop(void)
 {
-    emit output(serial5->readAll());
+    emit output(serial5->readAll()); //TODO проверить
 }
 //--------------------------------------------------------------------------------
 QString SerialBox5::ByteArrayToHex(const QByteArray &data)
@@ -590,22 +590,7 @@ void SerialBox5::drawData(const QByteArray &data)
 {
     // qDebug() << "drawData[" << data << "]";
 #ifdef RS232_LOG
-    if(flag_in_hex)
-    {
-        logBox->append(ByteArrayToHex(data));
-    }
-    else
-    {
-        logBox->bappend(data.data());
-    }
-    if(flag_in_hex)
-    {
-        emit info(ByteArrayToHex(data));
-    }
-    else
-    {
-        //emit info(data);
-    }
+    logBox->infoLog(data.data());
 #else
     Q_UNUSED(data);
 #endif
@@ -652,19 +637,12 @@ bool SerialBox5::add_menu(int index)
     QMenu *menu = new QMenu(caption);
     Q_CHECK_PTR(menu);
 
-    QAction *action_flag_in_hex = new QAction(menu);
     QAction *action_flag_byte_by_byte = new QAction(menu);
 
-    action_flag_in_hex->setCheckable(true);
     action_flag_byte_by_byte->setCheckable(true);
-
-    action_flag_in_hex->setText("in HEX");
     action_flag_byte_by_byte->setText("byte to byte");
-
-    menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex,         SIGNAL(triggered(bool)),    this,   SLOT(set_flag_in_hex(bool)));
     connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
 
     mw->add_optionsmenu_menu(index, menu);
@@ -679,30 +657,17 @@ bool SerialBox5::add_menu(int index, const QString &title)
 
     QMenu *menu = new QMenu(title);
 
-    QAction *action_flag_in_hex = new QAction(menu);
     QAction *action_flag_byte_by_byte = new QAction(menu);
 
-    action_flag_in_hex->setCheckable(true);
     action_flag_byte_by_byte->setCheckable(true);
-
-    action_flag_in_hex->setText("in HEX");
     action_flag_byte_by_byte->setText("byte to byte");
-
-    menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, SIGNAL(triggered(bool)), this, SLOT(set_flag_in_hex(bool)));
     connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
 
     mw->add_menu(index, menu);
 
     return true;
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::set_flag_in_hex(bool state)
-{
-    emit debug(QString("state is %1").arg(state ? "true" : "false"));
-    flag_in_hex = state;
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::set_flag_byte_by_byte(bool state)

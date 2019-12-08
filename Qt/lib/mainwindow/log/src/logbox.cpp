@@ -212,7 +212,7 @@ void LogBox::set_flag_is_shows_trace(bool state)
     flag_is_shows_trace = state;
 }
 //--------------------------------------------------------------------------------
-void LogBox::infoLog(const QString &text)
+void LogBox::append_string(QString level_str, QString text)
 {
     if(flag_is_shows_info == false)
     {
@@ -228,7 +228,8 @@ void LogBox::infoLog(const QString &text)
 
     if(flagAddDateTime)
     {
-        temp = QString("%1\tINFO\t%2")
+        temp = QString("%1\t%2\t%3")
+                .arg(level_str)
                 .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                 .arg(text);
     }
@@ -267,171 +268,52 @@ void LogBox::infoLog(const QString &text)
         logBox->append(temp);
 #endif
     }
-
     logBox->moveCursor(QTextCursor::End);
+}
+//--------------------------------------------------------------------------------
+void LogBox::infoLog(const QString &text)
+{
+    if(!text.isEmpty())
+    {
+        append_string("INFO", text);
+    }
 }
 //--------------------------------------------------------------------------------
 void LogBox::debugLog(const QString &text)
 {
-    if(flag_is_shows_debug == false)
+    if(!text.isEmpty())
     {
-        return;
+        append_string("DEBUG", text);
     }
-
-    if(text.isEmpty())
-    {
-        return;
-    }
-
-    QString temp;
-
-    if(flagAddDateTime)
-    {
-        temp = QString("%1\tDEBUG\t%2")
-                .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
-                .arg(text);
-    }
-    else
-    {
-        temp = text;
-    }
-
-    flagColor ? logBox->setTextColor(QColor(Qt::darkGreen)) : logBox->setTextColor(QColor(Qt::black));
-
-    if(flagNoCRLF)
-        logBox->insertPlainText(temp);
-    else
-        logBox->append(temp);
-
-    logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
 void LogBox::errorLog(const QString &text)
 {
-    if(flag_is_shows_error == false)
+    if(!text.isEmpty())
     {
-        return;
+        append_string("ERROR", text);
     }
-
-    if(text.isEmpty())
-    {
-        return;
-    }
-
-    QString temp;
-
-    if(flagAddDateTime)
-    {
-        temp = QString("%1\tERROR\t%2")
-                .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
-                .arg(text);
-    }
-    else
-    {
-        temp = text;
-    }
-
-    if(flagErrorAsMessage)
-    {
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setWindowTitle("Ошибка");
-        msgBox.setText(temp);
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.exec();
-    }
-
-    flagColor ? logBox->setTextColor(QColor(Qt::red)) : logBox->setTextColor(QColor(Qt::black));
-
-    if(flagNoCRLF)
-        logBox->insertPlainText(temp);
-    else
-        logBox->append(temp);
-
-    logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
 void LogBox::traceLog(const QString &text)
 {
-    if(flag_is_shows_trace == false)
+    if(!text.isEmpty())
     {
-        return;
+        append_string("TRACE", text);
     }
-
-    if(text.isEmpty())
-    {
-        return;
-    }
-
-    QString temp;
-
-    if(flagAddDateTime)
-    {
-        temp = QString("%1\tMESSAGE\t%2")
-                .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
-                .arg(text);
-    }
-    else
-    {
-        temp = text;
-    }
-
-    flagColor ? logBox->setTextColor(QColor(Qt::gray)) : logBox->setTextColor(QColor(Qt::black));
-
-    if(flagNoCRLF)
-        logBox->insertPlainText(temp);
-    else
-        logBox->append(temp);
-
-    logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
 void LogBox::colorLog(const QString &text,
                       const QColor text_color,
                       const QColor background_color)
 {
-    if(flag_is_shows_trace == false)
+    if(!text.isEmpty())
     {
-        return;
+        flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
+        flagColor ? logBox->setTextColor(text_color) : logBox->setTextColor(QColor(Qt::black));
+        append_string("COLOR", text);
+        logBox->moveCursor(QTextCursor::End);
     }
-
-    QString temp;
-
-    if(text.isEmpty())
-    {
-        return;
-    }
-
-    if(flagAddDateTime)
-    {
-        temp = QString("%1\tMESSAGE\t%2")
-                .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
-                .arg(text);
-    }
-    else
-    {
-        temp = text;
-    }
-
-    //#ifdef Q_OS_LINUX
-    // //TODO белый цвет, если тема темная
-    // QColor cb = QColor(Qt::white);
-    //#else
-    // QColor cb = logBox->textBackgroundColor();
-    //#endif
-
-    flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
-    flagColor ? logBox->setTextColor(text_color) : logBox->setTextColor(QColor(Qt::black));
-
-    // восстанавливаем цвет фона
-    // logBox->setTextBackgroundColor(cb);
-
-    if(flagNoCRLF)
-        logBox->insertPlainText(temp);
-    else
-        logBox->append(temp);
-
-    logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
 QString LogBox::syslog_to_str(int level)
@@ -576,7 +458,6 @@ void LogBox::changeOptions(void)
     int res = optionsBox->exec();
     if(res == QDialog::Accepted)
     {
-        QTextCodec::setCodecForLocale(optionsBox->get_text_codec());
 #ifdef NEED_CODEC
         //TODO проверить надо
         current_codec = optionsBox->get_text_codec();
@@ -599,26 +480,6 @@ void LogBox::changeOptions(void)
 void LogBox::clearProgress()
 {
     progress(0);
-}
-//--------------------------------------------------------------------------------
-void LogBox::append(const QString &data)
-{
-    if(data.isEmpty()) return;
-    logBox->append(data);
-    logBox->moveCursor(QTextCursor::End);
-}
-//--------------------------------------------------------------------------------
-void LogBox::bappend(const QByteArray &data)
-{
-    if(data.isEmpty()) return;
-
-    flagColor ? logBox->setTextColor(QColor(Qt::blue)) : logBox->setTextColor(QColor(Qt::black));
-    if(flagNoCRLF)
-        logBox->insertPlainText(data);
-    else
-        logBox->append(data);
-
-    logBox->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
 void LogBox::clear()

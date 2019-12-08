@@ -96,7 +96,6 @@ private:
     QString caption;
     QString o_name;
 
-    bool flag_in_hex = false;
     bool flag_byte_by_byte = false;
 
 #ifdef RS232_LOG
@@ -139,7 +138,6 @@ public slots:
     int input(const QByteArray &sending_data);
     int input(const QString &data);
 
-    void set_flag_in_hex(bool state);
     void set_flag_byte_by_byte(bool state);
 
 private slots:

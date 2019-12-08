@@ -47,8 +47,6 @@ public:
     void updateText(void);
 
 public slots:
-    void append(const QString &);
-    void bappend(const QByteArray &);
     void clear(void);
     void progress(int);
     void clearProgress(void);
@@ -121,6 +119,7 @@ private:
 
     void save_log(const QString &);
 
+    void append_string(QString level_str, QString text);
     QString syslog_to_str(int level);
 
 protected:

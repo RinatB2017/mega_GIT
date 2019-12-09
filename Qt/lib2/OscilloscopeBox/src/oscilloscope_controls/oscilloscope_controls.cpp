@@ -42,11 +42,6 @@ void Oscilloscope_controls::init(void)
     ui->tb_CH3->setStyleSheet("background:blue;");
     ui->tb_CH4->setStyleSheet("background:magenta;");
 
-//    connect(ui->tb_CH1,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH1()));
-//    connect(ui->tb_CH2,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH2()));
-//    connect(ui->tb_CH3,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH3()));
-//    connect(ui->tb_CH4,     SIGNAL(clicked(bool)),  this,   SLOT(click_color_CH4()));
-
     ui->tb_CH1->setProperty("curve_ID", 1);
     ui->tb_CH2->setProperty("curve_ID", 2);
     ui->tb_CH3->setProperty("curve_ID", 3);

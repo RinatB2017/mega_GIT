@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <limits.h>
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -44,9 +38,9 @@
 //--------------------------------------------------------------------------------
 #include "ui_oscilloscopebox.h"
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "oscilloscopebox.hpp"
 #include "oscilloscopedata.hpp"
+#include "oscilloscopebox.hpp"
+#include "mainwindow.hpp"
 #include "csvreader.hpp"
 //--------------------------------------------------------------------------------
 #include "oscilloscope_controls.hpp"
@@ -55,17 +49,6 @@ OscilloscopeBox::OscilloscopeBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::OscilloscopeBox)
 {
-    num_curves = 4;
-
-    axis_X_min = 0;
-    axis_X_max = 1000;
-    axis_Y_min = 0;
-    axis_Y_max = 1000;
-
-    title = "oscilloscope";
-    title_axis_X = "time";
-    title_axis_Y = "voltage";
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -108,7 +91,6 @@ int OscilloscopeBox::add_curve(int index_curve,
 QVariant OscilloscopeBox::itemToInfo(QwtPlotItem *plotItem) const
 {
     QVariant itemInfo;
-    //qVariantSetValue(itemInfo, plotItem);
     itemInfo.setValue(plotItem);
 
     return itemInfo;
@@ -281,6 +263,17 @@ void OscilloscopeBox::init()
 {
     ui->setupUi(this);
 
+    num_curves = 4;
+
+    axis_X_min = 0;
+    axis_X_max = 1000;
+    axis_Y_min = 0;
+    axis_Y_max = 1000;
+
+    title = "oscilloscope";
+    title_axis_X = "time";
+    title_axis_Y = "voltage";
+
     create_widgets();
     create_timer();
     create_curves();
@@ -303,9 +296,9 @@ void OscilloscopeBox::create_curves(void)
     colors.append(QColor(Qt::blue));
     colors.append(QColor(Qt::magenta));
 
-    int step = axis_Y_max / num_curves / 2;
+    int step = static_cast<int>(axis_Y_max / num_curves / 2);
     int y = step * num_curves * 2 - step;
-    for(unsigned int n=0; n<num_curves; n++)
+    for(int n=0; n<num_curves; n++)
     {
         add_curve(n, y, colors[n]);
         y-=(step*2);
@@ -322,7 +315,7 @@ void OscilloscopeBox::create_timer(void)
 void OscilloscopeBox::update(void)
 {
     //int cnt = 0;
-    for(unsigned int channel=0; channel<num_curves; channel++)
+    for(int channel=0; channel<num_curves; channel++)
     {
         QPointF point;
         point.setX(axis_X_max);

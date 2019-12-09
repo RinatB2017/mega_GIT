@@ -21,7 +21,11 @@
 #ifndef OscilloscopeBOX_HPP
 #define OscilloscopeBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "qwt_plot_magnifier.h"
 #include "qwt_legend_data.h"
@@ -69,7 +73,7 @@ class OscilloscopeBox : public MyWidget
     Q_OBJECT
 
 public:
-    OscilloscopeBox(QWidget *parent = nullptr);
+    explicit OscilloscopeBox(QWidget *parent = nullptr);
     ~OscilloscopeBox();
 
     void test(void);
@@ -104,7 +108,7 @@ private:
     QwtPlotPicker *d_picker;
     QwtLegend *legend;
 
-    unsigned int num_curves = 0;
+    int num_curves = 0;
     QVector<OSCILLOSCOPE_CURVE> curves;
 
     QTimer *timer;

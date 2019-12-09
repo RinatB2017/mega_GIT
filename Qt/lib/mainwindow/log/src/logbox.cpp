@@ -212,7 +212,10 @@ void LogBox::set_flag_is_shows_trace(bool state)
     flag_is_shows_trace = state;
 }
 //--------------------------------------------------------------------------------
-void LogBox::append_string(QString level_str, QString text)
+void LogBox::append_string(QString level_str,
+                           QColor color_text,
+                           QColor background_color,
+                           QString text)
 {
     if(flag_is_shows_info == false)
     {
@@ -238,7 +241,8 @@ void LogBox::append_string(QString level_str, QString text)
         temp = text;
     }
 
-    flagColor ? logBox->setTextColor(QColor(Qt::blue)) : logBox->setTextColor(QColor(Qt::black));
+    flagColor ? logBox->setTextColor(color_text) : logBox->setTextColor(QColor(Qt::black));
+    flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
 
 #ifdef NEED_CODEC
     //TODO проверить надо
@@ -275,7 +279,7 @@ void LogBox::infoLog(const QString &text)
 {
     if(!text.isEmpty())
     {
-        append_string("INFO", text);
+        append_string("INFO", Qt::blue, Qt::white, text);
     }
 }
 //--------------------------------------------------------------------------------
@@ -283,7 +287,7 @@ void LogBox::debugLog(const QString &text)
 {
     if(!text.isEmpty())
     {
-        append_string("DEBUG", text);
+        append_string("DEBUG", Qt::darkGreen, Qt::white, text);
     }
 }
 //--------------------------------------------------------------------------------
@@ -291,7 +295,7 @@ void LogBox::errorLog(const QString &text)
 {
     if(!text.isEmpty())
     {
-        append_string("ERROR", text);
+        append_string("ERROR", Qt::red, Qt::white, text);
     }
 }
 //--------------------------------------------------------------------------------
@@ -299,7 +303,7 @@ void LogBox::traceLog(const QString &text)
 {
     if(!text.isEmpty())
     {
-        append_string("TRACE", text);
+        append_string("TRACE", Qt::gray, Qt::white, text);
     }
 }
 //--------------------------------------------------------------------------------
@@ -309,10 +313,7 @@ void LogBox::colorLog(const QString &text,
 {
     if(!text.isEmpty())
     {
-        flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
-        flagColor ? logBox->setTextColor(text_color) : logBox->setTextColor(QColor(Qt::black));
-        append_string("COLOR", text);
-        logBox->moveCursor(QTextCursor::End);
+        append_string("COLOR", text_color, background_color, text);
     }
 }
 //--------------------------------------------------------------------------------

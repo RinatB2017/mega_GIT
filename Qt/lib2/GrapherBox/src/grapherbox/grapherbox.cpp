@@ -715,22 +715,31 @@ void GrapherBox::init()
     flag_symbol = false;
     curves.clear();
 
-    curve_colors[0]  = QColor(Qt::red);
-    curve_colors[1]  = QColor(Qt::green);
-    curve_colors[2]  = QColor(Qt::blue);
-    curve_colors[3]  = QColor(Qt::magenta);
-    curve_colors[4]  = QColor(Qt::cyan);
-    curve_colors[5]  = QColor(Qt::yellow);
-    curve_colors[6]  = QColor(Qt::darkRed);
-    curve_colors[7]  = QColor(Qt::darkGreen);
-    curve_colors[8]  = QColor(Qt::darkBlue);
-    curve_colors[9]  = QColor(Qt::darkMagenta);
-    curve_colors[10] = QColor(Qt::darkCyan);
-    curve_colors[11] = QColor(Qt::darkYellow);
-    curve_colors[12] = QColor(Qt::white);
-    curve_colors[12] = QColor(Qt::lightGray);
-    curve_colors[14] = QColor(Qt::gray);
-    curve_colors[15] = QColor(Qt::darkGray);
+    QList<QColor> l_colors;
+    l_colors << QColor(Qt::red);
+    l_colors << QColor(Qt::red);
+    l_colors << QColor(Qt::green);
+    l_colors << QColor(Qt::blue);
+    l_colors << QColor(Qt::magenta);
+    l_colors << QColor(Qt::cyan);
+    l_colors << QColor(Qt::yellow);
+    l_colors << QColor(Qt::darkRed);
+    l_colors << QColor(Qt::darkGreen);
+    l_colors << QColor(Qt::darkBlue);
+    l_colors << QColor(Qt::darkMagenta);
+    l_colors << QColor(Qt::darkCyan);
+    l_colors << QColor(Qt::darkYellow);
+    l_colors << QColor(Qt::white);
+    l_colors << QColor(Qt::lightGray);
+    l_colors << QColor(Qt::gray);
+    l_colors << QColor(Qt::darkGray);
+
+    int index = 0;
+    for(int n=0; n<MAX_CHANNELS; n++)
+    {
+        if(index >= l_colors.count())    index = 0;
+        curve_colors[n] = l_colors.at(index++);
+    }
 
     create_widgets();
     //load_setting();

@@ -119,7 +119,10 @@ private:
 
     void save_log(const QString &);
 
-    void append_string(QString level_str, QString text);
+    void append_string(QString level_str,
+                       QColor color_text,
+                       QColor background_color,
+                       QString text);
     QString syslog_to_str(int level);
 
 protected:

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
+    <width>210</width>
     <height>462</height>
    </rect>
   </property>
@@ -34,54 +34,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="Color_curve" name="color_widget" native="true"/>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="btn_CH2">
-              <property name="text">
-               <string>CH2</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QPushButton" name="btn_CH3">
-              <property name="text">
-               <string>CH3</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QToolButton" name="tb_CH1"/>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="btn_CH1">
-              <property name="text">
-               <string>CH1</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QPushButton" name="btn_CH4">
-              <property name="text">
-               <string>CH4</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QToolButton" name="tb_CH2"/>
-            </item>
-            <item row="2" column="0">
-             <widget class="QToolButton" name="tb_CH3"/>
-            </item>
-            <item row="3" column="0">
-             <widget class="QToolButton" name="tb_CH4"/>
-            </item>
-           </layout>
+           <layout class="QVBoxLayout" name="curves_layout"/>
           </item>
           <item>
            <spacer name="verticalSpacer">
@@ -209,12 +162,6 @@
    <class>QwtKnob</class>
    <extends>QWidget</extends>
    <header>qwt_knob.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Color_curve</class>
-   <extends>QWidget</extends>
-   <header>color_curve.hpp</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

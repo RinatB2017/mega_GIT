@@ -27,10 +27,23 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "qwt_plot_magnifier.h"
+#include <qwt_picker_machine.h>
+#include <qwt_plot_magnifier.h>
+#include <qwt_plot_renderer.h>
+#include <qwt_plot_canvas.h>
+#include <qwt_plot_panner.h>
+#include <qwt_plot_picker.h>
+#include <qwt_scale_draw.h>
+#include <qwt_plot_curve.h>
+#include <qwt_plot_grid.h>
+#include <qwt_symbol.h>
+#include <qwt_legend_label.h>
 #include "qwt_legend_data.h"
-#include "qwt_plot_curve.h"
-#include "qwt_plot_panner.h"
+#include <qwt_legend.h>
+#include <qwt_knob.h>
+#include <qwt_plot.h>
+//--------------------------------------------------------------------------------
+//#include <limits.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -77,6 +90,8 @@ public:
     ~OscilloscopeBox();
 
     void test(void);
+    bool set_curve_color(int index, QColor color);
+    bool get_curve_color(int index, QColor *color);
 
 public slots:
     void add_curve_data(int channel,
@@ -107,6 +122,8 @@ private:
 
     QwtPlotPicker *d_picker;
     QwtLegend *legend;
+
+    QColor color = Qt::black;
 
     int num_curves = 0;
     QVector<OSCILLOSCOPE_CURVE> curves;
@@ -149,6 +166,7 @@ private:
 
     void set_zoom(bool x_state, bool y_state);
     void set_panning(bool x_state, bool y_state);
+    void add_curves_button(void);
 
     void updateText(void);
     bool programm_is_exit(void);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Color_curve</class>
- <widget class="QWidget" name="Color_curve">
+ <class>Oscilloscope_curve_color</class>
+ <widget class="QWidget" name="Oscilloscope_curve_color">
   <property name="geometry">
    <rect>
     <x>0</x>

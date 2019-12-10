@@ -18,40 +18,56 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef COLOR_CURVE_HPP
-#define COLOR_CURVE_HPP
+#include "oscilloscope_curve_color.hpp"
+#include "ui_oscilloscope_curve_color.h"
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class Color_curve;
+Oscilloscope_curve_color::Oscilloscope_curve_color(int ID, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Oscilloscope_curve_color),
+    id(ID)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class Color_curve : public QWidget
+Oscilloscope_curve_color::~Oscilloscope_curve_color()
 {
-    Q_OBJECT
-
-signals:
-
-public:
-    explicit Color_curve(QWidget *parent = nullptr);
-    ~Color_curve();
-
-    void set_color(QColor color);
-    void set_button_text(QString text);
-
-private slots:
-    void set_color(void);
-
-private:
-    Ui::Color_curve *ui;
-    QColor color = Qt::black;
-
-    void init(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // COLOR_CURVE_HPP
+void Oscilloscope_curve_color::init(void)
+{
+    ui->setupUi(this);
+
+    ui->btn_push->setText("curve");
+    connect(ui->btn_color,  SIGNAL(clicked()),  this,   SLOT(set_color()));
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_curve_color::set_color(QColor color)
+{
+    this->color = color;
+    ui->btn_color->setStyleSheet(QString("background:rgb(%1,%2,%3);")
+                                 .arg(color.red())
+                                 .arg(color.green())
+                                 .arg(color.blue()));
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_curve_color::set_color(void)
+{
+    QColorDialog *dlg = new QColorDialog();
+    dlg->setCurrentColor(color);
+
+    int btn = dlg->exec();
+    if(btn == QColorDialog::Accepted)
+    {
+
+    }
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_curve_color::set_button_text(QString text)
+{
+    if(!text.isEmpty())
+    {
+        ui->btn_push->setText(text);
+    }
+}
+//--------------------------------------------------------------------------------

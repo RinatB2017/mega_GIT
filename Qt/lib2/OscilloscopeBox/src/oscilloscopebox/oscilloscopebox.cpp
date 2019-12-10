@@ -18,23 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <limits.h>
 #include "defines.hpp"
-//--------------------------------------------------------------------------------
-#include <qwt_knob.h>
-#include <qwt_plot_renderer.h>
-#include <qwt_plot_magnifier.h>
-#include <qwt_picker_machine.h>
-#include <qwt_plot_canvas.h>
-#include <qwt_plot_panner.h>
-#include <qwt_plot_picker.h>
-#include <qwt_scale_draw.h>
-#include <qwt_plot_curve.h>
-#include <qwt_plot_grid.h>
-#include <qwt_symbol.h>
-#include <qwt_legend.h>
-#include <qwt_legend_label.h>
-#include <qwt_plot.h>
 //--------------------------------------------------------------------------------
 #include "ui_oscilloscopebox.h"
 //--------------------------------------------------------------------------------
@@ -44,6 +28,7 @@
 #include "csvreader.hpp"
 //--------------------------------------------------------------------------------
 #include "oscilloscope_controls.hpp"
+#include "oscilloscope_curve_color.hpp"
 //--------------------------------------------------------------------------------
 OscilloscopeBox::OscilloscopeBox(QWidget *parent) :
     MyWidget(parent),
@@ -57,6 +42,7 @@ int OscilloscopeBox::add_curve(int index_curve,
                                const QColor &color)
 {
     OSCILLOSCOPE_CURVE curve;
+    this->color = color;
 
     QVector<QPointF> samples;
     for(int n=0; n<axis_X_max; n++)
@@ -83,9 +69,17 @@ int OscilloscopeBox::add_curve(int index_curve,
     showCurve(curve.plot_curve, true);
 
     curves.append(curve);
-    updateText();
+    add_curves_button();
 
+    updateText();
     return curves.count() - 1;
+}
+//--------------------------------------------------------------------------------
+void OscilloscopeBox::add_curves_button(void)
+{
+    Oscilloscope_curve_color *cc = new Oscilloscope_curve_color(current_channel, this);
+    cc->set_color(color);
+    ui->curves_layout->addWidget(cc);
 }
 //--------------------------------------------------------------------------------
 QVariant OscilloscopeBox::itemToInfo(QwtPlotItem *plotItem) const
@@ -173,14 +167,11 @@ void OscilloscopeBox::create_widgets(void)
         ui->qwtPlot->setAxisTitle(QwtPlot::yLeft, title_axis_Y);
 
     //---
-    ui->widget_controls->set_max_position(axis_Y_max);
-    ui->widget_controls->set_max_multiply(2.0);
-    //---
-    connect(ui->widget_controls,    SIGNAL(click_channel(int)),     this,   SLOT(click_channel(int)));
-    connect(ui->widget_controls,    SIGNAL(click_RUN()),            this,   SLOT(click_RUN()));
+    //connect(ui->widget_controls,    SIGNAL(click_channel(int)),     this,   SLOT(click_channel(int)));
+    //connect(ui->widget_controls,    SIGNAL(click_RUN()),            this,   SLOT(click_RUN()));
 
-    connect(ui->widget_controls,    SIGNAL(knob_position_changed(double)),  this,   SLOT(position_changed(double)));
-    connect(ui->widget_controls,    SIGNAL(knob_multiply_changed(double)),  this,   SLOT(multiply_changed(double)));
+    //connect(ui->widget_controls,    SIGNAL(knob_position_changed(double)),  this,   SLOT(position_changed(double)));
+    //connect(ui->widget_controls,    SIGNAL(knob_multiply_changed(double)),  this,   SLOT(multiply_changed(double)));
     //---
 }
 //--------------------------------------------------------------------------------
@@ -188,7 +179,7 @@ void OscilloscopeBox::clean_background_all_CH(void)
 {
     for(int n=0; n<4; n++)
     {
-        ui->widget_controls->set_background_channel(n, false);
+        //ui->widget_controls->set_background_channel(n, false);
     }
 }
 //--------------------------------------------------------------------------------
@@ -202,16 +193,16 @@ void OscilloscopeBox::click_channel(int channel)
         current_channel = channel;
         state_current_channel = true;
 
-        ui->widget_controls->set_background_channel(channel, true);
-        ui->widget_controls->set_position(static_cast<double>(curves[channel].correction_pos_y));
-        ui->widget_controls->set_multiply(static_cast<double>(curves[channel].correction_multiply));
+        //ui->widget_controls->set_background_channel(channel, true);
+        //ui->widget_controls->set_position(static_cast<double>(curves[channel].correction_pos_y));
+        //ui->widget_controls->set_multiply(static_cast<double>(curves[channel].correction_multiply));
         legend_state(channel, true);
         return;
     }
     state_current_channel = !state_current_channel;
     if(state_current_channel)
     {
-        ui->widget_controls->set_background_channel(channel, true);
+        //ui->widget_controls->set_background_channel(channel, true);
         legend_state(channel, true);
     }
     else
@@ -225,12 +216,12 @@ void OscilloscopeBox::click_RUN(void)
     state_RUN = !state_RUN;
     if(state_RUN)
     {
-        ui->widget_controls->set_state_RUN(true);
+        //ui->widget_controls->set_state_RUN(true);
         timer->start();
     }
     else
     {
-        ui->widget_controls->set_state_RUN(false);
+        //ui->widget_controls->set_state_RUN(false);
         timer->stop();
     }
 }
@@ -342,9 +333,9 @@ void OscilloscopeBox::update(void)
 void OscilloscopeBox::add_curve_data(int channel,
                                      qreal data)
 {
-    if(curves.count() == 0)
+    if(curves.count() <= 0)
     {
-        emit error(tr("curves.count() == 0"));
+        emit error(tr("curves.count() <= 0"));
         return;
     }
     if(channel >= curves.count())
@@ -392,6 +383,39 @@ void OscilloscopeBox::save_setting(void)
 void OscilloscopeBox::test(void)
 {
 
+}
+//--------------------------------------------------------------------------------
+bool OscilloscopeBox::set_curve_color(int index, QColor color)
+{
+    if(index < 0)
+    {
+        emit error("index too small");
+        return false;
+    }
+    if(index >= curves.count())
+    {
+        emit error("index too large 0");
+        return false;
+    }
+    curves[index].color = color;
+    curves[index].plot_curve->setPen(color);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool OscilloscopeBox::get_curve_color(int index, QColor *color)
+{
+    if(index < 0)
+    {
+        emit error("index too small");
+        return false;
+    }
+    if(index >= curves.count())
+    {
+        emit error("index too large 0");
+        return false;
+    }
+    *color = curves[index].color;
+    return true;
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::set_zoom(bool x_state, bool y_state)

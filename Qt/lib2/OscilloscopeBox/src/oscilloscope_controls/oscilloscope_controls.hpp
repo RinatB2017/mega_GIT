@@ -38,8 +38,11 @@ class Oscilloscope_controls : public MyWidget
     Q_OBJECT
 
 public:
-    Oscilloscope_controls(QWidget *parent = nullptr);
+    explicit Oscilloscope_controls(QWidget *parent = nullptr);
     ~Oscilloscope_controls();
+
+    bool set_curve_color(int index, QColor color);
+    void add_curves_button(void);
 
 signals:
     void click_channel(int channel);

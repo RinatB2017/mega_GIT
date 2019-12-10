@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "oscilloscope_controls.hpp"
+#include "oscilloscope_curve_color.hpp"
 #include "ui_oscilloscope_controls.h"
 //--------------------------------------------------------------------------------
 Oscilloscope_controls::Oscilloscope_controls(QWidget *parent) :
@@ -37,25 +38,27 @@ void Oscilloscope_controls::init(void)
 {
     ui->setupUi(this);
 
-    ui->tb_CH1->setStyleSheet("background:red;");
-    ui->tb_CH2->setStyleSheet("background:green;");
-    ui->tb_CH3->setStyleSheet("background:blue;");
-    ui->tb_CH4->setStyleSheet("background:magenta;");
+//    ui->tb_CH1->setStyleSheet("background:red;");
+//    ui->tb_CH2->setStyleSheet("background:green;");
+//    ui->tb_CH3->setStyleSheet("background:blue;");
+//    ui->tb_CH4->setStyleSheet("background:magenta;");
 
-    ui->tb_CH1->setProperty("curve_ID", 1);
-    ui->tb_CH2->setProperty("curve_ID", 2);
-    ui->tb_CH3->setProperty("curve_ID", 3);
-    ui->tb_CH4->setProperty("curve_ID", 4);
+//    ui->tb_CH1->setProperty("curve_ID", 1);
+//    ui->tb_CH2->setProperty("curve_ID", 2);
+//    ui->tb_CH3->setProperty("curve_ID", 3);
+//    ui->tb_CH4->setProperty("curve_ID", 4);
 
-    connect(ui->tb_CH1,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
-    connect(ui->tb_CH2,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
-    connect(ui->tb_CH3,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
-    connect(ui->tb_CH4,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
+//    connect(ui->tb_CH1,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
+//    connect(ui->tb_CH2,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
+//    connect(ui->tb_CH3,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
+//    connect(ui->tb_CH4,     SIGNAL(clicked(bool)),  this,   SLOT(set_color()));
 
-    connect(ui->btn_CH1,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH1()));
-    connect(ui->btn_CH2,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH2()));
-    connect(ui->btn_CH3,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH3()));
-    connect(ui->btn_CH4,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH4()));
+//    connect(ui->btn_CH1,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH1()));
+//    connect(ui->btn_CH2,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH2()));
+//    connect(ui->btn_CH3,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH3()));
+//    connect(ui->btn_CH4,    SIGNAL(clicked(bool)),  this,   SLOT(click_CH4()));
+
+    ui->curves_layout->setSpacing(0);
 
     connect(ui->btn_RUN,    SIGNAL(clicked(bool)),  this,   SIGNAL(click_RUN()));
 
@@ -91,38 +94,61 @@ void Oscilloscope_controls::set_max_multiply(double max_value)
     ui->knob_multiply->setUpperBound(max_value);
 }
 //--------------------------------------------------------------------------------
+bool Oscilloscope_controls::set_curve_color(int index, QColor color)
+{
+    if(index < 0)
+    {
+        emit error("index too small");
+        return false;
+    }
+    if(index >= 3)
+    {
+        emit error("index too large 0");
+        return false;
+    }
+//    curves[index].color = color;
+//    curves[index].plot_curve->setPen(color);
+    return true;
+}
+//--------------------------------------------------------------------------------
+void Oscilloscope_controls::add_curves_button(void)
+{
+    Oscilloscope_curve_color *cc = new Oscilloscope_curve_color(0, this);
+    ui->curves_layout->addWidget(cc);
+}
+//--------------------------------------------------------------------------------
 void Oscilloscope_controls::set_background_channel(int channel, bool state)
 {
-    switch(channel)
-    {
-    case 0:
-        if(state)
-            ui->btn_CH1->setStyleSheet("background:red;");
-        else
-            ui->btn_CH1->setStyleSheet("");
-        break;
+//    switch(channel)
+//    {
+//    case 0:
+//        if(state)
+//            ui->btn_CH1->setStyleSheet("background:red;");
+//        else
+//            ui->btn_CH1->setStyleSheet("");
+//        break;
 
-    case 1:
-        if(state)
-            ui->btn_CH2->setStyleSheet("background:green;");
-        else
-            ui->btn_CH2->setStyleSheet("");
-        break;
+//    case 1:
+//        if(state)
+//            ui->btn_CH2->setStyleSheet("background:green;");
+//        else
+//            ui->btn_CH2->setStyleSheet("");
+//        break;
 
-    case 2:
-        if(state)
-            ui->btn_CH3->setStyleSheet("background:blue;");
-        else
-            ui->btn_CH3->setStyleSheet("");
-        break;
+//    case 2:
+//        if(state)
+//            ui->btn_CH3->setStyleSheet("background:blue;");
+//        else
+//            ui->btn_CH3->setStyleSheet("");
+//        break;
 
-    case 3:
-        if(state)
-            ui->btn_CH4->setStyleSheet("background:magenta;");
-        else
-            ui->btn_CH4->setStyleSheet("");
-        break;
-    }
+//    case 3:
+//        if(state)
+//            ui->btn_CH4->setStyleSheet("background:magenta;");
+//        else
+//            ui->btn_CH4->setStyleSheet("");
+//        break;
+//    }
 }
 //--------------------------------------------------------------------------------
 void Oscilloscope_controls::set_state_RUN(bool state)

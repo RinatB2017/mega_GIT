@@ -143,6 +143,11 @@ GrapherBox::GrapherBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 QColor GrapherBox::get_curve_color(int channel)
 {
+    if(channel < 0)
+    {
+        emit error("channel < 0");
+        return Qt::black;
+    }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
@@ -154,19 +159,31 @@ QColor GrapherBox::get_curve_color(int channel)
 //--------------------------------------------------------------------------------
 bool GrapherBox::set_curve_color(int channel, QColor color)
 {
+    if(channel < 0)
+    {
+        emit error("channel < 0");
+        return false;
+    }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
                    .arg(curves.count()));
         return false;
     }
+    curves[channel].plot_curve->setPen(color);
     curves[channel].color = color;
+    updateGraphics();
     return true;
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_curve_symbol(int channel,
                                   QwtSymbol *symbol)
 {
+    if(channel < 0)
+    {
+        emit error("channel < 0");
+        return;
+    }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
@@ -174,11 +191,17 @@ void GrapherBox::set_curve_symbol(int channel,
         return;
     }
     curves.at(channel).plot_curve->setSymbol(symbol);
+    updateGraphics();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_curve_style(int channel,
                                  QwtPlotCurve::CurveStyle style)
 {
+    if(channel < 0)
+    {
+        emit error("channel < 0");
+        return;
+    }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
@@ -186,11 +209,17 @@ void GrapherBox::set_curve_style(int channel,
         return;
     }
     curves.at(channel).plot_curve->setStyle(style);
+    updateGraphics();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_curve_attribute(int channel,
                                      QwtPlotCurve::CurveAttribute attribute)
 {
+    if(channel < 0)
+    {
+        emit error("channel < 0");
+        return;
+    }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
@@ -198,11 +227,17 @@ void GrapherBox::set_curve_attribute(int channel,
         return;
     }
     curves.at(channel).plot_curve->setCurveAttribute(attribute);
+    updateGraphics();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_curve_fitter(int channel,
                                   QwtSplineCurveFitter *fitter)
 {
+    if(channel < 0)
+    {
+        emit error("channel < 0");
+        return;
+    }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
@@ -210,6 +245,7 @@ void GrapherBox::set_curve_fitter(int channel,
         return;
     }
     curves.at(channel).plot_curve->setCurveFitter(fitter);
+    updateGraphics();
 }
 //--------------------------------------------------------------------------------
 int GrapherBox::add_curve(const QString &title,
@@ -737,7 +773,10 @@ void GrapherBox::init()
     int index = 0;
     for(int n=0; n<MAX_CHANNELS; n++)
     {
-        if(index >= l_colors.count())    index = 0;
+        if(index >= l_colors.count())
+        {
+            index = 0;
+        }
         curve_colors[n] = l_colors.at(index++);
     }
 
@@ -758,9 +797,9 @@ void GrapherBox::add_curve_data(int channel,
                                 int x,
                                 qreal data)
 {
-    if(curves.count() == 0)
+    if(curves.count() <= 0)
     {
-        emit error(tr("curves.count() == 0"));
+        emit error(tr("curves.count() <= 0"));
         return;
     }
     if(channel >= curves.count())
@@ -782,9 +821,9 @@ bool GrapherBox::get_curve_data(int channel,
                                 int index,
                                 qreal *data)
 {
-    if(curves.count() == 0)
+    if(curves.count() <= 0)
     {
-        emit error(tr("curves.count() == 0"));
+        emit error(tr("curves.count() <= 0"));
         return false;
     }
     if(channel >= curves.count())
@@ -801,9 +840,9 @@ bool GrapherBox::get_curve_data(int channel,
 bool GrapherBox::add_curve_data(int channel,
                                 qreal data)
 {
-    if(curves.count() == 0)
+    if(curves.count() <= 0)
     {
-        emit error(tr("curves.count() == 0"));
+        emit error(tr("curves.count() <= 0"));
         return false;
     }
     if(channel >= curves.count())
@@ -844,9 +883,9 @@ bool GrapherBox::add_curve_data(int channel,
 bool GrapherBox::add_curve_array(int channel,
                                  QList<QPointF> a_points)
 {
-    if(curves.count() == 0)
+    if(curves.count() <= 0)
     {
-        emit error(tr("curves.count() == 0"));
+        emit error(tr("curves.count() <= 0"));
         return false;
     }
     if(channel >= curves.count())

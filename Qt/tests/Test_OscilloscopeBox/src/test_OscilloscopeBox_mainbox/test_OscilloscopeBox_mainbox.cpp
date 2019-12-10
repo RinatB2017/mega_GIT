@@ -109,6 +109,8 @@ void MainBox::save(void)
 void MainBox::test(void)
 {
     emit info("Test");
+
+    ui->oscilloscope_widget->set_curve_color(0, Qt::blue);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

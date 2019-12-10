@@ -134,11 +134,12 @@ void MainBox::init(void)
     grapher_widget->set_axis_scale_y(0, 100);
 #endif
 
-    grapher_widget->set_legend_is_visible(true);
+    //grapher_widget->set_legend_is_visible(true);
 #ifdef ONE_CURVE
     curve_0 = grapher_widget->add_curve("test");
 #else
-    for(int n=0; n<MAX_CHANNELS; n++)
+    //for(int n=0; n<MAX_CHANNELS; n++)
+    for(int n=0; n<8; n++)
     {
         curves[n] = grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
     }
@@ -216,6 +217,7 @@ void MainBox::test_data2(void)
     qreal delta = 0.1;
     for(int n=0; n<10000; n++)
     {
+#ifdef ONE_CURVE
         int temp = rand() % 10;
         if(temp >= 5)
         {
@@ -224,10 +226,21 @@ void MainBox::test_data2(void)
         else {
             begin_y-=delta;
         }
-#ifdef ONE_CURVE
         grapher_widget->add_curve_data(curve_0, n, begin_y);
 #else
-        grapher_widget->add_curve_data(curves[0], n, begin_y);
+        int r = 20;
+        for(int c_index=0; c_index<grapher_widget->get_curves_count(); c_index++)
+        {
+            int temp = rand() % r;
+            if(temp >= r / 2)
+            {
+                begin_y+=delta;
+            }
+            else {
+                begin_y-=delta;
+            }
+            grapher_widget->add_curve_data(curves[c_index], n, begin_y);
+        }
 #endif
     }
 }
@@ -291,7 +304,17 @@ void MainBox::save(void)
 
 void MainBox::test(void)
 {
+    emit trace(Q_FUNC_INFO);
     block_interface(true);
+
+#if 1
+    grapher_widget->set_curve_color(0, Qt::blue);
+
+    QColor color = grapher_widget->get_curve_color(0);
+    emit info(QString("R %1").arg(color.red()));
+    emit info(QString("G %1").arg(color.green()));
+    emit info(QString("B %1").arg(color.blue()));
+#endif
 
 #if 0
     for(qreal x=0; x<100; x+=0.01)
@@ -301,7 +324,7 @@ void MainBox::test(void)
     }
 #endif
 
-#if 1
+#if 0
     for(qreal x=0; x<100; x+=0.01)
     {
         qreal y = 3*x*qLn(x)-(0.13)*exp(-qPow(36*x-36/M_E,4));

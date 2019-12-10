@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef OSCILLOSCOPE_CURVE_HPP
-#define OSCILLOSCOPE_CURVE_HPP
+#ifndef OSCILLOSCOPEBOX_CONTROLS_HPP
+#define OSCILLOSCOPEBOX_CONTROLS_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -28,31 +28,46 @@
 #endif
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class Oscilloscope_curve_color;
+    class Oscilloscopebox_controls;
 }
 //--------------------------------------------------------------------------------
-class Oscilloscope_curve_color : public QWidget
+class Oscilloscopebox_controls : public QWidget
 {
     Q_OBJECT
 
 signals:
+    void s_color(void);
+    void s_select(bool);
 
 public:
-    explicit Oscilloscope_curve_color(int ID, QWidget *parent = nullptr);
-    ~Oscilloscope_curve_color();
+    explicit Oscilloscopebox_controls(QWidget *parent = nullptr);
+    ~Oscilloscopebox_controls();
 
-    void set_color(QColor color);
-    void set_button_text(QString text);
+    bool add_control(QColor color,  QString text);
+    bool set_curve_color(int index, QColor color);
+    bool set_curve_text(int index,  QString text);
+
+    int get_active_index(void);
 
 private slots:
-    void set_color(void);
+    void click_color(void);
+    void click_select(bool state);
+
+    void check_buttons(bool state);
 
 private:
-    Ui::Oscilloscope_curve_color *ui;
-    QColor color = Qt::black;
-    int id = 0;
+    Ui::Oscilloscopebox_controls *ui;
+
+    struct CURVE_BTNS {
+        QToolButton *btn_color;
+        QPushButton *btn_select;
+    };
+    QList<CURVE_BTNS> l_curves;
+    int curves = 0;
+    int current_index = -1;
 
     void init(void);
+    void update_curves(void);
 };
 //--------------------------------------------------------------------------------
 #endif // COLOR_CURVE_HPP

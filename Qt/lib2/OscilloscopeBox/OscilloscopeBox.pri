@@ -4,28 +4,23 @@
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/oscilloscope_curve_color \
-    $$PWD/src/oscilloscope_curve_color/ui \
+    $$PWD/src/oscilloscopebox_controls \
+    $$PWD/src/oscilloscopebox_controls/ui \
     $$PWD/src/oscilloscopebox \
     $$PWD/src/oscilloscopebox/ui \
-    $$PWD/src/oscilloscope_controls \
-    $$PWD/src/oscilloscope_controls/ui
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    oscilloscope_curve_color.hpp \
+    oscilloscopebox_controls.hpp \
     oscilloscopedata.hpp \
-    oscilloscopebox.hpp \
-    oscilloscope_controls.hpp
+    oscilloscopebox.hpp
 
 SOURCES += \
-    oscilloscope_curve_color.cpp \
+    oscilloscopebox_controls.cpp \
     oscilloscopebox.cpp \
-    oscilloscope_controls.cpp
 
 FORMS += \
-    oscilloscope_curve_color.ui \
+    oscilloscopebox_controls.ui \
     oscilloscopebox.ui \
-    oscilloscope_controls.ui
 
 RESOURCES += $$PWD/icons/oscilloscope.qrc

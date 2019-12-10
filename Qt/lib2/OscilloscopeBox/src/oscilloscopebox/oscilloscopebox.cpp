@@ -27,8 +27,7 @@
 #include "mainwindow.hpp"
 #include "csvreader.hpp"
 //--------------------------------------------------------------------------------
-#include "oscilloscope_controls.hpp"
-#include "oscilloscope_curve_color.hpp"
+#include "oscilloscopebox_controls.hpp"
 //--------------------------------------------------------------------------------
 OscilloscopeBox::OscilloscopeBox(QWidget *parent) :
     MyWidget(parent),
@@ -69,17 +68,11 @@ int OscilloscopeBox::add_curve(int index_curve,
     showCurve(curve.plot_curve, true);
 
     curves.append(curve);
-    add_curves_button();
+
+    ui->controls_widget->add_control(color, curve.title);
 
     updateText();
     return curves.count() - 1;
-}
-//--------------------------------------------------------------------------------
-void OscilloscopeBox::add_curves_button(void)
-{
-    Oscilloscope_curve_color *cc = new Oscilloscope_curve_color(current_channel, this);
-    cc->set_color(color);
-    ui->curves_layout->addWidget(cc);
 }
 //--------------------------------------------------------------------------------
 QVariant OscilloscopeBox::itemToInfo(QwtPlotItem *plotItem) const
@@ -168,47 +161,30 @@ void OscilloscopeBox::create_widgets(void)
 
     //---
     //connect(ui->widget_controls,    SIGNAL(click_channel(int)),     this,   SLOT(click_channel(int)));
-    //connect(ui->widget_controls,    SIGNAL(click_RUN()),            this,   SLOT(click_RUN()));
+    connect(ui->btn_RUN,    SIGNAL(clicked(bool)),  this,   SLOT(click_RUN()));
 
-    //connect(ui->widget_controls,    SIGNAL(knob_position_changed(double)),  this,   SLOT(position_changed(double)));
-    //connect(ui->widget_controls,    SIGNAL(knob_multiply_changed(double)),  this,   SLOT(multiply_changed(double)));
+    connect(ui->knob_position,  SIGNAL(valueChanged(double)),  this,   SLOT(position_changed(double)));
+    connect(ui->knob_multiply,  SIGNAL(valueChanged(double)),  this,   SLOT(multiply_changed(double)));
+
+    connect(ui->controls_widget,    SIGNAL(s_select(bool)), this,   SLOT(click(bool)));
     //---
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::clean_background_all_CH(void)
+void OscilloscopeBox::click(bool state)
 {
-    for(int n=0; n<4; n++)
-    {
-        //ui->widget_controls->set_background_channel(n, false);
-    }
+    emit trace(Q_FUNC_INFO);
+
+    int index = ui->controls_widget->get_active_index();
+    emit debug(QString("index %1").arg(index));
+
+    click_channel(index, state);
+    emit debug(state ? "ON" : "OFF");
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::click_channel(int channel)
+void OscilloscopeBox::click_channel(int channel, bool state)
 {
-    //emit debug(QString("channel %1").arg(channel));
-
-    clean_background_all_CH();
-    if(current_channel != channel)
-    {
-        current_channel = channel;
-        state_current_channel = true;
-
-        //ui->widget_controls->set_background_channel(channel, true);
-        //ui->widget_controls->set_position(static_cast<double>(curves[channel].correction_pos_y));
-        //ui->widget_controls->set_multiply(static_cast<double>(curves[channel].correction_multiply));
-        legend_state(channel, true);
-        return;
-    }
-    state_current_channel = !state_current_channel;
-    if(state_current_channel)
-    {
-        //ui->widget_controls->set_background_channel(channel, true);
-        legend_state(channel, true);
-    }
-    else
-    {
-        legend_state(channel, false);
-    }
+    state_current_channel = channel;
+    legend_state(channel, state);
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::click_RUN(void)
@@ -216,12 +192,10 @@ void OscilloscopeBox::click_RUN(void)
     state_RUN = !state_RUN;
     if(state_RUN)
     {
-        //ui->widget_controls->set_state_RUN(true);
         timer->start();
     }
     else
     {
-        //ui->widget_controls->set_state_RUN(false);
         timer->stop();
     }
 }

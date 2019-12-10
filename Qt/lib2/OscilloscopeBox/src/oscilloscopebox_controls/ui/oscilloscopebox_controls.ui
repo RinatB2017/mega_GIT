@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Oscilloscope_curve_color</class>
- <widget class="QWidget" name="Oscilloscope_curve_color">
+ <class>Oscilloscopebox_controls</class>
+ <widget class="QWidget" name="Oscilloscopebox_controls">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -30,10 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QToolButton" name="btn_color"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btn_push"/>
+    <layout class="QGridLayout" name="grid"/>
    </item>
   </layout>
  </widget>

@@ -108,9 +108,11 @@ private slots:
     void updateGraphics(void);
     void legend_checked(const QVariant &itemInfo, bool on);
 
+    void click(bool state);
+
     void update(void);
 
-    void click_channel(int channel);
+    void click_channel(int channel, bool state);
     void click_RUN(void);
 
     void position_changed(double value);
@@ -140,8 +142,6 @@ private:
     int current_channel = -1;
     bool state_current_channel = false;
 
-    void clean_background_all_CH(void);
-
     QString title;
     QString title_axis_X;
     QString title_axis_Y;
@@ -166,7 +166,6 @@ private:
 
     void set_zoom(bool x_state, bool y_state);
     void set_panning(bool x_state, bool y_state);
-    void add_curves_button(void);
 
     void updateText(void);
     bool programm_is_exit(void);

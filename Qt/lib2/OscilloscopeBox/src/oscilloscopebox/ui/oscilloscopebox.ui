@@ -46,7 +46,7 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
-              <layout class="QVBoxLayout" name="curves_layout"/>
+              <widget class="Oscilloscopebox_controls" name="controls_widget" native="true"/>
              </item>
              <item>
               <spacer name="verticalSpacer">
@@ -183,6 +183,12 @@
    <class>QwtKnob</class>
    <extends>QWidget</extends>
    <header>qwt_knob.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Oscilloscopebox_controls</class>
+   <extends>QWidget</extends>
+   <header>oscilloscopebox_controls.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

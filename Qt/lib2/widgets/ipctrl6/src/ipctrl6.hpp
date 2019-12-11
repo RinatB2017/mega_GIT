@@ -33,7 +33,7 @@ private:
         MAX_DIGITS      = 3     // число символов в LineEdit
     };
 
-    QLineEdit *(m_pLineEdit[QTUTL_IP_SIZE]);
+    QLineEdit *m_pLineEdit[QTUTL_IP_SIZE];
     void MoveNextLineEdit (int i);
     void MovePrevLineEdit (int i);
 };

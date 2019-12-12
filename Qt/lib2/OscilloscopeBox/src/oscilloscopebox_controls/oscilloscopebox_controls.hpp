@@ -36,7 +36,7 @@ class Oscilloscopebox_controls : public QWidget
     Q_OBJECT
 
 signals:
-    void s_color(void);
+    void s_color(int);
     void s_select(bool);
 
 public:

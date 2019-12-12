@@ -753,7 +753,6 @@ void GrapherBox::init()
 
     QList<QColor> l_colors;
     l_colors << QColor(Qt::red);
-    l_colors << QColor(Qt::red);
     l_colors << QColor(Qt::green);
     l_colors << QColor(Qt::blue);
     l_colors << QColor(Qt::magenta);

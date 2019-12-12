@@ -58,7 +58,7 @@ void MainBox::init(void)
 void MainBox::update(void)
 {
 #if 1
-    for(int n=0; n<4; n++)
+    for(int n=0; n<5; n++)
     {
         ui->oscilloscope_widget->add_curve_data(n, qreal(100.0)*qSin(qreal(index)*qreal(M_PI)/qreal(180.0)));
     }
@@ -66,7 +66,7 @@ void MainBox::update(void)
 #else
     for(int i=0; i<10; i++)
     {
-        for(int n=0; n<4; n++)
+        for(int n=0; n<5; n++)
         {
             ui->oscilloscope_widget->add_curve_data(n, qreal(100.0)*qSin(qreal(index)*qreal(M_PI)/qreal(180.0)));
         }

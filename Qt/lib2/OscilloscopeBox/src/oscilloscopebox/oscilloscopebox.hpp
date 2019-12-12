@@ -118,6 +118,8 @@ private slots:
     void position_changed(double value);
     void multiply_changed(double value);
 
+    void set_color(int index);
+
 private:
     Ui::OscilloscopeBox *ui;
     bool legend_is_visible = false;
@@ -140,7 +142,6 @@ private:
     bool state_RUN = true;
 
     int current_channel = -1;
-    bool state_current_channel = false;
 
     QString title;
     QString title_axis_X;

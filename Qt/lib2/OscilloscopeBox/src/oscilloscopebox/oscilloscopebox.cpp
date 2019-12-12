@@ -45,7 +45,9 @@ int OscilloscopeBox::add_curve(int index_curve,
 
     QVector<QPointF> samples;
     for(int n=0; n<axis_X_max; n++)
+    {
         samples.append(QPointF(n, pos_y));
+    }
 
     curve.data_curve = new CurveData();
     curve.data_curve->setSamples(samples);
@@ -73,6 +75,21 @@ int OscilloscopeBox::add_curve(int index_curve,
 
     updateText();
     return curves.count() - 1;
+}
+//--------------------------------------------------------------------------------
+void OscilloscopeBox::set_color(int index)
+{
+    //emit debug(QString("index = %1").arg(index));
+    QColor color = curves[index].color;
+
+    QColorDialog *dlg = new QColorDialog();
+    dlg->setCurrentColor(color);
+
+    int btn = dlg->exec();
+    if(btn == QColorDialog::Accepted)
+    {
+
+    }
 }
 //--------------------------------------------------------------------------------
 QVariant OscilloscopeBox::itemToInfo(QwtPlotItem *plotItem) const
@@ -159,14 +176,17 @@ void OscilloscopeBox::create_widgets(void)
     if(title_axis_Y.isEmpty() == false)
         ui->qwtPlot->setAxisTitle(QwtPlot::yLeft, title_axis_Y);
 
+    ui->knob_position->setUpperBound(1000);
+    ui->knob_multiply->setUpperBound(2);
+
     //---
-    //connect(ui->widget_controls,    SIGNAL(click_channel(int)),     this,   SLOT(click_channel(int)));
     connect(ui->btn_RUN,    SIGNAL(clicked(bool)),  this,   SLOT(click_RUN()));
 
     connect(ui->knob_position,  SIGNAL(valueChanged(double)),  this,   SLOT(position_changed(double)));
     connect(ui->knob_multiply,  SIGNAL(valueChanged(double)),  this,   SLOT(multiply_changed(double)));
 
     connect(ui->controls_widget,    SIGNAL(s_select(bool)), this,   SLOT(click(bool)));
+    connect(ui->controls_widget,    SIGNAL(s_color(int)), this,   SLOT(set_color(int)));
     //---
 }
 //--------------------------------------------------------------------------------
@@ -183,7 +203,14 @@ void OscilloscopeBox::click(bool state)
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::click_channel(int channel, bool state)
 {
-    state_current_channel = channel;
+    current_channel = channel;
+
+    ui->knob_position->setEnabled(state);
+    ui->knob_position->setValue(static_cast<double>(curves[current_channel].correction_pos_y));
+
+    ui->knob_multiply->setEnabled(state);
+    ui->knob_multiply->setValue(static_cast<double>(curves[current_channel].correction_multiply));
+
     legend_state(channel, state);
 }
 //--------------------------------------------------------------------------------
@@ -202,11 +229,31 @@ void OscilloscopeBox::click_RUN(void)
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::position_changed(double value)
 {
+    if(current_channel < 0)
+    {
+        emit debug("current_channel < 0");
+        return;
+    }
+    if(current_channel >= num_curves)
+    {
+        emit debug("current_channel >= num_curves");
+        return;
+    }
     curves[current_channel].correction_pos_y = static_cast<float>(value);
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::multiply_changed(double value)
 {
+    if(current_channel < 0)
+    {
+        emit debug("current_channel < 0");
+        return;
+    }
+    if(current_channel >= num_curves)
+    {
+        emit debug("current_channel >= num_curves");
+        return;
+    }
     curves[current_channel].correction_multiply = static_cast<float>(value);
 }
 //--------------------------------------------------------------------------------
@@ -228,7 +275,7 @@ void OscilloscopeBox::init()
 {
     ui->setupUi(this);
 
-    num_curves = 4;
+    num_curves = 5;
 
     axis_X_min = 0;
     axis_X_max = 1000;
@@ -253,19 +300,35 @@ void OscilloscopeBox::init()
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::create_curves(void)
 {
-    QList<QColor> colors;
-
-    colors.clear();
-    colors.append(QColor(Qt::red));
-    colors.append(QColor(Qt::green));
-    colors.append(QColor(Qt::blue));
-    colors.append(QColor(Qt::magenta));
+    QList<QColor> l_colors;
+    l_colors << QColor(Qt::red);
+    l_colors << QColor(Qt::green);
+    l_colors << QColor(Qt::blue);
+    l_colors << QColor(Qt::magenta);
+    l_colors << QColor(Qt::cyan);
+    l_colors << QColor(Qt::yellow);
+    l_colors << QColor(Qt::darkRed);
+    l_colors << QColor(Qt::darkGreen);
+    l_colors << QColor(Qt::darkBlue);
+    l_colors << QColor(Qt::darkMagenta);
+    l_colors << QColor(Qt::darkCyan);
+    l_colors << QColor(Qt::darkYellow);
+    l_colors << QColor(Qt::white);
+    l_colors << QColor(Qt::lightGray);
+    l_colors << QColor(Qt::gray);
+    l_colors << QColor(Qt::darkGray);
 
     int step = static_cast<int>(axis_Y_max / num_curves / 2);
     int y = step * num_curves * 2 - step;
+    //qDebug() << num_curves;
+    int index = 0;
     for(int n=0; n<num_curves; n++)
     {
-        add_curve(n, y, colors[n]);
+        if(index >= l_colors.count())
+        {
+            index = 0;
+        }
+        add_curve(n, y, l_colors.at(index++));
         y-=(step*2);
     }
 }

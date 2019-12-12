@@ -48,6 +48,8 @@ bool Oscilloscopebox_controls::add_control(QColor color, QString text)
                                   .arg(color.red())
                                   .arg(color.green())
                                   .arg(color.blue()));
+    btns.btn_color->setProperty("index", curves);
+
     btns.btn_select->setText(text);
     btns.btn_select->setCheckable(true);
     btns.btn_select->setProperty("index", curves);
@@ -55,7 +57,7 @@ bool Oscilloscopebox_controls::add_control(QColor color, QString text)
     connect(btns.btn_color,     SIGNAL(clicked(bool)),  this,   SLOT(click_color()));
     connect(btns.btn_select,    SIGNAL(clicked(bool)),  this,   SLOT(click_select(bool)));
 
-    connect(btns.btn_select,    SIGNAL(clicked(bool)),  this,   SLOT(check_buttons(bool)));
+    //connect(btns.btn_select,    SIGNAL(clicked(bool)),  this,   SLOT(check_buttons(bool)));
 
     ui->grid->addWidget(btns.btn_color,  curves, 0);
     ui->grid->addWidget(btns.btn_select, curves, 1);
@@ -93,11 +95,36 @@ int Oscilloscopebox_controls::get_active_index(void)
 //--------------------------------------------------------------------------------
 void Oscilloscopebox_controls::click_color(void)
 {
-    emit s_color();
+    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
+    if(btn == nullptr)
+    {
+        return;
+    }
+    int index = btn->property("index").toInt();
+
+    emit s_color(index);
 }
 //--------------------------------------------------------------------------------
 void Oscilloscopebox_controls::click_select(bool state)
 {
+    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
+    if(btn == nullptr)
+    {
+        return;
+    }
+    current_index = btn->property("index").toInt();
+    foreach (CURVE_BTNS btns, l_curves)
+    {
+        if(btns.btn_select == btn)
+        {
+            btns.btn_select->setChecked(state);
+        }
+        else
+        {
+            btns.btn_select->setChecked(false);
+        }
+    }
+
     emit s_select(state);
 }
 //--------------------------------------------------------------------------------

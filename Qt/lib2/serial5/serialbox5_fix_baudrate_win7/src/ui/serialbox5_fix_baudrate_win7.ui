@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>SerialBox5_fix_baudrate_win7</class>
  <widget class="QWidget" name="SerialBox5_fix_baudrate_win7">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>272</width>
-    <height>74</height>
-   </rect>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QFrame" name="frame">

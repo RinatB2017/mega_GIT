@@ -503,16 +503,33 @@ void MyWidget::load_QComboBox(QString group_name)
 #endif
     Q_CHECK_PTR(settings);
 
+//    settings->beginGroup(group_name);
+//    foreach (QComboBox *obj, allobj)
+//    {
+//        if(!obj->objectName().isEmpty())
+//        {
+//            settings->beginGroup(obj->objectName());
+//            obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
+//            settings->endGroup();
+//        }
+//    }
+
     settings->beginGroup(group_name);
     foreach (QComboBox *obj, allobj)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
+            int size = settings->beginReadArray(obj->objectName());
+            for(int n=0; n<size; n++)
+            {
+                settings->setArrayIndex(n);
+                obj->addItem(settings->value("value").toString());
+            }
+            settings->endArray();
             obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
-            settings->endGroup();
         }
     }
+
     settings->endGroup();
 }
 //--------------------------------------------------------------------------------
@@ -525,16 +542,34 @@ void MyWidget::save_QComboBox(QString group_name)
 #endif
     Q_CHECK_PTR(settings);
 
+//    settings->beginGroup(group_name);
+//    foreach(QComboBox *obj, allobj)
+//    {
+//        if(!obj->objectName().isEmpty())
+//        {
+//            settings->beginGroup(obj->objectName());
+//            settings->setValue("currentindex", QVariant(obj->currentIndex()));
+//            settings->endGroup();
+//        }
+//    }
+
     settings->beginGroup(group_name);
     foreach(QComboBox *obj, allobj)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
             settings->setValue("currentindex", QVariant(obj->currentIndex()));
-            settings->endGroup();
+            settings->beginWriteArray(obj->objectName());
+            for(int n=0; n<obj->count(); n++)
+            {
+                settings->setArrayIndex(n);
+                obj->setCurrentIndex(n);
+                settings->setValue("value", obj->currentText());
+            }
+            settings->endArray();
         }
     }
+
     settings->endGroup();
 }
 //--------------------------------------------------------------------------------

@@ -43,6 +43,19 @@ public:
     explicit RGB_display(QWidget *parent = nullptr);
     ~RGB_display();
 
+    bool set_param(int cnt_led_x,
+                   int cnt_led_y,
+                   double width_led,
+                   double height_led,
+                   double l_border,
+                   double u_border);
+    bool get_param(int *cnt_led_x,
+                   int *cnt_led_y,
+                   double *width_led,
+                   double *height_led,
+                   double *l_border,
+                   double *u_border);
+
     void show_picture(int begin_x, int begin_y);
 
     int get_max_x(void);
@@ -84,13 +97,6 @@ private:
     double up_border = 0;
 
     int brightness = 0;
-
-    QSpinBox *sb_max_x;
-    QSpinBox *sb_max_y;
-    QDoubleSpinBox *dsb_led_width;
-    QDoubleSpinBox *dsb_led_height;
-    QDoubleSpinBox *dsb_up_border;
-    QDoubleSpinBox *dsb_left_border;
 
     void init(void);
     void clean_grid(void);

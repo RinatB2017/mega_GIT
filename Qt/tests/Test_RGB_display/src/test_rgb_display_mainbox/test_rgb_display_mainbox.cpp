@@ -52,8 +52,6 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets(APPNAME);
-
-    //save_leds();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -64,6 +62,13 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
+
+    ui->sb_max_x->setRange(1, 128);
+    ui->sb_max_y->setRange(1, 64);
+    ui->sb_led_width->setRange(1.0, 10.0);
+    ui->sb_led_height->setRange(1.0, 10.0);
+    ui->sb_led_up_border->setRange(0.1, 10.0);
+    ui->sb_led_left_border->setRange(0.1, 10.8);
 
     ui->sb_brightness->setRange(1, 0xFF);
 
@@ -92,9 +97,14 @@ void MainBox::init(void)
 
     connect(ui->btn_send_test_data, SIGNAL(clicked(bool)),  this,   SLOT(send_test_data()));
 
+    connect(ui->btn_get,        SIGNAL(clicked(bool)),  this,   SLOT(get_param()));
+    connect(ui->btn_set,        SIGNAL(clicked(bool)),  this,   SLOT(set_param()));
+    connect(ui->btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(set_default()));
+
     //setFixedSize(sizeHint());
 
     load_widgets(APPNAME);
+    set_param();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -114,9 +124,6 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -133,9 +140,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -370,6 +374,72 @@ void MainBox::send_test_data(void)
 {
     ui->rgb_display->set_brightness(ui->sb_brightness->value());
     ui->rgb_display->send_test_data();
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_param(void)
+{
+    block_interface(true);
+
+    int cnt_led_x = ui->sb_max_x->value();
+    int cnt_led_y = ui->sb_max_y->value();
+    double width_led = ui->sb_led_width->value();
+    double height_led = ui->sb_led_height->value();
+    double l_border = ui->sb_led_left_border->value();
+    double u_border = ui->sb_led_up_border->value();
+
+    bool ok = ui->rgb_display->set_param(cnt_led_x,
+                                         cnt_led_y,
+                                         width_led,
+                                         height_led,
+                                         l_border,
+                                         u_border);
+    if(!ok)
+    {
+        emit error("bad param");
+    }
+    block_interface(false);
+}
+//--------------------------------------------------------------------------------
+void MainBox::get_param(void)
+{
+    block_interface(true);
+
+    int cnt_led_x = 0;
+    int cnt_led_y = 0;
+    double width_led = 0;
+    double height_led = 0;
+    double l_border = 0;
+    double u_border = 0;
+
+    bool ok = ui->rgb_display->get_param(&cnt_led_x,
+                                         &cnt_led_y,
+                                         &width_led,
+                                         &height_led,
+                                         &l_border,
+                                         &u_border);
+    if(!ok)
+    {
+        return;
+    }
+
+    ui->sb_max_x->setValue(cnt_led_x);
+    ui->sb_max_y->setValue(cnt_led_y);
+    ui->sb_led_width->setValue(width_led);
+    ui->sb_led_height->setValue(height_led);
+    ui->sb_led_left_border->setValue(l_border);
+    ui->sb_led_up_border->setValue(u_border);
+
+    block_interface(false);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_default(void)
+{
+    ui->sb_max_x->setValue(SCREEN_WIDTH);
+    ui->sb_max_y->setValue(SCREEN_HEIGTH);
+    ui->sb_led_width->setValue(LED_SIZE_W_MM);
+    ui->sb_led_height->setValue(LED_SIZE_H_MM);
+    ui->sb_led_left_border->setValue(LED_BORDER_W_MM);
+    ui->sb_led_up_border->setValue(LED_BORDER_H_MM);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

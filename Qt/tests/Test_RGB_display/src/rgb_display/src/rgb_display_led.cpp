@@ -109,12 +109,10 @@ bool RGB_dislpay_led::set_size(double w_size_mm,
                                double l_border_mm,
                                double u_border_mm)
 {
-    if((w_size_mm <= 0) || (h_size_mm <= 0))
-    {
-        return false;
-    }
-    if(l_border_mm < 0) l_border_mm = 0;
-    if(u_border_mm < 0) u_border_mm = 0;
+    Q_ASSERT(w_size_mm != 0.0);
+    Q_ASSERT(h_size_mm != 0.0);
+    Q_ASSERT(l_border_mm > 0);
+    Q_ASSERT(u_border_mm > 0);
 
     led_width = w_size_mm;
     led_heigth = h_size_mm;

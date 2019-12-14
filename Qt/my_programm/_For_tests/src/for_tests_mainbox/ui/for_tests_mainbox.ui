@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>379</width>
-    <height>284</height>
+    <height>347</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -79,6 +79,19 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="comboBox">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="comboBox_2"/>
    </item>
    <item>
     <widget class="QRadioButton" name="radioButton">

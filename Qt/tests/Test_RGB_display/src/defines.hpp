@@ -39,19 +39,19 @@
 #define MAX_SCREEN_X    1024
 #define MAX_SCREEN_Y    1024
 
-#define SCREEN_WIDTH    32
-#define SCREEN_HEIGTH   16
+#define SCREEN_WIDTH    128
+#define SCREEN_HEIGTH   64
 
-#define LED_DEFAULT_W   16
-#define LED_DEFAULT_H   16
+#define LED_DEFAULT_W   8
+#define LED_DEFAULT_H   8
 
 #define LED_BORDER_SIZE 0.5
 
-#define LED_SIZE_W_MM     3.0
-#define LED_SIZE_H_MM     5.0
+#define LED_SIZE_W_MM     2.0
+#define LED_SIZE_H_MM     2.0
 
-#define LED_BORDER_W_MM   1.0
-#define LED_BORDER_H_MM   1.5
+#define LED_BORDER_W_MM   0.1
+#define LED_BORDER_H_MM   0.1
 //--------------------------------------------------------------------------------
 #define CMD_01          0x01
 //--------------------------------------------------------------------------------

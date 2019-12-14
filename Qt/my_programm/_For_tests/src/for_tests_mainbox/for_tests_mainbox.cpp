@@ -232,94 +232,13 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
-#include "myfiledialog.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
-    QByteArray bai;
-    QDataStream out(&bai, QIODevice::WriteOnly);
-    QString str_cp1251;
-    str_cp1251.append(static_cast<char>(0xCF));
-    str_cp1251.append(static_cast<char>(0xF0));
-    str_cp1251.append(static_cast<char>(0xE8));
-    str_cp1251.append(static_cast<char>(0xE2));
-    str_cp1251.append(static_cast<char>(0xE5));
-    str_cp1251.append(static_cast<char>(0xF2));
+    test_assert(0);
 
-    out << str_cp1251;
-
-#endif
-
-#if 0
-    QString str_cp1251;
-    str_cp1251.append(static_cast<char>(0xCF));
-    str_cp1251.append(static_cast<char>(0xF0));
-    str_cp1251.append(static_cast<char>(0xE8));
-    str_cp1251.append(static_cast<char>(0xE2));
-    str_cp1251.append(static_cast<char>(0xE5));
-    str_cp1251.append(static_cast<char>(0xF2));
-
-    QByteArray ba_cp1251;
-    ba_cp1251.append(str_cp1251);
-
-    emit info(str_cp1251);
-    emit info(ba_cp1251);
-#endif
-
-#if 0
-    QByteArray ba_cp1251;
-    ba_cp1251.append(static_cast<char>(0xCF));
-    ba_cp1251.append(static_cast<char>(0xF0));
-    ba_cp1251.append(static_cast<char>(0xE8));
-    ba_cp1251.append(static_cast<char>(0xE2));
-    ba_cp1251.append(static_cast<char>(0xE5));
-    ba_cp1251.append(static_cast<char>(0xF2));
-
-    QTextCodec* code = QTextCodec::codecForName("CP1251");
-    QString str = code->toUnicode(ba_cp1251);
-    emit info(str);
-
-    QString temp;
-    temp.append(ba_cp1251.data());
-    emit info(QString("len %1").arg(temp.length()));
-#endif
-
-#if 1
-    MyFileDialog *dlg = new MyFileDialog("c_file", "c_file");
-    dlg->setNameFilter(tr("TXT files (*.txt)"));
-    dlg->setDefaultSuffix(tr("txt"));
-#ifdef Q_OS_LINUX
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-#endif
-    int res = dlg->exec();
-    if(res == QFileDialog::Accepted)
-    {
-        QString filename = dlg->selectedFiles().at(0);
-        if(!filename.isEmpty())
-        {
-            QFile file(filename);
-            if(file.open(QIODevice::ReadOnly))
-            {
-                QByteArray ba = file.readAll();
-
-#if 0
-                QTextCodec* code = QTextCodec::codecForName("CP1251");
-                //QTextCodec* code = QTextCodec::codecForName("KOI8R");
-                //QTextCodec* code = QTextCodec::codecForName("UTF8");
-                QString str = code->toUnicode(ba);
-                emit info(str);
-#else
-                emit info(ba);
-#endif
-
-                file.close();
-            }
-        }
-    }
-#endif
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -327,10 +246,6 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
-
-#if 1
-    emit info("Тест");
-#endif
 
 #if 0
     emit info("Текст <font style=\"color:red\">красный</font>");
@@ -343,16 +258,6 @@ bool MainBox::test_2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_2()");
 
-#if 1
-    for(int n=0; n<10; n++)
-    {
-        //emit info("0\t1\t2\t3");
-        emit info("info");
-        emit debug("debug");
-        emit error("error");
-        emit trace("trace");
-    }
-#endif
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -361,9 +266,6 @@ bool MainBox::test_3(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_3()");
 
-#if 0
-    emit colorLog("YELLOW", Qt::yellow, Qt::blue);
-#endif
     return true;
 }
 //--------------------------------------------------------------------------------

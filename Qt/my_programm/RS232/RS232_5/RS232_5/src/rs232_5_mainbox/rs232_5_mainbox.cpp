@@ -30,6 +30,7 @@
 #include "mainwindow.hpp"
 #include "serialbox5.hpp"
 #include "rs232_5_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -46,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -65,6 +67,8 @@ void MainBox::init(void)
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(serial_widget);
     setLayout(vbox);
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

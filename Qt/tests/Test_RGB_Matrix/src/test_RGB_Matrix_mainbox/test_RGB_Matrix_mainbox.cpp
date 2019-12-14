@@ -405,7 +405,7 @@ void MainBox::run(bool state)
 //--------------------------------------------------------------------------------
 void MainBox::wait(int max_time_ms)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
     while(time.elapsed() < max_time_ms)
     {

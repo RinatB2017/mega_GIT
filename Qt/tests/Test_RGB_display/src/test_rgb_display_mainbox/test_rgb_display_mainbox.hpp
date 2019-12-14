@@ -42,8 +42,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -72,6 +72,10 @@ private slots:
     void get_data(QByteArray data);
     void send_data(QString data);
 
+    void set_param(void);
+    void get_param(void);
+    void set_default(void);
+
     void send_test_data(void);
 
 private:
@@ -98,7 +102,6 @@ private:
     int begin_y = 0;
 
     QComboBox *cb_test;
-    QCheckBox *cb_block;
     QList<CMD> commands;
 
     void init(void);

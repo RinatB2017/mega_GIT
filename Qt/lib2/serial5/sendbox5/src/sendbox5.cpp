@@ -53,9 +53,6 @@ SendBox5::SendBox5(QWidget *parent) :
     ui->cb_send_bin->setEditable(true);
     ui->cb_send_bin->setObjectName("le_send_bin");
 
-    ui->cb_send_text->addItem("test");
-    ui->cb_send_bin->addItem("0A0B0C0D");
-
     ui->append_comboBox->setObjectName("append_comboBox");
 
     ui->append_comboBox->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);

@@ -36,11 +36,57 @@ RGB_display::RGB_display(QWidget *parent) :
 //--------------------------------------------------------------------------------
 RGB_display::~RGB_display()
 {
+    save_leds();
+}
+//--------------------------------------------------------------------------------
+bool RGB_display::set_param(int cnt_led_x,
+                            int cnt_led_y,
+                            double width_led,
+                            double height_led,
+                            double l_border,
+                            double u_border)
+{
+    if(cnt_led_x <= 0)  return false;
+    if(cnt_led_y <= 0)  return false;
+    if(width_led <= 0)  return false;
+    if(height_led <= 0) return false;
+    if(l_border <= 0)   return false;
+    if(u_border <= 0)   return false;
 
+    max_x = cnt_led_x;
+    max_y = cnt_led_y;
+    w_led = width_led;
+    h_led = height_led;
+    left_border = l_border;
+    up_border = u_border;
+
+    create_new_display();
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool RGB_display::get_param(int *cnt_led_x,
+                            int *cnt_led_y,
+                            double *width_led,
+                            double *height_led,
+                            double *l_border,
+                            double *u_border)
+{
+    (*cnt_led_x) = max_x;
+    (*cnt_led_y) = max_y;
+    (*width_led) = w_led;
+    (*height_led) = h_led;
+    (*l_border) = left_border;
+    (*u_border) = up_border;
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void RGB_display::init(void)
 {
+    max_x = SCREEN_WIDTH;
+    max_y = SCREEN_HEIGTH;
+
     w_led = LED_SIZE_W_MM;
     h_led = LED_SIZE_H_MM;
 
@@ -51,84 +97,17 @@ void RGB_display::init(void)
     grid->setMargin(1);
     grid->setSpacing(1);
 
-    max_x = SCREEN_WIDTH;
-    max_y = SCREEN_HEIGTH;
-
-    sb_max_x = new QSpinBox(this);
-    sb_max_y = new QSpinBox(this);
-    dsb_led_width = new QDoubleSpinBox(this);
-    dsb_led_height = new QDoubleSpinBox(this);
-    dsb_up_border = new QDoubleSpinBox(this);
-    dsb_left_border = new QDoubleSpinBox(this);
-
-    sb_max_x->setObjectName("sb_max_x");
-    sb_max_y->setObjectName("sb_max_y");
-    dsb_led_width->setObjectName("dsb_led_width");
-    dsb_led_height->setObjectName("dsb_led_height");
-    dsb_up_border->setObjectName("dsb_up_border");
-    dsb_left_border->setObjectName("dsb_left_border");
-
-    sb_max_x->setRange(1, 64);
-    sb_max_y->setRange(1, 32);
-    dsb_led_width->setRange(1.0, 10.0);
-    dsb_led_height->setRange(1.0, 10.0);
-    dsb_up_border->setRange(0.1, 10.0);
-    dsb_left_border->setRange(0.1, 10.8);
-
-    sb_max_x->setValue(max_x);
-    sb_max_y->setValue(max_y);
-    dsb_led_width->setValue(w_led);
-    dsb_led_height->setValue(h_led);
-    dsb_up_border->setValue(up_border);
-    dsb_left_border->setValue(left_border);
-
-    create_new_display();
-
-    QGridLayout *grid_buttons = new QGridLayout;
-    grid_buttons->addWidget(new QLabel("max_x"),        0, 0);    grid_buttons->addWidget(sb_max_x,           0, 1);
-    grid_buttons->addWidget(new QLabel("max_y"),        1, 0);    grid_buttons->addWidget(sb_max_y,           1, 1);
-    grid_buttons->addWidget(new QLabel("led_width"),    2, 0);    grid_buttons->addWidget(dsb_led_width,      2, 1);
-    grid_buttons->addWidget(new QLabel("led_height"),   3, 0);    grid_buttons->addWidget(dsb_led_height,     3, 1);
-    grid_buttons->addWidget(new QLabel("up_border"),    4, 0);    grid_buttons->addWidget(dsb_up_border,      4, 1);
-    grid_buttons->addWidget(new QLabel("left_border"),  5, 0);    grid_buttons->addWidget(dsb_left_border,    5, 1);
-
-    QPushButton *btn_set = new QPushButton(this);
-    QPushButton *btn_get = new QPushButton(this);
-    QPushButton *btn_default = new QPushButton(this);
-
-    btn_set->setText("set");
-    btn_get->setText("get");
-    btn_default->setText("default");
-
-    connect(btn_set,        SIGNAL(clicked(bool)),  this,   SLOT(set_display()));
-    connect(btn_get,        SIGNAL(clicked(bool)),  this,   SLOT(get_display()));
-    connect(btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(set_default()));
-
-    QHBoxLayout *btn_l = new QHBoxLayout();
-    btn_l->addWidget(btn_get);
-    btn_l->addWidget(btn_set);
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addLayout(grid_buttons);
-    vbox->addLayout(btn_l);
-    vbox->addWidget(btn_default);
-    vbox->addStretch(1);
-    //---
-
     QVBoxLayout *vbox2 = new QVBoxLayout();
     vbox2->addLayout(grid);
     vbox2->addStretch(1);
 
-    QFrame *frame = new QFrame(this);
-    frame->setFrameStyle(QFrame::Box | QFrame::Raised);
-    frame->setLayout(vbox);
-    frame->setFixedWidth(frame->sizeHint().width());
-
     QHBoxLayout *box = new QHBoxLayout();
-    box->addWidget(frame);
     box->addLayout(vbox2);
 
     setLayout(box);
+
+    load_leds();
+    //create_new_display();
 
     adjustSize();
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -158,16 +137,9 @@ void RGB_display::clean_grid(void)
 //--------------------------------------------------------------------------------
 void RGB_display::create_new_display(void)
 {
-    double led_width = dsb_led_width->value();
-    double led_height = dsb_led_height->value();
-    double up_border = dsb_up_border->value();
-    double left_border = dsb_left_border->value();
+    emit trace(Q_FUNC_INFO);
 
-    emit debug(QString("led_width %1").arg(led_width));
-    emit debug(QString("led_height %1").arg(led_height));
-    emit debug(QString("up_border %1").arg(up_border));
-    emit debug(QString("left_border %1").arg(left_border));
-
+    clean_grid();
     for(int row=0; row<max_y; row++)
     {
         for(int col=0; col<max_x; col++)
@@ -178,8 +150,8 @@ void RGB_display::create_new_display(void)
             connect(led,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
             connect(led,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
-            led->set_size(led_width,
-                          led_height,
+            led->set_size(w_led,
+                          h_led,
                           left_border,
                           up_border);
 
@@ -191,34 +163,20 @@ void RGB_display::create_new_display(void)
             l_buttons.append(led);
         }
     }
+    emit debug(QString("created %1 leds").arg(l_buttons.count()));
 }
 //--------------------------------------------------------------------------------
 void RGB_display::set_display(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    max_x = sb_max_x->value();
-    max_y = sb_max_y->value();
-
-    double led_width = dsb_led_width->value();
-    double led_height = dsb_led_height->value();
-    double up_border = dsb_up_border->value();
-    double left_border = dsb_left_border->value();
-
-    emit debug(QString("led_width %1").arg(led_width));
-    emit debug(QString("led_height %1").arg(led_height));
-    emit debug(QString("up_border %1").arg(up_border));
-    emit debug(QString("left_border %1").arg(left_border));
-
     foreach(RGB_dislpay_led *led, l_buttons)
     {
-        led->set_size(led_width,
-                      led_height,
+        led->set_size(w_led,
+                      h_led,
                       left_border,
                       up_border);
     }
-    //create_new_display();
-
     adjustSize();
     //setFixedSize(width(), height());
 }
@@ -242,21 +200,20 @@ void RGB_display::get_display(void)
     emit debug(QString("h_value %1").arg(h_value));
     emit debug(QString("l_border %1").arg(l_border));
     emit debug(QString("u_border %1").arg(u_border));
-
-    dsb_led_width->setValue(w_value);
-    dsb_led_height->setValue(h_value);
-    dsb_left_border->setValue(l_border);
-    dsb_up_border->setValue(u_border);
 }
 //--------------------------------------------------------------------------------
 void RGB_display::set_default(void)
 {
-    sb_max_x->setValue(SCREEN_WIDTH);
-    sb_max_y->setValue(SCREEN_HEIGTH);
-    dsb_led_width->setValue(LED_SIZE_W_MM);
-    dsb_led_height->setValue(LED_SIZE_H_MM);
-    dsb_left_border->setValue(LED_BORDER_W_MM);
-    dsb_up_border->setValue(LED_BORDER_H_MM);
+    emit trace(Q_FUNC_INFO);
+
+    max_x = SCREEN_WIDTH;
+    max_y = SCREEN_HEIGTH;
+    w_led = LED_SIZE_W_MM;
+    h_led = LED_SIZE_H_MM;
+    left_border = LED_BORDER_W_MM;
+    up_border = LED_BORDER_H_MM;
+
+    create_new_display();
 }
 //--------------------------------------------------------------------------------
 bool RGB_display::load_ico(void)
@@ -293,8 +250,8 @@ bool RGB_display::load_picture(QString fileName)
         return false;
     }
 
-    max_x = sb_max_x->value();
-    max_y = sb_max_y->value();
+    //    max_x = sb_max_x->value();
+    //    max_y = sb_max_y->value();
 
     emit debug(QString("max_x %1").arg(max_x));
     emit debug(QString("max_y %1").arg(max_y));
@@ -317,9 +274,6 @@ void RGB_display::show_picture(int begin_x, int begin_y)
         emit error("picture not loaded!");
         return;
     }
-
-    int max_x = sb_max_x->value();
-    int max_y = sb_max_y->value();
 
     packet.body.brightness = static_cast<uint8_t>(brightness);
 
@@ -373,23 +327,18 @@ void RGB_display::load_leds(void)
 #endif
 
     settings->beginGroup("Display");
+    w_led = settings->value("w_led").toDouble();
+    h_led = settings->value("h_led").toDouble();
+    left_border = settings->value("left_border").toDouble();
+    up_border = settings->value("up_border").toDouble();
+    brightness = settings->value("brightness").toInt();
     QByteArray ba_display = settings->value("ba_display").toByteArray();
     settings->endGroup();
 
-    int count_led = 0;
-    if(ba_display.isEmpty() == false)
-    {
-        if(ba_display.count() == (l_buttons.count() * 3))
-        {
-            for(int n=0; n<ba_display.count(); n+=3)
-            {
-                l_buttons[count_led]->set_R(ba_display.at(n));
-                l_buttons[count_led]->set_G(ba_display.at(n+1));
-                l_buttons[count_led]->set_B(ba_display.at(n+2));
-                count_led++;
-            }
-        }
-    }
+    if(w_led == 0.0)        w_led = LED_DEFAULT_W;
+    if(h_led == 0.0)        h_led = LED_DEFAULT_H;
+    if(left_border == 0.0)  left_border = LED_BORDER_W_MM;
+    if(up_border == 0.0)    up_border = LED_BORDER_H_MM;
 
     settings->deleteLater();
 }
@@ -411,6 +360,11 @@ void RGB_display::save_leds(void)
     }
 
     settings->beginGroup("Display");
+    settings->setValue("w_led", w_led);
+    settings->setValue("h_led", h_led);
+    settings->setValue("left_border", left_border);
+    settings->setValue("up_border", up_border);
+    settings->setValue("brightness", brightness);
     settings->setValue("ba_display", ba_display);
     settings->endGroup();
 

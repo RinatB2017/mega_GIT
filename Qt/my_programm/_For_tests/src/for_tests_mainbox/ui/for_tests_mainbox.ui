@@ -81,19 +81,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QComboBox" name="comboBox">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="editable">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="comboBox_2"/>
-   </item>
-   <item>
     <widget class="QRadioButton" name="radioButton">
      <property name="text">
       <string>RadioButton</string>

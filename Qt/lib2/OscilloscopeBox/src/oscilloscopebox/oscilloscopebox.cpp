@@ -116,7 +116,7 @@ int OscilloscopeBox::add_curve(int index_curve,
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::set_color(int index)
 {
-    Q_ASSERT(index > 0);
+    Q_ASSERT(index >= 0);
     Q_ASSERT(index < curves.count());
 
     //emit debug(QString("index = %1").arg(index));
@@ -428,6 +428,7 @@ void OscilloscopeBox::load_setting(void)
         emit error(QString("bad size curves: size %1 != curves.count %2")
                    .arg(size)
                    .arg(curves.count()));
+        endArray();
         return;
     }
     for(int n=0; n<size; n++)
@@ -439,7 +440,7 @@ void OscilloscopeBox::load_setting(void)
         int B = load_value(COLOR_B).toInt();
         color.setRed(R);
         color.setGreen(G);
-        color.setGreen(B);
+        color.setBlue(B);
 
         curves[n].color = color;
         curves[n].plot_curve->setPen(color);
@@ -455,6 +456,7 @@ void OscilloscopeBox::save_setting(void)
     //beginGroup("COLORS");
     beginWriteArray(CURVE_COLORS, curves.count());
     int cnt = curves.count();
+    qDebug() << "cnt" << cnt;
     for(int n=0; n<cnt; n++)
     {
         setArrayIndex(n);

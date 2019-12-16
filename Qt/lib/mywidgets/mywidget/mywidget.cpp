@@ -518,7 +518,6 @@ void MyWidget::load_QComboBox(QString group_name)
             obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
         }
     }
-
     settings->endGroup();
 }
 //--------------------------------------------------------------------------------
@@ -1170,6 +1169,7 @@ void MyWidget::beginWriteArray(const QString &prefix, int size)
 //--------------------------------------------------------------------------------
 int MyWidget::beginReadArray(const QString &prefix)
 {
+    Q_CHECK_PTR(settings);
     return settings->beginReadArray(prefix);
 }
 //--------------------------------------------------------------------------------

@@ -237,7 +237,43 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-    test_assert(0);
+    //test_assert(0);
+
+    //---
+    typedef struct TEST
+    {
+        QString caption;
+        QWidget *widget;
+    } TEST_t;
+    QList<TEST_t> xxx;
+
+    xxx.clear();
+    xxx.append({ "sb", new QSpinBox() });
+    xxx.append({ "btn", new QPushButton() });
+    xxx.append({ "cb", new QComboBox() });
+    //---
+
+    QWidget *w = new QWidget();
+    QGridLayout *grid = new QGridLayout();
+    w->setLayout(grid);
+
+    int index = 0;
+    foreach (TEST_t test, xxx)
+    {
+        QLabel *label = new QLabel();
+        label->setText(test.caption);
+
+        grid->addWidget(label,          index,  0);
+        grid->addWidget(test.widget,    index,  1);
+        index++;
+    }
+    w->show();
+
+//    QString cn = w->metaObject()->className();
+//    if(cn == "QSpinBox")
+//    {
+//        emit info("found");
+//    }
 
     return true;
 }

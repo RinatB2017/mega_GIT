@@ -25,6 +25,7 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_OscilloscopeBox_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -110,7 +111,11 @@ void MainBox::test(void)
 {
     emit info("Test");
 
-    ui->oscilloscope_widget->set_curve_color(0, Qt::blue);
+    int size = beginReadArray(CURVE_COLORS);
+    endArray();
+    emit info(QString("size %1").arg(size));
+
+    //ui->oscilloscope_widget->set_curve_color(0, Qt::blue);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

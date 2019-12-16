@@ -35,6 +35,7 @@ public:
     explicit MyFileDialog(const QString gName,
                           const QString oName,
                           QWidget *parent = nullptr);
+    ~MyFileDialog();
 
 public slots:
     int exec(void);

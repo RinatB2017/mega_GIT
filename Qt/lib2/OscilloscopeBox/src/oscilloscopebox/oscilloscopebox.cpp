@@ -36,6 +36,43 @@ OscilloscopeBox::OscilloscopeBox(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
+OscilloscopeBox::~OscilloscopeBox()
+{
+    save_setting();
+    curves.clear();
+
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void OscilloscopeBox::init()
+{
+    ui->setupUi(this);
+
+    num_curves = 5;
+
+    axis_X_min = 0;
+    axis_X_max = 1000;
+    axis_Y_min = 0;
+    axis_Y_max = 1000;
+
+    title = "oscilloscope";
+    title_axis_X = "time";
+    title_axis_Y = "voltage";
+
+    create_widgets();
+    create_timer();
+    create_curves();
+
+    set_legend_is_visible(false);
+    set_zoom(false, false);
+    set_panning(false, false);
+
+    updateText();
+    updateGraphics();
+
+    load_setting();
+}
+//--------------------------------------------------------------------------------
 int OscilloscopeBox::add_curve(int index_curve,
                                int pos_y,
                                const QColor &color)
@@ -79,6 +116,9 @@ int OscilloscopeBox::add_curve(int index_curve,
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::set_color(int index)
 {
+    Q_ASSERT(index > 0);
+    Q_ASSERT(index < curves.count());
+
     //emit debug(QString("index = %1").arg(index));
     QColor color = curves[index].color;
 
@@ -88,7 +128,11 @@ void OscilloscopeBox::set_color(int index)
     int btn = dlg->exec();
     if(btn == QColorDialog::Accepted)
     {
+        QColor color = dlg->selectedColor();
+        curves[index].color = color;
+        curves[index].plot_curve->setPen(color);
 
+        ui->controls_widget->set_curve_color(index, color);
     }
 }
 //--------------------------------------------------------------------------------
@@ -264,40 +308,6 @@ void OscilloscopeBox::legend_checked(const QVariant &itemInfo, bool on)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-OscilloscopeBox::~OscilloscopeBox()
-{
-    curves.clear();
-
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void OscilloscopeBox::init()
-{
-    ui->setupUi(this);
-
-    num_curves = 5;
-
-    axis_X_min = 0;
-    axis_X_max = 1000;
-    axis_Y_min = 0;
-    axis_Y_max = 1000;
-
-    title = "oscilloscope";
-    title_axis_X = "time";
-    title_axis_Y = "voltage";
-
-    create_widgets();
-    create_timer();
-    create_curves();
-
-    set_legend_is_visible(false);
-    set_zoom(false, false);
-    set_panning(false, false);
-
-    updateText();
-    updateGraphics();
-}
-//--------------------------------------------------------------------------------
 void OscilloscopeBox::create_curves(void)
 {
     QList<QColor> l_colors;
@@ -409,12 +419,53 @@ bool OscilloscopeBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::load_setting(void)
 {
+    qDebug() << "load_setting";
 
+    //beginGroup("COLORS");
+    int size = beginReadArray(CURVE_COLORS);
+    if(size != curves.count())
+    {
+        emit error(QString("bad size curves: size %1 != curves.count %2")
+                   .arg(size)
+                   .arg(curves.count()));
+        return;
+    }
+    for(int n=0; n<size; n++)
+    {
+        setArrayIndex(n);
+        //QColor color = load_value(COLOR).toUInt();
+        int R = load_value(COLOR_R).toInt();
+        int G = load_value(COLOR_G).toInt();
+        int B = load_value(COLOR_B).toInt();
+        color.setRed(R);
+        color.setGreen(G);
+        color.setGreen(B);
+
+        curves[n].color = color;
+        curves[n].plot_curve->setPen(color);
+    }
+    endArray();
+    //endGroup();
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::save_setting(void)
 {
+    qDebug() << "save_setting";
 
+    //beginGroup("COLORS");
+    beginWriteArray(CURVE_COLORS, curves.count());
+    int cnt = curves.count();
+    for(int n=0; n<cnt; n++)
+    {
+        setArrayIndex(n);
+        //save_value(COLOR, curves[n].color);
+
+        save_value(COLOR_R, curves[n].color.red());
+        save_value(COLOR_G, curves[n].color.green());
+        save_value(COLOR_B, curves[n].color.blue());
+    }
+    endArray();
+    //endGroup();
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::test(void)

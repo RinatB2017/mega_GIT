@@ -39,17 +39,20 @@ MyFileDialog::MyFileDialog(const QString gName,
 #else
     settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
-    if(settings)
-    {
-        settings->beginGroup(gName);
+    Q_CHECK_PTR(settings);
 
-        QString dir = settings->value(oName, QDir::homePath()).toString();
-        setDirectory(dir);
+    settings->beginGroup(gName);
 
-        settings->endGroup();
-        settings->deleteLater();
-    }
+    QString dir = settings->value(oName, QDir::homePath()).toString();
+    setDirectory(dir);
+
+    settings->endGroup();
     //---
+}
+//--------------------------------------------------------------------------------
+MyFileDialog::~MyFileDialog()
+{
+    settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
 int MyFileDialog::exec(void)
@@ -58,20 +61,9 @@ int MyFileDialog::exec(void)
 
     if(res == Accepted)
     {
-#ifndef SAVE_INI
-        settings = new QSettings(ORGNAME, APPNAME);
-#else
-        settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
-#endif
-        if(settings)
-        {
-            settings->beginGroup(gName);
-
-            settings->setValue(oName, directory().absolutePath());
-
-            settings->endGroup();
-            settings->deleteLater();
-        }
+        settings->beginGroup(gName);
+        settings->setValue(oName, directory().absolutePath());
+        settings->endGroup();
     }
 
     return res;

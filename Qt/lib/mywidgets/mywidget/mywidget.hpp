@@ -130,6 +130,8 @@ public:
     QVariant load_value(QString name);
     void save_value(QString name, QVariant value);
 
+    void beginGroup(const QString &prefix);
+    void endGroup(void);
     void beginWriteArray(const QString &prefix, int size = -1);
     int beginReadArray(const QString &prefix);
     void endArray(void);

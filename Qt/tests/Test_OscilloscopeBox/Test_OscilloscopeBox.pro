@@ -20,6 +20,8 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
+DEFINES += SAVE_INI
+
 HEADERS += \
     test_OscilloscopeBox_mainbox.hpp \
     defines.hpp \

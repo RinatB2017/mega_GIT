@@ -503,17 +503,6 @@ void MyWidget::load_QComboBox(QString group_name)
 #endif
     Q_CHECK_PTR(settings);
 
-//    settings->beginGroup(group_name);
-//    foreach (QComboBox *obj, allobj)
-//    {
-//        if(!obj->objectName().isEmpty())
-//        {
-//            settings->beginGroup(obj->objectName());
-//            obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
-//            settings->endGroup();
-//        }
-//    }
-
     settings->beginGroup(group_name);
     foreach (QComboBox *obj, allobj)
     {
@@ -542,24 +531,13 @@ void MyWidget::save_QComboBox(QString group_name)
 #endif
     Q_CHECK_PTR(settings);
 
-//    settings->beginGroup(group_name);
-//    foreach(QComboBox *obj, allobj)
-//    {
-//        if(!obj->objectName().isEmpty())
-//        {
-//            settings->beginGroup(obj->objectName());
-//            settings->setValue("currentindex", QVariant(obj->currentIndex()));
-//            settings->endGroup();
-//        }
-//    }
-
     settings->beginGroup(group_name);
     foreach(QComboBox *obj, allobj)
     {
         if(!obj->objectName().isEmpty())
         {
             settings->setValue("currentindex", QVariant(obj->currentIndex()));
-            settings->beginWriteArray(obj->objectName());
+            settings->beginWriteArray(obj->objectName(), obj->count());
             for(int n=0; n<obj->count(); n++)
             {
                 settings->setArrayIndex(n);
@@ -1173,6 +1151,16 @@ QVariant MyWidget::load_value(QString name)
 void MyWidget::save_value(QString name, QVariant value)
 {
     settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
+void MyWidget::beginGroup(const QString &prefix)
+{
+    settings->beginGroup(prefix);
+}
+//--------------------------------------------------------------------------------
+void MyWidget::endGroup(void)
+{
+    settings->endGroup();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::beginWriteArray(const QString &prefix, int size)

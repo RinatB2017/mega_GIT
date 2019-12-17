@@ -244,13 +244,15 @@ bool MainBox::test_0(void)
     {
         QString caption;
         QWidget *widget;
+        QVariant param[5];
     } TEST_t;
     QList<TEST_t> xxx;
 
     xxx.clear();
-    xxx.append({ "sb", new QSpinBox() });
-    xxx.append({ "btn", new QPushButton() });
-    xxx.append({ "cb", new QComboBox() });
+    xxx.append({ "sb", new QSpinBox(), { 5, 10, 0, 0, 0 } });
+    xxx.append({ "btn", new QPushButton(), { "XXX" } });
+    xxx.append({ "cb", new QComboBox(), { "str0", "str2", "str3", 0, 0 } });
+    xxx.append({ "null", nullptr, { 0 } });
     //---
 
     QWidget *w = new QWidget();
@@ -265,6 +267,30 @@ bool MainBox::test_0(void)
 
         grid->addWidget(label,          index,  0);
         grid->addWidget(test.widget,    index,  1);
+
+        if(test.widget != nullptr)
+        {
+            QString cn = test.widget->metaObject()->className();
+            if(cn == "QSpinBox")
+            {
+                (static_cast<QSpinBox *>(test.widget))->setRange(test.param[0].toInt(), test.param[1].toInt());
+            }
+            if(cn == "QComboBox")
+            {
+                for(int n=0; n<5; n++)
+                {
+                    if(test.param[n] != 0)
+                    {
+                        (static_cast<QComboBox *>(test.widget))->addItem(test.param[n].toString());
+                    }
+                }
+            }
+            if(cn == "QPushButton")
+            {
+               (static_cast<QPushButton *>(test.widget))->setText(test.param[0].toString());
+            }
+        }
+
         index++;
     }
     w->show();

@@ -239,6 +239,16 @@ bool MainBox::test_0(void)
 
     //test_assert(0);
 
+#if 0
+    QByteArray ba;
+    for(int n=1; n<255; n++)
+    {
+        ba.append(static_cast<char>(n));
+    }
+    emit info(ba.data());
+#endif
+
+#if 0
     //---
     typedef struct TEST
     {
@@ -294,12 +304,7 @@ bool MainBox::test_0(void)
         index++;
     }
     w->show();
-
-//    QString cn = w->metaObject()->className();
-//    if(cn == "QSpinBox")
-//    {
-//        emit info("found");
-//    }
+#endif
 
     return true;
 }

@@ -99,7 +99,7 @@ CONFIG(debug, debug|release) {
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
-include ($$LIB_PATH2/qwt/qwt.pri)
+#include ($$LIB_PATH2/qwt/qwt.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simple_mw/simple_mw.pri)

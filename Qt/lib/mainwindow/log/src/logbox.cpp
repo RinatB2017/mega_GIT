@@ -434,6 +434,7 @@ void LogBox::save_log(const QString &filename)
     }
     else
     {
+        //file.write(logBox->toPlainText().toLatin1());
         file.write(logBox->toPlainText().toLocal8Bit()); //.toAscii());
         //file.write(logBox->toHtml().toLocal8Bit());    //.toAscii());
     }

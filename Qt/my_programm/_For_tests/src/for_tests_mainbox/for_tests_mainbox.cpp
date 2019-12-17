@@ -248,7 +248,7 @@ bool MainBox::test_0(void)
     emit info(ba.data());
 #endif
 
-#if 0
+#if 1
     //---
     typedef struct TEST
     {
@@ -259,7 +259,7 @@ bool MainBox::test_0(void)
     QList<TEST_t> xxx;
 
     xxx.clear();
-    xxx.append({ "sb", new QSpinBox(), { 5, 10, 0, 0, 0 } });
+    xxx.append({ "sb", new QSpinBox(), { 5, 10 } });
     xxx.append({ "btn", new QPushButton(), { "XXX" } });
     xxx.append({ "cb", new QComboBox(), { "str0", "str2", "str3", 0, 0 } });
     xxx.append({ "null", nullptr, { 0 } });
@@ -283,7 +283,9 @@ bool MainBox::test_0(void)
             QString cn = test.widget->metaObject()->className();
             if(cn == "QSpinBox")
             {
-                (static_cast<QSpinBox *>(test.widget))->setRange(test.param[0].toInt(), test.param[1].toInt());
+                int min = test.param[0].toInt();
+                int max = test.param[1].toInt();
+                (static_cast<QSpinBox *>(test.widget))->setRange(min, max);
             }
             if(cn == "QComboBox")
             {

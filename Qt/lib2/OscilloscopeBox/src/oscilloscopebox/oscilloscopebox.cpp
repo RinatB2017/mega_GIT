@@ -421,7 +421,6 @@ void OscilloscopeBox::load_setting(void)
 {
     qDebug() << "load_setting";
 
-    //beginGroup("COLORS");
     int size = beginReadArray(CURVE_COLORS);
     if(size != curves.count())
     {
@@ -444,16 +443,16 @@ void OscilloscopeBox::load_setting(void)
 
         curves[n].color = color;
         curves[n].plot_curve->setPen(color);
+
+        ui->controls_widget->set_curve_color(n, color);
     }
     endArray();
-    //endGroup();
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::save_setting(void)
 {
     qDebug() << "save_setting";
 
-    //beginGroup("COLORS");
     beginWriteArray(CURVE_COLORS, curves.count());
     int cnt = curves.count();
     qDebug() << "cnt" << cnt;
@@ -467,7 +466,6 @@ void OscilloscopeBox::save_setting(void)
         save_value(COLOR_B, curves[n].color.blue());
     }
     endArray();
-    //endGroup();
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::test(void)

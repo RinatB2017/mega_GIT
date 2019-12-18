@@ -69,7 +69,7 @@ void MainBox::init(void)
     ui->grapher_widget->set_title("Sensors");
     ui->grapher_widget->set_title_axis_X("time");
     ui->grapher_widget->set_title_axis_Y("value");
-    ui->grapher_widget->set_axis_scale_x(0, 100);
+    ui->grapher_widget->set_axis_scale_x(0, 200);
     ui->grapher_widget->set_axis_scale_y(0, 5);
 
     ui->grapher_widget->set_visible_btn_Options(false);

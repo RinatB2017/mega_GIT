@@ -240,6 +240,24 @@ bool MainBox::test_0(void)
     //test_assert(0);
 
 #if 0
+    QFile file("/dev/shm/xxx.txt");
+    if(file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream ts(&file);
+        ts << "y0" << endl;
+        ts << "y1" << endl;
+    }
+
+#endif
+
+#if 0
+    QString result;
+    QTextStream(&result) << "result = " << 1.0 / 3.0 << " xxx";
+
+    emit info(result);
+#endif
+
+#if 0
     QByteArray ba;
     for(int n=1; n<255; n++)
     {
@@ -248,7 +266,7 @@ bool MainBox::test_0(void)
     emit info(ba.data());
 #endif
 
-#if 1
+#if 0
     //---
     typedef struct TEST
     {

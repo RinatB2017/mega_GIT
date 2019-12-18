@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>50</width>
-    <height>276</height>
+    <width>504</width>
+    <height>449</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -127,6 +127,22 @@
           <property name="icon">
            <iconset resource="../../../icons/grapher.qrc">
             <normaloff>:/grapher/object-flip-horizontal.png</normaloff>:/grapher/object-flip-horizontal.png</iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_autoscroll">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>A</string>
           </property>
           <property name="checkable">
            <bool>true</bool>

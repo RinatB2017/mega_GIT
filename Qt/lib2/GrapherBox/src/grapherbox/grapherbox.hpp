@@ -200,6 +200,8 @@ private slots:
     void set_vertical_alignment(bool state = true);
     void set_horizontal_alignment(bool state = true);
 
+    void set_autoscroll(bool state);
+
     void popup(QPoint);
 
     void statistic(void);
@@ -240,6 +242,8 @@ private:
     bool flag_vertical_alignment = false;
     bool flag_horizontal_alignment = false;
 
+    bool flag_autoscroll = false;
+
     bool flag_device_RECORDER = false;
     bool flag_device_OSCILLOSCOPE = false;
 
@@ -252,6 +256,8 @@ private:
 
     QVariant itemToInfo(QwtPlotItem *plotItem) const;
     void showCurve( QwtPlotItem *, bool on );
+
+    void autoscroll(void);
 
     void set_device_RECORDER(void);
     void set_device_OSCILLOSCOPE(void);

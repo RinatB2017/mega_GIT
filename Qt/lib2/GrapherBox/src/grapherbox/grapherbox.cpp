@@ -511,6 +511,8 @@ void GrapherBox::create_widgets(void)
     connect(ui->btn_Horizontal, SIGNAL(toggled(bool)), this, SLOT(set_horizontal_alignment(bool)));
     connect(ui->btn_Vertical,   SIGNAL(toggled(bool)), this, SLOT(set_vertical_alignment(bool)));
 
+    connect(ui->btn_autoscroll, SIGNAL(toggled(bool)), this, SLOT(set_autoscroll(bool)));
+
     connect(ui->btn_Statistic,  SIGNAL(clicked()), this, SLOT(statistic()));
 
 #ifdef CONTEXT_MENU
@@ -562,6 +564,8 @@ void GrapherBox::set_axis_scale_x(qreal new_axis_X_min, qreal new_axis_X_max)
     //    emit info(QString("set_axis_scale_x: %1 %2")
     //              .arg(new_axis_X_min)
     //              .arg(new_axis_X_max));
+    axis_X_min = new_axis_X_min;
+    axis_X_max = new_axis_X_max;
     ui->qwtPlot->setAxisScale(QwtPlot::xBottom, new_axis_X_min, new_axis_X_max);
     updateGraphics();
 }
@@ -571,6 +575,8 @@ void GrapherBox::set_axis_scale_y(qreal new_axis_Y_min, qreal new_axis_Y_max)
     //    emit info(QString("set_axis_scale_y: %1 %2")
     //              .arg(new_axis_Y_min)
     //              .arg(new_axis_Y_max));
+    axis_Y_min = new_axis_Y_min;
+    axis_Y_max = new_axis_Y_max;
     ui->qwtPlot->setAxisScale(QwtPlot::yLeft,   new_axis_Y_min, new_axis_Y_max);
     updateGraphics();
 }
@@ -874,6 +880,16 @@ bool GrapherBox::add_curve_data(int channel,
 
     set_horizontal_alignment(ui->btn_Horizontal->isChecked());
     set_vertical_alignment(ui->btn_Vertical->isChecked());
+
+    if(flag_autoscroll)
+    {
+        //FIXME костыль
+        if(channel == 0)
+        {
+            autoscroll();
+        }
+    }
+
     updateGraphics();
 
     return true;
@@ -916,6 +932,16 @@ bool GrapherBox::add_curve_array(int channel,
 #endif
     set_horizontal_alignment(ui->btn_Horizontal->isChecked());
     set_vertical_alignment(ui->btn_Vertical->isChecked());
+
+    if(flag_autoscroll)
+    {
+        //FIXME костыль
+        if(channel == 0)
+        {
+            autoscroll();
+        }
+    }
+
     updateGraphics();
 
     return true;
@@ -1095,8 +1121,12 @@ void GrapherBox::options(void)
             break;
         }
 
-        ui->qwtPlot->setAxisScale(QwtPlot::xBottom, dlg->get_min_axis_x(), dlg->get_max_axis_x());
-        ui->qwtPlot->setAxisScale(QwtPlot::yLeft,   dlg->get_min_axis_y(), dlg->get_max_axis_y());
+        axis_X_min = dlg->get_min_axis_x();
+        axis_X_max = dlg->get_max_axis_x();
+        axis_Y_min = dlg->get_min_axis_y();
+        axis_Y_max = dlg->get_max_axis_y();
+        ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
+        ui->qwtPlot->setAxisScale(QwtPlot::yLeft,   axis_Y_min, axis_Y_max);
         updateGraphics();
     }
 }
@@ -1260,6 +1290,8 @@ void GrapherBox::set_vertical_alignment(bool state)
             }
         }
     }
+    axis_Y_min = min_y;
+    axis_Y_max = max_y;
     ui->qwtPlot->setAxisScale(QwtPlot::yLeft, min_y, max_y);
     updateGraphics();
 }
@@ -1287,8 +1319,26 @@ void GrapherBox::set_horizontal_alignment(bool state)
             if(temp_x < min_x) min_x = temp_x;
         }
     }
+    axis_X_min = min_x;
+    axis_X_max = max_x;
     ui->qwtPlot->setAxisScale(QwtPlot::xBottom, min_x, max_x);
     updateGraphics();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::set_autoscroll(bool state)
+{
+    flag_autoscroll = state;
+//    axis_X_min += 1.0;
+//    axis_X_max += 1.0;
+//    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
+//    updateGraphics();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::autoscroll(void)
+{
+    axis_X_min ++;
+    axis_X_max ++;
+    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
 }
 //--------------------------------------------------------------------------------
 bool GrapherBox::get_vertical_alignment(void)
@@ -1441,13 +1491,19 @@ void GrapherBox::test(void)
     emit info("begin test");
 
 #if 1
+    axis_X_min--;
+    axis_X_max--;
+    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
+    updateGraphics();
+#endif
+
+#if 0
     QwtScaleDiv div;
     div.setInterval(0, 10);
     for(int index=0; index<get_curves_count(); index++)
     {
         ui->qwtPlot->setAxisScaleDiv(index, div);
     }
-#endif
 
     push_btn_Horizontal(false);
     push_btn_Vertical(false);
@@ -1464,6 +1520,7 @@ void GrapherBox::test(void)
 
     emit info(QString("curves_count %1").arg(get_curves_count()));
     emit info(QString("append %1 points").arg(360 * get_curves_count()));
+#endif
     emit info("end test");
 }
 //--------------------------------------------------------------------------------
@@ -1471,6 +1528,15 @@ void GrapherBox::test2(void)
 {
     emit info("begin test2");
 
+#if 1
+    axis_X_min++;
+    axis_X_max++;
+    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
+    updateGraphics();
+#endif
+
+
+#if 0
     int max_x = static_cast<int>(axis_X_max - axis_X_min);
     for(int channel=0; channel<get_curves_count(); channel++)
     {
@@ -1486,6 +1552,7 @@ void GrapherBox::test2(void)
     ui->btn_Vertical->setChecked(true);
     set_horizontal_alignment(true);
     set_vertical_alignment(true);
+#endif
 
     emit info("end test2");
 }

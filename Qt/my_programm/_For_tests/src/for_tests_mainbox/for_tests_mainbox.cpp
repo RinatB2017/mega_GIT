@@ -266,7 +266,7 @@ bool MainBox::test_0(void)
     emit info(ba.data());
 #endif
 
-#if 0
+#if 1
     //---
     typedef struct TEST
     {

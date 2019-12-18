@@ -348,14 +348,16 @@ void MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    clr_curves();
+    ui->grapher_widget->test();
+    //clr_curves();
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    add_curve("ADC1");
+    ui->grapher_widget->test2();
+    //add_curve("ADC1");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)

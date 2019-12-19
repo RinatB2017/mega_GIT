@@ -501,12 +501,14 @@ QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
     connect( label, SIGNAL( clicked() ), SLOT( itemClicked() ) );
     connect( label, SIGNAL( checked( bool ) ), SLOT( itemChecked( bool ) ) );
 
-#if 1
+#ifdef QT_DEBUG
     //TODO test QwtLegendLabel
-    QWidget *w = new QWidget();
+    QwtLegendLabel *w = new QwtLegendLabel();
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(new QLabel("fake btn"));
+    hbox->addStretch();
     hbox->addWidget(label);
+    w->setLayout(hbox);
     return w;
 #else
     return label;

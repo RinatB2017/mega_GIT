@@ -21,6 +21,7 @@ SUBDIRS += \
     Simple_HTTP_reader \
     neural/QNeuralNet \
     Labyrinth \
+    MCP4725 \
     MODBUS \
     show_films \
     Templates \

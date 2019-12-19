@@ -488,6 +488,9 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
   \note updateWidget() will called soon after createWidget()
         with the same attributes.
  */
+
+#include <QLabel>
+
 QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
 {
     Q_UNUSED( data )
@@ -498,7 +501,16 @@ QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
     connect( label, SIGNAL( clicked() ), SLOT( itemClicked() ) );
     connect( label, SIGNAL( checked( bool ) ), SLOT( itemChecked( bool ) ) );
 
+#if 1
+    //TODO test QwtLegendLabel
+    QWidget *w = new QWidget();
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(new QLabel("fake btn"));
+    hbox->addWidget(label);
+    return w;
+#else
     return label;
+#endif
 }
 
 /*!

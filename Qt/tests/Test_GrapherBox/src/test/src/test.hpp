@@ -21,7 +21,12 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
@@ -33,7 +38,6 @@ public:
     Test();
 
 private slots:
-    void test_grapher(void);
 
 private:
     MainWindow *mw;

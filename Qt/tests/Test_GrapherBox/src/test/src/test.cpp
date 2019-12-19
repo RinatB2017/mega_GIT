@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QTest>
 //--------------------------------------------------------------------------------
 #define private public
@@ -37,36 +31,5 @@ Test::Test()
 {
     mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
-}
-//--------------------------------------------------------------------------------
-void Test::test_grapher(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
-
-    GrapherBox *gb = mb->findChild<GrapherBox *>("GrapherBox");
-    QVERIFY(gb);
-
-    gb->remove_all_curve();
-
-    QCOMPARE(gb->add_curve("curve0"),   0);
-    QCOMPARE(gb->add_curve("curve1"),   1);
-    QCOMPARE(gb->add_curve("curve2"),   2);
-    QCOMPARE(gb->add_curve("curve3"),   3);
-    QCOMPARE(gb->add_curve("curve4"),   4);
-
-    QCOMPARE(gb->get_curves_count(),    5);
-
-    for(int n=0; n<1000; n++)
-    {
-        QCOMPARE(gb->add_curve_data(0, n),  true);
-    }
-
-    qreal x = 0;
-    for(int n=0; n<1000; n++)
-    {
-        gb->get_curve_data(0, n, &x);
-        QCOMPARE((int)x, n);
-    }
 }
 //--------------------------------------------------------------------------------

@@ -92,7 +92,7 @@ void QwtLegendMap::removeWidget( const QWidget *widget )
 
 QVariant QwtLegendMap::itemInfo( const QWidget *widget ) const
 {
-    if ( widget != NULL )
+    if ( widget != nullptr )
     {
         QWidget *w = const_cast<QWidget *>( widget );
 
@@ -224,7 +224,7 @@ public:
     {
         const QwtDynGridLayout *tl = qobject_cast<QwtDynGridLayout *>(
             contentsWidget->layout() );
-        if ( tl == NULL )
+        if ( tl == nullptr )
             return;
 
         const QSize visibleSize = viewport()->contentsRect().size();
@@ -547,7 +547,7 @@ void QwtLegend::updateTabOrder()
     {
         // set tab focus chain
 
-        QWidget *w = NULL;
+        QWidget *w = nullptr;
 
         for ( int i = 0; i < contentsLayout->count(); i++ )
         {
@@ -615,7 +615,7 @@ bool QwtLegend::eventFilter( QObject *object, QEvent *event )
             {
                 d_data->view->layoutContents();
 
-                if ( parentWidget() && parentWidget()->layout() == NULL )
+                if ( parentWidget() && parentWidget()->layout() == nullptr )
                 {
                     /*
                        We want the parent widget ( usually QwtPlot ) to recalculate
@@ -711,7 +711,7 @@ void QwtLegend::renderLegend( QPainter *painter,
 
     const QwtDynGridLayout *legendLayout = 
         qobject_cast<QwtDynGridLayout *>( contentsWidget()->layout() );
-    if ( legendLayout == NULL )
+    if ( legendLayout == nullptr )
         return;
 
     int left, right, top, bottom;

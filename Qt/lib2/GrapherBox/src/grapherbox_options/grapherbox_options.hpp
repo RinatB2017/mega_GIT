@@ -31,6 +31,8 @@ namespace Ui {
     class GrapherBox_Options;
 }
 //--------------------------------------------------------------------------------
+class ColorButton;
+//--------------------------------------------------------------------------------
 class GrapherBox_Options : public QDialog
 {
     Q_OBJECT
@@ -64,8 +66,13 @@ public:
     int get_min_axis_y(void);
     int get_max_axis_y(void);
 
+    void add_color_button(QColor color, QString text);
+    bool get_color(int channel, QColor *color);
+
 private:
     Ui::GrapherBox_Options *ui;
+    int cnt_channel = 0;
+    QList<ColorButton *> color_buttons;
 
     void init(void);
 };

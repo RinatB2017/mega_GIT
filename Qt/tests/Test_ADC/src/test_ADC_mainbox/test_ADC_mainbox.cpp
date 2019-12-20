@@ -72,7 +72,7 @@ void MainBox::init(void)
     ui->grapher_widget->set_axis_scale_x(0, 200);
     ui->grapher_widget->set_axis_scale_y(0, 5);
 
-    ui->grapher_widget->set_visible_btn_Options(false);
+    //ui->grapher_widget->set_visible_btn_Options(false);
     ui->grapher_widget->set_visible_btn_Load(false);
     ui->grapher_widget->set_visible_btn_Save(false);
     ui->grapher_widget->set_visible_btn_Statistic(false);

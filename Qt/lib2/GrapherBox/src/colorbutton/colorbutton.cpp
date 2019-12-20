@@ -26,6 +26,23 @@ ColorButton::ColorButton(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
+void ColorButton::setColor(QColor new_color)
+{
+    color = new_color;
+    int R = color.red();
+    int G = color.green();
+    int B = color.blue();
+    btn_color->setStyleSheet(QString("background:#%1%2%3")
+                             .arg(R, 2, 16, QChar('0'))
+                             .arg(G, 2, 16, QChar('0'))
+                             .arg(B, 2, 16, QChar('0')));
+}
+//--------------------------------------------------------------------------------
+QColor ColorButton::getColor(void)
+{
+    return color;
+}
+//--------------------------------------------------------------------------------
 void ColorButton::setText(const QString &text)
 {
     btn_text->setText(text);
@@ -52,9 +69,9 @@ void ColorButton::init(void)
     btn_color = new QToolButton(this);
 
     QHBoxLayout *box = new QHBoxLayout();
-//    box->setMargin(0)
-    box->addWidget(btn_text);
+    box->setMargin(0);
     box->addWidget(btn_color);
+    box->addWidget(btn_text);
 
     color = QColor(Qt::black);
 

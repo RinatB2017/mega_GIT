@@ -413,7 +413,6 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
         for ( int i = widgetList.size(); i < data.size(); i++ )
         {
             QWidget *widget = createWidget( data[i] );  //FIXME внимательнее надо
-            //QWidget *widget = new QWidget(this);
 #if 0
             //TODO добавить кнопку
             //---
@@ -489,8 +488,9 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
         with the same attributes.
  */
 
-#ifdef QT_DEBUG
+#if 0
 #   include <QToolButton>
+#   include <QPushButton>
 #   include <QLabel>
 #endif
 
@@ -504,7 +504,7 @@ QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
     connect( label, SIGNAL( clicked() ), SLOT( itemClicked() ) );
     connect( label, SIGNAL( checked( bool ) ), SLOT( itemChecked( bool ) ) );
 
-#ifdef QT_DEBUG
+#if 0
     //TODO test QwtLegendLabel
     QwtLegendLabel *w = new QwtLegendLabel();
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -512,7 +512,7 @@ QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
     btn->setText("fake btn");
 
     hbox->addWidget(btn);
-    //hbox->addStretch();
+    hbox->addStretch();
     hbox->addWidget(label);
     w->setLayout(hbox);
     return w;

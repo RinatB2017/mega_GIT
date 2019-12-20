@@ -1089,6 +1089,12 @@ void GrapherBox::options(void)
     {
         dlg->set_type_curve(GrapherBox_Options::SPLINE_LINES);
     }
+    //---
+    for(int n=0; n<curves.count(); n++)
+    {
+        dlg->add_color_button(curves[n].color, curves[n].title);
+    }
+    //---
 
     int button = dlg->exec();
     if(button == QDialog::Accepted)
@@ -1127,6 +1133,20 @@ void GrapherBox::options(void)
         axis_Y_max = dlg->get_max_axis_y();
         ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
         ui->qwtPlot->setAxisScale(QwtPlot::yLeft,   axis_Y_min, axis_Y_max);
+
+        //---
+        for(int n=0; n<curves.count(); n++)
+        {
+            QColor color;
+            bool ok = dlg->get_color(n, &color);
+            if(ok)
+            {
+                curves[n].color = color;
+                curves[n].plot_curve->setPen(color);
+            }
+        }
+        //---
+
         updateGraphics();
     }
 }

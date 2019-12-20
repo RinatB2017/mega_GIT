@@ -21,6 +21,7 @@
 #include <limits.h>
 #include "grapherbox_options.hpp"
 #include "ui_grapherbox_options.h"
+#include "colorbutton.hpp"
 //--------------------------------------------------------------------------------
 GrapherBox_Options::GrapherBox_Options(QWidget *parent) :
     QDialog(parent),
@@ -149,5 +150,25 @@ int GrapherBox_Options::get_min_axis_y(void)
 int GrapherBox_Options::get_max_axis_y(void)
 {
     return ui->sb_maxY->value();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox_Options::add_color_button(QColor color, QString text)
+{
+    ColorButton *btn = new ColorButton();
+    btn->setColor(color);
+    btn->setText(text);
+    color_buttons.append(btn);
+
+    ui->color_layout->addWidget(btn);
+    cnt_channel++;
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox_Options::get_color(int channel, QColor *color)
+{
+    if(channel < 0)             return false;
+    if(channel > cnt_channel)   return false;
+
+    *color = color_buttons[channel]->getColor();
+    return true;
 }
 //--------------------------------------------------------------------------------

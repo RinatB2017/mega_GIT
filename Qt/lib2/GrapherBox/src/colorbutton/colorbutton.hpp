@@ -39,9 +39,12 @@ public:
     explicit ColorButton(QWidget *parent = nullptr);
     ~ColorButton();
 
+    void setColor(QColor new_color);
     void setText(const QString &text);
     bool isCheckable(void);
     void setCheckable(bool state);
+
+    QColor getColor(void);
 
 private slots:
     void set_color(void);

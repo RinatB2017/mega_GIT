@@ -489,7 +489,10 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
         with the same attributes.
  */
 
-#include <QLabel>
+#ifdef QT_DEBUG
+#   include <QToolButton>
+#   include <QLabel>
+#endif
 
 QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
 {
@@ -505,8 +508,11 @@ QWidget *QwtLegend::createWidget( const QwtLegendData &data ) const
     //TODO test QwtLegendLabel
     QwtLegendLabel *w = new QwtLegendLabel();
     QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addWidget(new QLabel("fake btn"));
-    hbox->addStretch();
+    QToolButton *btn = new QToolButton();
+    btn->setText("fake btn");
+
+    hbox->addWidget(btn);
+    //hbox->addStretch();
     hbox->addWidget(label);
     w->setLayout(hbox);
     return w;

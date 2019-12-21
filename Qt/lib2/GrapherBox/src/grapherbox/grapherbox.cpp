@@ -1138,11 +1138,18 @@ void GrapherBox::options(void)
         for(int n=0; n<curves.count(); n++)
         {
             QColor color;
+            QString text;
             bool ok = dlg->get_color(n, &color);
             if(ok)
             {
                 curves[n].color = color;
                 curves[n].plot_curve->setPen(color);
+            }
+            ok = dlg->get_text(n, &text);
+            if(ok)
+            {
+                curves[n].title = text;
+                //FIXME надо доделать
             }
         }
         //---

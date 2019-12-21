@@ -43,9 +43,15 @@ QColor ColorButton::getColor(void)
     return color;
 }
 //--------------------------------------------------------------------------------
-void ColorButton::setText(const QString &text)
+void ColorButton::setText(const QString &new_text)
 {
+    text = new_text;
     btn_text->setText(text);
+}
+//--------------------------------------------------------------------------------
+QString ColorButton::getText(void)
+{
+    return text;
 }
 //--------------------------------------------------------------------------------
 bool ColorButton::isCheckable(void)
@@ -73,19 +79,11 @@ void ColorButton::init(void)
     box->addWidget(btn_color);
     box->addWidget(btn_text);
 
-    color = QColor(Qt::black);
-
-    int R = color.red();
-    int G = color.green();
-    int B = color.blue();
-    btn_color->setStyleSheet(QString("background:#%1%2%3")
-                             .arg(R, 2, 16, QChar('0'))
-                             .arg(G, 2, 16, QChar('0'))
-                             .arg(B, 2, 16, QChar('0')));
-
+    setColor(Qt::black);
     setLayout(box);
 
     connect(btn_color,  SIGNAL(clicked(bool)), this, SLOT(set_color()));
+    connect(btn_text,   SIGNAL(clicked(bool)), this, SLOT(set_text()));
 }
 //--------------------------------------------------------------------------------
 void ColorButton::set_color(void)
@@ -106,6 +104,22 @@ void ColorButton::set_color(void)
                                  .arg(R, 2, 16, QChar('0'))
                                  .arg(G, 2, 16, QChar('0'))
                                  .arg(B, 2, 16, QChar('0')));
+    }
+}
+//--------------------------------------------------------------------------------
+void ColorButton::set_text(void)
+{
+    bool ok = false;
+    QString new_text = QInputDialog::getText(this,
+                                             tr("Curve text"),
+                                             tr("Text:"),
+                                             QLineEdit::Normal,
+                                             text,
+                                             &ok);
+    if (ok && !new_text.isEmpty())
+    {
+        text = new_text;
+        btn_text->setText(text);
     }
 }
 //--------------------------------------------------------------------------------

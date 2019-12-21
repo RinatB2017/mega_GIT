@@ -44,6 +44,13 @@ void GrapherBox_Options::init(void)
     ui->sb_maxX->setRange(-INT_MAX, INT_MAX);
     ui->sb_maxY->setRange(-INT_MAX, INT_MAX);
 
+    //FIXME пока не сделано
+    ui->rb_recorder->setEnabled(false);
+    ui->rb_oscilloscope->setEnabled(false);
+    ui->rb_recorder->setToolTip("Пока не сделано");
+    ui->rb_oscilloscope->setToolTip("Пока не сделано");
+    //---
+
     setFixedSize(sizeHint());
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
@@ -169,6 +176,15 @@ bool GrapherBox_Options::get_color(int channel, QColor *color)
     if(channel > cnt_channel)   return false;
 
     *color = color_buttons[channel]->getColor();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox_Options::get_text(int channel, QString *text)
+{
+    if(channel < 0)             return false;
+    if(channel > cnt_channel)   return false;
+
+    *text = color_buttons[channel]->getText();
     return true;
 }
 //--------------------------------------------------------------------------------

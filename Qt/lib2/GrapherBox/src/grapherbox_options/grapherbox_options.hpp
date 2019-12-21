@@ -68,6 +68,7 @@ public:
 
     void add_color_button(QColor color, QString text);
     bool get_color(int channel, QColor *color);
+    bool get_text(int channel, QString *text);
 
 private:
     Ui::GrapherBox_Options *ui;

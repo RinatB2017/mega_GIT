@@ -40,19 +40,23 @@ public:
     ~ColorButton();
 
     void setColor(QColor new_color);
-    void setText(const QString &text);
+    QColor getColor(void);
+
+    void setText(const QString &new_text);
+    QString getText(void);
+
     bool isCheckable(void);
     void setCheckable(bool state);
 
-    QColor getColor(void);
-
 private slots:
     void set_color(void);
+    void set_text(void);
 
 private:
     QPushButton *btn_text;
     QToolButton *btn_color;
     QColor color;
+    QString text;
 
     void init(void);
 };

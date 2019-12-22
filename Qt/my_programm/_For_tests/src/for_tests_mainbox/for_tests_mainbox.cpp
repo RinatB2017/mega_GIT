@@ -240,6 +240,10 @@ bool MainBox::test_0(void)
     //test_assert(0);
 
 #if 0
+    ui->comboBox->removeItem(ui->comboBox->currentIndex());
+#endif
+
+#if 0
     QFile file("/dev/shm/xxx.txt");
     if(file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
     {
@@ -266,7 +270,7 @@ bool MainBox::test_0(void)
     emit info(ba.data());
 #endif
 
-#if 1
+#if 0
     //---
     typedef struct TEST
     {

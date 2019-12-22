@@ -18,6 +18,7 @@ win32 {
     SOURCES += src/hidapi_win/hid.c
     LIBS    += -lsetupapi
 }
+QT  *= xml
 
 HEADERS += \
     qxmlputget.h \

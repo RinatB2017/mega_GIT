@@ -92,7 +92,7 @@
     </widget>
    </item>
    <item>
-    <widget class="AD9106_Box" name="widget" native="true"/>
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
@@ -101,12 +101,6 @@
    <class>HexSpinBox</class>
    <extends>QWidget</extends>
    <header>hexspinbox.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AD9106_Box</class>
-   <extends>QWidget</extends>
-   <header>ad9106_box.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

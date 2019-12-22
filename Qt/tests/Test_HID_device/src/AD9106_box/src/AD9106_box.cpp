@@ -18,14 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDoubleSpinBox>
-#include <QTableWidget>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_AD9106_box.h"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
@@ -360,7 +352,7 @@ void AD9106_Box::choice_test(void)
 //--------------------------------------------------------------------------------
 void AD9106_Box::click(bool state)
 {
-    QToolButton *btn = (QToolButton *)sender();
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(!btn) return;
 
     if(state)
@@ -388,7 +380,7 @@ void AD9106_Box::click(bool state)
         QTableWidgetItem *item = obj->item(row, 1);
         if(item)
         {
-            uint16_t value = item->text().toInt(&ok);
+            uint16_t value = static_cast<uint16_t>(item->text().toInt(&ok));
             if(ok)
             {
                 if(state)
@@ -472,7 +464,7 @@ void AD9106_Box::read_xml(void)
                             QTableWidgetItem *name_reg  = new QTableWidgetItem(reg);
                             QTableWidgetItem *value_reg = new QTableWidgetItem(get->getString());
 
-                            uint16_t value = value_reg->text().toInt(&ok);
+                            uint16_t value = static_cast<uint16_t>(value_reg->text().toInt(&ok));
 
                             int index = 2;  //TODO костыль
                             for(int n=15; n>=0; n--)
@@ -499,7 +491,7 @@ void AD9106_Box::read_xml(void)
                             table->setItem(row, 1, value_reg);
                             row++;
                         }
-                    };
+                    }
                     ok = get->rise();
                     ok = get->rise();
                 }
@@ -526,7 +518,7 @@ void AD9106_Box::test_0(void)
     float temperature = 0;
     double voltage = 0;
 
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return;
@@ -535,7 +527,7 @@ void AD9106_Box::test_0(void)
     ok = ReadTemperature(&temperature);
     if(ok)
     {
-        emit info(QString("temp %1").arg(temperature));
+        emit info(QString("temp %1").arg(static_cast<double>(temperature)));
     }
 
     ok = ReadVoltage(ADC_GetVoltage::AVCC, &voltage);
@@ -596,15 +588,15 @@ void AD9106_Box::dev_open(void)
 
     int res;
     wchar_t wstr[MAX_STR];
-    int VID = 0xc251;
-    int PID = 0x2301;
+    uint16_t VID = 0xc251;
+    uint16_t PID = 0x2301;
 
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;
 
     devs = hid_enumerate(VID, PID);
     cur_dev = devs;
-    if(cur_dev == NULL)
+    if(cur_dev == nullptr)
     {
         messagebox_critical("Ошибка", "AD9106 не найден!");
         return;
@@ -626,10 +618,10 @@ void AD9106_Box::dev_open(void)
     // Open the device using the VID, PID,
     // and optionally the Serial number.
     int cnt_err = 0;
-    while(dev == 0)
+    while(dev == nullptr)
     {
-        dev = hid_open(VID, PID, NULL);
-        if(dev == 0)
+        dev = hid_open(VID, PID, nullptr);
+        if(dev == nullptr)
         {
             cnt_err++;
         }
@@ -676,10 +668,10 @@ void AD9106_Box::dev_open(void)
 //--------------------------------------------------------------------------------
 void AD9106_Box::dev_close(void)
 {
-    if(dev != 0)
+    if(dev != nullptr)
     {
         hid_close(dev);
-        dev = 0;
+        dev = nullptr;
     }
 }
 //--------------------------------------------------------------------------------
@@ -687,7 +679,7 @@ void AD9106_Box::dev_read_all_registers(void)
 {
     //TODO пока не надо
 #if 0
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return;
@@ -728,7 +720,7 @@ void AD9106_Box::dev_read_all_registers(void)
 //--------------------------------------------------------------------------------
 void AD9106_Box::dev_write_all_registers(void)
 {
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return;
@@ -751,7 +743,7 @@ void AD9106_Box::dev_write_all_registers(void)
 
             if(item0 && item1)
             {
-                ok = AD9106_write(item0->text(), item1->text().toInt());
+                ok = AD9106_write(item0->text(), static_cast<uint16_t>(item1->text().toInt()));
                 if(!ok)
                 {
                     emit error(QString("error write %1").arg(item0->text()));
@@ -765,7 +757,7 @@ void AD9106_Box::dev_write_all_registers(void)
 //--------------------------------------------------------------------------------
 bool AD9106_Box::AD9106_read(QString name_reg, uint16_t *data)
 {
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return false;
@@ -789,7 +781,7 @@ bool AD9106_Box::AD9106_read(QString name_reg, uint16_t *data)
     int res = 0;
 
     memset(output_buf, 0, sizeof(output_buf));
-    answer_t *i_packet = (answer_t *)output_buf;
+    answer_t *i_packet = reinterpret_cast<answer_t *>(output_buf);
     i_packet->cmd = 0x8f;
     i_packet->addr = r.address;
     i_packet->num = 1;
@@ -804,14 +796,14 @@ bool AD9106_Box::AD9106_read(QString name_reg, uint16_t *data)
     memset(output_buf, 0, sizeof(output_buf));
     res = hid_get_feature_report(dev, output_buf, sizeof(output_buf));
 
-    answer_t *o_packet = (answer_t *)output_buf;
+    answer_t *o_packet = reinterpret_cast<answer_t *>(output_buf);
     *data = o_packet->data;
     return true;
 }
 //--------------------------------------------------------------------------------
 bool AD9106_Box::AD9106_write(QString name_reg, uint16_t data)
 {
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return false;
@@ -839,7 +831,7 @@ bool AD9106_Box::AD9106_write(QString name_reg, uint16_t data)
     int res = 0;
 
     memset(output_buf, 0, sizeof(output_buf));
-    answer_t *i_packet = (answer_t *)output_buf;
+    answer_t *i_packet = reinterpret_cast<answer_t *>(output_buf);
     i_packet->cmd = 0x85;
     i_packet->addr = r.address;
     i_packet->data = data;
@@ -856,7 +848,7 @@ bool AD9106_Box::AD9106_write(QString name_reg, uint16_t data)
 //--------------------------------------------------------------------------------
 bool AD9106_Box::ReadTemperature(float *temperature)
 {
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return false;
@@ -877,13 +869,13 @@ bool AD9106_Box::ReadTemperature(float *temperature)
         return false;
     }
 
-    *temperature = (float)((float)(output_buf[3] + (output_buf[4] << 8)) / 100.0f);
+    *temperature = static_cast<float>(output_buf[3] + (output_buf[4] << 8) / 100.0);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool AD9106_Box::ReadADC(uint8_t channel, uint16_t *data)
 {
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return false;
@@ -905,7 +897,7 @@ bool AD9106_Box::ReadADC(uint8_t channel, uint16_t *data)
         return false;
     }
 
-    *data = (uint16_t)(output_buf[4] + (output_buf[5] << 8));
+    *data = static_cast<uint16_t>(output_buf[4] + (output_buf[5] << 8));
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -914,25 +906,25 @@ bool AD9106_Box::ReadVoltage(int channel, double *voltage)
     bool ok = false;
     uint16_t ADCData = 0;
 
-    ok = ReadADC(channel, &ADCData);
+    ok = ReadADC(static_cast<uint8_t>(channel), &ADCData);
     if(!ok) return ok;
 
     switch(channel)
     {
     case ADC_GetVoltage::AVCC:
-        *voltage = (float)(0.00226f * 2.0F * ADCData);
+        *voltage = static_cast<double>(0.00226f * 2.0F * ADCData);
         break;
 
     case ADC_GetVoltage::AVSS:
-        *voltage = (float)(0.00226f * 2.0f * ADCData);
+        *voltage = static_cast<double>(0.00226f * 2.0f * ADCData);
         break;
 
     case ADC_GetVoltage::BIAS:
-        *voltage = (float)(0.00226f * 16.0f * ADCData);
+        *voltage = static_cast<double>(0.00226f * 16.0f * ADCData);
         break;
 
     case ADC_GetVoltage::VCCIN:
-        *voltage = (float)(0.00226f * 8.0f * ADCData);
+        *voltage = static_cast<double>(0.00226f * 8.0f * ADCData);
         break;
 
     default:
@@ -949,7 +941,7 @@ void AD9106_Box::ApplySettings(void)
     emit info("ApplySettings");
 
     //start
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return;
@@ -976,7 +968,7 @@ void AD9106_Box::ManualReset(void)
     emit info("ManualReset");
 
     //reset
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return;
@@ -1004,7 +996,7 @@ void AD9106_Box::StopGeneration(void)
     emit info("StopGeneration");
 
     //stop
-    if(dev == NULL)
+    if(dev == nullptr)
     {
         emit error("handle not created");
         return;
@@ -1130,8 +1122,8 @@ void AD9106_Box::set_values(void)
     bool ok = false;
     QString reg;
 
-    uint16_t DDS_TW32 = (uint16_t)(DDS_TW >> 8);            //41
-    uint16_t DDS_TW1  = (uint16_t)((DDS_TW & 0xff) << 8);   //42
+    uint16_t DDS_TW32 = static_cast<uint16_t>(DDS_TW >> 8);            //41
+    uint16_t DDS_TW1  = static_cast<uint16_t>((DDS_TW & 0xff) << 8);   //42
 
     // emit info(QString("DDS_TW %1").arg(DDS_TW));
     //DDS_TW32  41
@@ -1156,6 +1148,26 @@ void AD9106_Box::set_values(void)
     reg = "DDS2_PW"; ok = AD9106_write(reg, DDS_PW_YN); if(!ok) emit error(QString("error write %1").arg(reg));
 
     emit info("Запись регистров: OK");
+}
+//--------------------------------------------------------------------------------
+void AD9106_Box::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool AD9106_Box::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void AD9106_Box::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void AD9106_Box::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------
 void AD9106_Box::changeEvent(QEvent *event)

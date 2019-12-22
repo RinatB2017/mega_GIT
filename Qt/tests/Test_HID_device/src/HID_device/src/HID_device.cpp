@@ -32,6 +32,7 @@
 #include "mainwindow.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
+#include "AD9106_box.hpp"
 #include "HID_device.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -55,9 +56,7 @@ void HID_device::init(void)
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
     createTestBar();
-#endif
 
     connect(ui->btn_open,   SIGNAL(clicked()), this, SLOT(dev_open()));
     connect(ui->btn_close,  SIGNAL(clicked()), this, SLOT(dev_close()));
@@ -132,6 +131,9 @@ void HID_device::choice_test(void)
 void HID_device::test_0(void)
 {
     emit info("Test_0()");
+
+    AD9106_Box *box = new AD9106_Box();
+    box->show();
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_1(void)

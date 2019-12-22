@@ -21,8 +21,13 @@
 #ifndef AD9106_BOX_HPP
 #define AD9106_BOX_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <stdint.h>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -86,7 +91,7 @@ class AD9106_Box : public MyWidget
     Q_OBJECT
 
 public:
-    AD9106_Box(QWidget *parent);
+    explicit AD9106_Box(QWidget *parent = nullptr);
     ~AD9106_Box();
 
 signals:
@@ -180,6 +185,11 @@ private:
     void init_sl_registers(void);
 
     void createTestBar(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     void changeEvent(QEvent *event);

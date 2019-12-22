@@ -10,7 +10,8 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 unix {
-    LIBS    *= -lhidapi-libusb
+    LIBS    += -lhidapi-libusb
+    #SOURCES += src/hidapi_fake/hid_fake.c
 }
 win32 {
     HEADERS += src/hidapi_win/hidapi.h
@@ -19,9 +20,15 @@ win32 {
 }
 
 HEADERS += \
-    HID_device.hpp
+    qxmlputget.h \
+    AD9106_box.hpp \
+    ad9106.hpp
 
 SOURCES += \
-    HID_device.cpp
+    qxmlputget.cpp \
+    AD9106_box.cpp \
+    ad9106.cpp
     
-FORMS   += HID_device.ui
+FORMS   += AD9106_box.ui
+
+RESOURCES   += registers.qrc

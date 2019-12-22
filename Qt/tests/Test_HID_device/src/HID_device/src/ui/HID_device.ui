@@ -6,62 +6,110 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>148</width>
-    <height>226</height>
+    <width>224</width>
+    <height>246</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>HID_device</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QPushButton" name="btn_open">
-     <property name="text">
-      <string>Open</string>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>VID</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>PID</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="HexSpinBox" name="vid_widget" native="true"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="HexSpinBox" name="pid_widget" native="true"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_open">
+        <property name="text">
+         <string>Open</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_close">
+        <property name="text">
+         <string>Close</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_send">
+        <property name="text">
+         <string>Send</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_show">
+        <property name="text">
+         <string>Show state</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="btn_close">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btn_send">
-     <property name="text">
-      <string>Send</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btn_show">
-     <property name="text">
-      <string>Show state</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+    <widget class="AD9106_Box" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>btn_open</tabstop>
-  <tabstop>btn_close</tabstop>
-  <tabstop>btn_send</tabstop>
- </tabstops>
+ <customwidgets>
+  <customwidget>
+   <class>HexSpinBox</class>
+   <extends>QWidget</extends>
+   <header>hexspinbox.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AD9106_Box</class>
+   <extends>QWidget</extends>
+   <header>ad9106_box.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

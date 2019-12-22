@@ -18,16 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef HID_DEVICE_HPP
-#define HID_DEVICE_HPP
-//--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#ifndef AD9106_BOX_HPP
+#define AD9106_BOX_HPP
 //--------------------------------------------------------------------------------
 #include <stdint.h>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -38,23 +33,61 @@
     #include "hidapi_win/hidapi.h"
 #endif
 //--------------------------------------------------------------------------------
-#define MAX_STR 255
+#pragma pack(push, 1)
+
+typedef struct question
+{
+    uint8_t     zero;
+    uint8_t     cmd;
+    uint8_t     num;
+    uint16_t    addr;
+} question_t;
+
+typedef struct answer
+{
+    uint8_t     zero;
+    uint8_t     cmd;
+    uint8_t     num;
+    uint16_t    addr;
+    uint16_t    data;
+} answer_t;
+
+enum ADC_GetVoltage
+{
+    AVCC = 0,
+    AVSS = 1,
+    BIAS = 2,
+    VCCIN = 3
+};
+
+enum DAC_SetVoltage
+{
+    REFIO = 0,
+    TEMPRETURE = 1,
+    NU0 = 2,
+    NU1 = 3
+};
+
+#pragma pack(pop)
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class HID_device;
+class AD9106_Box;
 }
 //--------------------------------------------------------------------------------
 class QToolButton;
 class QToolBar;
 class QComboBox;
 //--------------------------------------------------------------------------------
-class HID_device : public MyWidget
+class CurveBox;
+class QHexEdit;
+//--------------------------------------------------------------------------------
+class AD9106_Box : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit HID_device(QWidget *parent);
-    ~HID_device();
+    explicit AD9106_Box(QWidget *parent);
+    ~AD9106_Box();
 
 signals:
     void block_widget(bool);
@@ -68,13 +101,23 @@ private slots:
     void test_4(void);
     void test_5(void);
 
-    void show_state(void);
-
     //---
     void dev_open(void);
     void dev_close(void);
-    void dev_send(void);
+    void dev_read_all_registers(void);
+    void dev_write_all_registers(void);
+
+    void ApplySettings(void);
+    void StopGeneration(void);
+    void ManualReset(void);
+
+    void read_xml(void);
+    void convert_xml(void);
+
+    void set_values(void);
     //---
+
+    void click(bool state);
 
 private:
     enum {
@@ -90,33 +133,53 @@ private:
     {
         int cmd;
         QString cmd_text;
-        void (HID_device::*func)(void);
+        void (AD9106_Box::*func)(void);
     };
-    Ui::HID_device *ui;
+    Ui::AD9106_Box *ui = nullptr;
 
     //---
     hid_device *dev = nullptr;
-
-    uint8_t output_buf[0x40];
-
+    bool AD9106_read(QString name_reg, uint16_t *data);
+    bool AD9106_write(QString name_reg, uint16_t data);
     //---
+    bool ReadADC(uint8_t channel, uint16_t *data);
+    bool ReadTemperature(float *temperature);
+    bool ReadVoltage(int channel, double *voltage);
+    // DDS.ADC_GetVoltage.AVCC
+    // DDS.ADC_GetVoltage.AVSS
+    // DDS.ADC_GetVoltage.BIAS
+    // DDS.ADC_GetVoltage.VCCIN
+    //---
+#ifdef Q_OS_LINUX
+    uint8_t output_buf[128];
+#endif
+#ifdef Q_OS_WIN
+    uint8_t output_buf[256];
+#endif
 
-    QComboBox *cb_test;
+    QComboBox *cb_test = nullptr;
     QList<CMD> commands;
 
-    wchar_t wstr[MAX_STR];
+    QStringList sl_registers;
+
+#ifdef GRAPHER
+    CurveBox *curve = 0;
+#endif
 
     void init(void);
+    void init_sl_registers(void);
+
+    QToolButton *add_button(QToolBar *tool_bar,
+                            QToolButton *tool_button,
+                            QIcon icon,
+                            const QString &text,
+                            const QString &tool_tip);
 
     void createTestBar(void);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-
 protected:
     void changeEvent(QEvent *event);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

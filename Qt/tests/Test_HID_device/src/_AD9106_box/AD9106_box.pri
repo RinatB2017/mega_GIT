@@ -18,10 +18,18 @@ win32 {
     LIBS    += -lsetupapi
 }
 
+QT  *= xml
+
 HEADERS += \
-    HID_device.hpp
+    qxmlputget.h \
+    AD9106_box.hpp \
+    ad9106.hpp
 
 SOURCES += \
-    HID_device.cpp
+    qxmlputget.cpp \
+    AD9106_box.cpp \
+    ad9106.cpp
     
-FORMS   += HID_device.ui
+FORMS   += AD9106_box.ui
+
+RESOURCES   += registers.qrc

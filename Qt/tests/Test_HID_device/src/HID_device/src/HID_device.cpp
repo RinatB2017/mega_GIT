@@ -18,14 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDoubleSpinBox>
-#include <QTableWidget>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_HID_device.h"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
@@ -42,10 +34,6 @@
 //--------------------------------------------------------------------------------
 #include "HID_device.hpp"
 //--------------------------------------------------------------------------------
-#ifdef GRAPHER
-#   include "curvebox.hpp"
-#endif
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
@@ -59,9 +47,7 @@ HID_device::HID_device(QWidget *parent) :
 //--------------------------------------------------------------------------------
 HID_device::~HID_device()
 {
-#ifdef GRAPHER
-    if(curve) curve->deleteLater();
-#endif
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -69,7 +55,9 @@ void HID_device::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     connect(ui->btn_open,   SIGNAL(clicked()), this, SLOT(dev_open()));
     connect(ui->btn_close,  SIGNAL(clicked()), this, SLOT(dev_close()));
@@ -77,6 +65,7 @@ void HID_device::init(void)
     connect(ui->btn_show,   SIGNAL(clicked()), this, SLOT(show_state()));
 
     setFixedSize(sizeHint());
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void HID_device::createTestBar(void)
@@ -177,8 +166,11 @@ void HID_device::dev_open(void)
     // uint16_t VID = 0x0483;
     // uint16_t PID = 0x5711;
 
-    uint16_t VID = 0x08bb;
-    uint16_t PID = 0x2704;
+//    uint16_t VID = 0x08bb;
+//    uint16_t PID = 0x2704;
+
+    uint16_t VID = static_cast<uint16_t>(ui->vid_widget->value());
+    uint16_t PID = static_cast<uint16_t>(ui->pid_widget->value());
 
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;

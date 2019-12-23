@@ -1,9 +1,9 @@
 //--------------------------------------------------------------------------------
 #include <QListWidgetItem>
+#include <QElapsedTimer>
 #include <QApplication>
 #include <QInputDialog>
 #include <QWebView>
-#include <QTime>
 #include <QMenu>
 //--------------------------------------------------------------------------------
 #include "listwidget_site.hpp"
@@ -115,7 +115,7 @@ void ListWidget_Site::add_site(QAction *action)
 //--------------------------------------------------------------------------------
 void ListWidget_Site::wait(int timeout_msec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     //emit debug("waiting...");
     time.start();

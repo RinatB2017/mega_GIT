@@ -421,31 +421,31 @@ void OscilloscopeBox::load_setting(void)
 {
     qDebug() << "load_setting";
 
-    int size = beginReadArray(CURVE_COLORS);
-    if(size != curves.count())
-    {
-        emit error(QString("bad size curves: size %1 != curves.count %2")
-                   .arg(size)
-                   .arg(curves.count()));
-        endArray();
-        return;
-    }
-    for(int n=0; n<size; n++)
-    {
-        setArrayIndex(n);
-        //QColor color = load_value(COLOR).toUInt();
-        int R = load_value(COLOR_R).toInt();
-        int G = load_value(COLOR_G).toInt();
-        int B = load_value(COLOR_B).toInt();
-        color.setRed(R);
-        color.setGreen(G);
-        color.setBlue(B);
+//    int size = beginReadArray(CURVE_COLORS);
+//    if(size != curves.count())
+//    {
+//        emit error(QString("bad size curves: size %1 != curves.count %2")
+//                   .arg(size)
+//                   .arg(curves.count()));
+//        endArray();
+//        return;
+//    }
+//    for(int n=0; n<size; n++)
+//    {
+//        setArrayIndex(n);
+//        //QColor color = load_value(COLOR).toUInt();
+//        int R = load_value(COLOR_R).toInt();
+//        int G = load_value(COLOR_G).toInt();
+//        int B = load_value(COLOR_B).toInt();
+//        color.setRed(R);
+//        color.setGreen(G);
+//        color.setBlue(B);
 
-        curves[n].color = color;
-        curves[n].plot_curve->setPen(color);
+//        curves[n].color = color;
+//        curves[n].plot_curve->setPen(color);
 
-        ui->controls_widget->set_curve_color(n, color);
-    }
+//        ui->controls_widget->set_curve_color(n, color);
+//    }
     endArray();
 }
 //--------------------------------------------------------------------------------
@@ -453,19 +453,19 @@ void OscilloscopeBox::save_setting(void)
 {
     qDebug() << "save_setting";
 
-    beginWriteArray(CURVE_COLORS, curves.count());
-    int cnt = curves.count();
-    qDebug() << "cnt" << cnt;
-    for(int n=0; n<cnt; n++)
-    {
-        setArrayIndex(n);
-        //save_value(COLOR, curves[n].color);
+//    beginWriteArray(CURVE_COLORS, curves.count());
+//    int cnt = curves.count();
+//    qDebug() << "cnt" << cnt;
+//    for(int n=0; n<cnt; n++)
+//    {
+//        setArrayIndex(n);
+//        //save_value(COLOR, curves[n].color);
 
-        save_value(COLOR_R, curves[n].color.red());
-        save_value(COLOR_G, curves[n].color.green());
-        save_value(COLOR_B, curves[n].color.blue());
-    }
-    endArray();
+//        save_value(COLOR_R, curves[n].color.red());
+//        save_value(COLOR_G, curves[n].color.green());
+//        save_value(COLOR_B, curves[n].color.blue());
+//    }
+//    endArray();
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::test(void)

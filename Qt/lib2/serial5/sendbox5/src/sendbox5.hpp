@@ -62,6 +62,8 @@ signals:
 private slots:
     void send_text(void);
     void send_bin(void);
+    void send_text_remove(void);
+    void send_bin_remove(void);
 
 private:
     Ui::SendBox5 *ui;

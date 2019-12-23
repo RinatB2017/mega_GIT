@@ -19,7 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QCoreApplication>
-#include <QTime>
+#include <QElapsedTimer>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "waiting.hpp"
@@ -36,7 +36,7 @@ Waiting::Waiting(QObject *parent) :
 //--------------------------------------------------------------------------------
 bool Waiting::is_loaded(bool *is_loaded, int timeout_msec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     //emit debug("waiting...");
     time.start();
@@ -53,7 +53,7 @@ bool Waiting::is_loaded(bool *is_loaded, int timeout_msec)
 //--------------------------------------------------------------------------------
 void Waiting::sec(int timeout_sec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     time.start();
     while(true)
@@ -68,7 +68,7 @@ void Waiting::sec(int timeout_sec)
 //--------------------------------------------------------------------------------
 void Waiting::msec(int timeout_msec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     time.start();
     while(true)

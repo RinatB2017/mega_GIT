@@ -55,6 +55,8 @@ void MainBox::init(void)
     connect(ui->btn_ok, SIGNAL(clicked(bool)),      this,   SLOT(victory()));
     check_in();
 
+    ui->toolButton->setIcon((QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon))));
+
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else

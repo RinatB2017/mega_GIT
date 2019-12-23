@@ -47,6 +47,9 @@ SendBox5::SendBox5(QWidget *parent) :
     ui->btn_send_bin->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_send_bin->setObjectName("btn_send_bin");
 
+    ui->btn_send_bin_remove->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+    ui->btn_send_text_remove->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+
     ui->cb_send_text->setEditable(true);
     ui->cb_send_text->setObjectName("cb_send_text");
 
@@ -59,6 +62,9 @@ SendBox5::SendBox5(QWidget *parent) :
 
     connect(ui->btn_send_text,  SIGNAL(clicked()),  this,   SLOT(send_text()));
     connect(ui->btn_send_bin,   SIGNAL(clicked()),  this,   SLOT(send_bin()));
+
+    connect(ui->btn_send_text_remove,  SIGNAL(clicked()),  this,   SLOT(send_text_remove()));
+    connect(ui->btn_send_bin_remove,   SIGNAL(clicked()),  this,   SLOT(send_bin_remove()));
 
     connect(ui->cb_send_text->lineEdit(),   SIGNAL(editingFinished()),  this,   SLOT(send_text()));
     connect(ui->cb_send_bin->lineEdit(),    SIGNAL(editingFinished()),  this,   SLOT(send_bin()));
@@ -146,6 +152,16 @@ void SendBox5::send_bin(void)
     emit sendData(output_data);
 }
 //--------------------------------------------------------------------------------
+void SendBox5::send_text_remove(void)
+{
+    ui->cb_send_text->removeItem(ui->cb_send_text->currentIndex());
+}
+//--------------------------------------------------------------------------------
+void SendBox5::send_bin_remove(void)
+{
+    ui->cb_send_bin->removeItem(ui->cb_send_bin->currentIndex());
+}
+//--------------------------------------------------------------------------------
 void SendBox5::block_interface(bool state)
 {
     ui->cb_send_text->setDisabled(state);
@@ -154,6 +170,9 @@ void SendBox5::block_interface(bool state)
 
     ui->btn_send_text->setDisabled(state);
     ui->btn_send_bin->setDisabled(state);
+
+    ui->btn_send_bin_remove->setDisabled(state);
+    ui->btn_send_text_remove->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void SendBox5::updateText(void)

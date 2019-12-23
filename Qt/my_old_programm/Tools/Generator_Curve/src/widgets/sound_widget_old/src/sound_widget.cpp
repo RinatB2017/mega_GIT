@@ -82,12 +82,12 @@ void Sound_widget::initializeWindow(void)
     QScopedPointer<QVBoxLayout> layout(new QVBoxLayout);
 
     const QAudioDeviceInfo &defaultDeviceInfo = QAudioDeviceInfo::defaultOutputDevice();
-    ui->m_deviceBox->addItem(defaultDeviceInfo.deviceName(), qVariantFromValue(defaultDeviceInfo));
+    ui->m_deviceBox->addItem(defaultDeviceInfo.deviceName(), QVariant::fromValue(defaultDeviceInfo));
     foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioOutput))
     {
         if (deviceInfo != defaultDeviceInfo)
         {
-            ui->m_deviceBox->addItem(deviceInfo.deviceName(), qVariantFromValue(deviceInfo));
+            ui->m_deviceBox->addItem(deviceInfo.deviceName(), QVariant::fromValue(deviceInfo));
         }
     }
     connect(ui->m_deviceBox,    SIGNAL(activated(int)), SLOT(deviceChanged(int)));

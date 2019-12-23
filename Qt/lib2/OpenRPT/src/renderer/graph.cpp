@@ -164,9 +164,9 @@ tGraph::tGraph(const QRect & r) {
     _hPadding = 5;
     _vPadding = 5;
 
-    _dataLabel = QString::null;
-    _valueLabel = QString::null;
-    _title = QString::null;
+    _dataLabel = QString();
+    _valueLabel = QString();
+    _title = QString();
 
     _minValue = 0.0;
     _maxValue = 100.0;
@@ -176,11 +176,11 @@ tGraph::tGraph(const QRect & r) {
     _drawPoints = false;
 
     _font = QFont();
-    _titleFont = 0;
-    _dataLabelFont = 0;
-    _dataFont = 0;
-    _valueLabelFont = 0;
-    _valueFont = 0;
+    _titleFont = nullptr;
+    _dataLabelFont = nullptr;
+    _dataFont = nullptr;
+    _valueLabelFont = nullptr;
+    _valueFont = nullptr;
 
     _autoMinMax = true;
     _autoRepaint = true;
@@ -190,15 +190,15 @@ tGraph::tGraph(const QRect & r) {
 
 tGraph::~tGraph() {
     if(_titleFont) delete _titleFont;
-    _titleFont = 0;
+    _titleFont = nullptr;
     if(_dataLabelFont) delete _dataLabelFont;
-    _dataLabelFont = 0;
+    _dataLabelFont = nullptr;
     if(_dataFont) delete _dataFont;
-    _dataFont = 0;
+    _dataFont = nullptr;
     if(_valueLabelFont) delete _valueLabelFont;
-    _valueLabelFont = 0;
+    _valueLabelFont = nullptr;
     if(_valueFont) delete _valueFont;
-    _valueFont = 0;
+    _valueFont = nullptr;
 }
 
 int  tGraph::width() { return _rect.width(); }
@@ -263,7 +263,7 @@ void tGraph::setTitleFont(const QFont * fnt) {
         *_titleFont = *fnt;
     } else {
         if(_titleFont) delete _titleFont;
-        _titleFont = 0;
+        _titleFont = nullptr;
     }
 }
 
@@ -273,7 +273,7 @@ void tGraph::setDataLabelFont(const QFont * fnt) {
         *_dataLabelFont = *fnt;
     } else {
         if(_dataLabelFont) delete _dataLabelFont;
-        _dataLabelFont = 0;
+        _dataLabelFont = nullptr;
     }
 }
 
@@ -283,7 +283,7 @@ void tGraph::setDataFont(const QFont * fnt) {
         *_dataFont = *fnt;
     } else {
         if(_dataFont) delete _dataFont;
-        _dataFont = 0;
+        _dataFont = nullptr;
     }
 }
 
@@ -293,7 +293,7 @@ void tGraph::setValueLabelFont(const QFont * fnt) {
         *_valueLabelFont = *fnt;
     } else {
         if(_valueLabelFont) delete _valueLabelFont;
-        _valueLabelFont = 0;
+        _valueLabelFont = nullptr;
     }
 }
 
@@ -303,7 +303,7 @@ void tGraph::setValueFont(const QFont * fnt) {
         *_valueFont = *fnt;
     } else {
         if(_valueFont) delete _valueFont;
-        _valueFont = 0;
+        _valueFont = nullptr;
     }
 }
 
@@ -389,9 +389,9 @@ void tGraph::setSetValue(int rnum, int snum, double val) {
 
     if(autoMinMax()) {
         _minValue = qMin(val, _minValue);
-        _minValue = ((int)_minValue == _minValue ? _minValue : (int)_minValue - 1 );
+        _minValue = (static_cast<int>(_minValue) == _minValue ? _minValue : static_cast<int>(_minValue) - 1 );
         _maxValue = qMax(val, _maxValue);
-        _maxValue = ((int)_maxValue == _maxValue ? _maxValue : (int)_maxValue + 1 );
+        _maxValue = (static_cast<int>(_maxValue) == _maxValue ? _maxValue : static_cast<int>(_maxValue) + 1 );
     }
 
     if(autoRepaint()) repaint();
@@ -546,9 +546,9 @@ void tGraph::draw(QPainter & paint) {
 
     fm = QFontMetrics(valueFont());
 
-    QString min_str = QString().sprintf("%-.0f",minValue());
-    QString org_str = ( minValue() == 0.0 ? QString::null : QString("0") );
-    QString max_str = QString().sprintf("%-.0f",maxValue());
+    QString min_str = QString().asprintf("%-.0f",minValue());
+    QString org_str = ( minValue() == 0.0 ? QString() : QString("0") );
+    QString max_str = QString().asprintf("%-.0f",maxValue());
 
     int width = qMax(fm.width(min_str), fm.width(max_str));
     if(org_str.length() > 0) width = qMax(width, fm.width(org_str));
@@ -569,7 +569,7 @@ void tGraph::draw(QPainter & paint) {
     double grng = maxValue() - minValue();
     if(org_str.length() > 0) {
         double perc = (0 - minValue()) / grng;
-        gy_org = gy2 - (int)(perc * (double)gheight);
+        gy_org = gy2 - static_cast<int>(perc * (double)gheight);
         paint.drawText(gx1 - fm.width(org_str), gy_org, fm.width(org_str), fm.height(), tfa, org_str);
         paint.drawLine(gx1 - 3, gy_org, gx1 + 2, gy_org);
     }
@@ -618,8 +618,8 @@ void tGraph::draw(QPainter & paint) {
             QString label = ref.first;
             if(label.length() > 0 && ((pos + refwidth_div_2) - last_label_at) > ((label_offset * 2) + 1)) {
                 last_label_at = pos + refwidth_div_2;
-                int lx = (int)(((pos + refwidth_div_2) * cos45deg) - ((gy2 + label_offset) * sin45deg));
-                int ly = (int)(((pos + refwidth_div_2) * sin45deg) + ((gy2 + label_offset) * cos45deg));
+                int lx = static_cast<int>(((pos + refwidth_div_2) * cos45deg) - ((gy2 + label_offset) * sin45deg));
+                int ly = static_cast<int>(((pos + refwidth_div_2) * sin45deg) + ((gy2 + label_offset) * cos45deg));
                 int fmwidth = fm.width(label);
                 paint.save();
                 paint.rotate(-45);
@@ -649,9 +649,9 @@ void tGraph::draw(QPainter & paint) {
                     tval = it.value();
                     if(tval.second != 0.0) {
                         if(tval.second < 0) {
-                            bar_height = (int)((tval.second / minValue()) * (gy_org - gy_min));
+                            bar_height = static_cast<int>((tval.second / minValue()) * (gy_org - gy_min));
                         } else {
-                            bar_height = (int)((tval.second / maxValue()) * (gy_org - gy_max));
+                            bar_height = static_cast<int>((tval.second / maxValue()) * (gy_org - gy_max));
                         } 
                         paint.fillRect(pos + buf, gy_org - bar_height, refwidth - buf2, bar_height, getSetColor(tval.first));
                     }
@@ -670,8 +670,8 @@ void tGraph::draw(QPainter & paint) {
                             double old_val = last_map[sit.key()];
                             double new_val = sit.value();
                             int ly1;
-                            if(old_val < 0.0) ly1 = (int)((old_val / minValue()) * (gy_org - gy_min));
-                            else              ly1 = (int)((old_val / maxValue()) * (gy_org - gy_max));
+                            if(old_val < 0.0) ly1 = static_cast<int>((old_val / minValue()) * (gy_org - gy_min));
+                            else              ly1 = static_cast<int>((old_val / maxValue()) * (gy_org - gy_max));
                             ly1 = gy_org - ly1;
                             int lx1 = pos - refwidth_div_2;
                             int ly2;
@@ -694,8 +694,8 @@ void tGraph::draw(QPainter & paint) {
                         paint.setBrush(getSetColor(sit.key()));
                         paint.setPen(QColor(0,0,0));
                         int ly1;
-                        if(sit.value() < 0.0) ly1 = (int)((sit.value() / minValue()) * (gy_org - gy_min));
-                        else                  ly1 = (int)((sit.value() / maxValue()) * (gy_org - gy_max));
+                        if(sit.value() < 0.0) ly1 = static_cast<int>((sit.value() / minValue()) * (gy_org - gy_min));
+                        else                  ly1 = static_cast<int>((sit.value() / maxValue()) * (gy_org - gy_max));
                         ly1 = gy_org - ly1;
                         int lx1 = pos + refwidth_div_2;
                         paint.drawEllipse(lx1 - 2, ly1 - 2, 5, 5);
@@ -774,7 +774,7 @@ void renderGraph(QPainter & paint, const QRect & rect, ORGraphData & gData, XSql
 
     // setup the sets/series
     int snum = 0;
-    ORSeriesData * sd = 0;
+    ORSeriesData * sd = nullptr;
     for(snum = 0; snum < gData.series.count(); snum++) {
         sd = gData.series.at(snum);
         if(sd) {

@@ -67,7 +67,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    QTime time;
+    QElapsedTimer time;
     int max_n = 10000000;
 
     QCryptographicHash *md5 = new QCryptographicHash(QCryptographicHash::Md5);
@@ -83,7 +83,7 @@ void MainBox::test(void)
     emit info(QString(tr("посчитали %1 за %2 мсек, т.е. %3 в мсек"))
               .arg(max_n)
               .arg(time.elapsed())
-              .arg((float)max_n / (float)time.elapsed()));
+              .arg(static_cast<float>(max_n) / static_cast<float>(time.elapsed())));
 }
 //--------------------------------------------------------------------------------
 QString MainBox::get_md5(const QString &filename)

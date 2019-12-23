@@ -267,9 +267,9 @@ void renderCodeEAN13(OROPage * page, const QRectF & r, const QString & _str, ORB
   page->addPrimitive(rect);
 
   QString parstr = QString("%1").arg(val[0]);
-  QString leftstr = QString().sprintf("%d%d%d%d%d%d",
+  QString leftstr = QString().asprintf("%d%d%d%d%d%d",
                      val[1], val[2], val[3], val[4], val[5], val[6]);
-  QString rightstr = QString().sprintf("%d%d%d%d%d%d",
+  QString rightstr = QString().asprintf("%d%d%d%d%d%d",
                      val[7], val[8], val[9], val[10], val[11], val[12]);
   QFont font("Arial", 6);
 
@@ -323,7 +323,7 @@ void renderCodeUPCA(OROPage * page, const QRectF & r, const QString & _str, ORBa
   val[0] = 0;
   for(i = 0; i < _str.length(); i++)
   {
-    val[i+1] = ((QChar)_str.at(i)).digitValue();
+    val[i+1] = (static_cast<QChar>(_str.at(i)).digitValue());
     if(val[i+1] == -1)
       return;
   }
@@ -487,9 +487,9 @@ void renderCodeUPCA(OROPage * page, const QRectF & r, const QString & _str, ORBa
 
   QString parstr = QString("%1").arg(val[1]);
   QString chkstr = QString("%1").arg(val[12]);
-  QString leftstr = QString().sprintf("%d%d%d%d%d",
+  QString leftstr = QString().asprintf("%d%d%d%d%d",
 		     val[2], val[3], val[4], val[5], val[6]);
-  QString rightstr = QString().sprintf("%d%d%d%d%d",
+  QString rightstr = QString().asprintf("%d%d%d%d%d",
 		     val[7], val[8], val[9], val[10], val[11]);
   QFont font("Arial",6);
 
@@ -551,7 +551,7 @@ void renderCodeEAN8(OROPage * page, const QRectF & r, const QString & _str, ORBa
   // an invalid number
   for(i = 0; i < _str.length(); i++)
   {
-    val[i] = ((QChar)_str.at(i)).digitValue();
+    val[i] = (static_cast<QChar>(_str.at(i))).digitValue();
     if(val[i] == -1)
       return;
   }
@@ -715,9 +715,9 @@ void renderCodeEAN8(OROPage * page, const QRectF & r, const QString & _str, ORBa
   rect->setRotationAxis(r.topLeft());
   page->addPrimitive(rect);
 
-  QString leftstr = QString().sprintf("%d%d%d%d",
+  QString leftstr = QString().asprintf("%d%d%d%d",
 		     val[0], val[1], val[2], val[3]);
-  QString rightstr = QString().sprintf("%d%d%d%d",
+  QString rightstr = QString().asprintf("%d%d%d%d",
 		     val[4], val[5], val[6], val[7]);
   QFont font("Arial",6);
   OROTextBox * tb = new OROTextBox(bc);
@@ -761,7 +761,7 @@ void renderCodeUPCE(OROPage * page, const QRectF & r, const QString & _str, ORBa
   // an invalid number
   for(i = 0; i < _str.length(); i++)
   {
-    val[i] = ((QChar)_str.at(i)).digitValue();
+    val[i] = (static_cast<QChar>(_str.at(i))).digitValue();
     if(val[i] == -1)
       return;
   }
@@ -893,7 +893,7 @@ void renderCodeUPCE(OROPage * page, const QRectF & r, const QString & _str, ORBa
 
   QString parstr = QString("%1").arg(val[0]);
   QString chkstr = QString("%1").arg(val[7]);
-  QString leftstr = QString().sprintf("%d%d%d%d%d%d",
+  QString leftstr = QString().asprintf("%d%d%d%d%d%d",
 		     val[1], val[2], val[3], val[4], val[5], val[6]);
   QFont font("Arial",6);
 

@@ -797,7 +797,7 @@ void MainBox::test_securitylab(void)
 //--------------------------------------------------------------------------------
 void MainBox::find_and_append(void)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     Database *db = new Database("QSQLITE", "customdb.db", this);
@@ -866,7 +866,7 @@ void MainBox::find_and_append(void)
 
             Waiting::is_loaded(&is_loaded);
 #endif
-            Waiting::sec(5);
+            //Waiting::sec(5);
         }
     }
     emit debug(QString("time.elapsed() = %1 second").arg(time.elapsed() / 1000));
@@ -876,7 +876,7 @@ void MainBox::find_and_append(void)
 void MainBox::wait_element(const QString &selector_element,
                            int timeout_msec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     time.start();
     while(true)
@@ -1007,7 +1007,7 @@ void MainBox::del_news(void)
         JavaScript::click_element(submit);
         Waiting::sec(5);
     }
-    QMessageBox::information(this, tr("Information"), tr("The end!"));
+    //QMessageBox::information(this, tr("Information"), tr("The end!"));
 }
 //--------------------------------------------------------------------------------
 bool MainBox::append_proxy(const QString &ip_and_port)
@@ -1052,7 +1052,7 @@ bool MainBox::append_proxy(const QString &ip_and_port)
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::HttpProxy);
     proxy.setHostName(Ip);
-    proxy.setPort(port);
+    proxy.setPort(static_cast<uint16_t>(port));
     QNetworkProxy::setApplicationProxy(proxy);
 
     return true;
@@ -1332,6 +1332,7 @@ QStringList MainBox::get_links(QWebElementCollection collection)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
+#if 0
     load_url("http://plastikovyeokna-krasnodar.ru/");
     QWebElementCollection element_collection = main_frame->findAllElements("*");
     emit info(QString(tr("found %1")).arg(element_collection.count()));
@@ -1351,9 +1352,9 @@ void MainBox::test(void)
         if(i.key() > x) x=i.key();
     }
     emit info(map.value(x).toPlainText());
+#endif
 
-    return;
-
+#if 0
     load_url("http://bash.im/quote/422650");
     QWebElement element = main_frame->findFirstElement("a[class=down]");
     if(!element.isNull())
@@ -1363,8 +1364,9 @@ void MainBox::test(void)
     }
     else
         emit error("element NOT found!");
-    return;
+#endif
 
+#if 0
     load_url("http://lenta.ru/");
     QWebElementCollection titles_collection = main_frame->findAllElements("div[class=titles]");
     QWebElementCollection items_collection = main_frame->findAllElements("div[class=item]");
@@ -1385,7 +1387,7 @@ void MainBox::test(void)
     QListView *sl_view = new QListView;
     sl_view->setModel(sl_model);
     sl_view->show();
-    return;
+#endif
 
     proxies.clear();
 

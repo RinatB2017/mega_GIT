@@ -25,11 +25,11 @@
 //--------------------------------------------------------------------------------
 #define SIZE 1000
 
-#define MAX_VOLTAGE     400
-#define NORMAL_VOLTAGE  311.127f
+#define MAX_VOLTAGE     400.0
+#define NORMAL_VOLTAGE  311.127
 
-#define MAX_NOISE       20
-#define NORMAL_NOISE    13.25f
+#define MAX_NOISE       20.0
+#define NORMAL_NOISE    13.25
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -45,7 +45,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:

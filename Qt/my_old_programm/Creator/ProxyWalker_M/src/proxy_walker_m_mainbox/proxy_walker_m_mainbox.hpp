@@ -50,7 +50,7 @@ struct web_struct
     WebView *webview;   // текущий WebView
     QWebFrame *main_frame;
     QProgressBar *progressBar;
-    QTime time;
+    QElapsedTimer time;
 };
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget

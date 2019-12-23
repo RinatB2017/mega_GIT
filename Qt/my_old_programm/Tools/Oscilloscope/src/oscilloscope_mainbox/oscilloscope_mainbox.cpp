@@ -96,7 +96,7 @@ void MainBox::calc(double voltage)
     }
     //qDebug() << "voltage = " << voltage;
     n=0;
-    int voltage_noice = ui->Voltage_Noice->value();
+    int voltage_noice = static_cast<int>(ui->Voltage_Noice->value());
     while(n<SIZE)
     {
         if(y[n] > 0)
@@ -120,8 +120,8 @@ void MainBox::calc(double voltage)
         }
         if((n%18) < 3)
         {
-            if(y[n]>0) y2[n] = 380.0f;
-            else  y2[n] = -380.0f;
+            if(y[n]>0) y2[n] = 380.0;
+            else  y2[n] = -380.0;
 
             if(y[n] > temp) temp = y[n];
         }
@@ -136,16 +136,16 @@ void MainBox::calc(double voltage)
     {
         if((n%18) < 3)
         {
-            if(y[n]>0) y2[n] = 380.0f;
-            else  y2[n] = -380.0f;
+            if(y[n]>0) y2[n] = 380.0;
+            else  y2[n] = -380.0;
 
             if(y[n] > 0)
             {
-                if(y[n] > local_max) local_max = y[n];
+                if(y[n] > local_max) local_max = static_cast<int>(y[n]);
             }
             else
             {
-                if(y[n] < local_max) local_max = y[n];
+                if(y[n] < local_max) local_max = static_cast<int>(y[n]);
             }
 
             if(y[n] > temp) temp = y[n];
@@ -160,7 +160,7 @@ void MainBox::calc(double voltage)
     max_U = 0;
     for(n=0; n<SIZE; n++)
     {
-        current_U = y3[n]/qSqrt(2.0f);
+        current_U = y3[n]/qSqrt(2.0);
         if(current_U > max_U) max_U = current_U;
     }
 

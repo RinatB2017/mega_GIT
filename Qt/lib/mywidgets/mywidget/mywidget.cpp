@@ -45,10 +45,10 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 
 #ifndef RS232_LOG
-//    if(parent)
-        connect_log(parent);
-//    else
-//        connect_log(topLevelWidget());
+    //    if(parent)
+    connect_log(parent);
+    //    else
+    //        connect_log(topLevelWidget());
 #endif
 #ifdef QT_DEBUG
     qDebug() << "MyWidget()";
@@ -418,11 +418,14 @@ void MyWidget::load_QRadioButton(QString group_name)
     settings->beginGroup(group_name);
     foreach (QRadioButton *obj, widgets)
     {
-        if(!obj->objectName().isEmpty())
+        if(obj->property(NO_SAVE).toBool() == false)
         {
-            settings->beginGroup(obj->objectName());
-            obj->setChecked(settings->value("checked", false).toBool());
-            settings->endGroup();
+            if(!obj->objectName().isEmpty())
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setChecked(settings->value("checked", false).toBool());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -440,11 +443,14 @@ void MyWidget::save_QRadioButton(QString group_name)
     settings->beginGroup(group_name);
     foreach(QRadioButton *obj, allobj)
     {
-        if(!obj->objectName().isEmpty())
+        if(obj->property(NO_SAVE).toBool() == false)
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("checked", QVariant(obj->isChecked()));
-            settings->endGroup();
+            if(!obj->objectName().isEmpty())
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("checked", QVariant(obj->isChecked()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -462,11 +468,14 @@ void MyWidget::load_QCheckBox(QString group_name)
     settings->beginGroup(group_name);
     foreach (QCheckBox *obj, widgets)
     {
-        if(!obj->objectName().isEmpty())
+        if(obj->property(NO_SAVE).toBool() == false)
         {
-            settings->beginGroup(obj->objectName());
-            obj->setChecked(settings->value("checked", false).toBool());
-            settings->endGroup();
+            if(!obj->objectName().isEmpty())
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setChecked(settings->value("checked", false).toBool());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -484,11 +493,14 @@ void MyWidget::save_QCheckBox(QString group_name)
     settings->beginGroup(group_name);
     foreach(QCheckBox *obj, allobj)
     {
-        if(!obj->objectName().isEmpty())
+        if(obj->property(NO_SAVE).toBool() == false)
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("checked", QVariant(obj->isChecked()));
-            settings->endGroup();
+            if(!obj->objectName().isEmpty())
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("checked", QVariant(obj->isChecked()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -508,14 +520,17 @@ void MyWidget::load_QComboBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            int size = settings->beginReadArray(obj->objectName());
-            for(int n=0; n<size; n++)
+            if(obj->property(NO_SAVE).toBool() == false)
             {
-                settings->setArrayIndex(n);
-                obj->addItem(settings->value("value").toString());
+                int size = settings->beginReadArray(obj->objectName());
+                for(int n=0; n<size; n++)
+                {
+                    settings->setArrayIndex(n);
+                    obj->addItem(settings->value("value").toString());
+                }
+                settings->endArray();
+                obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
             }
-            settings->endArray();
-            obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
         }
     }
     settings->endGroup();
@@ -535,15 +550,18 @@ void MyWidget::save_QComboBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->setValue("currentindex", QVariant(obj->currentIndex()));
-            settings->beginWriteArray(obj->objectName(), obj->count());
-            for(int n=0; n<obj->count(); n++)
+            if(obj->property(NO_SAVE).toBool() == false)
             {
-                settings->setArrayIndex(n);
-                obj->setCurrentIndex(n);
-                settings->setValue("value", obj->currentText());
+                settings->setValue("currentindex", QVariant(obj->currentIndex()));
+                settings->beginWriteArray(obj->objectName(), obj->count());
+                for(int n=0; n<obj->count(); n++)
+                {
+                    settings->setArrayIndex(n);
+                    obj->setCurrentIndex(n);
+                    settings->setValue("value", obj->currentText());
+                }
+                settings->endArray();
             }
-            settings->endArray();
         }
     }
 
@@ -564,9 +582,12 @@ void MyWidget::load_QPushButton(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setText(settings->value("text", "").toString());
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setText(settings->value("text", "").toString());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -586,9 +607,12 @@ void MyWidget::save_QPushButton(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("text", QVariant(obj->text()));
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("text", QVariant(obj->text()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -608,9 +632,12 @@ void MyWidget::load_QToolButton(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setText(settings->value("text", "").toString());
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setText(settings->value("text", "").toString());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -630,9 +657,12 @@ void MyWidget::save_QToolButton(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("text", QVariant(obj->text()));
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("text", QVariant(obj->text()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -812,9 +842,12 @@ void MyWidget::load_QSpinBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setValue(settings->value("value", 0).toInt());
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setValue(settings->value("value", 0).toInt());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -834,9 +867,12 @@ void MyWidget::save_QSpinBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("value", QVariant(obj->value()));
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("value", QVariant(obj->value()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -856,9 +892,12 @@ void MyWidget::load_QDoubleSpinBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setValue(settings->value("value", 0).toDouble());
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setValue(settings->value("value", 0).toDouble());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -878,9 +917,12 @@ void MyWidget::save_QDoubleSpinBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("value", QVariant(obj->value()));
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("value", QVariant(obj->value()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -900,9 +942,12 @@ void MyWidget::load_QSlider(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setSliderPosition(settings->value("position", 0).toInt());
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setSliderPosition(settings->value("position", 0).toInt());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -922,9 +967,12 @@ void MyWidget::save_QSlider(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("position", QVariant(obj->value()));
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("position", QVariant(obj->value()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -944,9 +992,12 @@ void MyWidget::load_QSplitter(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->restoreState(settings->value("state", 0).toByteArray());
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->restoreState(settings->value("state", 0).toByteArray());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -966,9 +1017,12 @@ void MyWidget::save_QSplitter(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("state", QVariant(obj->saveState()));
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("state", QVariant(obj->saveState()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -988,9 +1042,12 @@ void MyWidget::load_QTimeEdit(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            obj->setDateTime(settings->value("datetime", 0).toDateTime());
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                obj->setDateTime(settings->value("datetime", 0).toDateTime());
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -1010,9 +1067,12 @@ void MyWidget::save_QTimeEdit(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->beginGroup(obj->objectName());
-            settings->setValue("datetime", QVariant(obj->dateTime()));
-            settings->endGroup();
+            if(obj->property(NO_SAVE).toBool() == false)
+            {
+                settings->beginGroup(obj->objectName());
+                settings->setValue("datetime", QVariant(obj->dateTime()));
+                settings->endGroup();
+            }
         }
     }
     settings->endGroup();
@@ -1065,7 +1125,7 @@ void MyWidget::load_widgets(QString group_name)
 #ifdef SAVE_WIDGETS_LINEEDIT
     load_QLineEdit(group_name);
 #endif
-    Q_UNUSED(group_name);
+    Q_UNUSED(group_name)
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(QString group_name)
@@ -1109,7 +1169,7 @@ void MyWidget::save_widgets(QString group_name)
 #ifdef SAVE_WIDGETS_LINEEDIT
     save_QLineEdit(group_name);
 #endif
-    Q_UNUSED(group_name);
+    Q_UNUSED(group_name)
 }
 //--------------------------------------------------------------------------------
 int MyWidget::load_int(QString name)

@@ -126,6 +126,8 @@ void SerialBox5::createWidgets(void)
 
     ui->btn_refresh->setToolTip("Обновить список портов");
 
+    ui->PortBox->setProperty(NO_SAVE, true);
+
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 

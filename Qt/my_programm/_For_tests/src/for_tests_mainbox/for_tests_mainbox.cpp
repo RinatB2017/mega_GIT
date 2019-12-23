@@ -241,6 +241,10 @@ bool MainBox::test_0(void)
 
     //test_assert(0);
 
+#if 1
+    emit info(QDir::home().path());
+#endif
+
 #if 0
     ui->comboBox->removeItem(ui->comboBox->currentIndex());
 #endif

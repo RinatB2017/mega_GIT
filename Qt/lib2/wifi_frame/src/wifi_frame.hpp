@@ -52,7 +52,7 @@ public:
                         QWidget *parent);
 
     bool send_at_command(QString cmd,
-                         unsigned int wait_ms = 200,
+                         int wait_ms = 200,
                          bool no_response = false);
 
 private slots:
@@ -104,7 +104,7 @@ private:
     void init(void);
     void connect_serial(void);
     bool send_command(QString cmd,
-                      unsigned int wait_ms = 100);
+                      int wait_ms = 100);
 
     bool send_cmd_create_server(bool is_silense = false);
     bool send_cmd_create_client(bool is_silense = false);

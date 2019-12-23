@@ -197,9 +197,9 @@ void WIFI_frame::port_error(QSerialPort::SerialPortError serial_error)
     case QSerialPort::UnknownError:         emit error("Error: UnknownError"); break;
     case QSerialPort::TimeoutError:         emit error("Error: TimeoutError"); break;
     case QSerialPort::NotOpenError:         emit error("Error: NotOpenError"); break;
-    default:
-        emit error(QString("Unknown error %1").arg(serial_error));
-        break;
+    //default:
+    //    emit error(QString("Unknown error %1").arg(serial_error));
+    //    break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -360,7 +360,7 @@ QString WIFI_frame::get_client_string(void)
 }
 //--------------------------------------------------------------------------------
 bool WIFI_frame::send_at_command(QString cmd,
-                                 unsigned int wait_ms,
+                                 int wait_ms,
                                  bool no_response)
 {
     if(serial->isOpen() == false)
@@ -403,7 +403,7 @@ bool WIFI_frame::send_at_command(QString cmd,
 }
 //--------------------------------------------------------------------------------
 bool WIFI_frame::send_command(QString cmd,
-                              unsigned int wait_ms)
+                              int wait_ms)
 {
     if(serial->isOpen() == false)
     {
@@ -437,7 +437,7 @@ bool WIFI_frame::send_command(QString cmd,
 //--------------------------------------------------------------------------------
 void WIFI_frame::wait_msec(int timeout_msec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     if(timeout_msec < 1)
     {

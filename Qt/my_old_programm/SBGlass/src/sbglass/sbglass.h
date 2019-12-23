@@ -35,13 +35,13 @@ public:
 	void enableOpacity(qreal opacity = 0.5);
 	void disableOpacity();
 
-    void enableInfoBlock(QMovie* movie = nullptr, const QString& text = QString::null);
+    void enableInfoBlock(QMovie* movie = nullptr, const QString& text = QString());
 	void disableInfoBlock();
 
     void enableAnimationBlock(QMovie* movie = nullptr);
 	void disableAnimationBlock();
 
-	void enableInfoTextBlock(const QString& text = QString::null);
+    void enableInfoTextBlock(const QString& text = QString());
 	void disableInfoTextBlock();
 	QLabel& getInfoTextBlock();
 	void setMovie(QMovie* movie);
@@ -50,7 +50,7 @@ protected:
 	bool eventFilter(QObject* object, QEvent* event);
 
 private:
-	void showInfoTextBlock(const QString& text = QString::null);
+    void showInfoTextBlock(const QString& text = QString());
     void showAnimationBlock(QMovie* movie = nullptr);
 	void infoBlockPositioning();
 

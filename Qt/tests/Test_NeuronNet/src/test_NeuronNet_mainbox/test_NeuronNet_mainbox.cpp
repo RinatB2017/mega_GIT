@@ -37,8 +37,8 @@
 #endif
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-#   define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
-#   define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
+#   define htons(n) static_cast<uint16_t>(((static_cast<uint16_t>(n)) << 8) | ((static_cast<uint16_t>(n)) >> 8))
+#   define htonl(n) static_cast<uint32_t>(((static_cast<uint32_t>(n)) << 16) | ((static_cast<uint32_t>(n)) >> 16))
 #endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -113,14 +113,14 @@ void MainBox::init_widgets(void)
         for (int j=0; j<display->columnCount(); j++)
         {
             display->setItem(i,j, new QTableWidgetItem);
-            display->item(i,j)->setBackgroundColor(Qt::white);
+            display->item(i,j)->setBackground(Qt::white);
         }
     }
     //---
-    display->item(0,0)->setBackgroundColor(Qt::red);
-    display->item(0,MAX_COL-1)->setBackgroundColor(Qt::red);
-    display->item(MAX_ROW-1,0)->setBackgroundColor(Qt::red);
-    display->item(MAX_ROW-1,MAX_COL-1)->setBackgroundColor(Qt::red);
+    display->item(0,0)->setBackground(Qt::red);
+    display->item(0,MAX_COL-1)->setBackground(Qt::red);
+    display->item(MAX_ROW-1,0)->setBackground(Qt::red);
+    display->item(MAX_ROW-1,MAX_COL-1)->setBackground(Qt::red);
     //---
 
     display->adjustSize();
@@ -173,7 +173,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -250,7 +250,7 @@ bool MainBox::get_label(QString filename, int num_label, int *label)
 
     labels ls;
     memset(&ls, 0, sizeof(labels));
-    qint64 res = file.read((char *)&ls, sizeof(ls));
+    qint64 res = file.read(reinterpret_cast<char *>(&ls), sizeof(ls));
     if(res != sizeof(ls))
     {
         emit error("error read magic number");
@@ -260,7 +260,7 @@ bool MainBox::get_label(QString filename, int num_label, int *label)
     emit debug(QString("magic_number 0x%1").arg(htons(htonl(ls.magic_number)), 0, 16));
     emit debug(QString("numbers_of_items %1").arg(htons(htonl(ls.numbers_of_items))));
 
-    ok = file.seek(num_label + sizeof(ls));
+    ok = file.seek(num_label + static_cast<int>(sizeof(ls)));
     if(!ok)
     {
         emit error("error seek");
@@ -268,7 +268,7 @@ bool MainBox::get_label(QString filename, int num_label, int *label)
     }
 
     QByteArray ba = file.read(1);
-    emit debug(QString("data %1").arg((int)ba.at(0)));
+    emit debug(QString("data %1").arg(static_cast<int>(ba.at(0))));
 
     *label = ba.at(0);
     return true;
@@ -293,7 +293,7 @@ bool MainBox::get_label_param(QString filename, int *numbers_of_items)
 
     labels ls;
     memset(&ls, 0, sizeof(labels));
-    qint64 res = file.read((char *)&ls, sizeof(ls));
+    qint64 res = file.read(reinterpret_cast<char *>(&ls), sizeof(ls));
     if(res != sizeof(ls))
     {
         emit error("error read magic number");
@@ -311,7 +311,7 @@ bool MainBox::get_image(QString filename, int num_image, QImage *image)
         emit error("filename is empty!");
         return false;
     }
-    if(image == 0)
+    if(image == nullptr)
     {
         emit error("image mot created");
         return false;
@@ -328,7 +328,7 @@ bool MainBox::get_image(QString filename, int num_image, QImage *image)
 
     images is;
     memset(&is, 0, sizeof(is));
-    qint64 res = file.read((char *)&is, sizeof(is));
+    qint64 res = file.read(reinterpret_cast<char *>(&is), sizeof(is));
     if(res != sizeof(is))
     {
         emit error("error read magic number");
@@ -352,7 +352,7 @@ bool MainBox::get_image(QString filename, int num_image, QImage *image)
     emit debug(QString("numbers_of_rows %1").arg(row));
     emit debug(QString("numbers_of_columns %1").arg(col));
 
-    ok = file.seek(num_image * row * col + sizeof(is));
+    ok = file.seek(num_image * row * col + static_cast<int>(sizeof(is)));
     if(!ok)
     {
         emit error("error seek");
@@ -373,7 +373,7 @@ bool MainBox::get_image(QString filename, int num_image, QImage *image)
     {
         for(int x=0; x<col; x++)
         {
-            (*image).setPixel(x, y, ba.at(y*row + x));
+            (*image).setPixel(x, y, static_cast<uint>(ba.at(y*row + x)));
         }
     }
     file.close();
@@ -389,7 +389,7 @@ bool MainBox::get_image_data(QString filename,
         emit error("filename is empty!");
         return false;
     }
-    if(data == 0)
+    if(data == nullptr)
     {
         emit error("data array mot created");
         return false;
@@ -406,7 +406,7 @@ bool MainBox::get_image_data(QString filename,
 
     images is;
     memset(&is, 0, sizeof(is));
-    qint64 res = file.read((char *)&is, sizeof(is));
+    qint64 res = file.read(reinterpret_cast<char *>(&is), sizeof(is));
     if(res != sizeof(is))
     {
         emit error("error read magic number");
@@ -430,7 +430,7 @@ bool MainBox::get_image_data(QString filename,
     emit debug(QString("numbers_of_rows %1").arg(row));
     emit debug(QString("numbers_of_columns %1").arg(col));
 
-    ok = file.seek(num_image * row * col + sizeof(is));
+    ok = file.seek(num_image * row * col + static_cast<int>(sizeof(is)));
     if(!ok)
     {
         emit error("error seek");
@@ -473,7 +473,7 @@ bool MainBox::get_image_param(QString filename,
 
     images is;
     memset(&is, 0, sizeof(is));
-    qint64 res = file.read((char *)&is, sizeof(is));
+    qint64 res = file.read(reinterpret_cast<char *>(&is), sizeof(is));
     if(res != sizeof(is))
     {
         emit error("error read magic number");
@@ -491,13 +491,13 @@ void MainBox::click(int row, int col)
 {
     if(!display) return;
 
-    if (display->item(row, col)->backgroundColor() == Qt::black)
+    if (display->item(row, col)->background() == QBrush(Qt::black))
     {
-        display->item(row, col)->setBackgroundColor(Qt::white);
+        display->item(row, col)->setBackground(Qt::white);
     }
     else
     {
-        display->item(row, col)->setBackgroundColor(Qt::black);
+        display->item(row, col)->setBackground(Qt::black);
     }
 }
 //--------------------------------------------------------------------------------
@@ -532,8 +532,8 @@ void MainBox::show_image(void)
                 for(int x=0; x<display->columnCount(); x++)
                 {
                     char value = ba.at(y*row + x);
-                    //display->item(y, x)->setBackgroundColor(value);
-                    display->item(y, x)->setBackgroundColor(qRgb(value, value, value));
+                    //display->item(y, x)->setBackground(value);
+                    display->item(y, x)->setBackground(QBrush(qRgb(value, value, value)));
                 }
             }
         }
@@ -590,7 +590,7 @@ void MainBox::test_0(void)
     images is;
     qint64 res = 0;
     memset(&is, 0, sizeof(is));
-    res = file_image.read((char *)&is, sizeof(is));
+    res = file_image.read(reinterpret_cast<char *>(&is), static_cast<int>(sizeof(is)));
     if(res != sizeof(is))
     {
         emit error("error read magic number");
@@ -601,7 +601,7 @@ void MainBox::test_0(void)
 
     labels ls;
     memset(&ls, 0, sizeof(labels));
-    res = file_label.read((char *)&ls, sizeof(ls));
+    res = file_label.read(reinterpret_cast<char *>(&ls), static_cast<int>(sizeof(ls)));
     if(res != sizeof(ls))
     {
         emit error("error read magic number");
@@ -630,7 +630,7 @@ void MainBox::test_0(void)
         }
 
         data_NMIST data;
-        data.label = ba_label.at(0);
+        data.label = static_cast<uint8_t>(ba_label.at(0));
         data.image.clear();
         data.image.append(ba_image);
         test_data.append(data);

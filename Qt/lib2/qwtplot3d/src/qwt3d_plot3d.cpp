@@ -137,7 +137,7 @@ void Plot3D::paintGL()
             glFrustum(-1.0, 1.0, -1.0, 1.0, 10.0, 100.0);
     }
 
-    glTranslatef(xViewportShift() * 2 * radius , yViewportShift() * 2 * radius , -7 * radius);
+    glTranslatef(xViewportShift() * 2.0 * radius , yViewportShift() * 2.0 * radius , -7.0 * radius);
 
 	applyLights();
 

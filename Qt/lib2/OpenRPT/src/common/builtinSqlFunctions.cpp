@@ -254,5 +254,5 @@ QString getSqlFromTag(const QString & stTag, const QString & stDriver)
       return __SqlTable[i][__fieldSql];
     }
 
-  return QString::null;
+  return QString();
 }

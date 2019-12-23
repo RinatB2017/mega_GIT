@@ -27,6 +27,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#define CURVE_COLORS "curve_colors"
+//#define COLOR "color"
+#define COLOR_R "color_r"
+#define COLOR_G "color_g"
+#define COLOR_B "color_b"
+//--------------------------------------------------------------------------------
 #include <qwt_picker_machine.h>
 #include <qwt_plot_magnifier.h>
 #include <qwt_plot_renderer.h>

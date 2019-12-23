@@ -76,7 +76,7 @@ QString getNameFromTag(const QString & str)
     if (__builtinTable[i][__fieldTag] == str)
       return __builtinTable[i][__fieldName];
 
-  return QString::null;
+  return QString();
 }
 
 QString getFunctionFromTag(const QString & str)
@@ -85,7 +85,7 @@ QString getFunctionFromTag(const QString & str)
     if (__builtinTable[i][__fieldTag] == str)
       return __builtinTable[i][__fieldFunction];
 
-  return QString::null;
+  return QString();
 }
 
 QString getTagFromName(const QString & str)
@@ -94,6 +94,6 @@ QString getTagFromName(const QString & str)
     if (__builtinTable[i][__fieldName] == str)
       return __builtinTable[i][__fieldTag];
 
-  return QString::null;
+  return QString();
 }
 

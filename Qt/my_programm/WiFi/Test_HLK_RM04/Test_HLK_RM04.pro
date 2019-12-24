@@ -16,8 +16,10 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
-DEFINES += RS232_SEND
+#DEFINES += RS232_SEND
 
+DEFINES += SAVE_WIDGETS_LINEEDIT
+DEFINES += SAVE_WIDGETS_SPINBOX
 DEFINES += NO_LOG
 
 QT      += serialport
@@ -43,12 +45,19 @@ LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/serial5/serialbox5_lite/serialbox5_lite.pri)
-include ($$LIB_PATH2/serial5/sendbox5/sendbox5.pri)
+
+include ($$LIB_PATH2/serial5/serial5.pri)
+#include ($$LIB_PATH2/serial5/serialbox5_lite/serialbox5_lite.pri)
+#include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
+#include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
+
+#include ($$LIB_PATH2/serial5/sendbox5/sendbox5.pri)
 
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
-
 include ($$LIB_PATH2/wifi_frame/wifi_frame.pri)
+include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
+
+include (src/hlk_rm04_widget/hlk_rm04_widget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -24,6 +24,7 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_HLK_RM04_mainbox.hpp"
+#include "defines.hpp"
 
 #include "wifi_frame.hpp"
 //--------------------------------------------------------------------------------
@@ -43,6 +44,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -50,39 +52,123 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    frame_1 = new WIFI_frame("client", false, this);
+    //frame_1 = new WIFI_frame("client", false, this);
     //frame_2 = new WIFI_frame("server", true, this);
     //frame_3 = new WIFI_frame("client", false, this);
 
-    QHBoxLayout *main_layout = new QHBoxLayout();
-    main_layout->addWidget(frame_1);
+    //QHBoxLayout *main_layout = new QHBoxLayout();
+    //main_layout->addWidget(frame_1);
     //main_layout->addWidget(frame_2);
     //main_layout->addWidget(frame_3);
 
     createTestBar();
 
-    setLayout(main_layout);
+    //setLayout(main_layout);
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
+
+    commands.clear();
+    commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
+    commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
+    commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
+    commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
+    commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
+    commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
-
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_BrowserReload),
-                                       "update_ports",
-                                       "update_ports");
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
 
-    connect(btn_test, SIGNAL(clicked()), frame_1, SLOT(update_ports()));
-    //connect(btn_test, SIGNAL(clicked()), frame_2, SLOT(update_ports()));
-    //connect(btn_test, SIGNAL(clicked()), frame_3, SLOT(update_ports()));
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+}
+//--------------------------------------------------------------------------------
+void MainBox::choice_test(void)
+{
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef bool (MainBox::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_0(void)
+{
+    emit info("Test_0()");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
+    emit info("Test_1()");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_2(void)
+{
+    emit info("Test_2()");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_3(void)
+{
+    emit info("Test_3()");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_4(void)
+{
+    emit info("Test_4()");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_5(void)
+{
+    emit info("Test_5()");
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

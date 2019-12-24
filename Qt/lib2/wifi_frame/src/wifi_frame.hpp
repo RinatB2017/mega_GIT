@@ -48,6 +48,8 @@ class WIFI_frame : public MyWidget
     Q_OBJECT
 
 public:
+    explicit WIFI_frame(QWidget *parent);
+
     explicit WIFI_frame(const QString &caption,
                         bool is_server,
                         QWidget *parent);

@@ -274,7 +274,7 @@ void SerialBox5_fix_baudrate::setCloseState(void)
     ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
-    emit state(false);
+    emit port_is_active(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
 #endif
@@ -288,7 +288,7 @@ void SerialBox5_fix_baudrate::setOpenState()
     ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
-    emit state(true);
+    emit port_is_active(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);
 #endif
@@ -303,7 +303,7 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
         if (result)
         {
             serial5->close();
-            emit state(false);
+            emit port_is_active(false);
             result = false;
         }
         else
@@ -328,14 +328,14 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
                     emit error(QString("Не удалось установить baudrate %1").arg(fix_baudrate));
                 }
                 get_parameter();
-                emit state(true);
+                emit port_is_active(true);
             }
             else
             {
                 emit error(QString("ERROR: serial [%1] not open (%2)")
                            .arg(serial5->portName())
                            .arg(serial5->errorString()));
-                emit state(false);
+                emit port_is_active(false);
             }
         }
 
@@ -348,13 +348,13 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit state(false);
+        emit port_is_active(false);
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit state(false);
+        emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -390,13 +390,13 @@ int SerialBox5_fix_baudrate::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit state(false);
+        emit port_is_active(false);
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit state(false);
+        emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;

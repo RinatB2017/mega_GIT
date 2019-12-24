@@ -6,14 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>100</width>
-    <height>30</height>
+    <width>356</width>
+    <height>183</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="WIFI_frame" name="widget" native="true"/>
+   </item>
+   <item>
+    <widget class="HLK_RM04_widget" name="widget_2" native="true"/>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WIFI_frame</class>
+   <extends>QWidget</extends>
+   <header>wifi_frame.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HLK_RM04_widget</class>
+   <extends>QWidget</extends>
+   <header>hlk_rm04_widget.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

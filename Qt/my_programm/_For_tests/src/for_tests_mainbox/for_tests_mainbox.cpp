@@ -241,7 +241,19 @@ bool MainBox::test_0(void)
 
     //test_assert(0);
 
-#if 1
+#if 0
+    QByteArray ba;
+    ba.append(QByteArray::fromHex("4265656C696E655F32475FD0BAD0"));
+    emit info(ba.data());
+#endif
+
+#if 0
+    QString temp = "1 2      3";
+    QStringList sl_read_data = temp.split(QRegExp("[ ]+"), QString::SkipEmptyParts);
+    emit info(QString("cnt %1").arg(sl_read_data.count()));
+#endif
+
+#if 0
     emit info(QDir::home().path());
 #endif
 

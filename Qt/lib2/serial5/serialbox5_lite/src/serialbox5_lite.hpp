@@ -106,8 +106,6 @@ signals:
 
     void s_error(QSerialPort::SerialPortError);
 
-    void state(bool);
-
 public slots:
     int input(const QByteArray &sending_data);
     int input(const QString &data);

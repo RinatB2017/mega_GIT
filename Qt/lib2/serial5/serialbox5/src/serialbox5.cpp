@@ -127,6 +127,11 @@ void SerialBox5::createWidgets(void)
     ui->btn_refresh->setToolTip("Обновить список портов");
 
     ui->PortBox->setProperty(NO_SAVE, true);
+    ui->BaudBox->setProperty(NO_SAVE, true);
+    ui->FlowBox->setProperty(NO_SAVE, true);
+    ui->ParityBox->setProperty(NO_SAVE, true);
+    ui->DataBitsBox->setProperty(NO_SAVE, true);
+    ui->StopBitsBox->setProperty(NO_SAVE, true);
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
@@ -451,14 +456,14 @@ void SerialBox5::btnOpenPortClicked()
             if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
 
             get_parameter();
-            emit state(true);
+            emit port_is_active(true);
         }
         else
         {
             emit error(QString("ERROR: serial [%1] not open (%2)")
                        .arg(serial5->portName())
                        .arg(serial5->errorString()));
-            emit state(false);
+            emit port_is_active(false);
         }
     }
 
@@ -471,14 +476,14 @@ int SerialBox5::input(const QByteArray &sending_data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit state(false);
+        emit port_is_active(false);
         emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit state(false);
+        emit port_is_active(false);
         emit not_working();
         return E_PORT_NOT_OPEN;
     }
@@ -518,14 +523,14 @@ int SerialBox5::input(const QString &data)
     if(!serial5)
     {
         emit error("E_PORT_NOT_INIT");
-        emit state(false);
+        emit port_is_active(false);
         emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
-        emit state(false);
+        emit port_is_active(false);
         emit not_working();
         return E_PORT_NOT_OPEN;
     }

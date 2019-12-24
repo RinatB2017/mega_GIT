@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HLK_RM04_widget</class>
+ <widget class="QWidget" name="HLK_RM04_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>507</width>
+    <height>462</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="SerialBox5_fix_baudrate" name="serial_widget" native="true"/>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>mask</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="le_password"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>network</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="le_ssid"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>IP</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>remote IP</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>gate</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>password</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>remote port</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>encrypt type</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="IPV4_wo_port" name="ip_widget" native="true"/>
+     </item>
+     <item row="1" column="3">
+      <widget class="IPV4_wo_port" name="gate_widget" native="true"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="IPV4_wo_port" name="mask_widget" native="true"/>
+     </item>
+     <item row="2" column="3">
+      <widget class="IPV4_wo_port" name="remove_ip_widget" native="true"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSpinBox" name="sb_remote_post"/>
+     </item>
+     <item row="3" column="3">
+      <widget class="QComboBox" name="cb_encrypt_type"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_info">
+     <property name="text">
+      <string>info</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="grid">
+     <item row="1" column="2">
+      <widget class="QPushButton" name="btn_net_IP">
+       <property name="text">
+        <string>net IP</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="2">
+      <widget class="QPushButton" name="btn_escape">
+       <property name="text">
+        <string>escape</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="btn_netmode">
+       <property name="text">
+        <string>netmode</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QPushButton" name="btn_dhcpd_time">
+       <property name="text">
+        <string>dhcpd time</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QPushButton" name="btn_uartpacktimeout">
+       <property name="text">
+        <string>uartpacktimeout</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QPushButton" name="btn_net_DNS">
+       <property name="text">
+        <string>net DNS</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QPushButton" name="btn_mode">
+       <property name="text">
+        <string>mode</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="btn_dhcpd_ip">
+       <property name="text">
+        <string>dhcpd ip</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="btn_get_MAC">
+       <property name="text">
+        <string>get MAC</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="btn_net_commit">
+       <property name="text">
+        <string>net commit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QPushButton" name="btn_out_trans">
+       <property name="text">
+        <string>out trans</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="btn_channel">
+       <property name="text">
+        <string>channel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="btn_dhcpd">
+       <property name="text">
+        <string>dhcpd</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="QPushButton" name="btn_remote_IP">
+       <property name="text">
+        <string>remote IP</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="btn_wifi_conf">
+       <property name="text">
+        <string>wifi conf</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QPushButton" name="btn_remote_pro">
+       <property name="text">
+        <string>remote pro</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QPushButton" name="btn_uart">
+       <property name="text">
+        <string>uart</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QPushButton" name="btn_uartpacklen">
+       <property name="text">
+        <string>uartpacklen</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btn_scan">
+       <property name="text">
+        <string>scan</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="3">
+      <widget class="QPushButton" name="btn_remote_port">
+       <property name="text">
+        <string>remote port</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QPushButton" name="btn_dhcpd_dns">
+       <property name="text">
+        <string>dhcpd dns</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QPushButton" name="btn_timeout">
+       <property name="text">
+        <string>timeout</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="btn_test">
+       <property name="text">
+        <string>test</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="3">
+      <widget class="QPushButton" name="btn_tcp_auto">
+       <property name="text">
+        <string>tcp auto</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QPushButton" name="btn_ver">
+       <property name="text">
+        <string>ver</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="LogBox" name="log_widget" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SerialBox5_fix_baudrate</class>
+   <extends>QWidget</extends>
+   <header>serialbox5_fix_baudrate.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IPV4_wo_port</class>
+   <extends>QWidget</extends>
+   <header>ipv4_wo_port.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LogBox</class>
+   <extends>QWidget</extends>
+   <header>logbox.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>le_ssid</tabstop>
+  <tabstop>le_password</tabstop>
+  <tabstop>sb_remote_post</tabstop>
+  <tabstop>cb_encrypt_type</tabstop>
+  <tabstop>btn_info</tabstop>
+  <tabstop>btn_test</tabstop>
+  <tabstop>btn_scan</tabstop>
+  <tabstop>btn_netmode</tabstop>
+  <tabstop>btn_get_MAC</tabstop>
+  <tabstop>btn_uartpacklen</tabstop>
+  <tabstop>btn_uartpacktimeout</tabstop>
+  <tabstop>btn_escape</tabstop>
+  <tabstop>btn_tcp_auto</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

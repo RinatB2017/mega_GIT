@@ -75,7 +75,7 @@ signals:
 
     void output(const QByteArray &data);
 
-    void state(bool);
+    void port_is_active(bool);
 
     //---
 signals:

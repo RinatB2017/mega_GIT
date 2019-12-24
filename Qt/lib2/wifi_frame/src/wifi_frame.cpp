@@ -30,6 +30,12 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+WIFI_frame::WIFI_frame(QWidget *parent) :
+    MyWidget(parent)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
 WIFI_frame::WIFI_frame(const QString &caption,
                        bool is_server,
                        QWidget *parent) :

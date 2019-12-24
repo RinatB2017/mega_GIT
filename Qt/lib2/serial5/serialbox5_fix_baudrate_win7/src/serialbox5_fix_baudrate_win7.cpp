@@ -191,7 +191,7 @@ void SerialBox5_fix_baudrate_win7::setCloseState(void)
     ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
-    emit state(false);
+    emit port_is_active(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
 #endif
@@ -205,7 +205,7 @@ void SerialBox5_fix_baudrate_win7::setOpenState()
     ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
-    emit state(true);
+    emit port_is_active(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);
 #endif

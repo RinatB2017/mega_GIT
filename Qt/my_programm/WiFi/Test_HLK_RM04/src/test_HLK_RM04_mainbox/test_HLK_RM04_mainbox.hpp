@@ -56,8 +56,8 @@ private:
     void init(void);
 
     WIFI_frame *frame_1;
-    WIFI_frame *frame_2;
-    WIFI_frame *frame_3;
+    //WIFI_frame *frame_2;
+    //WIFI_frame *frame_3;
 
     void createTestBar(void);
 

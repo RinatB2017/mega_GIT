@@ -46,6 +46,7 @@ class SerialBox5_lite;
 class WIFI_frame : public MyWidget
 {
     Q_OBJECT
+
 public:
     explicit WIFI_frame(const QString &caption,
                         bool is_server,
@@ -54,6 +55,9 @@ public:
     bool send_at_command(QString cmd,
                          int wait_ms = 200,
                          bool no_response = false);
+
+public slots:
+    void update_ports(void);
 
 private slots:
     void create_server(void);
@@ -68,13 +72,7 @@ private slots:
 
     void readChannelFinished(void);
 
-    void lock_interface(void);
-    void unlock_interface(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void lock_interface(bool state);
 
 private:
     QString caption;
@@ -118,6 +116,11 @@ private:
     QString get_client_string(void);
 
     void show_hex_data(QByteArray &data);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     void changeEvent(QEvent *event);

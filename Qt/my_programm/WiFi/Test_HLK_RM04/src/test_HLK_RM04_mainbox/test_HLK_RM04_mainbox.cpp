@@ -51,13 +51,13 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     frame_1 = new WIFI_frame("client", false, this);
-    frame_2 = new WIFI_frame("server", true, this);
-    frame_3 = new WIFI_frame("client", false, this);
+    //frame_2 = new WIFI_frame("server", true, this);
+    //frame_3 = new WIFI_frame("client", false, this);
 
     QHBoxLayout *main_layout = new QHBoxLayout();
     main_layout->addWidget(frame_1);
-    main_layout->addWidget(frame_2);
-    main_layout->addWidget(frame_3);
+    //main_layout->addWidget(frame_2);
+    //main_layout->addWidget(frame_3);
 
     createTestBar();
 
@@ -81,8 +81,8 @@ void MainBox::createTestBar(void)
                                        "update_ports");
 
     connect(btn_test, SIGNAL(clicked()), frame_1, SLOT(update_ports()));
-    connect(btn_test, SIGNAL(clicked()), frame_2, SLOT(update_ports()));
-    connect(btn_test, SIGNAL(clicked()), frame_3, SLOT(update_ports()));
+    //connect(btn_test, SIGNAL(clicked()), frame_2, SLOT(update_ports()));
+    //connect(btn_test, SIGNAL(clicked()), frame_3, SLOT(update_ports()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

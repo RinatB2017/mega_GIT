@@ -45,10 +45,10 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 
 #ifndef RS232_LOG
-    //    if(parent)
-    connect_log(parent);
-    //    else
-    //        connect_log(topLevelWidget());
+    if(parent)
+        connect_log(parent);
+    else
+        connect_log(topLevelWidget());
 #endif
 #ifdef QT_DEBUG
     qDebug() << "MyWidget()";
@@ -105,7 +105,7 @@ void MyWidget::connect_log(QWidget *parent)
     connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
     connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
 #else
     if(parent)
     {

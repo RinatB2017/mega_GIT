@@ -45,8 +45,7 @@ void WIFI_frame::connect_serial(void)
     serial = new SerialBox5_lite;
     //serial->setFixedHeight(serial->sizeHint().height());
 
-    connect(serial, SIGNAL(is_open()),  this,   SLOT(unlock_interface()));
-    connect(serial, SIGNAL(is_close()), this,   SLOT(lock_interface()));
+    connect(serial, SIGNAL(port_is_active(bool)),   this,   SLOT(lock_interface(bool)));
 
     if(is_server)
         connect(serial, SIGNAL(readyRead()), this, SLOT(server_port_read()));
@@ -54,7 +53,7 @@ void WIFI_frame::connect_serial(void)
         connect(serial, SIGNAL(readyRead()), this, SLOT(client_port_read()));
 
     connect(serial, SIGNAL(readChannelFinished()), this, SLOT(readChannelFinished()));
-    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)),
+    connect(serial, SIGNAL(s_error(QSerialPort::SerialPortError)),
             this,   SLOT(port_error(QSerialPort::SerialPortError)));
 }
 //--------------------------------------------------------------------------------
@@ -122,9 +121,9 @@ void WIFI_frame::init(void)
 
     main_layout->addWidget(serial);
     if(is_server)
-            main_layout->addLayout(add_server_cmd_layout());
+        main_layout->addLayout(add_server_cmd_layout());
     else
-    main_layout->addLayout(add_client_cmd_layout());
+        main_layout->addLayout(add_client_cmd_layout());
 
     btn_read_settings = new QPushButton(tr("read settings"));
     connect(btn_read_settings, SIGNAL(clicked()), this, SLOT(read_settings()));
@@ -142,7 +141,7 @@ void WIFI_frame::init(void)
 
     setLayout(vbox);
 
-    lock_interface();
+    lock_interface(false);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::server_port_read(void)
@@ -197,9 +196,9 @@ void WIFI_frame::port_error(QSerialPort::SerialPortError serial_error)
     case QSerialPort::UnknownError:         emit error("Error: UnknownError"); break;
     case QSerialPort::TimeoutError:         emit error("Error: TimeoutError"); break;
     case QSerialPort::NotOpenError:         emit error("Error: NotOpenError"); break;
-    //default:
-    //    emit error(QString("Unknown error %1").arg(serial_error));
-    //    break;
+        //default:
+        //    emit error(QString("Unknown error %1").arg(serial_error));
+        //    break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -692,54 +691,29 @@ QVBoxLayout *WIFI_frame::add_client_cmd_layout(void)
     return vbox;
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::lock_interface(void)
+void WIFI_frame::lock_interface(bool state)
 {
     if(is_server)
     {
-        btn_server->setEnabled(false);
+        btn_server->setDisabled(state);
     }
     else
     {
-        btn_client->setEnabled(false);
-        btn_send_data->setEnabled(false);
+        btn_client->setDisabled(state);
+        btn_send_data->setDisabled(state);
     }
 
-    btn_read_settings->setEnabled(false);
+    btn_read_settings->setDisabled(state);
 
-    le_Gate->setEnabled(false);
-    le_IP->setEnabled(false);
-    le_Mask->setEnabled(false);
-    le_Network->setEnabled(false);
-    le_Password->setEnabled(false);
-    le_RemoteIP->setEnabled(false);
-    le_RemotePort->setEnabled(false);
+    le_Gate->setDisabled(state);
+    le_IP->setDisabled(state);
+    le_Mask->setDisabled(state);
+    le_Network->setDisabled(state);
+    le_Password->setDisabled(state);
+    le_RemoteIP->setDisabled(state);
+    le_RemotePort->setDisabled(state);
 
-    cb_EncryptType->setEnabled(false);
-}
-//--------------------------------------------------------------------------------
-void WIFI_frame::unlock_interface(void)
-{
-    if(is_server)
-    {
-        btn_server->setEnabled(true);
-    }
-    else
-    {
-        btn_client->setEnabled(true);
-        btn_send_data->setEnabled(true);
-    }
-
-    btn_read_settings->setEnabled(true);
-
-    le_Gate->setEnabled(true);
-    le_IP->setEnabled(true);
-    le_Mask->setEnabled(true);
-    le_Network->setEnabled(true);
-    le_Password->setEnabled(true);
-    le_RemoteIP->setEnabled(true);
-    le_RemotePort->setEnabled(true);
-
-    cb_EncryptType->setEnabled(true);
+    cb_EncryptType->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::show_hex_data(QByteArray &data)
@@ -748,6 +722,11 @@ void WIFI_frame::show_hex_data(QByteArray &data)
     hexedit->setMinimumSize(640, 200);
     hexedit->setData(QHexEditData::fromMemory(data));
     hexedit->show();
+}
+//--------------------------------------------------------------------------------
+void WIFI_frame::update_ports(void)
+{
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::updateText(void)

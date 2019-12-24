@@ -104,6 +104,8 @@ signals:
     void readyRead(void);
     void readChannelFinished(void);
 
+    void s_error(QSerialPort::SerialPortError);
+
     void state(bool);
 
 public slots:

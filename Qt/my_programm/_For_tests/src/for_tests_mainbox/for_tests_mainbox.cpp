@@ -234,12 +234,65 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
+#define	MEAS_FLAG_OVC           static_cast<uint16_t>(1<<0)
+#define	MEAS_FLAG_PRESSERROR	static_cast<uint16_t>(1<<1)
+#define	MEAS_FLAG_COUNTERROR	static_cast<uint16_t>(1<<2)
+#define	MEAS_FLAG_GSMERROR      static_cast<uint16_t>(1<<3)
+#define	MEAS_FLAG_DISPERROR     static_cast<uint16_t>(1<<4)
+#define	MEAS_FLAG_MEMERROR      static_cast<uint16_t>(1<<5)
+#define	MEAS_FLAG_PARAMERROR	static_cast<uint16_t>(1<<6)
+#define	MEAS_FLAG_CONNECTERROR	static_cast<uint16_t>(1<<7)
+#define	MEAS_FLAG_UPDATEERROR	static_cast<uint16_t>(1<<8)
+#define	MEAS_FLAG_ISMOREDATA	static_cast<uint16_t>(1<<15)
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
     //test_assert(0);
+
+#if 1
+    uint16_t temp = 32904;
+    if(temp & MEAS_FLAG_OVC)            emit error("MEAS_FLAG_OVC");
+    if(temp & MEAS_FLAG_PRESSERROR)     emit error("MEAS_FLAG_PRESSERROR");
+    if(temp & MEAS_FLAG_COUNTERROR)     emit error("MEAS_FLAG_COUNTERROR");
+    if(temp & MEAS_FLAG_GSMERROR)       emit error("MEAS_FLAG_GSMERROR");
+    if(temp & MEAS_FLAG_DISPERROR)      emit error("MEAS_FLAG_DISPERROR");
+    if(temp & MEAS_FLAG_MEMERROR)       emit error("MEAS_FLAG_MEMERROR");
+    if(temp & MEAS_FLAG_PARAMERROR)     emit error("MEAS_FLAG_PARAMERROR");
+    if(temp & MEAS_FLAG_CONNECTERROR)   emit error("MEAS_FLAG_CONNECTERROR");
+    if(temp & MEAS_FLAG_UPDATEERROR)    emit error("MEAS_FLAG_UPDATEERROR");
+    if(temp & MEAS_FLAG_ISMOREDATA)     emit error("MEAS_FLAG_ISMOREDATA");
+#endif
+
+#if 0
+    QFile file("/dev/shm/0/bp-server.log");
+    if (file.open(QIODevice::ReadOnly))
+    {
+        int cnt = 0;
+        int f_cnt = 0;
+        QString str="";
+        while(!file.atEnd())
+        {
+            str = file.readLine();
+            //if(str.contains("865532042938320"))
+            if(str.contains("errors:") && !str.contains("errors:0"))
+            {
+                emit info(str);
+                f_cnt++;
+            }
+            cnt++;
+        }
+        emit info(QString("cnt = %1").arg(cnt));
+        emit info(QString("f_cnt = %1").arg(f_cnt));
+        file.close();
+    }
+    else
+    {
+        emit error("File not open!");
+    }
+#endif
 
 #if 0
     QByteArray ba;

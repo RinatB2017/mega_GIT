@@ -253,7 +253,7 @@ bool MainBox::test_0(void)
     //test_assert(0);
 
 #if 1
-    uint16_t temp = 32904;
+    uint16_t temp = 136;
     if(temp & MEAS_FLAG_OVC)            emit error("MEAS_FLAG_OVC");
     if(temp & MEAS_FLAG_PRESSERROR)     emit error("MEAS_FLAG_PRESSERROR");
     if(temp & MEAS_FLAG_COUNTERROR)     emit error("MEAS_FLAG_COUNTERROR");

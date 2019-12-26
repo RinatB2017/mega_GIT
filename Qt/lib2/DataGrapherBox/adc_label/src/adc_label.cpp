@@ -41,8 +41,9 @@ void ADC_label::init(void)
     ui->setupUi(this);
 
     ui->lbl_name->setText(label);
-    ui->lcd_value->setFixedSize(220, 48);
-    ui->lcd_value->setDigitCount(6);
+    ui->lcd_value->setFixedSize(300, 48);
+    //ui->lcd_value->setFixedSize(300, 36);
+    ui->lcd_value->setDigitCount(14);
 }
 //--------------------------------------------------------------------------------
 void ADC_label::display(double num)

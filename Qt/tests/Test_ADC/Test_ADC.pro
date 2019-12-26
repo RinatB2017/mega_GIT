@@ -56,7 +56,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
 
-include (src/adc_label/adc_label.pri)
+include ($$LIB_PATH2/DataGrapherBox/DataGrapherBox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

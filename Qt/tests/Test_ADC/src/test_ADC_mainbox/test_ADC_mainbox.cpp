@@ -63,34 +63,11 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-#ifndef NO_GRAPHER
-    ui->grapher_widget->setObjectName("GrapherBox");
-
-    ui->grapher_widget->set_title("Sensors");
-    ui->grapher_widget->set_title_axis_X("time");
-    ui->grapher_widget->set_title_axis_Y("value");
-    ui->grapher_widget->set_axis_scale_x(0, 200);
-    ui->grapher_widget->set_axis_scale_y(0, 5);
-
-    //ui->grapher_widget->set_visible_btn_Options(false);
-    ui->grapher_widget->set_visible_btn_Load(false);
-    ui->grapher_widget->set_visible_btn_Save(false);
-    ui->grapher_widget->set_visible_btn_Statistic(false);
-
-    ui->grapher_widget->push_btn_Horizontal(true);
-    ui->grapher_widget->push_btn_Vertical(true);
-#else
-    ui->grapher_widget->setVisible(false);
-#endif
-
-    ui->lcd_layout->setMargin(0);
-    ui->lcd_layout->setSpacing(0);
-
     clr_curves();
     for(int n=0; n<6; n++)
     {
         QString curve_name = QString("A%1").arg(n);
-        add_curve(curve_name);
+        ui->data_widget->add_curve(curve_name);
     }
 
     ui->serial_widget->set_fix_baudrate(57600);
@@ -98,6 +75,11 @@ void MainBox::init(void)
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_ADC(QByteArray)));
     //---
     layout()->setMargin(0);
+}
+//--------------------------------------------------------------------------------
+void MainBox::clr_curves(void)
+{
+    ui->data_widget->clr_curves();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -135,35 +117,6 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
-}
-//--------------------------------------------------------------------------------
-QString MainBox::convert(qreal value)
-{
-    return QString("%1").arg(value, 0, 'f', 2);
-}
-//--------------------------------------------------------------------------------
-qreal MainBox::convert_adc(QVariant value)
-{
-    // 5V
-    // 10 bit
-
-    // 1024 - 5V
-    // x    - y
-
-    qreal res = -1;
-
-    bool ok = false;
-
-    int i_value = value.toInt(&ok);
-    if(ok) res = i_value;
-
-    double d_value = value.toDouble(&ok);
-    if(ok) res = d_value;
-
-    float f_value = value.toFloat(&ok);
-    if(ok) res = static_cast<qreal>(f_value);
-
-    return res;
 }
 //--------------------------------------------------------------------------------
 void MainBox::data_ADC(const QByteArray &ba)
@@ -234,10 +187,7 @@ void MainBox::analize_packet(QStringList sl)
 void MainBox::add_curves(QStringList sl)
 {
     // emit trace(Q_FUNC_INFO);
-    foreach(QString curve_name, sl)
-    {
-        add_curve(curve_name);
-    }
+    ui->data_widget->add_curves(sl);
 }
 //--------------------------------------------------------------------------------
 QVariant MainBox::convert_string(QString str_value)
@@ -270,7 +220,7 @@ QVariant MainBox::convert_string(QString str_value)
 void MainBox::show_data_ADC(QStringList sl)
 {
     int max_index = sl.count();
-    if(curves.length() != max_index)
+    if(ui->data_widget->get_max_index() != max_index)
     {
         emit error("curves.length() != max_index");
         return;
@@ -278,10 +228,7 @@ void MainBox::show_data_ADC(QStringList sl)
     for(int index=0; index<max_index; index++)
     {
         QVariant value = convert_string(sl.at(index));
-#ifndef NO_GRAPHER
-        ui->grapher_widget->add_curve_data(curves.at(index).curve_index,    convert_adc(value));
-#endif
-        curves.at(index).obj->display(convert(convert_adc(value)));
+        ui->data_widget->add_data(index, value.toDouble());
     }
 }
 //--------------------------------------------------------------------------------
@@ -314,50 +261,14 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::add_curve(QString curve_name)
-{
-    // emit trace(Q_FUNC_INFO);
-
-    ADC_label *adc_label = new ADC_label(curve_name, this);
-    CURVES cur;
-
-    cur.name = curve_name;
-    cur.obj = adc_label;
-#ifndef NO_GRAPHER
-    cur.curve_index = ui->grapher_widget->add_curve(curve_name);
-#else
-    cur.curve_index = 0;
-#endif
-
-    curves.append(cur);
-    ui->lcd_layout->addWidget(adc_label);
-}
-//--------------------------------------------------------------------------------
-void MainBox::clr_curves(void)
-{
-    // emit trace(Q_FUNC_INFO);
-    ui->grapher_widget->remove_all_curve();
-    for(int n=0; n<curves.count(); n++)
-    {
-        curves[n].obj->deleteLater();
-    }
-    curves.clear();
-}
-//--------------------------------------------------------------------------------
 void MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
-
-    ui->grapher_widget->test();
-    //clr_curves();
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
-
-    ui->grapher_widget->test2();
-    //add_curve("ADC1");
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)

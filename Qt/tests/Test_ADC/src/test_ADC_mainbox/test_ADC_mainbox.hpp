@@ -23,15 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
-#include "adc_label.hpp"
+#include "datagrapherbox.hpp"
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-struct CURVES
-{
-    QString name;
-    ADC_label *obj;
-    int curve_index;
-};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -89,10 +82,6 @@ private:
     QString data_str;
     bool flag_good_data = false;
 
-    QList<CURVES> curves;
-
-    QString convert(qreal value);
-    qreal convert_adc(QVariant value);
     QVariant convert_string(QString str_value);
 
     void analize_packet(QStringList sl);
@@ -103,7 +92,6 @@ private:
     void add_curves(QStringList sl);
     void show_data_ADC(QStringList sl);
 
-    void add_curve(QString curve_name);
     void clr_curves(void);
 
     void updateText(void);

@@ -35,6 +35,7 @@ class QToolButton;
 class QToolBar;
 class PlotPicker;
 class QSplitter;
+class DataGrapherBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -81,6 +82,8 @@ private:
 
     QString data_str;
     bool flag_good_data = false;
+
+    DataGrapherBox *data_widget = nullptr;
 
     QVariant convert_string(QString str_value);
 

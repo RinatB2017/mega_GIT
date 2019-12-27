@@ -32,7 +32,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class HLK_RM04_widget;
+    class HLK_RM04_widget;
 }
 //--------------------------------------------------------------------------------
 class HLK_RM04_widget : public MyWidget
@@ -89,6 +89,7 @@ private:
 
     void send_command(QString cmd);
     void send_cmd(QString cmd, QString name, int default_cnt = 2);
+
     void serial_to_ethernet_dynamic_ip(void);
     void serial_to_ethernet_static_ip(void);
     void serial_to_wifi_client(void);

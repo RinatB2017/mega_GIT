@@ -407,8 +407,15 @@ void MainWindow::createMenus(void)
 #endif
     app_menu_add_style(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
+
+    //FIXME под виндой это нормально не работает, почему то
+#ifndef Q_OS_WIN
     app_menu_add_show_on_top(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
+#else
+    flag_always_on_top = false;
+#endif
+
     app_menu_add_confirm_exit(m_app_optionsmenu);
 
     app_menu_add_about(m_app_helpmenu);

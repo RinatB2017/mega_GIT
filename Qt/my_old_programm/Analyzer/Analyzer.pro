@@ -48,10 +48,8 @@ LIBS    += /opt/lib64/libftd2xx.so
 LIB_PATH  = "../../lib"
 LIB_PATH2 = "../../lib2"
 
-include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/csvreader/csvreader.pri)
-include ($$LIB_PATH2/qwt/qwt.pri)
+include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH/time/time.pri)
 
 win32 {

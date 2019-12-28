@@ -13,11 +13,11 @@ class AboutBox : public QDialog
     Q_OBJECT
 
 public:
-    AboutBox(const QString &orgName,
-             const QString &programmName,
-             const QString &version,
-             const QString &author,
-             QWidget *parent = nullptr);
+    explicit AboutBox(const QString &orgName,
+                      const QString &programmName,
+                      const QString &version,
+                      const QString &author,
+                      QWidget *parent = nullptr);
     ~AboutBox();
 
 private slots:

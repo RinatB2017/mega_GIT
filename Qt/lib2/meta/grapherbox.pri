@@ -12,4 +12,4 @@
     include (../qwt/qwt.pri)
 }
 
-include ($$LIB_PATH/mywidgets/myfiledialog.pri)
+include (../../lib/mywidgets/myfiledialog.pri)

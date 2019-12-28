@@ -162,4 +162,4 @@ private slots:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // SERIALBOX_HPP
+#endif // SERIALBOX5_FIX_BAUDRATE_WIN7_HPP

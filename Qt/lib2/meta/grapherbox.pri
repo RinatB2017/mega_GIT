@@ -11,3 +11,5 @@
 !contains(CONFIG, qwt) {
     include (../qwt/qwt.pri)
 }
+
+include ($$LIB_PATH/mywidgets/myfiledialog.pri)

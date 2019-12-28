@@ -147,7 +147,7 @@ void MainBox::init(void)
     grapher_widget->legends_all_on();
     //---
     //test_data();
-    test_data2();
+    //test_data2();
 
     grapher_widget->push_btn_Horizontal(true);
     grapher_widget->push_btn_Vertical(true);

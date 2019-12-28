@@ -37,6 +37,7 @@
 //--------------------------------------------------------------------------------
 #include "ui_grapherbox.h"
 
+#include "myfiledialog.hpp"
 #include "mainwindow.hpp"
 #include "grapherbox_options.hpp"
 #include "grapherbox.hpp"
@@ -1160,9 +1161,9 @@ void GrapherBox::options(void)
 //--------------------------------------------------------------------------------
 void GrapherBox::load_curves(void)
 {
-    QFileDialog *dlg;
+    MyFileDialog *dlg;
 
-    dlg = new QFileDialog;
+    dlg = new MyFileDialog("dlg_grapherbox", "dlg_grapherbox");
     dlg->setNameFilter(tr("CSV files (*.csv)"));
     dlg->setDefaultSuffix(tr("csv"));
 #ifdef Q_OS_LINUX
@@ -1174,47 +1175,9 @@ void GrapherBox::load_curves(void)
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
-        QFile file(files.at(0));
-        CsvReader *csv = new CsvReader(nullptr ,files.at(0));
-        csv->set_new_separator(';');
-        if(csv->Open())
-        {
-            for(int n=0; n<curves.count(); n++)
-            {
-                curves[n].real_data.clear();
-                curves[n].view_curve->clear();
-            }
-            QList<QStringList> str = csv->CSVRead();
-            foreach (QStringList sl, str)
-            {
-                if(sl.count() == 3)
-                {
-#ifdef USE_SCALE_POINT_DATETIME
-                    //nothing
-#elif defined(USE_SCALE_POINT_TIME)
-                    //nothing
-#else
-                    bool ok = false;
-                    int i = sl.at(0).toInt(&ok);
-                    if(!ok) i=0;
-                    qreal x = sl.at(1).toDouble(&ok);
-                    if(!ok) x=curves.at(i).pos_x;
-                    qreal y = sl.at(2).toDouble(&ok);
-                    if(!ok) y=0;
-                    //qDebug() << QString("%1 %2 %3").arg(i).arg(x).arg(y);
-                    curves[i].real_data.append(QPointF(x, y));
-                    curves[i].view_curve->append(QPointF(x, y));
-#endif
-                }
-                else
-                {
-                    emit error("error data");
-                    break;
-                }
+        QString filename = files.at(0);
+        f_load_curves(filename);
 
-            }
-        }
-        file.close();
         updateGraphics();
     }
 }
@@ -1247,9 +1210,9 @@ void GrapherBox::save_curves(void)
     }
 
     //записываем файл
-    QFileDialog *dlg;
+    MyFileDialog *dlg;
 
-    dlg = new QFileDialog;
+    dlg = new MyFileDialog("dlg_grapherbox", "dlg_grapherbox");
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setNameFilter(tr("CSV files (*.csv)"));
     dlg->setDefaultSuffix(tr("csv"));
@@ -1264,31 +1227,95 @@ void GrapherBox::save_curves(void)
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
-        QFile file(files.at(0));
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            emit error(QString(tr("file %1 not writed!"))
-                       .arg(files.at(0)));
-            return;
-        }
-
-        for(int n=0; n<curves.count(); n++)
-        {
-            for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
-            {
-                QString temp = QString("%1;%2;%3\n")
-                        .arg(n)
-                        .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).x())
-                        .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).y());
-                file.write(temp.toLocal8Bit());
-            }
-        }
-        file.close();
-        emit info(QString(tr("файл %1 записан успешно"))
-                  .arg(files.at(0)));
-        Q_CHECK_PTR(dlg);
+        QString filename = files.at(0);
+        f_save_curves(filename);
         dlg->deleteLater();
     }
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::f_load_curves(QString filename)
+{
+    if(filename.isEmpty())
+    {
+        emit error("Filename is empty!");
+        return;
+    }
+    QFile file(filename);
+    CsvReader *csv = new CsvReader(nullptr ,filename);
+    csv->set_new_separator(';');
+    if(csv->Open())
+    {
+        for(int n=0; n<curves.count(); n++)
+        {
+            curves[n].real_data.clear();
+            curves[n].view_curve->clear();
+        }
+        QList<QStringList> str = csv->CSVRead();
+        foreach (QStringList sl, str)
+        {
+            if(sl.count() == 3)
+            {
+#ifdef USE_SCALE_POINT_DATETIME
+                //nothing
+#elif defined(USE_SCALE_POINT_TIME)
+                //nothing
+#else
+                bool ok = false;
+                int i = sl.at(0).toInt(&ok);
+                if(!ok) i=0;
+                qreal x = sl.at(1).toDouble(&ok);
+                if(!ok) x=curves.at(i).pos_x;
+                qreal y = sl.at(2).toDouble(&ok);
+                if(!ok) y=0;
+                //qDebug() << QString("%1 %2 %3").arg(i).arg(x).arg(y);
+                if((i>=0) && (i<curves.count()))
+                {
+                    curves[i].real_data.append(QPointF(x, y));
+                    curves[i].view_curve->append(QPointF(x, y));
+                }
+#endif
+            }
+            else
+            {
+                emit error("error data");
+                break;
+            }
+
+        }
+    }
+    file.close();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::f_save_curves(QString filename)
+{
+    if(filename.isEmpty())
+    {
+        emit error("Filename is empty!");
+        return;
+    }
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        emit error(QString(tr("file %1 not writed!"))
+                   .arg(filename));
+        return;
+    }
+
+    for(int n=0; n<curves.count(); n++)
+    {
+        for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
+        {
+            QString temp = QString("%1;%2;%3\n")
+                    .arg(n)
+                    .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).x())
+                    .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).y());
+            file.write(temp.toLocal8Bit());
+        }
+    }
+    file.close();
+    emit info(QString(tr("файл %1 записан успешно"))
+              .arg(filename));
+
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_vertical_alignment(bool state)
@@ -1355,10 +1382,10 @@ void GrapherBox::set_horizontal_alignment(bool state)
 void GrapherBox::set_autoscroll(bool state)
 {
     flag_autoscroll = state;
-//    axis_X_min += 1.0;
-//    axis_X_max += 1.0;
-//    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
-//    updateGraphics();
+    //    axis_X_min += 1.0;
+    //    axis_X_max += 1.0;
+    //    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
+    //    updateGraphics();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::autoscroll(void)

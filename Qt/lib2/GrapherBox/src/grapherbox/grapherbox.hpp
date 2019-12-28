@@ -281,6 +281,9 @@ private:
 
     void test_get_info(void);
 
+    void f_load_curves(QString filename);
+    void f_save_curves(QString filename);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

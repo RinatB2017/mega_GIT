@@ -24,8 +24,8 @@
 #include <QThread>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "serialbox5_fix_baudrate.hpp"
-#include "ui_serialbox5_fix_baudrate.h"
+#include "serialbox5_fix_baudrate_win7.hpp"
+#include "ui_serialbox5_fix_baudrate_win7.h"
 //--------------------------------------------------------------------------------
 #ifdef RS232_SEND
 #   include "sendbox5.hpp"

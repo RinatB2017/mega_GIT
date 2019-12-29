@@ -165,7 +165,7 @@ QVariant DataGrapherBox::convert_string(QString str_value)
         return value;
     }
 
-    emit error("unknown format");
+    emit error(QString("DataGrapherBox: unknown format [%1]").arg(str_value));
     return value;
 }
 //--------------------------------------------------------------------------------

@@ -879,8 +879,14 @@ bool GrapherBox::add_curve_data(int channel,
 
     data_channels[channel].append(QPointF(curves[channel].pos_x, data));    //TODO добавление данных
 
-    set_horizontal_alignment(ui->btn_Horizontal->isChecked());
-    set_vertical_alignment(ui->btn_Vertical->isChecked());
+    if(flag_horizontal_alignment)
+    {
+        f_horizontal_alignment();
+    }
+    if(flag_vertical_alignment)
+    {
+        f_vertical_alignment();
+    }
 
     if(flag_autoscroll)
     {
@@ -1321,62 +1327,19 @@ void GrapherBox::f_save_curves(QString filename)
 void GrapherBox::set_vertical_alignment(bool state)
 {
     flag_vertical_alignment = state;
-    if(!state) return;
-
-    if(curves.isEmpty())
+    if(flag_vertical_alignment)
     {
-        //emit error(tr("Нет данных!"));
-        return;
+        f_vertical_alignment();
     }
-
-    qreal max_y = INT_MIN;
-    qreal min_y = INT_MAX;
-
-    for(int n=0; n<curves.count(); n++)
-    {
-        for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
-        {
-            if(curves.at(n).plot_curve->isVisible())
-            {
-                qreal temp_y = curves.at(n).view_curve->sample(static_cast<size_t>(x)).y();
-                if(temp_y > max_y) max_y = temp_y;
-                if(temp_y < min_y) min_y = temp_y;
-            }
-        }
-    }
-    axis_Y_min = min_y;
-    axis_Y_max = max_y;
-    ui->qwtPlot->setAxisScale(QwtPlot::yLeft, min_y, max_y);
-    updateGraphics();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_horizontal_alignment(bool state)
 {
     flag_horizontal_alignment = state;
-    if(!state) return;
-
-    if(curves.isEmpty())
+    if(flag_horizontal_alignment)
     {
-        //emit error(tr("Нет данных!"));
-        return;
+        f_horizontal_alignment();
     }
-
-    qreal max_x = INT_MIN;
-    qreal min_x = INT_MAX;
-
-    for(int n=0; n<curves.count(); n++)
-    {
-        for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
-        {
-            qreal temp_x = curves.at(n).view_curve->sample(static_cast<size_t>(x)).x();
-            if(temp_x > max_x) max_x = temp_x;
-            if(temp_x < min_x) min_x = temp_x;
-        }
-    }
-    axis_X_min = min_x;
-    axis_X_max = max_x;
-    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, min_x, max_x);
-    updateGraphics();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_autoscroll(bool state)
@@ -1706,6 +1669,66 @@ void GrapherBox::test_single_sinus(void)
     }
     push_btn_Horizontal(true);
     push_btn_Vertical(true);
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::f_vertical_alignment(void)
+{
+    if(curves.isEmpty())
+    {
+        //emit error(tr("Нет данных!"));
+        return;
+    }
+
+    qreal max_y = INT_MIN;
+    qreal min_y = INT_MAX;
+
+    for(int n=0; n<curves.count(); n++)
+    {
+        for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
+        {
+            if(curves.at(n).plot_curve->isVisible())
+            {
+                qreal temp_y = curves.at(n).view_curve->sample(static_cast<size_t>(x)).y();
+                if(temp_y > max_y) max_y = temp_y;
+                if(temp_y < min_y) min_y = temp_y;
+            }
+        }
+    }
+    axis_Y_min = min_y;
+    axis_Y_max = max_y;
+    ui->qwtPlot->setAxisScale(QwtPlot::yLeft, min_y, max_y);
+    updateGraphics();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::f_horizontal_alignment(void)
+{
+    if(curves.isEmpty())
+    {
+        //emit error(tr("Нет данных!"));
+        return;
+    }
+
+    qreal max_x = INT_MIN;
+    qreal min_x = INT_MAX;
+
+    for(int n=0; n<curves.count(); n++)
+    {
+        for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
+        {
+            qreal temp_x = curves.at(n).view_curve->sample(static_cast<size_t>(x)).x();
+            if(temp_x > max_x) max_x = temp_x;
+            if(temp_x < min_x) min_x = temp_x;
+        }
+    }
+    axis_X_min = min_x;
+    axis_X_max = max_x;
+    ui->qwtPlot->setAxisScale(QwtPlot::xBottom, min_x, max_x);
+    updateGraphics();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::f_autoscroll(void)
+{
+
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_silense(bool state)

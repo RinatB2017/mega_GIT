@@ -281,6 +281,10 @@ private:
 
     void test_get_info(void);
 
+    void f_vertical_alignment(void);
+    void f_horizontal_alignment(void);
+    void f_autoscroll(void);
+
     void f_load_curves(QString filename);
     void f_save_curves(QString filename);
 

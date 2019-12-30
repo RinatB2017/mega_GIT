@@ -95,10 +95,10 @@ bool MyWidget::check_exists_signals(QWidget *parent)
 void MyWidget::connect_log(QWidget *parent)
 {
 #ifdef NO_LOG
-    connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-    connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
+//    connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
+//    connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
+//    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
+//    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 
     connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
     connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));

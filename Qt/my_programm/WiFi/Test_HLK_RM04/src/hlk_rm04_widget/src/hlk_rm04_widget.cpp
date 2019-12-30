@@ -79,6 +79,8 @@ void HLK_RM04_widget::init(void)
     ui->cb_encrypt_type->addItem("wpa/wpa2 tkip");
     ui->cb_encrypt_type->addItem("wpa/wpa2 aes");
 
+    ui->sb_remote_post->setRange(0, 0xFFFF);
+
     init_serial();
     lock_iface(true);
 }
@@ -164,6 +166,17 @@ void HLK_RM04_widget::s_test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    emit info(QString("SSID: %1").arg(get_ssid()));
+    emit info(QString("Password: %1").arg(get_password()));
+    emit info(QString("IP: %1").arg(get_ip().host()));
+    emit info(QString("Remote IP: %1").arg(get_remote_id().host()));
+    emit info(QString("Mask: %1").arg(get_mask().host()));
+    emit info(QString("Gate: %1").arg(get_gate().host()));
+    emit info(QString("Port: %1").arg(get_remote_port()));
+    emit info(QString("Encrypt type: %1").arg(get_encrypt_type()));
+
+#else
     if(ui->serial_widget->isOpen() == false)
     {
         emit error("Port not open!");
@@ -188,6 +201,7 @@ void HLK_RM04_widget::s_test(void)
     }
 
     emit info(QString("%1").arg(sl_read_data.at(0)));
+#endif
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_info(void)
@@ -345,6 +359,86 @@ void HLK_RM04_widget::send_cmd(QString cmd, QString name, int default_cnt)
     emit info(QString("%1: [%2]")
               .arg(name)
               .arg(sl_read_data.at(default_cnt - 1)));
+}
+//--------------------------------------------------------------------------------
+QString HLK_RM04_widget::get_ssid(void)
+{
+    return ui->le_ssid->text();
+}
+//--------------------------------------------------------------------------------
+QString HLK_RM04_widget::get_password(void)
+{
+    return ui->le_password->text();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_ip(void)
+{
+    return ui->ip_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_remote_id(void)
+{
+    return ui->remove_ip_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_mask(void)
+{
+    return ui->mask_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_gate(void)
+{
+    return ui->gate_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+int HLK_RM04_widget::get_remote_port(void)
+{
+    return ui->sb_remote_post->value();
+}
+//--------------------------------------------------------------------------------
+QString HLK_RM04_widget::get_encrypt_type(void)
+{
+    return ui->cb_encrypt_type->currentText();
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_ssid(QString ssid)
+{
+    ui->le_ssid->setText(ssid);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_password(QString password)
+{
+    ui->le_password->setText(password);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_ip(QUrl ip)
+{
+    ui->ip_widget->set_url(ip);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_remote_id(QUrl remote_id)
+{
+    ui->remove_ip_widget->set_url(remote_id);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_mask(QUrl mask)
+{
+    ui->mask_widget->set_url(mask);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_gate(QUrl gate)
+{
+    ui->mask_widget->set_url(gate);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_remote_port(int port)
+{
+    ui->sb_remote_post->setValue(port);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::set_encrypt_type(QString encrypt_type)
+{
+    ui->cb_encrypt_type->setCurrentText(encrypt_type);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::serial_to_ethernet_dynamic_ip(void)

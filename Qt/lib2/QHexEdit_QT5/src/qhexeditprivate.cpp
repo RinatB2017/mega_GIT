@@ -230,7 +230,7 @@ void QHexEditPrivate::adjust()
 {
     QFontMetrics fm = this->fontMetrics();
 
-    this->_charwidth = fm.width(" ");
+    this->_charwidth = fm.boundingRect(" ").width();
     this->_charheight = fm.height();
 
     this->_xposhex =  this->_charwidth * (this->_addressWidth + 1);
@@ -559,12 +559,12 @@ void QHexEditPrivate::processHexPart(int key)
     if(this->isTextSelected())
         this->removeSelectedText();
 
-    uchar val = static_cast<uchar>(QString(key).toUInt(NULL, 16));
+    uchar val = static_cast<uchar>(QString(key).toUInt(nullptr, 16));
 
     if((this->_insmode == QHexEditPrivate::Insert) && !this->_charidx) /* Insert a new byte */
     {
         /* Insert Mode: Add one byte in current position */
-        uchar hexval = val << 4; /* X0 Byte */
+        uchar hexval = static_cast<uchar>(val << 4); /* X0 Byte */
         this->_writer->insert(this->selectionStart(), hexval);
     }
     else if((this->_hexeditdata->length() > 0) && (this->selectionStart() < this->_hexeditdata->length()))
@@ -904,14 +904,14 @@ void QHexEditPrivate::drawAddress(QPainter &painter, QFontMetrics &fm, qint64 li
         else
             painter.setPen(this->_addressforecolor);
 
-        painter.drawText(0, y, fm.width(addr), this->_charheight, Qt::AlignLeft | Qt::AlignTop, addr);
+        painter.drawText(0, y, fm.boundingRect(addr).width(), this->_charheight, Qt::AlignLeft | Qt::AlignTop, addr);
     }
 }
 
 void QHexEditPrivate::drawHex(QPainter &painter, QFontMetrics &fm, const QColor& bc, const QColor &fc, uchar b, qint64 i, int &x, int y)
 {
     QString s = QString("%1").arg(b, 2, 16, QLatin1Char('0')).toUpper();
-    int w = fm.width(s);
+    int w = fm.boundingRect(s).width();
     QRect r(x, y, w, this->_charheight);
 
     if(i < (QHexEditPrivate::BYTES_PER_LINE - 1))
@@ -931,12 +931,12 @@ void QHexEditPrivate::drawAscii(QPainter &painter, QFontMetrics &fm, const QColo
 
     if(QChar(b).isPrint())
     {
-        w = fm.width(b);
+        w = fm.boundingRect(b).width();
         s = QString(b);
     }
     else
     {
-        w = fm.width(QHexEditPrivate::UNPRINTABLE_CHAR);
+        w = fm.boundingRect(QHexEditPrivate::UNPRINTABLE_CHAR).width();
         s = QHexEditPrivate::UNPRINTABLE_CHAR;
     }
 

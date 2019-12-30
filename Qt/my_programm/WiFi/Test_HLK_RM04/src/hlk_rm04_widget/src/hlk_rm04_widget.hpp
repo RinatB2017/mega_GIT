@@ -96,6 +96,24 @@ private:
     void serial_to_wifi_client_static(void);
     void serial_to_wifi_ap(void);
 
+    QString get_ssid(void);
+    QString get_password(void);
+    QUrl get_ip(void);
+    QUrl get_remote_id(void);
+    QUrl get_mask(void);
+    QUrl get_gate(void);
+    int get_remote_port(void);
+    QString get_encrypt_type(void);
+
+    void set_ssid(QString ssid);
+    void set_password(QString password);
+    void set_ip(QUrl ip);
+    void set_remote_id(QUrl remote_id);
+    void set_mask(QUrl mask);
+    void set_gate(QUrl gate);
+    void set_remote_port(int port);
+    void set_encrypt_type(QString encrypt_type);
+
     void wait_msec(int timeout_msec);
 
     void updateText(void);

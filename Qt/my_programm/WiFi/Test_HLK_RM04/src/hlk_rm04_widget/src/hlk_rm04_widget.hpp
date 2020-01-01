@@ -52,6 +52,90 @@ private slots:
     void read_data(QByteArray ba);
     void lock_iface(bool state);
 
+private slots:
+    void choice_command(void);
+    void choice_serial_to(void);
+
+private:
+    enum {
+        ID_test = 0,
+        ID_info,
+        ID_scan,
+        ID_get_MAC,
+        ID_netmode,
+        ID_wifi_conf,
+        ID_channel,
+        ID_net_IP,
+        ID_net_DNS,
+        ID_dhcpd,
+        ID_dhcpd_ip,
+        ID_dhcpd_dns,
+        ID_dhcpd_time,
+        ID_net_commit,
+        ID_out_trans,
+        ID_remote_IP,
+        ID_remote_port,
+        ID_remote_pro,
+        ID_timeout,
+        ID_mode,
+        ID_uart,
+        ID_uartpacklen,
+        ID_uartpacktimeout,
+        ID_escape,
+        ID_tcp_auto,
+        ID_ver
+    };
+    enum {
+        ID_serial_to_ethernet_dynamic_ip = 0,
+        ID_serial_to_ethernet_static_ip,
+        ID_serial_to_wifi_client,
+        ID_serial_to_wifi_client_static,
+        ID_serial_to_wifi_ap
+    };
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        void (HLK_RM04_widget::*func)(void);
+    } CMD_t;
+    QList<CMD> l_commands;
+    QList<CMD> l_serial_to;
+
+    Ui::HLK_RM04_widget *ui;
+    QByteArray serial_data;
+    QStringList sl_read_data;
+
+    void init(void);
+    void init_serial(void);
+
+    void send_command(QString cmd);
+    void send_cmd(QString cmd, QString name, int default_cnt = 2);
+
+    QString get_ssid(void);
+    QString get_password(void);
+    QUrl get_ip(void);
+    QUrl get_remote_id(void);
+    QUrl get_mask(void);
+    QUrl get_gate(void);
+    int get_remote_port(void);
+    QString get_encrypt_type(void);
+
+    void set_ssid(QString ssid);
+    void set_password(QString password);
+    void set_ip(QUrl ip);
+    void set_remote_id(QUrl remote_id);
+    void set_mask(QUrl mask);
+    void set_gate(QUrl gate);
+    void set_remote_port(int port);
+    void set_encrypt_type(QString encrypt_type);
+
+    QUrl get_net_ip(void);
+    QUrl get_net_mask(void);
+    QUrl get_dhcpd_ip(void);
+    QUrl get_dhcpd_dns(void);
+
+    void wait_msec(int timeout_msec);
+
     void s_test(void);
     void s_info(void);
     void s_scan(void);
@@ -79,42 +163,11 @@ private slots:
     void s_tcp_auto(void);
     void s_ver(void);
 
-private:
-    Ui::HLK_RM04_widget *ui;
-    QByteArray serial_data;
-    QStringList sl_read_data;
-
-    void init(void);
-    void init_serial(void);
-
-    void send_command(QString cmd);
-    void send_cmd(QString cmd, QString name, int default_cnt = 2);
-
-    void serial_to_ethernet_dynamic_ip(void);
-    void serial_to_ethernet_static_ip(void);
-    void serial_to_wifi_client(void);
-    void serial_to_wifi_client_static(void);
-    void serial_to_wifi_ap(void);
-
-    QString get_ssid(void);
-    QString get_password(void);
-    QUrl get_ip(void);
-    QUrl get_remote_id(void);
-    QUrl get_mask(void);
-    QUrl get_gate(void);
-    int get_remote_port(void);
-    QString get_encrypt_type(void);
-
-    void set_ssid(QString ssid);
-    void set_password(QString password);
-    void set_ip(QUrl ip);
-    void set_remote_id(QUrl remote_id);
-    void set_mask(QUrl mask);
-    void set_gate(QUrl gate);
-    void set_remote_port(int port);
-    void set_encrypt_type(QString encrypt_type);
-
-    void wait_msec(int timeout_msec);
+    void s_serial_to_ethernet_dynamic_ip(void);
+    void s_serial_to_ethernet_static_ip(void);
+    void s_serial_to_wifi_client(void);
+    void s_serial_to_wifi_client_static(void);
+    void s_serial_to_wifi_ap(void);
 
     void updateText(void);
     bool programm_is_exit(void);

@@ -42,32 +42,52 @@ void HLK_RM04_widget::init(void)
     connect(this,   SIGNAL(error(QString)), ui->log_widget, SLOT(errorLog(QString)));
     connect(this,   SIGNAL(trace(QString)), ui->log_widget, SLOT(traceLog(QString)));
 
-    connect(ui->btn_test,       &QPushButton::clicked,    this,   &HLK_RM04_widget::s_test);
-    connect(ui->btn_info,       &QPushButton::clicked,    this,   &HLK_RM04_widget::s_info);
-    connect(ui->btn_scan,       &QPushButton::clicked,    this,   &HLK_RM04_widget::s_scan);
-    connect(ui->btn_get_MAC,    &QPushButton::clicked,    this,   &HLK_RM04_widget::s_get_MAC);
-    connect(ui->btn_netmode,    &QPushButton::clicked,    this,   &HLK_RM04_widget::s_netmode);
-    connect(ui->btn_wifi_conf,  &QPushButton::clicked,    this,   &HLK_RM04_widget::s_wifi_conf);
-    connect(ui->btn_channel,    &QPushButton::clicked,    this,   &HLK_RM04_widget::s_channel);
-    connect(ui->btn_net_IP,     &QPushButton::clicked,    this,   &HLK_RM04_widget::s_net_IP);
-    connect(ui->btn_net_DNS,    &QPushButton::clicked,    this,   &HLK_RM04_widget::s_net_DNS);
-    connect(ui->btn_dhcpd,      &QPushButton::clicked,    this,   &HLK_RM04_widget::s_dhcpd);
-    connect(ui->btn_dhcpd_ip,   &QPushButton::clicked,    this,   &HLK_RM04_widget::s_dhcpd_ip);
-    connect(ui->btn_dhcpd_dns,  &QPushButton::clicked,    this,   &HLK_RM04_widget::s_dhcpd_dns);
-    connect(ui->btn_dhcpd_time, &QPushButton::clicked,    this,   &HLK_RM04_widget::s_dhcpd_time);
-    connect(ui->btn_net_commit, &QPushButton::clicked,    this,   &HLK_RM04_widget::s_net_commit);
-    connect(ui->btn_out_trans,  &QPushButton::clicked,    this,   &HLK_RM04_widget::s_out_trans);
-    connect(ui->btn_remote_IP,  &QPushButton::clicked,    this,   &HLK_RM04_widget::s_remote_IP);
-    connect(ui->btn_remote_port,&QPushButton::clicked,    this,   &HLK_RM04_widget::s_remote_port);
-    connect(ui->btn_remote_pro, &QPushButton::clicked,    this,   &HLK_RM04_widget::s_remote_pro);
-    connect(ui->btn_timeout,    &QPushButton::clicked,    this,   &HLK_RM04_widget::s_timeout);
-    connect(ui->btn_mode,       &QPushButton::clicked,    this,   &HLK_RM04_widget::s_mode);
-    connect(ui->btn_uart,       &QPushButton::clicked,    this,   &HLK_RM04_widget::s_uart);
-    connect(ui->btn_uartpacklen,&QPushButton::clicked,    this,   &HLK_RM04_widget::s_uartpacklen);
-    connect(ui->btn_uartpacktimeout,    &QPushButton::clicked,    this,   &HLK_RM04_widget::s_uartpacktimeout);
-    connect(ui->btn_escape,     &QPushButton::clicked,    this,   &HLK_RM04_widget::s_escape);
-    connect(ui->btn_tcp_auto,   &QPushButton::clicked,    this,   &HLK_RM04_widget::s_tcp_auto);
-    connect(ui->btn_ver,        &QPushButton::clicked,    this,   &HLK_RM04_widget::s_ver);
+    l_commands.clear();
+    l_commands.append({ ID_test,            "test",             &HLK_RM04_widget::s_test });
+    l_commands.append({ ID_info,            "info",             &HLK_RM04_widget::s_info });
+    l_commands.append({ ID_scan,            "scan",             &HLK_RM04_widget::s_scan });
+    l_commands.append({ ID_get_MAC,         "get MAC",          &HLK_RM04_widget::s_get_MAC });
+    l_commands.append({ ID_netmode,         "netmode",          &HLK_RM04_widget::s_netmode });
+    l_commands.append({ ID_wifi_conf,       "wifi conf",        &HLK_RM04_widget::s_wifi_conf });
+    l_commands.append({ ID_channel,         "channel",          &HLK_RM04_widget::s_channel });
+    l_commands.append({ ID_net_IP,          "net IP",           &HLK_RM04_widget::s_net_IP });
+    l_commands.append({ ID_net_DNS,         "net_DNS",          &HLK_RM04_widget::s_net_DNS });
+    l_commands.append({ ID_dhcpd,           "dhcpd",            &HLK_RM04_widget::s_dhcpd });
+    l_commands.append({ ID_dhcpd_ip,        "dhcp IP",          &HLK_RM04_widget::s_dhcpd_ip });
+    l_commands.append({ ID_dhcpd_dns,       "dhcpd DNS",        &HLK_RM04_widget::s_dhcpd_dns });
+    l_commands.append({ ID_dhcpd_time,      "dhcpd TIME",       &HLK_RM04_widget::s_dhcpd_time });
+    l_commands.append({ ID_net_commit,      "net commit",       &HLK_RM04_widget::s_net_commit });
+    l_commands.append({ ID_out_trans,       "out trans",        &HLK_RM04_widget::s_out_trans });
+    l_commands.append({ ID_remote_IP,       "remote IP",        &HLK_RM04_widget::s_remote_IP });
+    l_commands.append({ ID_remote_port,     "remote PORT",      &HLK_RM04_widget::s_remote_port });
+    l_commands.append({ ID_remote_pro,      "remote PRO",       &HLK_RM04_widget::s_remote_pro });
+    l_commands.append({ ID_timeout,         "timeout",          &HLK_RM04_widget::s_timeout });
+    l_commands.append({ ID_mode,            "mode",             &HLK_RM04_widget::s_mode });
+    l_commands.append({ ID_uart,            "uart",             &HLK_RM04_widget::s_uart });
+    l_commands.append({ ID_uartpacklen,     "uartpacketlen",    &HLK_RM04_widget::s_uartpacklen });
+    l_commands.append({ ID_uartpacktimeout, "uartpacktimeout",  &HLK_RM04_widget::s_uartpacktimeout });
+    l_commands.append({ ID_escape,          "escape",           &HLK_RM04_widget::s_escape });
+    l_commands.append({ ID_tcp_auto,        "tcp_auto",         &HLK_RM04_widget::s_tcp_auto });
+    l_commands.append({ ID_ver,             "version",          &HLK_RM04_widget::s_ver });
+
+    l_serial_to.clear();
+    l_serial_to.append({ ID_serial_to_ethernet_dynamic_ip,    "serial_to_ethernet_dynamic_ip",    &HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip });
+    l_serial_to.append({ ID_serial_to_ethernet_static_ip,     "serial_to_ethernet_static_ip",     &HLK_RM04_widget::s_serial_to_ethernet_static_ip  });
+    l_serial_to.append({ ID_serial_to_wifi_client,            "serial_to_wifi_client",            &HLK_RM04_widget::s_serial_to_wifi_client });
+    l_serial_to.append({ ID_serial_to_wifi_client_static,     "serial_to_wifi_client_static",     &HLK_RM04_widget::s_serial_to_wifi_client_static });
+    l_serial_to.append({ ID_serial_to_wifi_ap,                "serial_to_wifi_ap",                &HLK_RM04_widget::s_serial_to_wifi_ap });
+
+    foreach (CMD command, l_commands)
+    {
+        ui->cb_function->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+    foreach (CMD command, l_serial_to)
+    {
+        ui->cb_serial_to->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    connect(ui->btn_function,   &QToolButton::clicked,  this,   &HLK_RM04_widget::choice_command);
+    connect(ui->btn_serial_to,  &QToolButton::clicked,  this,   &HLK_RM04_widget::choice_serial_to);
 
     ui->cb_encrypt_type->addItem("none");
     ui->cb_encrypt_type->addItem("wep_open");
@@ -162,6 +182,64 @@ void HLK_RM04_widget::wait_msec(int timeout_msec)
     }
 }
 //--------------------------------------------------------------------------------
+void HLK_RM04_widget::choice_command(void)
+{
+    bool ok = false;
+    int cmd = ui->cb_function->itemData(ui->cb_function->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, l_commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef void (HLK_RM04_widget::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::choice_serial_to(void)
+{
+    bool ok = false;
+    int cmd = ui->cb_serial_to->itemData(ui->cb_serial_to->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, l_serial_to)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef void (HLK_RM04_widget::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_test(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -175,6 +253,12 @@ void HLK_RM04_widget::s_test(void)
     emit info(QString("Gate: %1").arg(get_gate().host()));
     emit info(QString("Port: %1").arg(get_remote_port()));
     emit info(QString("Encrypt type: %1").arg(get_encrypt_type()));
+
+    emit info(QString("Net IP: %1").arg(get_net_ip().host()));
+    emit info(QString("Net mask: %1").arg(get_net_mask().host()));
+    emit info(QString("Dhcpd IP: %1").arg(get_dhcpd_ip().host()));
+    emit info(QString("Dhcpd DNS: %1").arg(get_dhcpd_dns().host()));
+
 
 #else
     if(ui->serial_widget->isOpen() == false)
@@ -441,7 +525,27 @@ void HLK_RM04_widget::set_encrypt_type(QString encrypt_type)
     ui->cb_encrypt_type->setCurrentText(encrypt_type);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::serial_to_ethernet_dynamic_ip(void)
+QUrl HLK_RM04_widget::get_net_ip(void)
+{
+    return ui->net_ip_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_net_mask(void)
+{
+    return ui->net_mask_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_dhcpd_ip(void)
+{
+    return ui->dhcpd_ip_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_dhcpd_dns(void)
+{
+    return ui->dhcpd_dns_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
 {
     QString temp;
     temp.append("at+netmode=1\r");
@@ -456,9 +560,11 @@ void HLK_RM04_widget::serial_to_ethernet_dynamic_ip(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::serial_to_ethernet_static_ip(void)
+void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
 {
     QString temp;
     temp.append("at+netmode=1\r");
@@ -475,9 +581,11 @@ void HLK_RM04_widget::serial_to_ethernet_static_ip(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::serial_to_wifi_client(void)
+void HLK_RM04_widget::s_serial_to_wifi_client(void)
 {
     QString temp;
     temp.append("at+netmode=2\r");
@@ -493,9 +601,11 @@ void HLK_RM04_widget::serial_to_wifi_client(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::serial_to_wifi_client_static(void)
+void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
 {
     QString temp;
     temp.append("at+netmode=2\r");
@@ -513,9 +623,11 @@ void HLK_RM04_widget::serial_to_wifi_client_static(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::serial_to_wifi_ap(void)
+void HLK_RM04_widget::s_serial_to_wifi_ap(void)
 {
     QString temp;
     temp.append("at+netmode=3\r");
@@ -536,6 +648,8 @@ void HLK_RM04_widget::serial_to_wifi_ap(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_netmode(void)

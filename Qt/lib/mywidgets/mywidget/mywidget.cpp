@@ -100,10 +100,15 @@ void MyWidget::connect_log(QWidget *parent)
 //    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
 //    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 
-    connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
-    connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
-    connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
-    connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
+    int m_info  = parent->metaObject()->indexOfSignal("info(QString)");
+    int m_debug = parent->metaObject()->indexOfSignal("debug(QString)");
+    int m_error = parent->metaObject()->indexOfSignal("error(QString)");
+    int m_trace = parent->metaObject()->indexOfSignal("trace(QString)");
+
+    if(m_info != -1)    connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
+    if(m_debug != -1)   connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
+    if(m_error != -1)   connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
+    if(m_trace != -1)   connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
 
     Q_UNUSED(parent)
 #else

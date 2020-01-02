@@ -70,6 +70,16 @@ void MainBox::init_serial_widgets(void)
     connect(ui->serial_widget_lite,                 SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
     connect(ui->serial_widget_fix_baudrate,         SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
     connect(ui->serial_widget_fix_baudrate_win7,    SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
+
+    ui->btn_serial_widget->setDisabled(true);
+    ui->btn_serial_widget_lite->setDisabled(true);
+    ui->btn_serial_widget_fix_baudrate->setDisabled(true);
+    ui->btn_serial_widget_fix_baudrate_win7->setDisabled(true);
+
+    connect(ui->serial_widget,                      &SerialBox5::port_is_active,                    ui->btn_serial_widget,                      &QToolButton::setEnabled);
+    connect(ui->serial_widget_lite,                 &SerialBox5_lite::port_is_active,               ui->btn_serial_widget_lite,                 &QToolButton::setEnabled);
+    connect(ui->serial_widget_fix_baudrate,         &SerialBox5_fix_baudrate::port_is_active,       ui->btn_serial_widget_fix_baudrate,         &QToolButton::setEnabled);
+    connect(ui->serial_widget_fix_baudrate_win7,    &SerialBox5_fix_baudrate_win7::port_is_active,  ui->btn_serial_widget_fix_baudrate_win7,    &QToolButton::setEnabled);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

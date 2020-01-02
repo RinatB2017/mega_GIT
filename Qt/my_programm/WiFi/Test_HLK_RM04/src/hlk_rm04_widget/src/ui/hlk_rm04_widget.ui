@@ -199,7 +199,7 @@
            <widget class="IPV4_wo_port" name="gate_widget" native="true"/>
           </item>
           <item row="5" column="1">
-           <widget class="IPV4_wo_port" name="remove_ip_widget" native="true"/>
+           <widget class="IPV4_wo_port" name="remote_ip_widget" native="true"/>
           </item>
           <item row="4" column="1">
            <widget class="IPV4_wo_port" name="mask_widget" native="true"/>

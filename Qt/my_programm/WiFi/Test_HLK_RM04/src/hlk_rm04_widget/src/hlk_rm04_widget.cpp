@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include "hlk_rm04_widget.hpp"
 #include "ui_hlk_rm04_widget.h"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 HLK_RM04_widget::HLK_RM04_widget(QWidget *parent) :
     MyWidget(parent),
@@ -30,6 +31,7 @@ HLK_RM04_widget::HLK_RM04_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 HLK_RM04_widget::~HLK_RM04_widget()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -69,7 +71,7 @@ void HLK_RM04_widget::init(void)
     l_commands.append({ ID_escape,          "escape",           &HLK_RM04_widget::s_escape });
     l_commands.append({ ID_tcp_auto,        "tcp_auto",         &HLK_RM04_widget::s_tcp_auto });
     l_commands.append({ ID_default,         "default",          &HLK_RM04_widget::s_default });
-    l_commands.append({ ID_reboot,          "default",          &HLK_RM04_widget::s_reboot });
+    l_commands.append({ ID_reboot,          "reboot",           &HLK_RM04_widget::s_reboot });
     l_commands.append({ ID_ver,             "version",          &HLK_RM04_widget::s_ver });
 
     l_serial_to.clear();
@@ -103,7 +105,25 @@ void HLK_RM04_widget::init(void)
 
     ui->sb_remote_post->setRange(0, 0xFFFF);
 
+    ui->cb_function->setProperty(NO_SAVE, true);
+    ui->cb_serial_to->setProperty(NO_SAVE, true);
+    ui->cb_encrypt_type->setProperty(NO_SAVE, true);
+
+    ui->btn_function->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
+    ui->btn_serial_to->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
+
     init_serial();
+    load_widgets(APPNAME);
+
+    //init_w_lists();
+    add_widget_to_w_lists(ui->le_ssid);
+    add_widget_to_w_lists(ui->le_password);
+    add_widget_to_w_lists(ui->sb_remote_post);
+    add_widget_to_w_lists(ui->cb_function);
+    add_widget_to_w_lists(ui->cb_serial_to);
+    add_widget_to_w_lists(ui->cb_encrypt_type);
+    add_widget_to_w_lists(ui->btn_function);
+    add_widget_to_w_lists(ui->btn_serial_to);
     lock_iface(true);
 }
 //--------------------------------------------------------------------------------
@@ -150,6 +170,20 @@ void HLK_RM04_widget::read_data(QByteArray ba)
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::lock_iface(bool state)
 {
+    emit info(QString("state is %1").arg(state ? "true" : "false"));
+    ui->ip_widget->block_interface(state);
+    ui->gate_widget->block_interface(state);
+    ui->mask_widget->block_interface(state);
+    ui->remote_ip_widget->block_interface(state);
+    ui->net_ip_widget->block_interface(state);
+    ui->net_gate_widget->block_interface(state);
+    ui->net_mask_widget->block_interface(state);
+    ui->dhcpd_ip_widget->block_interface(state);
+    ui->dhcpd_dns_widget->block_interface(state);
+    ui->dhcpd_mask_widget->block_interface(state);
+    ui->dhcpd_gate_widget->block_interface(state);
+    ui->net_dns_widget->block_interface(state);
+
     state ? lock_interface() : unlock_interface();
 }
 //--------------------------------------------------------------------------------
@@ -246,7 +280,7 @@ void HLK_RM04_widget::s_test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     emit info(QString("SSID: %1").arg(get_ssid()));
     emit info(QString("Password: %1").arg(get_password()));
     emit info(QString("IP: %1").arg(get_ip().host()));
@@ -260,8 +294,6 @@ void HLK_RM04_widget::s_test(void)
     emit info(QString("Net mask: %1").arg(get_net_mask().host()));
     emit info(QString("Dhcpd IP: %1").arg(get_dhcpd_ip().host()));
     emit info(QString("Dhcpd DNS: %1").arg(get_dhcpd_dns().host()));
-
-
 #else
     if(ui->serial_widget->isOpen() == false)
     {
@@ -464,7 +496,7 @@ QUrl HLK_RM04_widget::get_ip(void)
 //--------------------------------------------------------------------------------
 QUrl HLK_RM04_widget::get_remote_ip(void)
 {
-    return ui->remove_ip_widget->get_url();
+    return ui->remote_ip_widget->get_url();
 }
 //--------------------------------------------------------------------------------
 QUrl HLK_RM04_widget::get_mask(void)
@@ -504,7 +536,7 @@ void HLK_RM04_widget::set_ip(QUrl ip)
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::set_remote_ip(QUrl remote_id)
 {
-    ui->remove_ip_widget->set_url(remote_id);
+    ui->remote_ip_widget->set_url(remote_id);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::set_mask(QUrl mask)
@@ -595,6 +627,7 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
     temp.append("at+reconn=1\r");
 
     emit debug(temp);
+    send_command(temp);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
@@ -635,6 +668,7 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
     temp.append("at+reconn=1\r");
 
     emit debug(temp);
+    send_command(temp);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_serial_to_wifi_client(void)
@@ -673,6 +707,7 @@ void HLK_RM04_widget::s_serial_to_wifi_client(void)
     temp.append("at+reconn=1\r");
 
     emit debug(temp);
+    send_command(temp);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
@@ -714,6 +749,7 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
     temp.append("at+reconn=1\r");
 
     emit debug(temp);
+    send_command(temp);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_serial_to_wifi_ap(void)
@@ -767,6 +803,7 @@ void HLK_RM04_widget::s_serial_to_wifi_ap(void)
     temp.append("at+reconn=1\r");
 
     emit debug(temp);
+    send_command(temp);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_netmode(void)
@@ -899,13 +936,13 @@ void HLK_RM04_widget::s_tcp_auto(void)
 void HLK_RM04_widget::s_default(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+default=1", "Ver");
+    send_cmd("at+default=1", "Default", 1);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_reboot(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+reboot=1", "Ver");
+    send_cmd("at+reboot=1", "Reboot");
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_ver(void)

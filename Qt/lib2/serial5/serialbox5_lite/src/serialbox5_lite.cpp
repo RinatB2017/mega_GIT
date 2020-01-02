@@ -233,8 +233,6 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
 
     setCloseState();
     refresh();
-
-    emit not_working();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::getStatus(const QString &status, QDateTime current)
@@ -276,8 +274,8 @@ void SerialBox5_lite::setCloseState(void)
     ui->PortBox->setEnabled(true);
     ui->BaudBox->setEnabled(false);
     ui->btn_power->setChecked(false);
-    emit port_is_active(false);
     ui->btn_power->setToolTip("Старт");
+    emit port_is_active(false);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::setOpenState()
@@ -286,8 +284,8 @@ void SerialBox5_lite::setOpenState()
     ui->PortBox->setEnabled(false);
     ui->BaudBox->setEnabled(true);
     ui->btn_power->setChecked(true);
-    emit port_is_active(true);
     ui->btn_power->setToolTip("Стоп");
+    emit port_is_active(true);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::btnOpenPortClicked()
@@ -323,7 +321,7 @@ void SerialBox5_lite::btnOpenPortClicked()
                 if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
                 get_parameter();
-                emit port_is_active(true);
+                emit port_is_active(result);
             }
             else
             {
@@ -344,14 +342,12 @@ int SerialBox5_lite::input(const QByteArray &sending_data)
     {
         emit error("E_PORT_NOT_INIT");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -375,14 +371,12 @@ int SerialBox5_lite::input(const QString &data)
     {
         emit error("E_PORT_NOT_INIT");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;

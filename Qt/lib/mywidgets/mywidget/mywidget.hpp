@@ -92,6 +92,7 @@ public:
     ~MyWidget();
 
     void init_w_lists(void);
+    void add_widget_to_w_lists(QWidget *widget);
     void lock_interface(void);
     void unlock_interface(void);
 

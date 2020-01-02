@@ -72,9 +72,7 @@ public:
 signals:
     void readyRead(void);
     void readChannelFinished(void);
-
     void output(const QByteArray &data);
-
     void port_is_active(bool);
 
     //---

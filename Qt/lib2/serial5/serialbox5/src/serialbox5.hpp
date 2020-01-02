@@ -127,11 +127,7 @@ private:
 signals:
     void readyRead(void);
     void readChannelFinished(void);
-
-    void not_working(void);
-
     void output(const QByteArray &data);
-
     void port_is_active(bool);
 
 public slots:

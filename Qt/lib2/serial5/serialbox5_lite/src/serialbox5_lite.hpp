@@ -98,11 +98,10 @@ private:
     QString ByteArrayToHex(const QByteArray &data);
 
 signals:
-    void port_is_active(bool);
-    void not_working(void);
-    void output(const QByteArray &data);
     void readyRead(void);
     void readChannelFinished(void);
+    void output(const QByteArray &data);
+    void port_is_active(bool);
 
     void s_error(QSerialPort::SerialPortError);
 

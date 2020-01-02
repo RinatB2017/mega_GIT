@@ -303,8 +303,6 @@ void SerialBox5::serial5_error(QSerialPort::SerialPortError err)
 
     setCloseState();
     refresh();
-
-    emit not_working();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::getStatus(const QString &status, QDateTime current)
@@ -393,6 +391,7 @@ void SerialBox5::setCloseState(void)
     sendBox5->block_interface(true);
 #endif
     ui->btn_power->setToolTip("Старт");
+    emit port_is_active(false);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setOpenState()
@@ -412,6 +411,7 @@ void SerialBox5::setOpenState()
     sendBox5->block_interface(false);
 #endif
     ui->btn_power->setToolTip("Стоп");
+    emit port_is_active(true);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::btnOpenPortClicked()
@@ -477,14 +477,12 @@ int SerialBox5::input(const QByteArray &sending_data)
     {
         emit error("E_PORT_NOT_INIT");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     if(flag_byte_by_byte)
@@ -524,14 +522,12 @@ int SerialBox5::input(const QString &data)
     {
         emit error("E_PORT_NOT_INIT");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_INIT;
     }
     if(!serial5->isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
-        emit not_working();
         return E_PORT_NOT_OPEN;
     }
     QByteArray sending_data;

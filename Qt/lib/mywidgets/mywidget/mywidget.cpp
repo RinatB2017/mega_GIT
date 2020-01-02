@@ -223,39 +223,25 @@ void MyWidget::init_w_lists(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MyWidget::add_widget_to_w_lists(QWidget *widget)
+{
+    w_lists.append(widget);
+}
+//--------------------------------------------------------------------------------
 void MyWidget::lock_interface(void)
 {
-#if 1
     foreach (QWidget *btn, w_lists)
     {
-        btn->setProperty("state", btn->isEnabled());
         btn->setDisabled(true);
     }
-#else
-    for(int n=0; n<w_lists.count(); n++)
-    {
-        w_lists[n]->setProperty("state", w_lists[n]->isEnabled());
-        w_lists[n]->setDisabled(true);
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MyWidget::unlock_interface(void)
 {
-#if 1
     foreach (QWidget *btn, w_lists)
     {
-        bool ok = btn->property("state").toBool();
-        btn->setEnabled(ok);
+        btn->setEnabled(true);
     }
-#else
-    for(int n=0; n<w_lists.count(); n++)
-    {
-        bool ok = w_lists[n]->property("state").toBool();
-        emit debug(QString("property(state) is %1").arg(ok ? "true" : "false"));
-        w_lists[n]->setEnabled(ok);
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
 void MyWidget::lock_this_button(void)
@@ -525,6 +511,7 @@ void MyWidget::load_QComboBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
+            obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
             if(obj->property(NO_SAVE).toBool() == false)
             {
                 int size = settings->beginReadArray(obj->objectName());
@@ -534,7 +521,6 @@ void MyWidget::load_QComboBox(QString group_name)
                     obj->addItem(settings->value("value").toString());
                 }
                 settings->endArray();
-                obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
             }
         }
     }
@@ -555,9 +541,9 @@ void MyWidget::save_QComboBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
+            settings->setValue("currentindex", QVariant(obj->currentIndex()));
             if(obj->property(NO_SAVE).toBool() == false)
             {
-                settings->setValue("currentindex", QVariant(obj->currentIndex()));
                 settings->beginWriteArray(obj->objectName(), obj->count());
                 for(int n=0; n<obj->count(); n++)
                 {

@@ -191,11 +191,11 @@ void SerialBox5_fix_baudrate_win7::setCloseState(void)
     ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
-    emit port_is_active(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
 #endif
     ui->btn_power->setToolTip("Старт");
+    emit port_is_active(false);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::setOpenState()
@@ -205,11 +205,11 @@ void SerialBox5_fix_baudrate_win7::setOpenState()
     ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
-    emit port_is_active(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);
 #endif
     ui->btn_power->setToolTip("Стоп");
+    emit port_is_active(true);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::btnOpenPortClicked()

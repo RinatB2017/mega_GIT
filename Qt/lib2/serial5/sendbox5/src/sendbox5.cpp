@@ -66,8 +66,8 @@ SendBox5::SendBox5(QWidget *parent) :
     connect(ui->btn_send_text_remove,  SIGNAL(clicked()),  this,   SLOT(send_text_remove()));
     connect(ui->btn_send_bin_remove,   SIGNAL(clicked()),  this,   SLOT(send_bin_remove()));
 
-    connect(ui->cb_send_text->lineEdit(),   SIGNAL(editingFinished()),  this,   SLOT(send_text()));
-    connect(ui->cb_send_bin->lineEdit(),    SIGNAL(editingFinished()),  this,   SLOT(send_bin()));
+    connect(ui->cb_send_text->lineEdit(),   SIGNAL(returnPressed()),  this,   SLOT(send_text()));
+    connect(ui->cb_send_bin->lineEdit(),    SIGNAL(returnPressed()),  this,   SLOT(send_bin()));
 
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }

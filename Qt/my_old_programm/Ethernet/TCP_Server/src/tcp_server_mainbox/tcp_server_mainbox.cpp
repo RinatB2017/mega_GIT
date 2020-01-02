@@ -24,6 +24,7 @@
 //--------------------------------------------------------------------------------
 #include "tcp_server_mainbox.hpp"
 #include "tcp_server.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
@@ -34,6 +35,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     if(server)
     {
         delete server;
@@ -51,20 +53,22 @@ void MainBox::init(void)
     server = new TCP_Server(this);
 
     connect(server,             SIGNAL(output(QByteArray)), this,   SLOT(f_get_data(QByteArray)));
-    connect(ui->btn_connect,    SIGNAL(clicked(bool)),      this,   SLOT(f_connect()));
-    connect(ui->btn_disconnect, SIGNAL(clicked(bool)),      this,   SLOT(f_disconnect()));
+    connect(ui->btn_create,     SIGNAL(clicked(bool)),      this,   SLOT(f_connect()));
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_connect(void)
 {
     if(server)
     {
-        server->createServerOnPort(QHostAddress::AnyIPv4, ui->sb_port->value());
+        server->createServerOnPort(QHostAddress::AnyIPv4, static_cast<quint16>(ui->sb_port->value()));
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_disconnect(void)
 {
+    emit trace(Q_FUNC_INFO);
     if(server)
     {
         server->closeServer();

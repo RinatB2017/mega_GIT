@@ -66,7 +66,14 @@ public:
     QByteArray readAll(void);
 
     void set_caption(QString value);
+
     bool set_fix_baudrate(int value);
+
+    qint32 get_baudRate(void);
+    QSerialPort::DataBits       get_dataBits(void);
+    QSerialPort::Parity         get_parity(void);
+    QSerialPort::StopBits       get_stopBits(void);
+    QSerialPort::FlowControl    get_flowControl(void);
 
     qint64 bytesAvailable(void);
     qint64 write ( const char *data );

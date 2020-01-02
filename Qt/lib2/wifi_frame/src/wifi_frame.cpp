@@ -21,6 +21,7 @@
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
+#include "ui_wifi_frame.h"
 #include "serialbox5_lite.hpp"
 #include "wifi_frame.hpp"
 #include "qhexedit.h"
@@ -31,7 +32,8 @@
 #endif
 //--------------------------------------------------------------------------------
 WIFI_frame::WIFI_frame(QWidget *parent) :
-    MyWidget(parent)
+    MyWidget(parent),
+    ui(new Ui::WIFI_frame)
 {
     init();
 }
@@ -48,19 +50,15 @@ WIFI_frame::WIFI_frame(const QString &caption,
 //--------------------------------------------------------------------------------
 void WIFI_frame::connect_serial(void)
 {
-    serial = new SerialBox5_lite;
-    //serial->setFixedHeight(serial->sizeHint().height());
-
-    connect(serial, SIGNAL(port_is_active(bool)),   this,   SLOT(lock_interface(bool)));
+    connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,   SLOT(lock_interface(bool)));
 
     if(is_server)
-        connect(serial, SIGNAL(readyRead()), this, SLOT(server_port_read()));
+        connect(ui->serial_widget, SIGNAL(readyRead()), this, SLOT(server_port_read()));
     else
-        connect(serial, SIGNAL(readyRead()), this, SLOT(client_port_read()));
+        connect(ui->serial_widget, SIGNAL(readyRead()), this, SLOT(client_port_read()));
 
-    connect(serial, SIGNAL(readChannelFinished()), this, SLOT(readChannelFinished()));
-    connect(serial, SIGNAL(s_error(QSerialPort::SerialPortError)),
-            this,   SLOT(port_error(QSerialPort::SerialPortError)));
+    connect(ui->serial_widget,  SIGNAL(readChannelFinished()),  this,   SLOT(readChannelFinished()));
+    connect(ui->serial_widget,  SIGNAL(s_error(QSerialPort::SerialPortError)),  this,   SLOT(port_error(QSerialPort::SerialPortError)));
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::readChannelFinished(void)
@@ -68,84 +66,49 @@ void WIFI_frame::readChannelFinished(void)
     emit error("readChannelFinished");
 }
 //--------------------------------------------------------------------------------
-QGridLayout *WIFI_frame::add_grid_layout(void)
+void WIFI_frame::add_grid_layout(void)
 {
-    le_Network      = new QLineEdit("A00000001");
-    le_Password     = new QLineEdit("0000000000");
-    le_IP           = new QLineEdit("192.168.11.10");
-    le_Gate         = new QLineEdit("192.168.11.1");
-    le_Mask         = new QLineEdit("255.255.255.0");
-    le_RemoteIP     = new QLineEdit("192.168.11.20");
-    le_RemotePort   = new QLineEdit("8080");
+    ui->le_Network->setText("A00000001");
+    ui->le_Password->setText("0000000000");
+    ui->le_IP->setText("192.168.11.10");
+    ui->le_Gate->setText("192.168.11.1");
+    ui->le_Mask->setText("255.255.255.0");
+    ui->le_RemoteIP->setText("192.168.11.20");
+    ui->le_RemotePort->setText("8080");
 
-    cb_EncryptType = new QComboBox(this);
-    cb_EncryptType->clear();
-    cb_EncryptType->addItem("none");
-    cb_EncryptType->addItem("wep_open");
-    cb_EncryptType->addItem("wep");
-    cb_EncryptType->addItem("wpa_tkip");
-    cb_EncryptType->addItem("wpa_aes");
-    cb_EncryptType->addItem("wpa2_tkip");
-    cb_EncryptType->addItem("wpa2_aes");
-    cb_EncryptType->addItem("wpawpa2_tkip");
-    cb_EncryptType->addItem("wpawpa2_aes");
-
-    QGridLayout *grid = new QGridLayout();
-    grid->addWidget(new QLabel("network"),      0, 0);
-    grid->addWidget(le_Network,                 0, 1);
-    grid->addWidget(new QLabel("password"),     0, 2);
-    grid->addWidget(le_Password,                0, 3);
-    grid->addWidget(new QLabel("IP"),           1, 0);
-    grid->addWidget(le_IP,                      1, 1);
-    grid->addWidget(new QLabel("gate"),         1, 2);
-    grid->addWidget(le_Gate,                    1, 3);
-    grid->addWidget(new QLabel("mask"),         2, 0);
-    grid->addWidget(le_Mask,                    2, 1);
-    grid->addWidget(new QLabel("remote IP"),    2, 2);
-    grid->addWidget(le_RemoteIP,                2, 3);
-    grid->addWidget(new QLabel("remote port"),  3, 0);
-    grid->addWidget(le_RemotePort,              3, 1);
-    grid->addWidget(new QLabel("encrypt type"), 3, 2);
-    grid->addWidget(cb_EncryptType,             3, 3);
-
-    return grid;
+    ui->cb_EncryptType->clear();
+    ui->cb_EncryptType->addItem("none");
+    ui->cb_EncryptType->addItem("wep_open");
+    ui->cb_EncryptType->addItem("wep");
+    ui->cb_EncryptType->addItem("wpa_tkip");
+    ui->cb_EncryptType->addItem("wpa_aes");
+    ui->cb_EncryptType->addItem("wpa2_tkip");
+    ui->cb_EncryptType->addItem("wpa2_aes");
+    ui->cb_EncryptType->addItem("wpawpa2_tkip");
+    ui->cb_EncryptType->addItem("wpawpa2_aes");
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::init(void)
 {
+    ui->setupUi(this);
     connect_serial();
 
     server_is_created = false;
 
-    logBox = new LogBox("WiFi", this);
-    connect(this,   SIGNAL(info(QString)),  logBox, SLOT(infoLog(QString)));
-    connect(this,   SIGNAL(debug(QString)), logBox, SLOT(debugLog(QString)));
-    connect(this,   SIGNAL(error(QString)), logBox, SLOT(errorLog(QString)));
-    connect(this,   SIGNAL(trace(QString)), logBox, SLOT(traceLog(QString)));
+    connect(this,   SIGNAL(info(QString)),  ui->logBox, SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(debug(QString)), ui->logBox, SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(error(QString)), ui->logBox, SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(trace(QString)), ui->logBox, SLOT(traceLog(QString)));
 
-    QVBoxLayout *main_layout = new QVBoxLayout();
+    ui->btn_server->setEnabled(is_server);
 
-    main_layout->addWidget(serial);
-    if(is_server)
-        main_layout->addLayout(add_server_cmd_layout());
-    else
-        main_layout->addLayout(add_client_cmd_layout());
+    connect(ui->btn_read_settings, SIGNAL(clicked()), this, SLOT(read_settings()));
 
-    btn_read_settings = new QPushButton(tr("read settings"));
-    connect(btn_read_settings, SIGNAL(clicked()), this, SLOT(read_settings()));
-    main_layout->addWidget(btn_read_settings);
+    ui->caption_label->setAlignment(Qt::AlignHCenter);
 
-    main_layout->addWidget(logBox, 1);
-
-    QLabel *label = new QLabel(caption);
-    label->setAlignment(Qt::AlignHCenter);
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(label);
-    vbox->addLayout(add_grid_layout());
-    vbox->addLayout(main_layout);
-
-    setLayout(vbox);
+    add_server_cmd_layout();
+    add_client_cmd_layout();
+    add_grid_layout();
 
     lock_interface(false);
 }
@@ -155,15 +118,15 @@ void WIFI_frame::server_port_read(void)
     //emit debug(QString("server_is_created %1").arg(server_is_created ? "true" : "false"));
     if(server_is_created)
     {
-        serial_data.append(serial->readAll());
+        serial_data.append(ui->serial_widget->readAll());
     }
     else
     {
-        while(serial->bytesAvailable())
+        while(ui->serial_widget->bytesAvailable())
         {
             QCoreApplication::processEvents();
             //emit info(QString("bytesAvailable = %1").arg(serial->bytesAvailable()));
-            serial_data.append(serial->readAll());
+            serial_data.append(ui->serial_widget->readAll());
             //serial_data.append(serial->read(1));
             //serial->waitForReadyRead(300);
         }
@@ -175,11 +138,11 @@ void WIFI_frame::server_port_read(void)
 void WIFI_frame::client_port_read(void)
 {
     //serial->waitForReadyRead(100);
-    while(serial->bytesAvailable())
+    while(ui->serial_widget->bytesAvailable())
     {
         QCoreApplication::processEvents();
         //emit info(QString("bytesAvailable = %1").arg(serial->bytesAvailable()));
-        serial_data.append(serial->readAll());
+        serial_data.append(ui->serial_widget->readAll());
     }
     //is_ready = true;
 }
@@ -247,15 +210,15 @@ void WIFI_frame::read_settings(void)
         QStringList sl = QString(serial_data).split(',');
         if(sl.count() == 3)
         {
-            le_Network->setText(sl.at(0));
-            cb_EncryptType->setCurrentText(sl.at(1));
-            le_Password->setText(sl.at(2));
+            ui->le_Network->setText(sl.at(0));
+            ui->cb_EncryptType->setCurrentText(sl.at(1));
+            ui->le_Password->setText(sl.at(2));
         }
         else
         {
-            le_Network->setText("---");
-            cb_EncryptType->setCurrentText("---");
-            le_Password->setText("---");
+            ui->le_Network->setText("---");
+            ui->cb_EncryptType->setCurrentText("---");
+            ui->le_Password->setText("---");
         }
     }
 
@@ -283,15 +246,15 @@ void WIFI_frame::read_settings(void)
         QStringList sl = QString(serial_data).split(',');
         if(sl.count() == 3)
         {
-            le_IP->setText(sl.at(0));
-            le_Mask->setText(sl.at(1));
-            le_Gate->setText(sl.at(2));
+            ui->le_IP->setText(sl.at(0));
+            ui->le_Mask->setText(sl.at(1));
+            ui->le_Gate->setText(sl.at(2));
         }
         else
         {
-            le_IP->setText("---");
-            le_Mask->setText("---");
-            le_Gate->setText("---");
+            ui->le_IP->setText("---");
+            ui->le_Mask->setText("---");
+            ui->le_Gate->setText("---");
         }
     }
 
@@ -368,7 +331,7 @@ bool WIFI_frame::send_at_command(QString cmd,
                                  int wait_ms,
                                  bool no_response)
 {
-    if(serial->isOpen() == false)
+    if(ui->serial_widget->isOpen() == false)
     {
         emit error(tr("Port not open!"));
         return false;
@@ -380,7 +343,7 @@ bool WIFI_frame::send_at_command(QString cmd,
 
     serial_data.clear();
     is_ready = false;
-    serial->write(ba);
+    ui->serial_widget->write(ba);
 
     wait_msec(wait_ms);
 
@@ -410,7 +373,7 @@ bool WIFI_frame::send_at_command(QString cmd,
 bool WIFI_frame::send_command(QString cmd,
                               int wait_ms)
 {
-    if(serial->isOpen() == false)
+    if(ui->serial_widget->isOpen() == false)
     {
         emit error(tr("Port not open!"));
         return false;
@@ -422,7 +385,7 @@ bool WIFI_frame::send_command(QString cmd,
 
     serial_data.clear();
     is_ready = false;
-    serial->write(ba);
+    ui->serial_widget->write(ba);
 
     if(caption == "server")
     {
@@ -467,9 +430,9 @@ bool WIFI_frame::send_cmd_create_server(bool is_silense)
     if(!ok) return false;
 
     temp = QString("at+wifi_conf=%1,%2,%3\r")
-            .arg(le_Network->text())
-            .arg(cb_EncryptType->currentText())
-            .arg(le_Password->text());
+            .arg(ui->le_Network->text())
+            .arg(ui->cb_EncryptType->currentText())
+            .arg(ui->le_Password->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
@@ -479,15 +442,15 @@ bool WIFI_frame::send_cmd_create_server(bool is_silense)
     if(!ok) return false;
 
     temp = QString("at+net_ip=%1,%2,%3\r")
-            .arg(le_IP->text())
-            .arg(le_Mask->text())
-            .arg(le_Gate->text());
+            .arg(ui->le_IP->text())
+            .arg(ui->le_Mask->text())
+            .arg(ui->le_Gate->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
 
     temp = QString("at+net_dns=%1\r")
-            .arg(le_Gate->text());
+            .arg(ui->le_Gate->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
@@ -541,9 +504,9 @@ bool WIFI_frame::send_cmd_create_client(bool is_silense)
     if(!ok) return false;
 
     temp = QString("at+wifi_conf=%1,%2,%3\r")
-            .arg(le_Network->text())
-            .arg(cb_EncryptType->currentText())
-            .arg(le_Password->text());
+            .arg(ui->le_Network->text())
+            .arg(ui->cb_EncryptType->currentText())
+            .arg(ui->le_Password->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
@@ -553,27 +516,27 @@ bool WIFI_frame::send_cmd_create_client(bool is_silense)
     if(!ok) return false;
 
     temp = QString("at+net_ip=%1,%2,%3\r")
-            .arg(le_IP->text())
-            .arg(le_Mask->text())
-            .arg(le_Gate->text());
+            .arg(ui->le_IP->text())
+            .arg(ui->le_Mask->text())
+            .arg(ui->le_Gate->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
 
     temp = QString("at+net_dns=%1\r")
-            .arg(le_Gate->text());
+            .arg(ui->le_Gate->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
 
     temp = QString("at+remoteip=%1\r")
-            .arg(le_RemoteIP->text());
+            .arg(ui->le_RemoteIP->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
 
     temp = QString("at+remoteport=%1\r")
-            .arg(le_RemotePort->text());
+            .arg(ui->le_RemotePort->text());
     if(!is_silense) emit info(temp);
     ok = send_at_command(temp);
     if(!ok) return false;
@@ -655,71 +618,45 @@ void WIFI_frame::send_data(void)
         emit info(QString("received: %1").arg(serial_data.data()));
 }
 //--------------------------------------------------------------------------------
-QVBoxLayout *WIFI_frame::add_server_cmd_layout(void)
+void WIFI_frame::add_server_cmd_layout(void)
 {
     if(is_server)
     {
-        btn_server = new QPushButton("create server");
-        connect(btn_server, SIGNAL(clicked()), this, SLOT(create_server()));
+        connect(ui->btn_server, SIGNAL(clicked()), this, SLOT(create_server()));
     }
-
-    QVBoxLayout *cmd_box = new QVBoxLayout();
-    cmd_box->addWidget(btn_server);
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->setSpacing(1);
-    vbox->addLayout(cmd_box);
-    vbox->addStretch(1);
-
-    return vbox;
 }
 //--------------------------------------------------------------------------------
-QVBoxLayout *WIFI_frame::add_client_cmd_layout(void)
+void WIFI_frame::add_client_cmd_layout(void)
 {
     if(is_server == false)
     {
-        btn_client = new QPushButton("create client");
-        connect(btn_client, SIGNAL(clicked()), this, SLOT(create_client()));
+        connect(ui->btn_client, SIGNAL(clicked()), this, SLOT(create_client()));
     }
-
-    btn_send_data = new QPushButton("send data");
-    connect(btn_send_data, SIGNAL(clicked()), this, SLOT(send_data()));
-
-    QVBoxLayout *cmd_box = new QVBoxLayout();
-    cmd_box->addWidget(btn_client);
-    cmd_box->addWidget(btn_send_data);
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->setSpacing(1);
-    vbox->addLayout(cmd_box);
-    vbox->addStretch(1);
-
-    return vbox;
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::lock_interface(bool state)
 {
     if(is_server)
     {
-        btn_server->setDisabled(state);
+        ui->btn_server->setDisabled(state);
     }
     else
     {
-        btn_client->setDisabled(state);
-        btn_send_data->setDisabled(state);
+        ui->btn_client->setDisabled(state);
+        ui->btn_send_data->setDisabled(state);
     }
 
-    btn_read_settings->setDisabled(state);
+    ui->btn_read_settings->setDisabled(state);
 
-    le_Gate->setDisabled(state);
-    le_IP->setDisabled(state);
-    le_Mask->setDisabled(state);
-    le_Network->setDisabled(state);
-    le_Password->setDisabled(state);
-    le_RemoteIP->setDisabled(state);
-    le_RemotePort->setDisabled(state);
+    ui->le_Gate->setDisabled(state);
+    ui->le_IP->setDisabled(state);
+    ui->le_Mask->setDisabled(state);
+    ui->le_Network->setDisabled(state);
+    ui->le_Password->setDisabled(state);
+    ui->le_RemoteIP->setDisabled(state);
+    ui->le_RemotePort->setDisabled(state);
 
-    cb_EncryptType->setDisabled(state);
+    ui->cb_EncryptType->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::show_hex_data(QByteArray &data)

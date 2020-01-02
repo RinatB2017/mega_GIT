@@ -43,11 +43,12 @@ LIB_PATH2 = "../../../lib2"
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 
+include ($$LIB_PATH/mainwindow/mainwindow.pri)
+include ($$LIB_PATH/mywidgets/mywidget.pri)
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH2/ethernet/tcp_client.pri)
-include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/mywidgets/mywidget.pri)
+include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 
 #include ($$LIB_PATH/ethernet/fake/fake.pri)
 

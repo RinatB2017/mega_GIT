@@ -16,7 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
-#DEFINES += RS232_SEND
+DEFINES += RS232_SEND
 
 DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += SAVE_WIDGETS_SPINBOX
@@ -47,8 +47,9 @@ LIB_PATH2 = "../../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 #include ($$LIB_PATH2/serial5/serial5.pri)
-include ($$LIB_PATH2/serial5/serialbox5_lite/serialbox5_lite.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
+include ($$LIB_PATH2/serial5/serialbox5_lite/serialbox5_lite.pri)
+include ($$LIB_PATH2/serial5/serialbox5/serialbox5.pri)
 include ($$LIB_PATH2/serial5/sendbox5/sendbox5.pri)
 
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)

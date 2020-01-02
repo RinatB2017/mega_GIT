@@ -103,6 +103,31 @@ bool SerialBox5_fix_baudrate::set_fix_baudrate(int value)
     return ok;
 }
 //--------------------------------------------------------------------------------
+qint32 SerialBox5_fix_baudrate::get_baudRate(void)
+{
+    return serial5->baudRate();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::DataBits       SerialBox5_fix_baudrate::get_dataBits(void)
+{
+    return serial5->dataBits();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::Parity         SerialBox5_fix_baudrate::get_parity(void)
+{
+    return serial5->parity();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::StopBits       SerialBox5_fix_baudrate::get_stopBits(void)
+{
+    return serial5->stopBits();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::FlowControl    SerialBox5_fix_baudrate::get_flowControl(void)
+{
+    return serial5->flowControl();
+}
+//--------------------------------------------------------------------------------
 qint64 SerialBox5_fix_baudrate::bytesAvailable(void)
 {
     return serial5->bytesAvailable();

@@ -15,10 +15,10 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="WIFI_frame" name="widget" native="true"/>
+    <widget class="WIFI_frame" name="wifi_framewidget" native="true"/>
    </item>
    <item>
-    <widget class="HLK_RM04_widget" name="widget_2" native="true"/>
+    <widget class="HLK_RM04_widget" name="hlk_rm04_widget" native="true"/>
    </item>
   </layout>
  </widget>

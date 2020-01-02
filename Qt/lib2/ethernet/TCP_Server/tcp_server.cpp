@@ -44,6 +44,12 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
 {
     emit info(QString("Создание сервера на порту %1").arg(port));
 
+    if(tcpServer)
+    {
+        tcpServer->close();
+        tcpServer->deleteLater();
+    }
+
     tcpServer = new QTcpServer(this);
     if (!tcpServer->listen(address, port))
     {
@@ -74,7 +80,15 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
 //--------------------------------------------------------------------------------
 void TCP_Server::closeServer(void)
 {
-    clientConnection = nullptr;
+    if(tcpServer)
+    {
+        tcpServer->close();
+    }
+    if(clientConnection)
+    {
+        clientConnection->deleteLater();
+        clientConnection = nullptr;
+    }
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::newConnect(void)
@@ -83,8 +97,8 @@ void TCP_Server::newConnect(void)
     emit info(QString("Клиент подключился: %1:%2")
               .arg(clientConnection->peerAddress().toString())
               .arg(clientConnection->peerPort()));
-    connect(clientConnection, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
-    connect(clientConnection, SIGNAL(readyRead()), this, SLOT(clientReadyRead()));
+    connect(clientConnection,   SIGNAL(disconnected()), this,   SLOT(clientDisconnected()));
+    connect(clientConnection,   SIGNAL(readyRead()),    this,   SLOT(clientReadyRead()));
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::clientReadyRead(void)

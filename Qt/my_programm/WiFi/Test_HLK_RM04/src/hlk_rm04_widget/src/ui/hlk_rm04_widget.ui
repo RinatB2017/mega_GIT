@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>294</width>
-    <height>488</height>
+    <width>372</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,62 +28,73 @@
      </item>
      <item>
       <widget class="QGroupBox" name="groupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="title">
         <string>Network</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="4" column="1">
-           <widget class="IPV4_wo_port" name="mask_widget" native="true"/>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>mask</string>
+            </property>
+           </widget>
           </item>
-          <item row="9" column="1">
+          <item row="11" column="1">
+           <widget class="IPV4_wo_port" name="dhcpd_dns_widget" native="true"/>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>net dns</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="0" colspan="2">
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="2" column="1">
+             <widget class="QToolButton" name="btn_serial_to">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QComboBox" name="cb_serial_to"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QComboBox" name="cb_function"/>
+            </item>
+            <item row="1" column="1">
+             <widget class="QToolButton" name="btn_function">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="10" column="1">
            <widget class="IPV4_wo_port" name="dhcpd_ip_widget" native="true"/>
           </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_8">
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_15">
             <property name="text">
-             <string>encrypt type</string>
+             <string>dhcpd_mask</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="IPV4_wo_port" name="ip_widget" native="true"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>password</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="IPV4_wo_port" name="gate_widget" native="true"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>gate</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>remote port</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="IPV4_wo_port" name="net_mask_widget" native="true"/>
-          </item>
-          <item row="5" column="1">
-           <widget class="IPV4_wo_port" name="remove_ip_widget" native="true"/>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>net_ip</string>
+             <string>remote IP</string>
             </property>
            </widget>
           </item>
@@ -97,16 +108,54 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="le_ssid"/>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>dhcpd_ip</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="IPV4_wo_port" name="net_ip_widget" native="true"/>
+          </item>
+          <item row="8" column="1">
+           <widget class="IPV4_wo_port" name="net_gate_widget" native="true"/>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>net_ip</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>net_mask</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>dhcpd_dns</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>remote port</string>
+            </property>
+           </widget>
           </item>
           <item row="6" column="1">
            <widget class="QSpinBox" name="sb_remote_post"/>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_5">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>mask</string>
+             <string>gate</string>
             </property>
            </widget>
           </item>
@@ -117,66 +166,63 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="IPV4_wo_port" name="net_ip_widget" native="true"/>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>dhcpd_ip</string>
-            </property>
-           </widget>
+          <item row="2" column="1">
+           <widget class="IPV4_wo_port" name="ip_widget" native="true"/>
           </item>
           <item row="8" column="0">
-           <widget class="QLabel" name="label_10">
+           <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>net_mask</string>
+             <string>net_gate</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="1">
-           <widget class="IPV4_wo_port" name="dhcpd_dns_widget" native="true"/>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="le_ssid"/>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_6">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>remote IP</string>
+             <string>password</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>dhcpd_dns</string>
-            </property>
-           </widget>
+          <item row="9" column="1">
+           <widget class="IPV4_wo_port" name="net_mask_widget" native="true"/>
           </item>
-          <item row="11" column="1">
+          <item row="15" column="1">
+           <widget class="IPV4_wo_port" name="net_dns_widget" native="true"/>
+          </item>
+          <item row="14" column="1">
            <widget class="QComboBox" name="cb_encrypt_type"/>
           </item>
-          <item row="12" column="0" colspan="2">
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="1" column="0">
-             <widget class="QComboBox" name="cb_serial_to"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QToolButton" name="btn_serial_to">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QToolButton" name="btn_function">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QComboBox" name="cb_function"/>
-            </item>
-           </layout>
+          <item row="3" column="1">
+           <widget class="IPV4_wo_port" name="gate_widget" native="true"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="IPV4_wo_port" name="remove_ip_widget" native="true"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="IPV4_wo_port" name="mask_widget" native="true"/>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>encrypt type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>dhcpd_gate</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="IPV4_wo_port" name="dhcpd_mask_widget" native="true"/>
+          </item>
+          <item row="13" column="1">
+           <widget class="IPV4_wo_port" name="dhcpd_gate_widget" native="true"/>
           </item>
          </layout>
         </item>
@@ -199,11 +245,17 @@
     </layout>
    </item>
    <item>
-    <widget class="LogBox" name="log_widget" native="true"/>
+    <widget class="LogBox" name="log_widget"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>LogBox</class>
+   <extends>QTextEdit</extends>
+   <header>logbox.hpp</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>SerialBox5_fix_baudrate</class>
    <extends>QWidget</extends>
@@ -214,12 +266,6 @@
    <class>IPV4_wo_port</class>
    <extends>QWidget</extends>
    <header>ipv4_wo_port.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>LogBox</class>
-   <extends>QWidget</extends>
-   <header>logbox.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

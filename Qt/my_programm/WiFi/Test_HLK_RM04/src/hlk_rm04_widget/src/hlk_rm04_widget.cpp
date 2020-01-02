@@ -248,7 +248,7 @@ void HLK_RM04_widget::s_test(void)
     emit info(QString("SSID: %1").arg(get_ssid()));
     emit info(QString("Password: %1").arg(get_password()));
     emit info(QString("IP: %1").arg(get_ip().host()));
-    emit info(QString("Remote IP: %1").arg(get_remote_id().host()));
+    emit info(QString("Remote IP: %1").arg(get_remote_ip().host()));
     emit info(QString("Mask: %1").arg(get_mask().host()));
     emit info(QString("Gate: %1").arg(get_gate().host()));
     emit info(QString("Port: %1").arg(get_remote_port()));
@@ -460,7 +460,7 @@ QUrl HLK_RM04_widget::get_ip(void)
     return ui->ip_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_remote_id(void)
+QUrl HLK_RM04_widget::get_remote_ip(void)
 {
     return ui->remove_ip_widget->get_url();
 }
@@ -500,7 +500,7 @@ void HLK_RM04_widget::set_ip(QUrl ip)
     ui->ip_widget->set_url(ip);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::set_remote_id(QUrl remote_id)
+void HLK_RM04_widget::set_remote_ip(QUrl remote_id)
 {
     ui->remove_ip_widget->set_url(remote_id);
 }
@@ -540,9 +540,29 @@ QUrl HLK_RM04_widget::get_dhcpd_ip(void)
     return ui->dhcpd_ip_widget->get_url();
 }
 //--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_dhcpd_mask(void)
+{
+    return ui->dhcpd_mask_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_dhcpd_gate(void)
+{
+    return ui->dhcpd_gate_widget->get_url();
+}
+//--------------------------------------------------------------------------------
 QUrl HLK_RM04_widget::get_dhcpd_dns(void)
 {
     return ui->dhcpd_dns_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_net_dns(void)
+{
+    return ui->net_dns_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+QUrl HLK_RM04_widget::get_net_gate(void)
+{
+    return ui->net_gate_widget->get_url();
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
@@ -550,12 +570,23 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
     QString temp;
     temp.append("at+netmode=1\r");
     temp.append("at+dhcpc=1\r");
-    temp.append("at+remoteip=192.168.11.245\r");
-    temp.append("at+remoteport=8080\r");
+
+    //temp.append("at+remoteip=192.168.11.245\r");
+    temp.append(QString("at+remoteip=%1\r").arg(get_remote_ip().host()));
+    //temp.append("at+remoteport=8080\r");
+    temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
+
     temp.append("at+remotepro=tcp\r");
     temp.append("at+timeout=0\r");
     temp.append("at+mode=server\r");
-    temp.append("at+uart=115200,8,n,1\r");
+
+    //temp.append("at+uart=115200,8,n,1\r");
+    temp.append(QString("at+uart=%1,%2,%3,%4\r")
+                .arg(ui->serial_widget->get_baudRate())
+                .arg(ui->serial_widget->get_dataBits())
+                .arg(ui->serial_widget->get_flowControl())
+                .arg(ui->serial_widget->get_stopBits()));
+
     temp.append("at+uartpacklen=64\r");
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
@@ -569,14 +600,33 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
     QString temp;
     temp.append("at+netmode=1\r");
     temp.append("at+dhcpc=0\r");
-    temp.append("at+net_ip=192.168.11.254,255.255.255.0,192.168.11.1\r");
-    temp.append("at+net_dns=192.168.11.1,8.8.8.8\r");
-    temp.append("at+remoteip=192.168.11.245\r");
-    temp.append("at+remoteport=8080\r");
+
+    //temp.append("at+net_ip=192.168.11.254,255.255.255.0,192.168.11.1\r");
+    temp.append(QString("at+net_ip=%1,%2,%3\r")
+                .arg(get_net_ip().host())
+                .arg(get_net_mask().host())
+                .arg(get_net_gate().host()));
+
+    //temp.append("at+net_dns=192.168.11.1,8.8.8.8\r");
+    temp.append(QString("at+net_dns=%1\r").arg(get_net_dns().host()));
+
+    //temp.append("at+remoteip=192.168.11.245\r");
+    temp.append(QString("at+remoteip=%1\r").arg(get_remote_ip().host()));
+
+    //temp.append("at+remoteport=8080\r");
+    temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
+
     temp.append("at+remotepro=tcp\r");
     temp.append("at+timeout=0\r");
     temp.append("at+mode=server\r");
-    temp.append("at+uart=115200,8,n,1\r");
+
+    //temp.append("at+uart=115200,8,n,1\r");
+    temp.append(QString("at+uart=%1,%2,%3,%4\r")
+                .arg(ui->serial_widget->get_baudRate())
+                .arg(ui->serial_widget->get_dataBits())
+                .arg(ui->serial_widget->get_flowControl())
+                .arg(ui->serial_widget->get_stopBits()));
+
     temp.append("at+uartpacklen=64\r");
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
@@ -589,14 +639,32 @@ void HLK_RM04_widget::s_serial_to_wifi_client(void)
 {
     QString temp;
     temp.append("at+netmode=2\r");
-    temp.append("at+wifi_conf=HI-LINK,wpa2_aes,12345678\r");
+
+    //temp.append("at+wifi_conf=HI-LINK,wpa2_aes,12345678\r");
+    temp.append(QString("at+wifi_conf=%1,%2,%3\r")
+                .arg(get_ssid())
+                .arg(get_encrypt_type())
+                .arg(get_password()));
+
     temp.append("at+dhcpc=1\r");
-    temp.append("at+remoteip=192.168.11.245\r");
-    temp.append("at+remoteport=8080\r");
+
+    //temp.append("at+remoteip=192.168.11.245\r");
+    temp.append(QString("at+remoteip=%1\r").arg(get_remote_ip().host()));
+
+    //temp.append("at+remoteport=8080\r");
+    temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
+
     temp.append("at+remotepro=tcp\r");
     temp.append("at+timeout=0\r");
     temp.append("at+mode=server\r");
-    temp.append("at+uart=115200,8,n,1\r");
+
+    //temp.append("at+uart=115200,8,n,1\r");
+    temp.append(QString("at+uart=%1,%2,%3,%4\r")
+                .arg(ui->serial_widget->get_baudRate())
+                .arg(ui->serial_widget->get_dataBits())
+                .arg(ui->serial_widget->get_flowControl())
+                .arg(ui->serial_widget->get_stopBits()));
+
     temp.append("at+uartpacklen=64\r");
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
@@ -611,14 +679,33 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
     temp.append("at+netmode=2\r");
     temp.append("at+wifi_conf=HI-LINK,wpa2_aes,12345678\r");
     temp.append("at+dhcpc=0\r");
-    temp.append("at+net_ip=192.168.11.254,255.255.255.0,192.168.11.1\r");
-    temp.append("at+net_dns=192.168.11.1,8.8.8.8\r");
-    temp.append("at+remoteip=192.168.11.245\r");
-    temp.append("at+remoteport=8080\r");
+
+    //temp.append("at+net_ip=192.168.11.254,255.255.255.0,192.168.11.1\r");
+    temp.append(QString("at+net_ip=%1,%2,%3\r")
+                .arg(get_net_ip().host())
+                .arg(get_net_mask().host())
+                .arg(get_net_gate().host()));
+
+    //temp.append("at+net_dns=192.168.11.1,8.8.8.8\r");
+    temp.append(QString("at+net_dns=%1\r").arg(get_net_dns().host()));
+
+    //temp.append("at+remoteip=192.168.11.245\r");
+    temp.append(QString("at+remoteip=%1\r").arg(get_remote_ip().host()));
+
+    //temp.append("at+remoteport=8080\r");
+    temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
+
     temp.append("at+remotepro=tcp\r");
     temp.append("at+timeout=0\r");
     temp.append("at+mode=server\r");
-    temp.append("at+uart=115200,8,n,1\r");
+
+    //temp.append("at+uart=115200,8,n,1\r");
+    temp.append(QString("at+uart=%1,%2,%3,%4\r")
+                .arg(ui->serial_widget->get_baudRate())
+                .arg(ui->serial_widget->get_dataBits())
+                .arg(ui->serial_widget->get_flowControl())
+                .arg(ui->serial_widget->get_stopBits()));
+
     temp.append("at+uartpacklen=64\r");
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
@@ -633,17 +720,45 @@ void HLK_RM04_widget::s_serial_to_wifi_ap(void)
     temp.append("at+netmode=3\r");
     temp.append("at+wifi_conf=Hi-Link_,wpa2_aes,0000000000\r");
     temp.append("at+dhcpd=1\r");
-    temp.append("at+dhcpd_ip=192.168.16.100,192.168.16.200,255.255.255.0,192.168.16.254\r");
-    temp.append("at+dhcpd_dns=192.168.16.254,8.8.8.8\r");
+
+    //temp.append("at+dhcpd_ip=192.168.16.100,192.168.16.200,255.255.255.0,192.168.16.254\r");
+    temp.append(QString("at+dhcpd_ip=%1,%2,%3\r")
+                .arg(get_dhcpd_ip().host())
+                .arg(get_dhcpd_mask().host())
+                .arg(get_dhcpd_gate().host()));
+
+    //temp.append("at+dhcpd_dns=192.168.16.254,8.8.8.8\r");
+    temp.append(QString("at+dhcpd_dns=%1\r")
+                .arg(get_dhcpd_dns().host()));
+
     temp.append("at+dhcpd_time=86400\r");
-    temp.append("at+net_ip=192.168.16.254,255.255.255.0,192.168.16.254\r");
-    temp.append("at+net_dns=192.168.16.254,8.8.8.8\r");
-    temp.append("at+remoteip=192.168.11.245\r");
-    temp.append("at+remoteport=8080\r");
+
+    //temp.append("at+net_ip=192.168.16.254,255.255.255.0,192.168.16.254\r");
+    temp.append(QString("at+net_ip=%1,%2,%3\r")
+                .arg(get_net_ip().host())
+                .arg(get_net_mask().host())
+                .arg(get_net_gate().host()));
+
+    //temp.append("at+net_dns=192.168.16.254,8.8.8.8\r");
+    temp.append(QString("at+net_dns=%1\r").arg(get_net_dns().host()));
+
+    //temp.append("at+remoteip=192.168.11.245\r");
+    temp.append(QString("at+remoteip=%1\r").arg(get_remote_ip().host()));
+
+    //temp.append("at+remoteport=8080\r");
+    temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
+
     temp.append("at+remotepro=tcp\r");
     temp.append("at+timeout=0\r");
     temp.append("at+mode=server\r");
-    temp.append("at+uart=115200,8,n,1\r");
+
+    //temp.append("at+uart=115200,8,n,1\r");
+    temp.append(QString("at+uart=%1,%2,%3,%4\r")
+                .arg(ui->serial_widget->get_baudRate())
+                .arg(ui->serial_widget->get_dataBits())
+                .arg(ui->serial_widget->get_flowControl())
+                .arg(ui->serial_widget->get_stopBits()));
+
     temp.append("at+uartpacklen=64\r");
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");

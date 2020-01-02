@@ -31,17 +31,12 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QPushButton;
-class QVBoxLayout;
-class QGridLayout;
-class QLineEdit;
-class QComboBox;
-class QTextEdit;
-class QLineEdit;
-class QLabel;
-class LogBox;
-
+namespace Ui {
+    class WIFI_frame;
+}
+//--------------------------------------------------------------------------------
 class SerialBox5_lite;
+class LogBox;
 //--------------------------------------------------------------------------------
 class WIFI_frame : public MyWidget
 {
@@ -77,29 +72,13 @@ private slots:
     void lock_interface(bool state);
 
 private:
+    Ui::WIFI_frame *ui;
+
     QString caption;
     bool is_server = false;
     bool server_is_created = false;
-    SerialBox5_lite *serial;
     QByteArray  serial_data;
-    LogBox *logBox;
-
-    QLineEdit *le_Network;
-    QLineEdit *le_Password;
-    QLineEdit *le_IP;
-    QLineEdit *le_Gate;
-    QLineEdit *le_Mask;
-    QLineEdit *le_RemoteIP;
-    QLineEdit *le_RemotePort;
-    QComboBox *cb_EncryptType;
-
     bool is_ready = false;
-
-    QPushButton *btn_server;
-    QPushButton *btn_client;
-    QPushButton *btn_send_data;
-
-    QPushButton *btn_read_settings;
 
     void init(void);
     void connect_serial(void);
@@ -110,9 +89,9 @@ private:
     bool send_cmd_create_client(bool is_silense = false);
 
     void wait_msec(int timeout_msec);
-    QVBoxLayout *add_server_cmd_layout(void);
-    QVBoxLayout *add_client_cmd_layout(void);
-    QGridLayout *add_grid_layout(void);
+    void add_server_cmd_layout(void);
+    void add_client_cmd_layout(void);
+    void add_grid_layout(void);
 
     QString get_server_string(void);
     QString get_client_string(void);

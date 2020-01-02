@@ -328,7 +328,6 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
         if (result)
         {
             serial5->close();
-            emit port_is_active(false);
             result = false;
         }
         else
@@ -353,14 +352,12 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
                     emit error(QString("Не удалось установить baudrate %1").arg(fix_baudrate));
                 }
                 get_parameter();
-                emit port_is_active(result);
             }
             else
             {
                 emit error(QString("ERROR: serial [%1] not open (%2)")
                            .arg(serial5->portName())
                            .arg(serial5->errorString()));
-                emit port_is_active(false);
             }
         }
 

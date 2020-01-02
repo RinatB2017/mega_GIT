@@ -124,7 +124,7 @@ void HLK_RM04_widget::init(void)
     add_widget_to_w_lists(ui->cb_encrypt_type);
     add_widget_to_w_lists(ui->btn_function);
     add_widget_to_w_lists(ui->btn_serial_to);
-    lock_iface(true);
+    //lock_iface(false);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::init_serial(void)
@@ -133,7 +133,7 @@ void HLK_RM04_widget::init_serial(void)
 
     connect(this,               SIGNAL(send(QByteArray)),       ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),     this,               SLOT(read_data(QByteArray)));
-    connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,               SLOT(lock_iface(bool)));
+    //connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,               SLOT(lock_iface(bool)));
     connect(ui->serial_widget,  SIGNAL(readChannelFinished()),  this,               SLOT(readChannelFinished()));
 }
 //--------------------------------------------------------------------------------

@@ -511,7 +511,6 @@ void MyWidget::load_QComboBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
             if(obj->property(NO_SAVE).toBool() == false)
             {
                 int size = settings->beginReadArray(obj->objectName());
@@ -522,6 +521,7 @@ void MyWidget::load_QComboBox(QString group_name)
                 }
                 settings->endArray();
             }
+            obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
         }
     }
     settings->endGroup();
@@ -541,7 +541,6 @@ void MyWidget::save_QComboBox(QString group_name)
     {
         if(!obj->objectName().isEmpty())
         {
-            settings->setValue("currentindex", QVariant(obj->currentIndex()));
             if(obj->property(NO_SAVE).toBool() == false)
             {
                 settings->beginWriteArray(obj->objectName(), obj->count());
@@ -553,6 +552,7 @@ void MyWidget::save_QComboBox(QString group_name)
                 }
                 settings->endArray();
             }
+            settings->setValue("currentindex", QVariant(obj->currentIndex()));
         }
     }
 

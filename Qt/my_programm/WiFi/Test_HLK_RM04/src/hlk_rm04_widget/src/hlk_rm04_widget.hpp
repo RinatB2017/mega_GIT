@@ -83,6 +83,8 @@ private:
         ID_uartpacktimeout,
         ID_escape,
         ID_tcp_auto,
+        ID_default,
+        ID_reboot,
         ID_ver
     };
     enum {
@@ -166,6 +168,8 @@ private:
     void s_uartpacktimeout(void);
     void s_escape(void);
     void s_tcp_auto(void);
+    void s_default(void);
+    void s_reboot(void);
     void s_ver(void);
 
     void s_serial_to_ethernet_dynamic_ip(void);

@@ -68,6 +68,8 @@ void HLK_RM04_widget::init(void)
     l_commands.append({ ID_uartpacktimeout, "uartpacktimeout",  &HLK_RM04_widget::s_uartpacktimeout });
     l_commands.append({ ID_escape,          "escape",           &HLK_RM04_widget::s_escape });
     l_commands.append({ ID_tcp_auto,        "tcp_auto",         &HLK_RM04_widget::s_tcp_auto });
+    l_commands.append({ ID_default,         "default",          &HLK_RM04_widget::s_default });
+    l_commands.append({ ID_reboot,          "default",          &HLK_RM04_widget::s_reboot });
     l_commands.append({ ID_ver,             "version",          &HLK_RM04_widget::s_ver });
 
     l_serial_to.clear();
@@ -892,6 +894,18 @@ void HLK_RM04_widget::s_tcp_auto(void)
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+tcp_auto=?", "Tcp auto");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_default(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd("at+default=1", "Ver");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_reboot(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd("at+reboot=1", "Ver");
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_ver(void)

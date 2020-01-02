@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,60 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMessageBox>
+#include <QApplication>
+#include <QObject>
+#include <QWidget>
+#include <QList>
 //--------------------------------------------------------------------------------
-#include "qtsingleapplication.h"
-#include "mysplashscreen.hpp"
+#include <QSignalSpy>
+#include <QTest>
+//--------------------------------------------------------------------------------
+#include "test.hpp"
+//--------------------------------------------------------------------------------
+#define private public
+//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_HLK_RM04_mainbox.hpp"
-#include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "codecs.h"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+Test::Test()
 {
-    set_codecs();
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
-        return -1;
-    }
-
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
-
-    QPixmap pixmap(":/logo/logo.png");
-
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    splash->show();
-
-    qApp->processEvents();
-
-    MainWindow *main_window = new MainWindow();
-
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-    main_window->setCentralWidget(mainBox);
-
-    main_window->show();
-    splash->finish(main_window);
-    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-
-#ifdef QT_DEBUG
-    int test_result = QTest::qExec(new Test(), argc, argv);
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
-
-    return app.exec();
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
+Test::~Test()
+{
+
+}
+//--------------------------------------------------------------------------------
+void Test::test_GUI_network(void)
+{
+    QLineEdit *le_ssid = mw->findChild<QLineEdit *>("le_ssid");
+    QLineEdit *le_password = mw->findChild<QLineEdit *>("le_password");
+    QComboBox *cb_encrypt_type = mw->findChild<QComboBox *>("cb_encrypt_type");
+
+    QVERIFY(le_ssid);
+    QVERIFY(le_password);
+    QVERIFY(cb_encrypt_type);
+}
+//--------------------------------------------------------------------------------
+

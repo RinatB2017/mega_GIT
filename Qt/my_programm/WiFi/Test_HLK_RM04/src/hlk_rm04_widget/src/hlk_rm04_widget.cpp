@@ -50,7 +50,8 @@ void HLK_RM04_widget::init(void)
     l_commands.append({ ID_scan,            "scan",             &HLK_RM04_widget::s_scan });
     l_commands.append({ ID_get_MAC,         "get MAC",          &HLK_RM04_widget::s_get_MAC });
     l_commands.append({ ID_netmode,         "netmode",          &HLK_RM04_widget::s_netmode });
-    l_commands.append({ ID_wifi_conf,       "wifi conf",        &HLK_RM04_widget::s_wifi_conf });
+    l_commands.append({ ID_set_wifi_conf,   "set wifi_conf",    &HLK_RM04_widget::s_set_wifi_conf });
+    l_commands.append({ ID_get_wifi_conf,   "get wifi_conf",    &HLK_RM04_widget::s_get_wifi_conf });
     l_commands.append({ ID_channel,         "channel",          &HLK_RM04_widget::s_channel });
     l_commands.append({ ID_net_IP,          "net IP",           &HLK_RM04_widget::s_net_IP });
     l_commands.append({ ID_net_DNS,         "net_DNS",          &HLK_RM04_widget::s_net_DNS });
@@ -812,7 +813,16 @@ void HLK_RM04_widget::s_netmode(void)
     send_cmd("at+netmode=?", "netmode");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_wifi_conf(void)
+void HLK_RM04_widget::s_set_wifi_conf(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd(QString("at+wifi_conf=%1,%2,%3")
+             .arg(ui->le_ssid->text())
+             .arg(ui->cb_encrypt_type->currentText())
+             .arg(ui->le_password->text()), "wifi conf");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_get_wifi_conf(void)
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+wifi_conf=?", "wifi conf");

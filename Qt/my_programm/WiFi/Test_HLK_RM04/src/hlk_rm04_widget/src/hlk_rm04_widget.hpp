@@ -63,7 +63,8 @@ private:
         ID_scan,
         ID_get_MAC,
         ID_netmode,
-        ID_wifi_conf,
+        ID_set_wifi_conf,
+        ID_get_wifi_conf,
         ID_channel,
         ID_net_IP,
         ID_net_DNS,
@@ -148,7 +149,8 @@ private:
     void s_scan(void);
     void s_get_MAC(void);
     void s_netmode(void);
-    void s_wifi_conf(void);
+    void s_set_wifi_conf(void);
+    void s_get_wifi_conf(void);
     void s_channel(void);
     void s_net_IP(void);
     void s_net_DNS(void);

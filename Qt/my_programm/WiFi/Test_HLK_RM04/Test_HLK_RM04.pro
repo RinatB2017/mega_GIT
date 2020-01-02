@@ -47,6 +47,10 @@ win32 {
 LIB_PATH  = "../../../lib"
 LIB_PATH2 = "../../../lib2"
 
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
+}
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 #include ($$LIB_PATH2/serial5/serial5.pri)

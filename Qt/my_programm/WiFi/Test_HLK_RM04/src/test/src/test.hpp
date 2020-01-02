@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,60 +18,37 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMessageBox>
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include "qtsingleapplication.h"
-#include "mysplashscreen.hpp"
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include <QTest>
+//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_HLK_RM04_mainbox.hpp"
-#include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "codecs.h"
+class MyMainWindow;
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+class Test : public QObject
 {
-    set_codecs();
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
-        return -1;
-    }
+    Q_OBJECT
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+public:
+    Test();
+    ~Test();
 
-    QPixmap pixmap(":/logo/logo.png");
+private slots:
+    void test_GUI_network(void);
+//    void test_func(void);
+//    void test_slider(void);
+//    void test_mainbox(void);
 
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    splash->show();
-
-    qApp->processEvents();
-
-    MainWindow *main_window = new MainWindow();
-
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-    main_window->setCentralWidget(mainBox);
-
-    main_window->show();
-    splash->finish(main_window);
-    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
-
-#ifdef QT_DEBUG
-    int test_result = QTest::qExec(new Test(), argc, argv);
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
-
-    return app.exec();
-}
+private:
+    MainWindow *mw;
+};
 //--------------------------------------------------------------------------------
+#endif

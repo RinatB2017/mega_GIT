@@ -410,6 +410,31 @@ bool SerialBox5_fix_baudrate_win7::add_menu(int index, const QString &title)
     return true;
 }
 //--------------------------------------------------------------------------------
+qint32 SerialBox5_fix_baudrate_win7::get_baudRate(void)
+{
+    return 9600;
+}
+//--------------------------------------------------------------------------------
+QSerialPort::DataBits   SerialBox5_fix_baudrate_win7::get_dataBits(void)
+{
+    return QSerialPort::Data8;
+}
+//--------------------------------------------------------------------------------
+QSerialPort::Parity SerialBox5_fix_baudrate_win7::get_parity(void)
+{
+    return QSerialPort::NoParity;
+}
+//--------------------------------------------------------------------------------
+QSerialPort::StopBits   SerialBox5_fix_baudrate_win7::get_stopBits(void)
+{
+    return QSerialPort::OneStop;
+}
+//--------------------------------------------------------------------------------
+QSerialPort::FlowControl    SerialBox5_fix_baudrate_win7::get_flowControl(void)
+{
+    return QSerialPort::NoFlowControl;
+}
+//--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::set_flag_in_hex(bool state)
 {
     emit debug(QString("state is %1").arg(state ? "true" : "false"));
@@ -453,7 +478,7 @@ void SerialBox5_fix_baudrate_win7::initThread(void)
     // emit trace(Q_FUNC_INFO);
 
     QThread *thread = new QThread;
-    SerialBox5_thread *worker = new SerialBox5_thread;
+    worker = new SerialBox5_thread;
     worker->moveToThread(thread);
 
     connect(worker, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));

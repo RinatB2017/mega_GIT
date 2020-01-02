@@ -41,6 +41,7 @@ class QHBoxLayout;
 class QPushButton;
 class LogBox;
 class SendBox5;
+class SerialBox5_thread;
 //--------------------------------------------------------------------------------
 namespace Ui
 {
@@ -62,6 +63,12 @@ public:
 
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
+
+    qint32 get_baudRate(void);
+    QSerialPort::DataBits       get_dataBits(void);
+    QSerialPort::Parity         get_parity(void);
+    QSerialPort::StopBits       get_stopBits(void);
+    QSerialPort::FlowControl    get_flowControl(void);
 
     void set_caption(QString value);
 
@@ -127,6 +134,8 @@ private:
     void add_frame_text(QFrame *parent,
                         const QString &text);
 #endif
+
+    SerialBox5_thread *worker = nullptr;
 
 #ifdef RS232_SEND
     SendBox5 *sendBox5;

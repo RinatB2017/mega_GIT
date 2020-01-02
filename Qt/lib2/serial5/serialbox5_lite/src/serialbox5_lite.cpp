@@ -568,6 +568,31 @@ bool SerialBox5_lite::add_menu(int index, const QString &title)
     return true;
 }
 //--------------------------------------------------------------------------------
+qint32 SerialBox5_lite::get_baudRate(void)
+{
+    return serial5->baudRate();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::DataBits   SerialBox5_lite::get_dataBits(void)
+{
+    return serial5->dataBits();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::Parity     SerialBox5_lite::get_parity(void)
+{
+    return serial5->parity();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::StopBits   SerialBox5_lite::get_stopBits(void)
+{
+    return serial5->stopBits();
+}
+//--------------------------------------------------------------------------------
+QSerialPort::FlowControl    SerialBox5_lite::get_flowControl(void)
+{
+    return serial5->flowControl();
+}
+//--------------------------------------------------------------------------------
 void SerialBox5_lite::set_flag_in_hex(bool state)
 {
     emit debug(QString("state is %1").arg(state ? "true" : "false"));

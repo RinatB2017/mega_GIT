@@ -60,6 +60,12 @@ public:
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
 
+    qint32 get_baudRate(void);
+    QSerialPort::DataBits       get_dataBits(void);
+    QSerialPort::Parity         get_parity(void);
+    QSerialPort::StopBits       get_stopBits(void);
+    QSerialPort::FlowControl    get_flowControl(void);
+
     QByteArray readAll(void);
 
     void set_caption(QString value);

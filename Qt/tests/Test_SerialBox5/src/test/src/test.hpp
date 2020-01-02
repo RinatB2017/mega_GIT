@@ -33,6 +33,10 @@ public:
     Test();
 
 private slots:
+    void test_serial5(void);
+    void test_serial5_lite(void);
+    void test_serial5_fix_baudrate(void);
+    void test_serial5_fix_baudrate_win7(void);
 
 private:
     MainWindow *mw;

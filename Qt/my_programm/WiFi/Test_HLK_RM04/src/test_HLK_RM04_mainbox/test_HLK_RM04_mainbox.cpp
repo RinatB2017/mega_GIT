@@ -61,6 +61,8 @@ void MainBox::init(void)
     //main_layout->addWidget(frame_2);
     //main_layout->addWidget(frame_3);
 
+    connect(ui->tcp_widget, &TCP_Server::output,    this,   &MainBox::info);
+
     createTestBar();
 
     //setLayout(main_layout);
@@ -138,6 +140,8 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    ui->tcp_widget->createServerOnPort(QHostAddress::AnyIPv4, 5000);
     return true;
 }
 //--------------------------------------------------------------------------------

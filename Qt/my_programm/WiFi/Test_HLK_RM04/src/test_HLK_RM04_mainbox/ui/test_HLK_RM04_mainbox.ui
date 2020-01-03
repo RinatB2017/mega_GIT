@@ -15,6 +15,9 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
+    <widget class="TCP_Server" name="tcp_widget" native="true"/>
+   </item>
+   <item>
     <widget class="WIFI_frame" name="wifi_framewidget" native="true"/>
    </item>
    <item>
@@ -33,6 +36,12 @@
    <class>HLK_RM04_widget</class>
    <extends>QWidget</extends>
    <header>hlk_rm04_widget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TCP_Server</class>
+   <extends>QWidget</extends>
+   <header>tcp_server.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

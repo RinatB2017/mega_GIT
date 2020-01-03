@@ -21,7 +21,7 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += SAVE_WIDGETS_COMBOBOX
 DEFINES += SAVE_WIDGETS_LINEEDIT
 DEFINES += SAVE_WIDGETS_SPINBOX
-DEFINES += NO_LOG
+#DEFINES += NO_LOG
 
 #DEFINES += SAVE_INI
 
@@ -62,6 +62,8 @@ include ($$LIB_PATH2/serial5/sendbox5/sendbox5.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 include ($$LIB_PATH2/wifi_frame/wifi_frame.pri)
 include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
+
+include ($$LIB_PATH2/ethernet/tcp_server.pri)
 
 include (src/hlk_rm04_widget/hlk_rm04_widget.pri)
 

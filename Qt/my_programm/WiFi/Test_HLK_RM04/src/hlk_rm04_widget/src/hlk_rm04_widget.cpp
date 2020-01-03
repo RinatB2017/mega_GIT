@@ -49,20 +49,28 @@ void HLK_RM04_widget::init(void)
     l_commands.append({ ID_info,            "info",             &HLK_RM04_widget::s_info });
     l_commands.append({ ID_scan,            "scan",             &HLK_RM04_widget::s_scan });
     l_commands.append({ ID_get_MAC,         "get MAC",          &HLK_RM04_widget::s_get_MAC });
-    l_commands.append({ ID_netmode,         "netmode",          &HLK_RM04_widget::s_netmode });
+    l_commands.append({ ID_get_netmode,     "get netmode",      &HLK_RM04_widget::s_get_netmode });
+    l_commands.append({ ID_set_netmode,     "set netmode",      &HLK_RM04_widget::s_set_netmode });
     l_commands.append({ ID_set_wifi_conf,   "set wifi_conf",    &HLK_RM04_widget::s_set_wifi_conf });
     l_commands.append({ ID_get_wifi_conf,   "get wifi_conf",    &HLK_RM04_widget::s_get_wifi_conf });
     l_commands.append({ ID_channel,         "channel",          &HLK_RM04_widget::s_channel });
-    l_commands.append({ ID_net_IP,          "net IP",           &HLK_RM04_widget::s_net_IP });
-    l_commands.append({ ID_net_DNS,         "net_DNS",          &HLK_RM04_widget::s_net_DNS });
+    l_commands.append({ ID_get_net_IP,      "get net IP",       &HLK_RM04_widget::s_get_net_IP });
+    l_commands.append({ ID_set_net_IP,      "set net IP",       &HLK_RM04_widget::s_set_net_IP });
+    l_commands.append({ ID_get_net_DNS,     "get net_DNS",      &HLK_RM04_widget::s_get_net_DNS });
+    l_commands.append({ ID_set_net_DNS,     "set net_DNS",      &HLK_RM04_widget::s_set_net_DNS });
     l_commands.append({ ID_dhcpd,           "dhcpd",            &HLK_RM04_widget::s_dhcpd });
-    l_commands.append({ ID_dhcpd_ip,        "dhcp IP",          &HLK_RM04_widget::s_dhcpd_ip });
-    l_commands.append({ ID_dhcpd_dns,       "dhcpd DNS",        &HLK_RM04_widget::s_dhcpd_dns });
-    l_commands.append({ ID_dhcpd_time,      "dhcpd TIME",       &HLK_RM04_widget::s_dhcpd_time });
+    l_commands.append({ ID_get_dhcpd_ip,    "GET dhcp IP",      &HLK_RM04_widget::s_get_dhcpd_ip });
+    l_commands.append({ ID_set_dhcpd_ip,    "SET dhcp IP",      &HLK_RM04_widget::s_set_dhcpd_ip });
+    l_commands.append({ ID_get_dhcpd_dns,   "get dhcpd DNS",    &HLK_RM04_widget::s_get_dhcpd_dns });
+    l_commands.append({ ID_set_dhcpd_dns,   "set dhcpd DNS",    &HLK_RM04_widget::s_set_dhcpd_dns });
+    l_commands.append({ ID_get_dhcpd_time,  "get dhcpd TIME",   &HLK_RM04_widget::s_get_dhcpd_time });
+    l_commands.append({ ID_set_dhcpd_time,  "set dhcpd TIME",   &HLK_RM04_widget::s_set_dhcpd_time });
     l_commands.append({ ID_net_commit,      "net commit",       &HLK_RM04_widget::s_net_commit });
     l_commands.append({ ID_out_trans,       "out trans",        &HLK_RM04_widget::s_out_trans });
-    l_commands.append({ ID_remote_IP,       "remote IP",        &HLK_RM04_widget::s_remote_IP });
-    l_commands.append({ ID_remote_port,     "remote PORT",      &HLK_RM04_widget::s_remote_port });
+    l_commands.append({ ID_get_remote_IP,   "GET remote IP",    &HLK_RM04_widget::s_get_remote_IP });
+    l_commands.append({ ID_set_remote_IP,   "SET remote IP",    &HLK_RM04_widget::s_set_remote_IP });
+    l_commands.append({ ID_get_remote_port, "GET remote PORT",  &HLK_RM04_widget::s_get_remote_port });
+    l_commands.append({ ID_set_remote_port, "SET remote PORT",  &HLK_RM04_widget::s_set_remote_port });
     l_commands.append({ ID_remote_pro,      "remote PRO",       &HLK_RM04_widget::s_remote_pro });
     l_commands.append({ ID_timeout,         "timeout",          &HLK_RM04_widget::s_timeout });
     l_commands.append({ ID_mode,            "mode",             &HLK_RM04_widget::s_mode });
@@ -93,6 +101,9 @@ void HLK_RM04_widget::init(void)
 
     connect(ui->btn_function,   &QToolButton::clicked,  this,   &HLK_RM04_widget::choice_command);
     connect(ui->btn_serial_to,  &QToolButton::clicked,  this,   &HLK_RM04_widget::choice_serial_to);
+    connect(ui->btn_send,       &QToolButton::clicked,  this,   &HLK_RM04_widget::send_text);
+
+    connect(ui->le_send,        &QLineEdit::returnPressed,  this,   &HLK_RM04_widget::send_text);
 
     ui->cb_encrypt_type->addItem("none");
     ui->cb_encrypt_type->addItem("wep_open");
@@ -101,8 +112,15 @@ void HLK_RM04_widget::init(void)
     ui->cb_encrypt_type->addItem("wpa_aes");
     ui->cb_encrypt_type->addItem("wpa2_tkip");
     ui->cb_encrypt_type->addItem("wpa2_aes");
-    ui->cb_encrypt_type->addItem("wpa/wpa2 tkip");
-    ui->cb_encrypt_type->addItem("wpa/wpa2 aes");
+    ui->cb_encrypt_type->addItem("wpawpa2_tkip");
+    ui->cb_encrypt_type->addItem("wpawpa2_aes");
+
+    ui->cb_netmode->addItem("Default setup");
+    ui->cb_netmode->addItem("Ethernet");
+    ui->cb_netmode->addItem("Wifi client");
+    ui->cb_netmode->addItem("Wifi ap");
+
+    ui->sb_dhcpd_time_widget->setRange(0, INT_MAX);
 
     ui->sb_remote_post->setRange(0, 0xFFFF);
 
@@ -165,7 +183,7 @@ void HLK_RM04_widget::read_data(QByteArray ba)
         return;
     }
 
-    //emit debug(ba);
+    emit debug(ba);
     serial_data.append(ba);
 }
 //--------------------------------------------------------------------------------
@@ -604,6 +622,13 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
 {
     QString temp;
     temp.append("at+netmode=1\r");
+
+    //temp.append("at+wifi_conf=HI-LINK,wpa2_aes,12345678\r");
+    temp.append(QString("at+wifi_conf=%1,%2,%3\r")
+                .arg(get_ssid())
+                .arg(get_encrypt_type())
+                .arg(get_password()));
+
     temp.append("at+dhcpc=1\r");
 
     //temp.append("at+remoteip=192.168.11.245\r");
@@ -635,6 +660,13 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
 {
     QString temp;
     temp.append("at+netmode=1\r");
+
+    //temp.append("at+wifi_conf=HI-LINK,wpa2_aes,12345678\r");
+    temp.append(QString("at+wifi_conf=%1,%2,%3\r")
+                .arg(get_ssid())
+                .arg(get_encrypt_type())
+                .arg(get_password()));
+
     temp.append("at+dhcpc=0\r");
 
     //temp.append("at+net_ip=192.168.11.254,255.255.255.0,192.168.11.1\r");
@@ -715,7 +747,13 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
 {
     QString temp;
     temp.append("at+netmode=2\r");
-    temp.append("at+wifi_conf=HI-LINK,wpa2_aes,12345678\r");
+
+    //temp.append("at+wifi_conf=HI-LINK,wpa2_aes,12345678\r");
+    temp.append(QString("at+wifi_conf=%1,%2,%3\r")
+                .arg(get_ssid())
+                .arg(get_encrypt_type())
+                .arg(get_password()));
+
     temp.append("at+dhcpc=0\r");
 
     //temp.append("at+net_ip=192.168.11.254,255.255.255.0,192.168.11.1\r");
@@ -807,10 +845,18 @@ void HLK_RM04_widget::s_serial_to_wifi_ap(void)
     send_command(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_netmode(void)
+void HLK_RM04_widget::s_get_netmode(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+netmode=?", "netmode");
+    send_cmd("at+netmode=?", "get netmode");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_set_netmode(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd(QString("at+netmode=%1")
+             .arg(ui->cb_netmode->currentIndex()),
+             "set netmode");
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_set_wifi_conf(void)
@@ -834,16 +880,34 @@ void HLK_RM04_widget::s_channel(void)
     send_cmd("at+Channel=?", "Channel");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_net_IP(void)
+void HLK_RM04_widget::s_get_net_IP(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+net_ip=?", "IP");
+    send_cmd("at+net_ip=?", "GET net ip");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_net_DNS(void)
+void HLK_RM04_widget::s_set_net_IP(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+net_dns=?", "DNS");
+    send_cmd(QString("at+net_ip=%1,%2,%3\r")
+             .arg(get_net_ip().host())
+             .arg(get_net_mask().host())
+             .arg(get_net_gate().host()),
+             "SET net ip");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_get_net_DNS(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd("at+net_dns=?", "get DNS");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_set_net_DNS(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd(QString("at+net_dns=%1")
+             .arg(ui->net_dns_widget->get_url().host()),
+             "set DNS");
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_dhcpd(void)
@@ -852,23 +916,46 @@ void HLK_RM04_widget::s_dhcpd(void)
     send_cmd("at+dhcpd=?", "DHCPD");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_dhcpd_ip(void)
+void HLK_RM04_widget::s_get_dhcpd_ip(void)
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+dhcpd_ip=?", "DHCPD IP");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_dhcpd_dns(void)
+void HLK_RM04_widget::s_set_dhcpd_ip(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+dhcpd_dns=?", "DHCPD DNS");
-
+    send_cmd(QString("at+dhcpd_ip=%1")
+             .arg(ui->dhcpd_ip_widget->get_url().host()),
+             "DHCPD IP");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_dhcpd_time(void)
+void HLK_RM04_widget::s_get_dhcpd_dns(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+dhcpd_time=?", "DHCPD TIME");
+    send_cmd("at+dhcpd_dns=?", "get DHCPD DNS");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_set_dhcpd_dns(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd(QString("at+dhcpd_dns=%1")
+             .arg(ui->dhcpd_dns_widget->get_url().host()),
+             "set DHCPD DNS");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_get_dhcpd_time(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd("at+dhcpd_time=?", "get DHCPD TIME");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_set_dhcpd_time(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd(QString("at+dhcpd_time=%1")
+             .arg(ui->sb_dhcpd_time_widget->value()),
+             "set DHCPD TIME");
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_net_commit(void)
@@ -883,16 +970,32 @@ void HLK_RM04_widget::s_out_trans(void)
     send_cmd("at+out_trans=?", "Out trans", 1);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_remote_IP(void)
+void HLK_RM04_widget::s_get_remote_IP(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+remoteip=?", "Remote IP");
+    send_cmd("at+remoteip=?", "Get remote IP");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_remote_port(void)
+void HLK_RM04_widget::s_set_remote_IP(void)
 {
     emit trace(Q_FUNC_INFO);
-    send_cmd("at+remoteport=?", "Remote port");
+    send_cmd(QString("at+remoteip=%1")
+             .arg(ui->remote_ip_widget->get_url().host()),
+             "Set remote IP");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_get_remote_port(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd("at+remoteport=?", "Get remote port");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::s_set_remote_port(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_cmd(QString("at+remoteport=%1")
+             .arg(ui->sb_remote_post->value()),
+             "Set remote port");
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::s_remote_pro(void)
@@ -959,6 +1062,12 @@ void HLK_RM04_widget::s_ver(void)
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+ver=?", "Ver");
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::send_text(void)
+{
+    emit trace(Q_FUNC_INFO);
+    send_command(ui->le_send->text());
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::updateText(void)

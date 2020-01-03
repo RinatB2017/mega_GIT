@@ -55,6 +55,7 @@ private slots:
 private slots:
     void choice_command(void);
     void choice_serial_to(void);
+    void send_text(void);
 
 private:
     enum {
@@ -62,20 +63,28 @@ private:
         ID_info,
         ID_scan,
         ID_get_MAC,
-        ID_netmode,
-        ID_set_wifi_conf,
+        ID_get_netmode,
+        ID_set_netmode,
         ID_get_wifi_conf,
+        ID_set_wifi_conf,
         ID_channel,
-        ID_net_IP,
-        ID_net_DNS,
+        ID_get_net_IP,
+        ID_set_net_IP,
+        ID_get_net_DNS,
+        ID_set_net_DNS,
         ID_dhcpd,
-        ID_dhcpd_ip,
-        ID_dhcpd_dns,
-        ID_dhcpd_time,
+        ID_get_dhcpd_ip,
+        ID_set_dhcpd_ip,
+        ID_get_dhcpd_dns,
+        ID_set_dhcpd_dns,
+        ID_get_dhcpd_time,
+        ID_set_dhcpd_time,
         ID_net_commit,
         ID_out_trans,
-        ID_remote_IP,
-        ID_remote_port,
+        ID_get_remote_IP,
+        ID_set_remote_IP,
+        ID_get_remote_port,
+        ID_set_remote_port,
         ID_remote_pro,
         ID_timeout,
         ID_mode,
@@ -148,20 +157,28 @@ private:
     void s_info(void);
     void s_scan(void);
     void s_get_MAC(void);
-    void s_netmode(void);
-    void s_set_wifi_conf(void);
-    void s_get_wifi_conf(void);
+        void s_get_netmode(void);
+        void s_set_netmode(void);
+        void s_get_wifi_conf(void);
+        void s_set_wifi_conf(void);
     void s_channel(void);
-    void s_net_IP(void);
-    void s_net_DNS(void);
+        void s_get_net_IP(void);
+        void s_set_net_IP(void);
+        void s_get_net_DNS(void);
+        void s_set_net_DNS(void);
     void s_dhcpd(void);
-    void s_dhcpd_ip(void);
-    void s_dhcpd_dns(void);
-    void s_dhcpd_time(void);
+        void s_get_dhcpd_ip(void);
+        void s_set_dhcpd_ip(void);
+        void s_get_dhcpd_dns(void);
+        void s_set_dhcpd_dns(void);
+        void s_get_dhcpd_time(void);
+        void s_set_dhcpd_time(void);
     void s_net_commit(void);
     void s_out_trans(void);
-    void s_remote_IP(void);
-    void s_remote_port(void);
+        void s_get_remote_IP(void);
+        void s_set_remote_IP(void);
+        void s_get_remote_port(void);
+        void s_set_remote_port(void);
     void s_remote_pro(void);
     void s_timeout(void);
     void s_mode(void);

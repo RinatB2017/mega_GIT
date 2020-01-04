@@ -147,7 +147,7 @@
            <widget class="IPV4_wo_port" name="net_mask_widget" native="true"/>
           </item>
           <item row="8" column="1">
-           <widget class="QSpinBox" name="sb_remote_post"/>
+           <widget class="QSpinBox" name="sb_remote_port"/>
           </item>
           <item row="13" column="0">
            <widget class="QLabel" name="label_12">
@@ -303,7 +303,7 @@
   <tabstop>le_ssid</tabstop>
   <tabstop>le_password</tabstop>
   <tabstop>cb_encrypt_type</tabstop>
-  <tabstop>sb_remote_post</tabstop>
+  <tabstop>sb_remote_port</tabstop>
   <tabstop>cb_function</tabstop>
   <tabstop>btn_function</tabstop>
   <tabstop>cb_serial_to</tabstop>

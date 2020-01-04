@@ -141,7 +141,14 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
 
-    ui->tcp_widget->createServerOnPort(QHostAddress::AnyIPv4, 5000);
+    //ui->tcp_widget->createServerOnPort(QHostAddress::AnyIPv4, 5000);
+
+//    QUrl url;
+//    url.setHost("192.168.0.1");
+//    ui->hlk_rm04_widget->set_ip(url);
+//    url.setHost("255.255.255.0");
+//    ui->hlk_rm04_widget->set_mask(url);
+
     return true;
 }
 //--------------------------------------------------------------------------------

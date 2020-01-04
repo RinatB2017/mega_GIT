@@ -102,6 +102,7 @@ void IPV4_wo_port::set_url(QUrl url)
         b->setValue(QString(sl[1]).toInt());
         c->setValue(QString(sl[2]).toInt());
         d->setValue(QString(sl[3]).toInt());
+        update();
     }
     else
     {

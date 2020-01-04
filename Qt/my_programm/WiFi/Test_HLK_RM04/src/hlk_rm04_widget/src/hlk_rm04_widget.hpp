@@ -57,6 +57,8 @@ private slots:
     void choice_serial_to(void);
     void send_text(void);
 
+    void init_widgets(void);
+
 private:
     enum {
         ID_test = 0,

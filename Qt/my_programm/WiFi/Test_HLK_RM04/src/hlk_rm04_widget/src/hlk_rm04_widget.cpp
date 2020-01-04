@@ -122,7 +122,7 @@ void HLK_RM04_widget::init(void)
 
     ui->sb_dhcpd_time_widget->setRange(0, INT_MAX);
 
-    ui->sb_remote_post->setRange(0, 0xFFFF);
+    ui->sb_remote_port->setRange(0, 0xFFFF);
 
     ui->cb_function->setProperty(NO_SAVE, true);
     ui->cb_serial_to->setProperty(NO_SAVE, true);
@@ -132,18 +132,50 @@ void HLK_RM04_widget::init(void)
     ui->btn_serial_to->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
     init_serial();
+
+    //---
+    QTimer::singleShot(100, this, SLOT(init_widgets()));
+    //---
+
     load_widgets(APPNAME);
 
     //init_w_lists();
     add_widget_to_w_lists(ui->le_ssid);
     add_widget_to_w_lists(ui->le_password);
-    add_widget_to_w_lists(ui->sb_remote_post);
+    add_widget_to_w_lists(ui->sb_remote_port);
     add_widget_to_w_lists(ui->cb_function);
     add_widget_to_w_lists(ui->cb_serial_to);
     add_widget_to_w_lists(ui->cb_encrypt_type);
     add_widget_to_w_lists(ui->btn_function);
     add_widget_to_w_lists(ui->btn_serial_to);
     //lock_iface(false);
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::init_widgets(void)
+{
+    emit trace(Q_FUNC_INFO);
+    ui->le_ssid->setText("Ssid");
+    ui->le_password->setText("Password2");
+
+    QUrl url;
+    url.setHost("192.168.0.1");
+    ui->ip_widget->set_url(url);
+    ui->gate_widget->set_url(url);
+    ui->net_ip_widget->set_url(url);
+    ui->dhcpd_ip_widget->set_url(url);
+    ui->dhcpd_gate_widget->set_url(url);
+    ui->net_dns_widget->set_url(url);
+
+    url.setHost("192.168.0.10");
+    ui->remote_ip_widget->set_url(url);
+
+    ui->sb_remote_port->setValue(5000);
+
+    url.setHost("255.255.255.0");
+    ui->mask_widget->set_url(url);
+    ui->net_gate_widget->set_url(url);
+    ui->net_mask_widget->set_url(url);
+    ui->dhcpd_mask_widget->set_url(url);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::init_serial(void)
@@ -530,7 +562,7 @@ QUrl HLK_RM04_widget::get_gate(void)
 //--------------------------------------------------------------------------------
 int HLK_RM04_widget::get_remote_port(void)
 {
-    return ui->sb_remote_post->value();
+    return ui->sb_remote_port->value();
 }
 //--------------------------------------------------------------------------------
 QString HLK_RM04_widget::get_encrypt_type(void)
@@ -570,7 +602,7 @@ void HLK_RM04_widget::set_gate(QUrl gate)
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::set_remote_port(int port)
 {
-    ui->sb_remote_post->setValue(port);
+    ui->sb_remote_port->setValue(port);
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::set_encrypt_type(QString encrypt_type)
@@ -994,7 +1026,7 @@ void HLK_RM04_widget::s_set_remote_port(void)
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+remoteport=%1")
-             .arg(ui->sb_remote_post->value()),
+             .arg(ui->sb_remote_port->value()),
              "Set remote port");
 }
 //--------------------------------------------------------------------------------

@@ -58,10 +58,12 @@ void HID_device::init(void)
 
     createTestBar();
 
-    connect(ui->btn_open,   SIGNAL(clicked()), this, SLOT(dev_open()));
-    connect(ui->btn_close,  SIGNAL(clicked()), this, SLOT(dev_close()));
-    connect(ui->btn_send,   SIGNAL(clicked()), this, SLOT(dev_send()));
-    connect(ui->btn_show,   SIGNAL(clicked()), this, SLOT(show_state()));
+    connect(ui->btn_list_usb,   &QPushButton::clicked,  this,   &HID_device::dev_list);
+    connect(ui->btn_open,       &QPushButton::clicked,  this,   &HID_device::dev_open);
+    connect(ui->btn_close,      &QPushButton::clicked,  this,   &HID_device::dev_close);
+    connect(ui->btn_show,       &QPushButton::clicked,  this,   &HID_device::show_state);
+    connect(ui->btn_read,       &QPushButton::clicked,  this,   &HID_device::dev_read);
+    connect(ui->btn_write,      &QPushButton::clicked,  this,   &HID_device::dev_write);
 
     setFixedSize(sizeHint());
     load_widgets(APPNAME);
@@ -128,56 +130,12 @@ void HID_device::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HID_device::test_0(void)
+void HID_device::dev_list(void)
 {
-    emit info("Test_0()");
-
-    AD9106_Box *box = new AD9106_Box();
-    box->show();
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_1(void)
-{
-    emit info("Test_1()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_2(void)
-{
-    emit info("Test_2()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_3(void)
-{
-    emit info("Test_3()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_4(void)
-{
-    emit info("Test_4()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_5(void)
-{
-    emit info("Test_5()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::dev_open(void)
-{
-    int res;
-    //wchar_t wstr[MAX_STR];
-    // uint16_t VID = 0x0483;
-    // uint16_t PID = 0x5711;
-
-//    uint16_t VID = 0x08bb;
-//    uint16_t PID = 0x2704;
-
-    uint16_t VID = static_cast<uint16_t>(ui->vid_widget->value());
-    uint16_t PID = static_cast<uint16_t>(ui->pid_widget->value());
-
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;
 
-    devs = hid_enumerate(VID, PID);
+    devs = hid_enumerate(0, 0);
     cur_dev = devs;
     if(cur_dev == nullptr)
     {
@@ -191,6 +149,10 @@ void HID_device::dev_open(void)
         emit info(QString("  type: %1:%2 ").arg(cur_dev->vendor_id).arg(cur_dev->product_id));
         emit info(QString("  path: %1").arg(cur_dev->path));
         emit info(QString("  serial_number: %1").arg(QString::fromWCharArray(cur_dev->serial_number)));
+        emit error(QString("  VID:PID %1:%2")
+                   .arg(cur_dev->vendor_id, 4, 16, QChar('0'))
+                   .arg(cur_dev->product_id, 4, 16, QChar('0'))
+                   .toUpper());
         emit info("");
         emit info(QString("  Manufacturer: %1").arg(QString::fromWCharArray(cur_dev->manufacturer_string)));
         emit info(QString("  Product:      %1").arg(QString::fromWCharArray(cur_dev->product_string)));
@@ -198,12 +160,21 @@ void HID_device::dev_open(void)
         cur_dev = cur_dev->next;
     }
     hid_free_enumeration(devs);
+}
+//--------------------------------------------------------------------------------
+void HID_device::dev_open(void)
+{
+    uint16_t VID = static_cast<uint16_t>(ui->vid_widget->value());
+    uint16_t PID = static_cast<uint16_t>(ui->pid_widget->value());
 
     // Open the device using the VID, PID,
     // and optionally the Serial number.
     int cnt_err = 0;
+    int res = 0;
     while(dev == nullptr)
     {
+        res = hid_init();
+        emit info(QString("hid_int return %1").arg(res));
         dev = hid_open(VID, PID, nullptr);
         if(dev == nullptr)
         {
@@ -250,6 +221,8 @@ void HID_device::dev_open(void)
     {
         emit error("Ошибка: hid_get_serial_number_string");
     }
+
+    hid_set_nonblocking(dev, 1);
 }
 //--------------------------------------------------------------------------------
 void HID_device::dev_close(void)
@@ -261,7 +234,7 @@ void HID_device::dev_close(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HID_device::dev_send(void)
+void HID_device::dev_read(void)
 {
     if(dev == nullptr)
     {
@@ -269,27 +242,39 @@ void HID_device::dev_send(void)
         return;
     }
 
-    int len = sizeof(output_buf);
-
-    //---
-    for(int n=0; n<len; n++)
-    {
-        output_buf[n] = 0;
-    }
-    //---
-
-    int res = 0;
-    res = hid_send_feature_report(dev,  output_buf, static_cast<size_t>(len));
+    int res=0;
+    buf[0]=0;
+    res = hid_get_feature_report(dev, buf, SIZE_BUF);
     if(res < 0)
     {
-        emit error(QString("hid_send_feature_report return %1").arg(res));
+        emit error(QString("hid_get_feature_report return %1").arg(res));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
         return;
     }
 
     QByteArray ba;
-    ba.append(reinterpret_cast<char *>(&output_buf),    static_cast<int>(len));
-    emit debug(ba.toHex().data());
+    ba.append(reinterpret_cast<char *>(&buf), SIZE_BUF);
+    emit info(ba.toHex().data());
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::dev_write(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
 
+    int ret=0;
+    memset(buf, 0xFF, SIZE_BUF);
+    buf[0] = 0;
+    ret = hid_send_feature_report(dev, buf, SIZE_BUF);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        return;
+    }
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -301,13 +286,8 @@ void HID_device::show_state(void)
         return;
     }
 
-    size_t len = sizeof(output_buf);
-
-    memset(output_buf, 0, len);
-    output_buf[0] = 0x04;
-
     int res = 0;
-    res = hid_send_feature_report(dev, output_buf, len);
+    res = hid_send_feature_report(dev, buf, SIZE_BUF);
     if(res < 0)
     {
         emit error(QString("hid_send_feature_report return %1").arg(res));
@@ -315,11 +295,53 @@ void HID_device::show_state(void)
     }
 
     QByteArray ba;
-    ba.append(reinterpret_cast<char *>(&output_buf), static_cast<int>(len));
+    ba.append(reinterpret_cast<char *>(&buf), SIZE_BUF);
     emit info(ba.toHex().data());
 
     emit info("OK");
 
+}
+//--------------------------------------------------------------------------------
+void HID_device::wait(int max_time_ms)
+{
+    QElapsedTimer time;
+    time.start();
+    while(time.elapsed() < max_time_ms)
+    {
+        QCoreApplication::processEvents();
+    }
+}
+//--------------------------------------------------------------------------------
+void HID_device::test_0(void)
+{
+    emit info("Test_0()");
+    //AD9106_Box *box = new AD9106_Box();
+    //box->show();
+}
+//--------------------------------------------------------------------------------
+void HID_device::test_1(void)
+{
+    emit info("Test_1()");
+}
+//--------------------------------------------------------------------------------
+void HID_device::test_2(void)
+{
+    emit info("Test_2()");
+}
+//--------------------------------------------------------------------------------
+void HID_device::test_3(void)
+{
+    emit info("Test_3()");
+}
+//--------------------------------------------------------------------------------
+void HID_device::test_4(void)
+{
+    emit info("Test_4()");
+}
+//--------------------------------------------------------------------------------
+void HID_device::test_5(void)
+{
+    emit info("Test_5()");
 }
 //--------------------------------------------------------------------------------
 void HID_device::updateText(void)

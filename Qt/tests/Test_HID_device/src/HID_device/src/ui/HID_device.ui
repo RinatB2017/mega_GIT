@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>224</width>
-    <height>246</height>
+    <width>140</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,6 +48,13 @@
        </layout>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_list_usb">
+        <property name="text">
+         <string>List</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_open">
         <property name="text">
          <string>Open</string>
@@ -55,16 +62,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_close">
+       <widget class="QPushButton" name="btn_read">
         <property name="text">
-         <string>Close</string>
+         <string>Read</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_send">
+       <widget class="QPushButton" name="btn_write">
         <property name="text">
-         <string>Send</string>
+         <string>Write</string>
         </property>
        </widget>
       </item>
@@ -72,6 +79,13 @@
        <widget class="QPushButton" name="btn_show">
         <property name="text">
          <string>Show state</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_close">
+        <property name="text">
+         <string>Close</string>
         </property>
        </widget>
       </item>
@@ -104,6 +118,14 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>btn_list_usb</tabstop>
+  <tabstop>btn_open</tabstop>
+  <tabstop>btn_read</tabstop>
+  <tabstop>btn_write</tabstop>
+  <tabstop>btn_show</tabstop>
+  <tabstop>btn_close</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -39,6 +39,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #define MAX_STR 255
+#define SIZE_BUF 64
 //--------------------------------------------------------------------------------
 namespace Ui {
     class HID_device;
@@ -71,9 +72,11 @@ private slots:
     void show_state(void);
 
     //---
+    void dev_list(void);
     void dev_open(void);
     void dev_close(void);
-    void dev_send(void);
+    void dev_read(void);
+    void dev_write(void);
     //---
 
 private:
@@ -97,8 +100,7 @@ private:
     //---
     hid_device *dev = nullptr;
 
-    uint8_t output_buf[0x40];
-
+    uint8_t buf[SIZE_BUF];
     //---
 
     QComboBox *cb_test;
@@ -107,8 +109,8 @@ private:
     wchar_t wstr[MAX_STR];
 
     void init(void);
-
     void createTestBar(void);
+    void wait(int max_time_ms);
 
     void updateText(void);
     bool programm_is_exit(void);

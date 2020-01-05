@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>140</width>
-    <height>330</height>
+    <width>128</width>
+    <height>287</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,13 +76,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_show">
-        <property name="text">
-         <string>Show state</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btn_close">
         <property name="text">
          <string>Close</string>
@@ -123,7 +116,6 @@
   <tabstop>btn_open</tabstop>
   <tabstop>btn_read</tabstop>
   <tabstop>btn_write</tabstop>
-  <tabstop>btn_show</tabstop>
   <tabstop>btn_close</tabstop>
  </tabstops>
  <resources/>

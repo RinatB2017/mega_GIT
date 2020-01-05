@@ -60,10 +60,9 @@ void HID_device::init(void)
 
     connect(ui->btn_list_usb,   &QPushButton::clicked,  this,   &HID_device::dev_list);
     connect(ui->btn_open,       &QPushButton::clicked,  this,   &HID_device::dev_open);
-    connect(ui->btn_close,      &QPushButton::clicked,  this,   &HID_device::dev_close);
-    connect(ui->btn_show,       &QPushButton::clicked,  this,   &HID_device::show_state);
     connect(ui->btn_read,       &QPushButton::clicked,  this,   &HID_device::dev_read);
     connect(ui->btn_write,      &QPushButton::clicked,  this,   &HID_device::dev_write);
+    connect(ui->btn_close,      &QPushButton::clicked,  this,   &HID_device::dev_close);
 
     setFixedSize(sizeHint());
     load_widgets(APPNAME);
@@ -174,7 +173,10 @@ void HID_device::dev_open(void)
     while(dev == nullptr)
     {
         res = hid_init();
-        emit info(QString("hid_int return %1").arg(res));
+        if(res != 0)
+        {
+            emit error(QString("hid_int return %1").arg(res));
+        }
         dev = hid_open(VID, PID, nullptr);
         if(dev == nullptr)
         {
@@ -244,6 +246,8 @@ void HID_device::dev_read(void)
 
     int res=0;
     buf[0]=0;
+//    buf[1]=0x85;
+//    buf[2]=0x01;
     res = hid_get_feature_report(dev, buf, SIZE_BUF);
     if(res < 0)
     {
@@ -267,39 +271,40 @@ void HID_device::dev_write(void)
     }
 
     int ret=0;
+    int len=0;
     memset(buf, 0xFF, SIZE_BUF);
+
     buf[0] = 0;
-    ret = hid_send_feature_report(dev, buf, SIZE_BUF);
+    buf[1] = 0x85;
+    buf[2] = 0x01;
+    buf[3] = 0x09;
+    buf[4] = 0x01;
+    buf[5] = 0x15;
+    buf[6] = 0x00;
+    buf[7] = 0x25;
+    buf[8] = 0x01;
+    buf[9] = 0x75;
+    buf[10] = 0x08;
+    buf[11] = 0x95;
+    buf[12] = 0x01;
+    buf[13] = 0xB1;
+    buf[14] = 0x82;
+    buf[15] = 0x85;
+    buf[16] = 0x01;
+    buf[17] = 0x09;
+    buf[18] = 0x01;
+    buf[19] = 0x91;
+    buf[20] = 0x82;
+
+    len = 19;
+    ret = hid_send_feature_report(dev, buf, len);
     if(ret < 0)
     {
         emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
         return;
     }
     emit info("OK");
-}
-//--------------------------------------------------------------------------------
-void HID_device::show_state(void)
-{
-    if(dev == nullptr)
-    {
-        emit error("dev not open!");
-        return;
-    }
-
-    int res = 0;
-    res = hid_send_feature_report(dev, buf, SIZE_BUF);
-    if(res < 0)
-    {
-        emit error(QString("hid_send_feature_report return %1").arg(res));
-        return;
-    }
-
-    QByteArray ba;
-    ba.append(reinterpret_cast<char *>(&buf), SIZE_BUF);
-    emit info(ba.toHex().data());
-
-    emit info("OK");
-
 }
 //--------------------------------------------------------------------------------
 void HID_device::wait(int max_time_ms)

@@ -40,6 +40,8 @@
 //--------------------------------------------------------------------------------
 #define MAX_STR 255
 #define SIZE_BUF 64
+//#define SIZE_BUF 128
+//#define SIZE_BUF 256
 //--------------------------------------------------------------------------------
 namespace Ui {
     class HID_device;
@@ -68,8 +70,6 @@ private slots:
     void test_3(void);
     void test_4(void);
     void test_5(void);
-
-    void show_state(void);
 
     //---
     void dev_list(void);

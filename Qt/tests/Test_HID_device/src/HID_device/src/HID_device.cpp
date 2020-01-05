@@ -231,6 +231,7 @@ void HID_device::dev_close(void)
 {
     if(dev != nullptr)
     {
+        emit info("Closed");
         hid_close(dev);
         dev = nullptr;
     }
@@ -246,8 +247,9 @@ void HID_device::dev_read(void)
 
     int res=0;
     buf[0]=0;
-//    buf[1]=0x85;
-//    buf[2]=0x01;
+    buf[1]=0x85;
+    buf[2]=0x00;
+    buf[3]=0x00;
     res = hid_get_feature_report(dev, buf, SIZE_BUF);
     if(res < 0)
     {

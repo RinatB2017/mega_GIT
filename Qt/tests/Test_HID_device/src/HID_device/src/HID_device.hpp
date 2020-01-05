@@ -39,9 +39,14 @@
 #endif
 //--------------------------------------------------------------------------------
 #define MAX_STR 255
-#define SIZE_BUF 64
-//#define SIZE_BUF 128
-//#define SIZE_BUF 256
+//--------------------------------------------------------------------------------
+//#define SIZE_BUF 64
+#ifdef Q_OS_LINUX
+#   define SIZE_BUF 128
+#endif
+#ifdef Q_OS_WIN
+#   define SIZE_BUF 256
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class HID_device;

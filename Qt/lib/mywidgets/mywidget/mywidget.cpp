@@ -52,7 +52,7 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 #ifdef QT_DEBUG
     qDebug() << "MyWidget()";
-    QTimer::singleShot(100, this, SLOT(debug()));
+    QTimer::singleShot(100, this, SLOT(s_debug()));
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -1246,7 +1246,7 @@ void MyWidget::closeEvent(QCloseEvent *)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MyWidget::debug(void)
+void MyWidget::s_debug(void)
 {
     show_objectname();
     // block_wheel();

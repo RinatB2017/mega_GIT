@@ -322,8 +322,16 @@ void HID_device::wait(int max_time_ms)
 void HID_device::test_0(void)
 {
     emit info("Test_0()");
-    //AD9106_Box *box = new AD9106_Box();
-    //box->show();
+
+    //FIXME надо разобраться с сигналами
+#if 0
+    AD9106_Box *box = new AD9106_Box();
+    connect(box,    &AD9106_Box::info,  this,   &HID_device::info);
+    connect(box,    &AD9106_Box::debug, this,   &HID_device::debug);
+    connect(box,    &AD9106_Box::error, this,   &HID_device::error);
+    connect(box,    &AD9106_Box::trace, this,   &HID_device::trace);
+    box->show();
+#endif
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_1(void)

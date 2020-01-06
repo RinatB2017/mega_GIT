@@ -10,14 +10,8 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 unix {
-    LIBS    += -lhidapi-libusb
-    #SOURCES += src/hidapi_fake/hid_fake.c
+    LIBS    *= -lhidapi-libusb
 }
-#win32 {
-#    HEADERS += src/hidapi_win/hidapi.h
-#    SOURCES += src/hidapi_win/hid.c
-#    LIBS    += -lsetupapi
-#}
 QT  *= xml
 
 HEADERS += \

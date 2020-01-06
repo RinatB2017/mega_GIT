@@ -45,14 +45,12 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 
 #ifndef RS232_LOG
-    if(parent)
-        connect_log(parent);
-    else
-        connect_log(topLevelWidget());
+    //TODO не надо тут условий. Родитель может быть и пустым, не надо приводить всё к toplevelwidget
+    connect_log(parent);
 #endif
 #ifdef QT_DEBUG
     qDebug() << "MyWidget()";
-    QTimer::singleShot(100, this, SLOT(s_debug()));
+    QTimer::singleShot(100, this, SLOT(s_test()));
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -69,6 +67,10 @@ MyWidget::~MyWidget()
 //--------------------------------------------------------------------------------
 bool MyWidget::check_exists_signals(QWidget *parent)
 {
+    if(parent == nullptr)
+    {
+        return false;
+    }
     int m_info  = parent->metaObject()->indexOfSignal("info(QString)");
     int m_debug = parent->metaObject()->indexOfSignal("debug(QString)");
     int m_error = parent->metaObject()->indexOfSignal("error(QString)");
@@ -1246,7 +1248,7 @@ void MyWidget::closeEvent(QCloseEvent *)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MyWidget::s_debug(void)
+void MyWidget::s_test(void)
 {
     show_objectname();
     // block_wheel();

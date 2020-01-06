@@ -195,7 +195,7 @@ public slots:
 private slots:
     void log(const QString data);
 
-    void s_debug(void);
+    void s_test(void);
     void show_objectname(void);
 
 private:

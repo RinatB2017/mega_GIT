@@ -64,7 +64,19 @@ void HID_device::init(void)
     connect(ui->btn_write,      &QPushButton::clicked,  this,   &HID_device::dev_write);
     connect(ui->btn_close,      &QPushButton::clicked,  this,   &HID_device::dev_close);
 
-    setFixedSize(sizeHint());
+#if 0
+    QFont font("Liberation Mono", 16);
+    ui->hexedit_widget->setFont(font);
+
+    QByteArray fram_data;
+    for(int n=0; n<10; n++)
+    {
+        fram_data.append(static_cast<char>(n));
+    }
+    ui->hexedit_widget->setData(QHexEditData::fromMemory(fram_data));
+#endif
+
+    //setFixedSize(sizeHint());
     load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
@@ -340,11 +352,26 @@ void HID_device::wait(int max_time_ms)
     }
 }
 //--------------------------------------------------------------------------------
+#include "qhexedit.h"
 void HID_device::test_0(void)
 {
     emit info("Test_0()");
 
-#if 1
+#if 0
+    QFont font("Liberation Mono", 10);
+    ui->hexedit_widget->setFont(font);
+
+    QByteArray fram_data;
+    for(int n=0; n<10; n++)
+    {
+        fram_data.append(static_cast<char>(n));
+    }
+    QHexEdit *hex = new QHexEdit();
+    hex->setData(QHexEditData::fromMemory(fram_data));
+    hex->show();
+#endif
+
+#if 0
     AD9106_Box *box = new AD9106_Box();
     connect(box,    &AD9106_Box::info,  this,   &HID_device::info);
     connect(box,    &AD9106_Box::debug, this,   &HID_device::debug);

@@ -245,12 +245,33 @@ void HID_device::dev_read(void)
         return;
     }
 
-    int res=0;
-    buf[0]=0;
-    buf[1]=0x85;
-    buf[2]=0x00;
-    buf[3]=0x00;
-    res = hid_get_feature_report(dev, buf, SIZE_BUF);
+    int res = 0;
+    size_t len = 0;
+
+    buf[0] = 0;
+    buf[1] = 0x85;
+    buf[2] = 0x01;
+    buf[3] = 0x09;
+    buf[4] = 0x01;
+    buf[5] = 0x15;
+    buf[6] = 0x00;
+    buf[7] = 0x25;
+    buf[8] = 0x01;
+    buf[9] = 0x75;
+    buf[10] = 0x08;
+    buf[11] = 0x95;
+    buf[12] = 0x01;
+    buf[13] = 0xB1;
+    buf[14] = 0x82;
+    buf[15] = 0x85;
+    buf[16] = 0x01;
+    buf[17] = 0x09;
+    buf[18] = 0x01;
+    buf[19] = 0x91;
+    buf[20] = 0x82;
+
+    len = 19;
+    res = hid_get_feature_report(dev, buf, len);
     if(res < 0)
     {
         emit error(QString("hid_get_feature_report return %1").arg(res));
@@ -272,8 +293,8 @@ void HID_device::dev_write(void)
         return;
     }
 
-    int ret=0;
-    int len=0;
+    int ret = 0;
+    size_t len = 0;
     memset(buf, 0xFF, SIZE_BUF);
 
     buf[0] = 0;

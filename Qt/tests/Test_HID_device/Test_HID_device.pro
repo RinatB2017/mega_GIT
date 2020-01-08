@@ -42,7 +42,7 @@ LIB_PATH2 = "../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/hexspinbox/hexspinbox.pri)
-include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
+#include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 include (src/HID_device/HID_device.pri)
 include (src/AD9106_box/AD9106_box.pri)
 

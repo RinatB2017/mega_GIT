@@ -69,7 +69,7 @@ CarefulMessageBox::CarefulMessageBox(const QString &caption,
 //--------------------------------------------------------------------------------
 void CarefulMessageBox::click(void)
 {
-    QPushButton *button = (QPushButton *)sender();
+    QPushButton *button = reinterpret_cast<QPushButton *>(sender());
     bool ok;
     int btn = button->property("name").toInt(&ok);
     if(btn == true_button)

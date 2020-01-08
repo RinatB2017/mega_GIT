@@ -83,14 +83,10 @@ private slots:
     void dev_read(void);
     void dev_write(void);
     //---
-    void led1_on(void);
-    void led1_off(void);
-    void led2_on(void);
-    void led2_off(void);
-    void led3_on(void);
-    void led3_off(void);
-    void led4_on(void);
-    void led4_off(void);
+    void led1_state(bool state);
+    void led2_state(bool state);
+    void led3_state(bool state);
+    void led4_state(bool state);
     //---
 
 private:

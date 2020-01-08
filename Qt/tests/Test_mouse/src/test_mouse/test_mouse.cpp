@@ -73,7 +73,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::click(void)
 {
-    QToolButton *btn = (QToolButton *)sender();
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(btn == nullptr)
     {
         return;

@@ -62,6 +62,7 @@ SUBDIRS += \
     Test_Game \
     Test_OpenGL \
     Test_mouse \
+    Test_RSA \
     Test_SDL \
     Test_SDLWidget \
     Test_TCP_UDP_bridge \

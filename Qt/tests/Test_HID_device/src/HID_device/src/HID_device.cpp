@@ -64,6 +64,15 @@ void HID_device::init(void)
     connect(ui->btn_write,      &QPushButton::clicked,  this,   &HID_device::dev_write);
     connect(ui->btn_close,      &QPushButton::clicked,  this,   &HID_device::dev_close);
 
+    connect(ui->btn_led1_on,    &QPushButton::clicked,  this,   &HID_device::led1_on);
+    connect(ui->btn_led1_off,   &QPushButton::clicked,  this,   &HID_device::led1_off);
+    connect(ui->btn_led2_on,    &QPushButton::clicked,  this,   &HID_device::led2_on);
+    connect(ui->btn_led2_off,   &QPushButton::clicked,  this,   &HID_device::led2_off);
+    connect(ui->btn_led3_on,    &QPushButton::clicked,  this,   &HID_device::led3_on);
+    connect(ui->btn_led3_off,   &QPushButton::clicked,  this,   &HID_device::led3_off);
+    connect(ui->btn_led4_on,    &QPushButton::clicked,  this,   &HID_device::led4_on);
+    connect(ui->btn_led4_off,   &QPushButton::clicked,  this,   &HID_device::led4_off);
+
 #if 0
     QFont font("Liberation Mono", 16);
     ui->hexedit_widget->setFont(font);
@@ -261,28 +270,10 @@ void HID_device::dev_read(void)
     size_t len = 0;
 
     buf[0] = 0;
-    buf[1] = 0x85;
-    buf[2] = 0x01;
-    buf[3] = 0x09;
-    buf[4] = 0x01;
-    buf[5] = 0x15;
-    buf[6] = 0x00;
-    buf[7] = 0x25;
-    buf[8] = 0x01;
-    buf[9] = 0x75;
-    buf[10] = 0x08;
-    buf[11] = 0x95;
-    buf[12] = 0x01;
-    buf[13] = 0xB1;
-    buf[14] = 0x82;
-    buf[15] = 0x85;
-    buf[16] = 0x01;
-    buf[17] = 0x09;
-    buf[18] = 0x01;
-    buf[19] = 0x91;
-    buf[20] = 0x82;
+    buf[1] = 1;
+    buf[2] = 0;
 
-    len = 19;
+    len = 3;
     res = hid_get_feature_report(dev, buf, len);
     if(res < 0)
     {
@@ -307,31 +298,229 @@ void HID_device::dev_write(void)
 
     int ret = 0;
     size_t len = 0;
-    memset(buf, 0xFF, SIZE_BUF);
+    memset(buf, 0x00, SIZE_BUF);
 
     buf[0] = 0;
-    buf[1] = 0x85;
-    buf[2] = 0x01;
-    buf[3] = 0x09;
-    buf[4] = 0x01;
-    buf[5] = 0x15;
-    buf[6] = 0x00;
-    buf[7] = 0x25;
-    buf[8] = 0x01;
-    buf[9] = 0x75;
-    buf[10] = 0x08;
-    buf[11] = 0x95;
-    buf[12] = 0x01;
-    buf[13] = 0xB1;
-    buf[14] = 0x82;
-    buf[15] = 0x85;
-    buf[16] = 0x01;
-    buf[17] = 0x09;
-    buf[18] = 0x01;
-    buf[19] = 0x91;
-    buf[20] = 0x82;
+    buf[1] = 0x02;  //Report_Buf[0] LED1-4
+    buf[2] = 0x01;  //Report_Buf[1] 1-on 0-off
 
-    len = 19;
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led1_on(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x01;  //Report_Buf[0] LED1-4
+    buf[2] = 0x01;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led1_off(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x01;  //Report_Buf[0] LED1-4
+    buf[2] = 0x00;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led2_on(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x02;  //Report_Buf[0] LED1-4
+    buf[2] = 0x01;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led2_off(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x02;  //Report_Buf[0] LED1-4
+    buf[2] = 0x00;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led3_on(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x03;  //Report_Buf[0] LED1-4
+    buf[2] = 0x01;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led3_off(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x03;  //Report_Buf[0] LED1-4
+    buf[2] = 0x00;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led4_on(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x04;  //Report_Buf[0] LED1-4
+    buf[2] = 0x01;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
+    ret = hid_send_feature_report(dev, buf, len);
+    if(ret < 0)
+    {
+        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+void HID_device::led4_off(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int ret = 0;
+    size_t len = 0;
+    memset(buf, 0x00, SIZE_BUF);
+
+    buf[0] = 0;
+    buf[1] = 0x04;  //Report_Buf[0] LED1-4
+    buf[2] = 0x00;  //Report_Buf[1] 1-on 0-off
+
+    len = 3;
     ret = hid_send_feature_report(dev, buf, len);
     if(ret < 0)
     {
@@ -352,7 +541,7 @@ void HID_device::wait(int max_time_ms)
     }
 }
 //--------------------------------------------------------------------------------
-#include "qhexedit.h"
+//#include "qhexedit.h"
 void HID_device::test_0(void)
 {
     emit info("Test_0()");

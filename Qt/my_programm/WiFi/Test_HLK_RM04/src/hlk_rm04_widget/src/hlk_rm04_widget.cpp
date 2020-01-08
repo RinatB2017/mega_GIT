@@ -48,23 +48,23 @@ void HLK_RM04_widget::init(void)
     l_commands.append({ ID_test,            "test",             &HLK_RM04_widget::s_test });
     l_commands.append({ ID_info,            "info",             &HLK_RM04_widget::s_info });
     l_commands.append({ ID_scan,            "scan",             &HLK_RM04_widget::s_scan });
-    l_commands.append({ ID_get_MAC,         "get MAC",          &HLK_RM04_widget::s_get_MAC });
-    l_commands.append({ ID_get_netmode,     "get netmode",      &HLK_RM04_widget::s_get_netmode });
-    l_commands.append({ ID_set_netmode,     "set netmode",      &HLK_RM04_widget::s_set_netmode });
-    l_commands.append({ ID_set_wifi_conf,   "set wifi_conf",    &HLK_RM04_widget::s_set_wifi_conf });
-    l_commands.append({ ID_get_wifi_conf,   "get wifi_conf",    &HLK_RM04_widget::s_get_wifi_conf });
+    l_commands.append({ ID_get_MAC,         "GET MAC",          &HLK_RM04_widget::s_get_MAC });
+    l_commands.append({ ID_get_netmode,     "GET netmode",      &HLK_RM04_widget::s_get_netmode });
+    l_commands.append({ ID_set_netmode,     "SET netmode",      &HLK_RM04_widget::s_set_netmode });
+    l_commands.append({ ID_set_wifi_conf,   "SET wifi_conf",    &HLK_RM04_widget::s_set_wifi_conf });
+    l_commands.append({ ID_get_wifi_conf,   "GET wifi_conf",    &HLK_RM04_widget::s_get_wifi_conf });
     l_commands.append({ ID_channel,         "channel",          &HLK_RM04_widget::s_channel });
-    l_commands.append({ ID_get_net_IP,      "get net IP",       &HLK_RM04_widget::s_get_net_IP });
-    l_commands.append({ ID_set_net_IP,      "set net IP",       &HLK_RM04_widget::s_set_net_IP });
-    l_commands.append({ ID_get_net_DNS,     "get net_DNS",      &HLK_RM04_widget::s_get_net_DNS });
-    l_commands.append({ ID_set_net_DNS,     "set net_DNS",      &HLK_RM04_widget::s_set_net_DNS });
+    l_commands.append({ ID_get_net_IP,      "GET net IP",       &HLK_RM04_widget::s_get_net_IP });
+    l_commands.append({ ID_set_net_IP,      "SET net IP",       &HLK_RM04_widget::s_set_net_IP });
+    l_commands.append({ ID_get_net_DNS,     "GET net_DNS",      &HLK_RM04_widget::s_get_net_DNS });
+    l_commands.append({ ID_set_net_DNS,     "SET net_DNS",      &HLK_RM04_widget::s_set_net_DNS });
     l_commands.append({ ID_dhcpd,           "dhcpd",            &HLK_RM04_widget::s_dhcpd });
     l_commands.append({ ID_get_dhcpd_ip,    "GET dhcp IP",      &HLK_RM04_widget::s_get_dhcpd_ip });
     l_commands.append({ ID_set_dhcpd_ip,    "SET dhcp IP",      &HLK_RM04_widget::s_set_dhcpd_ip });
-    l_commands.append({ ID_get_dhcpd_dns,   "get dhcpd DNS",    &HLK_RM04_widget::s_get_dhcpd_dns });
-    l_commands.append({ ID_set_dhcpd_dns,   "set dhcpd DNS",    &HLK_RM04_widget::s_set_dhcpd_dns });
-    l_commands.append({ ID_get_dhcpd_time,  "get dhcpd TIME",   &HLK_RM04_widget::s_get_dhcpd_time });
-    l_commands.append({ ID_set_dhcpd_time,  "set dhcpd TIME",   &HLK_RM04_widget::s_set_dhcpd_time });
+    l_commands.append({ ID_get_dhcpd_dns,   "GET dhcpd DNS",    &HLK_RM04_widget::s_get_dhcpd_dns });
+    l_commands.append({ ID_set_dhcpd_dns,   "SET dhcpd DNS",    &HLK_RM04_widget::s_set_dhcpd_dns });
+    l_commands.append({ ID_get_dhcpd_time,  "GET dhcpd TIME",   &HLK_RM04_widget::s_get_dhcpd_time });
+    l_commands.append({ ID_set_dhcpd_time,  "SET dhcpd TIME",   &HLK_RM04_widget::s_set_dhcpd_time });
     l_commands.append({ ID_net_commit,      "net commit",       &HLK_RM04_widget::s_net_commit });
     l_commands.append({ ID_out_trans,       "out trans",        &HLK_RM04_widget::s_out_trans });
     l_commands.append({ ID_get_remote_IP,   "GET remote IP",    &HLK_RM04_widget::s_get_remote_IP });
@@ -134,7 +134,13 @@ void HLK_RM04_widget::init(void)
     init_serial();
 
     //---
-    QTimer::singleShot(100, this, SLOT(init_widgets()));
+    bool first_start = load_value("First_start").toBool();
+    if(!first_start)
+    {
+        emit info("First_start");
+        save_value("First_start", true);
+        QTimer::singleShot(100, this, SLOT(init_widgets()));
+    }
     //---
 
     load_widgets(APPNAME);

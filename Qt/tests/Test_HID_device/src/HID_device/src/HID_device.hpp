@@ -83,10 +83,7 @@ private slots:
     void dev_read(void);
     void dev_write(void);
     //---
-    void led1_state(bool state);
-    void led2_state(bool state);
-    void led3_state(bool state);
-    void led4_state(bool state);
+    void leds_state(bool state);
     //---
 
 private:
@@ -120,12 +117,13 @@ private:
 
     void init(void);
     void createTestBar(void);
-    void wait(int max_time_ms);
+    void block_buttons(bool state);
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+    bool send_cmd(int cmd, int state);
 
 protected:
     void changeEvent(QEvent *event);

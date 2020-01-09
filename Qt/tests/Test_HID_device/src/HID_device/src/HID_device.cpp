@@ -64,10 +64,10 @@ void HID_device::init(void)
     connect(ui->btn_write,      &QPushButton::clicked,  this,   &HID_device::dev_write);
     connect(ui->btn_close,      &QPushButton::clicked,  this,   &HID_device::dev_close);
 
-    connect(ui->btn_led1,   &QPushButton::toggled,  this,   &HID_device::led1_state);
-    connect(ui->btn_led2,   &QPushButton::toggled,  this,   &HID_device::led2_state);
-    connect(ui->btn_led3,   &QPushButton::toggled,  this,   &HID_device::led3_state);
-    connect(ui->btn_led4,   &QPushButton::toggled,  this,   &HID_device::led4_state);
+    connect(ui->btn_led1,   &QPushButton::toggled,  this,   &HID_device::leds_state);
+    connect(ui->btn_led2,   &QPushButton::toggled,  this,   &HID_device::leds_state);
+    connect(ui->btn_led3,   &QPushButton::toggled,  this,   &HID_device::leds_state);
+    connect(ui->btn_led4,   &QPushButton::toggled,  this,   &HID_device::leds_state);
 
 #if 0
     QFont font("Liberation Mono", 16);
@@ -83,6 +83,8 @@ void HID_device::init(void)
 
     //setFixedSize(sizeHint());
     load_widgets(APPNAME);
+
+    block_buttons(true);
 }
 //--------------------------------------------------------------------------------
 void HID_device::createTestBar(void)
@@ -242,6 +244,7 @@ void HID_device::dev_open(void)
     }
 
     hid_set_nonblocking(dev, 1);
+    block_buttons(false);
 }
 //--------------------------------------------------------------------------------
 void HID_device::dev_close(void)
@@ -252,6 +255,7 @@ void HID_device::dev_close(void)
         hid_close(dev);
         dev = nullptr;
     }
+    block_buttons(true);
 }
 //--------------------------------------------------------------------------------
 void HID_device::dev_read(void)
@@ -314,12 +318,12 @@ void HID_device::dev_write(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void HID_device::led1_state(bool state)
+bool HID_device::send_cmd(int cmd, int state)
 {
     if(dev == nullptr)
     {
         emit error("dev not open!");
-        return;
+        return false;
     }
 
     int res = 0;
@@ -327,7 +331,7 @@ void HID_device::led1_state(bool state)
     memset(buf, 0x00, SIZE_BUF);
 
     buf[0] = 0;
-    buf[1] = 0x01;  //Report_Buf[0] LED1-4
+    buf[1] = cmd;   //Report_Buf[0] LED1-4
     buf[2] = state; //Report_Buf[1] 1-on 0-off
 
     len = 3;
@@ -336,104 +340,101 @@ void HID_device::led1_state(bool state)
     {
         emit error(QString("hid_send_feature_report return %1").arg(res));
         emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
-        return;
+        return false;
     }
     emit debug(QString("res = %1").arg(res));
-    emit info("OK");
+    return true;
 }
 //--------------------------------------------------------------------------------
-void HID_device::led2_state(bool state)
+void HID_device::leds_state(bool state)
 {
+    bool ok = false;
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
+    if(btn == nullptr)
+    {
+        return;
+    }
     if(dev == nullptr)
     {
-        emit error("dev not open!");
+        btn->setChecked(false);
         return;
     }
-
-    int res = 0;
-    size_t len = 0;
-    memset(buf, 0x00, SIZE_BUF);
-
-    buf[0] = 0;
-    buf[1] = 0x02;  //Report_Buf[0] LED1-4
-    buf[2] = state; //Report_Buf[1] 1-on 0-off
-
-    len = 3;
-    res = hid_send_feature_report(dev, buf, len);
-    if(res < 0)
+    if(btn == ui->btn_led1)
     {
-        emit error(QString("hid_send_feature_report return %1").arg(res));
-        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        emit info("1");
+        ok = send_cmd(1, state);
+        if(ok)
+        {
+            if(state)
+            {
+                btn->setStyleSheet("background:red;");
+            }
+            else
+            {
+                btn->setStyleSheet("");
+            }
+        }
         return;
     }
-    emit debug(QString("res = %1").arg(res));
-    emit info("OK");
+    if(btn == ui->btn_led2)
+    {
+        emit info("2");
+        ok = send_cmd(2, state);
+        if(ok)
+        {
+            if(state)
+            {
+                btn->setStyleSheet("background:red;");
+            }
+            else
+            {
+                btn->setStyleSheet("");
+            }
+        }
+        return;
+    }
+    if(btn == ui->btn_led3)
+    {
+        emit info("3");
+        ok = send_cmd(3, state);
+        if(ok)
+        {
+            if(state)
+            {
+                btn->setStyleSheet("background:red;");
+            }
+            else
+            {
+                btn->setStyleSheet("");
+            }
+        }
+        return;
+    }
+    if(btn == ui->btn_led4)
+    {
+        emit info("4");
+        ok = send_cmd(4, state);
+        if(ok)
+        {
+            if(state)
+            {
+                btn->setStyleSheet("background:red;");
+            }
+            else
+            {
+                btn->setStyleSheet("");
+            }
+        }
+        return;
+    }
 }
 //--------------------------------------------------------------------------------
-void HID_device::led3_state(bool state)
+void HID_device::block_buttons(bool state)
 {
-    if(dev == nullptr)
-    {
-        emit error("dev not open!");
-        return;
-    }
-
-    int res = 0;
-    size_t len = 0;
-    memset(buf, 0x00, SIZE_BUF);
-
-    buf[0] = 0;
-    buf[1] = 0x03;  //Report_Buf[0] LED1-4
-    buf[2] = state; //Report_Buf[1] 1-on 0-off
-
-    len = 3;
-    res = hid_send_feature_report(dev, buf, len);
-    if(res < 0)
-    {
-        emit error(QString("hid_send_feature_report return %1").arg(res));
-        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
-        return;
-    }
-    emit debug(QString("res = %1").arg(res));
-    emit info("OK");
-}
-//--------------------------------------------------------------------------------
-void HID_device::led4_state(bool state)
-{
-    if(dev == nullptr)
-    {
-        emit error("dev not open!");
-        return;
-    }
-
-    int res = 0;
-    size_t len = 0;
-    memset(buf, 0x00, SIZE_BUF);
-
-    buf[0] = 0;
-    buf[1] = 0x04;  //Report_Buf[0] LED1-4
-    buf[2] = state; //Report_Buf[1] 1-on 0-off
-
-    len = 3;
-    res = hid_send_feature_report(dev, buf, len);
-    if(res < 0)
-    {
-        emit error(QString("hid_send_feature_report return %1").arg(res));
-        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
-        return;
-    }
-    emit debug(QString("res = %1").arg(res));
-    emit info("OK");
-}
-//--------------------------------------------------------------------------------
-void HID_device::wait(int max_time_ms)
-{
-    QElapsedTimer time;
-    time.start();
-    while(time.elapsed() < max_time_ms)
-    {
-        QCoreApplication::processEvents();
-    }
+    ui->btn_led1->setDisabled(state);
+    ui->btn_led2->setDisabled(state);
+    ui->btn_led3->setDisabled(state);
+    ui->btn_led4->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_0(void)

@@ -266,10 +266,8 @@ void HID_device::dev_read(void)
     size_t len = 0;
 
     buf[0] = 0;
-    buf[1] = 1;
-    buf[2] = 0;
 
-    len = 3;
+    len = SIZE_BUF;
     res = hid_get_feature_report(dev, buf, len);
     if(res < 0)
     {
@@ -278,9 +276,13 @@ void HID_device::dev_read(void)
         return;
     }
 
-    QByteArray ba;
-    ba.append(reinterpret_cast<char *>(&buf), SIZE_BUF);
-    emit info(ba.toHex().data());
+    if(res > 0)
+    {
+        QByteArray ba;
+        ba.append(reinterpret_cast<char *>(&buf), res);
+        emit info(ba.toHex().data());
+    }
+    emit debug(QString("res = %1").arg(res));
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -292,22 +294,23 @@ void HID_device::dev_write(void)
         return;
     }
 
-    int ret = 0;
+    int res = 0;
     size_t len = 0;
     memset(buf, 0x00, SIZE_BUF);
 
     buf[0] = 0;
     buf[1] = 0x02;  //Report_Buf[0] LED1-4
-    buf[2] = 0x01;  //Report_Buf[1] 1-on 0-off
+    buf[2] = 0x00;  //Report_Buf[1] 1-on 0-off
 
-    len = 3;
-    ret = hid_send_feature_report(dev, buf, len);
-    if(ret < 0)
+    len = 3; // можно 2 или 3
+    res = hid_send_feature_report(dev, buf, len);
+    if(res < 0)
     {
-        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_send_feature_report return %1").arg(res));
         emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
         return;
     }
+    emit debug(QString("res = %1").arg(res));
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -319,7 +322,7 @@ void HID_device::led1_state(bool state)
         return;
     }
 
-    int ret = 0;
+    int res = 0;
     size_t len = 0;
     memset(buf, 0x00, SIZE_BUF);
 
@@ -328,13 +331,14 @@ void HID_device::led1_state(bool state)
     buf[2] = state; //Report_Buf[1] 1-on 0-off
 
     len = 3;
-    ret = hid_send_feature_report(dev, buf, len);
-    if(ret < 0)
+    res = hid_send_feature_report(dev, buf, len);
+    if(res < 0)
     {
-        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_send_feature_report return %1").arg(res));
         emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
         return;
     }
+    emit debug(QString("res = %1").arg(res));
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -346,7 +350,7 @@ void HID_device::led2_state(bool state)
         return;
     }
 
-    int ret = 0;
+    int res = 0;
     size_t len = 0;
     memset(buf, 0x00, SIZE_BUF);
 
@@ -355,13 +359,14 @@ void HID_device::led2_state(bool state)
     buf[2] = state; //Report_Buf[1] 1-on 0-off
 
     len = 3;
-    ret = hid_send_feature_report(dev, buf, len);
-    if(ret < 0)
+    res = hid_send_feature_report(dev, buf, len);
+    if(res < 0)
     {
-        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_send_feature_report return %1").arg(res));
         emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
         return;
     }
+    emit debug(QString("res = %1").arg(res));
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -373,7 +378,7 @@ void HID_device::led3_state(bool state)
         return;
     }
 
-    int ret = 0;
+    int res = 0;
     size_t len = 0;
     memset(buf, 0x00, SIZE_BUF);
 
@@ -382,13 +387,14 @@ void HID_device::led3_state(bool state)
     buf[2] = state; //Report_Buf[1] 1-on 0-off
 
     len = 3;
-    ret = hid_send_feature_report(dev, buf, len);
-    if(ret < 0)
+    res = hid_send_feature_report(dev, buf, len);
+    if(res < 0)
     {
-        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_send_feature_report return %1").arg(res));
         emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
         return;
     }
+    emit debug(QString("res = %1").arg(res));
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
@@ -400,7 +406,7 @@ void HID_device::led4_state(bool state)
         return;
     }
 
-    int ret = 0;
+    int res = 0;
     size_t len = 0;
     memset(buf, 0x00, SIZE_BUF);
 
@@ -409,13 +415,14 @@ void HID_device::led4_state(bool state)
     buf[2] = state; //Report_Buf[1] 1-on 0-off
 
     len = 3;
-    ret = hid_send_feature_report(dev, buf, len);
-    if(ret < 0)
+    res = hid_send_feature_report(dev, buf, len);
+    if(res < 0)
     {
-        emit error(QString("hid_send_feature_report return %1").arg(ret));
+        emit error(QString("hid_send_feature_report return %1").arg(res));
         emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
         return;
     }
+    emit debug(QString("res = %1").arg(res));
     emit info("OK");
 }
 //--------------------------------------------------------------------------------

@@ -303,10 +303,11 @@ void HID_device::dev_write(void)
     memset(buf, 0x00, SIZE_BUF);
 
     buf[0] = 0;
-    buf[1] = 0x02;  //Report_Buf[0] LED1-4
-    buf[2] = 0x00;  //Report_Buf[1] 1-on 0-off
+    buf[1] = 0xBB;
+    //buf[1] = 0x02;  //Report_Buf[0] LED1-4
+    //buf[2] = 0x00;  //Report_Buf[1] 1-on 0-off
 
-    len = 3; // можно 2 или 3
+    len = 2; // можно 2 или 3
     res = hid_send_feature_report(dev, buf, len);
     if(res < 0)
     {
@@ -331,8 +332,8 @@ bool HID_device::send_cmd(int cmd, int state)
     memset(buf, 0x00, SIZE_BUF);
 
     buf[0] = 0;
-    buf[1] = cmd;   //Report_Buf[0] LED1-4
-    buf[2] = state; //Report_Buf[1] 1-on 0-off
+    buf[1] = static_cast<uint8_t>(cmd);     //Report_Buf[0] LED1-4
+    buf[2] = static_cast<uint8_t>(state);   //Report_Buf[1] 1-on 0-off
 
     len = 3;
     res = hid_send_feature_report(dev, buf, len);

@@ -443,6 +443,10 @@ void HID_device::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    emit info(QString("MEASURES_DATA size = %1").arg(sizeof(MEASURES_DATA)));
+#endif
+
+#if 0
     AD9106_Box *box = new AD9106_Box();
     connect(box,    &AD9106_Box::info,  this,   &HID_device::info);
     connect(box,    &AD9106_Box::debug, this,   &HID_device::debug);

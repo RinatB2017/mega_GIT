@@ -133,6 +133,7 @@ private slots:
     //---
     void leds_state(bool state);
     //---
+    void test(void);
 
 private:
     enum {

@@ -69,6 +69,8 @@ void HID_device::init(void)
     connect(ui->btn_led3,   &QPushButton::toggled,  this,   &HID_device::leds_state);
     connect(ui->btn_led4,   &QPushButton::toggled,  this,   &HID_device::leds_state);
 
+    connect(ui->btn_test,   &QPushButton::clicked,  this,   &HID_device::test);
+
 #if 0
     QFont font("Liberation Mono", 16);
     ui->hexedit_widget->setFont(font);
@@ -258,6 +260,80 @@ void HID_device::dev_close(void)
     block_buttons(true);
 }
 //--------------------------------------------------------------------------------
+void HID_device::test(void)
+{
+    if(dev == nullptr)
+    {
+        emit error("dev not open!");
+        return;
+    }
+
+    int res = 0;
+    size_t len = 0;
+
+    //---
+    buf[0] = 0;
+    buf[1] = 0xAA;
+
+    len = 2;
+    res = hid_send_feature_report(dev, buf, len);
+    if(res < 0)
+    {
+        emit error(QString("hid_get_feature_report return %1").arg(res));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit debug(QString("res = %1").arg(res));
+    //---
+    memset(buf, 0x00, SIZE_BUF);
+    res = hid_get_feature_report(dev, buf, SIZE_BUF);
+    if(res < 0)
+    {
+        emit error(QString("hid_get_feature_report return %1").arg(res));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    if(res > 0)
+    {
+        QByteArray ba;
+        ba.append(reinterpret_cast<char *>(&buf), res);
+        emit info(ba.toHex().data());
+    }
+    //---
+
+    //---
+    buf[0] = 0;
+    buf[1] = 0xBB;
+
+    len = 2;
+    res = hid_send_feature_report(dev, buf, len);
+    if(res < 0)
+    {
+        emit error(QString("hid_get_feature_report return %1").arg(res));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    emit debug(QString("res = %1").arg(res));
+    //---
+    memset(buf, 0x00, SIZE_BUF);
+    res = hid_get_feature_report(dev, buf, SIZE_BUF);
+    if(res < 0)
+    {
+        emit error(QString("hid_get_feature_report return %1").arg(res));
+        emit error(QString("hid_error = [%1]").arg(QString::fromWCharArray(hid_error(dev))));
+        return;
+    }
+    if(res > 0)
+    {
+        QByteArray ba;
+        ba.append(reinterpret_cast<char *>(&buf), res);
+        emit info(ba.toHex().data());
+    }
+    //---
+
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
 void HID_device::dev_read(void)
 {
     if(dev == nullptr)
@@ -436,6 +512,10 @@ void HID_device::block_buttons(bool state)
     ui->btn_led2->setDisabled(state);
     ui->btn_led3->setDisabled(state);
     ui->btn_led4->setDisabled(state);
+
+    ui->btn_read->setDisabled(state);
+    ui->btn_write->setDisabled(state);
+    ui->btn_test->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void HID_device::test_0(void)
@@ -443,6 +523,17 @@ void HID_device::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    uint unixTime = 0xFFFFFFFF;
+    QDateTime timestamp;
+    timestamp.setTime_t(unixTime);
+    emit info(timestamp.toString(Qt::SystemLocaleLongDate));
+
+    timestamp.setDate(QDate(2101, 11, 18));
+    timestamp.setTime(QTime(6, 57, 3));
+    emit info(QString("%1").arg(timestamp.toTime_t(), 2, 16, QChar('0')));
+#endif
+
+#if 0
     emit info(QString("MEASURES_DATA size = %1").arg(sizeof(MEASURES_DATA)));
 #endif
 

@@ -97,10 +97,10 @@ bool MyWidget::check_exists_signals(QWidget *parent)
 void MyWidget::connect_log(QWidget *parent)
 {
 #ifdef NO_LOG
-//    connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-//    connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-//    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-//    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
+    //    connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
+    //    connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
+    //    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
+    //    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 
     int m_info  = parent->metaObject()->indexOfSignal("info(QString)");
     int m_debug = parent->metaObject()->indexOfSignal("debug(QString)");
@@ -781,14 +781,17 @@ void MyWidget::load_QLineEdit(QString group_name)
     settings->beginGroup(group_name);
     foreach (QLineEdit *obj, allobj)
     {
-        QString o_name = obj->objectName();
-        if(!o_name.isEmpty())
+        if(obj->property(NO_SAVE).toBool() == false)
         {
-            if(o_name.left(3) == "le_") //TODO костыль
+            QString o_name = obj->objectName();
+            if(!o_name.isEmpty())
             {
-                settings->beginGroup(obj->objectName());
-                obj->setText(settings->value("text", "").toString());
-                settings->endGroup();
+                if(o_name.left(3) == "le_") //TODO костыль
+                {
+                    settings->beginGroup(obj->objectName());
+                    obj->setText(settings->value("text", "").toString());
+                    settings->endGroup();
+                }
             }
         }
     }
@@ -807,14 +810,17 @@ void MyWidget::save_QLineEdit(QString group_name)
     settings->beginGroup(group_name);
     foreach(QLineEdit *obj, allobj)
     {
-        QString o_name = obj->objectName();
-        if(!o_name.isEmpty())
+        if(obj->property(NO_SAVE).toBool() == false)
         {
-            if(o_name.left(3) == "le_") //TODO костыль
+            QString o_name = obj->objectName();
+            if(!o_name.isEmpty())
             {
-                settings->beginGroup(obj->objectName());
-                settings->setValue("text", QVariant(obj->text()));
-                settings->endGroup();
+                if(o_name.left(3) == "le_") //TODO костыль
+                {
+                    settings->beginGroup(obj->objectName());
+                    settings->setValue("text", QVariant(obj->text()));
+                    settings->endGroup();
+                }
             }
         }
     }

@@ -106,7 +106,7 @@ void IPV4_wo_port::set_url(QUrl url)
     }
     else
     {
-        emit error(QString("ip.count = %1").arg(sl.count()));
+        emit error(QString("set_url: ip.count = %1").arg(sl.count()));
     }
 }
 //--------------------------------------------------------------------------------

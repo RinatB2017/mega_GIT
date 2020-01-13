@@ -41,7 +41,7 @@ RESOURCES += \
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH = "../../lib"
+LIB_PATH = "$$PWD/../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

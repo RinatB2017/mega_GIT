@@ -29,8 +29,8 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH  = "../../../Qt/lib"
-LIB_PATH2 = "../../../Qt/lib2"
+LIB_PATH  = "$$PWD/../../../Qt/lib"
+LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

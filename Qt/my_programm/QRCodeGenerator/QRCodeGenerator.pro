@@ -49,7 +49,7 @@ HEADERS  += \
 FORMS    += \
     mainwindow.ui
 
-LIB_PATH2 = "../../lib2"
+LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH2/QRCodeGenerator/QRCodeGenerator.pri)
 
 VPATH = $$INCLUDEPATH

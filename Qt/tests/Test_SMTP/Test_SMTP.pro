@@ -64,7 +64,7 @@ HEADERS += sendemail.hpp
 SOURCES += sendemail.cpp
 FORMS   += sendemail.ui
 
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH = "$$PWD/../../../Qt/lib"
 
 include ($$LIB_PATH/turbo.pri)
 

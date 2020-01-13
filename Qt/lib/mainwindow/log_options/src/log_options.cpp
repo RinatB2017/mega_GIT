@@ -28,7 +28,9 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
 #include "log_options.hpp"
+#include "mywidget.hpp"
 #include "ui_log_options.h"
 //--------------------------------------------------------------------------------
 Log_options::Log_options(QWidget *parent):
@@ -57,10 +59,29 @@ Log_options::Log_options(QWidget *parent):
     ui->cb_CodecForCStrings->setCurrentIndex(ui->cb_CodecForCStrings->findText(QTextCodec::codecForCStrings()->name()));
 #endif
 
-    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(ui->buttonBox,  &QDialogButtonBox::accepted,    this,   &Log_options::accept);
+    connect(ui->buttonBox,  &QDialogButtonBox::rejected,    this,   &Log_options::reject);
+
+    connect(ui->btn_choice_filename,    &QToolButton::clicked,  this,   &Log_options::choice_file);
 
     setFixedSize(sizeHint());
+}
+//--------------------------------------------------------------------------------
+void Log_options::choice_file(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("log_options", "log_options", this);
+    dlg->setNameFilter("LOG files (*.log)");
+    dlg->selectFile("noname");
+    dlg->setDefaultSuffix("log");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        MyWidget::messagebox_info("Info",   filename);
+    }
 }
 //--------------------------------------------------------------------------------
 Log_options::~Log_options()

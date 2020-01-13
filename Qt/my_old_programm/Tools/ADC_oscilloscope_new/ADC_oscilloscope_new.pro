@@ -33,8 +33,8 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH  = "../../../lib"
-LIB_PATH2 = "../../../lib2"
+LIB_PATH  = "$$PWD/../../../lib"
+LIB_PATH2 = "$$PWD/../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

@@ -72,7 +72,7 @@ RESOURCES += \
 OTHER_FILES += doc/notebook.txt
 
 #----------------------------------------------
-LIB_PATH = "../../../lib"
+LIB_PATH = "$$PWD/../../../lib"
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

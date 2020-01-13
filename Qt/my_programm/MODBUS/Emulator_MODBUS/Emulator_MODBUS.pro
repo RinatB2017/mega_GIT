@@ -49,7 +49,7 @@ win32 {
 
 QT  += serialbus
 
-LIB_PATH = "../../../lib"
+LIB_PATH = "$$PWD/../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

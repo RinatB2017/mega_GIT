@@ -25,8 +25,8 @@ FORMS   = \
     src/meshmainwindowbase.ui \
     src/lightingdialogbase.ui
 
-LIB_PATH = "../../../../Qt/lib"
-LIB_PATH2 = "../../../../Qt/lib2"
+LIB_PATH = "$$PWD/../../../../Qt/lib"
+LIB_PATH2 = "$$PWD/../../../../Qt/lib2"
 
 include ($$LIB_PATH2/qwtplot3d/qwtplot3d.pri)
 

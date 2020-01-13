@@ -10,7 +10,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 SOURCES += main.cpp
 
-LIB_PATH = "../../lib"
+LIB_PATH = "$$PWD/../../lib"
 
 include ($$LIB_PATH/turbo.pri)
 

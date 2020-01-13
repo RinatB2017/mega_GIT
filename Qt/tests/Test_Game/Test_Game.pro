@@ -76,7 +76,7 @@ CONFIG(debug, debug|release) {
 }
 
 #----------------------------------------------
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH = "$$PWD/../../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

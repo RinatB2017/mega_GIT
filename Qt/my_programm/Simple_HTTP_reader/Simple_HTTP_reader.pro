@@ -47,8 +47,8 @@ CONFIG(debug, debug|release) {
 }
 
 #----------------------------------------------
-LIB_PATH  = "../../lib"
-LIB_PATH2 = "../../lib2"
+LIB_PATH  = "$$PWD/../../lib"
+LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/ipctrl4/ipctrl4.pri)

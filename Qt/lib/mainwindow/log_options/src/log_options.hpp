@@ -73,6 +73,8 @@ private:
     void set_flag_Color(bool value);
     void set_flag_ErrorAsMessage(bool value);
     void set_flag_TextIsWindows(bool value);
+
+    void choice_file(void);
 };
 //--------------------------------------------------------------------------------
 #endif // OPTIONS_BOX_HPP

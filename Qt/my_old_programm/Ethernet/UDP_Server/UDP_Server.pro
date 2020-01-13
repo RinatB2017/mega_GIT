@@ -37,7 +37,7 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "../../../lib"
+LIB_PATH = "$$PWD/../../../lib"
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

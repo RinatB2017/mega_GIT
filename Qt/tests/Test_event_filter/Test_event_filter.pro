@@ -22,8 +22,8 @@ SOURCES += \
     plot.cpp \
     scalepicker.cpp
 
-LIB_PATH = "../../lib"
-LIB_PATH2 = "../../lib2"
+LIB_PATH = "$$PWD/../../lib"
+LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)

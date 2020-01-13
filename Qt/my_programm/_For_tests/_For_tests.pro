@@ -90,8 +90,8 @@ RESOURCES += about/about.qrc
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH  = "../../lib"
-LIB_PATH2 = "../../lib2"
+LIB_PATH  = "$$PWD/../../lib"
+LIB_PATH2 = "$$PWD/../../lib2"
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
@@ -113,8 +113,6 @@ include (src/simple_mw/simple_mw.pri)
 
 #include ($$LIB_PATH2/qwt/qwt.pri)
 #include (src/knob_lcd/knob_lcd.pri)
-
-include ($$LIB_PATH/mywidgets/myfiledialog.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

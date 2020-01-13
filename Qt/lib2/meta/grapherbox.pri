@@ -11,5 +11,3 @@
 !contains(CONFIG, qwt) {
     include (../qwt/qwt.pri)
 }
-
-include (../../lib/mywidgets/myfiledialog.pri)

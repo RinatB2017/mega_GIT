@@ -50,7 +50,7 @@ include (src/test/test.pri)
 
 include (src/PCA10000/pca10000.pri)
 
-LIB_PATH = "../../lib"
+LIB_PATH = "$$PWD/../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/time/time.pri)

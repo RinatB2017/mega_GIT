@@ -37,12 +37,11 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH  = "../../lib"
+LIB_PATH  = "$$PWD/../../lib"
 
 include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
-include ($$LIB_PATH/mywidgets/myfiledialog.pri)
 include ($$LIB_PATH/turbo.pri)
 
 !exists(OBJECTS_DIR) {

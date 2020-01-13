@@ -40,7 +40,7 @@ RESOURCES += \
 OTHER_FILES += doc/notebook.txt
 
 #----------------------------------------------
-LIB_PATH = "../../../Qt/lib"
+LIB_PATH = "$$PWD/../../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_opengl_mainbox/test_opengl_mainbox.pri)

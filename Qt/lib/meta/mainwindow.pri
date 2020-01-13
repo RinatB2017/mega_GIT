@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 include (../qtsingleapplication/qtsingleapplication.pri)
-include (../mainwindow/mainwindow.pri)
+include (../mw/mw.pri)
 include (../mywidgets/mywaitsplashscreen.pri)
 include (../mywidgets/mysplashscreen.pri)
 include (../mywidgets/mywidget.pri)

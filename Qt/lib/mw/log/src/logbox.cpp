@@ -255,6 +255,24 @@ void LogBox::append_string(QString level_str,
     //logBox->append(QString("ba   len %1").arg(ba.length()));
 #endif
 
+    if(!autosave_filename.isEmpty())
+    {
+        QFile file(autosave_filename);
+        bool ok = file.open(QIODevice::WriteOnly | QIODevice::Append);
+        if(ok)
+        {
+#ifdef NEED_CODEC
+            file.write(ba);
+#else
+            QByteArray ba;
+            ba.append(temp.toStdString().c_str());
+            file.write(ba);
+#endif
+            file.write("\n");
+            file.close();
+        }
+    }
+
     if(flagNoCRLF)
     {
 #ifdef NEED_CODEC

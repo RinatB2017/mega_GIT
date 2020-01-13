@@ -234,10 +234,28 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
+#include "keeper.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    QList<QVariant> lv;
+    Keeper::get_array("group", "name", &lv);
+#endif
+
+#if 0
+    for(int n=0; n<10; n++)
+    {
+        ui->comboBox->addItem(QString("a%1").arg(n));
+    }
+#endif
+
+#if 0
+    Keeper::set_value("x", 123);
+    Keeper::set_value("name", "Имя");
+#endif
 
     return true;
 }
@@ -246,6 +264,25 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
+
+#if 0
+    QList<QVariant> lv;
+    for(int n=0; n<ui->comboBox->count(); n++)
+    {
+        ui->comboBox->setCurrentIndex(n);
+        lv.append(ui->comboBox->currentText());
+    }
+    Keeper::set_array("group", "name", lv);
+#endif
+
+#if 0
+    QVariant x;
+    QVariant name;
+    Keeper::get_value("x", &x);
+    Keeper::get_value("name", &name);
+    emit info(QString("%1").arg(x.toInt()));
+    emit info(QString("%1").arg(name.toString()));
+#endif
 
 #if 0
     emit info("Текст <font style=\"color:red\">красный</font>");

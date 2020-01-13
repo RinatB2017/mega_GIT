@@ -52,7 +52,8 @@ LogBox::LogBox(const QString &o_name,
     flagAddDateTime(false),
     flagColor(true),
     flagErrorAsMessage(false),
-    flagTextIsWindows(false)
+    flagTextIsWindows(false),
+    flagAutoSave(false)
 {
     init();
 
@@ -456,6 +457,8 @@ void LogBox::changeOptions(void)
     optionsBox->setProperty("flag_Color",           flagColor);
     optionsBox->setProperty("flag_ErrorAsMessage",  flagErrorAsMessage);
     optionsBox->setProperty("flag_TextIsWindows",   flagTextIsWindows);
+    optionsBox->setProperty("flag_AutoSave",        flagAutoSave);
+    optionsBox->setProperty("file_AutoSave",        autosave_filename);
 
     int res = optionsBox->exec();
     if(res == QDialog::Accepted)
@@ -474,6 +477,8 @@ void LogBox::changeOptions(void)
         flagColor           = optionsBox->property("flag_Color").toBool();
         flagErrorAsMessage  = optionsBox->property("flag_ErrorAsMessage").toBool();
         flagTextIsWindows   = optionsBox->property("flag_TextIsWindows").toBool();
+        flagAutoSave        = optionsBox->property("flag_AutoSave").toBool();
+        autosave_filename   = optionsBox->property("file_AutoSave").toString();
         save_settings();
     }
     optionsBox->deleteLater();

@@ -94,6 +94,7 @@ private:
     bool flagColor = true;
     bool flagErrorAsMessage = false;
     bool flagTextIsWindows = false;
+    bool flagAutoSave = false;
 
     bool flag_is_shows_info  = true;
     bool flag_is_shows_debug = true;
@@ -108,6 +109,8 @@ private:
     QHBoxLayout *hbox;
     QVBoxLayout *vbox;
     QHBoxLayout *mainbox;
+
+    QString autosave_filename = "noname.log";
 
     bool old_state_btn_show_Info = false;
     bool old_state_btn_show_Debug = false;

@@ -34,14 +34,16 @@ class Log_options : public QDialog
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool flag_ReadOnly       READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)
-    Q_PROPERTY(bool flag_AcceptRichText READ get_flag_AcceptRichText    WRITE set_flag_AcceptRichText)
+    Q_PROPERTY(bool flag_ReadOnly           READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)
+    Q_PROPERTY(bool flag_AcceptRichText     READ get_flag_AcceptRichText    WRITE set_flag_AcceptRichText)
 
-    Q_PROPERTY(bool flag_NoCRLF         READ get_flag_NoCRLF            WRITE set_flag_NoCRLF)
-    Q_PROPERTY(bool flag_AddDateTime    READ get_flag_AddDateTime       WRITE set_flag_AddDateTime)
-    Q_PROPERTY(bool flag_Color          READ get_flag_Color             WRITE set_flag_Color)
-    Q_PROPERTY(bool flag_ErrorAsMessage READ get_flag_ErrorAsMessage    WRITE set_flag_ErrorAsMessage)
-    Q_PROPERTY(bool flag_TextIsWindows  READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
+    Q_PROPERTY(bool flag_NoCRLF             READ get_flag_NoCRLF            WRITE set_flag_NoCRLF)
+    Q_PROPERTY(bool flag_AddDateTime        READ get_flag_AddDateTime       WRITE set_flag_AddDateTime)
+    Q_PROPERTY(bool flag_Color              READ get_flag_Color             WRITE set_flag_Color)
+    Q_PROPERTY(bool flag_ErrorAsMessage     READ get_flag_ErrorAsMessage    WRITE set_flag_ErrorAsMessage)
+    Q_PROPERTY(bool flag_TextIsWindows      READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
+    Q_PROPERTY(bool flag_AutoSave           READ get_flag_AutoSave          WRITE set_flag_AutoSave)
+    Q_PROPERTY(QString autosave_filename    READ get_file_AutoSave          WRITE set_file_AutoSave)
 
 public:
     Log_options(QWidget *parent = nullptr);
@@ -54,6 +56,8 @@ private:
     QList<QString> codecs;
     QTextEdit *logEdit;
 
+    QString autosave_filename = "noname.log";
+
     void findCodecs(void);
 
     bool get_flag_ReadOnly(void);
@@ -64,6 +68,8 @@ private:
     bool get_flag_Color(void);
     bool get_flag_ErrorAsMessage(void);
     bool get_flag_TextIsWindows(void);
+    bool get_flag_AutoSave(void);
+    QString get_file_AutoSave(void);
 
     void set_flag_ReadOnly(bool value);
     void set_flag_AcceptRichText(bool value);
@@ -73,6 +79,8 @@ private:
     void set_flag_Color(bool value);
     void set_flag_ErrorAsMessage(bool value);
     void set_flag_TextIsWindows(bool value);
+    void set_flag_AutoSave(bool value);
+    void set_file_AutoSave(QString new_filename);
 
     void choice_file(void);
 };

@@ -81,6 +81,10 @@ void Log_options::choice_file(void)
         QString filename = files.at(0);
 
         MyWidget::messagebox_info("Info",   filename);
+        if(!filename.isEmpty())
+        {
+            autosave_filename = filename;
+        }
     }
 }
 //--------------------------------------------------------------------------------
@@ -150,6 +154,16 @@ bool Log_options::get_flag_TextIsWindows(void)
     return ui->cb_Text_Is_Windows->isChecked();
 }
 //--------------------------------------------------------------------------------
+bool Log_options::get_flag_AutoSave(void)
+{
+    return ui->cb_AutoSave->isChecked();
+}
+//--------------------------------------------------------------------------------
+QString Log_options::get_file_AutoSave(void)
+{
+    return autosave_filename;
+}
+//--------------------------------------------------------------------------------
 void Log_options::set_flag_ReadOnly(bool value)
 {
     ui->cb_readOnly->setChecked(value);
@@ -183,5 +197,15 @@ void Log_options::set_flag_ErrorAsMessage(bool value)
 void Log_options::set_flag_TextIsWindows(bool value)
 {
     ui->cb_Text_Is_Windows->setChecked(value);
+}
+//--------------------------------------------------------------------------------
+void Log_options::set_flag_AutoSave(bool value)
+{
+    ui->cb_AutoSave->setChecked(value);
+}
+//--------------------------------------------------------------------------------
+void Log_options::set_file_AutoSave(QString new_filename)
+{
+    autosave_filename = new_filename;
 }
 //--------------------------------------------------------------------------------

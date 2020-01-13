@@ -99,20 +99,9 @@ CONFIG(debug, debug|release) {
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
-#include ($$LIB_PATH2/qwt/qwt.pri)
-#include ($$LIB_PATH/mywidgets/mycombobox2.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simple_mw/simple_mw.pri)
-#include (src/labirint/labirint.pri)
-#include (src/test_widget/test_widget.pri)
-#include (src/gem_widget/gem_widget.pri)
-#include (src/tile_widget/tile_widget.pri)
-#include (src/bone_15/bone_15.pri)
-#include (src/test_widget/test_widget.pri)
-
-#include ($$LIB_PATH2/qwt/qwt.pri)
-#include (src/knob_lcd/knob_lcd.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

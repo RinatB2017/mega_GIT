@@ -79,7 +79,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QCheckBox" name="cb_autosave">
+       <widget class="QCheckBox" name="cb_AutoSave">
         <property name="text">
          <string>auto</string>
         </property>

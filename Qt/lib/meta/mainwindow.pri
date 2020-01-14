@@ -2,11 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-include (../qtsingleapplication/qtsingleapplication.pri)
-include (../mw/mw.pri)
-include (../mywidgets/mywaitsplashscreen.pri)
-include (../mywidgets/mysplashscreen.pri)
-include (../mywidgets/mywidget.pri)
-include (../time/time.pri)
-include (../locale.pri)
-include (../turbo.pri)
+include ($$PWD/../qtsingleapplication/qtsingleapplication.pri)
+include ($$PWD/../mw/mw.pri)
+include ($$PWD/../mywidgets/mywaitsplashscreen.pri)
+include ($$PWD/../mywidgets/mysplashscreen.pri)
+include ($$PWD/../mywidgets/mywidget.pri)
+include ($$PWD/../time/time.pri)
+include ($$PWD/../locale.pri)
+include ($$PWD/../turbo.pri)

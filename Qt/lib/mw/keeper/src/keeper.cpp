@@ -87,7 +87,17 @@ bool Keeper::get_array(QString group_name,
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
+    settings->beginGroup(group_name);
+    int size = settings->beginReadArray(name);
+    for(int n=0; n<size; n++)
+    {
+        settings->setArrayIndex(n);
+        (*l_values).append(settings->value("value"));
+    }
+    settings->endArray();
+    settings->endGroup();
 
+    settings->deleteLater();
     return true;
 }
 //--------------------------------------------------------------------------------

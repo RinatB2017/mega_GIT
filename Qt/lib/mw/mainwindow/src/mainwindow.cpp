@@ -624,13 +624,6 @@ void MainWindow::load_main(void)
     flag_close = settings->value("NoAnswerFromExit", true).toBool();
     flag_always_on_top = settings->value("AlwaysOnTop", false).toBool();
 
-    //---
-    if(flag_always_on_top)
-    {
-        emit debug("flag_always_on_top");
-    }
-    //---
-
     QApplication::setStyle(QStyleFactory::create(style_name));
 
     //---

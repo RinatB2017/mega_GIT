@@ -1,5 +1,5 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'sender.h'
+** Meta object code from reading C++ file 'udp_server_mainbox.hpp'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.14.0)
 **
@@ -7,11 +7,11 @@
 *****************************************************************************/
 
 #include <memory>
-#include "src/sender.h"
+#include "src/udp_server_mainbox/udp_server_mainbox.hpp"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'sender.h' doesn't include <QObject>."
+#error "The header file 'udp_server_mainbox.hpp' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.14.0. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -21,28 +21,30 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_Sender_t {
-    QByteArrayData data[4];
-    char stringdata0[44];
+struct qt_meta_stringdata_MainBox_t {
+    QByteArrayData data[5];
+    char stringdata0[47];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Sender_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_MainBox_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_Sender_t qt_meta_stringdata_Sender = {
+static const qt_meta_stringdata_MainBox_t qt_meta_stringdata_MainBox = {
     {
-QT_MOC_LITERAL(0, 0, 6), // "Sender"
-QT_MOC_LITERAL(1, 7, 17), // "startBroadcasting"
-QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 17) // "broadcastDatagram"
+QT_MOC_LITERAL(0, 0, 7), // "MainBox"
+QT_MOC_LITERAL(1, 8, 23), // "processPendingDatagrams"
+QT_MOC_LITERAL(2, 32, 0), // ""
+QT_MOC_LITERAL(3, 33, 8), // "get_data"
+QT_MOC_LITERAL(4, 42, 4) // "data"
 
     },
-    "Sender\0startBroadcasting\0\0broadcastDatagram"
+    "MainBox\0processPendingDatagrams\0\0"
+    "get_data\0data"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_Sender[] = {
+static const uint qt_meta_data_MainBox[] = {
 
  // content:
        8,       // revision
@@ -57,55 +59,54 @@ static const uint qt_meta_data_Sender[] = {
 
  // slots: name, argc, parameters, tag, flags
        1,    0,   24,    2, 0x08 /* Private */,
-       3,    0,   25,    2, 0x08 /* Private */,
+       3,    1,   25,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QByteArray,    4,
 
        0        // eod
 };
 
-void Sender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void MainBox::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<Sender *>(_o);
+        auto *_t = static_cast<MainBox *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->startBroadcasting(); break;
-        case 1: _t->broadcastDatagram(); break;
+        case 0: _t->processPendingDatagrams(); break;
+        case 1: _t->get_data((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject Sender::staticMetaObject = { {
-    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
-    qt_meta_stringdata_Sender.data,
-    qt_meta_data_Sender,
+QT_INIT_METAOBJECT const QMetaObject MainBox::staticMetaObject = { {
+    QMetaObject::SuperData::link<MyWidget::staticMetaObject>(),
+    qt_meta_stringdata_MainBox.data,
+    qt_meta_data_MainBox,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *Sender::metaObject() const
+const QMetaObject *MainBox::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Sender::qt_metacast(const char *_clname)
+void *MainBox::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_Sender.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_MainBox.stringdata0))
         return static_cast<void*>(this);
-    return QWidget::qt_metacast(_clname);
+    return MyWidget::qt_metacast(_clname);
 }
 
-int Sender::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int MainBox::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = MyWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

@@ -36,12 +36,8 @@ win32 {
 LIB_PATH  = "$$PWD/../../../lib"
 LIB_PATH2 = "$$PWD/../../../lib2"
 
-include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH/mainwindow/mainwindow.pri)
+include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
-include ($$LIB_PATH/mywidgets/mywidget.pri)
-include ($$LIB_PATH/turbo.pri)
-
 include ($$LIB_PATH2/serial5/serialbox5/serialbox5.pri)
 
 !exists(OBJECTS_DIR) {

@@ -43,7 +43,7 @@ class Log_options : public QDialog
     Q_PROPERTY(bool flag_ErrorAsMessage     READ get_flag_ErrorAsMessage    WRITE set_flag_ErrorAsMessage)
     Q_PROPERTY(bool flag_TextIsWindows      READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
     Q_PROPERTY(bool flag_AutoSave           READ get_flag_AutoSave          WRITE set_flag_AutoSave)
-    Q_PROPERTY(QString autosave_filename    READ get_file_AutoSave          WRITE set_file_AutoSave)
+    Q_PROPERTY(QString file_AutoSave        READ get_file_AutoSave          WRITE set_file_AutoSave)
 
 public:
     Log_options(QWidget *parent = nullptr);

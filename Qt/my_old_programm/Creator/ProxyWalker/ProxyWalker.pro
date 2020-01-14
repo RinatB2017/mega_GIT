@@ -50,9 +50,7 @@ win32 {
 LIB_PATH  = "$$PWD/../../../lib"
 LIB_PATH2 = "$$PWD/../../../lib2"
 
-include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/mywidgets/mywidget.pri)
+include ($$LIB_PATH/meta/mainwindow.pri)
 
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 
@@ -61,8 +59,6 @@ include ($$LIB_PATH2/web/websettingbox/websettingbox.pri)
 include ($$LIB_PATH2/web/javascript/javascript.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
-
-include ($$LIB_PATH/turbo.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

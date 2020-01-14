@@ -40,8 +40,7 @@ win32 {
 LIB_PATH  = "$$PWD/../../lib"
 
 include ($$LIB_PATH/locale.pri)
-include ($$LIB_PATH/mainwindow/mainwindow.pri)
-include ($$LIB_PATH/mywidgets/mywidget.pri)
+include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/turbo.pri)
 
 !exists(OBJECTS_DIR) {

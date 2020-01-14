@@ -255,21 +255,28 @@ void LogBox::append_string(QString level_str,
     //logBox->append(QString("ba   len %1").arg(ba.length()));
 #endif
 
-    if(!autosave_filename.isEmpty())
+    if(flagAutoSave)
     {
-        QFile file(autosave_filename);
-        bool ok = file.open(QIODevice::WriteOnly | QIODevice::Append);
-        if(ok)
+        if(!autosave_filename.isEmpty())
         {
+            QFile file(autosave_filename);
+            bool ok = file.open(QIODevice::WriteOnly | QIODevice::Append);
+            if(ok)
+            {
 #ifdef NEED_CODEC
-            file.write(ba);
+                file.write(ba);
 #else
-            QByteArray ba;
-            ba.append(temp.toStdString().c_str());
-            file.write(ba);
+                QByteArray ba;
+                ba.append(temp.toStdString().c_str());
+                file.write(ba);
 #endif
-            file.write("\n");
-            file.close();
+                file.write("\n");
+                file.close();
+            }
+            else
+            {
+                errorLog(QString("file %1 not create").arg(autosave_filename));
+            }
         }
     }
 
@@ -478,6 +485,8 @@ void LogBox::changeOptions(void)
     optionsBox->setProperty("flag_AutoSave",        flagAutoSave);
     optionsBox->setProperty("file_AutoSave",        autosave_filename);
 
+    qDebug() << autosave_filename;
+
     int res = optionsBox->exec();
     if(res == QDialog::Accepted)
     {
@@ -497,6 +506,9 @@ void LogBox::changeOptions(void)
         flagTextIsWindows   = optionsBox->property("flag_TextIsWindows").toBool();
         flagAutoSave        = optionsBox->property("flag_AutoSave").toBool();
         autosave_filename   = optionsBox->property("file_AutoSave").toString();
+
+        qDebug() << autosave_filename;
+
         save_settings();
     }
     optionsBox->deleteLater();
@@ -560,11 +572,13 @@ void LogBox::load_settings(void)
     settings->beginGroup(text);
     logBox->setReadOnly(settings->value("readOnly", true).toBool());
     logBox->setAcceptRichText(settings->value("acceptRichText", true).toBool());
-    flagNoCRLF      = settings->value("no_CRLF", false).toBool();
-    flagAddDateTime = settings->value("addDateTime", false).toBool();
-    flagColor       = settings->value("color", true).toBool();
-    flagErrorAsMessage = settings->value("ErrorAsMessage", false).toBool();
-    flagTextIsWindows  = settings->value("TextIsWindows", false).toBool();
+    flagNoCRLF          = settings->value("no_CRLF", false).toBool();
+    flagAddDateTime     = settings->value("addDateTime", false).toBool();
+    flagColor           = settings->value("color", true).toBool();
+    flagErrorAsMessage  = settings->value("ErrorAsMessage", false).toBool();
+    flagTextIsWindows   = settings->value("TextIsWindows", false).toBool();
+    flagAutoSave        = settings->value("AutoSave", false).toBool();
+    autosave_filename   = settings->value("FileAutoSave", "noname.log").toString();
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: load settings";
@@ -573,6 +587,8 @@ void LogBox::load_settings(void)
     qDebug() << "flagColor" << flagColor;
     qDebug() << "flagErrorAsMessage" << flagErrorAsMessage;
     qDebug() << "flagTextIsWindows" << flagTextIsWindows;
+    qDebug() << "AutoSave" << flagAutoSave;
+    qDebug() << "FileAutoSave" << autosave_filename;
 #endif
 
     QFont font;
@@ -621,6 +637,8 @@ void LogBox::save_settings(void)
     qDebug() << "flagColor" << flagColor;
     qDebug() << "flagErrorAsMessage" << flagErrorAsMessage;
     qDebug() << "flagTextIsWindows" << flagTextIsWindows;
+    qDebug() << "AutoSave" << flagAutoSave;
+    qDebug() << "FileAutoSave" << autosave_filename;
 #endif
 
     settings->beginGroup(text);
@@ -631,6 +649,8 @@ void LogBox::save_settings(void)
     settings->setValue("color",         flagColor);
     settings->setValue("ErrorAsMessage",flagErrorAsMessage);
     settings->setValue("TextIsWindows", flagTextIsWindows);
+    settings->setValue("AutoSave",      flagAutoSave);
+    settings->setValue("FileAutoSave",  autosave_filename);
 
 #ifndef NO_LOG
     QFont font = get_font();

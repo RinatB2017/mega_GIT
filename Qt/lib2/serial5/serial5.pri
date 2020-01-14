@@ -10,4 +10,4 @@ include (serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 include (serialbox5_lite/serialbox5_lite.pri)
 include (serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
 
-include ($PWD/../power_knock/power_knock.pri)
+include ($$LIB_PATH2/power_knock/power_knock.pri)

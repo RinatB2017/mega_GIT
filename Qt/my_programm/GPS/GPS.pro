@@ -6,5 +6,5 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
-    Navi_receiver \
-    Navi_transmitter
+    $$PWD/Navi_receiver \
+    $$PWD/Navi_transmitter

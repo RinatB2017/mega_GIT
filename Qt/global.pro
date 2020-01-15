@@ -6,6 +6,6 @@ TEMPLATE  = subdirs
 CONFIG   += ordered
 
 SUBDIRS += \
-    my_programm \
-    my_old_programm \
-    tests
+    $$PWD/my_programm \
+    $$PWD/my_old_programm \
+    $$PWD/tests

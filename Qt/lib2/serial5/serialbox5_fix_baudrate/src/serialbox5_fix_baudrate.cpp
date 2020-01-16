@@ -228,7 +228,7 @@ void SerialBox5_fix_baudrate::initSerial(void)
 
     connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
 
-    refresh();
+    //TODO refresh();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::change_icon(bool state)
@@ -280,7 +280,7 @@ void SerialBox5_fix_baudrate::serial5_error(QSerialPort::SerialPortError err)
     }
 
     setCloseState();
-    refresh();
+    //TODO refresh();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current)

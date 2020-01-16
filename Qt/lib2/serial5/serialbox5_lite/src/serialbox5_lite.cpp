@@ -232,7 +232,7 @@ void SerialBox5_lite::serial5_error(QSerialPort::SerialPortError err)
     }
 
     setCloseState();
-    refresh();
+    //TODO refresh();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::getStatus(const QString &status, QDateTime current)

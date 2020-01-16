@@ -102,6 +102,8 @@ void SerialBox5_fix_baudrate_win7::init(void)
     initThread();
     setCloseState();
 
+    refresh();
+
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     //setFixedWidth(sizeHint().width());
     setFixedHeight(sizeHint().height());
@@ -523,7 +525,7 @@ void SerialBox5_fix_baudrate_win7::initThread(void)
 
     connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
 
-    refresh();
+    //TODO refresh();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::port_bytes_avialable(void)

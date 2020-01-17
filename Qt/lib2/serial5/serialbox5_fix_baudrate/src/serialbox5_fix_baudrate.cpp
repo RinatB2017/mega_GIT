@@ -228,7 +228,7 @@ void SerialBox5_fix_baudrate::initSerial(void)
 
     connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
 
-    //TODO refresh();
+    refresh();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::change_icon(bool state)

@@ -48,8 +48,8 @@
 #include "ui_webkit_mainbox.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
+#   include <QTest>
 #   include <QDebug>
-#   include <Qtest>
 #endif
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :

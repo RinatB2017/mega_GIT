@@ -38,10 +38,17 @@
 MyWidget::MyWidget(QWidget *parent) :
     QWidget(parent)
 {
-#ifndef SAVE_INI
-    settings = new QSettings(ORGNAME, APPNAME);
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
-    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QString app_name = APPNAME;
+#endif
+
+#ifndef SAVE_INI
+    settings = new QSettings(org_name, app_name);
+#else
+    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
 
 #ifndef RS232_LOG

@@ -46,6 +46,10 @@ RESOURCES += data/names.qrc
 LIB_PATH  = "$$PWD/../../../lib"
 LIB_PATH2 = "$$PWD/../../../lib2"
 
+CONFIG(debug, debug|release) {
+    QT  += testlib
+}
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/database/database.pri)
 

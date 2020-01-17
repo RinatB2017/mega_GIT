@@ -30,7 +30,7 @@
 #define private public
 
 #include "mainwindow.hpp"
-#include "test_QDBus_mainbox.hpp"
+#include "test_qdbus_mainbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test(void)
 {

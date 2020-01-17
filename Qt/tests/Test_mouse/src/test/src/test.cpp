@@ -27,7 +27,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "template_old_mainbox.hpp"
+#include "test_mouse.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

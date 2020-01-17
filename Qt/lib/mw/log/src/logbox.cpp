@@ -218,11 +218,6 @@ void LogBox::append_string(QString level_str,
                            QColor background_color,
                            QString text)
 {
-    if(flag_is_shows_info == false)
-    {
-        return;
-    }
-
     if(text.isEmpty())
     {
         return;
@@ -303,7 +298,7 @@ void LogBox::append_string(QString level_str,
 //--------------------------------------------------------------------------------
 void LogBox::infoLog(const QString &text)
 {
-    if(!text.isEmpty())
+    if(!text.isEmpty() && flag_is_shows_info)
     {
         append_string("INFO", Qt::blue, Qt::white, text);
     }
@@ -311,7 +306,7 @@ void LogBox::infoLog(const QString &text)
 //--------------------------------------------------------------------------------
 void LogBox::debugLog(const QString &text)
 {
-    if(!text.isEmpty())
+    if(!text.isEmpty() && flag_is_shows_debug)
     {
         append_string("DEBUG", Qt::darkGreen, Qt::white, text);
     }
@@ -319,7 +314,7 @@ void LogBox::debugLog(const QString &text)
 //--------------------------------------------------------------------------------
 void LogBox::errorLog(const QString &text)
 {
-    if(!text.isEmpty())
+    if(!text.isEmpty() && flag_is_shows_error)
     {
         append_string("ERROR", Qt::red, Qt::white, text);
     }
@@ -327,7 +322,7 @@ void LogBox::errorLog(const QString &text)
 //--------------------------------------------------------------------------------
 void LogBox::traceLog(const QString &text)
 {
-    if(!text.isEmpty())
+    if(!text.isEmpty() && flag_is_shows_trace)
     {
         append_string("TRACE", Qt::gray, Qt::white, text);
     }

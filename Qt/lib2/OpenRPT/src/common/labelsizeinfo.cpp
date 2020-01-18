@@ -138,8 +138,8 @@ LabelSizeInfo::LabelSizeInfo(const QString & n, const QString & p, int c,
 
 LabelSizeInfo::LabelSizeInfo()
 {
-  _name = QString::null;
-  _paper = QString::null;
+  _name = QString();
+  _paper = QString();
 
   _columns = 0;
   _rows = 0;

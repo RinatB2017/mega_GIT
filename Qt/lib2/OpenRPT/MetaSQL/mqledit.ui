@@ -35,7 +35,16 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -146,7 +155,7 @@
   </layout>
   <action name="fileNewAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/document_32.png</normaloff>:/icons/document_32.png</iconset>
    </property>
    <property name="text">
@@ -161,7 +170,7 @@
   </action>
   <action name="fileOpenAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/folder_32.png</normaloff>:/icons/folder_32.png</iconset>
    </property>
    <property name="text">
@@ -176,7 +185,7 @@
   </action>
   <action name="fileSaveAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/diskette_32.png</normaloff>:/icons/diskette_32.png</iconset>
    </property>
    <property name="text">
@@ -202,7 +211,7 @@
   </action>
   <action name="filePrintAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/printer_32.png</normaloff>:/icons/printer_32.png</iconset>
    </property>
    <property name="text">
@@ -228,7 +237,7 @@
   </action>
   <action name="editUndoAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/undo_32.png</normaloff>:/icons/undo_32.png</iconset>
    </property>
    <property name="text">
@@ -254,7 +263,7 @@
   </action>
   <action name="editCutAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/scissors_32.png</normaloff>:/icons/scissors_32.png</iconset>
    </property>
    <property name="text">
@@ -269,7 +278,7 @@
   </action>
   <action name="editCopyAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/copy_32.png</normaloff>:/icons/copy_32.png</iconset>
    </property>
    <property name="text">
@@ -284,7 +293,7 @@
   </action>
   <action name="editPasteAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/paste_32.png</normaloff>:/icons/paste_32.png</iconset>
    </property>
    <property name="text">
@@ -336,7 +345,7 @@
   </action>
   <action name="helpAboutAction">
    <property name="icon">
-    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+    <iconset resource="../src/images/OpenRPTMetaSQL.qrc">
      <normaloff>:/icons/help_32.png</normaloff>:/icons/help_32.png</iconset>
    </property>
    <property name="text">
@@ -458,7 +467,7 @@
  </widget>
  <layoutdefault spacing="6" margin="0"/>
  <resources>
-  <include location="../OpenRPT/images/OpenRPTMetaSQL.qrc"/>
+  <include location="../src/images/OpenRPTMetaSQL.qrc"/>
  </resources>
  <connections>
   <connection>

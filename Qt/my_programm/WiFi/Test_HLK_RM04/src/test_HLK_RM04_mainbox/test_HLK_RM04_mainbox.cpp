@@ -65,6 +65,14 @@ void MainBox::init(void)
 
     createTestBar();
 
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        //tcp_server не надо заводить в док
+        mw->add_dock_widget("wifi",     "wifi",     Qt::LeftDockWidgetArea, ui->wifi_framewidget);
+        mw->add_dock_widget("HLK-RM04", "HLK-RM04", Qt::LeftDockWidgetArea, ui->hlk_rm04_widget);
+    }
+
     //setLayout(main_layout);
 
     load_widgets(APPNAME);

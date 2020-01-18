@@ -283,11 +283,11 @@ SOURCES += \
 #   src/writer/rptwrt.cpp \
 
 RESOURCES += \
-    MetaSQL/metasql.qrc \
-    src/images/OpenRPTCommon.qrc \
-    src/images/OpenRPTMetaSQL.qrc \
-    src/images/OpenRPTWrtembed.qrc \
-    src/writer/writer.qrc
+    $$PWD/MetaSQL/metasql.qrc \
+    $$PWD/src/images/OpenRPTCommon.qrc \
+    $$PWD/src/images/OpenRPTMetaSQL.qrc \
+    $$PWD/src/images/OpenRPTWrtembed.qrc \
+    $$PWD/src/writer/writer.qrc
 
 TRANSLATIONS += \
     common/common_es.ts \

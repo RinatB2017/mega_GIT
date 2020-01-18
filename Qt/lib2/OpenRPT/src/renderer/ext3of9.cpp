@@ -167,15 +167,15 @@ const _ext3of9map ext3of9map[] = {
     _ext3of9map( '~' , "%S" ),
     _ext3of9map( '\177' , "%T" ), // DEL
 
-    _ext3of9map( -1 , NULL )
+    _ext3of9map( -1 , nullptr )
 };
 
 QString convertTo3of9(QChar c)
 {
-  for(int i = 0; ext3of9map[i].conversion != QString::null; i++)
+  for(int i = 0; ext3of9map[i].conversion != QString(); i++)
     if(ext3of9map[i].code == c.toLatin1())
       return ext3of9map[i].conversion;
-  return QString::null;
+  return QString();
 }
 
 

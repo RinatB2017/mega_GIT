@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "dock_position.hpp"
 #include "helpbrowser.hpp"
 #include "mainwindow.hpp"
 #include "aboutbox.hpp"
@@ -737,11 +738,15 @@ void MainWindow::createLog(void)
 
     connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   ld, SLOT(colorLog(QString,QColor,QColor)));
 
+#if 0
+    add_dock_widget(tr("log"), "log_dock",  Qt::BottomDockWidgetArea, ld);
+#else
     ld->setAllowedAreas(Qt::LeftDockWidgetArea |
                         Qt::RightDockWidgetArea |
                         Qt::TopDockWidgetArea |
                         Qt::BottomDockWidgetArea);
     addDockWidget(Qt::BottomDockWidgetArea, ld);
+#endif
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -1190,17 +1195,41 @@ bool MainWindow::add_dock_widget(QString title,
     QDockWidget *dw = new QDockWidget(this);
     dw->setObjectName(objectname);
     dw->setWindowTitle(title);
+
+#if 1
+    Dock_position *dp = new Dock_position(objectname, this);
+    QWidget *nw = new QWidget(this);
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->setMargin(0);
+    hbox->setSpacing(0);
+    hbox->addWidget(widget);
+    hbox->addWidget(dp);
+    nw->setLayout(hbox);
+
+    dw->setWidget(nw);
+#else
     dw->setWidget(widget);
-    dw->setAllowedAreas(Qt::LeftDockWidgetArea |
-                        Qt::RightDockWidgetArea |
-                        Qt::TopDockWidgetArea |
-                        Qt::BottomDockWidgetArea);
+#endif
+
+    dw->setAllowedAreas(Qt::AllDockWidgetAreas);
+//    dw->setAllowedAreas(Qt::LeftDockWidgetArea |
+//                        Qt::RightDockWidgetArea |
+//                        Qt::TopDockWidgetArea |
+//                        Qt::BottomDockWidgetArea);
+
+    connect(dw, &QDockWidget::dockLocationChanged, this, &MainWindow::dockLocationChanged);
 
     addDockWidget(area, dw);
     add_windowsmenu_action(dw, dw->toggleViewAction());
     load_setting();
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainWindow::dockLocationChanged(Qt::DockWidgetArea area)
+{
+    //qDebug() << area;
+    Q_UNUSED(area)
 }
 //--------------------------------------------------------------------------------
 bool MainWindow::add_filemenu_menu(int pos_y,

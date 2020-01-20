@@ -29,8 +29,8 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#include "dock_position.hpp"
 #include "logdock.hpp"
-//#include "logdock_options.hpp"
 //--------------------------------------------------------------------------------
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
@@ -49,7 +49,19 @@ LogDock::LogDock(const QString &title,
     connect(this,   SIGNAL(signal_is_shows_error(bool)),    le, SLOT(set_flag_is_shows_error(bool)));
     connect(this,   SIGNAL(signal_is_shows_trace(bool)),    le, SLOT(set_flag_is_shows_trace(bool)));
 
+#if 1
+    QWidget *w = new QWidget(this);
+    Dock_position *dp = new Dock_position(objectName(), this);
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->setMargin(0);
+    hbox->setSpacing(0);
+    hbox->addWidget(le);
+    hbox->addWidget(dp);
+    w->setLayout(hbox);
+    setWidget(w);
+#else
     setWidget(le);
+#endif
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));

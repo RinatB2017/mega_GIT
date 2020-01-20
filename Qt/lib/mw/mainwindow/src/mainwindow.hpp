@@ -338,6 +338,8 @@ private:
 
     void show_docs(void);
 
+    void dockLocationChanged(Qt::DockWidgetArea area);
+
 protected:
     bool flag_close = false;
     bool flag_always_on_top = false;

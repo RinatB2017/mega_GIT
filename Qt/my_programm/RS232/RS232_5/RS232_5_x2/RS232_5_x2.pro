@@ -19,7 +19,7 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_LOG
+#DEFINES += NO_LOG
 
 SOURCES += main.cpp
 
@@ -36,6 +36,8 @@ LIB_PATH2 = "$$PWD/../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+
+include (src/test_widget/test_widget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

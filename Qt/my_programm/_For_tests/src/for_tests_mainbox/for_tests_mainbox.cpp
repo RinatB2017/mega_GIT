@@ -234,39 +234,11 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
-#include "qxmlputget.h"
 #include "keeper.hpp"
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
-
-#if 1
-    QXmlGet *xmlGet = new QXmlGet();
-    bool ok = xmlGet->load("/dev/shm/0/test.xml");
-    if(!ok)
-    {
-        messagebox_warning("Error", "Не удалось открыть файл");
-        return false;
-    }
-    emit info(QString("%1").arg(xmlGet->findNext("folder")));
-#endif
-
-#if 0
-    QXmlPut *xmlPut = new QXmlPut("Catalog");
-    xmlPut->putString("player", "test player");
-    for(int n=0; n<10; n++)
-    {
-        xmlPut->descend("folder");
-        xmlPut->setAttributeString("name", QString("n = %1").arg(n));
-        xmlPut->rise();
-    }
-    bool ok = xmlPut->save("/dev/shm/0/test.xml");
-    if(ok)
-        messagebox_info("Info", "файл записан успешно");
-    else
-        messagebox_warning("Error", "Не удалось записать файл");
-#endif
 
 #if 0
     QString res = load_string("test");

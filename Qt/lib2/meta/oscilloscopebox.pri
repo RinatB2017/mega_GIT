@@ -3,11 +3,11 @@
 #**********************************************************************************
 
 !contains(CONFIG, oscilloscopebox) {
-    include (../OscilloscopeBox/OscilloscopeBox.pri)
+    include ($$PWD/../OscilloscopeBox/OscilloscopeBox.pri)
 }
 !contains(CONFIG, csvreader) {
-    include (../csvreader/csvreader.pri)
+    include ($$PWD/../csvreader/csvreader.pri)
 }
 !contains(CONFIG, qwt) {
-    include (../qwt/qwt.pri)
+    include ($$PWD/../qwt/qwt.pri)
 }

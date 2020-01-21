@@ -3,11 +3,11 @@
 #**********************************************************************************
 
 !contains(CONFIG, histogrambox) {
-    include (../HistogramBox/HistogramBox.pri)
+    include ($$PWD/../HistogramBox/HistogramBox.pri)
 }
 !contains(CONFIG, csvreader) {
-    include (../csvreader/csvreader.pri)
+    include ($$PWD/../csvreader/csvreader.pri)
 }
 !contains(CONFIG, qwt) {
-    include (../qwt/qwt.pri)
+    include ($$PWD/../qwt/qwt.pri)
 }

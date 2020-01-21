@@ -31,6 +31,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
+#include "hlk_rm04_widget.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -52,6 +53,19 @@ void Test::test_GUI_network(void)
     QVERIFY(le_ssid);
     QVERIFY(le_password);
     QVERIFY(cb_encrypt_type);
+}
+//--------------------------------------------------------------------------------
+void Test::test_HLK_RM04_widget(void)
+{
+    QByteArray ba;
+    ba.append("test");
+    ba.append('\n');
+    ba.append("test");
+
+    HLK_RM04_widget *w = mw->findChild<HLK_RM04_widget *>("hlk_rm04_widget");
+    QVERIFY(w);
+
+    QCOMPARE(w->split_data(ba), 2);
 }
 //--------------------------------------------------------------------------------
 

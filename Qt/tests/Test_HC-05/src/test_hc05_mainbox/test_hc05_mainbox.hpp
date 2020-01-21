@@ -104,7 +104,11 @@ private:
     void init(void);
     void createTestBar(void);
     bool send_command(QString cmd_string);
+
     void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -82,7 +82,9 @@ win32 {
     LIBS    += -lopencv_calib3d341
 }
 
-LIB_PATH = "$$PWD/../../lib"
+LIB_PATH  = "$$PWD/../../lib"
+LIB_PATH2 = "$$PWD/../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {

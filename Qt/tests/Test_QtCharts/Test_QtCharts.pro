@@ -62,7 +62,9 @@ RESOURCES += images/images.qrc
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH = "$$PWD/../../../Qt/lib"
+LIB_PATH  = "$$PWD/../../../Qt/lib"
+LIB_PATH2 = "$$PWD/../../../Qt/lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {

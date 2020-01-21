@@ -296,7 +296,7 @@ void MainBox::wait(int time_msec)
 #ifdef FAKE
     Q_UNUSED(time_msec)
 #else
-    QTime time;
+    QElapsedTimer time;
 
     time.start();
     while(true)
@@ -423,5 +423,20 @@ bool MainBox::test_5(void)
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

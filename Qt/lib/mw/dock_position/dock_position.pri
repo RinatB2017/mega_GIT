@@ -11,4 +11,4 @@ HEADERS += dock_position.hpp
 SOURCES += dock_position.cpp
 FORMS   += dock_position.ui
 
-RESOURCES   += $$LIB_PATH2/pictures/arrow.qrc
+RESOURCES   += $$LIB_PATH/pictures/arrow.qrc

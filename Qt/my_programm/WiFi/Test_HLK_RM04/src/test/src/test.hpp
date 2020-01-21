@@ -43,9 +43,7 @@ public:
 
 private slots:
     void test_GUI_network(void);
-//    void test_func(void);
-//    void test_slider(void);
-//    void test_mainbox(void);
+    void test_HLK_RM04_widget(void);
 
 private:
     MainWindow *mw;

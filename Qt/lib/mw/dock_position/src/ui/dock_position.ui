@@ -23,7 +23,7 @@
    <item>
     <widget class="QToolButton" name="btn_left">
      <property name="icon">
-      <iconset resource="../../../../../lib2/pictures/arrow.qrc">
+      <iconset resource="../../../../pictures/arrow.qrc">
        <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
      </property>
     </widget>
@@ -31,7 +31,7 @@
    <item>
     <widget class="QToolButton" name="btn_right">
      <property name="icon">
-      <iconset resource="../../../../../lib2/pictures/arrow.qrc">
+      <iconset resource="../../../../pictures/arrow.qrc">
        <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
      </property>
     </widget>
@@ -39,7 +39,7 @@
    <item>
     <widget class="QToolButton" name="btn_up">
      <property name="icon">
-      <iconset resource="../../../../../lib2/pictures/arrow.qrc">
+      <iconset resource="../../../../pictures/arrow.qrc">
        <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
      </property>
     </widget>
@@ -47,7 +47,7 @@
    <item>
     <widget class="QToolButton" name="btn_down">
      <property name="icon">
-      <iconset resource="../../../../../lib2/pictures/arrow.qrc">
+      <iconset resource="../../../../pictures/arrow.qrc">
        <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
      </property>
     </widget>
@@ -68,7 +68,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../../../lib2/pictures/arrow.qrc"/>
+  <include location="../../../../pictures/arrow.qrc"/>
  </resources>
  <connections/>
 </ui>

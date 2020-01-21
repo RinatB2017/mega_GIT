@@ -30,6 +30,17 @@ Dock_position::Dock_position(QString doc_name, QWidget *parent) :
 
     this->dock_name = doc_name;
 
+#ifndef NORMAL_BUTTONS
+    int size = 24;
+    ui->btn_up->setFixedSize(size, size);
+    ui->btn_down->setFixedSize(size, size);
+    ui->btn_left->setFixedSize(size, size);
+    ui->btn_right->setFixedSize(size, size);
+
+    ui->buttons_layout->setMargin(0);
+    ui->buttons_layout->setSpacing(0);
+#endif
+
     connect(ui->btn_up,     &QToolButton::clicked,  this,   &Dock_position::move_up);
     connect(ui->btn_down,   &QToolButton::clicked,  this,   &Dock_position::move_down);
     connect(ui->btn_left,   &QToolButton::clicked,  this,   &Dock_position::move_left);

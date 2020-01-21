@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="buttons_layout">
    <item>
     <widget class="QToolButton" name="btn_left">
      <property name="icon">

@@ -240,6 +240,18 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    QString res = load_string("test");
+    if(res.isEmpty())
+    {
+        emit error("string is empty");
+    }
+    else
+    {
+        emit info(res);
+    }
+#endif
+
 #if 0
     QList<QVariant> lv;
     Keeper::get_array("group", "name", &lv);

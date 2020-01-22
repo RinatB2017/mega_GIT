@@ -33,7 +33,7 @@
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER
-#   include "grapherbox.hpp"
+#   include "datagrapherbox.hpp"
 #endif
 //--------------------------------------------------------------------------------
 Test::Test()
@@ -49,14 +49,14 @@ void Test::test_grapher(void)
     return;
 #endif
 
-#if 0
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
+#if 1
+//    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+//    QVERIFY(mb);
 
-    GrapherBox *gb = mb->findChild<GrapherBox *>("GrapherBox");
+    DataGrapherBox *gb = mw->findChild<DataGrapherBox *>("DataGrapherBox");
     QVERIFY(gb);
 
-    gb->remove_all_curve();
+    gb->clr_curves();
 
     QCOMPARE(gb->add_curve("curve0"),   0);
     QCOMPARE(gb->add_curve("curve1"),   1);
@@ -64,11 +64,11 @@ void Test::test_grapher(void)
     QCOMPARE(gb->add_curve("curve3"),   3);
     QCOMPARE(gb->add_curve("curve4"),   4);
 
-    QCOMPARE(gb->get_curves_count(),    5);
+    QCOMPARE(gb->get_max_index(),    5);
 
     for(int n=0; n<1000; n++)
     {
-        QCOMPARE(gb->add_curve_data(0, n),  true);
+        QCOMPARE(gb->add_data(0, n),  true);
     }
 
     qreal x = 0;

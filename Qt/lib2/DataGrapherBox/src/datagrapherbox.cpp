@@ -44,7 +44,12 @@ void DataGrapherBox::add_curves(QStringList sl)
 //--------------------------------------------------------------------------------
 void DataGrapherBox::clr_curves(void)
 {
-
+    ui->grapher_widget->remove_all_curve();
+    foreach(CURVES cur, curves)
+    {
+        cur.obj->deleteLater();
+    }
+    curves.clear();
 }
 //--------------------------------------------------------------------------------
 bool DataGrapherBox::add_data(int curve_index, qreal value)
@@ -71,6 +76,27 @@ bool DataGrapherBox::add_data(int curve_index, qreal value)
 int DataGrapherBox::get_max_index(void)
 {
     return curves.count();
+}
+//--------------------------------------------------------------------------------
+bool DataGrapherBox::get_curve_data(int channel,
+                                int index,
+                                qreal *data)
+{
+    if(curves.count() <= 0)
+    {
+        emit error(tr("curves.count() <= 0"));
+        return false;
+    }
+    if(channel >= curves.count())
+    {
+        emit error(QString(tr("channel > %1"))
+                   .arg(curves.count()));
+        return false;
+    }
+    qreal point;
+    ui->grapher_widget->get_curve_data(channel, index, &point);
+    *data = point;
+    return true;
 }
 //--------------------------------------------------------------------------------
 void DataGrapherBox::init(void)
@@ -187,7 +213,7 @@ void DataGrapherBox::show_data_ADC(QStringList sl)
     }
 }
 //--------------------------------------------------------------------------------
-void DataGrapherBox::add_curve(QString curve_name)
+int DataGrapherBox::add_curve(QString curve_name)
 {
     // emit trace(Q_FUNC_INFO);
 
@@ -204,6 +230,7 @@ void DataGrapherBox::add_curve(QString curve_name)
 
     curves.append(cur);
     ui->lcd_layout->addWidget(adc_label);
+    return cur.curve_index;
 }
 //--------------------------------------------------------------------------------
 void DataGrapherBox::updateText(void)

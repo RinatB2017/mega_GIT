@@ -60,6 +60,7 @@ void MainBox::init(void)
 #endif
 
     data_widget = new DataGrapherBox(this);
+    data_widget->setObjectName("DataGrapherBox");
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -131,7 +132,7 @@ void MainBox::data_ADC(const QByteArray &ba)
     QString temp = ba.data();
     if(temp.isEmpty())
     {
-        emit trace("temp.isEmpty");
+        //emit trace("temp.isEmpty");
         return;
     }
 

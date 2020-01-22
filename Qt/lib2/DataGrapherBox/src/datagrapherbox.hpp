@@ -35,6 +35,8 @@ struct CURVES
     QString name;
     ADC_label *obj;
     int curve_index;
+
+    QVector<QPointF> real_data;
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -49,11 +51,14 @@ public:
     explicit DataGrapherBox(QWidget *parent = nullptr);
     ~DataGrapherBox();
 
-    void add_curve(QString curve_name);
+    int add_curve(QString curve_name);
     void add_curves(QStringList sl);
     void clr_curves(void);
     bool add_data(int curve_index, qreal value);
     int get_max_index(void);
+    bool get_curve_data(int channel,
+                        int index,
+                        qreal *data);
 
 private:
     Ui::DataGrapherBox *ui;

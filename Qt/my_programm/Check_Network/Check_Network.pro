@@ -40,11 +40,9 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-RESOURCES += ico/icons.qrc
-
 RESOURCES += \
     images/images.qrc \
-    
+    ico/icons.qrc
 
 OTHER_FILES += doc/notebook.txt
 

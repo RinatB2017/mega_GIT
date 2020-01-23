@@ -42,13 +42,13 @@ FORMS   += teacher_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
-RESOURCES   += image/image.qrc
-
 win32 {
     RC_ICONS = ico/computer.ico
 }
 
-RESOURCES += images/images.qrc
+RESOURCES += \
+    images/images.qrc \
+    image/image.qrc
 
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"

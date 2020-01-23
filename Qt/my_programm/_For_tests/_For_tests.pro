@@ -73,8 +73,6 @@ SOURCES += \
 
 FORMS   += for_tests_mainbox.ui
 
-RESOURCES += ico/icons.qrc
-
 win32 {
     RC_ICONS = ico/computer.ico
 }
@@ -83,7 +81,8 @@ RESOURCES += \
     images/images.qrc \
     images/bones/bones.qrc \
     images/gems/gems.qrc \
-    images/puzzle/puzzle.qrc
+    images/puzzle/puzzle.qrc \
+    ico/icons.qrc
 
 #можно поставить новое logo
 RESOURCES += about/about.qrc

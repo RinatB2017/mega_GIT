@@ -37,8 +37,7 @@ win32 {
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    ico/icons.qrc \
-    
+    ico/icons.qrc
 
 OTHER_FILES += doc/notebook.txt
 

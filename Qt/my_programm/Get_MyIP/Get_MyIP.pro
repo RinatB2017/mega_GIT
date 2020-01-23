@@ -36,8 +36,7 @@ win32 {
 }
 
 RESOURCES += \
-    images/images.qrc \
-    
+    images/images.qrc
 
 OTHER_FILES += doc/notebook.txt
 

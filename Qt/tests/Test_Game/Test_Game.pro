@@ -67,7 +67,7 @@ RESOURCES += \
     sprites/rock3/rock3.qrc \
     sprites/ship/ship.qrc \
     images/images.qrc \
-    doc/doc.qrc
+    
 
 OTHER_FILES += doc/notebook.txt
 

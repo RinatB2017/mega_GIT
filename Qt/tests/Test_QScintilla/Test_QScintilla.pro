@@ -72,7 +72,7 @@ win32 {
 RESOURCES += \
     ico/icons.qrc \
     images/images.qrc \
-    doc/doc.qrc
+    
 
 OTHER_FILES += doc/notebook.txt
 

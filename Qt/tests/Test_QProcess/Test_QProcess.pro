@@ -60,7 +60,7 @@ win32 {
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
     images/images.qrc \
-    doc/doc.qrc
+    
 
 OTHER_FILES += doc/notebook.txt
 

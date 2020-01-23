@@ -44,7 +44,7 @@ RESOURCES += ico/icons.qrc
 
 RESOURCES += \
     images/images.qrc \
-    doc/doc.qrc
+    
 
 OTHER_FILES += doc/notebook.txt
 

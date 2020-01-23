@@ -674,7 +674,7 @@ void QXmlPut::putPen(const QString &tagName, const QPen &value)
     {
         QVector<qreal> rv = value.dashPattern(); // just in case we're on ARM
         QVector<double> dv(rv.size());
-        qCopy(rv.constBegin(), rv.constEnd(), dv.begin());
+        std::copy(rv.constBegin(), rv.constEnd(), dv.begin());
         setAttributeDoubleVector("dashpattern", dv);
         setAttributeDouble("dashoffset", value.dashOffset());
     }
@@ -1882,7 +1882,7 @@ QPen QXmlGet::getPen(const QPen &defaultValue) const
         if (!dv.isEmpty())
         {
             QVector<qreal> rv(dv.size());
-            qCopy(dv.constBegin(), dv.constEnd(), rv.begin());
+            std::copy(dv.constBegin(), dv.constEnd(), rv.begin());
             result.setDashPattern(rv);
             if (hasAttribute("dashoffset"))
                 result.setDashOffset(getAttributeDouble("dashoffset", result.dashOffset()));

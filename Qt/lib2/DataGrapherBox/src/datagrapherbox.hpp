@@ -70,6 +70,7 @@ private:
     QVariant convert_string(QString str_value);
 
     void show_data_ADC(QStringList sl);
+    void change_text(int curve_index, QString text);
 
     void updateText(void);
     bool programm_is_exit(void);

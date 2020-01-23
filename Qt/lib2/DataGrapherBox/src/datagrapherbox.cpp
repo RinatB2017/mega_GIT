@@ -112,6 +112,8 @@ void DataGrapherBox::init(void)
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 5);
 
+    connect(ui->grapher_widget, &GrapherBox::change_text,   this,   &DataGrapherBox::change_text);
+
     //ui->grapher_widget->set_visible_btn_Options(false);
     //ui->grapher_widget->set_visible_btn_Load(false);
     //ui->grapher_widget->set_visible_btn_Save(false);
@@ -125,6 +127,25 @@ void DataGrapherBox::init(void)
 
     ui->lcd_layout->setMargin(0);
     ui->lcd_layout->setSpacing(0);
+}
+//--------------------------------------------------------------------------------
+void DataGrapherBox::change_text(int curve_index, QString text)
+{
+    if(curve_index < 0)
+    {
+        emit error("curve_index too small");
+        return;
+    }
+    if(curve_index >= curves.count())
+    {
+        emit error("curve_index too large");
+        return;
+    }
+
+    emit debug(QString("change_text %1 %2")
+              .arg(curve_index)
+              .arg(text));
+    curves[curve_index].obj->set_label_text(text);
 }
 //--------------------------------------------------------------------------------
 QString DataGrapherBox::convert(qreal value)

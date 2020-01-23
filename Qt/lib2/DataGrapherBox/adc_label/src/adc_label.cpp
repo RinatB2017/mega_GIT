@@ -46,6 +46,11 @@ void ADC_label::init(void)
     ui->lcd_value->setDigitCount(14);
 }
 //--------------------------------------------------------------------------------
+void ADC_label::set_label_text(QString text)
+{
+    ui->lbl_name->setText(text);
+}
+//--------------------------------------------------------------------------------
 void ADC_label::display(double num)
 {
     ui->lcd_value->display(num);

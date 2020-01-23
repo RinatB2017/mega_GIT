@@ -89,7 +89,7 @@ void MainBox::test(void)
     //bc->setBrush(QBrush(QColor(Qt::red)));
 
     ORORect *rect = new ORORect(bc);
-    rect->setRect(QRectF(1/2.54f, 1/2.54f, 1, 1));
+    rect->setRect(QRectF(1/2.54, 1/2.54, 1, 1));
 
     OROLine *line = new OROLine(bc);
     line->setStartPoint(QPointF(1, 1));
@@ -103,9 +103,9 @@ void MainBox::test(void)
     OROTextBox *text = new OROTextBox(bc);
     text->setPosition(QPointF(3, 3));
     text->setFont(font);
-    text->setSize(QSizeF(4.0f, 2.0f));
+    text->setSize(QSizeF(4.0, 2.0));
     //text->setFlags(Qt::AlignRight | Qt::AlignTop);
-    text->setRotation(45.0f);
+    text->setRotation(45.0);
     text->setText("русский текст");
 
     page->addPrimitive(rect);

@@ -45,6 +45,8 @@ public:
     void display(int num);
     void display(const QString &s);
 
+    void set_label_text(QString text);
+
 private:
     Ui::ADC_label *ui;
     QString label;

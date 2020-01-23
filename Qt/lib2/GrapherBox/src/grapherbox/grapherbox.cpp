@@ -1156,6 +1156,8 @@ void GrapherBox::options(void)
             if(ok)
             {
                 curves[n].title = text;
+                curves[n].plot_curve->setTitle(text);
+                emit change_text(n, text);
                 //FIXME надо доделать
             }
         }

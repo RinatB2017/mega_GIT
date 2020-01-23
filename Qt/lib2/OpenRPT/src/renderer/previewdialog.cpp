@@ -41,7 +41,8 @@ const int spacing = 30;
 PreviewDialog::PreviewDialog(ORODocument *document,
                              QPrinter *pPrinter,
                              QWidget *parent)
-  : QDialog(parent, Qt::Window), _view(0)
+  : QDialog(parent, Qt::Window),
+    _view(nullptr)
 {
     setWindowTitle(tr("Print Preview"));
 
@@ -77,7 +78,7 @@ PreviewDialog::PreviewDialog(ORODocument *document,
     mainlayout->addLayout(buttonlayout);
 
     resize(800, 600);
-    setWindowState(Qt::WindowMaximized);
+    //TODO setWindowState(Qt::WindowMaximized);
 
     connect(zoominbutton, SIGNAL(clicked()), _view, SLOT(zoomIn()));
     connect(zoomoutbutton, SIGNAL(clicked()), _view, SLOT(zoomOut()));
@@ -93,9 +94,10 @@ PreviewDialog::PreviewDialog(ORODocument *document,
 
 PreviewDialog::~PreviewDialog()
 {
-	if (_view) {
+    if (_view)
+    {
 		delete _view;
-		_view = 0;
+        _view = nullptr;
 	}
 }
 
@@ -128,7 +130,7 @@ PreviewWidget::~PreviewWidget()
 // update the view
 void PreviewWidget::updateView()
 {
-    resizeEvent(0);
+    resizeEvent(nullptr);
     viewport()->update();
 }
 
@@ -141,7 +143,7 @@ void PreviewWidget::zoomIn()
 {
     _zoom += 0.2;
     // update
-    resizeEvent(0);
+    resizeEvent(nullptr);
     viewport()->update();
 
 }
@@ -153,7 +155,7 @@ void PreviewWidget::zoomOut()
 {
     _zoom = qMax(_zoom - 0.2, 0.2);
     // update
-    resizeEvent(0);
+    resizeEvent(nullptr);
     viewport()->update();
 }
 

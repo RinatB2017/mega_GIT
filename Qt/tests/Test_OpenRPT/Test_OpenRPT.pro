@@ -13,6 +13,7 @@ DEPENDPATH  += \
     $$PWD/src/test_OpenRPT_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
+DEFINES += NO_STYLETOOLBAR
 #DEFINES += FIXED_SIZE
 
 DEFINES += NO_TRAYICON
@@ -40,7 +41,6 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
 include ($$LIB_PATH2/OpenRPT/OpenRPT.pri)
 
 !exists(OBJECTS_DIR) {

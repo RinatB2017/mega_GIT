@@ -123,6 +123,9 @@ public:
     bool get_vertical_alignment(void);
     bool get_horizontal_alignment(void);
 
+signals:
+    void change_text(int, QString);
+
 public slots:
     int add_curve(const QString &title,
                   QwtSymbol *symbol = nullptr);

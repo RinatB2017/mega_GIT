@@ -20,6 +20,7 @@ DEFINES += NO_LOG
 
 DEFINES += PROGRAMM_IN_UTF8
 
+DEFINES += SAVE_WIDGETS_LINEEDIT
 
 HEADERS += \
     test_QListWidget_mainbox.hpp \

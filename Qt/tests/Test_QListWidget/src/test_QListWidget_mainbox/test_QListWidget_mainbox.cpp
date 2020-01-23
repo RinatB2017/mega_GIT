@@ -47,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -66,6 +67,8 @@ void MainBox::init(void)
     {
         makeItem(lstWgt);
     }
+
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::onBtnClicked(void)

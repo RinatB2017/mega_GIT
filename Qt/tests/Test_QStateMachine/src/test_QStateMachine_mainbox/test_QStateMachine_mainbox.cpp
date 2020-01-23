@@ -104,7 +104,7 @@ void MainBox::init(void)
     machine->start();
 
 #if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
     if(sizeHint().height() > 0)
     {
@@ -136,7 +136,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");

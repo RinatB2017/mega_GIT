@@ -60,15 +60,14 @@ void MainBox::init(void)
 void MainBox::init_widgets(void)
 {
     ui->le_data->setText("test");
-    ui->le_address->setText(QHostAddress(QHostAddress::LocalHost).toString());
-    ui->sb_port->setValue(10000);
+    ui->ipv4_widget->set_url(QUrl(QHostAddress(QHostAddress::LocalHost).toString()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_client(void)
 {
-    client = new UDP_Client(this);
-    client->setAddress(QHostAddress(ui->le_address->text()));
-    client->setPort(static_cast<uint>(ui->sb_port->value()));
+    client = new UDP_Client();
+    client->setAddress(QHostAddress(ui->ipv4_widget->get_url().host()));
+    client->setPort(static_cast<quint16>(ui->ipv4_widget->get_url().port()));
 
     connect(ui->btn_Send, SIGNAL(clicked()), this, SLOT(send()));
 }
@@ -98,9 +97,8 @@ void MainBox::send(void)
     QByteArray data;
     QByteArray res_data;
 
-    if(ui->le_address->text().isEmpty()) return;
-    client->setAddress(QHostAddress(ui->le_address->text()));
-    client->setPort(static_cast<uint>(ui->sb_port->value()));
+    client->setAddress(QHostAddress(ui->ipv4_widget->get_url().host()));
+    client->setPort(static_cast<quint16>(ui->ipv4_widget->get_url().port()));
 
     data.clear();
     data.append(ui->le_data->text());

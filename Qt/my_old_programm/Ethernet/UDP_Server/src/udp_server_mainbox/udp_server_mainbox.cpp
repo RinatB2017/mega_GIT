@@ -27,8 +27,6 @@ MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MainBox)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -39,6 +37,8 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
     packets_good = 0;
     packets_bad  = 0;
 

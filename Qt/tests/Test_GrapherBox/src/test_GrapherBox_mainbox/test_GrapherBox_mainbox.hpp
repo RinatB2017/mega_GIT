@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "grapherbox.hpp"
 #include "mywidget.hpp"
@@ -37,10 +41,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
 class PlotPicker;
-class QSplitter;
 class GrapherBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -53,17 +54,31 @@ public:
     ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
-
-    void test(void);
+    void choice_test(void);
+    void test0(void);
     void test1(void);
     void test2(void);
     void test3(void);
-    void test4(void);
-    void test5(void);
 
 private:
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        void (MainBox::*func)(void);
+    } CMD_t;
+    QList<CMD> commands;
+    QComboBox *cb_test;
+
     MySplashScreen *splash;
     Ui::MainBox *ui;
     bool all_break = false;

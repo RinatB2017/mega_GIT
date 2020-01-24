@@ -93,9 +93,9 @@ public:
     }
     virtual QwtText label(double v) const
     {
-        int hour = v / 3600;
-        int minute = (v - hour * 3600) / 60;
-        int sec = (int)v % 60;
+        int hour = static_cast<int>(v / 3600);
+        int minute = static_cast<int>((v - hour * 3600) / 60);
+        int sec = static_cast<int>(v) % 60;
         QTime upTime(hour, minute, sec);
         return upTime.toString();
     }
@@ -115,7 +115,7 @@ public:
     {
         QwtText text;
         QTime time(0,0);
-        QTime temp = time.addSecs(invTransform(point).x());
+        QTime temp = time.addSecs(static_cast<int>(invTransform(point).x()));
         text.setText(QString("%1 %2")
                      .arg(temp.toString())
                      .arg(invTransform(point).y()));
@@ -959,31 +959,6 @@ void GrapherBox::updateGraphics(void)
     ui->qwtPlot->replot();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::updateText()
-{
-    ui->retranslateUi(this);
-
-    for(int n=0; n<curves.count(); n++)
-    {
-        curves.at(n).plot_curve->setTitle(curves.at(n).title);
-    }
-}
-//--------------------------------------------------------------------------------
-bool GrapherBox::programm_is_exit(void)
-{
-    return true;
-}
-//--------------------------------------------------------------------------------
-void GrapherBox::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void GrapherBox::save_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
 void GrapherBox::set_device_RECORDER(void)
 {
     flag_device_RECORDER = true;
@@ -1264,9 +1239,9 @@ void GrapherBox::f_load_curves(QString filename)
             if(sl.count() == 3)
             {
 #ifdef USE_SCALE_POINT_DATETIME
-                //nothing
+                //FIXME надо добавить обработчик
 #elif defined(USE_SCALE_POINT_TIME)
-                //nothing
+                //FIXME надо добавить обработчик
 #else
                 bool ok = false;
                 int i = sl.at(0).toInt(&ok);
@@ -1661,13 +1636,45 @@ void GrapherBox::test_sinus(void)
     push_btn_Vertical(true);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test_single_sinus(void)
+void GrapherBox::test_single_sinus(int index)
 {
+    if(index < 0)
+    {
+        emit error("index too small");
+        return;
+    }
+    if(index >= curves.count())
+    {
+        emit error("index too large");
+        return;
+    }
     push_btn_Horizontal(false);
     push_btn_Vertical(false);
     for(int n=0; n<360; n++)
     {
-        add_curve_data(0, 128 + 127*qSin(qreal(n)*qreal(M_PI)/qreal(180.0)));
+        add_curve_data(index, 128 + 127*qSin(qreal(n)*qreal(M_PI)/qreal(180.0)));
+    }
+    push_btn_Horizontal(true);
+    push_btn_Vertical(true);
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::test_random_data(int index)
+{
+    if(index < 0)
+    {
+        emit error("index too small");
+        return;
+    }
+    if(index >= curves.count())
+    {
+        emit error("index too large");
+        return;
+    }
+    push_btn_Horizontal(false);
+    push_btn_Vertical(false);
+    for(int n=0; n<360; n++)
+    {
+        add_curve_data(index, rand() % 100 - 50);
     }
     push_btn_Horizontal(true);
     push_btn_Vertical(true);
@@ -1751,5 +1758,30 @@ void GrapherBox::clicked(QVariant v, int i)
 void GrapherBox::checked(QVariant v, bool b, int i)
 {
     qDebug() << "checked" << v << b << i;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::updateText()
+{
+    ui->retranslateUi(this);
+
+    for(int n=0; n<curves.count(); n++)
+    {
+        curves.at(n).plot_curve->setTitle(curves.at(n).title);
+    }
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

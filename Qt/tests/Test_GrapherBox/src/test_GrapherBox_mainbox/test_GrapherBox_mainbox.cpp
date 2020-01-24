@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
@@ -252,145 +246,104 @@ void MainBox::createTestBar(void)
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
-
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       QIcon(":/red/0.png"),
-                                       "test",
-                                       "test");
-    QToolButton *btn_test_2 = add_button(testbar,
-                                         new QToolButton(this),
-                                         QIcon(":/red/2.png"),
-                                         "test2",
-                                         "test2");
-    QToolButton *btn_test_3 = add_button(testbar,
-                                         new QToolButton(this),
-                                         QIcon(":/red/3.png"),
-                                         "test3",
-                                         "test3");
-    QToolButton *btn_test_4 = add_button(testbar,
-                                         new QToolButton(this),
-                                         QIcon(":/red/4.png"),
-                                         "test4",
-                                         "test4");
-    QToolButton *btn_test_5 = add_button(testbar,
-                                         new QToolButton(this),
-                                         QIcon(":/red/5.png"),
-                                         "test5",
-                                         "test5");
+    commands.clear();
+    commands.append({ ID_TEST_0, "test_sinus",          &MainBox::test0 });
+    commands.append({ ID_TEST_1, "test_single_sinus",   &MainBox::test1 });
+    commands.append({ ID_TEST_2, "test_random_data",    &MainBox::test2 });
 
-    connect(btn_test,   SIGNAL(clicked()), this, SLOT(test()));
-    connect(btn_test_2, SIGNAL(clicked()), this, SLOT(test2()));
-    connect(btn_test_3, SIGNAL(clicked()), this, SLOT(test3()));
-    connect(btn_test_4, SIGNAL(clicked()), this, SLOT(test4()));
-    connect(btn_test_5, SIGNAL(clicked()), this, SLOT(test5()));
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-void MainBox::load(void)
+void MainBox::choice_test(void)
 {
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef void (MainBox::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
 
+            return;
+        }
+    }
 }
 //--------------------------------------------------------------------------------
-void MainBox::save(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-#include <QtMath>
-//y = -3*x*log(x)+(0.03)*exp(-(36*x -36/e)^4)
-//y = 3*x*log(x)-(0.13)*exp(-(36*x -36/e)^4)
-
-void MainBox::test(void)
+void MainBox::test0(void)
 {
     emit trace(Q_FUNC_INFO);
-    block_interface(true);
-
-#if 1
-    grapher_widget->set_curve_color(0, Qt::blue);
-
-    QColor color = grapher_widget->get_curve_color(0);
-    emit info(QString("R %1").arg(color.red()));
-    emit info(QString("G %1").arg(color.green()));
-    emit info(QString("B %1").arg(color.blue()));
-#endif
-
-#if 0
-    for(qreal x=0; x<100; x+=0.01)
-    {
-        qreal y = -3*x*qLn(x)+(0.03)*exp(-qPow(36*x - 36/M_E,4));
-        grapher_widget->add_curve_data(curve_0, static_cast<int>(x), y);
-    }
-#endif
-
-#if 0
-    for(qreal x=0; x<100; x+=0.01)
-    {
-        qreal y = 3*x*qLn(x)-(0.13)*exp(-qPow(36*x-36/M_E,4));
-#ifdef ONE_CURVE
-        grapher_widget->add_curve_data(curve_0, static_cast<int>(x), y);
-#else
-        grapher_widget->add_curve_data(curves[0], static_cast<int>(x), y);
-#endif
-    }
-#endif
-
-#if 0
-    for(int n=0; n<MAX_CHANNELS; n++)
-    {
-        ui->grapher_widget->set_curve_color(n, QColor(Qt::blue));
-    }
-#endif
-
-#if 0
-    grapher_widget->test();
-#endif
-
-    block_interface(false);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test1(void)
-{
     block_interface(true);
     grapher_widget->test_sinus();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+void MainBox::test1(void)
+{
+    int index = 0;
+    bool ok = false;
+    index = QInputDialog::getInt(this,
+                                 tr("Curves"),
+                                 tr("Index:"), 0, 0, grapher_widget->get_curves_count()-1, 1, &ok);
+    if (ok)
+    {
+        block_interface(true);
+        grapher_widget->test_single_sinus(index);
+        block_interface(false);
+    }
+}
+//--------------------------------------------------------------------------------
 void MainBox::test2(void)
 {
-    block_interface(true);
-    grapher_widget->test_single_sinus();
-    block_interface(false);
+    int index = 0;
+    bool ok = false;
+    index = QInputDialog::getInt(this,
+                                 tr("Curves"),
+                                 tr("Index:"), 0, 0, grapher_widget->get_curves_count()-1, 1, &ok);
+    if (ok)
+    {
+        block_interface(true);
+        grapher_widget->test_random_data(index);
+        block_interface(false);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test3(void)
 {
     block_interface(true);
-    grapher_widget->setAxisScaleDraw(QwtPlot::xBottom, new MyScaleDraw(100.0));
+    grapher_widget->test_draw_circle();
     block_interface(false);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test4(void)
-{
-    quint64 buf[100] = { 0 };
-
-    block_interface(true);
-    for(int n=0; n<1000000; n++)
-    {
-        int x = rand() % 100;
-        buf[x]++;
-    }
-    for(int n=0; n<100; n++)
-    {
-        grapher_widget->add_curve_data(0, n, buf[n]);
-    }
-    block_interface(false);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test5(void)
-{
-
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

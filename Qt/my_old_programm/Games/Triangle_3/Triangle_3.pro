@@ -12,9 +12,9 @@ TARGET = Triangle_3
 TEMPLATE = app
 
 SOURCES += \
-    src/main.cpp \
+    src/triangle.cpp \
     src/widget.cpp \
-    src/triangle.cpp
+    src/main.cpp
 
 HEADERS  += \
     src/widget.h \

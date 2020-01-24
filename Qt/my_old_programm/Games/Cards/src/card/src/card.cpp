@@ -131,12 +131,14 @@ int Card::get_corr_x1(QPixmap *pix)
         int r = qRed(rgb);
         int g = qGreen(rgb);
         int b = qBlue(rgb);
+#if 0
         emit debug(QString("%1 %2 %3 %4 %5")
                    .arg(rgb)
                    .arg(r)
                    .arg(g)
                    .arg(b)
                    .arg(qAlpha(rgb)));
+#endif
         if(r!=255 && b!=255 && g!=255)
         {
             return n;
@@ -156,12 +158,14 @@ int Card::get_corr_y1(QPixmap *pix)
         int r = qRed(rgb);
         int g = qGreen(rgb);
         int b = qBlue(rgb);
+#if 0
         emit debug(QString("%1 %2 %3 %4 %5")
                    .arg(rgb)
                    .arg(r)
                    .arg(g)
                    .arg(b)
                    .arg(qAlpha(rgb)));
+#endif
         if(r!=255 && b!=255 && g!=255)
         {
             return n;
@@ -181,12 +185,14 @@ int Card::get_corr_x2(QPixmap *pix)
         int r = qRed(rgb);
         int g = qGreen(rgb);
         int b = qBlue(rgb);
+#if 0
         emit debug(QString("%1 %2 %3 %4 %5")
                    .arg(rgb)
                    .arg(r)
                    .arg(g)
                    .arg(b)
                    .arg(qAlpha(rgb)));
+#endif
         if(r!=255 && b!=255 && g!=255)
         {
             return n;
@@ -207,12 +213,14 @@ int Card::get_corr_y2(QPixmap *pix)
         int r = qRed(rgb);
         int g = qGreen(rgb);
         int b = qBlue(rgb);
+#if 0
         emit debug(QString("%1 %2 %3 %4 %5")
                    .arg(rgb)
                    .arg(r)
                    .arg(g)
                    .arg(b)
                    .arg(qAlpha(rgb)));
+#endif
         if(r!=255 && b!=255 && g!=255)
         {
             return n;

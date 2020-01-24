@@ -1,6 +1,5 @@
-TEMPLATE = app
-TARGET = camera
-
+TEMPLATE    = app
+TARGET      = camera
 
 DEPENDPATH  += \
     $$PWD/src \
@@ -11,20 +10,20 @@ QT  +=  multimedia multimediawidgets
 QT  +=  widgets
 
 HEADERS = \
-    camera.h \
     imagesettings.h \
-    videosettings.h
+    videosettings.h \
+    camera.h \
 
 SOURCES = \
-    main.cpp \
-    camera.cpp \
     imagesettings.cpp \
-    videosettings.cpp
+    videosettings.cpp \
+    camera.cpp \
+    main.cpp
 
 FORMS += \
-    camera.ui \
+    imagesettings.ui \
     videosettings.ui \
-    imagesettings.ui
+    camera.ui
 
 RESOURCES += images/camera.qrc
 

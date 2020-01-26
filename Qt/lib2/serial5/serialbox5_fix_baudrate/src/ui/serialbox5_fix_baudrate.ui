@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>244</width>
+    <width>253</width>
     <height>74</height>
    </rect>
   </property>
@@ -22,12 +22,6 @@
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QPushButton" name="btn_power">
-        <property name="maximumSize">
-         <size>
-          <width>33</width>
-          <height>70</height>
-         </size>
-        </property>
         <property name="checkable">
          <bool>true</bool>
         </property>

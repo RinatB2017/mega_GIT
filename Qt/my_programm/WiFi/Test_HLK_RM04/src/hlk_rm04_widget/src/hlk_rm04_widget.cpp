@@ -31,7 +31,6 @@ HLK_RM04_widget::HLK_RM04_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 HLK_RM04_widget::~HLK_RM04_widget()
 {
-    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -115,6 +114,9 @@ void HLK_RM04_widget::init(void)
     ui->cb_encrypt_type->addItem("wpawpa2_tkip");
     ui->cb_encrypt_type->addItem("wpawpa2_aes");
 
+    ui->cb_remotepro->addItem("tcp");
+    ui->cb_remotepro->addItem("udp");
+
     ui->cb_netmode->addItem("Default setup");
     ui->cb_netmode->addItem("Ethernet");
     ui->cb_netmode->addItem("Wifi client");
@@ -129,6 +131,7 @@ void HLK_RM04_widget::init(void)
     ui->cb_function->setProperty(NO_SAVE, true);
     ui->cb_serial_to->setProperty(NO_SAVE, true);
     ui->cb_encrypt_type->setProperty(NO_SAVE, true);
+    ui->cb_netmode->setProperty(NO_SAVE, true);
 
     ui->btn_function->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_serial_to->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
@@ -145,8 +148,7 @@ void HLK_RM04_widget::init(void)
     }
     //---
 
-    load_widgets(APPNAME);
-
+#if 0
     //init_w_lists();
     add_widget_to_w_lists(ui->le_ssid);
     add_widget_to_w_lists(ui->le_password);
@@ -154,9 +156,11 @@ void HLK_RM04_widget::init(void)
     add_widget_to_w_lists(ui->cb_function);
     add_widget_to_w_lists(ui->cb_serial_to);
     add_widget_to_w_lists(ui->cb_encrypt_type);
+    add_widget_to_w_lists(ui->cb_netmode);
     add_widget_to_w_lists(ui->btn_function);
     add_widget_to_w_lists(ui->btn_serial_to);
     //lock_iface(false);
+#endif
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::init_widgets(void)
@@ -679,7 +683,8 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
     //temp.append("at+remoteport=8080\r");
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
-    temp.append("at+remotepro=tcp\r");
+    //temp.append("at+remotepro=tcp\r");
+    temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
@@ -731,7 +736,8 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
     //temp.append("at+remoteport=8080\r");
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
-    temp.append("at+remotepro=tcp\r");
+    //temp.append("at+remotepro=tcp\r");
+    temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
@@ -774,7 +780,8 @@ void HLK_RM04_widget::s_serial_to_wifi_client(void)
     //temp.append("at+remoteport=8080\r");
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
-    temp.append("at+remotepro=tcp\r");
+    //temp.append("at+remotepro=tcp\r");
+    temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
@@ -826,7 +833,8 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
     //temp.append("at+remoteport=8080\r");
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
-    temp.append("at+remotepro=tcp\r");
+    //temp.append("at+remotepro=tcp\r");
+    temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
@@ -884,7 +892,8 @@ void HLK_RM04_widget::s_serial_to_wifi_ap(void)
     //temp.append("at+remoteport=8080\r");
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
-    temp.append("at+remotepro=tcp\r");
+    //temp.append("at+remotepro=tcp\r");
+    temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");

@@ -529,8 +529,8 @@ void MyWidget::load_QComboBox(QString group_name)
                     obj->addItem(settings->value("value").toString());
                 }
                 settings->endArray();
-                obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
             }
+            obj->setCurrentIndex(settings->value("currentindex", 0).toInt());
         }
     }
     settings->endGroup();
@@ -560,8 +560,8 @@ void MyWidget::save_QComboBox(QString group_name)
                     settings->setValue("value", obj->currentText());
                 }
                 settings->endArray();
-                settings->setValue("currentindex", QVariant(obj->currentIndex()));
             }
+            settings->setValue("currentindex", QVariant(obj->currentIndex()));
         }
     }
 

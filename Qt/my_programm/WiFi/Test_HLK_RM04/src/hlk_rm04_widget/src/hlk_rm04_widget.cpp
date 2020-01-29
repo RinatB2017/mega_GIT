@@ -166,7 +166,7 @@ void HLK_RM04_widget::init_widgets(void)
     ui->le_password->setText("Password2");
 
     QUrl url;
-    url.setHost("192.168.0.1");
+    url.setHost("192.168.1.1");
     ui->ip_widget->set_url(url);
     ui->gate_widget->set_url(url);
     ui->net_ip_widget->set_url(url);
@@ -174,7 +174,7 @@ void HLK_RM04_widget::init_widgets(void)
     ui->dhcpd_gate_widget->set_url(url);
     ui->net_dns_widget->set_url(url);
 
-    url.setHost("192.168.0.10");
+    url.setHost("192.168.1.10");
     ui->remote_ip_widget->set_url(url);
 
     ui->sb_remote_port->setValue(5000);

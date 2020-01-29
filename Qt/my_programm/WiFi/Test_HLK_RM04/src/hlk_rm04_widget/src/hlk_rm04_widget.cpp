@@ -124,6 +124,8 @@ void HLK_RM04_widget::init(void)
 
     ui->sb_remote_port->setRange(0, 0xFFFF);
 
+    ui->sb_timeout->setRange(0, 0xFFFF);
+
     ui->cb_function->setProperty(NO_SAVE, true);
     ui->cb_serial_to->setProperty(NO_SAVE, true);
     ui->cb_encrypt_type->setProperty(NO_SAVE, true);
@@ -176,6 +178,9 @@ void HLK_RM04_widget::init_widgets(void)
     ui->remote_ip_widget->set_url(url);
 
     ui->sb_remote_port->setValue(5000);
+
+    ui->sb_timeout->setValue(3600);
+    ui->sb_dhcpd_time_widget->setValue(3600);
 
     url.setHost("255.255.255.0");
     ui->mask_widget->set_url(url);
@@ -675,7 +680,8 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
     temp.append("at+remotepro=tcp\r");
-    temp.append("at+timeout=0\r");
+    //temp.append("at+timeout=0\r");
+    temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
 
     //temp.append("at+uart=115200,8,n,1\r");
@@ -689,6 +695,9 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    //TODO test
+    temp.append("test\r");
 
     emit debug(temp);
     send_command(temp);
@@ -723,7 +732,8 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
     temp.append("at+remotepro=tcp\r");
-    temp.append("at+timeout=0\r");
+    //temp.append("at+timeout=0\r");
+    temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
 
     //temp.append("at+uart=115200,8,n,1\r");
@@ -737,6 +747,9 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    //TODO test
+    temp.append("test\r");
 
     emit debug(temp);
     send_command(temp);
@@ -762,7 +775,8 @@ void HLK_RM04_widget::s_serial_to_wifi_client(void)
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
     temp.append("at+remotepro=tcp\r");
-    temp.append("at+timeout=0\r");
+    //temp.append("at+timeout=0\r");
+    temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
 
     //temp.append("at+uart=115200,8,n,1\r");
@@ -776,6 +790,9 @@ void HLK_RM04_widget::s_serial_to_wifi_client(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    //TODO test
+    temp.append("test\r");
 
     emit debug(temp);
     send_command(temp);
@@ -810,7 +827,8 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
     temp.append("at+remotepro=tcp\r");
-    temp.append("at+timeout=0\r");
+    //temp.append("at+timeout=0\r");
+    temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
 
     //temp.append("at+uart=115200,8,n,1\r");
@@ -824,6 +842,9 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
     temp.append("at+uartpacktimeout=10\r");
     temp.append("at+net_commit=1\r");
     temp.append("at+reconn=1\r");
+
+    //TODO test
+    temp.append("test\r");
 
     emit debug(temp);
     send_command(temp);
@@ -864,7 +885,8 @@ void HLK_RM04_widget::s_serial_to_wifi_ap(void)
     temp.append(QString("at+remoteport=%1\r").arg(get_remote_port()));
 
     temp.append("at+remotepro=tcp\r");
-    temp.append("at+timeout=0\r");
+    //temp.append("at+timeout=0\r");
+    temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
     temp.append("at+mode=server\r");
 
     //temp.append("at+uart=115200,8,n,1\r");

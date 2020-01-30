@@ -147,7 +147,6 @@ void SerialBox5_fix_baudrate::init(void)
     setCloseState();
 
     ui->PortBox->setMinimumWidth(150);
-    ui->PortBox->setProperty(NO_SAVE, true);
 
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_refresh->setToolTip("Обновить список портов");

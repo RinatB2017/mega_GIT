@@ -219,7 +219,6 @@ private:
     void load_QDoubleSpinBox(QString group_name);
     void load_QSlider(QString group_name);
     void load_QSplitter(QString group_name);
-
     void load_QTimeEdit(QString group_name);
 
     void save_QCheckBox(QString group_name);
@@ -233,8 +232,12 @@ private:
     void save_QDoubleSpinBox(QString group_name);
     void save_QSlider(QString group_name);
     void save_QSplitter(QString group_name);
-
     void save_QTimeEdit(QString group_name);
+
+    bool is_my_widget(QString o_name);
+    bool compare_name(const char *widget_name, QString class_name);
+    void load_my_widgets(void);
+    void save_my_widgets(void);
 
     QList<QWidget *> w_lists;
 

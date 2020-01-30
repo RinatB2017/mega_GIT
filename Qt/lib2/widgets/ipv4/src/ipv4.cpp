@@ -56,6 +56,12 @@ void IPV4::init(void)
     port->setRange(0, 0xFFFF);
     port->setToolTip("Порт");
 
+    a->setProperty("NO_SAVE", true);
+    b->setProperty("NO_SAVE", true);
+    c->setProperty("NO_SAVE", true);
+    d->setProperty("NO_SAVE", true);
+    port->setProperty("NO_SAVE", true);
+
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);
     hbox->setSpacing(0);

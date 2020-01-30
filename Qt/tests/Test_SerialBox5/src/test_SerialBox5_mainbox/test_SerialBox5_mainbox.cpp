@@ -47,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets(APPNAME);
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -59,6 +60,7 @@ void MainBox::init(void)
 #endif
 
     init_serial_widgets();
+    load_widgets(APPNAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial_widgets(void)

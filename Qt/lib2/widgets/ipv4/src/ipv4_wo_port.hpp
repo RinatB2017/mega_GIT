@@ -46,6 +46,16 @@ public:
     QUrl get_url(void);
     void set_url(QUrl url);
 
+    void set_a(int value);
+    void set_b(int value);
+    void set_c(int value);
+    void set_d(int value);
+
+    int get_a(void);
+    int get_b(void);
+    int get_c(void);
+    int get_d(void);
+
     void setReadOnly(bool state);
 
     bool no_exit(void);

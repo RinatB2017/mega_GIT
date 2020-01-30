@@ -89,6 +89,9 @@ private:
 
     void createTestBar(void);
 
+    void load_widgets_ipv4(void);
+    void save_widgets_ipv4(void);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

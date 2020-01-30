@@ -39,6 +39,11 @@ IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
     c->setRange(0, 0xFF);
     d->setRange(0, 0xFF);
 
+    a->setProperty("NO_SAVE", true);
+    b->setProperty("NO_SAVE", true);
+    c->setProperty("NO_SAVE", true);
+    d->setProperty("NO_SAVE", true);
+
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);
     hbox->setSpacing(0);
@@ -66,10 +71,10 @@ IPV4_wo_port::~IPV4_wo_port()
 //--------------------------------------------------------------------------------
 void IPV4_wo_port::setObjectName(const QString &name)
 {
-    a->setObjectName(QString("%1_IPV4_wo_port_a").arg(name));
-    b->setObjectName(QString("%1_IPV4_wo_port_b").arg(name));
-    c->setObjectName(QString("%1_IPV4_wo_port_c").arg(name));
-    d->setObjectName(QString("%1_IPV4_wo_port_d").arg(name));
+    a->setObjectName(QString("sb_%1_a").arg(name));
+    b->setObjectName(QString("sb_%1_b").arg(name));
+    c->setObjectName(QString("sb_%1_c").arg(name));
+    d->setObjectName(QString("sb_%1_d").arg(name));
 
     QWidget::setObjectName(name);
 }
@@ -116,6 +121,46 @@ void IPV4_wo_port::setReadOnly(bool state)
     b->setReadOnly(state);
     c->setReadOnly(state);
     d->setReadOnly(state);
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::set_a(int value)
+{
+    a->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::set_b(int value)
+{
+    b->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::set_c(int value)
+{
+    c->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void IPV4_wo_port::set_d(int value)
+{
+    d->setValue(value);
+}
+//--------------------------------------------------------------------------------
+int IPV4_wo_port::get_a(void)
+{
+    return a->value();
+}
+//--------------------------------------------------------------------------------
+int IPV4_wo_port::get_b(void)
+{
+    return b->value();
+}
+//--------------------------------------------------------------------------------
+int IPV4_wo_port::get_c(void)
+{
+    return c->value();
+}
+//--------------------------------------------------------------------------------
+int IPV4_wo_port::get_d(void)
+{
+    return d->value();
 }
 //--------------------------------------------------------------------------------
 bool IPV4_wo_port::no_exit(void)

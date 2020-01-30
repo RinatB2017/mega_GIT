@@ -24,7 +24,10 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_HLK_RM04_mainbox.hpp"
+#include "ipv4_wo_port.hpp"
 #include "defines.hpp"
+
+#include <string.h>
 
 #include "wifi_frame.hpp"
 //--------------------------------------------------------------------------------
@@ -44,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets_ipv4();
     save_widgets(APPNAME);
     delete ui;
 }
@@ -76,6 +80,7 @@ void MainBox::init(void)
     //setLayout(main_layout);
 
     load_widgets(APPNAME);
+    load_widgets_ipv4();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -145,6 +150,48 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::load_widgets_ipv4(void)
+{
+    QList<IPV4_wo_port *> ipv4_widdgets = topLevelWidget()->findChildren<IPV4_wo_port *>();
+    int cnt = ipv4_widdgets.count();
+    if(cnt <= 0)
+    {
+        emit error("IPV4_wo_port not found");
+        return;
+    }
+    for(int n=0; n<cnt; n++)
+    {
+        QString oname = ipv4_widdgets.at(n)->objectName();
+        beginGroup(oname);
+        ipv4_widdgets.at(n)->set_a(load_value("a").toInt());
+        ipv4_widdgets.at(n)->set_b(load_value("b").toInt());
+        ipv4_widdgets.at(n)->set_c(load_value("c").toInt());
+        ipv4_widdgets.at(n)->set_d(load_value("d").toInt());
+        endGroup();
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_widgets_ipv4(void)
+{
+    QList<IPV4_wo_port *> ipv4_widdgets = topLevelWidget()->findChildren<IPV4_wo_port *>();
+    int cnt = ipv4_widdgets.count();
+    if(cnt <= 0)
+    {
+        emit error("IPV4_wo_port not found");
+        return;
+    }
+    for(int n=0; n<cnt; n++)
+    {
+        QString oname = ipv4_widdgets.at(n)->objectName();
+        beginGroup(oname);
+        save_value("a", ipv4_widdgets.at(n)->get_a());
+        save_value("b", ipv4_widdgets.at(n)->get_b());
+        save_value("c", ipv4_widdgets.at(n)->get_c());
+        save_value("d", ipv4_widdgets.at(n)->get_d());
+        endGroup();
+    }
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
@@ -156,6 +203,15 @@ bool MainBox::test_0(void)
 //    ui->hlk_rm04_widget->set_ip(url);
 //    url.setHost("255.255.255.0");
 //    ui->hlk_rm04_widget->set_mask(url);
+
+    QList<QWidget *> allobj = topLevelWidget()->findChildren<QWidget *>();
+    foreach(QWidget *widget, allobj)
+    {
+        if(widget->objectName().left(3) != "qt_")
+        {
+            emit info(widget->objectName());
+        }
+    }
 
     return true;
 }

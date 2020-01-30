@@ -128,11 +128,6 @@ void HLK_RM04_widget::init(void)
 
     ui->sb_timeout->setRange(0, 0xFFFF);
 
-    ui->cb_function->setProperty(NO_SAVE, true);
-    ui->cb_serial_to->setProperty(NO_SAVE, true);
-    ui->cb_encrypt_type->setProperty(NO_SAVE, true);
-    ui->cb_netmode->setProperty(NO_SAVE, true);
-
     ui->btn_function->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_serial_to->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
@@ -175,6 +170,7 @@ void HLK_RM04_widget::init_widgets(void)
     ui->gate_widget->set_url(url);
     ui->net_ip_widget->set_url(url);
     ui->dhcpd_ip_widget->set_url(url);
+    ui->dhcpd_dns_widget->set_url(url);
     ui->dhcpd_gate_widget->set_url(url);
     ui->net_dns_widget->set_url(url);
 

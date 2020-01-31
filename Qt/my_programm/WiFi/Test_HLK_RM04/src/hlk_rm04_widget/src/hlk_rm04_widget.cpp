@@ -117,6 +117,9 @@ void HLK_RM04_widget::init(void)
     ui->cb_remotepro->addItem("tcp");
     ui->cb_remotepro->addItem("udp");
 
+    ui->cb_mode->addItem("server");
+    ui->cb_mode->addItem("client");
+
     ui->cb_netmode->addItem("Default setup");
     ui->cb_netmode->addItem("Ethernet");
     ui->cb_netmode->addItem("Wifi client");
@@ -683,7 +686,8 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
     temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
-    temp.append("at+mode=server\r");
+    //temp.append("at+mode=server\r");
+    temp.append(QString("at+mode=%1\r").arg(ui->cb_mode->currentText()));
 
     //temp.append("at+uart=115200,8,n,1\r");
     temp.append(QString("at+uart=%1,%2,%3,%4\r")
@@ -736,7 +740,8 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
     temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
-    temp.append("at+mode=server\r");
+    //temp.append("at+mode=server\r");
+    temp.append(QString("at+mode=%1\r").arg(ui->cb_mode->currentText()));
 
     //temp.append("at+uart=115200,8,n,1\r");
     temp.append(QString("at+uart=%1,%2,%3,%4\r")
@@ -780,7 +785,8 @@ void HLK_RM04_widget::s_serial_to_wifi_client(void)
     temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
-    temp.append("at+mode=server\r");
+    //temp.append("at+mode=server\r");
+    temp.append(QString("at+mode=%1\r").arg(ui->cb_mode->currentText()));
 
     //temp.append("at+uart=115200,8,n,1\r");
     temp.append(QString("at+uart=%1,%2,%3,%4\r")
@@ -833,7 +839,8 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
     temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
-    temp.append("at+mode=server\r");
+    //temp.append("at+mode=server\r");
+    temp.append(QString("at+mode=%1\r").arg(ui->cb_mode->currentText()));
 
     //temp.append("at+uart=115200,8,n,1\r");
     temp.append(QString("at+uart=%1,%2,%3,%4\r")
@@ -892,7 +899,8 @@ void HLK_RM04_widget::s_serial_to_wifi_ap(void)
     temp.append(QString("at+remotepro=%1\r").arg(ui->cb_remotepro->currentText()));
     //temp.append("at+timeout=0\r");
     temp.append(QString("at+timeout=%1\r").arg(ui->sb_timeout->value()));
-    temp.append("at+mode=server\r");
+    //temp.append("at+mode=server\r");
+    temp.append(QString("at+mode=%1\r").arg(ui->cb_mode->currentText()));
 
     //temp.append("at+uart=115200,8,n,1\r");
     temp.append(QString("at+uart=%1,%2,%3,%4\r")

@@ -225,7 +225,7 @@ bool MainBox::append_proxy(const QString &ip_and_port)
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::HttpProxy);
     proxy.setHostName(Ip);
-    proxy.setPort(port);
+    proxy.setPort(static_cast<quint16>(port));
     //    QNetworkProxy::setApplicationProxy(proxy);
     webview->page()->networkAccessManager()->setProxy(proxy);
 
@@ -295,7 +295,7 @@ void MainBox::check_proxies_list(void)
             bool ok = append_proxy(proxy);
             if(ok)
             {
-                QTime time;
+                QElapsedTimer time;
                 time.start();
                 load_url("https://www.google.ru/"); //URL_MAIN_PAGE);
                 QWebElement title = main_frame->findFirstElement("title");
@@ -303,7 +303,7 @@ void MainBox::check_proxies_list(void)
                 {
                     if(title.toPlainText() == "Google") //"Персональный сайт - Главная страница")
                     {
-                        int time_elapsed = time.elapsed();
+                        qint64 time_elapsed = time.elapsed();
                         full_time += time_elapsed;
                         emit info(QString("proxy %1 is valid! elapsed %2 msec ")
                                   .arg(proxy)
@@ -476,7 +476,7 @@ void MainBox::load_url(const QString &address,
 {
     if(global_stop_flag) return;
 
-    if(webview == 0)
+    if(webview == nullptr)
     {
         emit error("webview not init");
         return;

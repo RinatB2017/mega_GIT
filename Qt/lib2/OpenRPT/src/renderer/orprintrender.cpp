@@ -27,8 +27,8 @@ static void renderWatermark(QImage &, const QString &, const QFont &, const unsi
 
 ORPrintRender::ORPrintRender()
 {
-    _printer = 0;
-    _painter = 0;
+    _printer = nullptr;
+    _painter = nullptr;
 }
 
 ORPrintRender::~ORPrintRender()
@@ -47,7 +47,7 @@ void ORPrintRender::setPainter(QPainter * pPainter)
 
 bool ORPrintRender::setupPrinter(ORODocument * pDocument, QPrinter * pPrinter)
 {
-    if(pDocument == 0 || pPrinter == 0)
+    if(pDocument == nullptr || pPrinter == nullptr)
         return false;
 
     pPrinter->setCreator("OpenRPT Print Renderer");
@@ -75,7 +75,7 @@ bool ORPrintRender::setupPrinter(ORODocument * pDocument, QPrinter * pPrinter)
 
 bool ORPrintRender::render(ORODocument * pDocument)
 {
-    if(pDocument == 0 || _printer == 0)
+    if(pDocument == nullptr || _printer == nullptr)
         return false;
 
     _printer->setFullPage(true);
@@ -84,7 +84,7 @@ bool ORPrintRender::render(ORODocument * pDocument)
     bool endWhenComplete = false;
 
     QPainter localPainter;
-    if(_painter == 0)
+    if(_painter == nullptr)
     {
         deleteWhenComplete = true;
         _painter = &localPainter;
@@ -127,7 +127,7 @@ bool ORPrintRender::render(ORODocument * pDocument)
         _painter->end();
 
     if(deleteWhenComplete)
-        _painter = 0;
+        _painter = nullptr;
 
     return true;
 }
@@ -185,9 +185,9 @@ void renderBackground(QImage & dest,
                 s = img.pixel(x, y);
                 if((s & 0x00ffffff) == 0x00ffffff) continue; // if it's white just skip it
                 d = dest.pixel(dx, dy);
-                dest.setPixel(dx, dy, qRgb( (int)((qRed(s) * opacity) + (qRed(d) * opacity_inv)),
-                                            (int)((qGreen(s) * opacity) + (qGreen(d) * opacity_inv)),
-                                            (int)((qBlue(s) * opacity) + (qBlue(d) * opacity_inv)) ));
+                dest.setPixel(dx, dy, qRgb( static_cast<int>((qRed(s) * opacity) + (qRed(d) * opacity_inv)),
+                                            static_cast<int>((qGreen(s) * opacity) + (qGreen(d) * opacity_inv)),
+                                            static_cast<int>((qBlue(s) * opacity) + (qBlue(d) * opacity_inv)) ));
             }
         }
     }
@@ -207,8 +207,8 @@ void renderWatermark(QImage & image,
 {
     const double pi = 3.14159265358979323846;
 
-    double w = ((double)image.width() - pA);
-    double h = ((double)image.height() - pB);
+    double w = (static_cast<double>(image.width()) - pA);
+    double h = (static_cast<double>(image.height()) - pB);
     double theta = (pi/-2.0) + atan(w / h);
     double l = sqrt((w * w) + (h * h));
 
@@ -218,11 +218,11 @@ void renderWatermark(QImage & image,
     double margin_width = pC;
     double margin_height = pD;
 
-    int offset = (int)(l * 0.05);
-    int l2 = (int)(l * 0.9);
+    int offset = static_cast<int>(l * 0.05);
+    int l2 = static_cast<int>(l * 0.9);
 
-    int x = (int)(sintheta * h) + offset;
-    int y = (int)(costheta * h);
+    int x = static_cast<int>(sintheta * h) + offset;
+    int y = static_cast<int>(costheta * h);
 
     QFont fnt = wmFont;
     QFontMetrics fm = QFontMetrics(fnt);
@@ -265,9 +265,9 @@ void renderWatermark(QImage & image,
             s = wm.pixel(x, y);
             if((s & 0x00ffffff) == 0x00ffffff) continue; // if it's white just skip it
             d = image.pixel(x, y);
-            image.setPixel(x, y, qRgb( (int)((qRed(s) * opacity) + (qRed(d) * opacity_inv)),
-                                       (int)((qGreen(s) * opacity) + (qGreen(d) * opacity_inv)),
-                                       (int)((qBlue(s) * opacity) + (qBlue(d) * opacity_inv)) ));
+            image.setPixel(x, y, qRgb( static_cast<int>((qRed(s) * opacity) + (qRed(d) * opacity_inv)),
+                                       static_cast<int>((qGreen(s) * opacity) + (qGreen(d) * opacity_inv)),
+                                       static_cast<int>((qBlue(s) * opacity) + (qBlue(d) * opacity_inv)) ));
         }
     }
 }
@@ -297,8 +297,8 @@ void ORPrintRender::renderPage(ORODocument * pDocument,
         if(pageSize == "Custom")
         {
             // if this is custom sized sheet of paper we will just use those values
-            pageWidth = (int)(pDocument->pageOptions().getCustomWidth() * resolution);
-            pageHeight = (int)(pDocument->pageOptions().getCustomHeight() * resolution);
+            pageWidth = static_cast<int>(pDocument->pageOptions().getCustomWidth() * resolution);
+            pageHeight = static_cast<int>(pDocument->pageOptions().getCustomHeight() * resolution);
         }
         else
         {
@@ -306,8 +306,8 @@ void ORPrintRender::renderPage(ORODocument * pDocument,
             PageSizeInfo pi = PageSizeInfo::getByName(pageSize);
             if(!pi.isNull())
             {
-                pageWidth = (int)((pi.width() / 100.0) * resolution);
-                pageHeight = (int)((pi.height() / 100.0) * resolution);
+                pageWidth = static_cast<int>((pi.width() / 100.0) * resolution);
+                pageHeight = static_cast<int>((pi.height() / 100.0) * resolution);
             }
         }
         if(!pDocument->pageOptions().isPortrait())
@@ -321,8 +321,8 @@ void ORPrintRender::renderPage(ORODocument * pDocument,
             // whoops we couldn't find it.... we will use the values from the painter
             // and add in the margins of the printer to get what should be the correct
             // size of the sheet of paper we are printing to.
-            pageWidth = (int)(((painter->viewport().width() + printMarginWidth + printMarginWidth) / xDpi) * resolution);
-            pageHeight = (int)(((painter->viewport().height() + printMarginHeight + printMarginHeight) / yDpi) * resolution);
+            pageWidth = static_cast<int>(((painter->viewport().width() + printMarginWidth + printMarginWidth) / xDpi) * resolution);
+            pageHeight = static_cast<int>(((painter->viewport().height() + printMarginHeight + printMarginHeight) / yDpi) * resolution);
         }
 
         QImage image = QImage(pageWidth, pageHeight, QImage::Format_RGB32);

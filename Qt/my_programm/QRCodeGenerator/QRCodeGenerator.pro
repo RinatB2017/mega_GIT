@@ -1,7 +1,3 @@
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 TARGET      = "QRCode Generator"
 TEMPLATE    = app
 
@@ -12,12 +8,16 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
+QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 unix:!macx {
     OBJECTS_DIR = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
     MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
     UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
     RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
 }
+
 
 macx {
     OBJECTS_DIR = build/obj
@@ -40,8 +40,8 @@ win32 {
 DESTDIR = bin
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    main.cpp
 
 HEADERS  += \
     mainwindow.h

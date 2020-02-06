@@ -136,7 +136,7 @@ void MainWindow::setScale(int scale)
 
 void MainWindow::on_pButtonSave_clicked()
 {
-    const QString & path = QFileDialog::getSaveFileName( this, QString::null, "qrcode", saveFormats() );
+    const QString & path = QFileDialog::getSaveFileName( this, QString(), "qrcode", saveFormats() );
     if ( path.isNull() )
         return;
 

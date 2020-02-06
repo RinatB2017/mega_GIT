@@ -49,113 +49,113 @@ typedef QMap<int, GReference> GReferences;
 
 
 class tGraph {
-    public:
-        tGraph(const QRect &);
-        virtual ~tGraph();
+public:
+    tGraph(const QRect &);
+    virtual ~tGraph();
 
-        int hPadding();
-        int vPadding();
+    int hPadding();
+    int vPadding();
 
-        QString dataLabel();
-        QString valueLabel();
-        QString title();
+    QString dataLabel();
+    QString valueLabel();
+    QString title();
 
-        QFont font();
-        QFont titleFont();
-        QFont dataLabelFont();
-        QFont dataFont();
-        QFont valueLabelFont();
-        QFont valueFont();
+    QFont font();
+    QFont titleFont();
+    QFont dataLabelFont();
+    QFont dataFont();
+    QFont valueLabelFont();
+    QFont valueFont();
 
-        int   titleAlignment();
-        int   dataLabelAlignment();
-        int   valueLabelAlignment();
+    int   titleAlignment();
+    int   dataLabelAlignment();
+    int   valueLabelAlignment();
 
-        QColor getSetColor(int);
+    QColor getSetColor(int);
 
-        double minValue();
-        double maxValue();
+    double minValue();
+    double maxValue();
 
-        bool drawBars();
-        bool drawLines();
-        bool drawPoints();
+    bool drawBars();
+    bool drawLines();
+    bool drawPoints();
 
-        bool autoMinMax();
-        bool autoRepaint();
+    bool autoMinMax();
+    bool autoRepaint();
 
-        //void populateFromResult(QSqlQuery&);
+    //void populateFromResult(QSqlQuery&);
 
-        void setHPadding(int);
-        void setVPadding(int);
+    void setHPadding(int);
+    void setVPadding(int);
 
-        void setDataLabel(const QString&);
-        void setValueLabel(const QString&);
-        void setTitle(const QString&);
+    void setDataLabel(const QString&);
+    void setValueLabel(const QString&);
+    void setTitle(const QString&);
 
-        void setFont(const QFont &);
-        void setTitleFont(const QFont *);
-        void setDataLabelFont(const QFont *);
-        void setDataFont(const QFont *);
-        void setValueLabelFont(const QFont *);
-        void setValueFont(const QFont *);
+    void setFont(const QFont &);
+    void setTitleFont(const QFont *);
+    void setDataLabelFont(const QFont *);
+    void setDataFont(const QFont *);
+    void setValueLabelFont(const QFont *);
+    void setValueFont(const QFont *);
 
-        void setMinValue(double);
-        void setMinValue(int);
-        void setMaxValue(double);
-        void setMaxValue(int);
+    void setMinValue(double);
+    void setMinValue(int);
+    void setMaxValue(double);
+    void setMaxValue(int);
 
-        void setReferenceLabel(int, const QString&);
-        void setSetValue(int, int, double);
-        void setSetColor(int, const QColor&);
-        void setSetStyle(int, const ORStyleData &);
+    void setReferenceLabel(int, const QString&);
+    void setSetValue(int, int, double);
+    void setSetColor(int, const QColor&);
+    void setSetStyle(int, const ORStyleData &);
 
-        void setDrawBars(bool);
-        void setDrawLines(bool);
-        void setDrawPoints(bool);
+    void setDrawBars(bool);
+    void setDrawLines(bool);
+    void setDrawPoints(bool);
 
-        void setAutoMinMax(bool);
-        void setAutoRepaint(bool);
+    void setAutoMinMax(bool);
+    void setAutoRepaint(bool);
 
-        void clear();
+    void clear();
 
-        int width();
-        int height();
+    int width();
+    int height();
 
-        void repaint();
+    void repaint();
 
-        virtual void draw(QPainter &); 
+    virtual void draw(QPainter &);
 
-    protected:
-        GReferences _data;
+protected:
+    GReferences _data;
 
-        QString _dataLabel;
-        QString _valueLabel;
-        QString _title;
+    QString _dataLabel;
+    QString _valueLabel;
+    QString _title;
 
-        int _hPadding;
-        int _vPadding;
+    int _hPadding;
+    int _vPadding;
 
-        double _minValue;
-        double _maxValue;
+    double _minValue;
+    double _maxValue;
 
-        bool _drawBars;
-        bool _drawLines;
-        bool _drawPoints;
+    bool _drawBars;
+    bool _drawLines;
+    bool _drawPoints;
 
-        QMap<int, QColor> _setColors;
-        QMap<int, ORStyleData> _setStyle;
+    QMap<int, QColor> _setColors;
+    QMap<int, ORStyleData> _setStyle;
 
-        QFont _font;
-        QFont * _titleFont;
-        QFont * _dataLabelFont;
-        QFont * _dataFont;
-        QFont * _valueLabelFont;
-        QFont * _valueFont;
+    QFont _font;
+    QFont * _titleFont;
+    QFont * _dataLabelFont;
+    QFont * _dataFont;
+    QFont * _valueLabelFont;
+    QFont * _valueFont;
 
-        bool _autoMinMax;
-        bool _autoRepaint;
+    bool _autoMinMax;
+    bool _autoRepaint;
 
-        QRect _rect;
+    QRect _rect;
 };
 
 
@@ -318,12 +318,18 @@ void   tGraph::setMinValue(double d) {
     _minValue = d;
     if(autoRepaint()) repaint();
 }
-void   tGraph::setMinValue(int i) { setMinValue((double)i); }
+void   tGraph::setMinValue(int i)
+{
+    setMinValue(static_cast<double>(i));
+}
 void   tGraph::setMaxValue(double d) {
     _maxValue = d;
     if(autoRepaint()) repaint();
 }
-void   tGraph::setMaxValue(int i) { setMaxValue((double)i); }
+void   tGraph::setMaxValue(int i)
+{
+    setMaxValue(static_cast<double>(i));
+}
 
 bool tGraph::drawBars() {
     //return _drawBars;
@@ -404,7 +410,7 @@ void tGraph::setSetStyle(int set, const ORStyleData & s) {
 void tGraph::setSetColor(int set, const QColor & color) {
     // The remove portion was not being used and the implmentation was causing warning/errors
     //if(color) {
-        _setColors[set] = color;
+    _setColors[set] = color;
     //} else {
     //    _setColors.remove(set);
     //}
@@ -416,26 +422,26 @@ QColor tGraph::getSetColor(int snum) {
         color = _setColors[snum];
     } else {
         switch(snum) {
-            case 0:
-                color = QColor(255,0,0);
-                break;
-            case 1:
-                color = QColor(0,255,0);
-                break;
-            case 2:
-                color = QColor(0,0,255);
-                break;
-            case 3:
-                color = QColor(255,255,0);
-                break;
-            case 4:
-                color = QColor(255,0,255);
-                break;
-            case 5:
-                color = QColor(0,255,255);
-                break;
-            default:
-                color = QColor(150,150,150);
+        case 0:
+            color = QColor(255,0,0);
+            break;
+        case 1:
+            color = QColor(0,255,0);
+            break;
+        case 2:
+            color = QColor(0,0,255);
+            break;
+        case 3:
+            color = QColor(255,255,0);
+            break;
+        case 4:
+            color = QColor(255,0,255);
+            break;
+        case 5:
+            color = QColor(0,255,255);
+            break;
+        default:
+            color = QColor(150,150,150);
         }
     }
     return color;
@@ -525,10 +531,10 @@ void tGraph::draw(QPainter & paint) {
     while(dlit.hasNext())
     {
         dlit.next();
-        tlh = qMax(sin45deg * fm.width(dlit.value().first), tlh);
+        tlh = qMax(sin45deg * fm.horizontalAdvance(dlit.value().first), tlh);
     }
     // don't change this variable as we use it later
-    int th = (tlh == 0.0 ? 0 : (int)(tlh + (fm.height() * sin45deg)) + 2);
+    int th = (tlh == 0.0 ? 0 : static_cast<int>(tlh + (fm.height() * sin45deg)) + 2);
     gy2 -= th;
 
 
@@ -550,8 +556,8 @@ void tGraph::draw(QPainter & paint) {
     QString org_str = ( minValue() == 0.0 ? QString() : QString("0") );
     QString max_str = QString().asprintf("%-.0f",maxValue());
 
-    int width = qMax(fm.width(min_str), fm.width(max_str));
-    if(org_str.length() > 0) width = qMax(width, fm.width(org_str));
+    int width = qMax(fm.horizontalAdvance(min_str), fm.horizontalAdvance(max_str));
+    if(org_str.length() > 0) width = qMax(width, fm.horizontalAdvance(org_str));
 
     gx1 += width;
 
@@ -561,16 +567,16 @@ void tGraph::draw(QPainter & paint) {
 
     paint.setFont(valueFont());
     int tfa = Qt::AlignTop | Qt::AlignRight;
-    paint.drawText(gx1 - fm.width(min_str), gy_min, fm.width(min_str), fm.height(), tfa, min_str);
+    paint.drawText(gx1 - fm.horizontalAdvance(min_str), gy_min, fm.horizontalAdvance(min_str), fm.height(), tfa, min_str);
     paint.drawLine(gx1 - 3, gy_min, gx1 + 2, gy_min);
-    paint.drawText(gx1 - fm.width(max_str), gy_max, fm.width(max_str), fm.height(), tfa, max_str);
+    paint.drawText(gx1 - fm.horizontalAdvance(max_str), gy_max, fm.horizontalAdvance(max_str), fm.height(), tfa, max_str);
     paint.drawLine(gx1 - 3, gy_max, gx1 + 2, gy_max);
     int gheight = gy2 - gy1;
     double grng = maxValue() - minValue();
     if(org_str.length() > 0) {
         double perc = (0 - minValue()) / grng;
-        gy_org = gy2 - static_cast<int>(perc * (double)gheight);
-        paint.drawText(gx1 - fm.width(org_str), gy_org, fm.width(org_str), fm.height(), tfa, org_str);
+        gy_org = gy2 - static_cast<int>(perc * static_cast<double>(gheight));
+        paint.drawText(gx1 - fm.horizontalAdvance(org_str), gy_org, fm.horizontalAdvance(org_str), fm.height(), tfa, org_str);
         paint.drawLine(gx1 - 3, gy_org, gx1 + 2, gy_org);
     }
 
@@ -599,14 +605,14 @@ void tGraph::draw(QPainter & paint) {
         fm = QFontMetrics(dataFont());
         paint.setFont(dataFont());
         int refwidth = qMax(1, gwidth / ref_cnt);
-        int buf = (int)(refwidth / 5);
+        int buf = static_cast<int>(refwidth / 5);
         int buf2 = buf * 2;
-        int pos = gx1 + (int)((gwidth - (refwidth * ref_cnt)) / 2);
+        int pos = gx1 + static_cast<int>((gwidth - (refwidth * ref_cnt)) / 2);
         int bar_height;
         int fmheight = fm.height();
         int fmheight_div_2 = fmheight / 2;
         int refwidth_div_2 = refwidth / 2;
-        int label_offset = (int)(fmheight_div_2 * cos45deg);
+        int label_offset = static_cast<int>(fmheight_div_2 * cos45deg);
         int last_label_at = -1000;
         QMap<int, double> last_map;
         QMap<int, double> this_map;
@@ -620,7 +626,7 @@ void tGraph::draw(QPainter & paint) {
                 last_label_at = pos + refwidth_div_2;
                 int lx = static_cast<int>(((pos + refwidth_div_2) * cos45deg) - ((gy2 + label_offset) * sin45deg));
                 int ly = static_cast<int>(((pos + refwidth_div_2) * sin45deg) + ((gy2 + label_offset) * cos45deg));
-                int fmwidth = fm.width(label);
+                int fmwidth = fm.horizontalAdvance(label);
                 paint.save();
                 paint.rotate(-45);
                 paint.drawText(lx - fmwidth, ly - fmheight_div_2, fmwidth, fmheight, Qt::AlignRight | Qt::AlignTop, label);
@@ -652,7 +658,7 @@ void tGraph::draw(QPainter & paint) {
                             bar_height = static_cast<int>((tval.second / minValue()) * (gy_org - gy_min));
                         } else {
                             bar_height = static_cast<int>((tval.second / maxValue()) * (gy_org - gy_max));
-                        } 
+                        }
                         paint.fillRect(pos + buf, gy_org - bar_height, refwidth - buf2, bar_height, getSetColor(tval.first));
                     }
                 }
@@ -675,8 +681,8 @@ void tGraph::draw(QPainter & paint) {
                             ly1 = gy_org - ly1;
                             int lx1 = pos - refwidth_div_2;
                             int ly2;
-                            if(new_val < 0.0) ly2 = (int)((new_val / minValue()) * (gy_org - gy_min));
-                            else              ly2 = (int)((new_val / maxValue()) * (gy_org - gy_max));
+                            if(new_val < 0.0) ly2 = static_cast<int>((new_val / minValue()) * (gy_org - gy_min));
+                            else              ly2 = static_cast<int>((new_val / maxValue()) * (gy_org - gy_max));
                             ly2 = gy_org - ly2;
                             int lx2 = pos + refwidth_div_2;
                             paint.drawLine(lx1, ly1, lx2, ly2);

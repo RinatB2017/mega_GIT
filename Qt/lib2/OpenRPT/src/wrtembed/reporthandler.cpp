@@ -199,7 +199,7 @@ ReportHandler::ReportHandler(QObject * parent, const char * name)
     setObjectName(name);
 
   // initialize data
-  _parentWindow = 0;
+  _parentWindow = nullptr;
   _parentWindowIsWorkspace = false;
   _noDatabase = false;
   _allowDBConnect = true;
@@ -418,7 +418,7 @@ ReportHandler::ReportHandler(QObject * parent, const char * name)
 
 ReportHandler::~ReportHandler()
 {
-    if (sectionData != 0)
+    if (sectionData != nullptr)
         delete sectionData;
 }
 
@@ -629,7 +629,7 @@ void ReportHandler::updateSelectedEntity()
         case ORGraphicsImageItem::Type:
         case ORGraphicsGraphItem::Type:
         case ORGraphicsCrossTabItem::Type:
-          rect = ((QGraphicsRectItem*)item)->rect();
+          rect = (static_cast<QGraphicsRectItem*>(item))->rect();
           rect = QRectF(item->mapToParent(rect.topLeft()), rect.size());
 
           dx = (rect.x())/100.0;
@@ -644,7 +644,7 @@ void ReportHandler::updateSelectedEntity()
                        .arg(QString::number(dh,'g',3));
           break;
         case ORGraphicsLineItem::Type:
-          line = ((QGraphicsLineItem*)item)->line();
+          line = (static_cast<QGraphicsLineItem*>(item))->line();
           line = QLineF(item->mapToParent(line.p1()), item->mapToParent(line.p2()));
 
           dx = ((line.p1().x()) / 100.0);
@@ -674,7 +674,7 @@ unsigned int ReportHandler::selectionCount()
 {
   DocumentWindow * gw = activeDocumentWindow();
   if(gw)
-    return gw->_scene->selectedItems().count();
+    return static_cast<unsigned int>(gw->_scene->selectedItems().count());
 
   return 0;
 }
@@ -697,7 +697,7 @@ DocumentWindow* ReportHandler::createDocument(bool newDoc)
 
   if(_placeMenusOnWindows)
   {
-    QMenuBar * mb = 0;
+    QMenuBar * mb = nullptr;
 #ifdef Q_WS_MACX
     mb = new QMenuBar();
     view->setMenuBar(mb);
@@ -718,8 +718,8 @@ void ReportHandler::fileOpen()
 {
   // ok first we need to get a file to open.
   QString file = QFileDialog::getOpenFileName(
-        0, tr("Open File"),
-        QString(), tr("XML (*.xml)") );
+              nullptr, tr("Open File"),
+              QString(), tr("XML (*.xml)") );
   fileOpen(file);
 }
 
@@ -746,8 +746,8 @@ void ReportHandler::fileOpen(const QString &fileName)
   else
   {
     // ERROR
-    QMessageBox::critical(0, tr("Failed read on Open File"),
-        QString().sprintf(tr("Encountered and error while parsing %s\n\n\t%s (Line %d Column %d)").toLatin1().constData(),file.toLatin1().data(),errMsg.toLatin1().data(),errLine,errCol));
+    QMessageBox::critical(nullptr, tr("Failed read on Open File"),
+        QString().asprintf(tr("Encountered and error while parsing %s\n\n\t%s (Line %d Column %d)").toLatin1().constData(),file.toLatin1().data(),errMsg.toLatin1().data(),errLine,errCol));
   }
   delete f;
 }
@@ -775,7 +775,7 @@ DocumentWindow * ReportHandler::fileOpen(const QDomDocument & doc)
     if(root.tagName() != "report") {
         // arg we got an xml file but not one i know of
         qDebug("root element was not <report>");
-        return 0;
+        return nullptr;
     }
 
     DocumentWindow * dv = createDocument(false);
@@ -877,7 +877,7 @@ void ReportHandler::editCopy() {
   if(gw)
   {
     QList<QGraphicsItem*> list = gw->_scene->selectedItems();
-    QGraphicsItem * item = 0;
+    QGraphicsItem * item = nullptr;
     if(list.count() > 0)
     {
       item = list.at(0);
@@ -893,7 +893,7 @@ void ReportHandler::editCopy() {
         int rtti = item->type();
         if(rtti == ORGraphicsLabelItem::Type)
         {
-          ORGraphicsLabelItem * ent = (ORGraphicsLabelItem*)item;
+          ORGraphicsLabelItem * ent = static_cast<ORGraphicsLabelItem*>(item);
           cp.copy_item = ReportWriterSectionData::LabelItem;
           cp.copy_str1 = ent->text();
           cp.copy_font = ent->font();
@@ -906,7 +906,7 @@ void ReportHandler::editCopy() {
         }
         else if(rtti == ORGraphicsFieldItem::Type)
         {
-          ORGraphicsFieldItem * ent = (ORGraphicsFieldItem*)item;
+          ORGraphicsFieldItem * ent = static_cast<ORGraphicsFieldItem*>(item);
           cp.copy_item = ReportWriterSectionData::FieldItem;
           cp.copy_str1 = ent->query();
           cp.copy_str2 = ent->column();
@@ -930,7 +930,7 @@ void ReportHandler::editCopy() {
         }
         else if(rtti == ORGraphicsTextItem::Type)
         {
-          ORGraphicsTextItem * ent = (ORGraphicsTextItem*)item;
+          ORGraphicsTextItem * ent = static_cast<ORGraphicsTextItem*>(item);
           cp.copy_item = ReportWriterSectionData::TextItem;
           cp.copy_str1 = ent->query();
           cp.copy_str2 = ent->column();
@@ -945,7 +945,7 @@ void ReportHandler::editCopy() {
         }
         else if(rtti == ORGraphicsLineItem::Type)
         {
-          ORGraphicsLineItem * ent = (ORGraphicsLineItem*)item;
+          ORGraphicsLineItem * ent = static_cast<ORGraphicsLineItem*>(item);
           cp.copy_item = ReportWriterSectionData::LineItem;
           cp.copy_line_start = ent->mapToScene(ent->line().p1());
           cp.copy_line_end = ent->mapToScene(ent->line().p2());
@@ -955,7 +955,7 @@ void ReportHandler::editCopy() {
         }
         else if(rtti == ORGraphicsRectItem::Type)
         {
-          ORGraphicsRectItem * ent = (ORGraphicsRectItem*)item;
+          ORGraphicsRectItem * ent = static_cast<ORGraphicsRectItem*>(item);
           cp.copy_item = ReportWriterSectionData::RectItem;
           cp.copy_rect = QRectF(ent->mapToScene(ent->rect().topLeft()), ent->rect().size());
           cp.copy_pen  = ent->pen();
@@ -965,7 +965,7 @@ void ReportHandler::editCopy() {
         }
         else if(rtti == ORGraphicsBarcodeItem::Type)
         {
-          ORGraphicsBarcodeItem * ent = (ORGraphicsBarcodeItem*)item;
+          ORGraphicsBarcodeItem * ent = static_cast<ORGraphicsBarcodeItem*>(item);
           cp.copy_item = ReportWriterSectionData::BarcodeItem;
           cp.copy_str1 = ent->query();
           cp.copy_str2 = ent->column();
@@ -981,7 +981,7 @@ void ReportHandler::editCopy() {
         }
         else if(rtti == ORGraphicsImageItem::Type)
         {
-          ORGraphicsImageItem * ent = (ORGraphicsImageItem*)item;
+          ORGraphicsImageItem * ent = static_cast<ORGraphicsImageItem*>(item);
           cp.copy_item = ReportWriterSectionData::ImageItem;
           cp.copy_str1 = ent->query();
           cp.copy_str2 = ent->column();
@@ -996,7 +996,7 @@ void ReportHandler::editCopy() {
         }
         else if(rtti == ORGraphicsGraphItem::Type)
         {
-          ORGraphicsGraphItem * ent = (ORGraphicsGraphItem*)item;
+          ORGraphicsGraphItem * ent = static_cast<ORGraphicsGraphItem*>(item);
           cp.copy_item = ReportWriterSectionData::GraphItem;
           cp.copy_rect = QRectF(ent->mapToScene(ent->rect().topLeft()), ent->rect().size());
           cp.copy_pen  = ent->pen();
@@ -1034,7 +1034,7 @@ void ReportHandler::editPaste(const QPointF & pos)
   if(sectionData->copy_list.count() < 1)
     return;
 
-  QGraphicsItem * section = 0;
+  QGraphicsItem * section = nullptr;
   QList<QGraphicsItem*> list = gw->_scene->items(pos);
   for(int i = 0; i < list.count(); i++)
   {
@@ -1051,13 +1051,13 @@ void ReportHandler::editPaste(const QPointF & pos)
     return;
   }
 
-  QGraphicsItem * pasted_ent = 0;
+  QGraphicsItem * pasted_ent = nullptr;
   gw->_scene->clearSelection();
   sectionData->mouseAction = ReportWriterSectionData::MA_None;
   ReportWriterCopyData cp;
   for(int i = 0; i < sectionData->copy_list.count(); i++)
   {
-    pasted_ent = 0;
+    pasted_ent = nullptr;
     cp = sectionData->copy_list[i];
     if(cp.copy_item == ReportWriterSectionData::LabelItem)
     {
@@ -1174,7 +1174,7 @@ void ReportHandler::editPaste(const QPointF & pos)
 
 void ReportHandler::editPreferences()
 {
-  EditPreferences * dlgPref = new EditPreferences(0);
+  EditPreferences * dlgPref = new EditPreferences(nullptr);
   if(dlgPref)
   {
     dlgPref->setDefaultFont(QFont(ORGraphicsRectItem::getDefaultEntityFont()));
@@ -1234,7 +1234,7 @@ void ReportHandler::editProperties()
         case ORGraphicsGraphItem::Type:
           (static_cast<ORGraphicsRectItem*>(list.at(i)))->properties(gw);
           break;
-      };
+      }
     }
   }  
 }
@@ -1372,7 +1372,7 @@ void ReportHandler::dbConnect() {
         params.append("build",       OpenRPT::build);
         params.append("databaseURL", OpenRPT::databaseURL);
 
-        login newdlg(0, "", true);
+        login newdlg(nullptr, "", true);
         newdlg.set(params);
 
         if(newdlg.exec() == QDialog::Accepted) {
@@ -1477,12 +1477,12 @@ void ReportHandler::dbLoadDoc() {
                   rw->_scene->dbRecordGrade = rptDiag.getGradeById();
                 }
             } else {
-                QMessageBox::warning(0, tr("Error Loading Report"),
-                    QString().sprintf(tr("ReportWriterWindow::dbLoadDoc() : ERROR on setContent()\n\t%s (Line %d Column %d)").toLatin1().constData(),errMsg.toLatin1().data(),errLine,errCol));
+                QMessageBox::warning(nullptr, tr("Error Loading Report"),
+                    QString().asprintf(tr("ReportWriterWindow::dbLoadDoc() : ERROR on setContent()\n\t%s (Line %d Column %d)").toLatin1().constData(),errMsg.toLatin1().data(),errLine,errCol));
             }
         }
     } else {
-        QMessageBox::warning(0, tr("No Database Connection"),
+        QMessageBox::warning(nullptr, tr("No Database Connection"),
             tr("There is no database connection that can be used to load a document."));
     }
 }
@@ -1501,7 +1501,7 @@ void ReportHandler::dbSaveDoc()
   }
   else
   {
-    QMessageBox::warning(0, tr("No Database Connection"),
+    QMessageBox::warning(nullptr, tr("No Database Connection"),
         tr("There is no database connection that can be used to save this document."));
   }
 }
@@ -1512,7 +1512,7 @@ void ReportHandler::dbSaveDoc()
 //
 DocumentWindow * ReportHandler::activeDocumentWindow()
 {
-  DocumentWindow * gw = 0;
+  DocumentWindow * gw = nullptr;
   // Using the activeWindow call from QMdiArea is more
   // reliable cross platform.
   if(_parentWindowIsWorkspace)
@@ -1525,7 +1525,7 @@ DocumentWindow * ReportHandler::activeDocumentWindow()
           the user has clicked back on a ReportWindow
          */
 //        return qobject_cast<DocumentWindow*>(((QMdiArea*)_parentWindow)->currentSubWindow());
-        QList<QMdiSubWindow*> list = ((QMdiArea*)_parentWindow)->subWindowList(QMdiArea::StackingOrder);
+        QList<QMdiSubWindow*> list = (static_cast<QMdiArea*>(_parentWindow))->subWindowList(QMdiArea::StackingOrder);
         int i;
         for (i = list.size() - 1; i >= 0; i--)
           if (list.at(i)->widget()->inherits("DocumentWindow") || list.at(i)->widget()->inherits("ReportWindow"))
@@ -1533,7 +1533,7 @@ DocumentWindow * ReportHandler::activeDocumentWindow()
 
         if (i >= 0 && list.at(i)->widget()->inherits("DocumentWindow"))
           return qobject_cast<DocumentWindow*>( list.at(i)->widget());
-        return 0;
+        return nullptr;
   }
   else
   {
@@ -1544,7 +1544,7 @@ DocumentWindow * ReportHandler::activeDocumentWindow()
         return gw;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 void ReportHandler::addDocumentWindow(DocumentWindow * gw)
@@ -1553,7 +1553,7 @@ void ReportHandler::addDocumentWindow(DocumentWindow * gw)
     gwList.append(gw);
     connect(gw, SIGNAL(destroyed(QObject*)), this, SLOT(removeReportWindow(QObject*)));
     if(_parentWindowIsWorkspace)
-      ((QMdiArea*)_parentWindow)->addSubWindow(gw);
+      (static_cast<QMdiArea*>(_parentWindow))->addSubWindow(gw);
   }
 }
 
@@ -1601,7 +1601,7 @@ void ReportHandler::print(bool showPreview)
   if(gw)
     gw->_scene->checkValidity(gw);
 
-  QMainWindow * mw = 0;
+  QMainWindow * mw = nullptr;
   if(gw)
     mw = gw;
 
@@ -1612,7 +1612,7 @@ void ReportHandler::print(bool showPreview)
   ORPreRender pre;
   pre.setDom(ddoc);
 
-  ParameterEdit paramEdit(0);
+  ParameterEdit paramEdit(nullptr);
   QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, mw);
   if (paramEdit.setDocument(ddoc))
     if (dlgEdit->exec() != QDialog::Accepted)
@@ -1660,7 +1660,7 @@ void ReportHandler::filePrintToPDF()
   DocumentWindow * gw = activeDocumentWindow();
   if(!rw && !gw)
     return;
-  QMainWindow * mw = 0;
+  QMainWindow * mw = nullptr;
   if(gw)
     mw = gw;
   QString outfile = QFileDialog::getSaveFileName( mw, tr("Choose filename to save"), tr("print.pdf"), tr("Pdf (*.pdf)") );
@@ -1681,7 +1681,7 @@ void ReportHandler::filePrintToPDF(QWidget *wnd, const QDomDocument & doc, QStri
   if ( QFileInfo( pdfFileName ).suffix().isEmpty() )
     pdfFileName.append(".pdf");
 
-  ParameterEdit paramEdit(0);
+  ParameterEdit paramEdit(nullptr);
   QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, wnd);
   if (paramEdit.setDocument(doc) && dlgEdit->exec() != QDialog::Accepted)
       return;
@@ -1763,7 +1763,7 @@ void ReportHandler::createSectionActions()
         delete m_SectionActions.takeFirst();
     }
 
-    QAction *selectedSection = NULL;
+    QAction *selectedSection = nullptr;
     bool differentSectionSelected = false;
     QList<ORGraphicsSectionItem *> sections = gw->_scene->sectionsList();
 
@@ -1941,7 +1941,7 @@ void ReportHandler::alignVCenter()
             y += list.at(i)->sceneBoundingRect().center().y();
         }
       }
-      y = y / (qreal)i;
+      y = y / static_cast<qreal>(i);
       for(i = 0; i < list.count(); i++)
       {
         if(list.at(i)->type() == ORGraphicsLineItem::Type)
@@ -2094,7 +2094,7 @@ void ReportHandler::alignHCenter()
             x += list.at(i)->sceneBoundingRect().center().x();
         }
       }
-      x = x / (qreal)i;
+      x = x / static_cast<qreal>(i);
       for(i = 0; i < list.count(); i++)
       {
         if(list.at(i)->type() == ORGraphicsLineItem::Type)
@@ -2411,7 +2411,7 @@ void ReportHandler::loadMemDB(const QString &filename, const QDomNode &it)
     MemDbLoader mdb;
     bool ok = mdb.load(_databaseElt, QSqlDatabase::database());
     if(!ok)
-        QMessageBox::warning(0, filename, mdb.lastError());
+        QMessageBox::warning(nullptr, filename, mdb.lastError());
 }
 
 void ReportHandler::sectionToggled(bool v)

@@ -156,7 +156,7 @@ void render3of9(OROPage * page, const QRectF & r, const QString & _str, ORBarcod
   qreal top = r.top();
 
   // ok we need to prepend and append the str with a *
-  str = QString().sprintf("*%s*",str.toLatin1().data());
+  str = QString().asprintf("*%s*",str.toLatin1().data());
 
   QPen pen(Qt::NoPen);
   QBrush brush(QColor("black"));

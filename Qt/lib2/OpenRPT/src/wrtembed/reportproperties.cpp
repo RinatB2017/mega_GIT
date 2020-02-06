@@ -52,7 +52,7 @@ ReportProperties::ReportProperties(QWidget* parent, Qt::WindowFlags fl)
     connect(_btnLoad, SIGNAL(clicked()), this, SLOT(sLoadBgImage()));
 
     _tabBg->setEnabled(false);
-    _uudata = QString::null;
+    _uudata = QString();
     
     QDoubleValidator * dblval = new QDoubleValidator(0.0, 100.0, 2, this);
     _leBgX->setValidator(dblval);
@@ -301,7 +301,7 @@ void ReportProperties::setBgImageData( QString dat )
 }
 
 void ReportProperties::sLoadBgImage() {
-    QString fn = QFileDialog::getOpenFileName(this, tr("Choose a file"), QString::null, tr("Images(*.png *.jpg *.xpm)"));
+    QString fn = QFileDialog::getOpenFileName(this, tr("Choose a file"), QString(), tr("Images(*.png *.jpg *.xpm)"));
     if(!fn.isEmpty()) {
         QFile file(fn);
         setBgImageData(QUUEncode(file));

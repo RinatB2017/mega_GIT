@@ -41,7 +41,7 @@ bool MemDbLoader::load(const QString &filename, QSqlDatabase db)
     int errLine, errCol;
 
     if(!doc.setContent(f,&errMsg,&errLine,&errCol)) {
-        _lastError = QString().sprintf("Encountered and error while parsing %s\n\n\t%s (Line %d Column %d)",filename.toLatin1().data(),errMsg.toLatin1().data(),errLine,errCol);
+        _lastError = QString().asprintf("Encountered and error while parsing %s\n\n\t%s (Line %d Column %d)",filename.toLatin1().data(),errMsg.toLatin1().data(),errLine,errCol);
         return false;
     }
 

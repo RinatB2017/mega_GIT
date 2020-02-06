@@ -27,7 +27,7 @@
 // QuerySource method implementations
 //
 QuerySource::QuerySource()
-    : _inList(0)
+    : _inList(nullptr)
 {
 }
 
@@ -38,7 +38,7 @@ QuerySource::QuerySource(const QString & n, const QString & q, bool fdb, const Q
 
 QuerySource::~QuerySource()
 {
-    if(_inList != 0)
+    if(_inList != nullptr)
         _inList->remove(this);
 }
 
@@ -109,7 +109,7 @@ void QuerySource::setMetaSqlName(const QString & g)
 
 void QuerySource::updated()
 {
-    if (_inList != 0)
+    if (_inList != nullptr)
         _inList->childUpdated(this);
 }
 
@@ -149,14 +149,14 @@ QuerySourceList::~QuerySourceList()
     // We will go through the _srcList and remove the values
     // so as to prevent any confusion about what gets deleted
     // when and how
-    QuerySource *qs = 0;
+    QuerySource *qs = nullptr;
     while (size() > 0)
     {
         qs = remove(0);             // remove from list
         if (qs)
         {
             delete qs;                // delete
-            qs = 0;
+            qs = nullptr;
         }
     }
 }
@@ -170,9 +170,9 @@ bool QuerySourceList::add(QuerySource * qs)
 {
     if (qs && !qs->_name.isEmpty())
     {
-        if (get(qs->_name) == 0)
+        if (get(qs->_name) == nullptr)
         {
-            if (qs->_inList != 0)
+            if (qs->_inList != nullptr)
                 qs->_inList->remove(qs);
             qs->_inList = this;
             _srcList.append(qs);
@@ -185,7 +185,7 @@ bool QuerySourceList::add(QuerySource * qs)
 
 QuerySource *QuerySourceList::remove(int i)
 {
-    QuerySource *qs = 0;
+    QuerySource *qs = nullptr;
 
     if (i >= 0 && (unsigned int)i < size())
     {
@@ -193,9 +193,9 @@ QuerySource *QuerySourceList::remove(int i)
         _srcList.takeAt(i);
     }
 
-    if (qs != 0)
+    if (qs != nullptr)
     {
-        qs->_inList = 0;            // mark this object as not being in any list
+        qs->_inList = nullptr;            // mark this object as not being in any list
         emit updated();
     }
 
@@ -206,14 +206,14 @@ QuerySource *QuerySourceList::remove(QuerySource * qs)
 {
     if (qs && !qs->_name.isEmpty())
         return remove(qs->_name);
-    return 0;
+    return nullptr;
 }
 
 QuerySource *QuerySourceList::remove(const QString & name)
 {
     if (!name.isEmpty())
     {
-        QuerySource *qs = 0;
+        QuerySource *qs = nullptr;
         for (unsigned int i = 0; i < size(); i++)
         {
             qs = (QuerySource *) _srcList.at(i);
@@ -221,21 +221,21 @@ QuerySource *QuerySourceList::remove(const QString & name)
                 return remove(i);
         }
     }
-    return 0;
+    return nullptr;
 }
 
 QuerySource *QuerySourceList::get(int i)
 {
-    if (i >= 0 && (unsigned int)i < size())
+    if (i >= 0 && static_cast<unsigned int>(i) < size())
         return _srcList.at(i);
-    return 0;
+    return nullptr;
 }
 
 QuerySource *QuerySourceList::get(const QString & name)
 {
     if (!name.isEmpty())
     {
-        QuerySource *qs = 0;
+        QuerySource *qs = nullptr;
         for (unsigned int i = 0; i < size(); i++)
         {
             qs = (QuerySource *) _srcList.at(i);
@@ -243,7 +243,7 @@ QuerySource *QuerySourceList::get(const QString & name)
                 return qs;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 void QuerySourceList::childUpdated(QuerySource * /*qs */ )

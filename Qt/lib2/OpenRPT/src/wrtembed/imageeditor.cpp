@@ -105,7 +105,7 @@ void ImageEditor::setInline( bool yes )
 
 void ImageEditor::btnLoad_clicked()
 {
-    QString fn = QFileDialog::getOpenFileName(this, tr("Choose a file"), QString::null, tr("Images(*.png *.jpg *.xpm)"));
+    QString fn = QFileDialog::getOpenFileName(this, tr("Choose a file"), QString(), tr("Images(*.png *.jpg *.xpm)"));
     if(!fn.isEmpty()) {
 	QFile file(fn);
 	setImageData(QUUEncode(file));

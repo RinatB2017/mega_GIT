@@ -45,7 +45,7 @@ QString QUUEncode(QIODevice & iod, const QString & _remote, int mode)
     if(remote == QString()) remote = "internal";
     if(mode == 0) mode = 0644;
 
-    value = QString().sprintf("begin %o %s\n", mode, remote.toLatin1().data());
+    value = QString().asprintf("begin %o %s\n", mode, remote.toLatin1().data());
 
     qint64 nr = 0;
     char data[45];
@@ -106,13 +106,13 @@ QByteArray QUUDecode(const QString & _source, QString * name, int * mode)
         qDebug("We may have a problem. Header not parsed correctly.");
     }
 
-    if(name != 0)
+    if(name != nullptr)
     {
         *name = _name;
     }
     QChar qc;
     char c;
-    if(mode != 0)
+    if(mode != nullptr)
     {
         *mode = 0;
         for(int i = 0; i < _mode.length(); i++)

@@ -81,18 +81,27 @@
     </widget>
    </item>
    <item>
-    <widget class="QRadioButton" name="radioButton">
+    <widget class="QRadioButton" name="rb_test">
      <property name="text">
       <string>RadioButton</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="my_checkBox">
+    <widget class="QCheckBox" name="cb_checkbox_test">
      <property name="text">
       <string>CheckBox</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+   </item>
+   <item>
+    <widget class="QTimeEdit" name="timeEdit"/>
+   </item>
+   <item>
+    <widget class="QDateTimeEdit" name="dateTimeEdit"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">

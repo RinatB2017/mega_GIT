@@ -1,916 +1,131 @@
-//--------------------------------------------------------------------------------
-SecretBox *sbox = new SecretBox("666");
-connect(sbox, SIGNAL(info(QString)),    this, SIGNAL(info(QString)));
-connect(sbox, SIGNAL(debug(QString)),   this, SIGNAL(debug(QString)));
-connect(sbox, SIGNAL(error(QString)),   this, SIGNAL(error(QString)));
-connect(sbox, SIGNAL(trace(QString)),   this, SIGNAL(trace(QString)));
+//struct rfc_CMD_PROP_RADIO_DIV_SETUP_s {
+//   uint16_t commandNo;                  //!<        The command ID number 0x3807
+//   uint16_t status;                     //!< \brief An integer telling the status of the command. This value is
+//                                        //!<        updated by the radio CPU during operation and may be read by the
+//                                        //!<        system CPU at any time.
+//   rfc_radioOp_t *pNextOp;              //!<        Pointer to the next operation to run after this operation is done
+//   ratmr_t startTime;                   //!<        Absolute or relative start time (depending on the value of <code>startTrigger</code>)
+//   struct {
+//      uint8_t triggerType:4;            //!<        The type of trigger
+//      uint8_t bEnaCmd:1;                //!< \brief 0: No alternative trigger command<br>
+//                                        //!<        1: CMD_TRIGGER can be used as an alternative trigger
+//      uint8_t triggerNo:2;              //!<        The trigger number of the CMD_TRIGGER command that triggers this action
+//      uint8_t pastTrig:1;               //!< \brief 0: A trigger in the past is never triggered, or for start of commands, give an error<br>
+//                                        //!<        1: A trigger in the past is triggered as soon as possible
+//   } startTrigger;                      //!<        Identification of the trigger that starts the operation
+//   struct {
+//      uint8_t rule:4;                   //!<        Condition for running next command: Rule for how to proceed
+//      uint8_t nSkip:4;                  //!<        Number of skips + 1 if the rule involves skipping. 0: same, 1: next, 2: skip next, ...
+//   } condition;
+//   struct {
+//      uint16_t modType:3;               //!< \brief 0: FSK<br>
+//                                        //!<        1: GFSK<br>
+//                                        //!<        Others: <i>Reserved</i>
+//      uint16_t deviation:13;            //!<        Deviation (250 Hz steps)
+//   } modulation;
+//   struct {
+//      uint32_t preScale:4;              //!<        Prescaler value
+//      uint32_t :4;
+//      uint32_t rateWord:21;             //!<        Rate word
+//      uint32_t decimMode:3;             //!< \brief 0: Use automatic PDIF decimation<br>
+//                                        //!<        1: Force PDIF decimation to 0<br>
+//                                        //!<        3: Force PDIF decimation to 1<br>
+//                                        //!<        5: Force PDIF decimation to 2<br>
+//                                        //!<        Others: <i>Reserved</i>
+//   } symbolRate;                        //!<        Symbol rate setting
+//   uint8_t rxBw;                        //!<        Receiver bandwidth
+//   struct {
+//      uint8_t nPreamBytes:6;            //!< \brief 0: 1 preamble bit<br>
+//                                        //!<        1--16: Number of preamble bytes<br>
+//                                        //!<        18, 20, ..., 30: Number of preamble bytes<br>
+//                                        //!<        31: 4 preamble bits<br>
+//                                        //!<        32: 32 preamble bytes<br>
+//                                        //!<        Others: <i>Reserved</i>
+//      uint8_t preamMode:2;              //!< \brief 0: Send 0 as the first preamble bit<br>
+//                                        //!<        1: Send 1 as the first preamble bit<br>
+//                                        //!<        2: Send same first bit in preamble and sync word<br>
+//                                        //!<        3: Send different first bit in preamble and sync word
+//   } preamConf;
+//   struct {
+//      uint16_t nSwBits:6;               //!<        Number of sync word bits (8--32)
+//      uint16_t bBitReversal:1;          //!< \brief 0: Use positive deviation for 1<br>
+//                                        //!<        1: Use positive deviation for 0
+//      uint16_t bMsbFirst:1;             //!< \brief 0: Least significant bit transmitted first<br>
+//                                        //!<        1: Most significant bit transmitted first
+//      uint16_t fecMode:4;               //!< \brief Select coding<br>
+//                                        //!<        0: Uncoded binary modulation<br>
+//                                        //!<        8: Long range mode<br>
+//                                        //!<        10: Manchester coded binary modulation<br>
+//                                        //!<        Others: <i>Reserved</i>
+//      uint16_t :1;
+//      uint16_t whitenMode:3;            //!< \brief 0: No whitening<br>
+//                                        //!<        1: CC1101/CC2500 compatible whitening<br>
+//                                        //!<        2: PN9 whitening without byte reversal<br>
+//                                        //!<        3: <i>Reserved</i><br>
+//                                        //!<        4: No whitener, 32-bit IEEE 802.15.4g compatible CRC<br>
+//                                        //!<        5: IEEE 802.15.4g compatible whitener and 32-bit CRC<br>
+//                                        //!<        6: No whitener, dynamically IEEE 802.15.4g compatible 16-bit or 32-bit CRC<br>
+//                                        //!<        7: Dynamically IEEE 802.15.4g compatible whitener and 16-bit or 32-bit CRC
+//   } formatConf;
+//   struct {
+//      uint16_t frontEndMode:3;          //!< \brief 0x00: Differential mode<br>
+//                                        //!<        0x01: Single-ended mode RFP<br>
+//                                        //!<        0x02: Single-ended mode RFN<br>
+//                                        //!<        0x05 Single-ended mode RFP with external frontend control on RF pins (RFN and RXTX)<br>
+//                                        //!<        0x06 Single-ended mode RFN with external frontend control on RF pins (RFP and RXTX)<br>
+//                                        //!<        Others: <i>Reserved</i>
+//      uint16_t biasMode:1;              //!< \brief 0: Internal bias<br>
+//                                        //!<        1: External bias
+//      uint16_t analogCfgMode:6;         //!< \brief 0x00: Write analog configuration.<br>
+//                                        //!<        Required first time after boot and when changing frequency band
+//                                        //!<        or front-end configuration<br>
+//                                        //!<        0x2D: Keep analog configuration.<br>
+//                                        //!<        May be used after standby or when changing mode with the same frequency
+//                                        //!<        band and front-end configuration<br>
+//                                        //!<        Others: <i>Reserved</i>
+//      uint16_t bNoFsPowerUp:1;          //!< \brief 0: Power up frequency synth<br>
+//                                        //!<        1: Do not power up frequency synth
+//   } config;                            //!<        Configuration options
+//   uint16_t txPower;                    //!<        Transmit power
+//   uint32_t* pRegOverride;              //!< \brief Pointer to a list of hardware and configuration registers to override. If NULL, no
+//                                        //!<        override is used.
+//   uint16_t centerFreq;                 //!< \brief Center frequency of the frequency band used, in MHz; used for calculating some internal TX and RX parameters.
+//                                        //!<        For a single channel RF system, this should be set equal to the RF frequency used.
+//                                        //!<        For a multi channel RF system (e.g. frequency hopping spread spectrum), this should be set equal
+//                                        //!<        to the center frequency of the frequency band used.
+//   int16_t intFreq;                     //!< \brief Intermediate frequency to use for RX, in MHz on 4.12 signed format. TX will use same
+//                                        //!<        intermediate frequency if supported, otherwise 0.<br>
+//                                        //!<        0x8000: Use default.
+//   uint8_t loDivider;                   //!<        LO frequency divider setting to use. Supported values: 2 (CC1350 only), 5, 6, 10, 12, 15, and 30
+//};
 
-int res = sbox->exec();
-if(res == QDialog::Accepted)
-{
-    emit info("OK");
-}
-else
-{
-    emit error("FAIL");
-}
-//--------------------------------------------------------------------------------
-QNetworkRequest request;
-QNetworkAccessManager networkManager;
+//typedef struct {
+//    uint32_t            nInactivityTimeout;      ///< Inactivity timeout in microseconds.
+//                                                 ///< The default value is 0xFFFFFFFF (infinite).
 
-request.setUrl(QUrl("https://yandex.ru/"));
-QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
-while (!reply->isFinished())
-{
-    QCoreApplication::processEvents();
-}
-QByteArray ba;
-int lines = 0;
-do
-{
-    ba = reply->readLine();
-    lines++;
+//    uint32_t            nPowerUpDuration;        ///< A custom power-up duration in microseconds.
+//                                                 ///< If 0, the RF driver will start with a conservative value and measure the actual time during the first power-up.
+//                                                 ///< The default value is 0.
 
-    emit info(ba);
-} while(ba.isEmpty() == false);
+//    RF_Callback         pPowerCb;                ///< \deprecated Power up callback, will be removed future versions, see RF_Params::pClienteventCb instead.
+//                                                 ///< The default value is NULL.
 
-emit info(QString("lines %1").arg(lines));
-//--------------------------------------------------------------------------------
-bool MainBox::split_address(const QString address,
-                            int *a,
-                            int *b,
-                            int *c,
-                            int *d,
-                            int *port)
-{
-    QStringList sl = address.split(":");
-    if(sl.count() != 2)
-    {
-        //emit error(QString("count %1").arg(sl.count()));
-        return false;
-    }
-    QString host = sl.at(0);
-    QStringList sl_address = host.split(".");
-    if(sl_address.count() != 4)
-    {
-        //emit error(QString("count %1").arg(sl_address.count()));
-        return false;
-    }
-    bool ok = false;
-    int t_a = sl_address.at(0).toInt(&ok);
-    if(!ok) return false;
-    int t_b = sl_address.at(1).toInt(&ok);
-    if(!ok) return false;
-    int t_c = sl_address.at(2).toInt(&ok);
-    if(!ok) return false;
-    int t_d = sl_address.at(3).toInt(&ok);
-    if(!ok) return false;
-    *a = t_a;
-    *b = t_b;
-    *c = t_c;
-    *d = t_d;
+//    RF_Callback         pErrCb;                  ///< \deprecated Callback function for driver error events.
 
-    QString port_str = sl.at(1);
-    int t_port = port_str.toInt(&ok);
-    if(!ok) return false;
-    *port = t_port;
+//    uint16_t            nPowerUpDurationMargin;  ///< An additional safety margin to be added to #RF_Params::nPowerUpDuration.
+//                                                 ///< This is necessary because of other hardware and software interrupts
+//                                                 ///< preempting the RF driver interrupt handlers and state machine.
+//                                                 ///< The default value is platform-dependent.
 
-    return true;
-}
-//--------------------------------------------------------------------------------
-//---
-QByteArray ba;
-ba.resize(0xFFFF);
-for (int n=0; n<ba.size(); n++)
-{
-    ba[n] = 0;
-}
+//    uint16_t            nPhySwitchingDurationMargin; ///< An additional safety margin to be used to calculate when conflicts shall be evaluated run-time.
 
-ba[0] = 0xAB;
-ba[0x10] = 0xBA;
-ba[0xFFFF] = 0x00;
-//---
-QPalette palette;
+//    RF_ClientCallback   pClientEventCb;          ///< Callback function for client-related events.
+//                                                 ///< The default value is NULL.
 
-palette.setBrush(QPalette::WindowText,  QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-palette.setBrush(QPalette::Button,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
-palette.setBrush(QPalette::Light,       QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-palette.setBrush(QPalette::Text,        QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-palette.setBrush(QPalette::BrightText,  QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-palette.setBrush(QPalette::ButtonText,  QBrush(QColor((QRgb)0x000000), Qt::SolidPattern));
-palette.setBrush(QPalette::Base,        QBrush(QColor((QRgb)0xffffff), Qt::SolidPattern));
-palette.setBrush(QPalette::Window,      QBrush(QColor((QRgb)0xd4d4d4), Qt::SolidPattern));
-palette.setBrush(QPalette::Shadow,      QBrush(QColor((QRgb)0x404040), Qt::SolidPattern));
-
-ui->hex_widget->setPalette(palette);
-ui->hex_widget->setReadOnly(true);
-//---
-ui->hex_widget->setData(QHexEditData::fromMemory(ba));
-//---
-//--------------------------------------------------------------------------------
-#if 0
-    get_color(QPalette::WindowText, "QPalette::WindowText");
-    get_color(QPalette::Button,     "QPalette::Button");
-    get_color(QPalette::Light,      "QPalette::Light");
-    get_color(QPalette::Text,       "QPalette::Text");
-    get_color(QPalette::BrightText, "QPalette::BrightText");
-    get_color(QPalette::ButtonText, "QPalette::ButtonText");
-    get_color(QPalette::Base,       "QPalette::Base");
-    get_color(QPalette::Window,     "QPalette::Window");
-    get_color(QPalette::Shadow,     "QPalette::Shadow");
-#endif
-//--------------------------------------------------------------------------------
-void MainBox::get_param(QString *str, QWidget *widget, QString w_name)
-{
-    int R = widget->palette().color(QPalette::WindowText).red();
-    int G = widget->palette().color(QPalette::WindowText).red();
-    int B = widget->palette().color(QPalette::WindowText).red();
-
-    int b_R = widget->palette().background().color().red();
-    int b_G = widget->palette().background().color().green();
-    int b_B = widget->palette().background().color().blue();
-
-    (*str).append(w_name);
-    (*str).append(" {");
-    (*str).append("\n");
-    (*str).append(QString("    color:#%1%2%3;")
-                  .arg(R, 0, 16)
-                  .arg(G, 0, 16)
-                  .arg(B, 0, 16));
-    (*str).append("\n");
-    (*str).append(QString("    background-color:#%1%2%3;")
-                  .arg(b_R, 0, 16)
-                  .arg(b_G, 0, 16)
-                  .arg(b_B, 0, 16));
-    (*str).append("\n");
-    (*str).append("}");
-    (*str).append("\n");
-}
-//--------------------------------------------------------------------------------
-void MainBox::get_color(QPalette::ColorRole role, QString r_name)
-{
-    int R = palette().color(role).red();
-    int G = palette().color(role).red();
-    int B = palette().color(role).red();
-
-    //palette.setBrush(QPalette::WindowText,  QBrush(QColor(65, 113, 145),    Qt::SolidPattern));
-    QString str;
-    str.append(QString("palette.setBrush(%1,  QBrush(QColor(%2, %3, %4),    Qt::SolidPattern));")
-               .arg(r_name)
-               .arg(R)
-               .arg(G)
-               .arg(B));
-    str.append("\n");
-
-    emit info(str);
-}
-//--------------------------------------------------------------------------------
-void MainBox::thread_is_finished(void)
-{
-    emit info("thread_is_finished");
-}
-//--------------------------------------------------------------------------------
-void MainBox::create_thread(void)
-{
-    QThread *thread = new QThread;
-
-    MyThread *worker = new MyThread;
-    connect(worker, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
-    connect(worker, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
-    connect(worker, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(worker, SIGNAL(message(QString)),   this, SIGNAL(message(QString)));
-
-    connect(thread, SIGNAL(started()),  worker, SLOT(process()));
-    connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
-    connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
-    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-
-    connect(thread, SIGNAL(finished()), this, SLOT(thread_is_finished()));
-
-    worker->moveToThread(thread);
-
-    thread->start();
-}
-//--------------------------------------------------------------------------------
-class Programmer : public QObject
-{
-    Q_OBJECT
-public:
-    enum Language {ASM, C, CPP, PASCAL, FORTRAN, BASIC, JAVA};
-    Q_ENUMS(Language)
-};
-//--------------------------------------------------------------------------------
-class MyThread : public QObject
-{
-    Q_OBJECT
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
-    void finished(void);
-
-public slots:
-    void process(void)
-    {
-        for(int n=0; n<1000; n++)
-        {
-            emit info(QString("info: n=%1").arg(n));
-            emit debug(QString("debug: n=%1").arg(n));
-            emit error(QString("error: n=%1").arg(n));
-            emit trace(QString("trace: n=%1").arg(n));
-        }
-        emit finished();
-    }
-};
-//--------------------------------------------------------------------------------
-//Синглтон Меерса
-class SingletonClass
-{
-public:
-    int getSomeInfo()
-    {
-        return 10;
-    }
-
-    static SingletonClass &instance()
-    {
-        static SingletonClass instance;
-        return instance;
-    }
-
-private:
-    SingletonClass(){}
-};
-//--------------------------------------------------------------------------------
-class MyDebug
-{
-public:
-    QString &operator << (QString &data)
-    {
-        qDebug() << data;
-        return data;
-    }
-};
-//--------------------------------------------------------------------------------
-class class_C : public QObject
-{
-    Q_OBJECT
-
-public:
-    void xxx(void)
-    {
-        qDebug() << "yes";
-    }
-
-    void send(QByteArray input, QByteArray *output)
-    {
-        emit info("class_C");
-        (*output).append("class_C ");
-        Q_UNUSED(input);
-    }
-
-signals:
-    void info(const QString &);
-
-};
-class class_B : public class_C
-{
-public:
-    void send(QByteArray input, QByteArray *output)
-    {
-        emit info("class_B");
-        (*output).append("class_B ");
-        class_C::send(input, output);
-        Q_UNUSED(input);
-    }
-};
-class class_A : public class_B
-{
-public:
-    void send(QByteArray input, QByteArray *output)
-    {
-        emit info("class_A");
-        (*output).append("class_A ");
-        class_B::send(input, output);
-        Q_UNUSED(input);
-    }
-};
-//--------------------------------------------------------------------------------
-#include <iostream>
-#include <memory>
-
-class IComponent
-{
-public:
-    virtual void operation() = 0;
-    virtual ~IComponent(){}
-};
-
-class Component : public IComponent
-{
-public:
-    virtual void operation()
-    {
-        std::cout<<"World!"<<std::endl;
-    }
-};
-
-class DecoratorOne : public IComponent
-{
-    std::shared_ptr<IComponent> m_component;
-
-public:
-    DecoratorOne(IComponent* component): m_component(component)
-    {
-
-    }
-
-    virtual void operation()
-    {
-        std::cout << ", ";
-        m_component->operation();
-    }
-};
-
-class DecoratorTwo : public IComponent
-{
-    std::shared_ptr<IComponent> m_component;
-
-public:
-    DecoratorTwo(IComponent* component): m_component(component)
-    {
-
-    }
-
-    virtual void operation()
-    {
-        std::cout << "Hello";
-        m_component->operation();
-    }
-};
-//--------------------------------------------------------------------------------
-namespace c0 {
-class class_X
-{
-public:
-    void x(void)
-    {
-        std::cout  << "111" << '\n';
-    }
-};
-}
-
-namespace c1 {
-class class_X
-{
-public:
-    void x(void)
-    {
-        std::cout  << "222" << '\n';
-    }
-};
-}
-//--------------------------------------------------------------------------------
-union LED
-{
-    uint32_t value;
-    struct BODY
-    {
-        uint8_t alpha;
-        uint8_t B;
-        uint8_t G;
-        uint8_t R;
-    } body;
-};
+//    RF_ClientEventMask  nClientEventMask;        ///< Event mask used to subscribe certain client events.
+//                                                 ///< The purpose is to keep the number of callback executions small.
+//} RF_Params;
 //--------------------------------------------------------
-#if 0
-    QString str;
-    //get_param(&str, new QToolTip,   "QToolTip");
-    get_param(&str, new QWidget,    "QWidget");
-    get_param(&str, new QCheckBox,  "QCheckBox");
-    get_param(&str, new QGroupBox,  "QGroupBox");
-    get_param(&str, new QRadioButton,   "QRadioButton");
-    get_param(&str, new QMenuBar,   "QMenuBar");
-    get_param(&str, new QMenu,   "QMenu");
-    //get_param(&str, new QAbstractItemView,   "QAbstractItemView");
-    get_param(&str, new QTabWidget,   "QTabWidget");
-    get_param(&str, new QLineEdit,   "QLineEdit");
-    get_param(&str, new QAbstractScrollArea,   "QAbstractScrollArea");
-    get_param(&str, new QScrollBar,   "QScrollBar");
-    get_param(&str, new QTextEdit,   "QTextEdit");
-    get_param(&str, new QPlainTextEdit,   "QPlainTextEdit");
-    get_param(&str, new QHeaderView(Qt::Horizontal),   "QHeaderView");
-    get_param(&str, new QSizeGrip(this),   "QSizeGrip");
-    get_param(&str, new QMainWindow,   "QMainWindow");
-    get_param(&str, new QFrame,   "QFrame");
-    get_param(&str, new QStackedWidget,   "QStackedWidget");
-    get_param(&str, new QToolBar,   "QToolBar");
-    get_param(&str, new QToolButton,   "QToolButton");
-    get_param(&str, new QPushButton,   "QPushButton");
-    get_param(&str, new QComboBox,   "QComboBox");
-    get_param(&str, new QAbstractSpinBox,   "QAbstractSpinBox");
-    get_param(&str, new QLabel,   "QLabel");
-    get_param(&str, new QTabWidget,   "QTabWidget");
-    get_param(&str, new QTabBar,   "QTabBar");
-    get_param(&str, new QDockWidget,   "QDockWidget");
-    get_param(&str, new QTreeView,   "QTreeView");
-    get_param(&str, new QListView,   "QListView");
-    get_param(&str, new QSlider,   "QSlider");
-    get_param(&str, new QTableView,   "QTableView");
-    //get_param(&str, new QTableCornerButton,   "QTableCornerButton");
-    get_param(&str, new QStatusBar,   "QStatusBar");
-    get_param(&str, new QFrame,   "QFrame");
-    get_param(&str, new QSplitter,   "QSplitter");
-    get_param(&str, new QProgressBar,   "QProgressBar");
-    get_param(&str, new QDateEdit,   "QDateEdit");
-
-    emit info(str);
-#endif
-//--------------------------------------------------------
-palette.setColor(QPalette::Window,          QColor(53,53,53));
-palette.setColor(QPalette::WindowText,      Qt::white);
-palette.setColor(QPalette::Base,            QColor(25,25,25));
-palette.setColor(QPalette::AlternateBase,   QColor(53,53,53));
-palette.setColor(QPalette::ToolTipBase,     Qt::white);
-palette.setColor(QPalette::ToolTipText,     Qt::white);
-palette.setColor(QPalette::Text,            Qt::white);
-palette.setColor(QPalette::Button,          QColor(53,53,53));
-palette.setColor(QPalette::ButtonText,      Qt::white);
-palette.setColor(QPalette::BrightText,      Qt::red);
-palette.setColor(QPalette::Link,            QColor(42, 130, 218));
-
-palette.setColor(QPalette::Highlight,       QColor(42, 130, 218));
-palette.setColor(QPalette::HighlightedText, Qt::black);
-//--------------------------------------------------------
-QWidgetList wl = qApp->allWidgets();
-foreach (QWidget *w, wl)
-{
-    LogDock *log = dynamic_cast<LogDock *>(w);
-    if(log)
-    {
-        connect(this, SIGNAL(info(QString)),    log, SLOT(infoLog(QString)));
-        connect(this, SIGNAL(debug(QString)),   log, SLOT(debugLog(QString)));
-        connect(this, SIGNAL(error(QString)),   log, SLOT(errorLog(QString)));
-        connect(this, SIGNAL(trace(QString)),   log, SLOT(traceLog(QString)));
-
-        connect(this,   SIGNAL(syslog(int,QString,QString)),
-                log,    SLOT(syslog(int,QString,QString)));
-        return;
-    }
-}
-connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
-
-Q_UNUSED(parent);
-//--------------------------------------------------------
-QBitArray bytesToBits(const QByteArray &bytes) const
-{
-    QBitArray bits;
-    bits.resize(bytes.size()*8);
-    // Convert from QByteArray to QBitArray
-    for(int i=0; i<bytes.count(); ++i)
-        for(int b=0; b<8; ++b)
-            bits.setBit(i*8+b, bytes.at(i)&(1<<(7-b)));
-    return bits;
-}
- 
- 
-QByteArray bitsToBytes(const QBitArray &bits) const
-{
-    QByteArray bytes;
-    bytes.resize(bits.size()/8);
- 
-    // Convert from QBitArray to QByteArray
-    for(int b=0; b<bits.count(); ++b)
-        bytes[b/8] = (bytes.at(b/8) | ((bits[b]?1:0)<<(b%8)));
-    return bytes;
-}
-//--------------------------------------------------------
-// Задание начального набора значений
-double **MainBox::getData(int n)
-{
-    double **f;
-    f = new double*[2];
-    f[0] = new double[n];
-    f[1] = new double[n];
-    for (int i = 0; i<n; i++)
-    {
-        f[0][i] = (double)i;
-        f[1][i] = 8 * (double)i - 3;
-        // Добавление случайной составляющей
-        f[1][i] = 8*(double)i - 3 + ((rand()%100)-50)*0.05;
-    }
-    return f;
-}
-//--------------------------------------------------------
-// Вычисление коэффициентов аппроксимирующей прямой
-void MainBox::getApprox(double **x, double *a, double *b, int n)
-{
-    double sumx = 0;
-    double sumy = 0;
-    double sumx2 = 0;
-    double sumxy = 0;
-    for (int i = 0; i<n; i++)
-    {
-        sumx += x[0][i];
-        sumy += x[1][i];
-        sumx2 += x[0][i] * x[0][i];
-        sumxy += x[0][i] * x[1][i];
-    }
-    *a = (n*sumxy - (sumx*sumy)) / (n*sumx2 - sumx*sumx);
-    *b = (sumy - *a*sumx) / n;
-    return;
-}
-//--------------------------------------------------------
-QString title = "Заголовок";
-QString text = "Текст";
-
-QMessageBox msgBox;
-msgBox.setIcon(QMessageBox::Information);
-msgBox.setWindowTitle(title);
-msgBox.setText(text);
-msgBox.setStandardButtons(QMessageBox::Ok);
-
-msgBox.setCheckBox(new QCheckBox("что-то написано"));
-
-int btn = msgBox.exec();
-if(btn == QMessageBox::Ok)
-{
-    QCheckBox *cb = msgBox.checkBox();
-    if(cb)
-    {
-        emit info(QString("%1").arg(cb->isChecked() ? "true" : "false"));
-    }
-}
-//--------------------------------------------------------
-#include <QTreeView>
-#include "test_model/test_model.hpp"
-// http://webhamster.ru/mytetrashare/index/mtb0/1438881056ul2fzqj0ny
-Test_model *model = 0;
-
-model = new Test_model();
-
-QTreeView *w = new QTreeView();
-w->setModel(model);
-w->setMinimumSize(640, 480);
-w->show();
-
-if(model)
-{
-    QVariant value;
-    bool ok = model->get(0,0,&value);
-    if(ok)
-    {
-        int x = value.toInt() + 1;
-        model->set(0, 0, x);
-    }
-}
-//--------------------------------------------------------
-QPalette Pal(palette());
-Pal.setColor(QPalette::Background, Qt::red);
-
-QWidget *w = new QWidget;
-w->setFixedSize(300, 300);
-w->setPalette(Pal);
-w->show();
-//--------------------------------------------------------
-QString title = "Заголовок";
-QString text = "Текст";
-
-QMessageBox msgBox;
-msgBox.setIcon(QMessageBox::Information);
-msgBox.setWindowTitle(title);
-msgBox.setText(text);
-msgBox.setStandardButtons(QMessageBox::Ok);
-
-msgBox.setCheckBox(new QCheckBox("что-то написано"));
-
-int btn = msgBox.exec();
-if(btn == QMessageBox::Ok)
-{
-    QCheckBox *cb = msgBox.checkBox();
-    if(cb)
-    {
-        emit info(QString("%1").arg(cb->isChecked() ? "true" : "false"));
-    }
-}
-//--------------------------------------------------------
-#if 0
-    QStandardItemModel *model = new QStandardItemModel(5, 5);
-    for (int row = 0; row < model->rowCount(); ++row)
-    {
-        for (int column = 0; column < model->columnCount(); ++column)
-        {
-            QStandardItem *item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
-            model->setItem(row, column, item);
-        }
-    }
-#else
-    QList<QStandardItem *> sl;
-    for(int n=0; n<5; n++)
-    {
-        sl.append(new QStandardItem(QString("item %1").arg(n)));
-    }
-
-    QStandardItem *item = new QStandardItem;
-    item->appendColumn(sl);
-
-    QStandardItemModel *model = new QStandardItemModel();
-    //model->setHorizontalHeaderLabels(QStringList() << "x1" << "x2"<< "x3" << "x4" << "x5" << "x6");
-    model->appendRow(item);
-#endif
-    QTreeView *tv = new QTreeView;
-    tv->setModel(model);
-    //tv->setC
-    tv->show();
-//--------------------------------------------------------
-emit info(QDir::homePath());
-//--------------------------------------------------------
-ui->comboBox->addItem("0");
-ui->comboBox->addItem("1");
-ui->comboBox->addItem("2");
-ui->comboBox->addItem("3");
-
-ui->comboBox->setCurrentIndex(-1);
-//--------------------------------------------------------
-#if 0
-    QStringList sl;
-    sl << "тест";
-
-    bool ok = create_pixmap((QWidget *)&sl, this);
-    if(ok == false)
-    {
-        emit error("FAIL");
-        return false;
-    }
-    emit info("OK");
-#endif
-//--------------------------------------------------------
-#if 0
-    QString str = "1|12|123|1234|12345";
-    QStringList sl = str.split('|');
-    foreach (QString text, sl)
-    {
-        emit info(text);
-    }
-#endif
-//--------------------------------------------------------
-#if 0
-    QDateTime dt = QDateTime::currentDateTime();
-    QString str = dt.toString("XXX dd.MM.yy hh:mm:ss");
-    emit info(QString("[%1]").arg(str));
-#endif
-//--------------------------------------------------------
-#include <QNetworkInterface>
-#if 0
-    //---
-    QList<QNetworkInterface> myInterfaces = QNetworkInterface::allInterfaces();
-    foreach (QNetworkInterface iface, myInterfaces)
-    {
-        if(!iface.name().contains("lo"))
-        {
-            emit info("---");
-            emit info(QString("name %1").arg(iface.name()));
-            emit info(QString("humanReadableName %1").arg(iface.humanReadableName()));
-            emit info(QString("hardwareAddress %1").arg(iface.hardwareAddress()));
-
-            QList<QNetworkAddressEntry> entry_list = iface.addressEntries();
-            foreach (QNetworkAddressEntry entry, entry_list)
-            {
-                QAbstractSocket::NetworkLayerProtocol proto = QHostAddress(entry.ip()).protocol();
-                if(proto == QAbstractSocket::IPv4Protocol)
-                {
-                    emit info(QString("IPV4 %1").arg(entry.ip().toString()));
-                }
-            }
-        }
-    }
-#endif
-//--------------------------------------------------------
-#if 1
-double k = 0.5;
-QRadialGradient *gradient = new QRadialGradient(10,10,10,10,10);
-gradient->setColorAt(0.0,     QColor(0,   0,   0));
-gradient->setColorAt(0.2 * k, QColor(85,  0,   170));
-gradient->setColorAt(0.4 * k, QColor(170, 0,   170));
-gradient->setColorAt(0.6 * k, QColor(255, 85,  0));
-gradient->setColorAt(0.8 * k, QColor(255, 170, 0));
-gradient->setColorAt(1.0,     QColor(255, 255, 255));
-
-gradient->setColorAt(0, QColor::fromRgbF(0, 1, 0, 1));
-gradient->setColorAt(1, QColor::fromRgbF(0, 0, 0, 0));
-
-QBrush *brush = new QBrush(*gradient);
-#else
-QBrush brush(Qt::green);
-#endif
-
-p.setBrush(*brush);
-//--------------------------------------------------------
-void Load()
-{
-    int num_verts;
-    char tmp;          //this is to skip ';' and ',' syntax in the file
-    int num_faces;
-    int num_texs;
-    float data;
-
-    //open up the file and print how many vertices to load
-    ifstream file;
-    file.open("balls.txt");
-
-    file >> num_verts;
-    file >> tmp;
-
-    //Load Vertex Data
-    for(int i = 0; i < num_verts; i++)
-    {
-        for(int j = 0; j < 3; j++)
-        {
-            file >> data;
-            //makeup for the y,z axis conversion
-            if(j==0)
-            {
-                ball_vertices[i][0] = data;
-            }
-
-            if(j == 1)
-            {
-                ball_vertices[i][2] = data;
-            }
-            if(j==2)
-            {
-                ball_vertices[i][1] = data*-1;
-            }
-            file >> tmp;
-        }
-        file >> tmp;
-    }
-
-    file >> num_faces;
-    file >> tmp;
-
-    //Load Face Data
-
-    for(int i = 0; i < num_faces; i++)
-    {
-        file >> num_verts;
-        ball_faces[i] = num_verts;
-        file >> tmp;
-        //Dont do anything with the data afterwards
-        for(int j = 1; j < num_verts+1; j++)
-        {
-            file >> data;
-            file >> tmp;
-        }
-        file >> tmp;
-    }
-
-    file >> num_texs;
-    file >> tmp;
-    //Load Texture Data
-    for(int i = 0; i < num_texs; i++)
-    {
-        for(int j = 0; j < 2; j++)
-        {
-            file >> data;
-            ball_texs[i][j] = data;
-            file >> tmp;
-        }
-        file >> tmp;
-    }
-
-    file.close();
-}
-//--------------------------------------------------------
-#include <QFormBuilder>
-#include <QGridLayout>
-
-
-QFormBuilder fb;
-QFile fileOut("xxx.ui");
-
-bool ok = fileOut.open(QIODevice::ReadWrite);
-emit info(QString("ok is %1").arg(ok ? "true" : "false"));
-
-QPushButton *x0 = new QPushButton();
-QPushButton *x1 = new QPushButton();
-QPushButton *x2 = new QPushButton();
-
-x0->setText("x0");
-x1->setText("x1");
-x2->setText("x2");
-
-x0->setObjectName("x0");
-x1->setObjectName("x1");
-x2->setObjectName("x2");
-
-QGridLayout *grid = new QGridLayout();
-grid->addWidget(x0, 0, 0);
-grid->addWidget(x1, 1, 0);
-grid->addWidget(x2, 2, 0);
-
-QWidget *w = new QWidget();
-w->setLayout(grid);
-w->show();
-
-fb.save(&fileOut, w);
-//--------------------------------------------------------
-void MainBox::paintEvent(QPaintEvent *)
-{
-    QPainter p(this);
-    p.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    p.drawLine(0, 0, width(), height());
-    p.drawLine(0, height(), width(), 0);
-}
-//--------------------------------------------------------
-Param<int> temp;
-temp.set(6);
-emit info(QString("%1").arg(temp.get()));
-
-Param<float> temp2;
-temp2.set(6.5);
-emit info(QString("%1").arg(temp2.get()));
-
-Param<QString> temp3;
-temp3.set("проба");
-emit info(QString("%1").arg(temp3.get()));
-
-Param<QByteArray> temp4;
-temp4.set("11111");
-emit info(QString("%1").arg(temp4.get().toHex().data()));
-//--------------------------------------------------------
-#include <QDateTime>
-
-QString s0 = "";
-QString s1 = "";
-QString s2 = "";
-
-QStringList sl;
-
-sl << "LOG_EMERG  "
-   << "LOG_ALERT  "
-   << "LOG_CRIT   "
-   << "LOG_ERR    "
-   << "LOG_WARNING"
-   << "LOG_NOTICE "
-   << "LOG_INFO   "
-   << "LOG_DEBUG  ";
-
-foreach (QString lvl, sl)
-{
-    QDateTime dtime = QDateTime::currentDateTime();
-
-    s0 = dtime.toString("dd-MM-yy hh:mm:ss");
-    s1 = lvl;
-    s2 = "message";
-    emit info(QString("%1\t%2\t%3").arg(s0).arg(s1).arg(s2));
-}
-//--------------------------------------------------------
-#ifdef Q_OS_LINUX
-    #include <syslog.h>
-#endif
-#include <QProgressDialog>
-#include <QProgressBar>
-#include "sleeper.h"
-
-#if 1
-    QProgressBar *p_bar = new QProgressBar();
-    p_bar->setMinimum(0);
-    p_bar->setMaximum(0);
-
-    QStyle *style = QStyleFactory::create("Fusion");
-    if(style)
-    {
-        p_bar->setStyle(style);
-    }
-    else
-    {
-        emit error("Style is FAIL");
-    }
-
-    QProgressDialog progress("Пожалуйста, ждите!", 0, 0, 0, this);
-    progress.setWindowFlags(Qt::SplashScreen);
-    //progress.setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
-    //progress.setWindowModality(Qt::WindowModal);
-    progress.setFixedWidth(320);
-    progress.setBar(p_bar);
-    progress.show();
-
-    for(int n=0; n<1000; n++)
-    {
-        qApp->processEvents();
-        Sleeper::msleep(10);
-    }
-
-    progress.close();
-#endif
-
 #ifdef Q_OS_LINUX
     syslog(LOG_EMERG,   "LOG_EMERG");
     syslog(LOG_ALERT,   "LOG_ALERT");

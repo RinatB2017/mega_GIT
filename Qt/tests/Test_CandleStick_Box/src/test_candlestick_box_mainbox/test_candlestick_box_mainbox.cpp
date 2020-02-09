@@ -32,6 +32,7 @@
 #include "test_candlestick_box_mainbox.hpp"
 
 #include "candlestick_box.hpp"
+#include "qcandlestickset.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -370,8 +371,6 @@ void MainBox::save(void)
     emit info("save");
 }
 //--------------------------------------------------------------------------------
-#include "candlestick_box.hpp"
-#include "qcandlestickset.h"
 void MainBox::test(void)
 {
 #if 0
@@ -393,10 +392,10 @@ void MainBox::test(void)
     box->update_data();
 #endif
 
-#if 0
+#if 1
     QProcess *proccess = new QProcess(this);
     proccess->setProcessChannelMode(QProcess::SeparateChannels);
-    //proccess->setReadChannel(QProcess::StandardOutput);
+    proccess->setReadChannel(QProcess::StandardOutput);
 
     connect(proccess, SIGNAL(started()),                 this, SLOT(started()));
     connect(proccess, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
@@ -404,17 +403,27 @@ void MainBox::test(void)
     connect(proccess, SIGNAL(finished(int)),             this, SLOT(finished(int)));
     connect(proccess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
 
-    proccess->start("wget", QStringList()
-                    << "-rc"
-                    << "-l1"
-                    << "-np"
-                    << "-nH"
-                    << "--cut-dirs=1"
-                    << "-A"
-                    << "zip"
-                    << "-P"
-                    << "quotes"
-                    << "http://www.forexite.com/free_forex_quotes/forex_history_arhiv.html");
+    QStringList args;
+    args << "-rc";
+    args << "-l1";
+    args << "-np";
+    args << "-nH";
+    args << "--cut-dirs=1";
+    args << "-A";
+    args << "zip";
+    args << "-P";
+    args << "quotes";
+    args << "http://www.forexite.com/free_forex_quotes/forex_history_arhiv.html";
+
+    QString temp;
+    foreach (QString str, args)
+    {
+        temp.append(str);
+        temp.append(" ");
+    }
+    emit debug(temp);
+
+    proccess->start("wget", args);
 #endif
 }
 //--------------------------------------------------------------------------------

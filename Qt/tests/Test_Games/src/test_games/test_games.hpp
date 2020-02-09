@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -34,7 +38,6 @@ class QToolButton;
 class QToolBar;
 class QComboBox;
 class QCheckBox;
-class GrapherBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -54,11 +57,21 @@ private slots:
     bool test_4(void);
     bool test_5(void);
 
-    void generate(void);
-    void calc(void);
+    void run_kmines(void);
+    void run_kpat(void);
+    void run_kdiamond(void);
 
-    void redraw_generate_data(void);
-    void redraw_calc_data(void);
+    void run_program(const QString program,
+                     const QString program_name,
+                     const QStringList arguments);
+
+    void find_kpat(void);
+    void find_kmines(void);
+    void find_kdiamond(void);
+
+    void started(void);
+    void finished(int result);
+    void process_error(QProcess::ProcessError p_error);
 
 private:
     enum {
@@ -83,30 +96,13 @@ private:
     QComboBox *cb_test;
     QList<CMD> commands;
 
-    GrapherBox *grapher_data;
-    GrapherBox *grapher_profit;
-
-    QList<qreal> prices_data;
-    QList<qreal> prices_profit;
-
-    int curve_data = 0;
-    int curve_profit;
-
     void init(void);
     void createTestBar(void);
-
-    void init_grapher_data(void);
-    void init_grapher_profit(void);
-    void init_widgets(void);
-
-    int get_count(void);
-    int get_inc_price(void);
-    int get_price(void);
-
-    int get_order_up_profit(void);
-    int get_order_up_loss(void);
-    int get_order_down_profit(void);
-    int get_order_down_loss(void);
+    bool find_window(const QString programm_title,
+                     int *x,
+                     int *y,
+                     int *width,
+                     int *heigth);
 
     void updateText(void);
     bool programm_is_exit(void);

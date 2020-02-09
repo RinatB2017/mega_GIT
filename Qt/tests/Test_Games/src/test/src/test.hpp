@@ -18,100 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-class GrapherBox;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    Test();
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    void generate(void);
-    void calc(void);
-
-    void redraw_generate_data(void);
-    void redraw_calc_data(void);
-
+    void test_GUI(void);
+    void test_func(void);
+    
 private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QComboBox *cb_test;
-    QList<CMD> commands;
-
-    GrapherBox *grapher_data;
-    GrapherBox *grapher_profit;
-
-    QList<qreal> prices_data;
-    QList<qreal> prices_profit;
-
-    int curve_data = 0;
-    int curve_profit;
-
-    void init(void);
-    void createTestBar(void);
-
-    void init_grapher_data(void);
-    void init_grapher_profit(void);
-    void init_widgets(void);
-
-    int get_count(void);
-    int get_inc_price(void);
-    int get_price(void);
-
-    int get_order_up_profit(void);
-    int get_order_up_loss(void);
-    int get_order_down_profit(void);
-    int get_order_down_loss(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    MainWindow *mw;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

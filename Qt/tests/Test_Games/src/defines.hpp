@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,100 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#define ORGNAME "Work"
+#define APPNAME "Test_Games"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
+#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
+#define QMAKE_TARGET_COMPANY    ORGNAME
+#define QMAKE_TARGET_PRODUCT    APPNAME
+#define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
+#define RC_ICONS                ":/images/computer.ico"
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-class GrapherBox;
+#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_FILEVERSION_STR         VER_STR
+#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_PRODUCTVERSION_STR      VER_STR
+#define VER_FILEDESCRIPTION_STR     APPNAME
+#define VER_INTERNALNAME_STR        APPNAME
+#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
+#define VER_ORIGINALFILENAME_STR    APPNAME
+#define VER_PRODUCTNAME_STR         APPNAME
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    void generate(void);
-    void calc(void);
-
-    void redraw_generate_data(void);
-    void redraw_calc_data(void);
-
-private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QComboBox *cb_test;
-    QList<CMD> commands;
-
-    GrapherBox *grapher_data;
-    GrapherBox *grapher_profit;
-
-    QList<qreal> prices_data;
-    QList<qreal> prices_profit;
-
-    int curve_data = 0;
-    int curve_profit;
-
-    void init(void);
-    void createTestBar(void);
-
-    void init_grapher_data(void);
-    void init_grapher_profit(void);
-    void init_widgets(void);
-
-    int get_count(void);
-    int get_inc_price(void);
-    int get_price(void);
-
-    int get_order_up_profit(void);
-    int get_order_up_loss(void);
-    int get_order_down_profit(void);
-    int get_order_down_loss(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+#define ICON_PROGRAMM   ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

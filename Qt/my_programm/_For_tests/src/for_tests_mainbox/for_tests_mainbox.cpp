@@ -369,6 +369,16 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    const QString program = "kpat";
+    const QStringList arguments = QStringList();
+    QProcess process;
+    process.setWorkingDirectory(".");
+    process.start(program, arguments);
+    bool res = process.waitForFinished(-1);
+    emit info(QString("programm return %1").arg(res ? "true" : "false"));
+#endif
+
 #if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);

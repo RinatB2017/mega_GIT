@@ -60,21 +60,10 @@ void MainBox::init(void)
     connect(ui->btn_kdiamond,       SIGNAL(clicked(bool)),  this,   SLOT(run_kdiamond()));
     connect(ui->btn_find_programm,  SIGNAL(clicked(bool)),  this,   SLOT(find_programm()));
 
-    //TODO setFixedHeight(sizeHint().height());
-
     camera = new WebCamera(this);
 
     camera->show();
     ui->camera_layout->addWidget(camera);
-
-#if 0
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
 
     load_widgets(APPNAME);
 }
@@ -328,7 +317,7 @@ void MainBox::find_programm(void)
         QPixmap screen_shot = screen->grabWindow(0, x, y, w, h);
         screen_shot.save(QString("%1.png").arg(title));
 
-#if 0
+#if 1
         int temp_x = 36;
         int temp_y = 91;
 
@@ -406,28 +395,24 @@ bool MainBox::test_1(void)
 bool MainBox::test_2(void)
 {
     emit info("Test_2()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_3(void)
 {
     emit info("Test_3()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_4(void)
 {
     emit info("Test_4()");
-
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_5(void)
 {
     emit info("Test_5()");
-
     return true;
 }
 //--------------------------------------------------------------------------------

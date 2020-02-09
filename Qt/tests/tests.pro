@@ -17,6 +17,7 @@ SUBDIRS += \
     Test_drawbuttons \
     Test_draw_line \
     Test_event_filter \
+    Test_FastTrading \
     Test_GrapherBox \
     Test_HistogramBox \
     Test_HC-05 \
@@ -61,6 +62,7 @@ SUBDIRS += \
     Test_QStateMachine \
     Test_QTreeWidget \
     Test_Game \
+    Test_Games \
     Test_OpenGL \
     Test_mouse \
     Test_RSA \

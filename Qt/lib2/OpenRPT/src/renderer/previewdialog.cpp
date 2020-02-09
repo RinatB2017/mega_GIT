@@ -80,10 +80,10 @@ PreviewDialog::PreviewDialog(ORODocument *document,
     resize(800, 600);
     //TODO setWindowState(Qt::WindowMaximized);
 
-    connect(zoominbutton, SIGNAL(clicked()), _view, SLOT(zoomIn()));
-    connect(zoomoutbutton, SIGNAL(clicked()), _view, SLOT(zoomOut()));
-    connect(buttonbox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonbox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(zoominbutton,   SIGNAL(clicked()),  _view,  SLOT(zoomIn()));
+    connect(zoomoutbutton,  SIGNAL(clicked()),  _view,  SLOT(zoomOut()));
+    connect(buttonbox,      SIGNAL(accepted()), this,   SLOT(accept()));
+    connect(buttonbox,      SIGNAL(rejected()), this,   SLOT(reject()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -238,7 +238,7 @@ void PreviewWidget::paintEvent(QPaintEvent *)
 
         painter.restore();
         int xTranslation = column==nbCol-1 ? (columnWidth()* -(nbCol-1)) : columnWidth();
-        int yTranslation = column==nbCol-1 ? (int)(spacing + paperRect(viewport()).height() * _zoom) : 0;
+        int yTranslation = column==nbCol-1 ? static_cast<int>(spacing + paperRect(viewport()).height() * _zoom) : 0;
         painter.translate(xTranslation, yTranslation);
     }
 }
@@ -254,7 +254,7 @@ void PreviewWidget::resizeEvent(QResizeEvent *)
     docsize.setWidth(qRound(paperRect(viewport()).width() *
                             _zoom + 2 * spacing));
 
-    int nbLines = (int)ceil ((double)_doc->pages() / (double)nbColumns());
+    int nbLines = static_cast<int>(ceil (static_cast<double>(_doc->pages()) / static_cast<double>(nbColumns())));
     docsize.setHeight(qRound(nbLines * paperRect(viewport()).height() *
                              _zoom + (nbLines + 1) * spacing));
 
@@ -285,7 +285,7 @@ QRectF PreviewWidget::paperRect(QPaintDevice *device)
 
 int PreviewWidget::columnWidth()
 {
-    return (int)(spacing + paperRect(viewport()).width() * _zoom);
+    return static_cast<int>(spacing + paperRect(viewport()).width() * _zoom);
 }
 
 int PreviewWidget::nbColumns()

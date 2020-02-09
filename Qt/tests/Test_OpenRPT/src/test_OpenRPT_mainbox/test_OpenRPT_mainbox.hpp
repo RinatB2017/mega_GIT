@@ -21,16 +21,17 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
-//--------------------------------------------------------------------------------
-class QToolButton;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -41,13 +42,36 @@ public:
     ~MainBox();
 
 private slots:
-    void test(void);
+    void choice_test(void);
+    bool test_0(void);
+    bool test_1(void);
+    bool test_2(void);
+    bool test_3(void);
+    bool test_4(void);
+    bool test_5(void);
 
 private:
+    enum {
+        ID_TEST_0 = 1000,
+        ID_TEST_1,
+        ID_TEST_2,
+        ID_TEST_3,
+        ID_TEST_4,
+        ID_TEST_5,
+        ID_TEST_6
+    };
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+
     Ui::MainBox *ui;
+    QComboBox *cb_test;
+    QList<CMD> commands;
 
     void init(void);
-
     void createTestBar(void);
 
     void updateText(void);

@@ -18,12 +18,9 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
+#include <QPrintPreviewWidget>
+#include <QPrintDialog>
+#include <QPageSize>
 #include <QPrinter>
 //--------------------------------------------------------------------------------
 #include "ui_test_OpenRPT_mainbox.h"
@@ -31,6 +28,9 @@
 #include "previewdialog.h"
 #include "renderobjects.h"
 #include "parsexmlutils.h"
+
+#include "orprintrender.h"
+#include "orprerender.h"
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "defines.hpp"
@@ -61,26 +61,69 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
-    QToolBar *testbar = new QToolBar(tr("testbar"));
-    testbar->setObjectName("testbar");
+    commands.clear();
+    commands.append({ ID_TEST_0, "example 0", &MainBox::test_0 });
+    commands.append({ ID_TEST_1, "example 1", &MainBox::test_1 });
 
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                       "test",
-                                       "test");
-    
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::choice_test(void)
 {
-    emit debug(tr("тест"));
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok)
+    {
+        return;
+    }
+    foreach (CMD command, commands)
+    {
+        if(command.cmd == cmd)
+        {
+            typedef bool (MainBox::*my_mega_function)(void);
+            my_mega_function x;
+            x = command.func;
+            if(x)
+            {
+                (this->*x)();
+            }
+            else
+            {
+                emit error("no func");
+            }
+
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_0(void)
+{
+    emit trace(Q_FUNC_INFO);
 
     ORODocument *document = new ORODocument();
     OROPage *page = new OROPage();
@@ -116,13 +159,97 @@ void MainBox::test(void)
     document->addPage(page);
 
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setFullPage(true);
+    printer->setPageSize(QPrinter::A4);
+    printer->setOrientation(QPrinter::Landscape);
 
     PreviewDialog *dlg = new PreviewDialog(document, printer);
     int res = dlg->exec();
     if(res)
     {
-        qDebug() << page->primitives();
+        emit info(QString("primitives %1").arg(page->primitives()));
     }
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_1(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    ORODocument *document = new ORODocument();
+    OROPage *page = new OROPage();
+
+    ORBarcodeData * bc = new ORBarcodeData();
+    //bc->setBrush(QBrush(QColor(Qt::red)));
+
+    ORORect *rect = new ORORect(bc);
+    rect->setRect(QRectF(1/2.54, 1/2.54, 1, 1));
+
+    OROLine *line = new OROLine(bc);
+    line->setStartPoint(QPointF(1, 1));
+    line->setEndPoint(QPointF(3, 2));
+
+    OROLine *line2 = new OROLine(bc);
+    line2->setStartPoint(QPointF(1, 1));
+    line2->setEndPoint(QPointF(5, 5));
+
+    QFont font("Arial", 24);
+    OROTextBox *text = new OROTextBox(bc);
+    text->setPosition(QPointF(3, 3));
+    text->setFont(font);
+    text->setSize(QSizeF(4.0, 2.0));
+    //text->setFlags(Qt::AlignRight | Qt::AlignTop);
+    text->setRotation(45.0);
+    text->setText("русский текст");
+
+    page->addPrimitive(rect);
+    page->addPrimitive(line);
+    page->addPrimitive(line2);
+    page->addPrimitive(text);
+
+    document->addPage(page);
+
+    QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+    printer->setOrientation(QPrinter::Landscape);
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setPageSize(QPrinter::A4);
+    printer->setFullPage(true);
+
+    ORPrintRender render;
+    render.setupPrinter(document, printer);
+    render.setPrinter(printer);
+    render.render(document);
+
+    QString pdf_filename = "print.pdf";
+    QDesktopServices::openUrl(QUrl::fromLocalFile(pdf_filename));
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_2(void)
+{
+    emit trace(Q_FUNC_INFO);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_3(void)
+{
+    emit trace(Q_FUNC_INFO);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_4(void)
+{
+    emit trace(Q_FUNC_INFO);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test_5(void)
+{
+    emit trace(Q_FUNC_INFO);
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

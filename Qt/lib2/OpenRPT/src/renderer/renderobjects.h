@@ -79,7 +79,7 @@ class OROPage
     friend class OROPrimitive;
 
 public:
-    OROPage(ORODocument * = 0);
+    OROPage(ORODocument * = nullptr);
     virtual ~OROPage();
 
     ORODocument* document() const { return _document; }

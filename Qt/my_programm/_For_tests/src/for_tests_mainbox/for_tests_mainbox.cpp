@@ -423,25 +423,6 @@ bool MainBox::test_1(void)
     emit info("Test_1()");
 
 #if 0
-    QList<QVariant> lv;
-    for(int n=0; n<ui->comboBox->count(); n++)
-    {
-        ui->comboBox->setCurrentIndex(n);
-        lv.append(ui->comboBox->currentText());
-    }
-    Keeper::set_array("group", "name", lv);
-#endif
-
-#if 0
-    QVariant x;
-    QVariant name;
-    Keeper::get_value("x", &x);
-    Keeper::get_value("name", &name);
-    emit info(QString("%1").arg(x.toInt()));
-    emit info(QString("%1").arg(name.toString()));
-#endif
-
-#if 0
     emit info("Текст <font style=\"color:red\">красный</font>");
 #endif
     return true;
@@ -489,11 +470,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    emit debug("load_setting !");
+    //emit debug("load_setting !");
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+    //emit debug("save_setting !");
 }
 //--------------------------------------------------------------------------------

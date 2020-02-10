@@ -45,7 +45,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -58,6 +58,10 @@ void MainBox::init(void)
     ui->le_kmines->setMinimumWidth(200);
     ui->le_kdiamond->setMinimumWidth(200);
 
+    ui->le_kpat->setMaximumWidth(400);
+    ui->le_kmines->setMaximumWidth(400);
+    ui->le_kdiamond->setMaximumWidth(400);
+
     connect(ui->btn_kmines,         SIGNAL(clicked(bool)),  this,   SLOT(run_kmines()));
     connect(ui->btn_kpat,           SIGNAL(clicked(bool)),  this,   SLOT(run_kpat()));
     connect(ui->btn_kdiamond,       SIGNAL(clicked(bool)),  this,   SLOT(run_kdiamond()));
@@ -65,7 +69,7 @@ void MainBox::init(void)
     connect(ui->btn_find_kmines,    SIGNAL(clicked(bool)),  this,   SLOT(find_kmines()));
     connect(ui->btn_find_kdiamond,  SIGNAL(clicked(bool)),  this,   SLOT(find_kdiamond()));
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

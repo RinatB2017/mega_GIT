@@ -49,7 +49,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
 
     if(youtube_walker)
     {
@@ -129,7 +129,7 @@ void MainBox::init(void)
     tab->addTab(w_test, "Test");
 #endif
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

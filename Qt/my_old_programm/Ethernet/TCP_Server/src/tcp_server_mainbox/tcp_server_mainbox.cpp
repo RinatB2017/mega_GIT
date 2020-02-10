@@ -35,7 +35,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     if(server)
     {
         delete server;
@@ -55,7 +55,7 @@ void MainBox::init(void)
     connect(server,             SIGNAL(output(QByteArray)), this,   SLOT(f_get_data(QByteArray)));
     connect(ui->btn_create,     SIGNAL(clicked(bool)),      this,   SLOT(f_connect()));
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_connect(void)

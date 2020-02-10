@@ -41,7 +41,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     if(client)
     {
         delete client;
@@ -54,7 +54,7 @@ void MainBox::init(void)
     init_widgets();
     init_client();
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)

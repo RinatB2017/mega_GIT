@@ -39,7 +39,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ void MainBox::init(void)
 
     ui->map_widget->load_map(":/test_map.dat");
 
-    load_widgets(APPNAME);
+    load_widgets();
     unlock_widgets();
 
     setFixedSize(sizeHint());

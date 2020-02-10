@@ -43,7 +43,7 @@ MainWidget_GUI::MainWidget_GUI(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainWidget_GUI::~MainWidget_GUI()
 {
-    save_widgets(APPNAME);
+    save_widgets();
 #ifdef QT_DEBUG
     qDebug() << "~MainWidget_GUI()";
 #endif
@@ -78,7 +78,7 @@ void MainWidget_GUI::init(void)
     }
 #endif
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::createTestBar(void)

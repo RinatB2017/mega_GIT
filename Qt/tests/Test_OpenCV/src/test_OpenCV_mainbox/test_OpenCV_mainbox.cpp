@@ -55,12 +55,12 @@ MainBox::MainBox(QWidget* parent) :
 
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  SLOT(s_test()));
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
 
     delete ui;
 }

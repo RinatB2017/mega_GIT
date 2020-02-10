@@ -48,7 +48,7 @@ HID_device::HID_device(QWidget *parent) :
 //--------------------------------------------------------------------------------
 HID_device::~HID_device()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ void HID_device::init(void)
 #endif
 
     //setFixedSize(sizeHint());
-    load_widgets(APPNAME);
+    load_widgets();
 
     block_buttons(true);
 }

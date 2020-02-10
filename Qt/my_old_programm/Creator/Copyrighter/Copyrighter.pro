@@ -38,10 +38,11 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-LIB_PATH = "$$PWD/../../../lib"
+LIB_PATH  = "$$PWD/../../../lib"
+LIB_PATH2 = "$$PWD/../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/smtp/smtp.pri)
+include ($$LIB_PATH2/smtp/smtp.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

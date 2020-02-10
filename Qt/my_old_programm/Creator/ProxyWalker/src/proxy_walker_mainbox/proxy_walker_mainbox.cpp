@@ -51,7 +51,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
 
     save_setting();
     delete ui;
@@ -92,7 +92,7 @@ void MainBox::init(void)
     if(current_index > 0)
         proxy_list->setCurrentRow(current_index);
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

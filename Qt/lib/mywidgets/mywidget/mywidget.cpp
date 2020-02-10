@@ -1226,7 +1226,7 @@ void MyWidget::load_widgets_old(QString group_name)
     Q_UNUSED(group_name)
 }
 //--------------------------------------------------------------------------------
-void MyWidget::load_widgets(QString group_name)
+void MyWidget::load_widgets(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
@@ -1390,7 +1390,6 @@ void MyWidget::load_widgets(QString group_name)
             }
         }
     }
-    Q_UNUSED(group_name)
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets_old(QString group_name)
@@ -1440,7 +1439,7 @@ void MyWidget::save_widgets_old(QString group_name)
     Q_UNUSED(group_name)
 }
 //--------------------------------------------------------------------------------
-void MyWidget::save_widgets(QString group_name)
+void MyWidget::save_widgets(void)
 {
 //    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
 //    Q_CHECK_PTR(mw);
@@ -1608,7 +1607,6 @@ void MyWidget::save_widgets(QString group_name)
             }
         }
     }
-    Q_UNUSED(group_name)
 }
 //--------------------------------------------------------------------------------
 int MyWidget::load_int(QString name)

@@ -48,7 +48,7 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets_ipv4();
-    save_widgets(APPNAME);
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void MainBox::init(void)
 
     //setLayout(main_layout);
 
-    load_widgets(APPNAME);
+    load_widgets();
     load_widgets_ipv4();
 }
 //--------------------------------------------------------------------------------

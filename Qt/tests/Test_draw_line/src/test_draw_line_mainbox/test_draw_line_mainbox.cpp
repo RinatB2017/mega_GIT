@@ -42,7 +42,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
 
     serialBox->deleteLater();
     delete ui;
@@ -64,7 +64,7 @@ void MainBox::init_widgets(void)
     ui->sb_len_pause->setRange(0, 0xFFFF);
     ui->sb_delay_ms->setRange(10, 0xFFFF);
 
-    load_widgets(APPNAME);
+    load_widgets();
 
     QVariant value_R;
     QVariant value_G;

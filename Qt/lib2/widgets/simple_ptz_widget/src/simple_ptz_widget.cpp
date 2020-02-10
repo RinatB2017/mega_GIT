@@ -33,7 +33,7 @@ Simple_PTZ_widget::Simple_PTZ_widget(QWidget *parent) :
 Simple_PTZ_widget::~Simple_PTZ_widget()
 {
     save_string("IP", ui->ipv4_widget->get_url().host());
-    save_widgets(APPNAME);
+    save_widgets();
     if(player)
     {
         player->deleteLater();
@@ -69,7 +69,7 @@ void Simple_PTZ_widget::init(void)
     url.setPort(port);
     emit debug(QString("IP %1").arg(url.toString()));
 
-    load_widgets(APPNAME);
+    load_widgets();
 
     port = ui->sb_port->value();
     emit debug(QString("port %1").arg(port));

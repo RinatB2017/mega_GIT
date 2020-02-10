@@ -51,7 +51,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void MainBox::init(void)
 
     //setFixedSize(sizeHint());
 
-    load_widgets(APPNAME);
+    load_widgets();
     set_param();
 }
 //--------------------------------------------------------------------------------

@@ -39,7 +39,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
 
 #ifdef QT_DEBUG
     qDebug() << "~MainBox()";
@@ -55,7 +55,7 @@ void MainBox::init(void)
     ui->rs232_widget->set_generator(ui->generator_widget);
     ui->sound_widget->set_generator(ui->generator_widget);
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

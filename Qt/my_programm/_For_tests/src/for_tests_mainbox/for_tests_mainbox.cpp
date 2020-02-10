@@ -166,7 +166,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
 
     delete ui;
 }
@@ -195,7 +195,7 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::check_in(void)

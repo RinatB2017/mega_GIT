@@ -120,8 +120,8 @@ public:
     void load_widgets_old(QString group_name);
     void save_widgets_old(QString group_name);
 
-    void load_widgets(QString group_name);
-    void save_widgets(QString group_name);
+    void load_widgets(void);
+    void save_widgets(void);
 
     int load_int(QString name);
     void save_int(QString name, int value);

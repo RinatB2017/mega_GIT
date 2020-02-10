@@ -39,7 +39,7 @@ PTZ_widget::PTZ_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 PTZ_widget::~PTZ_widget()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     if(player)
     {
         player->deleteLater();
@@ -243,7 +243,7 @@ void PTZ_widget::init(void)
     add_buttons(index++, "FLIP", param1, param2);
     //---
 
-    load_widgets(APPNAME);
+    load_widgets();
 
     play();
 }

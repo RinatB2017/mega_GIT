@@ -80,7 +80,7 @@ void MainBox::init(void)
     //---
     layout()->setMargin(0);
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::clr_curves(void)

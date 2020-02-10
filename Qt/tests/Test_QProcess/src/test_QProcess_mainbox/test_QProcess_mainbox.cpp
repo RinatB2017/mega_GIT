@@ -41,7 +41,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void MainBox::init(void)
     connect(ui->btn_run_kate,   SIGNAL(clicked(bool)),  this,   SLOT(run_kate()));
     connect(ui->btn_run_command,    SIGNAL(clicked(bool)),  this,   SLOT(run_command()));
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

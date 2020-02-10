@@ -47,7 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets(APPNAME);
+    save_widgets();
     if(serial)
     {
         serial->deleteLater();
@@ -71,7 +71,7 @@ void MainBox::init(void)
     }
 #endif
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)

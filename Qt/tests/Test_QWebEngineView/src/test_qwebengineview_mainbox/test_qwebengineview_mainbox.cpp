@@ -51,7 +51,7 @@ MainBox::~MainBox()
     }
 #endif
 
-    save_widgets(APPNAME);
+    save_widgets();
 
     delete ui;
 }
@@ -172,7 +172,7 @@ void MainBox::init(void)
 
     ui->progressBar->setValue(0);
 
-    load_widgets(APPNAME);
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::refresh_url(const QUrl url)

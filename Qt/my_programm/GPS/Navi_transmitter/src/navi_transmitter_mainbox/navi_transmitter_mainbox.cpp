@@ -46,8 +46,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_widgets("Transmitter");
-
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -97,7 +96,7 @@ void MainBox::init(void)
     connect(this,               SIGNAL(send(QByteArray)),   ui->serialWidget,   SLOT(input(QByteArray)));
     connect(ui->serialWidget,   SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 
-    load_widgets("Transmitter");
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

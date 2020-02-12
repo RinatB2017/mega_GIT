@@ -370,6 +370,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    emit info(metaObject()->className());
+#endif
+
+#if 0
     const QString program = "kpat";
     const QStringList arguments = QStringList();
     QProcess process;

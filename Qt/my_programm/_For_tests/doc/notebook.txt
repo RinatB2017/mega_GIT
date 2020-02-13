@@ -126,6 +126,164 @@
 //                                                 ///< The purpose is to keep the number of callback executions small.
 //} RF_Params;
 //--------------------------------------------------------
+#pragma pack (push, 1)
+
+//---
+struct modulation{
+   uint16_t modType:3;               //!< \brief 0: FSK<br>
+                                     //!<        1: GFSK<br>
+                                     //!<        Others: <i>Reserved</i>
+   uint16_t deviation:13;            //!<        Deviation (250 Hz steps)
+};
+
+struct symbolRate{
+   uint32_t preScale:4;              //!<        Prescaler value
+   uint32_t :4;
+   uint32_t rateWord:21;             //!<        Rate word
+   uint32_t decimMode:3;             //!< \brief 0: Use automatic PDIF decimation<br>
+                                     //!<        1: Force PDIF decimation to 0<br>
+                                     //!<        3: Force PDIF decimation to 1<br>
+                                     //!<        5: Force PDIF decimation to 2<br>
+                                     //!<        Others: <i>Reserved</i>
+};                        //!<        Symbol rate setting
+
+struct preamConf{
+   uint8_t nPreamBytes:6;            //!< \brief 0: 1 preamble bit<br>
+                                     //!<        1--16: Number of preamble bytes<br>
+                                     //!<        18, 20, ..., 30: Number of preamble bytes<br>
+                                     //!<        31: 4 preamble bits<br>
+                                     //!<        32: 32 preamble bytes<br>
+                                     //!<        Others: <i>Reserved</i>
+   uint8_t preamMode:2;              //!< \brief 0: Send 0 as the first preamble bit<br>
+                                     //!<        1: Send 1 as the first preamble bit<br>
+                                     //!<        2: Send same first bit in preamble and sync word<br>
+                                     //!<        3: Send different first bit in preamble and sync word
+};
+
+struct formatConf{
+   uint16_t nSwBits:6;               //!<        Number of sync word bits (8--32)
+   uint16_t bBitReversal:1;          //!< \brief 0: Use positive deviation for 1<br>
+                                     //!<        1: Use positive deviation for 0
+   uint16_t bMsbFirst:1;             //!< \brief 0: Least significant bit transmitted first<br>
+                                     //!<        1: Most significant bit transmitted first
+   uint16_t fecMode:4;               //!< \brief Select coding<br>
+                                     //!<        0: Uncoded binary modulation<br>
+                                     //!<        8: Long range mode<br>
+                                     //!<        10: Manchester coded binary modulation<br>
+                                     //!<        Others: <i>Reserved</i>
+   uint16_t :1;
+   uint16_t whitenMode:3;            //!< \brief 0: No whitening<br>
+                                     //!<        1: CC1101/CC2500 compatible whitening<br>
+                                     //!<        2: PN9 whitening without byte reversal<br>
+                                     //!<        3: <i>Reserved</i><br>
+                                     //!<        4: No whitener, 32-bit IEEE 802.15.4g compatible CRC<br>
+                                     //!<        5: IEEE 802.15.4g compatible whitener and 32-bit CRC<br>
+                                     //!<        6: No whitener, dynamically IEEE 802.15.4g compatible 16-bit or 32-bit CRC<br>
+                                     //!<        7: Dynamically IEEE 802.15.4g compatible whitener and 16-bit or 32-bit CRC
+};
+//---
+
+union u_modulation
+{
+    quint16 value;
+    struct modulation{
+       uint16_t modType:3;               //!< \brief 0: FSK<br>
+                                         //!<        1: GFSK<br>
+                                         //!<        Others: <i>Reserved</i>
+       uint16_t deviation:13;            //!<        Deviation (250 Hz steps)
+    } bytes;
+};
+
+union u_symbolRate
+{
+    quint32 value;
+    struct symbolRate{
+       uint32_t preScale:4;              //!<        Prescaler value
+       uint32_t :4;
+       uint32_t rateWord:21;             //!<        Rate word
+       uint32_t decimMode:3;             //!< \brief 0: Use automatic PDIF decimation<br>
+                                         //!<        1: Force PDIF decimation to 0<br>
+                                         //!<        3: Force PDIF decimation to 1<br>
+                                         //!<        5: Force PDIF decimation to 2<br>
+                                         //!<        Others: <i>Reserved</i>
+    } bytes;
+};
+
+union u_preamConf
+{
+    quint8 value;
+    struct preamConf{
+       uint8_t nPreamBytes:6;            //!< \brief 0: 1 preamble bit<br>
+                                         //!<        1--16: Number of preamble bytes<br>
+                                         //!<        18, 20, ..., 30: Number of preamble bytes<br>
+                                         //!<        31: 4 preamble bits<br>
+                                         //!<        32: 32 preamble bytes<br>
+                                         //!<        Others: <i>Reserved</i>
+       uint8_t preamMode:2;              //!< \brief 0: Send 0 as the first preamble bit<br>
+                                         //!<        1: Send 1 as the first preamble bit<br>
+                                         //!<        2: Send same first bit in preamble and sync word<br>
+                                         //!<        3: Send different first bit in preamble and sync word
+    } bytes;
+};
+
+union u_formatConf
+{
+    quint16 value;
+    struct formatConf{
+       uint16_t nSwBits:6;               //!<        Number of sync word bits (8--32)
+       uint16_t bBitReversal:1;          //!< \brief 0: Use positive deviation for 1<br>
+                                         //!<        1: Use positive deviation for 0
+       uint16_t bMsbFirst:1;             //!< \brief 0: Least significant bit transmitted first<br>
+                                         //!<        1: Most significant bit transmitted first
+       uint16_t fecMode:4;               //!< \brief Select coding<br>
+                                         //!<        0: Uncoded binary modulation<br>
+                                         //!<        8: Long range mode<br>
+                                         //!<        10: Manchester coded binary modulation<br>
+                                         //!<        Others: <i>Reserved</i>
+       uint16_t :1;
+       uint16_t whitenMode:3;            //!< \brief 0: No whitening<br>
+                                         //!<        1: CC1101/CC2500 compatible whitening<br>
+                                         //!<        2: PN9 whitening without byte reversal<br>
+                                         //!<        3: <i>Reserved</i><br>
+                                         //!<        4: No whitener, 32-bit IEEE 802.15.4g compatible CRC<br>
+                                         //!<        5: IEEE 802.15.4g compatible whitener and 32-bit CRC<br>
+                                         //!<        6: No whitener, dynamically IEEE 802.15.4g compatible 16-bit or 32-bit CRC<br>
+                                         //!<        7: Dynamically IEEE 802.15.4g compatible whitener and 16-bit or 32-bit CRC
+    } bytes;
+};
+
+#pragma pack (pop)
+//--------------------------------------------------------
+#if 0
+    u_modulation u_m;
+    u_m.value = 0x000000a1;
+    emit info("--- modulation ---");
+    emit info(QString("modType 0x%1").arg(u_m.bytes.modType, 0, 16));
+    emit info(QString("deviation0x%1").arg(u_m.bytes.deviation, 0, 16));
+
+    u_symbolRate u_s;
+    u_s.value = 0x0033330f;
+    emit info("--- symbolRate ---");
+    emit info(QString("preScale 0x%1").arg(u_s.bytes.preScale, 0, 16));
+    emit info(QString("rateWord 0x%1").arg(u_s.bytes.rateWord, 0, 16));
+    emit info(QString("decimMode 0x%1").arg(u_s.bytes.decimMode, 0, 16));
+
+    u_preamConf  u_p;
+    u_p.value = 0x00000002;
+    emit info("--- preamConf ---");
+    emit info(QString("preamMode 0x%1").arg(u_p.bytes.preamMode, 0, 16));
+    emit info(QString("nPreamBytes 0x%1").arg(u_p.bytes.nPreamBytes, 0, 16));
+
+    u_formatConf u_f;
+    u_f.value = 0x00002820;
+    emit info("--- formatConf ---");
+    emit info(QString("fecMode 0x%1").arg(u_f.bytes.fecMode, 0, 16));
+    emit info(QString("nSwBits 0x%1").arg(u_f.bytes.nSwBits, 0, 16));
+    emit info(QString("bMsbFirst 0x%1").arg(u_f.bytes.bMsbFirst, 0, 16));
+    emit info(QString("whitenMode 0x%1").arg(u_f.bytes.whitenMode, 0, 16));
+    emit info(QString("bBitReversal 0x%1").arg(u_f.bytes.bBitReversal, 0, 16));
+#endif
+//--------------------------------------------------------
 #ifdef Q_OS_LINUX
     syslog(LOG_EMERG,   "LOG_EMERG");
     syslog(LOG_ALERT,   "LOG_ALERT");

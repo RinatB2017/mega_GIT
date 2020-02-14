@@ -1,0 +1,29 @@
+#!/bin/bash
+
+find . -iname "Makefile" -print0 | xargs -0 rm -rf
+find . -type f -name "*.user" -print0 | xargs -0 rm -rf
+find . -type f -name "*.exe" -print0 | xargs -0 rm -rf
+find . -type f -name "*.o" -print0 | xargs -0 rm -rf
+#find . -type f -name "*.obj" -print0 | xargs -0 rm -rf
+
+#find . -type f -print0 | xargs -0 chmod 644
+find . -iname "*.cpp" -print0 | xargs -0 chmod 644
+find . -iname "*.hpp" -print0 | xargs -0 chmod 644
+find . -iname "*.h"   -print0 | xargs -0 chmod 644
+find . -iname "*.pri" -print0 | xargs -0 chmod 644
+find . -iname "*.pro" -print0 | xargs -0 chmod 644
+find . -iname "*.qrc" -print0 | xargs -0 chmod 644
+find . -iname "*.png" -print0 | xargs -0 chmod 644
+#find . -iname "*.ui"  -print0 | xargs -0 chmod 644
+find . -iname "*.rc"  -print0 | xargs -0 chmod 644
+find . -iname "*.ico" -print0 | xargs -0 chmod 644
+find . -iname "*.qm"  -print0 | xargs -0 chmod 644
+find . -iname "*.ts"  -print0 | xargs -0 chmod 644
+find . -iname "*.txt" -print0 | xargs -0 chmod 644
+#find . -iname "*.xml" -print0 | xargs -0 chmod 644
+
+find . -iname "*.Debug" -print0 | xargs -0 rm -rf
+find . -iname "*.Release" -print0 | xargs -0 rm -rf
+
+find . -type f -name object_script.* -print0 | xargs -0 rm -rf
+find . -type f -name .qmake.stash -print0 | xargs -0 rm -rf

@@ -117,9 +117,6 @@ public:
 
     void block_close(bool state);
 
-    void load_widgets_old(QString group_name);
-    void save_widgets_old(QString group_name);
-
     void load_widgets(void);
     void save_widgets(void);
 
@@ -207,37 +204,6 @@ private:
     QSettings *settings;
 
     bool check_exists_signals(QWidget *parent);
-
-    void load_QRadioButton(QString group_name);
-    void save_QRadioButton(QString group_name);
-
-    void load_QCheckBox(QString group_name);
-    void load_QComboBox(QString group_name);
-    void load_QPushButton(QString group_name);
-    void load_QToolButton(QString group_name);
-    void load_QPlainTextEdit(QString group_name);
-    void load_QTextEdit(QString group_name);
-    void load_QLineEdit(QString group_name);
-    void load_QSpinBox(QString group_name);
-    void load_QDoubleSpinBox(QString group_name);
-    void load_QSlider(QString group_name);
-    void load_QSplitter(QString group_name);
-    void load_QTimeEdit(QString group_name);
-    void load_QDateTimeEdit(QString group_name);
-
-    void save_QCheckBox(QString group_name);
-    void save_QComboBox(QString group_name);
-    void save_QPushButton(QString group_name);
-    void save_QToolButton(QString group_name);
-    void save_QPlainTextEdit(QString group_name);
-    void save_QTextEdit(QString group_name);
-    void save_QLineEdit(QString group_name);
-    void save_QSpinBox(QString group_name);
-    void save_QDoubleSpinBox(QString group_name);
-    void save_QSlider(QString group_name);
-    void save_QSplitter(QString group_name);
-    void save_QTimeEdit(QString group_name);
-    void save_QDateTimeEdit(QString group_name);
 
     bool is_my_widget(QString o_name);
     bool compare_name(const char *widget_name, QString class_name);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>379</width>
-    <height>365</height>
+    <height>450</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -122,6 +122,35 @@
     </layout>
    </item>
    <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="MyTimer" name="timer_widget" native="true"/>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btn_set_time">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btn_run_timer">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -136,6 +165,31 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyTimer</class>
+   <extends>QWidget</extends>
+   <header>mytimer.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>sb_1</tabstop>
+  <tabstop>sb_2</tabstop>
+  <tabstop>sb_res</tabstop>
+  <tabstop>btn_ok</tabstop>
+  <tabstop>horizontalSlider</tabstop>
+  <tabstop>rb_test</tabstop>
+  <tabstop>cb_checkbox_test</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>timeEdit</tabstop>
+  <tabstop>dateTimeEdit</tabstop>
+  <tabstop>toolButton</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>btn_set_time</tabstop>
+  <tabstop>btn_run_timer</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

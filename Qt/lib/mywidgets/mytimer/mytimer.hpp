@@ -60,6 +60,7 @@ private:
 
     void init(void);
     void create_timer(void);
+    void update_timer(void);
 
     void updateText(void);
     bool programm_is_exit(void);

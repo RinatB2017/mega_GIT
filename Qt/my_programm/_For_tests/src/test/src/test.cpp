@@ -44,39 +44,3 @@ Test::~Test()
 
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void Test::test_mainbox(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
-
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void Test::test_slider(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
-
-    QSlider *slider = mb->findChild<QSlider *>("horizontalSlider");
-    QVERIFY(slider);
-
-    int value = 250;
-    slider->setValue(value);
-    QCOMPARE(slider->value(),   value);
-}
-//--------------------------------------------------------------------------------

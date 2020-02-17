@@ -38,6 +38,11 @@ void MyTimer::init(void)
     ui->setupUi(this);
 
     create_timer();
+
+    last_time.setHMS(0, 0, 0);
+
+    update_timer();
+    setMinimumHeight(48);
 }
 //--------------------------------------------------------------------------------
 void MyTimer::create_timer(void)
@@ -48,16 +53,42 @@ void MyTimer::create_timer(void)
 //--------------------------------------------------------------------------------
 void MyTimer::update(void)
 {
+    emit trace(Q_FUNC_INFO);
 
+    //int sec = last_time.hour()*60*60 + last_time.minute()*60 + last_time.second();
+    int sec =  QTime(0, 0, 0).secsTo(last_time);
+    if(sec > 0)
+    {
+        sec--;
+        QTime nt(0, 0, 0);
+        last_time = nt.addSecs(sec);
+        update_timer();
+    }
+    else
+    {
+        timer->stop();
+        emit elapsed();
+    }
+}
+//--------------------------------------------------------------------------------
+void MyTimer::update_timer(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    ui->lcd_display->display(last_time.toString("hh:mm:ss"));
 }
 //--------------------------------------------------------------------------------
 void MyTimer::set_timer(QTime new_time)
 {
+    emit trace(Q_FUNC_INFO);
+
     last_time = new_time;
+    update_timer();
 }
 //--------------------------------------------------------------------------------
 void MyTimer::start(void)
 {
+    emit trace(Q_FUNC_INFO);
     if(timer)
     {
         if(timer->isActive() == false)
@@ -69,6 +100,7 @@ void MyTimer::start(void)
 //--------------------------------------------------------------------------------
 void MyTimer::stop(void)
 {
+    emit trace(Q_FUNC_INFO);
     if(timer)
     {
         if(timer->isActive() == true)
@@ -80,6 +112,7 @@ void MyTimer::stop(void)
 //--------------------------------------------------------------------------------
 void MyTimer::restart(void)
 {
+    emit trace(Q_FUNC_INFO);
 
 }
 //--------------------------------------------------------------------------------

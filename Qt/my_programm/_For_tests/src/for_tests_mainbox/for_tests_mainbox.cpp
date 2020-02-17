@@ -58,6 +58,14 @@ void MainBox::init(void)
     ui->toolButton->setIcon((QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon))));
 
 #if 1
+    ui->btn_set_time->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
+    ui->btn_run_timer->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+
+    connect(ui->btn_set_time,   &QToolButton::clicked,  this,   &MainBox::set_time);
+    connect(ui->btn_run_timer,  &QToolButton::clicked,  this,   &MainBox::run_timer);
+#endif
+
+#if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
     if(sizeHint().height() > 0)
@@ -66,6 +74,18 @@ void MainBox::init(void)
     }
 #endif
     load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_time(void)
+{
+    QTime nt;
+    nt.setHMS(0, 0, 10);
+    ui->timer_widget->set_timer(nt);
+}
+//--------------------------------------------------------------------------------
+void MainBox::run_timer(void)
+{
+    ui->timer_widget->start();
 }
 //--------------------------------------------------------------------------------
 void MainBox::check_in(void)

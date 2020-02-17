@@ -68,6 +68,9 @@ public slots:
     void check_in(void);
     void victory(void);
 
+    void set_time(void);
+    void run_timer(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,

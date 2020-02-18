@@ -259,6 +259,24 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    emit info(QDir::currentPath());
+
+    //TODO сначала модель присваивается виджету для просмотра
+    QFileSystemModel *model = new QFileSystemModel;
+    QTreeView *tree = new QTreeView();
+    tree->setModel(model);
+    tree->setColumnHidden(1, true);
+    tree->setColumnHidden(2, true);
+    tree->setColumnHidden(3, true);
+
+    //TODO и только потом переходим на нужный каталог
+    QModelIndex idx = model->setRootPath(QDir::currentPath());
+    tree->setRootIndex(idx);
+
+    tree->show();
+#endif
+
 #if 0
     //ui->cb_checkbox_test->setDisabled(ui->cb_checkbox_test->isEnabled());
     ui->rb_test->setDisabled(ui->rb_test->isEnabled());

@@ -42,7 +42,9 @@ void MyTimer::init(void)
     last_time.setHMS(0, 0, 0);
 
     update_timer();
+
     setMinimumHeight(48);
+//    setMinimumHeight(48);
 }
 //--------------------------------------------------------------------------------
 void MyTimer::create_timer(void)

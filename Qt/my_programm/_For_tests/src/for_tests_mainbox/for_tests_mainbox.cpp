@@ -259,7 +259,12 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
+    //ui->cb_checkbox_test->setDisabled(ui->cb_checkbox_test->isEnabled());
+    ui->rb_test->setDisabled(ui->rb_test->isEnabled());
+#endif
+
+#if 0
     emit info(metaObject()->className());
 #endif
 

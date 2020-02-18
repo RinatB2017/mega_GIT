@@ -65,8 +65,12 @@ void MainBox::init(void)
     //https://support.google.com/webmasters/answer/1061943?hl=ru
 
     // ширина TAB в символах
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     int fontWidth = QFontMetrics(ui->te_js->currentCharFormat().font()).averageCharWidth();
     ui->te_js->setTabStopWidth(3 * fontWidth);
+#else
+    ui->te_js->setTabStopDistance(QFontMetricsF(ui->te_js->font()).horizontalAdvance(' ') * 3);
+#endif
 
     QFont font("Courier", 10);
     ui->te_js->setFont(font);

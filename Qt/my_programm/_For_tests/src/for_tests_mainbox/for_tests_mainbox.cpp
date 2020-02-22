@@ -260,6 +260,13 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    emit info("Info");
+    emit debug("Debug");
+    emit error("Error");
+    emit trace("Trace");
+#endif
+
+#if 0
     emit info(QDir::currentPath());
 
     //TODO сначала модель присваивается виджету для просмотра

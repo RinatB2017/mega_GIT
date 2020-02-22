@@ -27,6 +27,24 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+typedef struct
+{
+    QDate date;
+    QTime time;
+    int level;
+    QColor color_text;
+    QColor background_color;
+    QString message;
+} LOG_DATA;
+
+enum LEVELS
+{
+    INFO = 0,
+    DEBUG,
+    ERROR,
+    TRACE
+};
+//--------------------------------------------------------------------------------
 class LogBox : public QFrame
 {
     Q_OBJECT
@@ -112,16 +130,17 @@ private:
 
     QString autosave_filename = "noname.log";
 
+    QList<LOG_DATA> l_log_data;
+
     void init(void);
     void create_widgets(void);
 
     void save_log(const QString &);
 
-    void append_string(QString level_str,
-                       QColor color_text,
-                       QColor background_color,
-                       QString text);
+    void append_string(LOG_DATA log_data);
     QString syslog_to_str(int level);
+
+    void update_log(void);
 
 protected:
     void changeEvent(QEvent *event);

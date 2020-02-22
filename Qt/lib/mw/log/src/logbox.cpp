@@ -196,49 +196,62 @@ void LogBox::setColorLog(bool state)
 void LogBox::set_flag_is_shows_info(bool state)
 {
     flag_is_shows_info = state;
+    update_log();
 }
 //--------------------------------------------------------------------------------
 void LogBox::set_flag_is_shows_debug(bool state)
 {
     flag_is_shows_debug = state;
+    update_log();
 }
 //--------------------------------------------------------------------------------
 void LogBox::set_flag_is_shows_error(bool state)
 {
     flag_is_shows_error = state;
+    update_log();
 }
 //--------------------------------------------------------------------------------
 void LogBox::set_flag_is_shows_trace(bool state)
 {
     flag_is_shows_trace = state;
+    update_log();
 }
 //--------------------------------------------------------------------------------
-void LogBox::append_string(QString level_str,
-                           QColor color_text,
-                           QColor background_color,
-                           QString text)
+void LogBox::append_string(LOG_DATA log_data)
 {
-    if(text.isEmpty())
+    if(log_data.message.isEmpty())
     {
         return;
     }
 
+    if(!flag_is_shows_info  && log_data.level == INFO)  return;
+    if(!flag_is_shows_debug && log_data.level == DEBUG) return;
+    if(!flag_is_shows_error && log_data.level == ERROR) return;
+    if(!flag_is_shows_trace && log_data.level == TRACE) return;
+
     QString temp;
 
+    QString level_str;
+    switch (log_data.level) {
+        case INFO: level_str = "INFO";  break;
+        case DEBUG: level_str = "DEBUG";  break;
+        case ERROR: level_str = "ERROR";  break;
+        case TRACE: level_str = "TRACE";  break;
+    }
     if(flagAddDateTime)
     {
         temp = QString("%1\t%2\t%3")
                 .arg(level_str)
                 .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
-                .arg(text);
+                .arg(log_data.message);
     }
     else
     {
-        temp = text;
+        temp = log_data.message;
     }
 
-    flagColor ? logBox->setTextColor(color_text) : logBox->setTextColor(QColor(Qt::black));
-    flagColor ? logBox->setTextBackgroundColor(background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
+    flagColor ? logBox->setTextColor(log_data.color_text) : logBox->setTextColor(QColor(Qt::black));
+    flagColor ? logBox->setTextBackgroundColor(log_data.background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
 
 #ifdef NEED_CODEC
     //TODO проверить надо
@@ -300,7 +313,19 @@ void LogBox::infoLog(const QString &text)
 {
     if(!text.isEmpty() && flag_is_shows_info)
     {
-        append_string("INFO", Qt::blue, Qt::white, text);
+        //---
+        LOG_DATA log_data;
+        log_data.date = QDate::currentDate();
+        log_data.time = QTime::currentTime();
+        log_data.level = INFO;
+        log_data.color_text = Qt::blue;
+        log_data.background_color = Qt::white;
+        log_data.message = text;
+
+        l_log_data.append(log_data);
+        //---
+
+        append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -308,7 +333,19 @@ void LogBox::debugLog(const QString &text)
 {
     if(!text.isEmpty() && flag_is_shows_debug)
     {
-        append_string("DEBUG", Qt::darkGreen, Qt::white, text);
+        //---
+        LOG_DATA log_data;
+        log_data.date = QDate::currentDate();
+        log_data.time = QTime::currentTime();
+        log_data.level = DEBUG;
+        log_data.color_text = Qt::darkGreen;
+        log_data.background_color = Qt::white;
+        log_data.message = text;
+
+        l_log_data.append(log_data);
+        //---
+
+        append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -316,7 +353,19 @@ void LogBox::errorLog(const QString &text)
 {
     if(!text.isEmpty() && flag_is_shows_error)
     {
-        append_string("ERROR", Qt::red, Qt::white, text);
+        //---
+        LOG_DATA log_data;
+        log_data.date = QDate::currentDate();
+        log_data.time = QTime::currentTime();
+        log_data.level = ERROR;
+        log_data.color_text = Qt::red;
+        log_data.background_color = Qt::white;
+        log_data.message = text;
+
+        l_log_data.append(log_data);
+        //---
+
+        append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -324,7 +373,19 @@ void LogBox::traceLog(const QString &text)
 {
     if(!text.isEmpty() && flag_is_shows_trace)
     {
-        append_string("TRACE", Qt::gray, Qt::white, text);
+        //---
+        LOG_DATA log_data;
+        log_data.date = QDate::currentDate();
+        log_data.time = QTime::currentTime();
+        log_data.level = TRACE;
+        log_data.color_text = Qt::gray;
+        log_data.background_color = Qt::white;
+        log_data.message = text;
+
+        l_log_data.append(log_data);
+        //---
+
+        append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -334,7 +395,19 @@ void LogBox::colorLog(const QString &text,
 {
     if(!text.isEmpty())
     {
-        append_string("COLOR", text_color, background_color, text);
+        //---
+        LOG_DATA log_data;
+        log_data.date = QDate::currentDate();
+        log_data.time = QTime::currentTime();
+        log_data.level = INFO;
+        log_data.color_text = text_color;
+        log_data.background_color = background_color;
+        log_data.message = text;
+
+        l_log_data.append(log_data);
+        //---
+
+        append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -439,26 +512,39 @@ void LogBox::save_log(const QString &filename)
 #endif
         return;
     }
+
+#if 0
     if(flagTextIsWindows)
     {
-#if 0
-        QString str=logBox->toPlainText();
-        QStringList strList=str.split('\n');
-        foreach (QString temp, strList)
-        {
-            temp.append("\r\n");
-            file.write(temp.toLocal8Bit());
-        }
-#else
         file.write(logBox->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
-#endif
     }
     else
     {
-        //file.write(logBox->toPlainText().toLatin1());
         file.write(logBox->toPlainText().toLocal8Bit()); //.toAscii());
-        //file.write(logBox->toHtml().toLocal8Bit());    //.toAscii());
     }
+#else
+    QString temp;
+    foreach (LOG_DATA ld, l_log_data)
+    {
+        temp.clear();
+
+        temp.append(QString("%1|").arg(ld.date.toString("dd-MM-yyyy")));
+        temp.append(QString("%1|").arg(ld.time.toString("hh:mm:ss")));
+        temp.append(QString("%1|").arg(ld.level));
+        temp.append(QString("#%1%2%3|")
+                    .arg(static_cast<uchar>(ld.color_text.red()),   2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.color_text.green()), 2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.color_text.blue()),  2, 16, QChar('0')));
+        temp.append(QString("#%1%2%3|")
+                    .arg(static_cast<uchar>(ld.background_color.red()),   2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.background_color.green()), 2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
+        temp.append(QString("%1|").arg(ld.background_color.red()));
+        temp.append(QString("%1\n").arg(ld.message));
+
+        file.write(temp.toLocal8Bit());
+    }
+#endif
 
     file.close();
 }
@@ -509,6 +595,16 @@ void LogBox::changeOptions(void)
     optionsBox->deleteLater();
 }
 //--------------------------------------------------------------------------------
+void LogBox::update_log(void)
+{
+    logBox->clear();
+
+    foreach (LOG_DATA ld, l_log_data)
+    {
+        append_string(ld);
+    }
+}
+//--------------------------------------------------------------------------------
 void LogBox::clearProgress()
 {
     progress(0);
@@ -517,6 +613,7 @@ void LogBox::clearProgress()
 void LogBox::clear()
 {
     logBox->clear();
+    l_log_data.clear();
 }
 //--------------------------------------------------------------------------------
 void LogBox::progress(int value)

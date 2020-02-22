@@ -112,11 +112,6 @@ private:
 
     QString autosave_filename = "noname.log";
 
-    bool old_state_btn_show_Info = false;
-    bool old_state_btn_show_Debug = false;
-    bool old_state_btn_show_Error = false;
-    bool old_state_btn_show_Message = false;
-
     void init(void);
     void create_widgets(void);
 

@@ -120,9 +120,9 @@ void HistogramSettings::change_rubberband_color(void)
 {
     QColorDialog *dlg = new QColorDialog(this);
 
-    int r = rubberband_color->palette().background().color().red();
-    int g = rubberband_color->palette().background().color().green();
-    int b = rubberband_color->palette().background().color().blue();
+    int r = rubberband_color->palette().window().color().red();
+    int g = rubberband_color->palette().window().color().green();
+    int b = rubberband_color->palette().window().color().blue();
     if(r>254) r=254;
     if(g>254) g=254;
     if(b>254) b=254;
@@ -138,13 +138,13 @@ void HistogramSettings::change_rubberband_color(void)
 //--------------------------------------------------------------------------------
 QColor HistogramSettings::get_rubberband_color(void)
 {
-    return rubberband_color->palette().background().color();
+    return rubberband_color->palette().window().color();
 }
 //--------------------------------------------------------------------------------
 QwtPicker::RubberBand HistogramSettings::get_rubberband(void)
 {
     int ribber = rubberband_curve->currentData().toInt() - Qt::UserRole;
-    return (QwtPicker::RubberBand)ribber;
+    return static_cast<QwtPicker::RubberBand>(ribber);
 }
 //--------------------------------------------------------------------------------
 void HistogramSettings::connect_log(void)

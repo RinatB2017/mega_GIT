@@ -724,7 +724,9 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));
 #endif
 #ifndef NO_LOG_DEBUG
+#ifdef QT_DEBUG
     connect(this,   SIGNAL(debug(QString)), ld, SLOT(debugLog(QString)));
+#endif
     connect(this,   SIGNAL(signal_is_shows_debug(bool)),    ld, SIGNAL(signal_is_shows_debug(bool)));
 #endif
 #ifndef NO_LOG_ERROR
@@ -732,7 +734,9 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
 #endif
 #ifndef NO_LOG_TRACE
+#ifdef QT_DEBUG
     connect(this,   SIGNAL(trace(QString)), ld, SLOT(traceLog(QString)));
+#endif
     connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
 #endif
 
@@ -1684,18 +1688,6 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
 
 #ifndef NO_LOG_INFO
     QAction *show_info  = new QAction(menu);
-#endif
-#ifndef NO_LOG_DEBUG
-    QAction *show_debug = new QAction(menu);
-#endif
-#ifndef NO_LOG_ERROR
-    QAction *show_error = new QAction(menu);
-#endif
-#ifndef NO_LOG_TRACE
-    QAction *show_trace = new QAction(menu);
-#endif
-
-#ifndef NO_LOG_INFO
     show_info->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_info");
     show_info->setText("is_shows_info");
     show_info->setToolTip("is_shows_info");
@@ -1709,6 +1701,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
 #endif
 
 #ifndef NO_LOG_DEBUG
+    QAction *show_debug = new QAction(menu);
     show_debug->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_debug");
     show_debug->setText("is_shows_debug");
     show_debug->setToolTip("is_shows_debug");
@@ -1722,6 +1715,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
 #endif
 
 #ifndef NO_LOG_ERROR
+    QAction *show_error = new QAction(menu);
     show_error->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_error");
     show_error->setText("is_shows_error");
     show_error->setToolTip("is_shows_error");
@@ -1735,6 +1729,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
 #endif
 
 #ifndef NO_LOG_TRACE
+    QAction *show_trace = new QAction(menu);
     show_trace->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_trace");
     show_trace->setText("is_shows_trace");
     show_trace->setToolTip("is_shows_trace");

@@ -25,9 +25,9 @@ class Q_WW_EXPORT ColorModel : public QStandardItemModel {
 public:
     ColorModel(QObject *parent = nullptr);
     QModelIndex contains(const QColor &c);
-    ColorModel *clone(QObject *par=0) const;
-    QModelIndex addColor(const QColor &c, const QString &name=QString::null);
-    QModelIndex insertColor(int index, const QColor &c, const QString &name=QString::null);
+    ColorModel *clone(QObject *par=nullptr) const;
+    QModelIndex addColor(const QColor &c, const QString &name=QString());
+    QModelIndex insertColor(int index, const QColor &c, const QString &name=QString());
 };
 
 #endif

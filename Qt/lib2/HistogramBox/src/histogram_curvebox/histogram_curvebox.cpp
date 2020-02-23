@@ -100,9 +100,9 @@ QString Histogram_CurveBox::get_caption(bool *ok)
 //--------------------------------------------------------------------------------
 void Histogram_CurveBox::get_color(int *r, int *g, int *b)
 {
-    *r = color_curve->palette().background().color().red();
-    *g = color_curve->palette().background().color().green();
-    *b = color_curve->palette().background().color().blue();
+    *r = color_curve->palette().window().color().red();
+    *g = color_curve->palette().window().color().green();
+    *b = color_curve->palette().window().color().blue();
 }
 //--------------------------------------------------------------------------------
 int Histogram_CurveBox::get_index(void)
@@ -115,9 +115,9 @@ void Histogram_CurveBox::change_color(void)
     emit info("change_color");
     QColorDialog *dlg = new QColorDialog(this);
 
-    int r = color_curve->palette().background().color().red();
-    int g = color_curve->palette().background().color().green();
-    int b = color_curve->palette().background().color().blue();
+    int r = color_curve->palette().window().color().red();
+    int g = color_curve->palette().window().color().green();
+    int b = color_curve->palette().window().color().blue();
     if(r>254) r=254;
     if(g>254) g=254;
     if(b>254) b=254;

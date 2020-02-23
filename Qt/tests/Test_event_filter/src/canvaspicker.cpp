@@ -12,7 +12,7 @@
 
 CanvasPicker::CanvasPicker( QwtPlot *plot ):
     QObject( plot ),
-    d_selectedCurve( NULL ),
+    d_selectedCurve( nullptr ),
     d_selectedPoint( -1 )
 {
     QwtPlotCanvas *canvas = qobject_cast<QwtPlotCanvas *>( plot->canvas() );
@@ -63,7 +63,7 @@ bool CanvasPicker::event( QEvent *ev )
 
 bool CanvasPicker::eventFilter( QObject *object, QEvent *event )
 {
-    if ( plot() == NULL || object != plot()->canvas() )
+    if ( plot() == nullptr || object != plot()->canvas() )
         return false;
 
     switch( event->type() )
@@ -251,8 +251,8 @@ void CanvasPicker::move( const QPoint &pos )
     if ( !d_selectedCurve )
         return;
 
-    QVector<double> xData( d_selectedCurve->dataSize() );
-    QVector<double> yData( d_selectedCurve->dataSize() );
+    QVector<double> xData( static_cast<int>(d_selectedCurve->dataSize()) );
+    QVector<double> yData( static_cast<int>(d_selectedCurve->dataSize()) );
 
     for ( int i = 0;
           i < static_cast<int>( d_selectedCurve->dataSize() ); i++ )
@@ -297,7 +297,7 @@ void CanvasPicker::showCursor( bool showIt )
 
     const QBrush brush = symbol->brush();
     if ( showIt )
-        symbol->setBrush( symbol->brush().color().dark( 180 ) );
+        symbol->setBrush( symbol->brush().color().darker( 180 ) );
 
     QwtPlotDirectPainter directPainter;
     directPainter.drawSeries( d_selectedCurve, d_selectedPoint, d_selectedPoint );
@@ -361,7 +361,7 @@ void CanvasPicker::shiftPointCursor( bool up )
         return;
 
     int index = d_selectedPoint + ( up ? 1 : -1 );
-    index = ( index + d_selectedCurve->dataSize() ) % d_selectedCurve->dataSize();
+    index = static_cast<int>( ( index + d_selectedCurve->dataSize() ) % d_selectedCurve->dataSize() );
 
     if ( index != d_selectedPoint )
     {

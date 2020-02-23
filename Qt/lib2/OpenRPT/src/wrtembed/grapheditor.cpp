@@ -335,7 +335,7 @@ void GraphEditor::_btnNewSeries_clicked()
         for(int i = 0; i < _seriesList.count(); i++) {
 	        if(_seriesList.at(i)->name == sname) {
 	            counter++;
-	            sname = QString().sprintf("New Series %d", counter);
+                sname = QString().asprintf("New Series %d", counter);
 	            exitLoop = false;
                 break;
 	        }

@@ -39,9 +39,7 @@ win32 {
 
 LIB_PATH  = "$$PWD/../../lib"
 
-include ($$LIB_PATH/locale.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH/turbo.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

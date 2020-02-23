@@ -2,6 +2,12 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
+CONFIG(debug, debug|release) {
+} else {
+    DEFINES += NO_LOG_DEBUG
+    DEFINES += NO_LOG_TRACE
+}
+
 include ($$PWD/../qtsingleapplication/qtsingleapplication.pri)
 include ($$PWD/../mw/mw.pri)
 include ($$PWD/../mywidgets/mywaitsplashscreen.pri)

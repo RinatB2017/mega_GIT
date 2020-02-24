@@ -56,15 +56,15 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
+//#ifdef QT_DEBUG
     createTestBar();
-#endif
+//#endif
 
     myProcess = new QProcess(this);
     connect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
     connect(myProcess,  SIGNAL(finished(int)),                  this,   SLOT(finished(int)));
     connect(myProcess,  SIGNAL(error(QProcess::ProcessError)),  this,   SLOT(process_error(QProcess::ProcessError)));
-    connect(myProcess,  SIGNAL(readyReadStandardOutput()),      this,   SLOT(readData()));
+//    connect(myProcess,  SIGNAL(readyReadStandardOutput()),      this,   SLOT(readData()));
     connect(myProcess,  SIGNAL(readyReadStandardError()),       this,   SLOT(readData()));
 
     connect(ui->btn_devices,            &QPushButton::clicked,  this,   &MainBox::f_devices);
@@ -461,15 +461,21 @@ bool MainBox::test_0(void)
 {
     emit info("Test_0()");
     f_get_screeshot2();
+
+    QByteArray ba = myProcess->readAllStandardOutput();
+    QFile file("out.png");
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return false;
+    file.write(ba);
+    file.close();
+
+    emit info("OK");
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
-
-    emit info(myProcess->readAllStandardOutput());
-
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -83,6 +83,7 @@ private:
 
     QProcess *myProcess = nullptr;
     bool f_busy = false;
+    int process_result = 0;
 
     void init(void);
     void createTestBar(void);
@@ -90,13 +91,15 @@ private:
     void run_program(const QString program,
                      const QStringList arguments);
 
-    void f_devices(void);
-    void f_create_screeshot(void);
-    void f_get_screeshot(void);
-    void f_get_file_screeshot(void);
+    void f_create_screenshot(void);
+
     void f_show_screeshot(void);
     void f_screen_tap(void);
-    void f_tap(uint pos_x, uint pos_y);
+
+    bool f_get_file_screeshot(void);
+    bool f_get_screeshot(void);
+    bool f_devices(void);
+    bool f_tap(uint pos_x, uint pos_y);
 
     void updateText(void);
     bool programm_is_exit(void);

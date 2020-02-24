@@ -68,7 +68,7 @@ void MainBox::init(void)
     connect(myProcess,  SIGNAL(readyReadStandardError()),       this,   SLOT(readData()));
 
     connect(ui->btn_devices,            &QPushButton::clicked,  this,   &MainBox::f_devices);
-    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screeshot);
+    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot);
     connect(ui->btn_tap,                &QPushButton::clicked,  this,   &MainBox::f_screen_tap);
 
     load_widgets();
@@ -173,12 +173,17 @@ void MainBox::started(void)
 //--------------------------------------------------------------------------------
 void MainBox::finished(int result)
 {
-    emit info("Процесс завершен!");
-    if(result)
-    {
-        emit error(QString(tr("code %1")).arg(result));
-    }
+    process_result = result;
     f_busy = false;
+
+    if(process_result == 0)
+    {
+        emit info("Процесс завершен!");
+    }
+    else
+    {
+        emit error(QString("Процесс завершён с ошибкой (%1)").arg(result));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::process_error(QProcess::ProcessError p_error)
@@ -211,26 +216,31 @@ void MainBox::process_error(QProcess::ProcessError p_error)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_devices(void)
+bool MainBox::f_devices(void)
 {
     QString program = "adb";
     QStringList arguments;
 
     arguments << "devices";
     run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+    return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_create_screeshot(void)
+void MainBox::f_create_screenshot(void)
 {
     QString program = "adb";
     QStringList arguments;
 
-    f_get_screeshot();
-    f_get_file_screeshot();
+    if(!f_get_screeshot())      return;
+    if(!f_get_file_screeshot()) return;
     f_show_screeshot();
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_get_screeshot(void)
+bool MainBox::f_get_screeshot(void)
 {
     QString program = "adb";
     QStringList arguments;
@@ -246,9 +256,10 @@ void MainBox::f_get_screeshot(void)
     {
         QCoreApplication::processEvents();
     }
+    return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_get_file_screeshot(void)
+bool MainBox::f_get_file_screeshot(void)
 {
     QString program = "adb";
     QStringList arguments;
@@ -262,6 +273,7 @@ void MainBox::f_get_file_screeshot(void)
     {
         QCoreApplication::processEvents();
     }
+    return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_screen_tap(void)
@@ -269,7 +281,7 @@ void MainBox::f_screen_tap(void)
     f_tap(100, 200);
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_tap(uint pos_x, uint pos_y)
+bool MainBox::f_tap(uint pos_x, uint pos_y)
 {
     //adb shell input tap 100 100
 
@@ -288,6 +300,7 @@ void MainBox::f_tap(uint pos_x, uint pos_y)
     {
         QCoreApplication::processEvents();
     }
+    return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_show_screeshot(void)

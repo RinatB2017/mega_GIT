@@ -112,7 +112,7 @@ bool MainBox::check_trianle_120(double A, double B, double C)
     angle_A = rad_to_grad(qAcos((A*A + B*B - C*C) / (2*A*B)));
     angle_B = rad_to_grad(qAcos((B*B + C*C - A*A) / (2*B*C)));
     angle_C = rad_to_grad(qAcos((A*A + C*C - B*B) / (2*A*C)));
-    //emit debug(QString("check_trianle_120: angle_A=%1 angle_B=%2 angle_C=%3").arg(angle_A).arg(angle_B).arg(angle_C));
+    emit debug(QString("check_trianle_120: angle_A=%1 angle_B=%2 angle_C=%3").arg(angle_A).arg(angle_B).arg(angle_C));
 
     delta = 0.01f;
     if(qAbs(angle_A - 120.0f) < delta) return true;
@@ -156,7 +156,7 @@ void MainBox::test_triangle(double a, double b, double c)
 void MainBox::test(void)
 {    
     test_triangle(220.0f, 220.0f, 220.0f);
-    //emit debug(QString("%1").arg(calc(381.051f, 381.051f, 381.051f, 30.0f) ? "true" : "false"));
+    emit debug(QString("%1").arg(calc(381.051f, 381.051f, 381.051f, 30.0f) ? "true" : "false"));
 }
 //--------------------------------------------------------------------------------
 bool MainBox::calc(double A, double B, double C, double angle_grad)
@@ -176,7 +176,7 @@ bool MainBox::calc(double A, double B, double C, double angle_grad)
     angle_A = rad_to_grad(qAcos((A*A + B*B - C*C) / (2*A*B)));
     angle_B = rad_to_grad(qAcos((B*B + C*C - A*A) / (2*B*C)));
     angle_C = rad_to_grad(qAcos((A*A + C*C - B*B) / (2*A*C)));
-    //emit debug(QString("angle_A=%1 angle_B=%2 angle_C=%3").arg(angle_A).arg(angle_B).arg(angle_C));
+    emit debug(QString("angle_A=%1 angle_B=%2 angle_C=%3").arg(angle_A).arg(angle_B).arg(angle_C));
     if(!check_angle("angle_A", angle_A)) return false;
     if(!check_angle("angle_B", angle_B)) return false;
     if(!check_angle("angle_C", angle_C)) return false;
@@ -217,9 +217,9 @@ bool MainBox::calc(double A, double B, double C, double angle_grad)
     if(qAbs(c - temp_value) > delta) return false;
     if(!check_triangle(a, c, C)) return false;
 
-    //emit debug(QString("angle1_a=%1 angle1_b=%2 angle_A=%3").arg(angle1_a).arg(angle1_b).arg(120.0f));
-    //emit debug(QString("angle2_b=%1 angle2_c=%2 angle_B=%3").arg(angle2_b).arg(angle2_c).arg(120.0f));
-    //emit debug(QString("angle3_a=%1 angle3_c=%2 angle_C=%3").arg(angle3_a).arg(angle3_c).arg(120.0f));
+    emit debug(QString("angle1_a=%1 angle1_b=%2 angle_A=%3").arg(angle1_a).arg(angle1_b).arg(120.0f));
+    emit debug(QString("angle2_b=%1 angle2_c=%2 angle_B=%3").arg(angle2_b).arg(angle2_c).arg(120.0f));
+    emit debug(QString("angle3_a=%1 angle3_c=%2 angle_C=%3").arg(angle3_a).arg(angle3_c).arg(120.0f));
 
     emit info(QString("a = %1").arg(a));
     emit info(QString("b = %1").arg(b));

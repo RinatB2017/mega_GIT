@@ -373,11 +373,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    //emit debug("load_setting !");
+    emit debug("load_setting !");
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    //emit debug("save_setting !");
+    emit debug("save_setting !");
 }
 //--------------------------------------------------------------------------------

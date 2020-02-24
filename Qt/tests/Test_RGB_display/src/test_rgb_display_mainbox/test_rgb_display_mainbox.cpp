@@ -362,7 +362,7 @@ void MainBox::get_data(QByteArray data)
 //--------------------------------------------------------------------------------
 void MainBox::send_data(QString data)
 {
-    //emit debug(data);
+    emit debug(data);
 
     QByteArray temp;
     temp.append(data);

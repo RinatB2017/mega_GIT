@@ -380,7 +380,7 @@ int SerialBox4::input(const QByteArray &sending_data)
     }
     else
     {
-        //emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
+        emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
         serial->write(sending_data);
     }
     return E_NO_ERROR;
@@ -494,7 +494,7 @@ void SerialBox4::sendData(const QByteArray &sending_data)
     }
     else
     {
-        //emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
+        emit debug(QString("send 0x%1").arg(sending_data.toHex().data()));
         serial->write(sending_data);
     }
 }

@@ -110,7 +110,7 @@ void MainBox::send(void)
     //data.append(QByteArray::fromHex("A0 01 01 A2"));
     //data.append(QByteArray::fromHex("A0 01 00 A1"));
 
-    //emit debug(QString("send(%1)").arg(data.data()));
+    emit debug(QString("send(%1)").arg(data.data()));
     res_data = client->input(data);
     emit debug(res_data.toHex());
     emit info(res_data);

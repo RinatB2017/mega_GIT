@@ -235,7 +235,7 @@ void MainBox::s_autorun_js(void)
         emit error("JS is empty!");
         return;
     }
-    //emit trace(javascript);
+    emit trace(javascript);
 
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
@@ -254,7 +254,7 @@ void MainBox::s_run_js(void)
         emit error("JS is empty!");
         return;
     }
-    //emit trace(javascript);
+    emit trace(javascript);
 
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {

@@ -71,6 +71,11 @@ void MainBox::init(void)
     connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot);
     connect(ui->btn_tap,                &QPushButton::clicked,  this,   &MainBox::f_screen_tap);
 
+    connect(ui->btn_swipe_LR,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_LR);
+    connect(ui->btn_swipe_RL,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_RL);
+
+    ui->lbl_screenshot->installEventFilter(this);
+
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -287,7 +292,7 @@ void MainBox::f_screen_tap(void)
     f_tap(100, 200);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_tap(uint pos_x, uint pos_y)
+bool MainBox::f_tap(int pos_x, int pos_y)
 {
     //adb shell input tap 100 100
 
@@ -309,9 +314,93 @@ bool MainBox::f_tap(uint pos_x, uint pos_y)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::f_test_swipe_LR(void)
+{
+    //adb shell input swipe x1 y1 x2 y2 sss
+
+    int pos_x1 = 10;
+    int pos_y1 = 300;
+    int pos_x2 = 400;
+    int pos_y2 = 300;
+
+    QString program = "adb";
+    QStringList arguments;
+
+    arguments << "shell";
+    arguments << "input";
+    arguments << "swipe";
+    arguments << QString("%1").arg(pos_x1);
+    arguments << QString("%1").arg(pos_y1);
+    arguments << QString("%1").arg(pos_x2);
+    arguments << QString("%1").arg(pos_y2);
+    arguments << "100";
+
+    f_busy = true;
+    run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+    return (process_result == 0);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_test_swipe_RL(void)
+{
+    //adb shell input swipe x1 y1 x2 y2 sss
+
+    int pos_x1 = 10;
+    int pos_y1 = 300;
+    int pos_x2 = 400;
+    int pos_y2 = 300;
+
+    QString program = "adb";
+    QStringList arguments;
+
+    arguments << "shell";
+    arguments << "input";
+    arguments << "swipe";
+    arguments << QString("%1").arg(pos_x2);
+    arguments << QString("%1").arg(pos_y2);
+    arguments << QString("%1").arg(pos_x1);
+    arguments << QString("%1").arg(pos_y1);
+    arguments << "100";
+
+    f_busy = true;
+    run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+    return (process_result == 0);
+}
+//--------------------------------------------------------------------------------
 void MainBox::f_show_screeshot(void)
 {
     ui->lbl_screenshot->setPixmap(QPixmap("screencap.png"));
+}
+//--------------------------------------------------------------------------------
+bool MainBox::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+        if(mouseEvent->button() == Qt::LeftButton)
+        {
+            int pos_x = mouseEvent->pos().x();
+            int pos_y = mouseEvent->pos().y();
+            emit info(QString("%1 %2").arg(pos_x).arg(pos_y));
+
+            bool ok = f_tap(pos_x, pos_y);
+            if(ok)
+            {
+                f_create_screenshot();
+            }
+
+            return true;
+        }
+    }
+    // standard event processing
+    return QObject::eventFilter(obj, event);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

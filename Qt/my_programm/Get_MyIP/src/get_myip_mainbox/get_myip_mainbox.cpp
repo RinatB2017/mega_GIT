@@ -82,8 +82,8 @@ void MainBox::show_my_IP(void)
                 QString begin_str = "<big id=\"d_clip_button\">";
                 int begin = ba.lastIndexOf(begin_str);
                 int end = ba.lastIndexOf("</big>");
-                //emit debug(QString("begin %1").arg(begin));
-                //emit debug(QString("end %1").arg(end));
+                emit debug(QString("begin %1").arg(begin));
+                emit debug(QString("end %1").arg(end));
                 if((end - begin) > 6)
                 {
                     QString str = ba.mid(begin+begin_str.length(), end-begin-begin_str.length());

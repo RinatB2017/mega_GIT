@@ -253,7 +253,7 @@ void MainBox::readData(void)
     QString output = m_engine->readAllStandardOutput();
     QStringList lines = output.split("\n");
     emit debug(QString("received %1 bytes").arg(output.size()));
-    //emit debug(QString("lines.size() %1").arg(lines.size()));
+    emit debug(QString("lines.size() %1").arg(lines.size()));
     for(int n=0; n<lines.size(); n++)
     {
         QString line = lines.at(n);

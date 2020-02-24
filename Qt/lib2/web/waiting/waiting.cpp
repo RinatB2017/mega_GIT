@@ -38,7 +38,6 @@ bool Waiting::is_loaded(bool *is_loaded, int timeout_msec)
 {
     QElapsedTimer time;
 
-    //emit debug("waiting...");
     time.start();
     while(*is_loaded == false)
     {

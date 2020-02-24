@@ -117,7 +117,7 @@ void ListWidget_Site::wait(int timeout_msec)
 {
     QElapsedTimer time;
 
-    //emit debug("waiting...");
+    emit debug("waiting...");
     time.start();
     while(!is_loaded)
     {

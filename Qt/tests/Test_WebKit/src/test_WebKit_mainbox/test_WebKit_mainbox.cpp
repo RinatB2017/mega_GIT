@@ -237,7 +237,7 @@ void MainBox::open_url(void)
 void MainBox::started(void)
 {
     is_loaded = false;
-    //emit debug("started");
+    emit debug("started");
 }
 //--------------------------------------------------------------------------------
 void MainBox::finished(bool state)
@@ -245,7 +245,7 @@ void MainBox::finished(bool state)
     if(state == false) return;
     //emit info(QString("bytes received = %1").arg(ui->webView->page()->bytesReceived()));
     progressBar->reset();
-    //emit debug("finished");
+    emit debug("finished");
     is_loaded = true;
 
     //attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -815,7 +815,7 @@ void MainBox::find_and_append(void)
         load_url("http://www.home.net/svow/", false);
         is_loaded=false;
         QString search_str=model.record(n).value("title").toString().trimmed().simplified();
-        //emit debug(search_str);
+        emit debug(search_str);
         //js_setByName("s", search_str.replace("/", "&frasl;"));
         //js_setByName("s", search_str.replace("%", "&#37"));
         JavaScript::setByName(main_frame, "s", search_str);
@@ -1839,7 +1839,7 @@ foreach (QWebElement element, search_collection)
         QUrl absoluteUrl = baseUrl.resolved(relativeUrl);
         QString data = absoluteUrl.toString().remove("https://www.google.ru/url?q=");
         QString host = QUrl(data).host();
-        //emit debug(host);
+        emit debug(host);
         if((host != "www.google.ru") && (host != "maps.google.ru"))
         {
             load_url("https://www.google.ru/", false);
@@ -1917,7 +1917,7 @@ emit debug(QString(tr("start test %1 sec")).arg(timeout));
 time.start();
 for(int n=0; n<timeout; n++)
 {
-    //emit debug(QString(tr("Прошло %1 секунд")).arg(n));
+    emit debug(QString(tr("Прошло %1 секунд")).arg(n));
     wait_sec(1);
 }
 emit debug(QString(tr("Прошло %1 милисекунд")).arg(time.elapsed()));

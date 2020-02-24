@@ -233,7 +233,7 @@ void MainBox::send_data(void)
         return;
     }
 
-    //emit debug(sending_array.toHex());
+    emit debug(sending_array.toHex());
 
     clear_receive_array();
     emit send(sending_array);
@@ -401,7 +401,7 @@ void MainBox::append_crc(void)
                                  static_cast<uchar>(sending_array.size()));
     sending_array.append(static_cast<char>((crc16 >> 8) & 0xFF));
     sending_array.append(static_cast<char>(crc16 & 0xFF));
-    //emit debug(QString("CRC %1").arg(crc16, 0, 16));
+    emit debug(QString("CRC %1").arg(crc16, 0, 16));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

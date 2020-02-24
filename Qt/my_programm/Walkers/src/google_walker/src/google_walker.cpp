@@ -87,7 +87,7 @@ void Google_walker::test_JS(bool)
         emit error("JS is empty!");
         return;
     }
-    //emit trace(javascript);
+    emit trace(javascript);
 
     viewer->page()->runJavaScript(javascript, [=](const QVariant &v)
     {

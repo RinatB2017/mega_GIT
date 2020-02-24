@@ -135,7 +135,7 @@ void MainBox::test(void)
     QByteArray ba;
     ba.clear();
     ba.append((char *)&packet.buf, sizeof(packet));
-    //emit debug(ba.toHex());
+    emit debug(ba.toHex());
 
     QString send_packet = QString(":%1\n")
             .arg(ba.toHex().toUpper().data());
@@ -180,7 +180,7 @@ void MainBox::set_color(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
-    //emit debug("read_data");
+    emit debug("read_data");
     //data_rs232.append(ba);
     emit info(ba);
 }

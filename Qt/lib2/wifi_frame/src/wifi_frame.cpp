@@ -115,7 +115,7 @@ void WIFI_frame::init(void)
 //--------------------------------------------------------------------------------
 void WIFI_frame::server_port_read(void)
 {
-    //emit debug(QString("server_is_created %1").arg(server_is_created ? "true" : "false"));
+    emit debug(QString("server_is_created %1").arg(server_is_created ? "true" : "false"));
     if(server_is_created)
     {
         serial_data.append(ui->serial_widget->readAll());

@@ -429,23 +429,23 @@ void MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::started(void)
 {
-    //emit trace(Q_FUNC_INFO);
+    emit trace(Q_FUNC_INFO);
     emit info("Starting...");
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(void)
 {
-    //emit trace(Q_FUNC_INFO);
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_error(void)
 {
-    //emit trace(Q_FUNC_INFO);
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void MainBox::finished(int state)
 {
-    //emit trace(Q_FUNC_INFO);
+    emit trace(Q_FUNC_INFO);
     emit info(QString("Finished: %1").arg(state));
 }
 //--------------------------------------------------------------------------------

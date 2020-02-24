@@ -78,7 +78,7 @@ void MainBox::test(void)
         md5->reset();
         md5->addData("abcde");
         QByteArray ba = md5->result();
-        //emit debug(ba.toHex());
+        emit debug(ba.toHex());
     }
     emit info(QString(tr("посчитали %1 за %2 мсек, т.е. %3 в мсек"))
               .arg(max_n)

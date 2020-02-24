@@ -187,10 +187,10 @@ bool Map::load_map(const QString &filename)
         QByteArray ta;
         ta.clear();
         ta.append(temp);
-        //emit trace(ta.toHex());
+        emit trace(ta.toHex());
 
         ba = QByteArray::fromHex(ta);
-        //emit trace(ba.toHex());
+        emit trace(ba.toHex());
         for(int x=0; x<ba.length(); x++)
         {
             if(ba.at(x) ==  PLAYER_ID)

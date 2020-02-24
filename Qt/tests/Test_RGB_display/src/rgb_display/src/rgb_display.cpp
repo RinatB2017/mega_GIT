@@ -427,7 +427,7 @@ void RGB_display::send_test_data(void)
     }
     packet_str.append("\n");
 
-    //emit debug(packet_str);
+    emit debug(packet_str);
     emit debug(QString("len %1").arg(packet_str.length()));
 
     emit send(packet_str);

@@ -108,7 +108,7 @@ void MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray data)
 {
-    //emit trace(data);
+    emit trace(data);
 
     for(int n=0; n<data.length(); n++)
     {
@@ -128,7 +128,7 @@ void MainBox::clean_data(void)
 {
     // AcX|AcY|AcZ|Tmp|GyX|GyY|GyZ
 
-    //emit trace(data_rs232.data());
+    emit trace(data_rs232.data());
 
     QString str = data_rs232;
     QStringList sl = str.split('|');

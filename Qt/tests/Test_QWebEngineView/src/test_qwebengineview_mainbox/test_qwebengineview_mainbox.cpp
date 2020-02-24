@@ -492,7 +492,7 @@ void MainBox::test_JS(bool)
         return;
     }
 
-    //emit debug(javascript);
+    emit debug(javascript);
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
         emit info(v.toString());

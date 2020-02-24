@@ -146,7 +146,7 @@ uint8_t Serial::convert_ascii_to_value(char hi, char lo)
         break;
     }
     //---
-    uint8_t r_byte = (b_hi << 4) | b_lo;
+    uint8_t r_byte = static_cast<uint8_t>( (b_hi << 4) | b_lo );
     return r_byte;
 }
 //--------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void Serial::analize(char data)
 //--------------------------------------------------------------------------------
 bool Serial::work(QByteArray clean_data)
 {
-    //emit debug(QString("%1").arg(ba.toHex().data()));
+    emit debug(QString("%1").arg(clean_data.toHex().data()));
 
     if(clean_data.isEmpty())
     {
@@ -201,9 +201,9 @@ bool Serial::work(QByteArray clean_data)
     int index = 0;
     for(int n=0 ;n<max_n - 1; n+=2)
     {
-        uint8_t hi = clean_data.at(n);
-        uint8_t lo = clean_data.at(n+1);
-        uint16_t value = (hi << 8) | lo;
+        uint8_t hi = static_cast<uint8_t>(clean_data.at(n));
+        uint8_t lo = static_cast<uint8_t>(clean_data.at(n+1));
+        uint16_t value = static_cast<uint16_t>( (hi << 8) | lo );
 
         //emit info("Serial: set_value");
         emit set_value(index, value);

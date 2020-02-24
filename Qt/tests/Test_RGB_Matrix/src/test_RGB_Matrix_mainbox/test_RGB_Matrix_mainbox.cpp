@@ -419,7 +419,7 @@ void MainBox::wait(int max_time_ms)
 //--------------------------------------------------------------------------------
 void MainBox::read_display_data(QByteArray ba)
 {
-    //emit debug("read_display_data");
+    emit debug("read_display_data");
     emit debug(ba);
 
     QByteArray data;
@@ -465,7 +465,7 @@ void MainBox::read_display_data(QByteArray ba)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
-    //emit debug("read_data");
+    emit debug("read_data");
     emit debug(ba);
 
     for(int n=0; n<ba.length(); n++)

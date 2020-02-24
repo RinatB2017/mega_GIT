@@ -119,7 +119,7 @@ void OscilloscopeBox::set_color(int index)
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < curves.count());
 
-    //emit debug(QString("index = %1").arg(index));
+    emit debug(QString("index = %1").arg(index));
     QColor color = curves[index].color;
 
     QColorDialog *dlg = new QColorDialog();

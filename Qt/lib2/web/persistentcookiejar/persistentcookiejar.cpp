@@ -97,7 +97,7 @@ void PersistentCookieJar::load(void)
     }
     QTextStream in (&fin);
     QByteArray buffer = in.readAll().toUtf8();
-    //emit debug(QString(tr("buffer: %1")).arg(buffer.constData()));
+    emit debug(QString(tr("buffer: %1")).arg(buffer.constData()));
     setAllCookies(QNetworkCookie::parseCookies(buffer));
     fin.close();
 }

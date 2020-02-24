@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>221</width>
-    <height>231</height>
+    <width>222</width>
+    <height>358</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="btn_swipe_LR">
+       <property name="text">
+        <string>Swipe LR</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_swipe_RL">
+       <property name="text">
+        <string>Swipe RL</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -74,8 +88,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>83</width>
-        <height>215</height>
+        <width>84</width>
+        <height>342</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -99,6 +113,8 @@
   <tabstop>btn_devices</tabstop>
   <tabstop>btn_create_screenshot</tabstop>
   <tabstop>btn_tap</tabstop>
+  <tabstop>btn_swipe_LR</tabstop>
+  <tabstop>btn_swipe_RL</tabstop>
   <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>

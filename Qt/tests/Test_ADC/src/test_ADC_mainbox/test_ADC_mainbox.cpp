@@ -132,7 +132,7 @@ void MainBox::data_ADC(const QByteArray &ba)
     QString temp = ba.data();
     if(temp.isEmpty())
     {
-        //emit trace("temp.isEmpty");
+        emit trace("temp.isEmpty");
         return;
     }
 

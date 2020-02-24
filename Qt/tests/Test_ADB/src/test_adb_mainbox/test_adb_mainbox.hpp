@@ -58,6 +58,10 @@ private slots:
     void process_error(QProcess::ProcessError p_error);
     void readData(void);
 
+    void f_create_screenshot(void);
+    void f_show_screeshot(void);
+    void f_screen_tap(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -91,20 +95,21 @@ private:
     void run_program(const QString program,
                      const QStringList arguments);
 
-    void f_create_screenshot(void);
-
-    void f_show_screeshot(void);
-    void f_screen_tap(void);
-
     bool f_get_file_screeshot(void);
     bool f_get_screeshot(void);
     bool f_devices(void);
-    bool f_tap(uint pos_x, uint pos_y);
+    bool f_tap(int pos_x, int pos_y);
+    bool f_test_swipe_LR(void);
+    bool f_test_swipe_RL(void);
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

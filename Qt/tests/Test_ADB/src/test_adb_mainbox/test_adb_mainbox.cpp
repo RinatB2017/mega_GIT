@@ -168,11 +168,14 @@ void MainBox::readData(void)
 //--------------------------------------------------------------------------------
 void MainBox::started(void)
 {
+    block_interface(true);
     emit info("Процесс начат!");
 }
 //--------------------------------------------------------------------------------
 void MainBox::finished(int result)
 {
+    block_interface(false);
+
     process_result = result;
     f_busy = false;
 
@@ -235,8 +238,11 @@ void MainBox::f_create_screenshot(void)
     QString program = "adb";
     QStringList arguments;
 
+    QElapsedTimer timer;
+    timer.start();
     if(!f_get_screeshot())      return;
     if(!f_get_file_screeshot()) return;
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
     f_show_screeshot();
 }
 //--------------------------------------------------------------------------------

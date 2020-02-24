@@ -59,7 +59,7 @@ private slots:
     void readData(void);
 
     void f_create_screenshot(void);
-    void f_show_screeshot(void);
+    void f_show_screeshot(const QString &filename);
     void f_screen_tap(void);
 
 private:
@@ -97,6 +97,8 @@ private:
 
     bool f_get_file_screeshot(void);
     bool f_get_screeshot(void);
+    bool f_get_screeshot2(void);
+    bool f_get_screeshot3(void);
     bool f_devices(void);
     bool f_tap(int pos_x, int pos_y);
     bool f_test_swipe_LR(void);

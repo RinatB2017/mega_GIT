@@ -248,7 +248,7 @@ void MainBox::f_create_screenshot(void)
     if(!f_get_screeshot())      return;
     if(!f_get_file_screeshot()) return;
     emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-    f_show_screeshot();
+    f_show_screeshot("screencap.png");
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot(void)
@@ -263,6 +263,58 @@ bool MainBox::f_get_screeshot(void)
 
     f_busy = true;
     run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+    return (process_result == 0);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_get_screeshot2(void)
+{
+    QString program = "adb";
+    QStringList arguments;
+
+    arguments << "exec-out";
+    arguments << "screencap";
+    arguments << "-p";
+
+    f_busy = true;
+    run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+    return (process_result == 0);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_get_screeshot3(void)
+{
+//    QString program = "./adb_test.sh";
+    QString program = "/bin/sh";
+    QStringList arguments;
+
+    arguments << "-c";
+//    arguments << "\"";
+//    arguments << "'";
+
+    arguments << "'ls";
+    arguments << "*.user";
+    arguments << "'";
+
+//    arguments << "adb";
+//    arguments << "exec-out";
+//    arguments << "screencap";
+//    arguments << "-p";
+//    arguments << ">";
+//    arguments << "screencap.png";
+
+//    arguments << "\"";
+//    arguments << "'";
+
+    f_busy = true;
+//    run_program(program, arguments);
+    myProcess->startDetached(program, arguments);
     while(f_busy)
     {
         QCoreApplication::processEvents();
@@ -374,9 +426,11 @@ bool MainBox::f_test_swipe_RL(void)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_show_screeshot(void)
+void MainBox::f_show_screeshot(const QString &filename)
 {
-    ui->lbl_screenshot->setPixmap(QPixmap("screencap.png"));
+    QPixmap pix = QPixmap(filename);
+    emit info(QString("%1 %2").arg(pix.width()).arg(pix.height()));
+    ui->lbl_screenshot->setPixmap(pix);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::eventFilter(QObject *obj, QEvent *event)
@@ -406,12 +460,16 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+    f_get_screeshot2();
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_1(void)
 {
     emit info("Test_1()");
+
+    emit info(myProcess->readAllStandardOutput());
+
     return true;
 }
 //--------------------------------------------------------------------------------

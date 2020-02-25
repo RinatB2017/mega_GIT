@@ -39,7 +39,7 @@ DetailSectionDialog::DetailSectionDialog(QWidget* parent, Qt::WindowFlags fl)
   connect(btnMoveUp, SIGNAL(clicked()), this, SLOT(btnMoveUp_clicked()));
   connect(brnMoveDown, SIGNAL(clicked()), this, SLOT(brnMoveDown_clicked()));
 
-  _gsd = 0;
+  _gsd = nullptr;
   lbGroups->clear();
 }
 
@@ -63,7 +63,7 @@ void DetailSectionDialog::btnAdd_clicked()
     while(i < 100 && _gsd->findSection(name) != -1)
     {
       i++;
-      name = tr("unnamed") + QString().sprintf("%d", i);
+      name = tr("unnamed") + QString().asprintf("%d", i);
     }
     if(_gsd->findSection(name) != -1)
     {
@@ -182,7 +182,7 @@ void DetailSectionDialog::btnMoveUp_clicked()
 void DetailSectionDialog::brnMoveDown_clicked()
 {
   int idx = lbGroups->currentRow();
-  if(idx == (int)(lbGroups->count() - 1))
+  if(idx == static_cast<int>(lbGroups->count() - 1))
     return;
   QString s = lbGroups->item(idx)->text();
   lbGroups->takeItem(idx);

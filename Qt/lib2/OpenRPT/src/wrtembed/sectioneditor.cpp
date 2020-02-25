@@ -77,7 +77,7 @@ void SectionEditor::btnAdd_clicked()
     // lets add a new section
     while(i < 100 && scene->findSection(name) != -1) {
         i++;
-        name = tr("unnamed") + QString().sprintf("%d", i);
+        name = tr("unnamed") + QString().asprintf("%d", i);
     }
     if(scene->findSection(name) != -1) {
         QMessageBox::warning(this, tr("Error Encountered"), tr("Unable to add a new section because a non-unique name could be generated."));

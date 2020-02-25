@@ -103,8 +103,12 @@ private:
     bool f_get_screeshot3(void);
     bool f_devices(void);
     bool f_tap(int pos_x, int pos_y);
+
+    bool f_swipe(int x1, int y1, int x2, int y2, int delay);
     bool f_test_swipe_LR(void);
     bool f_test_swipe_RL(void);
+    bool f_test_swipe_UD(void);
+    bool f_test_swipe_DU(void);
 
     void updateText(void);
     bool programm_is_exit(void);

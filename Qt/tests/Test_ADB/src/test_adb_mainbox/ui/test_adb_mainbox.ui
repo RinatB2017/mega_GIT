@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>222</width>
-    <height>358</height>
+    <width>229</width>
+    <height>338</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,25 +43,73 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btn_tap">
+      <widget class="QPushButton" name="btn_create_screenshot2">
        <property name="text">
-        <string>Tap</string>
+        <string>Screenshot2</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btn_swipe_LR">
-       <property name="text">
-        <string>Swipe LR</string>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="spacing">
+        <number>0</number>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_swipe_RL">
-       <property name="text">
-        <string>Swipe RL</string>
-       </property>
-      </widget>
+       <item row="0" column="1">
+        <widget class="QToolButton" name="btn_swipe_DU">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+           <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QToolButton" name="btn_swipe_LR">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+           <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QToolButton" name="btn_swipe_RL">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+           <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QToolButton" name="btn_swipe_UD">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+           <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QToolButton" name="btn_tap">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../../lib/mw/mainwindow/mw_images/mw_images.qrc">
+           <normaloff>:/mainwindow/computer.png</normaloff>:/mainwindow/computer.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -88,8 +136,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>84</width>
-        <height>342</height>
+        <width>83</width>
+        <height>322</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -112,11 +160,17 @@
  <tabstops>
   <tabstop>btn_devices</tabstop>
   <tabstop>btn_create_screenshot</tabstop>
+  <tabstop>btn_create_screenshot2</tabstop>
+  <tabstop>btn_swipe_DU</tabstop>
+  <tabstop>btn_swipe_RL</tabstop>
   <tabstop>btn_tap</tabstop>
   <tabstop>btn_swipe_LR</tabstop>
-  <tabstop>btn_swipe_RL</tabstop>
+  <tabstop>btn_swipe_UD</tabstop>
   <tabstop>scrollArea</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../../../lib/pictures/arrow.qrc"/>
+  <include location="../../../../../lib/mw/mainwindow/mw_images/mw_images.qrc"/>
+ </resources>
  <connections/>
 </ui>

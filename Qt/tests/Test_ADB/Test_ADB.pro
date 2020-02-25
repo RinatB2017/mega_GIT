@@ -48,6 +48,7 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+#include ($$LIB_PATH2/icons/arrows.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

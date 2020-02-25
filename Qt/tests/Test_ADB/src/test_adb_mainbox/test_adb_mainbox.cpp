@@ -68,12 +68,14 @@ void MainBox::init(void)
     connect(myProcess,  SIGNAL(readyReadStandardError()),       this,   SLOT(readData()));
 
     connect(ui->btn_devices,            &QPushButton::clicked,  this,   &MainBox::f_devices);
-//    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot);
-    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot2);
+    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot);
+    connect(ui->btn_create_screenshot2, &QPushButton::clicked,  this,   &MainBox::f_create_screenshot2);
     connect(ui->btn_tap,                &QPushButton::clicked,  this,   &MainBox::f_screen_tap);
 
     connect(ui->btn_swipe_LR,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_LR);
     connect(ui->btn_swipe_RL,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_RL);
+    connect(ui->btn_swipe_UD,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_UD);
+    connect(ui->btn_swipe_DU,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_DU);
 
     ui->lbl_screenshot->installEventFilter(this);
 
@@ -284,6 +286,8 @@ void MainBox::f_create_screenshot2(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot(void)
 {
+    //adb shell screencap -p /sdcard/screencap.png;
+
     QString program = "adb";
     QStringList arguments;
 
@@ -303,6 +307,8 @@ bool MainBox::f_get_screeshot(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot2(void)
 {
+    //adb exec-out screencap -p
+
     QString program = "adb";
     QStringList arguments;
 
@@ -397,14 +403,9 @@ bool MainBox::f_tap(int pos_x, int pos_y)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_test_swipe_LR(void)
+bool MainBox::f_swipe(int x1, int y1, int x2, int y2, int delay)
 {
     //adb shell input swipe x1 y1 x2 y2 sss
-
-    int pos_x1 = 10;
-    int pos_y1 = 300;
-    int pos_x2 = 400;
-    int pos_y2 = 300;
 
     QString program = "adb";
     QStringList arguments;
@@ -412,11 +413,11 @@ bool MainBox::f_test_swipe_LR(void)
     arguments << "shell";
     arguments << "input";
     arguments << "swipe";
-    arguments << QString("%1").arg(pos_x1);
-    arguments << QString("%1").arg(pos_y1);
-    arguments << QString("%1").arg(pos_x2);
-    arguments << QString("%1").arg(pos_y2);
-    arguments << "100";
+    arguments << QString("%1").arg(x1);
+    arguments << QString("%1").arg(y1);
+    arguments << QString("%1").arg(x2);
+    arguments << QString("%1").arg(y2);
+    arguments << QString("%1").arg(delay);
 
     f_busy = true;
     run_program(program, arguments);
@@ -431,38 +432,24 @@ bool MainBox::f_test_swipe_LR(void)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
+bool MainBox::f_test_swipe_LR(void)
+{
+    return f_swipe(10, 300, 400, 300, 100);
+}
+//--------------------------------------------------------------------------------
 bool MainBox::f_test_swipe_RL(void)
 {
-    //adb shell input swipe x1 y1 x2 y2 sss
-
-    int pos_x1 = 10;
-    int pos_y1 = 300;
-    int pos_x2 = 400;
-    int pos_y2 = 300;
-
-    QString program = "adb";
-    QStringList arguments;
-
-    arguments << "shell";
-    arguments << "input";
-    arguments << "swipe";
-    arguments << QString("%1").arg(pos_x2);
-    arguments << QString("%1").arg(pos_y2);
-    arguments << QString("%1").arg(pos_x1);
-    arguments << QString("%1").arg(pos_y1);
-    arguments << "100";
-
-    f_busy = true;
-    run_program(program, arguments);
-    while(f_busy)
-    {
-        QCoreApplication::processEvents();
-    }
-    if(process_result == 0)
-    {
-        f_create_screenshot2();
-    }
-    return (process_result == 0);
+    return f_swipe(400, 300, 10, 300, 100);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_test_swipe_UD(void)
+{
+    return f_swipe(200, 10, 200, 900, 100);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_test_swipe_DU(void)
+{
+    return f_swipe(200, 900, 200, 10, 100);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_show_screeshot(const QString &filename)
@@ -499,29 +486,6 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-
-    binary_data = true;
-    QString filename = "out.png";
-
-    QElapsedTimer timer;
-    timer.start();
-    f_get_screeshot2();
-
-    QByteArray ba = myProcess->readAllStandardOutput();
-    QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        binary_data = false;
-        return false;
-    }
-    file.write(ba);
-    file.close();
-
-    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-    f_show_screeshot(filename);
-
-    emit info("OK");
-    binary_data = false;
     return true;
 }
 //--------------------------------------------------------------------------------

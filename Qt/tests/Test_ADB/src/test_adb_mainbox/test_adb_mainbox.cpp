@@ -56,19 +56,20 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-//#ifdef QT_DEBUG
+    //#ifdef QT_DEBUG
     createTestBar();
-//#endif
+    //#endif
 
     myProcess = new QProcess(this);
     connect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
     connect(myProcess,  SIGNAL(finished(int)),                  this,   SLOT(finished(int)));
     connect(myProcess,  SIGNAL(error(QProcess::ProcessError)),  this,   SLOT(process_error(QProcess::ProcessError)));
-//    connect(myProcess,  SIGNAL(readyReadStandardOutput()),      this,   SLOT(readData()));
+    connect(myProcess,  SIGNAL(readyReadStandardOutput()),      this,   SLOT(readData()));
     connect(myProcess,  SIGNAL(readyReadStandardError()),       this,   SLOT(readData()));
 
     connect(ui->btn_devices,            &QPushButton::clicked,  this,   &MainBox::f_devices);
-    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot);
+//    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot);
+    connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot2);
     connect(ui->btn_tap,                &QPushButton::clicked,  this,   &MainBox::f_screen_tap);
 
     connect(ui->btn_swipe_LR,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_LR);
@@ -160,14 +161,17 @@ void MainBox::run_program(const QString program,
 //--------------------------------------------------------------------------------
 void MainBox::readData(void)
 {
-    QString output = myProcess->readAllStandardOutput();
-    QStringList lines = output.split("\n");
-    emit debug(QString("received %1 bytes").arg(output.size()));
-    emit debug(QString("lines.size() %1").arg(lines.size()));
-    for(int n=0; n<lines.size(); n++)
+    if(binary_data == false)
     {
-        QString line = lines.at(n);
-        emit info(QString("%1").arg(line));
+        QString output = myProcess->readAllStandardOutput();
+        QStringList lines = output.split("\n");
+        emit debug(QString("received %1 bytes").arg(output.size()));
+        emit debug(QString("lines.size() %1").arg(lines.size()));
+        for(int n=0; n<lines.size(); n++)
+        {
+            QString line = lines.at(n);
+            emit info(QString("%1").arg(line));
+        }
     }
 }
 //--------------------------------------------------------------------------------
@@ -251,6 +255,33 @@ void MainBox::f_create_screenshot(void)
     f_show_screeshot("screencap.png");
 }
 //--------------------------------------------------------------------------------
+void MainBox::f_create_screenshot2(void)
+{
+    binary_data = true;
+    QString filename = "out.png";
+
+    QElapsedTimer timer;
+    timer.start();
+    f_get_screeshot2();
+
+    QByteArray ba = myProcess->readAllStandardOutput();
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        emit error(QString("File %1 not created").arg(filename));
+        binary_data = false;
+        return;
+    }
+    file.write(ba);
+    file.close();
+
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+    f_show_screeshot(filename);
+
+    emit info("OK");
+    binary_data = false;
+}
+//--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot(void)
 {
     QString program = "adb";
@@ -290,30 +321,30 @@ bool MainBox::f_get_screeshot2(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot3(void)
 {
-//    QString program = "./adb_test.sh";
+    //    QString program = "./adb_test.sh";
     QString program = "/bin/sh";
     QStringList arguments;
 
     arguments << "-c";
-//    arguments << "\"";
-//    arguments << "'";
+    //    arguments << "\"";
+    //    arguments << "'";
 
     arguments << "'ls";
     arguments << "*.user";
     arguments << "'";
 
-//    arguments << "adb";
-//    arguments << "exec-out";
-//    arguments << "screencap";
-//    arguments << "-p";
-//    arguments << ">";
-//    arguments << "screencap.png";
+    //    arguments << "adb";
+    //    arguments << "exec-out";
+    //    arguments << "screencap";
+    //    arguments << "-p";
+    //    arguments << ">";
+    //    arguments << "screencap.png";
 
-//    arguments << "\"";
-//    arguments << "'";
+    //    arguments << "\"";
+    //    arguments << "'";
 
     f_busy = true;
-//    run_program(program, arguments);
+    //    run_program(program, arguments);
     myProcess->startDetached(program, arguments);
     while(f_busy)
     {
@@ -393,6 +424,10 @@ bool MainBox::f_test_swipe_LR(void)
     {
         QCoreApplication::processEvents();
     }
+    if(process_result == 0)
+    {
+        f_create_screenshot2();
+    }
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
@@ -423,13 +458,17 @@ bool MainBox::f_test_swipe_RL(void)
     {
         QCoreApplication::processEvents();
     }
+    if(process_result == 0)
+    {
+        f_create_screenshot2();
+    }
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_show_screeshot(const QString &filename)
 {
     QPixmap pix = QPixmap(filename);
-    emit info(QString("%1 %2").arg(pix.width()).arg(pix.height()));
+    emit info(QString("size %1 %2").arg(pix.width()).arg(pix.height()));
     ui->lbl_screenshot->setPixmap(pix);
 }
 //--------------------------------------------------------------------------------
@@ -442,12 +481,12 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
         {
             int pos_x = mouseEvent->pos().x();
             int pos_y = mouseEvent->pos().y();
-            emit info(QString("%1 %2").arg(pos_x).arg(pos_y));
+            emit info(QString("pos %1 %2").arg(pos_x).arg(pos_y));
 
             bool ok = f_tap(pos_x, pos_y);
             if(ok)
             {
-                f_create_screenshot();
+                f_create_screenshot2();
             }
 
             return true;
@@ -460,16 +499,29 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    binary_data = true;
+    QString filename = "out.png";
+
+    QElapsedTimer timer;
+    timer.start();
     f_get_screeshot2();
 
     QByteArray ba = myProcess->readAllStandardOutput();
-    QFile file("out.png");
+    QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        binary_data = false;
         return false;
+    }
     file.write(ba);
     file.close();
 
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+    f_show_screeshot(filename);
+
     emit info("OK");
+    binary_data = false;
     return true;
 }
 //--------------------------------------------------------------------------------

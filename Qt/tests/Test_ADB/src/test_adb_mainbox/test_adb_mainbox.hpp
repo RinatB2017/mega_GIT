@@ -59,6 +59,7 @@ private slots:
     void readData(void);
 
     void f_create_screenshot(void);
+    void f_create_screenshot2(void);
     void f_show_screeshot(const QString &filename);
     void f_screen_tap(void);
 
@@ -87,6 +88,7 @@ private:
 
     QProcess *myProcess = nullptr;
     bool f_busy = false;
+    bool binary_data = false;
     int process_result = 0;
 
     void init(void);

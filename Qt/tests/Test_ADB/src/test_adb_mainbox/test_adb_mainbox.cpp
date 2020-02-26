@@ -658,6 +658,7 @@ void MainBox::refreshHSV()
                         );
 
             std::vector< cv::Rect > rects;
+            int cnt = 0;
             for( uint i = 0; i < countours.size(); ++i )
             {
                 // Пропускаем внутренние контуры
@@ -666,7 +667,10 @@ void MainBox::refreshHSV()
                     continue;
                 }
                 rects.push_back( cv::boundingRect( countours[ i ] ) );
+                // emit info(QString("size %1").arg(countours[i].size()));
+                cnt++;
             }
+            emit info(QString("cnt %1").arg(cnt));
 
             resultImg = QImage(
                         mOrigImage.data,

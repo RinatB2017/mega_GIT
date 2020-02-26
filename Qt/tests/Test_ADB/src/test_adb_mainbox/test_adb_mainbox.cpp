@@ -60,6 +60,9 @@ void MainBox::init(void)
     createTestBar();
     //#endif
 
+    ui->sb_pos_x->setRange(0, 700);
+    ui->sb_pos_y->setRange(0, 1000);
+
     myProcess = new QProcess(this);
     connect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
     connect(myProcess,  SIGNAL(finished(int)),                  this,   SLOT(finished(int)));
@@ -254,13 +257,13 @@ void MainBox::f_create_screenshot(void)
     if(!f_get_screeshot())      return;
     if(!f_get_file_screeshot()) return;
     emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-    f_show_screeshot("screencap.png");
+    f_show_screeshot(PICTURE_NAME);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_create_screenshot2(void)
 {
     binary_data = true;
-    QString filename = "out.png";
+    QString filename = PICTURE_NAME;
 
     QElapsedTimer timer;
     timer.start();
@@ -344,7 +347,7 @@ bool MainBox::f_get_screeshot3(void)
     //    arguments << "screencap";
     //    arguments << "-p";
     //    arguments << ">";
-    //    arguments << "screencap.png";
+    //    arguments << PICTURE_NAME;
 
     //    arguments << "\"";
     //    arguments << "'";
@@ -378,7 +381,7 @@ bool MainBox::f_get_file_screeshot(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_screen_tap(void)
 {
-    f_tap(100, 200);
+    f_tap(ui->sb_pos_x->value(), ui->sb_pos_y->value());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_tap(int pos_x, int pos_y)
@@ -399,6 +402,10 @@ bool MainBox::f_tap(int pos_x, int pos_y)
     while(f_busy)
     {
         QCoreApplication::processEvents();
+    }
+    if(process_result == 0)
+    {
+        f_create_screenshot2();
     }
     return (process_result == 0);
 }
@@ -455,6 +462,10 @@ bool MainBox::f_test_swipe_DU(void)
 void MainBox::f_show_screeshot(const QString &filename)
 {
     QPixmap pix = QPixmap(filename);
+
+    ui->sb_pos_x->setRange(0, pix.width());
+    ui->sb_pos_y->setRange(0, pix.height());
+
     emit info(QString("size %1 %2").arg(pix.width()).arg(pix.height()));
     ui->lbl_screenshot->setPixmap(pix);
 }

@@ -21,10 +21,18 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
+#include <QtGlobal>
+//--------------------------------------------------------------------------------
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_ADB"
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   define PICTURE_NAME "/dev/shm/screencap.png"
+#else
+#   define PICTURE_NAME "screencap.png"
+#endif
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

@@ -31,6 +31,29 @@ SOURCES += \
 FORMS   += test_adb_mainbox.ui
 
 win32 {
+    INCLUDEPATH += C:/OpenCV/include/
+    LIBS += -LC:/OpenCV/x86/mingw/bin/
+    OPENCV_VER = 410 #320
+
+    LIBS += -lopencv_core$${OPENCV_VER} \
+            -lopencv_highgui$${OPENCV_VER} \
+            -lopencv_imgproc$${OPENCV_VER} \
+            -lopencv_imgcodecs$${OPENCV_VER} \
+            -lopencv_features2d$${OPENCV_VER} \
+            -lopencv_calib3d$${OPENCV_VER}
+}
+
+#linux-g++ {
+#    INCLUDEPATH += $$(HOME)/OpenCV/include/
+#    LIBS += -L$$(HOME)/OpenCV/lib/
+#}
+
+unix {
+    PKGCONFIG   += opencv
+    CONFIG      += link_pkgconfig
+}
+
+win32 {
     RC_ICONS = ico/computer.ico
 }
 

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -24,6 +24,7 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_adb_mainbox.hpp"
+#include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -80,7 +81,52 @@ void MainBox::init(void)
     connect(ui->btn_swipe_UD,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_UD);
     connect(ui->btn_swipe_DU,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_DU);
 
+    connect(ui->btn_load,               &QPushButton::clicked,  this,   &MainBox::onLoad);
+
     ui->lbl_screenshot->installEventFilter(this);
+
+    foreach( QSlider* slider, findChildren< QSlider* >() )
+    {
+        connect( slider, SIGNAL( sliderMoved( int ) ), SLOT( refreshHSV() ) );
+        QString sliderName = slider->objectName();
+        // slider->setValue( m_settings.value( sliderName, slider->value() ).toInt() );
+        if( QSpinBox* sp = findChild< QSpinBox* >( "sp" + sliderName.mid( 2 ) ) )
+        {
+            sp->setMinimum( slider->minimum() );
+            sp->setMaximum( slider->maximum() );
+            sp->setValue( slider->value() );
+            connect( sp, SIGNAL( valueChanged( int ) ), SLOT( refreshHSV() ) );
+        }
+    }
+
+    foreach( const QRadioButton* rb, findChildren< QRadioButton* >() )
+    {
+        connect( rb, SIGNAL( clicked( bool ) ), SLOT( refreshHSV() ) );
+    }
+
+//    connect(ui->spHueFrom,          &QSpinBox::valueChanged,    ui->slHueFrom,          &QSlider::setValue);
+//    connect(ui->spSaturationFrom,   &QSpinBox::valueChanged,    ui->slSaturationFrom,   &QSlider::setValue);
+//    connect(ui->spValueFrom,        &QSpinBox::valueChanged,    ui->slValueFrom,        &QSlider::setValue);
+
+//    connect(ui->spHueTo,            &QSpinBox::valueChanged,    ui->slHueTo,            &QSlider::setValue);
+//    connect(ui->spSaturationTo,     &QSpinBox::valueChanged,    ui->slSaturationTo,     &QSlider::setValue);
+//    connect(ui->spValueTo,          &QSpinBox::valueChanged,    ui->slValueTo,          &QSlider::setValue);
+
+    connect(ui->spHueFrom,          SIGNAL(valueChanged(int)), ui->slHueFrom,           SLOT(setValue(int)));
+    connect(ui->spSaturationFrom,   SIGNAL(valueChanged(int)), ui->slSaturationFrom,    SLOT(setValue(int)));
+    connect(ui->spValueFrom,        SIGNAL(valueChanged(int)), ui->slValueFrom,         SLOT(setValue(int)));
+
+    connect(ui->spHueTo,            SIGNAL(valueChanged(int)), ui->slHueTo,             SLOT(setValue(int)));
+    connect(ui->spSaturationTo,     SIGNAL(valueChanged(int)), ui->slSaturationTo,      SLOT(setValue(int)));
+    connect(ui->spValueTo,          SIGNAL(valueChanged(int)), ui->slValueTo,           SLOT(setValue(int)));
+
+    connect(ui->slHueFrom,          SIGNAL(valueChanged(int)), ui->spHueFrom,           SLOT(setValue(int)));
+    connect(ui->slSaturationFrom,   SIGNAL(valueChanged(int)), ui->spSaturationFrom,    SLOT(setValue(int)));
+    connect(ui->slValueFrom,        SIGNAL(valueChanged(int)), ui->spValueFrom,         SLOT(setValue(int)));
+
+    connect(ui->slHueTo,            SIGNAL(valueChanged(int)), ui->spHueTo,             SLOT(setValue(int)));
+    connect(ui->slSaturationTo,     SIGNAL(valueChanged(int)), ui->spSaturationTo,      SLOT(setValue(int)));
+    connect(ui->slValueTo,          SIGNAL(valueChanged(int)), ui->spValueTo,           SLOT(setValue(int)));
 
     load_widgets();
 }
@@ -468,6 +514,13 @@ void MainBox::f_show_screeshot(const QString &filename)
 
     emit info(QString("size %1 %2").arg(pix.width()).arg(pix.height()));
     ui->lbl_screenshot->setPixmap(pix);
+
+    mOrigImage = cv::imread( filename.toLocal8Bit().data() );
+    if( !mOrigImage.empty() )
+    {
+        cv::cvtColor( mOrigImage, mOrigImage, cv::COLOR_BGR2RGB );
+    }
+    refreshHSV();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::eventFilter(QObject *obj, QEvent *event)
@@ -492,6 +545,166 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
     }
     // standard event processing
     return QObject::eventFilter(obj, event);
+}
+//--------------------------------------------------------------------------------
+void MainBox::onLoad(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("picture_dlg", "picture_dlg", this);
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->selectFile("picture");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        if(filename.isEmpty() == false)
+        {
+            mOrigImage = cv::imread( filename.toLocal8Bit().data() );
+            if( !mOrigImage.empty() )
+            {
+                cv::cvtColor( mOrigImage, mOrigImage, cv::COLOR_BGR2RGB );
+            }
+            refreshHSV();
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::refreshHSV()
+{
+    emit trace(Q_FUNC_INFO);
+    if( mOrigImage.empty() )
+    {
+        emit debug("Image is empty");
+        return;
+    }
+
+    QImage resultImg;
+
+    if( ui->rbOriginal->isChecked() )
+    {
+        resultImg = QImage(
+                    mOrigImage.data,
+                    mOrigImage.cols,
+                    mOrigImage.rows,
+                    static_cast<int>(mOrigImage.step),
+                    QImage::Format_RGB888 ).copy();
+    }
+    else
+    {
+        int hueFrom = ui->slHueFrom->value();
+        int hueTo = std::max( hueFrom, ui->slHueTo->value() );
+
+        int saturationFrom = ui->slSaturationFrom->value();
+        int saturationTo = std::max( saturationFrom, ui->slSaturationTo->value() );
+
+        int valueFrom = ui->slValueFrom->value();
+        int valueTo = std::max( valueFrom, ui->slValueTo->value() );
+
+        cv::Mat thresholdedMat;
+        cv::cvtColor( mOrigImage, thresholdedMat, cv::COLOR_RGB2HSV );
+        // Отфильтровываем только то, что нужно, по диапазону цветов
+        cv::inRange(
+                    thresholdedMat,
+                    cv::Scalar( hueFrom, saturationFrom, valueFrom ),
+                    cv::Scalar( hueTo, saturationTo, valueTo ),
+                    thresholdedMat
+                    );
+
+        // Убираем шум
+        cv::erode(
+                    thresholdedMat,
+                    thresholdedMat,
+                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                    );
+        cv::dilate(
+                    thresholdedMat,
+                    thresholdedMat,
+                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                    );
+
+        // Замыкаем оставшиеся крупные объекты
+        cv::dilate(
+                    thresholdedMat,
+                    thresholdedMat,
+                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                    );
+        cv::erode(
+                    thresholdedMat,
+                    thresholdedMat,
+                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                    );
+
+        if( ui->rbCanny->isChecked() )
+        {
+            // Визуально выделяем границы
+            cv::Canny( thresholdedMat, thresholdedMat, 100, 50, 5 );
+        }
+
+        if( ui->rbResult->isChecked() )
+        {
+            // Находим контуры
+            std::vector< std::vector< cv::Point > > countours;
+            std::vector< cv::Vec4i > hierarchy;
+            cv::findContours(
+                        thresholdedMat,
+                        countours,
+                        hierarchy,
+                        CV_RETR_TREE,
+                        CV_CHAIN_APPROX_SIMPLE,
+                        cv::Point( 0, 0 )
+                        );
+
+            std::vector< cv::Rect > rects;
+            for( uint i = 0; i < countours.size(); ++i )
+            {
+                // Пропускаем внутренние контуры
+                if( 0 <= hierarchy[ i ][ 3 ] )
+                {
+                    continue;
+                }
+                rects.push_back( cv::boundingRect( countours[ i ] ) );
+            }
+
+            resultImg = QImage(
+                        mOrigImage.data,
+                        mOrigImage.cols,
+                        mOrigImage.rows,
+                        static_cast<int>(mOrigImage.step),
+                        QImage::Format_RGB888
+                        ).copy();
+
+            QPainter p;
+            p.begin( &resultImg );
+            p.setPen( QPen( Qt::green, 2 ) );
+            foreach( const cv::Rect& r, rects )
+            {
+                p.drawRect( r.x, r.y, r.width, r.height );
+            }
+            p.end();
+
+        }
+        else
+        {
+            resultImg = QImage(
+                        thresholdedMat.data,
+                        thresholdedMat.cols,
+                        thresholdedMat.rows,
+                        static_cast<int>(thresholdedMat.step),
+                        QImage::Format_Indexed8
+                        ).copy();
+        }
+    }
+
+    ui->lbl_screenshot->setPixmap(
+                QPixmap::fromImage( resultImg ).scaled(
+                    ui->lbl_screenshot->size(),
+                    Qt::KeepAspectRatio,
+                    Qt::SmoothTransformation
+                    )
+                );
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)

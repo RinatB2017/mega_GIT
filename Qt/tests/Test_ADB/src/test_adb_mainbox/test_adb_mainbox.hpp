@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -26,6 +26,15 @@
 #else
 #   include <QtGui>
 #endif
+//--------------------------------------------------------------------------------
+#include <opencv2/objdetect.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+
+#include <opencv2/opencv.hpp>
+
+using namespace std;
+using namespace cv;
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -63,6 +72,9 @@ private slots:
     void f_show_screeshot(const QString &filename);
     void f_screen_tap(void);
 
+    void onLoad(void);
+    void refreshHSV(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -90,6 +102,8 @@ private:
     bool f_busy = false;
     bool binary_data = false;
     int process_result = 0;
+
+    Mat mOrigImage;
 
     void init(void);
     void createTestBar(void);

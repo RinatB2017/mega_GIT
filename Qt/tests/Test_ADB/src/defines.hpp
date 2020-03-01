@@ -27,6 +27,8 @@
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_ADB"
+
+#define PROG_PROCESS    "adb"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   define PICTURE_NAME "/dev/shm/screencap.png"

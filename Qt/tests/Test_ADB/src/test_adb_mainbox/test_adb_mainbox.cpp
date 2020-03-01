@@ -57,12 +57,15 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //#ifdef QT_DEBUG
+#ifdef QT_DEBUG
     createTestBar();
-    //#endif
+#endif
 
-    ui->sb_pos_x->setRange(0, 700);
-    ui->sb_pos_y->setRange(0, 1000);
+    s_width = 700;
+    s_height = 1000;
+
+    ui->sb_pos_x->setRange(0, s_width);
+    ui->sb_pos_y->setRange(0, s_height);
 
     myProcess = new QProcess(this);
     connect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
@@ -104,14 +107,23 @@ void MainBox::init(void)
         connect( rb, SIGNAL( clicked( bool ) ), SLOT( refreshHSV() ) );
     }
 
-//    connect(ui->spHueFrom,          &QSpinBox::valueChanged,    ui->slHueFrom,          &QSlider::setValue);
-//    connect(ui->spSaturationFrom,   &QSpinBox::valueChanged,    ui->slSaturationFrom,   &QSlider::setValue);
-//    connect(ui->spValueFrom,        &QSpinBox::valueChanged,    ui->slValueFrom,        &QSlider::setValue);
+    connect(ui->spHueFrom,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHueFrom,          &QSlider::setValue);
+    connect(ui->spSaturationFrom,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slSaturationFrom,   &QSlider::setValue);
+    connect(ui->spValueFrom,        static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slValueFrom,        &QSlider::setValue);
 
-//    connect(ui->spHueTo,            &QSpinBox::valueChanged,    ui->slHueTo,            &QSlider::setValue);
-//    connect(ui->spSaturationTo,     &QSpinBox::valueChanged,    ui->slSaturationTo,     &QSlider::setValue);
-//    connect(ui->spValueTo,          &QSpinBox::valueChanged,    ui->slValueTo,          &QSlider::setValue);
+    connect(ui->spHueTo,            static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHueTo,            &QSlider::setValue);
+    connect(ui->spSaturationTo,     static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slSaturationTo,     &QSlider::setValue);
+    connect(ui->spValueTo,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slValueTo,          &QSlider::setValue);
 
+    connect(ui->slHueFrom,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spHueFrom,          &QSpinBox::setValue);
+    connect(ui->slSaturationFrom,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spSaturationFrom,   &QSpinBox::setValue);
+    connect(ui->slValueFrom,        static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValueFrom,        &QSpinBox::setValue);
+
+    connect(ui->slHueTo,            static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spHueTo,            &QSpinBox::setValue);
+    connect(ui->slSaturationTo,     static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spSaturationTo,     &QSpinBox::setValue);
+    connect(ui->slValueTo,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValueTo,          &QSpinBox::setValue);
+
+#if 0
     connect(ui->spHueFrom,          SIGNAL(valueChanged(int)), ui->slHueFrom,           SLOT(setValue(int)));
     connect(ui->spSaturationFrom,   SIGNAL(valueChanged(int)), ui->slSaturationFrom,    SLOT(setValue(int)));
     connect(ui->spValueFrom,        SIGNAL(valueChanged(int)), ui->slValueFrom,         SLOT(setValue(int)));
@@ -127,6 +139,7 @@ void MainBox::init(void)
     connect(ui->slHueTo,            SIGNAL(valueChanged(int)), ui->spHueTo,             SLOT(setValue(int)));
     connect(ui->slSaturationTo,     SIGNAL(valueChanged(int)), ui->spSaturationTo,      SLOT(setValue(int)));
     connect(ui->slValueTo,          SIGNAL(valueChanged(int)), ui->spValueTo,           SLOT(setValue(int)));
+#endif
 
     load_widgets();
 }
@@ -281,7 +294,7 @@ void MainBox::process_error(QProcess::ProcessError p_error)
 //--------------------------------------------------------------------------------
 bool MainBox::f_devices(void)
 {
-    QString program = "adb";
+    QString program = PROG_PROCESS;
     QStringList arguments;
 
     arguments << "devices";
@@ -295,7 +308,7 @@ bool MainBox::f_devices(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_create_screenshot(void)
 {
-    QString program = "adb";
+    QString program = PROG_PROCESS;
     QStringList arguments;
 
     QElapsedTimer timer;
@@ -335,9 +348,9 @@ void MainBox::f_create_screenshot2(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot(void)
 {
-    //adb shell screencap -p /sdcard/screencap.png;
+    //PROG_PROCESS shell screencap -p /sdcard/screencap.png;
 
-    QString program = "adb";
+    QString program = PROG_PROCESS;
     QStringList arguments;
 
     arguments << "shell";
@@ -356,9 +369,9 @@ bool MainBox::f_get_screeshot(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot2(void)
 {
-    //adb exec-out screencap -p
+    //PROG_PROCESS exec-out screencap -p
 
-    QString program = "adb";
+    QString program = PROG_PROCESS;
     QStringList arguments;
 
     arguments << "exec-out";
@@ -388,7 +401,7 @@ bool MainBox::f_get_screeshot3(void)
     arguments << "*.user";
     arguments << "'";
 
-    //    arguments << "adb";
+    //    arguments << PROG_PROCESS;
     //    arguments << "exec-out";
     //    arguments << "screencap";
     //    arguments << "-p";
@@ -410,7 +423,7 @@ bool MainBox::f_get_screeshot3(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_file_screeshot(void)
 {
-    QString program = "adb";
+    QString program = PROG_PROCESS;
     QStringList arguments;
 
     arguments << "pull";
@@ -427,14 +440,15 @@ bool MainBox::f_get_file_screeshot(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_screen_tap(void)
 {
-    f_tap(ui->sb_pos_x->value(), ui->sb_pos_y->value());
+    f_tap(ui->sb_pos_x->value(),
+          ui->sb_pos_y->value());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_tap(int pos_x, int pos_y)
 {
-    //adb shell input tap 100 100
+    //PROG_PROCESS shell input tap 100 100
 
-    QString program = "adb";
+    QString program = PROG_PROCESS;
     QStringList arguments;
 
     arguments << "shell";
@@ -458,9 +472,9 @@ bool MainBox::f_tap(int pos_x, int pos_y)
 //--------------------------------------------------------------------------------
 bool MainBox::f_swipe(int x1, int y1, int x2, int y2, int delay)
 {
-    //adb shell input swipe x1 y1 x2 y2 sss
+    //PROG_PROCESS shell input swipe x1 y1 x2 y2 sss
 
-    QString program = "adb";
+    QString program = PROG_PROCESS;
     QStringList arguments;
 
     arguments << "shell";
@@ -487,40 +501,60 @@ bool MainBox::f_swipe(int x1, int y1, int x2, int y2, int delay)
 //--------------------------------------------------------------------------------
 bool MainBox::f_test_swipe_LR(void)
 {
-    return f_swipe(10, 300, 400, 300, 100);
+    return f_swipe(10,
+                   s_height / 2,
+                   s_width / 2,
+                   s_height / 2,
+                   100);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_test_swipe_RL(void)
 {
-    return f_swipe(400, 300, 10, 300, 100);
+    return f_swipe(s_width / 2,
+                   s_height / 2,
+                   10,
+                   s_height / 2,
+                   100);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_test_swipe_UD(void)
 {
-    return f_swipe(200, 10, 200, 900, 100);
+    return f_swipe(s_width / 2,
+                   10,
+                   s_width / 2,
+                   s_height / 2,
+                   100);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_test_swipe_DU(void)
 {
-    return f_swipe(200, 900, 200, 10, 100);
+    return f_swipe(s_width / 2,
+                   s_height / 2,
+                   s_width / 2,
+                   10,
+                   100);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_show_screeshot(const QString &filename)
 {
     QPixmap pix = QPixmap(filename);
 
-    ui->sb_pos_x->setRange(0, pix.width());
-    ui->sb_pos_y->setRange(0, pix.height());
+    s_width = pix.width();
+    s_height = pix.height();
 
-    emit info(QString("size %1 %2").arg(pix.width()).arg(pix.height()));
+    ui->sb_pos_x->setRange(0, s_width);
+    ui->sb_pos_y->setRange(0, s_height);
+
+    emit info(QString("size %1 %2").arg(s_width).arg(s_height));
     ui->lbl_screenshot->setPixmap(pix);
+    ui->lbl_screenshot->setFixedSize(s_width, s_height);
 
     mOrigImage = cv::imread( filename.toLocal8Bit().data() );
     if( !mOrigImage.empty() )
     {
         cv::cvtColor( mOrigImage, mOrigImage, cv::COLOR_BGR2RGB );
+        refreshHSV();
     }
-    refreshHSV();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::eventFilter(QObject *obj, QEvent *event)
@@ -532,14 +566,13 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
         {
             int pos_x = mouseEvent->pos().x();
             int pos_y = mouseEvent->pos().y();
-            emit info(QString("pos %1 %2").arg(pos_x).arg(pos_y));
+            emit info(QString("TAP: pos %1 %2").arg(pos_x).arg(pos_y));
 
             bool ok = f_tap(pos_x, pos_y);
             if(ok)
             {
                 f_create_screenshot2();
             }
-
             return true;
         }
     }
@@ -566,8 +599,8 @@ void MainBox::onLoad(void)
             if( !mOrigImage.empty() )
             {
                 cv::cvtColor( mOrigImage, mOrigImage, cv::COLOR_BGR2RGB );
+                refreshHSV();
             }
-            refreshHSV();
         }
     }
 }
@@ -585,12 +618,11 @@ void MainBox::refreshHSV()
 
     if( ui->rbOriginal->isChecked() )
     {
-        resultImg = QImage(
-                    mOrigImage.data,
-                    mOrigImage.cols,
-                    mOrigImage.rows,
-                    static_cast<int>(mOrigImage.step),
-                    QImage::Format_RGB888 ).copy();
+        resultImg = QImage(mOrigImage.data,
+                           mOrigImage.cols,
+                           mOrigImage.rows,
+                           static_cast<int>(mOrigImage.step),
+                           QImage::Format_RGB888 ).copy();
     }
     else
     {
@@ -606,36 +638,31 @@ void MainBox::refreshHSV()
         cv::Mat thresholdedMat;
         cv::cvtColor( mOrigImage, thresholdedMat, cv::COLOR_RGB2HSV );
         // Отфильтровываем только то, что нужно, по диапазону цветов
-        cv::inRange(
-                    thresholdedMat,
+        cv::inRange(thresholdedMat,
                     cv::Scalar( hueFrom, saturationFrom, valueFrom ),
                     cv::Scalar( hueTo, saturationTo, valueTo ),
                     thresholdedMat
                     );
 
         // Убираем шум
-        cv::erode(
-                    thresholdedMat,
-                    thresholdedMat,
-                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
-                    );
-        cv::dilate(
-                    thresholdedMat,
-                    thresholdedMat,
-                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
-                    );
+        cv::erode(thresholdedMat,
+                  thresholdedMat,
+                  cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                  );
+        cv::dilate(thresholdedMat,
+                   thresholdedMat,
+                   cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                   );
 
         // Замыкаем оставшиеся крупные объекты
-        cv::dilate(
-                    thresholdedMat,
-                    thresholdedMat,
-                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
-                    );
-        cv::erode(
-                    thresholdedMat,
-                    thresholdedMat,
-                    cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
-                    );
+        cv::dilate(thresholdedMat,
+                   thresholdedMat,
+                   cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                   );
+        cv::erode(thresholdedMat,
+                  thresholdedMat,
+                  cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 5, 5 ) )
+                  );
 
         if( ui->rbCanny->isChecked() )
         {
@@ -648,14 +675,13 @@ void MainBox::refreshHSV()
             // Находим контуры
             std::vector< std::vector< cv::Point > > countours;
             std::vector< cv::Vec4i > hierarchy;
-            cv::findContours(
-                        thresholdedMat,
-                        countours,
-                        hierarchy,
-                        CV_RETR_TREE,
-                        CV_CHAIN_APPROX_SIMPLE,
-                        cv::Point( 0, 0 )
-                        );
+            cv::findContours(thresholdedMat,
+                             countours,
+                             hierarchy,
+                             CV_RETR_TREE,
+                             CV_CHAIN_APPROX_SIMPLE,
+                             cv::Point( 0, 0 )
+                             );
 
             std::vector< cv::Rect > rects;
             int cnt = 0;
@@ -672,13 +698,12 @@ void MainBox::refreshHSV()
             }
             emit info(QString("cnt %1").arg(cnt));
 
-            resultImg = QImage(
-                        mOrigImage.data,
-                        mOrigImage.cols,
-                        mOrigImage.rows,
-                        static_cast<int>(mOrigImage.step),
-                        QImage::Format_RGB888
-                        ).copy();
+            resultImg = QImage(mOrigImage.data,
+                               mOrigImage.cols,
+                               mOrigImage.rows,
+                               static_cast<int>(mOrigImage.step),
+                               QImage::Format_RGB888
+                               ).copy();
 
             QPainter p;
             p.begin( &resultImg );
@@ -692,28 +717,34 @@ void MainBox::refreshHSV()
         }
         else
         {
-            resultImg = QImage(
-                        thresholdedMat.data,
-                        thresholdedMat.cols,
-                        thresholdedMat.rows,
-                        static_cast<int>(thresholdedMat.step),
-                        QImage::Format_Indexed8
-                        ).copy();
+            resultImg = QImage(thresholdedMat.data,
+                               thresholdedMat.cols,
+                               thresholdedMat.rows,
+                               static_cast<int>(thresholdedMat.step),
+                               QImage::Format_Indexed8
+                               ).copy();
         }
     }
 
-    ui->lbl_screenshot->setPixmap(
-                QPixmap::fromImage( resultImg ).scaled(
-                    ui->lbl_screenshot->size(),
-                    Qt::KeepAspectRatio,
-                    Qt::SmoothTransformation
-                    )
-                );
+    ui->lbl_screenshot->setPixmap(QPixmap::fromImage( resultImg ).scaled(
+                                      ui->lbl_screenshot->size(),
+                                      Qt::KeepAspectRatio,
+                                      Qt::SmoothTransformation
+                                      )
+                                  );
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+    emit info(QString("pixmap: %1 %2")
+              .arg(ui->lbl_screenshot->pixmap()->width())
+              .arg(ui->lbl_screenshot->pixmap()->height()));
+    emit info(QString("s_*: %1 %2")
+              .arg(s_width)
+              .arg(s_height));
+
     return true;
 }
 //--------------------------------------------------------------------------------

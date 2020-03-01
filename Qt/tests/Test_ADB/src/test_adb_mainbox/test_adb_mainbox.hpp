@@ -103,6 +103,9 @@ private:
     bool binary_data = false;
     int process_result = 0;
 
+    int s_width = 0;
+    int s_height = 0;
+
     Mat mOrigImage;
 
     void init(void);

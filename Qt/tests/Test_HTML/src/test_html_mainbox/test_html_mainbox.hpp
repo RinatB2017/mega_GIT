@@ -76,6 +76,9 @@ private slots:
     void s_load_js(void);
     void s_save_js(void);
 
+    void choice_file_html(void);
+    void choice_file_js(void);
+
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -97,13 +100,15 @@ private:
     Ui::MainBox *ui;
 
     QComboBox *cb_test;
-    QCheckBox *cb_block;
     QList<CMD> commands;
 
     CustomPage *new_page;
 
     Highlighter *highlighter_cpp;
     Highlighter *highlighter_js;
+
+    QFileSystemModel *model_html;
+    QFileSystemModel *model_js;
 
     void init(void);
     void createTestBar(void);

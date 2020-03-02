@@ -78,17 +78,25 @@ void MainBox::init(void)
     createTestBar();
 
     // ширина TAB в символах
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     int fontWidth_html = QFontMetrics(ui->te_text_html->currentCharFormat().font()).averageCharWidth();
     ui->te_text_html->setTabStopWidth(3 * fontWidth_html);
+#else
+    ui->te_text_html->setTabStopDistance(QFontMetricsF(ui->te_text_html->font()).horizontalAdvance(' ') * 3);
+#endif
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     int fontWidth_js = QFontMetrics(ui->te_text_js->currentCharFormat().font()).averageCharWidth();
     ui->te_text_js->setTabStopWidth(3 * fontWidth_js);
+#else
+    ui->te_text_js->setTabStopDistance(QFontMetricsF(ui->te_text_js->font()).horizontalAdvance(' ') * 3);
+#endif
 
     QFont font("Courier", 10);
     ui->te_text_html->setFont(font);
     ui->te_text_js->setFont(font);
 
-    QWebEngineProfile *profile = new QWebEngineProfile();
+    QWebEngineProfile *profile = new QWebEngineProfile(this);
     // изменяем необходимые http-заголовки на свои значения
     //profile->setHttpUserAgent("Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
     //profile->setHttpUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
@@ -109,13 +117,13 @@ void MainBox::init(void)
 
     connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
     connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
-    connect(ui->btn_load_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_load_html()));
-    connect(ui->btn_save_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_save_html()));
+    //connect(ui->btn_load_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_load_html()));
+    //connect(ui->btn_save_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_save_html()));
 
     connect(ui->btn_run_js,         SIGNAL(clicked(bool)),  this,   SLOT(s_run_js()));
     connect(ui->btn_default_js,     SIGNAL(clicked(bool)),  this,   SLOT(s_default_js()));
-    connect(ui->btn_load_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_load_js()));
-    connect(ui->btn_save_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_save_js()));
+    //connect(ui->btn_load_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_load_js()));
+    //connect(ui->btn_save_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_save_js()));
 
 #if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -142,7 +150,73 @@ void MainBox::init(void)
     highlighter_cpp = new Highlighter(ui->te_text_html->document());
     highlighter_js  = new Highlighter(ui->te_text_js->document());
 
+    //TODO сначала модель присваивается виджету для просмотра
+    model_html = new QFileSystemModel;
+    model_html->setNameFilters(QStringList() << "*.html");
+    model_html->setNameFilterDisables(false);
+
+    model_js = new QFileSystemModel;
+    model_js->setNameFilters(QStringList() << "*.js");
+    model_js->setNameFilterDisables(false);
+
+    ui->tv_text_html->setModel(model_html);
+    ui->tv_text_js->setModel(model_js);
+
+    ui->tv_text_html->setColumnHidden(1, true);
+    ui->tv_text_html->setColumnHidden(2, true);
+    ui->tv_text_html->setColumnHidden(3, true);
+
+    ui->tv_text_js->setColumnHidden(1, true);
+    ui->tv_text_js->setColumnHidden(2, true);
+    ui->tv_text_js->setColumnHidden(3, true);
+
+    //TODO и только потом переходим на нужный каталог
+    QModelIndex idx_html = model_html->setRootPath(QDir::currentPath());
+    QModelIndex idx_js   = model_js->setRootPath(QDir::currentPath());
+
+    ui->tv_text_html->setRootIndex(idx_html);
+    ui->tv_text_js->setRootIndex(idx_js);
+
+    connect(ui->tv_text_html,   &QTreeView::doubleClicked,  this,   &MainBox::choice_file_html);
+    connect(ui->tv_text_js,     &QTreeView::doubleClicked,  this,   &MainBox::choice_file_js);
+
     load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::choice_file_html(void)
+{
+    QString filename = model_html->filePath(ui->tv_text_html->currentIndex());
+    if(filename.right(5).toLower() == ".html")
+    {
+        emit debug(filename);
+        if(ui->te_text_html->document()->isModified())
+        {
+            qDebug() << "HTML not saved";
+            messagebox_critical("ERROR", "HTML not saved");
+        }
+        else
+        {
+            load_html(filename);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::choice_file_js(void)
+{
+    QString filename = model_js->filePath(ui->tv_text_js->currentIndex());
+    if(filename.right(3).toLower() == ".js")
+    {
+        emit debug(filename);
+        if(ui->te_text_js->document()->isModified())
+        {
+            qDebug() << "JS not saved";
+            messagebox_critical("ERROR", "JS not saved");
+        }
+        else
+        {
+            load_js(filename);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_run_html(void)
@@ -473,9 +547,6 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -492,9 +563,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }

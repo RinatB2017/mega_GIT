@@ -547,6 +547,7 @@ void MyWidget::load_widgets(void)
 
             if(compare_name(widget->metaObject()->className(), "QSplitter"))
             {
+                qDebug() << "load" << widget->objectName();
                 settings->beginGroup("Splitter");
                     settings->beginGroup(widget->objectName());
                     static_cast<QSplitter *>(widget)->restoreState(settings->value("state", 0).toByteArray());
@@ -722,6 +723,16 @@ void MyWidget::save_widgets(void)
                 settings->beginGroup("Slider");
                     settings->beginGroup(widget->objectName());
                     settings->setValue("position", QVariant(static_cast<QSlider *>(widget)->value()));
+                    settings->endGroup();
+                settings->endGroup();
+            }
+
+            if(compare_name(widget->metaObject()->className(), "QSplitter"))
+            {
+                qDebug() << "save" << widget->objectName();
+                settings->beginGroup("Splitter");
+                    settings->beginGroup(widget->objectName());
+                    settings->setValue("state", QVariant(static_cast<QSplitter *>(widget)->saveState()));
                     settings->endGroup();
                 settings->endGroup();
             }

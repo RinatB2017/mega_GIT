@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>967</width>
-    <height>186</height>
+    <height>278</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,20 +43,6 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_load_html">
-          <property name="text">
-           <string>load</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_save_html">
-          <property name="text">
-           <string>save</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="btn_default_html">
           <property name="text">
            <string>default</string>
@@ -66,7 +52,25 @@
        </layout>
       </item>
       <item>
-       <widget class="CodeEditor" name="te_text_html"/>
+       <widget class="QFrame" name="frame_html">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QSplitter" name="splitter_html">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <widget class="QTreeView" name="tv_text_html"/>
+           <widget class="CodeEditor" name="te_text_html"/>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -125,20 +129,6 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_load_js">
-          <property name="text">
-           <string>load</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_save_js">
-          <property name="text">
-           <string>save</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="btn_default_js">
           <property name="text">
            <string>default</string>
@@ -148,7 +138,25 @@
        </layout>
       </item>
       <item>
-       <widget class="CodeEditor" name="te_text_js"/>
+       <widget class="QFrame" name="frame_js">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QSplitter" name="splitter_js">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <widget class="QTreeView" name="tv_text_js"/>
+           <widget class="CodeEditor" name="te_text_js"/>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -169,14 +177,8 @@
  </customwidgets>
  <tabstops>
   <tabstop>btn_run_html</tabstop>
-  <tabstop>te_text_html</tabstop>
-  <tabstop>btn_load_html</tabstop>
-  <tabstop>btn_save_html</tabstop>
   <tabstop>btn_default_html</tabstop>
   <tabstop>btn_run_js</tabstop>
-  <tabstop>te_text_js</tabstop>
-  <tabstop>btn_load_js</tabstop>
-  <tabstop>btn_save_js</tabstop>
   <tabstop>btn_default_js</tabstop>
  </tabstops>
  <resources/>

@@ -259,6 +259,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    setProperty("is_exit", true);
+#endif
+
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
@@ -324,6 +328,11 @@ bool MainBox::test_1(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
+
+#if 1
+    setProperty("is_exit", false);
+#endif
+
 
 #if 0
     emit info("Текст <font style=\"color:red\">красный</font>");

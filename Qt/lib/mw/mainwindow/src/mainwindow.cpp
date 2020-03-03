@@ -142,8 +142,29 @@ void MainWindow::changeEvent(QEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
+bool MainWindow::check_exit(void)
+{
+    QWidgetList wl = qApp->allWidgets();
+    foreach (QWidget *widget, wl)
+    {
+        bool ok = widget->property("is_exit").toBool();
+        if(ok)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    bool ok = check_exit();
+    if(!ok)
+    {
+        emit debug("output blocked");
+        event->ignore();
+        return;
+    }
     if(c_widget)
     {
         c_widget->save_setting();

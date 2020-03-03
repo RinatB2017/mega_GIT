@@ -547,7 +547,7 @@ void MyWidget::load_widgets(void)
 
             if(compare_name(widget->metaObject()->className(), "QSplitter"))
             {
-                qDebug() << "load" << widget->objectName();
+                //qDebug() << "load" << widget->objectName();
                 settings->beginGroup("Splitter");
                     settings->beginGroup(widget->objectName());
                     static_cast<QSplitter *>(widget)->restoreState(settings->value("state", 0).toByteArray());
@@ -729,7 +729,7 @@ void MyWidget::save_widgets(void)
 
             if(compare_name(widget->metaObject()->className(), "QSplitter"))
             {
-                qDebug() << "save" << widget->objectName();
+                //qDebug() << "save" << widget->objectName();
                 settings->beginGroup("Splitter");
                     settings->beginGroup(widget->objectName());
                     settings->setValue("state", QVariant(static_cast<QSplitter *>(widget)->saveState()));

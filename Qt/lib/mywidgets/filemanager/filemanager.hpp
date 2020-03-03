@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef FILEMANAGER_HPP
+#define FILEMANAGER_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -30,68 +30,43 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class FileManager;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
-
-class CustomPage;
+class Highlighter;
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class FileManager : public MyWidget
 {
     Q_OBJECT
 
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
 signals:
-    void send(const QString &);
+    void set_data(const QString& html, const QUrl& baseUrl = QUrl());
+    void run(void);
+
+public:
+    explicit FileManager(QWidget *parent = nullptr);
+    ~FileManager();
+
+    void set_extension(QString value);
+    bool isModified(void);
+    QString get_data(void);
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    void s_autorun_js(void);
-    void s_run_js(void);
+    void choice_file(void);
+    void s_run(void);
+    void s_save(void);
+    void s_save_as(void);
 
 private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    MySplashScreen *splash;
-    Ui::MainBox *ui;
-
-    QComboBox *cb_test;
-    QList<CMD> commands;
-
-    CustomPage *new_page;
+    Ui::FileManager *ui;
+    QFileSystemModel *model;
+    Highlighter *highlighter;
+    QString extension = "txt";
+    QString filename;
 
     void init(void);
-    void createTestBar(void);
+    void load_file(const QString &filename);
+    void save_file(void);
 
     void updateText(void);
     bool programm_is_exit(void);
@@ -99,4 +74,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // FILEMANAGER_HPP

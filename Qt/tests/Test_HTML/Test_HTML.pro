@@ -17,14 +17,11 @@ INCLUDEPATH = $$DEPENDPATH
 QT += webenginewidgets
 CONFIG += c++11
 
+DEFINES += USE_TOPLEVELWIDGETS
+DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-
 #DEFINES += SAVE_INI
-
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += USE_TOPLEVELWIDGETS
 
 HEADERS += \
     test_html_mainbox.hpp \
@@ -56,6 +53,7 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH/mywidgets/filemanager.pri)
 include ($$LIB_PATH2/highlighter/highlighter.pri)
 include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 

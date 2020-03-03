@@ -340,6 +340,9 @@ private:
 
     void dockLocationChanged(Qt::DockWidgetArea area);
 
+    //TODO
+    bool check_exit(void);
+
 protected:
     bool flag_close = false;
     bool flag_always_on_top = false;

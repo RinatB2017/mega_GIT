@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -57,13 +57,15 @@ MainBox::~MainBox()
 #endif
 
 #if 1
-    if(ui->te_text_html->document()->isModified())
+    if(ui->widget_html->isModified())
     {
         messagebox_warning("error", "HTML not saved");
+        //save_html(filename_html);
     }
-    if(ui->te_text_js->document()->isModified())
+    if(ui->widget_js->isModified())
     {
         messagebox_warning("error", "JS not saved");
+        //save_js(filename_js);
     }
 #endif
 
@@ -77,24 +79,8 @@ void MainBox::init(void)
     ui->setupUi(this);
     createTestBar();
 
-    // ширина TAB в символах
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    int fontWidth_html = QFontMetrics(ui->te_text_html->currentCharFormat().font()).averageCharWidth();
-    ui->te_text_html->setTabStopWidth(3 * fontWidth_html);
-#else
-    ui->te_text_html->setTabStopDistance(QFontMetricsF(ui->te_text_html->font()).horizontalAdvance(' ') * 3);
-#endif
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    int fontWidth_js = QFontMetrics(ui->te_text_js->currentCharFormat().font()).averageCharWidth();
-    ui->te_text_js->setTabStopWidth(3 * fontWidth_js);
-#else
-    ui->te_text_js->setTabStopDistance(QFontMetricsF(ui->te_text_js->font()).horizontalAdvance(' ') * 3);
-#endif
-
-    QFont font("Courier", 10);
-    ui->te_text_html->setFont(font);
-    ui->te_text_js->setFont(font);
+    ui->widget_html->set_extension("html");
+    ui->widget_js->set_extension("js");
 
     QWebEngineProfile *profile = new QWebEngineProfile(this);
     // изменяем необходимые http-заголовки на свои значения
@@ -108,190 +94,21 @@ void MainBox::init(void)
     new_page = new CustomPage(profile);
     connect(new_page,   SIGNAL(err_output(QString)),  this,   SIGNAL(error(QString)));
 
+    connect(ui->widget_html,    &FileManager::set_data, ui->webEngineView,  &QWebEngineView::setHtml);
+    connect(ui->widget_js,      &FileManager::run,      this,   &MainBox::s_run_js);
+
     ui->webEngineView->setPage(new_page);
 
-    connect(new_page,               SIGNAL(loadFinished(bool)),     this,   SLOT(s_autorun_js()));
+    connect(new_page,   SIGNAL(loadFinished(bool)),         this,   SLOT(s_autorun_js()));
 
-    //TODO
-    connect(new_page,               SIGNAL(urlChanged(const QUrl &)),  this,   SLOT(test_0()));
-
-    connect(ui->btn_run_html,       SIGNAL(clicked(bool)),  this,   SLOT(s_run_html()));
-    connect(ui->btn_default_html,   SIGNAL(clicked(bool)),  this,   SLOT(s_default_html()));
-    //connect(ui->btn_load_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_load_html()));
-    //connect(ui->btn_save_html,      SIGNAL(clicked(bool)),  this,   SLOT(s_save_html()));
-
-    connect(ui->btn_run_js,         SIGNAL(clicked(bool)),  this,   SLOT(s_run_js()));
-    connect(ui->btn_default_js,     SIGNAL(clicked(bool)),  this,   SLOT(s_default_js()));
-    //connect(ui->btn_load_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_load_js()));
-    //connect(ui->btn_save_js,        SIGNAL(clicked(bool)),  this,   SLOT(s_save_js()));
-
-#if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->add_dock_widget("HTML", "html_widget",  Qt::LeftDockWidgetArea, ui->groupBox_html);
-        mw->add_dock_widget("JS",   "js_widget",    Qt::LeftDockWidgetArea, ui->groupBox_js);
+        mw->add_dock_widget("HTML", "html_widget",  Qt::LeftDockWidgetArea, ui->frame_html);
+        mw->add_dock_widget("JS",   "js_widget",    Qt::LeftDockWidgetArea, ui->frame_js);
     }
-#else
-    QSplitter *splitter = new QSplitter(Qt::Horizontal);
-    splitter->setObjectName("splitter");
-    splitter->setChildrenCollapsible(false);
-
-    ui->groupBox_html->setParent(splitter);
-    ui->groupBox_view->setParent(splitter);
-    ui->groupBox_js->setParent(splitter);
-    splitter->addWidget(ui->groupBox_html);
-    splitter->addWidget(ui->groupBox_view);
-    splitter->addWidget(ui->groupBox_js);
-
-    layout()->addWidget(splitter);
-#endif
-
-    highlighter_cpp = new Highlighter(ui->te_text_html->document());
-    highlighter_js  = new Highlighter(ui->te_text_js->document());
-
-    //TODO сначала модель присваивается виджету для просмотра
-    model_html = new QFileSystemModel;
-    model_html->setNameFilters(QStringList() << "*.html");
-    model_html->setNameFilterDisables(false);
-
-    model_js = new QFileSystemModel;
-    model_js->setNameFilters(QStringList() << "*.js");
-    model_js->setNameFilterDisables(false);
-
-    ui->tv_text_html->setModel(model_html);
-    ui->tv_text_js->setModel(model_js);
-
-    ui->tv_text_html->setColumnHidden(1, true);
-    ui->tv_text_html->setColumnHidden(2, true);
-    ui->tv_text_html->setColumnHidden(3, true);
-
-    ui->tv_text_js->setColumnHidden(1, true);
-    ui->tv_text_js->setColumnHidden(2, true);
-    ui->tv_text_js->setColumnHidden(3, true);
-
-    //TODO и только потом переходим на нужный каталог
-    QModelIndex idx_html = model_html->setRootPath(QDir::currentPath());
-    QModelIndex idx_js   = model_js->setRootPath(QDir::currentPath());
-
-    ui->tv_text_html->setRootIndex(idx_html);
-    ui->tv_text_js->setRootIndex(idx_js);
-
-    connect(ui->tv_text_html,   &QTreeView::doubleClicked,  this,   &MainBox::choice_file_html);
-    connect(ui->tv_text_js,     &QTreeView::doubleClicked,  this,   &MainBox::choice_file_js);
 
     load_widgets();
-}
-//--------------------------------------------------------------------------------
-void MainBox::choice_file_html(void)
-{
-    QString filename = model_html->filePath(ui->tv_text_html->currentIndex());
-    if(filename.right(5).toLower() == ".html")
-    {
-        emit debug(filename);
-        if(ui->te_text_html->document()->isModified())
-        {
-            qDebug() << "HTML not saved";
-            messagebox_critical("ERROR", "HTML not saved");
-        }
-        else
-        {
-            load_html(filename);
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::choice_file_js(void)
-{
-    QString filename = model_js->filePath(ui->tv_text_js->currentIndex());
-    if(filename.right(3).toLower() == ".js")
-    {
-        emit debug(filename);
-        if(ui->te_text_js->document()->isModified())
-        {
-            qDebug() << "JS not saved";
-            messagebox_critical("ERROR", "JS not saved");
-        }
-        else
-        {
-            load_js(filename);
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_run_html(void)
-{
-    emit trace(Q_FUNC_INFO);
-
-    const QString temp = ui->te_text_html->toPlainText();
-    if(temp.isEmpty())
-    {
-        emit error("no data");
-        return;
-    }
-    ui->webEngineView->setHtml(temp);
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_default_html(void)
-{
-    emit trace(Q_FUNC_INFO);
-
-    QString temp;
-    temp.append("<!DOCTYPE html>\n");
-    temp.append("<html>\n");
-    temp.append("<head>\n");
-    temp.append("  <meta charset=\"utf-8\">\n");
-    temp.append("  <title>Название документа</title>\n");
-    temp.append("</head>\n");
-    temp.append("<body>\n");
-
-    temp.append("   <button name='btn_test' onclick=btn_test()>Кнопка с текстом</button>\n");
-
-    temp.append("   <p>Нажмите кнопку, чтобы изменить текст в этом абзаце.</p>\n");
-
-    temp.append("  <a href=\"#\" onclick=foo()>тест</a><br>\n");
-    temp.append("  <a href=\"#\" onclick=foo1()>1</a><br>\n");
-    temp.append("  <a href=\"#\" onclick=foo2()>2</a><br>\n");
-
-    temp.append("  <hr>\n");
-    temp.append("  <form action=\"#\">\n");
-    temp.append("    cars<select name=\"cars\">\n");
-    temp.append("      <option value=\"car1\">car1</option>\n");
-    temp.append("      <option value=\"car2\">car2</option>\n");
-    temp.append("      <option value=\"car3\">car3</option>\n");
-    temp.append("      <option value=\"car4\">car4</option>\n");
-    temp.append("    </select>\n");
-    temp.append("    <br>\n");
-    temp.append("    text <input type=\"text\">\n");
-    temp.append("    <br>\n");
-    temp.append("    <input type=\"submit\">\n");
-    temp.append("  </form>\n");
-    temp.append("  <hr>\n");
-
-    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad1\"> Пиво<Br>\n");
-    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad2\"> Чай<Br>\n");
-    temp.append("  <input type=\"radio\" name=\"drink\" value=\"rad3\"> Кофе\n");
-    temp.append("  <hr>\n");
-
-    temp.append("  <button onclick=\"foo()\">Попробовать</button>\n");
-    temp.append("  <script>\n");
-    temp.append("    function foo() {\n");
-    temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"Hello World\";\n");
-    temp.append("    }\n");
-    temp.append("    function foo1() {\n");
-    temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"1\";\n");
-    temp.append("    }\n");
-    temp.append("    function foo2() {\n");
-    temp.append("      document.getElementsByTagName(\"p\")[0].innerHTML=\"2\";\n");
-    temp.append("    }\n");
-    temp.append("    function btn_test() {\n");
-    temp.append("      alert('YES');\n");
-    temp.append("    }\n");
-    temp.append("  </script>\n");
-    temp.append("</body>\n");
-    temp.append("</html>\n");
-
-    ui->te_text_html->setPlainText(temp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_autorun_js(void)
@@ -303,14 +120,14 @@ void MainBox::s_autorun_js(void)
         return;
     }
 
-    const QString javascript = ui->te_text_js->toPlainText();
+    const QString javascript = ui->widget_js->get_data();
     if(javascript.isEmpty())
     {
         emit error("JS is empty!");
         return;
     }
-    emit trace(javascript);
 
+    emit debug(javascript);
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
         emit info(v.toString());
@@ -322,211 +139,19 @@ void MainBox::s_run_js(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    const QString javascript = ui->te_text_js->toPlainText();
+    const QString javascript = ui->widget_js->get_data();
     if(javascript.isEmpty())
     {
         emit error("JS is empty!");
         return;
     }
-    emit trace(javascript);
 
+    emit debug(javascript);
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
         emit info(v.toString());
         emit send(v.toString());
     });
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_default_js(void)
-{
-    emit trace(Q_FUNC_INFO);
-
-    QString temp;
-    temp.append("function myFunction()\n");
-    temp.append("{\n");
-    temp.append("   var links = document.getElementsByTagName('a');\n");
-    temp.append("   var l_str = '';\n");
-    temp.append("   for (var i = 0; i < links.length; i++)\n");
-    temp.append("   {\n");
-    temp.append("      l_str += links[i].href + \";\" + links[i].innerHTML + \";\";\n");
-
-    temp.append("      if(links[i].innerHTML == 'Транспорт')\n");
-    temp.append("      {\n");
-    temp.append("          links[i].click();\n");
-    temp.append("      }\n");
-
-    temp.append("   }\n");
-    temp.append("   return l_str;\n");
-    temp.append("}\n");
-    temp.append("myFunction();\n");
-
-    ui->te_text_js->setPlainText(temp);
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_load_html(void)
-{
-    QFileDialog *dlg;
-
-    dlg = new QFileDialog;
-    dlg->setNameFilter(tr("HTML files (*.html)"));
-    dlg->setDefaultSuffix("html");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-
-#ifdef Q_OS_LINUX
-    dlg->setDirectory("/home/boss/Programming/_GitHub/Private/JS/home");
-#endif
-
-#ifdef Q_OS_WIN
-    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
-#endif
-
-    dlg->selectFile("noname");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        load_html(files.at(0));
-    }
-    dlg->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_save_html(void)
-{
-    QFileDialog *dlg;
-
-    dlg = new QFileDialog;
-    dlg->setAcceptMode(QFileDialog::AcceptSave);
-    dlg->setNameFilter(tr("HTML files (*.html)"));
-    dlg->setDefaultSuffix("html");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-
-#ifdef Q_OS_LINUX
-    dlg->setDirectory("/home/boss/Programming/_GitHub/Private/JS/home");
-#endif
-
-#ifdef Q_OS_WIN
-    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
-#endif
-
-    dlg->selectFile("noname");
-    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
-    // dlg->setConfirmOverwrite(true);
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        save_html(files.at(0));
-    }
-    dlg->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_load_js(void)
-{
-    QFileDialog *dlg;
-
-    dlg = new QFileDialog;
-    dlg->setNameFilter(tr("JS files (*.js)"));
-    dlg->setDefaultSuffix("js");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-
-#ifdef Q_OS_LINUX
-    dlg->setDirectory("/home/boss/Programming/_GitHub/Private/JS/home");
-#endif
-
-#ifdef Q_OS_WIN
-    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
-#endif
-
-    dlg->selectFile("noname");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        load_js(files.at(0));
-    }
-    dlg->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_save_js(void)
-{
-    QFileDialog *dlg;
-
-    dlg = new QFileDialog;
-    dlg->setAcceptMode(QFileDialog::AcceptSave);
-    dlg->setNameFilter(tr("JS files (*.js)"));
-    dlg->setDefaultSuffix("js");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-
-#ifdef Q_OS_LINUX
-    dlg->setDirectory("/home/boss/Programming/_GitHub/Private/JS/home");
-#endif
-
-#ifdef Q_OS_WIN
-    dlg->setDirectory("c:\\Users\\User\\Programming\\GitHub\\Private\\JS\\work");
-#endif
-
-    dlg->selectFile("noname");
-    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
-    // dlg->setConfirmOverwrite(true);
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        save_js(files.at(0));
-    }
-    dlg->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_html(const QString &filename)
-{
-    if(filename.isEmpty()) return;
-
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        return;
-    }
-    ui->te_text_html->setPlainText(file.readAll());
-
-    file.close();
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_html(const QString &filename)
-{
-    if(filename.isEmpty()) return;
-
-    QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        return;
-    }
-    file.write(ui->te_text_html->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
-
-    file.close();
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_js(const QString &filename)
-{
-    if(filename.isEmpty()) return;
-
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        return;
-    }
-    ui->te_text_js->setPlainText(file.readAll());
-
-    file.close();
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_js(const QString &filename)
-{
-    if(filename.isEmpty()) return;
-
-    QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        return;
-    }
-    file.write(ui->te_text_js->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
-
-    file.close();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -599,8 +224,7 @@ void MainBox::choice_test(void)
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
-
-    emit info(QString("%1").arg(ui->te_text_js->document()->isModified()));
+    //emit info(QString("%1").arg(ui->te_text_js->document()->isModified()));
     return true;
 }
 //--------------------------------------------------------------------------------

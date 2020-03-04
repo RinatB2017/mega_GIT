@@ -45,9 +45,11 @@ void FileManager::init(void)
     ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_save->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
     ui->btn_save_as->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
+    ui->btn_cancel->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogAbortButton));
 
     ui->btn_save->setToolTip("File save");
     ui->btn_save_as->setToolTip("File save as...");
+    ui->btn_cancel->setToolTip("Cancel");
 
     //TODO сначала модель присваивается виджету для просмотра
     model = new QFileSystemModel;
@@ -85,10 +87,21 @@ void FileManager::init(void)
 
     connect(ui->btn_save,       &QToolButton::clicked,      this,   &FileManager::s_save);
     connect(ui->btn_save_as,    &QToolButton::clicked,      this,   &FileManager::s_save_as);
+    connect(ui->btn_cancel,     &QToolButton::clicked,      this,   &FileManager::s_cancel);
+
+    QTextDocument *td = ui->te_filemanager->document();
+    connect(td, &QTextDocument::modificationChanged,        this,   &FileManager::need_cancel);
+
+    ui->btn_cancel->setVisible(false);
 
     //TODO
 //    emit info(metaObject()->className());
 //    emit info(objectName());
+    for(int n=0; n<parent()->children().count(); n++)
+    {
+        emit info(parent()->children().at(n)->objectName());
+    }
+    emit info("---");
 //    emit info(parent()->objectName());
 //    emit info(metaObject()->classInfo(0).name());
 
@@ -215,6 +228,26 @@ void FileManager::s_save_as(void)
         QStringList files = dlg->selectedFiles();
         filename = files.at(0);
         save_file();
+    }
+}
+//--------------------------------------------------------------------------------
+void FileManager::s_cancel(void)
+{
+    emit debug(QString("%1").arg(ui->te_filemanager->document()->isModified() ? "true" : "false"));
+    int btn = messagebox_question("Отмена", "Вы уверены, что хотите отменить изменения и загрузить файл снова?");
+    if(btn == QMessageBox::Yes)
+    {
+        load_file(filename);
+    }
+}
+//--------------------------------------------------------------------------------
+void FileManager::need_cancel(bool state)
+{
+    if(ui->te_filemanager->document()->isEmpty() == false)
+    {
+        emit info(QString("state %1").arg(state ? "true" : "false"));
+        ui->btn_cancel->setVisible(state);
+        ui->tv_filemanager->setDisabled(state);
     }
 }
 //--------------------------------------------------------------------------------

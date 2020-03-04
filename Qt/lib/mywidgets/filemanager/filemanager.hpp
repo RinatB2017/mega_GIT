@@ -56,6 +56,8 @@ private slots:
     void s_run(void);
     void s_save(void);
     void s_save_as(void);
+    void s_cancel(void);
+    void need_cancel(bool state);
 
 private:
     Ui::FileManager *ui;

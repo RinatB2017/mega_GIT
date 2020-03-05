@@ -74,6 +74,9 @@ void MainBox::init(void)
     }
 #endif
     load_widgets();
+
+    //TODO xxx
+    ui->btn_ok->setProperty("xxx", 1);
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_time(void)
@@ -253,12 +256,98 @@ bool MainBox::test_assert(int value)
     return value != 0;
 }
 //--------------------------------------------------------------------------------
+void MainBox::print_mp(QWidget *widget)
+{
+    emit error(QString("objectName %1").arg(widget->objectName()));
+
+    const QMetaObject* metaObject = widget->metaObject();
+    emit info(QString("propertyCount  = %1").arg(metaObject->propertyCount()));
+    emit info(QString("propertyOffset = %1").arg(metaObject->propertyOffset()));
+    emit error("---");
+    for(int i = metaObject->propertyOffset(); i < metaObject->propertyCount(); ++i)
+    {
+        emit error(QString("%1").arg(QString::fromLatin1(metaObject->property(i).name())));
+    }
+    emit error("---");
+    emit info(QString("methodCount    = %1").arg(metaObject->methodCount()));
+    emit info(QString("methodOffset   = %1").arg(metaObject->methodOffset()));
+    emit error("---");
+    for(int i = metaObject->methodOffset(); i < metaObject->methodCount(); ++i)
+    {
+        emit error(QString("%1").arg(QString::fromLatin1(metaObject->method(i).methodSignature())));
+    }
+    emit error("---");
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    QWidgetList widgets = qApp->allWidgets();
+    foreach (QWidget *widget, widgets)
+    {
+        QString oname = widget->objectName();
+#if 1
+        //if(oname == "rb_test")
+        //if(oname == "cb_checkbox_test")
+        //if(oname == "comboBox")
+        if(oname == "btn_ok")
+        {
+            print_mp(widget);
+            return true;
+        }
+#endif
+        if(oname.left(1) != "q")
+        {
+            //emit info(oname);
+            //widget->>met
+
+#if 0
+            const QMetaObject* metaObject = widget->metaObject();
+            QStringList properties;
+            for(int i = metaObject->propertyOffset(); i < metaObject->propertyCount(); ++i)
+            {
+                QString prop = QString::fromLatin1(metaObject->property(i).name());
+                emit debug(prop);
+                if(prop == "value")
+                {
+                    emit error(QString("value %1").arg(QString::fromLatin1(metaObject->property(i).name())));
+                }
+                if(prop == "checked")
+                {
+                    emit error(QString("checked %1").arg(QString::fromLatin1(metaObject->property(i).name())));
+                }
+            }
+#endif
+
+#if 0
+            bool ok = false;
+            int v = widget->property("value").toInt(&ok);
+            if(ok)
+            {
+                emit error(QString("value = %1").arg(v));
+            }
+#endif
+
+#if 0
+            const QMetaObject* metaObject = widget->metaObject();
+            QStringList methods;
+            for(int i = metaObject->methodOffset(); i < metaObject->methodCount(); ++i)
+            {
+                methods << QString::fromLatin1(metaObject->method(i).methodSignature());
+            }
+            foreach (QString str, methods)
+            {
+                emit error(QString("   %1").arg(str));
+            }
+#endif
+        }
+    }
+#endif
+
+#if 0
     setProperty("is_exit", true);
 #endif
 
@@ -329,7 +418,7 @@ bool MainBox::test_1(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
 
-#if 1
+#if 0
     setProperty("is_exit", false);
 #endif
 

@@ -63,6 +63,8 @@ public slots:
     bool test_4(void);
     bool test_5(void);
 
+    void print_mp(QWidget *widget);
+
     void s_inFunc(void);
 
     void check_in(void);

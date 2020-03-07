@@ -285,6 +285,12 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    emit info(QString("%1").arg(ui->rb_test->property("checked").toBool()));
+    emit info(QString("%1").arg(ui->cb_checkbox_test->property("checked").toBool()));
+    emit info(QString("%1").arg(ui->sb_res->property("value").toInt()));
+#endif
+
+#if 0
     QWidgetList widgets = qApp->allWidgets();
     foreach (QWidget *widget, widgets)
     {

@@ -96,13 +96,14 @@ void FileManager::init(void)
 
     //TODO
 //    emit info(metaObject()->className());
+//    emit info(this->objectName());
 //    emit info(objectName());
+//    emit info(parent()->objectName());
     for(int n=0; n<parent()->children().count(); n++)
     {
         emit info(parent()->children().at(n)->objectName());
     }
     emit info("---");
-//    emit info(parent()->objectName());
 //    emit info(metaObject()->classInfo(0).name());
 
 //    QObject *object = new QPushButton;

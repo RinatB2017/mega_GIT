@@ -809,7 +809,7 @@ bool MainBox::s_create_new_image_2(void)
     center.setX(pic_width  / 2.0);
     center.setY(pic_height / 2.0);
 
-    QTime timer;
+    QElapsedTimer timer;
     timer.start();
     cnt_sin = 0;
     cnt_cos = 0;

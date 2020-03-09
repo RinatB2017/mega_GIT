@@ -20,11 +20,11 @@ QString wwFindStandardColorName(const QColor &c){
         if(tmp==c)
             return name;
     }
-    return QString::null;
+    return QString();
 }
 
 ColorDrag::ColorDrag(QWidget *source, const QColor &color, const QString &name) : QDrag(source) {
-        int siz = source->style()->pixelMetric(QStyle::PM_ButtonIconSize, 0, source);
+        int siz = source->style()->pixelMetric(QStyle::PM_ButtonIconSize, nullptr, source);
         QPixmap px = QPixmap(QSize(siz,siz));
         px.fill(color);
         setPixmap(px);

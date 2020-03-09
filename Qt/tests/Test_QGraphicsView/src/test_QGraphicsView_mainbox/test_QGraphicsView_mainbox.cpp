@@ -135,7 +135,7 @@ void MainBox::createTestBar(void)
     commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
     commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
     commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.append({ ID_TEST_6, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -256,7 +256,7 @@ bool MainBox::test_0(void)
     ui->graphicsView->setScene(scene_0);
     setFocus();
 
-    QTime time;
+    QElapsedTimer time;
 
     time.start();
     int max_n = 100000; //миллион уже много - все тормозит

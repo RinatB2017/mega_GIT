@@ -627,7 +627,7 @@ void MainWindow::handleRaceStateChange(RaceClient::ClientState state)
 
 void MainWindow::toggleDisplaySegment(int row, int column)
 {
-    if (ui->display->item(row, column)->backgroundColor() == Qt::black)
+    if (ui->display->item(row, column)->background() == Qt::black)
     {
         ui->display->item(row, column)->setBackground(Qt::white);
     }

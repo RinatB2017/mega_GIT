@@ -33,7 +33,7 @@ public:
      * @param inputValue - initial value on the input
      * @param weight - initial weight of the link
      */
-    NeuronLink(Neuron *input, Neuron *output = 0, float inputValue = 1.0f, float weight = 0.0f);
+    NeuronLink(Neuron *input, Neuron *output = nullptr, float inputValue = 1.0f, float weight = 0.0f);
     ~NeuronLink();
 
     void setWeight(float weight) {m_weight = weight;}       ///Sets the weight for the link
@@ -67,7 +67,7 @@ public:
     Neuron();
     virtual ~Neuron();
 
-    void addInputLink(Neuron *poutn = 0);   ///Adds input link to the neuron
+    void addInputLink(Neuron *poutn = nullptr);   ///Adds input link to the neuron
     void addBias();                         ///Adds bias
     void inputFire();                       ///Processes the numbers on input, only for input layer
     void fire();                            ///Processes inputs and sets the result to outputs

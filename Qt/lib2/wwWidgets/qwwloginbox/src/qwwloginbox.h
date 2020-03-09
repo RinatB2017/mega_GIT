@@ -21,7 +21,7 @@
 class QwwLoginBoxPrivate;
 class Q_WW_EXPORT QwwLoginBox : public QWidget, public QwwPrivatable {
     Q_OBJECT
-    Q_FLAGS(Fields);
+    Q_FLAGS(Fields)
     Q_PROPERTY(Fields fields READ fields WRITE setFields)
     Q_PROPERTY(QString host READ host WRITE setHost)
     Q_PROPERTY(int port READ port WRITE setPort)
@@ -45,7 +45,7 @@ public:
         ProxyField=0x40
     };
     QwwLoginBox(QWidget *parent = nullptr);
-    Q_DECLARE_FLAGS(Fields, Field);
+    Q_DECLARE_FLAGS(Fields, Field)
     Fields fields() const;
     void setFields(Fields f);
     QString host() const;
@@ -61,10 +61,10 @@ public:
     void setRememberPassword(bool r);
 public slots:
     void setHost(const QString &);
-    void setUser(const QString &user, const QString &pass=QString::null);
+    void setUser(const QString &user, const QString &pass = QString());
 private:
-    WW_DECLARE_PRIVATE(QwwLoginBox);
-	Q_DISABLE_COPY(QwwLoginBox);
+    WW_DECLARE_PRIVATE(QwwLoginBox)
+    Q_DISABLE_COPY(QwwLoginBox)
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(QwwLoginBox::Fields)
 

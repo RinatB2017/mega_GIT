@@ -284,73 +284,50 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
-    emit info(QString("%1").arg(ui->rb_test->property("checked").toBool()));
-    emit info(QString("%1").arg(ui->cb_checkbox_test->property("checked").toBool()));
-    emit info(QString("%1").arg(ui->sb_res->property("value").toInt()));
-#endif
-
 #if 0
-    QWidgetList widgets = qApp->allWidgets();
-    foreach (QWidget *widget, widgets)
+    typedef struct tagRS_BLOCKINFO
     {
-        QString oname = widget->objectName();
-#if 1
-        //if(oname == "rb_test")
-        //if(oname == "cb_checkbox_test")
-        //if(oname == "comboBox")
-        if(oname == "btn_ok")
+        int ncRSBlock;
+        int ncAllCodeWord;
+        int ncDataCodeWord;
+
+    } RS_BLOCKINFO;
+
+    typedef struct tagQR_VERSIONINFO
+    {
+        int nVersionNo;
+        int ncAllCodeWord;
+
+        int ncDataCodeWord[4];
+
+        int ncAlignPoint;
+        int nAlignPoint[6];
+
+        RS_BLOCKINFO RS_BlockInfo1[4];
+        RS_BLOCKINFO RS_BlockInfo2[4];
+
+    } QR_VERSIONINFO;
+
+    static QR_VERSIONINFO QR_VersonInfo[] = {
         {
-            print_mp(widget);
-            return true;
-        }
-#endif
-        if(oname.left(1) != "q")
+            0
+        },
         {
-            //emit info(oname);
-            //widget->>met
-
-#if 0
-            const QMetaObject* metaObject = widget->metaObject();
-            QStringList properties;
-            for(int i = metaObject->propertyOffset(); i < metaObject->propertyCount(); ++i)
-            {
-                QString prop = QString::fromLatin1(metaObject->property(i).name());
-                emit debug(prop);
-                if(prop == "value")
-                {
-                    emit error(QString("value %1").arg(QString::fromLatin1(metaObject->property(i).name())));
-                }
-                if(prop == "checked")
-                {
-                    emit error(QString("checked %1").arg(QString::fromLatin1(metaObject->property(i).name())));
-                }
-            }
-#endif
-
-#if 0
-            bool ok = false;
-            int v = widget->property("value").toInt(&ok);
-            if(ok)
-            {
-                emit error(QString("value = %1").arg(v));
-            }
-#endif
-
-#if 0
-            const QMetaObject* metaObject = widget->metaObject();
-            QStringList methods;
-            for(int i = metaObject->methodOffset(); i < metaObject->methodCount(); ++i)
-            {
-                methods << QString::fromLatin1(metaObject->method(i).methodSignature());
-            }
-            foreach (QString str, methods)
-            {
-                emit error(QString("   %1").arg(str));
-            }
-#endif
+            1, // Ver.1
+            26,   19,   16,   13,    9,
+            0,   0,   0,   0,   0,   0,   0,
+            1,  26,  19,
+            1,  26,  16,
+            1,  26,  13,
+            1,  26,   9,
+            0,   0,   0,
+            0,   0,   0,
+            0,   0,   0,
+            0,   0,   0
         }
-    }
+    };
+
+    emit info(QString("%1").arg(sizeof (QR_VERSIONINFO)));
 #endif
 
 #if 0
@@ -362,58 +339,6 @@ bool MainBox::test_0(void)
     emit debug("Debug");
     emit error("Error");
     emit trace("Trace");
-#endif
-
-#if 0
-    emit info(QDir::currentPath());
-
-    //TODO сначала модель присваивается виджету для просмотра
-    QFileSystemModel *model = new QFileSystemModel;
-    QTreeView *tree = new QTreeView();
-    tree->setModel(model);
-    tree->setColumnHidden(1, true);
-    tree->setColumnHidden(2, true);
-    tree->setColumnHidden(3, true);
-
-    //TODO и только потом переходим на нужный каталог
-    QModelIndex idx = model->setRootPath(QDir::currentPath());
-    tree->setRootIndex(idx);
-
-    tree->show();
-#endif
-
-#if 0
-    //ui->cb_checkbox_test->setDisabled(ui->cb_checkbox_test->isEnabled());
-    ui->rb_test->setDisabled(ui->rb_test->isEnabled());
-#endif
-
-#if 0
-    emit info(metaObject()->className());
-#endif
-
-#if 0
-    const QString program = "kpat";
-    const QStringList arguments = QStringList();
-    QProcess process;
-    process.setWorkingDirectory(".");
-    process.start(program, arguments);
-    bool res = process.waitForFinished(-1);
-    emit info(QString("programm return %1").arg(res ? "true" : "false"));
-#endif
-
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
-    QList<QWidget *> l_widgets = mw->findChildren<QWidget *>();
-    emit info(QString("find %1 widgets").arg(l_widgets.count()));
-
-    foreach (QWidget *w, l_widgets)
-    {
-        if(w->objectName().left(3) != "qt_")
-        {
-            emit info(w->objectName());
-        }
-    }
 #endif
 
     return true;

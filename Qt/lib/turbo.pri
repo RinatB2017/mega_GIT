@@ -62,12 +62,19 @@ unix:!macx {
     else {
         OPTIMIZE = -pipe -O2
     }
+    #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
+
     QMAKE_CFLAGS   += $${OPTIMIZE}
     QMAKE_CXXFLAGS += $${OPTIMIZE}
     QMAKE_LFLAGS   += $${OPTIMIZE}
     QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 
     QMAKE_CXX   = ccache g++
+
+    #CONFIG += warn_off
+    #QMAKE_CXXFLAGS += -Wall
+    #QMAKE_CFLAGS_WARN_ON   -= -Wno-missing-braces -Wno-missing-field-initializers
+    #QMAKE_CXXFLAGS_WARN_ON -= -Wno-missing-braces -Wno-missing-field-initializers
 }
 ###############################################################################
 #CONFIG	 += precompile_header

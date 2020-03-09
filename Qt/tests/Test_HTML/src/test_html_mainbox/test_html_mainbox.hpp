@@ -93,6 +93,8 @@ private:
     void init(void);
     void createTestBar(void);
 
+    QString get_full_objectName(QWidget *widget);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

@@ -117,6 +117,7 @@ public:
 
     void block_close(bool state);
 
+    QString get_full_objectName(QWidget *widget);
     void load_widgets(void);
     void save_widgets(void);
 

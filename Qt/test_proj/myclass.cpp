@@ -1,3 +1,4 @@
+#include <QTimer>
 #include <QDebug>
 
 #include "myclass.h"
@@ -9,7 +10,9 @@ MyClass::MyClass(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    qDebug() << objectName();
+    QTimer::singleShot(0, [this]{
+        qDebug() << objectName();
+    });
 }
 
 MyClass::~MyClass()

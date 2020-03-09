@@ -104,8 +104,8 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->add_dock_widget("HTML", "html_widget",  Qt::LeftDockWidgetArea, ui->frame_html);
-        mw->add_dock_widget("JS",   "js_widget",    Qt::LeftDockWidgetArea, ui->frame_js);
+        mw->add_dock_widget("HTML", "frame_html",  Qt::LeftDockWidgetArea, ui->frame_html);
+        mw->add_dock_widget("JS",   "frame_js",    Qt::LeftDockWidgetArea, ui->frame_js);
     }
 
     load_widgets();
@@ -221,10 +221,48 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+QString MainBox::get_full_objectName(QWidget *widget)
+{
+    QStringList sl;
+    QWidget *temp = static_cast<QWidget *>(widget);
+    do {
+        if(temp)
+        {
+            sl.append(temp->objectName());
+        }
+        temp = static_cast<QWidget *>(temp->parent());
+    } while(temp);
+
+    QString temp_string;
+    for(int n=sl.count(); n>0; n--)
+    {
+        QString str = sl.at(n-1);
+        if(str.isEmpty() == false)
+        {
+            temp_string.append(QString("%1/").arg(str));
+        }
+    }
+    temp_string = temp_string.remove(temp_string.length()-1, 1);
+    if(temp_string.isEmpty()) temp_string = "xxx";
+    return temp_string;
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
     //emit info(QString("%1").arg(ui->te_text_js->document()->isModified()));
+
+#if 1
+    QWidgetList wl = qApp->allWidgets();
+    foreach (QWidget *widget, wl)
+    {
+        if(strncmp(widget->metaObject()->className(), QString("QCheckBox").toLocal8Bit(), 9) == 0)
+        {
+            emit info(get_full_objectName(widget));
+        }
+    }
+#endif
+
     return true;
 }
 //--------------------------------------------------------------------------------

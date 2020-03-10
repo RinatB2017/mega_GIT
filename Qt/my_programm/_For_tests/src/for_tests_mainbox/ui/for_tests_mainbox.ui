@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>344</width>
-    <height>447</height>
+    <width>322</width>
+    <height>431</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -81,24 +81,28 @@
     </widget>
    </item>
    <item>
-    <widget class="QRadioButton" name="rb_test">
-     <property name="text">
-      <string>RadioButton</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="cb_checkbox_test">
-     <property name="text">
-      <string>CheckBox</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
-   </item>
-   <item>
-    <widget class="QTimeEdit" name="timeEdit"/>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="cb_checkbox_test">
+       <property name="text">
+        <string>CheckBox</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QRadioButton" name="rb_test">
+       <property name="text">
+        <string>RadioButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QTimeEdit" name="timeEdit"/>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QDateTimeEdit" name="dateTimeEdit"/>
@@ -180,10 +184,6 @@
   <tabstop>sb_res</tabstop>
   <tabstop>btn_ok</tabstop>
   <tabstop>horizontalSlider</tabstop>
-  <tabstop>rb_test</tabstop>
-  <tabstop>cb_checkbox_test</tabstop>
-  <tabstop>doubleSpinBox</tabstop>
-  <tabstop>timeEdit</tabstop>
   <tabstop>dateTimeEdit</tabstop>
   <tabstop>toolButton</tabstop>
   <tabstop>comboBox</tabstop>

@@ -56,6 +56,7 @@ void MainBox::init(void)
     check_in();
 
     ui->toolButton->setIcon((QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon))));
+    connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
 #if 1
     ui->btn_set_time->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
@@ -77,6 +78,11 @@ void MainBox::init(void)
 
     //TODO xxx
     ui->btn_ok->setProperty("xxx", 1);
+}
+//--------------------------------------------------------------------------------
+void MainBox::delete_string(void)
+{
+    ui->comboBox->removeItem(ui->comboBox->currentIndex());
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_time(void)
@@ -279,69 +285,29 @@ void MainBox::print_mp(QWidget *widget)
     emit error("---");
 }
 //--------------------------------------------------------------------------------
+bool MainBox::load_property(QWidget *widget, const QString &property_name)
+{
+    QVariant v = widget->property(property_name.toLocal8Bit());
+    if(v.isValid() == false)
+    {
+        return false;
+    }
+    emit info(v.toString());
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::save_property(QWidget *widget, const QString &property_name, QVariant value)
+{
+    return widget->setProperty(property_name.toLocal8Bit(), value);
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 0
-    typedef struct tagRS_BLOCKINFO
-    {
-        int ncRSBlock;
-        int ncAllCodeWord;
-        int ncDataCodeWord;
-
-    } RS_BLOCKINFO;
-
-    typedef struct tagQR_VERSIONINFO
-    {
-        int nVersionNo;
-        int ncAllCodeWord;
-
-        int ncDataCodeWord[4];
-
-        int ncAlignPoint;
-        int nAlignPoint[6];
-
-        RS_BLOCKINFO RS_BlockInfo1[4];
-        RS_BLOCKINFO RS_BlockInfo2[4];
-
-    } QR_VERSIONINFO;
-
-    static QR_VERSIONINFO QR_VersonInfo[] = {
-        {
-            0,
-            0,
-            {0,   0,   0,   0},
-            0,
-            {0,   0,   0,   0,   0,   0},
-            {{0,  0,  0},
-             {0,  0,  0},
-             {0,  0,  0},
-             {0,  0,   0}},
-            {{0,   0,   0},
-             {0,   0,   0},
-             {0,   0,   0},
-             {0,   0,   0}}
-        },
-        {
-            1, // Ver.1
-            26,
-            {19,   16,   13,    9},
-            0,
-            {0,   0,   0,   0,   0,   0},
-            {{1,  26,  19},
-             {1,  26,  16},
-             {1,  26,  13},
-             {1,  26,   9}},
-            {{0,   0,   0},
-             {0,   0,   0},
-             {0,   0,   0},
-             {0,   0,   0}}
-        }
-    };
-
-    emit info(QString("%1").arg(sizeof (QR_VersonInfo)));
+#if 1
+    print_mp(ui->timer_widget);
 #endif
 
 #if 0

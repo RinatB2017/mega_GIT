@@ -64,6 +64,9 @@ public slots:
     bool test_5(void);
 
     void print_mp(QWidget *widget);
+    bool load_property(QWidget *widget, const QString &property_name);
+    bool save_property(QWidget *widget, const QString &property_name, QVariant value);
+    void delete_string(void);
 
     void s_inFunc(void);
 

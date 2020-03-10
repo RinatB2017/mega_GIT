@@ -30,7 +30,7 @@
 class QwwFileChooserPrivate : public QwwButtonLineEditPrivate {
 public:
     QwwFileChooserPrivate(QwwFileChooser *c) : QwwButtonLineEditPrivate(c) {
-        model = 0;
+        model = nullptr;
         native = true;
         fileMode = QFileDialog::AnyFile;
         acceptMode = QFileDialog::AcceptOpen;
@@ -64,7 +64,7 @@ public:
     }
 
 private:
-    WW_DECLARE_PUBLIC(QwwFileChooser);
+    WW_DECLARE_PUBLIC(QwwFileChooser)
 };
 
 /*!
@@ -227,14 +227,14 @@ void QwwFileChooser::chooseFile() {
                 path = QFileDialog::getOpenFileName(this, tr("Choose file"), text(), filter());
             break;
         case QFileDialog::Directory:
-            path = QFileDialog::getExistingDirectory(this, tr("Choose directory"), text(), 0);
+            path = QFileDialog::getExistingDirectory(this, tr("Choose directory"), text(), nullptr);
             break;
         case QFileDialog::DirectoryOnly:
             path = QFileDialog::getExistingDirectory(this, tr("Choose directory"), text());
             break;
         case QFileDialog::ExistingFiles:
             QStringList s = QFileDialog::getOpenFileNames(this, tr("Choose files"), text(), filter());
-            path = s.isEmpty() ? QString::null : s.at(0);
+            path = s.isEmpty() ? QString() : s.at(0);
             break;
         }
     } else {
@@ -245,7 +245,7 @@ void QwwFileChooser::chooseFile() {
 		dlg.setNameFilter(filter());
         if (dlg.exec()) {
             QStringList s = dlg.selectedFiles();
-            path = s.isEmpty() ? QString::null : s.at(0);
+            path = s.isEmpty() ? QString() : s.at(0);
         }
     }
     if (ok && !path.isNull()) {

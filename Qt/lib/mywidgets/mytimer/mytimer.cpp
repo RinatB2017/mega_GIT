@@ -41,10 +41,12 @@ void MyTimer::init(void)
 
     last_time.setHMS(0, 0, 0);
 
-    update_timer();
-
     setMinimumHeight(48);
 //    setMinimumHeight(48);
+
+    QTimer::singleShot(0, [this]{
+        update_timer();
+    });
 }
 //--------------------------------------------------------------------------------
 void MyTimer::create_timer(void)

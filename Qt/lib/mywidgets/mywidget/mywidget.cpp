@@ -405,6 +405,71 @@ bool MyWidget::compare_name(const char *widget_name, QString class_name)
     return (re == 0);
 }
 //--------------------------------------------------------------------------------
+bool MyWidget::load_combobox_property(QWidget *widget)
+{
+    if(compare_name(widget->metaObject()->className(), "QComboBox"))
+    {
+        bool isEditable = settings->value("isEditable").toBool();
+        if(isEditable)
+        {
+            int size = settings->beginReadArray(static_cast<QComboBox *>(widget)->objectName());
+            for(int n=0; n<size; n++)
+            {
+                settings->setArrayIndex(n);
+                static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
+            }
+            settings->endArray();
+        }
+        static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());
+        return true;
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+bool MyWidget::save_combobox_property(QWidget *widget)
+{
+    if(compare_name(widget->metaObject()->className(), "QComboBox"))
+    {
+        bool isEditable = static_cast<QComboBox *>(widget)->isEditable();
+        settings->setValue("isEditable", isEditable);
+        settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));
+        if(isEditable)
+        {
+            settings->beginWriteArray(static_cast<QComboBox *>(widget)->objectName(), static_cast<QComboBox *>(widget)->count());
+            for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
+            {
+                settings->setArrayIndex(n);
+                static_cast<QComboBox *>(widget)->setCurrentIndex(n);
+                settings->setValue("currentText", static_cast<QComboBox *>(widget)->currentText());
+            }
+            settings->endArray();
+        }
+        return true;
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+bool MyWidget::load_property(QWidget *widget, const QString &property_name)
+{
+    QVariant property = settings->value(property_name);
+    if(property.isValid() == false)
+    {
+        return false;
+    }
+    return widget->setProperty(property_name.toLocal8Bit(), property);
+}
+//--------------------------------------------------------------------------------
+bool MyWidget::save_property(QWidget *widget, const QString &property_name)
+{
+    QVariant property = widget->property(property_name.toLocal8Bit());
+    if(property.isValid() == false)
+    {
+        return false;
+    }
+    settings->setValue(property_name, property);
+    return true;
+}
+//--------------------------------------------------------------------------------
 QString MyWidget::get_full_objectName(QWidget *widget)
 {
     QStringList sl;
@@ -458,6 +523,7 @@ void MyWidget::load_widgets(void)
             }
 
             settings->beginGroup(widget->objectName());
+#ifdef OLD_VALUE
             static_cast<QRadioButton *>(widget)->setEnabled(settings->value("isEnabled", true).toBool());
             settings->endGroup();
 
@@ -481,7 +547,7 @@ void MyWidget::load_widgets(void)
                     for(int n=0; n<size; n++)
                     {
                         settings->setArrayIndex(n);
-                        static_cast<QComboBox *>(widget)->addItem(settings->value("value").toString());
+                        static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
                     }
                     settings->endArray();
                 }
@@ -546,6 +612,17 @@ void MyWidget::load_widgets(void)
             {
                 static_cast<QDateTimeEdit *>(widget)->setDateTime(settings->value("datetime", 0).toDateTime());
             }
+#else
+            load_combobox_property(widget);
+            load_property(widget, "isEnabled");
+            load_property(widget, "checked");
+            load_property(widget, "text");
+            load_property(widget, "value");
+            load_property(widget, "position");
+            load_property(widget, "state");
+            load_property(widget, "time");
+            load_property(widget, "date");
+#endif
             settings->endGroup();
         }
     }
@@ -576,6 +653,7 @@ void MyWidget::save_widgets(void)
             }
 
             settings->beginGroup(widget->objectName());
+#ifdef OLD_VALUE
             settings->setValue("isEnabled", QVariant(static_cast<QRadioButton*>(widget)->isEnabled()));
             settings->endGroup();
 
@@ -603,7 +681,7 @@ void MyWidget::save_widgets(void)
                     {
                         settings->setArrayIndex(n);
                         static_cast<QComboBox *>(widget)->setCurrentIndex(n);
-                        settings->setValue("value", static_cast<QComboBox *>(widget)->currentText());
+                        settings->setValue("currentText", static_cast<QComboBox *>(widget)->currentText());
                     }
                     settings->endArray();
                 }
@@ -663,6 +741,17 @@ void MyWidget::save_widgets(void)
             {
                 settings->setValue("datetime", QVariant(static_cast<QDateTimeEdit *>(widget)->dateTime()));
             }
+#else
+            save_combobox_property(widget);
+            save_property(widget, "isEnabled");
+            save_property(widget, "checked");
+            save_property(widget, "text");
+            save_property(widget, "value");
+            save_property(widget, "position");
+            save_property(widget, "state");
+            save_property(widget, "time");
+            save_property(widget, "date");
+#endif
             settings->endGroup();
         }
     }

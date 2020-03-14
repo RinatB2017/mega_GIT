@@ -45,6 +45,7 @@ LIB_PATH2 = "$$PWD/../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
+include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include ($$LIB_PATH2/generator_curve/generator_curve.pri)

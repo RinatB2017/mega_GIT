@@ -522,97 +522,7 @@ void MyWidget::load_widgets(void)
                 continue;
             }
 
-            settings->beginGroup(widget->objectName());
-#ifdef OLD_VALUE
-            static_cast<QRadioButton *>(widget)->setEnabled(settings->value("isEnabled", true).toBool());
-            settings->endGroup();
-
             settings->beginGroup(get_full_objectName(widget));
-            if(compare_name(widget->metaObject()->className(), "QRadioButton"))
-            {
-                static_cast<QRadioButton *>(widget)->setChecked(settings->value("checked", false).toBool());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QCheckBox"))
-            {
-                static_cast<QCheckBox *>(widget)->setChecked(settings->value("checked", false).toBool());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QComboBox"))
-            {
-                bool isEditable = settings->value("isEditable").toBool();
-                if(isEditable)
-                {
-                    int size = settings->beginReadArray(static_cast<QComboBox *>(widget)->objectName());
-                    for(int n=0; n<size; n++)
-                    {
-                        settings->setArrayIndex(n);
-                        static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
-                    }
-                    settings->endArray();
-                }
-                static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QPushButton"))
-            {
-                QString text = settings->value("text", "").toString();
-                if(text.isEmpty() == false)
-                {
-                    static_cast<QPushButton *>(widget)->setText(text);
-                }
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QToolButton"))
-            {
-                static_cast<QToolButton *>(widget)->setText(settings->value("text", "").toString());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QPlainTextEdit"))
-            {
-                static_cast<QPlainTextEdit *>(widget)->setPlainText(settings->value("text", "").toString());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QTextEdit"))
-            {
-                static_cast<QTextEdit *>(widget)->setPlainText(settings->value("text", "").toString());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QLineEdit"))
-            {
-                static_cast<QLineEdit *>(widget)->setText(settings->value("text", "").toString());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QSpinBox"))
-            {
-                static_cast<QSpinBox *>(widget)->setValue(settings->value("value", 0).toInt());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QDoubleSpinBox"))
-            {
-                static_cast<QDoubleSpinBox *>(widget)->setValue(settings->value("value", 0).toDouble());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QSlider"))
-            {
-                static_cast<QSlider *>(widget)->setSliderPosition(settings->value("position", 0).toInt());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QSplitter"))
-            {
-                static_cast<QSplitter *>(widget)->restoreState(settings->value("state", 0).toByteArray());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QTimeEdit"))
-            {
-                static_cast<QTimeEdit *>(widget)->setDateTime(settings->value("datetime", 0).toDateTime());
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QDateTimeEdit"))
-            {
-                static_cast<QDateTimeEdit *>(widget)->setDateTime(settings->value("datetime", 0).toDateTime());
-            }
-#else
             load_combobox_property(widget);
             load_property(widget, "isEnabled");
             load_property(widget, "checked");
@@ -622,7 +532,6 @@ void MyWidget::load_widgets(void)
             load_property(widget, "state");
             load_property(widget, "time");
             load_property(widget, "date");
-#endif
             settings->endGroup();
         }
     }
@@ -652,96 +561,7 @@ void MyWidget::save_widgets(void)
                 continue;
             }
 
-            settings->beginGroup(widget->objectName());
-#ifdef OLD_VALUE
-            settings->setValue("isEnabled", QVariant(static_cast<QRadioButton*>(widget)->isEnabled()));
-            settings->endGroup();
-
             settings->beginGroup(get_full_objectName(widget));
-            //qDebug() << widget->objectName();
-            if(compare_name(widget->metaObject()->className(), "QRadioButton"))
-            {
-                settings->setValue("checked", QVariant(static_cast<QRadioButton*>(widget)->isChecked()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QCheckBox"))
-            {
-                settings->setValue("checked", QVariant(static_cast<QCheckBox *>(widget)->isChecked()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QComboBox"))
-            {
-                bool isEditable = static_cast<QComboBox *>(widget)->isEditable();
-                settings->setValue("isEditable", isEditable);
-                settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));
-                if(isEditable)
-                {
-                    settings->beginWriteArray(static_cast<QComboBox *>(widget)->objectName(), static_cast<QComboBox *>(widget)->count());
-                    for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
-                    {
-                        settings->setArrayIndex(n);
-                        static_cast<QComboBox *>(widget)->setCurrentIndex(n);
-                        settings->setValue("currentText", static_cast<QComboBox *>(widget)->currentText());
-                    }
-                    settings->endArray();
-                }
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QPushButton"))
-            {
-                settings->setValue("text", QVariant(static_cast<QPushButton *>(widget)->text()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QToolButton"))
-            {
-                settings->setValue("text", QVariant(static_cast<QToolButton *>(widget)->text()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QPlainTextEdit"))
-            {
-                settings->setValue("text", QVariant(static_cast<QPlainTextEdit *>(widget)->toPlainText()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QTextEdit"))
-            {
-                settings->setValue("text", QVariant(static_cast<QTextEdit *>(widget)->toPlainText()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QLineEdit"))
-            {
-                settings->setValue("text", QVariant(static_cast<QLineEdit *>(widget)->text()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QSpinBox"))
-            {
-                settings->setValue("value", QVariant(static_cast<QSpinBox *>(widget)->value()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QDoubleSpinBox"))
-            {
-                settings->setValue("value", QVariant(static_cast<QDoubleSpinBox *>(widget)->value()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QSlider"))
-            {
-                settings->setValue("position", QVariant(static_cast<QSlider *>(widget)->value()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QSplitter"))
-            {
-                settings->setValue("state", QVariant(static_cast<QSplitter *>(widget)->saveState()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QTimeEdit"))
-            {
-                settings->setValue("datetime", QVariant(static_cast<QTimeEdit *>(widget)->dateTime()));
-            }
-
-            if(compare_name(widget->metaObject()->className(), "QDateTimeEdit"))
-            {
-                settings->setValue("datetime", QVariant(static_cast<QDateTimeEdit *>(widget)->dateTime()));
-            }
-#else
             save_combobox_property(widget);
             save_property(widget, "isEnabled");
             save_property(widget, "checked");
@@ -751,7 +571,6 @@ void MyWidget::save_widgets(void)
             save_property(widget, "state");
             save_property(widget, "time");
             save_property(widget, "date");
-#endif
             settings->endGroup();
         }
     }

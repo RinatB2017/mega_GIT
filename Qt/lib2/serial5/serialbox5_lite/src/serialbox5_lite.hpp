@@ -27,9 +27,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include <QSerialPortInfo>
-#include <QSerialPort>
-//--------------------------------------------------------------------------------
+#include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QHBoxLayout;
@@ -42,7 +40,7 @@ namespace Ui
     class SerialBox5_lite;
 }
 //--------------------------------------------------------------------------------
-class SerialBox5_lite : public MyWidget
+class SerialBox5_lite : public SerialWidget
 {
     Q_OBJECT
 
@@ -55,8 +53,6 @@ public:
     SerialBox5_lite(QWidget *parent = nullptr);
     ~SerialBox5_lite();
 
-    bool isOpen(void);
-
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
 
@@ -66,24 +62,16 @@ public:
     QSerialPort::StopBits       get_stopBits(void);
     QSerialPort::FlowControl    get_flowControl(void);
 
-    QByteArray readAll(void);
-
     void set_caption(QString value);
-
-    qint64 bytesAvailable(void);
-    qint64 write ( const char *data );
 
 private:
     Ui::SerialBox5_lite *ui;
     QWidget *parent;
-    QSerialPort *serial5;
     QString caption;
     QString o_name;
 
     bool flag_in_hex = false;
     bool flag_byte_by_byte = false;
-
-    QTimer *timer;
 
     //TODO
     bool p_test = false;
@@ -95,6 +83,10 @@ private:
                         const QString &text);
 #endif
 
+#ifdef RS232_SEND
+    SendBox5 *sendBox5;
+#endif
+
     void init(void);
     void createWidgets(void);
     void initEnumerator(void);
@@ -102,14 +94,6 @@ private:
     void setOpenState(void);
     void setCloseState(void);
     QString ByteArrayToHex(const QByteArray &data);
-
-signals:
-    void readyRead(void);
-    void readChannelFinished(void);
-    void output(const QByteArray &data);
-    void port_is_active(bool);
-
-    void s_error(QSerialPort::SerialPortError);
 
 public slots:
     int input(const QByteArray &sending_data);
@@ -123,13 +107,10 @@ private slots:
     void sendData(const QByteArray &sending_data);
     void btnOpenPortClicked(void);
     void refresh(void);
-    void procSerialDataReceive(void);
     void setBaudBox(int index);
     void getStatus(const QString &status, QDateTime current);
-    void serial5_error(QSerialPort::SerialPortError err);
     void get_parameter(void);
     void set_default(void);
-    void timer_stop(void);
 
     void change_icon(bool state);
 

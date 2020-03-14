@@ -47,6 +47,7 @@ CONFIG(debug, debug|release) {
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include ($$LIB_PATH2/proto_NMEA_0183/proto_NMEA_0183.pri)

@@ -27,16 +27,15 @@
 #ifdef RS232_SEND
 #   include "sendbox5.hpp"
 #endif
-#   include "logbox.hpp"
 //--------------------------------------------------------------------------------
-#define MAX_TIME_MSEC   100
+#   include "logbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 SerialBox5::SerialBox5(QWidget *parent) :
-    MyWidget(parent),
+    SerialWidget(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
     caption("no name")
@@ -47,7 +46,7 @@ SerialBox5::SerialBox5(QWidget *parent) :
 SerialBox5::SerialBox5(QWidget *parent,
                        const QString &caption,
                        const QString &o_name) :
-    MyWidget(parent),
+    SerialWidget(parent),
     ui(new Ui::SerialBox5),
     parent(parent),
     caption(caption),
@@ -75,14 +74,6 @@ SerialBox5::~SerialBox5()
         sendBox5->deleteLater();
     }
 #endif
-
-    if(serial5)
-    {
-        serial5->disconnect();
-        serial5->close();
-        serial5->deleteLater();
-    }
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -105,13 +96,13 @@ void SerialBox5::init(void)
     createWidgets();
     initEnumerator();
     initSerial();
-    setCloseState();
 #ifdef RS232_FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
 
     connect(ui->btn_default, SIGNAL(clicked()), this, SLOT(set_default()));
 
+    setCloseState();
     updateText();
 }
 //--------------------------------------------------------------------------------
@@ -123,57 +114,6 @@ void SerialBox5::createWidgets(void)
 
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
-
-    ui->btn_refresh->setToolTip("Обновить список портов");
-
-    ui->PortBox->setProperty(NO_SAVE, true);
-    ui->BaudBox->setProperty(NO_SAVE, true);
-    ui->FlowBox->setProperty(NO_SAVE, true);
-    ui->ParityBox->setProperty(NO_SAVE, true);
-    ui->DataBitsBox->setProperty(NO_SAVE, true);
-    ui->StopBitsBox->setProperty(NO_SAVE, true);
-
-    connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
-    connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
-
-    connect(ui->BaudBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setBaudBox(int)));
-    connect(ui->DataBitsBox, SIGNAL(currentIndexChanged(int)),  this,   SLOT(setDataBox(int)));
-    connect(ui->ParityBox,   SIGNAL(currentIndexChanged(int)),  this,   SLOT(setParityBox(int)));
-    connect(ui->StopBitsBox, SIGNAL(currentIndexChanged(int)),  this,   SLOT(setStopBox(int)));
-    connect(ui->FlowBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setFlowBox(int)));
-
-    connect(this,   SIGNAL(output(QByteArray)), this,   SLOT(drawData(QByteArray)));
-
-#ifdef RS232_LOG
-    logBox = new LogBox(o_name, this);
-    ui->layout_right_LOG->addWidget(logBox);
-
-    connect(this,   SIGNAL(info(QString)),  logBox, SLOT(infoLog(QString)));
-    connect(this,   SIGNAL(debug(QString)), logBox, SLOT(debugLog(QString)));
-    connect(this,   SIGNAL(error(QString)), logBox, SLOT(errorLog(QString)));
-    connect(this,   SIGNAL(trace(QString)), logBox, SLOT(traceLog(QString)));
-#endif
-
-#ifdef RS232_SEND
-    sendBox5 = new SendBox5(this);
-    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
-    ui->layout_SEND->addWidget(sendBox5);
-#endif
-
-#ifndef RS232_NO_FRAME
-    frame_ring = new QFrame(this);
-    add_frame_text(frame_ring, tr("ring"));
-
-    frame_dsr = new QFrame(this);
-    add_frame_text(frame_dsr, tr("dsr"));
-
-    frame_cts = new QFrame(this);
-    add_frame_text(frame_cts, tr("cts"));
-
-    ui->layout_status->addWidget(frame_ring);
-    ui->layout_status->addWidget(frame_dsr);
-    ui->layout_status->addWidget(frame_cts);
-#endif
 }
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
@@ -193,10 +133,7 @@ void SerialBox5::add_frame_text(QFrame *parent,
 void SerialBox5::refresh(void)
 {
     ui->PortBox->clear();
-    foreach (QSerialPortInfo p_info, QSerialPortInfo::availablePorts())
-    {
-        ui->PortBox->addItem(p_info.portName());
-    }
+    ui->PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::initEnumerator(void)
@@ -245,64 +182,64 @@ void SerialBox5::initEnumerator(void)
 //--------------------------------------------------------------------------------
 void SerialBox5::initSerial(void)
 {
-    serial5 = new QSerialPort(this);
+    ui->PortBox->setProperty(NO_SAVE, true);
+    ui->BaudBox->setProperty(NO_SAVE, true);
+    ui->FlowBox->setProperty(NO_SAVE, true);
+    ui->ParityBox->setProperty(NO_SAVE, true);
+    ui->DataBitsBox->setProperty(NO_SAVE, true);
+    ui->StopBitsBox->setProperty(NO_SAVE, true);
+    ui->btn_refresh->setToolTip("Обновить список портов");
 
-    //TODO
-    timer = new QTimer();
-    connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
+#ifdef RS232_LOG
+    logBox = new LogBox(o_name, this);
+    ui->layout_right_LOG->addWidget(logBox);
 
-    connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this,   SLOT(serial5_error(QSerialPort::SerialPortError)));
-    //connect(serial5, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this,   SLOT(errorOccurred(QSerialPort::SerialPortError)));
+    connect(this,   SIGNAL(info(QString)),  logBox, SLOT(infoLog(QString)));
+    connect(this,   SIGNAL(debug(QString)), logBox, SLOT(debugLog(QString)));
+    connect(this,   SIGNAL(error(QString)), logBox, SLOT(errorLog(QString)));
+    connect(this,   SIGNAL(trace(QString)), logBox, SLOT(traceLog(QString)));
+#endif
 
-    connect(serial5, SIGNAL(baudRateChanged(qint32,QSerialPort::Directions)),   this,   SLOT(baudRateChanged(qint32,QSerialPort::Directions)));
-    connect(serial5, SIGNAL(breakEnabledChanged(bool)),                         this,   SLOT(breakEnabledChanged(bool)));
-    connect(serial5, SIGNAL(dataBitsChanged(QSerialPort::DataBits)),            this,   SLOT(dataBitsChanged(QSerialPort::DataBits)));
-    connect(serial5, SIGNAL(dataTerminalReadyChanged(bool)),                    this,   SLOT(dataTerminalReadyChanged(bool)));
-    connect(serial5, SIGNAL(flowControlChanged(QSerialPort::FlowControl)),      this,   SLOT(flowControlChanged(QSerialPort::FlowControl)));
-    connect(serial5, SIGNAL(parityChanged(QSerialPort::Parity)),                this,   SLOT(parityChanged(QSerialPort::Parity)));
-    connect(serial5, SIGNAL(requestToSendChanged(bool)),                        this,   SLOT(requestToSendChanged(bool)));
-    connect(serial5, SIGNAL(stopBitsChanged(QSerialPort::StopBits)),            this,   SLOT(stopBitsChanged(QSerialPort::StopBits)));
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::serial5_error(QSerialPort::SerialPortError err)
-{
-    if(err == QSerialPort::NoError)
-    {
-        return;
-    }
+#ifdef RS232_SEND
+    sendBox5 = new SendBox5(this);
+    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
+    ui->layout_SEND->addWidget(sendBox5);
+#endif
 
-    switch(err)
-    {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
-    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
-    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
-    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
-    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
-    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
-    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
-    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
+#ifndef RS232_NO_FRAME
+    frame_ring = new QFrame(this);
+    add_frame_text(frame_ring, tr("ring"));
 
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
-    }
+    frame_dsr = new QFrame(this);
+    add_frame_text(frame_dsr, tr("dsr"));
 
-    if(err != QSerialPort::NoError)
-    {
-        if(serial5->isOpen())
-        {
-            serial5->close();
-        }
-    }
+    frame_cts = new QFrame(this);
+    add_frame_text(frame_cts, tr("cts"));
 
-    setCloseState();
-    //TODO refresh();
+    ui->layout_status->addWidget(frame_ring);
+    ui->layout_status->addWidget(frame_dsr);
+    ui->layout_status->addWidget(frame_cts);
+#endif
+
+    connect(this,   &SerialWidget::s_baudRateChanged,    this,   &SerialBox5::set_baudRate);
+    connect(this,   &SerialWidget::s_dataBitsChanged,    this,   &SerialBox5::set_dataBits);
+    connect(this,   &SerialWidget::s_flowControlChanged, this,   &SerialBox5::set_flowControl);
+    connect(this,   &SerialWidget::s_parityChanged,      this,   &SerialBox5::set_parity);
+    connect(this,   &SerialWidget::s_stopBitsChanged,    this,   &SerialBox5::set_stopBits);
+
+    connect(this,   &SerialBox5::port_close,    this,   &SerialBox5::setCloseState);
+    connect(this,   &SerialBox5::port_open,     this,   &SerialBox5::setOpenState);
+
+    connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
+    connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+
+    connect(ui->BaudBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setBaudBox(int)));
+    connect(ui->DataBitsBox, SIGNAL(currentIndexChanged(int)),  this,   SLOT(setDataBox(int)));
+    connect(ui->ParityBox,   SIGNAL(currentIndexChanged(int)),  this,   SLOT(setParityBox(int)));
+    connect(ui->StopBitsBox, SIGNAL(currentIndexChanged(int)),  this,   SLOT(setStopBox(int)));
+    connect(ui->FlowBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setFlowBox(int)));
+
+    connect(this,   SIGNAL(output(QByteArray)), this,   SLOT(drawData(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::getStatus(const QString &status, QDateTime current)
@@ -312,66 +249,6 @@ void SerialBox5::getStatus(const QString &status, QDateTime current)
               .arg(current.toString()));
 
     get_parameter();
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::setBaudBox(int index)
-{
-    bool ok = false;
-    int value = ui->BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
-    if(!ok) return;
-    if(value < 0) return;
-
-    ok = serial5->setBaudRate(value);
-    if(!ok) emit error("error set baud");
-    else emit info(QString("set %1").arg(ui->BaudBox->currentText()));
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::setDataBox(int index)
-{
-    bool ok = false;
-    int value = ui->DataBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
-    if(!ok) return;
-    if(value < 0) return;
-
-    ok = serial5->setDataBits(static_cast<QSerialPort::DataBits>(value));
-    if(!ok) emit error("error set data");
-    else emit info(QString("set %1").arg(ui->DataBitsBox->currentText()));
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::setParityBox(int index)
-{
-    bool ok = false;
-    int value = ui->ParityBox->itemData(index, Qt::UserRole).toInt(&ok);
-    if(!ok) return;
-    if(value < 0) return;
-
-    ok = serial5->setParity(static_cast<QSerialPort::Parity>(value));
-    if(!ok) emit error("error set parity");
-    else emit info(QString("set %1").arg(ui->ParityBox->currentText()));
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::setStopBox(int index)
-{
-    bool ok = false;
-    int value = ui->StopBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
-    if(!ok) return;
-    if(value < 0) return;
-
-    ok = serial5->setStopBits(static_cast<QSerialPort::StopBits>(value));
-    if(!ok) emit error("error set stopbit");
-    else emit info(QString("set %1").arg(ui->StopBitsBox->currentText()));
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::setFlowBox(int index)
-{
-    bool ok = false;
-    int value = ui->FlowBox->itemData(index, Qt::UserRole).toInt(&ok);
-    if(!ok) return;
-    if(value < 0) return;
-
-    ok = serial5->setFlowControl(static_cast<QSerialPort::FlowControl>(value));
-    if(!ok) emit error("error set flow");
-    else emit info(QString("set %1").arg(ui->FlowBox->currentText()));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setCloseState(void)
@@ -418,10 +295,10 @@ void SerialBox5::btnOpenPortClicked()
 {
     int idx = 0;
 
-    bool result = serial5->isOpen();
+    bool result = isOpen();
     if (result)
     {
-        serial5->close();
+        serial_close();
         result = false;
     }
     else
@@ -429,30 +306,30 @@ void SerialBox5::btnOpenPortClicked()
         QString text = ui->PortBox->currentText();
         if(text.isEmpty())
         {
-            if(serial5->isOpen())
+            if(isOpen())
             {
-                serial5->close();
+                serial_close();
             }
             setCloseState();
             return;
         }
-        serial5->setPortName(text);
-        result = serial5->open(QIODevice::ReadWrite);
+        setPortName(text);
+        result = serial_open();
         if(result)
         {
-            idx = ui->BaudBox->findData(serial5->baudRate());
+            idx = ui->BaudBox->findData(baudRate());
             if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
-            idx = ui->DataBitsBox->findData(serial5->dataBits());
+            idx = ui->DataBitsBox->findData(dataBits());
             if (idx != -1) ui->DataBitsBox->setCurrentIndex(idx);
 
-            idx = ui->ParityBox->findData(serial5->parity());
+            idx = ui->ParityBox->findData(parity());
             if (idx != -1) ui->ParityBox->setCurrentIndex(idx);
 
-            idx = ui->StopBitsBox->findData(serial5->stopBits());
+            idx = ui->StopBitsBox->findData(stopBits());
             if (idx != -1) ui->StopBitsBox->setCurrentIndex(idx);
 
-            idx = ui->FlowBox->findData(serial5->flowControl());
+            idx = ui->FlowBox->findData(flowControl());
             if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
 
             get_parameter();
@@ -461,8 +338,8 @@ void SerialBox5::btnOpenPortClicked()
         else
         {
             emit error(QString("ERROR: serial [%1] not open (%2)")
-                       .arg(serial5->portName())
-                       .arg(serial5->errorString()));
+                       .arg(portName())
+                       .arg(errorString()));
             emit port_is_active(false);
         }
     }
@@ -473,13 +350,7 @@ void SerialBox5::btnOpenPortClicked()
 int SerialBox5::input(const QByteArray &sending_data)
 {
     emit trace(QString("SerialBox5::input [%1]").arg(sending_data.toHex().data()));
-    if(!serial5)
-    {
-        emit error("E_PORT_NOT_INIT");
-        emit port_is_active(false);
-        return E_PORT_NOT_INIT;
-    }
-    if(!serial5->isOpen())
+    if(!isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
@@ -489,7 +360,7 @@ int SerialBox5::input(const QByteArray &sending_data)
     {
         emit debug("flag_byte_by_byte");
         for(int n=0; n<sending_data.length(); n++)
-            serial5->write(sending_data.constData()+n, 1);
+            write(sending_data.constData()+n, 1);
     }
     else
     {
@@ -507,7 +378,7 @@ int SerialBox5::input(const QByteArray &sending_data)
         {
             emit debug(QString("send [%1]").arg(sending_data.toHex().toUpper().data()));
         }
-        serial5->write(sending_data);
+        write(sending_data);
     }
     return E_NO_ERROR;
 }
@@ -518,13 +389,7 @@ int SerialBox5::input(const QString &data)
     qDebug() << data;
 #endif
 
-    if(!serial5)
-    {
-        emit error("E_PORT_NOT_INIT");
-        emit port_is_active(false);
-        return E_PORT_NOT_INIT;
-    }
-    if(!serial5->isOpen())
+    if(!isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
@@ -537,36 +402,14 @@ int SerialBox5::input(const QString &data)
     {
         for(int n=0; n<sending_data.length(); n++)
         {
-            serial5->write(sending_data.constData()+n, 1);
+            write(sending_data.constData()+n, 1);
         }
     }
     else
     {
-        serial5->write(sending_data);
+        write(sending_data);
     }
     return E_NO_ERROR;
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::procSerialDataReceive(void)
-{
-    if(!serial5)
-    {
-        return;
-    }
-    if(!serial5->isOpen())
-    {
-        return;
-    }
-
-    if (!timer->isActive())
-        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
-    else
-        timer->stop();
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::timer_stop(void)
-{
-    emit output(serial5->readAll()); //TODO проверить
 }
 //--------------------------------------------------------------------------------
 QString SerialBox5::ByteArrayToHex(const QByteArray &data)
@@ -580,12 +423,12 @@ void SerialBox5::sendData(const QByteArray &sending_data)
     {
         for(int n=0; n<sending_data.length(); n++)
         {
-            serial5->write(sending_data.constData()+n, 1);
+            write(sending_data.constData()+n, 1);
         }
     }
     else
     {
-        serial5->write(sending_data);
+        write(sending_data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -595,8 +438,68 @@ void SerialBox5::drawData(const QByteArray &data)
 #ifdef RS232_LOG
     logBox->infoLog(data.data());
 #else
-    Q_UNUSED(data);
+    Q_UNUSED(data)
 #endif
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::setBaudBox(int index)
+{
+    bool ok = false;
+    int value = ui->BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+    if(value < 0) return;
+
+    ok = setBaudRate(value);
+    if(!ok) emit error("error set baud");
+    else emit info(QString("set %1").arg(ui->BaudBox->currentText()));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::setDataBox(int index)
+{
+    bool ok = false;
+    int value = ui->DataBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+    if(value < 0) return;
+
+    ok = setDataBits(static_cast<QSerialPort::DataBits>(value));
+    if(!ok) emit error("error set data");
+    else emit info(QString("set %1").arg(ui->DataBitsBox->currentText()));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::setParityBox(int index)
+{
+    bool ok = false;
+    int value = ui->ParityBox->itemData(index, Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+    if(value < 0) return;
+
+    ok = setParity(static_cast<QSerialPort::Parity>(value));
+    if(!ok) emit error("error set parity");
+    else emit info(QString("set %1").arg(ui->ParityBox->currentText()));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::setStopBox(int index)
+{
+    bool ok = false;
+    int value = ui->StopBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+    if(value < 0) return;
+
+    ok = setStopBits(static_cast<QSerialPort::StopBits>(value));
+    if(!ok) emit error("error set stopbit");
+    else emit info(QString("set %1").arg(ui->StopBitsBox->currentText()));
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::setFlowBox(int index)
+{
+    bool ok = false;
+    int value = ui->FlowBox->itemData(index, Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+    if(value < 0) return;
+
+    ok = setFlowControl(static_cast<QSerialPort::FlowControl>(value));
+    if(!ok) emit error("error set flow");
+    else emit info(QString("set %1").arg(ui->FlowBox->currentText()));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::updateText(void)
@@ -625,11 +528,6 @@ void SerialBox5::load_setting(void)
 void SerialBox5::save_setting(void)
 {
 
-}
-//--------------------------------------------------------------------------------
-bool SerialBox5::isOpen(void)
-{
-    return serial5->isOpen();
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::add_menu(int index)
@@ -681,36 +579,36 @@ void SerialBox5::set_flag_byte_by_byte(bool state)
 //--------------------------------------------------------------------------------
 void SerialBox5::set_default(void)
 {
-    if(serial5->isOpen())
+    if(isOpen())
     {
-        serial5->setBaudRate(9600);
-        serial5->setDataBits(QSerialPort::Data8);
-        serial5->setParity(QSerialPort::NoParity);
-        serial5->setStopBits(QSerialPort::OneStop);
-        serial5->setFlowControl(QSerialPort::NoFlowControl);
+        setBaudRate(9600);
+        setDataBits(QSerialPort::Data8);
+        setParity(QSerialPort::NoParity);
+        setStopBits(QSerialPort::OneStop);
+        setFlowControl(QSerialPort::NoFlowControl);
 
         int idx = 0;
 
-        idx = ui->BaudBox->findData(serial5->baudRate());
+        idx = ui->BaudBox->findData(baudRate());
         if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
-        idx = ui->DataBitsBox->findData(serial5->dataBits());
+        idx = ui->DataBitsBox->findData(dataBits());
         if (idx != -1) ui->DataBitsBox->setCurrentIndex(idx);
 
-        idx = ui->ParityBox->findData(serial5->parity());
+        idx = ui->ParityBox->findData(parity());
         if (idx != -1) ui->ParityBox->setCurrentIndex(idx);
 
-        idx = ui->StopBitsBox->findData(serial5->stopBits());
+        idx = ui->StopBitsBox->findData(stopBits());
         if (idx != -1) ui->StopBitsBox->setCurrentIndex(idx);
 
-        idx = ui->FlowBox->findData(serial5->flowControl());
+        idx = ui->FlowBox->findData(flowControl());
         if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
     }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::get_parameter(void)
 {
-    if(serial5->isOpen() == false)
+    if(isOpen() == false)
     {
         return;
     }
@@ -719,11 +617,11 @@ void SerialBox5::get_parameter(void)
     temp.clear();
 #if 1
     temp = QString("%1, %2, %3, %4, %5")
-            .arg(serial5->baudRate())
-            .arg(serial5->dataBits())
-            .arg(serial5->parity())
-            .arg(serial5->stopBits())
-            .arg(serial5->flowControl());
+            .arg(baudRate())
+            .arg(dataBits())
+            .arg(parity())
+            .arg(stopBits())
+            .arg(flowControl());
 #endif
     emit info(temp);
 }
@@ -740,75 +638,65 @@ void SerialBox5::add_QHBoxLayout(QHBoxLayout * hbox)
     ui->buttons_layout->addLayout(hbox);
 }
 //--------------------------------------------------------------------------------
-QByteArray SerialBox5::readAll(void)
-{
-    return serial5->readAll();
-}
-//--------------------------------------------------------------------------------
-qint64 SerialBox5::bytesAvailable(void)
-{
-    return serial5->bytesAvailable();
-}
-//--------------------------------------------------------------------------------
 bool SerialBox5::set_baudRate(qint32 value)
 {
-    return serial5->setBaudRate(value);
+    return setBaudRate(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::set_dataBits(QSerialPort::DataBits value)
 {
-    return serial5->setDataBits(value);
+    return setDataBits(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::set_parity(QSerialPort::Parity value)
 {
-    return serial5->setParity(value);
+    return setParity(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::set_stopBits(QSerialPort::StopBits value)
 {
-    return serial5->setStopBits(value);
+    return setStopBits(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::set_flowControl(QSerialPort::FlowControl value)
 {
-    return serial5->setFlowControl(value);
+    return setFlowControl(value);
 }
 //--------------------------------------------------------------------------------
 qint32 SerialBox5::get_baudRate(void)
 {
-    return serial5->baudRate();
+    return baudRate();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::DataBits       SerialBox5::get_dataBits(void)
 {
-    return serial5->dataBits();
+    return dataBits();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::Parity         SerialBox5::get_parity(void)
 {
-    return serial5->parity();
+    return parity();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::StopBits       SerialBox5::get_stopBits(void)
 {
-    return serial5->stopBits();
+    return stopBits();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::FlowControl    SerialBox5::get_flowControl(void)
 {
-    return serial5->flowControl();
+    return flowControl();
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::power_on(void)
 {
-    if(serial5->isOpen())
+    if(isOpen())
     {
         return false;
     }
 
     bool ok = false;
-    ok = serial5->open(QIODevice::ReadWrite);
+    ok = serial_open();
     btnOpenPortClicked();
 
     return ok;
@@ -816,9 +704,9 @@ bool SerialBox5::power_on(void)
 //--------------------------------------------------------------------------------
 bool SerialBox5::power_off(void)
 {
-    if(serial5->isOpen())
+    if(isOpen())
     {
-        serial5->close();
+        serial_close();
     }
     btnOpenPortClicked();
 
@@ -845,11 +733,6 @@ void SerialBox5::dataBitsChanged(QSerialPort::DataBits dataBits)
 void SerialBox5::dataTerminalReadyChanged(bool set)
 {
     emit debug(QString("dataTerminalReadyChanged %1").arg(set));
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::errorOccurred(QSerialPort::SerialPortError error)
-{
-    serial5_error(error);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::flowControlChanged(QSerialPort::FlowControl flow)

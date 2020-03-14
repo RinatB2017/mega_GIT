@@ -42,7 +42,7 @@ typedef enum
 } ERRORS;
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent) :
-    MyWidget(parent),
+    SerialWidget(parent),
     ui(new Ui::SerialBox5_fix_baudrate),
     parent(parent),
     caption("no name"),
@@ -55,7 +55,7 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent) :
 SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
                                                  const QString &caption,
                                                  const QString &o_name) :
-    MyWidget(parent),
+    SerialWidget(parent),
     ui(new Ui::SerialBox5_fix_baudrate),
     parent(parent),
     caption(caption),
@@ -76,13 +76,6 @@ SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
         sendBox5->deleteLater();
     }
 #endif
-
-    if(serial5)
-    {
-        serial5->disconnect();
-        serial5->close();
-        delete serial5;
-    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -94,48 +87,33 @@ void SerialBox5_fix_baudrate::set_caption(QString value)
 //--------------------------------------------------------------------------------
 bool SerialBox5_fix_baudrate::set_fix_baudrate(int value)
 {
-    bool ok = false;
     fix_baudrate = value;
-    if(serial5)
-    {
-        ok = serial5->setBaudRate(value);
-    }
-    return ok;
+    return setBaudRate(value);
 }
 //--------------------------------------------------------------------------------
 qint32 SerialBox5_fix_baudrate::get_baudRate(void)
 {
-    return serial5->baudRate();
+    return baudRate();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::DataBits       SerialBox5_fix_baudrate::get_dataBits(void)
 {
-    return serial5->dataBits();
+    return dataBits();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::Parity         SerialBox5_fix_baudrate::get_parity(void)
 {
-    return serial5->parity();
+    return parity();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::StopBits       SerialBox5_fix_baudrate::get_stopBits(void)
 {
-    return serial5->stopBits();
+    return stopBits();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::FlowControl    SerialBox5_fix_baudrate::get_flowControl(void)
 {
-    return serial5->flowControl();
-}
-//--------------------------------------------------------------------------------
-qint64 SerialBox5_fix_baudrate::bytesAvailable(void)
-{
-    return serial5->bytesAvailable();
-}
-//--------------------------------------------------------------------------------
-qint64 SerialBox5_fix_baudrate::write(const char *data)
-{
-    return serial5->write(data);
+    return flowControl();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::init(void)
@@ -196,38 +174,18 @@ void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
 void SerialBox5_fix_baudrate::refresh(void)
 {
     ui->PortBox->clear();
-    foreach (QSerialPortInfo p_info, QSerialPortInfo::availablePorts())
-    {
-        ui->PortBox->addItem(p_info.portName());
-    }
+    ui->PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::initSerial(void)
 {
-#ifdef FAKE
-    serial5 = new FakeSerialBox5(this);
+    ui->PortBox->setProperty(NO_SAVE, true);
+    ui->btn_refresh->setToolTip("Обновить список портов");
 
-    connect(serial5,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(serial5,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(serial5,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(serial5,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
-#else
-    serial5 = new QSerialPort(this);
-#endif
-    Q_CHECK_PTR(serial5);
+    connect(ui->btn_power,  &QToolButton::toggled,  this,   &SerialBox5_fix_baudrate::change_icon);
 
-    connect(serial5,    SIGNAL(readyRead()),            this,   SIGNAL(readyRead(void)));
-    connect(serial5,    SIGNAL(readChannelFinished()),  this,   SIGNAL(readChannelFinished(void)));
-
-    //TODO
-    timer = new QTimer();
-    connect(timer,  SIGNAL(timeout()),  this,   SLOT(timer_stop()));
-
-    connect(serial5, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-    connect(serial5, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
-
-    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
-
+    connect(this,   &SerialBox5_fix_baudrate::port_close,    this,   &SerialBox5_fix_baudrate::setCloseState);
+    connect(this,   &SerialBox5_fix_baudrate::port_open,     this,   &SerialBox5_fix_baudrate::setOpenState);
     refresh();
 }
 //--------------------------------------------------------------------------------
@@ -243,46 +201,6 @@ void SerialBox5_fix_baudrate::change_icon(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::serial5_error(QSerialPort::SerialPortError err)
-{
-    if(err == QSerialPort::NoError)
-    {
-        return;
-    }
-
-    switch(err)
-    {
-    case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
-    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
-    case QSerialPort::OpenError:                    emit error("OpenError");                    break;
-    case QSerialPort::ParityError:                  emit error("ParityError");                  break;
-    case QSerialPort::FramingError:                 emit error("FramingError");                 break;
-    case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
-    case QSerialPort::WriteError:                   emit error("WriteError");                   break;
-    case QSerialPort::ReadError:                    emit error("ReadError");                    break;
-    case QSerialPort::ResourceError:                emit error("ResourceError");                break;
-    case QSerialPort::UnsupportedOperationError:    emit error("UnsupportedOperationError");    break;
-    case QSerialPort::UnknownError:                 emit error("UnknownError");                 break;
-    case QSerialPort::TimeoutError:                 emit error("TimeoutError");                 break;
-    case QSerialPort::NotOpenError:                 emit error("NotOpenError");                 break;
-
-    default:
-        emit error(QString("unknown error %1").arg(err));
-        break;
-    }
-
-    if(err != QSerialPort::NoError)
-    {
-        if(serial5->isOpen())
-        {
-            serial5->close();
-        }
-    }
-
-    setCloseState();
-    //TODO refresh();
-}
-//--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current)
 {
     emit info(QString("%1 %2")
@@ -294,8 +212,6 @@ void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::setCloseState(void)
 {
-    //ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop)));
-
     ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
@@ -308,8 +224,6 @@ void SerialBox5_fix_baudrate::setCloseState(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::setOpenState()
 {
-    //ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
-
     ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
@@ -322,58 +236,49 @@ void SerialBox5_fix_baudrate::setOpenState()
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::btnOpenPortClicked()
 {
-    if (serial5)
+    bool result = isOpen();
+    if (result)
     {
-        bool result = serial5->isOpen();
-        if (result)
+        serial_close();
+        result = false;
+    }
+    else
+    {
+        QString text = ui->PortBox->currentText();
+        if(text.isEmpty())
         {
-            serial5->close();
-            result = false;
+            if(isOpen())
+            {
+                port_close();
+            }
+            setCloseState();
+            return;
+        }
+        setPortName(text);
+        result = serial_open();
+        if(result)
+        {
+            bool ok = setBaudRate(fix_baudrate);
+            if(!ok)
+            {
+                emit error(QString("Не удалось установить baudrate %1").arg(fix_baudrate));
+            }
+            get_parameter();
         }
         else
         {
-            QString text = ui->PortBox->currentText();
-            if(text.isEmpty())
-            {
-                if(serial5->isOpen())
-                {
-                    serial5->close();
-                }
-                setCloseState();
-                return;
-            }
-            serial5->setPortName(text);
-            result = serial5->open(QIODevice::ReadWrite);
-            if(result)
-            {
-                bool ok = serial5->setBaudRate(fix_baudrate);
-                if(!ok)
-                {
-                    emit error(QString("Не удалось установить baudrate %1").arg(fix_baudrate));
-                }
-                get_parameter();
-            }
-            else
-            {
-                emit error(QString("ERROR: serial [%1] not open (%2)")
-                           .arg(serial5->portName())
-                           .arg(serial5->errorString()));
-            }
+            emit error(QString("ERROR: serial [%1] not open (%2)")
+                       .arg(portName())
+                       .arg(errorString()));
         }
-
-        (result) ? setOpenState() : setCloseState();
     }
+
+    (result) ? setOpenState() : setCloseState();
 }
 //--------------------------------------------------------------------------------
 int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
 {
-    if(!serial5)
-    {
-        emit error("E_PORT_NOT_INIT");
-        emit port_is_active(false);
-        return E_PORT_NOT_INIT;
-    }
-    if(!serial5->isOpen())
+    if(!isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
@@ -383,7 +288,7 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
     {
         emit debug("flag_byte_by_byte");
         for(int n=0; n<sending_data.length(); n++)
-            serial5->write(sending_data.constData()+n, 1);
+            write(sending_data.constData()+n, 1);
     }
     else
     {
@@ -401,7 +306,7 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
         {
             emit debug(QString("send [%1]").arg(sending_data.toHex().toUpper().data()));
         }
-        serial5->write(sending_data);
+        write(sending_data);
     }
     return E_NO_ERROR;
 }
@@ -409,13 +314,7 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
 int SerialBox5_fix_baudrate::input(const QString &data)
 {
     qDebug() << data;
-    if(!serial5)
-    {
-        emit error("E_PORT_NOT_INIT");
-        emit port_is_active(false);
-        return E_PORT_NOT_INIT;
-    }
-    if(!serial5->isOpen())
+    if(!isOpen())
     {
         emit error("E_PORT_NOT_OPEN");
         emit port_is_active(false);
@@ -428,39 +327,14 @@ int SerialBox5_fix_baudrate::input(const QString &data)
     {
         for(int n=0; n<sending_data.length(); n++)
         {
-            serial5->write(sending_data.constData()+n, 1);
+            write(sending_data.constData()+n, 1);
         }
     }
     else
     {
-        serial5->write(sending_data);
+        write(sending_data);
     }
     return E_NO_ERROR;
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::procSerialDataReceive(void)
-{
-    if(!serial5)
-    {
-        return;
-    }
-    if(!serial5->isOpen())
-    {
-        return;
-    }
-
-    //TODO было
-    // emit output(serial5->readAll());
-
-    if (!timer->isActive())
-        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
-    else
-        timer->stop();
-}
-//--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::timer_stop(void)
-{
-    emit output(serial5->readAll());
 }
 //--------------------------------------------------------------------------------
 QString SerialBox5_fix_baudrate::ByteArrayToHex(const QByteArray &data)
@@ -513,43 +387,19 @@ void SerialBox5_fix_baudrate::sendData(const QByteArray &sending_data)
     {
         for(int n=0; n<sending_data.length(); n++)
         {
-            serial5->write(sending_data.constData()+n, 1);
+            write(sending_data.constData()+n, 1);
         }
     }
     else
     {
-        serial5->write(sending_data);
+        write(sending_data);
     }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::drawData(const QByteArray &data)
 {
     // qDebug() << "drawData[" << data << "]";
-#ifdef RS232_LOG
-    if(flag_in_hex)
-    {
-        emit info(ByteArrayToHex(data));
-    }
-    else
-    {
-        emit info(data.data());
-    }
-    if(flag_in_hex)
-    {
-        emit info(ByteArrayToHex(data));
-    }
-    else
-    {
-        //emit info(data);
-    }
-#else
     Q_UNUSED(data)
-#endif
-}
-//--------------------------------------------------------------------------------
-bool SerialBox5_fix_baudrate::isOpen(void)
-{
-    return serial5->isOpen();
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5_fix_baudrate::add_menu(int index)
@@ -624,33 +474,28 @@ void SerialBox5_fix_baudrate::set_flag_byte_by_byte(bool state)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::get_parameter(void)
 {
-    if(serial5->isOpen() == false)
+    if(isOpen() == false)
     {
         return;
     }
 
     QString temp;
     temp.clear();
-#if 1
-    emit info(QString("baudRate %1").arg(serial5->baudRate()));
-    emit info(QString("dataBits %1").arg(serial5->dataBits()));
-    emit info(QString("parity %1").arg(serial5->parity()));
-    emit info(QString("stopBits %1").arg(serial5->stopBits()));
-    emit info(QString("flowControl %1").arg(serial5->flowControl()));
+#if 0
+    emit info(QString("baudRate %1").arg(baudRate()));
+    emit info(QString("dataBits %1").arg(dataBits()));
+    emit info(QString("parity %1").arg(parity()));
+    emit info(QString("stopBits %1").arg(stopBits()));
+    emit info(QString("flowControl %1").arg(flowControl()));
 #else
     temp = QString("%1, %2, %3, %4, %5")
-            .arg(serial5->baudRate())
-            .arg(serial5->dataBits())
-            .arg(serial5->parity())
-            .arg(serial5->stopBits())
-            .arg(serial5->flowControl());
+            .arg(baudRate())
+            .arg(dataBits())
+            .arg(parity())
+            .arg(stopBits())
+            .arg(flowControl());
 #endif
     emit info(temp);
-}
-//--------------------------------------------------------------------------------
-QByteArray SerialBox5_fix_baudrate::readAll(void)
-{
-    return serial5->readAll();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::set_test(bool value)
@@ -666,11 +511,10 @@ bool SerialBox5_fix_baudrate::get_test(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::updateText(void)
 {
-    ui->retranslateUi(this);
-
 #ifdef RS232_SEND
     sendBox5->updateText();
 #endif
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5_fix_baudrate::programm_is_exit(void)

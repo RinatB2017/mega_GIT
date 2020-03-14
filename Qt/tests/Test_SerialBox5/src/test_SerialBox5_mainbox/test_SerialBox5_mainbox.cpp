@@ -70,10 +70,10 @@ void MainBox::init_serial_widgets(void)
     ui->serial_widget_fix_baudrate->set_fix_baudrate(BAUDRATE);
     ui->serial_widget_fix_baudrate_win7->set_fix_baudrate(BAUDRATE);
 
-    connect(ui->serial_widget,                      SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
-    connect(ui->serial_widget_lite,                 SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
-    connect(ui->serial_widget_fix_baudrate,         SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
-    connect(ui->serial_widget_fix_baudrate_win7,    SIGNAL(output(QByteArray)), this,   SLOT(serial_data(QByteArray)));
+    connect(ui->serial_widget,                      &SerialBox5::output,                    this,   &MainBox::serial_data);
+    connect(ui->serial_widget_lite,                 &SerialBox5_lite::output,               this,   &MainBox::serial_data);
+    connect(ui->serial_widget_fix_baudrate,         &SerialBox5_fix_baudrate::output,       this,   &MainBox::serial_data);
+    connect(ui->serial_widget_fix_baudrate_win7,    &SerialBox5_fix_baudrate_win7::output,  this,   &MainBox::serial_data);
 
     ui->btn_serial_widget->setDisabled(true);
     ui->btn_serial_widget_lite->setDisabled(true);
@@ -84,6 +84,12 @@ void MainBox::init_serial_widgets(void)
     connect(ui->serial_widget_lite,                 &SerialBox5_lite::port_is_active,               ui->btn_serial_widget_lite,                 &QToolButton::setEnabled);
     connect(ui->serial_widget_fix_baudrate,         &SerialBox5_fix_baudrate::port_is_active,       ui->btn_serial_widget_fix_baudrate,         &QToolButton::setEnabled);
     connect(ui->serial_widget_fix_baudrate_win7,    &SerialBox5_fix_baudrate_win7::port_is_active,  ui->btn_serial_widget_fix_baudrate_win7,    &QToolButton::setEnabled);
+
+    //TODO
+#if 0
+    ui->serial_widget_fix_baudrate_win7->setVisible(false);
+    ui->btn_serial_widget_fix_baudrate_win7->setVisible(false);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

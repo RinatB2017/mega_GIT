@@ -27,9 +27,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include <QSerialPortInfo>
-#include <QSerialPort>
-//--------------------------------------------------------------------------------
+#include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class QHBoxLayout;
@@ -42,7 +40,7 @@ namespace Ui
     class SerialBox5;
 }
 //--------------------------------------------------------------------------------
-class SerialBox5 : public MyWidget
+class SerialBox5 : public SerialWidget
 {
     Q_OBJECT
 
@@ -60,15 +58,11 @@ public:
     SerialBox5(QWidget *parent = nullptr);
     ~SerialBox5();
 
-    bool isOpen(void);
-
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
 
     QPushButton *add_QPushButton(const QString &title);
     void add_QHBoxLayout(QHBoxLayout *hbox);
-
-    QByteArray readAll(void);
 
     void set_caption(QString value);
 
@@ -87,12 +81,9 @@ public:
     bool power_on(void);
     bool power_off(void);
 
-    qint64 bytesAvailable(void);
-
 private:
     Ui::SerialBox5 *ui;
     QWidget *parent;
-    QSerialPort *serial5;
     QString caption;
     QString o_name;
 
@@ -105,8 +96,6 @@ private:
 #ifdef RS232_SEND
     SendBox5 *sendBox5;
 #endif
-
-    QTimer *timer;
 
 #ifndef RS232_NO_FRAME
     QFrame *frame_ring;
@@ -124,12 +113,6 @@ private:
     void setCloseState(void);
     QString ByteArrayToHex(const QByteArray &data);
 
-signals:
-    void readyRead(void);
-    void readChannelFinished(void);
-    void output(const QByteArray &data);
-    void port_is_active(bool);
-
 public slots:
     int input(const QByteArray &sending_data);
     int input(const QString &data);
@@ -143,7 +126,14 @@ private slots:
 
     void refresh(void);
 
-    void procSerialDataReceive(void);
+    void baudRateChanged(qint32 baudRate, QSerialPort::Directions);
+    void breakEnabledChanged(bool set);
+    void dataBitsChanged(QSerialPort::DataBits dataBits);
+    void dataTerminalReadyChanged(bool set);
+    void flowControlChanged(QSerialPort::FlowControl flow);
+    void parityChanged(QSerialPort::Parity parity);
+    void requestToSendChanged(bool set);
+    void stopBitsChanged(QSerialPort::StopBits stopBits);
 
     void setBaudBox(int index);
     void setDataBox(int index);
@@ -151,25 +141,11 @@ private slots:
     void setStopBox(int index);
     void setFlowBox(int index);
 
-    void baudRateChanged(qint32 baudRate, QSerialPort::Directions);
-    void breakEnabledChanged(bool set);
-    void dataBitsChanged(QSerialPort::DataBits dataBits);
-    void dataTerminalReadyChanged(bool set);
-    void errorOccurred(QSerialPort::SerialPortError error);
-    void flowControlChanged(QSerialPort::FlowControl flow);
-    void parityChanged(QSerialPort::Parity parity);
-    void requestToSendChanged(bool set);
-    void stopBitsChanged(QSerialPort::StopBits stopBits);
-
     void getStatus(const QString &status, QDateTime current);
-
-    void serial5_error(QSerialPort::SerialPortError err);
 
     void get_parameter(void);
 
     void set_default(void);
-
-    void timer_stop(void);
 
     void updateText(void);
     bool programm_is_exit(void);

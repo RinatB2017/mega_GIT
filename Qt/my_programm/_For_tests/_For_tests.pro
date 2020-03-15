@@ -90,6 +90,8 @@ include ($$LIB_PATH/mywidgets/mytimer.pri)
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simple_mw/simple_mw.pri)
 
+include (src/test_widgets/widgets.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

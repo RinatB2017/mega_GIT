@@ -15,6 +15,8 @@ public:
     explicit Widget2(QWidget *parent = nullptr);
     ~Widget2();
 
+    void test(void);
+
 private:
     Ui::Widget2 *ui;
 };

@@ -155,6 +155,9 @@
     </widget>
    </item>
    <item>
+    <widget class="Widget1" name="widget" native="true"/>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -174,6 +177,12 @@
    <class>MyTimer</class>
    <extends>QWidget</extends>
    <header>mytimer.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Widget1</class>
+   <extends>QWidget</extends>
+   <header>widget1.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

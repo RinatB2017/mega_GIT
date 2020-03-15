@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "defines.hpp"
-//--------------------------------------------------------------------------------
 #include <qwt_plot_renderer.h>
 #include <qwt_plot_magnifier.h>
 #include <qwt_picker_machine.h>
@@ -43,6 +41,8 @@
 #include "grapherbox.hpp"
 #include "curvedata.hpp"
 #include "csvreader.hpp"
+
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef USE_SCALE_POINT_DATETIME
 class TimeScaleDraw: public QwtScaleDraw
@@ -83,6 +83,7 @@ public:
         return text;
     }
 };
+
 #elif defined(USE_SCALE_POINT_TIME)
 class TimeScaleDraw: public QwtScaleDraw
 {
@@ -468,6 +469,7 @@ void GrapherBox::create_widgets(void)
     d_picker->setRubberBand(QwtPicker::CrossRubberBand);
     d_picker->setTrackerPen(QColor(Qt::blue));
     d_picker->setStateMachine(new QwtPickerDragPointMachine());
+
 #elif defined(USE_SCALE_POINT_TIME)
     d_picker = new PlotPicker(QwtPlot::xBottom,
                               QwtPlot::yLeft,
@@ -479,6 +481,7 @@ void GrapherBox::create_widgets(void)
     d_picker->setRubberBand(QwtPicker::CrossRubberBand);
     d_picker->setTrackerPen(QColor(Qt::blue));
     d_picker->setStateMachine(new QwtPickerDragPointMachine());
+
 #else
     d_picker = new QwtPlotPicker(QwtPlot::xBottom,
                                  QwtPlot::yLeft,
@@ -499,6 +502,7 @@ void GrapherBox::create_widgets(void)
     ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QTime::currentTime()));
 #elif defined(USE_SCALE_POINT_TIME)
     ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QTime::currentTime()));
+#else
 #endif
 
     connect(ui->btn_all_on,     SIGNAL(clicked(bool)),  this, SLOT(legends_all_on()));

@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "widget2.hpp"
 #include "ui_widget2.h"
 
@@ -11,4 +13,9 @@ Widget2::Widget2(QWidget *parent) :
 Widget2::~Widget2()
 {
     delete ui;
+}
+
+void Widget2::test(void)
+{
+    qDebug() << "test2";
 }

@@ -60,7 +60,8 @@ void Log_options::findCodecs(void)
         QTextCodec *codec = QTextCodec::codecForMib(mib);
         codecs.append(codec->name());
     }
-    qSort(codecs);
+    //qSort(codecs);
+    std::sort(codecs.begin(), codecs.end());
 
     ui->cb_CodecForCStrings->addItems(codecs);
 }

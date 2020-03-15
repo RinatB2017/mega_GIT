@@ -141,7 +141,8 @@ void GridItem::draw( QPainter *painter,
             xValues += area.right();
         }
 
-        qSort( xValues );
+        //qSort( xValues );
+        std::sort( xValues.begin(), xValues.end() );
     }
 
     QList<double> yValues;
@@ -161,7 +162,8 @@ void GridItem::draw( QPainter *painter,
             yValues += area.bottom();
         }
 
-        qSort( yValues );
+        //qSort( yValues );
+        std::sort( yValues.begin(), yValues.end() );
     }
 
     painter->setPen( Qt::NoPen );

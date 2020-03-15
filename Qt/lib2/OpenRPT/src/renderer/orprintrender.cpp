@@ -229,7 +229,8 @@ void renderWatermark(QImage & image,
     QFontInfo fi(fnt);
     QString family = fi.family();
     QList<int> sizes = QFontDatabase().pointSizes(family);
-    qSort(sizes);
+    //qSort(sizes);
+    std::sort(sizes.begin(), sizes.end());
 
     for(int i = sizes.size() - 1; i > 0; i--)
     {

@@ -51,7 +51,7 @@ private:
     Neuron *m_inputNeuron;
     Neuron *m_outputNeuron;
 
-    float m_iadd;
+    //float m_iadd;
     float m_prevWeight;
 
     float m_weight;

@@ -47,12 +47,7 @@ void Worker_fake::init(void)
 //--------------------------------------------------------------------------------
 void Worker_fake::input(QByteArray data)
 {
-    ui->log_widget->infoLog(data);
-    if(ui->cb_auto->isChecked())
-    {
-        emit output(data);
-        ui->log_widget->errorLog(data);
-    }
+
 }
 //--------------------------------------------------------------------------------
 void Worker_fake::port_open(void)

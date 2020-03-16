@@ -40,11 +40,17 @@ SerialWidget::~SerialWidget()
 void SerialWidget::init(void)
 {
     worker_fake = new Worker_fake(this);
-    worker_fake->show();
+
+    connect(worker_fake,    &Worker_fake::info,         this,           &SerialWidget::info);
+    connect(worker_fake,    &Worker_fake::debug,        this,           &SerialWidget::debug);
+    connect(worker_fake,    &Worker_fake::error,        this,           &SerialWidget::error);
+    connect(worker_fake,    &Worker_fake::trace,        this,           &SerialWidget::trace);
 
     connect(worker_fake,    &Worker_fake::output,       this,           &SerialWidget::output);
     connect(this,           &SerialWidget::port_open,   worker_fake,    &Worker_fake::port_open);
     connect(this,           &SerialWidget::port_close,  worker_fake,    &Worker_fake::port_close);
+
+    worker_fake->show();
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::isOpen(void)

@@ -53,13 +53,16 @@ win32 {
 RESOURCES += \
     ico/icons.qrc
 
-#----------------------------------------------
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+#----------------------------------------------
+#CONFIG  += use_worker
 include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
 #include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+#----------------------------------------------
+
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 !exists(OBJECTS_DIR) {

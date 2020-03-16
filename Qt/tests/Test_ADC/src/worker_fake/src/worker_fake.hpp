@@ -18,50 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "mainwindow.hpp"
-#include "worker_fake.hpp"
-#include "ui_worker_fake.h"
+#ifndef WORKER_FAKE_HPP
+#define WORKER_FAKE_HPP
 //--------------------------------------------------------------------------------
-Worker_fake::Worker_fake(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Worker_fake)
-{
-    init();
+#include <QWidget>
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class Worker_fake;
 }
 //--------------------------------------------------------------------------------
-Worker_fake::~Worker_fake()
+class Worker_fake : public QWidget
 {
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::init(void)
-{
-    ui->setupUi(this);
+    Q_OBJECT
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
-    }
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::input(QByteArray data)
-{
-    ui->log_widget->infoLog(data);
-    if(ui->cb_auto->isChecked())
-    {
-        emit output(data);
-        ui->log_widget->errorLog(data);
-    }
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_open(void)
-{
+signals:
+    void output(QByteArray text);
 
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_close(void)
-{
+public:
+    explicit Worker_fake(QWidget *parent = nullptr);
+    ~Worker_fake();
 
-}
+    void input(QByteArray data);
+    void port_open(void);
+    void port_close(void);
+
+private slots:
+    void update(void);
+
+private:
+    Ui::Worker_fake *ui;
+    QTimer *timer = nullptr;
+
+    void init(void);
+};
 //--------------------------------------------------------------------------------
+#endif // Worker_fake_HPP

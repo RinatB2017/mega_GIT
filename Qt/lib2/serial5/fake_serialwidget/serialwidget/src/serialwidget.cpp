@@ -30,19 +30,21 @@ SerialWidget::SerialWidget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 SerialWidget::~SerialWidget()
 {
-    if(serial_log)
+    if(worker_fake)
     {
-        serial_log->disconnect();
-        serial_log->deleteLater();
+        worker_fake->disconnect();
+        worker_fake->deleteLater();
     }
 }
 //--------------------------------------------------------------------------------
 void SerialWidget::init(void)
 {
-    serial_log = new Worker_fake(this);
-    serial_log->show();
+    worker_fake = new Worker_fake(this);
+    worker_fake->show();
 
-    connect(serial_log, &Worker_fake::output,    this,       &SerialWidget::output);
+    connect(worker_fake,    &Worker_fake::output,       this,           &SerialWidget::output);
+    connect(this,           &SerialWidget::port_open,   worker_fake,    &Worker_fake::port_open);
+    connect(this,           &SerialWidget::port_close,  worker_fake,    &Worker_fake::port_close);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::isOpen(void)
@@ -53,12 +55,14 @@ bool SerialWidget::isOpen(void)
 bool SerialWidget::serial_open(void)
 {
     f_port_open = true;
+    emit port_open();
     return f_port_open;
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::serial_close(void)
 {
     f_port_open = false;
+    emit port_close();
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -141,7 +145,7 @@ QSerialPort::FlowControl SerialWidget::flowControl(void)
 qint64 SerialWidget::write(const char *data, qint64 len)
 {
     port_data.append(data, static_cast<int>(len));
-    serial_log->input(data);
+    worker_fake->input(data);
 //    emit readyRead();
 //    emit output(readAll());
     return true;
@@ -150,7 +154,7 @@ qint64 SerialWidget::write(const char *data, qint64 len)
 qint64 SerialWidget::write(const char *data)
 {
     port_data.append(data);
-    serial_log->input(data);
+    worker_fake->input(data);
 //    emit readyRead();
 //    emit output(readAll());
     return true;
@@ -159,7 +163,7 @@ qint64 SerialWidget::write(const char *data)
 qint64 SerialWidget::write(const QByteArray &data)
 {
     port_data.append(data);
-    serial_log->input(data);
+    worker_fake->input(data);
 //    emit readyRead();
 //    emit output(readAll());
     return true;

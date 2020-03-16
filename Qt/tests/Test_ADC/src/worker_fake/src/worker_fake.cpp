@@ -38,6 +38,11 @@ void Worker_fake::init(void)
 {
     ui->setupUi(this);
 
+    timer = new QTimer(this);
+    connect(timer,  &QTimer::timeout,   this,   &Worker_fake::update);
+
+    ui->sb_interval->setRange(100, 10000);
+
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -47,21 +52,44 @@ void Worker_fake::init(void)
 //--------------------------------------------------------------------------------
 void Worker_fake::input(QByteArray data)
 {
-    ui->log_widget->infoLog(data);
-    if(ui->cb_auto->isChecked())
-    {
-        emit output(data);
-        ui->log_widget->errorLog(data);
-    }
+    Q_UNUSED(data)
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::update(void)
+{
+    int a = 100;
+    int b = 50;
+    QString temp = QString(":data|%1|%2|%3|%4|%5|%6")
+            .arg(static_cast<qreal>(rand() % a - b))
+            .arg(static_cast<qreal>(rand() % a - b))
+            .arg(static_cast<qreal>(rand() % a - b))
+            .arg(static_cast<qreal>(rand() % a - b))
+            .arg(static_cast<qreal>(rand() % a - b))
+            .arg(static_cast<qreal>(rand() % a - b));
+
+    QByteArray data;
+    data.append(temp);
+    data.append(static_cast<char>(0x0A));
+
+    emit output(data);
+    //ui->log_widget->errorLog(data);
 }
 //--------------------------------------------------------------------------------
 void Worker_fake::port_open(void)
 {
-
+    qDebug() << "port_open";
+    if(timer)
+    {
+        timer->start(ui->sb_interval->value());
+    }
 }
 //--------------------------------------------------------------------------------
 void Worker_fake::port_close(void)
 {
-
+    qDebug() << "port_close";
+    if(timer)
+    {
+        timer->stop();
+    }
 }
 //--------------------------------------------------------------------------------

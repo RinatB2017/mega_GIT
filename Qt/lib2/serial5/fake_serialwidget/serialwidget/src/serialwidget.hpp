@@ -92,7 +92,7 @@ private:
     bool f_port_open = false;
     QByteArray port_data;
 
-    Worker_fake *serial_log = nullptr;
+    Worker_fake *worker_fake = nullptr;
 
     QString port_name = "FAKE";
     qint32 port_BaudRate = 9600;

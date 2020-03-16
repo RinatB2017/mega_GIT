@@ -16,7 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
-DEFINES += USE_SCALE_POINT_TIME
+#DEFINES += USE_SCALE_POINT_TIME
 #DEFINES += NO_GRAPHER
 
 DEFINES += NEED_CODEC
@@ -55,8 +55,16 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
+
+
+#----------------------------------------------
+#CONFIG  += use_worker
+#include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
+#include (src/worker_fake/worker_fake.pri)
+
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
+#----------------------------------------------
 
 include ($$LIB_PATH2/DataGrapherBox/DataGrapherBox.pri)
 

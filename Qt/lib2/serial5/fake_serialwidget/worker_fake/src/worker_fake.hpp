@@ -39,6 +39,8 @@ public:
     ~Worker_fake();
 
     void input(QByteArray data);
+    void port_open(void);
+    void port_close(void);
 
 private:
     Ui::Worker_fake *ui;

@@ -39,6 +39,7 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
+class SimpleWidget;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -111,6 +112,7 @@ private:
         obj->setText(QString("x = %1").arg(x));
         cb_test->setCurrentIndex(2);
     }
+    SimpleWidget *sw = nullptr; // инициировать надо явно, иначе if(sw) ошибётся
     //---
 
     void init(void);

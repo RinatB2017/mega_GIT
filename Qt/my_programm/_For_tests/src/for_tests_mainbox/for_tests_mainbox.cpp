@@ -23,6 +23,9 @@
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
+
+#include "simplewidget.hpp"
+
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -37,6 +40,11 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets();
+
+    if(sw)
+    {
+        sw->deleteLater();
+    }
 
     delete ui;
 }
@@ -75,6 +83,11 @@ void MainBox::init(void)
     }
 #endif
     load_widgets();
+
+#if 1
+    sw = new SimpleWidget();
+    sw->show();
+#endif
 
     //TODO xxx
     ui->btn_ok->setProperty("xxx", 1);
@@ -306,7 +319,7 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     print_mp(ui->timer_widget);
 #endif
 

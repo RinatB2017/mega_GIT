@@ -188,6 +188,8 @@ void SerialBox5::initSerial(void)
     ui->ParityBox->setProperty(NO_SAVE, true);
     ui->DataBitsBox->setProperty(NO_SAVE, true);
     ui->StopBitsBox->setProperty(NO_SAVE, true);
+    ui->btn_power->setProperty(NO_SAVE, true);
+    ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
 #ifdef RS232_LOG

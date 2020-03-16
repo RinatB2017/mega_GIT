@@ -31,6 +31,7 @@
 //--------------------------------------------------------------------------------
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
+#include "worker_fake.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class SerialWidget : public MyWidget
@@ -90,6 +91,8 @@ public:
 private:
     bool f_port_open = false;
     QByteArray port_data;
+
+    Worker_fake *serial_log = nullptr;
 
     QString port_name = "FAKE";
     qint32 port_BaudRate = 9600;

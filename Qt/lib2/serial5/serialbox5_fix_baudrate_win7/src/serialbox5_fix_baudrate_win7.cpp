@@ -118,10 +118,11 @@ void SerialBox5_fix_baudrate_win7::createWidgets(void)
     ui->PortBox->setProperty(NO_BLOCK, true);
     ui->PortBox->setMinimumWidth(150);
 
-    ui->btn_power->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
+    ui->btn_power->setProperty(NO_SAVE, true);
+    ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));

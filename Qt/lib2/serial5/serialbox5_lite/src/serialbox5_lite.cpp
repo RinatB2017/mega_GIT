@@ -111,10 +111,10 @@ void SerialBox5_lite::createWidgets(void)
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
 
-    ui->btn_power->setProperty(NO_BLOCK, true);
-    ui->btn_refresh->setToolTip("Обновить список портов");
-    ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->PortBox->setProperty(NO_BLOCK, true);
+    ui->btn_power->setProperty(NO_SAVE, true);
+    ui->btn_refresh->setProperty(NO_BLOCK, true);
+    ui->btn_refresh->setToolTip("Обновить список портов");
 
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));

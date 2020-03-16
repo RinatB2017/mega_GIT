@@ -91,6 +91,7 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/simple_mw/simple_mw.pri)
 
 include (src/test_widgets/widgets.pri)
+include (src/simplewidget/simplewidget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

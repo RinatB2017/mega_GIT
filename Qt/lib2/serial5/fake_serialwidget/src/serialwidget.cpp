@@ -30,12 +30,19 @@ SerialWidget::SerialWidget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 SerialWidget::~SerialWidget()
 {
-
+    if(serial_log)
+    {
+        serial_log->disconnect();
+        serial_log->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialWidget::init(void)
 {
+    serial_log = new Worker_fake(this);
+    serial_log->show();
 
+    connect(serial_log, &Worker_fake::output,    this,       &SerialWidget::output);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::isOpen(void)
@@ -134,24 +141,27 @@ QSerialPort::FlowControl SerialWidget::flowControl(void)
 qint64 SerialWidget::write(const char *data, qint64 len)
 {
     port_data.append(data, static_cast<int>(len));
-    emit readyRead();
-    emit output(readAll());
+    serial_log->input(data);
+//    emit readyRead();
+//    emit output(readAll());
     return true;
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const char *data)
 {
     port_data.append(data);
-    emit readyRead();
-    emit output(readAll());
+    serial_log->input(data);
+//    emit readyRead();
+//    emit output(readAll());
     return true;
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const QByteArray &data)
 {
     port_data.append(data);
-    emit readyRead();
-    emit output(readAll());
+    serial_log->input(data);
+//    emit readyRead();
+//    emit output(readAll());
     return true;
 }
 //--------------------------------------------------------------------------------

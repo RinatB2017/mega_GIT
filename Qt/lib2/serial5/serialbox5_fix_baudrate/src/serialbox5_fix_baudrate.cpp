@@ -140,7 +140,6 @@ void SerialBox5_fix_baudrate::createWidgets(void)
     ui->gridLayout->setMargin(0);
     ui->gridLayout->setSpacing(0);
 
-    ui->btn_power->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->PortBox->setProperty(NO_BLOCK, true);
 
@@ -180,6 +179,8 @@ void SerialBox5_fix_baudrate::refresh(void)
 void SerialBox5_fix_baudrate::initSerial(void)
 {
     ui->PortBox->setProperty(NO_SAVE, true);
+    ui->btn_power->setProperty(NO_SAVE, true);
+    ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
     connect(ui->btn_power,  &QToolButton::toggled,  this,   &SerialBox5_fix_baudrate::change_icon);

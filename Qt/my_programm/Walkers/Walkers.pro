@@ -19,8 +19,6 @@ DEFINES += NO_TRAYICON
 
 DEFINES += SAVE_INI
 
-DEFINES += SAVE_WIDGETS_TEXTEDIT
-
 HEADERS += \
     walkers.hpp \
     defines.hpp \

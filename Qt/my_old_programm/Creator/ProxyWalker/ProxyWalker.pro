@@ -28,8 +28,6 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
-DEFINES += SAVE_WIDGETS_SPLITTER
-
 HEADERS += \
     proxy_walker_mainbox.hpp \
     defines.hpp \

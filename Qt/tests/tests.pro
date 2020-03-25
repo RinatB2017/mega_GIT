@@ -8,6 +8,7 @@ CONFIG   *= ordered
 SUBDIRS += \
     Test_ADB \
     Test_ADC \
+    Test_AT \
     Test_arduino \
     Test_arduino_modbus \
     Test_broadcast_UDP \

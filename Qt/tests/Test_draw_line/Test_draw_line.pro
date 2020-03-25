@@ -22,8 +22,6 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
-DEFINES += SAVE_WIDGETS_SPINBOX
-
 HEADERS += \
     test_draw_line_mainbox.hpp \
     defines.hpp \

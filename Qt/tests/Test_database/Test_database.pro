@@ -19,8 +19,6 @@ DEFINES += NO_TRAYICON
 
 DEFINES += PROGRAMM_IN_UTF8
 
-DEFINES += SAVE_WIDGETS_COMBOBOX
-
 HEADERS += \
     test_database_mainbox.hpp \
     defines.hpp \

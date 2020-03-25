@@ -23,8 +23,6 @@ DEFINES += PROGRAMM_IN_UTF8
 
 #DEFINES += USE_RTSP
 
-DEFINES += SAVE_WIDGETS_SPINBOX
-
 HEADERS += \
     check_network_mainbox.hpp \
     defines.hpp \

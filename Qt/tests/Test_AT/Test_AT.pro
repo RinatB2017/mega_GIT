@@ -2,56 +2,60 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE = app
-TARGET   = Generator_Curve
+TEMPLATE    = app
+TARGET      = Test_AT
 
-FOLDER  = old_programm
+FOLDER      = tests
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/generator_curve_mainbox \
-    $$PWD/src/generator_curve_mainbox/ui
+    $$PWD/src/test_at_mainbox \
+    $$PWD/src/test_at_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QT      += multimedia
-
 DEFINES += NO_STYLETOOLBAR
+DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
-#DEFINES += RS232_FIXED_SIZE
-
-DEFINES += PROGRAMM_IN_UTF8
+#DEFINES += SAVE_INI
 
 HEADERS += \
-    generator_curve_mainbox.hpp \
+    test_at_mainbox.hpp \
     defines.hpp \
-    version.hpp
+    version.hpp \
 
 SOURCES += \
-    generator_curve_mainbox.cpp \
+    test_at_mainbox.cpp \
     main.cpp
 
-FORMS   += generator_curve_mainbox.ui
+FORMS   += test_at_mainbox.ui
 
-win32 {
-    RC_ICONS = ico/computer.ico
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
 }
 
-LIB_PATH  = "$$PWD/../../../lib"
-LIB_PATH2 = "$$PWD/../../../lib2"
+win32 {
+    RC_ICONS = ico/RS232.ico
+}
+
+LIB_PATH  = "$$PWD/../../../Qt/lib"
+LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
-
-include ($$LIB_PATH2/generator_curve/generator_curve.pri)
-
-include (src/widgets/widgets.pri)
+include ($$LIB_PATH2/serial5/serialbox5_lite/serialbox5_lite.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 
+lessThan(QT_MAJOR_VERSION, 5) {
+    error (Only Qt5)
+}
+
+RESOURCES += \
+    ico/icons.qrc
+
 VPATH = $$INCLUDEPATH
+

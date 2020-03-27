@@ -148,6 +148,7 @@ void MainBox::createTestBar(void)
     testbar->addWidget(cb_block);
 
     cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
@@ -327,7 +328,7 @@ bool MainBox::test_0(void)
     setProperty("is_exit", true);
 #endif
 
-#if 0
+#if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

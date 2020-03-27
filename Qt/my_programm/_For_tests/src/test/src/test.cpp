@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                      **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,45 +18,64 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QApplication>
+#include <QObject>
+#include <QWidget>
+#include <QList>
+#include <QTest>
+//--------------------------------------------------------------------------------
+#define private public
+//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "worker_fake.hpp"
-#include "ui_worker_fake.h"
+#include "for_tests_mainbox.hpp"
+#include "test.hpp"
 //--------------------------------------------------------------------------------
-Worker_fake::Worker_fake(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Worker_fake)
+Test::Test()
 {
-    init();
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-Worker_fake::~Worker_fake()
+void Test::test_GUI(void)
 {
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::init(void)
-{
-    ui->setupUi(this);
+    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
+    QVERIFY(cb);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
-    }
+    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
+    QVERIFY(tb);
+    QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::input(QByteArray data)
+void Test::test_func(void)
 {
-    Q_UNUSED(data)
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_open(void)
-{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 
+    QCOMPARE(mb->test_0(), true);
+    QCOMPARE(mb->test_1(), true);
+    QCOMPARE(mb->test_2(), true);
+    QCOMPARE(mb->test_3(), true);
+    QCOMPARE(mb->test_4(), true);
+    QCOMPARE(mb->test_5(), true);
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::port_close(void)
+void Test::test_signals(void)
 {
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 
+    QSignalSpy spy_info(mb,  SIGNAL(info(const QString &)));
+    QSignalSpy spy_debug(mb, SIGNAL(debug(const QString &)));
+    QSignalSpy spy_error(mb, SIGNAL(error(const QString &)));
+    QSignalSpy spy_trace(mb, SIGNAL(trace(const QString &)));
+    QSignalSpy spy_color(mb, SIGNAL(colorLog(const QString &, const QColor, const QColor)));
+
+    QCOMPARE(spy_info.isValid(),  true);
+    QCOMPARE(spy_debug.isValid(), true);
+    QCOMPARE(spy_error.isValid(), true);
+    QCOMPARE(spy_trace.isValid(), true);
+    QCOMPARE(spy_color.isValid(), true);
 }
 //--------------------------------------------------------------------------------

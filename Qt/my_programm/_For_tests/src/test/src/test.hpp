@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                      **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,45 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "mainwindow.hpp"
-#include "worker_fake.hpp"
-#include "ui_worker_fake.h"
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-Worker_fake::Worker_fake(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Worker_fake)
-{
-    init();
-}
+#include <QSignalSpy>
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-Worker_fake::~Worker_fake()
-{
-    delete ui;
-}
+class MainWindow;
 //--------------------------------------------------------------------------------
-void Worker_fake::init(void)
-{
-    ui->setupUi(this);
+class Test : public QObject {
+    Q_OBJECT
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
-    }
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::input(QByteArray data)
-{
-    Q_UNUSED(data)
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_open(void)
-{
+public:
+    Test();
 
-}
+private slots:
+    void test_GUI(void);
+    void test_func(void);
+    void test_signals(void);
+    
+private:
+    MainWindow *mw;
+};
 //--------------------------------------------------------------------------------
-void Worker_fake::port_close(void)
-{
-
-}
-//--------------------------------------------------------------------------------
+#endif

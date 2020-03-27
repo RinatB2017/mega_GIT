@@ -24,11 +24,13 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
+#include "test_SerialBox5_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #include "serialbox5.hpp"
@@ -42,39 +44,31 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::test_serial5(void)
+void Test::test_signals(void)
 {
-    SerialBox5 *sb = mw->findChild<SerialBox5 *>("serial_widget");
-    QVERIFY(sb);
+    SerialBox5 *sb                              = mw->findChild<SerialBox5 *>("serial_widget");
+    SerialBox5_lite *sb_lite                    = mw->findChild<SerialBox5_lite *>("serial_widget_lite");
+    SerialBox5_fix_baudrate *sb_fix_br          = mw->findChild<SerialBox5_fix_baudrate *>("serial_widget_fix_baudrate");
+    SerialBox5_fix_baudrate_win7 *sb_fix_br_w7  = mw->findChild<SerialBox5_fix_baudrate_win7 *>("serial_widget_fix_baudrate_win7");
 
-    QCOMPARE(sb->isOpen(), false);
-    QCOMPARE(sb->get_baudRate(), 9600);
-}
-//--------------------------------------------------------------------------------
-void Test::test_serial5_lite(void)
-{
-    SerialBox5_lite *sb = mw->findChild<SerialBox5_lite *>("serial_widget_lite");
     QVERIFY(sb);
+    QVERIFY(sb_lite);
+    QVERIFY(sb_fix_br);
+    QVERIFY(sb_fix_br_w7);
 
-    QCOMPARE(sb->isOpen(), false);
-    QCOMPARE(sb->get_baudRate(), 9600);
-}
-//--------------------------------------------------------------------------------
-void Test::test_serial5_fix_baudrate(void)
-{
-    SerialBox5_fix_baudrate *sb = mw->findChild<SerialBox5_fix_baudrate *>("serial_widget_fix_baudrate");
-    QVERIFY(sb);
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 
-    QCOMPARE(sb->isOpen(), false);
-    QCOMPARE(sb->get_baudRate(), 57600);
-}
-//--------------------------------------------------------------------------------
-void Test::test_serial5_fix_baudrate_win7(void)
-{
-    SerialBox5_fix_baudrate_win7 *sb = mw->findChild<SerialBox5_fix_baudrate_win7 *>("serial_widget_fix_baudrate_win7");
-    QVERIFY(sb);
+    QSignalSpy spy_info(mb,  SIGNAL(info(const QString &)));
+    QSignalSpy spy_debug(mb, SIGNAL(debug(const QString &)));
+    QSignalSpy spy_error(mb, SIGNAL(error(const QString &)));
+    QSignalSpy spy_trace(mb, SIGNAL(trace(const QString &)));
+    QSignalSpy spy_color(mb, SIGNAL(colorLog(const QString &, const QColor, const QColor)));
 
-    QCOMPARE(sb->isOpen(), false);
-    QCOMPARE(sb->get_baudRate(), 9600);
+    QCOMPARE(spy_info.isValid(),  true);
+    QCOMPARE(spy_debug.isValid(), true);
+    QCOMPARE(spy_error.isValid(), true);
+    QCOMPARE(spy_trace.isValid(), true);
+    QCOMPARE(spy_color.isValid(), true);
 }
 //--------------------------------------------------------------------------------

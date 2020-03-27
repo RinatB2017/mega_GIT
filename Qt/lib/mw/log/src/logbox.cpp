@@ -590,6 +590,8 @@ void LogBox::changeOptions(void)
 
         qDebug() << autosave_filename;
 
+        update_log();
+
         save_settings();
     }
     optionsBox->deleteLater();

@@ -94,7 +94,11 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
-    emit info("Test");
+    emit info("Info");
+    emit debug("Debug");
+    emit error("Error");
+    emit trace("Trace");
+
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -52,6 +52,8 @@ public slots:
     void errorLog(QString text);
     void traceLog(QString text);
 
+    void clearLog(void);
+
     void colorLog(const QString &text,
                   const QColor text_color,
                   const QColor background_color);

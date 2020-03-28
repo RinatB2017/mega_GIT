@@ -96,6 +96,8 @@ public slots:
                    QString src,
                    QString message);
 
+    void update_log(void);
+
 private slots:
     void changeOptions(void);
     void save_to(void);
@@ -103,7 +105,7 @@ private slots:
     void popup(QPoint);
 
 private:
-    QTextEdit *logBox;
+    QTextEdit *logBox = nullptr;
 
     QString o_name;
 
@@ -139,8 +141,6 @@ private:
 
     void append_string(LOG_DATA log_data);
     QString syslog_to_str(int level);
-
-    void update_log(void);
 
 protected:
     void changeEvent(QEvent *event);

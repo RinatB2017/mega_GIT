@@ -59,5 +59,12 @@ void Test::test_func(void)
     QCOMPARE(mb->test_3(), true);
     QCOMPARE(mb->test_4(), true);
     QCOMPARE(mb->test_5(), true);
+
+    mb->clear_log();
+}
+//--------------------------------------------------------------------------------
+void Test::test_signals(void)
+{
+
 }
 //--------------------------------------------------------------------------------

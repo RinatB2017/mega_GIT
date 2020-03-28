@@ -100,13 +100,14 @@ void SerialBox5_fix_baudrate_win7::init(void)
 
     createWidgets();
     initThread();
-    setCloseState();
 
     refresh();
 
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     //setFixedWidth(sizeHint().width());
     setFixedHeight(sizeHint().height());
+
+    setCloseState();
     updateText();
 }
 //--------------------------------------------------------------------------------

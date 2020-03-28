@@ -190,6 +190,8 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
+    void clear_log(void);
+
     void colorLog(const QString &, const QColor, const QColor);
 
 public slots:

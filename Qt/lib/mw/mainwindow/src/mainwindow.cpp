@@ -740,6 +740,8 @@ void MainWindow::createLog(void)
     ld = new LogDock(tr("log"), this);
     Q_CHECK_PTR(ld);
 
+    connect(this,   SIGNAL(clear_log()),    ld, SLOT(clearLog()));
+
 #ifndef NO_LOG_INFO
     connect(this,   SIGNAL(info(QString)),  ld, SLOT(infoLog(QString)));
     connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));

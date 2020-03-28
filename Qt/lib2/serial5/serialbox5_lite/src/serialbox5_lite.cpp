@@ -92,7 +92,6 @@ void SerialBox5_lite::init(void)
     createWidgets();
     initEnumerator();
     initSerial();
-    setCloseState();
 #ifdef RS232_FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
@@ -103,6 +102,8 @@ void SerialBox5_lite::init(void)
 
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     setFixedWidth(sizeHint().width());
+
+    setCloseState();
     updateText();
 }
 //--------------------------------------------------------------------------------

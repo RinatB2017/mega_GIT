@@ -29,6 +29,8 @@
 #include "mainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "test.hpp"
+
+#include "logbox.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -70,12 +72,35 @@ void Test::test_signals(void)
     QSignalSpy spy_debug(mb, SIGNAL(debug(const QString &)));
     QSignalSpy spy_error(mb, SIGNAL(error(const QString &)));
     QSignalSpy spy_trace(mb, SIGNAL(trace(const QString &)));
+    QSignalSpy spy_clear_log(mb, SIGNAL(clear_log()));
     QSignalSpy spy_color(mb, SIGNAL(colorLog(const QString &, const QColor, const QColor)));
 
     QCOMPARE(spy_info.isValid(),  true);
     QCOMPARE(spy_debug.isValid(), true);
     QCOMPARE(spy_error.isValid(), true);
     QCOMPARE(spy_trace.isValid(), true);
+    QCOMPARE(spy_clear_log.isValid(), true);
     QCOMPARE(spy_color.isValid(), true);
+
+    //mb->clear_log();
+    mb->info("test_info");
+    mb->debug("test_debug");
+    mb->error("test_error");
+    mb->trace("test_trace");
+
+    LogBox *lb = mw->findChild<LogBox *>("LogBox");
+    QVERIFY(lb);
+
+    QTextEdit *te = lb->findChild<QTextEdit *>("te_LogBox");
+    QVERIFY(te);
+
+    QTest::qWait(100);
+
+    QCOMPARE(te->toPlainText().contains("test_info"), true);
+    QCOMPARE(te->toPlainText().contains("test_debug"), true);
+    QCOMPARE(te->toPlainText().contains("test_error"), true);
+    QCOMPARE(te->toPlainText().contains("test_trace"), true);
+
+    mb->clear_log();
 }
 //--------------------------------------------------------------------------------

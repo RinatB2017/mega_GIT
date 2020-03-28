@@ -122,7 +122,6 @@ void SerialBox5_fix_baudrate::init(void)
 
     createWidgets();
     initSerial();
-    setCloseState();
 
     ui->PortBox->setMinimumWidth(150);
 
@@ -132,6 +131,8 @@ void SerialBox5_fix_baudrate::init(void)
     //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     //setFixedWidth(sizeHint().width());
     //setFixedHeight(sizeHint().height());
+
+    setCloseState();
     updateText();
 }
 //--------------------------------------------------------------------------------

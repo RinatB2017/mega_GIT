@@ -142,6 +142,11 @@ void LogDock::traceLog(QString text)
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
+void LogDock::clearLog(void)
+{
+    queue_log.clear();
+}
+//--------------------------------------------------------------------------------
 void LogDock::colorLog(const QString &text,
                        const QColor text_color,
                        const QColor background_color)

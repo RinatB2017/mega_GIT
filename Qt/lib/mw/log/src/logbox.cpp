@@ -78,7 +78,7 @@ LogBox::~LogBox()
 //--------------------------------------------------------------------------------
 void LogBox::init(void)
 {
-    setObjectName("logbox");
+    setObjectName("LogBox");
 
 #ifdef NEED_CODEC
     //TODO проверить надо
@@ -139,6 +139,7 @@ void LogBox::create_widgets(void)
 {
     QFont font("Liberation Mono", 10);
     logBox = new QTextEdit(this);
+    logBox->setObjectName("te_LogBox");
     logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     logBox->setFont(font);
 #ifdef Q_OS_LINUX

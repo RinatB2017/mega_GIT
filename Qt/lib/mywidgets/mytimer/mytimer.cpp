@@ -77,7 +77,7 @@ void MyTimer::update(void)
 //--------------------------------------------------------------------------------
 void MyTimer::update_timer(void)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
 
     ui->lcd_display->display(last_time.toString("hh:mm:ss"));
 }

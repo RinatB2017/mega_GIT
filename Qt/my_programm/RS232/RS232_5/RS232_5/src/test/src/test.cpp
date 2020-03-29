@@ -57,26 +57,45 @@ void Test::check_serial(void)
     QTest::mouseClick(pb1, Qt::LeftButton);
     QCOMPARE(sb1->isOpen(),  true);
 
-    //QCOMPARE(sb1->get_baudRate(),   value);   //FIXME данные почему-то другие
+    QCOMPARE(sb1->get_baudRate(),   value);   //FIXME данные почему-то другие
     QCOMPARE(sb1->get_dataBits(),   QSerialPort::Data8);
     QCOMPARE(sb1->get_parity(),     QSerialPort::NoParity);
     QCOMPARE(sb1->get_stopBits(),   QSerialPort::OneStop);
     QCOMPARE(sb1->get_flowControl(),QSerialPort::NoFlowControl);
 
-    QSignalSpy spy(sb1, SIGNAL(output(QByteArray)));
-    QCOMPARE(spy.isValid(), true); // signal exists
+    QSignalSpy spy_port_open(sb1,           SIGNAL(port_open()));
+    QSignalSpy spy_port_close(sb1,          SIGNAL(port_close()));
+    QSignalSpy spy_readyRead(sb1,           SIGNAL(readyRead()));
+    QSignalSpy spy_readChannelFinished(sb1, SIGNAL(readChannelFinished()));
+    QSignalSpy spy_output(sb1,              SIGNAL(output(QByteArray)));
+    QSignalSpy spy_port_is_active(sb1,      SIGNAL(port_is_active(bool)));
 
-    QSignalSpy spy2(sb1, SIGNAL(port_open()));
-    QCOMPARE(spy2.isValid(), true); // signal exists
+    QSignalSpy spy_baudRateChanged(sb1,         SIGNAL(baudRateChanged(qint32, QSerialPort::Directions)));
+    QSignalSpy spy_breakEnabledChanged(sb1,     SIGNAL(breakEnabledChanged(bool)));
+    QSignalSpy spy_dataBitsChanged(sb1,         SIGNAL(dataBitsChanged(QSerialPort::DataBits)));
+    QSignalSpy spy_dataTerminalReadyChanged(sb1,SIGNAL(dataTerminalReadyChanged(bool)));
+    QSignalSpy spy_flowControlChanged(sb1,      SIGNAL(flowControlChanged(QSerialPort::FlowControl)));
+    QSignalSpy spy_parityChanged(sb1,           SIGNAL(parityChanged(QSerialPort::Parity)));
+    QSignalSpy spy_requestToSendChanged(sb1,    SIGNAL(requestToSendChanged(bool)));
+    QSignalSpy spy_stopBitsChanged(sb1,         SIGNAL(stopBitsChanged(QSerialPort::StopBits)));
 
-    QSignalSpy spy3(sb1, SIGNAL(port_close()));
-    QCOMPARE(spy3.isValid(), true); // signal exists
+    QCOMPARE(spy_port_open.isValid(),           true); // signal exists
+    QCOMPARE(spy_port_close.isValid(),          true); // signal exists
+    QCOMPARE(spy_readyRead.isValid(),           true); // signal exists
+    QCOMPARE(spy_readChannelFinished.isValid(), true); // signal exists
+    QCOMPARE(spy_output.isValid(),              true); // signal exists
+    QCOMPARE(spy_port_is_active.isValid(),      true); // signal exists
 
-    //QCOMPARE(sb1->input(QString("test1")),  SerialBox5::E_NO_ERROR);
+    QCOMPARE(spy_baudRateChanged.isValid(),             true); // signal exists
+    QCOMPARE(spy_breakEnabledChanged.isValid(),         true); // signal exists
+    QCOMPARE(spy_dataBitsChanged.isValid(),             true); // signal exists
+    QCOMPARE(spy_dataTerminalReadyChanged.isValid(),    true); // signal exists
+    QCOMPARE(spy_flowControlChanged.isValid(),          true); // signal exists
+    QCOMPARE(spy_parityChanged.isValid(),               true); // signal exists
+    QCOMPARE(spy_requestToSendChanged.isValid(),        true); // signal exists
+    QCOMPARE(spy_stopBitsChanged.isValid(),             true); // signal exists
+
     QTest::qWait(1000);
-
-    //QCOMPARE(spy.count(), 1);                       // fired exactly once
-    //QCOMPARE(spy.takeFirst().at(0).toBool(), true); // with right arguments
 
     QTest::mouseClick(pb1, Qt::LeftButton);
     QCOMPARE(sb1->isOpen(),  false);

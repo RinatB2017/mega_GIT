@@ -320,6 +320,21 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    uint16_t address = 1;
+    uint32_t t_address = address << 9;
+    uint8_t a = (t_address >> 24) & 0xFF;
+    uint8_t b = (t_address >> 16) & 0xFF;
+    uint8_t c = (t_address >> 8) & 0xFF;
+    uint8_t d = t_address & 0xFF;
+
+    emit info(QString("%1 %2 %3 %4")
+              .arg(a, 2, 16, QChar('0'))
+              .arg(b, 2, 16, QChar('0'))
+              .arg(c, 2, 16, QChar('0'))
+              .arg(d, 2, 16, QChar('0')));
+#endif
+
 #if 0
     print_mp(ui->timer_widget);
 #endif
@@ -328,7 +343,7 @@ bool MainBox::test_0(void)
     setProperty("is_exit", true);
 #endif
 
-#if 1
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

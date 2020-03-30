@@ -6,14 +6,66 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>299</width>
-    <height>219</height>
+    <width>252</width>
+    <height>311</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QFrame" name="frame_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="SerialBox5" name="serial_widget" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_serial_widget">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>186</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <widget class="QFrame" name="frame">
      <property name="sizePolicy">
@@ -31,45 +83,72 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <layout class="QGridLayout" name="grid">
-        <item row="1" column="0">
-         <widget class="SerialBox5_fix_baudrate" name="serial_widget_fix_baudrate" native="true"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="SerialBox5_fix_baudrate_win7" name="serial_widget_fix_baudrate_win7" native="true"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="SerialBox5" name="serial_widget" native="true"/>
-        </item>
-        <item row="3" column="0">
+        <item row="2" column="1">
          <widget class="SerialBox5_lite" name="serial_widget_lite" native="true"/>
         </item>
-        <item row="0" column="1">
-         <widget class="QToolButton" name="btn_serial_widget">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
+         <widget class="SerialBox5_fix_baudrate_win7" name="serial_widget_fix_baudrate_win7" native="true"/>
+        </item>
+        <item row="0" column="2">
          <widget class="QToolButton" name="btn_serial_widget_fix_baudrate">
           <property name="text">
            <string>...</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="2" column="2">
+         <widget class="QToolButton" name="btn_serial_widget_lite">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="SerialBox5_fix_baudrate" name="serial_widget_fix_baudrate" native="true"/>
+        </item>
+        <item row="1" column="2">
          <widget class="QToolButton" name="btn_serial_widget_fix_baudrate_win7">
           <property name="text">
            <string>...</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QToolButton" name="btn_serial_widget_lite">
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QToolButton" name="btn_sb_wo_form">
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="SerialBox5_wo_form" name="serial_widget_wo_form" native="true"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_serial_widget_wo_form">
           <property name="text">
            <string>...</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -114,6 +193,12 @@
    <class>SerialBox5_fix_baudrate_win7</class>
    <extends>QWidget</extends>
    <header>serialbox5_fix_baudrate_win7.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SerialBox5_wo_form</class>
+   <extends>QWidget</extends>
+   <header>serialbox5_wo_form.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

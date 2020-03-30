@@ -46,6 +46,8 @@ public:
 
 private slots:
     void test(void);
+    void test_open(bool state);
+    void test_send(void);
 
     void serial_data(QByteArray data);
 
@@ -56,6 +58,8 @@ private:
     void init(void);
     void createTestBar(void);
     void init_serial_widgets(void);
+
+    void test_only(void);
 
     void updateText(void);
     bool programm_is_exit(void);

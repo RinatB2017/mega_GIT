@@ -58,12 +58,15 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 #----------------------------------------------
-#CONFIG  += use_worker
-include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
-#include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
-#----------------------------------------------
-
+CONFIG  += use_worker
+use_worker {
+    include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
+    include (src/worker_fake/worker_fake.pri)
+} else {
+    include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+}
 include ($$LIB_PATH2/serial5/serial5.pri)
+#----------------------------------------------
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

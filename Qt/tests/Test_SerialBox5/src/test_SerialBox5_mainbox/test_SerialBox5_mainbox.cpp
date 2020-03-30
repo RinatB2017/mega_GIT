@@ -61,6 +61,25 @@ void MainBox::init(void)
 
     init_serial_widgets();
     load_widgets();
+
+    //---
+    QTimer::singleShot(0, [this]{
+        MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+        if(mw)
+        {
+            QList<QDockWidget *> alldw = mw->findChildren<QDockWidget *>();
+            foreach (QDockWidget *dock, alldw)
+            {
+                QList<Worker_fake *> alldocs = dock->findChildren<Worker_fake *>();
+                if(alldocs.count() > 0)
+                {
+                    //emit info(alldocs.at(0)->objectName());
+                    dock->setWindowTitle(QString("LOG: %1").arg(alldocs.at(0)->objectName()));
+                }
+            }
+        }
+    });
+    //---
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial_widgets(void)
@@ -74,22 +93,40 @@ void MainBox::init_serial_widgets(void)
     connect(ui->serial_widget_lite,                 &SerialBox5_lite::output,               this,   &MainBox::serial_data);
     connect(ui->serial_widget_fix_baudrate,         &SerialBox5_fix_baudrate::output,       this,   &MainBox::serial_data);
     connect(ui->serial_widget_fix_baudrate_win7,    &SerialBox5_fix_baudrate_win7::output,  this,   &MainBox::serial_data);
+    connect(ui->serial_widget_wo_form,              &SerialBox5_wo_form::output,            this,   &MainBox::serial_data);
 
     ui->btn_serial_widget->setDisabled(true);
     ui->btn_serial_widget_lite->setDisabled(true);
     ui->btn_serial_widget_fix_baudrate->setDisabled(true);
     ui->btn_serial_widget_fix_baudrate_win7->setDisabled(true);
+    ui->btn_serial_widget_wo_form->setDisabled(true);
+
+    connect(ui->btn_serial_widget,                      &QToolButton::clicked,  this,   &MainBox::test_only);
+    connect(ui->btn_serial_widget_lite,                 &QToolButton::clicked,  this,   &MainBox::test_only);
+    connect(ui->btn_serial_widget_fix_baudrate,         &QToolButton::clicked,  this,   &MainBox::test_only);
+    connect(ui->btn_serial_widget_fix_baudrate_win7,    &QToolButton::clicked,  this,   &MainBox::test_only);
+
+    connect(ui->btn_serial_widget_wo_form,              &QToolButton::clicked,  this,   &MainBox::test_send);
 
     connect(ui->serial_widget,                      &SerialBox5::port_is_active,                    ui->btn_serial_widget,                      &QToolButton::setEnabled);
     connect(ui->serial_widget_lite,                 &SerialBox5_lite::port_is_active,               ui->btn_serial_widget_lite,                 &QToolButton::setEnabled);
     connect(ui->serial_widget_fix_baudrate,         &SerialBox5_fix_baudrate::port_is_active,       ui->btn_serial_widget_fix_baudrate,         &QToolButton::setEnabled);
     connect(ui->serial_widget_fix_baudrate_win7,    &SerialBox5_fix_baudrate_win7::port_is_active,  ui->btn_serial_widget_fix_baudrate_win7,    &QToolButton::setEnabled);
+    connect(ui->serial_widget_wo_form,              &SerialBox5_wo_form::port_is_active,            ui->btn_serial_widget_wo_form,              &QToolButton::setEnabled);
+
+    ui->btn_sb_wo_form->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    connect(ui->btn_sb_wo_form, &QToolButton::toggled,  this,   &MainBox::test_open);
 
     //TODO
-#if 0
+#if 1
     ui->serial_widget_fix_baudrate_win7->setVisible(false);
     ui->btn_serial_widget_fix_baudrate_win7->setVisible(false);
 #endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_only(void)
+{
+    messagebox_info("Info", "test_only");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -124,6 +161,28 @@ void MainBox::serial_data(QByteArray data)
 void MainBox::test(void)
 {
     emit info("test");
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_open(bool state)
+{
+    if(state)
+        ui->serial_widget_wo_form->serial_open();
+    else
+        ui->serial_widget_wo_form->serial_close();
+
+    if(ui->serial_widget_wo_form->isOpen())
+        ui->btn_sb_wo_form->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
+    else
+        ui->btn_sb_wo_form->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_send(void)
+{
+    if(ui->serial_widget_wo_form->isOpen())
+    {
+        emit info("send data to serialbox_wo_form");
+        ui->serial_widget_wo_form->input(QString("send_wo_form"));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

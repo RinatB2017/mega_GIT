@@ -39,16 +39,43 @@ SerialWidget::~SerialWidget()
 //--------------------------------------------------------------------------------
 void SerialWidget::init(void)
 {
-    worker_fake = new Worker_fake(this);
+#ifdef USE_B588
+    worker_fake = new Worker_fake_b588(this);
+#endif
 
-    connect(worker_fake,    &Worker_fake::info,         this,           &SerialWidget::info);
-    connect(worker_fake,    &Worker_fake::debug,        this,           &SerialWidget::debug);
-    connect(worker_fake,    &Worker_fake::error,        this,           &SerialWidget::error);
-    connect(worker_fake,    &Worker_fake::trace,        this,           &SerialWidget::trace);
+#ifdef USE_B590
+    worker_fake = new Worker_fake_b590(this);
+#endif
 
-    connect(worker_fake,    &Worker_fake::output,       this,           &SerialWidget::output);
-    connect(this,           &SerialWidget::port_open,   worker_fake,    &Worker_fake::port_open);
-    connect(this,           &SerialWidget::port_close,  worker_fake,    &Worker_fake::port_close);
+    QTimer::singleShot(0, [this]{
+       worker_fake->setObjectName(objectName());
+    });
+
+#ifdef USE_B588
+    connect(worker_fake,    &Worker_fake_b588::info,        this,           &SerialWidget::info);
+    connect(worker_fake,    &Worker_fake_b588::debug,       this,           &SerialWidget::debug);
+    connect(worker_fake,    &Worker_fake_b588::error,       this,           &SerialWidget::error);
+    connect(worker_fake,    &Worker_fake_b588::trace,       this,           &SerialWidget::trace);
+
+    connect(worker_fake,    &Worker_fake_b588::readyRead,   this,           &SerialWidget::readyRead);
+
+    connect(worker_fake,    &Worker_fake_b588::output,      this,           &SerialWidget::output);
+    connect(this,           &SerialWidget::port_open,       worker_fake,    &Worker_fake_b588::port_open);
+    connect(this,           &SerialWidget::port_close,      worker_fake,    &Worker_fake_b588::port_close);
+#endif
+
+#ifdef USE_B590
+    connect(worker_fake,    &Worker_fake_b590::info,        this,           &SerialWidget::info);
+    connect(worker_fake,    &Worker_fake_b590::debug,       this,           &SerialWidget::debug);
+    connect(worker_fake,    &Worker_fake_b590::error,       this,           &SerialWidget::error);
+    connect(worker_fake,    &Worker_fake_b590::trace,       this,           &SerialWidget::trace);
+
+    connect(worker_fake,    &Worker_fake_b590::readyRead,   this,           &SerialWidget::readyRead);
+
+    connect(worker_fake,    &Worker_fake_b590::output,      this,           &SerialWidget::output);
+    connect(this,           &SerialWidget::port_open,       worker_fake,    &Worker_fake_b590::port_open);
+    connect(this,           &SerialWidget::port_close,      worker_fake,    &Worker_fake_b590::port_close);
+#endif
 
     worker_fake->show();
 }
@@ -150,28 +177,25 @@ QSerialPort::FlowControl SerialWidget::flowControl(void)
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const char *data, qint64 len)
 {
+    port_data.clear();
     port_data.append(data, static_cast<int>(len));
-    worker_fake->input(data);
-//    emit readyRead();
-//    emit output(readAll());
+    worker_fake->input(port_data);
     return true;
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const char *data)
 {
+    port_data.clear();
     port_data.append(data);
-    worker_fake->input(data);
-//    emit readyRead();
-//    emit output(readAll());
+    worker_fake->input(port_data);
     return true;
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const QByteArray &data)
 {
+    port_data.clear();
     port_data.append(data);
-    worker_fake->input(data);
-//    emit readyRead();
-//    emit output(readAll());
+    worker_fake->input(port_data);
     return true;
 }
 //--------------------------------------------------------------------------------

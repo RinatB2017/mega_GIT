@@ -321,6 +321,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QTimer::singleShot(10000, this, &MainBox::test_2);
+#endif
+
+#if 0
     uint16_t address = 1;
     uint32_t t_address = address << 9;
     uint8_t a = (t_address >> 24) & 0xFF;

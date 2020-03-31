@@ -96,7 +96,8 @@ public:
 
 private:
     bool f_port_open = false;
-    QByteArray port_data;
+    QByteArray ba_input;
+    QByteArray ba_output;
 
 #ifdef USE_B588
     Worker_fake_b588 *worker_fake = nullptr;
@@ -122,6 +123,8 @@ private:
     void parityChanged(QSerialPort::Parity parity);
     void requestToSendChanged(bool set);
     void stopBitsChanged(QSerialPort::StopBits stopBits);
+
+    void write_ba_output(QByteArray ba);
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALWIDGET_HPP

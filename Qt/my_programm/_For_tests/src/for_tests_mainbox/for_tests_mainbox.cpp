@@ -91,6 +91,9 @@ void MainBox::init(void)
 
     //TODO xxx
     ui->btn_ok->setProperty("xxx", 1);
+
+    //timer = new QTimer(this);
+    //connect(timer, &QTimer::timeout, this, &MainBox::test_2);
 }
 //--------------------------------------------------------------------------------
 void MainBox::delete_string(void)
@@ -321,7 +324,7 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    QTimer::singleShot(10000, this, &MainBox::test_2);
+    //timer->start(10000);
 #endif
 
 #if 0

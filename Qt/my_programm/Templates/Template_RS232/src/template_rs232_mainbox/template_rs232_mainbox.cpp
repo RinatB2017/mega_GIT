@@ -76,17 +76,13 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)
 {
-    //serial = new SerialBox5(this, "RS232", "RS232");
-    serial = new SerialBox5_fix_baudrate(this, "RS232", "RS232");
-    //serial = new SerialBox5_lite(this, "RS232", "RS232");
-
-    serial->add_menu(2);
-
-    ui->serial_layout->addWidget(serial);
-    ui->serial_layout->addStretch(1);
-
-    connect(this,   SIGNAL(send(QByteArray)),   serial,     SLOT(input(QByteArray)));
-    connect(serial, SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+#if 0
+    connect(this,               static_cast<int (MainBox::*)(const QByteArray&)>(&MainBox::send),
+            ui->serial_widget,  &SerialBox5::input);
+#else
+    connect(this,   SIGNAL(send()), ui->serial_widget,  SLOT(input(QByteArray)));
+#endif
+    connect(ui->serial_widget,  &SerialBox5::output,    this,               &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)

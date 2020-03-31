@@ -260,7 +260,7 @@ void MainBox::f_test(void)
                                    pic_width + 1,
                                    QImage::Format_RGB32);
     //---
-    QTime timer;
+    QElapsedTimer timer;
     //---
 #if 0
     timer.start();
@@ -695,7 +695,7 @@ bool MainBox::s_create_new_image(void)
     center.setX(pic_width  / 2.0);
     center.setY(pic_height / 2.0);
 
-    QTime timer;
+    QElapsedTimer timer;
     timer.start();
     cnt_sin = 0;
     cnt_cos = 0;

@@ -38,7 +38,7 @@ namespace Ui {
 #define NUM_LEDS_PER_STRIP 6
 #define NUM_STRIPS         8
 //---------------------------------------------------------------
-#pragma push (push, 1)
+#pragma pack (push, 1)
 
 typedef struct
 {

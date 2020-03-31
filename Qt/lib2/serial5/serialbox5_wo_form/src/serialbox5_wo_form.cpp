@@ -191,11 +191,7 @@ void SerialBox5_wo_form::sendData(const QByteArray &sending_data)
 void SerialBox5_wo_form::drawData(const QByteArray &data)
 {
     // qDebug() << "drawData[" << data << "]";
-#ifdef RS232_LOG
-    logBox->infoLog(data.data());
-#else
     Q_UNUSED(data)
-#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_wo_form::updateText(void)

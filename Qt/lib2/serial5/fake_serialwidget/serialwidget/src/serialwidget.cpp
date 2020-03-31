@@ -39,13 +39,7 @@ SerialWidget::~SerialWidget()
 //--------------------------------------------------------------------------------
 void SerialWidget::init(void)
 {
-#ifdef USE_B588
-    worker_fake = new Worker_fake_b588(this);
-#endif
-
-#ifdef USE_B590
-    worker_fake = new Worker_fake_b590(this);
-#endif
+    worker_fake = new Worker_fake(this);
 
     QTimer::singleShot(0, [this]{
        worker_fake->setObjectName(objectName());

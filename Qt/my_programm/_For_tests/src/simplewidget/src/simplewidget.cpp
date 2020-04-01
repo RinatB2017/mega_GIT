@@ -41,5 +41,36 @@ void SimpleWidget::init(void)
          | Qt::WindowMinimizeButtonHint
          | Qt::WindowMaximizeButtonHint
          | Qt::CustomizeWindowHint);
+
+    connect(ui->btn_close,  &QPushButton::clicked,  this,   &QWidget::close);
+
+    QList<QToolButton *> l_buttons;
+
+    l_buttons.append(ui->btn_0);
+    l_buttons.append(ui->btn_1);
+    l_buttons.append(ui->btn_2);
+    l_buttons.append(ui->btn_3);
+    l_buttons.append(ui->btn_4);
+    l_buttons.append(ui->btn_5);
+    l_buttons.append(ui->btn_6);
+    l_buttons.append(ui->btn_7);
+    l_buttons.append(ui->btn_8);
+    l_buttons.append(ui->btn_9);
+
+    int cnt = 0;
+    foreach (QToolButton *btn, l_buttons)
+    {
+        btn->setProperty("id", cnt++);
+        connect(btn,  &QPushButton::clicked,  this,   &SimpleWidget::click);
+    }
+}
+//--------------------------------------------------------------------------------
+void SimpleWidget::click(void)
+{
+    QToolButton *button = reinterpret_cast<QToolButton *>(sender());
+    if(button)
+    {
+        ui->log_widget->infoLog(button->property("id").toString());
+    }
 }
 //--------------------------------------------------------------------------------

@@ -43,6 +43,7 @@ private:
     Ui::SimpleWidget *ui;
 
     void init(void);
+    void click(void);
 };
 //--------------------------------------------------------------------------------
 #endif // SIMPLEWIDGET_HPP

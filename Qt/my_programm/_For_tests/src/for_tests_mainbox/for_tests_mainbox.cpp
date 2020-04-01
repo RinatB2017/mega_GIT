@@ -46,6 +46,13 @@ MainBox::~MainBox()
         sw->deleteLater();
     }
 
+    if(timer)
+    {
+        timer->stop();
+        timer->disconnect();
+        timer->deleteLater();
+    }
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -67,14 +74,6 @@ void MainBox::init(void)
     connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
 #if 1
-    ui->btn_set_time->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
-    ui->btn_run_timer->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-
-    connect(ui->btn_set_time,   &QToolButton::clicked,  this,   &MainBox::set_time);
-    connect(ui->btn_run_timer,  &QToolButton::clicked,  this,   &MainBox::run_timer);
-#endif
-
-#if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
     if(sizeHint().height() > 0)
@@ -92,25 +91,13 @@ void MainBox::init(void)
     //TODO xxx
     ui->btn_ok->setProperty("xxx", 1);
 
-    //timer = new QTimer(this);
-    //connect(timer, &QTimer::timeout, this, &MainBox::test_2);
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainBox::test_2);
 }
 //--------------------------------------------------------------------------------
 void MainBox::delete_string(void)
 {
     ui->comboBox->removeItem(ui->comboBox->currentIndex());
-}
-//--------------------------------------------------------------------------------
-void MainBox::set_time(void)
-{
-    QTime nt;
-    nt.setHMS(0, 0, 10);
-    ui->timer_widget->set_timer(nt);
-}
-//--------------------------------------------------------------------------------
-void MainBox::run_timer(void)
-{
-    ui->timer_widget->start();
 }
 //--------------------------------------------------------------------------------
 void MainBox::check_in(void)
@@ -324,33 +311,21 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
-    //timer->start(10000);
+    QTextEdit *te = new QTextEdit();
+    te->setTextColor(QColor(Qt::red));
+    te->insertPlainText("red");
+    te->setTextColor(QColor(Qt::green));
+    te->insertPlainText("green");
+    te->setTextColor(QColor(Qt::blue));
+    te->insertPlainText("blue");
+    te->show();
 #endif
 
 #if 0
-    uint16_t address = 1;
-    uint32_t t_address = address << 9;
-    uint8_t a = (t_address >> 24) & 0xFF;
-    uint8_t b = (t_address >> 16) & 0xFF;
-    uint8_t c = (t_address >> 8) & 0xFF;
-    uint8_t d = t_address & 0xFF;
-
-    emit info(QString("%1 %2 %3 %4")
-              .arg(a, 2, 16, QChar('0'))
-              .arg(b, 2, 16, QChar('0'))
-              .arg(c, 2, 16, QChar('0'))
-              .arg(d, 2, 16, QChar('0')));
+    timer->start(500);
 #endif
 
-#if 0
-    print_mp(ui->timer_widget);
-#endif
-
-#if 0
-    setProperty("is_exit", true);
-#endif
-
-#if 0
+#if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
@@ -366,6 +341,10 @@ bool MainBox::test_1(void)
     emit info("Test_1()");
 
 #if 0
+    timer->stop();
+#endif
+
+#if 0
     setProperty("is_exit", false);
 #endif
 
@@ -379,7 +358,11 @@ bool MainBox::test_1(void)
 bool MainBox::test_2(void)
 {
     emit trace(Q_FUNC_INFO);
-    emit info("Test_2()");
+    //emit info("Test_2()");
+
+#if 0
+    emit info(QString("cnt %1").arg(cnt++));
+#endif
 
     return true;
 }

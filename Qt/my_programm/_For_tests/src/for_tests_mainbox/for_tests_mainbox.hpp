@@ -77,9 +77,6 @@ public slots:
     void check_in(void);
     void victory(void);
 
-    void set_time(void);
-    void run_timer(void);
-
 private:
     enum {
         ID_TEST_0 = 1000,
@@ -116,6 +113,8 @@ private:
         cb_test->setCurrentIndex(2);
     }
     SimpleWidget *sw = nullptr; // инициировать надо явно, иначе if(sw) ошибётся
+    QTimer *timer = nullptr;
+    int cnt = 0;
     //---
 
     void init(void);

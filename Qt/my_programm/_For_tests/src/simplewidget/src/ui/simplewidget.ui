@@ -1,21 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>SimpleWidget</class>
- <widget name="SimpleWidget" class="QWidget">
+ <widget class="QWidget" name="SimpleWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>316</width>
+    <height>278</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="2" column="2">
+         <widget class="QToolButton" name="btn_8">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/8.png</normaloff>:/red/8.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QToolButton" name="btn_9">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/9.png</normaloff>:/red/9.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QToolButton" name="btn_6">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/6.png</normaloff>:/red/6.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QToolButton" name="btn_5">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/5.png</normaloff>:/red/5.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QToolButton" name="btn_0">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/0.png</normaloff>:/red/0.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QToolButton" name="btn_7">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/7.png</normaloff>:/red/7.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="btn_2">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/2.png</normaloff>:/red/2.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QToolButton" name="btn_3">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/3.png</normaloff>:/red/3.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QToolButton" name="btn_4">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/4.png</normaloff>:/red/4.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QToolButton" name="btn_1">
+          <property name="icon">
+           <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+            <normaloff>:/red/1.png</normaloff>:/red/1.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="3">
+         <widget class="QPushButton" name="btn_close">
+          <property name="text">
+           <string>close</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>169</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="LogBox" name="log_widget" native="true"/>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <customwidgets>
+  <customwidget>
+   <class>LogBox</class>
+   <extends>QWidget</extends>
+   <header>logbox.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>btn_0</tabstop>
+  <tabstop>btn_1</tabstop>
+  <tabstop>btn_2</tabstop>
+  <tabstop>btn_3</tabstop>
+  <tabstop>btn_4</tabstop>
+  <tabstop>btn_5</tabstop>
+  <tabstop>btn_6</tabstop>
+  <tabstop>btn_7</tabstop>
+  <tabstop>btn_8</tabstop>
+  <tabstop>btn_9</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../../../lib2/icons/digits/digits.qrc"/>
+ </resources>
  <connections/>
 </ui>

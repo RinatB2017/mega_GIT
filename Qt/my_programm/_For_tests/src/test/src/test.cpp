@@ -94,7 +94,7 @@ void Test::test_signals(void)
     QTextEdit *te = lb->findChild<QTextEdit *>("te_LogBox");
     QVERIFY(te);
 
-    QTest::qWait(100);
+    QTest::qWait(1000);
 
     QCOMPARE(te->toPlainText().contains("test_info"), true);
     QCOMPARE(te->toPlainText().contains("test_debug"), true);

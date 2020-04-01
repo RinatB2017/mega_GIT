@@ -85,12 +85,12 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
-include ($$LIB_PATH/mywidgets/mytimer.pri)
+#include ($$LIB_PATH/mywidgets/mytimer.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simple_mw/simple_mw.pri)
 
-include (src/test_widgets/widgets.pri)
+#include (src/test_widgets/widgets.pri)
 include (src/simplewidget/simplewidget.pri)
 
 !exists(OBJECTS_DIR) {

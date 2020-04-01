@@ -234,7 +234,7 @@ void LogBox::append_string(LOG_DATA log_data)
 
     QString level_str;
     switch (log_data.level) {
-        case INFO: level_str = "INFO";  break;
+        case INFO:  level_str = "INFO";   break;
         case DEBUG: level_str = "DEBUG";  break;
         case ERROR: level_str = "ERROR";  break;
         case TRACE: level_str = "TRACE";  break;
@@ -252,16 +252,12 @@ void LogBox::append_string(LOG_DATA log_data)
     }
 
     flagColor ? logBox->setTextColor(log_data.color_text) : logBox->setTextColor(QColor(Qt::black));
-    flagColor ? logBox->setTextBackgroundColor(log_data.background_color) : logBox->setTextBackgroundColor(logBox->textBackgroundColor());
+    flagColor ? logBox->setTextBackgroundColor(log_data.background_color) : logBox->setTextBackgroundColor(QColor(Qt::white));
 
 #ifdef NEED_CODEC
     //TODO проверить надо
     QByteArray ba;
     ba.append(temp.toStdString().c_str());
-    //ba.append(temp);
-
-    //logBox->append(QString("temp len %1").arg(temp.length()));
-    //logBox->append(QString("ba   len %1").arg(ba.length()));
 #endif
 
     if(flagAutoSave)
@@ -291,6 +287,7 @@ void LogBox::append_string(LOG_DATA log_data)
 
     if(flagNoCRLF)
     {
+        logBox->moveCursor(QTextCursor::End);
 #ifdef NEED_CODEC
         //TODO проверить надо
         logBox->insertPlainText(current_codec->toUnicode(ba));

@@ -31,7 +31,9 @@
 //--------------------------------------------------------------------------------
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
+// это шаблон, не надо его переписывать
 #include "worker_fake.hpp"
+
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class SerialWidget : public MyWidget
@@ -93,13 +95,13 @@ private:
     QByteArray ba_input;
     QByteArray ba_output;
 
-//#ifdef USE_B588
-//    Worker_fake_b588 *worker_fake = nullptr;
-//#elif defined USE_B590
-//    Worker_fake_b590 *worker_fake = nullptr;
-//#else
-    Worker_fake *worker_fake = nullptr;
-//#endif
+#ifdef USE_B588
+    Worker_fake_b588 *worker_fake = nullptr;
+#elif defined USE_B590
+    Worker_fake_b590 *worker_fake = nullptr;
+#else
+    Worker_fake_v786 *worker_fake = nullptr;
+#endif
 
     QString port_name = "FAKE";
     qint32 port_BaudRate = 9600;

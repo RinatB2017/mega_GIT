@@ -45,35 +45,19 @@ void SerialWidget::init(void)
        worker_fake->setObjectName(objectName());
     });
 
-#ifdef USE_B588
-    connect(worker_fake,    &Worker_fake_b588::info,        this,           &SerialWidget::info);
-    connect(worker_fake,    &Worker_fake_b588::debug,       this,           &SerialWidget::debug);
-    connect(worker_fake,    &Worker_fake_b588::error,       this,           &SerialWidget::error);
-    connect(worker_fake,    &Worker_fake_b588::trace,       this,           &SerialWidget::trace);
+// это шаблон, не надо его переписывать
+    connect(worker_fake,    &Worker_fake::info,        this,           &SerialWidget::info);
+    connect(worker_fake,    &Worker_fake::debug,       this,           &SerialWidget::debug);
+    connect(worker_fake,    &Worker_fake::error,       this,           &SerialWidget::error);
+    connect(worker_fake,    &Worker_fake::trace,       this,           &SerialWidget::trace);
 
-    connect(worker_fake,    &Worker_fake_b588::readyRead,   this,           &SerialWidget::readyRead);
+    connect(worker_fake,    &Worker_fake::readyRead,   this,           &SerialWidget::readyRead);
 
-    connect(worker_fake,    &Worker_fake_b588::output,      this,           &SerialWidget::output);
-    connect(worker_fake,    &Worker_fake_b588::output,      this,           &SerialWidget::write_ba_output);
+    connect(worker_fake,    &Worker_fake::output,      this,           &SerialWidget::output);
+    connect(worker_fake,    &Worker_fake::output,      this,           &SerialWidget::write_ba_output);
 
-    connect(this,           &SerialWidget::port_open,       worker_fake,    &Worker_fake_b588::port_open);
-    connect(this,           &SerialWidget::port_close,      worker_fake,    &Worker_fake_b588::port_close);
-#endif
-
-#ifdef USE_B590
-    connect(worker_fake,    &Worker_fake_b590::info,        this,           &SerialWidget::info);
-    connect(worker_fake,    &Worker_fake_b590::debug,       this,           &SerialWidget::debug);
-    connect(worker_fake,    &Worker_fake_b590::error,       this,           &SerialWidget::error);
-    connect(worker_fake,    &Worker_fake_b590::trace,       this,           &SerialWidget::trace);
-
-    connect(worker_fake,    &Worker_fake_b590::readyRead,   this,           &SerialWidget::readyRead);
-
-    connect(worker_fake,    &Worker_fake_b590::output,      this,           &SerialWidget::output);
-    connect(worker_fake,    &Worker_fake_b590::output,      this,           &SerialWidget::write_ba_output);
-
-    connect(this,           &SerialWidget::port_open,       worker_fake,    &Worker_fake_b590::port_open);
-    connect(this,           &SerialWidget::port_close,      worker_fake,    &Worker_fake_b590::port_close);
-#endif
+    connect(this,           &SerialWidget::port_open,       worker_fake,    &Worker_fake::port_open);
+    connect(this,           &SerialWidget::port_close,      worker_fake,    &Worker_fake::port_close);
 
     worker_fake->show();
 }

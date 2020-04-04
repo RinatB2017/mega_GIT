@@ -88,6 +88,8 @@ public:
     qint64 write(const char *data);
     qint64 write(const QByteArray &data);
 
+    void write_ba_output(QByteArray ba);
+
     QStringList get_port_names(void);
 
 private:
@@ -95,13 +97,7 @@ private:
     QByteArray ba_input;
     QByteArray ba_output;
 
-#ifdef USE_B588
-    Worker_fake_b588 *worker_fake = nullptr;
-#elif defined USE_B590
-    Worker_fake_b590 *worker_fake = nullptr;
-#else
-    Worker_fake_v786 *worker_fake = nullptr;
-#endif
+    Worker_fake *worker_fake = nullptr;
 
     QString port_name = "FAKE";
     qint32 port_BaudRate = 9600;
@@ -120,8 +116,6 @@ private:
     void parityChanged(QSerialPort::Parity parity);
     void requestToSendChanged(bool set);
     void stopBitsChanged(QSerialPort::StopBits stopBits);
-
-    void write_ba_output(QByteArray ba);
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALWIDGET_HPP

@@ -38,6 +38,7 @@ signals:
     void trace(const QString &);
 
     void output(QByteArray text);
+    void readyRead(void);
 
 public:
     explicit Worker_fake(QWidget *parent = nullptr);

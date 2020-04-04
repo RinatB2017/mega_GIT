@@ -61,6 +61,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 CONFIG  += use_worker
 use_worker {
     include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
+#    include (src/serialwidget_fake/serialwidget_fake.pri)
     include (src/worker_fake/worker_fake.pri)
 } else {
     include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)

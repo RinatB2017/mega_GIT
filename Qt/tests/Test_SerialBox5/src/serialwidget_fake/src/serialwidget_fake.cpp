@@ -18,51 +18,42 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "mainwindow.hpp"
-#include "worker_fake.hpp"
-#include "ui_worker_fake.h"
+// FAKE
 //--------------------------------------------------------------------------------
-Worker_fake::Worker_fake(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Worker_fake)
-{
-    init();
-}
+#include "serialwidget_fake.hpp"
 //--------------------------------------------------------------------------------
-Worker_fake::~Worker_fake()
+SerialWidget_fake::SerialWidget_fake(QWidget *parent) :
+    SerialWidget(parent)
 {
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::init(void)
-{
-    ui->setupUi(this);
+    worker_fake = new Worker_fake(this);
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
+    QTimer::singleShot(0, [this]{
+       worker_fake->setObjectName(objectName());
+    });
+
+// это шаблон, не надо его переписывать
+    connect(worker_fake,    &Worker_fake::info,        this,           &SerialWidget::info);
+    connect(worker_fake,    &Worker_fake::debug,       this,           &SerialWidget::debug);
+    connect(worker_fake,    &Worker_fake::error,       this,           &SerialWidget::error);
+    connect(worker_fake,    &Worker_fake::trace,       this,           &SerialWidget::trace);
+
+    connect(worker_fake,    &Worker_fake::readyRead,   this,           &SerialWidget::readyRead);
+
+    connect(worker_fake,    &Worker_fake::output,      this,           &SerialWidget::output);
+    connect(worker_fake,    &Worker_fake::output,      this,           &SerialWidget::write_ba_output);
+
+    connect(this,           &SerialWidget::port_open,       worker_fake,    &Worker_fake::port_open);
+    connect(this,           &SerialWidget::port_close,      worker_fake,    &Worker_fake::port_close);
+
+    worker_fake->show();
+}
+//--------------------------------------------------------------------------------
+SerialWidget_fake::~SerialWidget_fake()
+{
+    if(worker_fake)
     {
-        mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
+        worker_fake->disconnect();
+        worker_fake->deleteLater();
     }
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::input(QByteArray data)
-{
-    ui->log_widget->infoLog(data);
-    if(ui->cb_auto->isChecked())
-    {
-        emit output(data);
-        emit readyRead();
-        ui->log_widget->errorLog(data);
-    }    
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_open(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_close(void)
-{
-
 }
 //--------------------------------------------------------------------------------

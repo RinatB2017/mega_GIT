@@ -144,7 +144,7 @@ void LogBox::create_widgets(void)
     logBox->setFont(font);
 #ifdef Q_OS_LINUX
     //TODO белый цвет, если тема темная
-    logBox->setStyleSheet("background:white;");
+    //logBox->setStyleSheet("background:white;");
 #endif
 
     progressBar = new QProgressBar;

@@ -18,51 +18,35 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "mainwindow.hpp"
+// FAKE
+//--------------------------------------------------------------------------------
+#ifndef SERIALWIDGET_FAKE_HPP
+#define SERIALWIDGET_FAKE_HPP
+//--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include <QSerialPort>
+//--------------------------------------------------------------------------------
+// это шаблон, не надо его переписывать
 #include "worker_fake.hpp"
-#include "ui_worker_fake.h"
-//--------------------------------------------------------------------------------
-Worker_fake::Worker_fake(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Worker_fake)
-{
-    init();
-}
-//--------------------------------------------------------------------------------
-Worker_fake::~Worker_fake()
-{
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::init(void)
-{
-    ui->setupUi(this);
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
-    }
-}
+#include "serialwidget.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-void Worker_fake::input(QByteArray data)
+class SerialWidget_fake : public SerialWidget
 {
-    ui->log_widget->infoLog(data);
-    if(ui->cb_auto->isChecked())
-    {
-        emit output(data);
-        emit readyRead();
-        ui->log_widget->errorLog(data);
-    }    
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_open(void)
-{
+    Q_OBJECT
 
-}
-//--------------------------------------------------------------------------------
-void Worker_fake::port_close(void)
-{
+public:
+    explicit SerialWidget_fake(QWidget *parent = nullptr);
+    ~SerialWidget_fake();
 
-}
+private:
+    Worker_fake *worker_fake = nullptr;
+};
 //--------------------------------------------------------------------------------
+#endif // SERIALWIDGET_HPP

@@ -53,6 +53,11 @@ HEADERS += \
     defines.hpp \
     version.hpp
 
+#DEFINES += XXX
+#contains(DEFINES,XXX){
+#    SOURCES += for_tests_mainbox.cpp \
+#}
+
 SOURCES += \
     for_tests_mainbox.cpp \
     main.cpp

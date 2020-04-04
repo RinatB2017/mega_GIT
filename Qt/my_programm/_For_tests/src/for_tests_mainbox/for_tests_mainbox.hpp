@@ -34,6 +34,43 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+//class A {
+
+//public:
+//    A()
+//    {
+//        init();
+//    }
+//    void init(void)
+//    {
+//        qDebug() << "A: init";
+//        widget = new QWidget();
+//    }
+//    void test(void)
+//    {
+//        qDebug() << "A: test";
+//    }
+
+//    QWidget *widget = nullptr;
+//};
+
+//class B : A {
+
+//public:
+//    B()
+//    {
+//        init();
+//    }
+//    void init(void)
+//    {
+//        qDebug() << "B: init";
+//        widget = new QSpinBox();
+//        test();
+//    }
+
+//    QSpinBox *widget = nullptr;
+//};
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

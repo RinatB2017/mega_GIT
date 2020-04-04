@@ -310,7 +310,7 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
-#if 1
+#if 0
     QTextEdit *te = new QTextEdit();
     te->setTextColor(QColor(Qt::red));
     te->insertPlainText("red");
@@ -325,7 +325,7 @@ bool MainBox::test_0(void)
     timer->start(500);
 #endif
 
-#if 1
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

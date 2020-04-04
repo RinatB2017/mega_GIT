@@ -98,6 +98,10 @@ include (src/simple_mw/simple_mw.pri)
 #include (src/test_widgets/widgets.pri)
 include (src/simplewidget/simplewidget.pri)
 
+contains(DEFINES,XXX){
+    include (src/simplewidget/simplewidget.pri)
+}
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

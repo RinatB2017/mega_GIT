@@ -305,10 +305,18 @@ bool MainBox::save_property(QWidget *widget, const QString &property_name, QVari
     return widget->setProperty(property_name.toLocal8Bit(), value);
 }
 //--------------------------------------------------------------------------------
+#include "creatorbutton.hpp"
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
+
+#if 1
+    CreatorButton *cb = new CreatorButton();
+    connect_log_signals(cb, this);
+    cb->show();
+#endif
 
 #if 0
     QTextEdit *te = new QTextEdit();

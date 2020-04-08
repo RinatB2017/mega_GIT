@@ -59,6 +59,8 @@ MyWidget::MyWidget(QWidget *parent) :
     qDebug() << "MyWidget()";
     QTimer::singleShot(100, this, SLOT(s_test()));
 #endif
+
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 //--------------------------------------------------------------------------------
 MyWidget::~MyWidget()
@@ -148,6 +150,20 @@ void MyWidget::connect_log(QWidget *parent)
         connect(this,   SIGNAL(colorLog(QString,    QColor, QColor)),   this, SLOT(log(QString)));
     }
 #endif
+}
+//--------------------------------------------------------------------------------
+bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
+{
+    if(src == nullptr)  return false;
+    if(dest == nullptr)  return false;
+
+    //TODO надо переделать на современный стиль
+    connect(src,    SIGNAL(info(QString)),  dest,   SIGNAL(info(QString)));
+    connect(src,    SIGNAL(debug(QString)), dest,   SIGNAL(debug(QString)));
+    connect(src,    SIGNAL(error(QString)), dest,   SIGNAL(error(QString)));
+    connect(src,    SIGNAL(trace(QString)), dest,   SIGNAL(trace(QString)));
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MyWidget::log(const QString data)

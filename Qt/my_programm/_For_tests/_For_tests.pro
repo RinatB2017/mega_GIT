@@ -97,6 +97,7 @@ include (src/simple_mw/simple_mw.pri)
 
 #include (src/test_widgets/widgets.pri)
 include (src/simplewidget/simplewidget.pri)
+include (src/creatorbutton/creatorbutton.pri)
 
 contains(DEFINES,XXX){
     include (src/simplewidget/simplewidget.pri)

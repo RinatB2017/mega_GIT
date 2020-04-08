@@ -179,6 +179,8 @@ public:
                             const QString &text,
                             const QString &tool_tip);
 
+    bool connect_log_signals(QWidget *src, QWidget *dest);
+
     virtual void updateText(void) = 0;
     virtual bool programm_is_exit(void) = 0;
     virtual void load_setting(void) = 0;

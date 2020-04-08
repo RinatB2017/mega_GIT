@@ -53,6 +53,9 @@ private slots:
     void create_picture(void);
 
 private:
+    QColor border_color = Qt::black;
+    QColor background_color = Qt::black;
+
     void init(void);
 
     void set_width(int width);
@@ -63,6 +66,10 @@ private:
 
     void set_border(int size);
     int get_border(void);
+
+    void set_border_color(void);
+    void set_background_color(void);
+    void set_color(QToolButton *btn, QColor color);
 
     void save_picture_to(void);
 

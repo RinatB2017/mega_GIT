@@ -75,6 +75,50 @@ int CreatorButton::get_border(void)
     return ui->sb_border_w->value();
 }
 //--------------------------------------------------------------------------------
+void CreatorButton::set_border_color(void)
+{
+    QColorDialog *dlg_color = new QColorDialog();
+    dlg_color->setCurrentColor(border_color);
+    int btn = dlg_color->exec();
+    if(btn == QColorDialog::Accepted)
+    {
+        border_color = dlg_color->currentColor();
+        QToolButton *btn = static_cast<QToolButton *>(sender());
+        if(btn)
+        {
+            set_color(btn, border_color);
+        }
+    }
+    dlg_color->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void CreatorButton::set_background_color(void)
+{
+    QColorDialog *dlg_color = new QColorDialog();
+    dlg_color->setCurrentColor(background_color);
+    int btn = dlg_color->exec();
+    if(btn == QColorDialog::Accepted)
+    {
+        background_color = dlg_color->currentColor();
+        QToolButton *btn = static_cast<QToolButton *>(sender());
+        if(btn)
+        {
+            set_color(btn, background_color);
+        }
+    }
+    dlg_color->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void CreatorButton::set_color(QToolButton *btn, QColor color)
+{
+    QString color_str = QString("background:#%1%2%3")
+            .arg(color.red(),     2, 16, QChar('0'))
+            .arg(color.green(),   2, 16, QChar('0'))
+            .arg(color.blue(),    2, 16, QChar('0'));
+    emit debug(color_str);
+    btn->setStyleSheet(color_str);
+}
+//--------------------------------------------------------------------------------
 void CreatorButton::updateText(void)
 {
     ui->retranslateUi(this);
@@ -136,6 +180,12 @@ void CreatorButton::load_setting(void)
     set_height(load_value("size_h").toInt());
     set_border(load_value("size_border").toInt());
 
+    border_color = load_value("border_color").value<QColor>();  //TODO интересный способ, надо запомнить
+    background_color = load_value("background_color").value<QColor>();
+
+    set_color(ui->btn_border_color,     border_color);
+    set_color(ui->btn_background_color, background_color);
+
     connect(ui->sb_w,   SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
     connect(ui->sb_h,   SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
     connect(ui->sb_border_w,    SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
@@ -143,6 +193,12 @@ void CreatorButton::load_setting(void)
     connect(ui->sb_margin_b,    SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
     connect(ui->sb_margin_l,    SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
     connect(ui->sb_margin_r,    SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
+
+    connect(ui->btn_border_color,       &QPushButton::clicked,  this,   &CreatorButton::set_border_color);
+    connect(ui->btn_background_color,   &QPushButton::clicked,  this,   &CreatorButton::set_background_color);
+
+    connect(ui->cb_border_color_transparent,        &QCheckBox::stateChanged,   ui->btn_border_color,       &QToolButton::setDisabled);
+    connect(ui->cb_background_color_transparent,    &QCheckBox::stateChanged,   ui->btn_background_color,   &QToolButton::setDisabled);
 
     connect(ui->btn_create,     &QPushButton::clicked,  this,   &CreatorButton::create_picture);
     connect(ui->btn_save_to,    &QPushButton::clicked,  this,   &CreatorButton::save_picture_to);
@@ -155,5 +211,7 @@ void CreatorButton::save_setting(void)
     save_value("size_w", ui->sb_w->value());
     save_value("size_h", ui->sb_h->value());
     save_value("size_border",   ui->sb_border_w->value());
+    save_value("border_color",      border_color);
+    save_value("background_color",  background_color);
 }
 //--------------------------------------------------------------------------------

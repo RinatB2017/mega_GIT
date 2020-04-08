@@ -239,10 +239,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QRadioButton" name="rb_shapes_0">
-           <property name="icon">
-            <iconset resource="../../../../ico/icons.qrc">
-             <normaloff>:/ico/computer.ico</normaloff>:/ico/computer.ico</iconset>
-           </property>
            <property name="checked">
             <bool>true</bool>
            </property>
@@ -253,6 +249,9 @@
          </item>
          <item>
           <widget class="QRadioButton" name="rb_shapes_2"/>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="rb_shapes_3"/>
          </item>
         </layout>
        </widget>
@@ -328,8 +327,6 @@
   <tabstop>btn_create</tabstop>
   <tabstop>btn_save_to</tabstop>
  </tabstops>
- <resources>
-  <include location="../../../../ico/icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

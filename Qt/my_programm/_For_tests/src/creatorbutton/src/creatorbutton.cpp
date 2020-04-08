@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "creatorbutton.hpp"
+#include "myfiledialog.hpp"
 #include "ui_creatorbutton.h"
 //--------------------------------------------------------------------------------
 CreatorButton::CreatorButton(QWidget *parent) :
@@ -39,6 +40,8 @@ void CreatorButton::init(void)
     ui->setupUi(this);
 
     load_setting();
+
+    create_picture();
 }
 //--------------------------------------------------------------------------------
 void CreatorButton::set_width(int width)
@@ -138,20 +141,77 @@ void CreatorButton::create_picture(void)
 
     int border = get_border();
     if(border <= 0) border = 1;
-    QPen *pen = new QPen(Qt::red, border, Qt::SolidLine);
+    QPen *pen = nullptr;
+    if(ui->cb_background_color_transparent->isChecked())
+    {
+        pixmap->fill(Qt::transparent);
+    }
+    else
+    {
+        pixmap->fill(background_color);
+    }
 
-    pixmap->fill(Qt::white);
-//    pixmap->fill(Qt::transparent);
+    if(ui->cb_border_color_transparent->isChecked())
+    {
+        pen = new QPen(Qt::transparent, border, Qt::SolidLine);
+    }
+    else
+    {
+        pen = new QPen(border_color, border, Qt::SolidLine);
+    }
 
     //---
     QPainter painter;
     painter.begin(pixmap);
-    painter.drawLine(0, 0, w, h);
     painter.setPen(*pen);
-    painter.drawEllipse(border / 2,
-                        border / 2,
-                        w - border,
-                        h - border);
+
+    if(ui->rb_shapes_0->isChecked())
+    {
+        painter.drawEllipse(border / 2,
+                            border / 2,
+                            w - border,
+                            h - border);
+    }
+
+    if(ui->rb_shapes_1->isChecked())
+    {
+        painter.drawRect(border / 2,
+                         border / 2,
+                         w - border,
+                         h - border);
+    }
+
+    if(ui->rb_shapes_2->isChecked())
+    {
+        painter.drawLine(border / 2,
+                         h / 2,
+                         w - border,
+                         border / 2);
+        painter.drawLine(border / 2,
+                         h / 2,
+                         w - border,
+                         h - border);
+        painter.drawLine(w - border,
+                         border / 2,
+                         w - border,
+                         h - border);
+    }
+
+    if(ui->rb_shapes_3->isChecked())
+    {
+        painter.drawLine(border / 2,
+                         border / 2,
+                         w - border,
+                         h / 2);
+        painter.drawLine(border / 2,
+                         h - border,
+                         w - border,
+                         h / 2);
+        painter.drawLine(border / 2,
+                         border / 2,
+                         border / 2,
+                         h - border);
+    }
     //---
 
     ui->lbl_picture->setPixmap(*pixmap);
@@ -159,7 +219,21 @@ void CreatorButton::create_picture(void)
 //--------------------------------------------------------------------------------
 void CreatorButton::save_picture_to(void)
 {
-    emit error("Пока не сделано!");
+    MyFileDialog *dlg = new MyFileDialog("creator_button", "creator_button", this);
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->selectFile("noname");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        ui->lbl_picture->pixmap()->save(filename);
+    }
 }
 //--------------------------------------------------------------------------------
 void CreatorButton::load_setting(void)
@@ -194,6 +268,14 @@ void CreatorButton::load_setting(void)
     connect(ui->sb_margin_l,    SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
     connect(ui->sb_margin_r,    SIGNAL(valueChanged(int)),    this,   SLOT(create_picture()));
 
+    connect(ui->cb_border_color_transparent,        SIGNAL(stateChanged(int)),    this,   SLOT(create_picture()));
+    connect(ui->cb_background_color_transparent,    SIGNAL(stateChanged(int)),    this,   SLOT(create_picture()));
+
+    connect(ui->rb_shapes_0,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
+    connect(ui->rb_shapes_1,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
+    connect(ui->rb_shapes_2,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
+    connect(ui->rb_shapes_3,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
+
     connect(ui->btn_border_color,       &QPushButton::clicked,  this,   &CreatorButton::set_border_color);
     connect(ui->btn_background_color,   &QPushButton::clicked,  this,   &CreatorButton::set_background_color);
 
@@ -202,6 +284,9 @@ void CreatorButton::load_setting(void)
 
     connect(ui->btn_create,     &QPushButton::clicked,  this,   &CreatorButton::create_picture);
     connect(ui->btn_save_to,    &QPushButton::clicked,  this,   &CreatorButton::save_picture_to);
+
+    ui->cb_border_color_transparent->setChecked(load_value("transparent_border").toBool());
+    ui->cb_background_color_transparent->setChecked(load_value("transparent_background").toBool());
 }
 //--------------------------------------------------------------------------------
 void CreatorButton::save_setting(void)
@@ -213,5 +298,7 @@ void CreatorButton::save_setting(void)
     save_value("size_border",   ui->sb_border_w->value());
     save_value("border_color",      border_color);
     save_value("background_color",  background_color);
+    save_value("transparent_border", ui->cb_border_color_transparent->isChecked());
+    save_value("transparent_background", ui->cb_background_color_transparent->isChecked());
 }
 //--------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,65 +18,72 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef CREATORBUTTON_HPP
-#define CREATORBUTTON_HPP
-//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "creatorbutton.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-#define MIN_WIDTH   10
-#define MAX_WIDTH   256
-#define MIN_HEIGHT  10
-#define MAX_HEIGHT  256
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class CreatorButton;
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+#if 1
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_CHECK_PTR(splash);
+    splash->show();
+
+    qApp->processEvents();
+
+    MainWindow *main_window = new MainWindow();
+
+    CreatorButton *mainBox = new CreatorButton(main_window->getThis());
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class CreatorButton : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit CreatorButton(QWidget *parent = nullptr);
-    ~CreatorButton();
-
-private:
-    Ui::CreatorButton *ui;
-
-private slots:
-    void create_picture(void);
-
-private:
-    QColor border_color = Qt::black;
-    QColor background_color = Qt::black;
-
-    void init(void);
-
-    void set_width(int width);
-    int get_width(void);
-
-    void set_height(int height);
-    int get_height(void);
-
-    void set_border(int size);
-    int get_border(void);
-
-    void set_border_color(void);
-    void set_background_color(void);
-    void set_color(QToolButton *btn, QColor color);
-
-    void save_picture_to(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
-//--------------------------------------------------------------------------------
-#endif // CREATORBUTTON_HPP

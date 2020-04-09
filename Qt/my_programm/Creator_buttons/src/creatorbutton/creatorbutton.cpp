@@ -118,7 +118,6 @@ void CreatorButton::set_color(QToolButton *btn, QColor color)
             .arg(color.red(),     2, 16, QChar('0'))
             .arg(color.green(),   2, 16, QChar('0'))
             .arg(color.blue(),    2, 16, QChar('0'));
-    emit debug(color_str);
     btn->setStyleSheet(color_str);
 }
 //--------------------------------------------------------------------------------
@@ -160,65 +159,69 @@ void CreatorButton::create_picture(void)
         pen = new QPen(border_color, border, Qt::SolidLine);
     }
 
+    int offset_t = ui->sb_margin_t->value();
+    int offset_b = ui->sb_margin_b->value();
+    int offset_l = ui->sb_margin_l->value();
+    int offset_r = ui->sb_margin_r->value();
+
     //---
     QPainter painter;
     painter.begin(pixmap);
     painter.setPen(*pen);
 
-    if(ui->rb_shapes_0->isChecked())
+    if(ui->rb_shapes_ellipse->isChecked())
     {
-        painter.drawEllipse(border / 2,
-                            border / 2,
-                            w - border,
-                            h - border);
+        painter.drawEllipse(border / 2 + offset_l,
+                            border / 2 + offset_t,
+                            w - border - (offset_r + offset_r),
+                            h - border - (offset_t + offset_b));
     }
 
-    if(ui->rb_shapes_1->isChecked())
+    if(ui->rb_shapes_rectangle->isChecked())
     {
-        painter.drawRect(border / 2,
-                         border / 2,
-                         w - border,
-                         h - border);
+        painter.drawRect(border / 2 + offset_l,
+                         border / 2 + offset_t,
+                         w - border - (offset_r + offset_r),
+                         h - border - (offset_t + offset_b));
     }
 
-    if(ui->rb_shapes_2->isChecked())
+    if(ui->rb_shapes_arrow_left->isChecked())
     {
-        painter.drawLine(border / 2,
-                         h / 2,
-                         w - border,
-                         border / 2);
-        painter.drawLine(border / 2,
-                         h / 2,
-                         w - border,
-                         h - border);
-        painter.drawLine(w - border,
-                         border / 2,
-                         w - border,
-                         h - border);
+        painter.drawLine(border / 2 + offset_l,
+                         h / 2 + offset_t,
+                         w - border - (offset_r + offset_r),
+                         border / 2 - (offset_t + offset_b));
+        painter.drawLine(border / 2 + offset_l,
+                         h / 2 + offset_t,
+                         w - border - (offset_r + offset_r),
+                         h - border - (offset_t + offset_b));
+        painter.drawLine(w - border + offset_l,
+                         border / 2 + offset_t,
+                         w - border - (offset_r + offset_r),
+                         h - border - (offset_t + offset_b));
     }
 
-    if(ui->rb_shapes_3->isChecked())
+    if(ui->rb_shapes_arrow_right->isChecked())
     {
-        painter.drawLine(border / 2,
-                         border / 2,
-                         w - border,
-                         h / 2);
-        painter.drawLine(border / 2,
-                         h - border,
-                         w - border,
-                         h / 2);
-        painter.drawLine(border / 2,
-                         border / 2,
-                         border / 2,
-                         h - border);
+        painter.drawLine(border / 2 + offset_l,
+                         border / 2 + offset_t,
+                         w - border - (offset_r + offset_r),
+                         h / 2 - (offset_t + offset_b));
+        painter.drawLine(border / 2 + offset_l,
+                         h - border + offset_t,
+                         w - border - (offset_r + offset_r),
+                         h / 2 - (offset_t + offset_b));
+        painter.drawLine(border / 2 + offset_l,
+                         border / 2 + offset_t,
+                         border / 2 - (offset_r + offset_r),
+                         h - border - (offset_t + offset_b));
     }
     //---
 
     ui->lbl_picture->setPixmap(*pixmap);
 }
 //--------------------------------------------------------------------------------
-void CreatorButton::save_picture_to(void)
-{
+void CreatorButton::save_picture_to(void){
     MyFileDialog *dlg = new MyFileDialog("creator_button", "creator_button", this);
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
@@ -250,12 +253,22 @@ void CreatorButton::load_setting(void)
     ui->sb_margin_l->setRange(0, MAX_WIDTH / 2);
     ui->sb_margin_r->setRange(0, MAX_WIDTH / 2);
 
-    set_width(load_value("size_w").toInt());
-    set_height(load_value("size_h").toInt());
-    set_border(load_value("size_border").toInt());
+    set_width(load_value(S_SIZE_W).toInt());
+    set_height(load_value(S_SIZE_H).toInt());
+    set_border(load_value(S_SIZE_BORDER).toInt());
 
-    border_color = load_value("border_color").value<QColor>();  //TODO интересный способ, надо запомнить
-    background_color = load_value("background_color").value<QColor>();
+    border_color = load_value(S_BORDER_COLOR).value<QColor>();  //TODO интересный способ, надо запомнить
+    background_color = load_value(S_BACKGROUND_COLOR).value<QColor>();
+
+    ui->sb_margin_t->setValue(load_value(S_MARGIN_T).toInt());
+    ui->sb_margin_b->setValue(load_value(S_MARGIN_B).toInt());
+    ui->sb_margin_l->setValue(load_value(S_MARGIN_L).toInt());
+    ui->sb_margin_r->setValue(load_value(S_MARGIN_R).toInt());
+
+    ui->rb_shapes_ellipse->setChecked(load_value(S_RB_ECLIPSE).toBool());
+    ui->rb_shapes_rectangle->setChecked(load_value(S_RB_RECTANGLE).toBool());
+    ui->rb_shapes_arrow_left->setChecked(load_value(S_RB_ARROW_LEFT).toBool());
+    ui->rb_shapes_arrow_right->setChecked(load_value(S_RB_ARROW_RIGHT).toBool());
 
     set_color(ui->btn_border_color,     border_color);
     set_color(ui->btn_background_color, background_color);
@@ -271,10 +284,10 @@ void CreatorButton::load_setting(void)
     connect(ui->cb_border_color_transparent,        SIGNAL(stateChanged(int)),    this,   SLOT(create_picture()));
     connect(ui->cb_background_color_transparent,    SIGNAL(stateChanged(int)),    this,   SLOT(create_picture()));
 
-    connect(ui->rb_shapes_0,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
-    connect(ui->rb_shapes_1,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
-    connect(ui->rb_shapes_2,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
-    connect(ui->rb_shapes_3,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
+    connect(ui->rb_shapes_ellipse,      SIGNAL(clicked()),    this,   SLOT(create_picture()));
+    connect(ui->rb_shapes_rectangle,    SIGNAL(clicked()),    this,   SLOT(create_picture()));
+    connect(ui->rb_shapes_arrow_left,   SIGNAL(clicked()),    this,   SLOT(create_picture()));
+    connect(ui->rb_shapes_arrow_right,  SIGNAL(clicked()),    this,   SLOT(create_picture()));
 
     connect(ui->btn_border_color,       &QPushButton::clicked,  this,   &CreatorButton::set_border_color);
     connect(ui->btn_background_color,   &QPushButton::clicked,  this,   &CreatorButton::set_background_color);
@@ -285,20 +298,30 @@ void CreatorButton::load_setting(void)
     connect(ui->btn_create,     &QPushButton::clicked,  this,   &CreatorButton::create_picture);
     connect(ui->btn_save_to,    &QPushButton::clicked,  this,   &CreatorButton::save_picture_to);
 
-    ui->cb_border_color_transparent->setChecked(load_value("transparent_border").toBool());
-    ui->cb_background_color_transparent->setChecked(load_value("transparent_background").toBool());
+    ui->cb_border_color_transparent->setChecked(load_value(S_TRANSPARENT_BORDER).toBool());
+    ui->cb_background_color_transparent->setChecked(load_value(S_TRANSPARENT_BACKGROUND).toBool());
 }
 //--------------------------------------------------------------------------------
 void CreatorButton::save_setting(void)
 {
     emit debug("save_setting !");
 
-    save_value("size_w", ui->sb_w->value());
-    save_value("size_h", ui->sb_h->value());
-    save_value("size_border",   ui->sb_border_w->value());
-    save_value("border_color",      border_color);
-    save_value("background_color",  background_color);
-    save_value("transparent_border", ui->cb_border_color_transparent->isChecked());
-    save_value("transparent_background", ui->cb_background_color_transparent->isChecked());
+    save_value(S_SIZE_W, ui->sb_w->value());
+    save_value(S_SIZE_H, ui->sb_h->value());
+    save_value(S_SIZE_BORDER,   ui->sb_border_w->value());
+    save_value(S_BORDER_COLOR,      border_color);
+    save_value(S_BACKGROUND_COLOR,  background_color);
+    save_value(S_TRANSPARENT_BORDER, ui->cb_border_color_transparent->isChecked());
+    save_value(S_TRANSPARENT_BACKGROUND, ui->cb_background_color_transparent->isChecked());
+
+    save_value(S_MARGIN_T, ui->sb_margin_t->value());
+    save_value(S_MARGIN_B, ui->sb_margin_b->value());
+    save_value(S_MARGIN_L, ui->sb_margin_l->value());
+    save_value(S_MARGIN_R, ui->sb_margin_r->value());
+
+    save_value(S_RB_ECLIPSE,        ui->rb_shapes_ellipse->isChecked());
+    save_value(S_RB_RECTANGLE,      ui->rb_shapes_rectangle->isChecked());
+    save_value(S_RB_ARROW_LEFT,     ui->rb_shapes_arrow_left->isChecked());
+    save_value(S_RB_ARROW_RIGHT,    ui->rb_shapes_arrow_right->isChecked());
 }
 //--------------------------------------------------------------------------------

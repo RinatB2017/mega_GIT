@@ -10,8 +10,14 @@
     <height>663</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Creator buttons</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
@@ -238,20 +244,35 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QRadioButton" name="rb_shapes_0">
+          <widget class="QRadioButton" name="rb_shapes_ellipse">
+           <property name="text">
+            <string>ellipse</string>
+           </property>
            <property name="checked">
             <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rb_shapes_1"/>
+          <widget class="QRadioButton" name="rb_shapes_rectangle">
+           <property name="text">
+            <string>rectangle</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rb_shapes_2"/>
+          <widget class="QRadioButton" name="rb_shapes_arrow_left">
+           <property name="text">
+            <string>arrow left</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rb_shapes_3"/>
+          <widget class="QRadioButton" name="rb_shapes_arrow_right">
+           <property name="text">
+            <string>arrow right</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

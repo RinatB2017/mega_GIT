@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    Game *mainBox = new Game();
+    Game *mainBox = new Game(main_window->getThis());
     mainBox->setFocusPolicy(Qt::StrongFocus);
     main_window->setCentralWidget(mainBox);
 

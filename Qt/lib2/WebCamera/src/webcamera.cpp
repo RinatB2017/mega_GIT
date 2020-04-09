@@ -206,6 +206,7 @@ void WebCamera::start(void)
                 emit error("USB device is empty");
                 return;
             }
+            emit info(QString("USB: %1").arg(usb_device));
             mCapture.open(usb_device.toLatin1().data());
         }
         else
@@ -216,6 +217,7 @@ void WebCamera::start(void)
                     emit error("RTSP device is empty");
                     return;
             }
+            emit info(QString("RTSP: %1").arg(rtsp_device));
             mCapture.open(rtsp_device.toLatin1().data());
         }
     }

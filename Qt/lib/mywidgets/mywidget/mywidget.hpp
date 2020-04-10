@@ -119,8 +119,10 @@ public:
 
     bool load_combobox_property(QWidget *widget);
     bool save_combobox_property(QWidget *widget);
+
     bool load_property(QWidget *widget, const QString &property_name);
     bool save_property(QWidget *widget, const QString &property_name);
+
     QString get_full_objectName(QWidget *widget);
     void load_widgets(void);
     void save_widgets(void);

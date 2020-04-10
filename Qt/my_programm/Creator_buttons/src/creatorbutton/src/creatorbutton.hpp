@@ -29,27 +29,6 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define MIN_WIDTH   10
-#define MAX_WIDTH   256
-#define MIN_HEIGHT  10
-#define MAX_HEIGHT  256
-
-#define S_SIZE_W        "size_w"
-#define S_SIZE_H        "size_h"
-#define S_SIZE_BORDER   "size_border"
-#define S_BORDER_COLOR  "border_color"
-#define S_BACKGROUND_COLOR  "background_color"
-#define S_MARGIN_T  "margin_t"
-#define S_MARGIN_B  "margin_b"
-#define S_MARGIN_L  "margin_l"
-#define S_MARGIN_R  "margin_r"
-#define S_TRANSPARENT_BORDER    "transparent_border"
-#define S_TRANSPARENT_BACKGROUND    "transparent_background"
-#define S_RB_ECLIPSE        "rb_eclipse"
-#define S_RB_RECTANGLE      "rb_rectangle"
-#define S_RB_ARROW_LEFT     "rb_arrow_left"
-#define S_RB_ARROW_RIGHT    "rb_arrow_right"
-//--------------------------------------------------------------------------------
 namespace Ui {
     class CreatorButton;
 }
@@ -69,9 +48,6 @@ private slots:
     void create_picture(void);
 
 private:
-    QColor border_color = Qt::black;
-    QColor background_color = Qt::black;
-
     void init(void);
 
     void set_width(int width);
@@ -79,13 +55,6 @@ private:
 
     void set_height(int height);
     int get_height(void);
-
-    void set_border(int size);
-    int get_border(void);
-
-    void set_border_color(void);
-    void set_background_color(void);
-    void set_color(QToolButton *btn, QColor color);
 
     void save_picture_to(void);
 

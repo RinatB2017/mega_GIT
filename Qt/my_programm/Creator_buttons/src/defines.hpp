@@ -26,6 +26,36 @@
 #define ORGNAME "Work"
 #define APPNAME "Creator_buttons"
 //--------------------------------------------------------------------------------
+#define MIN_WIDTH   10
+#define MAX_WIDTH   256
+#define MIN_HEIGHT  10
+#define MAX_HEIGHT  256
+
+#define S_SIZE_W        "size_w"
+#define S_SIZE_H        "size_h"
+#define S_SIZE_BORDER   "size_border"
+#define S_BORDER_COLOR  "border_color"
+#define S_BACKGROUND_COLOR  "background_color"
+#define S_MARGIN_T  "margin_t"
+#define S_MARGIN_B  "margin_b"
+#define S_MARGIN_L  "margin_l"
+#define S_MARGIN_R  "margin_r"
+#define S_TRANSPARENT_BORDER    "transparent_border"
+#define S_TRANSPARENT_BACKGROUND    "transparent_background"
+#define S_RB_ECLIPSE        "rb_eclipse"
+#define S_RB_RECTANGLE      "rb_rectangle"
+#define S_RB_ARROW_LEFT     "rb_arrow_left"
+#define S_RB_ARROW_RIGHT    "rb_arrow_right"
+
+#define S_ELLIPSE_BORDER_COLOR          "ellipse_border_color"
+#define S_ELLIPSE_BACKGROUND_COLOR      "ellipse_background_color"
+#define S_RECTANGLE_BORDER_COLOR        "rectangle_border_color"
+#define S_RECTANGLE_BACKGROUND_COLOR    "rectangle_background_color"
+#define S_ARROW_LEFT_BORDER_COLOR       "arrow_left_border_color"
+#define S_ARROW_LEFT_BACKGROUND_COLOR   "arrow_left_background_color"
+#define S_ARROW_RIGHT_BORDER_COLOR      "arrow_right_border_color"
+#define S_ARROW_RIGHT_BACKGROUND_COLOR  "arrow_right_background_color"
+//--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME

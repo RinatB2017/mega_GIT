@@ -56,26 +56,21 @@ public:
     bool get_active(void);
 
     bool get_border_color_transparent(void);
-    bool get_background_color_transparent(void);
 
     void set_border_color(QColor color);
-    void set_background_color(QColor color);
 
     QColor get_border_color(void);
-    QColor get_background_color(void);
 
 private:
     Ui::PictureParam *ui;
 
     QColor border_color = Qt::black;
-    QColor background_color = Qt::black;
 
     void init(void);
 
     void set_color(QToolButton *btn, QColor color);
 
     void set_border_color(void);
-    void set_background_color(void);
 
     void updateText(void);
     bool programm_is_exit(void);

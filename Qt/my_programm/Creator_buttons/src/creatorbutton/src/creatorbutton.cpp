@@ -39,16 +39,9 @@ CreatorButton::~CreatorButton()
     save_widgets();
 
     save_value(S_ELLIPSE_BORDER_COLOR,      ui->ellipse_widget->get_border_color());
-    save_value(S_ELLIPSE_BACKGROUND_COLOR,  ui->ellipse_widget->get_background_color());
-
     save_value(S_RECTANGLE_BORDER_COLOR,      ui->rectangle_widget->get_border_color());
-    save_value(S_RECTANGLE_BACKGROUND_COLOR,  ui->rectangle_widget->get_background_color());
-
     save_value(S_ARROW_LEFT_BORDER_COLOR,      ui->arrow_left_widget->get_border_color());
-    save_value(S_ARROW_LEFT_BACKGROUND_COLOR,  ui->arrow_left_widget->get_background_color());
-
     save_value(S_ARROW_RIGHT_BORDER_COLOR,      ui->arrow_right_widget->get_border_color());
-    save_value(S_ARROW_RIGHT_BACKGROUND_COLOR,  ui->arrow_right_widget->get_background_color());
 
     delete ui;
 }
@@ -58,21 +51,17 @@ void CreatorButton::init(void)
     load_widgets();
 
     ui->ellipse_widget->set_border_color(load_value(S_ELLIPSE_BORDER_COLOR).value<QColor>());
-    ui->ellipse_widget->set_background_color(load_value(S_ELLIPSE_BACKGROUND_COLOR).value<QColor>());
-
     ui->rectangle_widget->set_border_color(load_value(S_RECTANGLE_BORDER_COLOR).value<QColor>());
-    ui->rectangle_widget->set_background_color(load_value(S_RECTANGLE_BACKGROUND_COLOR).value<QColor>());
-
     ui->arrow_left_widget->set_border_color(load_value(S_ARROW_LEFT_BORDER_COLOR).value<QColor>());
-    ui->arrow_left_widget->set_background_color(load_value(S_ARROW_LEFT_BACKGROUND_COLOR).value<QColor>());
-
     ui->arrow_right_widget->set_border_color(load_value(S_ARROW_RIGHT_BORDER_COLOR).value<QColor>());
-    ui->arrow_right_widget->set_background_color(load_value(S_ARROW_RIGHT_BACKGROUND_COLOR).value<QColor>());
 
     ui->ellipse_widget->set_caption("Ellipse");
     ui->rectangle_widget->set_caption("Rectangle");
     ui->arrow_left_widget->set_caption("Arrow left");
     ui->arrow_right_widget->set_caption("Arrow right");
+
+    connect(ui->btn_background_color,               &QPushButton::clicked,  this,   &CreatorButton::set_background_color);
+    connect(ui->cb_background_color_transparent,    &QCheckBox::stateChanged,  this,    &CreatorButton::create_picture);
 
     connect(ui->ellipse_widget, &PictureParam::picture_update,  this,   &CreatorButton::create_picture);
 
@@ -134,17 +123,41 @@ void CreatorButton::create_picture(void)
     QPainter painter;
     painter.begin(pixmap);
 
+//    const QPixmap *p = ui->lbl_picture->pixmap();
+//    if(p)
+//    {
+//        QRgb rgb = ui->lbl_picture->pixmap()->toImage().pixel(ui->lbl_picture->width() / 2,
+//                                                              ui->lbl_picture->height() / 2);
+//        pixmap->fill(QColor(rgb));
+//        pixmap->fill(Qt::lightGray);
+//    }
+
+//    pixmap->fill(Qt::transparent);
+//    pixmap->fill(qRgba(255, 255, 255, 255));
+//    pixmap->fill(qRgb(255, 255, 255));
+
+    if(ui->cb_background_color_transparent->isChecked())
+    {
+        pixmap->fill(QColor(Qt::transparent));
+    }
+    else
+    {
+        pixmap->fill(background_color);
+    }
+
     if(ui->ellipse_widget->get_active())
     {
         border = ui->ellipse_widget->get_border();
         if(border < 0) border = 0;
 
-        pixmap->fill(ui->ellipse_widget->get_background_color());
-        pen->setColor(ui->ellipse_widget->get_border_color());
+        if(ui->ellipse_widget->get_border_color_transparent() == false)
+        {
+            pen->setColor(ui->ellipse_widget->get_border_color());
+        }
+
         pen->setWidth(border);
         pen->setStyle(Qt::SolidLine);
         painter.setPen(*pen);
-        //painter.setBrush(ui->ellipse_widget->get_background_color());
 
         offset_t = ui->ellipse_widget->get_margen_t();
         offset_b = ui->ellipse_widget->get_margen_b();
@@ -162,8 +175,11 @@ void CreatorButton::create_picture(void)
         border = ui->rectangle_widget->get_border();
         if(border < 0) border = 0;
 
-        pixmap->fill(ui->rectangle_widget->get_background_color());
-        pen->setColor(ui->rectangle_widget->get_border_color());
+        if(ui->rectangle_widget->get_border_color_transparent() == false)
+        {
+            pen->setColor(ui->rectangle_widget->get_border_color());
+        }
+
         pen->setWidth(border);
         pen->setStyle(Qt::SolidLine);
         painter.setPen(*pen);
@@ -184,8 +200,10 @@ void CreatorButton::create_picture(void)
         border = ui->arrow_left_widget->get_border();
         if(border < 0) border = 0;
 
-        pixmap->fill(ui->arrow_left_widget->get_background_color());
-        pen->setColor(ui->arrow_left_widget->get_border_color());
+        if(ui->arrow_left_widget->get_border_color_transparent() == false)
+        {
+            pen->setColor(ui->arrow_left_widget->get_border_color());
+        }
         pen->setWidth(border);
         pen->setStyle(Qt::SolidLine);
         painter.setPen(*pen);
@@ -214,8 +232,10 @@ void CreatorButton::create_picture(void)
         border = ui->arrow_right_widget->get_border();
         if(border < 0) border = 0;
 
-        pixmap->fill(ui->arrow_right_widget->get_background_color());
-        pen->setColor(ui->arrow_right_widget->get_border_color());
+        if(ui->arrow_right_widget->get_border_color_transparent() == false)
+        {
+            pen->setColor(ui->arrow_right_widget->get_border_color());
+        }
         pen->setWidth(border);
         pen->setStyle(Qt::SolidLine);
         painter.setPen(*pen);
@@ -241,6 +261,33 @@ void CreatorButton::create_picture(void)
     //---
 
     ui->lbl_picture->setPixmap(*pixmap);
+}
+//--------------------------------------------------------------------------------
+void CreatorButton::set_color(QToolButton *btn, QColor color)
+{
+    QString color_str = QString("background:#%1%2%3")
+            .arg(color.red(),     2, 16, QChar('0'))
+            .arg(color.green(),   2, 16, QChar('0'))
+            .arg(color.blue(),    2, 16, QChar('0'));
+    btn->setStyleSheet(color_str);
+}
+//--------------------------------------------------------------------------------
+void CreatorButton::set_background_color(void)
+{
+    QColorDialog *dlg_color = new QColorDialog();
+    dlg_color->setCurrentColor(background_color);
+    int btn = dlg_color->exec();
+    if(btn == QColorDialog::Accepted)
+    {
+        background_color = dlg_color->currentColor();
+        setProperty("border_color", background_color);
+        QToolButton *btn = static_cast<QToolButton *>(sender());
+        if(btn)
+        {
+            set_color(btn, background_color);
+        }
+    }
+    dlg_color->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void CreatorButton::save_picture_to(void){

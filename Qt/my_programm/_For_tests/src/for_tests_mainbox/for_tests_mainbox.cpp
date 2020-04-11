@@ -34,7 +34,15 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
+    ui->setupUi(this);
+
+#ifdef QT_DEBUG
     init();
+#else
+    QTimer::singleShot(0, [this]{
+        init();
+    });
+#endif
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -58,16 +66,15 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
-
     createTestBar();
 
     ui->horizontalSlider->setRange(0, 1000);
 
-    connect(ui->sb_1,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
-    connect(ui->sb_2,   SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
-    connect(ui->sb_res, SIGNAL(valueChanged(int)),  this,   SLOT(check_in()));
-    connect(ui->btn_ok, SIGNAL(clicked(bool)),      this,   SLOT(victory()));
+    connect(ui->sb_1,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &MainBox::check_in);
+    connect(ui->sb_2,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &MainBox::check_in);
+    connect(ui->sb_res, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &MainBox::check_in);
+    connect(ui->btn_ok, &QPushButton::clicked,  this,   &MainBox::victory);
+
     check_in();
 
     ui->toolButton->setIcon((QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon))));
@@ -152,10 +159,10 @@ void MainBox::createTestBar(void)
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
 
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+    connect(cb_block,   &QCheckBox::clicked,    cb_test,            &QComboBox::setDisabled);
+    connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QComboBox::setDisabled);
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }

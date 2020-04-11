@@ -31,12 +31,6 @@ PictureParam::PictureParam(QWidget *parent) :
 //--------------------------------------------------------------------------------
 PictureParam::~PictureParam()
 {
-//    save_value(S_BORDER_COLOR,      border_color);
-//    save_value(S_BACKGROUND_COLOR,  background_color);
-
-//    setProperty("border_color", border_color);
-//    setProperty("background_color", background_color);
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -58,12 +52,12 @@ void PictureParam::init(void)
 
     connect(ui->cb_active,                          static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged),  this,   &PictureParam::picture_update);
     connect(ui->cb_border_color_transparent,        static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged),  this,   &PictureParam::picture_update);
-    connect(ui->cb_background_color_transparent,    static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged),  this,   &PictureParam::picture_update);
+
+    connect(ui->cb_border_color_transparent,        &QCheckBox::stateChanged,  ui->btn_border_color,        &QCheckBox::setDisabled);
 
     connect(ui->sb_border,      static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &PictureParam::picture_update);
 
     connect(ui->btn_border_color,       &QPushButton::clicked,  this,   static_cast<void (PictureParam::*)(void)>(&PictureParam::set_border_color));
-    connect(ui->btn_background_color,   &QPushButton::clicked,  this,   static_cast<void (PictureParam::*)(void)>(&PictureParam::set_background_color));
 }
 //--------------------------------------------------------------------------------
 void PictureParam::set_caption(const QString &caption)
@@ -107,27 +101,9 @@ bool PictureParam::get_border_color_transparent(void)
     return ui->cb_border_color_transparent->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool PictureParam::get_background_color_transparent(void)
-{
-    return ui->cb_background_color_transparent->isChecked();
-}
-//--------------------------------------------------------------------------------
 QColor PictureParam::get_border_color(void)
 {
-    if(get_border_color_transparent())
-    {
-        return Qt::transparent;
-    }
     return border_color;
-}
-//--------------------------------------------------------------------------------
-QColor PictureParam::get_background_color(void)
-{
-    if(get_background_color_transparent())
-    {
-        return Qt::transparent;
-    }
-    return background_color;
 }
 //--------------------------------------------------------------------------------
 void PictureParam::set_color(QToolButton *btn, QColor color)
@@ -164,34 +140,6 @@ void PictureParam::set_border_color(QColor color)
     setProperty("border_color", border_color);
 
     set_color(ui->btn_border_color, border_color);
-    emit picture_update();
-}
-//--------------------------------------------------------------------------------
-void PictureParam::set_background_color(void)
-{
-    QColorDialog *dlg_color = new QColorDialog();
-    dlg_color->setCurrentColor(background_color);
-    int btn = dlg_color->exec();
-    if(btn == QColorDialog::Accepted)
-    {
-        background_color = dlg_color->currentColor();
-        setProperty("background_color", background_color);
-        QToolButton *btn = static_cast<QToolButton *>(sender());
-        if(btn)
-        {
-            set_color(btn, background_color);
-            emit picture_update();
-        }
-    }
-    dlg_color->deleteLater();
-}
-//--------------------------------------------------------------------------------
-void PictureParam::set_background_color(QColor color)
-{
-    background_color = color;
-    setProperty("background_color", background_color);
-
-    set_color(ui->btn_background_color, background_color);
     emit picture_update();
 }
 //--------------------------------------------------------------------------------

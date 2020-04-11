@@ -58,6 +58,18 @@ private:
 
     void save_picture_to(void);
 
+    void set_color(QToolButton *btn, QColor color);
+    void set_background_color(void);
+
+    int border = 0;
+
+    QColor background_color = Qt::black;
+
+    int offset_t = 0;
+    int offset_b = 0;
+    int offset_l = 0;
+    int offset_r = 0;
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>274</width>
-    <height>277</height>
+    <height>239</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,24 +97,15 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Background:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QToolButton" name="btn_background_color"/>
-        </item>
         <item row="0" column="1">
          <widget class="QToolButton" name="btn_border_color"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QCheckBox" name="cb_border_color_transparent">
+          <property name="text">
+           <string>transparent</string>
+          </property>
+         </widget>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_8">
@@ -125,21 +116,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Border:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QCheckBox" name="cb_border_color_transparent">
-          <property name="text">
-           <string>transparent</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QCheckBox" name="cb_background_color_transparent">
-          <property name="text">
-           <string>transparent</string>
+           <string>Border color:</string>
           </property>
          </widget>
         </item>

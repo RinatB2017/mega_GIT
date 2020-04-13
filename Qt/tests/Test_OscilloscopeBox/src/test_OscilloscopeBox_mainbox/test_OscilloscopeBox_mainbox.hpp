@@ -52,7 +52,7 @@ private slots:
     void update(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QTimer *main_timer = nullptr;

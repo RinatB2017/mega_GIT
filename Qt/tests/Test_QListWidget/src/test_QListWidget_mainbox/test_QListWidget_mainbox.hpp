@@ -49,7 +49,7 @@ private slots:
     void onBtnClicked(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     void init(void);

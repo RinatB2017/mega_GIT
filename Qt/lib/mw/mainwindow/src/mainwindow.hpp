@@ -247,16 +247,16 @@ private:
     QString appVersion;
     QString style_name;
 
-    QLabel *statusLabel1;
-    QLabel *statusLabel2;
+    QPointer<QLabel> statusLabel1;
+    QPointer<QLabel> statusLabel2;
 
-    QSystemTrayIcon *trayIcon;
-    QMenu *trayIconMenu;
+    QPointer<QSystemTrayIcon> trayIcon;
+    QPointer<QMenu> trayIconMenu;
 
-    QSettings *settings;
+    QPointer<QSettings> settings;
 
     //TODO тест
-    MyWidget *c_widget = nullptr;
+    QPointer<MyWidget> c_widget;
 
     void load_main(void);
     void save_main(void);
@@ -271,21 +271,21 @@ private:
     void createTrayIcon(void);
 
 #ifndef NO_TOOLBAR
-    QToolBar *toolbar;
+    QPointer<QToolBar> toolbar;
     void createToolBar(void);
 #endif
 
 #ifndef NO_STYLETOOLBAR
-    QToolBar *styletoolbar;
+    QPointer<QToolBar> styletoolbar;
     void createStyleToolBar(void);
 #endif
 
-    QDockWidget *sd;
+    QPointer<QDockWidget> sd;
 
 #ifndef NO_LOG
-    LogDock *ld;
+    QPointer<LogDock> ld;
 #endif
-    SysLog_dock *syslog_dock;
+    QPointer<SysLog_dock> syslog_dock;
 
 #ifndef NO_LOG
     void createLog(void);
@@ -296,16 +296,16 @@ private:
 
     void check_date(void);
 
-    QMenuBar *app_mainBar;
+    QPointer<QMenuBar> app_mainBar;
 
     QList<QMenu   *> app_menus;
     QList<QAction *> app_actions;
     QList<QAbstractButton *> app_buttons;
 
-    QMenu *m_app_filemenu = nullptr;
-    QMenu *m_app_optionsmenu = nullptr;
-    QMenu *m_app_windowsmenu = nullptr;
-    QMenu *m_app_helpmenu = nullptr;
+    QPointer<QMenu> m_app_filemenu;
+    QPointer<QMenu> m_app_optionsmenu;
+    QPointer<QMenu> m_app_windowsmenu;
+    QPointer<QMenu> m_app_helpmenu;
 
     QList<QWidget *> l_docs;
 

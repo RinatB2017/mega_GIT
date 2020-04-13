@@ -105,7 +105,7 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
 #ifdef USE_CUSTOMPAGE

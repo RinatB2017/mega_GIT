@@ -132,7 +132,7 @@ private slots:
     void command_EXSNIFF(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     SerialBox5 *serialBox;

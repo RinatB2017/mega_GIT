@@ -105,7 +105,7 @@ private slots:
     void popup(QPoint);
 
 private:
-    QTextEdit *logBox = nullptr;
+    QPointer<QTextEdit> logBox;
 
     QString o_name;
 
@@ -125,10 +125,10 @@ private:
     QTextCodec *current_codec = nullptr; //TODO проверить надо
 #endif
 
-    QProgressBar *progressBar;
-    QHBoxLayout *hbox;
-    QVBoxLayout *vbox;
-    QHBoxLayout *mainbox;
+    QPointer<QProgressBar> progressBar;
+    QPointer<QHBoxLayout> hbox;
+    QPointer<QVBoxLayout> vbox;
+    QPointer<QHBoxLayout> mainbox;
 
     QString autosave_filename = "noname.log";
 

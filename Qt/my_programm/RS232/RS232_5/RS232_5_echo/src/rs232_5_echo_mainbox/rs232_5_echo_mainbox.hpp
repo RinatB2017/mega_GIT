@@ -46,7 +46,7 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     QByteArray data_rs232;
 

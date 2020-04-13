@@ -58,7 +58,7 @@ private slots:
     void set_sec(unsigned char sec);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QThread *thread;

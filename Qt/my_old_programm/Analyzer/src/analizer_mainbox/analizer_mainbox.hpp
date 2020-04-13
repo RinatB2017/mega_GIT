@@ -55,7 +55,7 @@ private slots:
     void draw_value(int x,unsigned short data);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     QWidget *parent;
 

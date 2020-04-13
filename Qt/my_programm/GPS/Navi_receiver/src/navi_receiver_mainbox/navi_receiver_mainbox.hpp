@@ -62,7 +62,7 @@ private slots:
     void skip_forward(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     QByteArray data_rs232;
 

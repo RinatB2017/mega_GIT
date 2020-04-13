@@ -172,7 +172,7 @@ private:
     uint8_t output_buf[256];
 #endif
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
     QStringList sl_registers;

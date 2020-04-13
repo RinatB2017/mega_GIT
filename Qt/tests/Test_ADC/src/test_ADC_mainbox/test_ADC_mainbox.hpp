@@ -58,7 +58,7 @@ private slots:
     void test_5(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     enum {
@@ -77,7 +77,7 @@ private:
         void (MainBox::*func)(void);
     } CMD_t;
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
     QString data_str;

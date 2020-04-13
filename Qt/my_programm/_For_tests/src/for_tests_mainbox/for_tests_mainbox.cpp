@@ -58,7 +58,7 @@ MainBox::~MainBox()
     {
         timer->stop();
         timer->disconnect();
-        timer->deleteLater();
+//        timer->deleteLater();
     }
 
     delete ui;
@@ -317,6 +317,10 @@ bool MainBox::test_0(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
+#if 1
+    timer->start(500);
+#endif
+
 #if 0
     for(int n=0; n<100000; n++)
         QPointer<QWidget> widget = new QWidget();
@@ -348,10 +352,6 @@ bool MainBox::test_0(void)
 #endif
 
 #if 0
-    timer->start(500);
-#endif
-
-#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
@@ -366,7 +366,7 @@ bool MainBox::test_1(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test_1()");
 
-#if 0
+#if 1
     timer->stop();
 #endif
 
@@ -386,7 +386,7 @@ bool MainBox::test_2(void)
     emit trace(Q_FUNC_INFO);
     //emit info("Test_2()");
 
-#if 0
+#if 1
     emit info(QString("cnt %1").arg(cnt++));
 #endif
 

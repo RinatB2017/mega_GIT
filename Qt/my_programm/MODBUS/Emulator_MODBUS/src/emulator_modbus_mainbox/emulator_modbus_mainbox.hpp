@@ -76,7 +76,7 @@ private Q_SLOTS:
     void handleDeviceError(QModbusDevice::Error newError);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     SerialBox5 *serialBox;
 

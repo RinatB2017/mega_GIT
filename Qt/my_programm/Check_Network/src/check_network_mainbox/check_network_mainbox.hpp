@@ -58,7 +58,7 @@ private slots:
     void slotConnected   (void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QString strHost;

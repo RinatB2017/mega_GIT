@@ -122,7 +122,7 @@ private slots:
     void color_changed(int);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     QWidget *parent;
 

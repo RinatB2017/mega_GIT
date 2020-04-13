@@ -54,7 +54,7 @@ private slots:
     void draw(QByteArray ba);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     SerialBox5 *serialBox;
 

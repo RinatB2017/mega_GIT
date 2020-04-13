@@ -53,10 +53,10 @@ private slots:
     void test_3(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
 
     void init(void);
 

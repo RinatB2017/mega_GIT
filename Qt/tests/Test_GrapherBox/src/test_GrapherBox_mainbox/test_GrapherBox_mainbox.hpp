@@ -77,9 +77,9 @@ private:
         void (MainBox::*func)(void);
     } CMD_t;
     QList<CMD> commands;
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
 
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     bool all_break = false;
 

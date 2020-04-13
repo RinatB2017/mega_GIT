@@ -21,6 +21,12 @@
 #ifndef VIDEO_PLAYER
 #define VIDEO_PLAYER
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QVideoWidget>
 #include <QMediaPlayer>
 //--------------------------------------------------------------------------------
@@ -29,7 +35,7 @@ class VideoPlayer : public QVideoWidget
     Q_OBJECT
 
 public:
-    explicit VideoPlayer(QWidget *parent = 0);
+    explicit VideoPlayer(QWidget *parent = nullptr);
     ~VideoPlayer(void);
 
     void set_url(QUrl new_url);
@@ -46,7 +52,7 @@ private slots:
     void s_error(QMediaPlayer::Error);
 
 private:
-    QMediaPlayer *player = 0;
+    QPointer<QMediaPlayer> player;
 };
 //--------------------------------------------------------------------------------
 #endif

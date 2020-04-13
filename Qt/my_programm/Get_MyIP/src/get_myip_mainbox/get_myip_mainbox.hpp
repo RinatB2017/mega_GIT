@@ -48,7 +48,7 @@ private slots:
     void show_my_IP(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QNetworkRequest request;

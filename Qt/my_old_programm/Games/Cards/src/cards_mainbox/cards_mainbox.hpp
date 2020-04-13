@@ -60,10 +60,10 @@ private slots:
     void show_node(QDomNode node, QString space);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
 
     int cnt = 0;
 

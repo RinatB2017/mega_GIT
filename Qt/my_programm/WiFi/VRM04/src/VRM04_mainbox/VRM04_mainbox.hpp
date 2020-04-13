@@ -52,7 +52,7 @@ private slots:
     void test2(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     WIFI_frame *wf;

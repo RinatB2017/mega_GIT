@@ -62,8 +62,8 @@ private slots:
     void update(void);
 
 private:
-    LogBox *le;
-    QTimer *timer;
+    QPointer<LogBox> le;
+    QPointer<QTimer> timer;
 
     bool is_busy = false;
 

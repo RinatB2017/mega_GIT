@@ -28,7 +28,7 @@ class Control_LOG : public QObject
     Q_OBJECT
 public:
     explicit Control_LOG(QString f_name,
-                         QObject *parent = 0);
+                         QObject *parent = nullptr);
 
 public slots:
     void info(const  QString text);

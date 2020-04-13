@@ -60,7 +60,7 @@ private slots:
     void load_firmvare(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QToolButton *btn_refresh_devices;

@@ -79,7 +79,7 @@ private slots:
     void f_error(QMediaPlayer::Error err);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QMediaPlayer *player;

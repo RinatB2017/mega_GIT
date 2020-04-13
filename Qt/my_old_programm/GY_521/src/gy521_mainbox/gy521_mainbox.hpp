@@ -53,7 +53,7 @@ private slots:
     void clean_data(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     SerialBox5 *serialBox;
 

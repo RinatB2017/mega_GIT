@@ -159,7 +159,7 @@ private:
     uint8_t buf[SIZE_BUF];
     //---
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
     wchar_t wstr[MAX_STR];

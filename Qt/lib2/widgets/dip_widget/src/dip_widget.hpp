@@ -46,7 +46,7 @@ class DIP_widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit DIP_widget(QWidget *parent = 0);
+    explicit DIP_widget(QWidget *parent = nullptr);
     ~DIP_widget();
 
 signals:

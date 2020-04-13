@@ -50,7 +50,7 @@ private slots:
     void test(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     bool is_blocked;

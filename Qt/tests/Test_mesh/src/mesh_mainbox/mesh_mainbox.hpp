@@ -70,10 +70,10 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
     void add_serial0(void);

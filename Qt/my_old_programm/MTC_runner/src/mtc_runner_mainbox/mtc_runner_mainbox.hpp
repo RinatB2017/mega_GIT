@@ -66,7 +66,7 @@ private slots:
     void auto_run(bool state);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     void init(void);

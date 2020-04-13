@@ -62,7 +62,7 @@ private slots:
     void send_command_SL6087(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QList<CMD> sl_commands_SIM800;

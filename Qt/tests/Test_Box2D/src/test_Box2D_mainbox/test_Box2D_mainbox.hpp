@@ -65,7 +65,7 @@ private:
     QLCDNumber *lcd;
     QCheckBox *cb_block_insert_object;
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
     void init(void);

@@ -43,10 +43,10 @@ private slots:
     void updateCaption(QUrl);
 
 private:
-    QTextBrowser *textBrowser;
-    QPushButton *homeButton;
-    QPushButton *backButton;
-    QPushButton *closeButton;
+    QPointer<QTextBrowser> textBrowser;
+    QPointer<QPushButton>  homeButton;
+    QPointer<QPushButton>  backButton;
+    QPointer<QPushButton>  closeButton;
 
     void setCaption(const QString &caption);
 

@@ -212,7 +212,7 @@ private slots:
 private:
     void connect_log(QWidget *parent);
 
-    QSettings *settings;
+    QPointer<QSettings> settings;
 
     bool check_exists_signals(QWidget *parent);
 

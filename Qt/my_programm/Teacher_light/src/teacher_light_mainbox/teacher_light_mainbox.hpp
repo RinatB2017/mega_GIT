@@ -50,7 +50,7 @@ public:
     ~MainBox();
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QGridLayout *grid1;

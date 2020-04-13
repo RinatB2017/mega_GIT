@@ -62,7 +62,7 @@ private slots:
     void check_move(QObject *obj);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     int map[MAX_X][MAX_Y];

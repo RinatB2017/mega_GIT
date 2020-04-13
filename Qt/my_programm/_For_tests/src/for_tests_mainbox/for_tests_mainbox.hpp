@@ -135,10 +135,11 @@ private:
     QList<CMD> commands;
     //---
 
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QComboBox *cb_test;
+//    QPointer<QComboBox> cb_test;
+    QPointer<QComboBox> cb_test;
 
     //---
     void test_validator(void);
@@ -149,8 +150,10 @@ private:
         obj->setText(QString("x = %1").arg(x));
         cb_test->setCurrentIndex(2);
     }
-    SimpleWidget *sw = nullptr; // инициировать надо явно, иначе if(sw) ошибётся
-    QTimer *timer = nullptr;
+//    SimpleWidget *sw = nullptr; // инициировать надо явно, иначе if(sw) ошибётся
+    QPointer<SimpleWidget> sw;
+//    QTimer *timer = nullptr;
+    QPointer<QTimer> timer;
     int cnt = 0;
     //---
 

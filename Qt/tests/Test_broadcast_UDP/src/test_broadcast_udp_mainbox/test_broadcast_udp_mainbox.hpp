@@ -54,7 +54,7 @@ private slots:
     void client_thread_is_finished(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     void init(void);

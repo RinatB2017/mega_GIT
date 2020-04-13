@@ -82,7 +82,7 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QPixmap picture;
@@ -91,7 +91,7 @@ private:
     int grapher_data[0xFF + 1] = { 0 };
     int grapher_curve = 0;
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QCheckBox *cb_block;
     QList<CMD> commands;
 

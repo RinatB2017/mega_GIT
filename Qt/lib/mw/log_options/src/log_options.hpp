@@ -54,7 +54,7 @@ public:
 private:
     Ui::Log_options *ui;
     QList<QString> codecs;
-    QTextEdit *logEdit;
+    QTextEdit *logEdit = nullptr;
 
     QString autosave_filename = "noname.log";
 

@@ -64,7 +64,7 @@ private slots:
     void process_error(QProcess::ProcessError err);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     QWidget *parent;
     int index = 0;

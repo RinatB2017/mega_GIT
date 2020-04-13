@@ -57,7 +57,7 @@ private:
         QString cmd_text;
         bool (NewMainWindow::*func)(void);
     } CMD_t;
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QCheckBox *cb_block;
     QList<CMD> commands;
 

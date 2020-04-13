@@ -55,7 +55,7 @@ private slots:
     void save(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QTabWidget *tab;

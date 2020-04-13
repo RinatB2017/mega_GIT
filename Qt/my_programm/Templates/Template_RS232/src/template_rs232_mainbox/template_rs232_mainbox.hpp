@@ -63,7 +63,7 @@ private slots:
     void read_data(QByteArray ba);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     enum {
@@ -88,7 +88,7 @@ private:
 
     void init_serial(void);
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QCheckBox *cb_block;
     QList<CMD> commands;
 

@@ -53,7 +53,7 @@ private slots:
     void stop(void);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     QThread *thread;

@@ -70,7 +70,7 @@ private:
     QList<CMD> commands;
     //---
 
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
 
     void createTestBar(void);
     QToolButton *add_button(QToolBar *tool_bar,

@@ -68,7 +68,7 @@ private:
     } CMD_t;
 
     Ui::MainBox *ui;
-    QComboBox *cb_test;
+    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
     void init(void);

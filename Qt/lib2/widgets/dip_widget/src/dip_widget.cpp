@@ -77,7 +77,7 @@ void DIP_widget::set_value(int value)
     };
 
     DATA_INT8 b;
-    b.value = value;
+    b.value = static_cast<uint8_t>(value);
     buttons[0].state = b.bites.bit_0;
     buttons[1].state = b.bites.bit_1;
     buttons[2].state = b.bites.bit_2;

@@ -52,7 +52,7 @@ private slots:
     void serial_data(QByteArray data);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
     void init(void);

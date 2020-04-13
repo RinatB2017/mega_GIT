@@ -66,7 +66,7 @@ private slots:
     void move(QString text);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
 #ifndef NO_CHESSBOARD

@@ -51,7 +51,7 @@ private slots:
     void read_data(QByteArray ba);
 
 private:
-    MySplashScreen *splash;
+    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     SerialBox4 *serialBox;
     QByteArray data_rs232;

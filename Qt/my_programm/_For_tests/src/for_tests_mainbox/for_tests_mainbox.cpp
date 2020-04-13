@@ -318,6 +318,25 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 0
+    for(int n=0; n<100000; n++)
+        QPointer<QWidget> widget = new QWidget();
+    emit info("The end!");
+#endif
+
+#if 0
+    struct Tools
+    {
+        static int Add (int a, int b) {return a+b;}
+        static int Sub (int a, int b) {return a-b;}
+    };
+
+    int b = Tools::Add(5, 2);
+    int c = Tools::Sub(10, 0);
+    emit info(QString("%1").arg(b));
+    emit info(QString("%1").arg(c));
+#endif
+
+#if 0
     QTextEdit *te = new QTextEdit();
     te->setTextColor(QColor(Qt::red));
     te->insertPlainText("red");

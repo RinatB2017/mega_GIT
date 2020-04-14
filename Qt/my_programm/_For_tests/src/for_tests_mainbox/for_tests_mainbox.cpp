@@ -58,7 +58,7 @@ MainBox::~MainBox()
     {
         timer->stop();
         timer->disconnect();
-//        timer->deleteLater();
+        //        timer->deleteLater();
     }
 
     delete ui;
@@ -312,12 +312,29 @@ bool MainBox::save_property(QWidget *widget, const QString &property_name, QVari
     return widget->setProperty(property_name.toLocal8Bit(), value);
 }
 //--------------------------------------------------------------------------------
+#define	REG_OKAY	 0
+#define	REG_NOMATCH	 1
+
 bool MainBox::test_0(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    static struct rerr {
+        int code;
+        const char *name;
+        const char *explain;
+    } rerrs[] = {
+    {REG_OKAY,	"REG_OKAY",	"no errors detected" },
+    {REG_NOMATCH,	"REG_NOMATCH",	"regexec() failed to match" },
+    {-1,		"",		"*** unknown regexp error code ***" }
+};
+
+    emit info(rerrs[0].name);
+#endif
+
+#if 0
     timer->start(500);
 #endif
 

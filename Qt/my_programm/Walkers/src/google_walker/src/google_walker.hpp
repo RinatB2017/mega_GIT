@@ -21,8 +21,13 @@
 #ifndef GOOGLE_WALKER_HPP
 #define GOOGLE_WALKER_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QWebEngineView>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 class Google_walker : public QWidget
 {
@@ -50,7 +55,7 @@ private slots:
     void run_js(const QString &javascript);
 
 private:
-    QWebEngineView *viewer = nullptr;
+    QPointer<QWebEngineView> viewer;
     QList<QString> urls;
 
     QString current_url;

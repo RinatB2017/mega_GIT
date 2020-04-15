@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QMediaPlayer>
 #include <QNetworkRequest>
 #include <QVideoWidget>
@@ -42,25 +36,6 @@
 //--------------------------------------------------------------------------------
 #include "crc.h"
 //--------------------------------------------------------------------------------
-#pragma pack (push, 1)
-
-union PELCO_PACKET
-{
-    struct PELCO_BODY
-    {
-        uint8_t sync;
-        uint8_t address;
-        uint8_t cmd1;
-        uint8_t cmd2;
-        uint8_t data1;
-        uint8_t data2;
-        uint8_t crc;
-    } body;
-    uint8_t buf[sizeof(PELCO_BODY)];
-};
-
-#pragma pack (pop)
-//--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
@@ -73,6 +48,13 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets();
+
+    if(player)
+    {
+        player->disconnect();
+        player->deleteLater();
+    }
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -92,6 +74,29 @@ void MainBox::init(void)
     connect(ui->sb_cmd2,    SIGNAL(editingFinished()),  this,   SLOT(refresh()));
     connect(ui->sb_data1,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
     connect(ui->sb_data2,   SIGNAL(editingFinished()),  this,   SLOT(refresh()));
+
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_address, &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_chk_sum, &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_cmd1,    &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_cmd2,    &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_data1,   &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_data2,   &QSpinBox::setEnabled);
+
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_up,         &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_down,       &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_left,       &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_right,      &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_run,        &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_send,       &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_up,         &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_down,       &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_up_left,    &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_up_right,   &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_down_left,  &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_down_right, &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_zoom_in,    &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_zoom_out,   &QSpinBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sl_speed,       &QSpinBox::setEnabled);
 
     //---
     player = new QMediaPlayer;
@@ -171,6 +176,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
+    emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -21,10 +21,11 @@
 #ifndef MYWAITSPLASHSCREEN_HPP
 #define MYWAITSPLASHSCREEN_HPP
 //--------------------------------------------------------------------------------
-#include <QSplashScreen>
-#include <QPixmap>
-//--------------------------------------------------------------------------------
-class QProgressBar;
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 class MyWaitSplashScreen : public QSplashScreen
 {
@@ -40,7 +41,7 @@ public slots:
                      const QColor &color = Qt::black);
 
 private:
-    QProgressBar *progress;
+    QPointer<QProgressBar> progress;
     int m_progress = 0;
     int current_progress = 0;
     int max_step = 0;

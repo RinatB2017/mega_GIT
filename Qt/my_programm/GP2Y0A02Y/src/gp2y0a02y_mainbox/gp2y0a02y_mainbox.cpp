@@ -18,17 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMouseEvent>
-#include <QMessageBox>
-#include <QPainter>
-#include <QPushButton>
-#include <QToolButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_gp2y0a02y_mainbox.h"
-//#include "ui_mainbox_test.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"

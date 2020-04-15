@@ -19,14 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QStyleOptionProgressBarV2>
-#include <QDesktopWidget>
 #include <QSplashScreen>
-#include <QApplication>
-#include <QProgressBar>
-#include <QVBoxLayout>
-#include <QScreen>
-#include <QLabel>
-#include <QRect>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

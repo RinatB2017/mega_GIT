@@ -175,6 +175,9 @@ void MainBox::init_serial(void)
 
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
+
+//    connect(ui->serial_widget,  &SerialBox5_fix_baudrate_win7::port_is_active,  ui->knob_voltage,   &QwtKnob::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,  ui->knob_voltage,   &QwtKnob::setEnabled);
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray data)
@@ -184,6 +187,10 @@ void MainBox::read_data(QByteArray data)
 //--------------------------------------------------------------------------------
 void MainBox::set_voltage(double value)
 {
+    if(ui->serial_widget->isOpen() == false)
+    {
+        return;
+    }
     QString temp = QString(":value|%1\n").arg(value);
 
     QByteArray ba;

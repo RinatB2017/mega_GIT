@@ -44,7 +44,7 @@ private:
     QString gName;
     QString oName;
 
-    QSettings *settings;
+    QPointer<QSettings> settings;
 };
 //--------------------------------------------------------------------------------
 #endif // MYFILEDIALOG_HPP

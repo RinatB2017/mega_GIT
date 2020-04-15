@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 #include "ascii_data.hpp"
@@ -64,10 +68,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -106,7 +106,7 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    Ascii_data *ascii_data;
+    QPointer<Ascii_data> ascii_data;
     QList<uint32_t> l_cards;
     bool find_card(uint32_t card_num);
     int cnt_card = 0;

@@ -80,7 +80,6 @@ typedef struct d_spin_box
 } d_spin_box_t;
 //--------------------------------------------------------------------------------
 class QToolButton;
-//class QSettings;
 class QToolBar;
 //--------------------------------------------------------------------------------
 class MyWidget : public QWidget

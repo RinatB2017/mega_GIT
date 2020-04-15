@@ -58,6 +58,8 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 #include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH2/serial5/serialbox5/serialbox5.pri)
 
+include ($$LIB_PATH2/power_knock/power_knock.pri)
+
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 

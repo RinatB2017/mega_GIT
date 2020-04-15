@@ -83,7 +83,6 @@ private:
         QColor background_color;
     };
     QQueue<LOG> queue_log;
-
 };
 //--------------------------------------------------------------------------------
 #endif // LOGDOCK_HPP

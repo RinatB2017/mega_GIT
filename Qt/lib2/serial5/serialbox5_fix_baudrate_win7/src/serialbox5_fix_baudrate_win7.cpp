@@ -109,6 +109,10 @@ void SerialBox5_fix_baudrate_win7::init(void)
 
     setCloseState();
     updateText();
+
+    QTimer::singleShot(0, [this]{
+        emit port_is_active(isOpen());
+    });
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate_win7::createWidgets(void)

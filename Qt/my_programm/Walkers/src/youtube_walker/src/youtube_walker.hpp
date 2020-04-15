@@ -21,8 +21,13 @@
 #ifndef YOUTUBE_WALKER_HPP
 #define YOUTUBE_WALKER_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QWebEngineView>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 class Youtube_walker : public QWidget
 {
@@ -49,7 +54,7 @@ private slots:
     void load_url(void);
 
 private:
-    QWebEngineView *viewer = nullptr;
+    QPointer<QWebEngineView> viewer;
     QList<QString> urls;
 
     QString current_url;

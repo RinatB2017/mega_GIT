@@ -45,7 +45,12 @@ CONFIG(debug, debug|release) {
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
+
+#include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
+
+include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
+include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+
 include ($$LIB_PATH2/qwt/qwt.pri)
 
 !exists(OBJECTS_DIR) {

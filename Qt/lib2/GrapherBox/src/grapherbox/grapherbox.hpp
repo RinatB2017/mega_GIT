@@ -219,9 +219,8 @@ private:
     Ui::GrapherBox *ui;
     bool legend_is_visible = true;
 
-    QwtPlotPicker *d_picker;
-
-    QwtLegend *legend;
+    QPointer<QwtPlotPicker> d_picker;
+    QPointer<QwtLegend> legend;
 
     QVector<GRAPHER_CURVE> curves;
     QColor curve_colors[MAX_CHANNELS];

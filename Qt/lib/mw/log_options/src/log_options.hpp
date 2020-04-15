@@ -21,8 +21,11 @@
 #ifndef LOG_OPTIONS_HPP
 #define LOG_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#include <QDialog>
-#include <QList>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Log_options;
@@ -54,7 +57,7 @@ public:
 private:
     Ui::Log_options *ui;
     QList<QString> codecs;
-    QTextEdit *logEdit = nullptr;
+    QPointer<QTextEdit> logEdit;
 
     QString autosave_filename = "noname.log";
 

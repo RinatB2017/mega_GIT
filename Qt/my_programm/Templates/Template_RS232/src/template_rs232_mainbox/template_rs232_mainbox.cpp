@@ -80,7 +80,7 @@ void MainBox::init_serial(void)
     connect(this,               static_cast<int (MainBox::*)(const QByteArray&)>(&MainBox::send),
             ui->serial_widget,  &SerialBox5::input);
 #else
-    connect(this,   SIGNAL(send()), ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(this,   SIGNAL(send(QByteArray)), ui->serial_widget,  SLOT(input(QByteArray)));
 #endif
     connect(ui->serial_widget,  &SerialBox5::output,    this,               &MainBox::read_data);
 }

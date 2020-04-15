@@ -39,7 +39,7 @@ class SimpleWidget : public QWidget
     Q_CLASSINFO("version", "666")
 
 signals:
-    void x_value_changed(void);
+    void x_value_changed(int);
 
 public:
     explicit SimpleWidget(QWidget *parent = nullptr);
@@ -50,7 +50,12 @@ private:
 
     int x_value = 0;
     int read_x(void) { return x_value; }
-    void write_x(int new_value) { x_value = new_value; }
+    void write_x(int new_value)
+    {
+        if(x_value == new_value)    return;
+        x_value = new_value;
+        emit x_value_changed(x_value);
+    }
 
     void init(void);
     void click(void);

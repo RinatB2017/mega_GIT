@@ -56,6 +56,10 @@ void SerialWidget::init(void)
     connect(serial5, &QSerialPort::parityChanged,               this,   &SerialWidget::parityChanged);
     connect(serial5, &QSerialPort::requestToSendChanged,        this,   &SerialWidget::requestToSendChanged);
     connect(serial5, &QSerialPort::stopBitsChanged,             this,   &SerialWidget::stopBitsChanged);
+
+    QTimer::singleShot(0, [this]{
+        emit port_is_active(isOpen());
+    });
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::isOpen(void)

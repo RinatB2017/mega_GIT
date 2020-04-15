@@ -21,6 +21,12 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -29,11 +35,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include <QAbstractSocket>
 //--------------------------------------------------------------------------------
-class QStandardItemModel;
 class MySplashScreen;
-class QToolButton;
-class QComboBox;
-class QToolBar;
 class QTcpSocket;
 class RTSP_widget;
 //--------------------------------------------------------------------------------
@@ -63,7 +65,7 @@ private:
 
     QString strHost;
     int nPort = 0;
-    QTcpSocket* m_pTcpSocket;
+    QPointer<QTcpSocket> m_pTcpSocket;
 
     QStandardItemModel *model;
 

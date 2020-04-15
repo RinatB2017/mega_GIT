@@ -31,13 +31,32 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+#pragma pack (push, 1)
+//#pragma pack (1)
+
+union PELCO_PACKET
+{
+    struct PELCO_BODY
+    {
+        uint8_t sync;
+        uint8_t address;
+        uint8_t cmd1;
+        uint8_t cmd2;
+        uint8_t data1;
+        uint8_t data2;
+        uint8_t crc;
+    } body;
+    uint8_t buf[sizeof(PELCO_BODY)];
+};
+
+#pragma pack (pop)
+//#pragma pop ()
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -82,7 +101,7 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QMediaPlayer *player;
+    QPointer<QMediaPlayer> player;
 
     void init(void);
     void createTestBar(void);

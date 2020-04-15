@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
@@ -52,6 +46,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
     if(m_pTcpSocket)
     {
         m_pTcpSocket->deleteLater();
@@ -111,6 +106,8 @@ void MainBox::init(void)
 
     //TODO layout = 0
     layout()->setMargin(0);
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::scan(void)
@@ -240,6 +237,13 @@ void MainBox::f_disconnect(void)
 {
     emit trace(Q_FUNC_INFO);
     Q_CHECK_PTR(m_pTcpSocket);
+
+    auto index = ui->tv_scan->currentIndex();
+    if(index.row() == -1)
+    {
+        emit error("Ничего не выбрано");
+        return;
+    }
 
     emit info("Disconnect");
     if(m_pTcpSocket->isOpen())

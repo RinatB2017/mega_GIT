@@ -58,7 +58,7 @@ MainBox::~MainBox()
     {
         timer->stop();
         timer->disconnect();
-        //        timer->deleteLater();
+        timer->deleteLater();
     }
 
     delete ui;

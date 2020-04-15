@@ -53,8 +53,8 @@ private slots:
     void set_text(void);
 
 private:
-    QPushButton *btn_text;
-    QToolButton *btn_color;
+    QPointer<QPushButton> btn_text;
+    QPointer<QToolButton> btn_color;
     QColor color;
     QString text;
 

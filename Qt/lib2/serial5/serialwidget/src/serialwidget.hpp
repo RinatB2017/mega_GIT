@@ -95,8 +95,8 @@ private slots:
     void timer_stop(void);
 
 private:
-    QSerialPort *serial5;
-    QTimer *timer;
+    QPointer<QSerialPort> serial5;
+    QPointer<QTimer> timer;
 
     void init(void);
 

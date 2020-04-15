@@ -21,8 +21,13 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QWebEngineView>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -48,8 +53,8 @@ private:
     Ui::MainBox *ui;
     QWidget *parent;
 
-    Youtube_walker *youtube_walker = nullptr;
-    Google_walker *google_walker = nullptr;
+    QPointer<Youtube_walker> youtube_walker;
+    QPointer<Google_walker> google_walker;
 
     void init(void);
     void createTestBar(void);

@@ -32,7 +32,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="SerialBox5_fix_baudrate" name="serial_widget" native="true"/>
+      <widget class="SerialBox5_fix_baudrate_win7" name="serial_widget" native="true"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -65,9 +65,9 @@
    <header>qwt_knob.h</header>
   </customwidget>
   <customwidget>
-   <class>SerialBox5_fix_baudrate</class>
+   <class>SerialBox5_fix_baudrate_win7</class>
    <extends>QWidget</extends>
-   <header>serialbox5_fix_baudrate.hpp</header>
+   <header>serialbox5_fix_baudrate_win7.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

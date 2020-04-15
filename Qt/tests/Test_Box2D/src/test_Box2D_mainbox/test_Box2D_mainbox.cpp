@@ -85,7 +85,7 @@ void MainBox::createTestBar(void)
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    commands.clear();
+    commands.clear(); int id = 0;
     commands.append({ 0x10, "create_scene_0", &World::create_scene_0 });
     commands.append({ 0x20, "create_scene_1", &World::create_scene_1 });
     commands.append({ 0x39, "create_scene_2", &World::create_scene_2 });

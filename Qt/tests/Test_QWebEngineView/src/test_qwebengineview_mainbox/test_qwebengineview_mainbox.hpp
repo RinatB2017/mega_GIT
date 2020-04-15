@@ -88,22 +88,14 @@ private slots:
     void get_document_title(void);
 
 private:
-    Ui::MainBox *ui;
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
         bool (MainBox::*func)(void);
     } CMD_t;
+
+    Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;

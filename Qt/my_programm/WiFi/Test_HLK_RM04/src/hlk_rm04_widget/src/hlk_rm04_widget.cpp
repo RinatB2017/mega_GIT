@@ -43,7 +43,7 @@ void HLK_RM04_widget::init(void)
     connect(this,   SIGNAL(error(QString)), ui->log_widget, SLOT(errorLog(QString)));
     connect(this,   SIGNAL(trace(QString)), ui->log_widget, SLOT(traceLog(QString)));
 
-    l_commands.clear();
+    l_commands.clear(); int id = 0;
     l_commands.append({ ID_test,            "test",             &HLK_RM04_widget::s_test });
     l_commands.append({ ID_info,            "info",             &HLK_RM04_widget::s_info });
     l_commands.append({ ID_scan,            "scan",             &HLK_RM04_widget::s_scan });

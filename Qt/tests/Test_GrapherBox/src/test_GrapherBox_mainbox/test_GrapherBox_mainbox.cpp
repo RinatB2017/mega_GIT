@@ -248,10 +248,10 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    commands.clear();
-    commands.append({ ID_TEST_0, "test_sinus",          &MainBox::test0 });
-    commands.append({ ID_TEST_1, "test_single_sinus",   &MainBox::test1 });
-    commands.append({ ID_TEST_2, "test_random_data",    &MainBox::test2 });
+    commands.clear(); int id = 0;
+    commands.append({ id++, "test_sinus",          &MainBox::test0 });
+    commands.append({ id++, "test_single_sinus",   &MainBox::test1 });
+    commands.append({ id++, "test_random_data",    &MainBox::test2 });
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");

@@ -84,7 +84,6 @@ class MainBox : public MyWidget
 
 signals:
 
-
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
@@ -93,16 +92,13 @@ public:
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
 
-    bool test_assert(int value);
-
 public slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
+    bool print_property(void);
+    bool timer_start(void);
+    bool timer_stop(void);
+    void show_timer_count(void);
 
     void print_mp(QWidget *widget);
     bool load_property(QWidget *widget, const QString &property_name);
@@ -115,17 +111,6 @@ public slots:
     void victory(void);
 
 private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5,
-        ID_TEST_6
-    };
-
-    //---
     typedef struct CMD
     {
         int cmd;
@@ -133,41 +118,19 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
     QList<CMD> commands;
-    //---
 
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-//    QPointer<QComboBox> cb_test;
     QPointer<QComboBox> cb_test;
-
-    //---
-    void test_validator(void);
-    //---
-    template<typename T>
-    void temp_test(T *obj, int x)
-    {
-        obj->setText(QString("x = %1").arg(x));
-        cb_test->setCurrentIndex(2);
-    }
-//    SimpleWidget *sw = nullptr; // инициировать надо явно, иначе if(sw) ошибётся
     QPointer<SimpleWidget> sw;
-//    QTimer *timer = nullptr;
     QPointer<QTimer> timer;
     int cnt = 0;
-    //---
 
     void init(void);
     void createTestBar(void);
 
-    bool create_color_block(int width,
-                            int height,
-                            int w_border,
-                            QColor color_border,
-                            QColor color,
-                            QString path,
-                            QString filename);
-
+    void test_validator(void);
     int get_cnt(void);
 
     void updateText(void);

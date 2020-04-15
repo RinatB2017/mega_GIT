@@ -1,11 +1,11 @@
 CMD command;
-command.cmd = ID_TEST_0; command.cmd_text = "test 0";   command.func = &MainBox::test_0;  commands.append(command);
-command.cmd = ID_TEST_1; command.cmd_text = "test 1";   command.func = &MainBox::test_1;  commands.append(command);
-command.cmd = ID_TEST_2; command.cmd_text = "test 2";   command.func = &MainBox::test_2;  commands.append(command);
-command.cmd = ID_TEST_3; command.cmd_text = "test 3";   command.func = &MainBox::test_3;  commands.append(command);
-command.cmd = ID_TEST_4; command.cmd_text = "test 4";   command.func = &MainBox::test_4;  commands.append(command);
-command.cmd = ID_TEST_5; command.cmd_text = "test 5";   command.func = &MainBox::test_5;  commands.append(command);
-command.cmd = ID_TEST_6; command.cmd_text = "test 6";   command.func = 0;    commands.append(command);
+command.cmd = id++; command.cmd_text = "test 0";   command.func = &MainBox::test_0;  commands.append(command);
+command.cmd = id++; command.cmd_text = "test 1";   command.func = &MainBox::test_1;  commands.append(command);
+command.cmd = id++; command.cmd_text = "test 2";   command.func = &MainBox::test_2;  commands.append(command);
+command.cmd = id++; command.cmd_text = "test 3";   command.func = &MainBox::test_3;  commands.append(command);
+command.cmd = id++; command.cmd_text = "test 4";   command.func = &MainBox::test_4;  commands.append(command);
+command.cmd = id++; command.cmd_text = "test 5";   command.func = &MainBox::test_5;  commands.append(command);
+command.cmd = id++; command.cmd_text = "test 6";   command.func = 0;    commands.append(command);
 //---
 
 #include <windows.h>

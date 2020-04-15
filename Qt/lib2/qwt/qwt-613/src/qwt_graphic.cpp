@@ -387,7 +387,7 @@ QwtGraphic& QwtGraphic::operator=(const QwtGraphic &other)
  */
 void QwtGraphic::reset() 
 {
-    d_data->commands.clear();
+    d_data->commands.clear(); int id = 0;
     d_data->pathInfos.clear();
 
     d_data->boundingRect = QRectF( 0.0, 0.0, -1.0, -1.0 );

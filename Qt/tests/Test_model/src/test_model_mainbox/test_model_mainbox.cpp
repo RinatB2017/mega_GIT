@@ -67,7 +67,7 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
-    commands.clear();
+    commands.clear(); int id = 0;
     CMD command;
     command.cmd = 0x10; command.cmd_text = "add user_0";   command.func = &MainBox::test_0;  commands.append(command);
     command.cmd = 0x20; command.cmd_text = "add user_1";   command.func = &MainBox::test_1;  commands.append(command);

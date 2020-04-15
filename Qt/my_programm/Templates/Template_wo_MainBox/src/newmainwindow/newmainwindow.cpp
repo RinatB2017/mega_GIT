@@ -69,14 +69,14 @@ QToolButton *NewMainWindow::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void NewMainWindow::createTestBar(void)
 {
-    commands.clear();
-    commands.append({ ID_TEST_0, "test 0", &NewMainWindow::test_0 });
-    commands.append({ ID_TEST_1, "test 1", &NewMainWindow::test_1 });
-    commands.append({ ID_TEST_2, "test 2", &NewMainWindow::test_2 });
-    commands.append({ ID_TEST_3, "test 3", &NewMainWindow::test_3 });
-    commands.append({ ID_TEST_4, "test 4", &NewMainWindow::test_4 });
-    commands.append({ ID_TEST_5, "test 5", &NewMainWindow::test_5 });
-    commands.append({ ID_TEST_6, "test 6", 0 });
+    commands.clear(); int id = 0;
+    commands.append({ id++, "test 0", &NewMainWindow::test_0 });
+    commands.append({ id++, "test 1", &NewMainWindow::test_1 });
+    commands.append({ id++, "test 2", &NewMainWindow::test_2 });
+    commands.append({ id++, "test 3", &NewMainWindow::test_3 });
+    commands.append({ id++, "test 4", &NewMainWindow::test_4 });
+    commands.append({ id++, "test 5", &NewMainWindow::test_5 });
+    commands.append({ id++, "test 6", nullptr });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

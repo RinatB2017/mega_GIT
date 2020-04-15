@@ -73,14 +73,6 @@ private slots:
     void f_test_2(void);
 
 private:
-    enum {
-        ID_TEST_0 = 1000,
-        ID_TEST_1,
-        ID_TEST_2,
-        ID_TEST_3,
-        ID_TEST_4,
-        ID_TEST_5
-    };
     typedef struct CMD
     {
         int cmd;

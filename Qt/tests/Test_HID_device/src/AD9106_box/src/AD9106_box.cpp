@@ -294,13 +294,13 @@ void AD9106_Box::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
-    commands.clear();
-    commands.append({ ID_TEST_0, "test 0", &AD9106_Box::test_0 });
-    commands.append({ ID_TEST_1, "test 1", &AD9106_Box::test_1 });
-    commands.append({ ID_TEST_2, "test 2", &AD9106_Box::test_2 });
-    commands.append({ ID_TEST_3, "test 3", &AD9106_Box::test_3 });
-    commands.append({ ID_TEST_4, "test 4", &AD9106_Box::test_4 });
-    commands.append({ ID_TEST_5, "test 5", &AD9106_Box::test_5 });
+    commands.clear(); int id = 0;
+    commands.append({ id++, "test 0", &AD9106_Box::test_0 });
+    commands.append({ id++, "test 1", &AD9106_Box::test_1 });
+    commands.append({ id++, "test 2", &AD9106_Box::test_2 });
+    commands.append({ id++, "test 3", &AD9106_Box::test_3 });
+    commands.append({ id++, "test 4", &AD9106_Box::test_4 });
+    commands.append({ id++, "test 5", &AD9106_Box::test_5 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

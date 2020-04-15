@@ -21,8 +21,11 @@
 #ifndef HELPBROWSER_HPP
 #define HELPBROWSER_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QUrl>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

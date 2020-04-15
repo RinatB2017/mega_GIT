@@ -92,6 +92,7 @@ void MainBox::init(void)
 
 #if 1
     sw = new SimpleWidget();
+    //sw->setProperty("windowTitle", "XXX");
     sw->show();
 #endif
 
@@ -99,7 +100,7 @@ void MainBox::init(void)
     ui->btn_ok->setProperty("xxx", 1);
 
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &MainBox::test_2);
+    connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 }
 //--------------------------------------------------------------------------------
 void MainBox::delete_string(void)
@@ -127,14 +128,11 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
-    commands.clear();
-    commands.append({ ID_TEST_0, "test 0", &MainBox::test_0 });
-    commands.append({ ID_TEST_1, "test 1", &MainBox::test_1 });
-    commands.append({ ID_TEST_2, "test 2", &MainBox::test_2 });
-    commands.append({ ID_TEST_3, "test 3", &MainBox::test_3 });
-    commands.append({ ID_TEST_4, "test 4", &MainBox::test_4 });
-    commands.append({ ID_TEST_5, "test 5", &MainBox::test_5 });
-    commands.append({ ID_TEST_6, "test 6", nullptr });
+    commands.clear(); int id = 0;
+    commands.append({ id++, "test",             &MainBox::test });
+    commands.append({ id++, "print property",   &MainBox::print_property });
+    commands.append({ id++, "timer start",      &MainBox::timer_start });
+    commands.append({ id++, "timer stop",       &MainBox::timer_stop });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -234,45 +232,6 @@ void MainBox::test_validator(void)
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_color_block(int width,
-                                 int height,
-                                 int w_border,
-                                 QColor color_border,
-                                 QColor color,
-                                 QString path,
-                                 QString filename)
-{
-    QPixmap *pixmap = new QPixmap(width, height);
-    QPainter *painter = new QPainter(pixmap);
-    painter->fillRect(0,
-                      0,
-                      pixmap->width(),
-                      pixmap->height(),
-                      QBrush(color_border));
-    painter->fillRect(w_border,
-                      w_border,
-                      pixmap->width()-w_border*2,
-                      pixmap->height()-w_border*2,
-                      QBrush(color));
-
-    bool ok = pixmap->save(path + filename);
-    if(ok)
-    {
-        emit info(QString("File %1 successfully created").arg(path + filename));
-    }
-    else
-    {
-        emit error(QString("Error create %1").arg(path + filename));
-    }
-    return ok;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_assert(int value)
-{
-    Q_ASSERT(value > 5);    // если значение > 5, то всё нормально
-    return value != 0;
-}
-//--------------------------------------------------------------------------------
 void MainBox::print_mp(QWidget *widget)
 {
     emit error(QString("objectName %1").arg(widget->objectName()));
@@ -312,60 +271,43 @@ bool MainBox::save_property(QWidget *widget, const QString &property_name, QVari
     return widget->setProperty(property_name.toLocal8Bit(), value);
 }
 //--------------------------------------------------------------------------------
-#define	REG_OKAY	 0
-#define	REG_NOMATCH	 1
-
-bool MainBox::test_0(void)
+bool MainBox::timer_start(void)
+{
+    Q_CHECK_PTR(timer);
+    timer->start(500);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::timer_stop(void)
+{
+    Q_CHECK_PTR(timer);
+    timer->stop();
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_timer_count(void)
+{
+    emit info(QString("cnt %1").arg(cnt++));
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
-    static struct rerr {
-        int code;
-        const char *name;
-        const char *explain;
-    } rerrs[] = {
-    {REG_OKAY,	"REG_OKAY",	"no errors detected" },
-    {REG_NOMATCH,	"REG_NOMATCH",	"regexec() failed to match" },
-    {-1,		"",		"*** unknown regexp error code ***" }
-};
+    sw->setProperty("x_value", 10);
 
-    emit info(rerrs[0].name);
-#endif
-
-#if 0
-    timer->start(500);
-#endif
-
-#if 0
-    for(int n=0; n<100000; n++)
-        QPointer<QWidget> widget = new QWidget();
-    emit info("The end!");
-#endif
-
-#if 0
-    struct Tools
+    bool ok = false;
+    int x = sw->property("x_value").toInt(&ok);
+    if(ok)
     {
-        static int Add (int a, int b) {return a+b;}
-        static int Sub (int a, int b) {return a-b;}
-    };
-
-    int b = Tools::Add(5, 2);
-    int c = Tools::Sub(10, 0);
-    emit info(QString("%1").arg(b));
-    emit info(QString("%1").arg(c));
-#endif
-
-#if 0
-    QTextEdit *te = new QTextEdit();
-    te->setTextColor(QColor(Qt::red));
-    te->insertPlainText("red");
-    te->setTextColor(QColor(Qt::green));
-    te->insertPlainText("green");
-    te->setTextColor(QColor(Qt::blue));
-    te->insertPlainText("blue");
-    te->show();
+        emit info(QString("x_value %1").arg(x));
+    }
+    else
+    {
+        emit error("bad name");
+    }
 #endif
 
 #if 0
@@ -378,57 +320,12 @@ bool MainBox::test_0(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+bool MainBox::print_property(void)
 {
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_1()");
-
-#if 1
-    timer->stop();
-#endif
-
-#if 0
-    setProperty("is_exit", false);
-#endif
-
-
-#if 0
-    emit info("Текст <font style=\"color:red\">красный</font>");
-#endif
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit trace(Q_FUNC_INFO);
-    //emit info("Test_2()");
-
-#if 1
-    emit info(QString("cnt %1").arg(cnt++));
-#endif
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_4()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_5()");
+    for(int index = 0; index < sw->metaObject()->propertyCount(); index++)
+    {
+        emit info(QString("%1").arg(sw->metaObject()->property(index).name()));
+    }
     return true;
 }
 //--------------------------------------------------------------------------------

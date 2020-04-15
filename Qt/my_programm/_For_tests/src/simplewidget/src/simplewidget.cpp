@@ -42,8 +42,6 @@ void SimpleWidget::init(void)
          | Qt::WindowMaximizeButtonHint
          | Qt::CustomizeWindowHint);
 
-    connect(ui->btn_close,  &QPushButton::clicked,  this,   &QWidget::close);
-
     QList<QToolButton *> l_buttons;
 
     l_buttons.append(ui->btn_0);
@@ -63,6 +61,9 @@ void SimpleWidget::init(void)
         btn->setProperty("id", cnt++);
         connect(btn,  &QPushButton::clicked,  this,   &SimpleWidget::click);
     }
+
+    connect(ui->btn_close,  &QPushButton::clicked,          this,   &QWidget::close);
+    connect(this,           &SimpleWidget::x_value_changed, this,   &SimpleWidget::value_changed);
 }
 //--------------------------------------------------------------------------------
 void SimpleWidget::click(void)
@@ -72,5 +73,10 @@ void SimpleWidget::click(void)
     {
         ui->log_widget->infoLog(button->property("id").toString());
     }
+}
+//--------------------------------------------------------------------------------
+void SimpleWidget::value_changed(void)
+{
+    ui->log_widget->errorLog(QString("x_value %1").arg(x_value));
 }
 //--------------------------------------------------------------------------------

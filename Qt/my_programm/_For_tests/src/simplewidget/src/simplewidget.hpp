@@ -35,6 +35,12 @@ class SimpleWidget : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(int x_value READ read_x WRITE write_x NOTIFY x_value_changed)
+    Q_CLASSINFO("version", "666")
+
+signals:
+    void x_value_changed(void);
+
 public:
     explicit SimpleWidget(QWidget *parent = nullptr);
     ~SimpleWidget();
@@ -42,8 +48,14 @@ public:
 private:
     Ui::SimpleWidget *ui;
 
+    int x_value = 0;
+    int read_x(void) { return x_value; }
+    void write_x(int new_value) { x_value = new_value; }
+
     void init(void);
     void click(void);
+
+    void value_changed(void);
 };
 //--------------------------------------------------------------------------------
 #endif // SIMPLEWIDGET_HPP

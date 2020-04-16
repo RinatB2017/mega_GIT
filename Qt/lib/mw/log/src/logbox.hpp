@@ -39,10 +39,10 @@ typedef struct
 
 enum LEVELS
 {
-    INFO = 0,
-    DEBUG,
-    ERROR,
-    TRACE
+    L_INFO = 0,
+    L_DEBUG,
+    L_ERROR,
+    L_TRACE
 };
 //--------------------------------------------------------------------------------
 class LogBox : public QFrame

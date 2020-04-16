@@ -225,19 +225,19 @@ void LogBox::append_string(LOG_DATA log_data)
         return;
     }
 
-    if(!flag_is_shows_info  && log_data.level == INFO)  return;
-    if(!flag_is_shows_debug && log_data.level == DEBUG) return;
-    if(!flag_is_shows_error && log_data.level == ERROR) return;
-    if(!flag_is_shows_trace && log_data.level == TRACE) return;
+    if(!flag_is_shows_info  && log_data.level == L_INFO)  return;
+    if(!flag_is_shows_debug && log_data.level == L_DEBUG) return;
+    if(!flag_is_shows_error && log_data.level == L_ERROR) return;
+    if(!flag_is_shows_trace && log_data.level == L_TRACE) return;
 
     QString temp;
 
     QString level_str;
     switch (log_data.level) {
-        case INFO:  level_str = "INFO";   break;
-        case DEBUG: level_str = "DEBUG";  break;
-        case ERROR: level_str = "ERROR";  break;
-        case TRACE: level_str = "TRACE";  break;
+        case L_INFO:  level_str = "INFO";   break;
+        case L_DEBUG: level_str = "DEBUG";  break;
+        case L_ERROR: level_str = "ERROR";  break;
+        case L_TRACE: level_str = "TRACE";  break;
     }
     if(flagAddDateTime)
     {
@@ -315,7 +315,7 @@ void LogBox::infoLog(const QString &text)
         LOG_DATA log_data;
         log_data.date = QDate::currentDate();
         log_data.time = QTime::currentTime();
-        log_data.level = INFO;
+        log_data.level = L_INFO;
         log_data.color_text = Qt::blue;
         log_data.background_color = Qt::white;
         log_data.message = text;
@@ -335,7 +335,7 @@ void LogBox::debugLog(const QString &text)
         LOG_DATA log_data;
         log_data.date = QDate::currentDate();
         log_data.time = QTime::currentTime();
-        log_data.level = DEBUG;
+        log_data.level = L_DEBUG;
         log_data.color_text = Qt::darkGreen;
         log_data.background_color = Qt::white;
         log_data.message = text;
@@ -355,7 +355,7 @@ void LogBox::errorLog(const QString &text)
         LOG_DATA log_data;
         log_data.date = QDate::currentDate();
         log_data.time = QTime::currentTime();
-        log_data.level = ERROR;
+        log_data.level = L_ERROR;
         log_data.color_text = Qt::red;
         log_data.background_color = Qt::white;
         log_data.message = text;
@@ -375,7 +375,7 @@ void LogBox::traceLog(const QString &text)
         LOG_DATA log_data;
         log_data.date = QDate::currentDate();
         log_data.time = QTime::currentTime();
-        log_data.level = TRACE;
+        log_data.level = L_TRACE;
         log_data.color_text = Qt::gray;
         log_data.background_color = Qt::white;
         log_data.message = text;
@@ -397,7 +397,7 @@ void LogBox::colorLog(const QString &text,
         LOG_DATA log_data;
         log_data.date = QDate::currentDate();
         log_data.time = QTime::currentTime();
-        log_data.level = INFO;
+        log_data.level = L_INFO;
         log_data.color_text = text_color;
         log_data.background_color = background_color;
         log_data.message = text;

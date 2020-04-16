@@ -108,3 +108,6 @@ contains(DEFINES,XXX){
 }
 
 VPATH = $$INCLUDEPATH
+
+#message ($$RESOURCES)
+

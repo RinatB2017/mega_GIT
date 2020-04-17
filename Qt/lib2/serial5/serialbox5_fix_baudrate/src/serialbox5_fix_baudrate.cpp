@@ -500,17 +500,6 @@ void SerialBox5_fix_baudrate::get_parameter(void)
     emit info(temp);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::set_test(bool value)
-{
-    p_test = value;
-}
-//--------------------------------------------------------------------------------
-bool SerialBox5_fix_baudrate::get_test(void)
-{
-    emit error("Зачем жать куда попало?");
-    return p_test;
-}
-//--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::updateText(void)
 {
 #ifdef RS232_SEND

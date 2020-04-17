@@ -30,8 +30,6 @@
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QHBoxLayout;
-class QPushButton;
 class LogBox;
 class SendBox5;
 //--------------------------------------------------------------------------------
@@ -43,7 +41,6 @@ namespace Ui
 class SerialBox5_fix_baudrate : public SerialWidget
 {
     Q_OBJECT
-    Q_PROPERTY(bool p_test      READ get_test       WRITE set_test)
 
 public:
     SerialBox5_fix_baudrate(QWidget *parent,
@@ -76,11 +73,6 @@ private:
     bool flag_byte_by_byte = false;
 
     int fix_baudrate = 9600;
-
-    //TODO
-    bool p_test = false;
-    void set_test(bool value);
-    bool get_test(void);
 
 #ifndef RS232_NO_FRAME
     void add_frame_text(QFrame *parent,

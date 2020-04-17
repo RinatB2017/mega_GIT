@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "datagrapherbox.hpp"
 #include "mywidget.hpp"
@@ -31,11 +35,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class PlotPicker;
-class QSplitter;
-class DataGrapherBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -58,15 +57,15 @@ private slots:
     void test_5(void);
 
 private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
         void (MainBox::*func)(void);
     } CMD_t;
+
+    QPointer<MySplashScreen> splash;
+    Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;

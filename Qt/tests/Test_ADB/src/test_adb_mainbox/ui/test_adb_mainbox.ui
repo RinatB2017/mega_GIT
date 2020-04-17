@@ -61,13 +61,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btn_create_screenshot2">
-       <property name="text">
-        <string>Screenshot2</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QGridLayout" name="gridLayout">
        <property name="spacing">
         <number>0</number>
@@ -481,8 +474,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>btn_create_screenshot</tabstop>
-  <tabstop>btn_create_screenshot2</tabstop>
   <tabstop>btn_swipe_DU</tabstop>
   <tabstop>btn_swipe_RL</tabstop>
   <tabstop>btn_swipe_LR</tabstop>

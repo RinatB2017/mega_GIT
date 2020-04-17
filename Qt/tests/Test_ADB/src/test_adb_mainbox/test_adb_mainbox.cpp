@@ -76,7 +76,6 @@ void MainBox::init(void)
 
     connect(ui->btn_devices,            &QPushButton::clicked,  this,   &MainBox::f_devices);
     connect(ui->btn_create_screenshot,  &QPushButton::clicked,  this,   &MainBox::f_create_screenshot);
-    connect(ui->btn_create_screenshot2, &QPushButton::clicked,  this,   &MainBox::f_create_screenshot2);
     connect(ui->btn_tap,                &QPushButton::clicked,  this,   &MainBox::f_screen_tap);
 
     connect(ui->btn_swipe_LR,           &QPushButton::clicked,  this,   &MainBox::f_test_swipe_LR);
@@ -203,7 +202,7 @@ void MainBox::run_program(const QString program,
         temp.append(str);
         temp.append(" ");
     }
-    emit error(temp);
+    emit debug(temp);
 #endif
 
     myProcess->start(program, arguments);
@@ -301,26 +300,16 @@ bool MainBox::f_devices(void)
     if(process_result == 0)
     {
         ui->cb_devices->clear();
-        ui->cb_devices->addItems(sl_data);  //TODO надо умнее
+        if(sl_data.isEmpty() == false)
+        {
+            ui->cb_devices->addItems(sl_data);  //TODO надо умнее
+        }
     }
 
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_create_screenshot(void)
-{
-    QString program = PROG_PROCESS;
-    QStringList arguments;
-
-    QElapsedTimer timer;
-    timer.start();
-    if(!f_get_screeshot())      return;
-    if(!f_get_file_screeshot()) return;
-    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-    f_show_screeshot(PICTURE_NAME);
-}
-//--------------------------------------------------------------------------------
-void MainBox::f_create_screenshot2(void)
 {
     if(ui->cb_devices->currentText().isEmpty())
     {
@@ -333,7 +322,7 @@ void MainBox::f_create_screenshot2(void)
 
     QElapsedTimer timer;
     timer.start();
-    f_get_screeshot2();
+    f_get_screeshot();
 
     QByteArray ba = myProcess->readAllStandardOutput();
     QFile file(filename);
@@ -361,33 +350,6 @@ bool MainBox::f_get_screeshot(void)
         return false;
     }
 
-    //PROG_PROCESS shell screencap -p /sdcard/screencap.png;
-    QString program = PROG_PROCESS;
-    QStringList arguments;
-
-    arguments << "-s" << ui->cb_devices->currentText();
-    arguments << "shell";
-    arguments << "screencap";
-    arguments << "-p";
-    arguments << "/sdcard/screencap.png";
-
-    f_busy = true;
-    run_program(program, arguments);
-    while(f_busy)
-    {
-        QCoreApplication::processEvents();
-    }
-    return (process_result == 0);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::f_get_screeshot2(void)
-{
-    if(ui->cb_devices->currentText().isEmpty())
-    {
-        emit error("device not selected");
-        return false;
-    }
-
     //PROG_PROCESS exec-out screencap -p
     QString program = PROG_PROCESS;
     QStringList arguments;
@@ -399,46 +361,6 @@ bool MainBox::f_get_screeshot2(void)
 
     f_busy = true;
     run_program(program, arguments);
-    while(f_busy)
-    {
-        QCoreApplication::processEvents();
-    }
-    return (process_result == 0);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::f_get_screeshot3(void)
-{
-    if(ui->cb_devices->currentText().isEmpty())
-    {
-        emit error("device not selected");
-        return false;
-    }
-
-    //    QString program = "./adb_test.sh";
-    QString program = "/bin/sh";
-    QStringList arguments;
-
-    arguments << "-c";
-    //    arguments << "\"";
-    //    arguments << "'";
-
-    arguments << "'ls";
-    arguments << "*.user";
-    arguments << "'";
-
-    //    arguments << PROG_PROCESS;
-    //    arguments << "exec-out";
-    //    arguments << "screencap";
-    //    arguments << "-p";
-    //    arguments << ">";
-    //    arguments << PICTURE_NAME;
-
-    //    arguments << "\"";
-    //    arguments << "'";
-
-    f_busy = true;
-    //    run_program(program, arguments);
-    myProcess->startDetached(program, arguments);
     while(f_busy)
     {
         QCoreApplication::processEvents();
@@ -503,7 +425,7 @@ bool MainBox::f_tap(int pos_x, int pos_y)
     }
     if(process_result == 0)
     {
-        f_create_screenshot2();
+        f_create_screenshot();
     }
     return (process_result == 0);
 }
@@ -538,7 +460,7 @@ bool MainBox::f_swipe(int x1, int y1, int x2, int y2, int delay)
     }
     if(process_result == 0)
     {
-        f_create_screenshot2();
+        f_create_screenshot();
     }
     return (process_result == 0);
 }
@@ -615,7 +537,7 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
             bool ok = f_tap(pos_x, pos_y);
             if(ok)
             {
-                f_create_screenshot2();
+                f_create_screenshot();
             }
             return true;
         }

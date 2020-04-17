@@ -296,6 +296,12 @@ bool MainBox::test(void)
     emit info("Test_0()");
 
 #if 1
+    QString temp = "RQ3004ZJKU      device";
+
+    emit info(QString("[%1]").arg(temp.remove("\t").remove("device").trimmed()));
+#endif
+
+#if 0
     sw->setProperty("x_value", 10);
 
     bool ok = false;

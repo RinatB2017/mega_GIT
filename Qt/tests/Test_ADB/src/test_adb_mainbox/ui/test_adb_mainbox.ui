@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>551</width>
-    <height>461</height>
+    <width>673</width>
+    <height>642</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,10 +29,28 @@
       <number>9</number>
      </property>
      <item>
-      <widget class="QPushButton" name="btn_devices">
-       <property name="text">
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="title">
         <string>Devices</string>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QPushButton" name="btn_devices">
+          <property name="text">
+           <string>get</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cb_devices"/>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
@@ -192,8 +210,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>389</width>
-           <height>238</height>
+           <width>417</width>
+           <height>419</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -463,7 +481,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>btn_devices</tabstop>
   <tabstop>btn_create_screenshot</tabstop>
   <tabstop>btn_create_screenshot2</tabstop>
   <tabstop>btn_swipe_DU</tabstop>

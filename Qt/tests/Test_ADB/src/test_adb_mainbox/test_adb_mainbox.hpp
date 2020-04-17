@@ -55,12 +55,7 @@ public:
 
 private slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
     void started(void);
     void finished(int result);
@@ -93,6 +88,7 @@ private:
     bool f_busy = false;
     bool binary_data = false;
     int process_result = 0;
+    QStringList sl_data;
 
     int s_width = 0;
     int s_height = 0;

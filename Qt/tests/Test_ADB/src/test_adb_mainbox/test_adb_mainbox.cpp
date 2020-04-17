@@ -123,24 +123,6 @@ void MainBox::init(void)
     connect(ui->slSaturationTo,     static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spSaturationTo,     &QSpinBox::setValue);
     connect(ui->slValueTo,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValueTo,          &QSpinBox::setValue);
 
-#if 0
-    connect(ui->spHueFrom,          SIGNAL(valueChanged(int)), ui->slHueFrom,           SLOT(setValue(int)));
-    connect(ui->spSaturationFrom,   SIGNAL(valueChanged(int)), ui->slSaturationFrom,    SLOT(setValue(int)));
-    connect(ui->spValueFrom,        SIGNAL(valueChanged(int)), ui->slValueFrom,         SLOT(setValue(int)));
-
-    connect(ui->spHueTo,            SIGNAL(valueChanged(int)), ui->slHueTo,             SLOT(setValue(int)));
-    connect(ui->spSaturationTo,     SIGNAL(valueChanged(int)), ui->slSaturationTo,      SLOT(setValue(int)));
-    connect(ui->spValueTo,          SIGNAL(valueChanged(int)), ui->slValueTo,           SLOT(setValue(int)));
-
-    connect(ui->slHueFrom,          SIGNAL(valueChanged(int)), ui->spHueFrom,           SLOT(setValue(int)));
-    connect(ui->slSaturationFrom,   SIGNAL(valueChanged(int)), ui->spSaturationFrom,    SLOT(setValue(int)));
-    connect(ui->slValueFrom,        SIGNAL(valueChanged(int)), ui->spValueFrom,         SLOT(setValue(int)));
-
-    connect(ui->slHueTo,            SIGNAL(valueChanged(int)), ui->spHueTo,             SLOT(setValue(int)));
-    connect(ui->slSaturationTo,     SIGNAL(valueChanged(int)), ui->spSaturationTo,      SLOT(setValue(int)));
-    connect(ui->slValueTo,          SIGNAL(valueChanged(int)), ui->spValueTo,           SLOT(setValue(int)));
-#endif
-
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -150,13 +132,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -220,6 +196,16 @@ void MainBox::run_program(const QString program,
         return;
     }
 
+#if 1
+    QString temp;
+    foreach (QString str, arguments)
+    {
+        temp.append(str);
+        temp.append(" ");
+    }
+    emit error(temp);
+#endif
+
     myProcess->start(program, arguments);
 }
 //--------------------------------------------------------------------------------
@@ -231,9 +217,18 @@ void MainBox::readData(void)
         QStringList lines = output.split("\n");
         emit debug(QString("received %1 bytes").arg(output.size()));
         emit debug(QString("lines.size() %1").arg(lines.size()));
+        sl_data.clear();
         for(int n=0; n<lines.size(); n++)
         {
             QString line = lines.at(n);
+            if(line.contains("List of devices attached") == false)
+            {
+                QString temp = line.remove("\t").remove("device").trimmed();
+                if(temp.isEmpty() == false)
+                {
+                    sl_data.append(temp);
+                }
+            }
             emit info(QString("%1").arg(line));
         }
     }
@@ -303,6 +298,12 @@ bool MainBox::f_devices(void)
     {
         QCoreApplication::processEvents();
     }
+    if(process_result == 0)
+    {
+        ui->cb_devices->clear();
+        ui->cb_devices->addItems(sl_data);  //TODO надо умнее
+    }
+
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
@@ -321,6 +322,12 @@ void MainBox::f_create_screenshot(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_create_screenshot2(void)
 {
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return;
+    }
+
     binary_data = true;
     QString filename = PICTURE_NAME;
 
@@ -348,11 +355,17 @@ void MainBox::f_create_screenshot2(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot(void)
 {
-    //PROG_PROCESS shell screencap -p /sdcard/screencap.png;
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
 
+    //PROG_PROCESS shell screencap -p /sdcard/screencap.png;
     QString program = PROG_PROCESS;
     QStringList arguments;
 
+    arguments << "-s" << ui->cb_devices->currentText();
     arguments << "shell";
     arguments << "screencap";
     arguments << "-p";
@@ -369,11 +382,17 @@ bool MainBox::f_get_screeshot(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot2(void)
 {
-    //PROG_PROCESS exec-out screencap -p
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
 
+    //PROG_PROCESS exec-out screencap -p
     QString program = PROG_PROCESS;
     QStringList arguments;
 
+    arguments << "-s" << ui->cb_devices->currentText();
     arguments << "exec-out";
     arguments << "screencap";
     arguments << "-p";
@@ -389,6 +408,12 @@ bool MainBox::f_get_screeshot2(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_screeshot3(void)
 {
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
+
     //    QString program = "./adb_test.sh";
     QString program = "/bin/sh";
     QStringList arguments;
@@ -423,9 +448,16 @@ bool MainBox::f_get_screeshot3(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_get_file_screeshot(void)
 {
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
+
     QString program = PROG_PROCESS;
     QStringList arguments;
 
+    arguments << "-s" << ui->cb_devices->currentText();
     arguments << "pull";
     arguments << "/sdcard/screencap.png";
 
@@ -446,11 +478,17 @@ void MainBox::f_screen_tap(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_tap(int pos_x, int pos_y)
 {
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
     //PROG_PROCESS shell input tap 100 100
 
     QString program = PROG_PROCESS;
     QStringList arguments;
 
+    arguments << "-s" << ui->cb_devices->currentText();
     arguments << "shell";
     arguments << "input";
     arguments << "tap";
@@ -472,11 +510,17 @@ bool MainBox::f_tap(int pos_x, int pos_y)
 //--------------------------------------------------------------------------------
 bool MainBox::f_swipe(int x1, int y1, int x2, int y2, int delay)
 {
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
     //PROG_PROCESS shell input swipe x1 y1 x2 y2 sss
 
     QString program = PROG_PROCESS;
     QStringList arguments;
 
+    arguments << "-s" << ui->cb_devices->currentText();
     arguments << "shell";
     arguments << "input";
     arguments << "swipe";
@@ -726,17 +770,17 @@ void MainBox::refreshHSV()
         }
     }
 
-    ui->lbl_screenshot->setPixmap(QPixmap::fromImage( resultImg ).scaled(
-                                      ui->lbl_screenshot->size(),
-                                      Qt::KeepAspectRatio,
-                                      Qt::SmoothTransformation
-                                      )
+    ui->lbl_screenshot->setPixmap(QPixmap::fromImage( resultImg )
+                                  .scaled(ui->lbl_screenshot->size(),
+                                          Qt::KeepAspectRatio,
+                                          Qt::SmoothTransformation
+                                          )
                                   );
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
+    emit info("Test()");
 
     emit info(QString("pixmap: %1 %2")
               .arg(ui->lbl_screenshot->pixmap()->width())
@@ -745,36 +789,6 @@ bool MainBox::test_0(void)
               .arg(s_width)
               .arg(s_height));
 
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
     return true;
 }
 //--------------------------------------------------------------------------------

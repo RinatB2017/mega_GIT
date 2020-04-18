@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,122 +18,74 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_test_QListWidget_mainbox.h"
+#include "autoclicker_item.hpp"
+#include "ui_autoclicker_item.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "test_QListWidget_mainbox.hpp"
-#include "defines.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-MainBox::MainBox(QWidget *parent,
-                 MySplashScreen *splash) :
-    MyWidget(parent),
-    splash(splash),
-    ui(new Ui::MainBox)
-{
-    init();
-}
-//--------------------------------------------------------------------------------
-MainBox::~MainBox()
-{
-    save_widgets();
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void MainBox::init(void)
+AutoClicker_item::AutoClicker_item(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::AutoClicker_item)
 {
     ui->setupUi(this);
 
-    //createTestBar();
-
-    QListWidget *lstWgt = new QListWidget;
-    QLayout *l = new QVBoxLayout();
-    l->addWidget(lstWgt);
-    setLayout(l);
-
-    // Добавим в список 10 элементов
-    for(int i=0; i<10; ++i)
-    {
-        makeItem(lstWgt);
-    }
-
-    load_widgets();
+    init();
 }
 //--------------------------------------------------------------------------------
-void MainBox::onBtnClicked(void)
+AutoClicker_item::~AutoClicker_item()
 {
-    if(QPushButton* btn = qobject_cast< QPushButton* >( sender()))
-    {
-        if(QLineEdit* e = btn->parent()->findChild< QLineEdit* >())
-        {
-            QMessageBox::information(this, "Button was clicked!", e->text());
-            return;
-        }
-    }
+    delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::makeItem(QListWidget* lstWgt)
+void AutoClicker_item::init(void)
 {
-    QWidget* wgt = new QWidget;
-    QLayout* l = new QHBoxLayout();
-    l->addWidget(new QLineEdit );
-    QPushButton* btn = new QPushButton("Click me");
-    connect(btn, SIGNAL(clicked()), SLOT( onBtnClicked()));
-    l->addWidget(btn);
-    wgt->setLayout(l);
+    ui->sb_pos_x->setRange(0, 1000);
+    ui->sb_pos_y->setRange(0, 1000);
 
-    QListWidgetItem* item = new QListWidgetItem(lstWgt);
-    item->setSizeHint(wgt->sizeHint());
-    lstWgt->setItemWidget(item, wgt);
+    connect(ui->btn_remove_item,    &QPushButton::clicked,  this,   &AutoClicker_item::remove_item);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void AutoClicker_item::set_name(const QString &name)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-
-    QToolBar *testbar = new QToolBar(tr("testbar"));
-    testbar->setObjectName("testbar");
-
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                       "test",
-                                       "test");
-    btn_test->setObjectName("btn_test");
-
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    this->name = name;
+    ui->lbl_name->setText(name);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+QString AutoClicker_item::get_name(void)
 {
-    emit info("Test()");
+    return name;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void AutoClicker_item::set_id(int new_id)
 {
-    ui->retranslateUi(this);
+    id = new_id;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+int AutoClicker_item::get_id(void)
 {
-    return true;
+    return id;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+QTime AutoClicker_item::get_time(void)
 {
-
+    return ui->te_time->time();
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void AutoClicker_item::set_x(int x)
 {
-
+    ui->sb_pos_x->setValue(x);
+}
+//--------------------------------------------------------------------------------
+int  AutoClicker_item::get_x(void)
+{
+    return ui->sb_pos_x->value();
+}
+//--------------------------------------------------------------------------------
+void AutoClicker_item::set_y(int y)
+{
+    ui->sb_pos_y->setValue(y);
+}
+//--------------------------------------------------------------------------------
+int  AutoClicker_item::get_y(void)
+{
+    return ui->sb_pos_y->value();
 }
 //--------------------------------------------------------------------------------

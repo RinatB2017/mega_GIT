@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef AUTOCLICKER_ITEM_HPP
+#define AUTOCLICKER_ITEM_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -27,39 +27,41 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class AutoClicker_item;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class AutoClicker_item : public QWidget
 {
     Q_OBJECT
 
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+signals:
+    void remove_item(void);
 
-private slots:
-    void test(void);
-    void onBtnClicked(void);
+public:
+    explicit AutoClicker_item(QWidget *parent = nullptr);
+    ~AutoClicker_item();
+
+    void set_name(const QString &name);
+    QString get_name(void);
+
+    void set_id(int new_id);
+    int  get_id(void);
+
+    QTime get_time(void);
+
+    void set_x(int x);
+    int  get_x(void);
+
+    void set_y(int y);
+    int  get_y(void);
 
 private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
+    Ui::AutoClicker_item *ui;
+    QString name;
+    int id = 0;
 
     void init(void);
-    void makeItem(QListWidget* lstWgt);
-    void createTestBar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // AUTOCLICKER_ITEM_HPP

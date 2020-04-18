@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef AUTOCLICKER_WIDGET_HPP
+#define AUTOCLICKER_WIDGET_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -27,102 +27,38 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include <opencv2/objdetect.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
-
-#include <opencv2/opencv.hpp>
-
-using namespace std;
-using namespace cv;
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class AutoClicker_widget;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class AutoClicker_widget : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    explicit AutoClicker_widget(QWidget *parent = nullptr);
+    ~AutoClicker_widget();
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void click_1(void);
+    void click_2(void);
+    void click_clear(void);
 
-    void started(void);
-    void finished(int result);
-    void process_error(QProcess::ProcessError p_error);
-    void readData(void);
-
-    void f_create_screenshot(void);
-    void f_show_screeshot(const QString &filename);
-    void f_screen_tap(void);
-
-    void onLoad(void);
-    void refreshHSV(void);
+    void remove_item(void);
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
+    Ui::AutoClicker_widget *ui;
 
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
-    QProcess *myProcess = nullptr;
-    bool f_busy = false;
-    bool binary_data = false;
-    int process_result = 0;
-    QStringList sl_data;
-
-    int s_width = 0;
-    int s_height = 0;
-
-    Mat mOrigImage;
-
-    QPointer <QTimer> timer_autoshot;
+    int id = 0;
 
     void init(void);
-    void createTestBar(void);
-
-    void run_program(const QString program,
-                     const QStringList arguments);
-
-    bool f_get_file_screeshot(void);
-    bool f_get_screeshot(void);
-    bool f_devices(void);
-    bool f_tap(int pos_x, int pos_y);
-
-    bool f_swipe(int x1, int y1, int x2, int y2, int delay);
-    bool f_test_swipe_LR(void);
-    bool f_test_swipe_RL(void);
-    bool f_test_swipe_UD(void);
-    bool f_test_swipe_DU(void);
-
-    void f_auto_shot(bool state);
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // AUTOCLICKER_WIDGET_HPP

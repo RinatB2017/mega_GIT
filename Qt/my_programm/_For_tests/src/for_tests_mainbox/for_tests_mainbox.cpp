@@ -77,7 +77,7 @@ void MainBox::init(void)
 
     check_in();
 
-    ui->toolButton->setIcon((QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon))));
+    ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
     connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
 #if 1
@@ -290,12 +290,24 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
+#include "autoclicker_widget.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test_0()");
 
 #if 1
+    AutoClicker_widget *ac = new AutoClicker_widget();
+    connect(ac, &AutoClicker_widget::info,     this,   &MainBox::info);
+    connect(ac, &AutoClicker_widget::debug,    this,   &MainBox::debug);
+    connect(ac, &AutoClicker_widget::error,    this,   &MainBox::error);
+    connect(ac, &AutoClicker_widget::trace,    this,   &MainBox::trace);
+
+    ac->show();
+#endif
+
+#if 0
     QString temp = "RQ3004ZJKU      device";
 
     emit info(QString("[%1]").arg(temp.remove("\t").remove("device").trimmed()));

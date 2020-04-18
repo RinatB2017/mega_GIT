@@ -44,6 +44,13 @@ MainBox::~MainBox()
 {
     save_widgets();
 
+    if(timer_autoshot)
+    {
+        timer_autoshot->stop();
+        timer_autoshot->disconnect();
+        timer_autoshot->deleteLater();
+    }
+
     if(myProcess)
     {
         myProcess->disconnect();
@@ -105,6 +112,14 @@ void MainBox::init(void)
     {
         connect( rb, SIGNAL( clicked( bool ) ), SLOT( refreshHSV() ) );
     }
+
+    //---
+    timer_autoshot = new QTimer(this);
+    connect(timer_autoshot, &QTimer::timeout,       this,   &MainBox::f_create_screenshot);
+    connect(ui->cb_auto,    &QCheckBox::toggled,    this,   &MainBox::f_auto_shot);
+
+    ui->cb_auto->setProperty(NO_BLOCK, true);
+    //---
 
     connect(ui->spHueFrom,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHueFrom,          &QSlider::setValue);
     connect(ui->spSaturationFrom,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slSaturationFrom,   &QSlider::setValue);
@@ -499,6 +514,27 @@ bool MainBox::f_test_swipe_DU(void)
                    s_width / 2,
                    10,
                    100);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_auto_shot(bool state)
+{
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        ui->cb_auto->setChecked(false);
+        return;
+    }
+
+    if(state)
+    {
+        ui->btn_create_screenshot->setDisabled(true);
+        timer_autoshot->start(ui->sb_interval->value());
+    }
+    else
+    {
+        ui->btn_create_screenshot->setEnabled(true);
+        timer_autoshot->stop();
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_show_screeshot(const QString &filename)

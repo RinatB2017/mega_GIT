@@ -315,12 +315,24 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
+#include "spoiler.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
 #if 1
+    Spoiler *spoiler = new Spoiler("my spoiler");
+
+    auto * anyLayout = new QVBoxLayout();
+    anyLayout->addWidget(new QPushButton());
+    spoiler->setContentLayout(*anyLayout);
+
+    spoiler->show();
+#endif
+
+#if 0
     readJson("coins.json");
 #endif
 

@@ -71,6 +71,8 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
+include (src/autoclicker/autoclicker.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

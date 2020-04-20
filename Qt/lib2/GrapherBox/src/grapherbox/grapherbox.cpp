@@ -842,8 +842,37 @@ bool GrapherBox::get_curve_data(int channel,
                    .arg(curves.count()));
         return false;
     }
+    if(curves[channel].real_data.isEmpty())
+    {
+        emit error("real_data is empty");
+        return false;
+    }
+
     QPointF temp = curves[channel].real_data.at(index);
     *data = temp.y();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::get_curve_data_count(int channel, int *cnt)
+{
+    if(curves.count() <= 0)
+    {
+        emit error(tr("curves.count() <= 0"));
+        return false;
+    }
+    if(channel >= curves.count())
+    {
+        emit error(QString(tr("channel > %1"))
+                   .arg(curves.count()));
+        return false;
+    }
+    if(curves[channel].real_data.isEmpty())
+    {
+        emit error("real_data is empty");
+        return false;
+    }
+
+    *cnt = curves[channel].real_data.count();
     return true;
 }
 //--------------------------------------------------------------------------------

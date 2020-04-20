@@ -249,9 +249,10 @@ void MainBox::createTestBar(void)
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test_sinus",          &MainBox::test0 });
-    commands.append({ id++, "test_single_sinus",   &MainBox::test1 });
-    commands.append({ id++, "test_random_data",    &MainBox::test2 });
+    commands.append({ id++, "test",                 &MainBox::test });
+    commands.append({ id++, "test_sinus",           &MainBox::test0 });
+    commands.append({ id++, "test_single_sinus",    &MainBox::test1 });
+    commands.append({ id++, "test_random_data",     &MainBox::test2 });
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -298,6 +299,27 @@ void MainBox::choice_test(void)
 
             return;
         }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::test(void)
+{
+    emit trace(Q_FUNC_INFO);
+    emit info(QString("cnt curves %1").arg(grapher_widget->get_curves_count()));
+
+    int cnt = 0;
+    bool ok = grapher_widget->get_curve_data_count(0, &cnt);
+    if(ok)
+        emit info(QString("real_data cnt: %1").arg(cnt));
+
+    qreal data;
+    for(int n=0; n<10; n++)
+    {
+        ok = grapher_widget->get_curve_data(curves[0], n, &data);
+        if(ok)
+            emit info(QString("data %1").arg(data));
+        else
+            return;
     }
 }
 //--------------------------------------------------------------------------------

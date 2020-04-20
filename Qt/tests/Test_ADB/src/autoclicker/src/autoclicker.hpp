@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,43 +18,76 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#ifndef AUTOCLICKER_HPP
+#define AUTOCLICKER_HPP
+//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include <QTest>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "test_QProcess_mainbox.hpp"
-#include "test.hpp"
-//--------------------------------------------------------------------------------
-Test::Test()
-{
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
+namespace Ui {
+    class AutoClicker;
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+class AutoClicker : public MyWidget
 {
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
+    Q_OBJECT
 
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
+public:
+    explicit AutoClicker(QWidget *parent = nullptr);
+    ~AutoClicker();
 
-    QCOMPARE(mb->test(), true);
-}
+    bool test_command(const QString &command_str);
+
+private:
+    enum STATE {
+        STATE_IDLE = 0,
+        STATE_CMD,
+        STATE_PAUSE
+    };
+    int current_state = STATE_IDLE;
+
+    QPointer<QStringListModel> model;
+
+    Ui::AutoClicker *ui;
+
+    QPointer<QTimer> timer_autoclick;
+    int current_command = 0;
+    int pause_counter = 0;
+
+    struct COMMAND {
+        QString cmd;
+        int cnt_param;  // wo cmd
+    };
+
+    QList<COMMAND> correct_commands;
+
+    void init(void);
+    void timer_start(void);
+    void timer_stop(void);
+    void test(void);
+    void update(void);
+
+    void load(void);
+    void save(void);
+
+    bool load_from_file(const QString &filename);
+    bool save_to_file(const QString &filename);
+
+    void append(void);
+    void clear(void);
+
+    bool test_commands(void);
+    void run_command(const QString &data);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+};
 //--------------------------------------------------------------------------------
+#endif // AUTOCLICKER_HPP

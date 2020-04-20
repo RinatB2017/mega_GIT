@@ -392,20 +392,6 @@ bool MyWidget::is_my_widget(QString o_name)
     if(o_name.isEmpty())
         return false;
 
-    //    if(o_name.indexOf("_") != -1)
-    //    {
-    //        return true;
-    //    }
-
-    //    if(o_name.left(3) == "qt_")     return false;
-
-    //    if(o_name.left(3) == "te_")     return true;
-    //    if(o_name.left(3) == "le_")     return true;
-    //    if(o_name.left(3) == "cb_")     return true;
-    //    if(o_name.left(3) == "sb_")     return true;
-    //    if(o_name.left(4) == "dsb_")    return true;
-    //    return false;
-
     return (o_name.left(3) != "qt_");
 }
 //--------------------------------------------------------------------------------

@@ -78,7 +78,7 @@ void MyMainWindow::messageHandler(QtMsgType type,
     out << context.category
         << ": "
         << msg
-        << endl;
+        << Qt::endl;
     out.flush();    // Очищаем буферизированные данные
 }
 #else
@@ -100,7 +100,7 @@ void MyMainWindow::messageHandler(QtMsgType type,
     // Записываем в вывод категорию сообщения и само сообщение
     out << ": "
         << msg
-        << endl;
+        << Qt::endl;
     out.flush();    // Очищаем буферизированные данные
 }
 #endif

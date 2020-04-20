@@ -20,10 +20,12 @@
 **********************************************************************************/
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+// Открывать только, если очень надо. Иначе будут малопонятные ошибки
+//#define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test_adb_mainbox.hpp"
+#include "autoclicker.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
@@ -48,7 +50,17 @@ void Test::test_func(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
+}
+//--------------------------------------------------------------------------------
+void Test::test_AutoClicker(void)
+{
+    AutoClicker *ac = new AutoClicker();
+    QVERIFY(ac);
 
-    QCOMPARE(mb->test(), true);
+    QCOMPARE(ac->test_command(""), false);
+    QCOMPARE(ac->test_command("pause"), false);
+    QCOMPARE(ac->test_command("pause|1|2"), false);
+    QCOMPARE(ac->test_command("tap|1|2"), true);
+    QCOMPARE(ac->test_command("swipe|1|2|3|4|5"), true);
 }
 //--------------------------------------------------------------------------------

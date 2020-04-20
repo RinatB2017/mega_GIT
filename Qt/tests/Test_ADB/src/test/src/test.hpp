@@ -21,12 +21,6 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
@@ -38,6 +32,7 @@ public:
     Test();
 
 private slots:
+    void test_AutoClicker(void);
     
 private:
     MainWindow *mw;

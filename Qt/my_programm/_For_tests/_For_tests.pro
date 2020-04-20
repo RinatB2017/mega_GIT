@@ -18,7 +18,7 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 #DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
-#DEFINES += NO_TRAYICON
+DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_MENU
 
@@ -97,8 +97,6 @@ include (src/simple_mw/simple_mw.pri)
 
 #include (src/test_widgets/widgets.pri)
 include (src/simplewidget/simplewidget.pri)
-
-include (src/autoclicker/autoclicker.pri)
 
 contains(DEFINES,XXX){
     include (src/simplewidget/simplewidget.pri)

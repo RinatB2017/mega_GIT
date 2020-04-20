@@ -21,8 +21,6 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QSignalSpy>
-#include <QObject>
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;

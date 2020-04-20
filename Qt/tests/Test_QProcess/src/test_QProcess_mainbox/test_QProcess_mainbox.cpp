@@ -48,12 +48,19 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
-    //createTestBar();
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
 
     connect(ui->btn_run_sh,     SIGNAL(clicked(bool)),  this,   SLOT(run_sh()));
     connect(ui->btn_run_gcc,    SIGNAL(clicked(bool)),  this,   SLOT(run_gcc()));
     connect(ui->btn_run_kate,   SIGNAL(clicked(bool)),  this,   SLOT(run_kate()));
     connect(ui->btn_run_command,    SIGNAL(clicked(bool)),  this,   SLOT(run_command()));
+
+    ui->btn_run_sh->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_run_gcc->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_run_kate->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_run_command->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 
     load_widgets();
 }
@@ -64,13 +71,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -147,11 +148,11 @@ void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
     emit info(tr("Процесс завершен!"));
     if(result)
     {
-        emit error(QString(tr("code %1")).arg(result));
+        emit info(QString(tr("code %1")).arg(result));
         switch (exitStatus)
         {
         case QProcess::NormalExit:
-            emit error("The process exited normally.");
+            emit info("The process exited normally.");
             break;
         case QProcess::CrashExit:
             emit error("The process crashed.");
@@ -246,43 +247,34 @@ void MainBox::run_command(void)
     prepare_QProcess();
     if(ui->le_command->text().isEmpty() == false)
     {
-        process->start(ui->le_command->text());
+        process->start(ui->le_command->text(), QStringList() << ui->le_param->text());
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
+    emit info("Test()");
+
+    qreal buffers[100];
+    qreal x = 0;
+    for(int n=0; n<100; n++)
+    {
+        buffers[n] = x;
+        x += 0.01;
+    }
+
+    QByteArray ba;
+    ba.append(reinterpret_cast<char *>(&buffers), sizeof (buffers));
+    emit info(QString("%1").arg(ba.toHex().data()));
+    emit error(QString("size %1").arg(ba.count()));
+
+    qreal temp_buffers[100] = { 0 };
+    memcpy(reinterpret_cast<char *>(&temp_buffers), ba.data(), static_cast<size_t>(ba.length()));
+    for(int n=0; n<10; n++)
+    {
+        emit info(QString("%1").arg(temp_buffers[n]));
+    }
+
     return true;
 }
 //--------------------------------------------------------------------------------

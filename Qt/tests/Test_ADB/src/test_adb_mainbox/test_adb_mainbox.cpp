@@ -121,6 +121,12 @@ void MainBox::init(void)
     ui->cb_auto->setProperty(NO_BLOCK, true);
     //---
 
+    //---
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+    mw->add_dock_widget("AutoClicker", "autoclicker_widget", Qt::RightDockWidgetArea, ui->autoclicker_widget);
+    //---
+
     connect(ui->spHueFrom,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHueFrom,          &QSlider::setValue);
     connect(ui->spSaturationFrom,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slSaturationFrom,   &QSlider::setValue);
     connect(ui->spValueFrom,        static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slValueFrom,        &QSlider::setValue);
@@ -741,8 +747,8 @@ bool MainBox::test(void)
     emit info("Test()");
 
     emit info(QString("pixmap: %1 %2")
-              .arg(ui->lbl_screenshot->pixmap()->width())
-              .arg(ui->lbl_screenshot->pixmap()->height()));
+              .arg(ui->lbl_screenshot->grab().width())
+              .arg(ui->lbl_screenshot->grab().height()));
     emit info(QString("s_*: %1 %2")
               .arg(s_width)
               .arg(s_height));

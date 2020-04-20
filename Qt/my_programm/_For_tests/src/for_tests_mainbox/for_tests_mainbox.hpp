@@ -127,6 +127,8 @@ private:
     QPointer<QTimer> timer;
     int cnt = 0;
 
+    void readJson(const QString &filename);
+
     void init(void);
     void createTestBar(void);
 

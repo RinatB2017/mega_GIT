@@ -18,10 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
+#include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
 #define private public

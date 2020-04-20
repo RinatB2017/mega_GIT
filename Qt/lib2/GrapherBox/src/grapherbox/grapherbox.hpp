@@ -159,6 +159,8 @@ public slots:
     bool get_curve_data(int channel,
                         int index,
                         qreal *data);
+    bool get_curve_data_count(int channel, int *cnt);
+
 
     void clear(void);
     void reset(void);

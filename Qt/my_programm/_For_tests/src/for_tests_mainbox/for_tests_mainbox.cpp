@@ -205,7 +205,7 @@ void MainBox::s_inFunc(void)
 int MainBox::get_cnt(void)
 {
     emit trace(Q_FUNC_INFO);
-    return qrand() % 10;
+    return QRandomGenerator::global()->generate() % 10;
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_validator(void)
@@ -290,21 +290,44 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
-#include "autoclicker_widget.hpp"
+void MainBox::readJson(const QString &filename)
+{
+    QString val;
+    QFile file;
+    file.setFileName(filename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
 
+    QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
+
+    QJsonObject obj;
+    int index = 0;
+    do {
+        obj = d[index++].toObject();
+        if(obj.isEmpty() == false)
+        {
+            emit info(QString("%1 %2")
+                      .arg(obj.value("symbol").toString())
+                      .arg(obj.value("askPrice").toString()));
+        }
+    } while(obj.isEmpty() == false);
+    emit error(QString("index %1").arg(index));
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-    emit info("Test_0()");
+    emit info("Test");
 
 #if 1
-    AutoClicker_widget *ac = new AutoClicker_widget();
-    connect(ac, &AutoClicker_widget::info,     this,   &MainBox::info);
-    connect(ac, &AutoClicker_widget::debug,    this,   &MainBox::debug);
-    connect(ac, &AutoClicker_widget::error,    this,   &MainBox::error);
-    connect(ac, &AutoClicker_widget::trace,    this,   &MainBox::trace);
+    readJson("coins.json");
+#endif
 
-    ac->show();
+#if 0
+    QString src_str = "{\"symbol\":\"ETHBTC\",\"price\":\"0.02547300\"}";
+    QString temp = src_str.remove("{").remove("}").remove("\"").replace(":", "|").replace(",", "|");
+    emit info(temp);
 #endif
 
 #if 0

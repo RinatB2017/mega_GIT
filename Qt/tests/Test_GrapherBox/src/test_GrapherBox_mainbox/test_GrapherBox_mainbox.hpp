@@ -55,6 +55,7 @@ public:
 
 private slots:
     void choice_test(void);
+    void test(void);
     void test0(void);
     void test1(void);
     void test2(void);
@@ -74,7 +75,7 @@ private:
     Ui::MainBox *ui;
     bool all_break = false;
 
-    GrapherBox *grapher_widget;
+    QPointer<GrapherBox> grapher_widget;
 
 #ifdef ONE_CURVE
     int curve_0 = 0;

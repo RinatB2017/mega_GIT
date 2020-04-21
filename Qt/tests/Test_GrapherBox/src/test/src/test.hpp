@@ -38,6 +38,7 @@ public:
     Test();
 
 private slots:
+    void test_grapherbox(void);
 
 private:
     MainWindow *mw;

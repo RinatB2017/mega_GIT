@@ -1778,6 +1778,11 @@ void GrapherBox::set_silense(bool state)
     is_silence = state;
 }
 //--------------------------------------------------------------------------------
+bool GrapherBox::get_silense(void)
+{
+    return is_silence;
+}
+//--------------------------------------------------------------------------------
 void GrapherBox::set_legend_is_visible(bool state)
 {
     legend_is_visible = state;

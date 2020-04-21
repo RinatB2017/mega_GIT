@@ -113,6 +113,7 @@ public:
     void push_btn_Vertical(bool state);
 
     void set_silense(bool state);
+    bool get_silense(void);
 
     int get_curves_count(void);
 

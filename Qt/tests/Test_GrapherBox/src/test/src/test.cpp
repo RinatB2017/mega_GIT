@@ -20,7 +20,7 @@
 **********************************************************************************/
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+//#define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "grapherbox.hpp"
@@ -31,5 +31,32 @@ Test::Test()
 {
     mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
+}
+//--------------------------------------------------------------------------------
+void Test::test_grapherbox(void)
+{
+    GrapherBox *gb = mw->findChild<GrapherBox *>("GrapherBox");
+    QVERIFY(gb);
+
+    const int cnt_buf = 1024;
+    qreal test_buf[cnt_buf] = { 0 };
+    for(int n=0; n<cnt_buf; n++)
+    {
+        test_buf[n] = static_cast<qreal>(rand() % 1000) + 0.12345;
+        gb->add_curve_data(0, n, test_buf[n]);
+    }
+
+    qreal data;
+    bool ok;
+    for(int n=0; n<cnt_buf; n++)
+    {
+        ok = gb->get_curve_data(0, n, &data);
+        QCOMPARE(ok, true);
+        QCOMPARE(data, test_buf[n]);
+    }
+    ok = gb->get_silense();
+    gb->set_silense(true);
+    gb->clear();
+    gb->set_silense(ok);
 }
 //--------------------------------------------------------------------------------

@@ -447,6 +447,42 @@ bool MyWidget::save_combobox_property(QWidget *widget)
     return false;
 }
 //--------------------------------------------------------------------------------
+bool MyWidget::load_splitter_property(QWidget *widget)
+{
+    if(compare_name(widget->metaObject()->className(), "QSplitter"))
+    {
+        QString o_name = widget->objectName();
+        if(o_name.isEmpty() == false)
+        {
+            QByteArray ba = load_bytearray(o_name);
+            if(ba.isEmpty() == false)
+            {
+                static_cast<QSplitter *>(widget)->restoreState(ba);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+bool MyWidget::save_splitter_property(QWidget *widget)
+{
+    if(compare_name(widget->metaObject()->className(), "QSplitter"))
+    {
+        QString o_name = widget->objectName();
+        if(o_name.isEmpty() == false)
+        {
+            QByteArray ba = static_cast<QSplitter *>(widget)->saveState();
+            if(ba.isEmpty() == false)
+            {
+                save_bytearray(o_name, ba);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
 bool MyWidget::load_property(QWidget *widget, const QString &property_name)
 {
     QVariant property = settings->value(property_name);
@@ -503,13 +539,13 @@ void MyWidget::load_widgets(void)
     }
 
 #ifdef USE_TOPLEVELWIDGETS
-    //    Q_CHECK_PTR(mw);
-    //    QList<QWidget *> widgets =  mw->findChildren<QWidget *>();
     QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
 #else
     QList<QWidget *> widgets = findChildren<QWidget *>();
 #endif
     Q_CHECK_PTR(settings);
+
+    Q_ASSERT(widgets.count() != 0);
 
     foreach(QWidget *widget, widgets)
     {
@@ -522,6 +558,7 @@ void MyWidget::load_widgets(void)
 
             settings->beginGroup(get_full_objectName(widget));
             load_combobox_property(widget);
+            load_splitter_property(widget);
             load_property(widget, "isEnabled");
             load_property(widget, "checked");
             load_property(widget, "text");
@@ -561,6 +598,7 @@ void MyWidget::save_widgets(void)
 
             settings->beginGroup(get_full_objectName(widget));
             save_combobox_property(widget);
+            save_splitter_property(widget);
             save_property(widget, "isEnabled");
             save_property(widget, "checked");
             save_property(widget, "text");
@@ -596,12 +634,28 @@ void MyWidget::save_string(QString name, QString value)
 //--------------------------------------------------------------------------------
 QByteArray MyWidget::load_bytearray(QString name)
 {
-    return settings->value(name).toByteArray();
+    QByteArray ba;
+    if(settings)
+    {
+        ba = settings->value(name).toByteArray();
+    }
+    else
+    {
+        qDebug() << "### load_bytearray ###";
+    }
+    return ba;
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_bytearray(QString name, QByteArray value)
 {
-    settings->setValue(name, value);
+    if(settings)
+    {
+        settings->setValue(name, value);
+    }
+    else
+    {
+        qDebug() << "### save_bytearray ###";
+    }
 }
 //--------------------------------------------------------------------------------
 QVariant MyWidget::load_value(QString name)

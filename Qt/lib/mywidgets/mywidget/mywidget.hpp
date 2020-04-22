@@ -119,6 +119,9 @@ public:
     bool load_combobox_property(QWidget *widget);
     bool save_combobox_property(QWidget *widget);
 
+    bool load_splitter_property(QWidget *widget);
+    bool save_splitter_property(QWidget *widget);
+
     bool load_property(QWidget *widget, const QString &property_name);
     bool save_property(QWidget *widget, const QString &property_name);
 

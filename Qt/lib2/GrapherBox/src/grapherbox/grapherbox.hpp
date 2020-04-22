@@ -185,8 +185,8 @@ public slots:
     void test(void);
     void test2(void);
     void test_sinus(void);
-    void test_single_sinus(int index);
-    void test_random_data(int index);
+    void test_single_sinus(int index, int offset);
+    void test_random_data(int index, int offset);
     void test_draw_circle(void);
 
     void legend_on(int curve_ID);

@@ -56,6 +56,8 @@ public:
 private slots:
     void choice_test(void);
     void test(void);
+    void test_load(void);
+    void test_save(void);
     void test0(void);
     void test1(void);
     void test2(void);

@@ -858,17 +858,20 @@ bool GrapherBox::get_curve_data_count(int channel, int *cnt)
     if(curves.count() <= 0)
     {
         emit error(tr("curves.count() <= 0"));
+        *cnt = 0;
         return false;
     }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
                    .arg(curves.count()));
+        *cnt = 0;
         return false;
     }
     if(curves[channel].real_data.isEmpty())
     {
         emit error("real_data is empty");
+        *cnt = 0;
         return false;
     }
 
@@ -1669,7 +1672,7 @@ void GrapherBox::test_sinus(void)
     push_btn_Vertical(true);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test_single_sinus(int index)
+void GrapherBox::test_single_sinus(int index, int offset)
 {
     if(index < 0)
     {
@@ -1685,13 +1688,13 @@ void GrapherBox::test_single_sinus(int index)
     push_btn_Vertical(false);
     for(int n=0; n<360; n++)
     {
-        add_curve_data(index, 128 + 127*qSin(qreal(n)*qreal(M_PI)/qreal(180.0)));
+        add_curve_data(index, offset + n,  128 + 127*qSin(qreal(n)*qreal(M_PI)/qreal(180.0)));
     }
     push_btn_Horizontal(true);
     push_btn_Vertical(true);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test_random_data(int index)
+void GrapherBox::test_random_data(int index, int offset)
 {
     if(index < 0)
     {
@@ -1707,7 +1710,7 @@ void GrapherBox::test_random_data(int index)
     push_btn_Vertical(false);
     for(int n=0; n<360; n++)
     {
-        add_curve_data(index, rand() % 100 - 50);
+        add_curve_data(index, offset + n, rand() % 100 - 50);
     }
     push_btn_Horizontal(true);
     push_btn_Vertical(true);

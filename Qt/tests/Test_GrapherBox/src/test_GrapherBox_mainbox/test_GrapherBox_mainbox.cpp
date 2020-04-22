@@ -30,47 +30,48 @@
 #include <qwt_plot.h>
 //--------------------------------------------------------------------------------
 #include "ui_test_GrapherBox_mainbox.h"
+#include "testdialog.hpp"
 //--------------------------------------------------------------------------------
-class MyScaleDraw : public QwtScaleDraw
-{
-public:
-    MyScaleDraw(double val)
-    {
-        divider = val;
-    }
-    virtual QwtText label(double value) const
-    {
-        return QString("%1").arg(value / divider, 0, 'f', 1);
-    }
-private:
-    double divider = 1.0;
-};
+//class MyScaleDraw : public QwtScaleDraw
+//{
+//public:
+//    MyScaleDraw(double val)
+//    {
+//        divider = val;
+//    }
+//    virtual QwtText label(double value) const
+//    {
+//        return QString("%1").arg(value / divider, 0, 'f', 1);
+//    }
+//private:
+//    double divider = 1.0;
+//};
 //--------------------------------------------
-class PlotPicker: public QwtPlotPicker
-{
-public:
-    PlotPicker(int xAxis,
-               int yAxis,
-               RubberBand rubberBand,
-               DisplayMode trackerMode,
-               double val,
-               QWidget * wgt)
-        :QwtPlotPicker(xAxis, yAxis, rubberBand, trackerMode, wgt)
-    {
-        divider = val;
-    }
+//class PlotPicker: public QwtPlotPicker
+//{
+//public:
+//    PlotPicker(int xAxis,
+//               int yAxis,
+//               RubberBand rubberBand,
+//               DisplayMode trackerMode,
+//               double val,
+//               QWidget * wgt)
+//        :QwtPlotPicker(xAxis, yAxis, rubberBand, trackerMode, wgt)
+//    {
+//        divider = val;
+//    }
 
-    QwtText trackerText(const QPoint &point) const
-    {
-        QwtText text;
-        text.setText(QString("%1:%2")
-                     .arg(invTransform(point).x() / divider)
-                     .arg(invTransform(point).y()));
-        return text;
-    }
-private:
-    double divider = 1.0;
-};
+//    QwtText trackerText(const QPoint &point) const
+//    {
+//        QwtText text;
+//        text.setText(QString("%1:%2")
+//                     .arg(invTransform(point).x() / divider)
+//                     .arg(invTransform(point).y()));
+//        return text;
+//    }
+//private:
+//    double divider = 1.0;
+//};
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
@@ -250,6 +251,8 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",                 &MainBox::test });
+    commands.append({ id++, "test load",            &MainBox::test_load });
+    commands.append({ id++, "test save",            &MainBox::test_save });
     commands.append({ id++, "test_sinus",           &MainBox::test0 });
     commands.append({ id++, "test_single_sinus",    &MainBox::test1 });
     commands.append({ id++, "test_random_data",     &MainBox::test2 });
@@ -305,6 +308,19 @@ void MainBox::choice_test(void)
 void MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 0
+    QByteArray ba;
+    QDataStream out(&ba, QIODevice::WriteOnly);
+
+    out << static_cast<float>(1.234);
+    out << static_cast<qreal>(1.234);
+    emit info(QString("F %1").arg(sizeof(float)));
+    emit info(QString("D %1").arg(sizeof(double)));
+    emit info(QString("size %1").arg(ba.size()));
+#endif
+
+#if 0
     emit info(QString("cnt curves %1").arg(grapher_widget->get_curves_count()));
 
     int cnt = 0;
@@ -321,6 +337,66 @@ void MainBox::test(void)
         else
             return;
     }
+#endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_load(void)
+{
+    QByteArray ba = load_bytearray("test_data");
+    emit info(QString("%1").arg(ba.size()));
+
+    int temp = static_cast<int>(ba.size()) % static_cast<int>(sizeof(qreal));
+    if(temp != 0)
+    {
+        emit error("bad array");
+        return;
+    }
+
+    QDataStream in(ba);
+    qreal data;
+    int size = static_cast<int>(ba.size()) / static_cast<int>(sizeof(qreal));
+    int offset = 0;
+    grapher_widget->get_curve_data_count(0, &offset);
+    for(int n=0; n<size; n++)
+    {
+        in >> data;
+        grapher_widget->add_curve_data(0, offset + n, data);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_save(void)
+{
+    int cnt = 0;
+    bool ok = grapher_widget->get_curve_data_count(0, &cnt);
+    if(ok)
+    {
+        emit info(QString("cnt %1").arg(cnt));
+        if(cnt <= 0)
+        {
+            emit error(QString("cnt == %1").arg(cnt));
+            return;
+        }
+
+        QByteArray ba;
+        qreal temp;
+        QDataStream out(&ba, QIODevice::WriteOnly);
+        for(int n=0; n<cnt; n++)
+        {
+            ok = grapher_widget->get_curve_data(0, n, &temp);
+            if(ok == false)
+            {
+                emit error("get_curve_data return false");
+                return;
+            }
+            out << temp;
+        }
+        save_bytearray("test_data", ba);
+        emit error(QString("ba size %1").arg(ba.length()));
+    }
+    else
+    {
+        emit error("FAIL");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test0(void)
@@ -333,32 +409,34 @@ void MainBox::test0(void)
 //--------------------------------------------------------------------------------
 void MainBox::test1(void)
 {
-    int index = 0;
-    bool ok = false;
-    index = QInputDialog::getInt(this,
-                                 tr("Curves"),
-                                 tr("Index:"), 0, 0, grapher_widget->get_curves_count()-1, 1, &ok);
-    if (ok)
+    TestDialog *dlg = new TestDialog(grapher_widget->get_curves_count()-1,
+                                     1000);
+    int res = dlg->exec();
+    if(res != QDialog::Accepted)
     {
-        block_interface(true);
-        grapher_widget->test_single_sinus(index);
-        block_interface(false);
+        return;
     }
+
+    block_interface(true);
+    grapher_widget->test_single_sinus(dlg->get_index(),
+                                      dlg->get_offset());
+    block_interface(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test2(void)
 {
-    int index = 0;
-    bool ok = false;
-    index = QInputDialog::getInt(this,
-                                 tr("Curves"),
-                                 tr("Index:"), 0, 0, grapher_widget->get_curves_count()-1, 1, &ok);
-    if (ok)
+    TestDialog *dlg = new TestDialog(grapher_widget->get_curves_count()-1,
+                                     1000);
+    int res = dlg->exec();
+    if(res != QDialog::Accepted)
     {
-        block_interface(true);
-        grapher_widget->test_random_data(index);
-        block_interface(false);
+        return;
     }
+
+    block_interface(true);
+    grapher_widget->test_random_data(dlg->get_index(),
+                                      dlg->get_offset());
+    block_interface(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test3(void)

@@ -26,6 +26,8 @@ DEFINES += PROGRAMM_IN_UTF8
 
 #DEFINES += ONE_CURVE
 
+DEFINES += SAVE_INI
+
 HEADERS += \
     test_GrapherBox_mainbox.hpp \
     defines.hpp \
@@ -54,6 +56,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/icons/digits.pri)
+
+include (src/testdialog/testdialog.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

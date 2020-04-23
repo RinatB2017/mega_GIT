@@ -355,12 +355,13 @@ void MainBox::test_load(void)
     QDataStream in(ba);
     qreal data;
     int size = static_cast<int>(ba.size()) / static_cast<int>(sizeof(qreal));
-    int offset = 0;
-    grapher_widget->get_curve_data_count(0, &offset);
+//    int offset = 0;
+//    grapher_widget->get_curve_data_count(0, &offset);
     for(int n=0; n<size; n++)
     {
         in >> data;
-        grapher_widget->add_curve_data(0, offset + n, data);
+        grapher_widget->add_curve_data(0, data);
+//        grapher_widget->add_curve_data(0, offset + n, data);
     }
 }
 //--------------------------------------------------------------------------------

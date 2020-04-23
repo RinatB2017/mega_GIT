@@ -92,6 +92,9 @@ void MainBox::init(void)
 
     connect(ui->btn_load,               &QPushButton::clicked,  this,   &MainBox::onLoad);
 
+    connect(ui->btn_adb,                &QPushButton::clicked,  this,   &MainBox::f_adb);
+    connect(ui->btn_test,               &QPushButton::clicked,  this,   &MainBox::f_test);
+
     ui->lbl_screenshot->installEventFilter(this);
 
     foreach( QSlider* slider, findChildren< QSlider* >() )
@@ -125,6 +128,30 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
     mw->add_dock_widget("AutoClicker", "autoclicker_widget", Qt::RightDockWidgetArea, ui->autoclicker_widget);
+    //---
+
+    //---
+    QStringList sl_commands;
+    sl_commands << "KEYCODE_POWER"
+                << "KEYCODE_ZOOM_OUT"
+                << "KEYCODE_ZOOM_IN"
+                << "KEYCODE_VOLUME_MUTE"
+                << "KEYCODE_A"
+                << "KEYCODE_B"
+                << "KEYCODE_C"
+                << "KEYCODE_D"
+                << "KEYCODE_E"
+                << "KEYCODE_F"
+                << "KEYCODE_APP_SWITCH"
+                << "FLAG_SOFT_KEYBOARD"
+                << "KEYCODE_ASSIST"
+                << "KEYCODE_CALCULATOR"
+                << "KEYCODE_DPAD_RIGHT"
+                << "KEYCODE_WAKEUP";
+
+    ui->cb_commands->addItems(sl_commands);
+    ui->btn_adb->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    connect(this,   &MainBox::r_programm,   this,   &MainBox::run_program);
     //---
 
     connect(ui->spHueFrom,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHueFrom,          &QSlider::setValue);
@@ -216,16 +243,7 @@ void MainBox::run_program(const QString program,
         return;
     }
 
-#if 1
-    QString temp;
-    foreach (QString str, arguments)
-    {
-        temp.append(str);
-        temp.append(" ");
-    }
-    emit debug(temp);
-#endif
-
+    f_busy = true;
     myProcess->start(program, arguments);
 }
 //--------------------------------------------------------------------------------
@@ -243,7 +261,9 @@ void MainBox::readData(void)
             QString line = lines.at(n);
             if(line.contains("List of devices attached") == false)
             {
+                emit debug(QString("line [%1]").arg(line));
                 QString temp = line.remove("\t").remove("device").trimmed();
+                emit debug(QString("temp [%1]").arg(temp));
                 if(temp.isEmpty() == false)
                 {
                     sl_data.append(temp);
@@ -380,7 +400,6 @@ bool MainBox::f_get_screeshot(void)
     arguments << "screencap";
     arguments << "-p";
 
-    f_busy = true;
     run_program(program, arguments);
     while(f_busy)
     {
@@ -404,7 +423,6 @@ bool MainBox::f_get_file_screeshot(void)
     arguments << "pull";
     arguments << "/sdcard/screencap.png";
 
-    f_busy = true;
     run_program(program, arguments);
     while(f_busy)
     {
@@ -438,7 +456,6 @@ bool MainBox::f_tap(int pos_x, int pos_y)
     arguments << QString("%1").arg(pos_x);
     arguments << QString("%1").arg(pos_y);
 
-    f_busy = true;
     run_program(program, arguments);
     while(f_busy)
     {
@@ -473,7 +490,6 @@ bool MainBox::f_swipe(int x1, int y1, int x2, int y2, int delay)
     arguments << QString("%1").arg(y2);
     arguments << QString("%1").arg(delay);
 
-    f_busy = true;
     run_program(program, arguments);
     while(f_busy)
     {
@@ -520,6 +536,42 @@ bool MainBox::f_test_swipe_DU(void)
                    s_width / 2,
                    10,
                    100);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_adb(void)
+{
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
+
+    QString program = PROG_PROCESS;
+    QStringList arguments;
+
+    // https://developer.android.com/reference/android/view/KeyEvent
+
+    arguments << "-s" << ui->cb_devices->currentText();
+    arguments << "shell";
+    arguments << "input";
+    arguments << "keyevent";
+    arguments << ui->cb_commands->currentText();
+
+    run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+    if(process_result == 0)
+    {
+        f_create_screenshot();
+    }
+    return (process_result == 0);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_test(void)
+{
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_auto_shot(bool state)

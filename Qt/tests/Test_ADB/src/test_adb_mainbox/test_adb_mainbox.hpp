@@ -53,6 +53,9 @@ public:
                      MySplashScreen *splash);
     ~MainBox();
 
+signals:
+    void r_programm(QString program, QStringList arguments);
+
 private slots:
     void choice_test(void);
     bool test(void);
@@ -112,6 +115,9 @@ private:
     bool f_test_swipe_RL(void);
     bool f_test_swipe_UD(void);
     bool f_test_swipe_DU(void);
+
+    bool f_adb(void);
+    bool f_test(void);
 
     void f_auto_shot(bool state);
 

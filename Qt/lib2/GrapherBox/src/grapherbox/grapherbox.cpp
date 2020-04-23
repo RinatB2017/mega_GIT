@@ -667,12 +667,12 @@ void GrapherBox::clear(void)
     {
         curves[n].real_data.clear();
         curves[n].view_curve->clear();
+        curves[n].pos_x = 0;
 #ifdef USE_SCALE_POINT_DATETIME
         //nothing
 #elif defined(USE_SCALE_POINT_TIME)
         //nothing
 #else
-        curves[n].pos_x = 0;
 #endif
         curves[n].plot_curve->setSamples(curves[n].view_curve);
     }
@@ -822,6 +822,7 @@ void GrapherBox::add_curve_data(int channel,
 
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
+    curves[channel].pos_x = x;
     set_horizontal_alignment(ui->btn_Horizontal->isChecked());
     set_vertical_alignment(ui->btn_Vertical->isChecked());
     updateGraphics();
@@ -850,6 +851,29 @@ bool GrapherBox::get_curve_data(int channel,
 
     QPointF temp = curves[channel].real_data.at(index);
     *data = temp.y();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::get_pos_x(int channel, long *value)
+{
+    if(curves.count() <= 0)
+    {
+        emit error(tr("curves.count() <= 0"));
+        return false;
+    }
+    if(channel >= curves.count())
+    {
+        emit error(QString(tr("channel > %1"))
+                   .arg(curves.count()));
+        return false;
+    }
+    if(curves[channel].real_data.isEmpty())
+    {
+        emit error("real_data is empty");
+        return false;
+    }
+
+    *value = curves[channel].pos_x;
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -901,12 +925,14 @@ bool GrapherBox::add_curve_data(int channel,
     qreal x = dt.toTime_t();
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
+    curves[channel].pos_x++;
 #elif defined(USE_SCALE_POINT_TIME)
     QTime time;
     time = QTime::currentTime();
     qreal x = (time.hour() * 3600) + (time.minute() * 60) + time.second();
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
+    curves[channel].pos_x++;
 #else
     curves[channel].real_data.append(QPointF(curves[channel].pos_x, data));
     curves[channel].view_curve->append(QPointF(curves[channel].pos_x, data));
@@ -958,12 +984,14 @@ bool GrapherBox::add_curve_array(int channel,
     {
         curves[channel].real_data.append(point);
         curves[channel].view_curve->append(point);
+        curves[channel].pos_x++;
     }
 #elif defined(USE_SCALE_POINT_TIME)
     foreach (QPointF point, a_points)
     {
         curves[channel].real_data.append(point);
         curves[channel].view_curve->append(point);
+        curves[channel].pos_x++;
     }
 #else
     foreach (QPointF point, a_points)
@@ -1268,6 +1296,7 @@ void GrapherBox::f_load_curves(QString filename)
         {
             curves[n].real_data.clear();
             curves[n].view_curve->clear();
+            curves[n].pos_x = 0;
         }
         QList<QStringList> str = csv->CSVRead();
         foreach (QStringList sl, str)
@@ -1291,6 +1320,7 @@ void GrapherBox::f_load_curves(QString filename)
                 {
                     curves[i].real_data.append(QPointF(x, y));
                     curves[i].view_curve->append(QPointF(x, y));
+                    curves[i].pos_x++;
                 }
 #endif
             }
@@ -1400,6 +1430,7 @@ void GrapherBox::correct(int channel,
     }
     curves[channel].view_curve->clear();
     curves[channel].view_curve->setSamples(temp.samples());
+    curves[channel].pos_x = temp.samples().count();
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
@@ -1636,6 +1667,7 @@ void GrapherBox::test_draw_circle(void)
 {
     emit info("test_draw_circle begin");
     curves[0].view_curve->clear();
+    curves[0].pos_x = 0;
 
     push_btn_Horizontal(false);
     push_btn_Vertical(false);

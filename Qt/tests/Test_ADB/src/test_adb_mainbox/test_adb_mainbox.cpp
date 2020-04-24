@@ -594,11 +594,17 @@ bool MainBox::f_adb(void)
     arguments << "keyevent";
     arguments << ui->cb_commands->currentText();
 
+    QElapsedTimer timer;
+    timer.start();
+
     run_program(program, arguments);
     while(f_busy)
     {
         QCoreApplication::processEvents();
     }
+
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+
     if(process_result == 0)
     {
         f_create_screenshot();

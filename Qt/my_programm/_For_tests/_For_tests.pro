@@ -100,10 +100,6 @@ include (src/simplewidget/simplewidget.pri)
 
 include (src/spoiler/spoiler.pri)
 
-contains(DEFINES,XXX){
-    include (src/simplewidget/simplewidget.pri)
-}
-
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

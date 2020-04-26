@@ -28,11 +28,8 @@
 #include "mywaitsplashscreen.hpp"
 //--------------------------------------------------------------------------------
 MyWaitSplashScreen::MyWaitSplashScreen(const QPixmap &pixmap,
-                                       int max_step,
-                                       QWidget *parent) :
-    QSplashScreen(parent),
-    m_progress(0),
-    current_progress(0),
+                                       int max_step) :
+    QSplashScreen(),
     max_step(max_step)
 {
     progress = new QProgressBar(this);

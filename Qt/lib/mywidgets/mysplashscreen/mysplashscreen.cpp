@@ -27,10 +27,8 @@
 #include "mysplashscreen.hpp"
 //--------------------------------------------------------------------------------
 MySplashScreen::MySplashScreen(const QPixmap &pixmap,
-                               int max_progress,
-                               QWidget *parent) :
-    QSplashScreen(parent),
-    current_progress(0),
+                               int max_progress) :
+    QSplashScreen(),
     max_progress(max_progress)
 {
     progress = new QProgressBar(this);

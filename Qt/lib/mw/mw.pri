@@ -11,6 +11,7 @@ include (syslog_dock/syslog_dock.pri)
 include (mainwindow/mainwindow.pri)
 include (aboutbox/aboutbox.pri)
 include (log_dock/log_dock.pri)
+include (findbox/findbox.pri)
 include (keeper/keeper.pri)
 include (log/log.pri)
 

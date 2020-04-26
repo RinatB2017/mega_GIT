@@ -45,6 +45,8 @@ enum LEVELS
     L_TRACE
 };
 //--------------------------------------------------------------------------------
+class FindBox;
+//--------------------------------------------------------------------------------
 class LogBox : public QFrame
 {
     Q_OBJECT
@@ -104,6 +106,9 @@ private slots:
 
     void popup(QPoint);
 
+    void find_prev(const QString &text);
+    void find_next(const QString &text);
+
 private:
     QPointer<QTextEdit> logBox;
 
@@ -130,6 +135,8 @@ private:
     QPointer<QVBoxLayout> vbox;
     QPointer<QHBoxLayout> mainbox;
 
+    QPointer<FindBox> fb;
+
     QString autosave_filename = "noname.log";
 
     QList<LOG_DATA> l_log_data;
@@ -144,7 +151,7 @@ private:
 
 protected:
     void changeEvent(QEvent *event);
-
+    void keyPressEvent(QKeyEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // LOGBOX_HPP

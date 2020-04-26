@@ -299,7 +299,17 @@ void MainBox::readJson(const QString &filename)
     val = file.readAll();
     file.close();
 
-    QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
+    QJsonParseError jerror;
+    QJsonDocument d = QJsonDocument::fromJson(val.toUtf8(), &jerror);
+    if(jerror.error != QJsonParseError::NoError)
+    {
+        emit error(jerror.errorString());
+        return;
+    }
+
+    emit info(QString("%1").arg(d[0].toObject().isEmpty() ? "empty" : "NO empty"));
+    emit info(QString("%1").arg(d[1].toObject().isEmpty() ? "empty" : "NO empty"));
+    emit info(QString("%1").arg(d[2].toObject().isEmpty() ? "empty" : "NO empty"));
 
     QJsonObject obj;
     int index = 0;
@@ -323,6 +333,24 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    emit info("test");
+    emit info("test");
+    emit info("test");
+    emit info("test");
+    emit info("test");
+#endif
+
+#if 0
+    QTextBrowser *tb = new QTextBrowser();
+    tb->setReadOnly(false);
+    tb->append("1");
+    tb->append("2");
+    tb->append("3");
+    tb->append("4");
+    tb->show();
+#endif
+
+#if 0
     Spoiler *spoiler = new Spoiler("my spoiler");
 
     auto * anyLayout = new QVBoxLayout();
@@ -333,7 +361,8 @@ bool MainBox::test(void)
 #endif
 
 #if 0
-    readJson("coins.json");
+//    readJson("coins.json");
+    readJson("test_coins.txt");
 #endif
 
 #if 0

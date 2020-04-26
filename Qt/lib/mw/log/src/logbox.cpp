@@ -31,6 +31,7 @@
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 #include "log_options.hpp"
+#include "findbox.hpp"
 #include "defines.hpp"
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
@@ -67,13 +68,27 @@ LogBox::~LogBox()
 {
     Q_CHECK_PTR(logBox);
     Q_CHECK_PTR(progressBar);
+    Q_CHECK_PTR(fb);
 
     //qDebug() << "logbox is closed!";
 
     save_settings();
 
-    logBox->deleteLater();
-    progressBar->deleteLater();
+    if(logBox)
+    {
+        logBox->disconnect();
+        logBox->deleteLater();
+    }
+    if(progressBar)
+    {
+        progressBar->disconnect();
+        progressBar->deleteLater();
+    }
+    if(fb)
+    {
+        fb->disconnect();
+        fb->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void LogBox::init(void)
@@ -181,12 +196,33 @@ void LogBox::create_widgets(void)
     vbox->addLayout(hbox);
 #endif
 
+#if 1
+    fb = new FindBox(this);
+    connect(fb, &FindBox::find_prev,    this,   &LogBox::find_prev);
+    connect(fb, &FindBox::find_next,    this,   &LogBox::find_next);
+
+    fb->hide();
+    vbox->addWidget(fb);
+
+    installEventFilter(this);
+#endif
+
     mainbox->addLayout(vbox);
 
     setLayout(mainbox);
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     //adjustSize();
+}
+//--------------------------------------------------------------------------------
+void LogBox::find_prev(const QString &text)
+{
+    logBox->find(text, QTextDocument::FindBackward);
+}
+//--------------------------------------------------------------------------------
+void LogBox::find_next(const QString &text)
+{
+    logBox->find(text);
 }
 //--------------------------------------------------------------------------------
 void LogBox::setColorLog(bool state)
@@ -642,6 +678,16 @@ void LogBox::changeEvent(QEvent *event)
 
     default:
         break;
+    }
+}
+//--------------------------------------------------------------------------------
+void LogBox::keyPressEvent(QKeyEvent *event)
+{
+    QWidget::keyPressEvent(event);
+
+    if (event->key() == Qt::Key_F && event->modifiers() == Qt::ControlModifier)
+    {
+        fb->show();
     }
 }
 //--------------------------------------------------------------------------------

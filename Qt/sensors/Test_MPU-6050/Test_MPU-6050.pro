@@ -69,13 +69,14 @@ RESOURCES += \
     ico/icons.qrc
 
 #----------------------------------------------
-LIB_PATH  = "../../../Qt/lib"
-LIB_PATH2 = "../../../Qt/lib2"
+LIB_PATH  = "$$PWD/../../../Qt/lib"
+LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 #include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
+include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

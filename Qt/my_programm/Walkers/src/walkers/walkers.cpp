@@ -67,18 +67,12 @@ void MainBox::init(void)
     createTestBar();
 
     google_walker = new Google_walker(this);
-    connect(google_walker, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(google_walker, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(google_walker, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(google_walker, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    connect_log_signals(google_walker,  this);
 
     google_walker->setUrl(QUrl("https://www.google.com/"));
 
     youtube_walker = new Youtube_walker(this);
-    connect(youtube_walker, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(youtube_walker, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(youtube_walker, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(youtube_walker, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    connect_log_signals(youtube_walker, this);
 
     youtube_walker->setUrl(QUrl("https://www.youtube.com/"));
 
@@ -97,12 +91,10 @@ void MainBox::init(void)
     for(int n=0; n<10; n++)
     {
         Youtube_walker *webView = new Youtube_walker(this);
-        connect(webView,    SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-        connect(webView,    SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-        connect(webView,    SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-        connect(webView,    SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+        connect_log_signals(webView,    this);
 
-        webView->setUrl(QUrl("https://www.youtube.com/"));
+//        webView->setUrl(QUrl("https://www.youtube.com/"));
+        webView->setUrl(QUrl("https://www.youtube.com/watch?v=puhO75x3kmg"));
         //l_views.append(webView);
 
         grid->addWidget(webView, y, x);

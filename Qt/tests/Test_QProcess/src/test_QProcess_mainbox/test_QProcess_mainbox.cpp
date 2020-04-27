@@ -254,27 +254,6 @@ void MainBox::run_command(void)
 bool MainBox::test(void)
 {
     emit info("Test()");
-
-    qreal buffers[100];
-    qreal x = 0;
-    for(int n=0; n<100; n++)
-    {
-        buffers[n] = x;
-        x += 0.01;
-    }
-
-    QByteArray ba;
-    ba.append(reinterpret_cast<char *>(&buffers), sizeof (buffers));
-    emit info(QString("%1").arg(ba.toHex().data()));
-    emit error(QString("size %1").arg(ba.count()));
-
-    qreal temp_buffers[100] = { 0 };
-    memcpy(reinterpret_cast<char *>(&temp_buffers), ba.data(), static_cast<size_t>(ba.length()));
-    for(int n=0; n<10; n++)
-    {
-        emit info(QString("%1").arg(temp_buffers[n]));
-    }
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -290,11 +269,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-
+    emit info("load_setting");
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+    emit info("save_setting");
 }
 //--------------------------------------------------------------------------------

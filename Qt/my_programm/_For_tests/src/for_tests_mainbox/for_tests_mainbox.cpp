@@ -326,6 +326,7 @@ void MainBox::readJson(const QString &filename)
 }
 //--------------------------------------------------------------------------------
 #include "spoiler.hpp"
+#include <QWebEngineView>
 
 bool MainBox::test(void)
 {
@@ -333,6 +334,26 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+//    QPointer<QWebEngineView> viewer;
+//    viewer = new QWebEngineView();
+//    viewer->setUrl(QUrl("https://www.youtube.com/watch?v=puhO75x3kmg"));
+//    viewer->show();
+
+    QTextEdit *viewer = new QTextEdit();
+    viewer->show();
+
+    QTimer::singleShot(1000, [viewer, this]{
+        emit info("send event");
+
+        //FIXME не передаётся пробел в вебэнджине почему-то
+        QKeyEvent* pressEvent   = new QKeyEvent (QEvent::KeyPress,      Qt::Key_Space, Qt::NoModifier, "A");
+        QKeyEvent* releaseEvent = new QKeyEvent (QEvent::KeyRelease,    Qt::Key_Space, Qt::NoModifier, "B");
+        QCoreApplication::sendEvent(viewer, pressEvent);
+        QCoreApplication::sendEvent(viewer, releaseEvent);
+    });
+#endif
+
+#if 0
     emit info("test");
     emit info("test");
     emit info("test");

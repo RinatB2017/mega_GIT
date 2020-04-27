@@ -29,7 +29,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_GY-652_mainbox.hpp"
+#include "test_HTU21D_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER
@@ -74,7 +74,7 @@ void Test::test_grapher(void)
     for(int n=0; n<1000; n++)
     {
         gb->get_curve_data(0, n, &x);
-        QCOMPARE((int)x, n);
+        QCOMPARE(static_cast<int>(x), n);
     }
 }
 #endif

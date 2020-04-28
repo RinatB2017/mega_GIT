@@ -77,6 +77,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class SimpleWidget;
+class QMediaPlayer;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -126,6 +127,10 @@ private:
     QPointer<SimpleWidget> sw;
     QPointer<QTimer> timer;
     int cnt = 0;
+
+    //TODO надо позже удалить
+    QPointer<QMediaPlayer> player;
+    //---
 
     void readJson(const QString &filename);
 

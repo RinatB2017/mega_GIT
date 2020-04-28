@@ -28,6 +28,12 @@ SerialWidget::SerialWidget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 SerialWidget::~SerialWidget()
 {
+    if(timer)
+    {
+        timer->stop();
+        timer->disconnect();
+        timer->deleteLater();
+    }
     if(serial5)
     {
         serial5->disconnect();
@@ -41,7 +47,7 @@ void SerialWidget::init(void)
     serial5 = new QSerialPort(this);
 
     //TODO
-    timer = new QTimer();
+    timer = new QTimer(this);
     connect(timer,  &QTimer::timeout,  this,   &SerialWidget::timer_stop);
 
     connect(serial5, &QSerialPort::readyRead,                   this,   &SerialWidget::procSerialDataReceive);

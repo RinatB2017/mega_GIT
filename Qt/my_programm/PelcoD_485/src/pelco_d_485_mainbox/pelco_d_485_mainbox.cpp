@@ -99,7 +99,7 @@ void MainBox::init(void)
     connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sl_speed,       &QSpinBox::setEnabled);
 
     //---
-    player = new QMediaPlayer;
+    player = new QMediaPlayer(this);
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
     player->setVideoOutput(ui->video_widget);
 
@@ -155,10 +155,11 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
+    Q_CHECK_PTR(testbar);
     testbar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
@@ -441,7 +442,7 @@ void MainBox::refresh(void)
 //--------------------------------------------------------------------------------
 void MainBox::pressed(void)
 {
-    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(btn)
     {
         QString str = btn->property("button").toString();
@@ -500,7 +501,7 @@ void MainBox::f_error(QMediaPlayer::Error err)
 //--------------------------------------------------------------------------------
 void MainBox::released(void)
 {
-    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(btn)
     {
         emit debug(QString("%1 released").arg(btn->property("button").toString()));

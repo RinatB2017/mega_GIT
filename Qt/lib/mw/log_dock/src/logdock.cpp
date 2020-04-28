@@ -72,12 +72,14 @@ LogDock::~LogDock()
 {
     if(le)
     {
+        le->disconnect();
         le->deleteLater();
     }
 
     if(timer)
     {
         timer->stop();
+        timer->disconnect();
         timer->deleteLater();
     }
 }

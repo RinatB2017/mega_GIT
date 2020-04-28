@@ -41,6 +41,15 @@ HelpBrowser::HelpBrowser(QString &page,
 //                                    qApp->desktop()->availableGeometry()));
 }
 //--------------------------------------------------------------------------------
+HelpBrowser::~HelpBrowser()
+{
+    if(textBrowser)
+    {
+        textBrowser->disconnect();
+        textBrowser->deleteLater();
+    }
+}
+//--------------------------------------------------------------------------------
 void HelpBrowser::updateCaption(QUrl)
 { 
     setCaption(textBrowser->documentTitle());

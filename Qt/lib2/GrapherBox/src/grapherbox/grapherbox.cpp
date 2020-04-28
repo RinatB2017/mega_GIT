@@ -181,6 +181,8 @@ bool GrapherBox::set_curve_color(int channel, QColor color)
 void GrapherBox::set_curve_symbol(int channel,
                                   QwtSymbol *symbol)
 {
+    Q_CHECK_PTR(symbol);
+
     if(channel < 0)
     {
         emit error("channel < 0");
@@ -235,6 +237,8 @@ void GrapherBox::set_curve_attribute(int channel,
 void GrapherBox::set_curve_fitter(int channel,
                                   QwtSplineCurveFitter *fitter)
 {
+    Q_CHECK_PTR(fitter);
+
     if(channel < 0)
     {
         emit error("channel < 0");
@@ -730,6 +734,7 @@ void GrapherBox::clear_d_picker(void)
 //--------------------------------------------------------------------------------
 void GrapherBox::set_d_picker(QwtPlotPicker *picker)
 {
+    Q_CHECK_PTR(picker);
     d_picker = picker;
 }
 //--------------------------------------------------------------------------------
@@ -798,6 +803,8 @@ void GrapherBox::init()
 //--------------------------------------------------------------------------------
 void GrapherBox::add_curve_data_points(int channel, QVector<QPointF> *points)
 {
+    Q_CHECK_PTR(points);
+
     curves[channel].real_data = *points;
     curves.at(channel).view_curve->setSamples(*points);
     updateGraphics();
@@ -1208,7 +1215,7 @@ void GrapherBox::options(void)
 //--------------------------------------------------------------------------------
 void GrapherBox::load_curves(void)
 {
-    MyFileDialog *dlg;
+    QPointer<MyFileDialog> dlg;
 
     dlg = new MyFileDialog("dlg_grapherbox", "dlg_grapherbox");
     dlg->setNameFilter(tr("CSV files (*.csv)"));
@@ -1257,7 +1264,7 @@ void GrapherBox::save_curves(void)
     }
 
     //записываем файл
-    MyFileDialog *dlg;
+    QPointer<MyFileDialog> dlg;
 
     dlg = new MyFileDialog("dlg_grapherbox", "dlg_grapherbox");
     dlg->setAcceptMode(QFileDialog::AcceptSave);

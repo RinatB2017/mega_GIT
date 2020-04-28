@@ -475,7 +475,7 @@ void MainWindow::setMenuLanguage(void)
 void MainWindow::setToolBarLanguage(void)
 {
 #ifndef ONLY_ENGLISH
-    QToolButton* button = dynamic_cast<QToolButton*>(sender());
+    QToolButton* button = reinterpret_cast<QToolButton*>(sender());
     Q_CHECK_PTR(button);
 
     if(!button)
@@ -514,7 +514,7 @@ void MainWindow::alwaysOnTop(bool state)
 {
     flag_always_on_top = state;
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         if(state)
@@ -578,7 +578,7 @@ void MainWindow::setStyles(void)
 //--------------------------------------------------------------------------------
 void MainWindow::setToolBarStyles(void)
 {
-    QPushButton *button = dynamic_cast<QPushButton*>(sender());
+    QPushButton *button = reinterpret_cast<QPushButton*>(sender());
     Q_CHECK_PTR(button);
 
     if(!button)

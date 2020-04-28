@@ -54,7 +54,7 @@ Dock_position::~Dock_position()
 //--------------------------------------------------------------------------------
 void Dock_position::move_up(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
@@ -67,7 +67,7 @@ void Dock_position::move_up(void)
 //--------------------------------------------------------------------------------
 void Dock_position::move_down(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
@@ -80,7 +80,7 @@ void Dock_position::move_down(void)
 //--------------------------------------------------------------------------------
 void Dock_position::move_left(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
@@ -93,7 +93,7 @@ void Dock_position::move_left(void)
 //--------------------------------------------------------------------------------
 void Dock_position::move_right(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);

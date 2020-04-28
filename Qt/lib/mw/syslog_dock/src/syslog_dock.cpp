@@ -260,7 +260,7 @@ void SysLog_dock::click(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    QToolButton *btn = dynamic_cast<QToolButton *>(sender());
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     Q_CHECK_PTR(btn);
 
     emit info(QString("%1").arg(btn->property("value").toInt()));

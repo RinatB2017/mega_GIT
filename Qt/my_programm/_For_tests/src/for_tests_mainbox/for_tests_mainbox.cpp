@@ -64,6 +64,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+#include <QMediaPlayer>
 void MainBox::init(void)
 {
     createTestBar();
@@ -98,6 +99,11 @@ void MainBox::init(void)
 
     //TODO xxx
     ui->btn_ok->setProperty("xxx", 1);
+
+    //TODO надо позже удалить
+    player = new QMediaPlayer();
+    player->setVideoOutput(ui->video_widget);
+    //
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
@@ -257,6 +263,7 @@ void MainBox::print_mp(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MainBox::load_property(QWidget *widget, const QString &property_name)
 {
+    Q_CHECK_PTR(widget);
     QVariant v = widget->property(property_name.toLocal8Bit());
     if(v.isValid() == false)
     {
@@ -268,6 +275,7 @@ bool MainBox::load_property(QWidget *widget, const QString &property_name)
 //--------------------------------------------------------------------------------
 bool MainBox::save_property(QWidget *widget, const QString &property_name, QVariant value)
 {
+    Q_CHECK_PTR(widget);
     return widget->setProperty(property_name.toLocal8Bit(), value);
 }
 //--------------------------------------------------------------------------------
@@ -334,6 +342,11 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    int x = -5;
+    Q_ASSERT(x > 0);
+#endif
+
+#if 0
 //    QPointer<QWebEngineView> viewer;
 //    viewer = new QWebEngineView();
 //    viewer->setUrl(QUrl("https://www.youtube.com/watch?v=puhO75x3kmg"));

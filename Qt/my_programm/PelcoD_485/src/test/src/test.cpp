@@ -34,7 +34,7 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    mw = reinterpret_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------

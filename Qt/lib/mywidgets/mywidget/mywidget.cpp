@@ -60,7 +60,7 @@ MyWidget::MyWidget(QWidget *parent) :
 MyWidget::~MyWidget()
 {
 #ifdef QT_DEBUG
-    qDebug() << "~MyWidget()";
+    qDebug() << "~MyWidget()" << objectName();
 #endif
     if(settings)
     {
@@ -148,6 +148,9 @@ void MyWidget::connect_log(QWidget *parent)
 //--------------------------------------------------------------------------------
 bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
 {
+    Q_CHECK_PTR(src);
+    Q_CHECK_PTR(dest);
+
     if(src == nullptr)  return false;
     if(dest == nullptr)  return false;
 
@@ -215,6 +218,7 @@ void MyWidget::init_w_lists(void)
 //--------------------------------------------------------------------------------
 void MyWidget::add_widget_to_w_lists(QWidget *widget)
 {
+    Q_CHECK_PTR(widget);
     w_lists.append(widget);
 }
 //--------------------------------------------------------------------------------
@@ -397,6 +401,7 @@ bool MyWidget::is_my_widget(QString o_name)
 //--------------------------------------------------------------------------------
 bool MyWidget::compare_name(const char *widget_name, QString class_name)
 {
+    Q_CHECK_PTR(widget_name);
     int re = strncmp(widget_name,
                      class_name.toLocal8Bit(),
                      static_cast<size_t>(class_name.count()));
@@ -405,6 +410,7 @@ bool MyWidget::compare_name(const char *widget_name, QString class_name)
 //--------------------------------------------------------------------------------
 bool MyWidget::load_combobox_property(QWidget *widget)
 {
+    Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
         bool isEditable = settings->value("isEditable").toBool();
@@ -426,6 +432,7 @@ bool MyWidget::load_combobox_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MyWidget::save_combobox_property(QWidget *widget)
 {
+    Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
         bool isEditable = static_cast<QComboBox *>(widget)->isEditable();
@@ -449,6 +456,7 @@ bool MyWidget::save_combobox_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MyWidget::load_splitter_property(QWidget *widget)
 {
+    Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QSplitter"))
     {
         QString o_name = widget->objectName();
@@ -467,6 +475,7 @@ bool MyWidget::load_splitter_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MyWidget::save_splitter_property(QWidget *widget)
 {
+    Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QSplitter"))
     {
         QString o_name = widget->objectName();
@@ -485,6 +494,7 @@ bool MyWidget::save_splitter_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MyWidget::load_property(QWidget *widget, const QString &property_name)
 {
+    Q_CHECK_PTR(widget);
     QVariant property = settings->value(property_name);
     if(property.isValid() == false)
     {
@@ -495,6 +505,7 @@ bool MyWidget::load_property(QWidget *widget, const QString &property_name)
 //--------------------------------------------------------------------------------
 bool MyWidget::save_property(QWidget *widget, const QString &property_name)
 {
+    Q_CHECK_PTR(widget);
     QVariant property = widget->property(property_name.toLocal8Bit());
     if(property.isValid() == false)
     {
@@ -506,6 +517,8 @@ bool MyWidget::save_property(QWidget *widget, const QString &property_name)
 //--------------------------------------------------------------------------------
 QString MyWidget::get_full_objectName(QWidget *widget)
 {
+    Q_CHECK_PTR(widget);
+
     QStringList sl;
     QWidget *temp = static_cast<QWidget *>(widget);
     do {
@@ -532,7 +545,7 @@ QString MyWidget::get_full_objectName(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MyWidget::load_widgets(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         mw->load_setting();
@@ -574,11 +587,11 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-    //    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    //    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     //    Q_CHECK_PTR(mw);
 
 #ifdef USE_TOPLEVELWIDGETS
-    //    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    //    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     //    Q_CHECK_PTR(mw);
     //    QList<QWidget *> widgets =  mw->findChildren<QWidget *>();
     QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
@@ -589,6 +602,7 @@ void MyWidget::save_widgets(void)
 
     foreach(QWidget *widget, widgets)
     {
+        Q_CHECK_PTR(widget);
         if(is_my_widget(widget->objectName()))
         {
             if(widget->property(NO_SAVE).toBool() == true)
@@ -966,8 +980,6 @@ void MyWidget::save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data)
     settings->endGroup();
 }
 //--------------------------------------------------------------------------------
-#include <QStringList>
-#include <QPainter>
 bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
 {
     Q_CHECK_PTR(w_left);
@@ -1036,7 +1048,7 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void MyWidget::check_tooltips(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
     QList<QAbstractButton *> l_obj = mw->findChildren<QAbstractButton *>();

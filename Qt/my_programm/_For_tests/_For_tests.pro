@@ -14,6 +14,7 @@ INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
 QT  += webenginewidgets
+QT  += multimediawidgets
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE

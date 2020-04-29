@@ -138,6 +138,9 @@ public:
     QByteArray load_bytearray(QString name);
     void save_bytearray(QString name, QByteArray value);
 
+    QStringList load_stringlist(QString name);
+    void save_stringlist(QString name, QStringList value);
+
     QVariant load_value(QString name);
     void save_value(QString name, QVariant value);
 

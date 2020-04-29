@@ -334,7 +334,7 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
-#if 1
+#if 0
     widget.reset(new QSpinBox());
     widget->setValue(5);
     widget->show();
@@ -374,8 +374,8 @@ bool MainBox::test(void)
 #endif
 
 #if 0
-//    readJson("coins.json");
-    readJson("test_coins.txt");
+    readJson("coins.json");
+//    readJson("test_coins.txt");
 #endif
 
 #if 0

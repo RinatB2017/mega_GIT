@@ -672,6 +672,32 @@ void MyWidget::save_bytearray(QString name, QByteArray value)
     }
 }
 //--------------------------------------------------------------------------------
+QStringList MyWidget::load_stringlist(QString name)
+{
+    QStringList sl;
+    if(settings)
+    {
+        sl = settings->value(name).toStringList();
+    }
+    else
+    {
+        qDebug() << "### load_stringlist ###";
+    }
+    return sl;
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_stringlist(QString name, QStringList value)
+{
+    if(settings)
+    {
+        settings->setValue(name, value);
+    }
+    else
+    {
+        qDebug() << "### save_stringlist ###";
+    }
+}
+//--------------------------------------------------------------------------------
 QVariant MyWidget::load_value(QString name)
 {
     return settings->value(name);

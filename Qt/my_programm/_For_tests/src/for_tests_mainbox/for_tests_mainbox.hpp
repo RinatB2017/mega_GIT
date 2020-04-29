@@ -124,13 +124,11 @@ private:
     Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
-    QPointer<SimpleWidget> sw;
     QPointer<QTimer> timer;
     int cnt = 0;
 
-    //TODO надо позже удалить
-    QPointer<QMediaPlayer> player;
-    //---
+    QScopedPointer<SimpleWidget> sw;
+    QScopedPointer<QSpinBox> widget;
 
     void readJson(const QString &filename);
 

@@ -64,7 +64,6 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-#include <QMediaPlayer>
 void MainBox::init(void)
 {
     createTestBar();
@@ -92,18 +91,13 @@ void MainBox::init(void)
     load_widgets();
 
 #if 1
-    sw = new SimpleWidget();
-    //sw->setProperty("windowTitle", "XXX");
+    sw.reset(new SimpleWidget);
+    sw->setProperty("windowTitle", "XXX");
     sw->show();
 #endif
 
     //TODO xxx
     ui->btn_ok->setProperty("xxx", 1);
-
-    //TODO надо позже удалить
-    player = new QMediaPlayer();
-    player->setVideoOutput(ui->video_widget);
-    //
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
@@ -333,7 +327,6 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
-#include "spoiler.hpp"
 #include <QWebEngineView>
 
 bool MainBox::test(void)
@@ -342,6 +335,12 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    widget.reset(new QSpinBox());
+    widget->setValue(5);
+    widget->show();
+#endif
+
+#if 0
     int x = -5;
     Q_ASSERT(x > 0);
 #endif
@@ -375,55 +374,8 @@ bool MainBox::test(void)
 #endif
 
 #if 0
-    QTextBrowser *tb = new QTextBrowser();
-    tb->setReadOnly(false);
-    tb->append("1");
-    tb->append("2");
-    tb->append("3");
-    tb->append("4");
-    tb->show();
-#endif
-
-#if 0
-    Spoiler *spoiler = new Spoiler("my spoiler");
-
-    auto * anyLayout = new QVBoxLayout();
-    anyLayout->addWidget(new QPushButton());
-    spoiler->setContentLayout(*anyLayout);
-
-    spoiler->show();
-#endif
-
-#if 0
 //    readJson("coins.json");
     readJson("test_coins.txt");
-#endif
-
-#if 0
-    QString src_str = "{\"symbol\":\"ETHBTC\",\"price\":\"0.02547300\"}";
-    QString temp = src_str.remove("{").remove("}").remove("\"").replace(":", "|").replace(",", "|");
-    emit info(temp);
-#endif
-
-#if 0
-    QString temp = "RQ3004ZJKU      device";
-
-    emit info(QString("[%1]").arg(temp.remove("\t").remove("device").trimmed()));
-#endif
-
-#if 0
-    sw->setProperty("x_value", 10);
-
-    bool ok = false;
-    int x = sw->property("x_value").toInt(&ok);
-    if(ok)
-    {
-        emit info(QString("x_value %1").arg(x));
-    }
-    else
-    {
-        emit error("bad name");
-    }
 #endif
 
 #if 0

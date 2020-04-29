@@ -51,8 +51,7 @@ MainBox::~MainBox()
 
     if(player)
     {
-        player->disconnect();
-        player->deleteLater();
+        delete player;
     }
 
     delete ui;

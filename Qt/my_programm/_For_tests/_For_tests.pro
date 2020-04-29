@@ -14,7 +14,6 @@ INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
 QT  += webenginewidgets
-QT  += multimediawidgets
 
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
@@ -101,7 +100,7 @@ include (src/simple_mw/simple_mw.pri)
 #include (src/test_widgets/widgets.pri)
 include (src/simplewidget/simplewidget.pri)
 
-include (src/spoiler/spoiler.pri)
+#include (src/spoiler/spoiler.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -58,8 +58,9 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 #----------------------------------------------
-CONFIG  += use_worker
+#CONFIG  += use_worker
 use_worker {
+#    DEFINES += FAKE
     include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
 #    include (src/serialwidget_fake/serialwidget_fake.pri)
     include (src/worker_fake/worker_fake.pri)

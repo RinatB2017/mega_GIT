@@ -55,9 +55,6 @@ void Test::check_serial_1(void)
     QSignalSpy spy(sb1, SIGNAL(output(QByteArray)));
     QCOMPARE(spy.isValid(), true); // signal exists
 
-    QSignalSpy spy2(sb1, SIGNAL(not_working()));
-    QCOMPARE(spy2.isValid(), true); // signal exists
-
     QCOMPARE(sb1->input(QString("test1")),  SerialBox5::E_NO_ERROR);
     QTest::qWait(1000);
 
@@ -82,9 +79,6 @@ void Test::check_serial_2(void)
 
     QSignalSpy spy(sb2, SIGNAL(output(QByteArray)));
     QCOMPARE(spy.isValid(), true); // signal exists
-
-    QSignalSpy spy2(sb2, SIGNAL(not_working()));
-    QCOMPARE(spy2.isValid(), true); // signal exists
 
     QCOMPARE(sb2->input(QString("test2")),  SerialBox5::E_NO_ERROR);
     QTest::qWait(1000);

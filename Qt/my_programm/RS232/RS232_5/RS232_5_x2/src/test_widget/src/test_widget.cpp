@@ -34,13 +34,7 @@ void TestWidget::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &TestWidget::test_0 });
-    commands.append({ id++, "test 1", &TestWidget::test_1 });
-    commands.append({ id++, "test 2", &TestWidget::test_2 });
-    commands.append({ id++, "test 3", &TestWidget::test_3 });
-    commands.append({ id++, "test 4", &TestWidget::test_4 });
-    commands.append({ id++, "test 5", &TestWidget::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &TestWidget::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -104,47 +98,10 @@ void TestWidget::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool TestWidget::test_0(void)
+bool TestWidget::test(void)
 {
     emit trace(Q_FUNC_INFO);
-    emit info("Test_0()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool TestWidget::test_1(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_1()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool TestWidget::test_2(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_2()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool TestWidget::test_3(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool TestWidget::test_4(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_4()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool TestWidget::test_5(void)
-{
-    emit trace(Q_FUNC_INFO);
-    emit info("Test_5()");
+    emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------

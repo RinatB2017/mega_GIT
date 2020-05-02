@@ -36,7 +36,7 @@ Simple_PTZ_widget::~Simple_PTZ_widget()
     save_widgets();
     if(player)
     {
-        player->deleteLater();
+        delete player;
     }
     delete ui;
 }

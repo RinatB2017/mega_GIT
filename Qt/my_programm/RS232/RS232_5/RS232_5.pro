@@ -9,5 +9,4 @@ SUBDIRS += \
     RS232_5 \
     RS232_5_x2 \
     RS232_5_bridge \
-    RS232_5_echo \
-	RS232_5_test
+    RS232_5_echo

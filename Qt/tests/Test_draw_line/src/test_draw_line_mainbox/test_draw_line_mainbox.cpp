@@ -44,7 +44,6 @@ MainBox::~MainBox()
 {
     save_widgets();
 
-    serialBox->deleteLater();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -107,14 +106,8 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 void MainBox::createSerialBox(void)
 {
-    serialBox = new SerialBox5(this, "RS232");
-    serialBox->add_menu(2);
-
-    ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
-
-    connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
-    connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
@@ -125,16 +118,16 @@ void MainBox::test(void)
     packet.body_t.header.cmd = CMD_0x01;
     packet.body_t.header.len = sizeof(packet.body_t.data_t);
 
-    packet.body_t.data_t.len_line = ui->sb_len_line->value();
-    packet.body_t.data_t.len_pause = ui->sb_len_pause->value();
-    packet.body_t.data_t.delay_ms = ui->sb_delay_ms->value();
-    packet.body_t.data_t.brightness_R = color_R;
-    packet.body_t.data_t.brightness_G = color_G;
-    packet.body_t.data_t.brightness_B = color_B;
+    packet.body_t.data_t.len_line  = static_cast<uint16_t>(ui->sb_len_line->value());
+    packet.body_t.data_t.len_pause = static_cast<uint16_t>(ui->sb_len_pause->value());
+    packet.body_t.data_t.delay_ms  = static_cast<uint16_t>(ui->sb_delay_ms->value());
+    packet.body_t.data_t.brightness_R = static_cast<uint8_t>(color_R);
+    packet.body_t.data_t.brightness_G = static_cast<uint8_t>(color_G);
+    packet.body_t.data_t.brightness_B = static_cast<uint8_t>(color_B);
 
     QByteArray ba;
     ba.clear();
-    ba.append((char *)&packet.buf, sizeof(packet));
+    ba.append(reinterpret_cast<char *>(&packet.buf), sizeof(packet));
     emit debug(ba.toHex());
 
     QString send_packet = QString(":%1\n")
@@ -287,13 +280,13 @@ uint8_t MainBox::convert_ascii_to_value(char hi, char lo)
         break;
     }
     //---
-    uint8_t r_byte = (b_hi << 4) | b_lo;
+    uint8_t r_byte = static_cast<uint8_t>((b_hi << 4) | b_lo);
     return r_byte;
 }
 //--------------------------------------------------------------------------------
 void MainBox::block_this_button(bool state)
 {
-    QObject *btn = (QObject *)sender();
+    QObject *btn = reinterpret_cast<QObject *>(sender());
     if(!btn) return;
 
     if (QPushButton *pb=qobject_cast<QPushButton *>(btn))

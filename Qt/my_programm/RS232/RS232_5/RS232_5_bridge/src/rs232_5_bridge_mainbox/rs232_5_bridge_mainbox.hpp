@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -30,8 +34,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
 class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -45,6 +47,7 @@ public:
 
 private slots:
     void test(void);
+    void serial_log(const QByteArray &data);
 
 private:
     QPointer<MySplashScreen> splash;

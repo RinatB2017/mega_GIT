@@ -59,6 +59,8 @@ void SerialWidget::init(void)
     connect(this,           &SerialWidget::port_open,       worker_fake,    &Worker_fake::port_open);
     connect(this,           &SerialWidget::port_close,      worker_fake,    &Worker_fake::port_close);
 
+    connect(this,   &SerialWidget::port_is_active,  worker_fake,    &Worker_fake::setEnabled);
+
     worker_fake->show();
 }
 //--------------------------------------------------------------------------------

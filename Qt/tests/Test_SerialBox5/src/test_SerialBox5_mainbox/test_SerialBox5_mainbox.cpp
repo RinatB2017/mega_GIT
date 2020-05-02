@@ -57,6 +57,7 @@ void MainBox::init(void)
     load_widgets();
 
     //---
+#ifdef FAKE
     QTimer::singleShot(0, [this]{
         MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
         if(mw)
@@ -73,6 +74,7 @@ void MainBox::init(void)
             }
         }
     });
+#endif
     //---
 }
 //--------------------------------------------------------------------------------

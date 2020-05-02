@@ -47,11 +47,11 @@ QCandlestickSet *CandlestickDataReader::readCandlestickSet()
 {
     QString line = readLine();
     if (line.startsWith("#") || line.isEmpty())
-        return 0;
+        return nullptr;
 
     QStringList strList = line.split(" ", QString::SkipEmptyParts);
     if (strList.count() != 5)
-        return 0;
+        return nullptr;
 
     const qreal timestamp = strList.at(0).toDouble();
     const qreal open = strList.at(1).toDouble();

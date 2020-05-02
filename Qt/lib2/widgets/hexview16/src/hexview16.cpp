@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "hexview16.hpp"
 //--------------------------------------------------------------------------------
 HexView16::HexView16(QWidget *parent) :
@@ -34,8 +28,8 @@ HexView16::HexView16(QWidget *parent) :
 //--------------------------------------------------------------------------------
 HexView16::~HexView16()
 {
-    if(model)   model->deleteLater();
     if(tv)      tv->deleteLater();
+    if(model)   model->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void HexView16::init(void)
@@ -51,14 +45,14 @@ void HexView16::init(void)
         v_sl.append(QString("%1").arg(n, 4, 16, QChar('0')).toUpper());
     }
 
-    model = new QStandardItemModel();
+    model = new QStandardItemModel(this);
     model->setHorizontalHeaderLabels(h_sl);
     model->setVerticalHeaderLabels(v_sl);
 
     int index = 0;
-    for(int row=0; row<0x1000; row++)
+    for(int row=0; row<MAX_ROW; row++)
     {
-        for (int col=0; col<0x10; col++)
+        for (int col=0; col<MAX_COL; col++)
         {
             items[index] = new QStandardItem("0000");
             model->setItem(row, col, items[index]);
@@ -66,7 +60,7 @@ void HexView16::init(void)
         }
     }
 
-    tv = new QTableView;
+    tv = new QTableView(this);
     tv->setModel(model);
 
     //костыль, но работает :)
@@ -84,33 +78,25 @@ void HexView16::init(void)
     QFont font("Courier", 10);
     tv->setFont(font);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->setMargin(0);
     vbox->setSpacing(0);
     vbox->addWidget(tv);
     setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
-void HexView16::test(void)
-{
-    tv->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    tv->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-}
-//--------------------------------------------------------------------------------
-void HexView16::test2(void)
-{
-    tv->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    tv->verticalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-}
-//--------------------------------------------------------------------------------
 void HexView16::set(uint16_t address, uint16_t value)
 {
+    if(address >= 0xFFFF)   return;
+
     buf[address] = value;
     items[address]->setText(QString("%1").arg(value, 4, 16, QChar('0')).toUpper());
 }
 //--------------------------------------------------------------------------------
 uint16_t HexView16::get(uint16_t address)
 {
+    if(address >= 0xFFFF)   return 0;
+
     return buf[address];
 }
 //--------------------------------------------------------------------------------

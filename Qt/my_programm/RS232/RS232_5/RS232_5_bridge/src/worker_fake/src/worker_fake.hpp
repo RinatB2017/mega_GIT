@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                      **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,25 +18,43 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef WORKER_FAKE_HPP
+#define WORKER_FAKE_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
-#include <QTest>
+#include <QWidget>
 //--------------------------------------------------------------------------------
-class MainWindow;
+namespace Ui {
+    class Worker_fake;
+}
 //--------------------------------------------------------------------------------
-class Test : public QObject {
+class Worker_fake : public QWidget
+{
     Q_OBJECT
 
-public:
-    Test();
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
 
-private slots:
-    void check_serial(void);
+    void output(QByteArray text);
+    void readyRead(void);
+
+public:
+    explicit Worker_fake(QWidget *parent = nullptr);
+    ~Worker_fake();
+
+    void input(QByteArray data);
+    void port_open(void);
+    void port_close(void);
 
 private:
-    MainWindow *mw;
+    Ui::Worker_fake *ui;
+
+    void init(void);
+
+    void send_hex(void);
+    void send_text(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // Worker_fake_HPP

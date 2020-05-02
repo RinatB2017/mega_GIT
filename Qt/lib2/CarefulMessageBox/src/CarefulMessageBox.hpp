@@ -31,9 +31,9 @@ class CarefulMessageBox : public QDialog
 {
     Q_OBJECT
 public:
-    CarefulMessageBox(const QString &caption,
-                      const QString &message,
-                      QWidget *parent = nullptr);
+    explicit CarefulMessageBox(const QString &caption,
+                               const QString &message,
+                               QWidget *parent = nullptr);
     
 signals:
     

@@ -52,14 +52,8 @@ void MainBox::init(void)
 
     createTestBar();
 
-    serialBox = new SerialBox5(this, "RS232");
-    serialBox->add_menu(2);
-
-    ui->serial_layout->addWidget(serialBox);
-    ui->serial_layout->addStretch();
-
-    connect(this,       SIGNAL(send(QByteArray)),   serialBox,  SLOT(input(QByteArray)));
-    connect(serialBox,  SIGNAL(output(QByteArray)), this,       SLOT(read_data(QByteArray)));
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -96,16 +90,16 @@ void MainBox::test(void)
 
     QByteArray ba;
     ba.clear();
-    ba.append((const char *)question.buf, sizeof(QUESTION));
+    ba.append(reinterpret_cast<const char *>(question.buf), sizeof(QUESTION));
 
-    if(!serialBox->isOpen())
+    if(!ui->serial_widget->isOpen())
     {
         emit error("serial not open!");
         return;
     }
 
     data_rs232.clear();
-    serialBox->input(ba);
+    ui->serial_widget->input(ba);
     emit info(QString("sending %1 bytes").arg(sizeof(QUESTION)));
     wait(1000);
 

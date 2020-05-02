@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_test_HistogramBox_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "qwt_symbol.h"
@@ -61,27 +55,21 @@ void MainBox::init(void)
 
     createTestBar();
 
-    histogram = new HistogramBox(this);
-    histogram->setObjectName("HistogramBox");
-    histogram->set_title("тест");
-    histogram->set_title_axis_X("тест X");
-    histogram->set_title_axis_Y("тест Y");
+    ui->histogram_widget->set_title("тест");
+    ui->histogram_widget->set_title_axis_X("тест X");
+    ui->histogram_widget->set_title_axis_Y("тест Y");
 
 #if 1
-    histogram->add_histogram(0, tr("red"), Qt::red);
-    histogram->add_histogram(1, tr("green"), Qt::green);
-    histogram->add_histogram(2, tr("blue"), Qt::blue);
+    ui->histogram_widget->add_histogram(0, tr("red"), Qt::red);
+    ui->histogram_widget->add_histogram(1, tr("green"), Qt::green);
+    ui->histogram_widget->add_histogram(2, tr("blue"), Qt::blue);
 #else
     for(int n=0; n<2; n++)
     {
         QColor color = QColor(rand() % 255, rand() % 255, rand() % 255);
-        histogram->add_histogram(n, QString(tr("histogram %1")).arg(n), color);
+        ui->histogram_widget->add_histogram(n, QString(tr("histogram %1")).arg(n), color);
     }
 #endif
-
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addWidget(histogram);
-    setLayout(hbox);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -124,14 +112,14 @@ void MainBox::test(void)
 #if 1
     emit info(tr("test begin"));
     //histogram->clear();
-    histogram->push_btn_Horizontal(true);
-    histogram->push_btn_Vertical(true);
+    ui->histogram_widget->push_btn_Horizontal(true);
+    ui->histogram_widget->push_btn_Vertical(true);
     unsigned int pos_x = 0;
-    for(int x=0; x<histogram->get_histograms_count(); x++)
+    for(int x=0; x<ui->histogram_widget->get_histograms_count(); x++)
     {
         if(all_break) return;
         QCoreApplication::processEvents();
-        histogram->add_histogram_data(x, pos_x, 5, qrand() % 100);
+        ui->histogram_widget->add_histogram_data(x, pos_x, 5, qrand() % 100);
         pos_x += 7;
     }
     emit info(tr("test end"));

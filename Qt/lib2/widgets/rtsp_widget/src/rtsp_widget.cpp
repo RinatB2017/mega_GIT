@@ -38,7 +38,7 @@ RTSP_widget::~RTSP_widget()
 {
     if(player)
     {
-        player->deleteLater();
+        delete player;
     }
     delete ui;
 }

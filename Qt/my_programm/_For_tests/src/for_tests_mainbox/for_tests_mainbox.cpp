@@ -227,7 +227,7 @@ void MainBox::test_validator(void)
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
 
     /* Set Validator on QLineEdit */
-    QLineEdit *lineEdit = new QLineEdit;
+    QLineEdit *lineEdit = new QLineEdit();
     lineEdit->setValidator(ipValidator);
     lineEdit->show();
 }
@@ -328,11 +328,21 @@ void MainBox::readJson(const QString &filename)
 }
 //--------------------------------------------------------------------------------
 #include <QWebEngineView>
+#include <QRegExpValidator>
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+
+#if 1
+    QRegExp regex("^[0-9A-F]{100}$", Qt::CaseInsensitive);  // не более 100 символов
+    QRegExpValidator *validator = new QRegExpValidator(regex, this);
+
+    QLineEdit * edt = new QLineEdit();
+    edt->setValidator(validator);
+    edt->show();
+#endif
 
 #if 0
     widget.reset(new QSpinBox());

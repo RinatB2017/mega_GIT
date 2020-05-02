@@ -165,7 +165,7 @@ bool HistogramBox::get_histogram_data(int channel,
                    .arg(histograms.count()));
         return false;
     }
-    float temp = histograms[channel].data_histogram.at(index).value;
+    float temp = static_cast<float>(histograms[channel].data_histogram.at(index).value);
     *data = temp;
     return true;
 }
@@ -201,7 +201,7 @@ int HistogramBox::get_pos_x(int index_histogram)
         emit error(tr("Индекс слишком большой"));
         return 0;
     }
-    return histograms[index_histogram].pos_x;
+    return static_cast<int>(histograms[index_histogram].pos_x);
 }
 //--------------------------------------------------------------------------------
 void HistogramBox::remove_histogram(int index_histogram)
@@ -230,7 +230,7 @@ void HistogramBox::remove_histogram(int index_histogram)
 QVariant HistogramBox::itemToInfo(QwtPlotItem *plotItem) const
 {
     QVariant itemInfo;
-    qVariantSetValue(itemInfo, plotItem);
+    itemInfo.setValue(plotItem);
 
     return itemInfo;
 }
@@ -436,9 +436,9 @@ bool HistogramBox::add_histogram_data(int index_histogram,
                    .arg(histograms.count()));
         return false;
     }
-    histograms[index_histogram].data_histogram.append(QwtIntervalSample((double)height,
-                                                                        (double)pos_x,
-                                                                        (double)pos_x+width));
+    histograms[index_histogram].data_histogram.append(QwtIntervalSample(static_cast<double>(height),
+                                                                        static_cast<double>(pos_x),
+                                                                        static_cast<double>(pos_x+width)));
     if((pos_x+width) > histograms[index_histogram].pos_x)
         histograms[index_histogram].pos_x = (pos_x + width);
 
@@ -543,7 +543,7 @@ void HistogramBox::load_histograms(void)
     {
         QStringList files = dlg->selectedFiles();
         QFile file(files.at(0));
-        CsvReader *csv = new CsvReader(0,files.at(0));
+        CsvReader *csv = new CsvReader(nullptr, files.at(0));
         csv->set_new_separator(';');
         if(csv->Open())
         {
@@ -561,7 +561,7 @@ void HistogramBox::load_histograms(void)
                     if(!ok) i=0;
                     float x = sl.at(1).toFloat(&ok);
                     if(!ok) x=histograms.at(i).pos_x;
-                    histograms[i].data_histogram.append(QwtIntervalSample(i, x, x+1));
+                    histograms[i].data_histogram.append(QwtIntervalSample(i, static_cast<qreal>(x), static_cast<qreal>(x+1)));
                 }
                 else
                 {
@@ -663,7 +663,7 @@ void HistogramBox::tune_vertical_axis(bool state)
             if(temp_y < min_y) min_y = temp_y;
         }
     }
-    if(min_y != max_y)
+    if(qAbs(min_y - max_y) > 0.001)
         ui->qwtPlot->setAxisScale(QwtPlot::yLeft, min_y, max_y);
     updateGraphics();
 }
@@ -691,7 +691,7 @@ void HistogramBox::tune_horizontal_axis(bool state)
             if(max_value > max_x) max_x = max_value;
         }
     }
-    if(min_x != max_x)
+    if(qAbs(min_x - max_x) > 0.001)
         ui->qwtPlot->setAxisScale(QwtPlot::xBottom, min_x, max_x);
     updateGraphics();
 }
@@ -701,8 +701,8 @@ void HistogramBox::statistic(void)
     emit info(tr("Статистика:"));
     for(int n=0; n<histograms.count(); n++)
     {
-        float max_value = INT_MIN;
-        float min_value = INT_MAX;
+        qreal max_value = INT_MIN;
+        qreal min_value = INT_MAX;
         double value = 0;
         double average = 0;
         int cnt = histograms[n].data_histogram.size();
@@ -716,9 +716,9 @@ void HistogramBox::statistic(void)
         emit info(QString("   График %1, кол-во точек %2").arg(n).arg(cnt));
         if(cnt > 0)
         {
-            average /= (double)cnt;
-            emit info(QString("     min %1").arg(min_value));
-            emit info(QString("     max %1").arg(max_value));
+            average /= static_cast<qreal>(cnt);
+            emit info(QString("     min %1").arg(static_cast<qreal>(min_value)));
+            emit info(QString("     max %1").arg(static_cast<qreal>(max_value)));
             emit info(QString("     average %1").arg(average));
         }
     }

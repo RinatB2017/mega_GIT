@@ -15,7 +15,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
-DEFINES += RS232_LOG
+#DEFINES += RS232_LOG
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
@@ -41,8 +41,17 @@ LIB_PATH  = "$$PWD/../../../../lib"
 LIB_PATH2 = "$$PWD/../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+#----------------------------------------------
+CONFIG  += use_worker
+use_worker {
+    DEFINES += FAKE
+    include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
+    include (src/worker_fake/worker_fake.pri)
+} else {
+    include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+}
 include ($$LIB_PATH2/serial5/serial5.pri)
+#----------------------------------------------
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

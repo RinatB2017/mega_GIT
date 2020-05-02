@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src/test_drawbuttons_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-
-
 #DEFINES += FIXED_SIZE
 
 #DEFINES += NO_STYLETOOLBAR

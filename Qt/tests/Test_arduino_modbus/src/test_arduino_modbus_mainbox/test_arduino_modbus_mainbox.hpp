@@ -38,33 +38,30 @@ namespace Ui {
 union QUESTION
 {
     struct BODY{
-        unsigned short address;
-        unsigned char  cmd;
-        unsigned short data_len;
-        unsigned char  data[3];
-        unsigned short crc16;
+        ushort address;
+        uchar  cmd;
+        ushort data_len;
+        uchar  data[3];
+        ushort crc16;
     } body;
-    unsigned char buf[sizeof(BODY)];
+    uchar buf[sizeof(BODY)];
 };
 
 union ANSWER
 {
     struct BODY{
-        unsigned short address;
-        unsigned char  cmd;
-        unsigned short data_len;
-        unsigned char  data;
-        unsigned short crc16;
+        ushort address;
+        uchar  cmd;
+        ushort data_len;
+        uchar  data;
+        ushort crc16;
     } body;
-    unsigned char buf[sizeof(BODY)];
+    uchar buf[sizeof(BODY)];
 };
 
 #pragma pack (pop)
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox5;
-class QToolButton;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -85,7 +82,6 @@ private slots:
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
-    SerialBox5 *serialBox;
     QByteArray data_rs232;
     bool is_ready = false;
 

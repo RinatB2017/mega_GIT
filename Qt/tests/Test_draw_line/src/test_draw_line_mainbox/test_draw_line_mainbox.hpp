@@ -36,10 +36,6 @@ class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SerialBox5;
-class QToolButton;
-class QSpinBox;
-class QToolBar;
 class Diod;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -62,7 +58,6 @@ private slots:
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
-    SerialBox5 *serialBox;
     QByteArray data_rs232;
 
     int color_R = 0;

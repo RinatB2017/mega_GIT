@@ -33,7 +33,7 @@ VideoPlayer::~VideoPlayer()
 {
     if(player)
     {
-        player->deleteLater();
+        delete player;
     }
 }
 //--------------------------------------------------------------------------------

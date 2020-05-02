@@ -21,31 +21,31 @@
 #ifndef HEXVIEW16_HPP
 #define HEXVIEW16_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-class QStandardItemModel;
-class QStandardItem;
-class QTableView;
+#define MAX_ROW 0x1000
+#define MAX_COL 0x10
 //--------------------------------------------------------------------------------
 class HexView16 : public QWidget
 {
     Q_OBJECT
 
 public:
-    HexView16(QWidget *parent = nullptr);
+    explicit HexView16(QWidget *parent = nullptr);
     ~HexView16();
 
     void set(uint16_t address, uint16_t value);
     uint16_t get(uint16_t address);
 
-    void test(void);
-    void test2(void);
-
 private:
-    QTableView *tv;
-    QStandardItemModel *model;
-    uint16_t buf[0xFFFF] = { 0 };
-    QStandardItem *items[0xFFFF];
+    QPointer<QTableView> tv;
+    QPointer<QStandardItemModel> model;
+    uint16_t buf[MAX_ROW*MAX_COL + 1] = { 0 };
+    QStandardItem *items[MAX_ROW*MAX_COL + 1] = { nullptr };
 
     void init(void);
 };

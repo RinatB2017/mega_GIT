@@ -89,7 +89,7 @@ void ColorList::_lbColors_dblClick( QListWidgetItem * item )
         QMessageBox::critical(this, tr("Error"),tr("This dialog was not properly setup and cannot perform the requested action!"),1,0,0);
         return;
     }
-    if(item != 0) {
+    if(item != nullptr) {
         QString name = item->text();
         ColorEditor ce(this);
         ce.setColorName(name);

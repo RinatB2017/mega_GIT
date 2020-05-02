@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_test_drawbuttons_mainbox.h"
 #include "csvreader.hpp"
 //--------------------------------------------------------------------------------
@@ -43,7 +37,7 @@
 //--------------------------------------------------------------------------------
 union U_BYTE
 {
-    unsigned char value;
+    uchar value;
     struct
     {
         unsigned bit0:1;
@@ -90,7 +84,7 @@ void MainBox::draw_my_buttons(void)
     for(int n=0; n<16; n++)
     {
         d[n] = new MyDisplay(this);
-        d[n]->display(n);
+        d[n]->display(static_cast<uint>(n));
     }
 
     MyButton *b = new MyButton(100, 50, 3, tr("Привет"), this);
@@ -148,7 +142,7 @@ void MainBox::test(void)
 {
     emit debug(tr("тест"));
 
-    CsvReader *csv = new CsvReader(0,"Склад_ПКИ.csv"); //
+    CsvReader *csv = new CsvReader(nullptr, "Склад_ПКИ.csv"); //
     if(csv->Open())
     {
         QList<QStringList> str = csv->CSVRead();

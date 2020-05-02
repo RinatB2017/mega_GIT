@@ -154,6 +154,16 @@ bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
     if(src == nullptr)  return false;
     if(dest == nullptr)  return false;
 
+    Q_ASSERT(src->metaObject()->indexOfSignal("info(QString)")  != -1);
+    Q_ASSERT(src->metaObject()->indexOfSignal("debug(QString)") != -1);
+    Q_ASSERT(src->metaObject()->indexOfSignal("error(QString)") != -1);
+    Q_ASSERT(src->metaObject()->indexOfSignal("trace(QString)") != -1);
+
+    Q_ASSERT(dest->metaObject()->indexOfSignal("info(QString)")  != -1);
+    Q_ASSERT(dest->metaObject()->indexOfSignal("debug(QString)") != -1);
+    Q_ASSERT(dest->metaObject()->indexOfSignal("error(QString)") != -1);
+    Q_ASSERT(dest->metaObject()->indexOfSignal("trace(QString)") != -1);
+
     //TODO надо переделать на современный стиль
     connect(src,    SIGNAL(info(QString)),  dest,   SIGNAL(info(QString)));
     connect(src,    SIGNAL(debug(QString)), dest,   SIGNAL(debug(QString)));

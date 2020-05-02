@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_test_QHexEdit_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -45,6 +39,8 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
+    ui->setupUi(this);
+
     init();
 }
 //--------------------------------------------------------------------------------
@@ -55,20 +51,7 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
-
     createTestBar();
-
-    QFont font("Liberation Mono", 8);
-
-    he = new QHexEdit();
-    he->setFont(font);
-    he->setMinimumSize(640, 200);
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(he);
-
-    setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -82,10 +65,10 @@ void MainBox::createTestBar(void)
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
-    cb_test->addItem(TEST_0_TEXT, QVariant(Qt::UserRole + TEST_0));
-    cb_test->addItem(TEST_1_TEXT, QVariant(Qt::UserRole + TEST_1));
-    cb_test->addItem(TEST_2_TEXT, QVariant(Qt::UserRole + TEST_2));
-    cb_test->addItem(TEST_3_TEXT, QVariant(Qt::UserRole + TEST_3));
+    cb_test->addItem(TEST_0_TEXT, TEST_0);
+    cb_test->addItem(TEST_1_TEXT, TEST_1);
+    cb_test->addItem(TEST_2_TEXT, TEST_2);
+    cb_test->addItem(TEST_3_TEXT, TEST_3);
 
     testbar->addWidget(cb_test);
     QToolButton *btn_choice_test = add_button(testbar,
@@ -100,7 +83,7 @@ void MainBox::createTestBar(void)
 void MainBox::choice_test(void)
 {
     bool ok = false;
-    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
     switch (cmd)
     {
@@ -120,14 +103,14 @@ void MainBox::test_0(void)
 
     QHexEditData *data = QHexEditData::fromMemory(ba);
 
-    he->setData(data);
+    ui->hexedit_widget->setData(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_1(void)
 {
     QHexEditData *data = QHexEditData::fromFile("Test_QHexEdit");
 
-    he->setData(data);
+    ui->hexedit_widget->setData(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_2(void)

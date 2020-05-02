@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2020                                                      **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,97 +18,79 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include "ui_rs232_5_test.h"
-//--------------------------------------------------------------------------------
-#include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox5.hpp"
-#include "rs232_5_test.hpp"
+#include "worker_fake.hpp"
+#include "ui_worker_fake.h"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-MainBox::MainBox(QWidget *parent,
-                 MySplashScreen *splash) :
-    MyWidget(parent),
-    splash(splash),
-    ui(new Ui::MainBox)
+Worker_fake::Worker_fake(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Worker_fake)
 {
     init();
 }
 //--------------------------------------------------------------------------------
-MainBox::~MainBox()
+Worker_fake::~Worker_fake()
 {
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void Worker_fake::init(void)
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
-    createTestBar();
-#endif
+    ui->btn_send_hex->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_send_text->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 
-    ui->serial_widget->set_caption("RS232_5");
-    ui->serial_widget->add_menu(2);
+    connect(ui->btn_send_hex,   &QToolButton::clicked,  this,   &Worker_fake::send_hex);
+    connect(ui->btn_send_text,  &QToolButton::clicked,  this,   &Worker_fake::send_text);
 
-    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
-}
-//--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
-{
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    QRegExp regex("^[0-9A-F]{100}$", Qt::CaseInsensitive);  // не более 100 символов
+    QRegExpValidator *validator = new QRegExpValidator(regex, this);
+    ui->le_hex->setValidator(validator);
 
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
+    }
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::input(QByteArray data)
+{
+    QString temp;
+    temp.append(data);
 
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                       "test",
-                                       "test");
-    
-    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+    QRegularExpression regex("(^[\\40-\\176]{1,47}$)"); // Printable ASCII characters only
+    if(regex.match(temp).hasMatch())
+    {
+        ui->log_widget->infoLog(data);
+    }
+    else
+    {
+        ui->log_widget->errorLog(data.toHex().toUpper());
+    }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+void Worker_fake::send_hex(void)
 {
-    return true;
+    QByteArray ba;
+    ba.append(QByteArray::fromHex(ui->le_hex->text().toLocal8Bit()));
+    emit output(ba);
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(QByteArray ba)
+void Worker_fake::send_text(void)
 {
-    emit info(ba.data());
+    QByteArray ba;
+    ba.append(ui->le_text->text());
+    emit output(ba);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
-{
-    ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
-{
-    return true;
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void Worker_fake::port_open(void)
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void Worker_fake::port_close(void)
 {
 
 }

@@ -18,20 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QWidget>
-#else
-#   include <QVBoxLayout>
-#   include <QMessageBox>
-#   include <QTime>
-
-#   include <QAction>
-#   include <QMenu>
-
-#   include <QToolButton>
-#   include <QToolBar>
-#endif
-//--------------------------------------------------------------------------------
 #ifdef Q_DEBUG
 #   include <QDebug>
 #endif
@@ -54,6 +40,8 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -61,21 +49,42 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
 
-    SerialBox5 *serial0 = new SerialBox5(this, "RS232 (0)", "RS232 (0)");
-    SerialBox5 *serial1 = new SerialBox5(this, "RS232 (1)", "RS232 (1)");
+    connect(ui->serial_widget_0,    &SerialBox5::output,    ui->serial_widget_1,    static_cast<int (SerialBox5::*)(const QByteArray &)>(&SerialBox5::input));
+    connect(ui->serial_widget_1,    &SerialBox5::output,    ui->serial_widget_0,    static_cast<int (SerialBox5::*)(const QByteArray &)>(&SerialBox5::input));
 
-    serial0->add_menu(1, "RS232 (0)");
-    serial1->add_menu(2, "RS232 (1)");
+    connect(ui->serial_widget_0,    &SerialBox5::output,    this,   &MainBox::serial_log);
+    connect(ui->serial_widget_1,    &SerialBox5::output,    this,   &MainBox::serial_log);
 
-    connect(serial0,    SIGNAL(output(QByteArray)), serial1,    SLOT(input(QByteArray)));
-    connect(serial1,    SIGNAL(output(QByteArray)), serial0,    SLOT(input(QByteArray)));
+    //---
+#ifdef FAKE
+    QTimer::singleShot(0, [this]{
+        MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+        if(mw)
+        {
+            QList<QDockWidget *> alldw = mw->findChildren<QDockWidget *>();
+            foreach (QDockWidget *dock, alldw)
+            {
+                QList<Worker_fake *> alldocs = dock->findChildren<Worker_fake *>();
+                if(alldocs.count() > 0)
+                {
+                    dock->setWindowTitle(QString("LOG: %1").arg(alldocs.at(0)->objectName()));
+                }
+            }
+        }
+    });
+#endif
+    //---
 
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(serial0);
-    vbox->addWidget(serial1);
-    setLayout(vbox);
+    connect(this,   &MainBox::info,     ui->logbox_widget,  &LogBox::infoLog);
+    connect(this,   &MainBox::debug,    ui->logbox_widget,  &LogBox::debugLog);
+    connect(this,   &MainBox::error,    ui->logbox_widget,  &LogBox::errorLog);
+    connect(this,   &MainBox::trace,    ui->logbox_widget,  &LogBox::traceLog);
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -95,6 +104,39 @@ void MainBox::createTestBar(void)
                                        "test");
     
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+}
+//--------------------------------------------------------------------------------
+void MainBox::serial_log(const QByteArray &data)
+{
+    SerialBox5 *serial = static_cast<SerialBox5 *>(sender());
+    QString text = QString();
+    if(serial == ui->serial_widget_0)
+    {
+        if(ui->rb_hex->isChecked())
+        {
+            text = QString("Serial0: %1").arg(data.toHex().data());
+        }
+        else
+        {
+            text = QString("Serial0: %1").arg(data.data());
+        }
+    }
+    if(serial == ui->serial_widget_1)
+    {
+        if(ui->rb_hex->isChecked())
+        {
+            text = QString("Serial1: %1").arg(data.toHex().data());
+        }
+        else
+        {
+            text = QString("Serial1: %1").arg(data.data());
+        }
+    }
+
+    if(text.isEmpty() == false)
+    {
+        emit info(text);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

@@ -18,16 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include <QSqlQueryModel>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-//--------------------------------------------------------------------------------
 #include "ui_test_PostgreSQL_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "test_PostgreSQL_mainbox.hpp"
@@ -38,8 +28,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    parent(parent)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -80,7 +69,7 @@ void MainBox::init(void)
     QSqlQueryModel *model = new QSqlQueryModel;
     model->setQuery("SELECT * FROM pg_type");
 
-    QTableView *view = new QTableView;
+    QTableView *view = new QTableView(this);
     view->setModel(model);
 //    view->show();
     ui->layout_SQL->addWidget(view);

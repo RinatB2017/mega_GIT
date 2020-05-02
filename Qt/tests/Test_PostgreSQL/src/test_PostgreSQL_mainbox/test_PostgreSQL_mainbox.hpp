@@ -18,13 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-//--------------------------------------------------------------------------------
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QSqlDatabase>
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
+#include <QSqlQueryModel>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -41,7 +46,6 @@ public:
 
 private:
     Ui::MainBox *ui;
-    QWidget *parent;
     QSqlDatabase db;
 
     void init(void);

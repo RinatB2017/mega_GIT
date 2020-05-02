@@ -327,61 +327,10 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
-#include <QWebEngineView>
-#include <QRegExpValidator>
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
-
-#if 1
-    QRegExp regex("^[0-9A-F]{100}$", Qt::CaseInsensitive);  // не более 100 символов
-    QRegExpValidator *validator = new QRegExpValidator(regex, this);
-
-    QLineEdit * edt = new QLineEdit();
-    edt->setValidator(validator);
-    edt->show();
-#endif
-
-#if 0
-    widget.reset(new QSpinBox());
-    widget->setValue(5);
-    widget->show();
-#endif
-
-#if 0
-    int x = -5;
-    Q_ASSERT(x > 0);
-#endif
-
-#if 0
-//    QPointer<QWebEngineView> viewer;
-//    viewer = new QWebEngineView();
-//    viewer->setUrl(QUrl("https://www.youtube.com/watch?v=puhO75x3kmg"));
-//    viewer->show();
-
-    QTextEdit *viewer = new QTextEdit();
-    viewer->show();
-
-    QTimer::singleShot(1000, [viewer, this]{
-        emit info("send event");
-
-        //FIXME не передаётся пробел в вебэнджине почему-то
-        QKeyEvent* pressEvent   = new QKeyEvent (QEvent::KeyPress,      Qt::Key_Space, Qt::NoModifier, "A");
-        QKeyEvent* releaseEvent = new QKeyEvent (QEvent::KeyRelease,    Qt::Key_Space, Qt::NoModifier, "B");
-        QCoreApplication::sendEvent(viewer, pressEvent);
-        QCoreApplication::sendEvent(viewer, releaseEvent);
-    });
-#endif
-
-#if 0
-    emit info("test");
-    emit info("test");
-    emit info("test");
-    emit info("test");
-    emit info("test");
-#endif
 
 #if 0
     readJson("coins.json");

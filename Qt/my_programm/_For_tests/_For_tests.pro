@@ -13,8 +13,6 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
-QT  += webenginewidgets
-
 #DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 
@@ -44,21 +42,14 @@ DEFINES += NO_TRAYICON
 
 #DEFINES += USE_TOPLEVELWIDGETS
 
-DEFINES += SAVE_INI
-
 DEFINES += PROGRAMM_IN_UTF8
-
 DEFINES += NEED_CODEC
+DEFINES += SAVE_INI
 
 HEADERS += \
     for_tests_mainbox.hpp \
     defines.hpp \
     version.hpp
-
-#DEFINES += XXX
-#contains(DEFINES,XXX){
-#    SOURCES += for_tests_mainbox.cpp \
-#}
 
 SOURCES += \
     for_tests_mainbox.cpp \
@@ -101,6 +92,3 @@ include (src/simplewidget/simplewidget.pri)
 }
 
 VPATH = $$INCLUDEPATH
-
-#message ($$RESOURCES)
-

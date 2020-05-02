@@ -128,7 +128,6 @@ private:
     int cnt = 0;
 
     QScopedPointer<SimpleWidget> sw;
-    QScopedPointer<QSpinBox> widget;
 
     void readJson(const QString &filename);
 

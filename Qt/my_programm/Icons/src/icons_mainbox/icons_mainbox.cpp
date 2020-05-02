@@ -18,8 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QDirIterator>
-#include <QEvent>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "ui_icons_mainbox.h"
 //--------------------------------------------------------------------------------
@@ -37,6 +40,8 @@ MainBox::MainBox(QWidget *parent, MySplashScreen *splash) :
     splash(splash),
     ui(new Ui::MainBox)
 {
+    ui->setupUi(this);
+
     init();
 }
 //--------------------------------------------------------------------------------
@@ -47,9 +52,9 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     tab = new QTabWidget(this);
 

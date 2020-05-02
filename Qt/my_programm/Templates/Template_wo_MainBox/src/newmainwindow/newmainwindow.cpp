@@ -27,16 +27,18 @@
 NewMainWindow::NewMainWindow(MainWindow *parent)
     : MainWindow(parent)
 {
+#ifdef QT_DEBUG
     createTestBar();
-
-    add_dock_widget("RS232",  "serial",   Qt::LeftDockWidgetArea,  new SerialBox5(this));
-    add_dock_widget("График", "grapher",  Qt::RightDockWidgetArea, new GrapherBox(this));
-    add_dock_widget("SpinBox", "spinbox", Qt::RightDockWidgetArea, new QSpinBox(this));
+#endif
 
     QPushButton *btn = new QPushButton(this);
     btn->setText("PUSH");
     connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(push()));
-    add_dock_widget("PushButton", "pushbutton", Qt::RightDockWidgetArea,  btn);
+
+    add_dock_widget("RS232",        "serial",       Qt::LeftDockWidgetArea,     new SerialBox5(this));
+    add_dock_widget("График",       "grapher",      Qt::RightDockWidgetArea,    new GrapherBox(this));
+    add_dock_widget("SpinBox",      "spinbox",      Qt::RightDockWidgetArea,    new QSpinBox(this), true);
+    add_dock_widget("PushButton",   "pushbutton",   Qt::RightDockWidgetArea,    btn, true);
 
     //FIXME явный костыль
     // без centralwidget нельзя нормально расставить доки позже мышкой
@@ -70,13 +72,7 @@ QToolButton *NewMainWindow::add_button(QToolBar *tool_bar,
 void NewMainWindow::createTestBar(void)
 {
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &NewMainWindow::test_0 });
-    commands.append({ id++, "test 1", &NewMainWindow::test_1 });
-    commands.append({ id++, "test 2", &NewMainWindow::test_2 });
-    commands.append({ id++, "test 3", &NewMainWindow::test_3 });
-    commands.append({ id++, "test 4", &NewMainWindow::test_4 });
-    commands.append({ id++, "test 5", &NewMainWindow::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &NewMainWindow::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -137,71 +133,9 @@ void NewMainWindow::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool NewMainWindow::test_0(void)
+bool NewMainWindow::test(void)
 {
-    emit info("Test_0()");
-
-#if 0
-    QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
-    foreach (auto dw, dockWidgets)
-    {
-        if(dw->objectName() == "spinbox")
-        {
-            removeDockWidget(dw);
-            addDockWidget(Qt::LeftDockWidgetArea, dw);
-            dw->show();
-        }
-    }
-#endif
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool NewMainWindow::test_1(void)
-{
-    emit info("Test_1()");
-
-#if 0
-    QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
-    foreach (auto dw, dockWidgets)
-    {
-        if(dw->objectName() == "spinbox")
-        {
-            removeDockWidget(dw);
-            addDockWidget(Qt::RightDockWidgetArea, dw);
-            dw->show();
-        }
-    }
-#endif
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool NewMainWindow::test_2(void)
-{
-    emit info("Test_2()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool NewMainWindow::test_3(void)
-{
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool NewMainWindow::test_4(void)
-{
-    emit info("Test_4()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool NewMainWindow::test_5(void)
-{
-    emit info("Test_5()");
-
+    emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------

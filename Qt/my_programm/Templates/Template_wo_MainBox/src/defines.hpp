@@ -23,28 +23,6 @@
 //--------------------------------------------------------------------------------
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-//  QString("%1").arg(question.buf[n], 2, 16, QChar('0'))
-//  строка в HEX с лидирующими нулями
-//
-//  float c = 1.123456789f;
-//  emit info(QString("%1").arg(c, 0, 'f', 3));
-//
-//  int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
-//
-//union UINT32_BYTES
-//{
-//    quint32 value;
-//    struct {
-//        uint8_t a;
-//        uint8_t b;
-//        uint8_t c;
-//        uint8_t d;
-//    } bytes;
-//};
-//
-// emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
-// emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
-//--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Template_wo_MainBox"
 //--------------------------------------------------------------------------------

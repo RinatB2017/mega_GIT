@@ -188,7 +188,7 @@ void Camera::updateRecordTime()
 
 void Camera::processCapturedImage(int requestId, const QImage& img)
 {
-    Q_UNUSED(requestId);
+    Q_UNUSED(requestId)
     QImage scaledImage = img.scaled(ui->viewfinder->size(),
                                     Qt::KeepAspectRatio,
                                     Qt::SmoothTransformation);
@@ -326,8 +326,8 @@ void Camera::takeImage()
 
 void Camera::displayCaptureError(int id, const QCameraImageCapture::Error error, const QString &errorString)
 {
-    Q_UNUSED(id);
-    Q_UNUSED(error);
+    Q_UNUSED(id)
+    Q_UNUSED(error)
     QMessageBox::warning(this, tr("Image Capture Error"), errorString);
     m_isCapturingImage = false;
 }
@@ -433,7 +433,7 @@ void Camera::readyForCapture(bool ready)
 
 void Camera::imageSaved(int id, const QString &fileName)
 {
-    Q_UNUSED(id);
+    Q_UNUSED(id)
     ui->statusbar->showMessage(tr("Captured \"%1\"").arg(QDir::toNativeSeparators(fileName)));
 
     m_isCapturingImage = false;

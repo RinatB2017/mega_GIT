@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_template_rs232_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -35,13 +29,15 @@
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
-//--------------------------------------------------------------------------------
+//----------- ---------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
     ui(new Ui::MainBox)
 {
+    ui->setupUi(this);
+
     init();
 }
 //--------------------------------------------------------------------------------
@@ -57,28 +53,19 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
+#ifdef QT_DEBUG
     createTestBar();
-
-    init_serial();
-
-#if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
 #endif
 
+    init_serial();
     load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)
 {
-#if 0
-    connect(this,               static_cast<int (MainBox::*)(const QByteArray&)>(&MainBox::send),
-            ui->serial_widget,  &SerialBox5::input);
+#if 1
+    connect(this,               static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
+            ui->serial_widget,  static_cast<int (SerialBox5::*)(const QByteArray&)>(&SerialBox5::input));
 #else
     connect(this,   SIGNAL(send(QByteArray)), ui->serial_widget,  SLOT(input(QByteArray)));
 #endif
@@ -96,13 +83,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -163,45 +144,9 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
-
+    emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -58,6 +58,8 @@
 #include <QMessageBox>
 #include <QStyle>
 
+#include <QWebEngineCertificateError>
+
 WebPage::WebPage(QWebEngineProfile *profile, QObject *parent)
     : QWebEnginePage(profile, parent)
 {
@@ -76,7 +78,7 @@ bool WebPage::certificateError(const QWebEngineCertificateError &error)
         Ui::CertificateErrorDialog certificateDialog;
         certificateDialog.setupUi(&dialog);
         certificateDialog.m_iconLabel->setText(QString());
-        QIcon icon(mainWindow->style()->standardIcon(QStyle::SP_MessageBoxWarning, 0, mainWindow));
+        QIcon icon(mainWindow->style()->standardIcon(QStyle::SP_MessageBoxWarning, nullptr, mainWindow));
         certificateDialog.m_iconLabel->setPixmap(icon.pixmap(32, 32));
         certificateDialog.m_errorLabel->setText(error.errorDescription());
         dialog.setWindowTitle(tr("Certificate Error"));
@@ -98,7 +100,7 @@ void WebPage::handleAuthenticationRequired(const QUrl &requestUrl, QAuthenticato
     passwordDialog.setupUi(&dialog);
 
     passwordDialog.m_iconLabel->setText(QString());
-    QIcon icon(mainWindow->style()->standardIcon(QStyle::SP_MessageBoxQuestion, 0, mainWindow));
+    QIcon icon(mainWindow->style()->standardIcon(QStyle::SP_MessageBoxQuestion, nullptr, mainWindow));
     passwordDialog.m_iconLabel->setPixmap(icon.pixmap(32, 32));
 
     QString introMessage(tr("Enter username and password for \"%1\" at %2")
@@ -127,7 +129,7 @@ void WebPage::handleProxyAuthenticationRequired(const QUrl &, QAuthenticator *au
     passwordDialog.setupUi(&dialog);
 
     passwordDialog.m_iconLabel->setText(QString());
-    QIcon icon(mainWindow->style()->standardIcon(QStyle::SP_MessageBoxQuestion, 0, mainWindow));
+    QIcon icon(mainWindow->style()->standardIcon(QStyle::SP_MessageBoxQuestion, nullptr, mainWindow));
     passwordDialog.m_iconLabel->setPixmap(icon.pixmap(32, 32));
 
     QString introMessage = tr("Connect to proxy \"%1\" using:");

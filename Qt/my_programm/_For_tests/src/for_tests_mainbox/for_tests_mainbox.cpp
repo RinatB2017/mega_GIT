@@ -332,6 +332,13 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
+#if 1
+    QPushButton *btn = new QPushButton();
+    btn->setText("test");
+    btn->setIcon(QIcon::fromTheme("system-shutdown"));
+    btn->show();
+#endif
+
 #if 0
     readJson("coins.json");
 //    readJson("test_coins.txt");

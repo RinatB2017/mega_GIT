@@ -132,7 +132,8 @@ public:
     bool add_dock_widget(QString title,
                          QString objectname,
                          Qt::DockWidgetArea area,
-                         QWidget *widget);
+                         QWidget *widget,
+                         bool no_dock_position = false);
 
     void load_setting(void);
     void save_setting(void);

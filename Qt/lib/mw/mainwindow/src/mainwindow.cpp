@@ -1204,7 +1204,8 @@ bool MainWindow::add_helpmenu_separator(int pos_y)
 bool MainWindow::add_dock_widget(QString title,
                                  QString objectname,
                                  Qt::DockWidgetArea area,
-                                 QWidget *widget)
+                                 QWidget *widget,
+                                 bool no_dock_position)
 {
     Q_CHECK_PTR(widget);
 
@@ -1223,26 +1224,30 @@ bool MainWindow::add_dock_widget(QString title,
     dw->setObjectName(objectname);
     dw->setWindowTitle(title);
 
-#if 1
-    Dock_position *dp = new Dock_position(objectname, this);
-    QWidget *nw = new QWidget(this);
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->setMargin(0);
-    hbox->setSpacing(0);
-    hbox->addWidget(widget);
-    hbox->addWidget(dp);
-    nw->setLayout(hbox);
+    if(no_dock_position == false)
+    {
+        // Dock_position - это стрелки сбоку
+        Dock_position *dp = new Dock_position(objectname, this);
+        QWidget *nw = new QWidget(this);
+        QHBoxLayout *hbox = new QHBoxLayout();
+        hbox->setMargin(0);
+        hbox->setSpacing(0);
+        hbox->addWidget(widget);
+        hbox->addWidget(dp);
+        nw->setLayout(hbox);
 
-    dw->setWidget(nw);
-#else
-    dw->setWidget(widget);
-#endif
+        dw->setWidget(nw);
+    }
+    else
+    {
+        dw->setWidget(widget);
+    }
 
     dw->setAllowedAreas(Qt::AllDockWidgetAreas);
-//    dw->setAllowedAreas(Qt::LeftDockWidgetArea |
-//                        Qt::RightDockWidgetArea |
-//                        Qt::TopDockWidgetArea |
-//                        Qt::BottomDockWidgetArea);
+    //    dw->setAllowedAreas(Qt::LeftDockWidgetArea |
+    //                        Qt::RightDockWidgetArea |
+    //                        Qt::TopDockWidgetArea |
+    //                        Qt::BottomDockWidgetArea);
 
     connect(dw, &QDockWidget::dockLocationChanged, this, &MainWindow::dockLocationChanged);
 

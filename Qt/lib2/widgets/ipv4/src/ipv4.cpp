@@ -39,6 +39,11 @@ void IPV4::init(void)
     c = new QSpinBox(this);
     d = new QSpinBox(this);
 
+    a->installEventFilter(this);
+    b->installEventFilter(this);
+    c->installEventFilter(this);
+    d->installEventFilter(this);
+
     a->setObjectName("IPV4_a");
     b->setObjectName("IPV4_b");
     c->setObjectName("IPV4_c");
@@ -125,5 +130,15 @@ void IPV4::set_url(QUrl url)
         d->setValue(QString(sl[3]).toInt());
     }
     port->setValue(url.port());
+}
+//--------------------------------------------------------------------------------
+bool IPV4::eventFilter(QObject*, QEvent* event)
+{
+    if(event->type() == QEvent::Wheel)
+    {
+        qDebug() << "Wheel event blocked";
+        return true;
+    }
+    return false;
 }
 //--------------------------------------------------------------------------------

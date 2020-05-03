@@ -43,7 +43,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
@@ -51,7 +51,6 @@ private slots:
 
 private:
     Ui::MainBox *ui;
-    QWidget *parent;
 
     QPointer<Youtube_walker> youtube_walker;
     QPointer<Google_walker> google_walker;

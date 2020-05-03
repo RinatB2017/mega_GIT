@@ -327,12 +327,68 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
+#define MAX_COL 24
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
 #if 1
+    QFile file("list_icons.txt");
+    QString temp;
+    QStringList sl_temp;
+    QStringList sl_icon_names;
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        while(!file.atEnd())
+        {
+            temp = file.readLine().replace("\t", " ");
+            sl_temp = temp.split(" ");
+            if(sl_temp.count() >= 1)
+            {
+                sl_icon_names.append(sl_temp.at(0));
+            }
+        }
+        emit info(QString("Found %1 icons").arg(sl_icon_names.count()));
+
+        QWidget *widget = new QWidget();
+        QGridLayout *grid = new QGridLayout();
+        grid->setMargin(0);
+        grid->setSpacing(0);
+        widget->setLayout(grid);
+
+        int col = 0;
+        int row = 0;
+        foreach (QString icon_name, sl_icon_names)
+        {
+            QToolButton *btn = new QToolButton(widget);
+            btn->setToolTip(icon_name);
+            btn->setIcon(QIcon::fromTheme(icon_name, QIcon(":/mainwindow/computer.png/mainwindow/computer.png")));
+            grid->addWidget(btn, row, col);
+            if(col < MAX_COL)
+            {
+                col++;
+            }
+            else
+            {
+                col=0;
+                row++;
+            }
+        }
+
+        widget->show();
+
+        file.close();
+    }
+    else
+    {
+        emit error(QString("File not open: %1")
+                   .arg(file.errorString()));
+    }
+#endif
+
+#if 0
     QPushButton *btn = new QPushButton();
     btn->setText("test");
     btn->setIcon(QIcon::fromTheme("system-shutdown"));
@@ -341,7 +397,7 @@ bool MainBox::test(void)
 
 #if 0
     readJson("coins.json");
-//    readJson("test_coins.txt");
+    //    readJson("test_coins.txt");
 #endif
 
 #if 0

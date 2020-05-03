@@ -21,11 +21,12 @@
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
-#include "ui_wifi_frame.h"
 #include "serialbox5_lite.hpp"
 #include "wifi_frame.hpp"
 #include "qhexedit.h"
 #include "logbox.hpp"
+
+#include "ui_wifi_frame.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -50,7 +51,7 @@ WIFI_frame::WIFI_frame(const QString &caption,
 //--------------------------------------------------------------------------------
 void WIFI_frame::connect_serial(void)
 {
-    connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,   SLOT(lock_interface(bool)));
+    connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,   SLOT(unlock_interface(bool)));
 
     if(is_server)
         connect(ui->serial_widget, SIGNAL(readyRead()), this, SLOT(server_port_read()));
@@ -58,7 +59,7 @@ void WIFI_frame::connect_serial(void)
         connect(ui->serial_widget, SIGNAL(readyRead()), this, SLOT(client_port_read()));
 
     connect(ui->serial_widget,  SIGNAL(readChannelFinished()),  this,   SLOT(readChannelFinished()));
-    connect(ui->serial_widget,  SIGNAL(s_error(QSerialPort::SerialPortError)),  this,   SLOT(port_error(QSerialPort::SerialPortError)));
+//    connect(ui->serial_widget,  SIGNAL(s_error(QSerialPort::SerialPortError)),  this,   SLOT(port_error(QSerialPort::SerialPortError)));
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::readChannelFinished(void)
@@ -94,15 +95,14 @@ void WIFI_frame::init(void)
     connect_serial();
 
     server_is_created = false;
-
-    connect(this,   SIGNAL(info(QString)),  ui->logBox, SLOT(infoLog(QString)));
-    connect(this,   SIGNAL(debug(QString)), ui->logBox, SLOT(debugLog(QString)));
-    connect(this,   SIGNAL(error(QString)), ui->logBox, SLOT(errorLog(QString)));
-    connect(this,   SIGNAL(trace(QString)), ui->logBox, SLOT(traceLog(QString)));
+    connect(this,   &WIFI_frame::info,  ui->logBox, &LogBox::infoLog);
+    connect(this,   &WIFI_frame::debug, ui->logBox, &LogBox::debugLog);
+    connect(this,   &WIFI_frame::error, ui->logBox, &LogBox::errorLog);
+    connect(this,   &WIFI_frame::trace, ui->logBox, &LogBox::traceLog);
 
     ui->btn_server->setEnabled(is_server);
 
-    connect(ui->btn_read_settings, SIGNAL(clicked()), this, SLOT(read_settings()));
+    connect(ui->btn_read_settings, &QToolButton::clicked,   this,   &WIFI_frame::read_settings);
 
     ui->caption_label->setAlignment(Qt::AlignHCenter);
 
@@ -633,7 +633,7 @@ void WIFI_frame::add_client_cmd_layout(void)
         connect(ui->btn_client, SIGNAL(clicked()), this, SLOT(create_client()));
     }
 }
-//--------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 void WIFI_frame::lock_interface(bool state)
 {
     if(is_server)
@@ -658,7 +658,31 @@ void WIFI_frame::lock_interface(bool state)
 
     ui->cb_EncryptType->setDisabled(state);
 }
-//--------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
+void WIFI_frame::unlock_interface(bool state)
+{
+    if(is_server)
+    {
+        ui->btn_server->setEnabled(state);
+    }
+    else
+    {
+        ui->btn_client->setEnabled(state);
+        ui->btn_send_data->setEnabled(state);
+    }
+
+    ui->btn_read_settings->setEnabled(state);
+
+    ui->le_Gate->setEnabled(state);
+    ui->le_IP->setEnabled(state);
+    ui->le_Mask->setEnabled(state);
+    ui->le_Network->setEnabled(state);
+    ui->le_Password->setEnabled(state);
+    ui->le_RemoteIP->setEnabled(state);
+    ui->le_RemotePort->setEnabled(state);
+
+    ui->cb_EncryptType->setEnabled(state);
+}//--------------------------------------------------------------------------------
 void WIFI_frame::show_hex_data(QByteArray &data)
 {
     QHexEdit *hexedit = new QHexEdit();

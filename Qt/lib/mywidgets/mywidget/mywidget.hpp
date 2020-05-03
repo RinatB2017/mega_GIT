@@ -206,7 +206,9 @@ signals:
 public slots:
     void block_interface(bool state);
     void check_tooltips(void);
+#ifndef BLOCK_WHEEL
     void block_wheel(void);
+#endif
 
 private slots:
     void log(const QString data);

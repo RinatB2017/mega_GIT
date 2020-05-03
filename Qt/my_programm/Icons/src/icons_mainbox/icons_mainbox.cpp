@@ -57,20 +57,27 @@ void MainBox::init(void)
 #endif
 
     tab = new QTabWidget(this);
+    Q_CHECK_PTR(tab);
 
-    QTabWidget *crystal_clear = new QTabWidget(this);
-    QTabWidget *oxygen = new QTabWidget(this);
-    QTabWidget *nuvola = new QTabWidget(this);
-    QTabWidget *gnome = new QTabWidget(this);
-    QTabWidget *hicolor = new QTabWidget(this);
-    QTabWidget *lol = new QTabWidget(this);
+    QTabWidget *crystal_clear   = new QTabWidget(this);
+    QTabWidget *oxygen          = new QTabWidget(this);
+    QTabWidget *nuvola          = new QTabWidget(this);
+    QTabWidget *gnome           = new QTabWidget(this);
+    QTabWidget *hicolor         = new QTabWidget(this);
+    QTabWidget *lol             = new QTabWidget(this);
+#ifdef Q_OS_LINUX
+    QTabWidget *from_theme      = new QTabWidget(this);
+#endif
 
-    tab->addTab(crystal_clear, "crystal clear");
-    tab->addTab(oxygen, "oxygen");
-    tab->addTab(nuvola, "nuvola");
-    tab->addTab(gnome, "gnome");
-    tab->addTab(hicolor, "hicolor");
-    tab->addTab(lol, "lol");
+    tab->addTab(crystal_clear,  "crystal clear");
+    tab->addTab(oxygen,         "oxygen");
+    tab->addTab(nuvola,         "nuvola");
+    tab->addTab(gnome,          "gnome");
+    tab->addTab(hicolor,        "hicolor");
+    tab->addTab(lol,            "lol");
+#ifdef Q_OS_LINUX
+    tab->addTab(from_theme,     "from theme");
+#endif
 
     splash->add_progress();
     add_icons(gnome, ":/gnome/actions");
@@ -127,7 +134,10 @@ void MainBox::init(void)
     add_icons(lol, ":/lol/filesystems");
     add_icons(lol, ":/lol/mimetypes");
 
-    Q_CHECK_PTR(tab);
+#ifdef Q_OS_LINUX
+    splash->add_progress();
+    add_icons_from_theme(from_theme);
+#endif
 
     QVBoxLayout *vbox = new QVBoxLayout();
     setLayout(vbox);
@@ -347,6 +357,77 @@ void MainBox::add_icons(QTabWidget *page,
     QFile file(catalog_name);
     QFileInfo fileInfo(file.fileName());
     page->addTab(area, fileInfo.fileName());
+}
+//--------------------------------------------------------------------------------
+void MainBox::add_icons_from_theme(QTabWidget *page, int max_x)
+{
+    QFile file(":/list_icons.txt");
+    QString temp;
+    QStringList sl_temp;
+    QStringList sl_icon_names;
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        while(!file.atEnd())
+        {
+            temp = file.readLine().replace("\t", " ");
+            sl_temp = temp.split(" ");
+            if(sl_temp.count() >= 1)
+            {
+                sl_icon_names.append(sl_temp.at(0));
+            }
+        }
+        emit info(QString("Found %1 icons").arg(sl_icon_names.count()));
+
+        QWidget *widget = new QWidget();
+        QGridLayout *grid = new QGridLayout();
+        grid->setMargin(0);
+        grid->setSpacing(0);
+        widget->setLayout(grid);
+
+        int col = 0;
+        int row = 0;
+        foreach (QString icon_name, sl_icon_names)
+        {
+            QToolButton *btn = new QToolButton(widget);
+            btn->setToolTip(icon_name);
+            btn->setIconSize(QSize(32, 32));
+            btn->setIcon(QIcon::fromTheme(icon_name, QIcon(":/mainwindow/computer.png/mainwindow/computer.png")));
+            btn->setProperty("icon_name", icon_name);
+            connect(btn,    &QToolButton::clicked,  this,   &MainBox::print_icon_name);
+
+            grid->addWidget(btn, row, col);
+            if(col < max_x)
+            {
+                col++;
+            }
+            else
+            {
+                col=0;
+                row++;
+            }
+        }
+        file.close();
+
+        QScrollArea *area = new QScrollArea(this);
+        area->setWidget(widget);
+        area->setWidgetResizable(true);
+
+        page->addTab(area, "from theme");
+    }
+    else
+    {
+        emit error(QString("File not open: %1")
+                   .arg(file.errorString()));
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::print_icon_name(void)
+{
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
+    if(btn)
+    {
+        emit info(QString("%1").arg(btn->property("icon_name").toString()));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

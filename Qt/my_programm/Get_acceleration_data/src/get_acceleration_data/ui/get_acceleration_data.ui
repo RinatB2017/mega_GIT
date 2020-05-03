@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="main_frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -132,6 +132,19 @@
             </layout>
            </widget>
           </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </widget>
         <widget class="QTabWidget" name="tabWidget">
@@ -206,15 +219,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GrapherBox</class>
-   <extends>QWidget</extends>
-   <header>grapherbox.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SerialBox5_fix_baudrate</class>
    <extends>QWidget</extends>
    <header>serialbox5_fix_baudrate.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GrapherBox</class>
+   <extends>QWidget</extends>
+   <header>grapherbox.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>

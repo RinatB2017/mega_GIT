@@ -767,17 +767,19 @@ void MyWidget::s_test(void)
     // block_wheel();
 }
 //--------------------------------------------------------------------------------
+#ifndef BLOCK_WHEEL
 void MyWidget::block_wheel(void)
 {
     QList<QWidget *> all_obj = findChildren<QWidget *>();
     foreach(QWidget *obj, all_obj)
     {
-        if(!obj->objectName().isEmpty())
+        if(obj->objectName().isEmpty() == false)
         {
             obj->installEventFilter(this);
         }
     }
 }
+#endif
 //--------------------------------------------------------------------------------
 void MyWidget::show_objectname(void)
 {
@@ -1124,6 +1126,7 @@ void MyWidget::changeEvent(QEvent *event)
 #ifndef BLOCK_WHEEL
 bool MyWidget::eventFilter(QObject*, QEvent* event)
 {
+#if 0
     QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
     //---
     if(mouseEvent->type() == QMouseEvent::Wheel)
@@ -1131,6 +1134,14 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
         return true;
     }
     return false;
+#else
+    if(event->type() == QEvent::Wheel)
+    {
+        qDebug() << "Wheel event blocked";
+        return true;
+    }
+    return false;
+#endif
 }
 #endif
 //--------------------------------------------------------------------------------

@@ -51,6 +51,7 @@ private slots:
     int split_data(QByteArray dirty_data);
     void read_data(QByteArray ba);
     void lock_iface(bool state);
+    void unlock_iface(bool state);  //FIXME костыль
 
 private slots:
     void choice_command(void);
@@ -203,6 +204,9 @@ private:
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    bool eventFilter(QObject*, QEvent* event);
 };
 //--------------------------------------------------------------------------------
 #endif // HLK_RM04_WIDGET_HPP

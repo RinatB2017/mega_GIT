@@ -35,8 +35,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    parent(parent)
+    ui(new Ui::MainBox)
 {
     init();
 }
@@ -64,7 +63,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     google_walker = new Google_walker(this);
     connect_log_signals(google_walker,  this);
@@ -142,25 +143,6 @@ void MainBox::createTestBar(void)
 void MainBox::test(void)
 {
     emit info("test");
-
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
-
-    //QList<QDockWidget *> all_dw = mw->findChildren<QDockWidget *>();
-    //emit info(QString("all_dw: cnt %1").arg(all_dw.count()));
-
-    QList<QTextEdit *> allobj = mw->findChildren<QTextEdit *>();
-    emit info(QString("allobj: cnt %1").arg(allobj.count()));
-    foreach (QTextEdit *obj, allobj)
-    {
-        if(!obj->objectName().isEmpty())
-        {
-            emit error(obj->objectName());
-            emit info(obj->toPlainText());
-        }
-    }
-
-    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

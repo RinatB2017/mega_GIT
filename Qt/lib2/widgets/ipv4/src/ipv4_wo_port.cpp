@@ -29,6 +29,11 @@ IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
     c = new QSpinBox(this);
     d = new QSpinBox(this);
 
+    a->installEventFilter(this);
+    b->installEventFilter(this);
+    c->installEventFilter(this);
+    d->installEventFilter(this);
+
     a->setObjectName("IPV4_wo_port_a");
     b->setObjectName("IPV4_wo_port_b");
     c->setObjectName("IPV4_wo_port_c");
@@ -66,7 +71,10 @@ IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
 //--------------------------------------------------------------------------------
 IPV4_wo_port::~IPV4_wo_port()
 {
-
+    if(a) a->deleteLater();
+    if(b) b->deleteLater();
+    if(c) c->deleteLater();
+    if(d) d->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void IPV4_wo_port::setObjectName(const QString &name)
@@ -161,6 +169,16 @@ int IPV4_wo_port::get_c(void)
 int IPV4_wo_port::get_d(void)
 {
     return d->value();
+}
+//--------------------------------------------------------------------------------
+bool IPV4_wo_port::eventFilter(QObject*, QEvent* event)
+{
+    if(event->type() == QEvent::Wheel)
+    {
+        qDebug() << "Wheel event blocked";
+        return true;
+    }
+    return false;
 }
 //--------------------------------------------------------------------------------
 bool IPV4_wo_port::no_exit(void)

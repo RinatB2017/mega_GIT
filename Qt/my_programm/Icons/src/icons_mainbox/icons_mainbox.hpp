@@ -55,6 +55,10 @@ private:
     void add_icons(QTabWidget *page,
                    const QString &catalog_name,
                    int max_x = 30);
+    void add_icons_from_theme(QTabWidget *page,
+                              int max_x = 30);
+
+    void print_icon_name(void);
 
     void createTestBar(void);
 

@@ -21,10 +21,14 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -40,8 +44,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -55,7 +59,7 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    WIFI_frame *wf;
+//    QPointer<WIFI_frame> wf;
 
     void init(void);
     void createTestBar(void);

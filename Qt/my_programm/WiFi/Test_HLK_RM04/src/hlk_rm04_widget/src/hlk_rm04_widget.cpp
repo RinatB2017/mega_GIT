@@ -43,7 +43,7 @@ void HLK_RM04_widget::init(void)
     connect(this,   SIGNAL(error(QString)), ui->log_widget, SLOT(errorLog(QString)));
     connect(this,   SIGNAL(trace(QString)), ui->log_widget, SLOT(traceLog(QString)));
 
-    l_commands.clear(); int id = 0;
+    l_commands.clear();
     l_commands.append({ ID_test,            "test",             &HLK_RM04_widget::s_test });
     l_commands.append({ ID_info,            "info",             &HLK_RM04_widget::s_info });
     l_commands.append({ ID_scan,            "scan",             &HLK_RM04_widget::s_scan });
@@ -136,6 +136,19 @@ void HLK_RM04_widget::init(void)
 
     init_serial();
 
+    //TODO надо доделать
+    ui->sb_timeout->installEventFilter(this);
+    ui->sb_remote_port->installEventFilter(this);
+    ui->sb_dhcpd_time_widget->installEventFilter(this);
+
+    ui->cb_mode->installEventFilter(this);
+    ui->cb_netmode->installEventFilter(this);
+    ui->cb_function->installEventFilter(this);
+    ui->cb_remotepro->installEventFilter(this);
+    ui->cb_serial_to->installEventFilter(this);
+    ui->cb_encrypt_type->installEventFilter(this);
+    //---
+
     //---
     bool first_start = load_value("First_start").toBool();
     if(!first_start)
@@ -198,7 +211,7 @@ void HLK_RM04_widget::init_serial(void)
 
     connect(this,               SIGNAL(send(QByteArray)),       ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),     this,               SLOT(read_data(QByteArray)));
-    //connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,               SLOT(lock_iface(bool)));
+    connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,               SLOT(unlock_iface(bool)));
     connect(ui->serial_widget,  SIGNAL(readChannelFinished()),  this,               SLOT(readChannelFinished()));
 }
 //--------------------------------------------------------------------------------
@@ -249,7 +262,64 @@ void HLK_RM04_widget::lock_iface(bool state)
     ui->dhcpd_gate_widget->block_interface(state);
     ui->net_dns_widget->block_interface(state);
 
+    ui->sb_timeout->setDisabled(state);
+    ui->sb_remote_port->setDisabled(state);
+    ui->sb_dhcpd_time_widget->setDisabled(state);
+
+    ui->cb_mode->setDisabled(state);
+    ui->cb_netmode->setDisabled(state);
+    ui->cb_function->setDisabled(state);
+    ui->cb_remotepro->setDisabled(state);
+    ui->cb_serial_to->setDisabled(state);
+    ui->cb_encrypt_type->setDisabled(state);
+
+    ui->btn_send->setDisabled(state);
+    ui->btn_function->setDisabled(state);
+    ui->btn_serial_to->setDisabled(state);
+
+    ui->le_send->setDisabled(state);
+    ui->le_ssid->setDisabled(state);
+    ui->le_password->setDisabled(state);
+
     state ? lock_interface() : unlock_interface();
+}
+//--------------------------------------------------------------------------------
+void HLK_RM04_widget::unlock_iface(bool state)
+{
+    emit info(QString("state is %1").arg(!state ? "true" : "false"));
+    ui->ip_widget->block_interface(!state);
+    ui->gate_widget->block_interface(!state);
+    ui->mask_widget->block_interface(!state);
+    ui->remote_ip_widget->block_interface(!state);
+    ui->net_ip_widget->block_interface(!state);
+    ui->net_gate_widget->block_interface(!state);
+    ui->net_mask_widget->block_interface(!state);
+    ui->dhcpd_ip_widget->block_interface(!state);
+    ui->dhcpd_dns_widget->block_interface(!state);
+    ui->dhcpd_mask_widget->block_interface(!state);
+    ui->dhcpd_gate_widget->block_interface(!state);
+    ui->net_dns_widget->block_interface(!state);
+
+    ui->sb_timeout->setEnabled(state);
+    ui->sb_remote_port->setEnabled(state);
+    ui->sb_dhcpd_time_widget->setEnabled(state);
+
+    ui->cb_mode->setEnabled(state);
+    ui->cb_netmode->setEnabled(state);
+    ui->cb_function->setEnabled(state);
+    ui->cb_remotepro->setEnabled(state);
+    ui->cb_serial_to->setEnabled(state);
+    ui->cb_encrypt_type->setEnabled(state);
+
+    ui->btn_send->setEnabled(state);
+    ui->btn_function->setEnabled(state);
+    ui->btn_serial_to->setEnabled(state);
+
+    ui->le_send->setEnabled(state);
+    ui->le_ssid->setEnabled(state);
+    ui->le_password->setEnabled(state);
+
+    !state ? lock_interface() : unlock_interface();
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::readChannelFinished(void)
@@ -1143,6 +1213,15 @@ void HLK_RM04_widget::send_text(void)
     send_command(ui->le_send->text());
 }
 //--------------------------------------------------------------------------------
+bool HLK_RM04_widget::eventFilter(QObject*, QEvent* event)
+{
+    if(event->type() == QEvent::Wheel)
+    {
+        qDebug() << "Wheel event blocked";
+        return true;
+    }
+    return false;
+}//--------------------------------------------------------------------------------
 void HLK_RM04_widget::updateText(void)
 {
 

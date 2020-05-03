@@ -12,9 +12,6 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
-
-#DEFINES += FIXED_SIZE
-
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
@@ -28,6 +25,8 @@ SOURCES += \
     main.cpp
 
 FORMS   += icons_mainbox.ui
+
+RESOURCES += icons/list_icons.qrc
 
 win32 {
     RC_ICONS = ico/computer.ico

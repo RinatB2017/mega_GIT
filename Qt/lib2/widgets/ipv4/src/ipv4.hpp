@@ -55,6 +55,9 @@ private:
     QSpinBox *port;
 
     void init(void);
+
+protected:
+    bool eventFilter(QObject*, QEvent* event);
 };
 //--------------------------------------------------------------------------------
 #endif // IPV4_HPP

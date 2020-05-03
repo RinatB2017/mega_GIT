@@ -64,15 +64,18 @@ private slots:
     void work(void);
 
 private:
-    QSpinBox *a;
-    QSpinBox *b;
-    QSpinBox *c;
-    QSpinBox *d;
+    QPointer<QSpinBox> a;
+    QPointer<QSpinBox> b;
+    QPointer<QSpinBox> c;
+    QPointer<QSpinBox> d;
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    bool eventFilter(QObject*, QEvent* event);
 };
 //--------------------------------------------------------------------------------
 #endif // IPV4_WO_PORT_HPP

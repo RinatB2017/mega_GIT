@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_VRM04_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "wifi_frame.hpp"
@@ -56,15 +50,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    wf = new WIFI_frame("WiFi", false, this);
-    wf->setFixedSize(wf->sizeHint());
-    wf->show();
-
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(wf);
-    setLayout(vbox);
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -109,33 +97,33 @@ void MainBox::test(void)
     ba.append("at+reconn=1\r");
 #endif
 
-    ok = wf->send_at_command("at+ver=?\r");
+    ok = ui->wifi_widget->send_at_command("at+ver=?\r");
     if(ok)  emit info("OK");
 
 #if 1
-    ok = wf->send_at_command("at+netmode=1\r");
+    ok = ui->wifi_widget->send_at_command("at+netmode=1\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+dhcpc=1\r");
+    ok = ui->wifi_widget->send_at_command("at+dhcpc=1\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+remoteip=192.168.0.10\r");
+    ok = ui->wifi_widget->send_at_command("at+remoteip=192.168.0.10\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+remoteport=8080\r");
+    ok = ui->wifi_widget->send_at_command("at+remoteport=8080\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+remotepro=tcp\r");
+    ok = ui->wifi_widget->send_at_command("at+remotepro=tcp\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+timeout=0\r");
+    ok = ui->wifi_widget->send_at_command("at+timeout=0\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+mode=server\r");
+    ok = ui->wifi_widget->send_at_command("at+mode=server\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+uart=9600,8,n,1\r");
+    ok = ui->wifi_widget->send_at_command("at+uart=9600,8,n,1\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+uartpacklen=64\r");
+    ok = ui->wifi_widget->send_at_command("at+uartpacklen=64\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+uartpacktimeout=10\r");
+    ok = ui->wifi_widget->send_at_command("at+uartpacktimeout=10\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+net_commit=1\r");
+    ok = ui->wifi_widget->send_at_command("at+net_commit=1\r");
     if(ok)  emit info("OK");
-    ok = wf->send_at_command("at+reconn=1\r");
+    ok = ui->wifi_widget->send_at_command("at+reconn=1\r");
     if(ok)  emit info("OK");
 #endif
 }

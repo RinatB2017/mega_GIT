@@ -35,9 +35,6 @@ namespace Ui {
     class WIFI_frame;
 }
 //--------------------------------------------------------------------------------
-class SerialBox5_lite;
-class LogBox;
-//--------------------------------------------------------------------------------
 class WIFI_frame : public MyWidget
 {
     Q_OBJECT
@@ -70,6 +67,7 @@ private slots:
     void readChannelFinished(void);
 
     void lock_interface(bool state);
+    void unlock_interface(bool state);  //FIXME костыль
 
 private:
     Ui::WIFI_frame *ui;

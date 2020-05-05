@@ -21,6 +21,12 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -48,7 +54,7 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QTabWidget *tab;
+    QPointer<QTabWidget> tab;
     QList<QToolButton *> l_buttons;
 
     void init(void);

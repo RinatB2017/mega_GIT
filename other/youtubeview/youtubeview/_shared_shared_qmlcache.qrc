@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/shared">
+        <file alias="images/arrow.png">../shared/images/arrow.png</file>
+        <file alias="images/busy.png">../shared/images/busy.png</file>
+        <file alias="images/less.png">../shared/images/less.png</file>
+        <file alias="images/more.png">../shared/images/more.png</file>
+        <file alias="Button.qml">../shared/Button.qml</file>
+        <file alias="LoadIndicator.qml">../shared/LoadIndicator.qml</file>
+    </qresource>
+</RCC>

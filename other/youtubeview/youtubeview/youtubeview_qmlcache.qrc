@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="content/YouTubeDialog.qml">content/YouTubeDialog.qml</file>
+        <file alias="content/player.html">content/player.html</file>
+        <file alias="youtubeview.qml">youtubeview.qml</file>
+    </qresource>
+</RCC>

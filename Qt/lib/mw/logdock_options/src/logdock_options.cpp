@@ -27,19 +27,19 @@ LogDock_options::LogDock_options(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->btn_ok,     SIGNAL(clicked(bool)),  this,   SLOT(accept()));
-    connect(ui->btn_cancel, SIGNAL(clicked(bool)),  this,   SLOT(reject()));
+    connect(ui->btn_ok,     &QPushButton::clicked,  this,   &LogDock_options::accept);
+    connect(ui->btn_cancel, &QPushButton::clicked,  this,   &LogDock_options::reject);
 
-    connect(ui->cb_readonly,    SIGNAL(toggled(bool)),  this,   SLOT(set_readonly(bool)));
+    connect(ui->cb_readonly,    &QCheckBox::toggled,    this,   &LogDock_options::set_readonly);
 
-    connect(ui->cb_EMERG,   SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_EMERG(bool)));
-    connect(ui->cb_ALERT,   SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_ALERT(bool)));
-    connect(ui->cb_CRIT,    SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_CRIT(bool)));
-    connect(ui->cb_ERR,     SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_ERR(bool)));
-    connect(ui->cb_WARN,    SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_WARNING(bool)));
-    connect(ui->cb_NOTICE,  SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_NOTICE(bool)));
-    connect(ui->cb_INFO,    SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_INFO(bool)));
-    connect(ui->cb_DEBUG,   SIGNAL(toggled(bool)),  this,   SLOT(set_LOG_DEBUG(bool)));
+    connect(ui->cb_EMERG,   &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_EMERG);
+    connect(ui->cb_ALERT,   &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_ALERT);
+    connect(ui->cb_CRIT,    &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_CRIT);
+    connect(ui->cb_ERR,     &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_ERR);
+    connect(ui->cb_WARN,    &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_WARNING);
+    connect(ui->cb_NOTICE,  &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_NOTICE);
+    connect(ui->cb_INFO,    &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_INFO);
+    connect(ui->cb_DEBUG,   &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_DEBUG);
 
     setFixedSize(sizeHint());
 }

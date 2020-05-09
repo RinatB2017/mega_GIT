@@ -56,11 +56,7 @@ AboutBox::AboutBox(const QString &orgName,
 
     ui->lbl_email->setAlignment(Qt::AlignTop);
     ui->lbl_email->setText(text);
-    connect(ui->lbl_email,  SIGNAL(linkActivated(QString)), this,   SLOT(send_mail(QString)));
-//    ui->lbl_email->connect(ui->lbl_email, &QLabel::linkActivated, [](const QString &link)
-//    {
-//        QDesktopServices::openUrl(QUrl(link));
-//    });
+    connect(ui->lbl_email,  &QLabel::linkActivated, this,   &AboutBox::send_mail);
 
 #ifdef LOGO_GL
     GLWidget *glWidget = new GLWidget(this);
@@ -76,15 +72,15 @@ AboutBox::AboutBox(const QString &orgName,
     ui->btn_about_qt->setIcon(QPixmap(QLatin1String(ICON_ABOUT_QT)));
     ui->btn_about_qt->setToolTip(tr("About Qt"));
     ui->btn_about_qt->setStatusTip(tr("About Qt"));
-    connect(ui->btn_about_qt, SIGNAL(clicked()),    qApp, SLOT(aboutQt()));
+    connect(ui->btn_about_qt,   &QToolButton::clicked,  qApp,   &QApplication::aboutQt);
 
-    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(ui->buttonBox,  &QDialogButtonBox::rejected, this, &AboutBox::close);
 
     ui->btn_env->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MessageBoxInformation)));
     ui->btn_env->setToolTip(tr("Get ENV"));
     ui->btn_env->setStatusTip(tr("Get ENV"));
 
-    connect(ui->btn_env,    SIGNAL(clicked(bool)),  this,   SLOT(show_env()));
+    connect(ui->btn_env,    &QToolButton::clicked,  this,   &AboutBox::show_env);
     ui->btn_env->setVisible(false);
 }
 //--------------------------------------------------------------------------------

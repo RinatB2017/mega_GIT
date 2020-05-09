@@ -96,8 +96,11 @@ void MainBox::init(void)
     sw->show();
 #endif
 
-    //TODO xxx
-    ui->btn_ok->setProperty("xxx", 1);
+    //---
+    connect(ui->btn_click,  &QPushButton::clicked,  [this]() {
+            emit info("click");
+        });
+    //---
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
@@ -365,6 +368,10 @@ bool MainBox::test(void)
             QToolButton *btn = new QToolButton(widget);
             btn->setToolTip(icon_name);
             btn->setIcon(QIcon::fromTheme(icon_name, QIcon(":/mainwindow/computer.png/mainwindow/computer.png")));
+            connect(btn, &QPushButton::clicked, [this, icon_name]() {
+                    emit info(icon_name);
+                });
+
             grid->addWidget(btn, row, col);
             if(col < MAX_COL)
             {

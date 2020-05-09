@@ -119,9 +119,9 @@ void MyMainWindow::create_local_menus(void)
     help_action->setText(QObject::tr("help_action"));
     help_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
-    connect(file_action,    SIGNAL(triggered()),    this,   SLOT(file_action_click()));
-    connect(options_action, SIGNAL(triggered()),    this,   SLOT(options_action_click()));
-    connect(help_action,    SIGNAL(triggered()),    this,   SLOT(help_action_click()));
+    connect(file_action,    &QAction::triggered,    this,   &MyMainWindow::file_action_click);
+    connect(options_action, &QAction::triggered,    this,   &MyMainWindow::options_action_click);
+    connect(help_action,    &QAction::triggered,    this,   &MyMainWindow::help_action_click);
 
 #ifndef NO_MENU
     add_filemenu_action(0,      file_action);
@@ -150,7 +150,7 @@ void MyMainWindow::create_toolbars(void)
         btn->setObjectName(QString("red_btn_%1").arg(n));
         btn->setToolTip(QString("%1").arg(n));
         btn->setProperty("value", n);
-        connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click_btn()));
+        connect(btn,    &QToolButton::clicked,  this,   &MyMainWindow::click_btn);
         toolBar->addWidget(btn);
     }
 
@@ -173,7 +173,7 @@ void MyMainWindow::create_toolbars(void)
         btn->setObjectName(QString("white_btn_%1").arg(n));
         btn->setToolTip(QString("%1").arg(n));
         btn->setProperty("value", n);
-        connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click_btn()));
+        connect(btn,    &QToolButton::clicked,  this,   &MyMainWindow::click_btn);
         toolBar2->addWidget(btn);
     }
 
@@ -258,7 +258,7 @@ void MyMainWindow::setCentralWidget(MyWidget *widget)
     QToolButton *btn = new QToolButton();
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     btn->setCheckable(true);
-    connect(btn,    SIGNAL(toggled(bool)),  widget, SLOT(setHidden(bool)));
+    connect(btn,    &QToolButton::toggled,  widget, &MyWidget::setHidden);
     btn->setText("#");
     grid->addWidget(btn, 1, 3);
 #endif

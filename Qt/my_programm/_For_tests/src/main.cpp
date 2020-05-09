@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+    QObject::connect(&app, &QtSingleApplication::messageReceived, main_window, &MyMainWindow::set_focus);
 #ifdef QT_DEBUG
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 #endif

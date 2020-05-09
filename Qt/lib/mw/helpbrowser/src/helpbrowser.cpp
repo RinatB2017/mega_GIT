@@ -27,10 +27,10 @@ HelpBrowser::HelpBrowser(QString &page,
     mainLayout->addWidget(textBrowser);
     setLayout(mainLayout);
 
-    connect(homeButton,     SIGNAL(clicked()),              textBrowser,    SLOT(home()));
-    connect(backButton,     SIGNAL(clicked()),              textBrowser,    SLOT(backward()));
-    connect(closeButton,    SIGNAL(clicked()),              this,           SLOT(close()));
-    connect(textBrowser,    SIGNAL(sourceChanged(QUrl)),    this,           SLOT(updateCaption(QUrl)));
+    connect(homeButton,     &QPushButton::clicked,          textBrowser,    &QTextBrowser::home);
+    connect(backButton,     &QPushButton::clicked,          textBrowser,    &QTextBrowser::backward);
+    connect(closeButton,    &QPushButton::clicked,          this,           &HelpBrowser::close);
+    connect(textBrowser,    &QTextBrowser::sourceChanged,   this,           &HelpBrowser::updateCaption);
 
     textBrowser->setSource(QUrl(page));
 

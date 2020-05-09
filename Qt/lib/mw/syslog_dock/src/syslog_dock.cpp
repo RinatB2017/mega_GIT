@@ -78,7 +78,7 @@ SysLog_dock::SysLog_dock(const QString &title,
         btn->setObjectName(QString("btn_%1").arg(n));
         btn->setText(QString("%1").arg(n));
         btn->setProperty("value", n);
-        connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(click()));
+        connect(btn,    &QToolButton::clicked,  this,   &SysLog_dock::click);
         buttons.append(btn);
     }
 
@@ -87,10 +87,10 @@ SysLog_dock::SysLog_dock(const QString &title,
     btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
     btn_last->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipForward));
 
-    connect(btn_first,  SIGNAL(clicked(bool)),  this,   SLOT(seek_first()));
-    connect(btn_prev,   SIGNAL(clicked(bool)),  this,   SLOT(seek_prev()));
-    connect(btn_next,   SIGNAL(clicked(bool)),  this,   SLOT(seek_next()));
-    connect(btn_last,   SIGNAL(clicked(bool)),  this,   SLOT(seek_last()));
+    connect(btn_first,  &QToolButton::clicked,  this,   &SysLog_dock::seek_first);
+    connect(btn_prev,   &QToolButton::clicked,  this,   &SysLog_dock::seek_prev);
+    connect(btn_next,   &QToolButton::clicked,  this,   &SysLog_dock::seek_next);
+    connect(btn_last,   &QToolButton::clicked,  this,   &SysLog_dock::seek_last);
 
     connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 

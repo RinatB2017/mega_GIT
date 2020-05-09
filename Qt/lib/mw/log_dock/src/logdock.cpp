@@ -44,10 +44,10 @@ LogDock::LogDock(const QString &title,
     le = new LogBox("LogBox", this);
     Q_CHECK_PTR(le);
 
-    connect(this,   SIGNAL(signal_is_shows_info(bool)),     le, SLOT(set_flag_is_shows_info(bool)));
-    connect(this,   SIGNAL(signal_is_shows_debug(bool)),    le, SLOT(set_flag_is_shows_debug(bool)));
-    connect(this,   SIGNAL(signal_is_shows_error(bool)),    le, SLOT(set_flag_is_shows_error(bool)));
-    connect(this,   SIGNAL(signal_is_shows_trace(bool)),    le, SLOT(set_flag_is_shows_trace(bool)));
+    connect(this,   &LogDock::signal_is_shows_info,     le, &LogBox::set_flag_is_shows_info);
+    connect(this,   &LogDock::signal_is_shows_debug,    le, &LogBox::set_flag_is_shows_debug);
+    connect(this,   &LogDock::signal_is_shows_error,    le, &LogBox::set_flag_is_shows_error);
+    connect(this,   &LogDock::signal_is_shows_trace,    le, &LogBox::set_flag_is_shows_trace);
 
 #if 1
     QWidget *w = new QWidget(this);
@@ -64,7 +64,7 @@ LogDock::LogDock(const QString &title,
 #endif
 
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(timer,  &QTimer::timeout,   this,   &LogDock::update);
     timer->start(10);   //TODO не надо ставить меньше
 }
 //--------------------------------------------------------------------------------

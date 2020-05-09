@@ -230,10 +230,10 @@ void MainWindow::init(void)
 #ifndef NO_LOG
     createLog();
 #else
-    connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-    connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
+    connect(this, &MainWindow::info,    this, &MainWindow::log);
+    connect(this, &MainWindow::debug,   this, &MainWindow::log);
+    connect(this, &MainWindow::error,   this, &MainWindow::log);
+    connect(this, &MainWindow::trace,   this, &MainWindow::log);
 #endif
 
 #ifdef SYSLOG_LOG
@@ -782,10 +782,10 @@ void MainWindow::createSysLog_dock(void)
     syslog_dock = new SysLog_dock("syslog", this);
     Q_CHECK_PTR(syslog_dock);
 
-    connect(syslog_dock,   SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(syslog_dock,   SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(syslog_dock,   SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(syslog_dock,   SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    connect(syslog_dock,   &SysLog_dock::info,  this,   &MainWindow::info);
+    connect(syslog_dock,   &SysLog_dock::debug, this,   &MainWindow::debug);
+    connect(syslog_dock,   &SysLog_dock::error, this,   &MainWindow::error);
+    connect(syslog_dock,   &SysLog_dock::trace, this,   &MainWindow::trace);
 
     connect(this,   SIGNAL(syslog(int,int,QString)),            syslog_dock,   SLOT(syslog(int,int,QString)));
     connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  syslog_dock,   SLOT(syslog(QDateTime,int,int,QString)));

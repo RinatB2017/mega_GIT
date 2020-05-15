@@ -330,6 +330,59 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
+bool MainBox::find_picture(void)
+{
+    QString filename_0 = "/dev/shm/0/Screenshot.png";
+    QString filename_1 = "/dev/shm/0/ok.png";
+
+    bool ok = false;
+    QImage *image_0 = new QImage();
+    ok = image_0->load(filename_0);
+    if(!ok)
+    {
+        emit error(QString("Error load %1").arg(filename_0));
+        return false;
+    }
+    QImage *image_1 = new QImage();
+    ok = image_1->load(filename_1);
+    if(!ok)
+    {
+        emit error(QString("Error load %1").arg(filename_1));
+        return false;
+    }
+
+    //---
+    int w_1 = image_1->width();
+    int h_1 = image_1->height();
+    QRgb buf[w_1][h_1];
+    for(int x_1=0; x_1<w_1; x_1++)
+    {
+        for(int y_1=0; y_1<h_1; y_1++)
+        {
+            buf[x_1][y_1] = image_1->pixel(x_1, y_1);
+        }
+    }
+    //---
+    int w_0 = image_0->width();
+    int h_0 = image_0->height();
+    for(int x_0=0; x_0<w_0; x_0++)
+    {
+        for(int y_0=0; y_0<h_0; y_0++)
+        {
+            QRgb rgb = image_0->pixel(x_0, y_0);
+        }
+    }
+    //---
+#if 0
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(*image_1));
+    label->show();
+#endif
+    //---
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 #define MAX_COL 24
 
 bool MainBox::test(void)
@@ -337,7 +390,28 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
+#if 0
+    bool ok = find_picture();
+    if(ok)
+    {
+        emit info("OK");
+    }
+    else
+    {
+        emit error("FAIL");
+    }
+#endif
+
 #if 1
+    auto res = [] (auto first, auto second)
+    {
+        return first + second;
+    };
+
+    emit info(QString("res %1").arg(res(5,5)));
+#endif
+
+#if 0
     QFile file("list_icons.txt");
     QString temp;
     QStringList sl_temp;

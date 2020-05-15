@@ -137,6 +137,8 @@ private:
     void test_validator(void);
     int get_cnt(void);
 
+    bool find_picture(void);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

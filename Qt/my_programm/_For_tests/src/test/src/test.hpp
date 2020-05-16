@@ -33,13 +33,13 @@ public:
 
 private slots:
     void test_signals(void);
-    
+    void test_func(void);
+
 private:
     MainWindow *mw;
 
     //TODO позже можно вернуть в private slots:
     void test_GUI(void);
-    void test_func(void);
 };
 //--------------------------------------------------------------------------------
 #endif

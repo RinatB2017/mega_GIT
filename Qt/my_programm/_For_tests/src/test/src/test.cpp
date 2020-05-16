@@ -51,6 +51,14 @@ void Test::test_func(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
+
+    auto *btn = mw->findChild<QAbstractButton *>("btn_click");
+    QVERIFY(btn);
+    btn->click();
+
+    auto *cb = mw->findChild<QAbstractButton *>("cb_checkbox_test");
+    QVERIFY(cb);
+    cb->setChecked(true);
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals(void)

@@ -383,6 +383,19 @@ bool MainBox::find_picture(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+void MainBox::f(int)
+{
+    emit info("int");
+}
+void MainBox::f(float)
+{
+    emit info("float");
+}
+void MainBox::f(double)
+{
+    emit info("double");
+}
+//--------------------------------------------------------------------------------
 #define MAX_COL 24
 
 bool MainBox::test(void)
@@ -403,6 +416,18 @@ bool MainBox::test(void)
 #endif
 
 #if 1
+    f(5.0);
+#endif
+
+#if 0
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+
+    stream << qint32(1000000);
+    emit info(data.toHex());
+#endif
+
+#if 0
     auto res = [] (auto first, auto second)
     {
         return first + second;

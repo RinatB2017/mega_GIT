@@ -138,6 +138,9 @@ private:
     int get_cnt(void);
 
     bool find_picture(void);
+    void f(int);
+    void f(float);
+    void f(double);
 
     void updateText(void);
     bool programm_is_exit(void);

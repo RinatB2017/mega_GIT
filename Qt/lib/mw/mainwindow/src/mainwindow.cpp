@@ -605,7 +605,12 @@ void MainWindow::setToolBarStyles(void)
 //--------------------------------------------------------------------------------
 void MainWindow::about(void)
 {
-    AboutBox *about = new AboutBox(orgName, appName, appVersion, tr("Author: Bikbao Rinat Zinorovich"));
+    AboutBox *about = new AboutBox(orgName,
+                                   appName,
+                                   appVersion,
+                                   "tux4096@gmail.com",
+                                   tr("Author: Bikbao Rinat Zinorovich"),
+                                   "https://t-do.ru/TesterAdv");
     Q_CHECK_PTR(about);
 
     about->exec();

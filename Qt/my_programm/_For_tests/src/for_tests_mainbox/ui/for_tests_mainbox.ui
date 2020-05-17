@@ -154,9 +154,14 @@
   <tabstop>sb_res</tabstop>
   <tabstop>btn_ok</tabstop>
   <tabstop>horizontalSlider</tabstop>
+  <tabstop>rb_test</tabstop>
+  <tabstop>cb_checkbox_test</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>timeEdit</tabstop>
   <tabstop>dateTimeEdit</tabstop>
   <tabstop>toolButton</tabstop>
   <tabstop>comboBox</tabstop>
+  <tabstop>btn_click</tabstop>
  </tabstops>
  <resources/>
  <connections/>

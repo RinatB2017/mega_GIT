@@ -395,6 +395,13 @@ void MainBox::f(double)
 {
     emit info("double");
 }
+int MainBox::check_packet(PACKET packet)
+{
+    if(packet.a != 1)   return 1;
+    if(packet.b != 2)   return 2;
+    if(packet.c != 3)   return 3;
+    return 0;
+}
 //--------------------------------------------------------------------------------
 #define MAX_COL 24
 
@@ -402,6 +409,11 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+
+#if 1
+    int res = check_packet({ 1, 2, 3, {1,1,1,1,1}});
+    emit info(QString("res = %1").arg(res));
+#endif
 
 #if 0
     bool ok = find_picture();
@@ -415,7 +427,7 @@ bool MainBox::test(void)
     }
 #endif
 
-#if 1
+#if 0
     f(5.0);
 #endif
 

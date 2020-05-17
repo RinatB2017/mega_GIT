@@ -2,5 +2,6 @@
     <qresource prefix="/logo">
         <file alias="logo.png">pinguin_os-tux-gentoo.png</file>
         <file alias="Tux.png">Tux.png</file>
+        <file alias="avatar.png">avatar.png</file>
     </qresource>
 </RCC>

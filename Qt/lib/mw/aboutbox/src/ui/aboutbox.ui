@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>369</height>
+    <width>487</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,13 +21,25 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="labelLogo">
-       <property name="pixmap">
-        <pixmap resource="../../images/aboutbox.qrc">:/logo/avatar.png</pixmap>
+      <widget class="QFrame" name="frame">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="labelLogo">
+          <property name="pixmap">
+           <pixmap resource="../../images/aboutbox.qrc">:/logo/avatar.png</pixmap>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>

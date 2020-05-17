@@ -18,7 +18,7 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 #DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
+#DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_MENU
 
@@ -66,7 +66,7 @@ RESOURCES += \
     ico/icons.qrc
 
 #можно поставить новое logo
-RESOURCES += about/about.qrc
+#RESOURCES += about/about.qrc
 
 OTHER_FILES += doc/notebook.txt
 

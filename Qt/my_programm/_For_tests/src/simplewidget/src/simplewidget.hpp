@@ -49,7 +49,10 @@ private:
     Ui::SimpleWidget *ui;
 
     int x_value = 0;
-    int read_x(void) { return x_value; }
+    int read_x(void)
+    {
+        return x_value;
+    }
     void write_x(int new_value)
     {
         if(x_value == new_value)    return;

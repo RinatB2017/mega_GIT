@@ -70,13 +70,6 @@
 
 //    QSpinBox *widget = nullptr;
 //};
-typedef struct PACKET
-{
-    uint8_t  a;
-    uint16_t b;
-    uint32_t c;
-    uint8_t buf[5];
-} *packet_t;
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -84,7 +77,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class SimpleWidget;
-class QMediaPlayer;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -143,12 +135,6 @@ private:
 
     void test_validator(void);
     int get_cnt(void);
-
-    bool find_picture(void);
-    void f(int);
-    void f(float);
-    void f(double);
-    int check_packet(PACKET packet);
 
     void updateText(void);
     bool programm_is_exit(void);

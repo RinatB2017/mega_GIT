@@ -63,16 +63,9 @@ void Test::test_GUI(void)
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-#if 0
     MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
     QVERIFY(mb);
 
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
-#endif
+    QCOMPARE(mb->test(), true);
 }
 //--------------------------------------------------------------------------------

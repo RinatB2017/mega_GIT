@@ -44,12 +44,7 @@ signals:
     void set(QString);
 
 public slots:
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
 public slots:
     void get(void);

@@ -37,7 +37,6 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox)
 {
     ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------

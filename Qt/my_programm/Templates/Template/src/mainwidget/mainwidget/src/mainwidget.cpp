@@ -45,9 +45,9 @@ void MainWidget::get(void)
     emit set(QString("%1").arg(x));
 }
 //--------------------------------------------------------------------------------
-bool MainWidget::test_0(void)
+bool MainWidget::test(void)
 {
-    emit info("Test_0()");
+    emit info("Test");
     emit trace(Q_FUNC_INFO);
 
 #if 0
@@ -61,46 +61,6 @@ bool MainWidget::test_0(void)
     emit error("error");
     emit trace("trace");
 #endif
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainWidget::test_1(void)
-{
-    emit info("Test_1()");
-    emit trace(Q_FUNC_INFO);
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainWidget::test_2(void)
-{
-    emit info("Test_2()");
-    emit trace(Q_FUNC_INFO);
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainWidget::test_3(void)
-{
-    emit info("Test_3()");
-    emit trace(Q_FUNC_INFO);
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainWidget::test_4(void)
-{
-    emit info("Test_4()");
-    emit trace(Q_FUNC_INFO);
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainWidget::test_5(void)
-{
-    emit info("Test_5()");
-    emit trace(Q_FUNC_INFO);
 
     return true;
 }

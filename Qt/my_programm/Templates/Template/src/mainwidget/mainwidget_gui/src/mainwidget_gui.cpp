@@ -87,13 +87,7 @@ void MainWidget_GUI::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainWidget::test_0 });
-    commands.append({ id++, "test 1", &MainWidget::test_1 });
-    commands.append({ id++, "test 2", &MainWidget::test_2 });
-    commands.append({ id++, "test 3", &MainWidget::test_3 });
-    commands.append({ id++, "test 4", &MainWidget::test_4 });
-    commands.append({ id++, "test 5", &MainWidget::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &MainWidget::test });
 
     testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");

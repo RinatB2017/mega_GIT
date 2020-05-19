@@ -70,6 +70,12 @@
 
 //    QSpinBox *widget = nullptr;
 //};
+
+typedef struct PACKET {
+    uint8_t a;
+    uint8_t b;
+    uint8_t c;
+} *packet_t;
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -91,6 +97,8 @@ public:
 
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
+
+    int test_packet(PACKET packet);
 
 public slots:
     void choice_test(void);

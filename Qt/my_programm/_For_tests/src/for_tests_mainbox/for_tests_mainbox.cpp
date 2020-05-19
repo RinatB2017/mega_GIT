@@ -340,14 +340,16 @@ bool MainBox::test(void)
 #if 1
     QLabel *label = new QLabel();
 
-    QPainter painter(label);
+    QPixmap pixmap(150, 150);
+
+    QPainter painter(&pixmap);
     painter.setPen(Qt::red);
     painter.setBrush(QBrush(Qt::red));
     int pos_x = 0;
     int pos_y = 0;
     painter.drawRect(pos_x, pos_y, 150, 150);
-    label->update();
 
+    label->setPixmap(pixmap);
     label->setFixedSize(200, 200);
     label->show();
 #endif
@@ -456,6 +458,14 @@ bool MainBox::print_property(void)
         emit info(QString("%1").arg(sw->metaObject()->property(index).name()));
     }
     return true;
+}
+//--------------------------------------------------------------------------------
+int MainBox::test_packet(PACKET packet)
+{
+    if(packet.a < 10)                       return 0;
+    if((packet.b > 10) && (packet.b < 20))  return 0;
+    if((packet.c > 20) && (packet.c < 30))  return 0;
+    return 1;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

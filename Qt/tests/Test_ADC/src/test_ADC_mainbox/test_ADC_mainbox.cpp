@@ -88,12 +88,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -261,32 +256,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_1(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_2(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_3(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_4(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_5(void)
+void MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 }

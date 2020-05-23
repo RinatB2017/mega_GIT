@@ -34,48 +34,38 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-//class A {
-
-//public:
-//    A()
-//    {
-//        init();
-//    }
-//    void init(void)
-//    {
-//        qDebug() << "A: init";
-//        widget = new QWidget();
-//    }
-//    void test(void)
-//    {
-//        qDebug() << "A: test";
-//    }
-
-//    QWidget *widget = nullptr;
-//};
-
-//class B : A {
-
-//public:
-//    B()
-//    {
-//        init();
-//    }
-//    void init(void)
-//    {
-//        qDebug() << "B: init";
-//        widget = new QSpinBox();
-//        test();
-//    }
-
-//    QSpinBox *widget = nullptr;
-//};
-
 typedef struct PACKET {
-    uint8_t a;
-    uint8_t b;
-    uint8_t c;
+    uint16_t a;
+    uint8_t  b;
+    uint32_t c;
 } *packet_t;
+//--------------------------------------------------------------------------------
+class IMyClass {
+    virtual void open(void) = 0;
+    virtual void close(void) = 0;
+};
+
+class IMyClass2 {
+    virtual void open2(void) = 0;
+    virtual void close2(void) = 0;
+};
+
+class MyClass : public IMyClass, IMyClass2
+{
+public:
+    void open(void)  { open2();  };
+    void close(void) { close2(); };
+
+private:
+    void open2(void)  { qDebug() << "open2";  };
+    void close2(void) { qDebug() << "close2"; };
+};
+
+class MyClass2 : MyClass
+{
+public:
+    void open(void)  { MyClass::open(); };
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;

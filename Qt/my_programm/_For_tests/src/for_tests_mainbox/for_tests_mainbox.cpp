@@ -338,6 +338,11 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    MyClass2 *mc = new MyClass2();
+    mc->open();
+#endif
+
+#if 0
     QLabel *label = new QLabel();
 
     QPixmap pixmap(150, 150);

@@ -76,6 +76,8 @@ AboutBox::AboutBox(const QString &orgName,
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(glWidget);
 
+    ui->labelLogo->setFixedSize(312, 312);   //TODO про фотографию не забыть
+
     ui->labelLogo->clear();
     ui->labelLogo->setLayout(vbox);
 #else

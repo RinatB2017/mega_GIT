@@ -41,15 +41,8 @@ template< class T >
 class Param
 {
 public:
-    void set(const T& Element)
-    {
-        value = Element;
-    }
-
-    T get(void)
-    {
-        return value;
-    }
+    void set(const T& Element) { value = Element; }
+    T get(void) { return value; }
 
 private:
     T value;

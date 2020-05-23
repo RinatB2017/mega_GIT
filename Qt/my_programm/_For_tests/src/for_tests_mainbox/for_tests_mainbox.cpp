@@ -338,6 +338,17 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    Param<int>   i_param;
+    Param<qreal> d_param;
+
+    i_param.set(5);
+    d_param.set(2.5);
+
+    emit info(QString("%1").arg(i_param.get()));
+    emit info(QString("%1").arg(d_param.get()));
+#endif
+
+#if 0
     MyClass2 *mc = new MyClass2();
     mc->open();
 #endif

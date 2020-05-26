@@ -53,7 +53,7 @@
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
-    //set_signals();
+    set_signals();
 #endif
 #if QT_VERSION >= 0x050000
     //qInstallMessageHandler(log_to_file);

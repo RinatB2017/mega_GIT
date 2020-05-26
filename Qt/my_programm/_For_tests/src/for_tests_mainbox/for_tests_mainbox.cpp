@@ -337,7 +337,18 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
-#if 1
+#if 0
+    char *text = "Каждому своё";
+
+    QByteArray ba;
+    ba.append(text, strlen(text));
+    emit info(ba.toHex().toUpper());
+
+    QByteArray t_ba = QByteArray::fromHex("D09AD0B0D0B6D0B4D0BED0BCD18320D181D0B2D0BED191");
+    emit info(t_ba.data());
+#endif
+
+#if 0
     Param<int>   i_param;
     Param<qreal> d_param;
 

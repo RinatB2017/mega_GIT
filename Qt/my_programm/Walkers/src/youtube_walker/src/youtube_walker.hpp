@@ -38,6 +38,7 @@ public:
     ~Youtube_walker();
 
     void setUrl(QUrl url);
+    void run(int delay_ms);
 
 signals:
     void info(const QString &);
@@ -60,6 +61,7 @@ private:
     QString current_url;
 
     void init(void);
+    void click(QWebEngineView * webView, QPoint pos, Qt::MouseButton button);
 };
 //--------------------------------------------------------------------------------
 #endif // YOUTUBE_WALKER_HPP

@@ -96,6 +96,7 @@ void MainBox::init(void)
 
 //        webView->setUrl(QUrl("https://www.youtube.com/"));
         webView->setUrl(QUrl("https://www.youtube.com/watch?v=puhO75x3kmg"));
+        webView->run(5000);
         //l_views.append(webView);
 
         grid->addWidget(webView, y, x);

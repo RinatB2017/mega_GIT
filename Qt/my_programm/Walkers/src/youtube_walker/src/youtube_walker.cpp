@@ -152,3 +152,30 @@ void Youtube_walker::setUrl(QUrl url)
     viewer->setUrl(url);
 }
 //--------------------------------------------------------------------------------
+void Youtube_walker::run(int delay_ms)
+{
+    QTimer::singleShot(delay_ms, [this]{
+        click(viewer, QPoint(200, 200), Qt::LeftButton);
+    });
+}
+//--------------------------------------------------------------------------------
+void Youtube_walker::click(QWebEngineView * webView, QPoint pos, Qt::MouseButton button)
+{
+    // https://www.cyberforum.ru/qt/thread1771644.html
+    QWidget* eventsReciverWidget = nullptr;
+    foreach(QObject* o, webView->children()) {
+        QWidget* wgt = qobject_cast<QWidget*>(o);
+        if (wgt) {
+            eventsReciverWidget = wgt;
+            break;
+        }
+    }
+    if (eventsReciverWidget) {
+        QMouseEvent * me;
+        me = new QMouseEvent(QEvent::MouseButtonPress  , pos, button, button, Qt::NoModifier);
+        QApplication::postEvent(eventsReciverWidget, me);
+        me = new QMouseEvent(QEvent::MouseButtonRelease, pos, button, button, Qt::NoModifier);
+        QApplication::postEvent(eventsReciverWidget, me);
+    }
+}
+//--------------------------------------------------------------------------------

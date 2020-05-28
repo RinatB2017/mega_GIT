@@ -124,6 +124,8 @@ private:
 
     bool containsCookie(const QNetworkCookie &cookie);
 
+    void click(QWebEngineView * webView, QPoint pos, Qt::MouseButton button);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

@@ -141,12 +141,13 @@ void MainBox::init(void)
     //ui->le_address->setText("https://www.youtube.com/");
     //ui->le_address->setText("http://localhost/mso/");
     //ui->le_address->setText("http://localhost/mso/home/next/12");
-    // ui->le_address->setText("https://www.avito.ru/krasnodar");
+    //ui->le_address->setText("https://www.avito.ru/krasnodar");
     //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
     //ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
     //ui->le_address->setText("http://fgramota.org/game/");
-    // ui->le_address->setText("https://free-socks.in");
-    ui->le_address->setText("https://whatismyipaddress.com/");
+    //ui->le_address->setText("https://free-socks.in");
+    //ui->le_address->setText("https://whatismyipaddress.com/");
+    ui->le_address->setText("https://www.youtube.com/watch?v=0vZp3slDGjw");
 
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 
@@ -579,9 +580,34 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::click(QWebEngineView * webView, QPoint pos, Qt::MouseButton button)
+{
+    // https://www.cyberforum.ru/qt/thread1771644.html
+
+    QWidget* eventsReciverWidget = nullptr;
+    foreach(QObject* o, webView->children()) {
+        QWidget* wgt = qobject_cast<QWidget*>(o);
+        if (wgt) {
+            eventsReciverWidget = wgt;
+            break;
+        }
+    }
+    if (eventsReciverWidget) {
+        QMouseEvent * me;
+        me = new QMouseEvent(QEvent::MouseButtonPress  , pos, button, button, Qt::NoModifier);
+        QApplication::postEvent(eventsReciverWidget, me);
+        me = new QMouseEvent(QEvent::MouseButtonRelease, pos, button, button, Qt::NoModifier);
+        QApplication::postEvent(eventsReciverWidget, me);
+    }
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+#if 1
+    click(ui->webEngineView, QPoint(500, 500), Qt::LeftButton);
+#endif
 
 #if 0
     QStringList *sl = new QStringList();
@@ -592,7 +618,7 @@ bool MainBox::test_0(void)
     emit info(QString("ken = %1").arg(sl->count()));
 #endif
 
-#if 1
+#if 0
     QPlainTextEdit *te = new QPlainTextEdit();
     new_page->toHtml([te](QString const &s)
     {

@@ -352,7 +352,7 @@ void MainWindow::load_translations()
     qApp->installTranslator(translator_system);
     //---
     translator_common = new QTranslator(this);
-    res = translator_common->load(":/common");
+    res = translator_common->load(":/translations/common");
     if(!res)
     {
         QMessageBox::critical(nullptr, "Error", "appTranslator (common) not loaded!");
@@ -366,7 +366,7 @@ void MainWindow::load_translations()
     }
     //---
     translator_programm = new QTranslator(this);
-    res = translator_programm->load(":/programm");
+    res = translator_programm->load(":/translations/programm");
     if(!res)
     {
         QMessageBox::critical(nullptr, "Error", "appTranslator (programm) not loaded!");

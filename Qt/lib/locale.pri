@@ -6,7 +6,7 @@ DEPENDPATH  += $$PWD
 INCLUDEPATH = $$DEPENDPATH
 
 TRANSLATIONS    += $$LIB_PATH/common/common.ts
-TRANSLATIONS    += locale/*.ts
+TRANSLATIONS    += locale/programm.ts
 
 RESOURCES       += locale/programm.qrc
 RESOURCES       += locale/common.qrc

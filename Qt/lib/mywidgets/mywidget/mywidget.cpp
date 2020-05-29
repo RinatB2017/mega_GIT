@@ -60,7 +60,13 @@ MyWidget::MyWidget(QWidget *parent) :
 MyWidget::~MyWidget()
 {
 #ifdef QT_DEBUG
-    qDebug() << "~MyWidget()" << objectName();
+    QString on = objectName();
+    if(on.isEmpty())
+    {
+        on = "no name";
+    }
+    qDebug() << "~MyWidget()" << on;
+    //qDebug() << "~MyWidget()" << objectName();
 #endif
     if(settings)
     {
@@ -597,11 +603,12 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->save_setting();
-    }
+//    не надо это раскомментировать
+//    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+//    if(mw)
+//    {
+//        mw->save_setting();
+//    }
 
 #ifdef USE_TOPLEVELWIDGETS
     QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();

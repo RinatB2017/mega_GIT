@@ -711,8 +711,8 @@ void MainWindow::save_main(void)
 
     settings->endGroup();
 
-    settings->setValue("windowState",   saveState());
     settings->setValue("geometry",      saveGeometry());
+    settings->setValue("windowState",   saveState());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)

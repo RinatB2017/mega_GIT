@@ -8,8 +8,8 @@ INCLUDEPATH = $$DEPENDPATH
 TRANSLATIONS    += $$LIB_PATH/common/common.ts
 TRANSLATIONS    += locale/*.ts
 
-RESOURCES       += locale/common.qrc
 RESOURCES       += locale/programm.qrc
+RESOURCES       += locale/common.qrc
 
 #message ($$LIB_PATH)
 
@@ -38,4 +38,3 @@ updateqm.output = locale/${QMAKE_FILE_BASE}.qm
 updateqm.commands = $$QMAKE_LRELEASE -silent ${QMAKE_FILE_IN} -qm locale/${QMAKE_FILE_BASE}.qm
 updateqm.CONFIG += no_link target_predeps no_clean
 QMAKE_EXTRA_COMPILERS += updateqm
-

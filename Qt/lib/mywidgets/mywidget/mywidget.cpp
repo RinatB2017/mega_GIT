@@ -597,13 +597,13 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-    //    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    //    Q_CHECK_PTR(mw);
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->save_setting();
+    }
 
 #ifdef USE_TOPLEVELWIDGETS
-    //    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    //    Q_CHECK_PTR(mw);
-    //    QList<QWidget *> widgets =  mw->findChildren<QWidget *>();
     QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
 #else
     QList<QWidget *> widgets = findChildren<QWidget *>();

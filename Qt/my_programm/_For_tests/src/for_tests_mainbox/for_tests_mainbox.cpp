@@ -98,8 +98,8 @@ void MainBox::init(void)
 
     //---
     connect(ui->btn_click,  &QPushButton::clicked,  [this]() {
-            emit info("click");
-        });
+        emit info("click");
+    });
     //---
 
     timer = new QTimer(this);
@@ -330,55 +330,20 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
-#define MAX_COL 24
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
-#if 0
-    char *text = "Каждому своё";
+#if 1
+    QPoint pos(10,10);
 
-    QByteArray ba;
-    ba.append(text, strlen(text));
-    emit info(ba.toHex().toUpper());
+    QMouseEvent *me;
+    me = new QMouseEvent(QEvent::MouseButtonPress  , pos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QApplication::postEvent(ui->btn_click, me);
 
-    QByteArray t_ba = QByteArray::fromHex("D09AD0B0D0B6D0B4D0BED0BCD18320D181D0B2D0BED191");
-    emit info(t_ba.data());
-#endif
-
-#if 0
-    Param<int>   i_param;
-    Param<qreal> d_param;
-
-    i_param.set(5);
-    d_param.set(2.5);
-
-    emit info(QString("%1").arg(i_param.get()));
-    emit info(QString("%1").arg(d_param.get()));
-#endif
-
-#if 0
-    MyClass2 *mc = new MyClass2();
-    mc->open();
-#endif
-
-#if 0
-    QLabel *label = new QLabel();
-
-    QPixmap pixmap(150, 150);
-
-    QPainter painter(&pixmap);
-    painter.setPen(Qt::red);
-    painter.setBrush(QBrush(Qt::red));
-    int pos_x = 0;
-    int pos_y = 0;
-    painter.drawRect(pos_x, pos_y, 150, 150);
-
-    label->setPixmap(pixmap);
-    label->setFixedSize(200, 200);
-    label->show();
+    me = new QMouseEvent(QEvent::MouseButtonRelease, pos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QApplication::postEvent(ui->btn_click, me);
 #endif
 
 #if 0
@@ -387,85 +352,6 @@ bool MainBox::test(void)
 
     stream << qint32(1000000);
     emit info(data.toHex());
-#endif
-
-#if 0
-    auto res = [] (auto first, auto second)
-    {
-        return first + second;
-    };
-
-    emit info(QString("res %1").arg(res(5,5)));
-#endif
-
-#if 0
-    QFile file("list_icons.txt");
-    QString temp;
-    QStringList sl_temp;
-    QStringList sl_icon_names;
-    if (file.open(QFile::ReadOnly | QFile::Text))
-    {
-        while(!file.atEnd())
-        {
-            temp = file.readLine().replace("\t", " ");
-            sl_temp = temp.split(" ");
-            if(sl_temp.count() >= 1)
-            {
-                sl_icon_names.append(sl_temp.at(0));
-            }
-        }
-        emit info(QString("Found %1 icons").arg(sl_icon_names.count()));
-
-        QWidget *widget = new QWidget();
-        QGridLayout *grid = new QGridLayout();
-        grid->setMargin(0);
-        grid->setSpacing(0);
-        widget->setLayout(grid);
-
-        int col = 0;
-        int row = 0;
-        foreach (QString icon_name, sl_icon_names)
-        {
-            QToolButton *btn = new QToolButton(widget);
-            btn->setToolTip(icon_name);
-            btn->setIcon(QIcon::fromTheme(icon_name, QIcon(":/mainwindow/computer.png/mainwindow/computer.png")));
-            connect(btn, &QPushButton::clicked, [this, icon_name]() {
-                    emit info(icon_name);
-                });
-
-            grid->addWidget(btn, row, col);
-            if(col < MAX_COL)
-            {
-                col++;
-            }
-            else
-            {
-                col=0;
-                row++;
-            }
-        }
-
-        widget->show();
-
-        file.close();
-    }
-    else
-    {
-        emit error(QString("File not open: %1")
-                   .arg(file.errorString()));
-    }
-#endif
-
-#if 0
-    QPushButton *btn = new QPushButton();
-    btn->setText("test");
-    btn->setIcon(QIcon::fromTheme("system-shutdown"));
-    btn->show();
-#endif
-
-#if 0
-    readJson("coins.json");
-    //    readJson("test_coins.txt");
 #endif
 
 #if 0

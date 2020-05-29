@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,95 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#define ORGNAME "Home"
+#define APPNAME "Test_HeroWars"
+//--------------------------------------------------------------------------------
+#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
+#define QMAKE_TARGET_COMPANY    ORGNAME
+#define QMAKE_TARGET_PRODUCT    APPNAME
+#define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
+#define RC_ICONS                ":/images/computer.ico"
+//--------------------------------------------------------------------------------
+#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_FILEVERSION_STR         VER_STR
+#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_PRODUCTVERSION_STR      VER_STR
+#define VER_FILEDESCRIPTION_STR     APPNAME
+#define VER_INTERNALNAME_STR        APPNAME
+#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
+#define VER_ORIGINALFILENAME_STR    APPNAME
+#define VER_PRODUCTNAME_STR         APPNAME
+//--------------------------------------------------------------------------------
+#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+//--------------------------------------------------------------------------------
 #endif
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class WebCamera;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    bool test_card(void);
-
-    void run_kmines(void);
-    void run_kpat(void);
-    void run_kdiamond(void);
-
-    void run_program(const QString program,
-                     const QString program_name,
-                     const QStringList arguments);
-
-    void find_programm(void);
-
-    void started(void);
-    void finished(int result);
-    void process_error(QProcess::ProcessError p_error);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
-    QPointer<WebCamera> camera;
-
-    void init(void);
-
-    void createTestBar(void);
-
-    void mouse_click(unsigned int button, QPoint pos);
-    void mouse_release(unsigned int button);
-    void mouse_move_to(QPoint pos);
-    bool find_window(const QString programm_title,
-                     int *x,
-                     int *y,
-                     int *width,
-                     int *heigth);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-
-protected:
-    //bool eventFilter(QObject*, QEvent* event);
-
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

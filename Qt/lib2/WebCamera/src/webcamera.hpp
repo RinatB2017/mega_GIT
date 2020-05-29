@@ -58,8 +58,10 @@ class WebCamera : public MyWidget
     Q_OBJECT
 
 public:
-    WebCamera(QWidget *parent);
+    explicit WebCamera(QWidget *parent);
     ~WebCamera();
+
+    bool searchObjectByTemplate(QString srcImgName, QString templImgName, QRect *rect);
 
 private slots:
     void start(void);
@@ -99,8 +101,6 @@ private:
     void init(void);
     void show_image_cv(void);
     void show_image_hw(void);
-
-    bool searchObjectByTemplate(QString srcImgName, QString templImgName, QRect *rect);
 
     void updateText(void);
     bool programm_is_exit(void);

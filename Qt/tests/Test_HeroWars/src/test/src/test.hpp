@@ -18,95 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class WebCamera;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    Test();
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    bool test_card(void);
-
-    void run_kmines(void);
-    void run_kpat(void);
-    void run_kdiamond(void);
-
-    void run_program(const QString program,
-                     const QString program_name,
-                     const QStringList arguments);
-
-    void find_programm(void);
-
-    void started(void);
-    void finished(int result);
-    void process_error(QProcess::ProcessError p_error);
-
+    
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
+    MainWindow *mw;
 
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
-    QPointer<WebCamera> camera;
-
-    void init(void);
-
-    void createTestBar(void);
-
-    void mouse_click(unsigned int button, QPoint pos);
-    void mouse_release(unsigned int button);
-    void mouse_move_to(QPoint pos);
-    bool find_window(const QString programm_title,
-                     int *x,
-                     int *y,
-                     int *width,
-                     int *heigth);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-
-protected:
-    //bool eventFilter(QObject*, QEvent* event);
-
+    void test_GUI(void);
+    void test_func(void);
+    void test_signals(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

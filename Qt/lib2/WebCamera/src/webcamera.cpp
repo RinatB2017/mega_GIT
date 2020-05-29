@@ -845,13 +845,14 @@ bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName,
             resultPair.first.x() == resultPair.second.x())
     {
         *rect = resultPair.first;
+        return true;
     }
 
     cvReleaseImage(&src);
     cvReleaseImage(&templ);
     cvReleaseImage(&result);
 
-    return true;
+    return false;
 }
 //--------------------------------------------------------------------------------
 void WebCamera::updateText(void)

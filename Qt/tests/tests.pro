@@ -23,6 +23,7 @@ SUBDIRS += \
     Test_GrapherBox \
     Test_HistogramBox \
     Test_HC-05 \
+    Test_HeroWars \
     Test_HID_device \
     Test_HTML \
     Test_QHexEdit \

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,95 +18,72 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "myfindform.hpp"
+#include "defines.hpp"
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+#if 1
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
+
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_CHECK_PTR(splash);
+    splash->show();
+
+    qApp->processEvents();
+
+    MainWindow *main_window = new MainWindow();
+
+    MyFindForm *mainBox = new MyFindForm(main_window->getThis());
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class WebCamera;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    bool test_card(void);
-
-    void run_kmines(void);
-    void run_kpat(void);
-    void run_kdiamond(void);
-
-    void run_program(const QString program,
-                     const QString program_name,
-                     const QStringList arguments);
-
-    void find_programm(void);
-
-    void started(void);
-    void finished(int result);
-    void process_error(QProcess::ProcessError p_error);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
-    QPointer<WebCamera> camera;
-
-    void init(void);
-
-    void createTestBar(void);
-
-    void mouse_click(unsigned int button, QPoint pos);
-    void mouse_release(unsigned int button);
-    void mouse_move_to(QPoint pos);
-    bool find_window(const QString programm_title,
-                     int *x,
-                     int *y,
-                     int *width,
-                     int *heigth);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-
-protected:
-    //bool eventFilter(QObject*, QEvent* event);
-
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

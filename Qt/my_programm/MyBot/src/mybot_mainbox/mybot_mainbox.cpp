@@ -53,15 +53,18 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
-    connect(ui->btn_kmines,         SIGNAL(clicked(bool)),  this,   SLOT(run_kmines()));
-    connect(ui->btn_kpat,           SIGNAL(clicked(bool)),  this,   SLOT(run_kpat()));
-    connect(ui->btn_kdiamond,       SIGNAL(clicked(bool)),  this,   SLOT(run_kdiamond()));
-    connect(ui->btn_find_programm,  SIGNAL(clicked(bool)),  this,   SLOT(find_programm()));
+    connect(ui->btn_kmines,         &QPushButton::clicked,  this,   &MainBox::run_kmines);
+    connect(ui->btn_kpat,           &QPushButton::clicked,  this,   &MainBox::run_kpat);
+    connect(ui->btn_kdiamond,       &QPushButton::clicked,  this,   &MainBox::run_kdiamond);
+    connect(ui->btn_find_programm,  &QPushButton::clicked,  this,   &MainBox::find_programm);
+
+    connect(ui->le_programm,        &QLineEdit::editingFinished,    this,   &MainBox::find_programm);
 
     camera = new WebCamera(this);
-
     camera->show();
     ui->camera_layout->addWidget(camera);
 
@@ -303,6 +306,7 @@ void MainBox::find_programm(void)
 
     QString title = ui->le_programm->text();
     QScreen *screen = QGuiApplication::primaryScreen();
+    Q_CHECK_PTR(screen);
 
     int x = 0;
     int y = 0;
@@ -317,7 +321,7 @@ void MainBox::find_programm(void)
         QPixmap screen_shot = screen->grabWindow(0, x, y, w, h);
         screen_shot.save(QString("%1.png").arg(title));
 
-#if 1
+#if 0
         int temp_x = 36;
         int temp_y = 91;
 
@@ -338,20 +342,40 @@ void MainBox::find_programm(void)
         paint.end();
 #endif
 
-        QLabel *lbl = new QLabel;
+        QLabel *lbl = new QLabel();
         lbl->setPixmap(screen_shot);
         lbl->installEventFilter(this);
         lbl->show();
     }
     else
     {
-        emit error(QString("%1 not found!").arg(title));
+        emit error(QString("\"%1\" not found!").arg(title));
     }
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_0(void)
 {
     emit info("Test_0()");
+
+#if 1
+    QRect rect;
+    QElapsedTimer timer;
+    timer.start();
+    bool ok = camera->searchObjectByTemplate("/dev/shm/0/Screenshot_4.png",
+                                             "/dev/shm/0/auto.png",
+                                             &rect);
+    if(ok)
+    {
+        emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+        emit info(QString("%1 %2")
+                  .arg(rect.x())
+                  .arg(rect.y()));
+    }
+    else
+    {
+        emit error("Not found");
+    }
+#endif
 
 #if 0
     test_card();

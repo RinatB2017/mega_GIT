@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef MYFINDFORM_HPP
+#define MYFINDFORM_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -27,86 +27,67 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include </usr/include/opencv2/core/core.hpp>
+#   include </usr/include/opencv2/objdetect/objdetect.hpp>
+#   include </usr/include/opencv2/imgproc/imgproc.hpp>
+#   include </usr/include/opencv2/highgui/highgui.hpp>
+#   include </usr/include/opencv2/opencv.hpp>
+#else
+#   include <opencv2/core/core.hpp>
+#   include <opencv2/objdetect/objdetect.hpp>
+#   include <opencv2/imgproc/imgproc.hpp>
+#   include <opencv2/highgui/highgui.hpp>
+#   include <opencv2/highgui/highgui_c.h>
+#   include <opencv2/opencv.hpp>
+#   include <opencv2/highgui.hpp>
+#   include <opencv2/imgcodecs/legacy/constants_c.h>
+#   include <opencv2/videoio/videoio_c.h>
+#endif
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+using namespace cv;
+//--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class MyFindForm;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class WebCamera;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MyFindForm : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
-
-    bool test_card(void);
-
-    void run_kmines(void);
-    void run_kpat(void);
-    void run_kdiamond(void);
-
-    void run_program(const QString program,
-                     const QString program_name,
-                     const QStringList arguments);
-
-    void find_programm(void);
-
-    void started(void);
-    void finished(int result);
-    void process_error(QProcess::ProcessError p_error);
+    explicit MyFindForm(QWidget *parent = nullptr);
+    ~MyFindForm();
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
+    Ui::MyFindForm *ui;
 
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
-    QPointer<WebCamera> camera;
+    QString src_file        = "/dev/shm/0/Screenshot_5.png";
+    QString file_ok         = "/dev/shm/0/ok.png";
+    QString file_auto       = "/dev/shm/0/auto.png";
+    QString file_in_battle  = "/dev/shm/0/в бой.png";
 
     void init(void);
+    void test(void);
+    bool searchObjectByTemplate(QString srcImgName,
+                                QString templImgName,
+                                QRect *rect);
 
-    void createTestBar(void);
+    void fail(void);
 
-    void mouse_click(unsigned int button, QPoint pos);
-    void mouse_release(unsigned int button);
-    void mouse_move_to(QPoint pos);
-    bool find_window(const QString programm_title,
-                     int *x,
-                     int *y,
-                     int *width,
-                     int *heigth);
+    void find_ok(void);
+    void find_auto(void);
+    void find_programm(void);
+    void find_to_battle(void);
+
+    void show_res(QRect rect);
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
-
-protected:
-    //bool eventFilter(QObject*, QEvent* event);
-
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // MYFINDFORM_HPP

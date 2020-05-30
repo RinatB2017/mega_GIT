@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/translations">
+    <qresource prefix="/">
         <file>programm.qm</file>
     </qresource>
 </RCC>

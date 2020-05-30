@@ -17,7 +17,6 @@ macx {
 }
 
 win32 {
-#     TEMP_PATH = "E:"
     TEMP_PATH = "X:"
     OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc
@@ -40,7 +39,7 @@ macx {
 win32 {
     CONFIG(debug, debug|release) {
         #DESTDIR = bin/debug
-        DESTDIR = c:/Programming/my_programm_bin/debug
+        DESTDIR = c:/Programming/my_programm_bin
     }
     else {
         #DESTDIR = bin/release

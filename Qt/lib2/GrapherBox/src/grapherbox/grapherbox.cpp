@@ -1497,49 +1497,78 @@ void GrapherBox::set_title_axis_Y(const QString &title)
     ui->qwtPlot->setAxisTitle(QwtPlot::yLeft, title);
 }
 //--------------------------------------------------------------------------------
+void GrapherBox::check_visible_buttons(void)
+{
+    QList<QToolButton *> buttons = ui->frame_buttons->findChildren<QToolButton *>();
+    bool buttons_visible = false;
+    foreach(QToolButton *btn, buttons)
+    {
+        if(btn->isVisible())
+        {
+            buttons_visible = true;
+        }
+    }
+    ui->frame_buttons->setVisible(buttons_visible);
+}
+//--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_all_ON(bool state)
 {
     ui->btn_all_on->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_all_OFF(bool state)
 {
     ui->btn_all_off->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Horizontal(bool state)
 {
     ui->btn_Horizontal->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Vertical(bool state)
 {
     ui->btn_Vertical->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Options(bool state)
 {
     ui->btn_Options->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Load(bool state)
 {
     ui->btn_Load->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Save(bool state)
 {
     ui->btn_Save->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Statistic(bool state)
 {
     ui->btn_Statistic->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Clear(bool state)
 {
     ui->btn_Clear->setVisible(state);
+    check_visible_buttons();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::set_visible_btn_Autoscroll(bool state)
+{
+    ui->btn_autoscroll->setVisible(state);
+    check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::push_btn_Horizontal(bool state)

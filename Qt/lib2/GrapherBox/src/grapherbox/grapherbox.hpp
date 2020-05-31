@@ -97,6 +97,8 @@ public:
 
     void set_legend_is_visible(bool state);
 
+    void check_visible_buttons(void);
+
     void set_visible_btn_all_ON(bool state);
     void set_visible_btn_all_OFF(bool state);
 
@@ -108,6 +110,7 @@ public:
     void set_visible_btn_Save(bool state);
     void set_visible_btn_Statistic(bool state);
     void set_visible_btn_Clear(bool state);
+    void set_visible_btn_Autoscroll(bool state);
 
     void push_btn_Horizontal(bool state);
     void push_btn_Vertical(bool state);

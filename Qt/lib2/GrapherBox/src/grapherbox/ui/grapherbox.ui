@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>504</width>
-    <height>449</height>
+    <width>523</width>
+    <height>451</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -35,158 +35,163 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>3</number>
-      </property>
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
       <item>
        <widget class="QwtPlot" name="qwtPlot"/>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="layout_options">
-        <property name="spacing">
-         <number>3</number>
+       <widget class="QFrame" name="frame_buttons">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
         </property>
-        <item>
-         <widget class="QToolButton" name="btn_Options">
-          <property name="text">
-           <string>options</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../icons/grapher.qrc">
-            <normaloff>:/grapher/advancedsettings.png</normaloff>:/grapher/advancedsettings.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_all_on">
-          <property name="text">
-           <string>1</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_all_off">
-          <property name="text">
-           <string>0</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_Load">
-          <property name="text">
-           <string>open</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../icons/grapher.qrc">
-            <normaloff>:/grapher/fileopen.png</normaloff>:/grapher/fileopen.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_Save">
-          <property name="text">
-           <string>save</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../icons/grapher.qrc">
-            <normaloff>:/grapher/filesave.png</normaloff>:/grapher/filesave.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_Vertical">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../icons/grapher.qrc">
-            <normaloff>:/grapher/object-flip-vertical.png</normaloff>:/grapher/object-flip-vertical.png</iconset>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_Horizontal">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../icons/grapher.qrc">
-            <normaloff>:/grapher/object-flip-horizontal.png</normaloff>:/grapher/object-flip-horizontal.png</iconset>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_autoscroll">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>A</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_Statistic">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>S</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_Clear">
-          <property name="text">
-           <string>clear</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../icons/grapher.qrc">
-            <normaloff>:/grapher/edit-clear.png</normaloff>:/grapher/edit-clear.png</iconset>
-          </property>
-         </widget>
-        </item>
-       </layout>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="btn_Options">
+           <property name="text">
+            <string>options</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../icons/grapher.qrc">
+             <normaloff>:/grapher/advancedsettings.png</normaloff>:/grapher/advancedsettings.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_all_on">
+           <property name="text">
+            <string>1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_all_off">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_Load">
+           <property name="text">
+            <string>open</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../icons/grapher.qrc">
+             <normaloff>:/grapher/fileopen.png</normaloff>:/grapher/fileopen.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_Save">
+           <property name="text">
+            <string>save</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../icons/grapher.qrc">
+             <normaloff>:/grapher/filesave.png</normaloff>:/grapher/filesave.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_Vertical">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../icons/grapher.qrc">
+             <normaloff>:/grapher/object-flip-vertical.png</normaloff>:/grapher/object-flip-vertical.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_Horizontal">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../icons/grapher.qrc">
+             <normaloff>:/grapher/object-flip-horizontal.png</normaloff>:/grapher/object-flip-horizontal.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_autoscroll">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>A</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_Statistic">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>S</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_Clear">
+           <property name="text">
+            <string>clear</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../icons/grapher.qrc">
+             <normaloff>:/grapher/edit-clear.png</normaloff>:/grapher/edit-clear.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>

@@ -80,17 +80,7 @@ void MainBox::init(void)
     ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
     connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
-#if 1
-    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
-    load_widgets();
-
-#if 1
+#if 0
     sw.reset(new SimpleWidget);
     sw->setProperty("windowTitle", "XXX");
     sw->show();
@@ -104,6 +94,16 @@ void MainBox::init(void)
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
+
+#if 1
+    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+#else
+    if(sizeHint().height() > 0)
+    {
+        setMinimumHeight(sizeHint().height());
+    }
+#endif
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::delete_string(void)
@@ -336,6 +336,46 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    QStringList sl;
+    sl << " "
+       << "."
+       << ","
+       << "-"
+       << "\r"
+       << "\n"
+       << "\t"
+       << "*"
+       << "\\"
+       << "("
+       << ")"
+       << ":"
+       << "0"
+       << "1"
+       << "2"
+       << "3"
+       << "4"
+       << "5"
+       << "6"
+       << "7"
+       << "8"
+       << "9";
+
+    QString temp = ui->te_test->toPlainText();
+    foreach (QString s, sl)
+    {
+        temp = temp.remove(s);
+    }
+
+    emit info(temp);
+    emit info(QString("Size %1").arg(temp.length()));
+#endif
+
+#if 0
+    QString temp = ui->te_test->property("markdown").toString();
+    emit info(temp);
+#endif
+
+#if 0
     QPoint pos(10,10);
 
     QMouseEvent *me;

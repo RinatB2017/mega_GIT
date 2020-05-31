@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>MainWidget_GUI</name>
+    <name>MainBox</name>
     <message>
         <source>PushButton</source>
         <translation>Проба</translation>

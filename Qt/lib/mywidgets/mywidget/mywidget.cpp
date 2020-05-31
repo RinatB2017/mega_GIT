@@ -596,6 +596,7 @@ void MyWidget::load_widgets(void)
             load_property(widget, "state");
             load_property(widget, "time");
             load_property(widget, "date");
+            load_property(widget, "plainText");
             settings->endGroup();
         }
     }
@@ -638,6 +639,7 @@ void MyWidget::save_widgets(void)
             save_property(widget, "state");
             save_property(widget, "time");
             save_property(widget, "date");
+            save_property(widget, "plainText");
             settings->endGroup();
         }
     }

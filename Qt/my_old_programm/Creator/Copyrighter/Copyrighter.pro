@@ -17,20 +17,21 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
+DEFINES += USE_TOPLEVELWIDGETS
 #DEFINES += FIXED_SIZE
 
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
+    copyrighter_mainbox.hpp \
     defines.hpp \
     version.hpp \
-    copyrighter_mainbox.hpp \
     mytextedit.hpp
 
 SOURCES += \
     copyrighter_mainbox.cpp \
-    main.cpp \
-    mytextedit.cpp
+    mytextedit.cpp \
+    main.cpp
 
 FORMS += copyrighter_mainbox.ui
 

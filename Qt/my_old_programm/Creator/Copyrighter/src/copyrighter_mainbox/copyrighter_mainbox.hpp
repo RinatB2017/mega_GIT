@@ -33,9 +33,7 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class QToolButton;
 class MyTextEdit;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -52,8 +50,8 @@ private slots:
 private:
     Ui::MainBox *ui;
 
-    MyTextEdit *srcTextEdit;
-    MyTextEdit *dstTextEdit;
+    QPointer<MyTextEdit> srcTextEdit;
+    QPointer<MyTextEdit> dstTextEdit;
 
     void init(void);
 

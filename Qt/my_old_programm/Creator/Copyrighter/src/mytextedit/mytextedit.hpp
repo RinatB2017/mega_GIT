@@ -33,6 +33,7 @@ signals:
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
+    void trace(const QString &);
 
 protected slots:
     void log(const QString &data);

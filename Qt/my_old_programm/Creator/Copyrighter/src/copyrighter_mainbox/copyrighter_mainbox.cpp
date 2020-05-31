@@ -40,6 +40,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -47,15 +48,24 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    QVBoxLayout *vbox = new QVBoxLayout();
-
     srcTextEdit = new MyTextEdit(this);
     dstTextEdit = new MyTextEdit(this);
 
+    srcTextEdit->setObjectName("srcTextEdit");
+    dstTextEdit->setObjectName("dstTextEdit");
+
+#if 0
+    QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(srcTextEdit);
     vbox->addWidget(dstTextEdit);
-
     setLayout(vbox);
+#else
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+    mw->add_dock_widget("Source",       "srcTextEdit", Qt::LeftDockWidgetArea,  srcTextEdit);
+    mw->add_dock_widget("Destination",  "dstTextEdit", Qt::RightDockWidgetArea, dstTextEdit);
+//    setVisible(false);
+#endif
 
     //srcTextEdit->setReadOnly(true);
 
@@ -73,11 +83,15 @@ void MainBox::init(void)
     textChanged();
 #endif
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     connect(srcTextEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
     connect(dstTextEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
     textChanged();
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -114,7 +128,7 @@ void MainBox::test(void)
     {
         if(text.isEmpty() == false)
         {
-            dstTextEdit->append(QString("%1.").arg(text.replace(",", ",бля, ").simplified()));
+            dstTextEdit->append(QString("%1.").arg(text.replace(",", ", бля, ").simplified()));
             //dstTextEdit->append(QString("%1.").arg(text.simplified()));
         }
     }

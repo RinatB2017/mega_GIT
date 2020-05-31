@@ -64,6 +64,7 @@ void MyTextEdit::connect_log(void)
         connect(this, SIGNAL(info(QString)),  parentWidget(), SIGNAL(info(QString)));
         connect(this, SIGNAL(debug(QString)), parentWidget(), SIGNAL(debug(QString)));
         connect(this, SIGNAL(error(QString)), parentWidget(), SIGNAL(error(QString)));
+        connect(this, SIGNAL(trace(QString)), parentWidget(), SIGNAL(trace(QString)));
     }
     else
     {
@@ -71,6 +72,7 @@ void MyTextEdit::connect_log(void)
         connect(this, SIGNAL(info(QString)),  this, SLOT(log(QString)));
         connect(this, SIGNAL(debug(QString)), this, SLOT(log(QString)));
         connect(this, SIGNAL(error(QString)), this, SLOT(log(QString)));
+        connect(this, SIGNAL(trace(QString)), this, SLOT(log(QString)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -85,7 +87,7 @@ void MyTextEdit::log(const QString &data)
 //--------------------------------------------------------------------------------
 void MyTextEdit::open_file(void)
 {
-    QFileDialog *dlg = 0;
+    QPointer<QFileDialog> dlg;
 
     dlg = new QFileDialog;
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
@@ -118,7 +120,7 @@ void MyTextEdit::open_file(void)
 //--------------------------------------------------------------------------------
 void MyTextEdit::save_file(void)
 {
-    QFileDialog *dlg;
+    QPointer<QFileDialog> dlg;
 
     dlg = new QFileDialog;
     dlg->setAcceptMode(QFileDialog::AcceptSave);

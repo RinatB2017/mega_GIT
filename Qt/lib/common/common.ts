@@ -200,6 +200,10 @@
         <source>Styles</source>
         <translation>Стили</translation>
     </message>
+    <message>
+        <source>Show buttons</source>
+        <translation>Показать кнопки</translation>
+    </message>
 </context>
 
 <context>

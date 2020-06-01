@@ -32,6 +32,7 @@ Dock_position::Dock_position(QString doc_name, QWidget *parent) :
 
 #ifndef NORMAL_BUTTONS
     int size = 24;
+    ui->btn_show->setFixedSize(size, size);
     ui->btn_up->setFixedSize(size, size);
     ui->btn_down->setFixedSize(size, size);
     ui->btn_left->setFixedSize(size, size);
@@ -39,6 +40,16 @@ Dock_position::Dock_position(QString doc_name, QWidget *parent) :
 
     ui->buttons_layout->setMargin(0);
     ui->buttons_layout->setSpacing(0);
+#endif
+
+    ui->btn_show->setToolTip(QObject::tr("Show buttons"));
+
+#if 1
+    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_up,     &QToolButton::setVisible);
+    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_down,   &QToolButton::setVisible);
+    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_left,   &QToolButton::setVisible);
+    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_right,  &QToolButton::setVisible);
+    ui->btn_show->toggled(false);
 #endif
 
     connect(ui->btn_up,     &QToolButton::clicked,  this,   &Dock_position::move_up);

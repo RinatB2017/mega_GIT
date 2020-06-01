@@ -18,17 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QStringList>
-#include <QTime>
-
-#include <QAction>
-#include <QMenu>
-
-#include <QToolButton>
-#include <QToolBar>
-//--------------------------------------------------------------------------------
 #include "ui_gy521_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"

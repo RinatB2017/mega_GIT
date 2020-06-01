@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -31,8 +35,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class Proto_NMEA_0183;
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -71,7 +73,7 @@ private:
     QList<QByteArray> fake_data;
     int index_fake_data = 0;
     int max_index_fake_data = 0;
-    QLineEdit *le_index;
+    QPointer<QLineEdit> le_index;
 
     void init(void);
     void init_protocol(void);

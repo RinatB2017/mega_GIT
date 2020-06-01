@@ -32,7 +32,7 @@ TCP_Server::TCP_Server(QWidget *parent) :
 //    connect(this, SIGNAL(output(QByteArray)), processor, SLOT(input(QByteArray)));
 //    connect(processor, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
 
-    setFixedSize(1, 1);
+    setVisible(false);
 }
 //--------------------------------------------------------------------------------
 TCP_Server::~TCP_Server()

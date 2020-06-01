@@ -76,8 +76,6 @@ union CMD_0x01_ANSWER
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class SerialBox5;
-class QToolButton;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {

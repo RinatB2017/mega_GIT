@@ -28,14 +28,12 @@
 #endif
 
 #include <QHostAddress>
-#include <QByteArray>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class Processor;
 class QTcpServer;
 class QTcpSocket;
-class QWidget;
 //--------------------------------------------------------------------------------
 class TCP_Server : public MyWidget
 {

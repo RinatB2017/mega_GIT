@@ -64,17 +64,17 @@ private slots:
 private:
     Ui::MODBUS_server *ui;
 
-    QModbusReply  *lastRequest;
-    QModbusServer *modbusDevice;
+    QPointer<QModbusReply>  lastRequest;
+    QPointer<QModbusServer> modbusDevice;
 
     QHash<QString, QLineEdit *> registers;
 
     QModbusDataUnitMap reg;
 
-    HexView16 *he_discrete_inputs;
-    HexView16 *he_coils;
-    HexView16 *he_input_registers;
-    HexView16 *he_holding_registers;
+    QPointer<HexView16> he_discrete_inputs;
+    QPointer<HexView16> he_coils;
+    QPointer<HexView16> he_input_registers;
+    QPointer<HexView16> he_holding_registers;
 
     void init(void);
     void init_modbusDevice(void);

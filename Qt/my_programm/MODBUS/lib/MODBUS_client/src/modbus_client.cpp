@@ -39,7 +39,10 @@ MODBUS_client::MODBUS_client(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MODBUS_client::~MODBUS_client()
 {
-    if(lastRequest)  lastRequest->deleteLater();
+    if(lastRequest)
+    {
+        lastRequest->deleteLater();
+    }
 
     if(modbusDevice)
     {

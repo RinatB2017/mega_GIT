@@ -26,25 +26,18 @@
 #else
 #   include <QtGui>
 #endif
-
+//--------------------------------------------------------------------------------
 #include <QModbusServer>
-#include <QButtonGroup>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
-    class SettingsDialog;
+class MainBox;
+class SettingsDialog;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class SerialBox5;
-class QToolButton;
-class QComboBox;
-class QLineEdit;
-class QToolBar;
-class QHexEdit;
 class Modbus;
 class SettingsDialog;
 //--------------------------------------------------------------------------------
@@ -53,8 +46,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox(void);
 
 private slots:
@@ -78,7 +71,7 @@ private Q_SLOTS:
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
-    SerialBox5 *serialBox;
+    QPointer<SerialBox5> serialBox;
 
     void init(void);
 
@@ -88,7 +81,7 @@ private:
     void setupDeviceData(void);
     void setupWidgetContainers(void);
 
-    QModbusServer *modbusDevice;
+    QPointer<QModbusServer> modbusDevice;
 
     QButtonGroup coilButtons;
     QButtonGroup discreteButtons;

@@ -71,14 +71,12 @@ int main(int argc, char *argv[])
     MODBUS_client *mainBox = new MODBUS_client(main_window->getThis());
 
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     splash->finish(main_window);
 
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);

@@ -49,8 +49,10 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     if (modbusDevice)
+    {
         modbusDevice->disconnectDevice();
-    delete modbusDevice;
+        delete modbusDevice;
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/html">
+        <file alias="html/dependency_wheel.html">resources/html/dependency_wheel.html</file>
+    </qresource>
+    <qresource prefix="/js">
+        <file alias="js/d3/d3.min.js">resources/js/d3/d3.min.js</file>
+        <file alias="js/d3/dependency_wheel/d3.dependencyWheel.js">resources/js/d3/dependency_wheel/d3.dependencyWheel.js</file>
+    </qresource>
+</RCC>

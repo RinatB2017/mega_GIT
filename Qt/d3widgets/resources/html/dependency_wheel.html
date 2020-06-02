@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <!-- Use the Source, Luke -->
+  <head>
+    <meta http-equiv=Content-Type content="text/html; charset=unicode">
+  <style>
+
+.dependencyWheel {
+  font: 14px arial;
+}
+
+.chord {
+fill-opacity: .67;
+}
+</style>
+
+</head>
+<body>
+  <div id="chart_placeholder"></div>
+
+  <script src="/js/js/d3/d3.min.js"></script>
+  <script src="/js/js/d3/dependency_wheel/d3.dependencyWheel.js"></script>
+  <script>
+
+api.update.connect(redraw);
+
+redraw();
+
+function itemClicked(itemName)
+{
+    api.itemClicked(itemName);
+}
+
+function redraw()
+{
+    d3.selectAll("svg").remove();
+    var json = recreateJsonObject(api.data());
+    var data = buildMatrixFromDependenciesJson(json);
+
+    var chart = d3.chart.dependencyWheel()
+                           .width(api.width)
+                           .height(api.height)
+                           .margin(api.margin)
+                           .padding(api.padding);
+
+    d3.select('#chart_placeholder')
+                        .datum(data)
+                        .call(chart);
+}
+
+
+function recreateJsonObject(obj)
+{
+    var jsonObj = {};
+    for(key in obj) {
+      jsonObj[key] = obj[key];
+      var dependencies = [];
+      for (var i = 0 ; i < obj[key].length ; i++ )
+      {
+        dependencies.push(obj[key][i]);
+      }
+
+      jsonObj[key] = dependencies;
+    }
+    return jsonObj;
+}
+
+</script>
+</body>
+</html>

@@ -160,6 +160,9 @@ public slots:
                         qreal data);
     bool add_curve_array(int channel,
                          QList<QPointF> a_points);
+    bool set_curve_data(int channel,
+                        int index,
+                        qreal data);
     bool get_curve_data(int channel,
                         int index,
                         qreal *data);

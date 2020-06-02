@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "myfiledialog.hpp"
 #include "myfindform.hpp"
 #include "ui_myfindform.h"
 //--------------------------------------------------------------------------------
@@ -32,6 +33,7 @@ MyFindForm::MyFindForm(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MyFindForm::~MyFindForm()
 {
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -39,10 +41,14 @@ void MyFindForm::init(void)
 {
     connect(ui->btn_test,           &QPushButton::clicked,  this,   &MyFindForm::test);
 
+    connect(ui->btn_set_screenshot_name,    &QPushButton::clicked,  this,   &MyFindForm::set_src_file);
+
     connect(ui->btn_find_ok,        &QPushButton::clicked,  this,   &MyFindForm::find_ok);
     connect(ui->btn_find_auto,      &QPushButton::clicked,  this,   &MyFindForm::find_auto);
     connect(ui->btn_find_programm,  &QPushButton::clicked,  this,   &MyFindForm::find_programm);
     connect(ui->btn_find_to_battle, &QPushButton::clicked,  this,   &MyFindForm::find_to_battle);
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::fail(void)
@@ -50,32 +56,87 @@ void MyFindForm::fail(void)
     emit error("Пока не сделано!");
 }
 //--------------------------------------------------------------------------------
-void MyFindForm::show_res(QRect rect)
+void MyFindForm::show_res(QString pic_filename, QRect rect)
 {
-#if 1
-    Q_UNUSED(rect);
-#else
-    QLabel *label = new QLabel();
-    QImage *image = new QImage();
-    bool ok = image->load(src_file);
+    bool ok = false;
+
+    //---
+    QImage *temp_image = new QImage();
+    ok = temp_image->load(pic_filename);
+    if(!ok)
+    {
+        emit error(QString("Error load %1").arg(pic_filename));
+        return;
+    }
+    QList<QRgb> pic_points;
+    for(int y=0; y<temp_image->height(); y++)
+    {
+        for(int x=0; x<temp_image->width(); x++)
+        {
+            pic_points.append(temp_image->pixel(x, y));
+        }
+    }
+    //---
+
+    //---
+    QImage *src_image = new QImage();
+    ok = src_image->load(src_file);
     if(!ok)
     {
         emit error(QString("Error load %1").arg(src_file));
         return;
     }
+    QList<QRgb> src_points;
+    for(int y=rect.y(); y<(rect.y() + rect.height()); y++)
+    {
+        for(int x=rect.x(); x<(rect.x() + rect.width()); x++)
+        {
+            src_points.append(src_image->pixel(x, y));
+        }
+    }
+    //---
 
-    QPainter painter(image);
-    painter.setPen(Qt::yellow);
-    painter.setBrush(QBrush(Qt::yellow));
-    painter.drawRect(rect.x(),
-                     rect.y(),
-                     rect.width(),
-                     rect.height());
+    if(src_points != pic_points)
+    {
+        emit error("pic not found");
+    }
+    else
+    {
+        QLabel *label = new QLabel();
 
-    label->setPixmap(QPixmap::fromImage(*image));
-    label->setMinimumSize(image->width(), image->height());
-    label->show();
+#if 0
+        QPainter painter(image);
+        painter.setPen(Qt::yellow);
+        painter.setBrush(QBrush(Qt::yellow));
+        painter.drawRect(rect.x(),
+                         rect.y(),
+                         rect.width(),
+                         rect.height());
 #endif
+
+        label->setPixmap(QPixmap::fromImage(*src_image));
+        label->setMinimumSize(src_image->width(), src_image->height());
+        label->show();
+    }
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::set_src_file(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("find_form", "find_form", this);
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        if(filename.isEmpty() == false)
+        {
+            ui->le_screenshot->setText(filename);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::find_ok(void)
@@ -85,6 +146,7 @@ void MyFindForm::find_ok(void)
     QRect rect;
     QElapsedTimer timer;
     timer.start();
+    src_file = ui->le_screenshot->text();
     bool ok = searchObjectByTemplate(src_file,
                                      file_ok,
                                      &rect);
@@ -96,7 +158,7 @@ void MyFindForm::find_ok(void)
                   .arg(rect.y())
                   .arg(rect.width())
                   .arg(rect.height()));
-        show_res(rect);
+        show_res(file_ok, rect);
     }
     else
     {
@@ -111,6 +173,7 @@ void MyFindForm::find_auto(void)
     QRect rect;
     QElapsedTimer timer;
     timer.start();
+    src_file = ui->le_screenshot->text();
     bool ok = searchObjectByTemplate(src_file,
                                      file_auto,
                                      &rect);
@@ -122,7 +185,7 @@ void MyFindForm::find_auto(void)
                   .arg(rect.y())
                   .arg(rect.width())
                   .arg(rect.height()));
-        show_res(rect);
+        show_res(file_auto, rect);
     }
     else
     {
@@ -144,6 +207,7 @@ void MyFindForm::find_to_battle(void)
     QRect rect;
     QElapsedTimer timer;
     timer.start();
+    src_file = ui->le_screenshot->text();
     bool ok = searchObjectByTemplate(src_file,
                                      file_in_battle,
                                      &rect);
@@ -155,7 +219,7 @@ void MyFindForm::find_to_battle(void)
                   .arg(rect.y())
                   .arg(rect.width())
                   .arg(rect.height()));
-        show_res(rect);
+        show_res(file_in_battle, rect);
     }
     else
     {
@@ -168,6 +232,7 @@ void MyFindForm::test(void)
     QRect rect;
     QElapsedTimer timer;
     timer.start();
+    src_file = ui->le_screenshot->text();
     bool ok = searchObjectByTemplate(src_file,
                                      file_in_battle,
                                      &rect);
@@ -179,7 +244,7 @@ void MyFindForm::test(void)
                   .arg(rect.y())
                   .arg(rect.width())
                   .arg(rect.height()));
-        show_res(rect);
+        show_res(file_in_battle, rect);
     }
     else
     {
@@ -194,6 +259,18 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
                                         QRect *rect)
 {
     emit trace(Q_FUNC_INFO);
+
+    if(srcImgName.isEmpty())
+    {
+        emit error("srcImgName is empty!");
+        return false;
+    }
+    if(templImgName.isEmpty())
+    {
+        emit error("templImgName is empty!");
+        return false;
+    }
+
     emit debug(srcImgName);
     emit debug(templImgName);
 

@@ -835,6 +835,33 @@ void GrapherBox::add_curve_data(int channel,
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
+bool GrapherBox::set_curve_data(int channel,
+                                int index,
+                                qreal data)
+{
+    if(curves.count() <= 0)
+    {
+        emit error(tr("curves.count() <= 0"));
+        return false;
+    }
+    if(channel >= curves.count())
+    {
+        emit error(QString(tr("channel > %1"))
+                   .arg(curves.count()));
+        return false;
+    }
+    if(curves[channel].real_data.isEmpty())
+    {
+        emit error("real_data is empty");
+        return false;
+    }
+
+    QPoint point(index, data);
+    curves[channel].real_data[index]  = point;
+//    curves[channel].view_curve[index].append(point);
+    return true;
+}
+//--------------------------------------------------------------------------------
 bool GrapherBox::get_curve_data(int channel,
                                 int index,
                                 qreal *data)

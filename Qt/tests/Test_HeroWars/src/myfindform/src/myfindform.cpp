@@ -39,14 +39,16 @@ MyFindForm::~MyFindForm()
 //--------------------------------------------------------------------------------
 void MyFindForm::init(void)
 {
-    connect(ui->btn_test,           &QPushButton::clicked,  this,   &MyFindForm::test);
-
     connect(ui->btn_set_screenshot_name,    &QPushButton::clicked,  this,   &MyFindForm::set_src_file);
 
     connect(ui->btn_find_ok,        &QPushButton::clicked,  this,   &MyFindForm::find_ok);
     connect(ui->btn_find_auto,      &QPushButton::clicked,  this,   &MyFindForm::find_auto);
     connect(ui->btn_find_programm,  &QPushButton::clicked,  this,   &MyFindForm::find_programm);
     connect(ui->btn_find_to_battle, &QPushButton::clicked,  this,   &MyFindForm::find_to_battle);
+
+    prepare_l(file_ok,          &l_file_ok);
+    prepare_l(file_auto,        &l_file_auto);
+    prepare_l(file_in_battle,   &l_file_in_battle);
 
     load_widgets();
 }
@@ -56,68 +58,70 @@ void MyFindForm::fail(void)
     emit error("Пока не сделано!");
 }
 //--------------------------------------------------------------------------------
-void MyFindForm::show_res(QString pic_filename, QRect rect)
+bool MyFindForm::prepare_l(QString filename, QList<QRgb> *list)
 {
-    bool ok = false;
-
-    //---
     QImage *temp_image = new QImage();
-    ok = temp_image->load(pic_filename);
+    bool ok = temp_image->load(filename);
     if(!ok)
     {
-        emit error(QString("Error load %1").arg(pic_filename));
-        return;
+        emit error(QString("Error load %1").arg(filename));
+        return false;
     }
-    QList<QRgb> pic_points;
+
+    (*list).clear();
     for(int y=0; y<temp_image->height(); y++)
     {
         for(int x=0; x<temp_image->width(); x++)
         {
-            pic_points.append(temp_image->pixel(x, y));
+            (*list).append(temp_image->pixel(x, y));
         }
     }
-    //---
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MyFindForm::prepare_temp(QString filename, QRect rect, QList<QRgb> *list)
+{
+    QImage *image = new QImage();
+    bool ok = image->load(filename);
+    if(!ok)
+    {
+        emit error(QString("Error load %1").arg(filename));
+        return false;
+    }
 
-    //---
+    (*list).clear();
+    for(int y=rect.y(); y<(rect.y() + rect.height()); y++)
+    {
+        for(int x=rect.x(); x<(rect.x() + rect.width()); x++)
+        {
+            (*list).append(image->pixel(x, y));
+        }
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::show_res(QString filename, QRect rect)
+{
     QImage *src_image = new QImage();
-    ok = src_image->load(src_file);
+    bool ok = src_image->load(filename);
     if(!ok)
     {
         emit error(QString("Error load %1").arg(src_file));
         return;
     }
-    QList<QRgb> src_points;
-    for(int y=rect.y(); y<(rect.y() + rect.height()); y++)
-    {
-        for(int x=rect.x(); x<(rect.x() + rect.width()); x++)
-        {
-            src_points.append(src_image->pixel(x, y));
-        }
-    }
-    //---
 
-    if(src_points != pic_points)
-    {
-        emit error("pic not found");
-    }
-    else
-    {
-        QLabel *label = new QLabel();
+    QLabel *label = new QLabel();
+    QPainter painter(src_image);
+    painter.setPen(Qt::yellow);
+    painter.setBrush(QBrush(Qt::yellow));
+    painter.drawRect(rect.x(),
+                     rect.y(),
+                     rect.width(),
+                     rect.height());
 
-#if 0
-        QPainter painter(image);
-        painter.setPen(Qt::yellow);
-        painter.setBrush(QBrush(Qt::yellow));
-        painter.drawRect(rect.x(),
-                         rect.y(),
-                         rect.width(),
-                         rect.height());
-#endif
-
-        label->setPixmap(QPixmap::fromImage(*src_image));
-        label->setMinimumSize(src_image->width(), src_image->height());
-        label->show();
-    }
+    label->setPixmap(QPixmap::fromImage(*src_image));
+    label->setMinimumSize(src_image->width(), src_image->height());
+    label->show();
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::set_src_file(void)
@@ -125,7 +129,7 @@ void MyFindForm::set_src_file(void)
     MyFileDialog *dlg = new MyFileDialog("find_form", "find_form", this);
     dlg->setNameFilter("PNG files (*.png)");
     dlg->setDefaultSuffix("png");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    //dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     int btn = dlg->exec();
     if(btn == MyFileDialog::Accepted)
     {
@@ -153,12 +157,20 @@ void MyFindForm::find_ok(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-        emit info(QString("%1 %2 %3 %4")
-                  .arg(rect.x())
-                  .arg(rect.y())
-                  .arg(rect.width())
-                  .arg(rect.height()));
-        show_res(file_ok, rect);
+        ok = prepare_temp(src_file, rect, &l_temp);
+        if(!ok)
+        {
+            emit error("prepare_temp return false");
+            return;
+        }
+        if(l_temp == l_file_ok)
+        {
+            emit info("OK");
+        }
+        else
+        {
+            emit error("FAIL");
+        }
     }
     else
     {
@@ -180,12 +192,20 @@ void MyFindForm::find_auto(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-        emit info(QString("%1 %2 %3 %4")
-                  .arg(rect.x())
-                  .arg(rect.y())
-                  .arg(rect.width())
-                  .arg(rect.height()));
-        show_res(file_auto, rect);
+        ok = prepare_temp(src_file, rect, &l_temp);
+        if(!ok)
+        {
+            emit error("prepare_temp return false");
+            return;
+        }
+        if(l_temp == l_file_auto)
+        {
+            emit info("OK");
+        }
+        else
+        {
+            emit error("FAIL");
+        }
     }
     else
     {
@@ -214,12 +234,20 @@ void MyFindForm::find_to_battle(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-        emit info(QString("%1 %2 %3 %4")
-                  .arg(rect.x())
-                  .arg(rect.y())
-                  .arg(rect.width())
-                  .arg(rect.height()));
-        show_res(file_in_battle, rect);
+        ok = prepare_temp(src_file, rect, &l_temp);
+        if(!ok)
+        {
+            emit error("prepare_temp return false");
+            return;
+        }
+        if(l_temp == l_file_in_battle)
+        {
+            emit info("OK");
+        }
+        else
+        {
+            emit error("FAIL");
+        }
     }
     else
     {
@@ -239,11 +267,6 @@ void MyFindForm::test(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-        emit info(QString("%1 %2 %3 %4")
-                  .arg(rect.x())
-                  .arg(rect.y())
-                  .arg(rect.width())
-                  .arg(rect.height()));
         show_res(file_in_battle, rect);
     }
     else
@@ -292,7 +315,7 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
     IplImage *result = nullptr;
 
     src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
-//    src = cvLoadImage(imgName, CV_LOAD_IMAGE_COLOR);
+    //    src = cvLoadImage(imgName, CV_LOAD_IMAGE_COLOR);
     if(!src)
     {
         emit error(QString("Error load %1").arg(srcImgName));
@@ -300,7 +323,7 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
     }
 
     templ = cvLoadImage(templName, CV_LOAD_IMAGE_GRAYSCALE);
-//    templ = cvLoadImage(templName, CV_LOAD_IMAGE_COLOR);
+    //    templ = cvLoadImage(templName, CV_LOAD_IMAGE_COLOR);
     if(!templ)
     {
         emit error(QString("Error load %1").arg(templImgName));

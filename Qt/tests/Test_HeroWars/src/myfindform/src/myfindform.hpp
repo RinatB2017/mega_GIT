@@ -74,6 +74,12 @@ private:
 //    QString file_auto       = ":/targets/auto.png";
 //    QString file_in_battle  = ":/targets/в бой.png";
 
+    QList<QRgb> l_src_file;
+    QList<QRgb> l_file_ok;
+    QList<QRgb> l_file_auto;
+    QList<QRgb> l_file_in_battle;
+    QList<QRgb> l_temp;
+
     void init(void);
     void test(void);
     bool searchObjectByTemplate(QString srcImgName,
@@ -87,9 +93,12 @@ private:
     void find_programm(void);
     void find_to_battle(void);
 
-    void show_res(QString pic_filename, QRect rect);
+    void show_res(QString filename, QRect rect);
 
     void set_src_file(void);
+
+    bool prepare_l(QString filename, QList<QRgb> *list);
+    bool prepare_temp(QString filename, QRect rect, QList<QRgb> *list);
 
     void updateText(void);
     bool programm_is_exit(void);

@@ -137,6 +137,7 @@ void AboutBox::changeEvent(QEvent *event)
         break;
 
     default:
+        QWidget::changeEvent(event);
         break;
     }
 }

@@ -51,42 +51,43 @@
 #define ICON_FONT       ":/mainwindow/kfontview.png"
 #define ICON_LANG       ":/mainwindow/applications-education-language.png"
 //--------------------------------------------------------------------------------
-#define APP_PROPERTY_ENG_TEXT   "app_property_eng_text"
+#define APP_PROPERTY_ENG_TEXT           "app_property_eng_text"
+#define DOCKWIDGET_PROPERTY_ENG_TEXT    "dockwidget_property_eng_text"
 //--------------------------------------------------------------------------------
 class LogBox;
 class LogDock;
 class SysLog_dock;
 //--------------------------------------------------------------------------------
-class ToolButtonAction : public QWidgetAction {
-public:
-    ToolButtonAction (QAction *action) :
-      QWidgetAction (nullptr) {
-        QWidget* pWidget = new QWidget (nullptr);
+//class ToolButtonAction : public QWidgetAction {
+//public:
+//    ToolButtonAction (QAction *action) :
+//      QWidgetAction (nullptr) {
+//        QWidget* pWidget = new QWidget (nullptr);
 
-        QHBoxLayout* pLayout = new QHBoxLayout();
-        pLayout->setMargin(0);
-        pLayout->setSpacing(0);
+//        QHBoxLayout* pLayout = new QHBoxLayout();
+//        pLayout->setMargin(0);
+//        pLayout->setSpacing(0);
 
-        QLabel* pLabel = new QLabel(action->text());  //bug fixed here, pointer was missing
-        pLayout->addWidget(pLabel);
+//        QLabel* pLabel = new QLabel(action->text());  //bug fixed here, pointer was missing
+//        pLayout->addWidget(pLabel);
 
-        pToolButton = new QToolButton(nullptr);
-        pToolButton->setText("...");
+//        pToolButton = new QToolButton(nullptr);
+//        pToolButton->setText("...");
 
-        pLayout->addWidget(pToolButton);
+//        pLayout->addWidget(pToolButton);
 
-        pWidget->setLayout(pLayout);
+//        pWidget->setLayout(pLayout);
 
-        setDefaultWidget(pWidget);
-    }
+//        setDefaultWidget(pWidget);
+//    }
 
-    QToolButton *toolButton () {
-        return pToolButton;
-    }
+//    QToolButton *toolButton () {
+//        return pToolButton;
+//    }
 
-private:
-    QToolButton *pToolButton;
-};
+//private:
+//    QToolButton *pToolButton;
+//};
 //--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow
 {
@@ -281,8 +282,6 @@ private:
     void createStyleToolBar(void);
 #endif
 
-    QPointer<QDockWidget> sd;
-
 #ifndef NO_LOG
     QPointer<LogDock> ld;
 #endif
@@ -338,6 +337,7 @@ private:
     void app_toolbar_add_help(void);
 
     void app_updateText(void);
+    void dockwidget_updateText(void);
 
     void show_docs(void);
 

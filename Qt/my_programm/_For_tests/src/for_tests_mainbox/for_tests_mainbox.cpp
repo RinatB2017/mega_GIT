@@ -335,7 +335,7 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
-#if 1
+#if 0
     QStringList sl;
     sl << " "
        << "."

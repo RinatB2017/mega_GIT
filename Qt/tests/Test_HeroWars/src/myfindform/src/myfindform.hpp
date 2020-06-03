@@ -64,7 +64,7 @@ public:
 private:
     Ui::MyFindForm *ui;
 
-    QString src_file        = "/dev/shm/0/Screenshot_5.png";
+    QString src_file        = "/dev/shm/0/Screenshot.png";
     QString file_ok         = "/dev/shm/0/ok.png";
     QString file_auto       = "/dev/shm/0/auto.png";
     QString file_in_battle  = "/dev/shm/0/в бой.png";

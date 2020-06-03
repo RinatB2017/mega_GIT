@@ -2,10 +2,18 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>MainBox</name>
+    <name>MainWindow</name>
     <message>
-        <source>head0</source>
-        <translation>Проба</translation>
+        <source>Test dock</source>
+        <translation>Тестовый док</translation>
+    </message>
+</context>
+
+<context>
+    <name>TestWidget</name>
+    <message>
+        <source>Test widget</source>
+        <translation>Тестовый виджет</translation>
     </message>
 </context>
 </TS>

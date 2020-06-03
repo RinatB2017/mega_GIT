@@ -112,11 +112,11 @@ void MainWindow::changeEvent(QEvent *event)
         return;
     }
 
-    QWidget::changeEvent(event);
     switch (event->type())
     {
     case QEvent::LanguageChange:
         app_updateText();
+        dockwidget_updateText();
 #ifndef NO_TOOLBAR
         if(toolbar)
         {
@@ -138,6 +138,7 @@ void MainWindow::changeEvent(QEvent *event)
         break;
 
     default:
+        QWidget::changeEvent(event);
         break;
     }
 }
@@ -1214,6 +1215,8 @@ bool MainWindow::add_dock_widget(QString title,
 {
     Q_CHECK_PTR(widget);
 
+    emit info(title);
+
     if(title.isEmpty())
     {
         emit error("title is empty!");
@@ -1227,7 +1230,9 @@ bool MainWindow::add_dock_widget(QString title,
 
     QDockWidget *dw = new QDockWidget(this);
     dw->setObjectName(objectname);
-    dw->setWindowTitle(title);
+//    dw->setWindowTitle(title);
+    dw->setWindowTitle(tr(title.toLatin1()));
+    dw->setProperty(DOCKWIDGET_PROPERTY_ENG_TEXT, title);
 
     if(no_dock_position == false)
     {
@@ -2121,6 +2126,15 @@ void MainWindow::app_updateText(void)
         btn->setText(tr(btn->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
         btn->setToolTip(tr(btn->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
         btn->setStatusTip(tr(btn->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
+    }
+}
+//--------------------------------------------------------------------------------
+void MainWindow::dockwidget_updateText(void)
+{
+    QList<QDockWidget *> ldw = findChildren<QDockWidget *>();
+    foreach (QDockWidget *dock, ldw)
+    {
+        dock->setWindowTitle(tr(dock->property(DOCKWIDGET_PROPERTY_ENG_TEXT).toString().toLatin1()));
     }
 }
 //--------------------------------------------------------------------------------

@@ -19,6 +19,8 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "myfiledialog.hpp"
+#include "mainwindow.hpp"
+#include "showpicture.hpp"
 #include "myfindform.hpp"
 #include "ui_myfindform.h"
 //--------------------------------------------------------------------------------
@@ -39,7 +41,16 @@ MyFindForm::~MyFindForm()
 //--------------------------------------------------------------------------------
 void MyFindForm::init(void)
 {
-    connect(ui->btn_set_screenshot_name,    &QPushButton::clicked,  this,   &MyFindForm::set_src_file);
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("Show picture", "show_picture", Qt::RightDockWidgetArea, ui->showpicture_widget);
+    }
+
+    connect(ui->btn_set,            &QToolButton::clicked,  this,   &MyFindForm::set_src_file);
+    connect(ui->btn_show,           &QToolButton::clicked, [this]() {
+        ui->showpicture_widget->show_picture(ui->le_screenshot->text());
+    });
 
     connect(ui->btn_find_ok,        &QPushButton::clicked,  this,   &MyFindForm::find_ok);
     connect(ui->btn_find_auto,      &QPushButton::clicked,  this,   &MyFindForm::find_auto);
@@ -216,7 +227,6 @@ void MyFindForm::find_auto(void)
 void MyFindForm::find_programm(void)
 {
     emit trace(Q_FUNC_INFO);
-
     fail();
 }
 //--------------------------------------------------------------------------------

@@ -78,8 +78,6 @@ class MainBox : public MyWidget
 {
     Q_OBJECT
 
-signals:
-
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);

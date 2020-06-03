@@ -663,7 +663,6 @@ void LogBox::updateText(void)
 //--------------------------------------------------------------------------------
 void LogBox::changeEvent(QEvent *event)
 {
-    QWidget::changeEvent(event);
     switch (event->type())
     {
     case QEvent::LanguageChange:
@@ -671,6 +670,7 @@ void LogBox::changeEvent(QEvent *event)
         break;
 
     default:
+        QWidget::changeEvent(event);
         break;
     }
 }

@@ -71,8 +71,8 @@ void MyFindForm::fail(void)
 //--------------------------------------------------------------------------------
 bool MyFindForm::prepare_l(QString filename, QList<QRgb> *list)
 {
-    QImage *temp_image = new QImage();
-    bool ok = temp_image->load(filename);
+    QImage *image = new QImage();
+    bool ok = image->load(filename);
     if(!ok)
     {
         emit error(QString("Error load %1").arg(filename));
@@ -80,11 +80,11 @@ bool MyFindForm::prepare_l(QString filename, QList<QRgb> *list)
     }
 
     (*list).clear();
-    for(int y=0; y<temp_image->height(); y++)
+    for(int y=0; y<image->height(); y++)
     {
-        for(int x=0; x<temp_image->width(); x++)
+        for(int x=0; x<image->width(); x++)
         {
-            (*list).append(temp_image->pixel(x, y));
+            (*list).append(image->pixel(x, y));
         }
     }
     return true;
@@ -150,6 +150,7 @@ void MyFindForm::set_src_file(void)
         if(filename.isEmpty() == false)
         {
             ui->le_screenshot->setText(filename);
+            ui->showpicture_widget->show_picture(filename);
         }
     }
 }
@@ -168,6 +169,11 @@ void MyFindForm::find_ok(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+        emit info(QString("%1 %2 %3 %4")
+                  .arg(rect.x())
+                  .arg(rect.y())
+                  .arg(rect.width())
+                  .arg(rect.height()));
         ok = prepare_temp(src_file, rect, &l_temp);
         if(!ok)
         {
@@ -203,6 +209,11 @@ void MyFindForm::find_auto(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+        emit info(QString("%1 %2 %3 %4")
+                  .arg(rect.x())
+                  .arg(rect.y())
+                  .arg(rect.width())
+                  .arg(rect.height()));
         ok = prepare_temp(src_file, rect, &l_temp);
         if(!ok)
         {
@@ -244,6 +255,11 @@ void MyFindForm::find_to_battle(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+        emit info(QString("%1 %2 %3 %4")
+                  .arg(rect.x())
+                  .arg(rect.y())
+                  .arg(rect.width())
+                  .arg(rect.height()));
         ok = prepare_temp(src_file, rect, &l_temp);
         if(!ok)
         {
@@ -277,6 +293,11 @@ void MyFindForm::test(void)
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+        emit info(QString("%1 %2 %3 %4")
+                  .arg(rect.x())
+                  .arg(rect.y())
+                  .arg(rect.width())
+                  .arg(rect.height()));
         show_res(file_in_battle, rect);
     }
     else
@@ -358,7 +379,7 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
     resultPair.second = SQDIFF_result;
 
     if(resultPair.first.x() == resultPair.second.x() &&
-            resultPair.first.x() == resultPair.second.x())
+            resultPair.first.y() == resultPair.second.y())
     {
         *rect = resultPair.first;
         return true;

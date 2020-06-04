@@ -153,7 +153,7 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
-    mw->add_dock_widget("График", "grapher", Qt::LeftDockWidgetArea, grapher_widget);
+    mw->add_dock_widget("Graphic", "graphic", Qt::LeftDockWidgetArea, grapher_widget);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_data(void)

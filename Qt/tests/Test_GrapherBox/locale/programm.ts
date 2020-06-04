@@ -2,10 +2,10 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>MainWidget_GUI</name>
+    <name>MainWindow</name>
     <message>
-        <source>PushButton</source>
-        <translation>Проба</translation>
+        <source>Graphic</source>
+        <translation>График</translation>
     </message>
 </context>
 </TS>

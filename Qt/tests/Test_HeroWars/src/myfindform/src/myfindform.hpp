@@ -64,6 +64,8 @@ public:
 private:
     Ui::MyFindForm *ui;
 
+    QString temp_file       = "/dev/shm/temp_screenshot.png";
+
     QString src_file        = "/dev/shm/0/Screenshot.png";
     QString file_ok         = "/dev/shm/0/ok.png";
     QString file_auto       = "/dev/shm/0/auto.png";
@@ -86,6 +88,7 @@ private:
                                 QString templImgName,
                                 QRect *rect);
 
+    void click(void);
     void fail(void);
 
     void find_ok(void);
@@ -93,12 +96,21 @@ private:
     void find_programm(void);
     void find_to_battle(void);
 
+    bool find_programm_with_title(const QString &title);
+    bool find_window(const QString programm_title,
+                     int *x,
+                     int *y,
+                     int *width,
+                     int *heigth);
+
     void show_res(QString filename, QRect rect);
 
     void set_src_file(void);
 
     bool prepare_l(QString filename, QList<QRgb> *list);
     bool prepare_temp(QString filename, QRect rect, QList<QRgb> *list);
+
+    void mouse_click(unsigned int button, QPoint pos);
 
     void updateText(void);
     bool programm_is_exit(void);

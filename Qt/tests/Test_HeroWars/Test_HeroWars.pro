@@ -44,9 +44,10 @@ unix {
     LIBS    += -lOpenCL
 }
 win32 {
-    INCLUDEPATH += C:\\OpenCV\\include
+    INCLUDEPATH += C:/opencv/build/include/
+    DEPENDPATH  += C:/opencv/build/include/
 
-    OPENCV_VER = 410
+    OPENCV_VER = 430
     LIBS    += -LC:\\OpenCV\\x86\\mingw\\bin
     LIBS    += -lopencv_core$${OPENCV_VER}
     LIBS    += -lopencv_highgui$${OPENCV_VER}

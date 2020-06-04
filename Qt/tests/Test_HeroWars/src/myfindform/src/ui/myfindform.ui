@@ -12,33 +12,120 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="le_screenshot"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLineEdit" name="le_address"/>
-     </item>
-     <item row="1" column="2">
-      <widget class="QPushButton" name="btn_show">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
-        <string>show</string>
+        <string>X:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="btn_find_programm">
+     <item>
+      <widget class="QSpinBox" name="sb_pos_x"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
-        <string>find</string>
+        <string>Y:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QToolButton" name="btn_set">
+     <item>
+      <widget class="QSpinBox" name="sb_pos_y"/>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_click">
        <property name="text">
         <string>...</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="le_screenshot">
+         <property name="maximumSize">
+          <size>
+           <width>800</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLineEdit" name="le_title">
+         <property name="maximumSize">
+          <size>
+           <width>800</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="btn_show">
+         <property name="text">
+          <string>show</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="btn_find_programm">
+         <property name="text">
+          <string>find</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QToolButton" name="btn_set">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -141,9 +228,13 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>le_address</tabstop>
+  <tabstop>sb_pos_x</tabstop>
+  <tabstop>sb_pos_y</tabstop>
+  <tabstop>btn_click</tabstop>
+  <tabstop>le_title</tabstop>
   <tabstop>btn_find_programm</tabstop>
   <tabstop>le_screenshot</tabstop>
+  <tabstop>btn_set</tabstop>
   <tabstop>btn_show</tabstop>
   <tabstop>btn_find_auto</tabstop>
   <tabstop>btn_find_ok</tabstop>

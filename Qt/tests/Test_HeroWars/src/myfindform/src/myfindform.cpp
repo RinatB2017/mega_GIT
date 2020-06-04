@@ -24,6 +24,10 @@
 #include "myfindform.hpp"
 #include "ui_myfindform.h"
 //--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include "other.hpp"
+#endif
+//--------------------------------------------------------------------------------
 MyFindForm::MyFindForm(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MyFindForm)
@@ -47,6 +51,12 @@ void MyFindForm::init(void)
         mw->add_dock_widget("Show picture", "show_picture", Qt::RightDockWidgetArea, ui->showpicture_widget);
     }
 
+    ui->sb_pos_x->setRange(0,   0xFFFF);
+    ui->sb_pos_y->setRange(0,   0xFFFF);
+    connect(ui->btn_click,          &QToolButton::clicked,      this,   &MyFindForm::click);
+    connect(ui->sb_pos_x,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
+    connect(ui->sb_pos_y,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
+
     connect(ui->btn_set,            &QToolButton::clicked,  this,   &MyFindForm::set_src_file);
     connect(ui->btn_show,           &QToolButton::clicked, [this]() {
         ui->showpicture_widget->show_picture(ui->le_screenshot->text());
@@ -62,6 +72,14 @@ void MyFindForm::init(void)
     prepare_l(file_in_battle,   &l_file_in_battle);
 
     load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::click(void)
+{
+    QPoint pos;
+    pos.setX(ui->sb_pos_x->value());
+    pos.setY(ui->sb_pos_y->value());
+    mouse_click(Qt::LeftButton, pos);
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::fail(void)
@@ -238,7 +256,115 @@ void MyFindForm::find_auto(void)
 void MyFindForm::find_programm(void)
 {
     emit trace(Q_FUNC_INFO);
-    fail();
+    bool ok = find_programm_with_title(ui->le_title->text());
+    if(ok)
+    {
+        emit info("Find!");
+    }
+    else
+    {
+        emit error("FAIL");
+    }
+}
+//--------------------------------------------------------------------------------
+bool MyFindForm::find_programm_with_title(const QString &title)
+{
+    if(title.isEmpty())
+    {
+        emit error("title is empty");
+        return false;
+    }
+
+    int x = -1;
+    int y = -1;
+    int w = -1;
+    int h = -1;
+    bool ok = find_window(title, &x, &y, &w, &h);
+    if(ok)
+    {
+        emit info(QString("%1 %2 %3 %4")
+                  .arg(x)
+                  .arg(y)
+                  .arg(w)
+                  .arg(h));
+
+        QScreen *screen = QGuiApplication::primaryScreen();
+        Q_CHECK_PTR(screen);
+        QPixmap screen_shot = screen->grabWindow(0, x, y, w, h);
+        screen_shot.save(temp_file);
+
+#if 1
+        ui->showpicture_widget->show_picture(temp_file);
+#else
+        QLabel *lbl = new QLabel();
+        lbl->setPixmap(screen_shot);
+        lbl->show();
+#endif
+    }
+    return ok;
+}
+//--------------------------------------------------------------------------------
+bool MyFindForm::find_window(const QString programm_title,
+                             int *x,
+                             int *y,
+                             int *width,
+                             int *heigth)
+{
+#ifdef Q_OS_LINUX
+    Display* display = XOpenDisplay( nullptr );
+    Q_CHECK_PTR(display);
+
+    bool is_found = false;
+    ulong count = 0;
+    Window* wins = findWindows( display, &count );
+    char* name;
+    QString temp;
+
+    for( ulong i = 0; i < count; ++i )
+    {
+        Window w = wins[ i ];
+        name = getWindowName( display, w );
+        if( name )
+        {
+            temp.clear();
+            temp.append(name);
+            XFree( name );
+        }
+
+        XWindowAttributes attrs;
+        if( XGetWindowAttributes( display, w, &attrs ) )
+        {
+            Window child;
+            if( XTranslateCoordinates( display,
+                                       w, attrs.root,
+                                       0, 0,
+                                       &attrs.x, &attrs.y,
+                                       &child
+                                       ) )
+            {
+                if(temp.contains(programm_title))
+                {
+                    *x = attrs.x;
+                    *y = attrs.y;
+                    *width = attrs.width;
+                    *heigth = attrs.height;
+                    is_found = true;
+                }
+            }
+        }
+    }
+
+    if( wins )
+    {
+        XFree( wins );
+    }
+
+    XCloseDisplay( display );
+
+    return is_found;
+#else
+    return false;
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::find_to_battle(void)
@@ -314,6 +440,7 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
 {
     emit trace(Q_FUNC_INFO);
 
+#ifdef Q_OS_LINUX
     if(srcImgName.isEmpty())
     {
         emit error("srcImgName is empty!");
@@ -388,7 +515,39 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
     cvReleaseImage(&src);
     cvReleaseImage(&templ);
     cvReleaseImage(&result);
+
+#endif
     return false;
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::mouse_click(unsigned int button, QPoint pos)
+{
+#ifdef Q_OS_LINUX
+    Display* display = XOpenDisplay( nullptr );
+    Q_CHECK_PTR(display);
+    if( display == nullptr )
+    {
+        emit error("display == nullptr");
+        return;
+    }
+
+    QCursor::setPos(pos);
+    XTestFakeButtonEvent( display, button,  true,   CurrentTime );
+    XTestFakeButtonEvent( display, button,  false,  CurrentTime );
+
+    XFlush( display );
+    XCloseDisplay( display );
+#endif
+
+#ifdef Q_OS_WIN
+    // https://stackoverflow.com/questions/8272681/how-can-i-simulate-a-mouse-click-at-a-certain-position-on-the-screen
+    //int MOUSEEVENTF_LEFTDOWN  = 0x02;
+    //int MOUSEEVENTF_LEFTUP    = 0x04;
+
+    SetCursorPos(pos.x(), pos.y());
+    mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
+    mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::updateText(void)

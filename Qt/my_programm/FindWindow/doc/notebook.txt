@@ -1,0 +1,71 @@
+void CaptureWindow()
+{
+    RECT rc;
+    HWND hwnd = ::FindWindow(0, _T("Mozilla Firefox Start Page - Mozilla Firefox"));
+    //::FindWindow(0,_T("ScreenCapture (Running) - Microsoft Visual Studio"));
+    //::FindWindow(0, _T("Calculator"));//= FindWindow("Notepad", NULL);    //You get the ideal?
+    if (hwnd == NULL)
+    {
+        return;
+    }
+    GetClientRect(hwnd, &rc);
+
+    //create
+    HDC hdcScreen = GetDC(NULL);
+    HDC hdc = CreateCompatibleDC(hdcScreen);
+    HBITMAP hbmp = CreateCompatibleBitmap(hdcScreen,
+        rc.right - rc.left, rc.bottom - rc.top);
+    SelectObject(hdc, hbmp);
+
+    //Print to memory hdc
+    PrintWindow(hwnd, hdc, PW_CLIENTONLY);
+
+    //copy to clipboard
+    OpenClipboard(NULL);
+    EmptyClipboard();
+    SetClipboardData(CF_BITMAP, hbmp);
+    CloseClipboard();
+
+    //release
+    DeleteDC(hdc);
+    DeleteObject(hbmp);
+    ReleaseDC(NULL, hdcScreen);
+
+    //Play(TEXT("photoclick.wav"));//This is just a function to play a sound, you can write it yourself, but it doesn't matter in this example so I comment it out.
+}
+
+#include <windows.h>
+
+#define VER_FILEVERSION             1,0,0,0
+#define VER_FILEVERSION_STR         "1.0.0.0\0"
+#define VER_PRODUCTVERSION          1,0,0
+#define VER_PRODUCTVERSION_STR      "1.0.0\0"
+#define VER_FILEDESCRIPTION_STR     "HelloWorld"
+#define VER_INTERNALNAME_STR        "Sensor"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright (C) 2015, MyCompany"
+#define VER_ORIGINALFILENAME_STR    "HelloWorld.exe"
+#define VER_PRODUCTNAME_STR         "Hello World"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "FileDescription",    VER_FILEDESCRIPTION_STR
+            VALUE "FileVersion",        VER_FILEVERSION_STR
+            VALUE "InternalName",       VER_INTERNALNAME_STR
+            VALUE "LegalCopyright",     VER_LEGALCOPYRIGHT_STR
+            VALUE "OriginalFilename",   VER_ORIGINALFILENAME_STR
+            VALUE "ProductName",        VER_PRODUCTNAME_STR
+            VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

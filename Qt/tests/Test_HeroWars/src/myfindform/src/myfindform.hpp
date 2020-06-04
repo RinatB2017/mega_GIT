@@ -77,10 +77,21 @@ private:
 //    QString file_in_battle  = ":/targets/в бой.png";
 
     QList<QRgb> l_src_file;
+    QRect rect_src_file;
+
     QList<QRgb> l_file_ok;
+    QRect rect_file_ok;
+
     QList<QRgb> l_file_auto;
+    QRect rect_file_auto;
+
     QList<QRgb> l_file_in_battle;
+    QRect rect_file_in_battle;
+
     QList<QRgb> l_temp;
+    QRect rect_temp;
+
+    void show_rect_picture(QString caption, QList<QRgb> array, QRect rect);
 
     void init(void);
     void test(void);
@@ -107,8 +118,11 @@ private:
 
     void set_src_file(void);
 
-    bool prepare_l(QString filename, QList<QRgb> *list);
-    bool prepare_temp(QString filename, QRect rect, QList<QRgb> *list);
+    bool prepare_l(QString filename, QList<QRgb> *list, QRect *rect);
+    bool prepare_temp(QString filename,
+                      QRect rect,
+                      QList<QRgb> *list,
+                      QRect *out_rect);
 
     void mouse_click(unsigned int button, QPoint pos);
 

@@ -24,6 +24,13 @@
 #include "myfindform.hpp"
 #include "ui_myfindform.h"
 //--------------------------------------------------------------------------------
+// Хроники Хаоса | Ролевая онлайн игра
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_WIN
+#   include "wingdi.h"
+#   include "tchar.h"
+#endif
+//--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "other.hpp"
 #endif
@@ -67,9 +74,9 @@ void MyFindForm::init(void)
     connect(ui->btn_find_programm,  &QPushButton::clicked,  this,   &MyFindForm::find_programm);
     connect(ui->btn_find_to_battle, &QPushButton::clicked,  this,   &MyFindForm::find_to_battle);
 
-    prepare_l(file_ok,          &l_file_ok);
-    prepare_l(file_auto,        &l_file_auto);
-    prepare_l(file_in_battle,   &l_file_in_battle);
+    prepare_l(file_ok,          &l_file_ok,         &rect_file_ok);
+    prepare_l(file_auto,        &l_file_auto,       &rect_file_auto);
+    prepare_l(file_in_battle,   &l_file_in_battle,  &rect_file_in_battle);
 
     load_widgets();
 }
@@ -87,7 +94,7 @@ void MyFindForm::fail(void)
     emit error("Пока не сделано!");
 }
 //--------------------------------------------------------------------------------
-bool MyFindForm::prepare_l(QString filename, QList<QRgb> *list)
+bool MyFindForm::prepare_l(QString filename, QList<QRgb> *list, QRect *rect)
 {
     QImage *image = new QImage();
     bool ok = image->load(filename);
@@ -96,6 +103,11 @@ bool MyFindForm::prepare_l(QString filename, QList<QRgb> *list)
         emit error(QString("Error load %1").arg(filename));
         return false;
     }
+
+    (*rect).setX(0);
+    (*rect).setY(0);
+    (*rect).setWidth(image->width());
+    (*rect).setHeight(image->height());
 
     (*list).clear();
     for(int y=0; y<image->height(); y++)
@@ -108,7 +120,10 @@ bool MyFindForm::prepare_l(QString filename, QList<QRgb> *list)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MyFindForm::prepare_temp(QString filename, QRect rect, QList<QRgb> *list)
+bool MyFindForm::prepare_temp(QString filename,
+                              QRect rect,
+                              QList<QRgb> *list,
+                              QRect *out_rect)
 {
     QImage *image = new QImage();
     bool ok = image->load(filename);
@@ -117,6 +132,8 @@ bool MyFindForm::prepare_temp(QString filename, QRect rect, QList<QRgb> *list)
         emit error(QString("Error load %1").arg(filename));
         return false;
     }
+
+    *out_rect = rect;
 
     (*list).clear();
     for(int y=rect.y(); y<(rect.y() + rect.height()); y++)
@@ -192,7 +209,7 @@ void MyFindForm::find_ok(void)
                   .arg(rect.y())
                   .arg(rect.width())
                   .arg(rect.height()));
-        ok = prepare_temp(src_file, rect, &l_temp);
+        ok = prepare_temp(src_file, rect, &l_temp, &rect_temp);
         if(!ok)
         {
             emit error("prepare_temp return false");
@@ -204,6 +221,8 @@ void MyFindForm::find_ok(void)
         }
         else
         {
+            show_rect_picture("src_file",   l_temp,     rect);
+            show_rect_picture("l_file_ok",  l_file_ok,  rect_file_ok);
             emit error("FAIL");
         }
     }
@@ -232,7 +251,7 @@ void MyFindForm::find_auto(void)
                   .arg(rect.y())
                   .arg(rect.width())
                   .arg(rect.height()));
-        ok = prepare_temp(src_file, rect, &l_temp);
+        ok = prepare_temp(src_file, rect, &l_temp, &rect_temp);
         if(!ok)
         {
             emit error("prepare_temp return false");
@@ -244,6 +263,8 @@ void MyFindForm::find_auto(void)
         }
         else
         {
+            show_rect_picture("src_file",       l_temp,         rect);
+            show_rect_picture("l_file_auto",    l_file_auto,    rect_file_auto);
             emit error("FAIL");
         }
     }
@@ -294,6 +315,7 @@ bool MyFindForm::find_programm_with_title(const QString &title)
         screen_shot.save(temp_file);
 
 #if 1
+        ui->le_screenshot->setText(temp_file);
         ui->showpicture_widget->show_picture(temp_file);
 #else
         QLabel *lbl = new QLabel();
@@ -365,6 +387,60 @@ bool MyFindForm::find_window(const QString programm_title,
 #else
     return false;
 #endif
+
+#ifdef Q_OS_WIN
+    RECT rc;
+//    HWND hwnd = ::FindWindow(0, _T("Calculator"));
+    HWND hwnd = ::FindWindow(0, _T("Проводник"));
+    if (hwnd == NULL)
+    {
+        emit error("hwnd == NULL");
+        return false;
+    }
+    GetClientRect(hwnd, &rc);
+
+    //create
+    HDC hdcScreen = GetDC(NULL);
+    HDC hdc = CreateCompatibleDC(hdcScreen);
+    HBITMAP hbmp = CreateCompatibleBitmap(hdcScreen,
+                                          rc.right - rc.left,
+                                          rc.bottom - rc.top);
+    SelectObject(hdc, hbmp);
+
+    //Print to memory hdc
+#if 1
+    WINDOWINFO wi;
+    GetWindowInfo(hwnd, &wi);
+
+    BitBlt(hdc, 0, 0, rc.right - rc.left, rc.bottom - rc.top, hdcScreen, wi.rcClient.left, wi.rcClient.top, SRCCOPY);
+#else
+    // так не получится сфотографировать калькулятор
+    bool ok = PrintWindow(hwnd, hdc, PW_CLIENTONLY);
+    if(!ok)
+    {
+        emit error("PrintWindow return false");
+    }
+#endif
+
+    //copy to clipboard
+    OpenClipboard(NULL);
+    EmptyClipboard();
+    SetClipboardData(CF_BITMAP, hbmp);
+    CloseClipboard();
+
+    //release
+    DeleteDC(hdc);
+    DeleteObject(hbmp);
+    ReleaseDC(NULL, hdcScreen);
+
+    emit info(QString("%1 %2 %3 %4")
+              .arg(rc.left)
+              .arg(rc.top)
+              .arg(rc.right)
+              .arg(rc.bottom));
+    emit info("OK");
+    return true;
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::find_to_battle(void)
@@ -386,7 +462,7 @@ void MyFindForm::find_to_battle(void)
                   .arg(rect.y())
                   .arg(rect.width())
                   .arg(rect.height()));
-        ok = prepare_temp(src_file, rect, &l_temp);
+        ok = prepare_temp(src_file, rect, &l_temp, &rect_temp);
         if(!ok)
         {
             emit error("prepare_temp return false");
@@ -398,6 +474,15 @@ void MyFindForm::find_to_battle(void)
         }
         else
         {
+            show_rect_picture("src_file",           l_temp,             rect);
+            show_rect_picture("l_file_in_battle",   l_file_in_battle,   rect_file_in_battle);
+
+            for(int n=0; n<10; n++)
+            {
+                emit info(QString("%1 %2")
+                          .arg(l_temp.at(n),            0,  16)
+                          .arg(l_file_in_battle.at(n),  0,  16));
+            }
             emit error("FAIL");
         }
     }
@@ -405,6 +490,33 @@ void MyFindForm::find_to_battle(void)
     {
         emit error("Not found");
     }
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::show_rect_picture(QString caption, QList<QRgb> array, QRect rect)
+{
+    emit info(QString("%1: %2 %3 %4 %5")
+              .arg(caption)
+              .arg(rect.x())
+              .arg(rect.y())
+              .arg(rect.width())
+              .arg(rect.height()));
+
+    QImage *image = new QImage(rect.width(), rect.height(), QImage::Format_RGBX8888);
+
+    int index = 0;
+    for(int y=0; y<rect.height(); y++)
+    {
+        for(int x=0; x<rect.width(); x++)
+        {
+            image->setPixel(x, y, array.at(index++));
+        }
+    }
+
+    QLabel *label = new QLabel();
+    label->setToolTip(caption);
+    label->setWindowTitle(caption);
+    label->setPixmap(QPixmap::fromImage(*image));
+    label->show();
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::test(void)

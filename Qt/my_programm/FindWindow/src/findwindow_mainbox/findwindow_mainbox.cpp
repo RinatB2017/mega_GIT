@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -128,7 +128,8 @@ bool MainBox::test(void)
 
 #ifdef Q_OS_WIN
     RECT rc;
-    HWND hwnd = ::FindWindow(0, _T("Calculator"));
+//    HWND hwnd = ::FindWindow(0, _T("Calculator"));
+    HWND hwnd = ::FindWindow(0, _T("Проводник"));
     if (hwnd == NULL)
     {
         emit error("hwnd == NULL");
@@ -145,11 +146,19 @@ bool MainBox::test(void)
     SelectObject(hdc, hbmp);
 
     //Print to memory hdc
+#if 1
+    WINDOWINFO wi;
+    GetWindowInfo(hwnd, &wi);
+
+    BitBlt(hdc, 0, 0, rc.right - rc.left, rc.bottom - rc.top, hdcScreen, wi.rcClient.left, wi.rcClient.top, SRCCOPY);
+#else
+    // так не получится сфотографировать калькулятор
     bool ok = PrintWindow(hwnd, hdc, PW_CLIENTONLY);
     if(!ok)
     {
         emit error("PrintWindow return false");
     }
+#endif
 
     //copy to clipboard
     OpenClipboard(NULL);

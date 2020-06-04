@@ -1,3 +1,5 @@
+https://stackoverflow.com/questions/16530871/findwindow-does-not-find-the-a-window
+
 void CaptureWindow()
 {
     RECT rc;

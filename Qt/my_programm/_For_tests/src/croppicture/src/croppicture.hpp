@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef CROPPICTURE_HPP
+#define CROPPICTURE_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -27,110 +27,39 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-typedef struct PACKET {
-    uint16_t a;
-    uint8_t  b;
-    uint32_t c;
-} *packet_t;
-//--------------------------------------------------------------------------------
-class IMyClass {
-    virtual void open(void) = 0;
-    virtual void close(void) = 0;
-};
-
-class IMyClass2 {
-    virtual void open2(void) = 0;
-    virtual void close2(void) = 0;
-};
-
-class MyClass : public IMyClass, IMyClass2
-{
-public:
-    void open(void)  { open2();  };
-    void close(void) { close2(); };
-
-private:
-    void open2(void)  { qDebug() << "open2";  };
-    void close2(void) { qDebug() << "close2"; };
-};
-
-class MyClass2 : MyClass
-{
-public:
-    void open(void)  { MyClass::open(); };
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class CropPicture;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class SimpleWidget;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class CropPicture : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    explicit CropPicture(QWidget *parent = nullptr);
+    ~CropPicture();
 
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-    int test_packet(PACKET packet);
-
-public slots:
-    void choice_test(void);
-    bool test(void);
-    bool print_property(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    void print_mp(QWidget *widget);
-    bool load_property(QWidget *widget, const QString &property_name);
-    bool save_property(QWidget *widget, const QString &property_name, QVariant value);
-    void delete_string(void);
-
-    void s_inFunc(void);
-
-    void check_in(void);
-    void victory(void);
+    bool load_pixmap(QPixmap pixmap);
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-    QList<CMD> commands;
+    Ui::CropPicture *ui;
 
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
-    QScopedPointer<SimpleWidget> sw;
-
-    void readJson(const QString &filename);
+    QPixmap orig_pixmap;
+    int pixmap_width = 0;
+    int pixmap_height = 0;
 
     void init(void);
-    void createTestBar(void);
 
-    void test_validator(void);
-    int get_cnt(void);
+    void up(void);
+    void down(void);
+    void left(void);
+    void right(void);
+    void up_left(void);
+    void down_right(void);
+    void plus(void);
+    void minus(void);
 
     void updateText(void);
     bool programm_is_exit(void);
@@ -138,4 +67,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // CROPPICTURE_HPP

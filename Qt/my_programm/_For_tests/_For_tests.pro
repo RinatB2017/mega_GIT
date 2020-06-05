@@ -79,9 +79,11 @@ CONFIG(debug, debug|release) {
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
+include ($$LIB_PATH2/icons/arrows.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simplewidget/simplewidget.pri)
+include (src/croppicture/croppicture.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

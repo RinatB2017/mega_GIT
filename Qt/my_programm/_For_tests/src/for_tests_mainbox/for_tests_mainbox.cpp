@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -330,10 +330,34 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
+#include "croppicture.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+
+#if 1
+    CropPicture *pict = new CropPicture();
+    pict->load_pixmap(QPixmap(ICON_PROGRAMM));
+    pict->show();
+#endif
+
+#if 0
+    QPixmap p(ICON_PROGRAMM);
+    int mul = 40;
+    int w = p.width()  * mul;
+    int h = p.height() * mul;
+
+    QLabel *label = new QLabel();
+
+    // set a scaled pixmap to a w x h window keeping its aspect ratio
+    label->setPixmap(p.scaled(w,h,Qt::KeepAspectRatio));
+
+//    label->setPixmap(QPixmap(ICON_PROGRAMM));
+//    label->setScaledContents(true);
+    label->show();
+#endif
 
 #if 0
     QStringList sl;

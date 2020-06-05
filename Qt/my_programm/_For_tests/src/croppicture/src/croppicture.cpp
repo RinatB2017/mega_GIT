@@ -111,6 +111,13 @@ bool CropPicture::load_pixmap(QPixmap pixmap)
     return true;
 }
 //--------------------------------------------------------------------------------
+void CropPicture::resizeEvent(QResizeEvent *event)
+{
+    emit info(QString("%1 %2")
+              .arg(event->size().width())
+              .arg(event->size().height()));
+}
+//--------------------------------------------------------------------------------
 void CropPicture::updateText(void)
 {
     ui->retranslateUi(this);

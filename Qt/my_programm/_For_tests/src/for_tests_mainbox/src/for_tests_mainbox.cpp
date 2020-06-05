@@ -339,6 +339,8 @@ bool MainBox::test(void)
 
 #if 1
     CropPicture *pict = new CropPicture();
+    connect_log_signals(pict, this);
+
     pict->load_pixmap(QPixmap(ICON_PROGRAMM));
     pict->show();
 #endif

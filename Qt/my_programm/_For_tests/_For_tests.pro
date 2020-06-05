@@ -7,9 +7,7 @@ TARGET   = _For_tests
 
 PROGRAMM_PATH  += \
     $$PWD \
-    $$PWD/src \
-    $$PWD/src/for_tests_mainbox \
-    $$PWD/src/for_tests_mainbox/ui
+    $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
@@ -47,15 +45,11 @@ DEFINES += NEED_CODEC
 DEFINES += SAVE_INI
 
 HEADERS += \
-    for_tests_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    for_tests_mainbox.cpp \
     main.cpp
-
-FORMS   += for_tests_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -80,6 +74,8 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
+
+include (src/for_tests_mainbox/for_tests_mainbox.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simplewidget/simplewidget.pri)

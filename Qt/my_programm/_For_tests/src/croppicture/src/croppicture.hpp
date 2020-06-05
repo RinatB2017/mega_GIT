@@ -65,6 +65,9 @@ private:
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    void resizeEvent (QResizeEvent * event);
 };
 //--------------------------------------------------------------------------------
 #endif // CROPPICTURE_HPP

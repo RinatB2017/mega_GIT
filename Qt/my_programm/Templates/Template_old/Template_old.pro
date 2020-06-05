@@ -9,9 +9,7 @@ FOLDER  = _Templates
 
 DEPENDPATH  += \
     $$PWD \
-    $$PWD/src \
-    $$PWD/src/template_old_mainbox \
-    $$PWD/src/template_old_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += LOGO_GL
@@ -45,15 +43,11 @@ DEFINES += SHOW_SIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    template_old_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    template_old_mainbox.cpp \
     main.cpp
-
-FORMS   += template_old_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -71,6 +65,8 @@ CONFIG(debug, debug|release) {
 
 LIB_PATH = "$$PWD/../../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/template_old_mainbox/template_old_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

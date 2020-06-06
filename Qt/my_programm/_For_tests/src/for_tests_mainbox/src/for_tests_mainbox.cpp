@@ -330,6 +330,31 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
+void MainBox::f1(void)
+{
+    emit info(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f2(void)
+{
+    emit info(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f3(void)
+{
+    emit info(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f4(void)
+{
+    emit info(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void MainBox::f5(void)
+{
+    emit info(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
 #include "croppicture.hpp"
 
 bool MainBox::test(void)
@@ -338,6 +363,44 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    typedef struct
+    {
+        QString btn_text;
+        QString file_str;
+        void (MainBox::*func)(void);
+    } BTN;
+    QList<BTN> buttons;
+
+    buttons.clear();
+    buttons.append( { "F1", ICON_PROGRAMM, &MainBox::f1} );
+    buttons.append( { "F2", ICON_PROGRAMM, &MainBox::f2} );
+    buttons.append( { "F3", ICON_PROGRAMM, &MainBox::f3} );
+    buttons.append( { "F4", ICON_PROGRAMM, &MainBox::f4} );
+    buttons.append( { "F5", ICON_PROGRAMM, &MainBox::f5} );
+
+    QWidget *widget = new QWidget();
+    QGridLayout *grid = new QGridLayout();
+
+    int row = 0;
+    foreach (BTN btn, buttons)
+    {
+        QLabel *label = new QLabel();
+        label->setPixmap(QPixmap(btn.file_str));
+
+        QPushButton *button = new QPushButton();
+        button->setText(btn.btn_text);
+        connect(button, &QPushButton::clicked,  this,   btn.func);
+
+        grid->addWidget(label,  row,    0);
+        grid->addWidget(button, row,    1);
+        row++;
+    }
+
+    widget->setLayout(grid);
+    widget->show();
+#endif
+
+#if 0
     MyLabel *pict = new MyLabel();
     connect_log_signals(pict, this);
 

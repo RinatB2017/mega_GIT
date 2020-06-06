@@ -229,7 +229,7 @@ private:
         int cmd;
         QString cmd_text;
         bool (MainBox::*func)(void);
-    } CMD_t;
+    } *cmd_t;
     QList<CMD> commands;
 
     QPointer<MySplashScreen> splash;
@@ -248,6 +248,12 @@ private:
 
     void test_validator(void);
     int get_cnt(void);
+
+    void f1(void);
+    void f2(void);
+    void f3(void);
+    void f4(void);
+    void f5(void);
 
     void updateText(void);
     bool programm_is_exit(void);

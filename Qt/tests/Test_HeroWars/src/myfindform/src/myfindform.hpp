@@ -64,11 +64,10 @@ public:
 private:
     Ui::MyFindForm *ui;
 
-    QString temp_file       = "/dev/shm/temp_screenshot.png";
-
     QString src_file        = "/dev/shm/0/Screenshot.png";
     QString file_ok         = "/dev/shm/0/ok.png";
     QString file_auto       = "/dev/shm/0/auto.png";
+    QString file_auto_active = "/dev/shm/0/auto_active.png";
     QString file_in_battle  = "/dev/shm/0/в бой.png";
 
 //    QString src_file        = "";
@@ -85,6 +84,9 @@ private:
     QList<QRgb> l_file_auto;
     QRect rect_file_auto;
 
+    QList<QRgb> l_file_auto_active;
+    QRect rect_file_auto_active;
+
     QList<QRgb> l_file_in_battle;
     QRect rect_file_in_battle;
 
@@ -94,7 +96,6 @@ private:
     void show_rect_picture(QString caption, QList<QRgb> array, QRect rect);
 
     void init(void);
-    void test(void);
     bool searchObjectByTemplate(QString srcImgName,
                                 QString templImgName,
                                 QRect *rect);
@@ -104,6 +105,7 @@ private:
 
     void find_ok(void);
     void find_auto(void);
+    void find_auto_active(void);
     void find_programm(void);
     void find_to_battle(void);
 
@@ -125,6 +127,9 @@ private:
                       QRect *out_rect);
 
     void mouse_click(unsigned int button, QPoint pos);
+
+    void test(void);
+    void add_buttons(void);
 
     void updateText(void);
     bool programm_is_exit(void);

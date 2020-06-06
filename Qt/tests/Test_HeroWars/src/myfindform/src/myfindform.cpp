@@ -22,6 +22,7 @@
 #include "mainwindow.hpp"
 #include "showpicture.hpp"
 #include "myfindform.hpp"
+#include "defines.hpp"
 #include "ui_myfindform.h"
 //--------------------------------------------------------------------------------
 // Хроники Хаоса | Ролевая онлайн игра
@@ -60,23 +61,19 @@ void MyFindForm::init(void)
 
     ui->sb_pos_x->setRange(0,   0xFFFF);
     ui->sb_pos_y->setRange(0,   0xFFFF);
+
     connect(ui->btn_click,          &QToolButton::clicked,      this,   &MyFindForm::click);
     connect(ui->sb_pos_x,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
     connect(ui->sb_pos_y,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
 
-    connect(ui->btn_set,            &QToolButton::clicked,  this,   &MyFindForm::set_src_file);
+    connect(ui->btn_set,            &QToolButton::clicked,      this,   &MyFindForm::set_src_file);
     connect(ui->btn_show,           &QToolButton::clicked, [this]() {
         ui->showpicture_widget->show_picture(ui->le_screenshot->text());
     });
 
-    connect(ui->btn_find_ok,        &QPushButton::clicked,  this,   &MyFindForm::find_ok);
-    connect(ui->btn_find_auto,      &QPushButton::clicked,  this,   &MyFindForm::find_auto);
-    connect(ui->btn_find_programm,  &QPushButton::clicked,  this,   &MyFindForm::find_programm);
-    connect(ui->btn_find_to_battle, &QPushButton::clicked,  this,   &MyFindForm::find_to_battle);
-
-    prepare_l(file_ok,          &l_file_ok,         &rect_file_ok);
-    prepare_l(file_auto,        &l_file_auto,       &rect_file_auto);
-    prepare_l(file_in_battle,   &l_file_in_battle,  &rect_file_in_battle);
+    add_buttons();
+    connect(ui->btn_test,           &QPushButton::clicked,      this,   &MyFindForm::test);
+    connect(ui->btn_find_programm,  &QPushButton::clicked,      this,   &MyFindForm::find_programm);
 
     load_widgets();
 }
@@ -274,6 +271,48 @@ void MyFindForm::find_auto(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MyFindForm::find_auto_active(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QRect rect;
+    QElapsedTimer timer;
+    timer.start();
+    src_file = ui->le_screenshot->text();
+    bool ok = searchObjectByTemplate(src_file,
+                                     file_auto_active,
+                                     &rect);
+    if(ok)
+    {
+        emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+        emit info(QString("%1 %2 %3 %4")
+                  .arg(rect.x())
+                  .arg(rect.y())
+                  .arg(rect.width())
+                  .arg(rect.height()));
+        ok = prepare_temp(src_file, rect, &l_temp, &rect_temp);
+        if(!ok)
+        {
+            emit error("prepare_temp return false");
+            return;
+        }
+        if(l_temp == l_file_auto_active)
+        {
+            emit info("OK");
+        }
+        else
+        {
+            show_rect_picture("src_file",           l_temp,                 rect);
+            show_rect_picture("l_file_auto_active", l_file_auto_active,     rect_file_auto_active);
+            emit error("FAIL");
+        }
+    }
+    else
+    {
+        emit error("Not found");
+    }
+}
+//--------------------------------------------------------------------------------
 void MyFindForm::find_programm(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -312,9 +351,14 @@ bool MyFindForm::find_programm_with_title(const QString &title)
         QScreen *screen = QGuiApplication::primaryScreen();
         Q_CHECK_PTR(screen);
         QPixmap screen_shot = screen->grabWindow(0, x, y, w, h);
-        screen_shot.save(temp_file);
 
 #if 1
+        QDateTime now = QDateTime::currentDateTime();
+        QString temp_file       = QString("/dev/shm/temp_screenshot_%1.png")
+                .arg(now.toString("dd_MM_yyyy_hh_mm_ss"));
+
+        screen_shot.save(temp_file);
+
         ui->le_screenshot->setText(temp_file);
         ui->showpicture_widget->show_picture(temp_file);
 #else
@@ -519,31 +563,6 @@ void MyFindForm::show_rect_picture(QString caption, QList<QRgb> array, QRect rec
     label->show();
 }
 //--------------------------------------------------------------------------------
-void MyFindForm::test(void)
-{
-    QRect rect;
-    QElapsedTimer timer;
-    timer.start();
-    src_file = ui->le_screenshot->text();
-    bool ok = searchObjectByTemplate(src_file,
-                                     file_in_battle,
-                                     &rect);
-    if(ok)
-    {
-        emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-        emit info(QString("%1 %2 %3 %4")
-                  .arg(rect.x())
-                  .arg(rect.y())
-                  .arg(rect.width())
-                  .arg(rect.height()));
-        show_res(file_in_battle, rect);
-    }
-    else
-    {
-        emit error("Not found");
-    }
-}
-//--------------------------------------------------------------------------------
 // https://www.cyberforum.ru/qt/thread1096383.html
 
 bool MyFindForm::searchObjectByTemplate(QString srcImgName,
@@ -660,6 +679,48 @@ void MyFindForm::mouse_click(unsigned int button, QPoint pos)
     mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
     mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
 #endif
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::test(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::add_buttons(void)
+{
+    typedef struct
+    {
+        QString btn_text;
+        QString file_str;
+        void (MyFindForm::*func)(void);
+    } BTN;
+    QList<BTN> buttons;
+
+    buttons.clear();
+    buttons.append( { "OK",             file_ok,            &MyFindForm::find_ok} );
+    buttons.append( { "Auto",           file_auto,          &MyFindForm::find_auto} );
+    buttons.append( { "Auto(active)",   file_auto_active,   &MyFindForm::find_auto_active} );
+    buttons.append( { "Battle",         file_in_battle,     &MyFindForm::find_to_battle} );
+
+    int row = 0;
+    foreach (BTN btn, buttons)
+    {
+        QLabel *label = new QLabel();
+        label->setPixmap(QPixmap(btn.file_str));
+
+        QPushButton *button = new QPushButton();
+        button->setText(btn.btn_text);
+        connect(button, &QPushButton::clicked,  this,   btn.func);
+
+        ui->grid->addWidget(label,  row,    0);
+        ui->grid->addWidget(button, row,    1);
+        row++;
+    }
+
+    prepare_l(file_ok,          &l_file_ok,             &rect_file_ok);
+    prepare_l(file_auto,        &l_file_auto,           &rect_file_auto);
+    prepare_l(file_auto_active, &l_file_auto_active,    &rect_file_auto_active);
+    prepare_l(file_in_battle,   &l_file_in_battle,      &rect_file_in_battle);
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::updateText(void)

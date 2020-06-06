@@ -1118,6 +1118,11 @@ void MyWidget::check_tooltips(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MyWidget::fail(void)
+{
+    emit error("Пока не сделано");
+}
+//--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
     switch (event->type())

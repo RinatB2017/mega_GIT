@@ -338,10 +338,18 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    MyLabel *pict = new MyLabel();
+    connect_log_signals(pict, this);
+
+    pict->setPixmap(QPixmap(":/s1.png"));
+    pict->show();
+#endif
+
+#if 0
     CropPicture *pict = new CropPicture();
     connect_log_signals(pict, this);
 
-    pict->load_pixmap(QPixmap(ICON_PROGRAMM));
+    pict->load_pixmap(QPixmap(":/s1.png"));
     pict->show();
 #endif
 

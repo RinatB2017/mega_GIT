@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "myfiledialog.hpp"
 #include "croppicture.hpp"
 #include "ui_croppicture.h"
 //--------------------------------------------------------------------------------
@@ -41,6 +42,9 @@ void CropPicture::init(void)
     ui->sb_inc->setRange(1, 100);
     ui->sb_inc->setValue(load_value("inc_value").toInt());
 
+    ui->btn_load->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton)));
+    ui->btn_save->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton)));
+
     connect(ui->btn_up,         &QToolButton::clicked,  this,   &CropPicture::up);
     connect(ui->btn_left,       &QToolButton::clicked,  this,   &CropPicture::left);
     connect(ui->btn_plus,       &QToolButton::clicked,  this,   &CropPicture::plus);
@@ -49,36 +53,127 @@ void CropPicture::init(void)
     connect(ui->btn_down,       &QToolButton::clicked,  this,   &CropPicture::down);
     connect(ui->btn_up_left,    &QToolButton::clicked,  this,   &CropPicture::up_left);
     connect(ui->btn_down_right, &QToolButton::clicked,  this,   &CropPicture::down_right);
+
+    connect(ui->btn_load,       &QToolButton::clicked,  this,   &CropPicture::load);
+    connect(ui->btn_save,       &QToolButton::clicked,  this,   &CropPicture::save);
+}
+//--------------------------------------------------------------------------------
+void CropPicture::load(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("croppicture", "croppicture", this);
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->selectFile("noname");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        if(!filename.isEmpty())
+        {
+            QPixmap pixmap;
+            bool ok = pixmap.load(filename);
+            if(ok)
+            {
+                orig_pixmap = pixmap;
+                pixmap_width  = ui->picture_label->width();
+                pixmap_height = ui->picture_label->height();
+
+                QPixmap temp_pixmap = pixmap.copy(pos_x,
+                                                  pos_y,
+                                                  pixmap_width,
+                                                  pixmap_height);
+                ui->picture_label->setPixmap(temp_pixmap);
+            }
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void CropPicture::save(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("croppicture", "croppicture", this);
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->selectFile("noname");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(QFileDialog::DontUseNativeDialog,    true);
+    dlg->setOption(QFileDialog::DontConfirmOverwrite,   false);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        if(!filename.isEmpty())
+        {
+            MyWidget::messagebox_info("Info",   filename);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void CropPicture::update_picture(void)
+{
+#if 1
+    QPixmap temp_pixmap = orig_pixmap.copy(pos_x,
+                                           pos_y,
+                                           pixmap_width,
+                                           pixmap_height);
+#else
+    QPixmap temp_pixmap = orig_pixmap.copy(pos_x,
+                                           pos_y,
+                                           ui->picture_label->width(),
+                                           ui->picture_label->height());
+#endif
+    ui->picture_label->setPixmap(temp_pixmap);
 }
 //--------------------------------------------------------------------------------
 void CropPicture::up(void)
 {
-
+    if(pos_y > 0)
+    {
+        pos_y--;
+        update_picture();
+    }
 }
 //--------------------------------------------------------------------------------
 void CropPicture::down(void)
 {
-
+    if(pos_y < pixmap_height)
+    {
+        pos_y++;
+        update_picture();
+    }
 }
 //--------------------------------------------------------------------------------
 void CropPicture::left(void)
 {
-
+    if(pos_x > 0)
+    {
+        pos_x--;
+        update_picture();
+    }
 }
 //--------------------------------------------------------------------------------
 void CropPicture::right(void)
 {
-
+    if(pos_x < pixmap_width)
+    {
+        pos_x++;
+        update_picture();
+    }
 }
 //--------------------------------------------------------------------------------
 void CropPicture::up_left(void)
 {
-
+    up();
+    left();
 }
 //--------------------------------------------------------------------------------
 void CropPicture::down_right(void)
 {
-
+    down();
+    right();
 }
 //--------------------------------------------------------------------------------
 void CropPicture::plus(void)
@@ -107,15 +202,36 @@ bool CropPicture::load_pixmap(QPixmap pixmap)
     pixmap_width  = pixmap.width();
     pixmap_height = pixmap.height();
 
-    ui->picture_label->setPixmap(pixmap);
+    QPixmap temp_pixmap = pixmap.copy(pos_x,
+                                      pos_y,
+                                      ui->picture_label->width(),
+                                      ui->picture_label->height());
+    ui->picture_label->setPixmap(temp_pixmap);
+
     return true;
 }
 //--------------------------------------------------------------------------------
 void CropPicture::resizeEvent(QResizeEvent *event)
 {
-    emit info(QString("%1 %2")
-              .arg(event->size().width())
-              .arg(event->size().height()));
+//    int w = event->size().width();
+//    int h = event->size().height();
+
+    emit info(QString("1: %1 %2")
+              .arg(ui->picture_label->width())
+              .arg(ui->picture_label->height()));
+
+    pixmap_width  = ui->picture_label->width();
+    pixmap_height = ui->picture_label->height();
+
+//    ui->picture_label->clear();
+    QWidget::resizeEvent(event);
+
+//    ui->picture_label->update();
+//    emit info(QString("2: %1 %2")
+//              .arg(ui->picture_label->width())
+//              .arg(ui->picture_label->height()));
+
+    update_picture();
 }
 //--------------------------------------------------------------------------------
 void CropPicture::updateText(void)

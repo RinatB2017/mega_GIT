@@ -21,6 +21,9 @@
 #ifndef CROPPICTURE_HPP
 #define CROPPICTURE_HPP
 //--------------------------------------------------------------------------------
+#define MAX_WIDTH   800
+#define MAX_HEIGHT  600
+//--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
 #else
@@ -47,10 +50,15 @@ private:
     Ui::CropPicture *ui;
 
     QPixmap orig_pixmap;
+
+    int pos_x = 0;
+    int pos_y = 0;
     int pixmap_width = 0;
     int pixmap_height = 0;
 
     void init(void);
+
+    void update_picture(void);
 
     void up(void);
     void down(void);
@@ -60,6 +68,9 @@ private:
     void down_right(void);
     void plus(void);
     void minus(void);
+
+    void load(void);
+    void save(void);
 
     void updateText(void);
     bool programm_is_exit(void);

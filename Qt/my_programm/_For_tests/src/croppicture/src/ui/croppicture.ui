@@ -129,6 +129,12 @@
         <widget class="QSpinBox" name="sb_inc"/>
        </item>
        <item>
+        <widget class="QToolButton" name="btn_load"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="btn_save"/>
+       </item>
+       <item>
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -152,7 +158,11 @@
       </layout>
      </item>
      <item row="1" column="1">
-      <widget class="QLabel" name="picture_label"/>
+      <widget class="QLabel" name="picture_label">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -165,6 +175,9 @@
   <tabstop>btn_down</tabstop>
   <tabstop>btn_plus</tabstop>
   <tabstop>btn_minus</tabstop>
+  <tabstop>sb_inc</tabstop>
+  <tabstop>btn_load</tabstop>
+  <tabstop>btn_save</tabstop>
   <tabstop>btn_right</tabstop>
   <tabstop>btn_down_right</tabstop>
  </tabstops>

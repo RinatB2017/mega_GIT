@@ -183,9 +183,26 @@ protected:
         }
     }
 };
+
+class MyTextEdit : public QTextEdit
+{
+    Q_OBJECT
+
+public:
+    MyTextEdit()
+    {
+        QToolButton *btn = new QToolButton();
+        btn->setText("...");
+        QLayout *layout = this->layout();
+        if(layout)
+            layout->addWidget(btn);
+        else
+            qDebug() << "layout is NULL";
+    }
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;

@@ -1,9 +1,6 @@
-#include <QTime>
-
-#   include <QDebug>
-
+#include <QElapsedTimer>
+#include <QDebug>
 #include <qmath.h>
-
 #include <omp.h>
 
 /*
@@ -27,7 +24,9 @@ int main(void)
 
     //---
 #if 1
-    QTime timer;
+    qDebug() << "это продлится примерно 40 секунд";
+
+    QElapsedTimer timer;
     timer.start();
 
     double x = 0;

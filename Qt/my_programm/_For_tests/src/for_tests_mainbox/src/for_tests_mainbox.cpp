@@ -363,6 +363,16 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    QToolButton *btn = new QToolButton(ui->te_test);
+    btn->show();
+#endif
+
+#if 0
+    MyTextEdit *mte = new MyTextEdit();
+    mte->show();
+#endif
+
+#if 0
     typedef struct
     {
         QString btn_text;

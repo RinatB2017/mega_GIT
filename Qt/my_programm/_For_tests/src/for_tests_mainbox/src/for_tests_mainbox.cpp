@@ -362,54 +362,6 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
-#if 1
-    QToolButton *btn = new QToolButton(ui->te_test);
-    btn->show();
-#endif
-
-#if 0
-    MyTextEdit *mte = new MyTextEdit();
-    mte->show();
-#endif
-
-#if 0
-    typedef struct
-    {
-        QString btn_text;
-        QString file_str;
-        void (MainBox::*func)(void);
-    } BTN;
-    QList<BTN> buttons;
-
-    buttons.clear();
-    buttons.append( { "F1", ICON_PROGRAMM, &MainBox::f1} );
-    buttons.append( { "F2", ICON_PROGRAMM, &MainBox::f2} );
-    buttons.append( { "F3", ICON_PROGRAMM, &MainBox::f3} );
-    buttons.append( { "F4", ICON_PROGRAMM, &MainBox::f4} );
-    buttons.append( { "F5", ICON_PROGRAMM, &MainBox::f5} );
-
-    QWidget *widget = new QWidget();
-    QGridLayout *grid = new QGridLayout();
-
-    int row = 0;
-    foreach (BTN btn, buttons)
-    {
-        QLabel *label = new QLabel();
-        label->setPixmap(QPixmap(btn.file_str));
-
-        QPushButton *button = new QPushButton();
-        button->setText(btn.btn_text);
-        connect(button, &QPushButton::clicked,  this,   btn.func);
-
-        grid->addWidget(label,  row,    0);
-        grid->addWidget(button, row,    1);
-        row++;
-    }
-
-    widget->setLayout(grid);
-    widget->show();
-#endif
-
 #if 0
     MyLabel *pict = new MyLabel();
     connect_log_signals(pict, this);
@@ -435,7 +387,7 @@ bool MainBox::test(void)
     QLabel *label = new QLabel();
 
     // set a scaled pixmap to a w x h window keeping its aspect ratio
-    label->setPixmap(p.scaled(w,h,Qt::KeepAspectRatio));
+    label->setPixmap(p.scaled(w, h, Qt::KeepAspectRatio));
 
 //    label->setPixmap(QPixmap(ICON_PROGRAMM));
 //    label->setScaledContents(true);

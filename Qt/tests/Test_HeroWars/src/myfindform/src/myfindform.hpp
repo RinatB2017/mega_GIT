@@ -65,15 +65,16 @@ private:
     Ui::MyFindForm *ui;
 
     QString src_file        = "/dev/shm/0/Screenshot.png";
-    QString file_ok         = "/dev/shm/0/ok.png";
-    QString file_auto       = "/dev/shm/0/auto.png";
-    QString file_auto_active = "/dev/shm/0/auto_active.png";
-    QString file_in_battle  = "/dev/shm/0/в бой.png";
+//    QString file_ok         = "/dev/shm/0/ok.png";
+//    QString file_auto       = "/dev/shm/0/auto.png";
+//    QString file_auto_active = "/dev/shm/0/auto_active.png";
+//    QString file_in_battle  = "/dev/shm/0/в бой.png";
 
 //    QString src_file        = "";
-//    QString file_ok         = ":/targets/ok.png";
-//    QString file_auto       = ":/targets/auto.png";
-//    QString file_in_battle  = ":/targets/в бой.png";
+    QString file_ok         = ":/targets/ok.png";
+    QString file_auto       = ":/targets/auto.png";
+    QString file_auto_active = ":/targets/auto_active.png";
+    QString file_in_battle  = ":/targets/в бой.png";
 
     QList<QRgb> l_src_file;
     QRect rect_src_file;

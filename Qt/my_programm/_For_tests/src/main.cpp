@@ -63,6 +63,9 @@ int main(int argc, char *argv[])
 
     set_codecs();
 #if 1
+    QtSingleApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QtSingleApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -70,6 +73,8 @@ int main(int argc, char *argv[])
         if(app.sendMessage("Wake up!")) return 0;
     }
 #else
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
 #endif
 
@@ -77,8 +82,6 @@ int main(int argc, char *argv[])
     app.setApplicationName(APPNAME);
     app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
-    app.setAttribute(Qt::AA_EnableHighDpiScaling);
-    app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QPixmap pixmap(":/logo/logo.png");
 

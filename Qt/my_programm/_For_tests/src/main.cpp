@@ -43,6 +43,8 @@
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
+//#define SINGLE_APP
+//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include "test.hpp"
 #   include <QDebug>
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
 #endif
 
     set_codecs();
-#if 1
+#ifdef SINGLE_APP
     QtSingleApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QtSingleApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
@@ -105,12 +107,13 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
+#ifdef SINGLE_APP
     QObject::connect(&app, &QtSingleApplication::messageReceived, main_window, &MyMainWindow::set_focus);
-#ifdef QT_DEBUG
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
 #endif
 
 #ifdef QT_DEBUG
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

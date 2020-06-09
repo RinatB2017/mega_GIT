@@ -16,6 +16,13 @@ macx {
     RCC_DIR     = build/rc
 }
 
+android {
+    OBJECTS_DIR = build/obj
+    MOC_DIR     = build/moc
+    UI_DIR      = build/ui
+    RCC_DIR     = build/rc
+}
+
 win32 {
     TEMP_PATH = "X:"
     OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj

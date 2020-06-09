@@ -45,6 +45,9 @@ public:
     explicit SimpleWidget(QWidget *parent = nullptr);
     ~SimpleWidget();
 
+    int getValue() const;
+    void setValue(int value);
+
 private:
     Ui::SimpleWidget *ui;
 
@@ -55,10 +58,15 @@ private:
     }
     void write_x(int new_value)
     {
-        if(x_value == new_value)    return;
+        if(x_value == new_value)
+        {
+            return;
+        }
         x_value = new_value;
         emit x_value_changed(x_value);
     }
+
+    int value = 0;
 
     void init(void);
     void click(void);

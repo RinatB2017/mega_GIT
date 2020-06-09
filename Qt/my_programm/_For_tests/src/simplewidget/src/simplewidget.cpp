@@ -33,6 +33,17 @@ SimpleWidget::~SimpleWidget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+int SimpleWidget::getValue() const
+{
+    return value;
+}
+
+void SimpleWidget::setValue(int value)
+{
+    this->value = value;
+    ui->log_widget->infoLog(QString("value = %1").arg(this->value));
+}
+//--------------------------------------------------------------------------------
 void SimpleWidget::init(void)
 {
     ui->setupUi(this);
@@ -58,6 +69,7 @@ void SimpleWidget::init(void)
     int cnt = 0;
     foreach (QToolButton *btn, l_buttons)
     {
+        // btn->setIcon(QIcon(QString(":/white/%1.png").arg(cnt)));
         btn->setProperty("id", cnt++);
         connect(btn,  &QPushButton::clicked,  this,   &SimpleWidget::click);
     }

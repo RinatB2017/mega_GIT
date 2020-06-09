@@ -80,7 +80,7 @@ void MainBox::init(void)
     ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
     connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
-#if 0
+#if 1
     sw.reset(new SimpleWidget);
     sw->setProperty("windowTitle", "XXX");
     sw->show();
@@ -330,37 +330,19 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f1(void)
-{
-    emit info(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::f2(void)
-{
-    emit info(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::f3(void)
-{
-    emit info(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::f4(void)
-{
-    emit info(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
-void MainBox::f5(void)
-{
-    emit info(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
 #include "croppicture.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+
+#if 1
+    sw->setValue(5);
+    emit info(QString("value %1").arg(sw->getValue()));
+
+    sw->show();
+#endif
 
 #if 0
     MyLabel *pict = new MyLabel();

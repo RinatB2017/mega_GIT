@@ -28,10 +28,10 @@
 #   include <QtMessageHandler>
 #endif
 //--------------------------------------------------------------------------------
+#include "template_old_mainbox.hpp"
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "template_old_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -47,6 +47,8 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#define SINGLE_APP
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
 #endif
 
     set_codecs();
-#if 1
+#ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {

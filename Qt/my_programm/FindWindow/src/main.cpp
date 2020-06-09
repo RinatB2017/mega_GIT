@@ -24,10 +24,10 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include "findwindow_mainbox.hpp"
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "findwindow_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

@@ -38,7 +38,7 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#if 1
+#if 0
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {

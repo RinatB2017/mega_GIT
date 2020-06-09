@@ -18,21 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <qwt_plot_renderer.h>
-#include <qwt_plot_magnifier.h>
-#include <qwt_picker_machine.h>
-#include <qwt_plot_canvas.h>
-#include <qwt_plot_panner.h>
-#include <qwt_plot_picker.h>
-#include <qwt_scale_draw.h>
-#include <qwt_plot_curve.h>
-#include <qwt_plot_grid.h>
-#include <qwt_symbol.h>
-#include <qwt_legend.h>
-#include <qwt_legend_label.h>
-#include "qwt_curve_fitter.h"
-#include <qwt_plot.h>
-//--------------------------------------------------------------------------------
 #include "ui_grapherbox.h"
 
 #include "myfiledialog.hpp"

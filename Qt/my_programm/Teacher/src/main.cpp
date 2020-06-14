@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     set_signals();
 #endif
     set_codecs();
-#if 1
+#ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {

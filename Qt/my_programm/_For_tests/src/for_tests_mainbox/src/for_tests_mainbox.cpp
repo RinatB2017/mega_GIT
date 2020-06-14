@@ -337,7 +337,7 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
-#if 1
+#if 0
     sw->setValue(5);
     emit info(QString("value %1").arg(sw->getValue()));
 

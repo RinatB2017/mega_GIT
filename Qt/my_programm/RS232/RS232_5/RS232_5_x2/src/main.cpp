@@ -40,10 +40,12 @@
 //--------------------------------------------------------------------------------
 #include "test_widget.hpp"
 //--------------------------------------------------------------------------------
+#define SINGLE_APP
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
-#if 1
+#ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -51,7 +53,7 @@ int main(int argc, char *argv[])
         if(app.sendMessage("Wake up!")) return 0;
     }
 #else
-    MyApplication app(argc, argv);
+    QApplication app(argc, argv);
 #endif
 
     app.setOrganizationName(QObject::tr(ORGNAME));
@@ -85,7 +87,7 @@ int main(int argc, char *argv[])
     QObject::connect(cw, &TestWidget::info,  main_window, &MainWindow::info);
 
     main_window->setCentralWidget(cw);
-#if 1
+#ifdef SINGLE_APP
     main_window->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  serial);
     main_window->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, serial2);
 #else

@@ -37,10 +37,12 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#define SINGLE_APP
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
-#if 1
+#ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -48,7 +50,7 @@ int main(int argc, char *argv[])
         if(app.sendMessage("Wake up!")) return 0;
     }
 #else
-    MyApplication app(argc, argv);
+    QApplication app(argc, argv);
 #endif
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));

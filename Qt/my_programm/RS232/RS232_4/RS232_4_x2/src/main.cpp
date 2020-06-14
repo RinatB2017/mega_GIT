@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     SerialBox4 *serial2 = new SerialBox4(main_window->getThis(), "RS-232 (2)");
     serial2->add_menu(3, QObject::tr("Настройка RS-232 (2)"));
 
-#if 1
+#ifdef SINGLE_APP
     QBoxLayout *box = new QBoxLayout(QBoxLayout::LeftToRight);
 #else
     QBoxLayout *box = new QBoxLayout(QBoxLayout::TopToBottom);

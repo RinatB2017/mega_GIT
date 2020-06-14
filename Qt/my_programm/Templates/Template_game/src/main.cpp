@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
 
-#if 1
+#ifdef SINGLE_APP
     MainWindow *main_window = new MainWindow();
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 

@@ -19,6 +19,7 @@ SUBDIRS += \
     PelcoD_485 \
     Reader_SAAT_T505 \
     Simple_HTTP_reader \
+    Splitter \
     neural/QNeuralNet \
     Labyrinth \
     MCP4725 \

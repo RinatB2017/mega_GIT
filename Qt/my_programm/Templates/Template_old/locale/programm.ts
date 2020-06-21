@@ -2,10 +2,10 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>NainBox</name>
+    <name>MainBox</name>
     <message>
         <source>PushButton</source>
-        <translation>Проба</translation>
+        <translation>ПушБатон</translation>
     </message>
 </context>
 </TS>

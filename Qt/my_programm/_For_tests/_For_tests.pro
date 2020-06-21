@@ -63,7 +63,9 @@ RESOURCES += \
 #можно поставить новое logo
 #RESOURCES += about/about.qrc
 
-OTHER_FILES += doc/notebook.txt
+OTHER_FILES += \
+    doc/notebook.txt
+#    meta/*
 
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"

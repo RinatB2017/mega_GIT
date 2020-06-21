@@ -57,7 +57,7 @@ void MainBox::init(void)
     ui->sb_x->setRange(1, 100);
     ui->sb_y->setRange(1, 100);
 
-#if 1
+#if 0
     //FIXME позже разберусь
     ui->btn_split->setVisible(false);
 #endif

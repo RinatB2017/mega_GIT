@@ -63,6 +63,7 @@ private:
     QList<CMD> commands;
 
     QString filename;
+    QPointer<QLabel> fake_label;
 
     void f_split(void);
     void f_save_files(void);

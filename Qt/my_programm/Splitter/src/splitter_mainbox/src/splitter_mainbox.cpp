@@ -133,22 +133,14 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
+    emit trace(Q_FUNC_INFO);
 #if 0
-    MyFileDialog *dlg = new MyFileDialog("splitter_dirs", "splitter_dirs", this);
-    dlg->setOption(QFileDialog::ShowDirsOnly, true);
-    int btn = dlg->exec();
-    if(btn == MyFileDialog::Accepted)
+    if(fake_label)
     {
-        QStringList files = dlg->selectedFiles();
-        QString dirname = files.at(0);
-
-        if(!dirname.isEmpty())
-        {
-            emit info(dirname);
-        }
+        emit info("delete fake_label");
+        fake_label->deleteLater();
     }
 #endif
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -156,10 +148,6 @@ void MainBox::f_split(void)
 {
     int max_x = ui->sb_x->value();
     int max_y = ui->sb_y->value();
-
-    emit info(QString("%1:%2")
-              .arg(max_x)
-              .arg(max_y));
 
     int w = ui->picture_label->pixmap(Qt::ReturnByValue).width();
     int h = ui->picture_label->pixmap(Qt::ReturnByValue).height();
@@ -195,7 +183,7 @@ void MainBox::f_split(void)
             painter.drawLine(x1, y1, x2, y2);
         }
 
-        QLabel *fake_label = new QLabel(ui->picture_label);
+        fake_label = new QLabel(ui->picture_label);
         fake_label->setPixmap(QPixmap::fromImage(*image));
         fake_label->show();
     }
@@ -217,6 +205,12 @@ void MainBox::f_save_files(void)
 
         if(!dirname.isEmpty())
         {
+            if(fake_label)
+            {
+                emit info("delete fake_label");
+                delete fake_label;
+            }
+
             int max_x = ui->sb_x->value();
             int max_y = ui->sb_y->value();
 

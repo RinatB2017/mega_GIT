@@ -5,7 +5,7 @@
     <name>MainBox</name>
     <message>
         <source>PushButton</source>
-        <translation>ПушБатон</translation>
+        <translation>Нужно заменить</translation>
     </message>
 </context>
 </TS>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>896</width>
-    <height>223</height>
+    <height>226</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -115,6 +115,9 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
+       <widget class="MultiEdit" name="multiedit_widget" native="true"/>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_get_document_title">
         <property name="text">
          <string>get document title</string>
@@ -191,6 +194,12 @@
    <class>CodeEditor</class>
    <extends>QTextEdit</extends>
    <header>codeeditor.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>MultiEdit</class>
+   <extends>QWidget</extends>
+   <header>multiedit.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

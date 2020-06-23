@@ -147,7 +147,8 @@ void MainBox::init(void)
     //ui->le_address->setText("http://fgramota.org/game/");
     //ui->le_address->setText("https://free-socks.in");
     //ui->le_address->setText("https://whatismyipaddress.com/");
-    ui->le_address->setText("https://www.youtube.com/watch?v=0vZp3slDGjw");
+    //ui->le_address->setText("https://www.youtube.com/watch?v=0vZp3slDGjw");
+    ui->le_address->setText("https://coinmarketcap.com/");
 
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 
@@ -606,6 +607,10 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    emit info(ui->multiedit_widget->getCurrentText());
+#endif
+
+#if 0
     click(ui->webEngineView, QPoint(500, 500), Qt::LeftButton);
 #endif
 

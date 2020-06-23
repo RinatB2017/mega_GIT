@@ -51,6 +51,8 @@ include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH2/highlighter/highlighter.pri)
 include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 
+include (src/multiedit/multiedit.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

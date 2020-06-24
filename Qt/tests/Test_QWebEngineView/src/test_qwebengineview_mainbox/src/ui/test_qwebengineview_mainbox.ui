@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>896</width>
-    <height>226</height>
+    <width>566</width>
+    <height>242</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,95 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="QFrame" name="frame_browser">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Proxy</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="cb_proxy"/>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="cb_use_proxy">
-          <property name="text">
-           <string>use</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QComboBox" name="cb_user_agent"/>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="le_address"/>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_run">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QProgressBar" name="progressBar">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="value">
-           <number>24</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QWebEngineView" name="webEngineView">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="url">
-         <url>
-          <string>about:blank</string>
-         </url>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    <widget class="MyBrowser" name="browser_widget" native="true"/>
    </item>
    <item>
     <layout class="QVBoxLayout" name="m_layout"/>
@@ -186,11 +98,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QWebEngineView</class>
-   <extends>QWidget</extends>
-   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
-  </customwidget>
-  <customwidget>
    <class>CodeEditor</class>
    <extends>QTextEdit</extends>
    <header>codeeditor.hpp</header>
@@ -201,13 +108,14 @@
    <header>multiedit.hpp</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>MyBrowser</class>
+   <extends>QWidget</extends>
+   <header>mybrowser.hpp</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>cb_proxy</tabstop>
-  <tabstop>cb_use_proxy</tabstop>
-  <tabstop>cb_user_agent</tabstop>
-  <tabstop>le_address</tabstop>
-  <tabstop>btn_run</tabstop>
   <tabstop>btn_get_document_title</tabstop>
   <tabstop>btn_run_js</tabstop>
   <tabstop>te_js</tabstop>

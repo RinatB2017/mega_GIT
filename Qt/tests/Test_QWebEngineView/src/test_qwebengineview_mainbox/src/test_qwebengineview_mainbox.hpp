@@ -27,14 +27,6 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#include <QWebEngineCookieStore>
-#include <QWebEngineProfile>
-#include <QWebEngineSettings>
-#include <QWebEnginePage>
-#include <QWebEngineView>
-#include <QNetworkProxy>
-
-#include <QNetworkCookie>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -58,34 +50,19 @@ public:
     explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
-signals:
-    void send(const QString &);
-
 private slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
     void run_JS(bool);
     void test_JS(bool);
 
-    void s_run(void);
     void s_default(void);
 
     void js_load(void);
     void js_save(void);
 
-    void refresh_url(const QUrl url);
-
     void analize(const QString data);
-
-    void handleCookieAdded(const QNetworkCookie &cookie);
-
-    void get_document_title(void);
 
 private:
     typedef struct CMD
@@ -100,31 +77,15 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-#ifdef USE_CUSTOMPAGE
-    CustomPage *new_page;
-#else
-    QWebEnginePage *new_page;
-#endif
-
-    QWebEngineProfile *profile;
-
-    QWebEngineCookieStore *m_store;
-    QVector<QNetworkCookie> m_cookies;
-
     Highlighter *highlighter_js;
 
     void init(void);
     void createTestBar(void);
 
-    void load_proxies(void);
     void load_js_default(void);
 
     void load_js(const QString &filename);
     void save_js(const QString &filename);
-
-    bool containsCookie(const QNetworkCookie &cookie);
-
-    void click(QWebEngineView * webView, QPoint pos, Qt::MouseButton button);
 
     void updateText(void);
     bool programm_is_exit(void);

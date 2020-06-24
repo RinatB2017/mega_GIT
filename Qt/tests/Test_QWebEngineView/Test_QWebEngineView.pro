@@ -8,9 +8,7 @@ TARGET   = Test_QWebEngineView
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_qwebengineview_mainbox \
-    $$PWD/src/test_qwebengineview_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += webenginewidgets
@@ -26,16 +24,11 @@ DEFINES += USE_CUSTOMPAGE
 DEFINES += USE_TOPLEVELWIDGETS
 
 HEADERS += \
-    test_qwebengineview_mainbox.hpp \
-    custompage.h \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_qwebengineview_mainbox.cpp \
     main.cpp
-
-FORMS   += test_qwebengineview_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -50,7 +43,9 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH2/highlighter/highlighter.pri)
 include ($$LIB_PATH2/codeeditor/codeeditor.pri)
+include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 
+include (src/test_qwebengineview_mainbox/test_qwebengineview_mainbox.pri)
 include (src/multiedit/multiedit.pri)
 
 !exists(OBJECTS_DIR) {

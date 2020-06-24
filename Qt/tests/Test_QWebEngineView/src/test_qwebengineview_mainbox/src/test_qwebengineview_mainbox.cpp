@@ -22,7 +22,6 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test_qwebengineview_mainbox.hpp"
-#include "qxmlputget.h"
 #include "highlighter.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -62,8 +61,6 @@ void MainBox::init(void)
 
     createTestBar();
 
-    //https://support.google.com/webmasters/answer/1061943?hl=ru
-
     // ширина TAB в символах
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     int fontWidth = QFontMetrics(ui->te_js->currentCharFormat().font()).averageCharWidth();
@@ -75,80 +72,20 @@ void MainBox::init(void)
     QFont font("Courier", 10);
     ui->te_js->setFont(font);
 
-    ui->cb_user_agent->addItem("Linux", "Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
-    ui->cb_user_agent->addItem("Windows XP", "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
-    ui->cb_user_agent->addItem("Windows 7", "Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");
-    ui->cb_user_agent->addItem("Windows 10", "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
-    ui->cb_user_agent->addItem("Windows 10", "Mozilla/5.0 (Windows NT 10.0; U; en) Presto/2.9.168 Version/11.50");
-    ui->cb_user_agent->addItem("IOS 6.0", "iPad: Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25");
+    connect(ui->btn_default_js, &QToolButton::clicked,
+            this,               &MainBox::s_default);
+    connect(ui->btn_run_js,     &QToolButton::clicked,
+            this,               &MainBox::test_JS);
+    connect(ui->browser_widget, &MyBrowser::send,
+            this,               &MainBox::analize);
 
-    ui->cb_user_agent->addItem("Googlebot", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
-    ui->cb_user_agent->addItem("Googlebot", "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Safari/537.36");
-    ui->cb_user_agent->addItem("Googlebot", "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
-    ui->cb_user_agent->addItem("Googlebot", "Googlebot/2.1 (+http://www.google.com/bot.html)");
+    connect(ui->btn_load_js,    &QToolButton::clicked,
+            this,               &MainBox::js_load);
+    connect(ui->btn_save_js,    &QToolButton::clicked,
+            this,               &MainBox::js_save);
 
-    ui->cb_user_agent->setFixedWidth(200);
-
-    profile = QWebEngineProfile::defaultProfile();
-
-    //TODO печеньки
-    QString path_cookies = QCoreApplication::applicationDirPath() + QLatin1String("/storage");
-    emit info(path_cookies);
-    profile->setCachePath(path_cookies);
-    profile->setPersistentStoragePath(path_cookies);
-    m_store = profile->cookieStore();
-    connect(m_store, &QWebEngineCookieStore::cookieAdded, this, &MainBox::handleCookieAdded);
-    m_store->loadAllCookies();
-
-#ifdef USE_CUSTOMPAGE
-    new_page = new CustomPage(profile);
-    connect(new_page,   SIGNAL(err_output(QString)),  this,   SIGNAL(error(QString)));
-#else
-    new_page = new QWebEnginePage(profile);
-#endif
-    ui->webEngineView->setPage(new_page);
-
-    ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_BrowserReload));
-
-    connect(new_page,           SIGNAL(loadProgress(int)),
-            ui->progressBar,    SLOT(setValue(int)));
-    connect(new_page,           SIGNAL(loadFinished(bool)),
-            this,               SLOT(run_JS(bool)));
-    connect(new_page,           SIGNAL(urlChanged(const QUrl &)),
-            this,               SLOT(refresh_url(QUrl)));
-
-    connect(ui->btn_run,        SIGNAL(clicked(bool)),
-            this,               SLOT(s_run()));
-    connect(ui->btn_default_js, SIGNAL(clicked(bool)),
-            this,               SLOT(s_default()));
-    connect(ui->btn_run_js,     SIGNAL(clicked(bool)),
-            this,               SLOT(test_JS(bool)));
-    connect(this,               SIGNAL(send(QString)),
-            this,               SLOT(analize(QString)));
-
-    connect(ui->le_address,     SIGNAL(returnPressed()),
-            this,               SLOT(s_run()));
-    connect(ui->btn_load_js,    SIGNAL(clicked(bool)),
-            this,               SLOT(js_load()));
-    connect(ui->btn_save_js,    SIGNAL(clicked(bool)),
-            this,               SLOT(js_save()));
-
-    connect(ui->btn_get_document_title, SIGNAL(clicked(bool)),
-            this,               SLOT(get_document_title()));
-
-    //ui->le_address->setText("https://2ip.ru/");
-    //ui->le_address->setText("https://cashgo.ru/play/levels/#103");
-    //ui->le_address->setText("https://www.youtube.com/");
-    //ui->le_address->setText("http://localhost/mso/");
-    //ui->le_address->setText("http://localhost/mso/home/next/12");
-    //ui->le_address->setText("https://www.avito.ru/krasnodar");
-    //ui->le_address->setText("file:///C:/Users/User/Dropbox/HTML/test.html");
-    //ui->le_address->setText("file:///home/boss/HDD/Dropbox/HTML/test.html");
-    //ui->le_address->setText("http://fgramota.org/game/");
-    //ui->le_address->setText("https://free-socks.in");
-    //ui->le_address->setText("https://whatismyipaddress.com/");
-    //ui->le_address->setText("https://www.youtube.com/watch?v=0vZp3slDGjw");
-    ui->le_address->setText("https://coinmarketcap.com/");
+    connect(ui->btn_get_document_title, &QToolButton::clicked,
+            ui->browser_widget,         &MyBrowser::get_document_title);
 
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 
@@ -174,58 +111,7 @@ void MainBox::init(void)
     
     highlighter_js  = new Highlighter(ui->te_js->document());
 
-    load_proxies();
-
-    ui->progressBar->setValue(0);
-
     load_widgets();
-}
-//--------------------------------------------------------------------------------
-void MainBox::refresh_url(const QUrl url)
-{
-    ui->le_address->setText(url.toString());
-}
-//--------------------------------------------------------------------------------
-bool MainBox::containsCookie(const QNetworkCookie &cookie)
-{
-    for (auto c: m_cookies)
-    {
-        if (c.hasSameIdentifier(cookie))
-            return true;
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-void MainBox::handleCookieAdded(const QNetworkCookie &cookie)
-{
-    emit trace(Q_FUNC_INFO);
-
-    // only new cookies
-    if (containsCookie(cookie))
-        return;
-
-    emit debug(QString("append new cookie = [%1]").arg(cookie.name().data()));
-    m_cookies.append(cookie);
-}
-//--------------------------------------------------------------------------------
-void MainBox::get_document_title(void)
-{
-    emit trace(Q_FUNC_INFO);
-
-    QString javascript;
-    javascript.append("function myFunction()\n");
-    javascript.append("{\n");
-    javascript.append("  var title = document.title;\n");
-    javascript.append("  alert(title);\n");
-    javascript.append("  return title;\n");
-    javascript.append("}\n");
-    javascript.append("myFunction();\n");
-
-    new_page->runJavaScript(javascript, [=](const QVariant &v)
-    {
-        emit info(v.toString());
-        emit send(v.toString());
-    });
 }
 //--------------------------------------------------------------------------------
 void MainBox::js_load(void)
@@ -312,46 +198,6 @@ void MainBox::save_js(const QString &filename)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_proxies(void)
-{
-    bool ok = false;
-    QXmlGet xmlGet;
-    if(!QFile(PROXIES_XML).exists())
-    {
-        emit error(QString(tr("file %1 not exists")).arg(PROXIES_XML));
-        return;
-    }
-
-    QString error_message;
-    int error_line;
-    int error_column;
-    ok = xmlGet.load(PROXIES_XML, &error_message, &error_line, &error_column);
-    if(ok == false)
-    {
-        emit error(QString(tr("file %1 not load ERROR: %2 line %3 column %4"))
-                   .arg(PROXIES_XML)
-                   .arg(error_message)
-                   .arg(error_line)
-                   .arg(error_column));
-        return;
-    }
-
-    while(xmlGet.findNext("proxy"))
-    {
-        xmlGet.descend();
-        if (xmlGet.find("uri"))
-        {
-            QString uri = xmlGet.getString();
-            if(uri.isEmpty() == false)
-            {
-                ui->cb_proxy->addItem(uri);
-            }
-        }
-        xmlGet.rise();
-    }
-    emit info(QString(tr("load %1 proxy")).arg(ui->cb_proxy->count()));
-}
-//--------------------------------------------------------------------------------
 void MainBox::load_js_default(void)
 {
     QString temp;
@@ -405,49 +251,6 @@ void MainBox::load_js_default(void)
     ui->te_js->setPlainText(temp);
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_run(void)
-{
-    emit trace(Q_FUNC_INFO);
-
-    QString address = ui->le_address->text();
-    if(address.isEmpty())
-    {
-        emit error("address is empty!");
-        return;
-    }
-
-    if(ui->cb_use_proxy->isChecked())
-    {
-        QNetworkProxy proxy;
-        proxy.setType(QNetworkProxy::HttpProxy);
-        QString host = ui->cb_proxy->currentText();
-        QStringList sl = host.split(':');
-        if(sl.count() == 2)
-        {
-            proxy.setHostName(sl.at(0));
-            proxy.setPort(static_cast<quint16>(sl.at(1).toInt()));
-
-            emit info(QString("proxy %1:%2")
-                      .arg(sl.at(0))
-                      .arg(sl.at(1)));
-        }
-        else
-        {
-            emit error("bad address of proxy");
-        }
-        //webviews[index].webview->page()->networkAccessManager()->setProxy(proxy);
-        QNetworkProxy::setApplicationProxy(proxy);
-    }
-    else
-    {
-        QNetworkProxy::setApplicationProxy(QNetworkProxy());
-    }
-
-    profile->setHttpUserAgent(ui->cb_user_agent->itemData(ui->cb_user_agent->currentIndex()).toString());
-
-    ui->webEngineView->load(QUrl(address));
-}
-//--------------------------------------------------------------------------------
 void MainBox::s_default(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -475,11 +278,12 @@ void MainBox::run_JS(bool)
         return;
     }
 
-    new_page->runJavaScript(javascript, [=](const QVariant &v)
-    {
-        emit info(v.toString());
-        emit send(v.toString());
-    });
+    //FIXME надо сделать
+//    new_page->runJavaScript(javascript, [=](const QVariant &v)
+//    {
+//        emit info(v.toString());
+//        emit send(v.toString());
+//    });
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -495,11 +299,12 @@ void MainBox::test_JS(bool)
     }
 
     emit debug(javascript);
-    new_page->runJavaScript(javascript, [=](const QVariant &v)
-    {
-        emit info(v.toString());
-        emit send(v.toString());
-    });
+    //FIXME надо сделать
+//    new_page->runJavaScript(javascript, [=](const QVariant &v)
+//    {
+//        emit info(v.toString());
+//        emit send(v.toString());
+//    });
 }
 //--------------------------------------------------------------------------------
 void MainBox::analize(const QString data)
@@ -521,12 +326,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -547,7 +347,8 @@ void MainBox::createTestBar(void)
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    connect(btn_choice_test,    &QToolButton::clicked,
+            this,               &MainBox::choice_test);
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -581,32 +382,17 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::click(QWebEngineView * webView, QPoint pos, Qt::MouseButton button)
-{
-    // https://www.cyberforum.ru/qt/thread1771644.html
-
-    QWidget* eventsReciverWidget = nullptr;
-    foreach(QObject* o, webView->children()) {
-        QWidget* wgt = qobject_cast<QWidget*>(o);
-        if (wgt) {
-            eventsReciverWidget = wgt;
-            break;
-        }
-    }
-    if (eventsReciverWidget) {
-        QMouseEvent * me;
-        me = new QMouseEvent(QEvent::MouseButtonPress  , pos, button, button, Qt::NoModifier);
-        QApplication::postEvent(eventsReciverWidget, me);
-        me = new QMouseEvent(QEvent::MouseButtonRelease, pos, button, button, Qt::NoModifier);
-        QApplication::postEvent(eventsReciverWidget, me);
-    }
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+#include "mybrowser.hpp"
+bool MainBox::test(void)
 {
     emit info("Test_0()");
 
 #if 1
+    MyBrowser *browser = new MyBrowser();
+    browser->show();
+#endif
+
+#if 0
     emit info(ui->multiedit_widget->getCurrentText());
 #endif
 
@@ -648,39 +434,6 @@ bool MainBox::test_0(void)
               .arg(filename)
               .arg(bytes));
 #endif
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-
-    ui->webEngineView->reload();
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-
-    emit info(new_page->profile()->httpUserAgent());
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -34,12 +34,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-typedef struct PACKET {
-    uint16_t a;
-    uint8_t  b;
-    uint32_t c;
-} *packet_t;
-//--------------------------------------------------------------------------------
 class IMyClass {
     virtual void open(void) = 0;
     virtual void close(void) = 0;
@@ -203,12 +197,9 @@ public:
     typedef void (MainBox::*saveSlot)(void);
     void inFunc(QPushButton *btn, saveSlot slot);
 
-    int test_packet(PACKET packet);
-
 public slots:
     void choice_test(void);
     bool test(void);
-    bool print_property(void);
     bool timer_start(void);
     bool timer_stop(void);
     void show_timer_count(void);

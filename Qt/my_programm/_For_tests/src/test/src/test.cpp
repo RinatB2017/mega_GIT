@@ -102,22 +102,3 @@ void Test::test_signals(void)
     mb->clear_log();
 }
 //--------------------------------------------------------------------------------
-void Test::test_packet(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
-
-    QList<PACKET> packets;
-
-    packets.append( {1, 15, 25} );
-    packets.append( {5, 15, 25} );
-    packets.append( {1, 2,  3 } );
-
-    int i = 0;
-    foreach(PACKET packet, packets)
-    {
-        qDebug() << "index" << i++;
-        QCOMPARE(mb->test_packet(packet), 0);
-    }
-}
-//--------------------------------------------------------------------------------

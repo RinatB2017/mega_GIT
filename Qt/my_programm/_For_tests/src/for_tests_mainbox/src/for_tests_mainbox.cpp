@@ -133,7 +133,6 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
-    commands.append({ id++, "print property",   &MainBox::print_property });
     commands.append({ id++, "timer start",      &MainBox::timer_start });
     commands.append({ id++, "timer stop",       &MainBox::timer_stop });
 
@@ -330,110 +329,10 @@ void MainBox::readJson(const QString &filename)
     emit error(QString("index %1").arg(index));
 }
 //--------------------------------------------------------------------------------
-#include "croppicture.hpp"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
-
-#if 0
-    sw->setValue(5);
-    emit info(QString("value %1").arg(sw->getValue()));
-
-    sw->show();
-#endif
-
-#if 0
-    MyLabel *pict = new MyLabel();
-    connect_log_signals(pict, this);
-
-    pict->setPixmap(QPixmap(":/s1.png"));
-    pict->show();
-#endif
-
-#if 0
-    CropPicture *pict = new CropPicture();
-    connect_log_signals(pict, this);
-
-    pict->load_pixmap(QPixmap(":/s1.png"));
-    pict->show();
-#endif
-
-#if 0
-    QPixmap p(ICON_PROGRAMM);
-    int mul = 40;
-    int w = p.width()  * mul;
-    int h = p.height() * mul;
-
-    QLabel *label = new QLabel();
-
-    // set a scaled pixmap to a w x h window keeping its aspect ratio
-    label->setPixmap(p.scaled(w, h, Qt::KeepAspectRatio));
-
-//    label->setPixmap(QPixmap(ICON_PROGRAMM));
-//    label->setScaledContents(true);
-    label->show();
-#endif
-
-#if 0
-    QStringList sl;
-    sl << " "
-       << "."
-       << ","
-       << "-"
-       << "\r"
-       << "\n"
-       << "\t"
-       << "*"
-       << "\\"
-       << "("
-       << ")"
-       << ":"
-       << "0"
-       << "1"
-       << "2"
-       << "3"
-       << "4"
-       << "5"
-       << "6"
-       << "7"
-       << "8"
-       << "9";
-
-    QString temp = ui->te_test->toPlainText();
-    foreach (QString s, sl)
-    {
-        temp = temp.remove(s);
-    }
-
-    emit info(temp);
-    emit info(QString("Size %1").arg(temp.length()));
-#endif
-
-#if 0
-    QString temp = ui->te_test->property("markdown").toString();
-    emit info(temp);
-#endif
-
-#if 0
-    QPoint pos(10,10);
-
-    QMouseEvent *me;
-    me = new QMouseEvent(QEvent::MouseButtonPress  , pos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    QApplication::postEvent(ui->btn_click, me);
-
-    me = new QMouseEvent(QEvent::MouseButtonRelease, pos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    QApplication::postEvent(ui->btn_click, me);
-#endif
-
-#if 0
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    stream << qint32(1000000);
-    emit info(data.toHex());
-#endif
 
 #if 0
     emit info("Info");
@@ -443,23 +342,6 @@ bool MainBox::test(void)
 #endif
 
     return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::print_property(void)
-{
-    for(int index = 0; index < sw->metaObject()->propertyCount(); index++)
-    {
-        emit info(QString("%1").arg(sw->metaObject()->property(index).name()));
-    }
-    return true;
-}
-//--------------------------------------------------------------------------------
-int MainBox::test_packet(PACKET packet)
-{
-    if(packet.a < 10)                       return 0;
-    if((packet.b > 10) && (packet.b < 20))  return 0;
-    if((packet.c > 20) && (packet.c < 30))  return 0;
-    return 1;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

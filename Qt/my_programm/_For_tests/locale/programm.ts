@@ -16,4 +16,16 @@
         <translation>Тестовый виджет</translation>
     </message>
 </context>
+
+<context>
+    <name>MainBox</name>
+    <message>
+        <source>CheckBox</source>
+        <translation>Надо переименовать</translation>
+    </message>
+    <message>
+        <source>RadioButton</source>
+        <translation>Надо переименовать</translation>
+    </message>
+</context>
 </TS>

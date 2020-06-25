@@ -35,8 +35,6 @@ private slots:
     void test_signals(void);
     void test_func(void);
 
-    void test_packet(void);
-
 private:
     MainWindow *mw;
 

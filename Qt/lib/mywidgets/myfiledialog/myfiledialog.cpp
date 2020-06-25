@@ -34,12 +34,18 @@ MyFileDialog::MyFileDialog(const QString gName,
     setOption(MyFileDialog::DontUseNativeDialog, false);
     setObjectName(oName);
     //---
-#ifndef SAVE_INI
-    settings = new QSettings(ORGNAME, APPNAME);
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
-    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QString app_name = APPNAME;
 #endif
-    Q_CHECK_PTR(settings);
+
+#ifndef SAVE_INI
+    settings = new QSettings(org_name, app_name);
+#else
+    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
+#endif
 
     settings->beginGroup(gName);
 

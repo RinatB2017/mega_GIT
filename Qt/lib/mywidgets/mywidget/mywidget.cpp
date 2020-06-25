@@ -349,8 +349,15 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
 {
     if(name.isEmpty())  return false;
 
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QSettings *settings = new QSettings(org_name, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
@@ -374,8 +381,15 @@ bool MyWidget::get_param(QString group_name,
         return false;
     }
 
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QSettings *settings = new QSettings(org_name, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
@@ -392,8 +406,15 @@ bool MyWidget::get_param(QString group_name,
 //--------------------------------------------------------------------------------
 QStringList MyWidget::get_all_param_name(void)
 {
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QSettings *settings = new QSettings(org_name, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif

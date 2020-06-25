@@ -54,11 +54,7 @@ Test::~Test()
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
 {
-    for(int n=1; n<7; n++)
-    {
-        tf->combobox_key_down_and_check_value("cb_test", QString("test %1").arg(n));
-        tf->button_click("btn_choice_test");
-    }
+    tf->combobox_key_down_and_check_value("cb_test", "test");
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)

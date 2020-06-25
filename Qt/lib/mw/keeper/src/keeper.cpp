@@ -34,8 +34,15 @@ Keeper::~Keeper()
 //--------------------------------------------------------------------------------
 bool Keeper::set_value(QString name, QVariant value)
 {
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QSettings *settings = new QSettings(org_name, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
@@ -46,8 +53,15 @@ bool Keeper::set_value(QString name, QVariant value)
 //--------------------------------------------------------------------------------
 bool Keeper::get_value(QString name, QVariant *value)
 {
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QSettings *settings = new QSettings(org_name, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
@@ -60,8 +74,15 @@ bool Keeper::set_array(QString group_name,
                        QString name,
                        QList<QVariant> l_values)
 {
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QSettings *settings = new QSettings(org_name, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
@@ -82,8 +103,15 @@ bool Keeper::get_array(QString group_name,
                        QString name,
                        QList<QVariant> *l_values)
 {
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QSettings *settings = new QSettings(org_name, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif

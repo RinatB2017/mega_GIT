@@ -141,6 +141,8 @@ private:
 
     QList<LOG_DATA> l_log_data;
 
+    QPointer<QSettings> settings;
+
     void init(void);
     void create_widgets(void);
 

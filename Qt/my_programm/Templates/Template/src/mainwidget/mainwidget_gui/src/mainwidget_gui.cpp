@@ -117,6 +117,24 @@ void MainWidget_GUI::createTestBar(void)
 
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+
+#ifdef TOOLBAR_ORIENTATION
+    testbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    connect(testbar, &QToolBar::orientationChanged, [this]()
+    {
+        switch(testbar->orientation())
+        {
+        case Qt::Horizontal:
+            testbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+            break;
+
+        case Qt::Vertical:
+            testbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+            break;
+        }
+    });
+#endif
+
 }
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::choice_test(void)

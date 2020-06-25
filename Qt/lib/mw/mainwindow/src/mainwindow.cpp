@@ -217,10 +217,17 @@ void MainWindow::init(void)
 {
     flag_close = true;
 
-#ifndef SAVE_INI
-    settings = new QSettings(ORGNAME, APPNAME);
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
-    settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QString app_name = APPNAME;
+#endif
+
+#ifndef SAVE_INI
+    settings = new QSettings(org_name, app_name);
+#else
+    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
 
     load_translations();
@@ -670,6 +677,9 @@ void MainWindow::load_main(void)
     case BLUE_THEME:
         set_blue_palette();
         break;
+    default:
+        set_system_palette();
+        break;
     }
     //---
 
@@ -848,6 +858,24 @@ void MainWindow::createToolBar(void)
     app_toolbar_add_help();
 #endif
 
+#ifdef TOOLBAR_ORIENTATION
+    toolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    connect(toolbar, &QToolBar::orientationChanged, [this]()
+    {
+        switch(toolbar->orientation())
+        {
+        case Qt::Horizontal:
+            toolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+            break;
+
+        case Qt::Vertical:
+            toolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+            break;
+        }
+    });
+#endif
+
+
 #ifndef NO_TOOLBAR
     add_windowsmenu_action(toolbar, toolbar->toggleViewAction());
 #endif
@@ -874,6 +902,23 @@ void MainWindow::createStyleToolBar(void)
         styletoolbar->addWidget(btnTemp);
         connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
     }
+
+#ifdef TOOLBAR_ORIENTATION
+    styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    connect(styletoolbar, &QToolBar::orientationChanged, [this]()
+    {
+        switch(styletoolbar->orientation())
+        {
+        case Qt::Horizontal:
+            styletoolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+            break;
+
+        case Qt::Vertical:
+            styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+            break;
+        }
+    });
+#endif
 
     addToolBar(Qt::LeftToolBarArea, styletoolbar);
 
@@ -1230,7 +1275,7 @@ bool MainWindow::add_dock_widget(QString title,
 
     QDockWidget *dw = new QDockWidget(this);
     dw->setObjectName(objectname);
-//    dw->setWindowTitle(title);
+    //    dw->setWindowTitle(title);
     dw->setWindowTitle(tr(title.toLatin1()));
     dw->setProperty(DOCKWIDGET_PROPERTY_ENG_TEXT, title);
 

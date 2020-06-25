@@ -694,12 +694,19 @@ void LogBox::load_settings(void)
     QString text = o_name;
     if(text.isEmpty())  text = "noname";
 
-#ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QString app_name = APPNAME;
 #endif
-    Q_CHECK_PTR(settings);
+
+#ifndef SAVE_INI
+    settings = new QSettings(org_name, app_name);
+#else
+    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
+#endif
+
 
     settings->beginGroup(text);
     logBox->setReadOnly(settings->value("readOnly", true).toBool());
@@ -755,12 +762,18 @@ void LogBox::save_settings(void)
     //if(text.isEmpty())  text = objectName();
     if(text.isEmpty())  text = "RS-232";
 
-#ifndef SAVE_INI
-    QSettings *settings = new QSettings(ORGNAME, APPNAME);
+    QString org_name = ORGNAME;
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QString app_name = APPNAME;
 #endif
-    Q_CHECK_PTR(settings);
+
+#ifndef SAVE_INI
+    settings = new QSettings(org_name, app_name);
+#else
+    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
+#endif
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: save settings";

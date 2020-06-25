@@ -43,7 +43,7 @@ MainBox::MainBox(QWidget *parent) :
 MainBox::~MainBox()
 {
 #if 0
-    if(ui->te_js->document()->isModified())
+    if(ui->me_js->document()->isModified())
     {
         qDebug() << "JS not saved";
         messagebox_critical("ERROR", "JS not saved");
@@ -63,14 +63,14 @@ void MainBox::init(void)
 
     // ширина TAB в символах
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    int fontWidth = QFontMetrics(ui->te_js->currentCharFormat().font()).averageCharWidth();
-    ui->te_js->setTabStopWidth(3 * fontWidth);
+    int fontWidth = QFontMetrics(ui->me_js->currentCharFormat().font()).averageCharWidth();
+    ui->me_js->setTabStopWidth(3 * fontWidth);
 #else
-    ui->te_js->setTabStopDistance(QFontMetricsF(ui->te_js->font()).horizontalAdvance(' ') * 3);
+    ui->me_js->setTabStopDistance(QFontMetricsF(ui->me_js->font()).horizontalAdvance(' ') * 3);
 #endif
 
     QFont font("Courier", 10);
-    ui->te_js->setFont(font);
+    ui->me_js->setFont(font);
 
     connect(ui->btn_default_js, &QToolButton::clicked,
             this,               &MainBox::s_default);
@@ -109,7 +109,7 @@ void MainBox::init(void)
 #endif
     //---
     
-    highlighter_js  = new Highlighter(ui->te_js->document());
+    highlighter_js  = new Highlighter(ui->me_js->document());
 
     load_widgets();
 }
@@ -178,7 +178,7 @@ void MainBox::load_js(const QString &filename)
     {
         return;
     }
-    ui->te_js->setPlainText(file.readAll());
+    ui->me_js->setPlainText(file.readAll());
 
     file.close();
 }
@@ -192,8 +192,8 @@ void MainBox::save_js(const QString &filename)
     {
         return;
     }
-    file.write(ui->te_js->toPlainText().replace("\r\n", "\n").toLocal8Bit());
-    //file.write(ui->te_js->toPlainText().replace('\n', "\r\n").toLocal8Bit());
+    file.write(ui->me_js->toPlainText().replace("\r\n", "\n").toLocal8Bit());
+    //file.write(ui->me_js->toPlainText().replace('\n', "\r\n").toLocal8Bit());
 
     file.close();
 }
@@ -218,7 +218,7 @@ void MainBox::load_js_default(void)
     temp.append("}\n");
     temp.append("\n");
 
-    temp.append(ui->te_js->toPlainText());
+    temp.append(ui->me_js->toPlainText());
 #endif
 
 #if 0
@@ -248,7 +248,7 @@ void MainBox::load_js_default(void)
     temp.append("myFunction();\n");
 #endif
 
-    ui->te_js->setPlainText(temp);
+    ui->me_js->setPlainText(temp);
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_default(void)
@@ -271,7 +271,7 @@ void MainBox::run_JS(bool)
         return;
     }
 
-    const QString javascript = ui->te_js->toPlainText();
+    const QString javascript = ui->me_js->toPlainText();
     if(javascript.isEmpty())
     {
         emit error("JS is empty!");
@@ -291,7 +291,7 @@ void MainBox::test_JS(bool)
 {
     emit trace(Q_FUNC_INFO);
 
-    const QString javascript = ui->te_js->toPlainText();
+    const QString javascript = ui->me_js->toPlainText();
     if(javascript.isEmpty())
     {
         emit error("JS is empty!");

@@ -18,10 +18,7 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 DEFINES += USE_CUSTOMPAGE
-
 #DEFINES += SAVE_INI
-
-DEFINES += USE_TOPLEVELWIDGETS
 
 HEADERS += \
     defines.hpp \
@@ -44,9 +41,9 @@ include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH2/highlighter/highlighter.pri)
 include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
+include ($$LIB_PATH2/widgets/multiedit/multiedit.pri)
 
 include (src/test_qwebengineview_mainbox/test_qwebengineview_mainbox.pri)
-include (src/multiedit/multiedit.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

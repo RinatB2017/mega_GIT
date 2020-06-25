@@ -41,14 +41,17 @@ public:
     explicit MultiEdit(QWidget *parent = nullptr);
     ~MultiEdit();
 
-    QString getCurrentText(void);
+    void setPlainText(const QString &text);
+    QString toPlainText(void) const;
+    void setTabStopDistance(qreal distance);
+    QTextDocument *document(void) const;
 
 private:
     Ui::MultiEdit *ui;
 
     void init(void);
 
-    void add_page(void);
+    QTextEdit *add_page(void);
     void rem_page(void);
 
     void updateText(void);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>566</width>
-    <height>242</height>
+    <height>149</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,9 +26,6 @@
       <string>JS</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="MultiEdit" name="multiedit_widget" native="true"/>
-      </item>
       <item>
        <widget class="QPushButton" name="btn_get_document_title">
         <property name="text">
@@ -89,7 +86,7 @@
        </layout>
       </item>
       <item>
-       <widget class="CodeEditor" name="te_js"/>
+       <widget class="MultiEdit" name="me_js" native="true"/>
       </item>
      </layout>
     </widget>
@@ -97,11 +94,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>CodeEditor</class>
-   <extends>QTextEdit</extends>
-   <header>codeeditor.hpp</header>
-  </customwidget>
   <customwidget>
    <class>MultiEdit</class>
    <extends>QWidget</extends>
@@ -118,7 +110,6 @@
  <tabstops>
   <tabstop>btn_get_document_title</tabstop>
   <tabstop>btn_run_js</tabstop>
-  <tabstop>te_js</tabstop>
   <tabstop>cb_auto_js</tabstop>
   <tabstop>btn_load_js</tabstop>
   <tabstop>btn_save_js</tabstop>

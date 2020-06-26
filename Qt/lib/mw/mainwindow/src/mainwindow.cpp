@@ -1759,7 +1759,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     show_info->setToolTip("is_shows_info");
     show_info->setStatusTip("is_shows_info");
     show_info->setCheckable(true);
-    connect(show_info,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_info(bool)));
+    connect(show_info,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_info);
     show_info->setChecked(v_flag_show_info.toBool());
     slot_is_shows_info(v_flag_show_info.toBool());
     app_actions.append(show_info);
@@ -1773,7 +1773,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     show_debug->setToolTip("is_shows_debug");
     show_debug->setStatusTip("is_shows_debug");
     show_debug->setCheckable(true);
-    connect(show_debug,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_debug(bool)));
+    connect(show_debug,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_debug);
     show_debug->setChecked(v_flag_show_debug.toBool());
     slot_is_shows_debug(v_flag_show_debug.toBool());
     app_actions.append(show_debug);
@@ -1787,7 +1787,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     show_error->setToolTip("is_shows_error");
     show_error->setStatusTip("is_shows_error");
     show_error->setCheckable(true);
-    connect(show_error,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_error(bool)));
+    connect(show_error,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_error);
     show_error->setChecked(v_flag_show_error.toBool());
     slot_is_shows_error(v_flag_show_error.toBool());
     app_actions.append(show_error);
@@ -1801,7 +1801,7 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     show_trace->setToolTip("is_shows_trace");
     show_trace->setStatusTip("is_shows_trace");
     show_trace->setCheckable(true);
-    connect(show_trace,    SIGNAL(triggered(bool)),    this,   SLOT(slot_is_shows_trace(bool)));
+    connect(show_trace,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_trace);
     show_trace->setChecked(v_flag_show_trace.toBool());
     slot_is_shows_trace(v_flag_show_trace.toBool());
     app_actions.append(show_trace);

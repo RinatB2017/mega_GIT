@@ -279,11 +279,7 @@ void MainBox::run_JS(bool)
     }
 
     //FIXME надо сделать
-//    new_page->runJavaScript(javascript, [=](const QVariant &v)
-//    {
-//        emit info(v.toString());
-//        emit send(v.toString());
-//    });
+    ui->browser_widget->run_javascript(javascript);
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -300,11 +296,7 @@ void MainBox::test_JS(bool)
 
     emit debug(javascript);
     //FIXME надо сделать
-//    new_page->runJavaScript(javascript, [=](const QVariant &v)
-//    {
-//        emit info(v.toString());
-//        emit send(v.toString());
-//    });
+    ui->browser_widget->run_javascript(javascript);
 }
 //--------------------------------------------------------------------------------
 void MainBox::analize(const QString data)

@@ -215,6 +215,15 @@ void MyBrowser::get_document_title(void)
     });
 }
 //--------------------------------------------------------------------------------
+void MyBrowser::run_javascript(QString javascript)
+{
+    new_page->runJavaScript(javascript, [=](const QVariant &v)
+    {
+        emit info(v.toString());
+        emit send(v.toString());
+    });
+}
+//--------------------------------------------------------------------------------
 void MyBrowser::refresh_url(const QUrl &url)
 {
     ui->le_address->setText(url.toString());

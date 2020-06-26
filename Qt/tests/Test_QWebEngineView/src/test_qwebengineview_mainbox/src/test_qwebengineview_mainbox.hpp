@@ -50,6 +50,9 @@ public:
     explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
+signals:
+    void send(QString);
+
 private slots:
     void choice_test(void);
     bool test(void);
@@ -77,7 +80,7 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    Highlighter *highlighter_js;
+    QPointer<Highlighter> highlighter_js;
 
     void init(void);
     void createTestBar(void);

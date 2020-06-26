@@ -241,9 +241,9 @@ private:
                         QIcon   *icon,
                         b_saveSlot slot);
 
-    QTranslator *translator_system;
-    QTranslator *translator_common;
-    QTranslator *translator_programm;
+    QPointer<QTranslator> translator_system;
+    QPointer<QTranslator> translator_common;
+    QPointer<QTranslator> translator_programm;
 
     QString orgName;
     QString appName;

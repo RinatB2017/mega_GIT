@@ -54,6 +54,7 @@ public:
     ~MyBrowser();
 
     void setUrl(const QUrl &url);
+    void run_javascript(QString javascript);
 
 signals:
     void send(const QString &);
@@ -65,14 +66,14 @@ private:
     Ui::MyBrowser *ui;
 
 #ifdef USE_CUSTOMPAGE
-    CustomPage *new_page;
+    QPointer<CustomPage> new_page;
 #else
-    QWebEnginePage *new_page;
+    QPointer<QWebEnginePage> new_page;
 #endif
 
-    QWebEngineProfile *profile;
+    QPointer<QWebEngineProfile> profile;
 
-    QWebEngineCookieStore *m_store;
+    QPointer<QWebEngineCookieStore> m_store;
     QVector<QNetworkCookie> m_cookies;
 
     void init(void);

@@ -27,6 +27,9 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include "mysettings.hpp"
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
 typedef struct
 {
     QDate date;
@@ -47,7 +50,7 @@ enum LEVELS
 //--------------------------------------------------------------------------------
 class FindBox;
 //--------------------------------------------------------------------------------
-class LogBox : public QFrame
+class LogBox : public QFrame, MySettings
 {
     Q_OBJECT
 
@@ -140,8 +143,6 @@ private:
     QString autosave_filename = "noname.log";
 
     QList<LOG_DATA> l_log_data;
-
-    QPointer<QSettings> settings;
 
     void init(void);
     void create_widgets(void);

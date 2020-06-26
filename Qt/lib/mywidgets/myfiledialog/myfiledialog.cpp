@@ -18,7 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QSettings>
 #include <QDebug>
 //--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
@@ -28,48 +27,35 @@ MyFileDialog::MyFileDialog(const QString gName,
                            const QString oName,
                            QWidget *parent) :
     QFileDialog(parent),
+    MySettings(),
     gName(gName),
     oName(oName)
 {
     setOption(MyFileDialog::DontUseNativeDialog, false);
     setObjectName(oName);
     //---
-    QString org_name = ORGNAME;
-#ifdef QT_DEBUG
-    QString app_name = QString("%1(debug)").arg(APPNAME);
-#else
-    QString app_name = APPNAME;
-#endif
 
-#ifndef SAVE_INI
-    settings = new QSettings(org_name, app_name);
-#else
-    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
-#endif
-
-    settings->beginGroup(gName);
-
-    QString dir = settings->value(oName, QDir::homePath()).toString();
-    setDirectory(dir);
-
-    settings->endGroup();
+    beginGroup(gName);
+    dir = load_value(oName, QDir::homePath()).toString();
+    endGroup();
     //---
 }
 //--------------------------------------------------------------------------------
 MyFileDialog::~MyFileDialog()
 {
-    settings->deleteLater();
+
 }
 //--------------------------------------------------------------------------------
 int MyFileDialog::exec(void)
 {
+    QFileDialog::setDirectory(dir);
     int res = QFileDialog::exec();
 
     if(res == Accepted)
     {
-        settings->beginGroup(gName);
-        settings->setValue(oName, directory().absolutePath());
-        settings->endGroup();
+        beginGroup(gName);
+        save_value(oName, directory().absolutePath());
+        endGroup();
     }
 
     return res;

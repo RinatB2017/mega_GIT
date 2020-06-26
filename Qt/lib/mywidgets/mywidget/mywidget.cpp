@@ -30,21 +30,9 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MyWidget::MyWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    MySettings()
 {
-    QString org_name = ORGNAME;
-#ifdef QT_DEBUG
-    QString app_name = QString("%1(debug)").arg(APPNAME);
-#else
-    QString app_name = APPNAME;
-#endif
-
-#ifndef SAVE_INI
-    settings = new QSettings(org_name, app_name);
-#else
-    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
-#endif
-
 #ifndef RS232_LOG
     //TODO не надо тут условий. Родитель может быть и пустым, не надо приводить всё к toplevelwidget
     connect_log(parent);
@@ -68,10 +56,6 @@ MyWidget::~MyWidget()
     qDebug() << "~MyWidget()" << on;
     //qDebug() << "~MyWidget()" << objectName();
 #endif
-    if(settings)
-    {
-        settings->deleteLater();
-    }
 }
 //--------------------------------------------------------------------------------
 bool MyWidget::check_exists_signals(QWidget *parent)
@@ -428,130 +412,6 @@ QStringList MyWidget::get_all_param_name(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
-bool MyWidget::is_my_widget(QString o_name)
-{
-    if(o_name.isEmpty())
-        return false;
-
-    return (o_name.left(3) != "qt_");
-}
-//--------------------------------------------------------------------------------
-bool MyWidget::compare_name(const char *widget_name, QString class_name)
-{
-    Q_CHECK_PTR(widget_name);
-    int re = strncmp(widget_name,
-                     class_name.toLocal8Bit(),
-                     static_cast<size_t>(class_name.count()));
-    return (re == 0);
-}
-//--------------------------------------------------------------------------------
-bool MyWidget::load_combobox_property(QWidget *widget)
-{
-    Q_CHECK_PTR(widget);
-    if(compare_name(widget->metaObject()->className(), "QComboBox"))
-    {
-        bool isEditable = settings->value("isEditable").toBool();
-        if(isEditable)
-        {
-            int size = settings->beginReadArray(static_cast<QComboBox *>(widget)->objectName());
-            for(int n=0; n<size; n++)
-            {
-                settings->setArrayIndex(n);
-                static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
-            }
-            settings->endArray();
-        }
-        static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());
-        return true;
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-bool MyWidget::save_combobox_property(QWidget *widget)
-{
-    Q_CHECK_PTR(widget);
-    if(compare_name(widget->metaObject()->className(), "QComboBox"))
-    {
-        bool isEditable = static_cast<QComboBox *>(widget)->isEditable();
-        settings->setValue("isEditable", isEditable);
-        settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));
-        if(isEditable)
-        {
-            settings->beginWriteArray(static_cast<QComboBox *>(widget)->objectName(), static_cast<QComboBox *>(widget)->count());
-            for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
-            {
-                settings->setArrayIndex(n);
-                static_cast<QComboBox *>(widget)->setCurrentIndex(n);
-                settings->setValue("currentText", static_cast<QComboBox *>(widget)->currentText());
-            }
-            settings->endArray();
-        }
-        return true;
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-bool MyWidget::load_splitter_property(QWidget *widget)
-{
-    Q_CHECK_PTR(widget);
-    if(compare_name(widget->metaObject()->className(), "QSplitter"))
-    {
-        QString o_name = widget->objectName();
-        if(o_name.isEmpty() == false)
-        {
-            QByteArray ba = load_bytearray(o_name);
-            if(ba.isEmpty() == false)
-            {
-                static_cast<QSplitter *>(widget)->restoreState(ba);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-bool MyWidget::save_splitter_property(QWidget *widget)
-{
-    Q_CHECK_PTR(widget);
-    if(compare_name(widget->metaObject()->className(), "QSplitter"))
-    {
-        QString o_name = widget->objectName();
-        if(o_name.isEmpty() == false)
-        {
-            QByteArray ba = static_cast<QSplitter *>(widget)->saveState();
-            if(ba.isEmpty() == false)
-            {
-                save_bytearray(o_name, ba);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-//--------------------------------------------------------------------------------
-bool MyWidget::load_property(QWidget *widget, const QString &property_name)
-{
-    Q_CHECK_PTR(widget);
-    QVariant property = settings->value(property_name);
-    if(property.isValid() == false)
-    {
-        return false;
-    }
-    return widget->setProperty(property_name.toLocal8Bit(), property);
-}
-//--------------------------------------------------------------------------------
-bool MyWidget::save_property(QWidget *widget, const QString &property_name)
-{
-    Q_CHECK_PTR(widget);
-    QVariant property = widget->property(property_name.toLocal8Bit());
-    if(property.isValid() == false)
-    {
-        return false;
-    }
-    settings->setValue(property_name, property);
-    return true;
-}
-//--------------------------------------------------------------------------------
 QString MyWidget::get_full_objectName(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
@@ -578,205 +438,6 @@ QString MyWidget::get_full_objectName(QWidget *widget)
     temp_string = temp_string.remove(temp_string.length()-1, 1);
     if(temp_string.isEmpty()) temp_string = "xxx";
     return temp_string;
-}
-//--------------------------------------------------------------------------------
-void MyWidget::load_widgets(void)
-{
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->load_setting();
-    }
-
-#ifdef USE_TOPLEVELWIDGETS
-    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
-#else
-    QList<QWidget *> widgets = findChildren<QWidget *>();
-#endif
-    Q_CHECK_PTR(settings);
-
-    Q_ASSERT(widgets.count() != 0);
-
-    foreach(QWidget *widget, widgets)
-    {
-        if(is_my_widget(widget->objectName()))
-        {
-            if(widget->property(NO_SAVE).toBool() == true)
-            {
-                continue;
-            }
-
-            settings->beginGroup(get_full_objectName(widget));
-            load_combobox_property(widget);
-            load_splitter_property(widget);
-            load_property(widget, "isEnabled");
-            load_property(widget, "checked");
-            load_property(widget, "text");
-            load_property(widget, "value");
-            load_property(widget, "position");
-            load_property(widget, "state");
-            load_property(widget, "time");
-            load_property(widget, "date");
-            load_property(widget, "plainText");
-            settings->endGroup();
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_widgets(void)
-{
-//    не надо это раскомментировать
-//    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-//    if(mw)
-//    {
-//        mw->save_setting();
-//    }
-
-#ifdef USE_TOPLEVELWIDGETS
-    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
-#else
-    QList<QWidget *> widgets = findChildren<QWidget *>();
-#endif
-    Q_CHECK_PTR(settings);
-
-    foreach(QWidget *widget, widgets)
-    {
-        Q_CHECK_PTR(widget);
-        if(is_my_widget(widget->objectName()))
-        {
-            if(widget->property(NO_SAVE).toBool() == true)
-            {
-                continue;
-            }
-
-            settings->beginGroup(get_full_objectName(widget));
-            save_combobox_property(widget);
-            save_splitter_property(widget);
-            save_property(widget, "isEnabled");
-            save_property(widget, "checked");
-            save_property(widget, "text");
-            save_property(widget, "value");
-            save_property(widget, "position");
-            save_property(widget, "state");
-            save_property(widget, "time");
-            save_property(widget, "date");
-            save_property(widget, "plainText");
-            settings->endGroup();
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-int MyWidget::load_int(QString name)
-{
-    return settings->value(name).toInt();
-}
-//--------------------------------------------------------------------------------
-QString MyWidget::load_string(QString name)
-{
-    return settings->value(name).toString();
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_int(QString name, int value)
-{
-    settings->setValue(name, value);
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_string(QString name, QString value)
-{
-    settings->setValue(name, value);
-}
-//--------------------------------------------------------------------------------
-QByteArray MyWidget::load_bytearray(QString name)
-{
-    QByteArray ba;
-    if(settings)
-    {
-        ba = settings->value(name).toByteArray();
-    }
-    else
-    {
-        qDebug() << "### load_bytearray ###";
-    }
-    return ba;
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_bytearray(QString name, QByteArray value)
-{
-    if(settings)
-    {
-        settings->setValue(name, value);
-    }
-    else
-    {
-        qDebug() << "### save_bytearray ###";
-    }
-}
-//--------------------------------------------------------------------------------
-QStringList MyWidget::load_stringlist(QString name)
-{
-    QStringList sl;
-    if(settings)
-    {
-        sl = settings->value(name).toStringList();
-    }
-    else
-    {
-        qDebug() << "### load_stringlist ###";
-    }
-    return sl;
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_stringlist(QString name, QStringList value)
-{
-    if(settings)
-    {
-        settings->setValue(name, value);
-    }
-    else
-    {
-        qDebug() << "### save_stringlist ###";
-    }
-}
-//--------------------------------------------------------------------------------
-QVariant MyWidget::load_value(QString name)
-{
-    return settings->value(name);
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_value(QString name, QVariant value)
-{
-    settings->setValue(name, value);
-}
-//--------------------------------------------------------------------------------
-void MyWidget::beginGroup(const QString &prefix)
-{
-    settings->beginGroup(prefix);
-}
-//--------------------------------------------------------------------------------
-void MyWidget::endGroup(void)
-{
-    settings->endGroup();
-}
-//--------------------------------------------------------------------------------
-void MyWidget::beginWriteArray(const QString &prefix, int size)
-{
-    settings->beginWriteArray(prefix, size);
-}
-//--------------------------------------------------------------------------------
-int MyWidget::beginReadArray(const QString &prefix)
-{
-    Q_CHECK_PTR(settings);
-    return settings->beginReadArray(prefix);
-}
-//--------------------------------------------------------------------------------
-void MyWidget::endArray(void)
-{
-    settings->endArray();
-}
-//--------------------------------------------------------------------------------
-void MyWidget::setArrayIndex(int i)
-{
-    settings->setArrayIndex(i);
 }
 //--------------------------------------------------------------------------------
 void MyWidget::block_close(bool state)
@@ -825,87 +486,6 @@ void MyWidget::show_objectname(void)
         }
     }
 }
-//--------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------
-int MyWidget::messagebox_noicon(const QString title,
-                                const QString text,
-                                unsigned int width)
-{
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::NoIcon);
-    msgBox.setWindowTitle(title);
-    msgBox.setText(text);
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
-    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
-    return msgBox.exec();
-}
-//--------------------------------------------------------------------------------
-int MyWidget::messagebox_info(const QString title,
-                              const QString text,
-                              unsigned int width)
-{
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setWindowTitle(title);
-    msgBox.setText(text);
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
-    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
-    return msgBox.exec();
-}
-//--------------------------------------------------------------------------------
-int MyWidget::messagebox_question(const QString title,
-                                  const QString text,
-                                  unsigned int width)
-{
-    QMessageBox msgBox;
-
-    //msgBox.setIconPixmap(QPixmap(":/qmessagebox/qmessagebox-quest.png"));
-    msgBox.setIcon(QMessageBox::Question);
-
-    msgBox.setWindowTitle(title);
-    msgBox.setText(text);
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::Yes);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
-    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
-    return msgBox.exec();
-}
-//--------------------------------------------------------------------------------
-int MyWidget::messagebox_critical(const QString title,
-                                  const QString text,
-                                  unsigned int width)
-{
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.setWindowTitle(title);
-    msgBox.setText(text);
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
-    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
-    return msgBox.exec();
-}
-//--------------------------------------------------------------------------------
-int MyWidget::messagebox_warning(const QString title,
-                                 const QString text,
-                                 unsigned int width)
-{
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Warning);
-    msgBox.setWindowTitle(title);
-    msgBox.setText(text);
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
-    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
-    return msgBox.exec();
-}
-//--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 void MyWidget::load_checkBox(QList<check_box> data)
 {
@@ -965,87 +545,6 @@ void MyWidget::load_d_spinBox(QList<d_spin_box> data)
             }
         }
     }
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_checkBox(QString group_name, QList<QCheckBox *> data)
-{
-    QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-
-    foreach (QCheckBox *cb_obj, data) {
-        foreach(QCheckBox *obj, all_chb)
-        {
-            if(obj->objectName() == cb_obj->objectName())
-            {
-                settings->beginGroup(obj->objectName());
-                settings->setValue("checked", QVariant(obj->isChecked()));
-                settings->endGroup();
-            }
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_comboBox(QString group_name, QList<QComboBox *> data)
-{
-    QList<QComboBox *> all_chb = findChildren<QComboBox *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-
-    foreach (QComboBox *cb_obj, data) {
-        foreach(QComboBox *obj, all_chb)
-        {
-            if(obj->objectName() == cb_obj->objectName())
-            {
-                settings->beginGroup(obj->objectName());
-                settings->setValue("index", QVariant(obj->currentIndex()));
-                settings->endGroup();
-            }
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_spinBox(QString group_name, QList<QSpinBox *> data)
-{
-    QList<QSpinBox *> all_chb = findChildren<QSpinBox *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-
-    foreach (QSpinBox *sb_obj, data) {
-        foreach(QSpinBox *obj, all_chb)
-        {
-            if(obj->objectName() == sb_obj->objectName())
-            {
-                settings->beginGroup(obj->objectName());
-                settings->setValue("value", QVariant(obj->value()));
-                settings->endGroup();
-            }
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MyWidget::save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data)
-{
-    QList<QDoubleSpinBox *> all_chb = findChildren<QDoubleSpinBox *>();
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup(group_name);
-
-    foreach (QDoubleSpinBox *sb_obj, data) {
-        foreach(QDoubleSpinBox *obj, all_chb)
-        {
-            if(obj->objectName() == sb_obj->objectName())
-            {
-                settings->beginGroup(obj->objectName());
-                settings->setValue("value", QVariant(obj->value()));
-                settings->endGroup();
-            }
-        }
-    }
-    settings->endGroup();
 }
 //--------------------------------------------------------------------------------
 bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
@@ -1179,4 +678,90 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 #endif
 }
 #endif
+//--------------------------------------------------------------------------------
+void MyWidget::load_widgets(void)
+{
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->load_setting();
+    }
+
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
+#else
+    QList<QWidget *> widgets = findChildren<QWidget *>();
+#endif
+
+    Q_ASSERT(widgets.count() != 0);
+
+    foreach(QWidget *widget, widgets)
+    {
+        if(is_my_widget(widget->objectName()))
+        {
+            if(widget->property(NO_SAVE).toBool() == true)
+            {
+                continue;
+            }
+
+            beginGroup(get_full_objectName(widget));
+            load_combobox_property(widget);
+            load_splitter_property(widget);
+            load_property(widget, "isEnabled");
+            load_property(widget, "checked");
+            load_property(widget, "text");
+            load_property(widget, "value");
+            load_property(widget, "position");
+            load_property(widget, "state");
+            load_property(widget, "time");
+            load_property(widget, "date");
+            load_property(widget, "plainText");
+            endGroup();
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MyWidget::save_widgets(void)
+{
+//    не надо это раскомментировать
+//    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+//    if(mw)
+//    {
+//        mw->save_setting();
+//    }
+
+#ifdef USE_TOPLEVELWIDGETS
+    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
+#else
+    QList<QWidget *> widgets = findChildren<QWidget *>();
+#endif
+
+    Q_ASSERT(widgets.count() != 0);
+
+    foreach(QWidget *widget, widgets)
+    {
+        Q_CHECK_PTR(widget);
+        if(is_my_widget(widget->objectName()))
+        {
+            if(widget->property(NO_SAVE).toBool() == true)
+            {
+                continue;
+            }
+
+            beginGroup(get_full_objectName(widget));
+            save_combobox_property(widget);
+            save_splitter_property(widget);
+            save_property(widget, "isEnabled");
+            save_property(widget, "checked");
+            save_property(widget, "text");
+            save_property(widget, "value");
+            save_property(widget, "position");
+            save_property(widget, "state");
+            save_property(widget, "time");
+            save_property(widget, "date");
+            save_property(widget, "plainText");
+            endGroup();
+        }
+    }
+}
 //--------------------------------------------------------------------------------

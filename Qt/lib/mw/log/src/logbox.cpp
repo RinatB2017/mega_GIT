@@ -24,6 +24,7 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
 #include "log_options.hpp"
 #include "findbox.hpp"
 #include "defines.hpp"
@@ -32,7 +33,8 @@
 //#include "LoggingCategories.hpp"
 //--------------------------------------------------------------------------------
 LogBox::LogBox(QWidget *parent) :
-    QFrame(parent)
+    QFrame(parent),
+    MySettings()
 {
     init();
 }
@@ -42,6 +44,7 @@ LogBox::LogBox(const QString &o_name,
                int min_width,
                int min_height) :
     QFrame(parent),
+    MySettings(),
     o_name(o_name),
     flagNoCRLF(false),
     flagAddDateTime(false),
@@ -506,16 +509,16 @@ void LogBox::syslogLog(int level,
 //--------------------------------------------------------------------------------
 void LogBox::save_to(void)
 {
-    QFileDialog *dlg;
+    MyFileDialog *dlg;
 
-    dlg = new QFileDialog;
-    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg = new MyFileDialog("log_box", "log_box");
+    dlg->setAcceptMode(MyFileDialog::AcceptSave);
     dlg->setNameFilter(tr("log files (*.log)"));
     dlg->setDefaultSuffix(tr("log"));
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
     dlg->setDirectory(".");
     dlg->selectFile("без имени");
-    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    dlg->setOption(MyFileDialog::DontConfirmOverwrite, false);
     // dlg->setConfirmOverwrite(true);
     if(dlg->exec())
     {
@@ -694,30 +697,16 @@ void LogBox::load_settings(void)
     QString text = o_name;
     if(text.isEmpty())  text = "noname";
 
-    QString org_name = ORGNAME;
-#ifdef QT_DEBUG
-    QString app_name = QString("%1(debug)").arg(APPNAME);
-#else
-    QString app_name = APPNAME;
-#endif
-
-#ifndef SAVE_INI
-    settings = new QSettings(org_name, app_name);
-#else
-    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
-#endif
-
-
-    settings->beginGroup(text);
-    logBox->setReadOnly(settings->value("readOnly", true).toBool());
-    logBox->setAcceptRichText(settings->value("acceptRichText", true).toBool());
-    flagNoCRLF          = settings->value("no_CRLF", false).toBool();
-    flagAddDateTime     = settings->value("addDateTime", false).toBool();
-    flagColor           = settings->value("color", true).toBool();
-    flagErrorAsMessage  = settings->value("ErrorAsMessage", false).toBool();
-    flagTextIsWindows   = settings->value("TextIsWindows", false).toBool();
-    flagAutoSave        = settings->value("AutoSave", false).toBool();
-    autosave_filename   = settings->value("FileAutoSave", "noname.log").toString();
+    beginGroup(text);
+    logBox->setReadOnly(load_value("readOnly", true).toBool());
+    logBox->setAcceptRichText(load_value("acceptRichText", true).toBool());
+    flagNoCRLF          = load_value("no_CRLF", false).toBool();
+    flagAddDateTime     = load_value("addDateTime", false).toBool();
+    flagColor           = load_value("color", true).toBool();
+    flagErrorAsMessage  = load_value("ErrorAsMessage", false).toBool();
+    flagTextIsWindows   = load_value("TextIsWindows", false).toBool();
+    flagAutoSave        = load_value("AutoSave", false).toBool();
+    autosave_filename   = load_value("FileAutoSave", "noname.log").toString();
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: load settings";
@@ -735,9 +724,9 @@ void LogBox::load_settings(void)
     int font_weight = 0;
     int font_size = 0;
 
-    font_weight = settings->value("FontWeight",   QFont::Normal).toInt();
-    font_size   = settings->value("FontSize",     9).toInt();
-    font_name   = settings->value("FontName",     "Liberation Mono").toString();
+    font_weight = load_value("FontWeight",   QFont::Normal).toInt();
+    font_size   = load_value("FontSize",     9).toInt();
+    font_name   = load_value("FontName",     "Liberation Mono").toString();
 
     if(font_size > 72) font_size = 72;
     if(font_size < 6)  font_size = 6;
@@ -748,8 +737,7 @@ void LogBox::load_settings(void)
 
     logBox->setFont(font);
 
-    settings->endGroup();
-    settings->deleteLater();
+    endGroup();
 }
 //--------------------------------------------------------------------------------
 void LogBox::save_settings(void)
@@ -762,19 +750,6 @@ void LogBox::save_settings(void)
     //if(text.isEmpty())  text = objectName();
     if(text.isEmpty())  text = "RS-232";
 
-    QString org_name = ORGNAME;
-#ifdef QT_DEBUG
-    QString app_name = QString("%1(debug)").arg(APPNAME);
-#else
-    QString app_name = APPNAME;
-#endif
-
-#ifndef SAVE_INI
-    settings = new QSettings(org_name, app_name);
-#else
-    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
-#endif
-
 #ifdef QT_DEBUG
     qDebug() << "logbox: save settings";
     qDebug() << "flagNoCRLF" << flagNoCRLF;
@@ -786,26 +761,25 @@ void LogBox::save_settings(void)
     qDebug() << "FileAutoSave" << autosave_filename;
 #endif
 
-    settings->beginGroup(text);
-    settings->setValue("readOnly",      logBox->isReadOnly());
-    settings->setValue("acceptRichText",logBox->acceptRichText());
-    settings->setValue("no_CRLF",       flagNoCRLF);
-    settings->setValue("addDateTime",   flagAddDateTime);
-    settings->setValue("color",         flagColor);
-    settings->setValue("ErrorAsMessage",flagErrorAsMessage);
-    settings->setValue("TextIsWindows", flagTextIsWindows);
-    settings->setValue("AutoSave",      flagAutoSave);
-    settings->setValue("FileAutoSave",  autosave_filename);
+    beginGroup(text);
+    save_value("readOnly",      logBox->isReadOnly());
+    save_value("acceptRichText",logBox->acceptRichText());
+    save_value("no_CRLF",       flagNoCRLF);
+    save_value("addDateTime",   flagAddDateTime);
+    save_value("color",         flagColor);
+    save_value("ErrorAsMessage",flagErrorAsMessage);
+    save_value("TextIsWindows", flagTextIsWindows);
+    save_value("AutoSave",      flagAutoSave);
+    save_value("FileAutoSave",  autosave_filename);
 
 #ifndef NO_LOG
     QFont font = get_font();
-    settings->setValue("FontWeight",  font.weight());
-    settings->setValue("FontSize",    font.pointSize());
-    settings->setValue("FontName",    font.family());
+    save_value("FontWeight",  font.weight());
+    save_value("FontSize",    font.pointSize());
+    save_value("FontName",    font.family());
 #endif
 
-    settings->endGroup();
-    settings->deleteLater();
+    endGroup();
 }
 //--------------------------------------------------------------------------------
 void LogBox::set_o_name(QString value)

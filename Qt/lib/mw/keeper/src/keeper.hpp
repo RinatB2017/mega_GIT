@@ -42,7 +42,6 @@ public:
     static bool get_array(QString group_name, QString name, QList<QVariant> *l_values);
 
 private:
-
 };
 //--------------------------------------------------------------------------------
 #endif // KEEPER_HPP

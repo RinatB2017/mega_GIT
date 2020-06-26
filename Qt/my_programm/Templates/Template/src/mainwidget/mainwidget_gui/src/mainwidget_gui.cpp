@@ -115,10 +115,11 @@ void MainWidget_GUI::createTestBar(void)
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+    connect(cb_block,   &QCheckBox::clicked,    cb_test,            &QToolButton::setDisabled);
+    connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QToolButton::setDisabled);
 
 #ifdef TOOLBAR_ORIENTATION
+    testbar->adjustSize();
     testbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     connect(testbar, &QToolBar::orientationChanged, [this]()
     {

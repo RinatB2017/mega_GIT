@@ -27,7 +27,9 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-class MyFileDialog : public QFileDialog
+#include "mysettings.hpp"
+//--------------------------------------------------------------------------------
+class MyFileDialog : public QFileDialog, public MySettings
 {
     Q_OBJECT
 
@@ -43,8 +45,7 @@ public slots:
 private:
     QString gName;
     QString oName;
-
-    QPointer<QSettings> settings;
+    QString dir;
 };
 //--------------------------------------------------------------------------------
 #endif // MYFILEDIALOG_HPP

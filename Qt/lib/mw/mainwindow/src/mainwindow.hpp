@@ -88,8 +88,9 @@ class SysLog_dock;
 //private:
 //    QToolButton *pToolButton;
 //};
+#include "mysettings.hpp"
 //--------------------------------------------------------------------------------
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public MySettings
 {
     Q_OBJECT
 
@@ -255,7 +256,7 @@ private:
     QPointer<QSystemTrayIcon> trayIcon;
     QPointer<QMenu> trayIconMenu;
 
-    QPointer<QSettings> settings;
+//    QPointer<QSettings> settings;
 
     //TODO тест
     QPointer<MyWidget> c_widget;

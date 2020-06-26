@@ -67,7 +67,7 @@ void Log_options::choice_file(void)
     dlg->setNameFilter("LOG files (*.log)");
     dlg->selectFile("noname");
     dlg->setDefaultSuffix("log");
-    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
     int btn = dlg->exec();
     if(btn == MyFileDialog::Accepted)
     {

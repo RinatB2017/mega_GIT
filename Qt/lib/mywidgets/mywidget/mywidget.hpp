@@ -27,11 +27,12 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include "mymessages.hpp"
+#include "mysettings.hpp"
+//--------------------------------------------------------------------------------
 #define PARAMS_GROUP_NAME   "Params"
 #define NO_BLOCK    "no_block"
 #define NO_SAVE     "no_save"
-//--------------------------------------------------------------------------------
-#define MESSAGEBOX_WIDTH    320
 //--------------------------------------------------------------------------------
 //
 //  шаблон для хранения разнообразных данных
@@ -72,10 +73,7 @@ typedef struct d_spin_box
     double  default_value;
 } d_spin_box_t;
 //--------------------------------------------------------------------------------
-class QToolButton;
-class QToolBar;
-//--------------------------------------------------------------------------------
-class MyWidget : public QWidget
+class MyWidget : public QWidget, public MyMessages, public MySettings
 {
     Q_OBJECT
 
@@ -109,68 +107,16 @@ public:
 
     void block_close(bool state);
 
-    bool load_combobox_property(QWidget *widget);
-    bool save_combobox_property(QWidget *widget);
-
-    bool load_splitter_property(QWidget *widget);
-    bool save_splitter_property(QWidget *widget);
-
-    bool load_property(QWidget *widget, const QString &property_name);
-    bool save_property(QWidget *widget, const QString &property_name);
-
     QString get_full_objectName(QWidget *widget);
     void load_widgets(void);
     void save_widgets(void);
-
-    int load_int(QString name);
-    void save_int(QString name, int value);
-
-    QString load_string(QString name);
-    void save_string(QString name, QString value);
-
-    QByteArray load_bytearray(QString name);
-    void save_bytearray(QString name, QByteArray value);
-
-    QStringList load_stringlist(QString name);
-    void save_stringlist(QString name, QStringList value);
-
-    QVariant load_value(QString name);
-    void save_value(QString name, QVariant value);
-
-    void beginGroup(const QString &prefix);
-    void endGroup(void);
-    void beginWriteArray(const QString &prefix, int size = -1);
-    int beginReadArray(const QString &prefix);
-    void endArray(void);
-    void setArrayIndex(int i);
 
     void load_checkBox(QList<check_box> data);
     void load_comboBox(QList<combo_box> data);
     void load_spinBox(QList<spin_box> data);
     void load_d_spinBox(QList<d_spin_box> data);
 
-    void save_checkBox(QString group_name, QList<QCheckBox *> data);
-    void save_comboBox(QString group_name, QList<QComboBox *> data);
-    void save_spinBox(QString group_name, QList<QSpinBox *> data);
-    void save_d_spinBox(QString group_name, QList<QDoubleSpinBox *> data);
-
     //---
-    static int messagebox_noicon(const QString title,
-                                 const QString text,
-                                 unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_info(const QString title,
-                               const QString text,
-                               unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_warning(const QString title,
-                                  const QString text,
-                                  unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_critical(const QString title,
-                                   const QString text,
-                                   unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_question(const QString title,
-                                   const QString text,
-                                   unsigned int width = MESSAGEBOX_WIDTH);
-
     bool create_pixmap(QWidget *w_left, QWidget *w_central);
 
     QToolButton *add_button(QToolBar *tool_bar,
@@ -214,12 +160,7 @@ private slots:
 private:
     void connect_log(QWidget *parent);
 
-    QPointer<QSettings> settings;
-
     bool check_exists_signals(QWidget *parent);
-
-    bool is_my_widget(QString o_name);
-    bool compare_name(const char *widget_name, QString class_name);
 
     QList<QWidget *> w_lists;
 

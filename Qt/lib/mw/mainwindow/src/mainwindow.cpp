@@ -71,10 +71,10 @@ MainWindow::~MainWindow()
     }
 #endif
 
-    if(settings)
-    {
-        settings->deleteLater();
-    }
+//    if(settings)
+//    {
+//        settings->deleteLater();
+//    }
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(MyWidget *widget)
@@ -216,19 +216,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::init(void)
 {
     flag_close = true;
-
-    QString org_name = ORGNAME;
-#ifdef QT_DEBUG
-    QString app_name = QString("%1(debug)").arg(APPNAME);
-#else
-    QString app_name = APPNAME;
-#endif
-
-#ifndef SAVE_INI
-    settings = new QSettings(org_name, app_name);
-#else
-    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
-#endif
 
     load_translations();
     setWindowTitle(QString("%1 (ver. %2)")
@@ -635,12 +622,10 @@ void MainWindow::load_main(void)
     int font_weight;
     int font_size;
 
-    Q_CHECK_PTR(settings);
-
-    settings->beginGroup("Main");
-    font_weight = settings->value("FontWeight",   QFont::Normal).toInt();
-    font_size   = settings->value("FontSize",     9).toInt();
-    font_name   = settings->value("FontName",     "Liberation Sans").toString();
+    beginGroup("Main");
+    font_weight = load_value("FontWeight",   QFont::Normal).toInt();
+    font_size   = load_value("FontSize",     9).toInt();
+    font_name   = load_value("FontName",     "Liberation Sans").toString();
 
     if(font_size > 72) font_size = 72;
     if(font_size < 6)  font_size = 6;
@@ -655,14 +640,14 @@ void MainWindow::load_main(void)
 
     QApplication::setFont(font);
 
-    style_name = settings->value("StyleName", "Breeze").toString();
-    flag_close = settings->value("NoAnswerFromExit", true).toBool();
-    flag_always_on_top = settings->value("AlwaysOnTop", false).toBool();
+    style_name = load_value("StyleName", "Breeze").toString();
+    flag_close = load_value("NoAnswerFromExit", true).toBool();
+    flag_always_on_top = load_value("AlwaysOnTop", false).toBool();
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 
     //---
-    state_theme = settings->value("Theme",  SYSTEM_THEME).toInt();
+    state_theme = load_value("Theme",  SYSTEM_THEME).toInt();
     switch(state_theme)
     {
     case SYSTEM_THEME:
@@ -683,10 +668,10 @@ void MainWindow::load_main(void)
     }
     //---
 
-    settings->endGroup();
+    endGroup();
 
-    restoreState(settings->value("windowState").toByteArray());
-    restoreGeometry(settings->value("geometry").toByteArray());
+    restoreState(load_value("windowState").toByteArray());
+    restoreGeometry(load_value("geometry").toByteArray());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::save_main(void)
@@ -695,35 +680,33 @@ void MainWindow::save_main(void)
     qDebug() << "MainWindow::save_main";
 #endif
 
-    Q_CHECK_PTR(settings);
+    beginGroup("Main");
+    save_value("FontName",      QApplication::font().family());
+    save_value("FontWeight",    QApplication::font().weight());
+    save_value("FontSize",      QApplication::font().pointSize());
+    save_value("StyleName",     style_name);
 
-    settings->beginGroup("Main");
-    settings->setValue("FontName",      QApplication::font().family());
-    settings->setValue("FontWeight",    QApplication::font().weight());
-    settings->setValue("FontSize",      QApplication::font().pointSize());
-    settings->setValue("StyleName",     style_name);
-
-    settings->setValue("NoAnswerFromExit", flag_close);
-    settings->setValue("AlwaysOnTop", flag_always_on_top);
+    save_value("NoAnswerFromExit", flag_close);
+    save_value("AlwaysOnTop",   flag_always_on_top);
 #ifndef NO_LOG_INFO
-    settings->setValue("flag_show_info",  flag_show_info);
+    save_value("flag_show_info",  flag_show_info);
 #endif
 #ifndef NO_LOG_DEBUG
-    settings->setValue("flag_show_debug", flag_show_debug);
+    save_value("flag_show_debug", flag_show_debug);
 #endif
 #ifndef NO_LOG_ERROR
-    settings->setValue("flag_show_error", flag_show_error);
+    save_value("flag_show_error", flag_show_error);
 #endif
 #ifndef NO_LOG_TRACE
-    settings->setValue("flag_show_trace", flag_show_trace);
+    save_value("flag_show_trace", flag_show_trace);
 #endif
 
-    settings->setValue("Theme",         state_theme);
+    save_value("Theme",         state_theme);
 
-    settings->endGroup();
+    endGroup();
 
-    settings->setValue("geometry",      saveGeometry());
-    settings->setValue("windowState",   saveState());
+    save_value("geometry",      saveGeometry());
+    save_value("windowState",   saveState());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)

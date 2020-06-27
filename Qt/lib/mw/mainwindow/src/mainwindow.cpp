@@ -1243,7 +1243,7 @@ bool MainWindow::add_dock_widget(QString title,
 {
     Q_CHECK_PTR(widget);
 
-    emit info(title);
+    emit debug(title);
 
     if(title.isEmpty())
     {

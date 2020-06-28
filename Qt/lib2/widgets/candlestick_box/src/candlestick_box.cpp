@@ -18,19 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-
 #include <QVBoxLayout>
+#include <QDebug>
 
 #include "candlestick_box.hpp"
 #include "ui_candlestick_box.h"
 
 #include "candlestickdatareader.h"
 //--------------------------------------------------------------------------------
-CandleStick_Box::CandleStick_Box(const QString ticket_name, QWidget *parent) :
+CandleStick_Box::CandleStick_Box(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CandleStick_Box)
 {
-    this->ticket_name = ticket_name;
     setWindowTitle(ticket_name);
 
     ui->setupUi(this);
@@ -62,18 +61,19 @@ CandleStick_Box::CandleStick_Box(const QString ticket_name, QWidget *parent) :
     chart = new QChart();
     chart->addSeries(acmeSeries);
     chart->setTitle(ticket_name);
-    //chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->setAnimationOptions(QChart::SeriesAnimations);
 
     chart->createDefaultAxes();
 
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
 
-    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    axisY->setMax(1.17);    //axisY->max() * 10.00);
-    axisY->setMin(1.16);    //axisY->min() * 0.00);
+//    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+//    Q_CHECK_PTR(axisY);
+//    axisY->setMin(axisY->min() * 0.99);
+//    axisY->setMax(axisY->max() * 1.01);
 
-    chart->legend()->setVisible(false);
+    chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
     QChartView *chartView = new QChartView(chart);
@@ -86,15 +86,32 @@ CandleStick_Box::CandleStick_Box(const QString ticket_name, QWidget *parent) :
 //--------------------------------------------------------------------------------
 void CandleStick_Box::append(QCandlestickSet *set)
 {
+    qDebug() << set->timestamp();
+
     acmeSeries->append(set);
-    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy-MM-dd");
+
+    qDebug() << "cnt" << acmeSeries->count();
+
+//    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy-MM-dd");
+    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("dd");
+
+    QDateTime timestamp;
+    timestamp.setTime_t(set->timestamp());
+    qDebug() << QString("Unixtime: %1").arg(timestamp.toString(Qt::SystemLocaleLongDate));
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::update_data(void)
 {
-    //chart->removeAllSeries();
-    chart->addSeries(acmeSeries);
+    axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::set_ticket_name(QString new_ticket_name)
+{
+    ticket_name = new_ticket_name;
+    setWindowTitle(ticket_name);
+    acmeSeries->setName(ticket_name);
+    chart->setTitle(ticket_name);
 }
 //--------------------------------------------------------------------------------
 QString CandleStick_Box::get_ticket_name(void)

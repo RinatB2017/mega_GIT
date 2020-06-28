@@ -14,8 +14,6 @@ DEPENDPATH  += \
     $$PWD/src/test_candlestick_box_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QT  += charts
-
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
@@ -45,8 +43,7 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
-
-include (src/candlestick_box/candlestick_box.pri)
+include ($$LIB_PATH2/widgets/candlestick_box/candlestick_box.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -74,6 +74,16 @@ void MainBox::init(void)
 
     createTestBar();
 
+    process = new QProcess(this);
+    process->setProcessChannelMode(QProcess::SeparateChannels);
+    process->setReadChannel(QProcess::StandardOutput);
+
+    connect(process, SIGNAL(started()),                 this, SLOT(started()));
+    connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
+    connect(process, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
+    connect(process, SIGNAL(finished(int)),             this, SLOT(finished(int)));
+    connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
+
 #if 1
     create_test_currency();
 #else
@@ -109,7 +119,8 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::create_test_currency(void)
 {
-    CandleStick_Box *box = new CandleStick_Box("EURUSD", this);
+    CandleStick_Box *box = new CandleStick_Box(this);
+    box->set_ticket_name("EURUSD");
 #if 0
     for(int n=0; n<16; n++)
     {
@@ -195,7 +206,8 @@ void MainBox::create_plot_currency(void)
 
     foreach (QString currency, sl_currency)
     {
-        CandleStick_Box *box = new CandleStick_Box(currency, this);
+        CandleStick_Box *box = new CandleStick_Box(this);
+        box->set_ticket_name(currency);
         plot_tickets.append(box);
     }
 }
@@ -222,13 +234,19 @@ void MainBox::createTestBar(void)
                                        "save");
     QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                       QIcon(),
                                        "test",
                                        "test");
+    QToolButton *btn_test2 = add_button(testbar,
+                                        new QToolButton(this),
+                                        QIcon(),
+                                        "test2",
+                                        "test2");
 
-    connect(btn_load, SIGNAL(clicked()), this, SLOT(load()));
-    connect(btn_save, SIGNAL(clicked()), this, SLOT(save()));
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    connect(btn_load,   &QToolButton::clicked,  this,   &MainBox::load);
+    connect(btn_save,   &QToolButton::clicked,  this,   &MainBox::save);
+    connect(btn_test,   &QToolButton::clicked,  this,   &MainBox::test);
+    connect(btn_test2,  &QToolButton::clicked,  this,   &MainBox::test2);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::create_set(QStringList sl,
@@ -373,36 +391,120 @@ void MainBox::save(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-#if 0
-    CandleStick_Box *box = new CandleStick_Box("USDEUR");
+    CandleStick_Box *box = new CandleStick_Box();
+    box->set_ticket_name("TEST");
     box->setMinimumSize(800, 600);
-    box->show();
 
-    for(int n=0; n<10; n++)
+#if 0
+    QRandomGenerator generator;
+    for(int n=0; n<1000; n++)
     {
-        QCandlestickSet *set = new QCandlestickSet;
-        set->setTimestamp(1435708800000 * n);
+        QCandlestickSet *set = new QCandlestickSet();
+        set->setTimestamp(1435708800000 + n);
         //set->setTimestamp(n * 24 * 3600);
-        set->setOpen(qrand() % 1000);
-        set->setClose(qrand() % 1000);
-        set->setHigh(qrand() % 1000);
-        set->setLow(qrand() % 1000);
+        set->setOpen(generator() % 1000);
+        set->setClose(generator() % 1000);
+        set->setHigh(generator() % 1000);
+        set->setLow(generator() % 1000);
         box->append(set);
     }
-    box->update_data();
+#else
+    QCandlestickSet *set1 = new QCandlestickSet();
+    set1->setOpen(0.0202550100000000);
+    set1->setHigh(0.0205355100000000);
+    set1->setLow(0.0200902600000000);
+    set1->setClose(0.0202730700000000);
+    //volume":"3944.0084858500000000
+    set1->setTimestamp(1572393600000);
+    box->append(set1);
+
+    QCandlestickSet *set2 = new QCandlestickSet();
+    set2->setOpen(0.0202350100000000);
+    set2->setHigh(0.0202876700000000);
+    set2->setLow(0.0198971300000000);
+    set2->setClose(0.0200359800000000);
+    //volume":"4332.6834116200000000
+    set2->setTimestamp(1572422400000);
+    box->append(set2);
+
+    QCandlestickSet *set3 = new QCandlestickSet();
+    set3->setOpen(0.0200417600000000);
+    set3->setHigh(0.0200871100000000);
+    set3->setLow(0.0198633900000000);
+    set3->setClose(0.0199950000000000);
+    //volume":"1326.6261286100000000;
+    set3->setTimestamp(1572451200000);
+    box->append(set3);
+
+    QCandlestickSet *set4 = new QCandlestickSet();
+    set4->setOpen(0.0200088700000000);
+    set4->setHigh(0.0201535900000000);
+    set4->setLow(0.0199500000000000);
+    set4->setClose(0.0200250000000000);
+    //volume":"1633.7763925100000000
+    set4->setTimestamp(1572480000000);
+    box->append(set4);
+
+    QCandlestickSet *set5 = new QCandlestickSet();
+    set5->setOpen(0.0200149700000000);
+    set5->setHigh(0.0200248800000000);
+    set5->setLow(0.0195836700000000);
+    set5->setClose(0.0197245300000000);
+    //volume":"3544.8681055200000000
+    set5->setTimestamp(1572508800000);
+    box->append(set5);
+
+    QCandlestickSet *set6 = new QCandlestickSet();
+    set6->setOpen(0.0197050400000000);
+    set6->setHigh(0.0200310600000000);
+    set6->setLow(0.0196817400000000);
+    set6->setClose(0.0199250000000000);
+    //volume":"4773.6334983000000000
+    set6->setTimestamp(1572537600000);
+    box->append(set6);
+
+    QCandlestickSet *set7 = new QCandlestickSet();
+    set7->setOpen(0.0199200100000000);
+    set7->setHigh(0.0200208200000000);
+    set7->setLow(0.0198200000000000);
+    set7->setClose(0.0198200000000000);
+    //volume":"2491.0707443400000000
+    set7->setTimestamp(1572566400000);
+    box->append(set7);
+
+    QCandlestickSet *set8 = new QCandlestickSet();
+    set8->setOpen(0.0198349900000000);
+    set8->setHigh(0.0199600000000000);
+    set8->setLow(0.0195860200000000);
+    set8->setClose(0.0197458000000000);
+    //volume":"3124.0585905100000000
+    set8->setTimestamp(1572595200000);
+    box->append(set8);
+
+    QCandlestickSet *set9 = new QCandlestickSet();
+    set9->setOpen(0.0197458000000000);
+    set9->setHigh(0.0200600000000000);
+    set9->setLow(0.0195363000000000);
+    set9->setClose(0.0198050000000000);
+    //volume":"1382.2579215800000000
+    set9->setTimestamp(1572624000000);
+    box->append(set9);
+
+    QCandlestickSet *set10 = new QCandlestickSet();
+    set10->setOpen(0.0198199700000000);
+    set10->setHigh(0.0198550000000000);
+    set10->setLow(0.0197350000000000);
+    set10->setClose(0.0198100000000000);
+    //volume":"487.7146311400000000
+    set10->setTimestamp(1572652800000);
+    box->append(set10);
 #endif
-
-#if 1
-    QProcess *proccess = new QProcess(this);
-    proccess->setProcessChannelMode(QProcess::SeparateChannels);
-    proccess->setReadChannel(QProcess::StandardOutput);
-
-    connect(proccess, SIGNAL(started()),                 this, SLOT(started()));
-    connect(proccess, SIGNAL(readyReadStandardOutput()), this, SLOT(read_data()));
-    connect(proccess, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
-    connect(proccess, SIGNAL(finished(int)),             this, SLOT(finished(int)));
-    connect(proccess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
-
+    box->update_data();
+    box->show();
+}
+//--------------------------------------------------------------------------------
+void MainBox::test2(void)
+{
     QStringList args;
     args << "-rc";
     args << "-l1";
@@ -423,8 +525,7 @@ void MainBox::test(void)
     }
     emit debug(temp);
 
-    proccess->start("wget", args);
-#endif
+    process->start("wget", args);
 }
 //--------------------------------------------------------------------------------
 void MainBox::started(void)
@@ -435,6 +536,8 @@ void MainBox::started(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(void)
 {
+    Q_CHECK_PTR(process);
+    QByteArray data = process->readAllStandardOutput();
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------

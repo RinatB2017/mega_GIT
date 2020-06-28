@@ -26,6 +26,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QValueAxis>
 #include <QDateTime>
+#include <QPointer>
 #include <QWidget>
 
 QT_CHARTS_USE_NAMESPACE
@@ -39,22 +40,22 @@ class CandleStick_Box : public QWidget
     Q_OBJECT
 
 public:
-    explicit CandleStick_Box(const QString ticket_name, QWidget *parent = nullptr);
+    explicit CandleStick_Box(QWidget *parent = nullptr);
     ~CandleStick_Box();
 
     void append(QCandlestickSet *set);
     void update_data(void);
 
+    void set_ticket_name(QString new_ticket_name);
     QString get_ticket_name(void);
 
 private:
     Ui::CandleStick_Box *ui;
-    QCandlestickSeries *acmeSeries;
-    QChart *chart;
+    QPointer<QCandlestickSeries> acmeSeries;
+    QPointer<QChart> chart;
     QStringList categories;
-    QBarCategoryAxis *axisX;
-    QString ticket_name;
-
+    QPointer<QBarCategoryAxis> axisX;
+    QString ticket_name = "unknown";
 };
 //--------------------------------------------------------------------------------
 #endif // CANDLESTICK_BOX_HPP

@@ -53,6 +53,7 @@ private slots:
     void load(void);
     void save(void);
     void test(void);
+    void test2(void);
 
     void started(void);
     void read_data(void);
@@ -67,6 +68,7 @@ private:
     int index = 0;
 
     QList<CandleStick_Box *> plot_tickets;
+    QPointer<QProcess> process;
 
 #ifdef GRAPHER
     GrapherBox *grapher;

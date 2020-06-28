@@ -334,6 +334,10 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
+#if 1
+    qInfo() << "YES";
+#endif
+
 #if 0
     emit info("Info");
     emit debug("Debug");

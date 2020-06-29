@@ -67,7 +67,6 @@ private:
     QWidget *parent;
     int index = 0;
 
-    QList<CandleStick_Box *> plot_tickets;
     QPointer<QProcess> process;
 
 #ifdef GRAPHER
@@ -77,8 +76,6 @@ private:
     void init(void);
 
     void createTestBar(void);
-    void create_test_currency(void);
-    void create_plot_currency(void);
 
     bool create_set(QStringList sl, QCandlestickSet *set);
 

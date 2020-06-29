@@ -50,7 +50,7 @@ include (src/test_qwebengineview_mainbox/test_qwebengineview_mainbox.pri)
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 
-VPATH = $$INCLUDEPATH
-
 RESOURCES += \
     proxy/proxies.qrc
+
+VPATH = $$INCLUDEPATH

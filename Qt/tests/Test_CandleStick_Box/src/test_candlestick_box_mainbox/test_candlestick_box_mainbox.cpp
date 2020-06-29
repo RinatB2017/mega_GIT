@@ -50,6 +50,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -84,21 +85,15 @@ void MainBox::init(void)
     connect(process, SIGNAL(finished(int)),             this, SLOT(finished(int)));
     connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
 
-#if 1
-    create_test_currency();
-#else
-    create_plot_currency();
-#endif
-
     QVBoxLayout *vbox = new QVBoxLayout();
     QScrollArea *scroll = new QScrollArea(this);
     QMdiArea *area = new QMdiArea(this);
 
     //area->show();
-    foreach (CandleStick_Box *box, plot_tickets)
-    {
-        area->addSubWindow(box);
-    }
+//    foreach (CandleStick_Box *box, plot_tickets)
+//    {
+//        area->addSubWindow(box);
+//    }
     //area->setViewMode(QMdiArea::SubWindowView);
     area->setViewMode(QMdiArea::TabbedView);
     emit debug(QString("area: %1 %2").arg(area->width()).arg(area->height()));
@@ -115,101 +110,8 @@ void MainBox::init(void)
     hbox->setMargin(0);
     hbox->addWidget(frame);
     setLayout(hbox);
-}
-//--------------------------------------------------------------------------------
-void MainBox::create_test_currency(void)
-{
-    CandleStick_Box *box = new CandleStick_Box(this);
-    box->set_ticket_name("EURUSD");
-#if 0
-    for(int n=0; n<16; n++)
-    {
-        QCandlestickSet *set = new QCandlestickSet;
-        set->setTimestamp(1527802700 * n);
-        //set->setTimestamp(n * 24 * 3600);
-        set->setOpen(qrand() % 1000);
-        set->setClose(qrand() % 1000);
-        set->setHigh(qrand() % 1000);
-        set->setLow(qrand() % 1000);
-        box->append(set);
-    }
-    box->update_data();
-#endif
-    plot_tickets.append(box);
-}
-//--------------------------------------------------------------------------------
-void MainBox::create_plot_currency(void)
-{
-    QStringList sl_currency;
-    sl_currency << "EURUSD"
-                   //                << "EURGBP"
-                   //                << "EURCHF"
-                   //                << "EURJPY"
-                << "EURRUB"
-                   //                << "EURHKD"
-                   //                << "EURMXN"
-                   //                << "EURTRY"
-                   //                << "EURAUD"
-                   //                << "EURNZD"
-                   //                << "EURSGD"
-                   //                << "EURZAR"
-                   //                << "EURCAD"
 
-                   //                << "USDCHF"
-                   //                << "USDJPY"
-                   //                << "USDCAD"
-                   //                << "USDDKK"
-                   //                << "USDCZK"
-                   //                << "USDNOK"
-                   //                << "USDPLN"
-                << "USDRUB"
-                   //                << "USDSEK"
-                   //                << "USDSGD"
-                   //                << "USDZAR"
-                   //                << "USDHKD"
-                   //                << "USDMXN"
-                   //                << "USDTRY"
-                   //                << "USDHUF"
-                   //                << "USDCNH"
-
-                   //                << "GBPUSD"
-                   //                << "GBPCHF"
-                   //                << "GBPJPY"
-                   //                << "GBPCAD"
-                   //                << "GBPAUD"
-                   //                << "GBPNZD"
-
-                   //                << "AUDUSD"
-                   //                << "AUDJPY"
-                   //                << "AUDCHF"
-                   //                << "AUDCAD"
-                   //                << "AUDNZD"
-
-                   //                << "NZDUSD"
-                   //                << "NZDJPY"
-                   //                << "NZDCHF"
-                   //                << "NZDCAD"
-
-                   //                << "XAUUSD"
-                   //                << "XAGUSD"
-                   //                << "XAUEUR"
-                   //                << "XAGEUR"
-
-                   //                << "CADCHF"
-                   //                << "CADJPY"
-
-                   //                << "CHFJPY"
-                   //                << "BTCUSD"
-                   //                << "ETHUSD"
-                   //                << "LTCUSD"
-                   ;
-
-    foreach (QString currency, sl_currency)
-    {
-        CandleStick_Box *box = new CandleStick_Box(this);
-        box->set_ticket_name(currency);
-        plot_tickets.append(box);
-    }
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -357,19 +259,19 @@ void MainBox::load(void)
             }
             //---
 
-            foreach (CandleStick_Box *plot_ticket, plot_tickets)
-            {
-                if(plot_ticket->get_ticket_name() == ticket_name)
-                {
-                    QCandlestickSet *set = new QCandlestickSet;
-                    ok = create_set(sl, set);
-                    if(ok)
-                    {
-                        plot_ticket->append(set);
-                        plot_ticket->update_data();
-                    }
-                }
-            }
+//            foreach (CandleStick_Box *plot_ticket, plot_tickets)
+//            {
+//                if(plot_ticket->get_ticket_name() == ticket_name)
+//                {
+//                    QCandlestickSet *set = new QCandlestickSet;
+//                    ok = create_set(sl, set);
+//                    if(ok)
+//                    {
+//                        plot_ticket->append(set);
+//                        plot_ticket->update_data();
+//                    }
+//                }
+//            }
         }
         foreach (QString t_name, t_sl)
         {
@@ -391,22 +293,21 @@ void MainBox::save(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    CandleStick_Box *box = new CandleStick_Box();
-    box->set_ticket_name("TEST");
-    box->setMinimumSize(800, 600);
-
 #if 0
     QRandomGenerator generator;
-    for(int n=0; n<1000; n++)
+    int delta = 0;
+    for(int n=0; n<100; n++)
     {
         QCandlestickSet *set = new QCandlestickSet();
-        set->setTimestamp(1435708800000 + n);
+        set->setTimestamp(1435708800000 + delta);
         //set->setTimestamp(n * 24 * 3600);
         set->setOpen(generator() % 1000);
         set->setClose(generator() % 1000);
         set->setHigh(generator() % 1000);
         set->setLow(generator() % 1000);
-        box->append(set);
+        ui->CandleStick_widget->append(set);
+
+        delta += 100000;
     }
 #else
     QCandlestickSet *set1 = new QCandlestickSet();
@@ -416,7 +317,7 @@ void MainBox::test(void)
     set1->setClose(0.0202730700000000);
     //volume":"3944.0084858500000000
     set1->setTimestamp(1572393600000);
-    box->append(set1);
+    ui->CandleStick_widget->append(set1);
 
     QCandlestickSet *set2 = new QCandlestickSet();
     set2->setOpen(0.0202350100000000);
@@ -425,7 +326,7 @@ void MainBox::test(void)
     set2->setClose(0.0200359800000000);
     //volume":"4332.6834116200000000
     set2->setTimestamp(1572422400000);
-    box->append(set2);
+    ui->CandleStick_widget->append(set2);
 
     QCandlestickSet *set3 = new QCandlestickSet();
     set3->setOpen(0.0200417600000000);
@@ -434,7 +335,7 @@ void MainBox::test(void)
     set3->setClose(0.0199950000000000);
     //volume":"1326.6261286100000000;
     set3->setTimestamp(1572451200000);
-    box->append(set3);
+    ui->CandleStick_widget->append(set3);
 
     QCandlestickSet *set4 = new QCandlestickSet();
     set4->setOpen(0.0200088700000000);
@@ -443,7 +344,7 @@ void MainBox::test(void)
     set4->setClose(0.0200250000000000);
     //volume":"1633.7763925100000000
     set4->setTimestamp(1572480000000);
-    box->append(set4);
+    ui->CandleStick_widget->append(set4);
 
     QCandlestickSet *set5 = new QCandlestickSet();
     set5->setOpen(0.0200149700000000);
@@ -452,7 +353,7 @@ void MainBox::test(void)
     set5->setClose(0.0197245300000000);
     //volume":"3544.8681055200000000
     set5->setTimestamp(1572508800000);
-    box->append(set5);
+    ui->CandleStick_widget->append(set5);
 
     QCandlestickSet *set6 = new QCandlestickSet();
     set6->setOpen(0.0197050400000000);
@@ -461,7 +362,7 @@ void MainBox::test(void)
     set6->setClose(0.0199250000000000);
     //volume":"4773.6334983000000000
     set6->setTimestamp(1572537600000);
-    box->append(set6);
+    ui->CandleStick_widget->append(set6);
 
     QCandlestickSet *set7 = new QCandlestickSet();
     set7->setOpen(0.0199200100000000);
@@ -470,7 +371,7 @@ void MainBox::test(void)
     set7->setClose(0.0198200000000000);
     //volume":"2491.0707443400000000
     set7->setTimestamp(1572566400000);
-    box->append(set7);
+    ui->CandleStick_widget->append(set7);
 
     QCandlestickSet *set8 = new QCandlestickSet();
     set8->setOpen(0.0198349900000000);
@@ -479,7 +380,7 @@ void MainBox::test(void)
     set8->setClose(0.0197458000000000);
     //volume":"3124.0585905100000000
     set8->setTimestamp(1572595200000);
-    box->append(set8);
+    ui->CandleStick_widget->append(set8);
 
     QCandlestickSet *set9 = new QCandlestickSet();
     set9->setOpen(0.0197458000000000);
@@ -488,7 +389,7 @@ void MainBox::test(void)
     set9->setClose(0.0198050000000000);
     //volume":"1382.2579215800000000
     set9->setTimestamp(1572624000000);
-    box->append(set9);
+    ui->CandleStick_widget->append(set9);
 
     QCandlestickSet *set10 = new QCandlestickSet();
     set10->setOpen(0.0198199700000000);
@@ -497,10 +398,10 @@ void MainBox::test(void)
     set10->setClose(0.0198100000000000);
     //volume":"487.7146311400000000
     set10->setTimestamp(1572652800000);
-    box->append(set10);
+    ui->CandleStick_widget->append(set10);
 #endif
-    box->update_data();
-    box->show();
+    ui->CandleStick_widget->update_data();
+    ui->CandleStick_widget->show();
 }
 //--------------------------------------------------------------------------------
 void MainBox::test2(void)

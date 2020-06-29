@@ -27,39 +27,26 @@
 #include "candlestickdatareader.h"
 //--------------------------------------------------------------------------------
 CandleStick_Box::CandleStick_Box(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::CandleStick_Box)
 {
-    setWindowTitle(ticket_name);
-
     ui->setupUi(this);
-    
-    //---
-    acmeSeries = new QCandlestickSeries();
-    acmeSeries->setName(ticket_name);
-    acmeSeries->setIncreasingColor(QColor(Qt::green));
-    acmeSeries->setDecreasingColor(QColor(Qt::red));
 
-#if 0
-    QFile acmeData(":acme");
-    if (acmeData.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        CandlestickDataReader dataReader(&acmeData);
-        while (!dataReader.atEnd())
-        {
-            QCandlestickSet *set = dataReader.readCandlestickSet();
-            if (set)
-            {
-                acmeSeries->append(set);
-                categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("dd");
-            }
-        }
-    }
-#endif
+    init();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::init(void)
+{
+    setWindowTitle(ticket_name);
+    //---
+    candleSeries = new QCandlestickSeries();
+    candleSeries->setName(ticket_name);
+    candleSeries->setIncreasingColor(QColor(Qt::green));
+    candleSeries->setDecreasingColor(QColor(Qt::red));
     //---
 
     chart = new QChart();
-    chart->addSeries(acmeSeries);
+    chart->addSeries(candleSeries);
     chart->setTitle(ticket_name);
     chart->setAnimationOptions(QChart::SeriesAnimations);
 
@@ -68,49 +55,107 @@ CandleStick_Box::CandleStick_Box(QWidget *parent) :
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
 
-//    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-//    Q_CHECK_PTR(axisY);
-//    axisY->setMin(axisY->min() * 0.99);
-//    axisY->setMax(axisY->max() * 1.01);
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+    Q_CHECK_PTR(axisY);
+    axisY->setMin(axisY->min() * 0.99);
+    axisY->setMax(axisY->max() * 1.01);
 
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+    ui->chartView->setChart(chart);
+    ui->chartView->setRenderHint(QPainter::Antialiasing);
 
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(chartView);
-    setLayout(vbox);
+    connect(ui->btn_axesX_min_inc,      &QPushButton::clicked,  this,   &CandleStick_Box::axesX_min_inc);
+    connect(ui->btn_axesX_max_inc,      &QPushButton::clicked,  this,   &CandleStick_Box::axesX_max_inc);
+    connect(ui->btn_axesX_min_dec,      &QPushButton::clicked,  this,   &CandleStick_Box::axesX_min_dec);
+    connect(ui->btn_axesX_max_dec,      &QPushButton::clicked,  this,   &CandleStick_Box::axesX_max_dec);
+
+    connect(ui->btn_move_left,          &QPushButton::clicked,  this,   &CandleStick_Box::move_left);
+    connect(ui->btn_move_right,         &QPushButton::clicked,  this,   &CandleStick_Box::move_right);
+
+    connect(ui->btn_get_axesY_value,    &QPushButton::clicked,  this,   &CandleStick_Box::get_axesY_value);
+    connect(ui->btn_set_axesY_value,    &QPushButton::clicked,  this,   &CandleStick_Box::set_axesY_value);
+    connect(ui->btn_test,               &QPushButton::clicked,  this,   &CandleStick_Box::test);
+
+    connect(ui->btn_clear_data,         &QPushButton::clicked,  this,   &CandleStick_Box::clear_data);
+
+    ui->dsb_axesY_min_value->setRange(-100000, 100000);
+    ui->dsb_axesY_max_value->setRange(-100000, 100000);
+
+    ui->sb_axesX_min_delta->setRange(1, 1000);
+    ui->sb_axesX_max_delta->setRange(1, 1000);
+
+    ui->dsb_axesY_min_value->setDecimals(8);
+    ui->dsb_axesY_max_value->setDecimals(8);
+
+    ui->dsb_axesY_min_value->setSingleStep(0.1);
+    ui->dsb_axesY_max_value->setSingleStep(0.1);
+
+    qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
+    qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::append(QCandlestickSet *set)
 {
-    qDebug() << set->timestamp();
+    candleSeries->append(set);
 
-    acmeSeries->append(set);
+    qDebug() << "cnt" << candleSeries->count();
 
-    qDebug() << "cnt" << acmeSeries->count();
-
-//    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy-MM-dd");
-    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("dd");
-
-    QDateTime timestamp;
-    timestamp.setTime_t(set->timestamp());
-    qDebug() << QString("Unixtime: %1").arg(timestamp.toString(Qt::SystemLocaleLongDate));
+    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
+    index_max++;
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::clear_data(void)
+{
+    Q_CHECK_PTR(candleSeries);
+    while(candleSeries->count() > 0)
+    {
+        candleSeries->remove(candleSeries->sets().at(0));
+    }
+    categories.clear();
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::update_data(void)
 {
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
+
+#if 1
+    qreal v_max = -100;
+    qreal v_min = 100;
+    for(int n=0; n<candleSeries->count(); n++)
+    {
+        qreal v_open  = candleSeries->sets().at(n)->open();
+        qreal v_close = candleSeries->sets().at(n)->close();
+        qreal v_high  = candleSeries->sets().at(n)->high();
+        qreal v_low   = candleSeries->sets().at(n)->low();
+
+        if(v_open > v_max)  v_max = v_open;
+        if(v_close > v_max) v_max = v_close;
+        if(v_high > v_max)  v_max = v_high;
+        if(v_low > v_max)   v_max = v_low;
+
+        if(v_open < v_min)  v_min = v_open;
+        if(v_close < v_min) v_min = v_close;
+        if(v_high < v_min)  v_min = v_high;
+        if(v_low < v_min)   v_min = v_low;
+    }
+
+    qDebug() << v_min << v_max;
+
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+    Q_CHECK_PTR(axisY);
+    axisY->setMin(v_min);
+    axisY->setMax(v_max);
+#endif
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::set_ticket_name(QString new_ticket_name)
 {
     ticket_name = new_ticket_name;
     setWindowTitle(ticket_name);
-    acmeSeries->setName(ticket_name);
+    candleSeries->setName(ticket_name);
     chart->setTitle(ticket_name);
 }
 //--------------------------------------------------------------------------------
@@ -122,5 +167,137 @@ QString CandleStick_Box::get_ticket_name(void)
 CandleStick_Box::~CandleStick_Box()
 {
     delete ui;
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::get_axesY_value(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+    Q_CHECK_PTR(axisY);
+
+    qreal min_value = axisY->min();
+    qreal max_value = axisY->max();
+    ui->dsb_axesY_min_value->setValue(min_value);
+    ui->dsb_axesY_max_value->setValue(max_value);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::set_axesY_value(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+    Q_CHECK_PTR(axisY);
+
+    axisY->setMin(ui->dsb_axesY_min_value->value());
+    axisY->setMax(ui->dsb_axesY_max_value->value());
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::axesX_min_inc(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+//    axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
+    Q_CHECK_PTR(axisX);
+
+    fail();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::axesX_max_inc(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    fail();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::axesX_min_dec(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    fail();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::axesX_max_dec(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    fail();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::move_left(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    fail();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::move_right(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    fail();
+}
+//--------------------------------------------------------------------------------
+bool CandleStick_Box::get_index(QString key, int *index)
+{
+    int temp = categories.indexOf(key);
+    if(temp == -1)
+    {
+        return false;
+    }
+
+    *index = temp;
+    return true;
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::test(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+#if 1
+    bool ok = false;
+
+    int index = 0;
+    ok = get_index(axisX->min(), &index);
+    if(ok)
+        emit info(QString("min %1").arg(index));
+    else
+        emit error("min not found");
+
+    ok = get_index(axisX->max(), &index);
+    if(ok)
+        emit info(QString("max %1").arg(index));
+    else
+        emit error("max not found");
+#endif
+
+#if 0
+    QBarCategoryAxis *axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
+    Q_CHECK_PTR(axisX);
+    foreach(QString cat, axisX->categories())
+    {
+        emit info(cat);
+    }
+#endif
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool CandleStick_Box::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

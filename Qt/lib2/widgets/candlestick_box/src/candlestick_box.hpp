@@ -29,13 +29,15 @@
 #include <QPointer>
 #include <QWidget>
 
+#include "mywidget.hpp"
+
 QT_CHARTS_USE_NAMESPACE
 //--------------------------------------------------------------------------------
 namespace Ui {
     class CandleStick_Box;
 }
 //--------------------------------------------------------------------------------
-class CandleStick_Box : public QWidget
+class CandleStick_Box : public MyWidget
 {
     Q_OBJECT
 
@@ -51,11 +53,38 @@ public:
 
 private:
     Ui::CandleStick_Box *ui;
-    QPointer<QCandlestickSeries> acmeSeries;
+    QPointer<QCandlestickSeries> candleSeries;
     QPointer<QChart> chart;
     QStringList categories;
     QPointer<QBarCategoryAxis> axisX;
     QString ticket_name = "unknown";
+
+    int index_min = 0;
+    int index_max = 0;
+
+    void init(void);
+
+    void get_axesY_value(void);
+    void set_axesY_value(void);
+
+    void axesX_min_inc(void);
+    void axesX_max_inc(void);
+
+    void axesX_min_dec(void);
+    void axesX_max_dec(void);
+
+    void move_left(void);
+    void move_right(void);
+
+    bool get_index(QString key, int *index);
+    void clear_data(void);
+
+    void test(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // CANDLESTICK_BOX_HPP

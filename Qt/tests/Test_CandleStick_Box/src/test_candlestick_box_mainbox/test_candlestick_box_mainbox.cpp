@@ -89,7 +89,7 @@ void MainBox::init(void)
     QScrollArea *scroll = new QScrollArea(this);
     QMdiArea *area = new QMdiArea(this);
 
-    //area->show();
+//    area->show();
 //    foreach (CandleStick_Box *box, plot_tickets)
 //    {
 //        area->addSubWindow(box);

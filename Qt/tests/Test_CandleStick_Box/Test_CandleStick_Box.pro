@@ -45,8 +45,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/widgets/candlestick_box/candlestick_box.pri)
 
-include ($$LIB_PATH2/icons/digits.pri)
-
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

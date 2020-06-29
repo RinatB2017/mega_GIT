@@ -35,6 +35,11 @@ CandleStick_Box::CandleStick_Box(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
+CandleStick_Box::~CandleStick_Box()
+{
+    delete ui;
+}
+//--------------------------------------------------------------------------------
 void CandleStick_Box::init(void)
 {
     setWindowTitle(ticket_name);
@@ -55,6 +60,8 @@ void CandleStick_Box::init(void)
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
 
+    ui->btn_clear_data->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
     Q_CHECK_PTR(axisY);
     axisY->setMin(axisY->min() * 0.99);
@@ -73,6 +80,8 @@ void CandleStick_Box::init(void)
 
     connect(ui->btn_move_left,          &QPushButton::clicked,  this,   &CandleStick_Box::move_left);
     connect(ui->btn_move_right,         &QPushButton::clicked,  this,   &CandleStick_Box::move_right);
+    connect(ui->btn_move_up,            &QPushButton::clicked,  this,   &CandleStick_Box::move_up);
+    connect(ui->btn_move_down,          &QPushButton::clicked,  this,   &CandleStick_Box::move_down);
 
     connect(ui->btn_get_axesY_value,    &QPushButton::clicked,  this,   &CandleStick_Box::get_axesY_value);
     connect(ui->btn_set_axesY_value,    &QPushButton::clicked,  this,   &CandleStick_Box::set_axesY_value);
@@ -86,8 +95,13 @@ void CandleStick_Box::init(void)
     ui->sb_axesX_min_delta->setRange(1, 1000);
     ui->sb_axesX_max_delta->setRange(1, 1000);
 
+    ui->sb_posx_delta->setRange(1, 1000);
+    ui->dsb_posy_delta->setRange(-1000, 1000);
+
     ui->dsb_axesY_min_value->setDecimals(8);
     ui->dsb_axesY_max_value->setDecimals(8);
+
+    ui->dsb_posy_delta->setDecimals(8);
 
     ui->dsb_axesY_min_value->setSingleStep(0.1);
     ui->dsb_axesY_max_value->setSingleStep(0.1);
@@ -164,11 +178,6 @@ QString CandleStick_Box::get_ticket_name(void)
     return ticket_name;
 }
 //--------------------------------------------------------------------------------
-CandleStick_Box::~CandleStick_Box()
-{
-    delete ui;
-}
-//--------------------------------------------------------------------------------
 void CandleStick_Box::get_axesY_value(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -197,45 +206,106 @@ void CandleStick_Box::axesX_min_inc(void)
 {
     emit trace(Q_FUNC_INFO);
 
-//    axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
-    Q_CHECK_PTR(axisX);
+    int delta = ui->sb_axesX_min_delta->value();
+    if(index_min < (categories.count() - delta - 1))
+    {
+        index_min+=delta;
 
-    fail();
+        axisX->setMin(categories.at(index_min));
+        axisX->setMax(categories.at(index_max-1));
+    }
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::axesX_max_inc(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    fail();
+    int delta = ui->sb_axesX_max_delta->value();
+    if(index_max < (categories.count() - delta - 1))
+    {
+        index_max+=delta;
+
+        axisX->setMin(categories.at(index_min));
+        axisX->setMax(categories.at(index_max-1));
+    }
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::axesX_min_dec(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    fail();
+    int delta = ui->sb_axesX_min_delta->value();
+    if(index_min > delta)
+    {
+        index_min-=delta;
+
+        axisX->setMin(categories.at(index_min));
+        axisX->setMax(categories.at(index_max-1));
+    }
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::axesX_max_dec(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    fail();
+    int delta = ui->sb_axesX_max_delta->value();
+    if(index_max > delta)
+    {
+        index_max-=delta;
+
+        axisX->setMin(categories.at(index_min));
+        axisX->setMax(categories.at(index_max-1));
+    }
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::move_left(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    fail();
+    if(index_min > 0)
+    {
+        index_min--;
+        index_max--;
+
+        axisX->setMin(categories.at(index_min));
+        axisX->setMax(categories.at(index_max-1));
+    }
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::move_right(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    fail();
+    if(index_max < (categories.count() - 1))
+    {
+        index_min++;
+        index_max++;
+
+        axisX->setMin(categories.at(index_min));
+        axisX->setMax(categories.at(index_max-1));
+    }
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::move_up(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+    Q_CHECK_PTR(axisY);
+
+    axisY->setMin(axisY->min()+ui->dsb_posy_delta->value());
+    axisY->setMax(axisY->max()+ui->dsb_posy_delta->value());
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::move_down(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+    Q_CHECK_PTR(axisY);
+
+    axisY->setMin(axisY->min()-ui->dsb_posy_delta->value());
+    axisY->setMax(axisY->max()-ui->dsb_posy_delta->value());
 }
 //--------------------------------------------------------------------------------
 bool CandleStick_Box::get_index(QString key, int *index)
@@ -255,6 +325,12 @@ void CandleStick_Box::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    emit info(QString("index_min %1").arg(index_min));
+    emit info(QString("index_max %1").arg(index_max));
+    emit info(QString("categories cnt %1").arg(categories.count()));
+#endif
+
+#if 0
     bool ok = false;
 
     int index = 0;

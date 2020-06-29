@@ -75,6 +75,8 @@ private:
 
     void move_left(void);
     void move_right(void);
+    void move_up(void);
+    void move_down(void);
 
     bool get_index(QString key, int *index);
     void clear_data(void);

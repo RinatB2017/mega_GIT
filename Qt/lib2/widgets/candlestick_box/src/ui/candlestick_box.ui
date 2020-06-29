@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>319</width>
-    <height>469</height>
+    <height>624</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -118,24 +118,6 @@
            </item>
           </layout>
          </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QPushButton" name="btn_move_left">
-             <property name="text">
-              <string>left</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btn_move_right">
-             <property name="text">
-              <string>right</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
         </layout>
        </widget>
       </item>
@@ -203,6 +185,82 @@
        </widget>
       </item>
       <item>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>move horizontal</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QToolButton" name="btn_move_left">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_move_right">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="sb_posx_delta"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="title">
+         <string>move vertical</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QToolButton" name="btn_move_up">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_move_down">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDoubleSpinBox" name="dsb_posy_delta"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_test">
         <property name="text">
          <string>test</string>
@@ -249,15 +307,20 @@
   <tabstop>btn_axesX_max_inc</tabstop>
   <tabstop>btn_axesX_max_dec</tabstop>
   <tabstop>sb_axesX_max_delta</tabstop>
-  <tabstop>btn_move_left</tabstop>
-  <tabstop>btn_move_right</tabstop>
   <tabstop>dsb_axesY_min_value</tabstop>
   <tabstop>dsb_axesY_max_value</tabstop>
   <tabstop>btn_get_axesY_value</tabstop>
   <tabstop>btn_set_axesY_value</tabstop>
+  <tabstop>btn_move_left</tabstop>
+  <tabstop>btn_move_right</tabstop>
+  <tabstop>sb_posx_delta</tabstop>
+  <tabstop>btn_move_up</tabstop>
+  <tabstop>btn_move_down</tabstop>
   <tabstop>btn_test</tabstop>
+  <tabstop>btn_clear_data</tabstop>
  </tabstops>
  <resources>
+  <include location="../../../../../lib/pictures/arrow.qrc"/>
   <include location="../../../../icons/digits/digits.qrc"/>
  </resources>
  <connections/>

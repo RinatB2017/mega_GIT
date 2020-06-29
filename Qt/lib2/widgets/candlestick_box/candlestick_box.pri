@@ -16,4 +16,6 @@ HEADERS += candlestick_box.hpp
 SOURCES += candlestick_box.cpp
 FORMS   += candlestick_box.ui
 
+include ($$LIB_PATH2/icons/digits.pri)
+
 RESOURCES   += $$PWD/test_data/candlestickdata.qrc

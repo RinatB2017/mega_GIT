@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef COPYRIGHTER_EDITOR_HPP
+#define COPYRIGHTER_EDITOR_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -30,28 +30,30 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class Copyrighter_editor;
 }
 //--------------------------------------------------------------------------------
-class MyTextEdit;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Copyrighter_editor : public MyWidget
 {
     Q_OBJECT
 
-public:
-    explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+signals:
+    void textChanged(void);
 
-private slots:
-    void test(void);
+public:
+    explicit Copyrighter_editor(QWidget *parent = nullptr);
+    ~Copyrighter_editor();
+
+    QString toPlainText(void);
+    void append(const QString &text);
 
 private:
-    Ui::MainBox *ui;
+    Ui::Copyrighter_editor *ui;
 
     void init(void);
+    void check(void);
 
-    void createTestBar(void);
+    void show_info(void);
 
     void updateText(void);
     bool programm_is_exit(void);
@@ -59,4 +61,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // COPYRIGHTER_EDITOR_HPP

@@ -49,9 +49,9 @@ LIB_PATH  = "$$PWD/../../../lib"
 LIB_PATH2 = "$$PWD/../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/smtp/smtp.pri)
+#include ($$LIB_PATH2/smtp/smtp.pri)
 
-include (src/mytextedit/mytextedit.pri)
+include (src/copyrighter_editor/copyrighter_editor.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

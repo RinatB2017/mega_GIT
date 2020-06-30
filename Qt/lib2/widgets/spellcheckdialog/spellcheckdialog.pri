@@ -2,8 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/src
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += mytextedit.hpp
-SOURCES += mytextedit.cpp
+HEADERS += spellcheckdialog.hpp
+SOURCES += spellcheckdialog.cpp
+FORMS   += spellcheckdialog.ui

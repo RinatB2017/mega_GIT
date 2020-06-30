@@ -48,12 +48,6 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    srcTextEdit = new MyTextEdit(this);
-    dstTextEdit = new MyTextEdit(this);
-
-    srcTextEdit->setObjectName("srcTextEdit");
-    dstTextEdit->setObjectName("dstTextEdit");
-
 #if 0
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(srcTextEdit);
@@ -62,9 +56,9 @@ void MainBox::init(void)
 #else
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    mw->add_dock_widget("Source",       "srcTextEdit", Qt::LeftDockWidgetArea,  srcTextEdit);
-    mw->add_dock_widget("Destination",  "dstTextEdit", Qt::RightDockWidgetArea, dstTextEdit);
-//    setVisible(false);
+    mw->add_dock_widget("Source",       "srcTextEdit", Qt::LeftDockWidgetArea,  ui->src_editor);
+    mw->add_dock_widget("Destination",  "dstTextEdit", Qt::RightDockWidgetArea, ui->dst_editor);
+    setVisible(false);
 #endif
 
     //srcTextEdit->setReadOnly(true);
@@ -86,10 +80,6 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
-
-    connect(srcTextEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
-    connect(dstTextEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
-    textChanged();
 
     load_widgets();
 }
@@ -117,7 +107,7 @@ void MainBox::createTestBar(void)
 void MainBox::test(void)
 {
     QString temp;
-    temp = srcTextEdit->toPlainText().simplified();
+    temp = ui->src_editor->toPlainText().simplified();
     if(temp.isEmpty())
     {
         emit error(tr("Нет данных"));
@@ -128,24 +118,10 @@ void MainBox::test(void)
     {
         if(text.isEmpty() == false)
         {
-            dstTextEdit->append(QString("%1.").arg(text.replace(",", ", бля, ").simplified()));
+            ui->dst_editor->append(QString("%1.").arg(text.replace(",", ", бля, ").simplified()));
             //dstTextEdit->append(QString("%1.").arg(text.simplified()));
         }
     }
-}
-//--------------------------------------------------------------------------------
-void MainBox::textChanged(void)
-{
-    QString clean_src = srcTextEdit->toPlainText().remove(" ");
-    QString clean_dst = dstTextEdit->toPlainText().remove(" ");
-
-    MainWindow *parent = (MainWindow *)parentWidget();
-    parent->set_status1_text(QString(tr("text %1 clean text %2"))
-                             .arg(srcTextEdit->toPlainText().size())
-                             .arg(clean_src.length()));
-    parent->set_status2_text(QString(tr("text %1 clean text %2"))
-                             .arg(dstTextEdit->toPlainText().size())
-                             .arg(clean_dst.length()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

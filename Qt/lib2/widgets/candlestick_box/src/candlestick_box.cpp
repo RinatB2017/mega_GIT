@@ -67,7 +67,7 @@ void CandleStick_Box::init(void)
     axisY->setMin(axisY->min() * 0.99);
     axisY->setMax(axisY->max() * 1.01);
 
-    chart->legend()->setVisible(false);
+    chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
     ui->chartView->setChart(chart);
@@ -118,6 +118,7 @@ void CandleStick_Box::append(QCandlestickSet *set)
 
     qDebug() << "cnt" << candleSeries->count();
 
+//    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
     categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
     index_max++;
 }

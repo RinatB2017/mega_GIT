@@ -335,7 +335,12 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
-    qInfo() << "YES";
+    uint64_t temp1 = ui->dateTimeEdit->dateTime().toTime_t();
+    uint64_t temp2 = temp1 * 1000;
+
+    emit info(QString("timestamp %1").arg(temp1));
+    emit info(QString("timestamp %1").arg(temp2));
+    emit info(QString("timestamp %1").arg(temp1 * 1000));
 #endif
 
 #if 0

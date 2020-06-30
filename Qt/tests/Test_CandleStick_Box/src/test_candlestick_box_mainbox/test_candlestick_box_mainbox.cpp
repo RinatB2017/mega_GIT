@@ -293,6 +293,8 @@ void MainBox::save(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
+    ui->CandleStick_widget->set_ticket_name("TEST");
+
 #if 0
     QRandomGenerator generator;
     int delta = 0;

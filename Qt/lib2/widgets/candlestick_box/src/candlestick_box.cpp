@@ -67,7 +67,7 @@ void CandleStick_Box::init(void)
     axisY->setMin(axisY->min() * 0.99);
     axisY->setMax(axisY->max() * 1.01);
 
-    chart->legend()->setVisible(true);
+    chart->legend()->setVisible(false);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
     ui->chartView->setChart(chart);
@@ -105,6 +105,8 @@ void CandleStick_Box::init(void)
 
     ui->dsb_axesY_min_value->setSingleStep(0.1);
     ui->dsb_axesY_max_value->setSingleStep(0.1);
+
+    ui->chartView->installEventFilter(this);
 
     qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
     qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
@@ -355,6 +357,88 @@ void CandleStick_Box::test(void)
         emit info(cat);
     }
 #endif
+}
+//--------------------------------------------------------------------------------
+//void CandleStick_Box::mousePressEvent(QMouseEvent * event)
+//{
+//    emit info(QString("mousePressEvent %1 %2")
+//              .arg(event->pos().x())
+//              .arg(event->pos().y()));
+//    emit info(QString("left button %1").arg(event->button() == Qt::LeftButton));
+//}
+//--------------------------------------------------------------------------------
+//void CandleStick_Box::mouseReleaseEvent(QMouseEvent * event)
+//{
+//    emit info(QString("mouseReleaseEvent %1 %2")
+//              .arg(event->pos().x())
+//              .arg(event->pos().y()));
+//    emit info(QString("left button %1").arg(event->button() == Qt::LeftButton));
+//}
+//--------------------------------------------------------------------------------
+//void CandleStick_Box::mouseMoveEvent(QMouseEvent * event)
+//{
+//    qreal x = event->pos().x();
+//    qreal y = event->pos().y();
+
+//    emit info(QString("mouseMoveEvent %1 %2")
+//              .arg(x)
+//              .arg(y));
+//}
+//--------------------------------------------------------------------------------
+//void CandleStick_Box::wheelEvent(QWheelEvent * event)
+//{
+//    qreal x = event->position().x();
+//    qreal y = event->position().y();
+//    int delta = event->angleDelta().ry();
+
+//    emit info( tr("wheelEvent( x:%1, y:%2, delta:%3 )")
+//                   .arg(x)
+//                   .arg(y)
+//                   .arg(delta));
+//}
+//--------------------------------------------------------------------------------
+bool CandleStick_Box::eventFilter(QObject*, QEvent* event)
+{
+    QMouseEvent *mouseEvent = (QMouseEvent *) event;
+    if(mouseEvent == nullptr)
+    {
+        return false;
+    }
+    QWheelEvent *wheelEvent = (QWheelEvent *) event;
+    if(wheelEvent == nullptr)
+    {
+        return false;
+    }
+    //---
+    if(mouseEvent->type() == QMouseEvent::MouseButtonPress)
+    {
+        emit info(QString("press %1 %2 %3")
+                  .arg(mouseEvent->pos().x())
+                  .arg(mouseEvent->pos().y())
+                  .arg(mouseEvent->button() == Qt::LeftButton));
+        return true;
+    }
+    if(mouseEvent->type() == QMouseEvent::MouseButtonRelease)
+    {
+        emit info(QString("release %1 %2")
+                  .arg(mouseEvent->pos().x())
+                  .arg(mouseEvent->pos().y()));
+        return true;
+    }
+    if(mouseEvent->type() == QMouseEvent::MouseMove)
+    {
+        emit info(QString("move %1 %2")
+                  .arg(mouseEvent->pos().x())
+                  .arg(mouseEvent->pos().y()));
+        return true;
+    }
+    //---
+    if(mouseEvent->type() == QMouseEvent::Wheel)
+    {
+        emit info(QString("wheel delta: %1").arg(wheelEvent->angleDelta().ry()));
+        return true;
+    }
+    return false;
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::updateText(void)

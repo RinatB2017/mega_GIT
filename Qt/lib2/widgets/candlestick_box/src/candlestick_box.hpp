@@ -87,6 +87,14 @@ private:
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+//    void mousePressEvent(QMouseEvent * event);
+//    void mouseReleaseEvent(QMouseEvent * event);
+//    void mouseMoveEvent(QMouseEvent * event);
+//    void wheelEvent(QWheelEvent * event);
+
+    bool eventFilter(QObject*, QEvent* event);
 };
 //--------------------------------------------------------------------------------
 #endif // CANDLESTICK_BOX_HPP

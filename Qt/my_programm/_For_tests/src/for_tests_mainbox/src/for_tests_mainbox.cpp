@@ -335,6 +335,16 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    QTextCursor tmpCursor = ui->te_test->textCursor();
+    tmpCursor.movePosition(QTextCursor::Up, QTextCursor::MoveAnchor, 4);
+    tmpCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor, 4);
+    ui->te_test->setTextCursor(tmpCursor);
+
+//    ui->te_test->textCursor().movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 5);
+    ui->te_test->insertPlainText("XXX");
+#endif
+
+#if 0
     uint64_t temp1 = ui->dateTimeEdit->dateTime().toTime_t();
     uint64_t temp2 = temp1 * 1000;
 

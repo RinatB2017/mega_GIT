@@ -108,6 +108,9 @@ void CandleStick_Box::init(void)
 
     ui->chartView->installEventFilter(this);
 
+    ui->chartView->setToolTip("chart");
+    //setMouseTracking(true);
+
     qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
     qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
 }
@@ -118,7 +121,7 @@ void CandleStick_Box::append(QCandlestickSet *set)
 
     qDebug() << "cnt" << candleSeries->count();
 
-//    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
+    //    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
     categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
     index_max++;
 }
@@ -409,6 +412,13 @@ bool CandleStick_Box::eventFilter(QObject*, QEvent* event)
     if(wheelEvent == nullptr)
     {
         return false;
+    }
+    //---
+    if(event->type() == QEvent::ToolTip)
+    {
+        ui->chartView->setToolTip(QString("tooltip %1 %2")
+                                  .arg(mouseEvent->pos().x())
+                                  .arg(mouseEvent->pos().y()));
     }
     //---
     if(mouseEvent->type() == QMouseEvent::MouseButtonPress)

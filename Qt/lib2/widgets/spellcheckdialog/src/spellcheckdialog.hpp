@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+//https://wiki.qt.io/Spell-Checking-with-Hunspell
+
 class SpellChecker;
 
 namespace Ui {

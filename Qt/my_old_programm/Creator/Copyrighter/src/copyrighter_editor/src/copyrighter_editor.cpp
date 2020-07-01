@@ -52,7 +52,17 @@ void Copyrighter_editor::init(void)
 {
     connect(ui->btn_check,      &QPushButton::clicked,      this,   &Copyrighter_editor::check);
     connect(ui->editor_widget,  &MyTextEdit::textChanged,   this,   &Copyrighter_editor::show_info);
+    connect(ui->editor_widget,  &MyTextEdit::textChanged,   this,   &Copyrighter_editor::check_it);
+    check();
     show_info();
+}
+//--------------------------------------------------------------------------------
+void Copyrighter_editor::check_it(void)
+{
+    if(ui->cb_auto->isChecked())
+    {
+        check();
+    }
 }
 //--------------------------------------------------------------------------------
 void Copyrighter_editor::check(void)
@@ -60,7 +70,6 @@ void Copyrighter_editor::check(void)
     QString dictPath = "/usr/share/hunspell/ru_RU";
     QString userDict = "/usr/share/hunspell/ru_RU.aff";
     SpellChecker *spellChecker = new SpellChecker(dictPath, userDict);
-    SpellCheckDialog *checkDialog = new SpellCheckDialog(spellChecker, this);
 
     QTextCharFormat highlightFormat;
 #if 0
@@ -80,6 +89,10 @@ void Copyrighter_editor::check(void)
 
     // Don't call cursor.beginEditBlock(), as this prevents the rewdraw after changes to the content
     // cursor.beginEditBlock();
+
+    //TODO перенёс сюда
+    QList<QTextEdit::ExtraSelection> esList;
+
     while(!cursor.atEnd())
     {
         QCoreApplication::processEvents();
@@ -108,6 +121,66 @@ void Copyrighter_editor::check(void)
             es.cursor = cursor;
             es.format = highlightFormat;
 
+            //TODO перенёс отсюда
+            //QList<QTextEdit::ExtraSelection> esList;
+
+            esList << es;
+            ui->editor_widget->setExtraSelections(esList);
+            QCoreApplication::processEvents();
+        }
+        cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
+    }
+    //cursor.endEditBlock();
+    ui->editor_widget->setTextCursor(oldCursor);
+}
+//--------------------------------------------------------------------------------
+void Copyrighter_editor::check_orig(void)
+{
+    QString dictPath = "/path/to/your/dictionary/de_DE_neu/de_DE_neu";
+    QString userDict= "/tmp/userDict.txt";
+    SpellChecker *spellChecker = new SpellChecker(dictPath, userDict);
+    SpellCheckDialog *checkDialog = new SpellCheckDialog(spellChecker, this);
+
+    QTextCharFormat highlightFormat;
+    highlightFormat.setBackground(QBrush(QColor("#ff6060")));
+    highlightFormat.setForeground(QBrush(QColor("#000000")));
+    // alternative format
+    //highlightFormat.setUnderlineColor(QColor("red"));
+    //highlightFormat.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
+
+    // save the position of the current cursor
+    QTextCursor oldCursor = ui->editor_widget->textCursor();
+
+    // create a new cursor to walk through the text
+    QTextCursor cursor(ui->editor_widget->document());
+
+    // Don't call cursor.beginEditBlock(), as this prevents the rewdraw after changes to the content
+    // cursor.beginEditBlock();
+    while(!cursor.atEnd()) {
+        QCoreApplication::processEvents();
+        cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+        QString word = cursor.selectedText();
+
+        // Workaround for better recognition of words
+        // punctuation etc. does not belong to words
+        while(!word.isEmpty() && !word.at(0).isLetter() && cursor.anchor() < cursor.position()) {
+            int cursorPos = cursor.position();
+            cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
+            cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
+            word = cursor.selectedText();
+        }
+
+        if(!word.isEmpty() && !spellChecker->spell(word)) {
+            QTextCursor tmpCursor(cursor);
+            tmpCursor.setPosition(cursor.anchor());
+            ui->editor_widget->setTextCursor(tmpCursor);
+            ui->editor_widget->ensureCursorVisible();
+
+            // highlight the unknown word
+            QTextEdit::ExtraSelection es;
+            es.cursor = cursor;
+            es.format = highlightFormat;
+
             QList<QTextEdit::ExtraSelection> esList;
             esList << es;
             ui->editor_widget->setExtraSelections(esList);
@@ -124,8 +197,7 @@ void Copyrighter_editor::check(void)
             if(spellResult == SpellCheckDialog::AbortCheck)
                 break;
 
-            switch(spellResult)
-            {
+            switch(spellResult) {
             case SpellCheckDialog::ReplaceOnce:
                 cursor.insertText(checkDialog->replacement());
                 break;
@@ -160,8 +232,8 @@ void Copyrighter_editor::show_info(void)
             .remove("\t");
 
     ui->lbl_info->setText(QString(tr("text %1 clean text %2"))
-                             .arg(ui->editor_widget->toPlainText().size())
-                             .arg(clean_src.length()));
+                          .arg(ui->editor_widget->toPlainText().size())
+                          .arg(clean_src.length()));
 
 }
 //--------------------------------------------------------------------------------

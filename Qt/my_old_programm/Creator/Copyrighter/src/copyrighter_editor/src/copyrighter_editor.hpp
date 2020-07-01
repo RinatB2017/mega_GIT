@@ -51,7 +51,9 @@ private:
     Ui::Copyrighter_editor *ui;
 
     void init(void);
+    void check_it(void);
     void check(void);
+    void check_orig(void);
 
     void show_info(void);
 

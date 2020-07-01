@@ -3,6 +3,8 @@
 
 #include "spellchecker.hpp"
 
+//https://wiki.qt.io/Spell-Checking-with-Hunspell
+
 SpellCheckDialog::SpellCheckDialog(SpellChecker *spellChecker, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SpellCheckDialog)
@@ -12,12 +14,12 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *spellChecker, QWidget *parent) 
 
     connect(ui->listWidget, SIGNAL(currentTextChanged(QString)), ui->ledtReplaceWith, SLOT(setText(QString)));
 
-    connect(ui->btnAddToDict, SIGNAL(clicked()), this, SLOT(addToDict()));
-    connect(ui->btnReplaceOnce, SIGNAL(clicked()), this, SLOT(replaceOnce()));
-    connect(ui->btnReplaceAll, SIGNAL(clicked()), this, SLOT(replaceAll()));
-    connect(ui->btnIgnoreOnce, SIGNAL(clicked()), this, SLOT(ignoreOnce()));
-    connect(ui->btnIgnoreAll, SIGNAL(clicked()), this, SLOT(ignoreAll()));
-    connect(ui->btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(ui->btnAddToDict,   SIGNAL(clicked()),  this,   SLOT(addToDict()));
+    connect(ui->btnReplaceOnce, SIGNAL(clicked()),  this,   SLOT(replaceOnce()));
+    connect(ui->btnReplaceAll,  SIGNAL(clicked()),  this,   SLOT(replaceAll()));
+    connect(ui->btnIgnoreOnce,  SIGNAL(clicked()),  this,   SLOT(ignoreOnce()));
+    connect(ui->btnIgnoreAll,   SIGNAL(clicked()),  this,   SLOT(ignoreAll()));
+    connect(ui->btnCancel,      SIGNAL(clicked()),  this,   SLOT(reject()));
 }
 
 

@@ -1,6 +1,8 @@
 #ifndef SPELLCHECKER_H
 #define SPELLCHECKER_H
 
+//https://wiki.qt.io/Spell-Checking-with-Hunspell
+
 #include <QString>
 
 class Hunspell;

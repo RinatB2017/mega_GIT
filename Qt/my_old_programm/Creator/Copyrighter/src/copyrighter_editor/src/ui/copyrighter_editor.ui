@@ -50,6 +50,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="cb_auto">
+        <property name="text">
+         <string>auto</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_check">
         <property name="text">
          <string>check</string>

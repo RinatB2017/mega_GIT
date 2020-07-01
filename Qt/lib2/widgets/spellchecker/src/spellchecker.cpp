@@ -7,6 +7,8 @@
 #include "spellchecker.hpp"
 #include "hunspell/hunspell.hxx"
 
+//https://wiki.qt.io/Spell-Checking-with-Hunspell
+
 SpellChecker::SpellChecker(const QString &dictionaryPath, const QString &userDictionary)
 {
     _userDictionary = userDictionary;

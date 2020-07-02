@@ -28,6 +28,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_for_tests_mainbox.h"
+#include "test_json.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -88,7 +89,7 @@ public:
 #endif
         setLayout(vbox);
 
-        //        installEventFilter(this);
+        //installEventFilter(this);
     }
 
     void setPixmap(const QPixmap &pix)
@@ -231,6 +232,7 @@ private:
     int cnt = 0;
 
     QScopedPointer<SimpleWidget> sw;
+    QPointer<Test_JSON> tjs;
 
     void readJson(const QString &filename);
 

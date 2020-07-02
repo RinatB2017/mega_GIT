@@ -53,6 +53,10 @@ MainBox::~MainBox()
     {
         sw->deleteLater();
     }
+    if(tjs)
+    {
+        tjs->deleteLater();
+    }
 
     if(timer)
     {
@@ -80,10 +84,19 @@ void MainBox::init(void)
     ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
     connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
-#if 1
+#if 0
     sw.reset(new SimpleWidget);
     sw->setProperty("windowTitle", "XXX");
     sw->show();
+#endif
+
+#if 1
+    tjs = new Test_JSON();
+    connect_log_signals(tjs, this);
+    tjs->show();
+
+    QSize rec = QGuiApplication::screens().at(0)->size();
+    tjs->move(0, rec.height()-tjs->height());
 #endif
 
     //---

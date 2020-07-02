@@ -1,0 +1,11 @@
+https://github.com/dridk/QJsonmodel
+
+QTreeView  *view   = new QTreeView;
+QJsonModel *model = new QJsonModel;
+
+view->setModel(model);
+
+QByteArray ba;
+ba.append(json);
+model->loadJson(ba);
+view->show();

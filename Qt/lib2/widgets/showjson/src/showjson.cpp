@@ -48,6 +48,8 @@ void ShowJSON::init(void)
 //--------------------------------------------------------------------------------
 void ShowJSON::loadJson(QByteArray data)
 {
+    emit trace(Q_FUNC_INFO);
+
     model->loadJson(data);
     ui->view->setModel(model);
 }

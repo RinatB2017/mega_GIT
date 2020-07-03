@@ -262,13 +262,13 @@ bool MyBrowser::containsCookie(const QNetworkCookie &cookie)
 //--------------------------------------------------------------------------------
 void MyBrowser::handleCookieAdded(const QNetworkCookie &cookie)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
 
     // only new cookies
     if (containsCookie(cookie))
         return;
 
-    emit debug(QString("append new cookie = [%1]").arg(cookie.name().data()));
+    //emit debug(QString("append new cookie = [%1]").arg(cookie.name().data()));
     m_cookies.append(cookie);
 }
 //--------------------------------------------------------------------------------

@@ -18,57 +18,43 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "showjson.hpp"
-#include "ui_showjson.h"
+#ifndef MOUSEPOSITION_HPP
+#define MOUSEPOSITION_HPP
 //--------------------------------------------------------------------------------
-ShowJSON::ShowJSON(QWidget *parent) :
-    MyWidget(parent),
-    ui(new Ui::ShowJSON)
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class MousePosition;
+}
+//--------------------------------------------------------------------------------
+class MousePosition : public MyWidget
 {
-    ui->setupUi(this);
+    Q_OBJECT
 
-    init();
-}
-//--------------------------------------------------------------------------------
-ShowJSON::~ShowJSON()
-{
-    if(model)
-    {
-        model->deleteLater();
-    }
+public:
+    explicit MousePosition(QWidget *parent = nullptr);
+    ~MousePosition();
 
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void ShowJSON::init(void)
-{
-    model = new QJsonModel;
-    ui->view->setModel(model);
-}
-//--------------------------------------------------------------------------------
-void ShowJSON::loadJson(QByteArray data)
-{
-    model->loadJson(data);
-    ui->view->setModel(model);
-}
-//--------------------------------------------------------------------------------
-void ShowJSON::updateText(void)
-{
-    ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
-bool ShowJSON::programm_is_exit(void)
-{
-    return true;
-}
-//--------------------------------------------------------------------------------
-void ShowJSON::load_setting(void)
-{
+private:
+    Ui::MousePosition *ui;
 
-}
-//--------------------------------------------------------------------------------
-void ShowJSON::save_setting(void)
-{
+    void init(void);
 
-}
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+
+protected:
+    void mousePressEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+};
 //--------------------------------------------------------------------------------
+#endif // MOUSEPOSITION_HPP

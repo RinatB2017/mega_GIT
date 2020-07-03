@@ -52,11 +52,7 @@ public:
     QString value() const;
     QJsonValue::Type type() const;
 
-
     static QJsonTreeItem* load(const QJsonValue& value, QJsonTreeItem * parent = 0);
-
-protected:
-
 
 private:
     QString mKey;
@@ -64,12 +60,9 @@ private:
     QJsonValue::Type mType;
     QList<QJsonTreeItem*> mChilds;
     QJsonTreeItem * mParent;
-
-
 };
 
 //---------------------------------------------------
-
 class QJsonModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -94,11 +87,8 @@ public:
 
 private:
     QJsonValue genJson(QJsonTreeItem *) const;
-
     QJsonTreeItem * mRootItem;
     QStringList mHeaders;
-
-
 };
 
 #endif // QJSONMODEL_H

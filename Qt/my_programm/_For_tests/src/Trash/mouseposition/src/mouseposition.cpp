@@ -18,56 +18,62 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "showjson.hpp"
-#include "ui_showjson.h"
+#include "mouseposition.hpp"
+#include "ui_mouseposition.h"
 //--------------------------------------------------------------------------------
-ShowJSON::ShowJSON(QWidget *parent) :
+MousePosition::MousePosition(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::ShowJSON)
+    ui(new Ui::MousePosition)
 {
     ui->setupUi(this);
 
     init();
 }
 //--------------------------------------------------------------------------------
-ShowJSON::~ShowJSON()
+MousePosition::~MousePosition()
 {
-    if(model)
-    {
-        model->deleteLater();
-    }
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void ShowJSON::init(void)
+void MousePosition::init(void)
 {
-    model = new QJsonModel;
-    ui->view->setModel(model);
+
 }
 //--------------------------------------------------------------------------------
-void ShowJSON::loadJson(QByteArray data)
+void MousePosition::mousePressEvent(QMouseEvent* event)
 {
-    model->loadJson(data);
-    ui->view->setModel(model);
+    emit info("press");
+    QWidget::mousePressEvent(event);
 }
 //--------------------------------------------------------------------------------
-void ShowJSON::updateText(void)
+void MousePosition::mouseMoveEvent(QMouseEvent* event)
+{
+    emit info("move");
+    QWidget::mouseMoveEvent(event);
+}
+//--------------------------------------------------------------------------------
+void MousePosition::mouseReleaseEvent(QMouseEvent* event)
+{
+    emit info("release");
+    QWidget::mouseReleaseEvent(event);
+}
+//--------------------------------------------------------------------------------
+void MousePosition::updateText(void)
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool ShowJSON::programm_is_exit(void)
+bool MousePosition::programm_is_exit(void)
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void ShowJSON::load_setting(void)
+void MousePosition::load_setting(void)
 {
 
 }
 //--------------------------------------------------------------------------------
-void ShowJSON::save_setting(void)
+void MousePosition::save_setting(void)
 {
 
 }

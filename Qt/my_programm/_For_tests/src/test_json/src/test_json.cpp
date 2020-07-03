@@ -40,8 +40,6 @@ void Test_JSON::init(void)
     connect(ui->btn_test,   &QPushButton::clicked,  this,   &Test_JSON::test);
 }
 //--------------------------------------------------------------------------------
-#include "showjson.hpp"
-
 void Test_JSON::test(void)
 {
     QString val = ui->te_result->toPlainText().remove("\r").remove("\n");
@@ -54,10 +52,11 @@ void Test_JSON::test(void)
     //---
     QByteArray ba;
     ba.append(val);
+    ui->ShowJSON_widget->loadJson(ba);
 
-    ShowJSON *w = new ShowJSON();
-    w->loadJson(ba);
-    w->show();
+//    ShowJSON *sj = new ShowJSON();
+//    sj->loadJson(ba);
+//    sj->show();
     //---
 
     QJsonParseError jerror;

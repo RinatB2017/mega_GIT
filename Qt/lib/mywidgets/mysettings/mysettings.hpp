@@ -50,6 +50,9 @@ public:
     int load_int(QString name);
     void save_int(QString name, int value);
 
+    uint load_uint(QString name);
+    void save_uint(QString name, uint value);
+
     QString load_string(QString name);
     void save_string(QString name, QString value);
 

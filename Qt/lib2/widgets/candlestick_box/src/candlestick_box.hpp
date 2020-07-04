@@ -21,10 +21,10 @@
 #ifndef CANDLESTICK_BOX_HPP
 #define CANDLESTICK_BOX_HPP
 //--------------------------------------------------------------------------------
-#include <QtCharts/QBarCategoryAxis>
-#include <QtCharts/QCandlestickSeries>
-#include <QtCharts/QChartView>
-#include <QtCharts/QValueAxis>
+#include <QBarCategoryAxis>
+#include <QCandlestickSeries>
+#include <QChartView>
+#include <QValueAxis>
 #include <QDateTime>
 #include <QPointer>
 #include <QWidget>
@@ -51,12 +51,16 @@ public:
     void set_ticket_name(QString new_ticket_name);
     QString get_ticket_name(void);
 
+    void test2(void);
+
 private:
     Ui::CandleStick_Box *ui;
     QPointer<QCandlestickSeries> candleSeries;
-    QPointer<QChart> chart;
     QStringList categories;
     QPointer<QBarCategoryAxis> axisX;
+
+    QPointer<QChart> chart;
+
     QString ticket_name = "unknown";
 
     int index_min = 0;
@@ -83,6 +87,8 @@ private:
 
     void test(void);
 
+    void show_volumes(QMouseEvent *event);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
@@ -92,6 +98,7 @@ private:
 
 protected:
     void wheelEvent(QWheelEvent *event);
+
 };
 //--------------------------------------------------------------------------------
 #endif // CANDLESTICK_BOX_HPP

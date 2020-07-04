@@ -48,6 +48,8 @@ include ($$LIB_PATH2/widgets/candlestick_box/candlestick_box.pri)
 # https://forum.qt.io/topic/69626/visualize-value-on-qt-chart-view/3
 # mapToValue
 
+#include (src/myqchart/myqchart.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

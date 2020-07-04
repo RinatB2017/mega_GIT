@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QChartView" name="chartView" native="true"/>
+    <widget class="MyQChartView" name="chartView" native="true"/>
    </item>
    <item>
     <widget class="QFrame" name="frame">
@@ -294,9 +294,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QChartView</class>
+   <class>MyQChartView</class>
    <extends>QWidget</extends>
-   <header>qchartview.h</header>
+   <header>myqchartview.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -144,11 +144,17 @@ void MainBox::createTestBar(void)
                                         QIcon(),
                                         "test2",
                                         "test2");
+    QToolButton *btn_test3 = add_button(testbar,
+                                        new QToolButton(this),
+                                        QIcon(),
+                                        "test3",
+                                        "test3");
 
     connect(btn_load,   &QToolButton::clicked,  this,   &MainBox::load);
     connect(btn_save,   &QToolButton::clicked,  this,   &MainBox::save);
     connect(btn_test,   &QToolButton::clicked,  this,   &MainBox::test);
     connect(btn_test2,  &QToolButton::clicked,  this,   &MainBox::test2);
+    connect(btn_test3,  &QToolButton::clicked,  this,   &MainBox::test3);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::create_set(QStringList sl,
@@ -291,6 +297,16 @@ void MainBox::save(void)
     emit info("save");
 }
 //--------------------------------------------------------------------------------
+void MainBox::print_set(QCandlestickSet *set)
+{
+    emit info(QString("%1\t%2\t%3\t%4\t%5")
+              .arg(set->open())
+              .arg(set->high())
+              .arg(set->low())
+              .arg(set->close())
+              .arg((quint64)set->timestamp()));
+}
+//--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     ui->CandleStick_widget->set_ticket_name("TEST");
@@ -319,6 +335,7 @@ void MainBox::test(void)
     set1->setClose(0.0202730700000000);
     //volume":"3944.0084858500000000
     set1->setTimestamp(1572393600000);
+    print_set(set1);
     ui->CandleStick_widget->append(set1);
 
     QCandlestickSet *set2 = new QCandlestickSet();
@@ -328,6 +345,7 @@ void MainBox::test(void)
     set2->setClose(0.0200359800000000);
     //volume":"4332.6834116200000000
     set2->setTimestamp(1572422400000);
+    print_set(set2);
     ui->CandleStick_widget->append(set2);
 
     QCandlestickSet *set3 = new QCandlestickSet();
@@ -337,6 +355,7 @@ void MainBox::test(void)
     set3->setClose(0.0199950000000000);
     //volume":"1326.6261286100000000;
     set3->setTimestamp(1572451200000);
+    print_set(set3);
     ui->CandleStick_widget->append(set3);
 
     QCandlestickSet *set4 = new QCandlestickSet();
@@ -346,6 +365,7 @@ void MainBox::test(void)
     set4->setClose(0.0200250000000000);
     //volume":"1633.7763925100000000
     set4->setTimestamp(1572480000000);
+    print_set(set4);
     ui->CandleStick_widget->append(set4);
 
     QCandlestickSet *set5 = new QCandlestickSet();
@@ -355,6 +375,7 @@ void MainBox::test(void)
     set5->setClose(0.0197245300000000);
     //volume":"3544.8681055200000000
     set5->setTimestamp(1572508800000);
+    print_set(set5);
     ui->CandleStick_widget->append(set5);
 
     QCandlestickSet *set6 = new QCandlestickSet();
@@ -364,6 +385,7 @@ void MainBox::test(void)
     set6->setClose(0.0199250000000000);
     //volume":"4773.6334983000000000
     set6->setTimestamp(1572537600000);
+    print_set(set6);
     ui->CandleStick_widget->append(set6);
 
     QCandlestickSet *set7 = new QCandlestickSet();
@@ -373,6 +395,7 @@ void MainBox::test(void)
     set7->setClose(0.0198200000000000);
     //volume":"2491.0707443400000000
     set7->setTimestamp(1572566400000);
+    print_set(set7);
     ui->CandleStick_widget->append(set7);
 
     QCandlestickSet *set8 = new QCandlestickSet();
@@ -382,6 +405,7 @@ void MainBox::test(void)
     set8->setClose(0.0197458000000000);
     //volume":"3124.0585905100000000
     set8->setTimestamp(1572595200000);
+    print_set(set8);
     ui->CandleStick_widget->append(set8);
 
     QCandlestickSet *set9 = new QCandlestickSet();
@@ -391,6 +415,7 @@ void MainBox::test(void)
     set9->setClose(0.0198050000000000);
     //volume":"1382.2579215800000000
     set9->setTimestamp(1572624000000);
+    print_set(set9);
     ui->CandleStick_widget->append(set9);
 
     QCandlestickSet *set10 = new QCandlestickSet();
@@ -400,6 +425,7 @@ void MainBox::test(void)
     set10->setClose(0.0198100000000000);
     //volume":"487.7146311400000000
     set10->setTimestamp(1572652800000);
+    print_set(set10);
     ui->CandleStick_widget->append(set10);
 #endif
     ui->CandleStick_widget->update_data();
@@ -429,6 +455,11 @@ void MainBox::test2(void)
     emit debug(temp);
 
     process->start("wget", args);
+}
+//--------------------------------------------------------------------------------
+void MainBox::test3(void)
+{
+    ui->CandleStick_widget->test2();
 }
 //--------------------------------------------------------------------------------
 void MainBox::started(void)

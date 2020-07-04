@@ -17,5 +17,6 @@ SOURCES += candlestick_box.cpp
 FORMS   += candlestick_box.ui
 
 include ($$LIB_PATH2/icons/digits.pri)
+include ($$LIB_PATH2/widgets/candlestick_box/myqchartview/myqchartview.pri)
 
 RESOURCES   += $$PWD/test_data/candlestickdata.qrc

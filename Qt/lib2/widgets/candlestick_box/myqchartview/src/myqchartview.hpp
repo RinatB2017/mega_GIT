@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,77 +18,29 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef MYQCHARTVIEW_HPP
+#define MYQCHARTVIEW_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include <QtCharts/QCandlestickSet>
-QT_CHARTS_USE_NAMESPACE
+#include <QChartView>
+#include <QDebug>
 
-#include "qcandlestickset.h"
-#include "mywidget.hpp"
+QT_CHARTS_USE_NAMESPACE
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class CandleStick_Box;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MyQChartView : public QChartView
 {
     Q_OBJECT
 
+signals:
+    void local_pos(QMouseEvent *);
+
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-private slots:
-    void load(void);
-    void save(void);
-    void test(void);
-    void test2(void);
-    void test3(void);
-
-    void started(void);
-    void read_data(void);
-    void read_error(void);
-    void finished(int state);
-    void process_error(QProcess::ProcessError err);
+    MyQChartView(QWidget *parent = nullptr);
+    ~MyQChartView();
 
 private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-    QWidget *parent;
-    int index = 0;
 
-    QPointer<QProcess> process;
-
-#ifdef GRAPHER
-    GrapherBox *grapher;
-#endif
-
-    void init(void);
-
-    void createTestBar(void);
-
-    bool create_set(QStringList sl, QCandlestickSet *set);
-
-    QVector<QPointF> circle(qreal x, qreal y, qreal r);
-    QVector<QLine> circle_line(float x, float y, float r);
-
-    void print_set(QCandlestickSet *set);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+protected:
+    void mouseMoveEvent(QMouseEvent *event);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // MYQCHARTVIEW_HPP

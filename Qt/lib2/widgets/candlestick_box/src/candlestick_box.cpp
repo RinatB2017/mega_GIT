@@ -51,6 +51,7 @@ void CandleStick_Box::init(void)
     //---
 
     chart = new QChart();
+
     chart->addSeries(candleSeries);
     chart->setTitle(ticket_name);
     chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -89,6 +90,8 @@ void CandleStick_Box::init(void)
 
     connect(ui->btn_clear_data,         &QPushButton::clicked,  this,   &CandleStick_Box::clear_data);
 
+    connect(ui->chartView,              &MyQChartView::local_pos,   this,   &CandleStick_Box::show_volumes);
+
     ui->dsb_axesY_min_value->setRange(-100000, 100000);
     ui->dsb_axesY_max_value->setRange(-100000, 100000);
 
@@ -120,7 +123,7 @@ void CandleStick_Box::append(QCandlestickSet *set)
 
     qDebug() << "cnt" << candleSeries->count();
 
-    //    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
+    //categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
     categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
     index_max++;
 }
@@ -325,6 +328,44 @@ bool CandleStick_Box::get_index(QString key, int *index)
     return true;
 }
 //--------------------------------------------------------------------------------
+void CandleStick_Box::show_volumes(QMouseEvent *event)
+{
+    //FIXME надо сделать
+#if 0
+    QString pos = QString("pos: %1 %2")
+            .arg(event->localPos().x())
+            .arg(event->localPos().y());
+    ui->chartView->setToolTip(pos);
+#else
+    Q_UNUSED(event)
+#endif
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::test2(void)
+{
+    emit info(QString("min %1").arg(axisX->min()));
+    emit info(QString("max %1").arg(axisX->max()));
+    emit info(QString("cnt %1").arg(axisX->count()));
+
+    QList<QCandlestickSet *> l_sets = candleSeries->sets();
+    if(l_sets.isEmpty())
+    {
+        return;
+    }
+
+    QCandlestickSet *set = l_sets.at(1);
+//    emit info(QString("%1").arg(->open()));
+    emit info(QString("%1\t%2\t%3\t%4\t%5")
+              .arg(set->open())
+              .arg(set->high())
+              .arg(set->low())
+              .arg(set->close())
+              .arg((quint64)set->timestamp()));
+
+    emit info(QString("min index %1").arg(categories.indexOf(axisX->min())));
+    emit info(QString("max index %1").arg(categories.indexOf(axisX->max())));
+}
+//--------------------------------------------------------------------------------
 void CandleStick_Box::test(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -375,7 +416,7 @@ void CandleStick_Box::wheelEvent(QWheelEvent *event)
     rect.moveCenter(c);
     ui->chartView->chart()->zoomIn(rect);
 
-//    QChartView::wheelEvent(event);
+    //    QChartView::wheelEvent(event);
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::updateText(void)

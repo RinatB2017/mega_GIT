@@ -75,9 +75,8 @@ private:
 #endif
 
     void init(void);
-
+    void init_process(void);
     void createTestBar(void);
-
     bool create_set(QStringList sl, QCandlestickSet *set);
 
     QVector<QPointF> circle(qreal x, qreal y, qreal r);

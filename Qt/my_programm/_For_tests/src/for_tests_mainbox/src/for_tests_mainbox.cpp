@@ -90,7 +90,7 @@ void MainBox::init(void)
     sw->show();
 #endif
 
-#if 1
+#if 0
     tjs = new Test_JSON();
     connect_log_signals(tjs, this);
     tjs->show();
@@ -348,6 +348,10 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    emit info("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest");
+#endif
+
+#if 0
     QTextCursor tmpCursor = ui->te_test->textCursor();
     tmpCursor.movePosition(QTextCursor::Up, QTextCursor::MoveAnchor, 4);
     tmpCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor, 4);

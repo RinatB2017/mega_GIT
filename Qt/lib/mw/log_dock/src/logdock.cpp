@@ -51,6 +51,7 @@ LogDock::LogDock(const QString &title,
 
 #if 1
     QWidget *w = new QWidget(this);
+
     Dock_position *dp = new Dock_position(objectName(), this);
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setMargin(0);

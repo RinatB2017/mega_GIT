@@ -1257,6 +1257,7 @@ bool MainWindow::add_dock_widget(QString title,
     }
 
     QDockWidget *dw = new QDockWidget(this);
+
     dw->setObjectName(objectname);
     //    dw->setWindowTitle(title);
     dw->setWindowTitle(tr(title.toLatin1()));
@@ -1266,6 +1267,7 @@ bool MainWindow::add_dock_widget(QString title,
     {
         // Dock_position - это стрелки сбоку
         Dock_position *dp = new Dock_position(objectname, this);
+
         QWidget *nw = new QWidget(this);
         QHBoxLayout *hbox = new QHBoxLayout();
         hbox->setMargin(0);

@@ -73,8 +73,23 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
+    init_process();
+    load_widgets();
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("CandleStickBox", "candlestickbox", Qt::LeftDockWidgetArea, ui->CandleStick_widget);
+        setVisible(false);
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_process(void)
+{
     process = new QProcess(this);
     process->setProcessChannelMode(QProcess::SeparateChannels);
     process->setReadChannel(QProcess::StandardOutput);
@@ -84,34 +99,6 @@ void MainBox::init(void)
     connect(process, SIGNAL(readyReadStandardError()),  this, SLOT(read_error()));
     connect(process, SIGNAL(finished(int)),             this, SLOT(finished(int)));
     connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    QScrollArea *scroll = new QScrollArea(this);
-    QMdiArea *area = new QMdiArea(this);
-
-//    area->show();
-//    foreach (CandleStick_Box *box, plot_tickets)
-//    {
-//        area->addSubWindow(box);
-//    }
-    //area->setViewMode(QMdiArea::SubWindowView);
-    area->setViewMode(QMdiArea::TabbedView);
-    emit debug(QString("area: %1 %2").arg(area->width()).arg(area->height()));
-
-    scroll->setWidgetResizable(true);
-    scroll->setWidget(area);
-    vbox->addWidget(scroll);
-
-    QFrame *frame = new QFrame();
-    frame->setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
-    frame->setLayout(vbox);
-
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->setMargin(0);
-    hbox->addWidget(frame);
-    setLayout(hbox);
-
-    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

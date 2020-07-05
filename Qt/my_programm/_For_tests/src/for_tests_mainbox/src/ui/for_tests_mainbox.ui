@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>322</width>
-    <height>400</height>
+    <width>323</width>
+    <height>416</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -131,6 +131,9 @@
       <string>*</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
    <item>
     <widget class="QTextEdit" name="te_test"/>

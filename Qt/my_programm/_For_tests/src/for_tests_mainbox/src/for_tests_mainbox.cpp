@@ -90,7 +90,7 @@ void MainBox::init(void)
     sw->show();
 #endif
 
-#if 0
+#if 1
     tjs = new Test_JSON();
     connect_log_signals(tjs, this);
     tjs->show();

@@ -736,7 +736,7 @@ void MyWidget::save_widgets(void)
     QList<QWidget *> widgets = findChildren<QWidget *>();
 #endif
 
-    Q_ASSERT(widgets.count() != 0);
+    //Q_ASSERT(widgets.count() != 0);
 
     foreach(QWidget *widget, widgets)
     {

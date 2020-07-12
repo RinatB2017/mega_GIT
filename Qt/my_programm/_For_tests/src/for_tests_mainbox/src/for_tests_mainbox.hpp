@@ -35,150 +35,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-class IMyClass {
-    virtual void open(void) = 0;
-    virtual void close(void) = 0;
-};
-
-class IMyClass2 {
-    virtual void open2(void) = 0;
-    virtual void close2(void) = 0;
-};
-
-class MyClass : public IMyClass, IMyClass2
-{
-public:
-    void open(void)  { open2();  };
-    void close(void) { close2(); };
-
-private:
-    void open2(void)  { qDebug() << "open2";  };
-    void close2(void) { qDebug() << "close2"; };
-};
-
-class MyClass2 : MyClass
-{
-public:
-    void open(void)  { MyClass::open(); };
-};
-
-class MyLabel : public QWidget
-{
-    Q_OBJECT
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
-public:
-    MyLabel()
-    {
-        picture_label = new QLabel(this);
-        QVBoxLayout *vbox = new QVBoxLayout();
-
-#if 0
-        scr = new QScrollArea(this);
-        scr->setWidgetResizable(true);
-        scr->setWidget(picture_label);
-
-        vbox->addWidget(scr);
-#else
-        vbox->addWidget(picture_label);
-#endif
-        setLayout(vbox);
-
-        //installEventFilter(this);
-    }
-
-    void setPixmap(const QPixmap &pix)
-    {
-        orig_pixmap = pix;
-        picture_label->setPixmap(orig_pixmap);
-    }
-
-private:
-    QPixmap orig_pixmap;
-    QPointer<QLabel> picture_label;
-    QPointer<QScrollArea> scr;
-    bool flag = false;
-
-protected:
-    void resizeEvent (QResizeEvent * event)
-    {
-        QWidget::resizeEvent(event);
-
-        if(scr)
-        {
-            qDebug() << "size" << scr->size();
-            qDebug() << "rect" << scr->rect();
-        }
-    }
-
-    //    bool eventFilter(QObject* obj, QEvent* event)
-    //    {
-    //        if(event->type() == QEvent::Wheel)
-    //        {
-    //            emit info("Wheel event blocked");
-    //            return false;
-    //        }
-    //        return QWidget::eventFilter(obj, event);;
-    //    }
-
-    void mousePressEvent(QMouseEvent* event)
-    {
-        flag = true;
-        //emit info("press");
-        QWidget::mousePressEvent(event);
-    }
-
-    void mouseMoveEvent(QMouseEvent* event)
-    {
-        //emit info("move");
-        QWidget::mouseMoveEvent(event);
-    }
-
-    void mouseReleaseEvent(QMouseEvent* event)
-    {
-        flag = false;
-        //emit info("release");
-        QWidget::mouseReleaseEvent(event);
-    }
-
-    void keyPressEvent(QKeyEvent *event)
-    {
-        if(event->key() ==  Qt::Key_Control)
-            flag = true;
-        //        emit info(QString("key press %1").arg(event->key()));
-        QWidget::keyPressEvent(event);
-    }
-
-    void keyReleaseEvent(QKeyEvent *event)
-    {
-        if(event->key() ==  Qt::Key_Control)
-            flag = false;
-        //        emit info("key release");
-        QWidget::keyReleaseEvent(event);
-    }
-
-
-    void wheelEvent(QWheelEvent *event)
-    {
-        //        QPoint numPixels = event->pixelDelta();
-        QPoint numDegrees = event->angleDelta() / 8;
-        if(flag)
-        {
-            orig_pixmap = orig_pixmap.scaled(orig_pixmap.width()  + numDegrees.ry(),
-                                             orig_pixmap.height() + numDegrees.ry(),
-                                             Qt::KeepAspectRatio);
-            picture_label->setPixmap(orig_pixmap);
-
-            emit info(QString("numDegrees %1").arg(numDegrees.ry()));
-        }
-    }
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
@@ -206,8 +62,6 @@ public slots:
     void show_timer_count(void);
 
     void print_mp(QWidget *widget);
-    bool load_property(QWidget *widget, const QString &property_name);
-    bool save_property(QWidget *widget, const QString &property_name, QVariant value);
     void delete_string(void);
 
     void s_inFunc(void);
@@ -234,7 +88,10 @@ private:
     QScopedPointer<SimpleWidget> sw;
     QPointer<Test_JSON> tjs;
 
-    void readJson(const QString &filename);
+    //---
+    QDockWidget *main_dock;
+    QList<QDockWidget *> l_docks;
+    //---
 
     void init(void);
     void createTestBar(void);

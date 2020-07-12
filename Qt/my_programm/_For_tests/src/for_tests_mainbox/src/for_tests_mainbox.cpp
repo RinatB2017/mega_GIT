@@ -105,6 +105,50 @@ void MainBox::init(void)
     });
     //---
 
+    //---
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        QDockWidget *main_dw = new QDockWidget(this);
+        main_dw->setWindowTitle("Main");
+        main_dw->setProperty(DOCKWIDGET_PROPERTY_ENG_TEXT, "Main");
+
+        QTextEdit *te = new QTextEdit();
+        te->setText("test");
+        main_dw->setWidget(te);
+
+        main_dw->setAllowedAreas(Qt::AllDockWidgetAreas);
+        mw->addDockWidget(Qt::RightDockWidgetArea, main_dw);
+        mw->add_windowsmenu_action(main_dw, main_dw->toggleViewAction());
+
+        l_docks.append(main_dw);
+
+        for(int n=0; n<3; n++)
+        {
+            QDockWidget *dw = new QDockWidget(this);
+            dw->setWindowTitle(QString("test %1").arg(n));
+            dw->setProperty(DOCKWIDGET_PROPERTY_ENG_TEXT, QString("test %1").arg(n));
+
+            QTextEdit *te = new QTextEdit();
+            te->setText(QString("test %1").arg(n));
+            dw->setWidget(te);
+
+            dw->setWidget(te);
+            dw->setAllowedAreas(Qt::AllDockWidgetAreas);
+            mw->addDockWidget(Qt::RightDockWidgetArea, dw);
+
+            mw->add_windowsmenu_action(dw, dw->toggleViewAction());
+            l_docks.append(dw);
+        }
+        QTimer::singleShot(0, [this]{
+            MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+            mw->tabifyDockWidget(l_docks.at(0), l_docks.at(1));
+            mw->tabifyDockWidget(l_docks.at(0), l_docks.at(2));
+            mw->tabifyDockWidget(l_docks.at(0), l_docks.at(3));
+        });
+    }
+    //---
+
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 
@@ -270,24 +314,6 @@ void MainBox::print_mp(QWidget *widget)
     emit error("---");
 }
 //--------------------------------------------------------------------------------
-bool MainBox::load_property(QWidget *widget, const QString &property_name)
-{
-    Q_CHECK_PTR(widget);
-    QVariant v = widget->property(property_name.toLocal8Bit());
-    if(v.isValid() == false)
-    {
-        return false;
-    }
-    emit info(v.toString());
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::save_property(QWidget *widget, const QString &property_name, QVariant value)
-{
-    Q_CHECK_PTR(widget);
-    return widget->setProperty(property_name.toLocal8Bit(), value);
-}
-//--------------------------------------------------------------------------------
 bool MainBox::timer_start(void)
 {
     Q_CHECK_PTR(timer);
@@ -307,48 +333,20 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
-void MainBox::readJson(const QString &filename)
-{
-    QString val;
-    QFile file;
-    file.setFileName(filename);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    val = file.readAll();
-    file.close();
-
-    QJsonParseError jerror;
-    QJsonDocument d = QJsonDocument::fromJson(val.toUtf8(), &jerror);
-    if(jerror.error != QJsonParseError::NoError)
-    {
-        emit error(jerror.errorString());
-        return;
-    }
-
-    emit info(QString("%1").arg(d[0].toObject().isEmpty() ? "empty" : "NO empty"));
-    emit info(QString("%1").arg(d[1].toObject().isEmpty() ? "empty" : "NO empty"));
-    emit info(QString("%1").arg(d[2].toObject().isEmpty() ? "empty" : "NO empty"));
-
-    QJsonObject obj;
-    int index = 0;
-    do {
-        obj = d[index++].toObject();
-        if(obj.isEmpty() == false)
-        {
-            emit info(QString("%1 %2")
-                      .arg(obj.value("symbol").toString())
-                      .arg(obj.value("askPrice").toString()));
-        }
-    } while(obj.isEmpty() == false);
-    emit error(QString("index %1").arg(index));
-}
-//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
 #if 1
-    emit info("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest");
+    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+    QList<QDockWidget *> l_obj = mw->findChildren<QDockWidget *>();
+    emit info(QString("find %1 docks").arg(l_obj.count()));
+    foreach (QDockWidget *dock, l_obj)
+    {
+        emit info(QString("   %1").arg(dock->windowTitle()));
+    }
 #endif
 
 #if 0

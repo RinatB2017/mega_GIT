@@ -343,7 +343,7 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
 #ifndef SAVE_INI
     QSettings *settings = new QSettings(org_name, app_name);
 #else
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
     Q_CHECK_PTR(settings);
 

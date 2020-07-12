@@ -739,6 +739,8 @@ void MainWindow::createLog(void)
     ld = new LogDock(tr("log"), this);
     Q_CHECK_PTR(ld);
 
+    ld->setObjectName("log_widget");
+
     connect(this,   SIGNAL(clear_log()),    ld, SLOT(clearLog()));
 
 #ifndef NO_LOG_INFO

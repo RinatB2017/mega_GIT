@@ -4,7 +4,7 @@
 #include <QGLWidget>
 
 #ifdef Q_OS_LINUX
-#   include </usr/include/opencv2/core/core.hpp>
+#   include <opencv2/core/core.hpp>
 #else
 #   include <opencv2/core/core.hpp>
 #endif

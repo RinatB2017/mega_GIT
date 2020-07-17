@@ -74,6 +74,10 @@ void Dock_position::move_up(void)
             mw->addDockWidget(Qt::TopDockWidgetArea, dw);
         }
     }
+    else
+    {
+        qDebug() << "mw is null!";
+    }
 }
 //--------------------------------------------------------------------------------
 void Dock_position::move_down(void)
@@ -86,6 +90,14 @@ void Dock_position::move_down(void)
         {
             mw->addDockWidget(Qt::BottomDockWidgetArea, dw);
         }
+        else
+        {
+            qDebug() << dock_name << "not found!";
+        }
+    }
+    else
+    {
+        qDebug() << "mw is null!";
     }
 }
 //--------------------------------------------------------------------------------
@@ -99,6 +111,14 @@ void Dock_position::move_left(void)
         {
             mw->addDockWidget(Qt::LeftDockWidgetArea, dw);
         }
+        else
+        {
+            qDebug() << dock_name << "not found!";
+        }
+    }
+    else
+    {
+        qDebug() << "mw is null!";
     }
 }
 //--------------------------------------------------------------------------------
@@ -112,6 +132,14 @@ void Dock_position::move_right(void)
         {
             mw->addDockWidget(Qt::RightDockWidgetArea, dw);
         }
+        else
+        {
+            qDebug() << dock_name << "not found!";
+        }
+    }
+    else
+    {
+        qDebug() << "mw is null!";
     }
 }
 //--------------------------------------------------------------------------------

@@ -54,7 +54,7 @@ CONFIG(debug, debug|release) {
 }
 
 unix {
-    PKGCONFIG   += opencv
+    PKGCONFIG   += opencv4
     CONFIG      += link_pkgconfig
 }
 

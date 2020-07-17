@@ -49,7 +49,7 @@ win32 {
 #}
 
 unix {
-    PKGCONFIG   += opencv
+    PKGCONFIG   += opencv4
     CONFIG      += link_pkgconfig
 }
 

@@ -37,11 +37,12 @@ OTHER_FILES += doc/notebook.txt
 unix {
     CONFIG  += c++11
 
-    PKGCONFIG   += opencv
+    PKGCONFIG   += opencv4
     CONFIG      += link_pkgconfig
 
     LIBS    += -lX11 -lXtst
     LIBS    += -lOpenCL
+    #LIBS    += -lopencv_core
 }
 win32 {
     INCLUDEPATH += C:/opencv/build/include/

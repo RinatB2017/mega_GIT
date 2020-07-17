@@ -2,14 +2,17 @@
 #define CARDS_HPP
 
 #ifdef Q_OS_LINUX
-#   include </usr/include/opencv2/opencv.hpp>
-#   include </usr/include/opencv2/highgui/highgui.hpp>
+#   include <opencv2/opencv.hpp>
+#   include <opencv2/highgui/highgui.hpp>
 #else
 #   include <opencv2/opencv.hpp>
 #   include <opencv2/highgui/highgui_c.h>
 #   include <opencv2/highgui/highgui.hpp>
 #   include <opencv2/videoio/videoio_c.h>
 #endif
+
+#include <opencv2/videoio/legacy/constants_c.h>
+#include <opencv2/highgui/highgui_c.h>
 
 #include <iostream>
 

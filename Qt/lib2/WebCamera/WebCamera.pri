@@ -10,6 +10,8 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += opengl
 
+DEFINES += CV_NO_BACKWARD_COMPATIBILITY
+
 HEADERS += webcamera.hpp
 SOURCES += webcamera.cpp
 FORMS   += webcamera.ui
@@ -18,7 +20,7 @@ HEADERS += cqtopencvviewergl.h
 SOURCES += cqtopencvviewergl.cpp
 
 unix {
-    PKGCONFIG   += opencv
+    PKGCONFIG   += opencv4
     CONFIG      += link_pkgconfig
 }
 

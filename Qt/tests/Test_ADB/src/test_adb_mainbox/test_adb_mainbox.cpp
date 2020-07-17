@@ -782,8 +782,8 @@ void MainBox::refreshHSV()
             cv::findContours(thresholdedMat,
                              countours,
                              hierarchy,
-                             CV_RETR_TREE,
-                             CV_CHAIN_APPROX_SIMPLE,
+                             RETR_TREE,
+                             CHAIN_APPROX_SIMPLE,
                              cv::Point( 0, 0 )
                              );
 

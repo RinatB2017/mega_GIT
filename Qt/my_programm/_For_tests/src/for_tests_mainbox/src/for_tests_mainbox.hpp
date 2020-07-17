@@ -28,7 +28,6 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_for_tests_mainbox.h"
-#include "resizewidget.hpp"
 #include "test_json.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -93,8 +92,6 @@ private:
     QDockWidget *main_dock;
     QList<QDockWidget *> l_docks;
     //---
-
-    QPointer<ResizeWidget> rw;
 
     void init(void);
     void createTestBar(void);

@@ -57,10 +57,6 @@ MainBox::~MainBox()
     {
         tjs->deleteLater();
     }
-    if(rw)
-    {
-        rw->deleteLater();
-    }
 
     if(timer)
     {
@@ -103,14 +99,6 @@ void MainBox::init(void)
     tjs->move(0, rec.height()-tjs->height());
 #endif
 
-#if 1
-    rw = new ResizeWidget();
-    connect_log_signals(rw, this);
-    rw->show();
-
-    rw->move(0, rec.height()-rw->height());
-#endif
-
     //---
     connect(ui->btn_click,  &QPushButton::clicked,  [this]() {
         emit info("click");
@@ -118,6 +106,7 @@ void MainBox::init(void)
     //---
 
     //---
+#if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -159,6 +148,7 @@ void MainBox::init(void)
             mw->tabifyDockWidget(l_docks.at(0), l_docks.at(3));
         });
     }
+#endif
     //---
 
     timer = new QTimer(this);

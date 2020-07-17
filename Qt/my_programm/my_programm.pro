@@ -30,7 +30,7 @@ SUBDIRS += \
 
 unix {
 SUBDIRS += \
-    MyBot \
+    MyBot \    #надо нормально собрать в новой версии opencv
     QRCodeGenerator \
     Teacher \
     Teacher_light \

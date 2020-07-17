@@ -39,7 +39,7 @@ LogDock::LogDock(const QString &title,
     QDockWidget(parent)
 {
     setWindowTitle(title);
-    setObjectName(title);
+    //setObjectName(title); //TODO не надо здесь присваивать objectname
 
     le = new LogBox("LogBox", this);
     Q_CHECK_PTR(le);

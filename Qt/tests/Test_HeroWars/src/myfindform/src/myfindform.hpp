@@ -27,20 +27,48 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include </usr/include/opencv2/core/core.hpp>
-#   include </usr/include/opencv2/objdetect/objdetect.hpp>
-#   include </usr/include/opencv2/imgproc/imgproc.hpp>
-#   include </usr/include/opencv2/highgui/highgui.hpp>
-#   include </usr/include/opencv2/opencv.hpp>
-#else
+//#ifdef Q_OS_LINUX
+//#   include <opencv2/core/core.hpp>
+//#   include <opencv2/core/types_c.h>
+//#   include <opencv2/objdetect/objdetect.hpp>
+//#   include <opencv2/imgproc/imgproc.hpp>
+////#   include <opencv2/imgcodecs/imgcodecs_c.h>
+//#   include <opencv2/highgui.hpp> // highgui/highgui.hpp>
+//#   include <opencv2/opencv.hpp>
+
+//#   include <opencv2/core/core_c.h>
+//#   include <opencv2/imgcodecs/legacy/constants_c.h>
+//#   include <opencv2/imgproc/imgproc.hpp>
+//#else
+//#   include <opencv2/core/core.hpp>
+//#   include <opencv2/objdetect/objdetect.hpp>
+//#   include <opencv2/imgproc/imgproc.hpp>
+//#   include <opencv2/highgui/highgui.hpp>
+//#   include <opencv2/highgui/highgui_c.h>
+//#   include <opencv2/opencv.hpp>
+//#   include <opencv2/highgui.hpp>
+//#   include <opencv2/imgcodecs/legacy/constants_c.h>
+//#   include <opencv2/videoio/videoio_c.h>
+//#endif
+
+#ifdef Q_OS_LINUX2
 #   include <opencv2/core/core.hpp>
 #   include <opencv2/objdetect/objdetect.hpp>
 #   include <opencv2/imgproc/imgproc.hpp>
 #   include <opencv2/highgui/highgui.hpp>
-#   include <opencv2/highgui/highgui_c.h>
+#   include <opencv2/opencv.hpp>
+#else
+#   include <opencv2/core/core.hpp>
+
+#   include <opencv2/core/core_c.h>
+//#   include <opencv2/imgcodecs/imgcodecs_c.h>
+
+#   include <opencv2/objdetect/objdetect.hpp>
+#   include <opencv2/imgproc/imgproc.hpp>
 #   include <opencv2/opencv.hpp>
 #   include <opencv2/highgui.hpp>
+#   include <opencv2/highgui/highgui.hpp>
+#   include <opencv2/highgui/highgui_c.h>
 #   include <opencv2/imgcodecs/legacy/constants_c.h>
 #   include <opencv2/videoio/videoio_c.h>
 #endif

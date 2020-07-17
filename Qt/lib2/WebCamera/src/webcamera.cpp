@@ -444,12 +444,12 @@ void WebCamera::timerEvent(QTimerEvent *event)
 void WebCamera::show_image_cv(void)
 {
     emit trace(Q_FUNC_INFO);
-    CvMat *cv = cvLoadImageM("test_photo.jpg");
+    Mat cv = imread("test_photo.jpg");
 
     // создаём окошко
     cvNamedWindow("Hello World", 0);
     // показываем картинку в созданном окне
-    cvShowImage("Hello World", cv);
+    cvShowImage("Hello World", &cv);
 
     // ждём нажатия клавиши
     cvWaitKey(0);
@@ -461,18 +461,20 @@ void WebCamera::show_image_cv(void)
 void WebCamera::show_image_hw(void)
 {
     emit trace(Q_FUNC_INFO);
-    IplImage *hw = cvLoadImage("test_photo.jpg");
+    Mat cv = imread("test_photo.jpg");
+    //IplImage *hw = cvLoadImage("test_photo.jpg");
+    IplImage hw = cvIplImage(cv);
 
     // создаём окошко
     cvNamedWindow("Hello World", 0);
     // показываем картинку в созданном окне
-    cvShowImage("Hello World", hw);
+    cvShowImage("Hello World", &hw);
 
     // ждём нажатия клавиши
     cvWaitKey(0);
 
     // освобождаем ресурсы
-    cvReleaseImage(&hw);
+    //cvReleaseImage(&hw);
     cvDestroyWindow("Hello World");
 }
 //--------------------------------------------------------------------------------
@@ -580,15 +582,17 @@ void WebCamera::test(void)
 void WebCamera::test2(void)
 {
     emit trace(Q_FUNC_INFO);
-    IplImage *src, *templ, *result;
+    IplImage src, templ, *result;
     double min, max;
     CvPoint minpos, maxpos;
 
-    src     = cvLoadImage("lena.png", 1);
-    templ   = cvLoadImage("lena_eye.png", 1);
-    result  = cvCreateImage(cvSize(src->width - templ->width + 1, src->height - templ->height + 1), 32, 1);
+//    src     = cvLoadImage("lena.png", 1);
+    src     = cvIplImage(imread("lena.png"));
+//    templ   = cvLoadImage("lena_eye.png", 1);
+    templ   = cvIplImage(imread("lena_eye.png"));
+    result  = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
 
-    cvMatchTemplate( src, templ, result, CV_TM_CCOEFF_NORMED);
+    cvMatchTemplate( &src, &templ, result, CV_TM_CCOEFF_NORMED);
     cvNormalize( result, result, 1, 0, CV_MINMAX );
 
     cvMinMaxLoc(result, &min, &max, &minpos, &maxpos);
@@ -718,16 +722,18 @@ void WebCamera::test4(void)
                   .arg(rect.height()));
 
         //IplImage *result = cvLoadImage("lena.png", CV_LOAD_IMAGE_GRAYSCALE);
-        IplImage *result = cvLoadImage("lena.png", CV_LOAD_IMAGE_COLOR);
-        cvRectangle(result,
+        Mat cv_result = imread("lena.png", CV_LOAD_IMAGE_COLOR);
+        //IplImage *result = cvLoadImage("lena.png", CV_LOAD_IMAGE_COLOR);
+        IplImage result = cvIplImage(cv_result);
+        cvRectangle(&result,
                     cvPoint(rect.x(), rect.y()),
                     cvPoint(rect.x()+rect.width(), rect.y()+rect.height()),
                     CV_RGB(0,0,0), 1);
 
         cvNamedWindow("Image", CV_WINDOW_AUTOSIZE);
-        cvShowImage("Image", result);
+        cvShowImage("Image", &result);
         cvWaitKey(0);
-        cvReleaseImage(&result);
+        //cvReleaseImage(&result);
         cvDestroyWindow("Image");
     }
     emit info("OK");
@@ -738,15 +744,19 @@ void WebCamera::test4(void)
 void WebCamera::test5(void)
 {
     emit trace(Q_FUNC_INFO);
-    IplImage* image = nullptr;
-    IplImage* templ = nullptr;
+    IplImage image; // = nullptr;
+    IplImage templ; // = nullptr;
 
     // получаем картинку
-    image = cvLoadImage("lena.png", CV_LOAD_IMAGE_COLOR);
+    Mat cv_image = imread("lena.png", CV_LOAD_IMAGE_COLOR);
+    //image = cvLoadImage("lena.png", CV_LOAD_IMAGE_COLOR);
+    image = cvIplImage(cv_image);
     //image = cvLoadImage("KPatience.png", CV_LOAD_IMAGE_COLOR);
 
     // шаблон
-    templ = cvLoadImage("rect.png", CV_LOAD_IMAGE_COLOR);
+    Mat cv_templ = imread("rect.png", CV_LOAD_IMAGE_COLOR);
+    templ = cvIplImage(cv_templ);
+    //templ = cvLoadImage("rect.png", CV_LOAD_IMAGE_COLOR);
     //templ = cvLoadImage("lena_eye.png", CV_LOAD_IMAGE_COLOR);
     //templ = cvLoadImage("lena_eye_bad.png", CV_LOAD_IMAGE_COLOR);
     //templ = cvLoadImage("_3_5.png", CV_LOAD_IMAGE_COLOR);
@@ -754,10 +764,10 @@ void WebCamera::test5(void)
 
     // изображение для хранения результата сравнения
     // размер результата: если image WxH и templ wxh, то result = (W-w+1)x(H-h+1)
-    IplImage *res = cvCreateImage( cvSize( (image->width-templ->width+1), (image->height-templ->height+1)), IPL_DEPTH_32F, 1 );
+    IplImage *res = cvCreateImage( cvSize( (image.width-templ.width+1), (image.height-templ.height+1)), IPL_DEPTH_32F, 1 );
 
     // сравнение изображения с шаблоном
-    cvMatchTemplate(image, templ, res, CV_TM_SQDIFF);
+    cvMatchTemplate(&image, &templ, res, CV_TM_SQDIFF);
 
     // определение лучшее положение для сравнения
     // (поиск минимумов и максимумов на изображении)
@@ -766,23 +776,23 @@ void WebCamera::test5(void)
     cvMinMaxLoc(res, &minval, &maxval, &minloc, &maxloc, nullptr);
 
     // выделим область прямоугольником
-    cvRectangle(image,
+    cvRectangle(&image,
                 cvPoint(minloc.x, minloc.y),
-                cvPoint(minloc.x+templ->width-1, minloc.y+templ->height-1),
+                cvPoint(minloc.x+templ.width-1, minloc.y+templ.height-1),
                 CV_RGB(255, 0, 0), 2, 8);
 
     // показываем изображение
-    cvShowImage("Match", image);
+    cvShowImage("Match", &image);
 
     // показываем шаблон
-    cvShowImage("Template", templ);
+    cvShowImage("Template", &templ);
 
     // ждём нажатия клавиши
     cvWaitKey(0);
 
     // освобождаем ресурсы
-    cvReleaseImage( &image );
-    cvReleaseImage( &templ );
+    //cvReleaseImage( &image );
+    //cvReleaseImage( &templ );
     cvReleaseImage( &res );
     cvDestroyAllWindows();
 }
@@ -804,39 +814,45 @@ bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName,
     char* imgName   = srcImgName.toLocal8Bit().data();
     char* templName = templImgName.toLocal8Bit().data();
 
-    IplImage *src    = nullptr;
-    IplImage *templ  = nullptr;
+    IplImage src; //    = nullptr;
+    IplImage templ; //  = nullptr;
     IplImage *result = nullptr;
 
-    src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+    Mat cv_img = imread(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+    //src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+    src = cvIplImage(cv_img);
     //src = cvLoadImage(imgName, CV_LOAD_IMAGE_COLOR);
-    if(!src)
-    {
-        emit error(QString("Error load %1").arg(srcImgName));
-        return false;
-    }
+//    if(!src)
+//    {
+//        emit error(QString("Error load %1").arg(srcImgName));
+//        return false;
+//    }
 
-    templ = cvLoadImage(templName, CV_LOAD_IMAGE_GRAYSCALE);
+    Mat cv_templ = imread(templName, CV_LOAD_IMAGE_GRAYSCALE);
+    //templ = cvLoadImage(templName, CV_LOAD_IMAGE_GRAYSCALE);
     //templ = cvLoadImage(templName, CV_LOAD_IMAGE_COLOR);
-    if(!templ)
-    {
-        emit error(QString("Error load %1").arg(templImgName));
-        return false;
-    }
+    templ = cvIplImage(cv_templ);
+//    if(!templ)
+//    {
+//        emit error(QString("Error load %1").arg(templImgName));
+//        return false;
+//    }
 
-    result = cvCreateImage(cvSize(src->width - templ->width + 1, src->height - templ->height + 1), 32, 1);
+    result = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
+    Q_CHECK_PTR(result);
 
-    cvMatchTemplate(src, templ, result, CV_TM_CCORR_NORMED);
+//    matchTemplate(src, templ, result, CV_TM_CCORR_NORMED);
+    cvMatchTemplate(&src, &templ, result, CV_TM_CCORR_NORMED);
     cvNormalize(result, result, 1, 0, CV_MINMAX );
     cvMinMaxLoc(result, &min, &max, &minpos, &maxpos);
 
-    CCORR_result = QRect(maxpos.x, maxpos.y, templ->width, templ->height);
+    CCORR_result = QRect(maxpos.x, maxpos.y, templ.width, templ.height);
 
-    cvMatchTemplate(src, templ, result, CV_TM_SQDIFF_NORMED);
+    cvMatchTemplate(&src, &templ, result, CV_TM_SQDIFF_NORMED);
     cvNormalize(result, result, 1, 0, CV_MINMAX );
     cvMinMaxLoc(result, &min, &max, &minpos, &maxpos);
 
-    SQDIFF_result = QRect(minpos.x, minpos.y, templ->width, templ->height);
+    SQDIFF_result = QRect(minpos.x, minpos.y, templ.width, templ.height);
 
     resultPair.first = CCORR_result;
     resultPair.second = SQDIFF_result;
@@ -848,8 +864,8 @@ bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName,
         return true;
     }
 
-    cvReleaseImage(&src);
-    cvReleaseImage(&templ);
+    //cvReleaseImage(&src);
+    //cvReleaseImage(&templ);
     cvReleaseImage(&result);
 
     return false;

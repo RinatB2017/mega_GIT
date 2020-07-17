@@ -599,39 +599,45 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
     char* imgName   = srcImgName.toLocal8Bit().data();
     char* templName = templImgName.toLocal8Bit().data();
 
-    IplImage *src    = nullptr;
-    IplImage *templ  = nullptr;
+    IplImage src; //    = nullptr;
+    IplImage templ; //  = nullptr;
     IplImage *result = nullptr;
 
-    src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+    Mat cv_img = imread(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+    //src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+    src = cvIplImage(cv_img);
     //    src = cvLoadImage(imgName, CV_LOAD_IMAGE_COLOR);
-    if(!src)
-    {
-        emit error(QString("Error load %1").arg(srcImgName));
-        return false;
-    }
+//    if(!src)
+//    {
+//        emit error(QString("Error load %1").arg(srcImgName));
+//        return false;
+//    }
 
-    templ = cvLoadImage(templName, CV_LOAD_IMAGE_GRAYSCALE);
+    Mat cv_templ = imread(templName, CV_LOAD_IMAGE_GRAYSCALE);
+//    templ = cvLoadImage(templName, CV_LOAD_IMAGE_GRAYSCALE);
     //    templ = cvLoadImage(templName, CV_LOAD_IMAGE_COLOR);
-    if(!templ)
-    {
-        emit error(QString("Error load %1").arg(templImgName));
-        return false;
-    }
+    templ = cvIplImage(cv_templ);
+//    if(!templ)
+//    {
+//        emit error(QString("Error load %1").arg(templImgName));
+//        return false;
+//    }
 
-    result = cvCreateImage(cvSize(src->width - templ->width + 1, src->height - templ->height + 1), 32, 1);
+//    result = cvCreateImage(cvSize(src->width - templ->width + 1, src->height - templ->height + 1), 32, 1);
+    result = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
+    Q_CHECK_PTR(result);
 
-    cvMatchTemplate(src, templ, result, CV_TM_CCORR_NORMED);
-    cvNormalize(result, result, 1, 0, CV_MINMAX );
+    cvMatchTemplate(&src, &templ, result, TM_CCORR_NORMED);
+    cvNormalize(result, result, 1, 0, NORM_MINMAX );
     cvMinMaxLoc(result, &min, &max, &minpos, &maxpos);
 
-    CCORR_result = QRect(maxpos.x, maxpos.y, templ->width, templ->height);
+    CCORR_result = QRect(maxpos.x, maxpos.y, templ.width, templ.height);
 
-    cvMatchTemplate(src, templ, result, CV_TM_SQDIFF_NORMED);
-    cvNormalize(result, result, 1, 0, CV_MINMAX );
+    cvMatchTemplate(&src, &templ, result, TM_SQDIFF_NORMED);
+    cvNormalize(result, result, 1, 0, NORM_MINMAX );
     cvMinMaxLoc(result, &min, &max, &minpos, &maxpos);
 
-    SQDIFF_result = QRect(minpos.x, minpos.y, templ->width, templ->height);
+    SQDIFF_result = QRect(minpos.x, minpos.y, templ.width, templ.height);
 
     resultPair.first = CCORR_result;
     resultPair.second = SQDIFF_result;
@@ -643,8 +649,8 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
         return true;
     }
 
-    cvReleaseImage(&src);
-    cvReleaseImage(&templ);
+    //cvReleaseImage(&src);
+    //cvReleaseImage(&templ);
     cvReleaseImage(&result);
 
 #endif

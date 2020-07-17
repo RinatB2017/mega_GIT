@@ -767,7 +767,7 @@ void MainWindow::createLog(void)
     connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   ld, SLOT(colorLog(QString,QColor,QColor)));
 
 #if 0
-    add_dock_widget("log", "log_dock",  Qt::BottomDockWidgetArea, ld);
+    add_dock_widget("log", "log_widget",  Qt::BottomDockWidgetArea, ld);
 #else
     ld->setAllowedAreas(Qt::LeftDockWidgetArea |
                         Qt::RightDockWidgetArea |

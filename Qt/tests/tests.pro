@@ -6,7 +6,6 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
-    Test_ADB \
     Test_ADC \
     Test_AT \
     Test_arduino \
@@ -23,7 +22,6 @@ SUBDIRS += \
     Test_GrapherBox \
     Test_HistogramBox \
     Test_HC-05 \
-    Test_HeroWars \
     Test_HID_device \
     Test_HTML \
     Test_QHexEdit \
@@ -57,7 +55,6 @@ SUBDIRS += \
     Test_Widgets \
     Test_QtCharts \
     Test_OpenCL \
-    Test_OpenCV \
     Test_OpenMP \
     Test_QDBus \
     Test_QGraphicsView \
@@ -74,6 +71,11 @@ SUBDIRS += \
     Test_TCP_UDP_bridge \
     Test_YouTube \
     Tester
+    
+SUBDIRS += \
+    Test_ADB \
+    Test_HeroWars \
+    Test_OpenCV
     
 unix {
 SUBDIRS += \

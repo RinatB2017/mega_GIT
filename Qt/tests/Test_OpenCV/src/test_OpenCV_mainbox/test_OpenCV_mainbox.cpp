@@ -156,8 +156,8 @@ void MainBox::refreshHSV(void)
             cv::findContours(thresholdedMat,
                              countours,
                              hierarchy,
-                             CV_RETR_TREE,
-                             CV_CHAIN_APPROX_SIMPLE,
+                             RETR_TREE,
+                             CHAIN_APPROX_SIMPLE,
                              cv::Point( 0, 0 )
                              );
 
@@ -270,7 +270,7 @@ void MainBox::find_faces(void)
 
     mOrigImage.copyTo(mElabImage);
 
-    cvtColor(mOrigImage, grayFrames, CV_BGR2GRAY);
+    cvtColor(mOrigImage, grayFrames, COLOR_BGR2GRAY);
     equalizeHist(grayFrames, grayFrames);
 
     bool ok = faceCade.load(FEAT_FACE_FILE);

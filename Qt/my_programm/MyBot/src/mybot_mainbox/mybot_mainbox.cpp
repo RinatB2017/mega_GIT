@@ -361,7 +361,7 @@ bool MainBox::test_0(void)
     QRect rect;
     QElapsedTimer timer;
     timer.start();
-    bool ok = camera->searchObjectByTemplate("/dev/shm/0/Screenshot_4.png",
+    bool ok = camera->searchObjectByTemplate("/dev/shm/0/Screenshot.png",
                                              "/dev/shm/0/auto.png",
                                              &rect);
     if(ok)

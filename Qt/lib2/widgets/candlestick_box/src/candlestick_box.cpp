@@ -113,11 +113,17 @@ void CandleStick_Box::init(void)
 
     ui->chartView->setToolTip("chart");
 
+    //---
+    //ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    ui->lbl_volumes_grapher->setScaledContents(true);
+    //---
+
     qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
     qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::append(QCandlestickSet *set)
+void CandleStick_Box::append(QCandlestickSet *set, qreal volume)
 {
     candleSeries->append(set);
 
@@ -125,7 +131,38 @@ void CandleStick_Box::append(QCandlestickSet *set)
 
     //categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
     categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
+    volumes.append(volume);
     index_max++;
+}
+//--------------------------------------------------------------------------------
+bool CandleStick_Box::get_ticket_data(int index, QCandlestickSet *set, qreal *volume)
+{
+    if(index < 0)
+    {
+        emit error("index < 0");
+        return false;
+    }
+    if(index >= candleSeries->count())
+    {
+        emit error("index too big");
+        return false;
+    }
+    QCandlestickSet *temp_set = candleSeries->sets().at(index);
+
+    //TODO костыль, напрямую пока не получается
+    (*set).setTimestamp((*temp_set).timestamp());
+    (*set).setOpen((*temp_set).open());
+    (*set).setClose((*temp_set).close());
+    (*set).setHigh((*temp_set).high());
+    (*set).setLow((*temp_set).low());
+
+    *volume = volumes.at(index);
+    return true;
+}
+//--------------------------------------------------------------------------------
+int CandleStick_Box::get_max_index(void)
+{
+    return candleSeries->count();
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::clear_data(void)
@@ -136,6 +173,7 @@ void CandleStick_Box::clear_data(void)
         candleSeries->remove(candleSeries->sets().at(0));
     }
     categories.clear();
+    volumes.clear();
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::update_data(void)
@@ -171,6 +209,36 @@ void CandleStick_Box::update_data(void)
     axisY->setMin(v_min);
     axisY->setMax(v_max);
 #endif
+
+    create_volumes_grapher(ui->chartView->width());
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::create_volumes_grapher(int new_width)
+{
+    QPixmap pixmap(new_width, 50);
+    pixmap.fill(Qt::white);
+
+    qreal max_height = 0;
+    qreal current_value = 0;
+    for(int n=0; n<volumes.count(); n++)
+    {
+        current_value = volumes.at(n);
+        if(current_value > max_height)
+        {
+            max_height = current_value;
+        }
+    }
+    emit info(QString("max_height %1").arg(max_height));
+
+    QPainter painter(&pixmap);
+    painter.setPen(Qt::red);
+    painter.drawLine(0, 0, pixmap.width(), pixmap.height());
+
+
+    ui->lbl_volumes_grapher->setPixmap(pixmap);
+
+    //ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    //ui->lbl_volumes_grapher->setScaledContents(true);
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::set_ticket_name(QString new_ticket_name)
@@ -417,6 +485,18 @@ void CandleStick_Box::wheelEvent(QWheelEvent *event)
     ui->chartView->chart()->zoomIn(rect);
 
     //    QChartView::wheelEvent(event);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::resizeEvent(QResizeEvent *event)
+{
+    //ui->lbl_volumes_grapher->setPixmap(QPixmap(0, 0));
+    QWidget::resizeEvent(event);
+#if 1
+    ui->chartView->update();
+    //create_volumes_grapher(ui->chartView->width());
+#else
+    create_volumes_grapher(event->size().width());
+#endif
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::updateText(void)

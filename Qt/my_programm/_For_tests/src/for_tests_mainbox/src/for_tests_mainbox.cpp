@@ -57,6 +57,10 @@ MainBox::~MainBox()
     {
         tjs->deleteLater();
     }
+    if(rw)
+    {
+        rw->deleteLater();
+    }
 
     if(timer)
     {
@@ -97,6 +101,14 @@ void MainBox::init(void)
 
     QSize rec = QGuiApplication::screens().at(0)->size();
     tjs->move(0, rec.height()-tjs->height());
+#endif
+
+#if 1
+    rw = new ResizeWidget();
+    connect_log_signals(rw, this);
+    rw->show();
+
+    rw->move(0, rec.height()-rw->height());
 #endif
 
     //---

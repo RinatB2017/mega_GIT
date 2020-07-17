@@ -83,6 +83,7 @@ include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simplewidget/simplewidget.pri)
 include (src/test_json/test_json.pri)
+include (src/resizewidget/resizewidget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

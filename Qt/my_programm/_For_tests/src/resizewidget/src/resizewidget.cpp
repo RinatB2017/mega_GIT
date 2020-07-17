@@ -18,94 +18,72 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
 #include "resizewidget.hpp"
-#include "test_json.hpp"
-#include "mywidget.hpp"
+#include "ui_resizewidget.h"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+ResizeWidget::ResizeWidget(QWidget *parent) :
+    MyWidget(parent),
+    ui(new Ui::ResizeWidget)
+{
+    ui->setupUi(this);
+
+    ui->label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    ui->label->setScaledContents(true);
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class SimpleWidget;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+ResizeWidget::~ResizeWidget()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    void print_mp(QWidget *widget);
-    void delete_string(void);
-
-    void s_inFunc(void);
-
-    void check_in(void);
-    void victory(void);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
-    QScopedPointer<SimpleWidget> sw;
-    QPointer<Test_JSON> tjs;
-
-    //---
-    QDockWidget *main_dock;
-    QList<QDockWidget *> l_docks;
-    //---
-
-    QPointer<ResizeWidget> rw;
-
-    void init(void);
-    void createTestBar(void);
-
-    void test_validator(void);
-    int get_cnt(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void ResizeWidget::resizeEvent(QResizeEvent *event)
+{
+    QPixmap pixmap(":/logo/logo.png");
+    //    QPixmap new_pixmap = pixmap.scaled(event->size());
+    //    ui->label->setPixmap(new_pixmap);
+    //    ui->label->resize(event->size());
+
+    emit info(QString("%1 : %2")
+              .arg(event->size().width())
+              .arg(event->size().height()));
+
+#if 0
+    QWidget::resizeEvent(event);
+    ui->label->setPixmap(pixmap.scaled(event->size().width(),
+                                       event->size().height(),
+                                       Qt::KeepAspectRatio));
+#endif
+
+#if 0
+    ui->label->resize(event->size());
+#endif
+
+#if 0
+    QPixmap temp_pixmap = pixmap.copy(0,
+                                      0,
+                                      event->size().width(),
+                                      event->size().height());
+    ui->label->setPixmap(temp_pixmap);
+#endif
+}
+//--------------------------------------------------------------------------------
+void ResizeWidget::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool ResizeWidget::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void ResizeWidget::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void ResizeWidget::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------

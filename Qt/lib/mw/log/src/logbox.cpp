@@ -513,8 +513,8 @@ void LogBox::save_to(void)
 
     dlg = new MyFileDialog("log_box", "log_box");
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
-    dlg->setNameFilter(tr("log files (*.log)"));
-    dlg->setDefaultSuffix(tr("log"));
+    dlg->setNameFilter("log files (*.log)");
+    dlg->setDefaultSuffix("log");
     dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
     dlg->setDirectory(".");
     dlg->selectFile("без имени");

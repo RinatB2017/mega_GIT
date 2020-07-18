@@ -70,9 +70,10 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));    
-
+#ifdef SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#endif
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 
     return app.exec();
 }

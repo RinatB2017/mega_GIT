@@ -27,27 +27,19 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX2
-#   include <opencv2/core/core.hpp>
-#   include <opencv2/objdetect/objdetect.hpp>
-#   include <opencv2/imgproc/imgproc.hpp>
-#   include <opencv2/highgui/highgui.hpp>
-#   include <opencv2/opencv.hpp>
-#else
-#   include <opencv2/core/core.hpp>
-
-#   include <opencv2/core/core_c.h>
-//#   include <opencv2/imgcodecs/imgcodecs_c.h>
-
-#   include <opencv2/objdetect/objdetect.hpp>
-#   include <opencv2/imgproc/imgproc.hpp>
-#   include <opencv2/opencv.hpp>
-#   include <opencv2/highgui.hpp>
-#   include <opencv2/highgui/highgui.hpp>
-#   include <opencv2/highgui/highgui_c.h>
-#   include <opencv2/imgcodecs/legacy/constants_c.h>
-#   include <opencv2/videoio/videoio_c.h>
-#endif
+#include <opencv2/core/core.hpp>
+#include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/core_c.h>
+//#include <opencv2/imgcodecs/imgcodecs_c.h>
+#include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui_c.h>
+#include <opencv2/imgcodecs/legacy/constants_c.h>
+#include <opencv2/videoio/videoio_c.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -65,7 +57,7 @@ public:
     explicit WebCamera(QWidget *parent);
     ~WebCamera();
 
-    bool searchObjectByTemplate(QString srcImgName, QString templImgName, QRect *rect);
+    bool searchObjectByTemplate(const char *srcImgName, const char *templName, QRect *rect);
 
 private slots:
     void start(void);

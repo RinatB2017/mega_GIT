@@ -47,12 +47,16 @@ int main(int argc, char *argv[])
 #endif
 
     set_codecs();
+#ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
         //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
         if(app.sendMessage("Wake up!")) return 0;
     }
+#else
+    QApplication app(argc, argv);
+#endif
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
@@ -68,7 +72,9 @@ int main(int argc, char *argv[])
     main_window->setCentralWidget(mainBox);
     main_window->show();
 
-    //QObject::connect(&app,  SIGNAL(messageReceived(const QString&)),    main_window,    SLOT(set_focus(QString)));
+#ifdef SINGLE_APP
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#endif
     qDebug() << QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME));
 
     return app.exec();

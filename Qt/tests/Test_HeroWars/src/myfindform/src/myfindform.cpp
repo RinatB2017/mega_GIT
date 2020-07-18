@@ -53,11 +53,11 @@ MyFindForm::~MyFindForm()
 //--------------------------------------------------------------------------------
 void MyFindForm::init(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("Show picture", "show_picture", Qt::RightDockWidgetArea, ui->showpicture_widget);
-    }
+//    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+//    if(mw)
+//    {
+//        mw->add_dock_widget("Show picture", "show_picture", Qt::RightDockWidgetArea, ui->showpicture_widget);
+//    }
 
     ui->sb_pos_x->setRange(0,   0xFFFF);
     ui->sb_pos_y->setRange(0,   0xFFFF);
@@ -68,6 +68,7 @@ void MyFindForm::init(void)
 
     connect(ui->btn_set,            &QToolButton::clicked,      this,   &MyFindForm::set_src_file);
     connect(ui->btn_show,           &QToolButton::clicked, [this]() {
+        emit trace(Q_FUNC_INFO);
         ui->showpicture_widget->show_picture(ui->le_screenshot->text());
     });
 
@@ -191,12 +192,27 @@ void MyFindForm::find_ok(void)
 {
     emit trace(Q_FUNC_INFO);
 
+    emit info(src_file);
+    emit info(file_ok);
+
+//    src_file = ui->le_screenshot->text();
+
+    if(QFile::exists(src_file) == false)
+    {
+        emit error(QString("file %1 not exists").arg(src_file));
+        return;
+    }
+    if(QFile::exists(file_ok) == false)
+    {
+        emit error(QString("file %1 not exists").arg(file_ok));
+        return;
+    }
+
     QRect rect;
     QElapsedTimer timer;
     timer.start();
-    src_file = ui->le_screenshot->text();
-    bool ok = searchObjectByTemplate(src_file,
-                                     file_ok,
+    bool ok = searchObjectByTemplate(src_file.toLocal8Bit().data(),
+                                     file_ok.toLocal8Bit().data(),
                                      &rect);
     if(ok)
     {
@@ -233,12 +249,24 @@ void MyFindForm::find_auto(void)
 {
     emit trace(Q_FUNC_INFO);
 
+//    src_file = ui->le_screenshot->text();
+
+    if(QFile::exists(src_file) == false)
+    {
+        emit error(QString("file %1 not exists").arg(src_file));
+        return;
+    }
+    if(QFile::exists(file_auto) == false)
+    {
+        emit error(QString("file %1 not exists").arg(file_auto));
+        return;
+    }
+
     QRect rect;
     QElapsedTimer timer;
     timer.start();
-    src_file = ui->le_screenshot->text();
-    bool ok = searchObjectByTemplate(src_file,
-                                     file_auto,
+    bool ok = searchObjectByTemplate(src_file.toLocal8Bit().data(),
+                                     file_auto.toLocal8Bit().data(),
                                      &rect);
     if(ok)
     {
@@ -275,12 +303,24 @@ void MyFindForm::find_auto_active(void)
 {
     emit trace(Q_FUNC_INFO);
 
+//    src_file = ui->le_screenshot->text();
+
+    if(QFile::exists(src_file) == false)
+    {
+        emit error(QString("file %1 not exists").arg(src_file));
+        return;
+    }
+    if(QFile::exists(file_auto_active) == false)
+    {
+        emit error(QString("file %1 not exists").arg(file_auto_active));
+        return;
+    }
+
     QRect rect;
     QElapsedTimer timer;
     timer.start();
-    src_file = ui->le_screenshot->text();
-    bool ok = searchObjectByTemplate(src_file,
-                                     file_auto_active,
+    bool ok = searchObjectByTemplate(src_file.toLocal8Bit().data(),
+                                     file_auto_active.toLocal8Bit().data(),
                                      &rect);
     if(ok)
     {
@@ -491,12 +531,24 @@ void MyFindForm::find_to_battle(void)
 {
     emit trace(Q_FUNC_INFO);
 
+//    src_file = ui->le_screenshot->text();
+
+    if(QFile::exists(src_file) == false)
+    {
+        emit error(QString("file %1 not exists").arg(src_file));
+        return;
+    }
+    if(QFile::exists(file_in_battle) == false)
+    {
+        emit error(QString("file %1 not exists").arg(file_in_battle));
+        return;
+    }
+
     QRect rect;
     QElapsedTimer timer;
     timer.start();
-    src_file = ui->le_screenshot->text();
-    bool ok = searchObjectByTemplate(src_file,
-                                     file_in_battle,
+    bool ok = searchObjectByTemplate(src_file.toLocal8Bit().data(),
+                                     file_in_battle.toLocal8Bit().data(),
                                      &rect);
     if(ok)
     {
@@ -565,27 +617,13 @@ void MyFindForm::show_rect_picture(QString caption, QList<QRgb> array, QRect rec
 //--------------------------------------------------------------------------------
 // https://www.cyberforum.ru/qt/thread1096383.html
 
-bool MyFindForm::searchObjectByTemplate(QString srcImgName,
-                                        QString templImgName,
+bool MyFindForm::searchObjectByTemplate(const char *imgName,
+                                        const char *templName,
                                         QRect *rect)
 {
     emit trace(Q_FUNC_INFO);
 
 #ifdef Q_OS_LINUX
-    if(srcImgName.isEmpty())
-    {
-        emit error("srcImgName is empty!");
-        return false;
-    }
-    if(templImgName.isEmpty())
-    {
-        emit error("templImgName is empty!");
-        return false;
-    }
-
-    emit debug(srcImgName);
-    emit debug(templImgName);
-
     QRect CCORR_result;
     QRect SQDIFF_result;
     QPair <QRect, QRect> resultPair;
@@ -596,36 +634,23 @@ bool MyFindForm::searchObjectByTemplate(QString srcImgName,
     double min, max;
     CvPoint minpos, maxpos;
 
-    char* imgName   = srcImgName.toLocal8Bit().data();
-    char* templName = templImgName.toLocal8Bit().data();
-
     IplImage src; //    = nullptr;
     IplImage templ; //  = nullptr;
     IplImage *result = nullptr;
 
     Mat cv_img = imread(imgName, CV_LOAD_IMAGE_GRAYSCALE);
-    //src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
     src = cvIplImage(cv_img);
-    //    src = cvLoadImage(imgName, CV_LOAD_IMAGE_COLOR);
-//    if(!src)
-//    {
-//        emit error(QString("Error load %1").arg(srcImgName));
-//        return false;
-//    }
 
     Mat cv_templ = imread(templName, CV_LOAD_IMAGE_GRAYSCALE);
-//    templ = cvLoadImage(templName, CV_LOAD_IMAGE_GRAYSCALE);
-    //    templ = cvLoadImage(templName, CV_LOAD_IMAGE_COLOR);
     templ = cvIplImage(cv_templ);
-//    if(!templ)
-//    {
-//        emit error(QString("Error load %1").arg(templImgName));
-//        return false;
-//    }
 
-//    result = cvCreateImage(cvSize(src->width - templ->width + 1, src->height - templ->height + 1), 32, 1);
     result = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
     Q_CHECK_PTR(result);
+
+    Q_ASSERT(src.width != 0);
+    Q_ASSERT(src.height != 0);
+    Q_ASSERT(templ.width != 0);
+    Q_ASSERT(templ.height != 0);
 
     cvMatchTemplate(&src, &templ, result, TM_CCORR_NORMED);
     cvNormalize(result, result, 1, 0, NORM_MINMAX );
@@ -689,7 +714,7 @@ void MyFindForm::mouse_click(unsigned int button, QPoint pos)
 //--------------------------------------------------------------------------------
 void MyFindForm::test(void)
 {
-
+    fail();
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::add_buttons(void)

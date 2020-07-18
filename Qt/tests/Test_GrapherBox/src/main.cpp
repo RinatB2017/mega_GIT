@@ -38,12 +38,12 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#if 0
+#ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
-        QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
-        return -1;
+        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
     }
 #else
     QApplication app(argc, argv);

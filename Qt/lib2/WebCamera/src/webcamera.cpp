@@ -687,7 +687,7 @@ void WebCamera::test3(void)
 
     foreach (QString filename, sl)
     {
-        ok = searchObjectByTemplate("KPatience.png", filename, &rect);
+        ok = searchObjectByTemplate("KPatience.png", filename.toLatin1().data(), &rect);
         if(ok)
         {
             emit info(QString("%1 \t %2 %3 %4 %5")
@@ -797,7 +797,7 @@ void WebCamera::test5(void)
     cvDestroyAllWindows();
 }
 //--------------------------------------------------------------------------------
-bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName, QRect *rect)
+bool WebCamera::searchObjectByTemplate(const char *imgName, const char *templName, QRect *rect)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -810,9 +810,6 @@ bool WebCamera::searchObjectByTemplate(QString srcImgName, QString templImgName,
 
     double min,max;
     CvPoint minpos, maxpos;
-
-    char* imgName   = srcImgName.toLocal8Bit().data();
-    char* templName = templImgName.toLocal8Bit().data();
 
     IplImage src; //    = nullptr;
     IplImage templ; //  = nullptr;

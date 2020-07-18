@@ -93,16 +93,18 @@ private:
     Ui::MyFindForm *ui;
 
     QString src_file        = "/dev/shm/0/Screenshot.png";
-//    QString file_ok         = "/dev/shm/0/ok.png";
-//    QString file_auto       = "/dev/shm/0/auto.png";
-//    QString file_auto_active = "/dev/shm/0/auto_active.png";
-//    QString file_in_battle  = "/dev/shm/0/в бой.png";
-
-//    QString src_file        = "";
-    QString file_ok         = ":/targets/ok.png";
-    QString file_auto       = ":/targets/auto.png";
+    //QString src_file        = "";
+#if 1
+    QString file_ok         = "/dev/shm/0/ok.png";
+    QString file_auto       = "/dev/shm/0/auto.png";
+    QString file_auto_active = "/dev/shm/0/auto_active.png";
+    QString file_in_battle  = "/dev/shm/0/в бой.png";
+#else
+    QString file_ok          = ":/targets/ok.png";
+    QString file_auto        = ":/targets/auto.png";
     QString file_auto_active = ":/targets/auto_active.png";
-    QString file_in_battle  = ":/targets/в бой.png";
+    QString file_in_battle   = ":/targets/в бой.png";
+#endif
 
     QList<QRgb> l_src_file;
     QRect rect_src_file;
@@ -125,8 +127,8 @@ private:
     void show_rect_picture(QString caption, QList<QRgb> array, QRect rect);
 
     void init(void);
-    bool searchObjectByTemplate(QString srcImgName,
-                                QString templImgName,
+    bool searchObjectByTemplate(const char *imgName,
+                                const char *templName,
                                 QRect *rect);
 
     void click(void);

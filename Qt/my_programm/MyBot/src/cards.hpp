@@ -99,7 +99,7 @@ Mat resizeToWidth(const Mat& mat, int width)
     }
 }
 
-void mouseCallback(int event, int x, int y, int flags, void* userdata)
+void mouseCallback(int event, int x, int y, int /*flags*/, void* /*userdata*/)
 {
     if (event == EVENT_LBUTTONDOWN)
     {
@@ -107,7 +107,7 @@ void mouseCallback(int event, int x, int y, int flags, void* userdata)
     }
 }
 
-void buttonCallback(int state, void *userdata)
+void buttonCallback(int /*state*/, void */*userdata*/)
 {
     cout << "Button" << endl;
 }
@@ -563,7 +563,7 @@ int cards_main()
                             Point current = poly[pointIndex];
                             Point previous = (pointIndex == 0) ? poly[poly.size() - 1] : poly[pointIndex - 1];
                             
-                            uint32_t length = norm(current - previous);
+                            int length = norm(current - previous);
                             
                             if (length >= shortestLine)
                             {

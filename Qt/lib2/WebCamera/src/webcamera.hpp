@@ -28,20 +28,19 @@
 #endif
 //--------------------------------------------------------------------------------
 #include <opencv2/core/core.hpp>
+#include <opencv2/core/core_c.h>
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/core/core_c.h>
-//#include <opencv2/imgcodecs/imgcodecs_c.h>
-#include <opencv2/objdetect/objdetect.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui.hpp>
 #include <opencv2/highgui/highgui_c.h>
+#include <opencv2/highgui.hpp>
+#include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs/legacy/constants_c.h>
 #include <opencv2/videoio/videoio_c.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+//#define FACE_DETECT
 //--------------------------------------------------------------------------------
 using namespace cv;
 //--------------------------------------------------------------------------------
@@ -87,11 +86,13 @@ private:
     VideoCapture mCapture;
 
     // ---> Face detectors
+#ifdef FACE_DETECT
     bool create_detectors(void);
     CascadeClassifier mFaceDetector;
     CascadeClassifier mEyeDetector;
     CascadeClassifier mMouthDetector;
     CascadeClassifier mNoseDetector;
+#endif
     // <--- Face detectors
 
     void init(void);

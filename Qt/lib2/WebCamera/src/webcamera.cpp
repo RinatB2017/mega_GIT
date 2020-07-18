@@ -84,6 +84,11 @@ void WebCamera::init(void)
     ui->le_device->setText("rtsp://admin:admin@192.168.1.11:81");
     //ui->le_device->setText("/dev/video0");
 
+    ui->sl_brightness->setProperty(NO_SAVE, true);
+    ui->sl_contrast->setProperty(NO_SAVE, true);
+    ui->sl_saturation->setProperty(NO_SAVE, true);
+    ui->sl_hue->setProperty(NO_SAVE, true);
+
     set_brightness(1);
     set_contrast(1);
     set_saturation(1);
@@ -125,6 +130,7 @@ void WebCamera::set_device(void)
     }
 }
 //--------------------------------------------------------------------------------
+#ifdef FACE_DETECT
 bool WebCamera::create_detectors(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -133,54 +139,86 @@ bool WebCamera::create_detectors(void)
     if(mFaceDetector.empty())
     {
         file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_FACE_FILE);
-        if(!mFaceDetector.load(file.toLatin1().constData()))
+        if(QFile::exists(file))
         {
-            emit error(QString("Cannot find %1").arg(file));
-            return false;
+            if(!mFaceDetector.load(file.toLatin1().constData()))
+            {
+                emit error(QString("Cannot find %1").arg(file));
+                return false;
+            }
+        }
+        else
+        {
+            emit error(QString("file %1 not exists").arg(file));
         }
     }
 
     if(mEyeDetector.empty())
     {
         file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_EYE_FILE);
-        if(!mEyeDetector.load(file.toLatin1().constData()))
+        if(QFile::exists(file))
         {
-            emit error(QString("Cannot find %1").arg(file));
-            return false;
+            if(!mEyeDetector.load(file.toLatin1().constData()))
+            {
+                emit error(QString("Cannot find %1").arg(file));
+                return false;
+            }
+        }
+        else
+        {
+            emit error(QString("file %1 not exists").arg(file));
         }
     }
 
     if(mNoseDetector.empty())
     {
         file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_NOSE_FILE);
-        if(!mNoseDetector.load(file.toLatin1().constData()))
+        if(QFile::exists(file))
         {
-            emit error(QString("Cannot find %1").arg(file));
-            return false;
+            if(!mNoseDetector.load(file.toLatin1().constData()))
+            {
+                emit error(QString("Cannot find %1").arg(file));
+                return false;
+            }
+        }
+        else
+        {
+            emit error(QString("file %1 not exists").arg(file));
         }
     }
 
     if(mMouthDetector.empty())
     {
         file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_MOUTH_FILE);
-        if(!mMouthDetector.load(file.toLatin1().constData()))
+        if(QFile::exists(file))
         {
-            emit error(QString("Cannot find %1").arg(file));
-            return false;
+            if(!mMouthDetector.load(file.toLatin1().constData()))
+            {
+                emit error(QString("Cannot find %1").arg(file));
+                return false;
+            }
+        }
+        else
+        {
+            emit error(QString("file %1 not exists").arg(file));
         }
     }
     return true;
 }
+#endif
 //--------------------------------------------------------------------------------
 void WebCamera::start(void)
 {
     emit trace(Q_FUNC_INFO);
-    bool ok = create_detectors();
+    bool ok = false;
+#ifdef FACE_DETECT
+    ok = create_detectors();
     if(ok == false)
     {
         emit error("create_detectors return FALSE");
         return;
     }
+#endif
 
     QString dev_name = ui->le_device->text();
     if(dev_name.isEmpty())
@@ -188,7 +226,6 @@ void WebCamera::start(void)
         messagebox_critical("Ошибка", "Не задано имя");
         return;
     }
-    ok = false;
 
     mCapture.release();
     int num = dev_name.toInt(&ok);
@@ -231,10 +268,15 @@ void WebCamera::start(void)
 
     if(mCapture.isOpened())
     {
-        ui->sl_brightness->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_BRIGHTNESS) * 100.0));
-        ui->sl_contrast->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_CONTRAST) * 100.0));
-        ui->sl_saturation->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_SATURATION) * 100.0));
-        ui->sl_hue->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_HUE) * 100.0));
+        //ui->sl_brightness->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_BRIGHTNESS) * 100.0));
+        //ui->sl_contrast->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_CONTRAST) * 100.0));
+        //ui->sl_saturation->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_SATURATION) * 100.0));
+        //ui->sl_hue->setValue(static_cast<int>(mCapture.get(CV_CAP_PROP_HUE) * 100.0));
+
+        set_brightness(static_cast<int>(mCapture.get(CV_CAP_PROP_BRIGHTNESS)));
+        set_contrast(static_cast<int>(mCapture.get(CV_CAP_PROP_CONTRAST)));
+        set_saturation(static_cast<int>(mCapture.get(CV_CAP_PROP_SATURATION)));
+        set_hue(static_cast<int>(mCapture.get(CV_CAP_PROP_HUE)));
 
         //TODO
         mCapture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
@@ -275,7 +317,9 @@ void WebCamera::set_brightness(int value)
     ui->lbl_brightness->setText(QString("%1").arg(ui->sl_brightness->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_BRIGHTNESS, static_cast<double>(value) / 100.0);
+        //mCapture.set(CV_CAP_PROP_BRIGHTNESS, static_cast<double>(value) / 100.0);
+        mCapture.set(CV_CAP_PROP_BRIGHTNESS, value);
+        ui->sl_brightness->setValue(value);
     }
 }
 //--------------------------------------------------------------------------------
@@ -288,7 +332,9 @@ void WebCamera::set_contrast(int value)
     ui->lbl_contrast->setText(QString("%1").arg(ui->sl_contrast->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_CONTRAST, static_cast<double>(value) / 100.0);
+        //mCapture.set(CV_CAP_PROP_CONTRAST, static_cast<double>(value) / 100.0);
+        mCapture.set(CV_CAP_PROP_CONTRAST, value);
+        ui->sl_contrast->setValue(value);
     }
 }
 //--------------------------------------------------------------------------------
@@ -301,7 +347,9 @@ void WebCamera::set_saturation(int value)
     ui->lbl_saturation->setText(QString("%1").arg(ui->sl_saturation->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_SATURATION, static_cast<double>(value) / 100.0);
+        //mCapture.set(CV_CAP_PROP_SATURATION, static_cast<double>(value) / 100.0);
+        mCapture.set(CV_CAP_PROP_SATURATION, value);
+        ui->sl_saturation->setValue(value);
     }
 }
 //--------------------------------------------------------------------------------
@@ -314,7 +362,9 @@ void WebCamera::set_hue(int value)
     ui->lbl_hue->setText(QString("%1").arg(ui->sl_hue->value()));
     if(mCapture.isOpened())
     {
-        mCapture.set(CV_CAP_PROP_HUE, static_cast<double>(value) / 100.0);
+        //mCapture.set(CV_CAP_PROP_HUE, static_cast<double>(value) / 100.0);
+        mCapture.set(CV_CAP_PROP_HUE, value);
+        ui->sl_hue->setValue(value);
     }
 }
 //--------------------------------------------------------------------------------
@@ -353,8 +403,10 @@ void WebCamera::timerEvent(QTimerEvent *event)
         vector< Rect > faceVec;
         //Rect rectVec;
 
+#ifdef FACE_DETECT
         double scaleFactor = 3.0; // Change Scale Factor to change speed
-        mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
+#endif
+        //TODO mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
         //mFaceDetector.detectSingleScale(mOrigImage, rectVec);
 
         if(faceVec.size() > 0)
@@ -378,7 +430,9 @@ void WebCamera::timerEvent(QTimerEvent *event)
             {
                 vector< Rect > eyeVec;
 
+#ifdef FACE_DETECT
                 mEyeDetector.detectMultiScale(face, eyeVec);
+#endif
 
                 for(size_t j=0; j<eyeVec.size(); j++)
                 {
@@ -396,7 +450,9 @@ void WebCamera::timerEvent(QTimerEvent *event)
             {
                 vector< Rect > noseVec;
 
+#ifdef FACE_DETECT
                 mNoseDetector.detectMultiScale(face, noseVec, 3);
+#endif
 
                 for(size_t j=0; j<noseVec.size(); j++)
                 {
@@ -420,7 +476,9 @@ void WebCamera::timerEvent(QTimerEvent *event)
 
                 Mat halfFace = mOrigImage(halfRect);
 
+#ifdef FACE_DETECT
                 mMouthDetector.detectMultiScale(halfFace, mouthVec, 3);
+#endif
 
                 for(size_t j=0; j<mouthVec.size(); j++)
                 {
@@ -481,7 +539,7 @@ void WebCamera::show_image_hw(void)
 void WebCamera::test(void)
 {
 #if 1
-    //mCapture.set(CV_CAP_PROP_BRIGHTNESS, 100.0);
+    mCapture.set(CV_CAP_PROP_BRIGHTNESS, 100.0);
 
     if(mCapture.isOpened())
     {
@@ -811,29 +869,20 @@ bool WebCamera::searchObjectByTemplate(const char *imgName, const char *templNam
     double min,max;
     CvPoint minpos, maxpos;
 
-    IplImage src; //    = nullptr;
-    IplImage templ; //  = nullptr;
+    IplImage src;
+    IplImage templ;
     IplImage *result = nullptr;
 
     Mat cv_img = imread(imgName, CV_LOAD_IMAGE_GRAYSCALE);
-    //src = cvLoadImage(imgName, CV_LOAD_IMAGE_GRAYSCALE);
     src = cvIplImage(cv_img);
-    //src = cvLoadImage(imgName, CV_LOAD_IMAGE_COLOR);
-//    if(!src)
-//    {
-//        emit error(QString("Error load %1").arg(srcImgName));
-//        return false;
-//    }
 
     Mat cv_templ = imread(templName, CV_LOAD_IMAGE_GRAYSCALE);
-    //templ = cvLoadImage(templName, CV_LOAD_IMAGE_GRAYSCALE);
-    //templ = cvLoadImage(templName, CV_LOAD_IMAGE_COLOR);
     templ = cvIplImage(cv_templ);
-//    if(!templ)
-//    {
-//        emit error(QString("Error load %1").arg(templImgName));
-//        return false;
-//    }
+
+    Q_ASSERT(src.width != 0);
+    Q_ASSERT(src.height != 0);
+    Q_ASSERT(templ.width != 0);
+    Q_ASSERT(templ.height != 0);
 
     result = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
     Q_CHECK_PTR(result);

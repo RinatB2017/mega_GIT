@@ -84,7 +84,7 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    QPointer<WebCamera> camera;
+//    QPointer<WebCamera> camera;
 
     void init(void);
 

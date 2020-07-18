@@ -64,9 +64,13 @@ void MainBox::init(void)
 
     connect(ui->le_programm,        &QLineEdit::editingFinished,    this,   &MainBox::find_programm);
 
+#if 0
     camera = new WebCamera(this);
     camera->show();
     ui->camera_layout->addWidget(camera);
+#else
+    connect_log_signals(ui->camera_widget, this);
+#endif
 
     load_widgets();
 }
@@ -361,9 +365,9 @@ bool MainBox::test_0(void)
     QRect rect;
     QElapsedTimer timer;
     timer.start();
-    bool ok = camera->searchObjectByTemplate("/dev/shm/0/Screenshot.png",
-                                             "/dev/shm/0/auto.png",
-                                             &rect);
+    bool ok = ui->camera_widget->searchObjectByTemplate("/dev/shm/0/Screenshot.png",
+                                                        "/dev/shm/0/auto.png",
+                                                        &rect);
     if(ok)
     {
         emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));

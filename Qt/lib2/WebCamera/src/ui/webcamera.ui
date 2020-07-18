@@ -324,6 +324,23 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>rb_usb</tabstop>
+  <tabstop>le_usb_device</tabstop>
+  <tabstop>rb_rtsp</tabstop>
+  <tabstop>le_device</tabstop>
+  <tabstop>btn_set_device</tabstop>
+  <tabstop>checkBox_eyes</tabstop>
+  <tabstop>checkBox_nose</tabstop>
+  <tabstop>checkBox_mouth</tabstop>
+  <tabstop>sl_brightness</tabstop>
+  <tabstop>sl_contrast</tabstop>
+  <tabstop>sl_hue</tabstop>
+  <tabstop>sl_saturation</tabstop>
+  <tabstop>btn_start</tabstop>
+  <tabstop>btn_stop</tabstop>
+  <tabstop>btn_test</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

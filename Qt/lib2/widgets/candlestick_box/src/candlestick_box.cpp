@@ -234,7 +234,6 @@ void CandleStick_Box::create_volumes_grapher(int new_width)
     painter.setPen(Qt::red);
     painter.drawLine(0, 0, pixmap.width(), pixmap.height());
 
-
     ui->lbl_volumes_grapher->setPixmap(pixmap);
 
     //ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);

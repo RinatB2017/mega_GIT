@@ -138,20 +138,22 @@ void WebCamera::set_device(void)
 //--------------------------------------------------------------------------------
 void WebCamera::copy_file(QString filename)
 {
-    QString old_name = QString(":/%1").arg(filename);
+    QString old_name = QString(":/%1")
+            .arg(filename);
     QString new_name = QString("%1/xml/%2")
             .arg(QApplication::applicationDirPath())
             .arg(filename);
-    if(QFile::exists(new_name) == false)
+    if(QFile::exists(new_name))
     {
-        emit debug(QString("copy %1 to %2")
-                   .arg(old_name)
-                   .arg(new_name));
-        bool ok = QFile::copy(old_name, new_name);
-        if(!ok)
-        {
-            emit error(QString("cannot copy file").arg(new_name));
-        }
+        return;
+    }
+    emit debug(QString("copy %1 to %2")
+               .arg(old_name)
+               .arg(new_name));
+    bool ok = QFile::copy(old_name, new_name);
+    if(!ok)
+    {
+        emit error(QString("cannot copy file").arg(new_name));
     }
 }
 //--------------------------------------------------------------------------------
@@ -302,8 +304,8 @@ void WebCamera::start(void)
             QString rtsp_device = dev_name;
             if(rtsp_device.isEmpty())
             {
-                    emit error("RTSP device is empty");
-                    return;
+                emit error("RTSP device is empty");
+                return;
             }
             emit info(QString("RTSP: %1").arg(rtsp_device));
             mCapture.open(rtsp_device.toLatin1().data());
@@ -448,9 +450,7 @@ void WebCamera::timerEvent(QTimerEvent *event)
         killTimer(mCameraEventId);
 
         mCapture >> mOrigImage;
-
         mOrigImage.copyTo(mElabImage);
-
         vector< Rect > faceVec;
         //Rect rectVec;
 
@@ -476,15 +476,12 @@ void WebCamera::timerEvent(QTimerEvent *event)
 
             Mat face = mOrigImage(faceVec[i]);
 
+#ifdef FACE_DETECT
             // ---> Eye Detection
             if(ui->checkBox_eyes->isChecked())
             {
                 vector< Rect > eyeVec;
-
-#ifdef FACE_DETECT
                 mEyeDetector.detectMultiScale(face, eyeVec);
-#endif
-
                 for(size_t j=0; j<eyeVec.size(); j++)
                 {
                     Rect rect = eyeVec[j];
@@ -500,11 +497,7 @@ void WebCamera::timerEvent(QTimerEvent *event)
             if(ui->checkBox_nose->isChecked())
             {
                 vector< Rect > noseVec;
-
-#ifdef FACE_DETECT
                 mNoseDetector.detectMultiScale(face, noseVec, 3);
-#endif
-
                 for(size_t j=0; j<noseVec.size(); j++)
                 {
                     Rect rect = noseVec[j];
@@ -526,11 +519,7 @@ void WebCamera::timerEvent(QTimerEvent *event)
                 halfRect.y += halfRect.height;
 
                 Mat halfFace = mOrigImage(halfRect);
-
-#ifdef FACE_DETECT
                 mMouthDetector.detectMultiScale(halfFace, mouthVec, 3);
-#endif
-
                 for(size_t j=0; j<mouthVec.size(); j++)
                 {
                     Rect rect = mouthVec[j];
@@ -541,6 +530,7 @@ void WebCamera::timerEvent(QTimerEvent *event)
                 }
             }
             // <--- Mouth Detection
+#endif
         }
 
         ui->cameraWidget->showImage(mElabImage);
@@ -695,9 +685,9 @@ void WebCamera::test2(void)
     double min, max;
     CvPoint minpos, maxpos;
 
-//    src     = cvLoadImage("lena.png", 1);
+    //    src     = cvLoadImage("lena.png", 1);
     src     = cvIplImage(imread("lena.png"));
-//    templ   = cvLoadImage("lena_eye.png", 1);
+    //    templ   = cvLoadImage("lena_eye.png", 1);
     templ   = cvIplImage(imread("lena_eye.png"));
     result  = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
 
@@ -938,7 +928,7 @@ bool WebCamera::searchObjectByTemplate(const char *imgName, const char *templNam
     result = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
     Q_CHECK_PTR(result);
 
-//    matchTemplate(src, templ, result, CV_TM_CCORR_NORMED);
+    //    matchTemplate(src, templ, result, CV_TM_CCORR_NORMED);
     cvMatchTemplate(&src, &templ, result, CV_TM_CCORR_NORMED);
     cvNormalize(result, result, 1, 0, CV_MINMAX );
     cvMinMaxLoc(result, &min, &max, &minpos, &maxpos);

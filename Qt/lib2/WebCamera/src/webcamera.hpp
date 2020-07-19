@@ -104,6 +104,9 @@ private:
     void show_image_cv(void);
     void show_image_hw(void);
 
+    void check_xml_files(void);
+    void copy_file(QString filename);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

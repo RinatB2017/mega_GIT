@@ -113,10 +113,8 @@ void WebCamera::init(void)
 
 #ifndef FACE_DETECT
     ui->gb_face_detect->setVisible(false);
-
-//    ui->checkBox_eyes->setVisible(false);
-//    ui->checkBox_nose->setVisible(false);
-//    ui->checkBox_mouth->setVisible(false);
+#else
+    check_xml_files();
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -136,6 +134,51 @@ void WebCamera::set_device(void)
             ui->le_device->setText(device);
         }
     }
+}
+//--------------------------------------------------------------------------------
+void WebCamera::copy_file(QString filename)
+{
+    QString old_name = QString(":/%1").arg(filename);
+    QString new_name = QString("%1/xml/%2")
+            .arg(QApplication::applicationDirPath())
+            .arg(filename);
+    if(QFile::exists(new_name) == false)
+    {
+        emit debug(QString("copy %1 to %2")
+                   .arg(old_name)
+                   .arg(new_name));
+        bool ok = QFile::copy(old_name, new_name);
+        if(!ok)
+        {
+            emit error(QString("cannot copy file").arg(new_name));
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void WebCamera::check_xml_files(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    bool ok = false;
+    QString directory = QString("%1/xml").
+            arg(QApplication::applicationDirPath());
+    QDir dir;
+    if(dir.exists(directory) == false)
+    {
+        emit trace(QString("create directory %1").arg(directory));
+        ok = dir.mkdir(directory);
+        if(!ok)
+        {
+            emit error("directory not created");
+            return;
+        }
+    }
+    copy_file("haarcascade_frontalface_default.xml");
+    copy_file("haarcascade_mcs_eyepair_big.xml");
+    copy_file("haarcascade_mcs_mouth.xml");
+    copy_file("haarcascade_mcs_nose.xml");
+
+    emit trace("OK");
 }
 //--------------------------------------------------------------------------------
 #ifdef FACE_DETECT

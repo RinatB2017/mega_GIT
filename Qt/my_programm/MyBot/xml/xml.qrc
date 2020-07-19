@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>haarcascade_frontalface_default.xml</file>
+        <file>haarcascade_mcs_eyepair_big.xml</file>
+        <file>haarcascade_mcs_mouth.xml</file>
+        <file>haarcascade_mcs_nose.xml</file>
+    </qresource>
+</RCC>

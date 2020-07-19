@@ -68,8 +68,6 @@ void MainBox::init(void)
     camera = new WebCamera(this);
     camera->show();
     ui->camera_layout->addWidget(camera);
-#else
-    connect_log_signals(ui->camera_widget, this);
 #endif
 
     load_widgets();

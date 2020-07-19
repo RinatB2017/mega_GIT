@@ -104,7 +104,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="groupBox">
+            <widget class="QGroupBox" name="gb_face_detect">
              <property name="title">
               <string>Options</string>
              </property>

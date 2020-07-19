@@ -110,6 +110,14 @@ void WebCamera::init(void)
     connect(ui->sl_hue,         SIGNAL(valueChanged(int)),  this,   SLOT(set_hue(int)));
     //connect(ui->cb_autofocus,   SIGNAL(toggled(bool)),      this,   SLOT(set_autofocus(bool)));
     connect(ui->btn_set_device, SIGNAL(clicked(bool)),      this,   SLOT(set_device()));
+
+#ifndef FACE_DETECT
+    ui->gb_face_detect->setVisible(false);
+
+//    ui->checkBox_eyes->setVisible(false);
+//    ui->checkBox_nose->setVisible(false);
+//    ui->checkBox_mouth->setVisible(false);
+#endif
 }
 //--------------------------------------------------------------------------------
 void WebCamera::set_device(void)
@@ -405,9 +413,9 @@ void WebCamera::timerEvent(QTimerEvent *event)
 
 #ifdef FACE_DETECT
         double scaleFactor = 3.0; // Change Scale Factor to change speed
-#endif
-        //TODO mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
+        mFaceDetector.detectMultiScale(mOrigImage, faceVec, scaleFactor);
         //mFaceDetector.detectSingleScale(mOrigImage, rectVec);
+#endif
 
         if(faceVec.size() > 0)
         {

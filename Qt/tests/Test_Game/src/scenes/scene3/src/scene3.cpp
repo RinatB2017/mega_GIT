@@ -108,8 +108,9 @@ void Scene3::init_rocks(void)
         }
 
 
-        int max_x = qrand() % WIDTH - rock->boundingRect().width();
-        int max_y = qrand() % HEIGHT - rock->boundingRect().height();
+        QRandomGenerator generator;
+        int max_x = generator.generate() % WIDTH - rock->boundingRect().width();
+        int max_y = generator.generate() % HEIGHT - rock->boundingRect().height();
         if(max_x < 0) max_x = 0;
         if(max_y < 0) max_y = 0;
         rock->setPos(max_x, max_y);

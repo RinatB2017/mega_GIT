@@ -36,6 +36,8 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
+    ui->setupUi(this);
+
     init();
 }
 //--------------------------------------------------------------------------------
@@ -47,15 +49,20 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
 #ifdef QT_DEBUG
     createTestBar();
 #endif
 
-    connect(ui->btn_run_sh,     SIGNAL(clicked(bool)),  this,   SLOT(run_sh()));
-    connect(ui->btn_run_gcc,    SIGNAL(clicked(bool)),  this,   SLOT(run_gcc()));
-    connect(ui->btn_run_kate,   SIGNAL(clicked(bool)),  this,   SLOT(run_kate()));
+    connect(ui->btn_run_sh,         SIGNAL(clicked(bool)),  this,   SLOT(run_sh()));
+    connect(ui->btn_run_gcc,        SIGNAL(clicked(bool)),  this,   SLOT(run_gcc()));
+    connect(ui->btn_run_kate,       SIGNAL(clicked(bool)),  this,   SLOT(run_kate()));
     connect(ui->btn_run_command,    SIGNAL(clicked(bool)),  this,   SLOT(run_command()));
+
+    connect(ui->le_script_filename, &QLineEdit::editingFinished,    this,   &MainBox::run_sh);
+    connect(ui->le_gcc_param,       &QLineEdit::editingFinished,    this,   &MainBox::run_gcc);
+    connect(ui->le_kate_param,      &QLineEdit::editingFinished,    this,   &MainBox::run_kate);
+    connect(ui->le_command,         &QLineEdit::editingFinished,    this,   &MainBox::run_command);
+    connect(ui->le_param,           &QLineEdit::editingFinished,    this,   &MainBox::run_command);
 
     ui->btn_run_sh->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_run_gcc->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
@@ -269,11 +276,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    emit info("load_setting");
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    emit info("save_setting");
+
 }
 //--------------------------------------------------------------------------------

@@ -160,14 +160,14 @@ bool MainBox::execTableBuild(QString &qryStr, QTextStream &out)
 
     if(!(result = qry.exec(qryStr)))
     {
-        out << "----------------------------" << endl;
-        out << "Failed to build report table" << endl;
-        out << "Error Number: " << qry.lastError().number() << endl;
-        out << "Driver Error: " << qry.lastError().driverText() << endl;
-        out << "Database Error: " << qry.lastError().databaseText() << endl;
+        out << "----------------------------" << Qt::endl;
+        out << "Failed to build report table" << Qt::endl;
+        out << "Error Number: " << qry.lastError().number() << Qt::endl;
+        out << "Driver Error: " << qry.lastError().driverText() << Qt::endl;
+        out << "Database Error: " << qry.lastError().databaseText() << Qt::endl;
     }
     else
-        out << "Table built OK" << endl;
+        out << "Table built OK" << Qt::endl;
 
     return result;
 }

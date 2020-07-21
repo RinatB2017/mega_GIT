@@ -1260,6 +1260,7 @@ void MainBox::generate_random_name(void)
     family_list.sort();
     //------
     QStringList final_data;
+    QRandomGenerator generator;
     for(int n=0; n<family_list.count(); n++)
     {
         QString last_simvol = family_list.at(n).right(1);
@@ -1268,14 +1269,14 @@ void MainBox::generate_random_name(void)
         {
             temp = QString("%1 %2")
                     .arg(family_list.at(n))
-                    .arg(name_rus_women_list.at(qrand() % name_rus_women_list.count()));
+                    .arg(name_rus_women_list.at(generator.generate() % name_rus_women_list.count()));
         }
 
         if(temp.isEmpty())
         {
             temp = QString("%1 %2")
                     .arg(family_list.at(n))
-                    .arg(name_rus_men_list.at(qrand() % name_rus_men_list.count()));
+                    .arg(name_rus_men_list.at(generator.generate() % name_rus_men_list.count()));
         }
         final_data << temp;
     }

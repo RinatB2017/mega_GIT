@@ -56,6 +56,11 @@ IPCtrl4::IPCtrl4(QWidget *parent) : QFrame(parent)
     connect( this, SIGNAL(signalTextChanged(QLineEdit*)),
              this, SLOT(slotTextChanged(QLineEdit*)),
              Qt::QueuedConnection );
+
+    for(int n=0; n<QTUTL_IP_SIZE; n++)
+    {
+        connect(m_pLineEdit[n], &QLineEdit::editingFinished,    this,   &IPCtrl4::editingFinished);
+    }
 }
 //--------------------------------------------------------------------------------
 IPCtrl4::~IPCtrl4()

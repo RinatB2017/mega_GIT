@@ -119,7 +119,8 @@ void MainBox::test(void)
     {
         if(all_break) return;
         QCoreApplication::processEvents();
-        ui->histogram_widget->add_histogram_data(x, pos_x, 5, qrand() % 100);
+        QRandomGenerator generator;
+        ui->histogram_widget->add_histogram_data(x, pos_x, 5, generator.generate() % 100);
         pos_x += 7;
     }
     emit info(tr("test end"));

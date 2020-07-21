@@ -11,6 +11,9 @@ class IPCtrl4 : public QFrame
 {
     Q_OBJECT
 
+signals:
+    void editingFinished(void);
+
 public:
     IPCtrl4(QWidget *parent = nullptr);
     ~IPCtrl4();

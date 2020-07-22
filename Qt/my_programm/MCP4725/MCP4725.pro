@@ -6,10 +6,7 @@ TEMPLATE = app
 TARGET   = MCP4725
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/mcp4725_mainbox \
-    $$PWD/src/mcp4725_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -18,15 +15,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    mcp4725_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    mcp4725_mainbox.cpp \
     main.cpp
-
-FORMS   += mcp4725_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -52,6 +45,8 @@ include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 
 include ($$LIB_PATH2/qwt/qwt.pri)
+
+include (src/mcp4725_mainbox/mcp4725_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

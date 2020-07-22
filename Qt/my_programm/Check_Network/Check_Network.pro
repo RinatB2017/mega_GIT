@@ -7,10 +7,7 @@ TARGET      = Check_Network
 CONFIG      += c++11
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/check_network_mainbox \
-    $$PWD/src/check_network_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
@@ -24,15 +21,11 @@ DEFINES += PROGRAMM_IN_UTF8
 #DEFINES += USE_RTSP
 
 HEADERS += \
-    check_network_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    check_network_mainbox.cpp \
     main.cpp
-
-FORMS   += check_network_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -50,6 +43,8 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/ipctrl4/ipctrl4.pri)
 include ($$LIB_PATH2/widgets/rtsp_widget/rtsp_widget.pri)
+
+include (src/check_network_mainbox/check_network_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

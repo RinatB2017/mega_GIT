@@ -6,9 +6,7 @@ TEMPLATE = app
 TARGET   = CalcMd5
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/calcmd5_mainbox \
-    $$PWD/src/calcmd5_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += NO_LOG
@@ -23,15 +21,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    calcmd5_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    calcmd5_mainbox.cpp \
     main.cpp
-
-FORMS   += calcmd5_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -40,6 +34,8 @@ win32 {
 LIB_PATH  = "$$PWD/../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/calcmd5_mainbox/calcmd5_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

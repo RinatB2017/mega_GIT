@@ -6,10 +6,7 @@ TEMPLATE = app
 TARGET   = FindWindow
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/findwindow_mainbox \
-    $$PWD/src/findwindow_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += USE_TOPLEVELWIDGETS
@@ -18,15 +15,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    findwindow_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    findwindow_mainbox.cpp \
     main.cpp
-
-FORMS   += findwindow_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -48,6 +41,8 @@ LIB_PATH    = "$$PWD/../../lib"
 LIB_PATH2   = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/findwindow_mainbox/findwindow_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

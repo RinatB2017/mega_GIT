@@ -6,10 +6,7 @@ TEMPLATE = app
 TARGET   = Labyrinth
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/labyrinth_mainbox \
-    $$PWD/src/labyrinth_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -18,15 +15,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    labyrinth_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    labyrinth_mainbox.cpp \
     main.cpp
-
-FORMS   += labyrinth_mainbox.ui
 
 RESOURCES   += \
     images/buttons.qrc \
@@ -43,6 +36,8 @@ LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/labyrinth_mainbox/labyrinth_mainbox.pri)
 
 include (src/minimap/minimap.pri)
 include (src/map/map.pri)

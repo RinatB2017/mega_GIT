@@ -8,9 +8,7 @@ TARGET      = RS232_5_bridge
 FOLDER      = RS232
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/rs232_5_bridge_mainbox \
-    $$PWD/src/rs232_5_bridge_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += RS232_FIXED_SIZE
@@ -23,15 +21,11 @@ DEFINES += NO_TRAYICON
 DEFINES += NO_LOG
 
 HEADERS += \
-    rs232_5_bridge_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    rs232_5_bridge_mainbox.cpp \
     main.cpp
-
-FORMS   += rs232_5_bridge_mainbox.ui
 
 win32 {
     RC_ICONS = ico/RS232.ico
@@ -41,6 +35,8 @@ LIB_PATH  = "$$PWD/../../../../lib"
 LIB_PATH2 = "$$PWD/../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/rs232_5_bridge_mainbox/rs232_5_bridge_mainbox.pri)
 #----------------------------------------------
 CONFIG  += use_worker
 use_worker {

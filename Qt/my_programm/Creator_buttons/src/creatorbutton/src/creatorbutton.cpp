@@ -304,7 +304,7 @@ void CreatorButton::save_picture_to(void){
         QStringList files = dlg->selectedFiles();
         QString filename = files.at(0);
 
-        ui->lbl_picture->pixmap()->save(filename);
+        ui->lbl_picture->pixmap(Qt::ReturnByValue).save(filename);
     }
 }
 //--------------------------------------------------------------------------------

@@ -6,9 +6,7 @@ TEMPLATE    = app
 TARGET      = Navi_transmitter
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/navi_transmitter_mainbox \
-    $$PWD/src/navi_transmitter_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += RS232_FIXED_SIZE
@@ -23,15 +21,11 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
-    navi_transmitter_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    navi_transmitter_mainbox.cpp \
     main.cpp
-
-FORMS   += navi_transmitter_mainbox.ui
 
 RESOURCES += doc/test_data.qrc
 
@@ -45,6 +39,8 @@ LIB_PATH2 = "$$PWD/../../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+
+include (src/navi_transmitter_mainbox/navi_transmitter_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

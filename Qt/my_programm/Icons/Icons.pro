@@ -6,9 +6,7 @@ TEMPLATE = app
 TARGET   = Icons
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/icons_mainbox \
-    $$PWD/src/icons_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -16,15 +14,11 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    icons_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    icons_mainbox.cpp \
     main.cpp
-
-FORMS   += icons_mainbox.ui
 
 RESOURCES += icons/list_icons.qrc
 
@@ -39,6 +33,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 QMAKE_RESOURCE_FLAGS += -no-compress
 include ($$LIB_PATH2/icons.pri)
+
+include (src/icons_mainbox/icons_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

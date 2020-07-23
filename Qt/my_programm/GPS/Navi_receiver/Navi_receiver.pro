@@ -6,9 +6,7 @@ TEMPLATE    = app
 TARGET      = Navi_receiver
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/navi_receiver_mainbox \
-    $$PWD/src/navi_receiver_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += RS232_FIXED_SIZE
@@ -24,14 +22,10 @@ DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \
-    version.hpp \
-    navi_receiver_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    navi_receiver_mainbox.cpp \
     main.cpp
-
-FORMS   += navi_receiver_mainbox.ui
 
 RESOURCES += doc/test_data.qrc
 
@@ -51,6 +45,8 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include ($$LIB_PATH2/proto_NMEA_0183/proto_NMEA_0183.pri)
+
+include (src/navi_receiver_mainbox/navi_receiver_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

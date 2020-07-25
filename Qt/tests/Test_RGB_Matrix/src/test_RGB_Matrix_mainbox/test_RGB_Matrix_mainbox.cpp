@@ -243,10 +243,6 @@ void MainBox::createTimer(void)
 {
     timer = new QTimer(this);
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
-    if(main_serialBox)
-    {
-        connect(main_serialBox,  SIGNAL(not_working()), timer,  SLOT(stop()));
-    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::update(void)
@@ -346,7 +342,7 @@ void MainBox::test(void)
 
     QString text = "Hello, world! ПРИВЕТ, МИР!";
     QFontMetrics fm(*font);
-    int w = fm.width(text);
+    int w = fm.horizontalAdvance(text);
     int h = fm.height();
 
     QImage picture(w, h, QImage::Format_Mono);

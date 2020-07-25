@@ -95,8 +95,8 @@ void MainBox::init(void)
     connect_log_signals(tjs, this);
     tjs->show();
 
-    QSize rec = QGuiApplication::screens().at(0)->size();
-    tjs->move(0, rec.height()-tjs->height());
+//    QSize rec = QGuiApplication::screens().at(0)->size();
+//    tjs->move(0, rec.height()-tjs->height());
 #endif
 
     //---

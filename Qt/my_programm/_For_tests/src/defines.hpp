@@ -12,6 +12,12 @@
 #define MAX_X 10
 #define MAX_Y 10
 #define CELL_SIZE 50
+
+#define TEST_JSON_X "test_json_x"
+#define TEST_JSON_Y "test_json_y"
+#define TEST_JSON_W "test_json_w"
+#define TEST_JSON_H "test_json_h"
+#define TEST_JSON_SPLITTER "test_json_splitter"
 //--------------------------------------------------------------------------------
 #define ORGNAME "Home"
 #define APPNAME "_For_tests"

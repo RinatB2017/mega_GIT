@@ -19,6 +19,8 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "test_json.hpp"
+#include "defines.hpp"
+
 #include "ui_test_json.h"
 //--------------------------------------------------------------------------------
 Test_JSON::Test_JSON(QWidget *parent) :
@@ -32,12 +34,39 @@ Test_JSON::Test_JSON(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Test_JSON::~Test_JSON()
 {
+    QRect rect = geometry();
+
+    int pos_x = rect.x();
+    int pos_y = rect.y();
+    int pos_w = rect.width();
+    int pos_h = rect.height();
+
+    save_int(TEST_JSON_X,   pos_x);
+    save_int(TEST_JSON_Y,   pos_y);
+    save_int(TEST_JSON_W,   pos_w);
+    save_int(TEST_JSON_H,   pos_h);
+
+    save_bytearray(TEST_JSON_SPLITTER,  ui->tj_splitter->saveState());
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
 void Test_JSON::init(void)
 {
     connect(ui->btn_test,   &QPushButton::clicked,  this,   &Test_JSON::test);
+
+    int pos_x = load_int(TEST_JSON_X);
+    int pos_y = load_int(TEST_JSON_Y);
+    int pos_w = load_int(TEST_JSON_W);
+    int pos_h = load_int(TEST_JSON_H);
+
+    QByteArray ba = load_bytearray(TEST_JSON_SPLITTER);
+
+    if(pos_w <= 100) pos_w = 800;
+    if(pos_h <= 100) pos_h = 600;
+
+    setGeometry(pos_x, pos_y, pos_w, pos_h);
+    ui->tj_splitter->restoreState(ba);
 }
 //--------------------------------------------------------------------------------
 void Test_JSON::test(void)

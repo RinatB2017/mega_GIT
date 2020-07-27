@@ -215,8 +215,8 @@ void EventWidget::resizeEvent( QResizeEvent * event )
 void EventWidget::wheelEvent( QWheelEvent * event )
 {
     emit gotEvent( tr("wheelEvent( x:%1, y:%2, delta:%3, orientation:%4 )")
-                   .arg( event->x() )
-                   .arg( event->y() )
-                   .arg( event->delta() ).arg( event->orientation()==1?
+                   .arg( event->position().x() )
+                   .arg( event->position().y() )
+                   .arg( event->angleDelta().y() ).arg( event->orientation()==1?
                                                    "Horizontal":"Vertical" ) );
 }

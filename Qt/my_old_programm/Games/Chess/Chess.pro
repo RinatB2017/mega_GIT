@@ -9,8 +9,6 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/chess_mainbox \
-    $$PWD/src/chess_mainbox/ui \
     $$PWD/src/new_chessboard
 #    $$PWD/src/chessboard
 INCLUDEPATH = $$DEPENDPATH
@@ -24,15 +22,11 @@ DEFINES += NO_TRAYICON
 HEADERS += \
     chessboard.hpp \
     defines.hpp \
-    version.hpp \
-    chess_mainbox.hpp
+    version.hpp
 
 SOURCES += \
     chessboard.cpp \
-    chess_mainbox.cpp \
     main.cpp
-
-FORMS   += chess_mainbox.ui
 
 RESOURCES   += images/chess.qrc
 
@@ -45,6 +39,8 @@ win32 {
 LIB_PATH = "$$PWD/../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/chess_mainbox/chess_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

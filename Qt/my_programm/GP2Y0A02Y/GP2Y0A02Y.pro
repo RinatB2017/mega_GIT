@@ -6,10 +6,7 @@ TEMPLATE = app
 TARGET   = GP2Y0A02Y
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/gp2y0a02y_mainbox \
-    $$PWD/src/gp2y0a02y_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += RS232_FIXED_SIZE
@@ -23,15 +20,11 @@ DEFINES += SHOW_SIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    gp2y0a02y_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    gp2y0a02y_mainbox.cpp \
     main.cpp
-
-FORMS   += gp2y0a02y_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -60,6 +53,8 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 include (src/serial/serial.pri)
 include (src/viewer/viewer.pri)
 include (src/grapher/grapher.pri)
+
+include (src/gp2y0a02y_mainbox/gp2y0a02y_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

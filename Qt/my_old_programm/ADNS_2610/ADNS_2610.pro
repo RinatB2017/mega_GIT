@@ -8,7 +8,7 @@ TARGET      = ADNS_2610
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src 
+    $$PWD/src \
     $$PWD/src/screen
 INCLUDEPATH = $$DEPENDPATH
 

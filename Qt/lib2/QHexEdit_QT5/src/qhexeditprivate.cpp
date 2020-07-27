@@ -1110,7 +1110,7 @@ void QHexEditPrivate::wheelEvent(QWheelEvent *event)
 {
     if(this->_hexeditdata->length())
     {
-        int numDegrees = event->delta() / 8;
+        int numDegrees = event->angleDelta().y() / 8;
         int numSteps = numDegrees / 15;
 
         if(event->orientation() == Qt::Vertical)

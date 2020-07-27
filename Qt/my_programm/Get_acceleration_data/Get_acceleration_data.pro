@@ -6,10 +6,7 @@ TEMPLATE = app
 TARGET   = Get_acceleration_data
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/get_acceleration_data \
-    $$PWD/src/get_acceleration_data/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -19,15 +16,11 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    get_acceleration_data.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    get_acceleration_data.cpp \
     main.cpp
-
-FORMS   += get_acceleration_data.ui
 
 win32 {
     RC_ICONS += ico/computer.ico
@@ -52,6 +45,8 @@ include ($$LIB_PATH2/meta/grapherbox.pri)
 
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
+
+include (src/get_acceleration_data/get_acceleration_data.pri)
 
 include (src/glwidget/glwidget_qt5.pri)
 include (src/lcd_widget/lcd_widget.pri)

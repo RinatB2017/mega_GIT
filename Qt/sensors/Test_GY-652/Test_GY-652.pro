@@ -8,9 +8,7 @@ TARGET   = Test_GY-652
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_GY-652_mainbox \
-    $$PWD/src/test_GY-652_mainbox/ui \
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -33,15 +31,11 @@ win32 {
 }
 
 HEADERS += \
-    test_GY-652_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_GY-652_mainbox.cpp \
     main.cpp
-
-FORMS   += test_GY-652_mainbox.ui
 
 OTHER_FILES += \
     doc/notebook.txt \
@@ -67,6 +61,8 @@ include ($$LIB_PATH2/meta/grapherbox.pri)
 #include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+
+include (src/test_GY-652_mainbox/test_GY-652_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

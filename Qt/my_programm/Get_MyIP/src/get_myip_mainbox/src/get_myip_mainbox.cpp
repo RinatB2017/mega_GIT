@@ -47,7 +47,7 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
-    connect(ui->btn_get_my_ip,  SIGNAL(clicked(bool)),  this,   SLOT(show_my_IP()));
+    connect(ui->btn_get_my_ip,  &QPushButton::clicked,  this,   &MainBox::show_my_IP);
 
     ui->lcd_0->display("---");
     ui->lcd_1->display("---");

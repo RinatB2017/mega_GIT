@@ -8,10 +8,7 @@ TARGET   = Cards
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/cards_mainbox \
-    $$PWD/src/cards_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT	+= svg
@@ -25,15 +22,11 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += SAVE_CARD
 
 HEADERS += \
-    cards_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    cards_mainbox.cpp \
     main.cpp
-
-FORMS   += cards_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -45,6 +38,8 @@ LIB_PATH = "$$PWD/../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/card/card.pri)
+
+include (src/cards_mainbox/cards_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -8,9 +8,7 @@ TARGET   = Test_MPU-6050
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_MPU-6050_mainbox \
-    $$PWD/src/test_MPU-6050_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -28,15 +26,11 @@ DEFINES += PROGRAMM_IN_UTF8
 #DEFINES += NO_GRAPHER
 
 HEADERS += \
-    test_MPU-6050_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_MPU-6050_mainbox.cpp \
     main.cpp
-
-FORMS   += test_MPU-6050_mainbox.ui
 
 OTHER_FILES += \
     doc/notebook.txt \
@@ -77,6 +71,8 @@ include ($$LIB_PATH2/meta/grapherbox.pri)
 #include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+
+include (src/test_MPU-6050_mainbox/test_MPU-6050_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

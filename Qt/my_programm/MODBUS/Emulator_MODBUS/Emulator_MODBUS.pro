@@ -8,11 +8,7 @@ TARGET      = Emulator_MODBUS
 FOLDER  = modbus
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/emulator_modbus_mainbox \
-    $$PWD/src/emulator_modbus_mainbox/ui \
-    $$PWD/src/settingsdialog \
-    $$PWD/src/settingsdialog/ui \
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport network
@@ -28,20 +24,16 @@ DEFINES += USE_CRC16
 DEFINES += TEST
 
 HEADERS += \
-    emulator_modbus_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    emulator_modbus_mainbox.cpp \
     main.cpp
 
-FORMS   += emulator_modbus_mainbox.ui
-
 QT      += serialport
-HEADERS += settingsdialog.h
-SOURCES += settingsdialog.cpp
-FORMS   += settingsdialog.ui
+#HEADERS += settingsdialog.h
+#SOURCES += settingsdialog.cpp
+#FORMS   += settingsdialog.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -52,6 +44,9 @@ QT  += serialbus
 LIB_PATH = "$$PWD/../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/emulator_modbus_mainbox/emulator_modbus_mainbox.pri)
+include (src/settingsdialog/settingsdialog.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

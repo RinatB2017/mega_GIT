@@ -49,7 +49,7 @@ QCandlestickSet *CandlestickDataReader::readCandlestickSet()
     if (line.startsWith("#") || line.isEmpty())
         return nullptr;
 
-    QStringList strList = line.split(" ", QString::SkipEmptyParts);
+    QStringList strList = line.split(" ", Qt::SkipEmptyParts);
     if (strList.count() != 5)
         return nullptr;
 

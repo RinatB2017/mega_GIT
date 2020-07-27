@@ -74,7 +74,7 @@ void PersistentCookieJar::save(void)
 
     foreach (QNetworkCookie cookie, allCookies())
     {
-        out << cookie.toRawForm () << endl;
+        out << cookie.toRawForm () << Qt::endl;
     }
     out.flush();
     fout.flush();

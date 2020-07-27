@@ -52,8 +52,6 @@ const int DurationSeconds   = 1;
 const int DataSampleRateHz  = 44100;
 const int BufferSize        = 32768;
 //---------------------------------------------------------------------------
-#define APPNAME "audiooutput"
-//---------------------------------------------------------------------------
 #include "generator_curve.hpp"
 #include "grapherbox.hpp"
 #include "sound_widget.hpp"

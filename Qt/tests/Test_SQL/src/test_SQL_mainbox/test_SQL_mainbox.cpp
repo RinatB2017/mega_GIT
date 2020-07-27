@@ -210,18 +210,18 @@ bool MainBox::odbcSanityCheck(QSqlDatabase &db, QString &dbServer)
 //--------------------------------------------------------------------------------
 void MainBox::displayNotSupportedMesg(QSqlDatabase &db, QTextStream &out)
 {
-    out << "Selected Driver [" << db.driverName() << "]" << endl;
-    out << "Cannot build the required table - Do not know how to "              << endl;
-    out << "specify an auto incrementing primary key for this database engine." << endl;
-    out << "CREATE TABLE report"                                                << endl;
-    out << "("                                                                  << endl;
-    out << "  report_id integer NOT NULL PRIMARY KEY,"                          << endl;
-    out << "  report_name TEXT,"                                                << endl;
-    out << "  report_descrip TEXT NOT NULL,"                                    << endl;
-    out << "  report_grade INTEGER NOT NULL DEFAULT 0,"                         << endl;
-    out << "  report_source TEXT"                                               << endl;
-    out << ")"                                                                  << endl;
-    out << endl;
+    out << "Selected Driver [" << db.driverName() << "]" << Qt::endl;
+    out << "Cannot build the required table - Do not know how to "              << Qt::endl;
+    out << "specify an auto incrementing primary key for this database engine." << Qt::endl;
+    out << "CREATE TABLE report"                                                << Qt::endl;
+    out << "("                                                                  << Qt::endl;
+    out << "  report_id integer NOT NULL PRIMARY KEY,"                          << Qt::endl;
+    out << "  report_name TEXT,"                                                << Qt::endl;
+    out << "  report_descrip TEXT NOT NULL,"                                    << Qt::endl;
+    out << "  report_grade INTEGER NOT NULL DEFAULT 0,"                         << Qt::endl;
+    out << "  report_source TEXT"                                               << Qt::endl;
+    out << ")"                                                                  << Qt::endl;
+    out << Qt::endl;
 }
 //--------------------------------------------------------------------------------
 // Builds the report table if its a database engine that is supported
@@ -241,10 +241,10 @@ bool MainBox::buildTable(QSqlDatabase &db, QTextStream &out, QString &dbServer)
     {
         if(!odbcSanityCheck(db, dbServer))
         {
-            out << "If -databaseURL uses the ODBC protocol then -dbengine " << endl;
-            out << "must indicate the type of database being connected to via " << endl;
-            out << "ODBC. Eg. mysql, db2, psql" << endl;
-            out << "-dbengine=" << dbServer << " Do not know how to create report table for this engine" << endl;
+            out << "If -databaseURL uses the ODBC protocol then -dbengine " << Qt::endl;
+            out << "must indicate the type of database being connected to via " << Qt::endl;
+            out << "ODBC. Eg. mysql, db2, psql" << Qt::endl;
+            out << "-dbengine=" << dbServer << " Do not know how to create report table for this engine" << Qt::endl;
             displayNotSupportedMesg(db, out);
             return result;
         }

@@ -8,9 +8,7 @@ TARGET   = Generator_Curve
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/generator_curve_mainbox \
-    $$PWD/src/generator_curve_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += multimedia
@@ -23,15 +21,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    generator_curve_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    generator_curve_mainbox.cpp \
     main.cpp
-
-FORMS   += generator_curve_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -46,6 +40,8 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include ($$LIB_PATH2/generator_curve/generator_curve.pri)
+
+include (src/generator_curve_mainbox/generator_curve_mainbox.pri)
 
 include (src/widgets/widgets.pri)
 

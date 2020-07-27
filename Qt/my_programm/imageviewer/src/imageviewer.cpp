@@ -179,18 +179,17 @@ void ImageViewer::saveAs()
 
 void ImageViewer::print()
 {
-    Q_ASSERT(imageLabel->pixmap());
 #if !defined(QT_NO_PRINTER) && !defined(QT_NO_PRINTDIALOG)
     QPrintDialog dialog(&printer, this);
     if (dialog.exec())
     {
         QPainter painter(&printer);
         QRect rect = painter.viewport();
-        QSize size = imageLabel->pixmap()->size();
+        QSize size = imageLabel->pixmap(Qt::ReturnByValue).size();
         size.scale(rect.size(), Qt::KeepAspectRatio);
         painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-        painter.setWindow(imageLabel->pixmap()->rect());
-        painter.drawPixmap(0, 0, *imageLabel->pixmap());
+        painter.setWindow(imageLabel->pixmap(Qt::ReturnByValue).rect());
+        painter.drawPixmap(0, 0, imageLabel->pixmap(Qt::ReturnByValue));
     }
 #endif
 }
@@ -237,13 +236,10 @@ void ImageViewer::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
-    const QPixmap *p = imageLabel->pixmap();
-    if(p)
-    {
-        QSize pixSize = p->size();
-        pixSize.scale(size(), Qt::KeepAspectRatio);
-        imageLabel->setMaximumSize(pixSize);
-    }
+    QPixmap p = imageLabel->pixmap(Qt::ReturnByValue);
+    QSize pixSize = p.size();
+    pixSize.scale(size(), Qt::KeepAspectRatio);
+    imageLabel->setMaximumSize(pixSize);
 }
 
 void ImageViewer::zoomIn()
@@ -354,11 +350,10 @@ void ImageViewer::updateActions()
 
 void ImageViewer::scaleImage(double factor)
 {
-    Q_ASSERT(imageLabel->pixmap());
     scaleFactor *= factor;
 
-    imageLabel->resize(scaleFactor * imageLabel->pixmap()->size().width(),
-                       scaleFactor * imageLabel->pixmap()->size().height());
+    imageLabel->resize(scaleFactor * imageLabel->pixmap(Qt::ReturnByValue).size().width(),
+                       scaleFactor * imageLabel->pixmap(Qt::ReturnByValue).size().height());
 
     adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
     adjustScrollBar(scrollArea->verticalScrollBar(), factor);

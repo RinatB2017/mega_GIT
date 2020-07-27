@@ -1221,6 +1221,7 @@ void MainBox::generate_random_name(void)
     QFile name_rus_women_data(":/name_rus_women.txt");
     QFile family_rus_data(":/family_rus.txt");
 
+    QRandomGenerator generator;
     QStringList name_rus_men_list;
     QStringList name_rus_women_list;
     QStringList family_list;
@@ -1273,14 +1274,14 @@ void MainBox::generate_random_name(void)
         {
             temp = QString("%1 %2")
                     .arg(family_list.at(n))
-                    .arg(name_rus_women_list.at(qrand() % name_rus_women_list.count()));
+                    .arg(name_rus_women_list.at(generator.generate() % name_rus_women_list.count()));
         }
 
         if(temp.isEmpty())
         {
             temp = QString("%1 %2")
                     .arg(family_list.at(n))
-                    .arg(name_rus_men_list.at(qrand() % name_rus_men_list.count()));
+                    .arg(name_rus_men_list.at(generator.generate() % name_rus_men_list.count()));
         }
         final_data << temp;
     }

@@ -427,8 +427,9 @@ void MainBox::test(void)
     QString current_url = URL_MAIN_PAGE;
     QUrl beginUrl = QUrl(current_url);
 
+    QRandomGenerator generator;
     int n=0;
-    int max_n = 10 + (qrand() % 20);
+    int max_n = 10 + (generator.generate() % 20);
     while(n < max_n)
     {
         if(global_stop_flag) return;
@@ -457,14 +458,14 @@ void MainBox::test(void)
         }
         if(sl.count() != 0)
         {
-            int index = qrand() % sl.count();
+            int index = generator.generate() % sl.count();
             current_url = sl.at(index);
         }
         else
         {
             current_url = beginUrl.toString();
         }
-        int waiting_time = 1 + (qrand() % 10);
+        int waiting_time = 1 + (generator.generate() % 10);
         emit info(QString(tr("waiting %1 sec")).arg(waiting_time));
         Waiting::sec(waiting_time);
         n++;

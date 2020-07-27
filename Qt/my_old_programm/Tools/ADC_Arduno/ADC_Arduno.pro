@@ -8,9 +8,7 @@ TARGET   = ADC_Arduno
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/adc_arduino_mainbox \
-    $$PWD/src/adc_arduino_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += RS232LOG
@@ -19,15 +17,11 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    adc_arduino_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    adc_arduino_mainbox.cpp \
     main.cpp
-
-FORMS   += adc_arduino_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -38,6 +32,8 @@ LIB_PATH2 = "$$PWD/../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
+
+include (src/adc_arduino_mainbox/adc_arduino_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -219,7 +219,7 @@ int HLK_RM04_widget::split_data(QByteArray dirty_data)
 {
     QString temp = dirty_data.data();
 
-    sl_read_data = temp.split(QRegExp("[\r\n]+"), QString::SkipEmptyParts);
+    sl_read_data = temp.split(QRegExp("[\r\n]+"), Qt::SkipEmptyParts);
     int cnt = sl_read_data.count();
     if(cnt > 0)
     {
@@ -542,7 +542,7 @@ void HLK_RM04_widget::s_scan(void)
     emit info(QString("Cnt: %1").arg(cnt));
     for(int n=2; n<cnt; n++)
     {
-        QStringList sl_scan_data = sl_read_data.at(n).split(QRegExp("[ ]+"), QString::SkipEmptyParts);
+        QStringList sl_scan_data = sl_read_data.at(n).split(QRegExp("[ ]+"), Qt::SkipEmptyParts);
         //emit info(QString("SSID: %1").arg(sl_scan_data.at(1)));
         emit info(QString("BSSID: %1").arg(sl_scan_data.at(2)));
     }

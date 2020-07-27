@@ -84,7 +84,8 @@ void MainBox::init(void)
 
         web.main_frame = web.webview->page()->mainFrame();
         web.is_loaded = false;
-        web.count = 10 + (qrand() % 10);
+        QRandomGenerator generator;
+        web.count = 10 + (generator.generate() % 10);
 
         webviews.append(web);
     }
@@ -599,6 +600,8 @@ void MainBox::check_proxies_list(void)
 //--------------------------------------------------------------------------------
 void MainBox::run_walker(void)
 {
+    QRandomGenerator generator;
+
     int button = QMessageBox::question(this, tr("run walker"), tr("Run walker?"), QMessageBox::Yes, QMessageBox::No);
     if(button != QMessageBox::Yes)
     {
@@ -610,7 +613,7 @@ void MainBox::run_walker(void)
         webviews[n].is_block = false;
         webviews[n].is_loaded = false;
         webviews[n].progressBar->reset();
-        webviews[n].count = 5 + (qrand() % 5);
+        webviews[n].count = 5 + (generator.generate() % 5);
         append_proxy(n, proxy_list->item(n)->text());
         webviews[n].time.start();
         load_url(n, URL_MAIN_PAGE, true, false);
@@ -631,7 +634,7 @@ void MainBox::run_walker(void)
                 {
                     if(webviews[index].is_block == false)
                     {
-                        webviews[index].count = 5 + (qrand() % 5);
+                        webviews[index].count = 5 + (generator.generate() % 5);
                         append_proxy(index, proxy_list->item(current_index)->text());
                         load_url(index, URL_MAIN_PAGE, true, false);
                         proxy_list->setCurrentRow(current_index);
@@ -752,7 +755,8 @@ void MainBox::test(void)
     QUrl beginUrl = QUrl(current_url);
 
     int n=0;
-    int max_n = 10 + (qrand() % 10);
+    QRandomGenerator generator;
+    int max_n = 10 + (generator.generate() % 10);
     while(n < max_n)
     {
         if(global_stop_flag) return;
@@ -781,14 +785,14 @@ void MainBox::test(void)
         }
         if(sl.count() != 0)
         {
-            int index = qrand() % sl.count();
+            int index = generator.generate() % sl.count();
             current_url = sl.at(index);
         }
         else
         {
             current_url = beginUrl.toString();
         }
-        int waiting_time = 1 + (qrand() % 10);
+        int waiting_time = 1 + (generator.generate() % 10);
         emit info(QString(tr("waiting %1 sec")).arg(waiting_time));
         Waiting::sec(waiting_time);
         n++;
@@ -938,7 +942,8 @@ QString MainBox::get_random_url(int index)
     }
     if(sl.count() != 0)
     {
-        int index = qrand() % sl.count();
+        QRandomGenerator generator;
+        int index = generator.generate() % sl.count();
         current_url = sl.at(index);
     }
     else

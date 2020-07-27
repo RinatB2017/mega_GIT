@@ -8,9 +8,7 @@ TARGET   = ADC_oscilloscope_new
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/adc_oscilloscope_new_mainbox \
-    $$PWD/src/adc_oscilloscope_new_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += RS232LOG
@@ -19,15 +17,11 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    adc_oscilloscope_new_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    adc_oscilloscope_new_mainbox.cpp \
     main.cpp
-
-FORMS   += adc_oscilloscope_new_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -41,6 +35,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+
+include (src/adc_oscilloscope_new_mainbox/adc_oscilloscope_new_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

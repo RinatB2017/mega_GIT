@@ -8,9 +8,7 @@ TARGET   = WebKit
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/webkit_mainbox \
-    $$PWD/src/webkit_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += PROGRAMM_IN_UTF8
@@ -28,14 +26,10 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += network testlib
 
 HEADERS += \
-    defines.hpp \
-    webkit_mainbox.hpp
+    defines.hpp 
 
 SOURCES += \
-    main.cpp \
-    webkit_mainbox.cpp
-
-FORMS   += webkit_mainbox.ui
+    main.cpp 
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -63,6 +57,8 @@ include ($$LIB_PATH2/web/tableview/tableview.pri)
 include ($$LIB_PATH2/web/findlinks/findlinks.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
+
+include (src/webkit_mainbox/webkit_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

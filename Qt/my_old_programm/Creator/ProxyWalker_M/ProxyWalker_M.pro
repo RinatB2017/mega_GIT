@@ -9,8 +9,6 @@ FOLDER  = old_programm
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/proxy_walker_m_mainbox \
-    $$PWD/src/proxy_walker_m_mainbox/ui \
     $$PWD/src/waiting \
     $$PWD/src/tester
 INCLUDEPATH = $$DEPENDPATH
@@ -30,15 +28,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    proxy_walker_m_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    proxy_walker_m_mainbox.cpp \
     main.cpp
-
-FORMS   += proxy_walker_m_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -58,6 +52,8 @@ include ($$LIB_PATH2/web/webview/webview.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
+
+include (src/proxy_walker_m_mainbox/proxy_walker_m_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -8,9 +8,7 @@ TARGET      = ADNS_2610
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/adns_2610_mainbox \
-    $$PWD/src/adns_2610_mainbox/ui \
+    $$PWD/src 
     $$PWD/src/screen
 INCLUDEPATH = $$DEPENDPATH
 
@@ -23,17 +21,13 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    adns_2610_mainbox.hpp \
     defines.hpp \
     version.hpp \
     screen.hpp
 
 SOURCES += \
-    adns_2610_mainbox.cpp \
     main.cpp \
     screen.cpp
-
-FORMS += adns_2610_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -45,6 +39,8 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+
+include (src/adns_2610_mainbox/adns_2610_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

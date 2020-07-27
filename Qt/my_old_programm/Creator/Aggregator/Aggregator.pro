@@ -8,9 +8,7 @@ TARGET   = Aggregator
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/aggregator_mainbox \
-    $$PWD/src/aggregator_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -26,15 +24,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    aggregator_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    aggregator_mainbox.cpp \
     main.cpp
-
-FORMS += aggregator_mainbox.ui
 
 #RESOURCES += icons/temp.qrc
 
@@ -57,6 +51,8 @@ include ($$LIB_PATH2/web/webview/webview.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
 
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
+
+include (src/aggregator_mainbox/aggregator_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

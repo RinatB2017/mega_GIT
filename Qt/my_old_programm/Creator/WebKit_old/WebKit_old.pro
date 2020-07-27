@@ -8,9 +8,7 @@ TARGET   = WebKit_old
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/webkit_mainbox \
-    $$PWD/src/webkit_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 #QMAKE_CXXFLAGS += -std=c++11
@@ -29,14 +27,10 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += network sql
 
 HEADERS += \
-    webkit_mainbox.hpp \
     defines.hpp
 
 SOURCES += \
-    webkit_mainbox.cpp \
     main.cpp
-
-FORMS   += webkit_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
@@ -53,6 +47,8 @@ include ($$LIB_PATH/mainwindow/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mywidget.pri)
 
 include ($$LIB_PATH2/pictures/pictures.pri)
+
+include (src/webkit_mainbox/webkit_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

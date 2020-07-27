@@ -8,10 +8,7 @@ TARGET   = Teacher_reserv
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/teacher_mainbox \
-    $$PWD/src/teacher_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -28,15 +25,11 @@ DEFINES += NO_LOG
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    teacher_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    teacher_mainbox.cpp \
     main.cpp
-
-FORMS   += teacher_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -49,6 +42,8 @@ win32 {
 LIB_PATH = "$$PWD/../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/teacher_mainbox/teacher_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -8,9 +8,7 @@ TARGET   = TCP_Client
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/tcp_client_mainbox \
-    $$PWD/src/tcp_client_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += PROGRAMM_IN_UTF8
@@ -18,15 +16,11 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    tcp_client_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    tcp_client_mainbox.cpp \
     main.cpp
-
-FORMS   += tcp_client_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -45,5 +39,7 @@ include ($$LIB_PATH2/ethernet/tcp_client.pri)
 include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 
 #include ($$LIB_PATH/ethernet/fake/fake.pri)
+
+include (src/tcp_client_mainbox/tcp_client_mainbox.pri)
 
 VPATH = $$INCLUDEPATH

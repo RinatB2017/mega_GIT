@@ -8,9 +8,7 @@ TARGET      = MTC
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/mtc_mainbox \
-    $$PWD/src/mtc_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += RS232_FIXED_SIZE
@@ -21,15 +19,11 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    mtc_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    mtc_mainbox.cpp \
     main.cpp
-
-FORMS   += mtc_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -41,6 +35,8 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+
+include (src/mtc_mainbox/mtc_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

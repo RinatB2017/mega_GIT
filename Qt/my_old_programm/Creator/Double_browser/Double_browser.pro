@@ -8,9 +8,7 @@ TARGET   = Double_browser
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/double_browser_mainbox \
-    $$PWD/src/double_browser_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -28,15 +26,11 @@ DEFINES += NO_LOG
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    double_browser_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    double_browser_mainbox.cpp \
     main.cpp
-
-FORMS += double_browser_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -53,6 +47,8 @@ include ($$LIB_PATH2/web/javascript/javascript.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
 
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
+
+include (src/double_browser_mainbox/double_browser_mainbox.pri)
 
 DESTDIR = bin
 

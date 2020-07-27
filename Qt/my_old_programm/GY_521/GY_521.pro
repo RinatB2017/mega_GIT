@@ -8,9 +8,7 @@ TARGET      = GY_521
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/gy521_mainbox \
-    $$PWD/src/gy521_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += RS232_FIXED_SIZE
@@ -24,15 +22,11 @@ DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
 HEADERS += \
-    gy521_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    gy521_mainbox.cpp \
     main.cpp
-
-FORMS += gy521_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -45,6 +39,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+
+include (src/gy521_mainbox/gy521_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

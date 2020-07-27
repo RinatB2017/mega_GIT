@@ -7,8 +7,6 @@ TARGET   = ProxyWalker
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/proxy_walker_mainbox \
-    $$PWD/src/proxy_walker_mainbox/ui \
     $$PWD/src/waiting \
     $$PWD/src/tester
 INCLUDEPATH = $$DEPENDPATH
@@ -20,15 +18,11 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    proxy_walker_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    proxy_walker_mainbox.cpp \
     main.cpp
-
-FORMS   += proxy_walker_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
@@ -45,6 +39,8 @@ include ($$LIB_PATH2/web/webview/webview.pri)
 include ($$LIB_PATH2/web/websettingbox/websettingbox.pri)
 include ($$LIB_PATH2/web/javascript/javascript.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
+
+include (src/proxy_walker_mainbox/proxy_walker_mainbox.pri)
 
 VERSION_HEADER = src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)

@@ -310,7 +310,7 @@ void WebView::wheelEvent(QWheelEvent *event)
 {
     if (event->modifiers() == Qt::ControlModifier)
     {
-        if (event->delta() > 0)
+        if (event->angleDelta().y() > 0)
             setZoomFactor(zoomFactor()+0.1);
         else if (zoomFactor() > 0.1)
             setZoomFactor(zoomFactor()-0.1);

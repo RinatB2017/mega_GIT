@@ -8,10 +8,7 @@ TARGET   = MTC_runner
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/mtc_runner_mainbox \
-    $$PWD/src/mtc_runner_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -20,15 +17,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    mtc_runner_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    mtc_runner_mainbox.cpp \
     main.cpp
-
-FORMS   += mtc_runner_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -41,6 +34,8 @@ include (src/test/test.pri)
 LIB_PATH = "$$PWD/../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/mtc_runner_mainbox/mtc_runner_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

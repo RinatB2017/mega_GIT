@@ -8,9 +8,7 @@ TARGET   = Platanov_blowser
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/platanov_browser_mainbox \
-    $$PWD/src/platanov_browser_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -30,13 +28,9 @@ DEFINES += PROGRAMM_IN_UTF8
 HEADERS += \
     defines.hpp \
     version.hpp \
-    platanov_browser_mainbox.hpp
 
 SOURCES += \
-    platanov_browser_mainbox.cpp \
     main.cpp
-
-FORMS += platanov_browser_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -53,6 +47,8 @@ include ($$LIB_PATH2/web/websettingbox/websettingbox.pri)
 include ($$LIB_PATH2/web/javascript/javascript.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
+
+include (src/platanov_browser_mainbox/platanov_browser_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

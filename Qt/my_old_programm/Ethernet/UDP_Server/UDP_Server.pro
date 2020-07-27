@@ -8,9 +8,7 @@ TARGET   = UDP_Server
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/udp_server_mainbox \
-    $$PWD/src/udp_server_mainbox/ui
+    $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
@@ -20,15 +18,11 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    udp_server_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    udp_server_mainbox.cpp \
     main.cpp
-
-FORMS   += udp_server_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -42,5 +36,7 @@ LIB_PATH = "$$PWD/../../../lib"
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/udp_server_mainbox/udp_server_mainbox.pri)
 
 VPATH = $$INCLUDEPATH

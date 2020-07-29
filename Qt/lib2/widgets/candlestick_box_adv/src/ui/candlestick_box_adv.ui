@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CandleStick_Box_adv</class>
+ <widget class="QWidget" name="CandleStick_Box_adv">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>359</width>
+    <height>624</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CandleStick_Box</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QFrame" name="frame_2">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="MyQChartView" name="chartView" native="true"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="widget" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_volumes_grapher"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>axesX</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="1">
+            <widget class="QToolButton" name="btn_axesX_min_inc">
+             <property name="text">
+              <string>+</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../icons/digits/digits.qrc">
+               <normaloff>:/plus_minus/plus.png</normaloff>:/plus_minus/plus.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>max:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>min:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QToolButton" name="btn_axesX_min_dec">
+             <property name="text">
+              <string>-</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../icons/digits/digits.qrc">
+               <normaloff>:/plus_minus/minus.png</normaloff>:/plus_minus/minus.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QToolButton" name="btn_axesX_max_inc">
+             <property name="text">
+              <string>+</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../icons/digits/digits.qrc">
+               <normaloff>:/plus_minus/plus.png</normaloff>:/plus_minus/plus.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QToolButton" name="btn_axesX_max_dec">
+             <property name="text">
+              <string>-</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../icons/digits/digits.qrc">
+               <normaloff>:/plus_minus/minus.png</normaloff>:/plus_minus/minus.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QSpinBox" name="sb_axesX_min_delta"/>
+           </item>
+           <item row="1" column="3">
+            <widget class="QSpinBox" name="sb_axesX_max_delta"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>axesY</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>min:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>max:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_axesY_min_value"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="dsb_axesY_max_value"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QPushButton" name="btn_get_axesY_value">
+             <property name="text">
+              <string>get</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_set_axesY_value">
+             <property name="text">
+              <string>set</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>move horizontal</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QToolButton" name="btn_move_left">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_move_right">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="sb_posx_delta"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="title">
+         <string>move vertical</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QToolButton" name="btn_move_up">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btn_move_down">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../lib/pictures/arrow.qrc">
+               <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDoubleSpinBox" name="dsb_posy_delta"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_test">
+        <property name="text">
+         <string>test</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>38</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_clear_data">
+        <property name="text">
+         <string>clear</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyQChartView</class>
+   <extends>QWidget</extends>
+   <header>myqchartview.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>btn_axesX_min_inc</tabstop>
+  <tabstop>btn_axesX_min_dec</tabstop>
+  <tabstop>sb_axesX_min_delta</tabstop>
+  <tabstop>btn_axesX_max_inc</tabstop>
+  <tabstop>btn_axesX_max_dec</tabstop>
+  <tabstop>sb_axesX_max_delta</tabstop>
+  <tabstop>dsb_axesY_min_value</tabstop>
+  <tabstop>dsb_axesY_max_value</tabstop>
+  <tabstop>btn_get_axesY_value</tabstop>
+  <tabstop>btn_set_axesY_value</tabstop>
+  <tabstop>btn_move_left</tabstop>
+  <tabstop>btn_move_right</tabstop>
+  <tabstop>sb_posx_delta</tabstop>
+  <tabstop>btn_move_up</tabstop>
+  <tabstop>btn_move_down</tabstop>
+  <tabstop>btn_test</tabstop>
+  <tabstop>btn_clear_data</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../../lib/pictures/arrow.qrc"/>
+  <include location="../../../../icons/digits/digits.qrc"/>
+ </resources>
+ <connections/>
+</ui>

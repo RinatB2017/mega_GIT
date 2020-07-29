@@ -12,6 +12,7 @@ SUBDIRS += \
     Test_arduino_modbus \
     Test_broadcast_UDP \
     Test_CandleStick_Box \
+    Test_CandleStick_Box_adv \
     Test_CRC \
     Test_digits \
     Test_database \

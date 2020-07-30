@@ -41,6 +41,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_setting();
     save_widgets();
     delete ui;
 }
@@ -60,6 +61,7 @@ void MainBox::init(void)
 #endif
 
     updateText();
+    load_setting();
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -148,11 +150,13 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-
+    bool is_checked = load_int("cb_block");
+    cb_block->setChecked(is_checked);
+    cb_block->clicked(is_checked);
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+    save_int("cb_block", cb_block->isChecked());
 }
 //--------------------------------------------------------------------------------

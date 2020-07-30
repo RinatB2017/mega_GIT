@@ -681,52 +681,54 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 //--------------------------------------------------------------------------------
 void MyWidget::load_widgets(void)
 {
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->load_setting();
-    }
-
-    QList<QWidget *> widgets = findChildren<QWidget *>();
-    if(widgets.count() <= 0)
-    {
-        return;
-    }
-
-    foreach(QWidget *widget, widgets)
-    {
-        if(is_my_widget(widget->objectName()))
+    QTimer::singleShot(0, [this]{
+        MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+        if(mw)
         {
-            if(widget->property(NO_SAVE).toBool() == true)
-            {
-                continue;
-            }
-
-            beginGroup(get_full_objectName(widget));
-            load_combobox_property(widget);
-            load_splitter_property(widget);
-            load_property(widget, "isEnabled");
-            load_property(widget, "checked");
-            load_property(widget, "text");
-            load_property(widget, "value");
-            load_property(widget, "position");
-            load_property(widget, "state");
-            load_property(widget, "time");
-            load_property(widget, "date");
-            load_property(widget, "plainText");
-            endGroup();
+            mw->load_setting();
         }
-    }
+
+        QList<QWidget *> widgets = findChildren<QWidget *>();
+        if(widgets.count() <= 0)
+        {
+            return;
+        }
+
+        foreach(QWidget *widget, widgets)
+        {
+            if(is_my_widget(widget->objectName()))
+            {
+                if(widget->property(NO_SAVE).toBool() == true)
+                {
+                    continue;
+                }
+
+                beginGroup(get_full_objectName(widget));
+                load_combobox_property(widget);
+                load_splitter_property(widget);
+                load_property(widget, "isEnabled");
+                load_property(widget, "checked");
+                load_property(widget, "text");
+                load_property(widget, "value");
+                load_property(widget, "position");
+                load_property(widget, "state");
+                load_property(widget, "time");
+                load_property(widget, "date");
+                load_property(widget, "plainText");
+                endGroup();
+            }
+        }
+    });
 }
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-//    не надо это раскомментировать
-//    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-//    if(mw)
-//    {
-//        mw->save_setting();
-//    }
+    //    не надо это раскомментировать
+    //    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+    //    if(mw)
+    //    {
+    //        mw->save_setting();
+    //    }
 
     QList<QWidget *> widgets = findChildren<QWidget *>();
     if(widgets.count() <= 0)

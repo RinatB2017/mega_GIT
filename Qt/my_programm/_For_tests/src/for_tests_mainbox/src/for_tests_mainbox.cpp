@@ -34,15 +34,7 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    ui->setupUi(this);
-
-#ifdef QT_DEBUG
     init();
-#else
-    QTimer::singleShot(0, [this]{
-        init();
-    });
-#endif
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -71,6 +63,8 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
     createTestBar();
 
     ui->horizontalSlider->setRange(0, 1000);
@@ -105,6 +99,9 @@ void MainBox::init(void)
     //---
     connect(ui->btn_click,  &QPushButton::clicked,  [this]() {
         emit info("click");
+    });
+    connect(ui->btn_set_dt,  &QPushButton::clicked,  [this]() {
+        ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
     });
     //---
 

@@ -687,13 +687,11 @@ void MyWidget::load_widgets(void)
         mw->load_setting();
     }
 
-#ifdef USE_TOPLEVELWIDGETS
-    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
-#else
     QList<QWidget *> widgets = findChildren<QWidget *>();
-#endif
-
-    Q_ASSERT(widgets.count() != 0);
+    if(widgets.count() <= 0)
+    {
+        return;
+    }
 
     foreach(QWidget *widget, widgets)
     {
@@ -730,13 +728,11 @@ void MyWidget::save_widgets(void)
 //        mw->save_setting();
 //    }
 
-#ifdef USE_TOPLEVELWIDGETS
-    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
-#else
     QList<QWidget *> widgets = findChildren<QWidget *>();
-#endif
-
-    //Q_ASSERT(widgets.count() != 0);
+    if(widgets.count() <= 0)
+    {
+        return;
+    }
 
     foreach(QWidget *widget, widgets)
     {

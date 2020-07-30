@@ -84,6 +84,8 @@ void MainBox::init(void)
     ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
     connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
+    ui->te_test->setProperty(NO_SAVE, true);
+
 #if 0
     sw.reset(new SimpleWidget);
     sw->setProperty("windowTitle", "XXX");

@@ -87,6 +87,8 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
+    ui->setupUi(this);
+
     init();
 }
 //--------------------------------------------------------------------------------
@@ -98,8 +100,6 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
-
     all_break = false;
 
     createTestBar();
@@ -147,7 +147,7 @@ void MainBox::init(void)
     grapher_widget->push_btn_Horizontal(true);
     grapher_widget->push_btn_Vertical(true);
 
-    setFixedSize(1, 1); //TODO не забудь про это
+    setVisible(false);
     //---
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());

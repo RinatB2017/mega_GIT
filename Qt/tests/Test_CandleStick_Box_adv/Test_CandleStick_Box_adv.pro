@@ -8,10 +8,7 @@ TARGET   = Test_CandleStick_Box_adv
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/trader \
-    $$PWD/src/test_candlestick_box_mainbox \
-    $$PWD/src/test_candlestick_box_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -22,15 +19,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_candlestick_box_mainbox.hpp \
     defines.hpp \
-    version.hpp \
+    version.hpp
 
 SOURCES += \
-    test_candlestick_box_mainbox.cpp \
     main.cpp
-
-FORMS   += test_candlestick_box_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -44,6 +37,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/widgets/candlestick_box_adv/candlestick_box_adv.pri)
+
+include (src/test_candlestick_box_mainbox/test_candlestick_box_mainbox.pri)
 
 # https://forum.qt.io/topic/69626/visualize-value-on-qt-chart-view/3
 # mapToValue

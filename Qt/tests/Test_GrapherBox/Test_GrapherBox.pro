@@ -8,10 +8,7 @@ TARGET   = Test_GrapherBox
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/test_GrapherBox_mainbox \
-    $$PWD/src/test_GrapherBox_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -29,15 +26,11 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += SAVE_INI
 
 HEADERS += \
-    test_GrapherBox_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_GrapherBox_mainbox.cpp \
     main.cpp
-
-FORMS   += test_GrapherBox_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -56,6 +49,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/icons/digits.pri)
+
+include (src/test_GrapherBox_mainbox/test_GrapherBox_mainbox.pri)
 
 include (src/testdialog/testdialog.pri)
 

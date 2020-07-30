@@ -73,9 +73,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
     createTestBar();
-#endif
 
     init_process();
     load_widgets();

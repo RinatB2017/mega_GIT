@@ -8,10 +8,7 @@ TARGET   = Test_ADB
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/test_adb_mainbox \
-    $$PWD/src/test_adb_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -20,15 +17,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_adb_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_adb_mainbox.cpp \
     main.cpp
-
-FORMS   += test_adb_mainbox.ui
 
 win32 {
     INCLUDEPATH += C:/OpenCV/include/
@@ -70,6 +63,8 @@ CONFIG(debug, debug|release) {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/test_adb_mainbox/test_adb_mainbox.pri)
 
 include (src/autoclicker/autoclicker.pri)
 

@@ -8,9 +8,7 @@ TARGET   = Test_ADC
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_ADC_mainbox \
-    $$PWD/src/test_ADC_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -24,15 +22,11 @@ DEFINES += NEED_CODEC
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_ADC_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_ADC_mainbox.cpp \
     main.cpp
-
-FORMS   += test_ADC_mainbox.ui
 
 OTHER_FILES += \
     doc/notebook.txt \
@@ -67,6 +61,8 @@ include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri
 #----------------------------------------------
 
 include ($$LIB_PATH2/DataGrapherBox/DataGrapherBox.pri)
+
+include (src/test_ADC_mainbox/test_ADC_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

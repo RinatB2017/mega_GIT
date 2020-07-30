@@ -82,10 +82,6 @@ void Test_JSON::test(void)
     QByteArray ba;
     ba.append(val);
     ui->ShowJSON_widget->loadJson(ba);
-
-//    ShowJSON *sj = new ShowJSON();
-//    sj->loadJson(ba);
-//    sj->show();
     //---
 
     QJsonParseError jerror;
@@ -142,11 +138,11 @@ bool Test_JSON::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void Test_JSON::load_setting(void)
 {
-    emit debug("load_setting !");
+
 }
 //--------------------------------------------------------------------------------
 void Test_JSON::save_setting(void)
 {
-    emit debug("save_setting !");
+
 }
 //--------------------------------------------------------------------------------

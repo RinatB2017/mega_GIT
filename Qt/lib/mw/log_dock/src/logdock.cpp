@@ -18,13 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMetaMethod>
-#include <QTextEdit>
-#include <QThread>
-#include <QAction>
-#include <QTimer>
-#include <QMenu>
-//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif

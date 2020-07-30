@@ -93,6 +93,9 @@ private:
     QList<QDockWidget *> l_docks;
     //---
 
+    QSpinBox  *sb_test  = nullptr;
+    QCheckBox *cb_block = nullptr;
+
     void init(void);
     void createTestBar(void);
 

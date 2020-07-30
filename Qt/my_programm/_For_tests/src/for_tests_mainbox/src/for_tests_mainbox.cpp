@@ -47,6 +47,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_setting();
     save_widgets();
 
     if(sw)
@@ -164,6 +165,7 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+    load_setting();
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -201,9 +203,13 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QCheckBox *cb_block = new QCheckBox("block");
+    cb_block = new QCheckBox("block");
     cb_block->setObjectName("cb_block");
     testbar->addWidget(cb_block);
+
+    sb_test = new QSpinBox(this);
+    sb_test->setObjectName("sb_test");
+    testbar->addWidget(sb_test);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -224,6 +230,7 @@ void MainBox::createTestBar(void)
 
     connect(cb_block,   &QCheckBox::clicked,    cb_test,            &QComboBox::setDisabled);
     connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QComboBox::setDisabled);
+    connect(cb_block,   &QCheckBox::clicked,    sb_test,            &QComboBox::setDisabled);
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -374,11 +381,20 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    emit debug("load_setting !");
+    Q_CHECK_PTR(sb_test);
+    Q_CHECK_PTR(cb_block);
+    sb_test->setValue(load_int("sb_test"));
+
+    bool block_is_checked = load_int("cb_block");
+    cb_block->clicked(block_is_checked);
+    cb_block->setChecked(block_is_checked);
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    emit debug("save_setting !");
+    Q_CHECK_PTR(sb_test);
+    Q_CHECK_PTR(cb_block);
+    save_int("sb_test", sb_test->value());
+    save_int("cb_block", cb_block->isChecked());
 }
 //--------------------------------------------------------------------------------

@@ -31,19 +31,12 @@ namespace Ui {
     class SendBox5;
 }
 //--------------------------------------------------------------------------------
-class QGridLayout;
-class QHBoxLayout;
-class QToolButton;
-class QLineEdit;
-class QComboBox;
-class QCheckBox;
-//--------------------------------------------------------------------------------
 class SendBox5 : public QFrame
 {
     Q_OBJECT
 
 public:
-    SendBox5(QWidget *parent);
+    explicit SendBox5(QWidget *parent);
     ~SendBox5();
 
     void block_interface(bool state);

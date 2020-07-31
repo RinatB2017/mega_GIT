@@ -52,10 +52,10 @@ public:
         E_PORT_NOT_OPEN
     };
 
-    SerialBox5(QWidget *parent,
+    explicit SerialBox5(QWidget *parent,
                const QString &caption,
                const QString &o_name = "SerialBox5");
-    SerialBox5(QWidget *parent = nullptr);
+    explicit SerialBox5(QWidget *parent = nullptr);
     ~SerialBox5();
 
     bool add_menu(int index);
@@ -83,24 +83,23 @@ public:
 
 private:
     Ui::SerialBox5 *ui;
-    QWidget *parent;
     QString caption;
     QString o_name;
 
     bool flag_byte_by_byte = false;
 
 #ifdef RS232_LOG
-    LogBox  *logBox;
+    QPointer<LogBox>  logBox;
 #endif
 
 #ifdef RS232_SEND
-    SendBox5 *sendBox5;
+    QPointer<SendBox5> sendBox5;
 #endif
 
 #ifndef RS232_NO_FRAME
-    QFrame *frame_ring;
-    QFrame *frame_dsr;
-    QFrame *frame_cts;
+    QPointer<QFrame> frame_ring;
+    QPointer<QFrame> frame_dsr;
+    QPointer<QFrame> frame_cts;
     void add_frame_text(QFrame *parent,
                         const QString &text);
 #endif

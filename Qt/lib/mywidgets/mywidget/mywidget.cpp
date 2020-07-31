@@ -22,7 +22,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
 #include "mywidget.hpp"
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
@@ -561,8 +560,8 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
             text.append(txt);
         }
         //---
-        QWidget *frame = new QWidget;
-        QTextEdit *te = new QTextEdit;
+        QWidget *frame = new QWidget();
+        QTextEdit *te = new QTextEdit();
         QFont font("Courier", 10);
         te->setFont(font);
         te->setReadOnly(true);
@@ -585,7 +584,7 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
         painter.end();
         //---
 
-        QLabel *label = new QLabel;
+        QLabel *label = new QLabel();
         label->setPixmap(*main_pixmap);
         label->show();
 
@@ -615,10 +614,14 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void MyWidget::check_tooltips(void)
 {
+#if 0
     MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
 
     QList<QAbstractButton *> l_obj = mw->findChildren<QAbstractButton *>();
+#else
+    QList<QAbstractButton *> l_obj = findChildren<QAbstractButton *>();
+#endif
     foreach (QAbstractButton *obj, l_obj)
     {
         if(obj->objectName().left(3) == "qt_")
@@ -682,11 +685,11 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 void MyWidget::load_widgets(void)
 {
     QTimer::singleShot(0, [this]{
-        MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-        if(mw)
-        {
-            mw->load_setting();
-        }
+//        MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+//        if(mw)
+//        {
+//            mw->load_setting();
+//        }
 
         QList<QWidget *> widgets = findChildren<QWidget *>();
         if(widgets.count() <= 0)

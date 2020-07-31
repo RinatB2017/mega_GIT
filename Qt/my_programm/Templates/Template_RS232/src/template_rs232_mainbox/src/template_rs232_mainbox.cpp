@@ -20,38 +20,30 @@
 **********************************************************************************/
 #include "ui_template_rs232_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "template_rs232_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//----------- ---------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
     splash(splash),
     ui(new Ui::MainBox)
 {
-    ui->setupUi(this);
     init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
     save_widgets();
-    if(serial)
-    {
-        serial->deleteLater();
-    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
 #ifdef QT_DEBUG
     createTestBar();
 #endif
@@ -63,6 +55,9 @@ void MainBox::init(void)
 void MainBox::init_serial(void)
 {
 #if 1
+    QTimer::singleShot(100, [this]{
+        ui->serial_widget->set_caption("RS232_5");
+    });
     connect(this,               static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
             ui->serial_widget,  static_cast<int (SerialBox5::*)(const QByteArray&)>(&SerialBox5::input));
 #else
@@ -118,27 +113,26 @@ void MainBox::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
-    if(!ok)
+    if(ok)
     {
-        return;
-    }
-    foreach (CMD command, commands)
-    {
-        if(command.cmd == cmd)
+        foreach (CMD command, commands)
         {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
+            if(command.cmd == cmd)
             {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
+                typedef bool (MainBox::*my_mega_function)(void);
+                my_mega_function x;
+                x = command.func;
+                if(x)
+                {
+                    (this->*x)();
+                }
+                else
+                {
+                    emit error("no func");
+                }
 
-            return;
+                return;
+            }
         }
     }
 }
@@ -146,6 +140,8 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test");
+    ui->serial_widget->set_caption("RS232_5");
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -161,11 +157,19 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-
+    if(cb_block)
+    {
+        bool block_is_checked = load_int("cb_block");
+        cb_block->clicked(block_is_checked);
+        cb_block->setChecked(block_is_checked);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+    if(cb_block)
+    {
+        save_int("cb_block", cb_block->isChecked());
+    }
 }
 //--------------------------------------------------------------------------------

@@ -64,6 +64,7 @@ private:
     QPointer<QToolBar> testbar;
 
     QPointer<QComboBox> cb_test;
+    QPointer<QCheckBox> cb_block;
     QList<CMD> commands;
 
     void init(void);

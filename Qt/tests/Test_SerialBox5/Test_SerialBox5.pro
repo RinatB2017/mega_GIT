@@ -8,14 +8,12 @@ TARGET   = Test_SerialBox5
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_SerialBox5_mainbox \
-    $$PWD/src/test_SerialBox5_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-#DEFINES += SHOW_SIZE
+DEFINES += SHOW_SIZE
 
 DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
@@ -29,15 +27,11 @@ DEFINES += RS232_SEND
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_SerialBox5_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_SerialBox5_mainbox.cpp \
     main.cpp
-
-FORMS   += test_SerialBox5_mainbox.ui
 
 OTHER_FILES += \
     doc/notebook.txt
@@ -69,6 +63,8 @@ use_worker {
 }
 include ($$LIB_PATH2/serial5/serial5.pri)
 #----------------------------------------------
+
+include (src/test_SerialBox5_mainbox/test_SerialBox5_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

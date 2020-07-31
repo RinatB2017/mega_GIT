@@ -119,8 +119,14 @@ class MyMainBox : public MyWidget
 
 public:
     void updateText(void) {}
-    void load_setting(void) {}
-    void save_setting(void) {}
+    void load_setting(void)
+    {
+        qDebug() << "MyMainBox:load_setting";
+    }
+    void save_setting(void)
+    {
+        qDebug() << "MyMainBox:save_setting";
+    }
 
     bool programm_is_exit(void)
     {

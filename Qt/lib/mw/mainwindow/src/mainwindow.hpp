@@ -27,6 +27,11 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+#include "mysettings.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
@@ -57,38 +62,6 @@
 class LogBox;
 class LogDock;
 class SysLog_dock;
-//--------------------------------------------------------------------------------
-//class ToolButtonAction : public QWidgetAction {
-//public:
-//    ToolButtonAction (QAction *action) :
-//      QWidgetAction (nullptr) {
-//        QWidget* pWidget = new QWidget (nullptr);
-
-//        QHBoxLayout* pLayout = new QHBoxLayout();
-//        pLayout->setMargin(0);
-//        pLayout->setSpacing(0);
-
-//        QLabel* pLabel = new QLabel(action->text());  //bug fixed here, pointer was missing
-//        pLayout->addWidget(pLabel);
-
-//        pToolButton = new QToolButton(nullptr);
-//        pToolButton->setText("...");
-
-//        pLayout->addWidget(pToolButton);
-
-//        pWidget->setLayout(pLayout);
-
-//        setDefaultWidget(pWidget);
-//    }
-
-//    QToolButton *toolButton () {
-//        return pToolButton;
-//    }
-
-//private:
-//    QToolButton *pToolButton;
-//};
-#include "mysettings.hpp"
 //--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow, public MySettings
 {
@@ -255,8 +228,6 @@ private:
 
     QPointer<QSystemTrayIcon> trayIcon;
     QPointer<QMenu> trayIconMenu;
-
-//    QPointer<QSettings> settings;
 
     //TODO тест
     QPointer<MyWidget> c_widget;

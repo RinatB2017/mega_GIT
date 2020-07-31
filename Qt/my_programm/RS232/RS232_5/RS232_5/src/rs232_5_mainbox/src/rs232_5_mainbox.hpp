@@ -30,13 +30,10 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
-
 class SerialBox5;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -44,8 +41,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -59,7 +56,7 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    SerialBox5 *serial_widget;
+    //SerialBox5 *serial_widget;
 
     void init(void);
     void createTestBar(void);

@@ -25,12 +25,9 @@
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 #include "syslog_dock.hpp"
 #include "logdock.hpp"
+#include "logbox.hpp"
 //--------------------------------------------------------------------------------
 MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
@@ -205,8 +202,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 #ifdef SHOW_SIZE
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
+    Q_CHECK_PTR(event);
 #ifndef NO_STATUSBAR
-    statusLabel1->setText(QString(QLatin1String("%1 %2")).arg(event->size().width()).arg(event->size().height()));
+    statusLabel1->setText(QString(QLatin1String("%1 %2"))
+                          .arg(event->size().width())
+                          .arg(event->size().height()));
 #else
     Q_UNUSED(event)
 #endif

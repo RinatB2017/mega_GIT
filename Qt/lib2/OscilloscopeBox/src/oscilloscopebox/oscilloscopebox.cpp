@@ -38,7 +38,6 @@ OscilloscopeBox::OscilloscopeBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 OscilloscopeBox::~OscilloscopeBox()
 {
-    save_setting();
     curves.clear();
 
     delete ui;
@@ -69,8 +68,6 @@ void OscilloscopeBox::init()
 
     updateText();
     updateGraphics();
-
-    load_setting();
 }
 //--------------------------------------------------------------------------------
 int OscilloscopeBox::add_curve(int index_curve,

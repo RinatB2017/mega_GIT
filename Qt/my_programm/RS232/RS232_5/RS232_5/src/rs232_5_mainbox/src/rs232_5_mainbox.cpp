@@ -18,17 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_rs232_5_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "serialbox5.hpp"
 #include "rs232_5_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -59,6 +52,7 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
+#if 0
     serial_widget = new SerialBox5(this, "RS232_5", "RS232_5");
     serial_widget->add_menu(2);
     connect(this,           SIGNAL(send(QByteArray)),   serial_widget,  SLOT(input(QByteArray)));
@@ -67,6 +61,12 @@ void MainBox::init(void)
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(serial_widget);
     setLayout(vbox);
+#else
+    ui->serial_widget->set_caption("RS232_5");
+    ui->serial_widget->add_menu(2);
+    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
+    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
+#endif
 
     load_widgets();
 }
@@ -94,11 +94,7 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
-    emit info("Info");
-    emit debug("Debug");
-    emit error("Error");
-    emit trace("Trace");
-
+    ui->serial_widget->set_caption("RS232_5");
     return true;
 }
 //--------------------------------------------------------------------------------

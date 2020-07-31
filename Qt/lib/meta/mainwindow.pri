@@ -4,8 +4,8 @@
 
 CONFIG(debug, debug|release) {
 } else {
-    DEFINES += NO_LOG_DEBUG
-    DEFINES += NO_LOG_TRACE
+#    DEFINES += NO_LOG_DEBUG
+#    DEFINES += NO_LOG_TRACE
 }
 
 include ($$PWD/../qtsingleapplication/qtsingleapplication.pri)

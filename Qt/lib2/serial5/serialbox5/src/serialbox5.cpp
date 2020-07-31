@@ -37,7 +37,6 @@
 SerialBox5::SerialBox5(QWidget *parent) :
     SerialWidget(parent),
     ui(new Ui::SerialBox5),
-    parent(parent),
     caption("no name")
 {
     init();
@@ -48,7 +47,6 @@ SerialBox5::SerialBox5(QWidget *parent,
                        const QString &o_name) :
     SerialWidget(parent),
     ui(new Ui::SerialBox5),
-    parent(parent),
     caption(caption),
     o_name(o_name)
 {
@@ -131,7 +129,8 @@ void SerialBox5::createWidgets(void)
 void SerialBox5::add_frame_text(QFrame *parent,
                                 const QString &text)
 {
-    QHBoxLayout *hbox = new QHBoxLayout();    hbox->setMargin(0);
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->setMargin(0);
     hbox->setSpacing(0);
     QLabel *label = new QLabel(text);
     label->setAlignment(Qt::AlignHCenter);
@@ -215,18 +214,22 @@ void SerialBox5::initSerial(void)
 
 #ifdef RS232_SEND
     sendBox5 = new SendBox5(this);
-    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
+    Q_CHECK_PTR(sendBox5);
+    connect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
     ui->layout_SEND->addWidget(sendBox5);
 #endif
 
 #ifndef RS232_NO_FRAME
     frame_ring = new QFrame(this);
+    Q_CHECK_PTR(frame_ring);
     add_frame_text(frame_ring, tr("ring"));
 
     frame_dsr = new QFrame(this);
+    Q_CHECK_PTR(frame_dsr);
     add_frame_text(frame_dsr, tr("dsr"));
 
     frame_cts = new QFrame(this);
+    Q_CHECK_PTR(frame_cts);
     add_frame_text(frame_cts, tr("cts"));
 
     ui->layout_status->addWidget(frame_ring);
@@ -246,11 +249,11 @@ void SerialBox5::initSerial(void)
     connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
     connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
 
-    connect(ui->BaudBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setBaudBox(int)));
-    connect(ui->DataBitsBox, SIGNAL(currentIndexChanged(int)),  this,   SLOT(setDataBox(int)));
-    connect(ui->ParityBox,   SIGNAL(currentIndexChanged(int)),  this,   SLOT(setParityBox(int)));
-    connect(ui->StopBitsBox, SIGNAL(currentIndexChanged(int)),  this,   SLOT(setStopBox(int)));
-    connect(ui->FlowBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setFlowBox(int)));
+    connect(ui->BaudBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setBaudBox);
+    connect(ui->DataBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setDataBox);
+    connect(ui->ParityBox,   static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setParityBox);
+    connect(ui->StopBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setStopBox);
+    connect(ui->FlowBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setFlowBox);
 
     connect(this,   SIGNAL(output(QByteArray)), this,   SLOT(drawData(QByteArray)));
 }
@@ -642,6 +645,7 @@ void SerialBox5::get_parameter(void)
 QPushButton *SerialBox5::add_QPushButton(const QString &title)
 {
     QPushButton *btn = new QPushButton(title);
+    Q_CHECK_PTR(btn);
     ui->buttons_layout->addWidget(btn);
     return btn;
 }

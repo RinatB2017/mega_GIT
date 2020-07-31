@@ -416,7 +416,6 @@ void HistogramBox::init()
 
     create_widgets();
     updateText();
-    load_setting();
     updateGraphics();
 }
 //--------------------------------------------------------------------------------

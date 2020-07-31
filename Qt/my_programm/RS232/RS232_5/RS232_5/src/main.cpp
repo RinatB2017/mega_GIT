@@ -33,6 +33,8 @@
 #   include "test.hpp"
 #endif
 //--------------------------------------------------------------------------------
+//#define SINGLE_APP
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
@@ -54,9 +56,11 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/logo.png");
+
     MySplashScreen *splash = new MySplashScreen(pixmap);
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
+
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();

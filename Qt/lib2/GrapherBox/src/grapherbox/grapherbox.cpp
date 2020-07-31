@@ -781,7 +781,6 @@ void GrapherBox::init()
     }
 
     create_widgets();
-    //load_setting();
     updateGraphics();
     updateText();
 }

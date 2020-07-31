@@ -27,11 +27,11 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//----------- ---------------------------------------------------------------------
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#include "serialbox5.hpp"
-#include "serialbox5_fix_baudrate.hpp"
-#include "serialbox5_lite.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -68,14 +68,10 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
-    //SerialBox5 *serial;
-    SerialBox5_fix_baudrate *serial;
-    //SerialBox5_lite *serial;
-
     void init_serial(void);
 
     QPointer<QComboBox> cb_test;
-    QCheckBox *cb_block;
+    QPointer<QCheckBox> cb_block;
     QList<CMD> commands;
 
     void init(void);

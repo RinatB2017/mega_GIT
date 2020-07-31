@@ -154,6 +154,7 @@ void LogBox::create_widgets(void)
     logBox->setObjectName("te_LogBox");
     logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     logBox->setFont(font);
+    logBox->setProperty(NO_SAVE, true);
 #ifdef Q_OS_LINUX
     //TODO белый цвет, если тема темная
     //logBox->setStyleSheet("background:white;");

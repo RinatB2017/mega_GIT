@@ -39,7 +39,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_setting();
     save_widgets();
 
     if(sw)
@@ -162,7 +161,6 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
-    load_setting();
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -232,11 +230,35 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
+#if 0
+#include <algorithm>    // std::find_if
+#include <vector>       // std::vector
+
+bool IsOdd (int i)
+{
+  return ((i%2)==1);
+}
+#endif
 void MainBox::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
+
+#if 0
+    std::vector<CMD>::iterator it = std::find_if (commands.begin(), commands.end(), IsOdd);
+    typedef bool (MainBox::*function)(void);
+    function x;
+    x = it.func;
+    if(x)
+    {
+        (this->*x)();
+    }
+    else
+    {
+        emit error("no func");
+    }
+#else
     foreach (CMD command, commands)
     {
         if(command.cmd == cmd)
@@ -256,6 +278,7 @@ void MainBox::choice_test(void)
             return;
         }
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::inFunc(QPushButton *btn, saveSlot slot)
@@ -347,6 +370,10 @@ bool MainBox::test(void)
     emit info("Test");
 
 #if 1
+    qBadAlloc();
+#endif
+
+#if 0
     QTextCursor tmpCursor = ui->te_test->textCursor();
     tmpCursor.movePosition(QTextCursor::Up, QTextCursor::MoveAnchor, 4);
     tmpCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor, 4);
@@ -378,20 +405,32 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    Q_CHECK_PTR(sb_test);
-    Q_CHECK_PTR(cb_block);
-    sb_test->setValue(load_int("sb_test"));
+    qDebug() << "MainBox::load_setting";
 
-    bool block_is_checked = load_int("cb_block");
-    cb_block->clicked(block_is_checked);
-    cb_block->setChecked(block_is_checked);
+    if(sb_test)
+    {
+        sb_test->setValue(load_int("sb_test"));
+    }
+
+    if(cb_block)
+    {
+        bool block_is_checked = load_int("cb_block");
+        cb_block->clicked(block_is_checked);
+        cb_block->setChecked(block_is_checked);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    Q_CHECK_PTR(sb_test);
-    Q_CHECK_PTR(cb_block);
-    save_int("sb_test", sb_test->value());
-    save_int("cb_block", cb_block->isChecked());
+    qDebug() << "MainBox::save_setting";
+
+    if(sb_test)
+    {
+        save_int("sb_test", sb_test->value());
+    }
+    if(cb_block)
+    {
+        save_int("cb_block", cb_block->isChecked());
+    }
 }
 //--------------------------------------------------------------------------------

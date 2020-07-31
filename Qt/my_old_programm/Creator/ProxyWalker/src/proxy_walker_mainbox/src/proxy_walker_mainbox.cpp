@@ -88,7 +88,6 @@ void MainBox::init(void)
     ui->hbox->addWidget(webview, 7);
 #endif
 
-    //load_setting();
     if(current_index > 0)
         proxy_list->setCurrentRow(current_index);
 

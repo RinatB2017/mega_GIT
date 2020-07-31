@@ -24,7 +24,6 @@
 //--------------------------------------------------------------------------------
 #include "ui_test_SerialBox5_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
@@ -55,27 +54,6 @@ void MainBox::init(void)
 
     init_serial_widgets();
     load_widgets();
-
-    //---
-#ifdef FAKE
-    QTimer::singleShot(0, [this]{
-        MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-        if(mw)
-        {
-            QList<QDockWidget *> alldw = mw->findChildren<QDockWidget *>();
-            foreach (QDockWidget *dock, alldw)
-            {
-                QList<Worker_fake *> alldocs = dock->findChildren<Worker_fake *>();
-                if(alldocs.count() > 0)
-                {
-                    //emit info(alldocs.at(0)->objectName());
-                    dock->setWindowTitle(QString("LOG: %1").arg(alldocs.at(0)->objectName()));
-                }
-            }
-        }
-    });
-#endif
-    //---
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial_widgets(void)

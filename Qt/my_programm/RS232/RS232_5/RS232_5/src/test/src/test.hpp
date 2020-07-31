@@ -33,10 +33,11 @@ public:
     Test();
 
 private slots:
-    void check_serial(void);
 
 private:
     MainWindow *mw;
+
+    void check_serial(void);
 };
 //--------------------------------------------------------------------------------
 #endif

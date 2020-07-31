@@ -93,7 +93,7 @@ void MainWidget_GUI::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    QCheckBox *cb_block = new QCheckBox("block");
+    cb_block = new QCheckBox("block");
     cb_block->setObjectName("cb_block");
     testbar->addWidget(cb_block);
 
@@ -180,11 +180,15 @@ bool MainWidget_GUI::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::load_setting(void)
 {
-
+    Q_CHECK_PTR(cb_block);
+    bool block_is_checked = load_int("cb_block");
+    cb_block->clicked(block_is_checked);
+    cb_block->setChecked(block_is_checked);
 }
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::save_setting(void)
 {
-
+    Q_CHECK_PTR(cb_block);
+    save_int("cb_block", cb_block->isChecked());
 }
 //--------------------------------------------------------------------------------

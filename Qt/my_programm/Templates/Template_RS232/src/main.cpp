@@ -18,15 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#if QT_VERSION >= 0x050000
-#   include <QtMessageHandler>
-#endif
+#include <QApplication>
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
@@ -42,9 +34,12 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#define SINGLE_APP
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
+
 #ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
@@ -58,6 +53,7 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+    app.setApplicationVersion(VER_STR);
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/logo.png");
@@ -71,10 +67,20 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
+#if 0
+    try {
+        MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+        main_window->setCentralWidget(mainBox);
+        main_window->show();
+    } catch (const std::bad_alloc &) {
+        qDebug() << "main: bad_alloc";
+        return EXIT_FAILURE; // exit the application
+    }
+#else
     MainBox *mainBox = new MainBox(main_window->getThis(), splash);
-
     main_window->setCentralWidget(mainBox);
     main_window->show();
+#endif
 
     splash->finish(main_window);
 

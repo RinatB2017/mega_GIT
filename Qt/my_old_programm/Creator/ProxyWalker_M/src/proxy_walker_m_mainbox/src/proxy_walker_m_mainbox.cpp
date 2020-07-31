@@ -49,7 +49,6 @@ MainBox::MainBox(QWidget *parent) :
 MainBox::~MainBox()
 {
     save_widgets();
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -103,7 +102,6 @@ void MainBox::init(void)
     ui->hbox->addWidget(tw, 7);
 #endif
 
-    load_setting();
     if(current_index > 0)
     {
         proxy_list->setCurrentRow(current_index);

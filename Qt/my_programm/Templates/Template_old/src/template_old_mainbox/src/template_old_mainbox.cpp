@@ -41,7 +41,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_setting();
     save_widgets();
     delete ui;
 }
@@ -61,7 +60,6 @@ void MainBox::init(void)
 #endif
 
     updateText();
-    load_setting();
     load_widgets();
 }
 //--------------------------------------------------------------------------------

@@ -266,6 +266,7 @@ void MyMainWindow::setCentralWidget(MyWidget *widget)
     w->setLayout(grid);
 
     MainWindow::setCentralWidget(w);
+    MainWindow::set_c_widget(widget);   //TODO проба
 }
 //--------------------------------------------------------------------------------
 void MyMainWindow::closeEvent(QCloseEvent *event)

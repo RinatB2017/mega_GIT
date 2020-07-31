@@ -73,6 +73,8 @@ public:
 
     void setCentralWidget(MyWidget *widget);
     void setCentralWidget(QWidget *widget);
+    void set_c_widget(MyWidget *widget);   //TODO проба
+
     MainWindow *getThis(void);
 
     void setWindowTitle(const QString &title);
@@ -279,7 +281,7 @@ private:
     QPointer<QMenu> m_app_windowsmenu;
     QPointer<QMenu> m_app_helpmenu;
 
-    QList<QWidget *> l_docs;
+//    QList<QWidget *> l_docs;
 
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
@@ -311,7 +313,7 @@ private:
     void app_updateText(void);
     void dockwidget_updateText(void);
 
-    void show_docs(void);
+//    void show_docs(void);
 
     void dockLocationChanged(Qt::DockWidgetArea area);
 

@@ -104,52 +104,6 @@ void MainBox::init(void)
     });
     //---
 
-    //---
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        QDockWidget *main_dw = new QDockWidget(this);
-        main_dw->setWindowTitle("Main");
-        main_dw->setProperty(DOCKWIDGET_PROPERTY_ENG_TEXT, "Main");
-
-        QTextEdit *te = new QTextEdit();
-        te->setText("test");
-        main_dw->setWidget(te);
-
-        main_dw->setAllowedAreas(Qt::AllDockWidgetAreas);
-        mw->addDockWidget(Qt::RightDockWidgetArea, main_dw);
-        mw->add_windowsmenu_action(main_dw, main_dw->toggleViewAction());
-
-        l_docks.append(main_dw);
-
-        for(int n=0; n<3; n++)
-        {
-            QDockWidget *dw = new QDockWidget(this);
-            dw->setWindowTitle(QString("test %1").arg(n));
-            dw->setProperty(DOCKWIDGET_PROPERTY_ENG_TEXT, QString("test %1").arg(n));
-
-            QTextEdit *te = new QTextEdit();
-            te->setText(QString("test %1").arg(n));
-            dw->setWidget(te);
-
-            dw->setWidget(te);
-            dw->setAllowedAreas(Qt::AllDockWidgetAreas);
-            mw->addDockWidget(Qt::RightDockWidgetArea, dw);
-
-            mw->add_windowsmenu_action(dw, dw->toggleViewAction());
-            l_docks.append(dw);
-        }
-        QTimer::singleShot(0, [this]{
-            MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-            mw->tabifyDockWidget(l_docks.at(0), l_docks.at(1));
-            mw->tabifyDockWidget(l_docks.at(0), l_docks.at(2));
-            mw->tabifyDockWidget(l_docks.at(0), l_docks.at(3));
-        });
-    }
-#endif
-    //---
-
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 
@@ -400,7 +354,7 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
-    return true;
+    return ui->cb_fag_exit->isChecked();
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
@@ -411,7 +365,6 @@ void MainBox::load_setting(void)
     {
         sb_test->setValue(load_int("sb_test"));
     }
-
     if(cb_block)
     {
         bool block_is_checked = load_int("cb_block");

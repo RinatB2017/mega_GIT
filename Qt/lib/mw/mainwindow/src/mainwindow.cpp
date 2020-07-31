@@ -86,7 +86,7 @@ void MainWindow::setCentralWidget(MyWidget *widget)
     setFixedSize(sizeHint());
 #endif
 
-    show_docs();
+//    show_docs();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(QWidget *widget)
@@ -99,7 +99,14 @@ void MainWindow::setCentralWidget(QWidget *widget)
     setFixedSize(sizeHint());
 #endif
 
-    show_docs();
+//    show_docs();
+}
+//--------------------------------------------------------------------------------
+void MainWindow::set_c_widget(MyWidget *widget)   //TODO проба
+{
+    Q_CHECK_PTR(widget);
+    c_widget = widget;
+    c_widget->load_setting();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::changeEvent(QEvent *event)
@@ -725,13 +732,13 @@ void MainWindow::save_setting(void)
     save_main();
 }
 //--------------------------------------------------------------------------------
-void MainWindow::show_docs(void)
-{
-    foreach (QWidget *widget, l_docs)
-    {
-        widget->show();
-    }
-}
+//void MainWindow::show_docs(void)
+//{
+//    foreach (QWidget *widget, l_docs)
+//    {
+//        widget->show();
+//    }
+//}
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG
 void MainWindow::createLog(void)
@@ -1097,7 +1104,7 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
     Q_CHECK_PTR(action);
     Q_CHECK_PTR(m_app_windowsmenu);
 
-    l_docs.append(widget);
+//    l_docs.append(widget);
 
 #if 0
     ToolButtonAction *tb_action = new ToolButtonAction(action);

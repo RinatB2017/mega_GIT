@@ -180,15 +180,19 @@ bool MainWidget_GUI::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::load_setting(void)
 {
-    Q_CHECK_PTR(cb_block);
-    bool block_is_checked = load_int("cb_block");
-    cb_block->clicked(block_is_checked);
-    cb_block->setChecked(block_is_checked);
+    if(cb_block)
+    {
+        bool block_is_checked = load_int("cb_block");
+        cb_block->clicked(block_is_checked);
+        cb_block->setChecked(block_is_checked);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainWidget_GUI::save_setting(void)
 {
-    Q_CHECK_PTR(cb_block);
-    save_int("cb_block", cb_block->isChecked());
+    if(cb_block)
+    {
+        save_int("cb_block", cb_block->isChecked());
+    }
 }
 //--------------------------------------------------------------------------------

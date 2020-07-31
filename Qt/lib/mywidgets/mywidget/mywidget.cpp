@@ -685,12 +685,6 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 void MyWidget::load_widgets(void)
 {
     QTimer::singleShot(0, [this]{
-//        MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-//        if(mw)
-//        {
-//            mw->load_setting();
-//        }
-
         QList<QWidget *> widgets = findChildren<QWidget *>();
         if(widgets.count() <= 0)
         {
@@ -718,6 +712,7 @@ void MyWidget::load_widgets(void)
                 load_property(widget, "time");
                 load_property(widget, "date");
                 load_property(widget, "plainText");
+                load_property(widget, "currentIndex");
                 endGroup();
             }
         }
@@ -726,13 +721,6 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-    //    не надо это раскомментировать
-    //    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    //    if(mw)
-    //    {
-    //        mw->save_setting();
-    //    }
-
     QList<QWidget *> widgets = findChildren<QWidget *>();
     if(widgets.count() <= 0)
     {
@@ -761,6 +749,7 @@ void MyWidget::save_widgets(void)
             save_property(widget, "time");
             save_property(widget, "date");
             save_property(widget, "plainText");
+            save_property(widget, "currentIndex");
             endGroup();
         }
     }

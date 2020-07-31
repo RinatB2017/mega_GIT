@@ -250,9 +250,9 @@ void MyMainWindow::setCentralWidget(MyWidget *widget)
     QGridLayout *grid = new QGridLayout();
     grid->setSpacing(0);
     grid->setMargin(0);
-    grid->addWidget(lt_box, 0, 0);    grid->addWidget(t_widget, 0, 1);  grid->addWidget(rt_box, 0, 2);
-    grid->addWidget(l_widget, 1, 0);  grid->addWidget(widget, 1, 1);    grid->addWidget(r_widget, 1, 2);
-    grid->addWidget(lb_box, 2, 0);    grid->addWidget(b_widget, 2, 1);  grid->addWidget(rb_box, 2, 2);
+    grid->addWidget(lt_box,   0, 0);    grid->addWidget(t_widget, 0, 1);  grid->addWidget(rt_box,   0, 2);
+    grid->addWidget(l_widget, 1, 0);    grid->addWidget(widget, 1, 1);    grid->addWidget(r_widget, 1, 2);
+    grid->addWidget(lb_box,   2, 0);    grid->addWidget(b_widget, 2, 1);  grid->addWidget(rb_box,   2, 2);
 
 #if 1
     QToolButton *btn = new QToolButton();

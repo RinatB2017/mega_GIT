@@ -208,8 +208,14 @@
   <tabstop>cb_checkbox_test</tabstop>
   <tabstop>doubleSpinBox</tabstop>
   <tabstop>timeEdit</tabstop>
+  <tabstop>dateTimeEdit</tabstop>
+  <tabstop>btn_set_dt</tabstop>
   <tabstop>toolButton</tabstop>
   <tabstop>comboBox</tabstop>
+  <tabstop>cb_fag_exit</tabstop>
+  <tabstop>btn_click</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>te_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

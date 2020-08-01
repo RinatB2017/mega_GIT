@@ -66,6 +66,7 @@ void MyMainWindow::messageHandler(QtMsgType type,
     // Записываем дату записи
     out << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz ");
     // По типу определяем, к какому уровню относится сообщение
+
     switch (type)
     {
     case QtInfoMsg:     out << "INF ";  break;

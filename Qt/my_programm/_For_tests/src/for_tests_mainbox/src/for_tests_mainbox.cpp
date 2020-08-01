@@ -20,6 +20,9 @@
 **********************************************************************************/
 #include "ui_for_tests_mainbox.h"
 //--------------------------------------------------------------------------------
+#include <algorithm>    // std::find_if
+#include <vector>       // std::vector
+
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
@@ -184,33 +187,34 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-#if 0
-#include <algorithm>    // std::find_if
-#include <vector>       // std::vector
+#define IT
 
-bool IsOdd (int i)
-{
-  return ((i%2)==1);
-}
-#endif
 void MainBox::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
 
-#if 0
-    std::vector<CMD>::iterator it = std::find_if (commands.begin(), commands.end(), IsOdd);
-    typedef bool (MainBox::*function)(void);
-    function x;
-    x = it.func;
-    if(x)
+#ifdef IT
+//    QList<MainBox::CMD>::iterator cmd_it = std::find_if(
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        (this->*x)();
-    }
-    else
-    {
-        emit error("no func");
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
     }
 #else
     foreach (CMD command, commands)
@@ -323,7 +327,7 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
-#if 1
+#if 0
     qBadAlloc();
 #endif
 

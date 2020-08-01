@@ -156,6 +156,7 @@ private slots:
 
 private:
     static QFile *m_logFile;
+
     void create_local_menus(void);
     void create_toolbars(void);
 

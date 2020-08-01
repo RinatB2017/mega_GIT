@@ -56,10 +56,11 @@ public:
 
 public slots:
     void choice_test(void);
-    bool test(void);
     bool timer_start(void);
     bool timer_stop(void);
     void show_timer_count(void);
+
+    bool test(void);
 
     void print_mp(QWidget *widget);
     void delete_string(void);

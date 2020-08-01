@@ -34,8 +34,6 @@ MainBox::MainBox(QWidget *parent, MySplashScreen *splash) :
     splash(splash),
     ui(new Ui::MainBox)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -46,6 +44,7 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
 #ifdef QT_DEBUG
     createTestBar();
 #endif
@@ -376,7 +375,16 @@ void MainBox::add_icons_from_theme(QTabWidget *page, int max_x)
         QGridLayout *grid = new QGridLayout();
         grid->setMargin(0);
         grid->setSpacing(0);
-        widget->setLayout(grid);
+
+        QHBoxLayout *hbox = new QHBoxLayout();
+        hbox->addLayout(grid);
+        hbox->addStretch();
+
+        QVBoxLayout *vbox = new QVBoxLayout();
+        vbox->addLayout(hbox);
+        vbox->addStretch();
+
+        widget->setLayout(vbox);
 
         int col = 0;
         int row = 0;
@@ -390,7 +398,7 @@ void MainBox::add_icons_from_theme(QTabWidget *page, int max_x)
             connect(btn,    &QToolButton::clicked,  this,   &MainBox::print_icon_name);
 
             grid->addWidget(btn, row, col);
-            if(col < max_x)
+            if(col < (max_x - 1))
             {
                 col++;
             }

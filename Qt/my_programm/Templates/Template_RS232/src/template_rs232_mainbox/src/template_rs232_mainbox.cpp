@@ -113,34 +113,33 @@ void MainBox::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
-    if(ok)
-    {
-        foreach (CMD command, commands)
-        {
-            if(command.cmd == cmd)
-            {
-                typedef bool (MainBox::*my_mega_function)(void);
-                my_mega_function x;
-                x = command.func;
-                if(x)
-                {
-                    (this->*x)();
-                }
-                else
-                {
-                    emit error("no func");
-                }
+    if(!ok) return;
 
-                return;
-            }
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
-    emit info("Test");
-    ui->serial_widget->set_caption("RS232_5");
+    qDebug() << "Test";
+    ui->serial_widget->set_caption("RS232");
 
     return true;
 }

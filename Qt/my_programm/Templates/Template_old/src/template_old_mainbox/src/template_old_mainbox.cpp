@@ -69,7 +69,8 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test });
+    commands.append({ id++, "test",     &MainBox::test });
+    commands.append({ id++, "test2",    &MainBox::test2 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -105,27 +106,25 @@ void MainBox::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
-    if(!ok)
-    {
-        return;
-    }
-    foreach (CMD command, commands)
-    {
-        if(command.cmd == cmd)
-        {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
+    if(!ok) return;
 
-            return;
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -133,6 +132,12 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test2(void)
+{
+    emit info("Test2");
     return true;
 }
 //--------------------------------------------------------------------------------

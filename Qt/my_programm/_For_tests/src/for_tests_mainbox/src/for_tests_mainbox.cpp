@@ -187,15 +187,12 @@ void MainBox::createTestBar(void)
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-#define IT
-
 void MainBox::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
 
-#ifdef IT
 //    QList<MainBox::CMD>::iterator cmd_it = std::find_if(
     auto cmd_it = std::find_if(
         commands.begin(),
@@ -216,7 +213,16 @@ void MainBox::choice_test(void)
             emit error("no func");
         }
     }
-#else
+}
+//--------------------------------------------------------------------------------
+#if 0
+//TODO старый вариант, от 01.08.2020
+void MainBox::choice_test(void)
+{
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+
     foreach (CMD command, commands)
     {
         if(command.cmd == cmd)
@@ -236,8 +242,8 @@ void MainBox::choice_test(void)
             return;
         }
     }
-#endif
 }
+#endif
 //--------------------------------------------------------------------------------
 void MainBox::inFunc(QPushButton *btn, saveSlot slot)
 {

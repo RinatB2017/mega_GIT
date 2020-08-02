@@ -43,24 +43,67 @@ void PTZ_dialog::init(void)
 {
     ui->setupUi(this);
 
-    ui->le_add->setText("HD");
+    ui->sb_port->setRange(0, 0xFFFF);
+
+    ui->le_proto->setText("rtsp");
+    ui->le_proto->setReadOnly(true);
+
+    ui->le_login->setText("admin");
+    ui->le_password->setText("admin");
+    ui->ip_widget->set_url(QUrl("192.168.1.1"));
+    ui->sb_port->setValue(81);
+
     connect(ui->buttonBox,  SIGNAL(accepted()), this,   SLOT(accept()));
     connect(ui->buttonBox,  SIGNAL(rejected()), this,   SLOT(reject()));
 }
 //--------------------------------------------------------------------------------
-void PTZ_dialog::set_url(QUrl url)
+void PTZ_dialog::set_login(const QString &login)
 {
-    ui->ip4_widget->set_url(url);
+    ui->le_login->setText(login);
 }
 //--------------------------------------------------------------------------------
-QString PTZ_dialog::get_address(void)
+void PTZ_dialog::set_password(const QString &password)
 {
-    QString address;
-    address.append("rtsp://");
-    address.append(QString("%1").arg(ui->ip4_widget->get_url().host()));
-    address.append("/");
-    address.append(ui->le_add->text());
-
-    return address;
+    ui->le_password->setText(password);
+}
+//--------------------------------------------------------------------------------
+void PTZ_dialog::set_IP(QUrl url)
+{
+    ui->ip_widget->set_url(url);
+}
+//--------------------------------------------------------------------------------
+void PTZ_dialog::set_port(int port)
+{
+    ui->sb_port->setValue(port);
+}
+//--------------------------------------------------------------------------------
+void PTZ_dialog::set_param(const QString &param)
+{
+    ui->le_param->setText(param);
+}
+//--------------------------------------------------------------------------------
+QString PTZ_dialog::get_login(void)
+{
+    return ui->le_login->text();
+}
+//--------------------------------------------------------------------------------
+QString PTZ_dialog::get_password(void)
+{
+    return ui->le_password->text();
+}
+//--------------------------------------------------------------------------------
+QUrl PTZ_dialog::get_IP(void)
+{
+    return ui->ip_widget->get_url();
+}
+//--------------------------------------------------------------------------------
+int PTZ_dialog::get_port(void)
+{
+    return ui->sb_port->value();
+}
+//--------------------------------------------------------------------------------
+QString PTZ_dialog::get_param(void)
+{
+    return ui->le_param->text();
 }
 //--------------------------------------------------------------------------------

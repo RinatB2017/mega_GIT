@@ -77,9 +77,6 @@ void CandleStick_Box::init(void)
     ui->chartView->setRubberBand(QChartView::RectangleRubberBand);
 
     ui->chartView->setToolTip("chart");
-
-    qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
-    qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::append(QCandlestickSet *set, qreal volume)
@@ -88,7 +85,7 @@ void CandleStick_Box::append(QCandlestickSet *set, qreal volume)
 
     candleSeries->append(set);
 
-    qDebug() << "cnt" << candleSeries->count();
+    emit debug(QString("cnt %1").arg(candleSeries->count()));
 
     //categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
     categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
@@ -163,7 +160,9 @@ void CandleStick_Box::update_data(void)
         if(v_low < v_min)   v_min = v_low;
     }
 
-    qDebug() << v_min << v_max;
+    emit debug(QString("v_min %1 v_max %2")
+               .arg(v_min)
+               .arg(v_max));
 
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
     Q_CHECK_PTR(axisY);
@@ -180,9 +179,9 @@ void CandleStick_Box::create_volumes_grapher(int new_width)
     pixmap.fill(Qt::white);
 
     qreal max_height = 0;
-    qreal current_value = 0;
     for(int n=0; n<volumes.count(); n++)
     {
+        qreal current_value = 0;
         current_value = volumes.at(n);
         if(current_value > max_height)
         {
@@ -196,7 +195,7 @@ void CandleStick_Box::create_volumes_grapher(int new_width)
     painter.drawLine(0, 0, pixmap.width(), pixmap.height());
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::set_ticket_name(QString new_ticket_name)
+void CandleStick_Box::set_ticket_name(const QString &new_ticket_name)
 {
     ticket_name = new_ticket_name;
     setWindowTitle(ticket_name);

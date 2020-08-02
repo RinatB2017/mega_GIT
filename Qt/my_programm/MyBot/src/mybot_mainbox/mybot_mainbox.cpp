@@ -114,23 +114,24 @@ void MainBox::choice_test(void)
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
-    foreach (CMD command, commands)
-    {
-        if(command.cmd == cmd)
-        {
-            typedef bool (MainBox::*function)(void);
-            function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
 
-            return;
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -211,9 +212,9 @@ void MainBox::run_kdiamond(void)
     run_program(program, program_name, arguments);
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_program(const QString program,
-                          const QString program_name,
-                          const QStringList arguments)
+void MainBox::run_program(const QString &program,
+                          const QString &program_name,
+                          const QStringList &arguments)
 {
     if(program.isEmpty())
     {
@@ -235,7 +236,7 @@ void MainBox::run_program(const QString program,
     ui->le_programm->setText(program_name);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::find_window(const QString programm_title,
+bool MainBox::find_window(const QString &programm_title,
                           int *x,
                           int *y,
                           int *width,
@@ -248,7 +249,7 @@ bool MainBox::find_window(const QString programm_title,
     bool is_found = false;
     ulong count = 0;
     Window* wins = findWindows( display, &count );
-    char* name;
+    char *name = nullptr;
     QString temp;
 
     for( ulong i = 0; i < count; ++i )

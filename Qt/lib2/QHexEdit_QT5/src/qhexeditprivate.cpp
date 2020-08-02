@@ -27,9 +27,9 @@ QHexEditPrivate::QHexEditPrivate(QScrollArea *scrollarea, QScrollBar *vscrollbar
 
     QFont f("Monospace", qApp->font().pointSize());
     f.setStyleHint(QFont::TypeWriter); /* Use monospace fonts! */
+    this->setFont(f);
 
     this->setMouseTracking(true);
-    this->setFont(f);
     this->setWheelScrollLines(5); /* By default: scroll 5 lines */
     this->setAddressWidth(8);
     this->setCursor(Qt::IBeamCursor);
@@ -952,7 +952,11 @@ qint64 QHexEditPrivate::cursorPosFromPoint(const QPoint &pt, int *charindex)
     qint64 y = (this->verticalSliderPosition64() + (pt.y() / this->_charheight)) * QHexEditPrivate::BYTES_PER_LINE, x = 0;
 
     if(charindex)
+    {
         *charindex = 0;
+    }
+
+    Q_ASSERT(this->_charwidth != 0);
 
     if(this->_selpart == HexPart)
     {

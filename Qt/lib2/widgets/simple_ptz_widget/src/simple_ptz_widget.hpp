@@ -70,10 +70,7 @@ private slots:
 
 private:
     Ui::Simple_PTZ_widget *ui;
-    QMediaPlayer *player = nullptr;
-
-    //int port = 554;
-    int port = 81;
+    QPointer<QMediaPlayer> player;
 
     QNetworkRequest request;
     QNetworkAccessManager networkManager;

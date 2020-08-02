@@ -133,6 +133,8 @@ private:
 
     void init(void);
 
+    QString get_full_url(void);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

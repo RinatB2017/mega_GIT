@@ -32,9 +32,12 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#define SINGLE_APP
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
+
 #ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
@@ -60,6 +63,10 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
 
     PTZ_widget *mainBox = new PTZ_widget(main_window->getThis());
+    QObject::connect(mainBox,    &PTZ_widget::info,     main_window,    &MainWindow::info);
+    QObject::connect(mainBox,    &PTZ_widget::debug,    main_window,    &MainWindow::debug);
+    QObject::connect(mainBox,    &PTZ_widget::error,    main_window,    &MainWindow::error);
+    QObject::connect(mainBox,    &PTZ_widget::trace,    main_window,    &MainWindow::trace);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

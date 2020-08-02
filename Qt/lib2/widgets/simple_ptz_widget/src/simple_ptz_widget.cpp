@@ -62,7 +62,9 @@ void Simple_PTZ_widget::init(void)
     if(ip_string.isEmpty()) ip_string = "127.0.0.1";
     ui->ipv4_widget->set_url(QUrl(ip_string));
 
-    connect(ui->btn_run,        SIGNAL(clicked()),                  this,   SLOT(play()));
+    connect(ui->btn_connect,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::play);
+    connect(ui->btn_disconnect, &QPushButton::clicked,  this,   &Simple_PTZ_widget::stop);
+
     connect(&networkManager,    SIGNAL(finished( QNetworkReply*)),  this,   SLOT(onFinished(QNetworkReply*)));
 
     connect(ui->ipv4_widget,    &IPCtrl4::editingFinished,      this,   &Simple_PTZ_widget::play);
@@ -71,18 +73,20 @@ void Simple_PTZ_widget::init(void)
     connect(ui->sb_port,        &QSpinBox::editingFinished,     this,   &Simple_PTZ_widget::play);
 
     url = ui->ipv4_widget->get_url();
-    url.setPort(port);
+    url.setPort(ui->sb_port->value());
     emit debug(QString("IP %1").arg(url.toString()));
 
     load_widgets();
 
-    port = ui->sb_port->value();
-    emit debug(QString("port %1").arg(port));
-
     create_player();
     connect_position_widgets();
 
-    play();
+    ui->btn_d->setDisabled(true);
+    ui->btn_l->setDisabled(true);
+    ui->btn_r->setDisabled(true);
+    ui->btn_u->setDisabled(true);
+    ui->btn_up_down->setDisabled(true);
+    ui->btn_left_right->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::connect_position_widgets(void)
@@ -152,7 +156,9 @@ void Simple_PTZ_widget::play(void)
         emit debug(url_str);
 
         //const QUrl url = QUrl("rtsp://admin:admin@192.168.1.14:81");
-        const QUrl url = QUrl(url_str);
+        url = QUrl(url_str);
+        url.setPort(ui->sb_port->value());
+
         const QNetworkRequest requestRtsp(url);
         player->setMedia(requestRtsp);
         player->setVolume(0);   //TODO установить громкость
@@ -178,6 +184,12 @@ void Simple_PTZ_widget::play(void)
         //player->setMedia(request);
         player->play();
 #endif
+        ui->btn_d->setEnabled(true);
+        ui->btn_l->setEnabled(true);
+        ui->btn_r->setEnabled(true);
+        ui->btn_u->setEnabled(true);
+        ui->btn_up_down->setEnabled(true);
+        ui->btn_left_right->setEnabled(true);
     }
     else
     {
@@ -202,6 +214,13 @@ void Simple_PTZ_widget::stop(void)
     if(player->isAvailable())
     {
         player->stop();
+
+        ui->btn_d->setDisabled(true);
+        ui->btn_l->setDisabled(true);
+        ui->btn_r->setDisabled(true);
+        ui->btn_u->setDisabled(true);
+        ui->btn_up_down->setDisabled(true);
+        ui->btn_left_right->setDisabled(true);
     }
     else
     {
@@ -259,11 +278,11 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     QString param;
     param.append(QString("http://%1:%2/moveptz.xml?dir=%3")
                  .arg(url.host())
-                 .arg(port)
+                 .arg(url.port())
                  .arg(cmd));
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
-    emit debug(QString("concatenated = [%1]").arg(concatenated));
+    emit info(QString("%1").arg(concatenated));
 
     QByteArray data = concatenated.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
@@ -272,7 +291,7 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     request.setRawHeader("Connection:", "keep-alive");
     networkManager.get(request);
 
-    emit trace(QString("param = %1").arg(param));
+    emit info(param);
     emit info("OK");
 }
 //--------------------------------------------------------------------------------

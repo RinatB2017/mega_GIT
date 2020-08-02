@@ -94,22 +94,16 @@ void WebCamera::init(void)
     set_saturation(1);
     set_hue(1);
 
-    connect(ui->btn_start,  SIGNAL(clicked(bool)),  this,   SLOT(start()));
-    connect(ui->btn_stop,   SIGNAL(clicked(bool)),  this,   SLOT(stop()));
+    connect(ui->btn_start,  &QToolButton::clicked,  this,   &WebCamera::start);
+    connect(ui->btn_stop,   &QToolButton::clicked,  this,   &WebCamera::stop);
 
-    connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
-    //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test1()));
-    //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test2()));
-    //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test3()));
-    //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test4()));
-    //connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test5()));
+    connect(ui->btn_test,   &QToolButton::clicked,  this,   &WebCamera::test);
 
-    connect(ui->sl_brightness,  SIGNAL(valueChanged(int)),  this,   SLOT(set_brightness(int)));
-    connect(ui->sl_contrast,    SIGNAL(valueChanged(int)),  this,   SLOT(set_contrast(int)));
-    connect(ui->sl_saturation,  SIGNAL(valueChanged(int)),  this,   SLOT(set_saturation(int)));
-    connect(ui->sl_hue,         SIGNAL(valueChanged(int)),  this,   SLOT(set_hue(int)));
-    //connect(ui->cb_autofocus,   SIGNAL(toggled(bool)),      this,   SLOT(set_autofocus(bool)));
-    connect(ui->btn_set_device, SIGNAL(clicked(bool)),      this,   SLOT(set_device()));
+    connect(ui->sl_brightness,  &QSlider::valueChanged,  this,   &WebCamera::set_brightness);
+    connect(ui->sl_contrast,    &QSlider::valueChanged,  this,   &WebCamera::set_contrast);
+    connect(ui->sl_saturation,  &QSlider::valueChanged,  this,   &WebCamera::set_saturation);
+    connect(ui->sl_hue,         &QSlider::valueChanged,  this,   &WebCamera::set_hue);
+    connect(ui->btn_set_device, &QToolButton::clicked,   this,   &WebCamera::set_device);
 
 #ifndef FACE_DETECT
     ui->gb_face_detect->setVisible(false);
@@ -161,14 +155,13 @@ void WebCamera::check_xml_files(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    bool ok = false;
     QString directory = QString("%1/xml").
             arg(QApplication::applicationDirPath());
     QDir dir;
     if(dir.exists(directory) == false)
     {
         emit trace(QString("create directory %1").arg(directory));
-        ok = dir.mkdir(directory);
+        bool ok = dir.mkdir(directory);
         if(!ok)
         {
             emit error("directory not created");
@@ -353,7 +346,7 @@ void WebCamera::start(void)
         //TODO ui->cameraWidget->setFixedSize(w, h);
         ui->main_frame->setFixedWidth(ui->cameraWidget->width() + ui->frame->width());
 
-        mCameraEventId = startTimer(0);    //50
+        mCameraEventId = startTimer(0);
     }
     else
     {

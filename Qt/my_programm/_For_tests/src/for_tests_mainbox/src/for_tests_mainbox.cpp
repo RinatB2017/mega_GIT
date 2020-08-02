@@ -107,6 +107,8 @@ void MainBox::init(void)
     });
     //---
 
+    ui->label_3->setProperty(NO_SAVE, true);
+
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 

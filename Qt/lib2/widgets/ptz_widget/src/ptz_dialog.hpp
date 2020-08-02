@@ -22,6 +22,7 @@
 #define PTZ_DIALOG_HPP
 //--------------------------------------------------------------------------------
 #include <QDialog>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class PTZ_dialog;
@@ -35,11 +36,21 @@ public:
     explicit PTZ_dialog(QWidget *parent = nullptr);
     ~PTZ_dialog();
 
-    void set_url(QUrl url);
-    QString get_address(void);
+    void set_login(const QString &login);
+    void set_password(const QString &password);
+    void set_IP(QUrl url);
+    void set_port(int port);
+    void set_param(const QString &param);
+
+    QString get_login(void);
+    QString get_password(void);
+    QUrl get_IP(void);
+    int get_port(void);
+    QString get_param(void);
 
 private:
     Ui::PTZ_dialog *ui;
+    QUrl url;
 
     void init(void);
 };

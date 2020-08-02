@@ -52,6 +52,9 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     createTestBar();
+
+    QFont font("Courier", 10);
+    ui->hexedit_widget->setFont(font);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

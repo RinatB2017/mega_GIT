@@ -81,6 +81,8 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/simplewidget/simplewidget.pri)
 include (src/test_json/test_json.pri)
 
+include (src/dragdrop_widget/dragdrop_widget.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

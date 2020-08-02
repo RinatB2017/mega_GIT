@@ -53,6 +53,12 @@ void PTZ_widget::create_player(void)
     player->setVolume(0);   //TODO выключить звук
     player->setVideoOutput(ui->video_widget);
 
+    ui->le_proto->setText("rtsp");
+    ui->le_proto->setProperty(NO_SAVE, true);
+    ui->le_proto->setReadOnly(true);
+
+    connect_position_widgets();
+
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
 }
 //--------------------------------------------------------------------------------
@@ -71,32 +77,29 @@ void PTZ_widget::init(void)
 
     create_tcp_socket();
     create_player();
-    connect_position_widgets();
 
     ui->video_widget->setMinimumSize(640, 480);
 
     ui->sl_speed->setRange(0, 100);
     ui->sl_speed->setValue(50);
 
-#ifdef Q_OS_LINUX
-    // ui->le_address->setText("rtsp://192.168.1.66/av0_0");
-    // ui->le_address->setText("rtsp://admin:admin@192.168.1.11:8001/0/video0");
-    // ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
-    // ui->le_address->setText("rtsp://192.168.1.11:554/user=admin&password=admind&channel=1&stream=0.cgi");
-    //ui->le_address->setText("rtsp://admin:admin@192.168.1.11");
-    ui->le_address->setText("rtsp://admin:admin@192.168.1.14:81");
-#else
-    ui->le_address->setText("rtsp://192.168.10.101");
-#endif
-    ui->le_address->setEnabled(false);
+    ui->sb_port->setRange(0, 0xFFFF);
 
-    //---
-    QByteArray ba;
-    ba.append(ui->le_address->text());
-    url = QUrl::fromEncoded(ba);
-    url.setPort(port);
-    emit info(QString("IP %1").arg(url.host()));
-    //---
+    ui->le_login->setText("admin");
+    ui->le_password->setText("admin");
+    ui->sb_port->setValue(81);
+#ifdef Q_OS_LINUX
+    ui->ip_widget->set_url(QUrl("192.168.1.12"));
+#else
+    ui->ip_widget->set_url(QUrl("192.168.1.101"));
+#endif
+
+    ui->le_proto->setEnabled(false);
+    ui->le_login->setEnabled(false);
+    ui->le_password->setEnabled(false);
+    ui->ip_widget->setEnabled(false);
+    ui->sb_port->setEnabled(false);
+    ui->le_param->setEnabled(false);
 
     ui->btn_play->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_pause->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPause));
@@ -115,6 +118,11 @@ void PTZ_widget::init(void)
     PTZ_PARAM param;
     PTZ_PARAM param1;
     PTZ_PARAM param2;
+
+    param1.min_value = 0;
+    param1.max_value = 0;
+    param2.min_value = 0;
+    param2.max_value = 0;
 
     param.cmd = "isp";
     param.func = "brightness";
@@ -243,9 +251,12 @@ void PTZ_widget::init(void)
     add_buttons(index++, "FLIP", param1, param2);
     //---
 
+    url.setHost(ui->ip_widget->get_url().host());
+    url.setPort(ui->sb_port->value());
+
     load_widgets();
 
-    play();
+    //play();
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_buttons(int index,
@@ -447,13 +458,24 @@ void PTZ_widget::f_disconnected(void)
     emit info("Disconnected");
 }
 //--------------------------------------------------------------------------------
+QString PTZ_widget::get_full_url(void)
+{
+    QString temp = QString("rtsp://%1:%2@%3:%4/%5")
+            .arg(ui->le_login->text())
+            .arg(ui->le_password->text())
+            .arg(ui->ip_widget->get_url().host())
+            .arg(ui->sb_port->value())
+            .arg(ui->le_param->text());
+    return temp;
+}
+//--------------------------------------------------------------------------------
 void PTZ_widget::play(void)
 {
     if(player->isAvailable())
     {
         player->stop();
 
-        const QUrl url = QUrl(ui->le_address->text());
+        const QUrl url = QUrl(get_full_url());
         const QNetworkRequest requestRtsp(url);
         player->setMedia(requestRtsp);
         player->play();
@@ -491,15 +513,23 @@ void PTZ_widget::stop(void)
 void PTZ_widget::choice(void)
 {
     PTZ_dialog *dlg = new PTZ_dialog;
-    dlg->set_url(QUrl("192.168.1.14"));
+    dlg->set_IP(ui->ip_widget->get_url());
+    dlg->set_login(ui->le_login->text());
+    dlg->set_password(ui->le_password->text());
+    dlg->set_port(ui->sb_port->value());
+    dlg->set_param(ui->le_param->text());
+
     int btn = dlg->exec();
     if(btn == PTZ_dialog::Accepted)
     {
-        emit debug(QString("[%1]").arg(dlg->get_address()));
-        ui->le_address->setText(dlg->get_address());
+        ui->le_login->setText(dlg->get_login());
+        ui->le_password->setText(dlg->get_password());
+        ui->ip_widget->set_url(dlg->get_IP());
+        ui->sb_port->setValue(dlg->get_port());
+        ui->le_login->setText(dlg->get_login());
 
         QByteArray ba;
-        ba.append(ui->le_address->text());
+        ba.append(ui->ip_widget->get_url().host());
         url = QUrl::fromEncoded(ba);
         url.setPort(port);
     }
@@ -576,8 +606,8 @@ void PTZ_widget::send_cmd(QString  cmd,
     //param.append(QString("http://%1/cgi-bin/senddata.cgi?").arg(url.host()));
     param.append("http://");
     param.append("admin:admin@");
-    param.append(QString("%1").arg(url.host()));
-    param.append(":81");
+    param.append(url.host());
+    param.append(QString(":%1").arg(url.port()));
     param.append("/cgi-bin/senddata.cgi?");
 
     param.append(QString("cmd=%1;").arg(cmd));
@@ -610,6 +640,7 @@ void PTZ_widget::send_cmd(QString  cmd,
         ok = f_connect();
         if(ok == false)
         {
+            emit error("connect fail");
             return;
         }
     }

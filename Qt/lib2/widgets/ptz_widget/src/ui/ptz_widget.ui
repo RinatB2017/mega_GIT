@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>331</height>
+    <width>552</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,10 +30,101 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLineEdit" name="le_address"/>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>IP</string>
+          </property>
+         </widget>
         </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="le_password"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Login</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="le_login"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Proto</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="le_proto"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Pass</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="IPCtrl4" name="ip_widget" native="true"/>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="sb_port"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Port</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Param</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="le_param"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QToolButton" name="btn_choice">
           <property name="text">
@@ -61,6 +152,19 @@
            <string>...</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -346,7 +450,33 @@
    <header>qvideowidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>IPCtrl4</class>
+   <extends>QWidget</extends>
+   <header>ipctrl4.hpp</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>le_proto</tabstop>
+  <tabstop>le_login</tabstop>
+  <tabstop>le_password</tabstop>
+  <tabstop>sb_port</tabstop>
+  <tabstop>btn_choice</tabstop>
+  <tabstop>btn_play</tabstop>
+  <tabstop>btn_pause</tabstop>
+  <tabstop>btn_stop</tabstop>
+  <tabstop>btn_test</tabstop>
+  <tabstop>sl_speed</tabstop>
+  <tabstop>btn_lu</tabstop>
+  <tabstop>btn_u</tabstop>
+  <tabstop>btn_ru</tabstop>
+  <tabstop>btn_l</tabstop>
+  <tabstop>btn_r</tabstop>
+  <tabstop>btn_ld</tabstop>
+  <tabstop>btn_d</tabstop>
+  <tabstop>btn_rd</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../../icons/arrows/arrows.qrc"/>
  </resources>

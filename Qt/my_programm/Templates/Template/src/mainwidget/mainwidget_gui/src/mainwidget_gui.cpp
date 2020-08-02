@@ -143,23 +143,23 @@ void MainWidget_GUI::choice_test(void)
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef bool (MainWidget::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef bool (MainWidget::*function)(void);
-            function x;
-            x = command.func;
-            if(x)
-            {
-                (w->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (w->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }

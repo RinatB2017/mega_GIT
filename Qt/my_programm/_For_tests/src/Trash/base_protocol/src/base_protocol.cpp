@@ -37,7 +37,7 @@ int Base_protocol::check_packet(QByteArray question,
     {
         return E_BAD_SIZE;
     }
-    HEADER *header = (HEADER *)question.data();
+    HEADER *header = reinterpret_cast<HEADER *>(question.data());
 
     if(address != header->addr)
     {

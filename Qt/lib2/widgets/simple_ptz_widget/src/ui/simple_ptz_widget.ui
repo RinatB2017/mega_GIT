@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>331</height>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,9 +74,16 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_run">
+       <widget class="QPushButton" name="btn_connect">
         <property name="text">
          <string>connect</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_disconnect">
+        <property name="text">
+         <string>disconnect</string>
         </property>
        </widget>
       </item>
@@ -301,7 +308,8 @@
   <tabstop>sb_port</tabstop>
   <tabstop>le_login</tabstop>
   <tabstop>le_password</tabstop>
-  <tabstop>btn_run</tabstop>
+  <tabstop>btn_connect</tabstop>
+  <tabstop>btn_disconnect</tabstop>
   <tabstop>btn_left_right</tabstop>
   <tabstop>btn_up_down</tabstop>
   <tabstop>btn_u</tabstop>

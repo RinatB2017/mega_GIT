@@ -26,6 +26,7 @@ SUBDIRS += \
     Test_HID_device \
     Test_HTML \
     Test_QHexEdit \
+    Test_QHexEdit2 \
     Test_mesh \
     Test_md5 \
     Test_OpenRPT \

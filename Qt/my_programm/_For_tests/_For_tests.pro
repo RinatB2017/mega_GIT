@@ -82,6 +82,8 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/simplewidget/simplewidget.pri)
 include (src/test_json/test_json.pri)
 
+include (src/qhexedit2/qhexedit2.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

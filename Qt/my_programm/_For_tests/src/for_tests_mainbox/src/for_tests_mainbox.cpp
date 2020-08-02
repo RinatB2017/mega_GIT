@@ -330,10 +330,18 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
+#include "qhexedit.hpp"
+#include "qhexedit2.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+
+#if 1
+    QHexEdit2 *he = new QHexEdit2();
+    //he->setMinimumSize(800, 600);
+    he->show();
+#endif
 
 #if 0
     qBadAlloc();

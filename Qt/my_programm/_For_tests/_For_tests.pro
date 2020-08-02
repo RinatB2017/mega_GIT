@@ -74,14 +74,13 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
+include ($$LIB_PATH/mywidgets/picturelabel.pri)
 
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/simplewidget/simplewidget.pri)
 include (src/test_json/test_json.pri)
-
-include (src/dragdrop_widget/dragdrop_widget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DRAGDROP_WIDGET_HPP
-#define DRAGDROP_WIDGET_HPP
+#ifndef PICTURELABEL_HPP
+#define PICTURELABEL_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -28,20 +28,20 @@
 #endif
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class DragDrop_widget;
+    class PictureLabel;
 }
 //--------------------------------------------------------------------------------
-class DragDrop_widget : public QLabel
+class PictureLabel : public QLabel
 {
     Q_OBJECT
 
 public:
-    explicit DragDrop_widget(QWidget *parent = nullptr);
-    ~DragDrop_widget();
+    explicit PictureLabel(QWidget *parent = nullptr);
+    ~PictureLabel();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
 };
 //--------------------------------------------------------------------------------
-#endif // DRAGDROP_WIDGET_HPP
+#endif // PICTURELABEL_HPP

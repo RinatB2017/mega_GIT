@@ -2,8 +2,9 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD/src
+DEPENDPATH  += \
+    $$PWD/picturelabel 
 INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += dragdrop_widget.hpp
-SOURCES += dragdrop_widget.cpp
+HEADERS += picturelabel.hpp
+SOURCES += picturelabel.cpp

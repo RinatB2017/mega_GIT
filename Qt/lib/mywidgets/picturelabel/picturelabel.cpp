@@ -18,20 +18,20 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "dragdrop_widget.hpp"
+#include "picturelabel.hpp"
 //--------------------------------------------------------------------------------
-DragDrop_widget::DragDrop_widget(QWidget *parent) :
+PictureLabel::PictureLabel(QWidget *parent) :
     QLabel(parent)
 {
     setAcceptDrops(true);
 }
 //--------------------------------------------------------------------------------
-DragDrop_widget::~DragDrop_widget()
+PictureLabel::~PictureLabel()
 {
 
 }
 //--------------------------------------------------------------------------------
-void DragDrop_widget::dragEnterEvent(QDragEnterEvent *event)
+void PictureLabel::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasUrls())
     {
@@ -39,7 +39,7 @@ void DragDrop_widget::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void DragDrop_widget::dropEvent(QDropEvent *event)
+void PictureLabel::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasUrls())
     {

@@ -333,7 +333,6 @@ void MainBox::show_timer_count(void)
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-    emit info("Test");
 
 #if 0
     qBadAlloc();
@@ -349,7 +348,7 @@ bool MainBox::test(void)
     ui->te_test->insertPlainText(QString("XXX: cnt = %1 ").arg(cnt++));
 #endif
 
-#if 0
+#if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

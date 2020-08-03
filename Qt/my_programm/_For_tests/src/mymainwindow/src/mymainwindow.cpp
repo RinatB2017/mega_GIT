@@ -18,11 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "for_tests_mainbox.hpp"
 #include "mymainwindow.hpp"
 #include "mywidget.hpp"
-
 #include "defines.hpp"
-#include "for_tests_mainbox.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

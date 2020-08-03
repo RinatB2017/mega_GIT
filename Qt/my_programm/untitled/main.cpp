@@ -1,13 +1,14 @@
 #include <QCoreApplication>
+#include <QLocalSocket>
 #include <QDebug>
 #include <QTimer>
 
 class Sender : public QObject
 {
 public:
-    static void send_data(const QString &text, Sender *obj)
+    static void send_data(const QString &text)
     {
-        obj->get_data(text);
+        QLocalSocket *socket(new QLocalSocket());
     }
     void get_data(const QString &text)
     {
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
     QCoreApplication app(argc, argv);
 
     Sender *sender = new Sender();
-    sender->send_data("test", sender);
+    sender->send_data("test");
     delete sender;
 
     QTimer::singleShot(0, &app, SLOT(quit()));

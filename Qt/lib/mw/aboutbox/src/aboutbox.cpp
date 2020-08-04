@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "aboutbox.hpp"
 #include "ui_aboutbox.h"
 //--------------------------------------------------------------------------------
@@ -45,7 +39,23 @@ AboutBox::AboutBox(const QString &orgName,
                    const QString &telegram,
                    QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::AboutBox)
+    ui(new Ui::AboutBox),
+    orgName(orgName),
+    programmName(programmName),
+    version(version),
+    email(email),
+    author(author),
+    telegram(telegram)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+AboutBox::~AboutBox()
+{
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void AboutBox::init(void)
 {
     ui->setupUi(this);
 
@@ -58,16 +68,6 @@ AboutBox::AboutBox(const QString &orgName,
     ui->lbl_email->setToolTip(email);
     ui->lbl_telegram->setToolTip(telegram);
 
-#if 0
-    QString text;
-    text = QString("<b>%1</b><br><br><b>%2</b><br><i>%3</i><br><br><i>%4<br><i>%5</i>")
-            .arg(orgName)
-            .arg(programmName)
-            .arg(QString(tr("version %1")).arg(version))
-            .arg(QString("<a href='mailto:tux4096@gmail.com'>%1</a>").arg(author))
-            .arg(QString("<a href='%5'>Telegram</a>").arg(telegram));
-#endif
-
     connect(ui->lbl_email,      &QLabel::linkActivated, this,   &AboutBox::send_mail);
     connect(ui->lbl_telegram,   &QLabel::linkActivated, this,   &AboutBox::go_telegramm);
 
@@ -76,7 +76,7 @@ AboutBox::AboutBox(const QString &orgName,
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(glWidget);
 
-    ui->labelLogo->setFixedSize(312, 312);   //TODO про фотографию не забыть
+    ui->labelLogo->setFixedSize(312, 312);
 
     ui->labelLogo->clear();
     ui->labelLogo->setLayout(vbox);
@@ -122,24 +122,6 @@ void AboutBox::send_mail(QString link)
 void AboutBox::go_telegramm(QString link)
 {
     QDesktopServices::openUrl(QUrl(link));
-}
-//--------------------------------------------------------------------------------
-AboutBox::~AboutBox()
-{
-    delete ui;
-}
-//--------------------------------------------------------------------------------
-void AboutBox::changeEvent(QEvent *event)
-{
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        break;
-
-    default:
-        QWidget::changeEvent(event);
-        break;
-    }
 }
 //--------------------------------------------------------------------------------
 

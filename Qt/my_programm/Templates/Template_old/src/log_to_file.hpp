@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= 0x050000
-#include <QMessageLogContext>
+#   include <QMessageLogContext>
 #endif
 #include <stdio.h>
 #include <QFile>

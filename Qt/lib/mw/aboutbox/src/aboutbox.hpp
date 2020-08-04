@@ -2,10 +2,14 @@
 #ifndef ABOUTBOX_HPP
 #define ABOUTBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QDialog>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
-class AboutBox;
+    class AboutBox;
 }
 //--------------------------------------------------------------------------------
 class AboutBox : public QDialog
@@ -29,9 +33,14 @@ private slots:
 
 private:
     Ui::AboutBox *ui;
+    QString orgName;
+    QString programmName;
+    QString version;
+    QString email;
+    QString author;
+    QString telegram;
 
-protected:
-    void changeEvent(QEvent *event);
+    void init(void);
 };
 //--------------------------------------------------------------------------------
 #endif // ABOUTBOX_HPP

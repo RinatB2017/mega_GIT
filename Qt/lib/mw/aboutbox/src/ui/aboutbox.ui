@@ -6,16 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>487</width>
-    <height>385</height>
+    <width>470</width>
+    <height>383</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>About</string>
-  </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>:/images/computer.png</normaloff>:/images/computer.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -33,9 +29,6 @@
          <widget class="QLabel" name="labelLogo">
           <property name="pixmap">
            <pixmap resource="../../images/aboutbox.qrc">:/logo/avatar.png</pixmap>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>

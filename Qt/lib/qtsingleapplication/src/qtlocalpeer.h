@@ -62,7 +62,7 @@ Q_SIGNALS:
     void messageReceived(const QString &message);
 
 protected Q_SLOTS:
-    void receiveConnection();
+    void receiveConnection(void);
 
 protected:
     QString id;

@@ -32,47 +32,6 @@
 #include "ui_test_GrapherBox_mainbox.h"
 #include "testdialog.hpp"
 //--------------------------------------------------------------------------------
-//class MyScaleDraw : public QwtScaleDraw
-//{
-//public:
-//    MyScaleDraw(double val)
-//    {
-//        divider = val;
-//    }
-//    virtual QwtText label(double value) const
-//    {
-//        return QString("%1").arg(value / divider, 0, 'f', 1);
-//    }
-//private:
-//    double divider = 1.0;
-//};
-//--------------------------------------------
-//class PlotPicker: public QwtPlotPicker
-//{
-//public:
-//    PlotPicker(int xAxis,
-//               int yAxis,
-//               RubberBand rubberBand,
-//               DisplayMode trackerMode,
-//               double val,
-//               QWidget * wgt)
-//        :QwtPlotPicker(xAxis, yAxis, rubberBand, trackerMode, wgt)
-//    {
-//        divider = val;
-//    }
-
-//    QwtText trackerText(const QPoint &point) const
-//    {
-//        QwtText text;
-//        text.setText(QString("%1:%2")
-//                     .arg(invTransform(point).x() / divider)
-//                     .arg(invTransform(point).y()));
-//        return text;
-//    }
-//private:
-//    double divider = 1.0;
-//};
-//--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -284,23 +243,23 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }

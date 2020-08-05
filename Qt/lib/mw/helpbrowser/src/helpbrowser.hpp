@@ -29,15 +29,12 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QPushButton;
-class QTextBrowser; 
-//--------------------------------------------------------------------------------
 class HelpBrowser : public QWidget
 { 
     Q_OBJECT
 public: 
-    HelpBrowser(QString &page,
-                QWidget *parent = nullptr);
+    explicit HelpBrowser(QString &page,
+                         QWidget *parent = nullptr);
     ~HelpBrowser();
 
     static void showPage(QString page,

@@ -162,7 +162,7 @@ bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MyWidget::log(const QString data)
+void MyWidget::log(const QString &data)
 {
 #if 1
     qDebug() << data;
@@ -300,7 +300,7 @@ void MyWidget::block_interface(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void MyWidget::block_widget(const QString name, bool state)
+void MyWidget::block_widget(const QString &name, bool state)
 {
     if(name.isEmpty())
     {

@@ -176,7 +176,7 @@ bool QtLocalPeer::sendMessage(const QString &message, int timeout)
 }
 
 
-void QtLocalPeer::receiveConnection()
+void QtLocalPeer::receiveConnection(void)
 {
     QLocalSocket* socket = server->nextPendingConnection();
     if (!socket)

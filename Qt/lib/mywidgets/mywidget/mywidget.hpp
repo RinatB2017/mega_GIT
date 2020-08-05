@@ -90,7 +90,7 @@ public:
     void unlock_this_button(void);
 
     void block_this_button(bool state);
-    void block_widget(const QString name,
+    void block_widget(const QString &name,
                       bool state);
 
     bool is_slot_exists(QWidget *obj,
@@ -152,7 +152,7 @@ public slots:
 #endif
 
 private slots:
-    void log(const QString data);
+    void log(const QString &data);
 
     void s_test(void);
     void show_objectname(void);

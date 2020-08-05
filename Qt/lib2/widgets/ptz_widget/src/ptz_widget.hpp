@@ -119,6 +119,8 @@ private:
 
     QList<PTZ_PARAM> l_params;
 
+    void send_cmd(QString cmd);
+
     void send_cmd(QString cmd,
                   QString func,
                   QVariant param_1,
@@ -132,6 +134,10 @@ private:
     void connect_position_widgets(void);
 
     void init(void);
+
+    void widgets_set_state(bool state);
+    void lock_widgets(void);
+    void unlock_widgets(void);
 
     QString get_full_url(void);
 

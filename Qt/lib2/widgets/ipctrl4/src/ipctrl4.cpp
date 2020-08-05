@@ -1,12 +1,3 @@
-#include <stdint.h>
-#include <QIntValidator>
-#include <QHBoxLayout>
-#include <QKeyEvent>
-#include <QLineEdit>
-#include <QFrame>
-#include <QLabel>
-#include <QFont>
-#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "ipctrl4.hpp"
 //--------------------------------------------------------------------------------
@@ -175,7 +166,6 @@ void IPCtrl4::MovePrevLineEdit(int i)
     }
 }
 //--------------------------------------------------------------------------------
-#include <QDebug>
 void IPCtrl4::set_url(QUrl url)
 {
     QString url_string;

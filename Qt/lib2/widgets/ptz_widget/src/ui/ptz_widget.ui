@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
+    <width>538</width>
     <height>418</height>
    </rect>
   </property>
@@ -140,13 +140,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="btn_pause">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QToolButton" name="btn_stop">
           <property name="text">
            <string>...</string>
@@ -206,7 +199,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <spacer name="horizontalSpacer_3">
+         <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -233,7 +226,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_2">
+         <spacer name="horizontalSpacer_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -464,7 +457,6 @@
   <tabstop>sb_port</tabstop>
   <tabstop>btn_choice</tabstop>
   <tabstop>btn_play</tabstop>
-  <tabstop>btn_pause</tabstop>
   <tabstop>btn_stop</tabstop>
   <tabstop>btn_test</tabstop>
   <tabstop>sl_speed</tabstop>

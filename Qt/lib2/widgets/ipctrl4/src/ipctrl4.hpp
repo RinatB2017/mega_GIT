@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QDebug>
 #include <QFrame>
 #include <QLabel>
 #include <QFont>

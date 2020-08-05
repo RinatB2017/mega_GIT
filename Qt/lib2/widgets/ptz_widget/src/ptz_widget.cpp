@@ -39,6 +39,9 @@ PTZ_widget::PTZ_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 PTZ_widget::~PTZ_widget()
 {
+    save_string(IP_STRING, ui->ip_widget->get_url().host());
+    save_int(PORT_STRING, ui->ip_widget->get_url().port());
+
     save_widgets();
     if(player)
     {
@@ -102,11 +105,9 @@ void PTZ_widget::init(void)
     ui->le_param->setEnabled(false);
 
     ui->btn_play->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btn_pause->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPause));
     ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
 
     connect(ui->btn_play,   SIGNAL(clicked(bool)),  this,   SLOT(play()));
-    connect(ui->btn_pause,  SIGNAL(clicked(bool)),  this,   SLOT(pause()));
     connect(ui->btn_stop,   SIGNAL(clicked(bool)),  this,   SLOT(stop()));
 
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(f_test()));
@@ -254,9 +255,58 @@ void PTZ_widget::init(void)
     url.setHost(ui->ip_widget->get_url().host());
     url.setPort(ui->sb_port->value());
 
+    url.setHost(load_string(IP_STRING));
+    url.setPort(load_int(PORT_STRING));
+
+    ui->ip_widget->set_url(url);
+
+    lock_widgets();
+
     load_widgets();
 
     //play();
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::widgets_set_state(bool state)
+{
+    ui->btn_u->setEnabled(state);
+    ui->btn_d->setEnabled(state);
+    ui->btn_l->setEnabled(state);
+    ui->btn_r->setEnabled(state);
+    ui->btn_lu->setEnabled(state);
+    ui->btn_ld->setEnabled(state);
+    ui->btn_ru->setEnabled(state);
+    ui->btn_rd->setEnabled(state);
+    ui->btn_lu->setEnabled(state);
+    ui->sl_speed->setEnabled(state);
+
+    QList<QPushButton *> all_btn = findChildren<QPushButton *>();
+    foreach(QPushButton *btn, all_btn)
+    {
+        if(btn->property("cmd").toString().isEmpty() == false)
+        {
+            btn->setEnabled(state);
+        }
+    }
+
+    QList<QSlider *> all_slider = findChildren<QSlider *>();
+    foreach(QSlider *slider, all_slider)
+    {
+        if(slider->property("cmd").toString().isEmpty() == false)
+        {
+            slider->setEnabled(state);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::lock_widgets(void)
+{
+    widgets_set_state(false);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::unlock_widgets(void)
+{
+    widgets_set_state(true);
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::add_buttons(int index,
@@ -385,6 +435,10 @@ void PTZ_widget::connect_position_widgets(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_error(QMediaPlayer::Error err)
 {
+    if(err != QMediaPlayer::NoError)
+    {
+        lock_widgets();
+    }
     switch (err)
     {
     case QMediaPlayer::NoError:             emit error("NoError");              break;
@@ -475,10 +529,12 @@ void PTZ_widget::play(void)
     {
         player->stop();
 
-        const QUrl url = QUrl(get_full_url());
+        url = QUrl(get_full_url());
         const QNetworkRequest requestRtsp(url);
         player->setMedia(requestRtsp);
         player->play();
+
+        unlock_widgets();
     }
     else
     {
@@ -503,6 +559,7 @@ void PTZ_widget::stop(void)
     if(player->isAvailable())
     {
         player->stop();
+        lock_widgets();
     }
     else
     {
@@ -538,47 +595,56 @@ void PTZ_widget::choice(void)
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_stop(void)
 {
-    send_cmd("ptz", "STOP", 0, 0);
+    //send_cmd("ptz", "STOP", 0, 0);
+    send_cmd("stop");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_up(void)
 {
-    send_cmd("ptz", "LU", ui->sl_speed->value(), ui->sl_speed->value());
+    //send_cmd("ptz", "LU", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("leftup");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right_up(void)
 {
-    send_cmd("ptz", "RU", ui->sl_speed->value(), ui->sl_speed->value());
+    //send_cmd("ptz", "RU", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("rightup");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left(void)
 {
-    send_cmd("ptz", "L", ui->sl_speed->value(), 0);
+    //send_cmd("ptz", "L", ui->sl_speed->value(), 0);
+    send_cmd("left");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right(void)
 {
-    send_cmd("ptz", "R", ui->sl_speed->value(), 0);
+    //send_cmd("ptz", "R", ui->sl_speed->value(), 0);
+    send_cmd("right");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_up(void)
 {
-    send_cmd("ptz", "U", 0, ui->sl_speed->value());
+    //send_cmd("ptz", "U", 0, ui->sl_speed->value());
+    send_cmd("up");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_down(void)
 {
-    send_cmd("ptz", "D", 0, ui->sl_speed->value());
+    //send_cmd("ptz", "D", 0, ui->sl_speed->value());
+    send_cmd("down");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_left_down(void)
 {
-    send_cmd("ptz", "LD", ui->sl_speed->value(), ui->sl_speed->value());
+    //send_cmd("ptz", "LD", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("leftdown");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_right_down(void)
 {
-    send_cmd("ptz", "RD", ui->sl_speed->value(), ui->sl_speed->value());
+    //send_cmd("ptz", "RD", ui->sl_speed->value(), ui->sl_speed->value());
+    send_cmd("rightdown");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::f_test(void)
@@ -590,6 +656,30 @@ void PTZ_widget::f_test(void)
 
     //send_cmd("isp", "flip", 0, 0);
     //send_cmd("isp", "flip", 1, 0);
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::send_cmd(QString  cmd)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QString param;
+    param.append(QString("http://%1:%2/moveptz.xml?dir=%3")
+                 .arg(url.host())
+                 .arg(url.port())
+                 .arg(cmd));
+
+    QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
+    emit info(QString("%1").arg(concatenated));
+
+    QByteArray data = concatenated.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    QNetworkRequest request=QNetworkRequest(QUrl( param ));
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+    request.setRawHeader("Connection:", "keep-alive");
+    networkManager.get(request);
+
+    emit info(param);
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::send_cmd(QString  cmd,

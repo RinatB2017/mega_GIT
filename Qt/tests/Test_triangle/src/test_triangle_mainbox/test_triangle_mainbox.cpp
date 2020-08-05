@@ -135,7 +135,6 @@ void MainBox::test_triangle(double a, double b, double c)
 {
     double A, B, C;
     double x;
-    bool temp;
 
     A = qSqrt(a*a + b*b + a*b);
     B = qSqrt(a*a + c*c + a*c);
@@ -143,7 +142,7 @@ void MainBox::test_triangle(double a, double b, double c)
     emit debug(QString("A=%1 B=%2 C=%3").arg(A).arg(B).arg(C));
     for(x=0.0f; x<90.0f; x+=0.00001)
     {
-        temp = calc(A, B, C, x);
+        bool temp = calc(A, B, C, x);
         if(temp)
         {
             emit info(QString("found! x = %1").arg(x));

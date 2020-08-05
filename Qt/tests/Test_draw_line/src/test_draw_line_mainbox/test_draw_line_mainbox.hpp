@@ -72,7 +72,7 @@ private:
 
     void block_this_button(bool state);
     void block_interface(bool state);
-    void block_widget(const QString name, bool state);
+    void block_widget(const QString &name, bool state);
 
     QString convert_data_to_ascii(uint8_t data);
     uint8_t convert_ascii_to_value(char hi, char lo);

@@ -136,7 +136,7 @@ void MainBox::find_device(void)
             {
                 if(serial.open(QIODevice::ReadWrite))
                 {
-                    bool ok = send_AT();
+                    ok = send_AT();
                     if(ok)
                     {
                         emit info(QString(tr("%1 найден на скорости %2"))
@@ -357,23 +357,23 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }

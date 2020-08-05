@@ -95,10 +95,10 @@ void MainBox::init(void)
 int MainBox::load(const QString &filename)
 {
     QString line;
-    double phase_A;
-    double phase_B;
-    double phase_C;
-    bool ok;
+    double phase_A = 0;
+    double phase_B = 0;
+    double phase_C = 0;
+    bool ok = false;
 
     emit debug(QString("load %1").arg(filename));
 
@@ -112,17 +112,17 @@ int MainBox::load(const QString &filename)
             line = in.readLine();
             if(line.isNull()) break;
             phase_A = line.toDouble(&ok);
-            if(!ok) phase_A = 0.0f;
+            if(!ok) phase_A = 0.0;
 
             line = in.readLine();
             if(line.isNull()) break;
             phase_B = line.toDouble(&ok);
-            if(!ok) phase_B = 0.0f;
+            if(!ok) phase_B = 0.0;
 
             line = in.readLine();
             if(line.isNull()) break;
             phase_C = line.toDouble(&ok);
-            if(!ok) phase_C = 0.0f;
+            if(!ok) phase_C = 0.0;
 
             qDebug() << "phase_A" << phase_A << "phase_B" << phase_B << "phase_C" << phase_C;
             plot->graph(0)->addData(index, phase_A);

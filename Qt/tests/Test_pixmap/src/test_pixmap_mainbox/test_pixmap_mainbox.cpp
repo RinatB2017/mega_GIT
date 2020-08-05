@@ -157,9 +157,9 @@ void MainBox::load_labirint(void)
     int map_w = w*wall.width();
     int map_h = h*wall.height();
 
-    QPixmap temp(map_w, map_h);
-    temp.fill(Qt::gray);
-    QPainter t(&temp);
+    QPixmap temp_pix(map_w, map_h);
+    temp_pix.fill(Qt::gray);
+    QPainter t(&temp_pix);
 
     int y = 0;
     ok = xmlGet->find("items");
@@ -189,7 +189,7 @@ void MainBox::load_labirint(void)
         ok = xmlGet->findNext("items");
     }
 
-    p = temp.copy(0, 0, map_w, map_h);
+    p = temp_pix.copy(0, 0, map_w, map_h);
 
     emit info(QString("width %1").arg(w));
     emit info(QString("height %1").arg(h));

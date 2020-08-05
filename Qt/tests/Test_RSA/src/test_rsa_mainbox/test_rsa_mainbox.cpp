@@ -105,23 +105,23 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -268,8 +268,6 @@ void MainBox::test_2(void)
 {
     emit info("Test_2()");
 
-    bool ok = false;
-
     QCA::Initializer init;
     load_public_file("keypublic.pem");
     load_private_file("keyprivate.pem", "pass phrase");
@@ -282,7 +280,7 @@ void MainBox::test_2(void)
     timer.start();
     for(int n=0; n<10000; n++)
     {
-        ok = crypt(ba, result);
+        bool ok = crypt(ba, result);
         if(!ok)
         {
             emit error("Error crypt");
@@ -297,8 +295,6 @@ void MainBox::test_3(void)
 {
     emit info("Test_3()");
 
-    bool ok = false;
-
     QCA::Initializer init;
     load_public_file("keypublic.pem");
     load_private_file("keyprivate.pem", "pass phrase");
@@ -310,7 +306,7 @@ void MainBox::test_3(void)
     timer.start();
     for(int n=0; n<10000; n++)
     {
-        ok = decrypt(ba, &result);
+        bool ok = decrypt(ba, &result);
         if(!ok)
         {
             emit error("Error decrypt");

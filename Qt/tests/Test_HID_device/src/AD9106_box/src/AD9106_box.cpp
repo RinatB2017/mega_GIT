@@ -329,23 +329,23 @@ void AD9106_Box::choice_test(void)
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (AD9106_Box::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (AD9106_Box::*function)(void);
-            function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -469,7 +469,7 @@ void AD9106_Box::read_xml(void)
                             int index = 2;  //TODO костыль
                             for(int n=15; n>=0; n--)
                             {
-                                QToolButton *btn = new QToolButton;
+                                QToolButton *btn = new QToolButton();
                                 btn->setCheckable(true);
                                 btn->setProperty("row", row);
                                 btn->setProperty("bit", n);
@@ -732,7 +732,6 @@ void AD9106_Box::dev_write_all_registers(void)
         return;
     }
 
-    bool ok = false;
     QList<QTableWidget *> all_obj = w->findChildren<QTableWidget *>();
     foreach(QTableWidget *obj, all_obj)
     {
@@ -743,7 +742,7 @@ void AD9106_Box::dev_write_all_registers(void)
 
             if(item0 && item1)
             {
-                ok = AD9106_write(item0->text(), static_cast<uint16_t>(item1->text().toInt()));
+                bool ok = AD9106_write(item0->text(), static_cast<uint16_t>(item1->text().toInt()));
                 if(!ok)
                 {
                     emit error(QString("error write %1").arg(item0->text()));
@@ -907,7 +906,7 @@ bool AD9106_Box::ReadVoltage(int channel, double *voltage)
     uint16_t ADCData = 0;
 
     ok = ReadADC(static_cast<uint8_t>(channel), &ADCData);
-    if(!ok) return ok;
+    if(!ok) return false;
 
     switch(channel)
     {

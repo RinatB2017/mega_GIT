@@ -141,7 +141,7 @@ private:
     void find_to_battle(void);
 
     bool find_programm_with_title(const QString &title);
-    bool find_window(const QString programm_title,
+    bool find_window(const QString &programm_title,
                      int *x,
                      int *y,
                      int *width,

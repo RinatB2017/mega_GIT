@@ -61,9 +61,9 @@ private slots:
     void run_kpat(void);
     void run_kdiamond(void);
 
-    void run_program(const QString program,
-                     const QString program_name,
-                     const QStringList arguments);
+    void run_program(const QString &program,
+                     const QString &program_name,
+                     const QStringList &arguments);
 
     void find_kpat(void);
     void find_kmines(void);
@@ -89,7 +89,7 @@ private:
 
     void init(void);
     void createTestBar(void);
-    bool find_window(const QString programm_title,
+    bool find_window(const QString &programm_title,
                      int *x,
                      int *y,
                      int *width,

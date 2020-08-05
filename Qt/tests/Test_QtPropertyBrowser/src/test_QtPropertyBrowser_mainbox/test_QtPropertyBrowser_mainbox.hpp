@@ -84,8 +84,8 @@ private:
 
     void add_property(QtVariantPropertyManager *variantManager,
                       QList<StructProperty_t> *l_property,
-                      QString name,
-                      QString object_name,
+                      const QString &name,
+                      const QString &object_name,
                       int propertyType);
 
     void init(void);

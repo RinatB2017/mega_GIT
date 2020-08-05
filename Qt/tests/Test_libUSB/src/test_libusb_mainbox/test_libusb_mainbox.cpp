@@ -476,7 +476,7 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
 
         if (returned >= 0)
         {
-            for (short i=0; i < DATA_SIZE; i++)
+            for (int i=0; i < DATA_SIZE; i++)
             {
                 emit info(QString("buf[%1] = %2").arg(i).arg(static_cast<int>(buf[i])));
                 cc++;
@@ -523,7 +523,7 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
         // parce transfer errors
         if (returned >= 0)
         {
-            for (short i=0; i < DATA_SIZE; i++)
+            for (int i=0; i < DATA_SIZE; i++)
             {
                 emit info(QString("buf[%1] = %2").arg(i).arg(static_cast<int>(buf[i])));
                 cc++;

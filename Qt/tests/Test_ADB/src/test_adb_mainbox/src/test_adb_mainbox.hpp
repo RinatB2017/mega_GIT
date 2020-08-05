@@ -102,8 +102,8 @@ private:
     void init(void);
     void createTestBar(void);
 
-    void run_program(const QString program,
-                     const QStringList arguments);
+    void run_program(const QString &program,
+                     const QStringList &arguments);
 
     bool f_get_file_screeshot(void);
     bool f_get_screeshot(void);

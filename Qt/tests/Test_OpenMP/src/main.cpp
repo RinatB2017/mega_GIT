@@ -19,7 +19,7 @@ int main(void)
     qDebug() << "Compiled by an OpenMP-compliant implementation.";
     qDebug() << "The result of omp_get_num_threads " << omp_get_num_threads();
 #else
-    qFatal() << "OpenMP not found!");
+    qFatal("OpenMP not found!");
 #endif
 
     //---

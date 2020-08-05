@@ -67,7 +67,7 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
-    commands.clear(); int id = 0;
+    commands.clear();
     CMD command;
     command.cmd = 0x10; command.cmd_text = "add user_0";   command.func = &MainBox::test_0;  commands.append(command);
     command.cmd = 0x20; command.cmd_text = "add user_1";   command.func = &MainBox::test_1;  commands.append(command);
@@ -104,23 +104,23 @@ void MainBox::choice_test(void)
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (MainBox::*function)(void);
-            function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }

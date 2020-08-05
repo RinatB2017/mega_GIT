@@ -410,7 +410,7 @@ bool MyFindForm::find_programm_with_title(const QString &title)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MyFindForm::find_window(const QString programm_title,
+bool MyFindForm::find_window(const QString &programm_title,
                              int *x,
                              int *y,
                              int *width,
@@ -423,7 +423,7 @@ bool MyFindForm::find_window(const QString programm_title,
     bool is_found = false;
     ulong count = 0;
     Window* wins = findWindows( display, &count );
-    char* name;
+    char* name = nullptr;
     QString temp;
 
     for( ulong i = 0; i < count; ++i )

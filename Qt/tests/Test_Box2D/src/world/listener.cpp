@@ -16,8 +16,8 @@ MyContactListener::~MyContactListener()
 //--------------------------------------------------------------------------------
 void MyContactListener::BeginContact(b2Contact* contact)
 {
-    UserData *actor1 = (UserData *)contact->GetFixtureA()->GetBody()->GetUserData();
-    UserData *actor2 = (UserData *)contact->GetFixtureB()->GetBody()->GetUserData();
+    UserData *actor1 = reinterpret_cast<UserData *>(contact->GetFixtureA()->GetBody()->GetUserData());
+    UserData *actor2 = reinterpret_cast<UserData *>(contact->GetFixtureB()->GetBody()->GetUserData());
 
     if(actor1) qDebug() << actor1->name;
     if(actor2) qDebug() << actor2->name;

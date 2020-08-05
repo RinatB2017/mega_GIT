@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "ui_HID_device.h"
+#include <stdint.h>
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include <hidapi/hidapi.h>
@@ -129,23 +130,23 @@ void HID_device::choice_test(void)
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (HID_device::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (HID_device::*function)(void);
-            function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }

@@ -78,7 +78,7 @@ private:
     void mouse_release(unsigned int button);
     void mouse_move_to(QPoint pos);
 
-    bool find_window(const QString programm_title,
+    bool find_window(const QString &programm_title,
                      int *x,
                      int *y,
                      int *width,

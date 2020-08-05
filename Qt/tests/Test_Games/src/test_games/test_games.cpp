@@ -118,23 +118,23 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -169,9 +169,9 @@ void MainBox::run_kdiamond(void)
     ui->le_kdiamond->setText(program_name);
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_program(const QString program,
-                          const QString program_name,
-                          const QStringList arguments)
+void MainBox::run_program(const QString &program,
+                          const QString &program_name,
+                          const QStringList &arguments)
 {
     if(program.isEmpty())
     {
@@ -193,7 +193,7 @@ void MainBox::run_program(const QString program,
 //    ui->le_programm->setText(program_name);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::find_window(const QString programm_title,
+bool MainBox::find_window(const QString &programm_title,
                           int *x,
                           int *y,
                           int *width,
@@ -206,7 +206,7 @@ bool MainBox::find_window(const QString programm_title,
     bool is_found = false;
     ulong count = 0;
     Window* wins = findWindows( display, &count );
-    char* name;
+    char* name = nullptr;
     QString temp;
 
     for( ulong i = 0; i < count; ++i )

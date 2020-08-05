@@ -52,8 +52,8 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::add_property(QtVariantPropertyManager *variantManager,
                            QList<StructProperty_t>  *l_property,
-                           QString name,
-                           QString object_name,
+                           const QString &name,
+                           const QString &object_name,
                            int propertyType)
 {
     StructProperty_t d_property;
@@ -173,23 +173,23 @@ void MainBox::choice_test(void)
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (MainBox::*function)(void);
-            function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }

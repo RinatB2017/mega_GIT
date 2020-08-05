@@ -308,7 +308,7 @@ void MainBox::block_interface(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::block_widget(const QString name, bool state)
+void MainBox::block_widget(const QString &name, bool state)
 {
     if(name.isEmpty())
     {

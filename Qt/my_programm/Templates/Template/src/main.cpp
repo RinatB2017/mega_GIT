@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     Q_CHECK_PTR(main_window);
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
-    MainWidget_GUI *mainBox = new MainWidget_GUI(main_window->getThis(), splash);
+    MainWidget_GUI *mainBox = new MainWidget_GUI(main_window, splash);
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

@@ -32,20 +32,20 @@ class MyMessages
 public:
     MyMessages();
 
-    static int messagebox_noicon(const QString title,
-                                 const QString text,
+    static int messagebox_noicon(const QString &title,
+                                 const QString &text,
                                  unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_info(const QString title,
-                               const QString text,
+    static int messagebox_info(const QString &title,
+                               const QString &text,
                                unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_warning(const QString title,
-                                  const QString text,
+    static int messagebox_warning(const QString &title,
+                                  const QString &text,
                                   unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_critical(const QString title,
-                                   const QString text,
+    static int messagebox_critical(const QString &title,
+                                   const QString &text,
                                    unsigned int width = MESSAGEBOX_WIDTH);
-    static int messagebox_question(const QString title,
-                                   const QString text,
+    static int messagebox_question(const QString &title,
+                                   const QString &text,
                                    unsigned int width = MESSAGEBOX_WIDTH);
 };
 //--------------------------------------------------------------------------------

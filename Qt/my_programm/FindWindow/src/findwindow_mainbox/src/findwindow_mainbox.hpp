@@ -60,6 +60,7 @@ private:
     Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
+    QPointer<QLineEdit> le_programm;
     QList<CMD> commands;
 
     void init(void);

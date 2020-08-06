@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_show_films_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
@@ -111,7 +105,7 @@ void MainBox::init(void)
                                     Qt::AlignCenter,
                                     size(),
                                     QGuiApplication::screens()[0]->geometry()));
-                                    // qApp->desktop()->availableGeometry()));
+    // qApp->desktop()->availableGeometry()));
 
     lblFilmPicture->installEventFilter(this);
     lblFilmPicture->setScaledContents(true);
@@ -167,12 +161,10 @@ void MainBox::show_picture(const QString &data)
 //--------------------------------------------------------------------------------
 void MainBox::resizeEvent(QResizeEvent *event)
 {
-    QPixmap new_picture;
-    double width  = MAX_WIDTH;
-    double height = MAX_HEIGHT;
-
     if(current_picture_name.isEmpty() == false)
     {
+        double width  = MAX_WIDTH;
+        double height = MAX_HEIGHT;
         current_picture.load(current_picture_name);
 
         double fixed_multplier = static_cast<double>(MAX_WIDTH) / static_cast<double>(MAX_HEIGHT);
@@ -188,10 +180,10 @@ void MainBox::resizeEvent(QResizeEvent *event)
             width = (height * fixed_multplier) + 0.5;
         }
 
-        new_picture = current_picture.scaled(static_cast<int>(width),
-                                             static_cast<int>(height),
-                                             Qt::KeepAspectRatioByExpanding,
-                                             Qt::SmoothTransformation);
+        QPixmap new_picture = current_picture.scaled(static_cast<int>(width),
+                                                     static_cast<int>(height),
+                                                     Qt::KeepAspectRatioByExpanding,
+                                                     Qt::SmoothTransformation);
         lblFilmPicture->setPixmap(new_picture);
     }
     Q_UNUSED(event);

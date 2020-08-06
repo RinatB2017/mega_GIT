@@ -72,14 +72,14 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     splash->showMessage("init RS-232 (1)...");
-    SerialBox5 *serial = new SerialBox5(main_window->getThis(), "RS-232 (1)", "RS-232_1");
+    SerialBox5 *serial = new SerialBox5(main_window, "RS-232 (1)", "RS-232_1");
     serial->add_menu(2);
 
     splash->showMessage("init RS-232 (2)...");
-    SerialBox5 *serial2 = new SerialBox5(main_window->getThis(), "RS-232 (2)", "RS-232_2");
+    SerialBox5 *serial2 = new SerialBox5(main_window, "RS-232 (2)", "RS-232_2");
     serial2->add_menu(4);
 
-    TestWidget *cw = new TestWidget(main_window->getThis());
+    TestWidget *cw = new TestWidget(main_window);
     cw->setStyleSheet("background:green;");
     cw->setFixedSize(10, 10);
     cw->update();
@@ -88,11 +88,11 @@ int main(int argc, char *argv[])
 
     main_window->setCentralWidget(cw);
 #ifdef SINGLE_APP
-    main_window->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  serial);
-    main_window->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, serial2);
+    main_window->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(serial));
+    main_window->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(serial2));
 #else
-    main_window->add_dock_widget("RS232_1", "rs232_1", Qt::TopDockWidgetArea,       serial);
-    main_window->add_dock_widget("RS232_2", "rs232_2", Qt::BottomDockWidgetArea,    serial2);
+    main_window->add_dock_widget("RS232_1", "rs232_1", Qt::TopDockWidgetArea,       reinterpret_cast<QWidget *>(serial));
+    main_window->add_dock_widget("RS232_2", "rs232_2", Qt::BottomDockWidgetArea,    reinterpret_cast<QWidget *>(serial2));
 #endif
     main_window->load_setting();
     main_window->show();

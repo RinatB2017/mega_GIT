@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     // main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    GrapherBox *mainBox = new GrapherBox(main_window->getThis());
+    GrapherBox *mainBox = new GrapherBox(main_window);
     mainBox->set_title("xxx");
     mainBox->set_axis_scale_x(0, 400);
     mainBox->set_axis_scale_y(-220.0, 220.0);

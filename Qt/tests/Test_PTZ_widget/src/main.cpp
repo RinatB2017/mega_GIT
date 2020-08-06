@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow;
 
-    PTZ_widget *mainBox = new PTZ_widget(main_window->getThis());
+    PTZ_widget *mainBox = new PTZ_widget(main_window);
     QObject::connect(mainBox,    &PTZ_widget::info,     main_window,    &MainWindow::info);
     QObject::connect(mainBox,    &PTZ_widget::debug,    main_window,    &MainWindow::debug);
     QObject::connect(mainBox,    &PTZ_widget::error,    main_window,    &MainWindow::error);

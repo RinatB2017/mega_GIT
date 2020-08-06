@@ -65,11 +65,11 @@ void MainBox::init(void)
     mw->add_dock_widget("GL widget",
                         "gl_widget",
                         Qt::RightDockWidgetArea,
-                        ui->gl_frame);
+                        reinterpret_cast<QWidget *>(ui->gl_frame));
     mw->add_dock_widget("Grapher widget",
                         "grapher_widget",
                         Qt::RightDockWidgetArea,
-                        ui->grapher_widget);
+                        reinterpret_cast<QWidget *>(ui->grapher_widget));
 #endif
 
 //#ifdef Q_OS_WIN

@@ -922,11 +922,6 @@ void MainWindow::help(void)
         HelpBrowser::showPage("qrc:/index.html", false);
 }
 //--------------------------------------------------------------------------------
-MainWindow *MainWindow::getThis(void)
-{
-    return this;
-}
-//--------------------------------------------------------------------------------
 void MainWindow::setWindowTitle(const QString &title)
 {
     QString temp = title;

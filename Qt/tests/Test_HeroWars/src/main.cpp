@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
-    MyFindForm *mainBox = new MyFindForm(main_window->getThis());
+    MyFindForm *mainBox = new MyFindForm(main_window);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

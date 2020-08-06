@@ -127,7 +127,7 @@ void MainBox::init(void)
     //---
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_CHECK_PTR(mw);
-    mw->add_dock_widget("AutoClicker", "autoclicker_widget", Qt::RightDockWidgetArea, ui->autoclicker_widget);
+    mw->add_dock_widget("AutoClicker", "autoclicker_widget", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->autoclicker_widget));
     //---
 
     //---

@@ -58,7 +58,7 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->add_dock_widget("ADC", "data_widget", Qt::LeftDockWidgetArea, data_widget);
+        mw->add_dock_widget("ADC", "data_widget", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(data_widget));
     }
 
     clr_curves();

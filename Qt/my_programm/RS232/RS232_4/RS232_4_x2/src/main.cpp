@@ -54,11 +54,11 @@ int main(int argc, char *argv[])
     QFrame *frame = new QFrame;
 
     splash->showMessage(QObject::tr("init RS-232 (1)..."));
-    SerialBox4 *serial = new SerialBox4(main_window->getThis(), "RS-232 (1)");
+    SerialBox4 *serial = new SerialBox4(main_window, "RS-232 (1)");
     serial->add_menu(2, QObject::tr("Настройка RS-232 (1)"));
 
     splash->showMessage(QObject::tr("init RS-232 (2)..."));
-    SerialBox4 *serial2 = new SerialBox4(main_window->getThis(), "RS-232 (2)");
+    SerialBox4 *serial2 = new SerialBox4(main_window, "RS-232 (2)");
     serial2->add_menu(3, QObject::tr("Настройка RS-232 (2)"));
 
 #ifdef SINGLE_APP

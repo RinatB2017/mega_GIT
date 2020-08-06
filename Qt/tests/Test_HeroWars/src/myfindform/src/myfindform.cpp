@@ -56,7 +56,7 @@ void MyFindForm::init(void)
 //    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
 //    if(mw)
 //    {
-//        mw->add_dock_widget("Show picture", "show_picture", Qt::RightDockWidgetArea, ui->showpicture_widget);
+//        mw->add_dock_widget("Show picture", "show_picture", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->showpicture_widget));
 //    }
 
     ui->sb_pos_x->setRange(0,   0xFFFF);

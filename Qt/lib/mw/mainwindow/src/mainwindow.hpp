@@ -75,8 +75,6 @@ public:
     void setCentralWidget(QWidget *widget);
     void set_c_widget(MyWidget *widget);   //TODO проба
 
-    MainWindow *getThis(void);
-
     void setWindowTitle(const QString &title);
 
     bool add_menu(int pos_x, QMenu *menu);

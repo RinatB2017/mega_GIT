@@ -26,6 +26,8 @@
 #define ORGNAME "Work"
 #define APPNAME "FindWindow"
 //--------------------------------------------------------------------------------
+#define PROGRAMM_NAME   "programm_name"
+//--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME

@@ -25,9 +25,9 @@ MyMessages::MyMessages()
 
 }
 //--------------------------------------------------------------------------------
-int MyMessages::messagebox_noicon(const QString title,
-                                const QString text,
-                                unsigned int width)
+int MyMessages::messagebox_noicon(const QString &title,
+                                  const QString &text,
+                                  unsigned int width)
 {
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::NoIcon);
@@ -40,9 +40,9 @@ int MyMessages::messagebox_noicon(const QString title,
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
-int MyMessages::messagebox_info(const QString title,
-                              const QString text,
-                              unsigned int width)
+int MyMessages::messagebox_info(const QString &title,
+                                const QString &text,
+                                unsigned int width)
 {
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Information);
@@ -55,9 +55,9 @@ int MyMessages::messagebox_info(const QString title,
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
-int MyMessages::messagebox_question(const QString title,
-                                  const QString text,
-                                  unsigned int width)
+int MyMessages::messagebox_question(const QString &title,
+                                    const QString &text,
+                                    unsigned int width)
 {
     QMessageBox msgBox;
 
@@ -74,9 +74,9 @@ int MyMessages::messagebox_question(const QString title,
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
-int MyMessages::messagebox_critical(const QString title,
-                                  const QString text,
-                                  unsigned int width)
+int MyMessages::messagebox_critical(const QString &title,
+                                    const QString &text,
+                                    unsigned int width)
 {
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Critical);
@@ -89,9 +89,9 @@ int MyMessages::messagebox_critical(const QString title,
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
-int MyMessages::messagebox_warning(const QString title,
-                                 const QString text,
-                                 unsigned int width)
+int MyMessages::messagebox_warning(const QString &title,
+                                   const QString &text,
+                                   unsigned int width)
 {
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Warning);

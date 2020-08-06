@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
     main_window->show();
 
-    MainBox *mainBox = new MainBox(main_window->getThis());
+    MainBox *mainBox = new MainBox(main_window);
     main_window->setCentralWidget(mainBox);
 
 #ifdef QT_DEBUG

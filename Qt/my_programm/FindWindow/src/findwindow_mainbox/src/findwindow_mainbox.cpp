@@ -64,7 +64,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -76,6 +76,11 @@ void MainBox::createTestBar(void)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
     }
+
+    le_programm = new QLineEdit(this);
+    le_programm->setObjectName("le_programm");
+    connect(le_programm,    &QLineEdit::editingFinished,    this,   &MainBox::choice_test);
+    testbar->addWidget(le_programm);
 
     testbar->addWidget(cb_test);
     QToolButton *btn_choice_test = add_button(testbar,
@@ -98,23 +103,23 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -128,8 +133,8 @@ bool MainBox::test(void)
 
 #ifdef Q_OS_WIN
     RECT rc;
-//    HWND hwnd = ::FindWindow(0, _T("Calculator"));
-    HWND hwnd = ::FindWindow(0, _T("Проводник"));
+    // HWND hwnd = ::FindWindow(0, _T("Calculator"));
+    HWND hwnd = ::FindWindow(0, reinterpret_cast<wchar_t *>(le_programm->text().data()));
     if (hwnd == NULL)
     {
         emit error("hwnd == NULL");
@@ -193,11 +198,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-
+    le_programm->setText(load_string(PROGRAMM_NAME));
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+    save_string(PROGRAMM_NAME, le_programm->text());
 }
 //--------------------------------------------------------------------------------

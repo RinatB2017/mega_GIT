@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     // отключает заголовок
     // main_window->setWindowFlags(Qt::FramelessWindowHint);
 
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window, splash);
     Q_CHECK_PTR(mainBox);
 
     main_window->setCentralWidget(mainBox);

@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow;
 
-    Simple_PTZ_widget *mainBox = new Simple_PTZ_widget(main_window->getThis());
+    Simple_PTZ_widget *mainBox = new Simple_PTZ_widget(main_window);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window, splash);
     mainBox->setMinimumSize(1024, 600);
 
     main_window->setCentralWidget(mainBox);

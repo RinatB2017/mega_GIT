@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     Q_CHECK_PTR(main_window);
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window, splash);
     Q_CHECK_PTR(mainBox);
     main_window->setCentralWidget(mainBox);
     main_window->show();

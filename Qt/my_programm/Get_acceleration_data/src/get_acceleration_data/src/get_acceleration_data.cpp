@@ -65,7 +65,7 @@ void MainBox::init(void)
     Q_CHECK_PTR(mw);
     if(mw)
     {
-        mw->add_dock_widget("main", "main", Qt::LeftDockWidgetArea, ui->main_frame);
+        mw->add_dock_widget("main", "main", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->main_frame));
         setFixedSize(0, 0);
     }
 

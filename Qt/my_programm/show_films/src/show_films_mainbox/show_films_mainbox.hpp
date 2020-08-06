@@ -21,10 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QModelIndex>
-#include <QDomElement>
-#include <QWidget>
-#include <QEvent>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -34,21 +35,14 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class QTreeWidgetItem;
-class QResizeEvent;
-class QVBoxLayout;
-class QHBoxLayout;
 class TreeFilms;
-class QAction;
-class QEvent;
-class QLabel;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 signals:
@@ -73,10 +67,10 @@ private:
 
     void init(void);
 
-    TreeFilms *tree_films;
-    QLabel *lblFilmPicture;
-    QVBoxLayout *picture_vbox;
-    QHBoxLayout *picture_hbox;
+    QPointer<TreeFilms> tree_films;
+    QPointer<QLabel> lblFilmPicture;
+    QPointer<QVBoxLayout> picture_vbox;
+    QPointer<QHBoxLayout> picture_hbox;
 
     void init_tree_widget(void);
 

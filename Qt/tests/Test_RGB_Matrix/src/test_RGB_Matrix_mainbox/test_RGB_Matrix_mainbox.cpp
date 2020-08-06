@@ -198,8 +198,8 @@ void MainBox::createDockWidgets(void)
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
-    mw->add_dock_widget("Main",     "main_control",     Qt::LeftDockWidgetArea, w1);
-    mw->add_dock_widget("Control",  "control_control",  Qt::RightDockWidgetArea, w2);
+    mw->add_dock_widget("Main",     "main_control",     Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(w1));
+    mw->add_dock_widget("Control",  "control_control",  Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(w2));
 }
 //--------------------------------------------------------------------------------
 #if 0

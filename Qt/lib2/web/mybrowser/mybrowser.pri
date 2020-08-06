@@ -19,3 +19,5 @@ SOURCES += mybrowser.cpp
 FORMS   += mybrowser.ui
 
 HEADERS += custompage.h
+
+include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)

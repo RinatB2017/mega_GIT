@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     //---
 
     //MainBox *mainBox = new MainBox(0, splash);
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window, splash);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
-    MainBox *mainBox = new MainBox(main_window->getThis());
+    MainBox *mainBox = new MainBox(main_window);
     main_window->setCentralWidget(mainBox);
 
     main_window->showMaximized();

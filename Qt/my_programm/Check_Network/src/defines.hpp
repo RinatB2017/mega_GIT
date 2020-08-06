@@ -6,6 +6,9 @@
 #define ORGNAME "Home"
 #define APPNAME "Check_Network"
 //--------------------------------------------------------------------------------
+#define IP_BEGIN_STRING "ip_begin_string"
+#define IP_END_STRING   "ip_end_string"
+//--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME

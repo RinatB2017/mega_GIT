@@ -46,6 +46,9 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_string(IP_BEGIN_STRING, ui->ip_widget_begin->get_url().host());
+    save_string(IP_END_STRING,   ui->ip_widget_end->get_url().host());
+
     save_widgets();
     if(m_pTcpSocket)
     {
@@ -69,15 +72,8 @@ void MainBox::init(void)
     ui->layout_rtsp->addWidget(rtsp_widget);
 #endif
 
-    ui->sb_src_a->setRange(0, 0xFF);
-    ui->sb_src_b->setRange(0, 0xFF);
-    ui->sb_src_c->setRange(0, 0xFF);
-    ui->sb_src_d->setRange(0, 0xFF);
-
-    ui->sb_dst_a->setRange(0, 0xFF);
-    ui->sb_dst_b->setRange(0, 0xFF);
-    ui->sb_dst_c->setRange(0, 0xFF);
-    ui->sb_dst_d->setRange(0, 0xFF);
+    ui->ip_widget_begin->set_url(QUrl("192.168.1.1"));
+    ui->ip_widget_end->set_url(QUrl("192.168.1.255"));
 
     ui->sb_port->setRange(0, 0xFFFF);
 
@@ -107,6 +103,9 @@ void MainBox::init(void)
     //TODO layout = 0
     layout()->setMargin(0);
 
+    ui->ip_widget_begin->set_url(QUrl(load_string(IP_BEGIN_STRING)));
+    ui->ip_widget_end->set_url(QUrl(load_string(IP_END_STRING)));
+
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -120,16 +119,10 @@ void MainBox::scan(void)
     block_this_button(true);
 
     emit info("Scanning ...");
-    QHostAddress src = QHostAddress(QString("%1.%2.%3.%4")
-                                    .arg(ui->sb_src_a->value())
-                                    .arg(ui->sb_src_b->value())
-                                    .arg(ui->sb_src_c->value())
-                                    .arg(ui->sb_src_d->value()));
-    QHostAddress dst = QHostAddress(QString("%1.%2.%3.%4")
-                                    .arg(ui->sb_dst_a->value())
-                                    .arg(ui->sb_dst_b->value())
-                                    .arg(ui->sb_dst_c->value())
-                                    .arg(ui->sb_dst_d->value()));
+    QHostAddress src = QHostAddress(QString("%1")
+                                    .arg(ui->ip_widget_begin->get_url().host()));
+    QHostAddress dst = QHostAddress(QString("%1")
+                                    .arg(ui->ip_widget_end->get_url().host()));
 
     quint32 min_address = src.toIPv4Address();
     quint32 max_address = dst.toIPv4Address();
@@ -141,7 +134,6 @@ void MainBox::scan(void)
         return;
     }
 
-    bool ok = false;
     int max_wait = ui->sb_max_wait->value();
 
     nPort = ui->sb_port->value();
@@ -174,7 +166,7 @@ void MainBox::scan(void)
         QApplication::processEvents();
         strHost = QHostAddress(address).toString();
         m_pTcpSocket->connectToHost(QHostAddress(address), static_cast<quint16>(nPort));
-        ok = m_pTcpSocket->waitForConnected(max_wait);
+        bool ok = m_pTcpSocket->waitForConnected(max_wait);
         if(ok)
         {
             emit info(QString("%1:%2 OK")

@@ -103,6 +103,18 @@ void MyBrowser::init(void)
     //ui->le_address->setText("https://www.youtube.com/watch?v=0vZp3slDGjw");
     ui->le_address->setText("https://coinmarketcap.com/");
 
+    //---
+#ifdef SIMPLE_BROWSER
+    ui->proxy_label->setVisible(false);
+    ui->cb_proxy->setVisible(false);
+    ui->cb_use_proxy->setVisible(false);
+    ui->cb_user_agent->setVisible(false);
+    ui->le_address->setVisible(false);
+    ui->btn_run->setVisible(false);
+    ui->progressBar->setVisible(false);
+#endif
+    //---
+
     load_proxies();
     ui->progressBar->setValue(0);
 }
@@ -110,6 +122,11 @@ void MyBrowser::init(void)
 void MyBrowser::setUrl(const QUrl &url)
 {
     ui->le_address->setText(url.toString(QUrl::FullyEncoded));
+}
+//--------------------------------------------------------------------------------
+void MyBrowser::run(void)
+{
+    s_run();
 }
 //--------------------------------------------------------------------------------
 void MyBrowser::load_proxies(void)

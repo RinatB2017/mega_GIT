@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     //MyMainWindow *main_window = new MyMainWindow;
     // main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MainBox *mainBox = new MainBox(main_window->getThis());
+    MainBox *mainBox = new MainBox(main_window);
     main_window->setCentralWidget(mainBox);
     //main_window->showMaximized();
     main_window->show();

@@ -54,6 +54,7 @@ public:
     ~MyBrowser();
 
     void setUrl(const QUrl &url);
+    void run(void);
     void run_javascript(QString javascript);
 
 signals:

@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
 
-    HID_device *mainBox = new HID_device(main_window->getThis());
+    HID_device *mainBox = new HID_device(main_window);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

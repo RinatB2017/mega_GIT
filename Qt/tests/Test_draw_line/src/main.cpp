@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     Q_CHECK_PTR(main_window);
 
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window, splash);
     Q_CHECK_PTR(mainBox);
     main_window->setCentralWidget(mainBox);
     main_window->show();

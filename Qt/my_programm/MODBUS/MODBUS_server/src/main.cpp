@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow;
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    MODBUS_server *mainBox = new MODBUS_server(main_window->getThis());
+    MODBUS_server *mainBox = new MODBUS_server(main_window);
     main_window->setCentralWidget(mainBox);
 
     main_window->show();

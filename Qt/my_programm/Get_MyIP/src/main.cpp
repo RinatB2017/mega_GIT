@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     //qDebug() << main_window->windowFlags();
 
-    MainBox *mainBox = new MainBox(main_window->getThis(), splash);
+    MainBox *mainBox = new MainBox(main_window, splash);
     main_window->setCentralWidget(mainBox);
 
     main_window->show();

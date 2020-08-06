@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>398</width>
-    <height>430</height>
+    <width>308</width>
+    <height>449</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QFrame" name="frame">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -31,69 +31,81 @@
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>scan</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="3" column="1">
-            <widget class="QSpinBox" name="sb_max_wait"/>
-           </item>
-           <item row="0" column="2">
-            <widget class="QSpinBox" name="sb_src_b"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>End</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="sb_dst_a"/>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Max wait, ms</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Begin</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="3">
-            <widget class="QSpinBox" name="sb_src_c"/>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>End</string>
+             </property>
+            </widget>
            </item>
-           <item row="0" column="4">
-            <widget class="QSpinBox" name="sb_src_d"/>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Max wait, ms</string>
+             </property>
+            </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QSpinBox" name="sb_dst_b"/>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="sb_src_a"/>
-           </item>
-           <item row="1" column="4">
-            <widget class="QSpinBox" name="sb_dst_d"/>
-           </item>
-           <item row="1" column="3">
-            <widget class="QSpinBox" name="sb_dst_c"/>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="sb_max_wait"/>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="label_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Port</string>
              </property>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="IPCtrl4" name="ip_widget_begin" native="true"/>
+           </item>
            <item row="2" column="1">
             <widget class="QSpinBox" name="sb_port"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="IPCtrl4" name="ip_widget_end" native="true"/>
            </item>
           </layout>
          </item>
@@ -127,19 +139,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>140</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
            </layout>
           </widget>
          </item>
@@ -154,15 +153,15 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IPCtrl4</class>
+   <extends>QWidget</extends>
+   <header>ipctrl4.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
-  <tabstop>sb_src_a</tabstop>
-  <tabstop>sb_src_b</tabstop>
-  <tabstop>sb_src_c</tabstop>
-  <tabstop>sb_src_d</tabstop>
-  <tabstop>sb_dst_a</tabstop>
-  <tabstop>sb_dst_b</tabstop>
-  <tabstop>sb_dst_c</tabstop>
-  <tabstop>sb_dst_d</tabstop>
   <tabstop>sb_port</tabstop>
   <tabstop>sb_max_wait</tabstop>
   <tabstop>btn_scan</tabstop>

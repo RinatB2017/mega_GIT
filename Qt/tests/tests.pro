@@ -40,6 +40,7 @@ SUBDIRS += \
     Test_QListWidget \
     Test_QProcess \
     Test_QsLog \
+    Test_RadioGarden \
     Test_RGB_display \
     Test_RGB_Matrix \
     Test_RTSP_widget \
@@ -49,6 +50,7 @@ SUBDIRS += \
     Test_model \
     Test_pixmap \
     Test_Polar \
+    Test_RadioGarden \
     Test_SQL \
     Test_SMTP \
     Test_thread \

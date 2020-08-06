@@ -94,7 +94,7 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->add_dock_widget("JS", "js_dock", Qt::RightDockWidgetArea, ui->groupBox_js);
+        mw->add_dock_widget("JS", "js_dock", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->groupBox_js));
     }
 #else
     QSplitter *splitter = new QSplitter(Qt::Horizontal);

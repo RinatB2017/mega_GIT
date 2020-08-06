@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    QSDLScreenWidget *mainBox = new QSDLScreenWidget(main_window->getThis());
+    QSDLScreenWidget *mainBox = new QSDLScreenWidget(main_window);
     main_window->setCentralWidget(mainBox);
 
     main_window->show();

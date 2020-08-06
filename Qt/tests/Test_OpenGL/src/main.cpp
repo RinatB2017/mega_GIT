@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     MainWindow *main_window = new MainWindow;
-    MainBox *mainBox = new MainBox(main_window->getThis(), nullptr);
+    MainBox *mainBox = new MainBox(main_window, nullptr);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

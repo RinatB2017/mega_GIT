@@ -20,8 +20,8 @@ struct FILM
 //--------------------------------------------------------------------------------
 #define FILMS_XML "films.xml"
 //--------------------------------------------------------------------------------
-#define MAX_WIDTH  300
-#define MAX_HEIGHT 420
+#define MAX_WIDTH  300.0
+#define MAX_HEIGHT 420.0
 //--------------------------------------------------------------------------------
 #define SPACE_FILE  ":/no_picture.png"
 #define FOLDER_FILE ":/folder.png"

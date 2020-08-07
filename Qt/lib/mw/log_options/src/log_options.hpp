@@ -31,12 +31,11 @@ namespace Ui {
     class Log_options;
 }
 //--------------------------------------------------------------------------------
-class QTextEdit;
-//--------------------------------------------------------------------------------
 class Log_options : public QDialog
 {
     Q_OBJECT
 
+    //TODO не забыть, что название property должны совпадать с первым полем Q_PROPERTY
     Q_PROPERTY(bool flag_ReadOnly           READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)
     Q_PROPERTY(bool flag_AcceptRichText     READ get_flag_AcceptRichText    WRITE set_flag_AcceptRichText)
 

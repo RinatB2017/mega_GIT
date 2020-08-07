@@ -50,6 +50,9 @@ public:
     int load_int(QString name);
     void save_int(QString name, int value);
 
+    bool load_bool(QString name);
+    void save_bool(QString name, bool value);
+
     uint load_uint(QString name);
     void save_uint(QString name, uint value);
 

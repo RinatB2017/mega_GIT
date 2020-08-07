@@ -112,7 +112,10 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);
 
-    mw->add_dock_widget("Graphic", "graphic", Qt::LeftDockWidgetArea, grapher_widget);
+    mw->add_dock_widget("Graphic",
+                        "graphic",
+                        Qt::LeftDockWidgetArea,
+                        reinterpret_cast<QWidget *>(grapher_widget));
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_data(void)
@@ -267,6 +270,8 @@ void MainBox::choice_test(void)
 void MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+    emit info("Test");
 
 #if 0
     QByteArray ba;

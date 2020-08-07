@@ -162,6 +162,16 @@ void MySettings::save_int(QString name, int value)
     settings->setValue(name, value);
 }
 //--------------------------------------------------------------------------------
+bool MySettings::load_bool(QString name)
+{
+    return settings->value(name).toBool();
+}
+//--------------------------------------------------------------------------------
+void MySettings::save_bool(QString name, bool value)
+{
+    settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
 uint MySettings::load_uint(QString name)
 {
     return settings->value(name).toUInt();

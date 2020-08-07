@@ -21,7 +21,11 @@
 #ifndef LOGDOCK_OPTIONS_HPP
 #define LOGDOCK_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#include <QDialog>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class LogDock_options;
@@ -30,16 +34,22 @@ namespace Ui {
 class LogDock_options : public QDialog
 {
     Q_OBJECT
-    Q_PROPERTY(bool p_readOnly      READ get_readonly       WRITE set_readonly)
 
-    Q_PROPERTY(bool p_LOG_EMERG     READ get_LOG_EMERG      WRITE set_LOG_EMERG)
-    Q_PROPERTY(bool p_LOG_ALERT     READ get_LOG_ALERT      WRITE set_LOG_ALERT)
-    Q_PROPERTY(bool p_LOG_CRIT      READ get_LOG_CRIT       WRITE set_LOG_CRIT)
-    Q_PROPERTY(bool p_LOG_ERR       READ get_LOG_ERR        WRITE set_LOG_ERR)
-    Q_PROPERTY(bool p_LOG_WARNING   READ get_LOG_WARNING    WRITE set_LOG_WARNING)
-    Q_PROPERTY(bool p_LOG_NOTICE    READ get_LOG_NOTICE     WRITE set_LOG_NOTICE)
-    Q_PROPERTY(bool p_LOG_INFO      READ get_LOG_INFO       WRITE set_LOG_INFO)
-    Q_PROPERTY(bool p_LOG_DEBUG     READ get_LOG_DEBUG      WRITE set_LOG_DEBUG)
+    //TODO не забыть, что название property должны совпадать с первым полем Q_PROPERTY
+    Q_PROPERTY(bool flag_ReadOnly       READ get_readonly       WRITE set_readonly)
+    Q_PROPERTY(bool flag_Color          READ get_color          WRITE set_color)
+    Q_PROPERTY(bool flag_NoCRLF         READ get_noCRLF         WRITE set_noCRLF)
+    Q_PROPERTY(bool flag_AddDateTime    READ get_datetime       WRITE set_datetime)
+    Q_PROPERTY(bool flag_ErrorAsMessage READ get_show_error     WRITE set_show_error)
+
+    Q_PROPERTY(bool flag_LOG_EMERG      READ get_LOG_EMERG      WRITE set_LOG_EMERG)
+    Q_PROPERTY(bool flag_LOG_ALERT      READ get_LOG_ALERT      WRITE set_LOG_ALERT)
+    Q_PROPERTY(bool flag_LOG_CRIT       READ get_LOG_CRIT       WRITE set_LOG_CRIT)
+    Q_PROPERTY(bool flag_LOG_ERR        READ get_LOG_ERR        WRITE set_LOG_ERR)
+    Q_PROPERTY(bool flag_LOG_WARNING    READ get_LOG_WARNING    WRITE set_LOG_WARNING)
+    Q_PROPERTY(bool flag_LOG_NOTICE     READ get_LOG_NOTICE     WRITE set_LOG_NOTICE)
+    Q_PROPERTY(bool flag_LOG_INFO       READ get_LOG_INFO       WRITE set_LOG_INFO)
+    Q_PROPERTY(bool flag_LOG_DEBUG      READ get_LOG_DEBUG      WRITE set_LOG_DEBUG)
 
 public:
     LogDock_options(QWidget *parent = nullptr);
@@ -47,7 +57,16 @@ public:
 
 private slots:
     void set_readonly(bool value);
+    void set_color(bool value);
+    void set_noCRLF(bool value);
+    void set_datetime(bool value);
+    void set_show_error(bool value);
+
     bool get_readonly(void);
+    bool get_color(void);
+    bool get_noCRLF(void);
+    bool get_datetime(void);
+    bool get_show_error(void);
 
     void set_LOG_EMERG(bool value);
     void set_LOG_ALERT(bool value);
@@ -69,16 +88,26 @@ private slots:
 
 private:
     Ui::LogDock_options *ui;
-    bool m_readonly = false;
 
-    bool m_LOG_EMERG = false;
-    bool m_LOG_ALERT = false;
-    bool m_LOG_CRIT = false;
-    bool m_LOG_ERR = false;
-    bool m_LOG_WARNING = false;
-    bool m_LOG_NOTICE = false;
-    bool m_LOG_INFO = false;
-    bool m_LOG_DEBUG = false;
+    //---
+#if 0
+    typedef struct OPTIONS
+    {
+        int index;
+        //QCheckBox cb;
+        void (LogDock_options::*func_get)(QCheckBox *cb);
+        void (LogDock_options::*func_set)(QCheckBox *cb);
+    } *options_t;
+    QList<OPTIONS> options;
+
+    void get(QCheckBox *cb) {}
+    void set(QCheckBox *cb) {}
+#endif
+    //---
+
+    void init(void);
+
+    void show_objectname(void);
 };
 //--------------------------------------------------------------------------------
 #endif // LOGDOCK_OPTIONS_HPP

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
-    <height>303</height>
+    <width>391</width>
+    <height>444</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -171,36 +171,32 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <widget class="QTabWidget" name="tabWidget">
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <widget class="QWidget" name="tab">
-        <attribute name="title">
-         <string>Tab 1</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_2"/>
-       </widget>
-       <widget class="QWidget" name="tab_2">
-        <attribute name="title">
-         <string>Tab 2</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_3"/>
-       </widget>
-       <widget class="QWidget" name="tab_3">
-        <attribute name="title">
-         <string>Tab 3</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_4"/>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTextEdit" name="te_test"/>
-     </item>
-    </layout>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Tab 1</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2"/>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Tab 2</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3"/>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Tab 3</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4"/>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="te_test"/>
    </item>
   </layout>
  </widget>
@@ -222,8 +218,6 @@
   <tabstop>cb_checkbox_test</tabstop>
   <tabstop>doubleSpinBox</tabstop>
   <tabstop>timeEdit</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>te_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

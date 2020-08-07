@@ -23,8 +23,8 @@
 #include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-MyFileDialog::MyFileDialog(const QString gName,
-                           const QString oName,
+MyFileDialog::MyFileDialog(const QString &gName,
+                           const QString &oName,
                            QWidget *parent) :
     QFileDialog(parent),
     MySettings(),

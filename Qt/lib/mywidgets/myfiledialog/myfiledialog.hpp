@@ -34,8 +34,8 @@ class MyFileDialog : public QFileDialog, public MySettings
     Q_OBJECT
 
 public:
-    explicit MyFileDialog(const QString gName,
-                          const QString oName,
+    explicit MyFileDialog(const QString &gName,
+                          const QString &oName,
                           QWidget *parent = nullptr);
     ~MyFileDialog();
 

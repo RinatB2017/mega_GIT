@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
 
-    QOgreWidgetDemo *window = new QOgreWidgetDemo;
+    QOgreWidgetDemo *window = new QOgreWidgetDemo();
     window->show();
 
     // the call to exec will block until the last GUI window has been closed

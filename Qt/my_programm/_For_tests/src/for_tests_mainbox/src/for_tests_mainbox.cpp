@@ -330,9 +330,79 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
+#include "logdock_options.hpp"
+#include "logdock_defines.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 0
+    qreal deposit = 100.0;
+    for(int n=0; n<30; n++)
+    {
+        deposit *= 1.02;
+    }
+    emit info(QString("deposit %1").arg(deposit));
+#endif
+
+#if 1
+    beginGroup("logdock_options");
+
+    bool flag_ReadOnly       = load_bool(FLAG_READONLY);
+    bool flag_Color          = load_bool(FLAG_COLOR);
+    bool flag_NoCRLF         = load_bool(FLAG_NOCRLF);
+    bool flag_AddDateTime    = load_bool(FLAG_ADDDATETIME);
+    bool flag_ErrorAsMessage = load_bool(FLAG_ERRORASMESSAGE);
+
+    bool flag_LOG_EMERG     = load_bool(FLAG_LOG_EMERG);
+    bool flag_LOG_ALERT     = load_bool(FLAG_LOG_ALERT);
+    bool flag_LOG_CRIT      = load_bool(FLAG_LOG_CRIT);
+    bool flag_LOG_ERR       = load_bool(FLAG_LOG_ERR);
+    bool flag_LOG_WARNING   = load_bool(FLAG_LOG_WARNING);
+    bool flag_LOG_NOTICE    = load_bool(FLAG_LOG_NOTICE);
+    bool flag_LOG_INFO      = load_bool(FLAG_LOG_INFO);
+    bool flag_LOG_DEBUG     = load_bool(FLAG_LOG_DEBUG);
+
+    LogDock_options *optionsBox = new LogDock_options();
+    Q_CHECK_PTR(optionsBox);
+
+    optionsBox->setProperty(FLAG_READONLY,            flag_ReadOnly);
+    optionsBox->setProperty(FLAG_COLOR,               flag_Color);
+    optionsBox->setProperty(FLAG_NOCRLF,              flag_NoCRLF);
+    optionsBox->setProperty(FLAG_ADDDATETIME,         flag_AddDateTime);
+    optionsBox->setProperty(FLAG_ERRORASMESSAGE,      flag_ErrorAsMessage);
+
+    optionsBox->setProperty(FLAG_LOG_EMERG,   flag_LOG_EMERG);
+    optionsBox->setProperty(FLAG_LOG_ALERT,   flag_LOG_ALERT);
+    optionsBox->setProperty(FLAG_LOG_CRIT,    flag_LOG_CRIT);
+    optionsBox->setProperty(FLAG_LOG_ERR,     flag_LOG_ERR);
+    optionsBox->setProperty(FLAG_LOG_WARNING, flag_LOG_WARNING);
+    optionsBox->setProperty(FLAG_LOG_NOTICE,  flag_LOG_NOTICE);
+    optionsBox->setProperty(FLAG_LOG_INFO,    flag_LOG_INFO);
+    optionsBox->setProperty(FLAG_LOG_DEBUG,   flag_LOG_DEBUG);
+
+    int res = optionsBox->exec();
+    if(res == QDialog::Accepted)
+    {
+        save_bool(FLAG_READONLY,        optionsBox->property(FLAG_READONLY).toBool());
+        save_bool(FLAG_COLOR,           optionsBox->property(FLAG_COLOR).toBool());
+        save_bool(FLAG_NOCRLF,          optionsBox->property(FLAG_NOCRLF).toBool());
+        save_bool(FLAG_ADDDATETIME,     optionsBox->property(FLAG_ADDDATETIME).toBool());
+        save_bool(FLAG_ERRORASMESSAGE,  optionsBox->property(FLAG_ERRORASMESSAGE).toBool());
+
+        save_bool(FLAG_LOG_EMERG,       optionsBox->property(FLAG_LOG_EMERG).toBool());
+        save_bool(FLAG_LOG_ALERT,       optionsBox->property(FLAG_LOG_ALERT).toBool());
+        save_bool(FLAG_LOG_CRIT,        optionsBox->property(FLAG_LOG_CRIT).toBool());
+        save_bool(FLAG_LOG_ERR,         optionsBox->property(FLAG_LOG_ERR).toBool());
+        save_bool(FLAG_LOG_WARNING,     optionsBox->property(FLAG_LOG_WARNING).toBool());
+        save_bool(FLAG_LOG_NOTICE,      optionsBox->property(FLAG_LOG_NOTICE).toBool());
+        save_bool(FLAG_LOG_INFO,        optionsBox->property(FLAG_LOG_INFO).toBool());
+        save_bool(FLAG_LOG_DEBUG,       optionsBox->property(FLAG_LOG_DEBUG).toBool());
+    }
+
+    endGroup();
+#endif
 
 #if 0
     qBadAlloc();
@@ -348,7 +418,7 @@ bool MainBox::test(void)
     ui->te_test->insertPlainText(QString("XXX: cnt = %1 ").arg(cnt++));
 #endif
 
-#if 1
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

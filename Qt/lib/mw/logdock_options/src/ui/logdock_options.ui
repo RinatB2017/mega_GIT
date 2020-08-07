@@ -27,28 +27,28 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_10">
+         <widget class="QCheckBox" name="cb_color">
           <property name="text">
            <string>цветные логи</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_11">
+         <widget class="QCheckBox" name="cb_noCRLF">
           <property name="text">
            <string>не добавлять CRLF</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_12">
+         <widget class="QCheckBox" name="cb_add_datetime">
           <property name="text">
            <string>добавлять дату и время</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_13">
+         <widget class="QCheckBox" name="cb_show_error">
           <property name="text">
            <string>отображать ошибки, как MsgBox</string>
           </property>

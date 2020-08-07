@@ -38,7 +38,7 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 #ifdef QT_DEBUG
     qDebug() << "MyWidget()";
-    QTimer::singleShot(100, this, SLOT(s_test()));
+    QTimer::singleShot(0, this, SLOT(s_test()));
 #endif
 
     setAttribute(Qt::WA_DeleteOnClose);

@@ -25,23 +25,7 @@ LogDock_options::LogDock_options(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LogDock_options)
 {
-    ui->setupUi(this);
-
-    connect(ui->btn_ok,     &QPushButton::clicked,  this,   &LogDock_options::accept);
-    connect(ui->btn_cancel, &QPushButton::clicked,  this,   &LogDock_options::reject);
-
-    connect(ui->cb_readonly,    &QCheckBox::toggled,    this,   &LogDock_options::set_readonly);
-
-    connect(ui->cb_EMERG,   &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_EMERG);
-    connect(ui->cb_ALERT,   &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_ALERT);
-    connect(ui->cb_CRIT,    &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_CRIT);
-    connect(ui->cb_ERR,     &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_ERR);
-    connect(ui->cb_WARN,    &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_WARNING);
-    connect(ui->cb_NOTICE,  &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_NOTICE);
-    connect(ui->cb_INFO,    &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_INFO);
-    connect(ui->cb_DEBUG,   &QCheckBox::toggled,  this,   &LogDock_options::set_LOG_DEBUG);
-
-    setFixedSize(sizeHint());
+    init();
 }
 //--------------------------------------------------------------------------------
 LogDock_options::~LogDock_options()
@@ -49,102 +33,169 @@ LogDock_options::~LogDock_options()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+void LogDock_options::init(void)
+{
+    ui->setupUi(this);
+
+    connect(ui->btn_ok,     &QPushButton::clicked,  this,   &LogDock_options::accept);
+    connect(ui->btn_cancel, &QPushButton::clicked,  this,   &LogDock_options::reject);
+
+    //---
+#if 0
+    int id = 0;
+    options.append({id++, &LogDock_options::get(ui->cb_show_error), &LogDock_options::set(ui->cb_show_error)});
+#endif
+    //---
+
+#ifdef QT_DEBUG
+    QTimer::singleShot(0, this, &LogDock_options::show_objectname);
+#endif
+
+    setFixedSize(sizeHint());
+}
+//--------------------------------------------------------------------------------
+void LogDock_options::show_objectname(void)
+{
+    QList<QWidget *> all_obj = findChildren<QWidget *>();
+    foreach(QWidget *obj, all_obj)
+    {
+        if(obj->objectName().isEmpty() == false)
+        {
+            if(obj->objectName().left(3) != "qt_")
+            {
+                obj->setToolTip(obj->objectName());
+            }
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 void LogDock_options::set_readonly(bool value)
 {
-    m_readonly = value;
     ui->cb_readonly->setChecked(value);
+}
+//--------------------------------------------------------------------------------
+void LogDock_options::set_color(bool value)
+{
+    ui->cb_color->setChecked(value);
+}
+//--------------------------------------------------------------------------------
+void LogDock_options::set_noCRLF(bool value)
+{
+    ui->cb_noCRLF->setChecked(value);
+}
+//--------------------------------------------------------------------------------
+void LogDock_options::set_datetime(bool value)
+{
+    ui->cb_add_datetime->setChecked(value);
+}
+//--------------------------------------------------------------------------------
+void LogDock_options::set_show_error(bool value)
+{
+    ui->cb_show_error->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_readonly(void)
 {
-    return m_readonly;
+    return ui->cb_readonly->isChecked();
+}
+//--------------------------------------------------------------------------------
+bool LogDock_options::get_color(void)
+{
+    return ui->cb_color->isChecked();
+}
+//--------------------------------------------------------------------------------
+bool LogDock_options::get_noCRLF(void)
+{
+    return ui->cb_noCRLF->isChecked();
+}
+//--------------------------------------------------------------------------------
+bool LogDock_options::get_datetime(void)
+{
+    return ui->cb_add_datetime->isChecked();
+}
+//--------------------------------------------------------------------------------
+bool LogDock_options::get_show_error(void)
+{
+    return ui->cb_show_error->isChecked();
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_EMERG(bool value)
 {
-    m_LOG_EMERG = value;
     ui->cb_EMERG->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_ALERT(bool value)
 {
-    m_LOG_ALERT = value;
     ui->cb_ALERT->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_CRIT(bool value)
 {
-    m_LOG_CRIT = value;
     ui->cb_CRIT->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_ERR(bool value)
 {
-    m_LOG_ERR = value;
     ui->cb_ERR->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_WARNING(bool value)
 {
-    m_LOG_WARNING = value;
     ui->cb_WARN->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_NOTICE(bool value)
 {
-    m_LOG_NOTICE = value;
     ui->cb_NOTICE->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_INFO(bool value)
 {
-    m_LOG_INFO = value;
     ui->cb_INFO->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::set_LOG_DEBUG(bool value)
 {
-    m_LOG_DEBUG = value;
     ui->cb_DEBUG->setChecked(value);
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_EMERG(void)
 {
-    return m_LOG_EMERG;
+    return ui->cb_EMERG->isChecked();
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_ALERT(void)
 {
-    return m_LOG_ALERT;
+    return ui->cb_ALERT->isChecked();
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_CRIT(void)
 {
-    return m_LOG_CRIT;
+    return ui->cb_CRIT->isChecked();
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_ERR(void)
 {
-    return m_LOG_ERR;
+    return ui->cb_ERR->isChecked();
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_WARNING(void)
 {
-    return m_LOG_WARNING;
+    return ui->cb_WARN->isChecked();
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_NOTICE(void)
 {
-    return m_LOG_NOTICE;
+    return ui->cb_NOTICE->isChecked();
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_INFO(void)
 {
-    return m_LOG_INFO;
+    return ui->cb_INFO->isChecked();
 }
 //--------------------------------------------------------------------------------
 bool LogDock_options::get_LOG_DEBUG(void)
 {
-    return m_LOG_DEBUG;
+    return ui->cb_DEBUG->isChecked();
 }
 //--------------------------------------------------------------------------------

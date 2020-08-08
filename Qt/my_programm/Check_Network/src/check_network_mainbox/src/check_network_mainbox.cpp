@@ -46,9 +46,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    save_string(IP_BEGIN_STRING, ui->ip_widget_begin->get_url().host());
-    save_string(IP_END_STRING,   ui->ip_widget_end->get_url().host());
-
     save_widgets();
     if(m_pTcpSocket)
     {
@@ -71,9 +68,6 @@ void MainBox::init(void)
     rtsp_widget = new RTSP_widget(this);
     ui->layout_rtsp->addWidget(rtsp_widget);
 #endif
-
-    ui->ip_widget_begin->set_url(QUrl("192.168.1.1"));
-    ui->ip_widget_end->set_url(QUrl("192.168.1.255"));
 
     ui->sb_port->setRange(0, 0xFFFF);
 
@@ -102,9 +96,6 @@ void MainBox::init(void)
 
     //TODO layout = 0
     layout()->setMargin(0);
-
-    ui->ip_widget_begin->set_url(QUrl(load_string(IP_BEGIN_STRING)));
-    ui->ip_widget_end->set_url(QUrl(load_string(IP_END_STRING)));
 
     load_widgets();
 }

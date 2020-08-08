@@ -48,7 +48,10 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);

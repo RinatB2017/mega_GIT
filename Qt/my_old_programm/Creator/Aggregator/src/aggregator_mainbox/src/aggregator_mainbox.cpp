@@ -46,7 +46,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     webview = new WebView(this);
     webview->load(QUrl("http://www.google.com"));

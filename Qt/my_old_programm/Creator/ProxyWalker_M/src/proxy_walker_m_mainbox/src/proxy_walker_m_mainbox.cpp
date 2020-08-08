@@ -56,8 +56,11 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    create_menu();
+#ifdef QT_DEBUG
     createTestBar();
+#endif
+
+    create_menu();
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_CHECK_PTR(mw);

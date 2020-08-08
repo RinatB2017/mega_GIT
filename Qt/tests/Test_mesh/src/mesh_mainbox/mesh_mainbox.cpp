@@ -55,7 +55,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
 #if 0
     add_serial0();

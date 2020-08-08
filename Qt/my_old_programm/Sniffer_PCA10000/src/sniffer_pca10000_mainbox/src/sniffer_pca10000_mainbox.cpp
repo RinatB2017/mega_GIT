@@ -55,8 +55,11 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    create_sniffer();
+#ifdef QT_DEBUG
     createTestBar();
+#endif
+
+    create_sniffer();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

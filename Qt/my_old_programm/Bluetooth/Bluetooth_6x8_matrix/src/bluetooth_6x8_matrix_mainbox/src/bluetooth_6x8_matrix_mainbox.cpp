@@ -48,7 +48,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     serialBox = new SerialBox5(this, "RS232", "RS232");
     Q_CHECK_PTR(serialBox);

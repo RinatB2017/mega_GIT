@@ -49,7 +49,10 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     QGridLayout *grid = new QGridLayout(this);
     grid->setMargin(0);

@@ -52,7 +52,10 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     ui->le_kpat->setMinimumWidth(200);
     ui->le_kmines->setMinimumWidth(200);

@@ -58,7 +58,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     ui->sb_width->setRange(100, 10000);
     ui->sb_width->setObjectName("sb_width");

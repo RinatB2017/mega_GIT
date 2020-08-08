@@ -45,7 +45,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     index=0;
     main_timer = new QTimer(this);

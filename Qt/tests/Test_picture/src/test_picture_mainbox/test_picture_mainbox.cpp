@@ -48,7 +48,10 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     ui->grapher_widget->set_visible_btn_Load(false);
     ui->grapher_widget->set_visible_btn_Save(false);

@@ -27,8 +27,6 @@ Test_JSON::Test_JSON(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Test_JSON)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -53,6 +51,7 @@ Test_JSON::~Test_JSON()
 //--------------------------------------------------------------------------------
 void Test_JSON::init(void)
 {
+    ui->setupUi(this);
     connect(ui->btn_test,   &QPushButton::clicked,  this,   &Test_JSON::test);
 
     int pos_x = load_int(TEST_JSON_X);

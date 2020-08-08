@@ -51,7 +51,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
     create_tcp_socket();
 
     ui->host_widget->set_url(QUrl("127.0.0.1"));

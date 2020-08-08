@@ -58,8 +58,11 @@ void MainBox::init()
     //y[n] = double(308.0)*qSin(double(n)*double(M_PI)/double(180.0));
     ui->setupUi(this);
 
-    createSerialBar();
+#ifdef QT_DEBUG
     createTestBar();
+#endif
+
+    createSerialBar();
 
     oscilloscope = new OscilloscopeBox(this);
     //connect(widget, SIGNAL(get_data(DATA)), this, SLOT(get_data(DATA)));

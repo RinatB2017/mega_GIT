@@ -48,7 +48,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
 
     QHBoxLayout *red_hbox = new QHBoxLayout();
     for(int n=0; n<10; n++)

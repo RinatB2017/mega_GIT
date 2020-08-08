@@ -58,7 +58,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     serialBox = new SerialBox5(this, "RS232");
     serialBox->add_menu(2);

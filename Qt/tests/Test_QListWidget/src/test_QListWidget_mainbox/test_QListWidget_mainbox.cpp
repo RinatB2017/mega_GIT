@@ -49,7 +49,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
 
     QListWidget *lstWgt = new QListWidget;
     QLayout *l = new QVBoxLayout();

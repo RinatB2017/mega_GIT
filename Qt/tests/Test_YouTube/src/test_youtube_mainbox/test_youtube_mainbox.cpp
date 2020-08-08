@@ -46,7 +46,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     QStringList sl;
     sl.append("https://www.youtube.com/watch?v=zsfj9j0kjoU&start_radio=1&list=RDzsfj9j0kjoU");

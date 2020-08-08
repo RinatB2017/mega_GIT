@@ -58,7 +58,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     QPushButton *btn_test = new QPushButton(this);
     btn_test->setObjectName("btn_test");

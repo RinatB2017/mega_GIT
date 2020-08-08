@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>421</width>
-    <height>96</height>
+    <height>102</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="IPCtrl4" name="ip4_widget" native="true"/>
+      <widget class="IPV4_wo_port" name="ip4_widget" native="true"/>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -90,9 +90,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IPCtrl4</class>
+   <class>IPV4_wo_port</class>
    <extends>QWidget</extends>
-   <header>ipctrl4.hpp</header>
+   <header>ipv4_wo_port.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

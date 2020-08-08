@@ -48,11 +48,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifndef QT_DEBUG
-    Q_CHECK_PTR(parentWidget());
-#endif
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     connect(ui->widget_serial,  SIGNAL(set_value(int,int)), ui->widget_visual,  SLOT(set_value(int,int)));
     connect(ui->widget_serial,  SIGNAL(set_value(int,int)), ui->widget_grapher, SLOT(set_value(int,int)));

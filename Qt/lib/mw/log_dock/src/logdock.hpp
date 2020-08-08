@@ -47,10 +47,10 @@ signals:
     void signal_is_shows_trace(bool);
 
 public slots:
-    void infoLog(QString text);
-    void debugLog(QString text);
-    void errorLog(QString text);
-    void traceLog(QString text);
+    void infoLog(const QString &text);
+    void debugLog(const QString &text);
+    void errorLog(const QString &text);
+    void traceLog(const QString &text);
 
     void clearLog(void);
 
@@ -62,6 +62,7 @@ private slots:
     void update(void);
 
 private:
+    QString title;
     QPointer<LogBox> le;
     QPointer<QTimer> timer;
 
@@ -83,6 +84,8 @@ private:
         QColor background_color;
     };
     QQueue<LOG> queue_log;
+
+    void init(void);
 };
 //--------------------------------------------------------------------------------
 #endif // LOGDOCK_HPP

@@ -38,8 +38,6 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -50,7 +48,11 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     QFont font("Courier", 10);
     ui->hexedit_widget->setFont(font);

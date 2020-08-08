@@ -59,7 +59,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     // ширина TAB в символах
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))

@@ -54,7 +54,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     model = new QStandardItemModel(0, 1, this);
     model->setHeaderData(0, Qt::Horizontal, tr("User"));

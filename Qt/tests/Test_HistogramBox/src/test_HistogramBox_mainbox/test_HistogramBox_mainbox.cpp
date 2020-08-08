@@ -53,7 +53,9 @@ void MainBox::init(void)
 
     all_break = false;
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     ui->histogram_widget->set_title("тест");
     ui->histogram_widget->set_title_axis_X("тест X");

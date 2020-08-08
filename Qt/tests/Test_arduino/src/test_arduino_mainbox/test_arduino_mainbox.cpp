@@ -50,7 +50,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     ui->serial_widget->set_caption("Arduino");
 

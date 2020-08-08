@@ -68,9 +68,11 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    pos_x = 0;
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
+
+    pos_x = 0;
 
     createSerialBox();
     createDisplayBox();

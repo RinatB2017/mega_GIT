@@ -55,10 +55,12 @@ public:
 
 private:
     Ui::Log_options *ui;
-    QList<QString> codecs;
+    QStringList codecs;
     QPointer<QTextEdit> logEdit;
 
     QString autosave_filename = "noname.log";
+
+    void init(void);
 
     void findCodecs(void);
 

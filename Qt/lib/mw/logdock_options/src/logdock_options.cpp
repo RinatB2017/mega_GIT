@@ -47,11 +47,26 @@ void LogDock_options::init(void)
 #endif
     //---
 
+    findCodecs();
+
 #ifdef QT_DEBUG
     QTimer::singleShot(0, this, &LogDock_options::show_objectname);
 #endif
 
     setFixedSize(sizeHint());
+}
+//--------------------------------------------------------------------------------
+void LogDock_options::findCodecs(void)
+{
+    codecs.clear();
+    foreach (int mib, QTextCodec::availableMibs())
+    {
+        QTextCodec *codec = QTextCodec::codecForMib(mib);
+        codecs.append(codec->name());
+    }
+    std::sort(codecs.begin(), codecs.end());
+
+    ui->cb_CodecForCStrings->addItems(codecs);
 }
 //--------------------------------------------------------------------------------
 void LogDock_options::show_objectname(void)

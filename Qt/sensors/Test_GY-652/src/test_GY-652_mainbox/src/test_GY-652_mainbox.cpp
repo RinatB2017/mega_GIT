@@ -52,7 +52,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
 
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");

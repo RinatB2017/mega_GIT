@@ -52,7 +52,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     init_grapher_widget();
     init_gl_widget();

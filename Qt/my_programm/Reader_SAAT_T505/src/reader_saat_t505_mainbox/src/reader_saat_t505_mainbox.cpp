@@ -52,11 +52,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifndef QT_DEBUG
-    Q_CHECK_PTR(parentWidget());
-#endif
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     //---
     l_cards.clear();

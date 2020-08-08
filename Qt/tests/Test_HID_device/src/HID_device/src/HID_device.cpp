@@ -57,7 +57,9 @@ void HID_device::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     connect(ui->btn_list_usb,   &QPushButton::clicked,  this,   &HID_device::dev_list);
     connect(ui->btn_open,       &QPushButton::clicked,  this,   &HID_device::dev_open);

@@ -53,7 +53,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
     prepare_and_show_cards();
 
     setMinimumSize(640, 480);

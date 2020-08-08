@@ -56,12 +56,11 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifndef QT_DEBUG
-    Q_CHECK_PTR(parentWidget());
+#ifdef QT_DEBUG
+    createTestBar();
 #endif
 
     init_widgets();
-    createTestBar();
     installEventFilter(this);
 
     load_widgets();

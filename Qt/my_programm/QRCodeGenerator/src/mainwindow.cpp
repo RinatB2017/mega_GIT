@@ -126,7 +126,7 @@ void MainWindow::setScale(int scale)
     {
         int scale_size = encodeImageSize * scale;
 
-        const QPixmap & scale_image = ui->image_label->pixmap()->scaled( scale_size, scale_size );
+        const QPixmap & scale_image = ui->image_label->pixmap(Qt::ReturnByValue).scaled( scale_size, scale_size );
         ui->image_label->setPixmap( scale_image );
 
         const QString & size_info = QString( "%1x%2" ).arg( scale_size ).arg( scale_size );
@@ -140,7 +140,7 @@ void MainWindow::on_pButtonSave_clicked()
     if ( path.isNull() )
         return;
 
-    ui->image_label->pixmap()->save( path );
+    ui->image_label->pixmap(Qt::ReturnByValue).save( path );
 }
 
 void MainWindow::on_sBoxScale_valueChanged(int arg1)

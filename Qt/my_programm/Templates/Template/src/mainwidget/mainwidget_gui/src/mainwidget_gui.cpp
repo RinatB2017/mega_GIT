@@ -55,7 +55,9 @@ void MainWidget_GUI::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     //---
     w = new MainWidget(this);

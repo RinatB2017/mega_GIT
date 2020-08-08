@@ -31,6 +31,37 @@ Log_options::Log_options(QWidget *parent):
     QDialog(parent),
     ui(new Ui::Log_options)
 {
+    init();
+}
+//--------------------------------------------------------------------------------
+void Log_options::choice_file(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("log_options", "log_options", this);
+    dlg->setNameFilter("LOG files (*.log)");
+    dlg->selectFile("noname");
+    dlg->setDefaultSuffix("log");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        MyWidget::messagebox_info("Info",   filename);
+        if(!filename.isEmpty())
+        {
+            autosave_filename = filename;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+Log_options::~Log_options()
+{
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void Log_options::init(void)
+{
     ui->setupUi(this);
 
     setWindowTitle(tr("Options"));
@@ -59,32 +90,6 @@ Log_options::Log_options(QWidget *parent):
     connect(ui->btn_choice_filename,    &QToolButton::clicked,  this,   &Log_options::choice_file);
 
     setFixedSize(sizeHint());
-}
-//--------------------------------------------------------------------------------
-void Log_options::choice_file(void)
-{
-    MyFileDialog *dlg = new MyFileDialog("log_options", "log_options", this);
-    dlg->setNameFilter("LOG files (*.log)");
-    dlg->selectFile("noname");
-    dlg->setDefaultSuffix("log");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
-    int btn = dlg->exec();
-    if(btn == MyFileDialog::Accepted)
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-
-        MyWidget::messagebox_info("Info",   filename);
-        if(!filename.isEmpty())
-        {
-            autosave_filename = filename;
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-Log_options::~Log_options()
-{
-    delete ui;
 }
 //--------------------------------------------------------------------------------
 void Log_options::findCodecs(void)

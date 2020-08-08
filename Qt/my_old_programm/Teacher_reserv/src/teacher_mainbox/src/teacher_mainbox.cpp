@@ -78,7 +78,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
     prepare_browsers();
 
     ui->gridLayout->addWidget(new QLabel("я"),   0, 0);

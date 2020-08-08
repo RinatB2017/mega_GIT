@@ -29,7 +29,29 @@
 //--------------------------------------------------------------------------------
 LogDock::LogDock(const QString &title,
                  QWidget *parent) :
-    QDockWidget(parent)
+    QDockWidget(parent),
+    title(title)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+LogDock::~LogDock()
+{
+    if(le)
+    {
+        le->disconnect();
+        le->deleteLater();
+    }
+
+    if(timer)
+    {
+        timer->stop();
+        timer->disconnect();
+        timer->deleteLater();
+    }
+}
+//--------------------------------------------------------------------------------
+void LogDock::init(void)
 {
     setWindowTitle(title);
     //setObjectName(title); //TODO не надо здесь присваивать objectname
@@ -62,22 +84,6 @@ LogDock::LogDock(const QString &title,
     timer->start(10);   //TODO не надо ставить меньше
 }
 //--------------------------------------------------------------------------------
-LogDock::~LogDock()
-{
-    if(le)
-    {
-        le->disconnect();
-        le->deleteLater();
-    }
-
-    if(timer)
-    {
-        timer->stop();
-        timer->disconnect();
-        timer->deleteLater();
-    }
-}
-//--------------------------------------------------------------------------------
 void LogDock::update(void)
 {
     if(is_busy) return;
@@ -102,7 +108,7 @@ void LogDock::update(void)
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-void LogDock::infoLog(QString text)
+void LogDock::infoLog(const QString &text)
 {
     LOG log;
     log.level = L_INFO;
@@ -111,7 +117,7 @@ void LogDock::infoLog(QString text)
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
-void LogDock::debugLog(QString text)
+void LogDock::debugLog(const QString &text)
 {
     LOG log;
     log.level = L_DEBUG;
@@ -120,7 +126,7 @@ void LogDock::debugLog(QString text)
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
-void LogDock::errorLog(QString text)
+void LogDock::errorLog(const QString &text)
 {
     LOG log;
     log.level = L_ERROR;
@@ -129,7 +135,7 @@ void LogDock::errorLog(QString text)
     queue_log.enqueue(log);
 }
 //--------------------------------------------------------------------------------
-void LogDock::traceLog(QString text)
+void LogDock::traceLog(const QString &text)
 {
     LOG log;
     log.level = L_TRACE;

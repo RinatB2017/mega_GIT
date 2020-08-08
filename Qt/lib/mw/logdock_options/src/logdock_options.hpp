@@ -88,6 +88,7 @@ private slots:
 
 private:
     Ui::LogDock_options *ui;
+    QStringList codecs;
 
     //---
 #if 0
@@ -106,7 +107,7 @@ private:
     //---
 
     void init(void);
-
+    void findCodecs(void);
     void show_objectname(void);
 };
 //--------------------------------------------------------------------------------

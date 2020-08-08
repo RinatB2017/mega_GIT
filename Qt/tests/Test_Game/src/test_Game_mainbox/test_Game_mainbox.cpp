@@ -58,11 +58,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifndef QT_DEBUG
-    Q_CHECK_PTR(parentWidget());
-#endif
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     //scene = new Scene();
     //scene = new Scene2();

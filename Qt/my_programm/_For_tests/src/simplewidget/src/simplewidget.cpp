@@ -37,7 +37,7 @@ int SimpleWidget::getValue() const
 {
     return value;
 }
-
+//--------------------------------------------------------------------------------
 void SimpleWidget::setValue(int value)
 {
     this->value = value;

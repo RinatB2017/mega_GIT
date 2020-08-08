@@ -56,7 +56,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
     create_chessboard();
     create_engine();
     new_game();

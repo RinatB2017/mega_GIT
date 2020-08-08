@@ -79,7 +79,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
     create_plot_currency();
 
     QVBoxLayout *vbox = new QVBoxLayout();

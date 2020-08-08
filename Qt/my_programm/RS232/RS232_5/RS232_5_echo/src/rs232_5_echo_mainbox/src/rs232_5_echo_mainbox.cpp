@@ -53,7 +53,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    //createTestBar();
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
 
     ui->serial0->set_caption("RS232");
     connect(ui->serial0,    SIGNAL(output(QByteArray)), ui->serial0,    SLOT(input(QByteArray)));

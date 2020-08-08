@@ -33,12 +33,10 @@ MyFileDialog::MyFileDialog(const QString &gName,
 {
     setOption(MyFileDialog::DontUseNativeDialog, false);
     setObjectName(oName);
-    //---
 
     beginGroup(gName);
     dir = load_value(oName, QDir::homePath()).toString();
     endGroup();
-    //---
 }
 //--------------------------------------------------------------------------------
 MyFileDialog::~MyFileDialog()

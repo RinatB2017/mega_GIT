@@ -56,6 +56,10 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
+
     //frame_1 = new WIFI_frame("client", false, this);
     //frame_2 = new WIFI_frame("server", true, this);
     //frame_3 = new WIFI_frame("client", false, this);
@@ -66,8 +70,6 @@ void MainBox::init(void)
     //main_layout->addWidget(frame_3);
 
     connect(ui->tcp_widget, &TCP_Server::output,    this,   &MainBox::info);
-
-    createTestBar();
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)

@@ -99,13 +99,13 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="IPCtrl4" name="ip_widget_begin" native="true"/>
+            <widget class="IPV4_wo_port" name="ip_widget_begin" native="true"/>
            </item>
            <item row="2" column="1">
             <widget class="QSpinBox" name="sb_port"/>
            </item>
            <item row="1" column="1">
-            <widget class="IPCtrl4" name="ip_widget_end" native="true"/>
+            <widget class="IPV4_wo_port" name="ip_widget_end" native="true"/>
            </item>
           </layout>
          </item>
@@ -155,9 +155,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IPCtrl4</class>
+   <class>IPV4_wo_port</class>
    <extends>QWidget</extends>
-   <header>ipctrl4.hpp</header>
+   <header>ipv4_wo_port.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

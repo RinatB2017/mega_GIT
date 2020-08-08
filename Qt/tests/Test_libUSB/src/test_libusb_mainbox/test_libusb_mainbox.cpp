@@ -60,6 +60,10 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
+
     set_VID(0x08BB);
     set_PID(0x2704);
 
@@ -67,7 +71,6 @@ void MainBox::init(void)
     connect(ui->btn_read,   SIGNAL(clicked(bool)),  this,   SLOT(f_read()));
     connect(ui->btn_write,  SIGNAL(clicked(bool)),  this,   SLOT(f_write()));
 
-    createTestBar();
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------

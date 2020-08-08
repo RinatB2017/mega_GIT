@@ -49,10 +49,12 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     connect(ui->btn_calc,   SIGNAL(clicked(bool)),  this,   SLOT(run_crc()));
-
     load_widgets();
 }
 //--------------------------------------------------------------------------------

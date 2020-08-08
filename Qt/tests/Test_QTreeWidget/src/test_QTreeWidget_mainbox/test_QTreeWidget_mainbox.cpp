@@ -54,7 +54,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
     prepare_treeWidget();
 
     connect(ui->treeWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(click(QModelIndex)));

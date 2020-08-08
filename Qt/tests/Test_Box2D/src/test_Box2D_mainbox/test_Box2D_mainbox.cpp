@@ -51,9 +51,11 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    world = new World(this);
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
+
+    world = new World(this);
 
     connect(world, SIGNAL(cnt_objects(int)), lcd, SLOT(display(int)));
     //connect(cb_block_insert_object, SIGNAL(clicked(bool)), world, SLOT(block_insert_objects(bool)));

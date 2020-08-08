@@ -78,7 +78,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     //---
     f_qwwcolorbutton(0, 0);     f_qwwhuesatradialpicker(1, 0);

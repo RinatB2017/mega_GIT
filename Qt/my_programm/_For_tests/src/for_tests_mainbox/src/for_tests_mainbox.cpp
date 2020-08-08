@@ -67,7 +67,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     ui->horizontalSlider->setRange(0, 1000);
 

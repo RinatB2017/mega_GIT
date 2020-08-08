@@ -41,7 +41,7 @@ LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/widgets/ipctrl4/ipctrl4.pri)
+include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 include ($$LIB_PATH2/widgets/rtsp_widget/rtsp_widget.pri)
 
 include (src/check_network_mainbox/check_network_mainbox.pri)

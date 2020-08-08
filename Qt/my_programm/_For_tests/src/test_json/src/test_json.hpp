@@ -46,7 +46,6 @@ private:
     Ui::Test_JSON *ui;
 
     void init(void);
-
     void test(void);
 
     void updateText(void);

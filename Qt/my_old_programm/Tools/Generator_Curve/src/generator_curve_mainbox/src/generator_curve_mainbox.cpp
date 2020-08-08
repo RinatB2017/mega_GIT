@@ -50,7 +50,10 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     ui->rs232_widget->set_generator(ui->generator_widget);
     ui->sound_widget->set_generator(ui->generator_widget);

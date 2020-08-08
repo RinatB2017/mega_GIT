@@ -47,7 +47,10 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
+#endif
     thread_start();
 
     ui->frame->setFixedSize(430, 125);

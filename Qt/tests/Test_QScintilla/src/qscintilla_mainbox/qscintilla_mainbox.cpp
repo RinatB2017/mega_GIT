@@ -65,11 +65,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifndef QT_DEBUG
-    Q_CHECK_PTR(parentWidget());
-#endif
-
+#ifdef QT_DEBUG
     createTestBar();
+#endif
 
     QsciLexerCPP *lexCpp = new QsciLexerCPP(this);
     ui->te_CPP->setUtf8(true);

@@ -70,6 +70,10 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
+
     //---
     QtVariantPropertyManager *variantManager = new QtVariantPropertyManager();
     //QtGroupPropertyManager *variantManager = new QtGroupPropertyManager();
@@ -125,8 +129,6 @@ void MainBox::init(void)
     box->addWidget(variantEditor);
     setLayout(box);
     //---
-
-    createTestBar();
 
     setFixedWidth(sizeHint().width());
 }

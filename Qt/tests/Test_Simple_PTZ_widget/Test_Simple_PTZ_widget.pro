@@ -33,7 +33,7 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include ($$LIB_PATH2/icons/arrows.pri)
-include ($$LIB_PATH2/widgets/ipctrl4/ipctrl4.pri)
+include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 include ($$LIB_PATH2/widgets/simple_ptz_widget/simple_ptz_widget.pri)
 
 !exists(OBJECTS_DIR) {

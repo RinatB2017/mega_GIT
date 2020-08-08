@@ -32,6 +32,7 @@ class IPV4 : public QWidget
     Q_OBJECT
 
 signals:
+    void editingFinished(void);
     void s_get_url(QUrl);
 
 public:

@@ -58,9 +58,6 @@ void MainBox::init(void)
 
     ui->host_widget->set_url(QUrl("127.0.0.1"));
 
-    ui->sb_port->setRange(0, 0xFFFF);
-    ui->sb_port->setValue(80);
-
     connect(ui->btn_run,        SIGNAL(clicked(bool)),  this,   SLOT(f_run()));
     connect(ui->btn_update,     SIGNAL(clicked(bool)),  this,   SLOT(f_update()));
     connect(ui->btn_host_to_ip, SIGNAL(clicked(bool)),  this,   SLOT(f_host_to_ip()));
@@ -111,23 +108,23 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -224,7 +221,6 @@ void MainBox::f_disconnect(void)
 QUrl MainBox::get_url(void)
 {
     QUrl url = ui->host_widget->get_url();
-    url.setPort(ui->sb_port->value());
 
     return url;
 }

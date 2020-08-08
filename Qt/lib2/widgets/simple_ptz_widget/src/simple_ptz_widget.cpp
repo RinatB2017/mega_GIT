@@ -67,7 +67,7 @@ void Simple_PTZ_widget::init(void)
 
     connect(&networkManager,    SIGNAL(finished( QNetworkReply*)),  this,   SLOT(onFinished(QNetworkReply*)));
 
-    connect(ui->ipv4_widget,    &IPCtrl4::editingFinished,      this,   &Simple_PTZ_widget::play);
+    connect(ui->ipv4_widget,    &IPV4_wo_port::editingFinished, this,   &Simple_PTZ_widget::play);
     connect(ui->le_login,       &QLineEdit::editingFinished,    this,   &Simple_PTZ_widget::play);
     connect(ui->le_password,    &QLineEdit::editingFinished,    this,   &Simple_PTZ_widget::play);
     connect(ui->sb_port,        &QSpinBox::editingFinished,     this,   &Simple_PTZ_widget::play);

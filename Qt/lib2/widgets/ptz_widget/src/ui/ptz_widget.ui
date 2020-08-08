@@ -93,7 +93,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="IPCtrl4" name="ip_widget" native="true"/>
+         <widget class="IPV4_wo_port" name="ip_widget" native="true"/>
         </item>
         <item row="4" column="1">
          <widget class="QSpinBox" name="sb_port"/>
@@ -438,15 +438,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QVideoWidget</class>
+   <class>IPV4_wo_port</class>
    <extends>QWidget</extends>
-   <header>qvideowidget.h</header>
+   <header>ipv4_wo_port.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>IPCtrl4</class>
+   <class>QVideoWidget</class>
    <extends>QWidget</extends>
-   <header>ipctrl4.hpp</header>
+   <header>qvideowidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

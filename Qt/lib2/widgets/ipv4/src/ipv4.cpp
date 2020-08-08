@@ -87,6 +87,13 @@ void IPV4::init(void)
     connect(d,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
     connect(port,   SIGNAL(valueChanged(int)),  this,   SLOT(work()));
 
+    connect(a, &QSpinBox::editingFinished,  this,   &IPV4::editingFinished);
+    connect(b, &QSpinBox::editingFinished,  this,   &IPV4::editingFinished);
+    connect(c, &QSpinBox::editingFinished,  this,   &IPV4::editingFinished);
+    connect(d, &QSpinBox::editingFinished,  this,   &IPV4::editingFinished);
+
+    connect(port, &QSpinBox::editingFinished,  this,   &IPV4::editingFinished);
+
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------

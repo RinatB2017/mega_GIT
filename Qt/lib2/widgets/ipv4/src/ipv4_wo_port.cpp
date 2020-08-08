@@ -66,6 +66,11 @@ IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
     connect(c,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
     connect(d,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
 
+    connect(a, &QSpinBox::editingFinished,  this,   &IPV4_wo_port::editingFinished);
+    connect(b, &QSpinBox::editingFinished,  this,   &IPV4_wo_port::editingFinished);
+    connect(c, &QSpinBox::editingFinished,  this,   &IPV4_wo_port::editingFinished);
+    connect(d, &QSpinBox::editingFinished,  this,   &IPV4_wo_port::editingFinished);
+
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------

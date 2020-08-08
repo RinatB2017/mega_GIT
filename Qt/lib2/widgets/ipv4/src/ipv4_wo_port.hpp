@@ -35,6 +35,7 @@ class IPV4_wo_port : public MyWidget
     Q_OBJECT
 
 signals:
+    void editingFinished(void);
     void s_get_url(QUrl);
 
 public:

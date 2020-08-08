@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>391</width>
-    <height>444</height>
+    <height>460</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -161,6 +161,9 @@
     </layout>
    </item>
    <item>
+    <widget class="IPV4_wo_port" name="widget" native="true"/>
+   </item>
+   <item>
     <widget class="PictureLabel" name="label_3">
      <property name="text">
       <string>Drag &amp; Drop picture here</string>
@@ -202,6 +205,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IPV4_wo_port</class>
+   <extends>QWidget</extends>
+   <header location="global">ipv4_wo_port.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>PictureLabel</class>
    <extends>QLabel</extends>
    <header>picturelabel.hpp</header>
@@ -218,6 +227,14 @@
   <tabstop>cb_checkbox_test</tabstop>
   <tabstop>doubleSpinBox</tabstop>
   <tabstop>timeEdit</tabstop>
+  <tabstop>toolButton</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>btn_set_dt</tabstop>
+  <tabstop>dateTimeEdit</tabstop>
+  <tabstop>cb_fag_exit</tabstop>
+  <tabstop>btn_click</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>te_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

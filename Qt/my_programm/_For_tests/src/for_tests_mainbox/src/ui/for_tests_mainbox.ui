@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>391</width>
-    <height>460</height>
+    <height>419</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -161,19 +161,6 @@
     </layout>
    </item>
    <item>
-    <widget class="IPV4_wo_port" name="widget" native="true"/>
-   </item>
-   <item>
-    <widget class="PictureLabel" name="label_3">
-     <property name="text">
-      <string>Drag &amp; Drop picture here</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -203,19 +190,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>IPV4_wo_port</class>
-   <extends>QWidget</extends>
-   <header location="global">ipv4_wo_port.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PictureLabel</class>
-   <extends>QLabel</extends>
-   <header>picturelabel.hpp</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>lineEdit</tabstop>
   <tabstop>sb_1</tabstop>

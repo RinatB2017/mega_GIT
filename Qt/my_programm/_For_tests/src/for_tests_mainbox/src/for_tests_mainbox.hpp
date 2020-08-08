@@ -28,7 +28,6 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_for_tests_mainbox.h"
-#include "test_json.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -84,9 +83,6 @@ private:
     QPointer<QComboBox> cb_test;
     QPointer<QTimer> timer;
     int cnt = 0;
-
-    QScopedPointer<SimpleWidget> sw;
-    QPointer<Test_JSON> tjs;
 
     //---
     QDockWidget *main_dock;

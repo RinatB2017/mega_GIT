@@ -152,7 +152,7 @@ void RTSP_widget::stop(void)
 void RTSP_widget::choice(void)
 {
     RTSP_dialog *dlg = new RTSP_dialog;
-    dlg->set_url(QUrl("192.168.1.14"));
+    dlg->set_url(QUrl("ip://192.168.1.14"));
     int btn = dlg->exec();
     if(btn == RTSP_dialog::Accepted)
     {

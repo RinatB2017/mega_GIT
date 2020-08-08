@@ -50,7 +50,7 @@ void PTZ_dialog::init(void)
 
     ui->le_login->setText("admin");
     ui->le_password->setText("admin");
-    ui->ip_widget->set_url(QUrl("192.168.1.1"));
+    ui->ip_widget->set_url(QUrl("ip://192.168.1.1"));
     ui->sb_port->setValue(81);
 
     connect(ui->buttonBox,  SIGNAL(accepted()), this,   SLOT(accept()));

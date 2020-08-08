@@ -58,9 +58,9 @@ void Simple_PTZ_widget::init(void)
     ui->video_widget->setMinimumSize(640, 480);
     ui->sb_port->setRange(0, 0xFFFF);
 
-    QString ip_string = load_string("IP");
-    if(ip_string.isEmpty()) ip_string = "127.0.0.1";
-    ui->ipv4_widget->set_url(QUrl(ip_string));
+//    QString ip_string = load_string("IP");
+//    if(ip_string.isEmpty()) ip_string = "ip://127.0.0.1";
+//    ui->ipv4_widget->set_url(QUrl(ip_string));
 
     connect(ui->btn_connect,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::play);
     connect(ui->btn_disconnect, &QPushButton::clicked,  this,   &Simple_PTZ_widget::stop);

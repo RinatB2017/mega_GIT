@@ -91,9 +91,12 @@ void PersistentConnection::aboutToClose() {
     QDEBUG() << "Stopping timer";
     refreshTimer.stop();
     QDEBUG() << "checking thread null";
-    if(thread == NULL) {
+    if(thread == nullptr)
+    {
         QDEBUG() << "pointer is null";
-    } else {
+    }
+    else
+    {
         QDEBUG() << "requesting stop";
         thread->closeRequest = true;
     }

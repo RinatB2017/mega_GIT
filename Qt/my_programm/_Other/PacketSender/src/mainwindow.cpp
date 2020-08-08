@@ -577,8 +577,9 @@ quint64 MainWindow::timeSinceLaunch()
     if(launchTimer.isValid())
     {
         return launchTimer.elapsed();
-
-    } else {
+    }
+    else
+    {
         launchTimer.start();
         return 0;
     }
@@ -587,14 +588,11 @@ quint64 MainWindow::timeSinceLaunch()
 
 void MainWindow::on_packetHexEdit_lostFocus()
 {
-
     QString quicktestHex =  ui->packetHexEdit->text();
 
     ui->packetASCIIEdit->setText(Packet::hexToASCII(quicktestHex));
     ui->packetASCIIEdit->setToolTip("");
     ui->packetHexEdit->setText(quicktestHex);
-
-
 }
 
 void MainWindow::on_packetASCIIEdit_lostFocus()

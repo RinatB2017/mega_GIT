@@ -33,6 +33,14 @@ LogDock_options::~LogDock_options()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+bool LogDock_options::setProperty(const char *name, const QVariant &value)
+{
+    Q_ASSERT(property(name).isValid() == true);
+
+    QDialog::setProperty(name, value);
+    return true;
+}
+//--------------------------------------------------------------------------------
 void LogDock_options::init(void)
 {
     ui->setupUi(this);

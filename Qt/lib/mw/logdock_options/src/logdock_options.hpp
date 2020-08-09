@@ -55,6 +55,8 @@ public:
     LogDock_options(QWidget *parent = nullptr);
     ~LogDock_options();
 
+    bool setProperty(const char *name, const QVariant &value);
+
 private slots:
     void set_readonly(bool value);
     void set_color(bool value);

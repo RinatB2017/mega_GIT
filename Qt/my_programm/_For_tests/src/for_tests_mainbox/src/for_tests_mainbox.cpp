@@ -310,15 +310,6 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    qreal deposit = 100.0;
-    for(int n=0; n<30; n++)
-    {
-        deposit *= 1.02;
-    }
-    emit info(QString("deposit %1").arg(deposit));
-#endif
-
 #if 1
     beginGroup("logdock_options");
 
@@ -340,11 +331,11 @@ bool MainBox::test(void)
     LogDock_options *optionsBox = new LogDock_options();
     Q_CHECK_PTR(optionsBox);
 
-    optionsBox->setProperty(FLAG_READONLY,            flag_ReadOnly);
-    optionsBox->setProperty(FLAG_COLOR,               flag_Color);
-    optionsBox->setProperty(FLAG_NOCRLF,              flag_NoCRLF);
-    optionsBox->setProperty(FLAG_ADDDATETIME,         flag_AddDateTime);
-    optionsBox->setProperty(FLAG_ERRORASMESSAGE,      flag_ErrorAsMessage);
+    optionsBox->setProperty(FLAG_READONLY,          flag_ReadOnly);
+    optionsBox->setProperty(FLAG_COLOR,             flag_Color);
+    optionsBox->setProperty(FLAG_NOCRLF,            flag_NoCRLF);
+    optionsBox->setProperty(FLAG_ADDDATETIME,       flag_AddDateTime);
+    optionsBox->setProperty(FLAG_ERRORASMESSAGE,    flag_ErrorAsMessage);
 
     optionsBox->setProperty(FLAG_LOG_EMERG,   flag_LOG_EMERG);
     optionsBox->setProperty(FLAG_LOG_ALERT,   flag_LOG_ALERT);
@@ -375,6 +366,15 @@ bool MainBox::test(void)
     }
 
     endGroup();
+#endif
+
+#if 0
+    qreal deposit = 100.0;
+    for(int n=0; n<30; n++)
+    {
+        deposit *= 1.02;
+    }
+    emit info(QString("deposit %1").arg(deposit));
 #endif
 
 #if 0

@@ -30,7 +30,7 @@ Window* findWindows( Display* display, ulong* winCount )
     Atom actualType;
     int format;
     ulong bytesAfter;
-    uchar* list = nullptr;
+    unsigned char* list = nullptr;
     Status status = XGetWindowProperty( display,
                                         DefaultRootWindow( display ),
                                         XInternAtom( display, "_NET_CLIENT_LIST", False ),
@@ -59,7 +59,7 @@ char* getWindowName( Display* display, Window win )
     Atom actualType;
     int format;
     ulong count, bytesAfter;
-    uchar* name = nullptr;
+    unsigned char* name = nullptr;
     Status status = XGetWindowProperty( display,
                                         win,
                                         XInternAtom( display, "_NET_WM_NAME", False ),
@@ -79,7 +79,8 @@ char* getWindowName( Display* display, Window win )
         return nullptr;
     }
 
-    if( name == NULL ) {
+    if( name == nullptr )
+    {
         Status status = XGetWindowProperty( display,
                                             win,
                                             XInternAtom( display, "WM_NAME", False ),

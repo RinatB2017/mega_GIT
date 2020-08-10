@@ -6,7 +6,6 @@ TEMPLATE = app
 TARGET   = MyBot
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/mybot_mainbox \
     $$PWD/src/mybot_mainbox/ui
@@ -46,7 +45,7 @@ CONFIG  += c++11
 
 unix {
     LIBS    += -lX11 -lXtst
-    LIBS    += -lOpenCL
+#    LIBS    += -lOpenCL
 }
 
 LIB_PATH  = "$$PWD/../../lib"

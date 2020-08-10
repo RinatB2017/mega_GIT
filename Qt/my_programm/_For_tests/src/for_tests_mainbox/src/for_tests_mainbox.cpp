@@ -311,6 +311,14 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    //wid можно получить с помощью wmctrl -l
+    QWindow* myWindow = QWindow::fromWinId(0x05c00006);
+    QWidget* widget = QWidget::createWindowContainer(myWindow);
+//    widget->show();
+    ui->temp_layout->addWidget(widget);
+#endif
+
+#if 0
     beginGroup("logdock_options");
 
     bool flag_ReadOnly       = load_bool(FLAG_READONLY);

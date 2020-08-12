@@ -51,6 +51,8 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+#include "coloritem.hpp"
+
 void MainBox::init(void)
 {
     ui->setupUi(this);
@@ -84,6 +86,21 @@ void MainBox::init(void)
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
+
+    //---
+#if 1
+    QGraphicsScene *scene = new QGraphicsScene(0, 0, 200, 200);
+
+    ColorItem *item = new ColorItem;
+    item->setPos(18, 18);
+    scene->addItem(item);
+
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setFixedSize(206, 206);   //TODO не забудь про бордюры (6)
+
+    ui->picture_label->setProperty(NO_SAVE, true);
+#endif
+    //---
 
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -168,12 +185,12 @@ void MainBox::choice_test(void)
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
 
-//    QList<MainBox::CMD>::iterator cmd_it = std::find_if(
+    //    QList<MainBox::CMD>::iterator cmd_it = std::find_if(
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);

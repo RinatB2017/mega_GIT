@@ -79,8 +79,10 @@ include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
 include ($$LIB_PATH/mywidgets/picturelabel.pri)
-include (src/coloritem/coloritem.pri)
-include (src/mygraphicsview/mygraphicsview.pri)
+
+include (src/widgets/coloritem/coloritem.pri)
+include (src/widgets/mygraphicsview/mygraphicsview.pri)
+include (src/widgets/mygraphicsscene/mygraphicsscene.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

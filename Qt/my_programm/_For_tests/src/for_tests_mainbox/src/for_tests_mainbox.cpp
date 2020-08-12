@@ -52,6 +52,7 @@ MainBox::~MainBox()
 }
 //--------------------------------------------------------------------------------
 #include "coloritem.hpp"
+#include "mygraphicsscene.hpp"
 
 void MainBox::init(void)
 {
@@ -88,8 +89,10 @@ void MainBox::init(void)
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 
     //---
+    ui->picture_label->setProperty(NO_SAVE, true);
+
 #if 1
-    QGraphicsScene *scene = new QGraphicsScene(0, 0, 200, 200);
+    MyGraphicsScene *scene = new MyGraphicsScene(0, 0, 200, 200);
 
     ColorItem *item = new ColorItem;
     item->setPos(18, 18);
@@ -98,7 +101,10 @@ void MainBox::init(void)
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setFixedSize(206, 206);   //TODO не забудь про бордюры (6)
 
-    ui->picture_label->setProperty(NO_SAVE, true);
+    MyGraphicsScene *scene2 = new MyGraphicsScene(0, 0, 200, 200);
+    ui->graphicsView_2->setScene(scene2);
+    ui->graphicsView_2->setFixedSize(206, 206);   //TODO не забудь про бордюры (6)
+
 #endif
     //---
 

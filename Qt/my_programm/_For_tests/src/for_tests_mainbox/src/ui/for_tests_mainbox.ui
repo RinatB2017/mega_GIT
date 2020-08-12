@@ -24,6 +24,9 @@
        <widget class="MyGraphicsView" name="graphicsView"/>
       </item>
       <item>
+       <widget class="MyGraphicsView" name="graphicsView_2"/>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>

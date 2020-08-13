@@ -78,8 +78,6 @@ include ($$LIB_PATH2/icons/arrows.pri)
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
-include ($$LIB_PATH/mywidgets/picturelabel.pri)
-
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

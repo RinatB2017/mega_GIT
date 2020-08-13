@@ -85,10 +85,6 @@ void MainBox::init(void)
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 
-    //---
-    ui->picture_label->setProperty(NO_SAVE, true);
-    //---
-
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else

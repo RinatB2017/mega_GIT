@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>613</width>
-    <height>460</height>
+    <height>435</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -22,7 +22,7 @@
         <x>0</x>
         <y>0</y>
         <width>192</width>
-        <height>316</height>
+        <height>291</height>
        </rect>
       </property>
       <attribute name="label">
@@ -262,13 +262,6 @@
        </widget>
       </item>
       <item>
-       <widget class="PictureLabel" name="picture_label">
-        <property name="text">
-         <string>PictureLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QTextEdit" name="te_test"/>
       </item>
      </layout>
@@ -279,13 +272,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PictureLabel</class>
-   <extends>QLabel</extends>
-   <header>picturelabel.hpp</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>sb_1</tabstop>
   <tabstop>sb_2</tabstop>

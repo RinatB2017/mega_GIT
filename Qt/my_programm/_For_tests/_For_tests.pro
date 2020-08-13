@@ -80,10 +80,6 @@ include (src/mymainwindow/mymainwindow.pri)
 
 include ($$LIB_PATH/mywidgets/picturelabel.pri)
 
-include (src/widgets/coloritem/coloritem.pri)
-include (src/widgets/mygraphicsview/mygraphicsview.pri)
-include (src/widgets/mygraphicsscene/mygraphicsscene.pri)
-
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

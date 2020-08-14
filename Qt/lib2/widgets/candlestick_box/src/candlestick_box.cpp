@@ -81,11 +81,9 @@ void CandleStick_Box::init(void)
 //--------------------------------------------------------------------------------
 void CandleStick_Box::append(QCandlestickSet *set, qreal volume)
 {
-    emit trace(Q_FUNC_INFO);
-
+    //emit trace(Q_FUNC_INFO);
     candleSeries->append(set);
-
-    emit debug(QString("cnt %1").arg(candleSeries->count()));
+    //emit debug(QString("cnt %1").arg(candleSeries->count()));
 
     //categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
     categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();

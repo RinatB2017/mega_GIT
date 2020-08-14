@@ -85,6 +85,21 @@ void MainBox::init(void)
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 
+    //---
+#if 0
+    QElapsedTimer timer;
+    for(int n=0; n<10; n++)
+    {
+        splash->showMessage(QString("test %1").arg(n));
+        timer.start();
+        while(timer.elapsed() < 1000)
+        {
+            QCoreApplication::processEvents();
+        }
+    }
+#endif
+    //---
+
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else

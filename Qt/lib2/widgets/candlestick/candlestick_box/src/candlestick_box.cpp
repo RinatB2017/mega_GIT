@@ -48,6 +48,8 @@ void CandleStick_Box::init(void)
     candleSeries->setName(ticket_name);
     candleSeries->setIncreasingColor(QColor(Qt::green));
     candleSeries->setDecreasingColor(QColor(Qt::red));
+
+    connect(candleSeries,   &QCandlestickSeries::hovered,   this,   &CandleStick_Box::hovered_candle);
     //---
 
     chart = new QChart();
@@ -77,6 +79,24 @@ void CandleStick_Box::init(void)
     ui->chartView->setRubberBand(QChartView::RectangleRubberBand);
 
     ui->chartView->setToolTip("chart");
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box::hovered_candle(bool state, QCandlestickSet *set)
+{
+    if(state)
+    {
+        QString temp;
+        temp.append(QString("open\t%1\n").arg(set->open()));
+        temp.append(QString("hi\t%1\n").arg(set->high()));
+        temp.append(QString("lo\t%1\n").arg(set->low()));
+        temp.append(QString("close\t%1\n").arg(set->close()));
+
+        ui->chartView->setToolTip(temp);
+    }
+    else
+    {
+        ui->chartView->setToolTip(nullptr);
+    }
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::set_theme_light(void)

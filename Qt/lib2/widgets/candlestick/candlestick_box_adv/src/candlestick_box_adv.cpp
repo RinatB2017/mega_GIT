@@ -49,16 +49,30 @@ void CandleStick_Box_adv::init(void)
     candleSeries->setName(ticket_name);
     candleSeries->setIncreasingColor(QColor(Qt::green));
     candleSeries->setDecreasingColor(QColor(Qt::red));
-    //---
 
-    //---
+    connect(candleSeries,   &QCandlestickSeries::hovered,   this,   &CandleStick_Box_adv::hovered_candle);
     //---
 
     chart = new QChart();
-
     chart->addSeries(candleSeries);
     //chart->setTitle(ticket_name);
     //chart->setAnimationOptions(QChart::SeriesAnimations);
+
+    //---
+#ifdef SHOW_VOLUMES
+    volume_series = new QBarSeries();
+
+    volume_chart = new QChart();
+    volume_chart->addSeries(volume_series);
+    volume_chart->createDefaultAxes();
+    volume_chart->axisY()->setMax(110);
+    //volume_chart->axisX()->setMin(-100);
+    ui->volumes_widget->setChart(volume_chart);
+    ui->volumes_widget->setRenderHint(QPainter::Antialiasing);
+#else
+    ui->volumes_widget->setVisible(false);
+#endif
+    //---
 
     chart->createDefaultAxes();
 
@@ -95,6 +109,8 @@ void CandleStick_Box_adv::init(void)
 
     connect(ui->chartView,      &MyQChartView::local_pos,   this,   &CandleStick_Box_adv::show_volumes);
 
+    connect(ui->btn_test,       &QPushButton::clicked,  this,   &CandleStick_Box_adv::test);
+
     ui->sb_pos->setRange(1, 1000);
 
     ui->dsb_zoom->setRange(0, 10);
@@ -118,10 +134,37 @@ void CandleStick_Box_adv::init(void)
         btn->setProperty(NO_SAVE, true);
     }
 
-    qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
-    qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
+    //qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
+    //qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
 
     load_widgets();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::hovered_candle(bool state, QCandlestickSet *set)
+{
+    if(state)
+    {
+        QString temp;
+        temp.append(QString("open\t%1\n").arg(set->open()));
+        temp.append(QString("hi\t%1\n").arg(set->high()));
+        temp.append(QString("lo\t%1\n").arg(set->low()));
+        temp.append(QString("close\t%1\n").arg(set->close()));
+
+        for(int n=0; n<candleSeries->count(); n++)
+        {
+            if(candleSeries->sets().at(n) == set)
+            {
+                temp.append(QString("volume\t%1").arg(volumes.at(n)));
+                break;
+            }
+        }
+
+        ui->chartView->setToolTip(temp);
+    }
+    else
+    {
+        ui->chartView->setToolTip(nullptr);
+    }
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::append(QCandlestickSet *set, qreal volume)
@@ -130,36 +173,21 @@ void CandleStick_Box_adv::append(QCandlestickSet *set, qreal volume)
 
     candleSeries->append(set);
 
-    qDebug() << "cnt" << candleSeries->count();
+    //---
+#ifdef SHOW_VOLUMES
+    QBarSet *volume_bar = new QBarSet("volume");
+    volume_bar->append(temp_volume+=10.0);
+    volume_series->append(volume_bar);
+
+    volumes_categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
+#endif
+    //---
+
+    qDebug() << "cnt"  << candleSeries->count();
 
     //categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
     categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
     volumes.append(volume);
-}
-//--------------------------------------------------------------------------------
-bool CandleStick_Box_adv::get_ticket_data(int index, QCandlestickSet *set, qreal *volume)
-{
-    if(index < 0)
-    {
-        emit error("index < 0");
-        return false;
-    }
-    if(index >= candleSeries->count())
-    {
-        emit error("index too big");
-        return false;
-    }
-    QCandlestickSet *temp_set = candleSeries->sets().at(index);
-
-    //TODO костыль, напрямую пока не получается
-    (*set).setTimestamp((*temp_set).timestamp());
-    (*set).setOpen((*temp_set).open());
-    (*set).setClose((*temp_set).close());
-    (*set).setHigh((*temp_set).high());
-    (*set).setLow((*temp_set).low());
-
-    *volume = volumes.at(index);
-    return true;
 }
 //--------------------------------------------------------------------------------
 int CandleStick_Box_adv::get_max_index(void)
@@ -175,6 +203,7 @@ void CandleStick_Box_adv::clear_data(void)
         candleSeries->remove(candleSeries->sets().at(0));
     }
     categories.clear();
+    //volumes_categories.clear();
     volumes.clear();
 }
 //--------------------------------------------------------------------------------
@@ -182,6 +211,11 @@ void CandleStick_Box_adv::update_data(void)
 {
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
+
+#ifdef SHOW_VOLUMES
+    QBarCategoryAxis *ax = qobject_cast<QBarCategoryAxis *>(volume_chart->axes(Qt::Horizontal).at(0));
+    ax->setCategories(volumes_categories);
+#endif
 
 #if 1
     qreal v_max = -100;
@@ -350,6 +384,36 @@ void CandleStick_Box_adv::set_theme_dark(void)
 void CandleStick_Box_adv::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#ifdef SHOW_VOLUMES
+    volume_chart->scroll(10, 0);
+#endif
+    //qDebug() << volume_chart->axisX();
+}
+//--------------------------------------------------------------------------------
+bool CandleStick_Box_adv::get_ticket_data(int index, QCandlestickSet *set, qreal *volume)
+{
+    if(index < 0)
+    {
+        emit error("index < 0");
+        return false;
+    }
+    if(index >= candleSeries->count())
+    {
+        emit error("index too big");
+        return false;
+    }
+    QCandlestickSet *temp_set = candleSeries->sets().at(index);
+
+    //TODO костыль, напрямую пока не получается
+    (*set).setTimestamp((*temp_set).timestamp());
+    (*set).setOpen((*temp_set).open());
+    (*set).setClose((*temp_set).close());
+    (*set).setHigh((*temp_set).high());
+    (*set).setLow((*temp_set).low());
+
+    *volume = volumes.at(index);
+    return true;
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::resizeEvent(QResizeEvent *event)

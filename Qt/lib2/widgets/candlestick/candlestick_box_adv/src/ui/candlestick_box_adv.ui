@@ -27,6 +27,9 @@
        <widget class="MyQChartView" name="chartView" native="true"/>
       </item>
       <item>
+       <widget class="MyQChartView" name="volumes_widget" native="true"/>
+      </item>
+      <item>
        <widget class="QLabel" name="lbl_volumes_grapher"/>
       </item>
      </layout>
@@ -64,7 +67,7 @@
               <string>-</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../../../../../icons/digits/digits.qrc">
                <normaloff>:/plus_minus/minus.png</normaloff>:/plus_minus/minus.png</iconset>
              </property>
             </widget>
@@ -75,7 +78,7 @@
               <string>+</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../../../../../icons/digits/digits.qrc">
                <normaloff>:/plus_minus/plus.png</normaloff>:/plus_minus/plus.png</iconset>
              </property>
             </widget>
@@ -183,6 +186,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_test">
+        <property name="text">
+         <string>test</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -231,6 +241,7 @@
  </tabstops>
  <resources>
   <include location="../../../../../../lib/pictures/arrow.qrc"/>
+  <include location="../../../../../icons/digits/digits.qrc"/>
  </resources>
  <connections/>
 </ui>

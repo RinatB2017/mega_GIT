@@ -50,7 +50,6 @@ SUBDIRS += \
     $$PWD/Test_model \
     $$PWD/Test_pixmap \
     $$PWD/Test_Polar \
-    $$PWD/Test_RadioGarden \
     $$PWD/Test_SQL \
     $$PWD/Test_SMTP \
     $$PWD/Test_thread \

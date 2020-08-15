@@ -93,6 +93,8 @@ private:
 
     void show_volumes(QMouseEvent *event);
 
+    void hovered_candle(bool state, QCandlestickSet *set);
+
     void chart_test(void);
 
     void set_theme_light(void);

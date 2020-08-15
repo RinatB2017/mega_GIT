@@ -150,7 +150,7 @@ bool MainBox::create_set(QStringList sl,
         emit error(QString("bad len %1").arg(sl.size()));
         return false;
     }
-    QString s_ticket = sl.at(0);
+    //QString s_ticket = sl.at(0);
     QString s_date   = sl.at(1);
     QString s_time   = sl.at(2);
     QString s_open   = sl.at(3);

@@ -409,6 +409,7 @@ void DocumentScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         break;
       case 9: // crosstab
         gi = new ORGraphicsCrossTabItem();
+        break;
       default:
         qDebug("%s: unknown insertItemCode %d", "mousePressEvent", _handler->insertItemCode());
     }

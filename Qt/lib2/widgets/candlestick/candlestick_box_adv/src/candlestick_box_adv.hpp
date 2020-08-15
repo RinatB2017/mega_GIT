@@ -29,6 +29,10 @@
 #include <QPointer>
 #include <QWidget>
 
+#include <QLineSeries>
+#include <QBarSeries>
+#include <QBarSet>
+
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 QT_CHARTS_USE_NAMESPACE
@@ -73,6 +77,13 @@ private:
     qreal dx = 0;
     qreal dy = 0;
 
+#ifdef SHOW_VOLUMES
+    QPointer<QBarSeries> volume_series;
+    QPointer<QChart> volume_chart;
+    QStringList volumes_categories;
+    qreal temp_volume = 0;
+#endif
+
     void init(void);
 
     void zoom_in(void);
@@ -91,6 +102,8 @@ private:
     bool get_index(QString key, int *index);
 
     void show_volumes(QMouseEvent *event);
+
+    void hovered_candle(bool state, QCandlestickSet *set);
 
     void updateText(void);
     bool programm_is_exit(void);

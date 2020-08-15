@@ -9,4 +9,4 @@ SUBDIRS += \
     $$PWD/my_programm \
     $$PWD/my_old_programm \
     $$PWD/sensors \
-    $$PWD/tests
+    $$PWD/mega_git_tests

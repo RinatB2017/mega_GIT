@@ -6,7 +6,7 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
-    Test_ADXL345 \
-    Test_GY-652 \
-    Test_HTU21D \
-    Test_MPU-6050
+    $$PWD/Test_ADXL345 \
+    $$PWD/Test_GY-652 \
+    $$PWD/Test_HTU21D \
+    $$PWD/Test_MPU-6050

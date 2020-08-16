@@ -349,9 +349,11 @@ void MainWindow::load_translations()
 #ifdef QT_DEBUG
         qDebug() << "translator_system not loaded!";
 #endif
-        return;
     }
-    qApp->installTranslator(translator_system);
+    else
+    {
+        qApp->installTranslator(translator_system);
+    }
     //---
     translator_common = new QTranslator(this);
     res = translator_common->load(":/common");

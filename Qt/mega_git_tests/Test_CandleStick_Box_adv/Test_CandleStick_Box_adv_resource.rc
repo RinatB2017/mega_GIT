@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"C:\\Qt\\my_programm\\Icons\\ico\\computer.ico"
+IDI_ICON1	ICON	DISCARDABLE	"C:\\Qt\\mega_git_tests\\Test_CandleStick_Box_adv\\ico\\computer.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0
@@ -23,8 +23,8 @@ VS_VERSION_INFO VERSIONINFO
 				VALUE "FileDescription", "\0"
 				VALUE "FileVersion", "0.0.0.0\0"
 				VALUE "LegalCopyright", "\0"
-				VALUE "OriginalFilename", "Icons.exe\0"
-				VALUE "ProductName", "Icons\0"
+				VALUE "OriginalFilename", "Test_CandleStick_Box_adv.exe\0"
+				VALUE "ProductName", "Test_CandleStick_Box_adv\0"
 				VALUE "ProductVersion", "0.0.0.0\0"
 			END
 		END

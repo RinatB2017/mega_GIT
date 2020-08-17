@@ -21,12 +21,6 @@
 #ifndef GRAPHERBOX_HPP
 #define GRAPHERBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 //#include <qwt_spline_curve_fitter.h>
 #include "qwt_plot_renderer.h"
 #include "qwt_plot_magnifier.h"

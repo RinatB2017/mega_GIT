@@ -91,9 +91,9 @@ private:
 
     void test(void);
 
-    void show_volumes(QMouseEvent *event);
-
     void hovered_candle(bool state, QCandlestickSet *set);
+//    void pressed_candle(QCandlestickSet *set);
+//    void released_candle(QCandlestickSet *set);
 
     void chart_test(void);
 
@@ -111,6 +111,11 @@ protected:
 #if 0
     void wheelEvent(QWheelEvent *event);
 #endif
+#if 0
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+#endif
+
     void resizeEvent (QResizeEvent * event);
 };
 //--------------------------------------------------------------------------------

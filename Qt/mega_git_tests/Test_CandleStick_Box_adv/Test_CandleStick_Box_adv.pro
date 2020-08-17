@@ -20,7 +20,6 @@ DEFINES += PROGRAMM_IN_UTF8
 
 #DEFINES += SHOW_VOLUMES
 
-
 HEADERS += \
     defines.hpp \
     version.hpp

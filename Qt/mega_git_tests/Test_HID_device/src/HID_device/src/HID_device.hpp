@@ -21,12 +21,6 @@
 #ifndef HID_DEVICE_HPP
 #define HID_DEVICE_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <stdint.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -99,10 +93,6 @@ typedef struct
 namespace Ui {
     class HID_device;
 }
-//--------------------------------------------------------------------------------
-class QToolButton;
-class QToolBar;
-class QComboBox;
 //--------------------------------------------------------------------------------
 class HID_device : public MyWidget
 {

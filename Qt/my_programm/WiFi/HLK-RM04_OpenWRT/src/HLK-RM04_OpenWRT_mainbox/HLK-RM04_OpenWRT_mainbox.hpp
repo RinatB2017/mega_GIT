@@ -21,12 +21,6 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
@@ -37,9 +31,6 @@ namespace Ui {
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QComboBox;
-class QToolBar;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {

@@ -8,9 +8,7 @@ TARGET   = Test_OscilloscopeBox
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_OscilloscopeBox_mainbox \
-    $$PWD/src/test_OscilloscopeBox_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -20,15 +18,11 @@ DEFINES += NO_TRAYICON
 DEFINES += SAVE_INI
 
 HEADERS += \
-    test_OscilloscopeBox_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_OscilloscopeBox_mainbox.cpp \
     main.cpp
-
-FORMS   += test_OscilloscopeBox_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -41,6 +35,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/oscilloscopebox.pri)
+
+include (src/test_OscilloscopeBox_mainbox/test_OscilloscopeBox_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

@@ -50,6 +50,8 @@ void CandleStick_Box::init(void)
     candleSeries->setDecreasingColor(QColor(Qt::red));
 
     connect(candleSeries,   &QCandlestickSeries::hovered,   this,   &CandleStick_Box::hovered_candle);
+//    connect(candleSeries,   &QCandlestickSeries::pressed,   this,   &CandleStick_Box::pressed_candle);
+//    connect(candleSeries,   &QCandlestickSeries::released,  this,   &CandleStick_Box::released_candle);
     //---
 
     chart = new QChart();
@@ -74,15 +76,15 @@ void CandleStick_Box::init(void)
     ui->chartView->setChart(chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
 
-    connect(ui->chartView,              &MyQChartView::local_pos,   this,   &CandleStick_Box::show_volumes);
-
-    ui->chartView->setRubberBand(QChartView::RectangleRubberBand);
+    //ui->chartView->setRubberBand(QChartView::RectangleRubberBand);    //включает увеличение (прямоугольник)
+    //ui->chartView->setRubberBand(QChartView::HorizontalRubberBand);
 
     ui->chartView->setToolTip("chart");
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::hovered_candle(bool state, QCandlestickSet *set)
 {
+//    emit trace(Q_FUNC_INFO);
     if(state)
     {
         QString temp;
@@ -91,6 +93,15 @@ void CandleStick_Box::hovered_candle(bool state, QCandlestickSet *set)
         temp.append(QString("lo\t%1\n").arg(set->low()));
         temp.append(QString("close\t%1\n").arg(set->close()));
 
+        for(int n=0; n<candleSeries->count(); n++)
+        {
+            if(candleSeries->sets().at(n) == set)
+            {
+                temp.append(QString("volume\t%1").arg(volumes.at(n)));
+                break;
+            }
+        }
+
         ui->chartView->setToolTip(temp);
     }
     else
@@ -98,6 +109,16 @@ void CandleStick_Box::hovered_candle(bool state, QCandlestickSet *set)
         ui->chartView->setToolTip(nullptr);
     }
 }
+//--------------------------------------------------------------------------------
+//void CandleStick_Box::pressed_candle(QCandlestickSet *set)
+//{
+//    emit trace(Q_FUNC_INFO);
+//}
+//--------------------------------------------------------------------------------
+//void CandleStick_Box::released_candle(QCandlestickSet *set)
+//{
+//    emit trace(Q_FUNC_INFO);
+//}
 //--------------------------------------------------------------------------------
 void CandleStick_Box::set_theme_light(void)
 {
@@ -323,19 +344,6 @@ bool CandleStick_Box::get_index(QString key, int *index)
     return true;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::show_volumes(QMouseEvent *event)
-{
-    //FIXME надо сделать
-#if 0
-    QString pos = QString("pos: %1 %2")
-            .arg(event->localPos().x())
-            .arg(event->localPos().y());
-    ui->chartView->setToolTip(pos);
-#else
-    Q_UNUSED(event)
-#endif
-}
-//--------------------------------------------------------------------------------
 void CandleStick_Box::test2(void)
 {
     emit info(QString("min %1").arg(axisX->min()));
@@ -413,6 +421,17 @@ void CandleStick_Box::wheelEvent(QWheelEvent *event)
     ui->chartView->chart()->zoomIn(rect);
 
     //    QChartView::wheelEvent(event);
+}
+#endif
+
+#if 0
+void CandleStick_Box::mousePressEvent(QMouseEvent *event)
+{
+    emit trace(Q_FUNC_INFO);
+}
+void CandleStick_Box::mouseReleaseEvent(QMouseEvent *event)
+{
+    emit trace(Q_FUNC_INFO);
 }
 #endif
 //--------------------------------------------------------------------------------

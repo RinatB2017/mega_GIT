@@ -21,12 +21,6 @@
 #ifndef MYFINDFORM_HPP
 #define MYFINDFORM_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 //#ifdef Q_OS_LINUX
 //#   include <opencv2/core/core.hpp>
 //#   include <opencv2/core/types_c.h>

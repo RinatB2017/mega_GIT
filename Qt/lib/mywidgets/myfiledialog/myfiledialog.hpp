@@ -21,12 +21,6 @@
 #ifndef MYFILEDIALOG_HPP
 #define MYFILEDIALOG_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mysettings.hpp"
 //--------------------------------------------------------------------------------
 class MyFileDialog : public QFileDialog, public MySettings

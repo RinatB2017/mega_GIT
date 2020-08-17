@@ -21,12 +21,6 @@
 #ifndef OscilloscopeBOX_HPP
 #define OscilloscopeBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #define CURVE_COLORS "curve_colors"
 //#define COLOR "color"
 #define COLOR_R "color_r"

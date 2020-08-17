@@ -32,5 +32,6 @@
         <file>white/9.png</file>
         <file>plus_minus/minus.png</file>
         <file>plus_minus/plus.png</file>
+        <file>plus_minus/clear.png</file>
     </qresource>
 </RCC>

@@ -21,13 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-
 #include <QNetworkReply>
+#include <QWebFrame>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -36,11 +31,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QProgressBar;
-class QListWidget;
-class QToolButton;
-class QWebFrame;
-class QToolBar;
 class WebView;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -48,7 +38,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
@@ -68,12 +58,12 @@ private:
     bool is_loaded = false;
     WebView *webview;
     bool global_stop_flag = false;
-    QWebFrame *main_frame;
+    QPointer<QWebFrame> main_frame;
 
-    QProgressBar *web_progressBar;
-    QProgressBar *result_progressBar;
+    QPointer<QProgressBar> web_progressBar;
+    QPointer<QProgressBar> result_progressBar;
 
-    QListWidget *proxy_list;
+    QPointer<QListWidget> proxy_list;
 
     int current_index;
 

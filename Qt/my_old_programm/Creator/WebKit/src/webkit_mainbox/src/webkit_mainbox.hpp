@@ -21,12 +21,6 @@
 #ifndef MAINBOX_H
 #define MAINBOX_H
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-
 #include <QWebElement>
 #include <QSqlTableModel>
 #include <QSqlRecord>
@@ -45,9 +39,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QListWidgetItem;
 class QNetworkReply;
-class QProgressBar;
 class QWebFrame;
 class TableView;
 class WebView;

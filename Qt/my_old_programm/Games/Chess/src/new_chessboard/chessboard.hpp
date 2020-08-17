@@ -21,17 +21,8 @@
 #ifndef CHESSBOARD_HPP
 #define CHESSBOARD_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class QGridLayout;
-class QToolButton;
 //--------------------------------------------------------------------------------
 class ChessBoard : public MyWidget
 {

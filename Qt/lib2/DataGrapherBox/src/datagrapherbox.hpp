@@ -21,12 +21,6 @@
 #ifndef DATA_GRAPHERBOX_HPP
 #define DATA_GRAPHERBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "adc_label.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

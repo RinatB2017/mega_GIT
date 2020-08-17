@@ -21,12 +21,6 @@
 #ifndef TCP_SERVER_HPP
 #define TCP_SERVER_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-
 #include <QHostAddress>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"

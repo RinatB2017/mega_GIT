@@ -21,12 +21,6 @@
 #ifndef WEBCAMERA_HPP
 #define WEBCAMERA_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 //#include <opencv2/objdetect.hpp>
 //#include <opencv2/highgui.hpp>
 //#include <opencv2/imgproc.hpp>

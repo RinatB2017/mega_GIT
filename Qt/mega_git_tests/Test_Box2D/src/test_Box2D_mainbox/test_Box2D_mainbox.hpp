@@ -21,23 +21,12 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class QComboBox;
-class QCheckBox;
-class QToolButton;
-class QToolBar;
-class QLCDNumber;
 class World;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget

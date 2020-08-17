@@ -85,6 +85,13 @@ private:
 #endif
 
     void init(void);
+    void init_candle_series(void);
+    void init_chart(void);
+    void init_rubberband(void);
+    void init_axis(void);
+    void init_icons(void);
+    void init_tooltips(void);
+    void connect_widgets(void);
 
     void zoom_in(void);
     void zoom_out(void);
@@ -104,6 +111,7 @@ private:
     void show_volumes(QMouseEvent *event);
 
     void hovered_candle(bool state, QCandlestickSet *set);
+    void set_rubber_band(int index);
 
     void updateText(void);
     bool programm_is_exit(void);

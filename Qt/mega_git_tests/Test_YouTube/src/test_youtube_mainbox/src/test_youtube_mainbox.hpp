@@ -21,48 +21,29 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
-class QGraphicsRectItem;
-class QGraphicsScene;
-
-class MySplashScreen;
-class QToolButton;
-class QToolBar;
-//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
     void test(void);
 
 private:
-    QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
-
-    bool is_blocked = 0;
-
-    QGraphicsScene *scene;
-    QGraphicsRectItem *rectangle_R;
-    QGraphicsRectItem *rectangle_G;
-    QGraphicsRectItem *rectangle_B;
+    QWidget *parent;
 
     void init(void);
-
     void createTestBar(void);
-    void block_interface(bool state);
 
     void updateText(void);
     bool programm_is_exit(void);

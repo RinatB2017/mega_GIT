@@ -21,12 +21,6 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -35,8 +29,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class ListWidget_Link;
 class ListWidget_Site;
-class QToolButton;
-class QToolBar;
 class WebView;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget

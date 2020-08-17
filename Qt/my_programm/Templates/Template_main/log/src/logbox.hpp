@@ -27,15 +27,6 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-class QProgressBar;
-class QPushButton;
-class QToolButton;
-class QHBoxLayout;
-class QVBoxLayout;
-class QTextEdit;
-class QCheckBox;
-class QString;
-//--------------------------------------------------------------------------------
 class LogBox : public QFrame
 {
     Q_OBJECT

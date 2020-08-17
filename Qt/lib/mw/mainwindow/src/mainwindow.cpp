@@ -79,7 +79,9 @@ void MainWindow::setCentralWidget(MyWidget *widget)
     Q_CHECK_PTR(widget);
     c_widget = widget;
 
+    //TODO это отработает только для одного единственного виджета
     c_widget->load_setting();
+
     QMainWindow::setCentralWidget(c_widget);
 
 #ifdef FIXED_SIZE
@@ -172,6 +174,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     if(c_widget)
     {
+        Q_CHECK_PTR(c_widget);
         c_widget->save_setting();
         if(!c_widget->programm_is_exit())
         {

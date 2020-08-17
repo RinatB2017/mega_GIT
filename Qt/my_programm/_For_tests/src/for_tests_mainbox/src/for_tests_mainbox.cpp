@@ -325,7 +325,41 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    ui->btn_animation->setGeometry(ui->btn_animation->pos().x(),
+                                   ui->btn_animation->pos().y(),
+                                   ui->btn_animation->width()+100,
+                                   ui->btn_animation->height());
+#endif
+
+#if 0
+    QPushButton *button = new QPushButton();
+    button->setText("Animated Button");
+    button->show();
+
+    QPropertyAnimation *animation = new QPropertyAnimation(button, "geometry");
+    animation->setDuration(10000);
+    animation->setStartValue(QRect(0, 0, 200, 30));
+    animation->setEndValue(QRect(250, 250, 200, 30));
+
+    animation->start();
+#endif
+
+#if 0
+    int x1 = ui->btn_animation->pos().x();
+    int y1 = ui->btn_animation->pos().y();
+    int w = ui->btn_animation->width();
+    int h = ui->btn_animation->height();
+
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->btn_animation, "geometry");
+    animation->setDuration(10000);
+    animation->setStartValue(ui->btn_animation->pos());
+    animation->setEndValue(QRect(x1, y1, w-10, h));
+
+    animation->start();
+#endif
+
+#if 0
     beginGroup("logdock_options");
 
     bool flag_ReadOnly       = load_bool(FLAG_READONLY);

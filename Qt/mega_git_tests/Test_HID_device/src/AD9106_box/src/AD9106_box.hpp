@@ -21,12 +21,6 @@
 #ifndef AD9106_BOX_HPP
 #define AD9106_BOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <stdint.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -78,10 +72,6 @@ enum DAC_SetVoltage
 namespace Ui {
     class AD9106_Box;
 }
-//--------------------------------------------------------------------------------
-class QToolButton;
-class QToolBar;
-class QComboBox;
 //--------------------------------------------------------------------------------
 class CurveBox;
 class QHexEdit;

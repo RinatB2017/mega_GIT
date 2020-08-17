@@ -66,6 +66,10 @@ void OscilloscopeBox::init()
     set_zoom(false, false);
     set_panning(false, false);
 
+    ui->btn_show_frame->setFixedSize(24, 24);
+    connect(ui->btn_show_frame, &QToolButton::clicked,  ui->frame,  &QFrame::setVisible);
+    ui->frame->setVisible(false);
+
     updateText();
     updateGraphics();
 }

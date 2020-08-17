@@ -8,9 +8,7 @@ TARGET   = Test_YouTube
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_youtube_mainbox \
-    $$PWD/src/test_youtube_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += webenginewidgets
@@ -20,15 +18,11 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    test_youtube_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_youtube_mainbox.cpp \
     main.cpp
-
-FORMS   += test_youtube_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -38,6 +32,8 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/test_youtube_mainbox/test_youtube_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

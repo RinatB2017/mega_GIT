@@ -36,6 +36,7 @@ CandleStick_Box_adv::CandleStick_Box_adv(QWidget *parent) :
 CandleStick_Box_adv::~CandleStick_Box_adv()
 {
     save_widgets();
+    save_setting();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -44,19 +45,13 @@ void CandleStick_Box_adv::init(void)
     ui->setupUi(this);
 
     setWindowTitle(ticket_name);
-    //---
-    candleSeries = new QCandlestickSeries();
-    candleSeries->setName(ticket_name);
-    candleSeries->setIncreasingColor(QColor(Qt::green));
-    candleSeries->setDecreasingColor(QColor(Qt::red));
-
-    connect(candleSeries,   &QCandlestickSeries::hovered,   this,   &CandleStick_Box_adv::hovered_candle);
-    //---
-
-    chart = new QChart();
-    chart->addSeries(candleSeries);
-    //chart->setTitle(ticket_name);
-    //chart->setAnimationOptions(QChart::SeriesAnimations);
+    init_candle_series();
+    init_chart();
+    init_rubberband();
+    init_axis();
+    init_icons();
+    init_tooltips();
+    connect_widgets();
 
     //---
 #ifdef SHOW_VOLUMES
@@ -74,24 +69,94 @@ void CandleStick_Box_adv::init(void)
 #endif
     //---
 
+    ui->sb_pos->setRange(1, 1000);
+    ui->dsb_zoom->setRange(0, 10);
+
+    //---
+    //ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    ui->lbl_volumes_grapher->setScaledContents(true);
+    //---
+
+    QList<QAbstractButton *> btns = findChildren<QAbstractButton *>();
+    foreach(QAbstractButton *btn, btns)
+    {
+        btn->setProperty(NO_SAVE, true);
+    }
+
+    ui->btn_show_frame->setFixedSize(24, 24);
+    ui->frame->setVisible(false);
+
+    load_widgets();
+    load_setting();
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::init_candle_series(void)
+{
+    candleSeries = new QCandlestickSeries();
+    candleSeries->setName(ticket_name);
+    candleSeries->setIncreasingColor(QColor(Qt::green));
+    candleSeries->setDecreasingColor(QColor(Qt::red));
+
+    connect(candleSeries,   &QCandlestickSeries::hovered,   this,   &CandleStick_Box_adv::hovered_candle);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::init_chart(void)
+{
+    chart = new QChart();
+    chart->addSeries(candleSeries);
+    //chart->setTitle(ticket_name);
+    //chart->setAnimationOptions(QChart::SeriesAnimations);
+
     chart->createDefaultAxes();
-
-    axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
-    axisX->setCategories(categories);
-
-    ui->btn_clear_data->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
-
-    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    Q_CHECK_PTR(axisY);
-    axisY->setMin(axisY->min() * 0.99);
-    axisY->setMax(axisY->max() * 1.01);
-
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
     ui->chartView->setChart(chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::init_rubberband(void)
+{
+    //ui->chartView->setRubberBand(QChartView::RectangleRubberBand);
+    ui->cb_rubberband->addItem("NoRubberBand", 0);
+    ui->cb_rubberband->addItem("VerticalRubberBand", 0x1);
+    ui->cb_rubberband->addItem("HorizontalRubberBand", 0x2);
+    ui->cb_rubberband->addItem("RectangleRubberBand", 0x3);
+    connect(ui->cb_rubberband,  static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),    this,   &CandleStick_Box_adv::set_rubber_band);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::init_axis(void)
+{
+    axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
+    axisX->setCategories(categories);
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
+    Q_CHECK_PTR(axisY);
+    axisY->setMin(axisY->min() * 0.99);
+    axisY->setMax(axisY->max() * 1.01);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::init_icons(void)
+{
+    ui->btn_clear_data->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+    ui->btn_move_reset->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+    ui->btn_zoom_reset->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::init_tooltips(void)
+{
+    ui->chartView->setToolTip("chart");
+    ui->btn_theme_light->setToolTip("Light theme");
+    ui->btn_theme_dark->setToolTip("Dark theme");
 
+    ui->btn_move_up->setToolTip("move up");
+    ui->btn_move_down->setToolTip("move down");
+    ui->btn_move_left->setToolTip("move left");
+    ui->btn_move_right->setToolTip("move right");
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::connect_widgets(void)
+{
     connect(ui->btn_move_left,  &QPushButton::clicked,  this,   &CandleStick_Box_adv::move_left);
     connect(ui->btn_move_right, &QPushButton::clicked,  this,   &CandleStick_Box_adv::move_right);
     connect(ui->btn_move_up,    &QPushButton::clicked,  this,   &CandleStick_Box_adv::move_up);
@@ -111,33 +176,30 @@ void CandleStick_Box_adv::init(void)
 
     connect(ui->btn_test,       &QPushButton::clicked,  this,   &CandleStick_Box_adv::test);
 
-    ui->sb_pos->setRange(1, 1000);
+    connect(ui->btn_show_frame, &QToolButton::clicked,  ui->frame,   &QFrame::setVisible);
+}
+//--------------------------------------------------------------------------------
+void CandleStick_Box_adv::set_rubber_band(int index)
+{
+    bool ok = false;
+    int cmd = ui->cb_rubberband->itemData(index, Qt::UserRole).toInt(&ok);
+    if(!ok) return;
 
-    ui->dsb_zoom->setRange(0, 10);
-
-    ui->chartView->setRubberBand(QChartView::RectangleRubberBand);
-
-    ui->chartView->setToolTip("chart");
-
-    ui->btn_theme_light->setToolTip("Light theme");
-    ui->btn_theme_dark->setToolTip("Dark theme");
-
-    //---
-    //ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    ui->lbl_volumes_grapher->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
-    ui->lbl_volumes_grapher->setScaledContents(true);
-    //---
-
-    QList<QAbstractButton *> btns = findChildren<QAbstractButton *>();
-    foreach(QAbstractButton *btn, btns)
+    switch (cmd)
     {
-        btn->setProperty(NO_SAVE, true);
+    case QChartView::NoRubberBand:
+        ui->chartView->setRubberBand(QChartView::NoRubberBand);
+        break;
+    case QChartView::VerticalRubberBand:
+        ui->chartView->setRubberBand(QChartView::VerticalRubberBand);
+        break;
+    case QChartView::HorizontalRubberBand:
+        ui->chartView->setRubberBand(QChartView::HorizontalRubberBand);
+        break;
+    case QChartView::RectangleRubberBand:
+        ui->chartView->setRubberBand(QChartView::RectangleRubberBand);
+        break;
     }
-
-    //qDebug() << "horiz:" << chart->axes(Qt::Horizontal).at(0);
-    //qDebug() << "vert:"  << chart->axes(Qt::Vertical).at(0);
-
-    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::hovered_candle(bool state, QCandlestickSet *set)
@@ -440,11 +502,11 @@ bool CandleStick_Box_adv::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::load_setting(void)
 {
-
+    chart->setTheme(static_cast<QChart::ChartTheme>(load_int("chart_theme")));
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::save_setting(void)
 {
-
+    save_int("chart_theme", chart->theme());
 }
 //--------------------------------------------------------------------------------

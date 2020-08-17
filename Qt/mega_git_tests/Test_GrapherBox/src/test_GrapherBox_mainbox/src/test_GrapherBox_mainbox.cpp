@@ -61,9 +61,7 @@ void MainBox::init(void)
 {
     all_break = false;
 
-#ifdef QT_DEBUG
     createTestBar();
-#endif
 
     grapher_widget = new GrapherBox(this);
     grapher_widget->setObjectName("GrapherBox");

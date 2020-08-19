@@ -36,7 +36,6 @@ CandleStick_Box_adv::CandleStick_Box_adv(QWidget *parent) :
 CandleStick_Box_adv::~CandleStick_Box_adv()
 {
     save_widgets();
-    save_setting();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -88,7 +87,6 @@ void CandleStick_Box_adv::init(void)
     ui->frame->setVisible(false);
 
     load_widgets();
-    load_setting();
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::init_candle_series(void)

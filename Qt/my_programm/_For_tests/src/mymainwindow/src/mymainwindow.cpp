@@ -44,7 +44,7 @@ MyMainWindow::MyMainWindow(MainWindow *parent) :
     create_local_menus();
     create_toolbars();
 
-    //TODO
+    //TODO не надо отсюда это убирать
     load_setting();
 }
 //--------------------------------------------------------------------------------
@@ -53,6 +53,8 @@ MyMainWindow::~MyMainWindow()
 #ifdef QT_DEBUG
     qDebug() << "~NyMainWindow()";
 #endif
+    //TODO не надо отсюда это убирать
+    save_setting();
 }
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5

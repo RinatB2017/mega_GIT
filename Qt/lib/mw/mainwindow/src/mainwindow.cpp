@@ -47,7 +47,14 @@ MainWindow::~MainWindow()
 #ifdef QT_DEBUG
     qDebug() << "~MainWindow()";
 #endif
-    //save_setting();
+
+#if 1
+    QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
+    foreach(MyWidget *widget, l_widgets)
+    {
+        widget->save_setting();
+    }
+#endif
 
 #ifndef NO_LOG_INFO
     MyWidget::set_param("Main", "flag_show_info",   flag_show_info);
@@ -79,10 +86,15 @@ void MainWindow::setCentralWidget(MyWidget *widget)
     Q_CHECK_PTR(widget);
     c_widget = widget;
 
-    //TODO это отработает только для одного единственного виджета
-    c_widget->load_setting();
-
     QMainWindow::setCentralWidget(c_widget);
+
+#if 1
+    QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
+    foreach(MyWidget *widget, l_widgets)
+    {
+        widget->load_setting();
+    }
+#endif
 
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
@@ -108,7 +120,6 @@ void MainWindow::set_c_widget(MyWidget *widget)   //TODO проба
 {
     Q_CHECK_PTR(widget);
     c_widget = widget;
-    c_widget->load_setting();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::changeEvent(QEvent *event)
@@ -172,16 +183,28 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->ignore();
         return;
     }
+#if 1
+    QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
+    foreach(MyWidget *widget, l_widgets)
+    {
+        if(!widget->programm_is_exit())
+        {
+            event->ignore();
+            return;
+        }
+    }
+
+#else
     if(c_widget)
     {
         Q_CHECK_PTR(c_widget);
-        c_widget->save_setting();
         if(!c_widget->programm_is_exit())
         {
             event->ignore();
             return;
         }
     }
+#endif
 
     if(flag_close)
     {

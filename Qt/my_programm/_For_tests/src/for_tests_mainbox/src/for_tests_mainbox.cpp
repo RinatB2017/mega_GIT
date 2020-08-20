@@ -138,6 +138,8 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
+    commands.append({ id++, "inc push button",  &MainBox::inc_push_button });
+    commands.append({ id++, "dec push button",  &MainBox::dec_push_button });
     commands.append({ id++, "timer start",      &MainBox::timer_start });
     commands.append({ id++, "timer stop",       &MainBox::timer_stop });
 
@@ -318,6 +320,20 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
+bool MainBox::inc_push_button(void)
+{
+    ui->push_widget->setFixedSize(ui->push_widget->width(),
+                                  ui->push_widget->height()+10);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::dec_push_button(void)
+{
+    ui->push_widget->setFixedSize(ui->push_widget->width(),
+                                  ui->push_widget->height()-10);
+    return true;
+}
+//--------------------------------------------------------------------------------
 #include "logdock_options.hpp"
 #include "logdock_defines.hpp"
 
@@ -326,10 +342,19 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 0
-    ui->btn_animation->setGeometry(ui->btn_animation->pos().x(),
-                                   ui->btn_animation->pos().y(),
-                                   ui->btn_animation->width()+100,
-                                   ui->btn_animation->height());
+    ui->push_widget->setSizeIncrement(0, 100);
+#endif
+
+#if 1
+    ui->push_widget->setFixedSize(ui->push_widget->width(),
+                                  ui->push_widget->height()+50);
+#endif
+
+#if 0
+    ui->push_widget->setGeometry(ui->push_widget->pos().x(),
+                                 ui->push_widget->pos().y(),
+                                 ui->push_widget->width(),
+                                 ui->push_widget->height()+100);
 #endif
 
 #if 0

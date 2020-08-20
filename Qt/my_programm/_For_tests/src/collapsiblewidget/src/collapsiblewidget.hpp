@@ -18,82 +18,43 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef COLLAPSIBLEWIDGET_HPP
+#define COLLAPSIBLEWIDGET_HPP
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class CollapsibleWidget;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-class SimpleWidget;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class CollapsibleWidget : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    bool test(void);
-
-    void print_mp(QWidget *widget);
-    void delete_string(void);
-
-    void s_inFunc(void);
-
-    void check_in(void);
-    void victory(void);
+    explicit CollapsibleWidget(QWidget *parent = nullptr);
+    ~CollapsibleWidget();
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
+    Ui::CollapsibleWidget *ui;
     QPointer<QTimer> timer;
-    int cnt = 0;
 
-    //---
-    QDockWidget *main_dock;
-    QList<QDockWidget *> l_docks;
-    //---
+    enum {
+        COLLAPSE_NONE = 100,
+        COLLAPSE_ON = 200,
+        COLLAPSE_OFF = 300
+    };
+    int state = COLLAPSE_NONE;
 
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    bool inc_push_button(void);
-    bool dec_push_button(void);
+    int height_frame = 0;
+    int inc_height = 0;
+    int max_time_msec = 0;
+    qreal max_size = 0;
 
     void init(void);
-    void createTestBar(void);
-
-    void test_validator(void);
-    int get_cnt(void);
+    void init_timer(void);
+    void update(void);
+    void collapse(bool new_state);
 
     void updateText(void);
     bool programm_is_exit(void);
@@ -101,4 +62,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // COLLAPSIBLEWIDGET_HPP

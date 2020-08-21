@@ -45,13 +45,11 @@ void CollapsibleWidget::init(void)
     init_timer();
     adjustSize();
 
-    max_time_msec = 1000;
-    max_size = ui->main_frame->height();
-    //inc_height = static_cast<qreal>(max_size) / static_cast<qreal>(max_time_msec);
-    inc_height = 100;  //TODO для теста
-
-    emit info(QString("max_size %1").arg(max_size));
-    emit info(QString("inc_height %1").arg(inc_height));
+    max_height_frame = ui->main_frame->height();
+    height_frame = 0;
+    step_time_msec = 10;
+    cnt = 100;
+    step_inc_height = max_height_frame / cnt;
 
     connect(ui->btn_collapse,   &QToolButton::clicked,  this, &CollapsibleWidget::collapse);
     ui->btn_collapse->setProperty(NO_SAVE, true);
@@ -66,8 +64,6 @@ void CollapsibleWidget::init_timer(void)
 //--------------------------------------------------------------------------------
 void CollapsibleWidget::collapse(bool new_state)
 {
-    //ui->main_frame->setVisible(state);
-    emit info(QString("inc_height %1").arg(inc_height));
     if(new_state)
     {
         state = COLLAPSE_ON;
@@ -76,7 +72,7 @@ void CollapsibleWidget::collapse(bool new_state)
     {
         state = COLLAPSE_OFF;
     }
-    timer->start(1000);
+    timer->start(step_time_msec);
 }
 //--------------------------------------------------------------------------------
 void CollapsibleWidget::update(void)
@@ -89,21 +85,21 @@ void CollapsibleWidget::update(void)
         break;
 
     case COLLAPSE_ON:
-        emit info("COLLAPSE_ON");
-        new_height = ui->main_frame->height() + inc_height;
-        emit info(QString("new_height %1").arg(new_height));
+        //emit info("COLLAPSE_ON");
+        new_height = ui->main_frame->height() + step_inc_height;
+        //emit info(QString("new_height %1").arg(new_height));
         ui->main_frame->setFixedSize(ui->main_frame->width(),
                                      new_height);
-        if(ui->main_frame->height() >= max_size)
+        if(ui->main_frame->height() >= max_height_frame)
         {
             state = COLLAPSE_NONE;
         }
         break;
 
     case COLLAPSE_OFF:
-        emit info("COLLAPSE_OFF");
-        new_height = ui->main_frame->height() - inc_height;
-        emit info(QString("new_height %1").arg(new_height));
+        //emit info("COLLAPSE_OFF");
+        new_height = ui->main_frame->height() - step_inc_height;
+        //emit info(QString("new_height %1").arg(new_height));
         if(new_height < 0)
         {
             state = COLLAPSE_NONE;

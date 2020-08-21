@@ -46,10 +46,11 @@ private:
     };
     int state = COLLAPSE_NONE;
 
+    int max_height_frame = 0;
     int height_frame = 0;
-    int inc_height = 0;
-    int max_time_msec = 0;
-    qreal max_size = 0;
+    qreal step_inc_height = 0;
+    int cnt = 0;
+    int step_time_msec = 0;
 
     void init(void);
     void init_timer(void);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>613</width>
-    <height>566</height>
+    <height>479</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -22,7 +22,7 @@
         <x>0</x>
         <y>0</y>
         <width>200</width>
-        <height>422</height>
+        <height>335</height>
        </rect>
       </property>
       <attribute name="label">
@@ -35,7 +35,7 @@
         <x>0</x>
         <y>0</y>
         <width>200</width>
-        <height>422</height>
+        <height>335</height>
        </rect>
       </property>
       <attribute name="icon">
@@ -52,7 +52,7 @@
         <x>0</x>
         <y>0</y>
         <width>200</width>
-        <height>422</height>
+        <height>335</height>
        </rect>
       </property>
       <attribute name="label">
@@ -65,7 +65,7 @@
         <x>0</x>
         <y>0</y>
         <width>200</width>
-        <height>422</height>
+        <height>335</height>
        </rect>
       </property>
       <attribute name="label">
@@ -83,6 +83,35 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="ControlExitWidget" name="widget" native="true"/>
+        </item>
+        <item>
+         <widget class="ControlExitWidget" name="widget_2" native="true"/>
+        </item>
+        <item>
+         <widget class="ControlExitWidget" name="widget_3" native="true"/>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
       <item>
        <widget class="CollapsibleWidget" name="push_widget" native="true"/>
       </item>
@@ -277,6 +306,12 @@
    <class>CollapsibleWidget</class>
    <extends>QWidget</extends>
    <header>collapsiblewidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ControlExitWidget</class>
+   <extends>QWidget</extends>
+   <header>controlexitwidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -334,135 +334,15 @@ bool MainBox::dec_push_button(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-#include "logdock_options.hpp"
-#include "logdock_defines.hpp"
+#include "collapsiblewidget.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    ui->push_widget->setSizeIncrement(0, 100);
-#endif
-
 #if 1
-    ui->push_widget->setFixedSize(ui->push_widget->width(),
-                                  ui->push_widget->height()+50);
-#endif
-
-#if 0
-    ui->push_widget->setGeometry(ui->push_widget->pos().x(),
-                                 ui->push_widget->pos().y(),
-                                 ui->push_widget->width(),
-                                 ui->push_widget->height()+100);
-#endif
-
-#if 0
-    QPushButton *button = new QPushButton();
-    button->setText("Animated Button");
-    button->show();
-
-    QPropertyAnimation *animation = new QPropertyAnimation(button, "geometry");
-    animation->setDuration(10000);
-    animation->setStartValue(QRect(0, 0, 200, 30));
-    animation->setEndValue(QRect(250, 250, 200, 30));
-
-    animation->start();
-#endif
-
-#if 0
-    int x1 = ui->btn_animation->pos().x();
-    int y1 = ui->btn_animation->pos().y();
-    int w = ui->btn_animation->width();
-    int h = ui->btn_animation->height();
-
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->btn_animation, "geometry");
-    animation->setDuration(10000);
-    animation->setStartValue(ui->btn_animation->pos());
-    animation->setEndValue(QRect(x1, y1, w-10, h));
-
-    animation->start();
-#endif
-
-#if 0
-    beginGroup("logdock_options");
-
-    bool flag_ReadOnly       = load_bool(FLAG_READONLY);
-    bool flag_Color          = load_bool(FLAG_COLOR);
-    bool flag_NoCRLF         = load_bool(FLAG_NOCRLF);
-    bool flag_AddDateTime    = load_bool(FLAG_ADDDATETIME);
-    bool flag_ErrorAsMessage = load_bool(FLAG_ERRORASMESSAGE);
-
-    bool flag_LOG_EMERG     = load_bool(FLAG_LOG_EMERG);
-    bool flag_LOG_ALERT     = load_bool(FLAG_LOG_ALERT);
-    bool flag_LOG_CRIT      = load_bool(FLAG_LOG_CRIT);
-    bool flag_LOG_ERR       = load_bool(FLAG_LOG_ERR);
-    bool flag_LOG_WARNING   = load_bool(FLAG_LOG_WARNING);
-    bool flag_LOG_NOTICE    = load_bool(FLAG_LOG_NOTICE);
-    bool flag_LOG_INFO      = load_bool(FLAG_LOG_INFO);
-    bool flag_LOG_DEBUG     = load_bool(FLAG_LOG_DEBUG);
-
-    LogDock_options *optionsBox = new LogDock_options();
-    Q_CHECK_PTR(optionsBox);
-
-    optionsBox->setProperty(FLAG_READONLY,          flag_ReadOnly);
-    optionsBox->setProperty(FLAG_COLOR,             flag_Color);
-    optionsBox->setProperty(FLAG_NOCRLF,            flag_NoCRLF);
-    optionsBox->setProperty(FLAG_ADDDATETIME,       flag_AddDateTime);
-    optionsBox->setProperty(FLAG_ERRORASMESSAGE,    flag_ErrorAsMessage);
-
-    optionsBox->setProperty(FLAG_LOG_EMERG,   flag_LOG_EMERG);
-    optionsBox->setProperty(FLAG_LOG_ALERT,   flag_LOG_ALERT);
-    optionsBox->setProperty(FLAG_LOG_CRIT,    flag_LOG_CRIT);
-    optionsBox->setProperty(FLAG_LOG_ERR,     flag_LOG_ERR);
-    optionsBox->setProperty(FLAG_LOG_WARNING, flag_LOG_WARNING);
-    optionsBox->setProperty(FLAG_LOG_NOTICE,  flag_LOG_NOTICE);
-    optionsBox->setProperty(FLAG_LOG_INFO,    flag_LOG_INFO);
-    optionsBox->setProperty(FLAG_LOG_DEBUG,   flag_LOG_DEBUG);
-
-    int res = optionsBox->exec();
-    if(res == QDialog::Accepted)
-    {
-        save_bool(FLAG_READONLY,        optionsBox->property(FLAG_READONLY).toBool());
-        save_bool(FLAG_COLOR,           optionsBox->property(FLAG_COLOR).toBool());
-        save_bool(FLAG_NOCRLF,          optionsBox->property(FLAG_NOCRLF).toBool());
-        save_bool(FLAG_ADDDATETIME,     optionsBox->property(FLAG_ADDDATETIME).toBool());
-        save_bool(FLAG_ERRORASMESSAGE,  optionsBox->property(FLAG_ERRORASMESSAGE).toBool());
-
-        save_bool(FLAG_LOG_EMERG,       optionsBox->property(FLAG_LOG_EMERG).toBool());
-        save_bool(FLAG_LOG_ALERT,       optionsBox->property(FLAG_LOG_ALERT).toBool());
-        save_bool(FLAG_LOG_CRIT,        optionsBox->property(FLAG_LOG_CRIT).toBool());
-        save_bool(FLAG_LOG_ERR,         optionsBox->property(FLAG_LOG_ERR).toBool());
-        save_bool(FLAG_LOG_WARNING,     optionsBox->property(FLAG_LOG_WARNING).toBool());
-        save_bool(FLAG_LOG_NOTICE,      optionsBox->property(FLAG_LOG_NOTICE).toBool());
-        save_bool(FLAG_LOG_INFO,        optionsBox->property(FLAG_LOG_INFO).toBool());
-        save_bool(FLAG_LOG_DEBUG,       optionsBox->property(FLAG_LOG_DEBUG).toBool());
-    }
-
-    endGroup();
-#endif
-
-#if 0
-    qreal deposit = 100.0;
-    for(int n=0; n<30; n++)
-    {
-        deposit *= 1.02;
-    }
-    emit info(QString("deposit %1").arg(deposit));
-#endif
-
-#if 0
-    qBadAlloc();
-#endif
-
-#if 0
-    QTextCursor tmpCursor = ui->te_test->textCursor();
-    tmpCursor.movePosition(QTextCursor::Up, QTextCursor::MoveAnchor, 4);
-    tmpCursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor, 4);
-    ui->te_test->setTextCursor(tmpCursor);
-
-    ui->te_test->textCursor().movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 5);
-    ui->te_test->insertPlainText(QString("XXX: cnt = %1 ").arg(cnt++));
+    CollapsibleWidget *cw = new CollapsibleWidget();
+    cw->show();
 #endif
 
 #if 0
@@ -482,7 +362,12 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
-    return ui->cb_fag_exit->isChecked();
+    bool is_exit = ui->cb_fag_exit->isChecked();
+    if(is_exit == false)
+    {
+        messagebox_info("Info", "Низзя");
+    }
+    return is_exit;
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)

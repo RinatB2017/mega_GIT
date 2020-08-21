@@ -79,6 +79,7 @@ include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
 include (src/collapsiblewidget/collapsiblewidget.pri)
+include (src/controlexitwidget/controlexitwidget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

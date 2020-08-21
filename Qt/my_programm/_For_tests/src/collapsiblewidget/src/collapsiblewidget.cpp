@@ -47,7 +47,7 @@ void CollapsibleWidget::init(void)
 
     max_time_msec = 1000;
     max_size = ui->main_frame->height();
-    inc_height = static_cast<qreal>(max_size) / static_cast<qreal>(max_time_msec);
+    //inc_height = static_cast<qreal>(max_size) / static_cast<qreal>(max_time_msec);
     inc_height = 100;  //TODO для теста
 
     emit info(QString("max_size %1").arg(max_size));
@@ -56,7 +56,6 @@ void CollapsibleWidget::init(void)
     connect(ui->btn_collapse,   &QToolButton::clicked,  this, &CollapsibleWidget::collapse);
     ui->btn_collapse->setProperty(NO_SAVE, true);
     ui->main_frame->setFixedSize(ui->main_frame->width(), 0);
-    ui->main_frame->setVisible(false);
 }
 //--------------------------------------------------------------------------------
 void CollapsibleWidget::init_timer(void)
@@ -77,7 +76,7 @@ void CollapsibleWidget::collapse(bool new_state)
     {
         state = COLLAPSE_OFF;
     }
-    timer->start(inc_height);
+    timer->start(1000);
 }
 //--------------------------------------------------------------------------------
 void CollapsibleWidget::update(void)
@@ -105,7 +104,7 @@ void CollapsibleWidget::update(void)
         emit info("COLLAPSE_OFF");
         new_height = ui->main_frame->height() - inc_height;
         emit info(QString("new_height %1").arg(new_height));
-        if(new_height <= 0)
+        if(new_height < 0)
         {
             state = COLLAPSE_NONE;
             break;

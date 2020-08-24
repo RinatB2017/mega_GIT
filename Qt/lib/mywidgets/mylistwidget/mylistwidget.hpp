@@ -18,72 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MYSETTINGS_HPP
-#define MYSETTINGS_HPP
+#ifndef MYLISTWIDGET_HPP
+#define MYLISTWIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QApplication>
+#include <QListWidget>
+#include <QMenu>
 //--------------------------------------------------------------------------------
-#include "defines.hpp"
+namespace Ui {
+    class MyListWidget;
+}
 //--------------------------------------------------------------------------------
-class MySettings
+class MyListWidget : public QListWidget
 {
+    Q_OBJECT
+
 public:
-    MySettings();
-    ~MySettings();
-
-    bool is_my_widget(QString o_name);
-    bool compare_name(const char *widget_name, QString class_name);
-
-    bool load_combobox_property(QWidget *widget);
-    bool save_combobox_property(QWidget *widget);
-
-    bool load_listwidget_property(QWidget *widget);
-    bool save_listwidget_property(QWidget *widget);
-
-    bool load_splitter_property(QWidget *widget);
-    bool save_splitter_property(QWidget *widget);
-
-    bool load_property(QWidget *widget, const QString &property_name);
-    bool save_property(QWidget *widget, const QString &property_name);
-
-    int load_int(QString name);
-    void save_int(QString name, int value);
-
-    bool load_bool(QString name);
-    void save_bool(QString name, bool value);
-
-    uint load_uint(QString name);
-    void save_uint(QString name, uint value);
-
-    QString load_string(QString name);
-    void save_string(QString name, QString value);
-
-    QByteArray load_bytearray(QString name);
-    void save_bytearray(QString name, QByteArray value);
-
-    QStringList load_stringlist(QString name);
-    void save_stringlist(QString name, QStringList value);
-
-    QVariant load_value(QString name, const QVariant &defaultValue = QVariant());
-    void save_value(QString name, QVariant value);
-
-    void beginGroup(const QString &prefix);
-    void endGroup(void);
-
-    void beginWriteArray(const QString &prefix, int size = -1);
-    int  beginReadArray(const QString &prefix);
-
-    void endArray(void);
-    void setArrayIndex(int i);
+    explicit MyListWidget(QWidget *parent = nullptr);
+    ~MyListWidget();
 
 private:
-    QPointer<QSettings> settings;
-
-    QString get_full_objectName(QWidget *widget);
+    void init(void);
+    void popup(QPoint);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // MYLISTWIDGET_HPP

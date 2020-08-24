@@ -45,6 +45,7 @@ MySettings::~MySettings()
     }
 }
 //--------------------------------------------------------------------------------
+#if 0
 bool MySettings::load_combobox_property(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
@@ -66,7 +67,27 @@ bool MySettings::load_combobox_property(QWidget *widget)
     }
     return false;
 }
+#else
+bool MySettings::load_combobox_property(QWidget *widget)
+{
+    Q_CHECK_PTR(widget);
+    if(compare_name(widget->metaObject()->className(), "QComboBox"))
+    {
+        int size = settings->beginReadArray(static_cast<QComboBox *>(widget)->objectName());
+        for(int n=0; n<size; n++)
+        {
+            settings->setArrayIndex(n);
+            static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
+        }
+        settings->endArray();
+        static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());
+        return true;
+    }
+    return false;
+}
+#endif
 //--------------------------------------------------------------------------------
+#if 0
 bool MySettings::save_combobox_property(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
@@ -86,6 +107,65 @@ bool MySettings::save_combobox_property(QWidget *widget)
             }
             settings->endArray();
         }
+        return true;
+    }
+    return false;
+}
+#else
+bool MySettings::save_combobox_property(QWidget *widget)
+{
+    Q_CHECK_PTR(widget);
+    if(compare_name(widget->metaObject()->className(), "QComboBox"))
+    {
+        settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));
+        settings->beginWriteArray(static_cast<QComboBox *>(widget)->objectName(), static_cast<QComboBox *>(widget)->count());
+        for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
+        {
+            settings->setArrayIndex(n);
+            static_cast<QComboBox *>(widget)->setCurrentIndex(n);
+            settings->setValue("currentText", static_cast<QComboBox *>(widget)->currentText());
+        }
+        settings->endArray();
+        return true;
+    }
+    return false;
+}
+#endif
+//--------------------------------------------------------------------------------
+bool MySettings::load_listwidget_property(QWidget *widget)
+{
+    Q_CHECK_PTR(widget);
+
+    QListWidget *lw = dynamic_cast<QListWidget *>(widget);
+    if(lw)
+    {
+        int size = settings->beginReadArray(static_cast<QListWidget *>(widget)->objectName());
+        for(int n=0; n<size; n++)
+        {
+            settings->setArrayIndex(n);
+            dynamic_cast<QListWidget *>(widget)->addItem(settings->value("currentText").toString());
+        }
+        settings->endArray();
+        return true;
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+bool MySettings::save_listwidget_property(QWidget *widget)
+{
+    Q_CHECK_PTR(widget);
+    QListWidget *lw = dynamic_cast<QListWidget *>(widget);
+    if(lw)
+    {
+        settings->setValue("currentindex", QVariant(dynamic_cast<QListWidget *>(widget)->currentIndex()));
+        settings->beginWriteArray(dynamic_cast<QListWidget *>(widget)->objectName(), dynamic_cast<QListWidget *>(widget)->count());
+        for(int n=0; n<dynamic_cast<QListWidget *>(widget)->count(); n++)
+        {
+            settings->setArrayIndex(n);
+            dynamic_cast<QListWidget *>(widget)->setCurrentRow(n);
+            settings->setValue("currentText", dynamic_cast<QListWidget *>(widget)->currentItem()->text());
+        }
+        settings->endArray();
         return true;
     }
     return false;

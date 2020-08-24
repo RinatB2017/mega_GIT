@@ -18,72 +18,44 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MYSETTINGS_HPP
-#define MYSETTINGS_HPP
+#include "mylistwidget.hpp"
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include "defines.hpp"
-//--------------------------------------------------------------------------------
-class MySettings
+MyListWidget::MyListWidget(QWidget *parent) :
+    QListWidget(parent)
 {
-public:
-    MySettings();
-    ~MySettings();
-
-    bool is_my_widget(QString o_name);
-    bool compare_name(const char *widget_name, QString class_name);
-
-    bool load_combobox_property(QWidget *widget);
-    bool save_combobox_property(QWidget *widget);
-
-    bool load_listwidget_property(QWidget *widget);
-    bool save_listwidget_property(QWidget *widget);
-
-    bool load_splitter_property(QWidget *widget);
-    bool save_splitter_property(QWidget *widget);
-
-    bool load_property(QWidget *widget, const QString &property_name);
-    bool save_property(QWidget *widget, const QString &property_name);
-
-    int load_int(QString name);
-    void save_int(QString name, int value);
-
-    bool load_bool(QString name);
-    void save_bool(QString name, bool value);
-
-    uint load_uint(QString name);
-    void save_uint(QString name, uint value);
-
-    QString load_string(QString name);
-    void save_string(QString name, QString value);
-
-    QByteArray load_bytearray(QString name);
-    void save_bytearray(QString name, QByteArray value);
-
-    QStringList load_stringlist(QString name);
-    void save_stringlist(QString name, QStringList value);
-
-    QVariant load_value(QString name, const QVariant &defaultValue = QVariant());
-    void save_value(QString name, QVariant value);
-
-    void beginGroup(const QString &prefix);
-    void endGroup(void);
-
-    void beginWriteArray(const QString &prefix, int size = -1);
-    int  beginReadArray(const QString &prefix);
-
-    void endArray(void);
-    void setArrayIndex(int i);
-
-private:
-    QPointer<QSettings> settings;
-
-    QString get_full_objectName(QWidget *widget);
-};
+    init();
+}
 //--------------------------------------------------------------------------------
-#endif
+MyListWidget::~MyListWidget()
+{
+
+}
+//--------------------------------------------------------------------------------
+void MyListWidget::init(void)
+{
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this,   &QListWidget::customContextMenuRequested,   this,   &MyListWidget::popup);
+}
+//--------------------------------------------------------------------------------
+void MyListWidget::popup(QPoint)
+{
+    QMenu *popup_menu = new QMenu(this);
+
+    QAction *delete_action = new QAction(qApp->style()->standardIcon(QStyle::SP_TrashIcon),
+                                         QObject::tr("delete item"),
+                                         this);
+
+    connect(delete_action,  &QAction::triggered,    [this]() {
+        QList<QListWidgetItem*> items = selectedItems();
+
+        foreach(QListWidgetItem* item, items)
+        {
+            removeItemWidget(item);
+            delete item; // Qt documentation warnings you to destroy item to effectively remove it from QListWidget.
+        }
+    });
+
+    popup_menu->addAction(delete_action);
+    popup_menu->exec(QCursor::pos());
+}
+//--------------------------------------------------------------------------------

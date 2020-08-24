@@ -80,6 +80,18 @@ void MainBox::init(void)
     connect(ui->btn_set_dt,  &QPushButton::clicked,  [this]() {
         ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
     });
+    connect(ui->btn_clear_strings,  &QPushButton::clicked,  [this]() {
+        ui->comboBox_2->clear();
+    });
+    connect(ui->btn_add_strings,  &QPushButton::clicked,  [this]() {
+        ui->comboBox_2->addItem("a0");
+        ui->comboBox_2->addItem("a1");
+        ui->comboBox_2->addItem("a2");
+
+        ui->listWidget->addItem("b0");
+        ui->listWidget->addItem("b1");
+        ui->listWidget->addItem("b2");
+    });
     //---
 
     timer = new QTimer(this);
@@ -341,7 +353,7 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     QSpinBox *sb = new QSpinBox();
     QSpinBox *sb1 = new QSpinBox();
     QSpinBox *sb2 = new QSpinBox();
@@ -356,7 +368,7 @@ bool MainBox::test(void)
     spoiler->show();
 #endif
 
-#if 0
+#if 1
     CollapsibleWidget *cw = new CollapsibleWidget();
     cw->show();
 #endif

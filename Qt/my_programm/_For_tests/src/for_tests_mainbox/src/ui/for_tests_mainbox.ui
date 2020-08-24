@@ -7,73 +7,10 @@
     <x>0</x>
     <y>0</y>
     <width>613</width>
-    <height>386</height>
+    <height>447</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="QToolBox" name="toolBox">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="page">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>180</width>
-        <height>242</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Page 1</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>180</width>
-        <height>242</height>
-       </rect>
-      </property>
-      <attribute name="icon">
-       <iconset resource="../../../../images/images.qrc">
-        <normaloff>:/images/computer.ico</normaloff>:/images/computer.ico</iconset>
-      </attribute>
-      <attribute name="label">
-       <string>Page 2</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="page_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>180</width>
-        <height>242</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Page 3</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="page_4">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>180</width>
-        <height>242</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Page 4</string>
-      </attribute>
-     </widget>
-    </widget>
-   </item>
    <item>
     <widget class="QFrame" name="frame">
      <property name="frameShape">
@@ -115,7 +52,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -138,15 +75,15 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
-             <widget class="QRadioButton" name="rb_test">
+            <item row="1" column="0">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QPushButton" name="btn_click">
               <property name="text">
-               <string>RadioButton</string>
+               <string>*</string>
               </property>
              </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QTimeEdit" name="timeEdit"/>
             </item>
             <item row="0" column="1">
              <widget class="QCheckBox" name="cb_checkbox_test">
@@ -172,9 +109,6 @@
                </widget>
               </item>
              </layout>
-            </item>
-            <item row="1" column="0">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
             </item>
             <item row="2" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -207,27 +141,41 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QPushButton" name="btn_click">
+            <item row="1" column="1">
+             <widget class="QTimeEdit" name="timeEdit"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QRadioButton" name="rb_test">
               <property name="text">
-               <string>*</string>
+               <string>RadioButton</string>
               </property>
              </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QComboBox" name="comboBox_2"/>
+            </item>
+            <item row="4" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QToolButton" name="btn_clear_strings">
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_add_strings">
+                <property name="text">
+                 <string>add strings</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
           <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+           <widget class="MyListWidget" name="listWidget"/>
           </item>
          </layout>
         </widget>
@@ -343,6 +291,76 @@
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="tab_5">
+         <attribute name="title">
+          <string>Tab 5</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QToolBox" name="toolBox">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="page">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>565</width>
+               <height>212</height>
+              </rect>
+             </property>
+             <attribute name="label">
+              <string>Page 1</string>
+             </attribute>
+            </widget>
+            <widget class="QWidget" name="page_2">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>180</width>
+               <height>303</height>
+              </rect>
+             </property>
+             <attribute name="icon">
+              <iconset resource="../../../../images/images.qrc">
+               <normaloff>:/images/computer.ico</normaloff>:/images/computer.ico</iconset>
+             </attribute>
+             <attribute name="label">
+              <string>Page 2</string>
+             </attribute>
+            </widget>
+            <widget class="QWidget" name="page_3">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>180</width>
+               <height>303</height>
+              </rect>
+             </property>
+             <attribute name="label">
+              <string>Page 3</string>
+             </attribute>
+            </widget>
+            <widget class="QWidget" name="page_4">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>180</width>
+               <height>303</height>
+              </rect>
+             </property>
+             <attribute name="label">
+              <string>Page 4</string>
+             </attribute>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
@@ -363,12 +381,15 @@
    <header>controlexitwidget.hpp</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>MyListWidget</class>
+   <extends>QListWidget</extends>
+   <header>mylistwidget.hpp</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>sb_1</tabstop>
-  <tabstop>sb_2</tabstop>
-  <tabstop>sb_res</tabstop>
-  <tabstop>btn_ok</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>te_test</tabstop>
   <tabstop>rb_test</tabstop>
   <tabstop>cb_checkbox_test</tabstop>
   <tabstop>doubleSpinBox</tabstop>
@@ -379,6 +400,15 @@
   <tabstop>dateTimeEdit</tabstop>
   <tabstop>cb_fag_exit</tabstop>
   <tabstop>btn_click</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>btn_clear_strings</tabstop>
+  <tabstop>btn_add_strings</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>sb_1</tabstop>
+  <tabstop>sb_2</tabstop>
+  <tabstop>sb_res</tabstop>
+  <tabstop>btn_ok</tabstop>
+  <tabstop>horizontalSlider</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../images/images.qrc"/>

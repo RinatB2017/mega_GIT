@@ -701,6 +701,7 @@ void MyWidget::load_widgets(void)
                 }
 
                 beginGroup(get_full_objectName(widget));
+                load_listwidget_property(widget);
                 load_combobox_property(widget);
                 load_splitter_property(widget);
                 load_property(widget, "isEnabled");
@@ -712,7 +713,7 @@ void MyWidget::load_widgets(void)
                 load_property(widget, "time");
                 load_property(widget, "date");
                 load_property(widget, "plainText");
-                load_property(widget, "currentIndex");
+                load_property(widget, "currentIndex");  //FIXME надо подумать, как правильно сделать
                 endGroup();
             }
         }
@@ -738,6 +739,7 @@ void MyWidget::save_widgets(void)
             }
 
             beginGroup(get_full_objectName(widget));
+            save_listwidget_property(widget);
             save_combobox_property(widget);
             save_splitter_property(widget);
             save_property(widget, "isEnabled");
@@ -749,7 +751,7 @@ void MyWidget::save_widgets(void)
             save_property(widget, "time");
             save_property(widget, "date");
             save_property(widget, "plainText");
-            save_property(widget, "currentIndex");
+            save_property(widget, "currentIndex");  //FIXME надо подумать, как правильно сделать
             endGroup();
         }
     }

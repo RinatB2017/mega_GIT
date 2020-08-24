@@ -93,6 +93,7 @@ void CollapsibleWidget::update(void)
         if(ui->main_frame->height() >= max_height_frame)
         {
             state = COLLAPSE_NONE;
+            emit info(QString("ON h %1").arg(height()));
         }
         break;
 
@@ -103,6 +104,7 @@ void CollapsibleWidget::update(void)
         if(new_height < 0)
         {
             state = COLLAPSE_NONE;
+            emit info(QString("OFF h %1").arg(height()));
             break;
         }
         ui->main_frame->setFixedSize(ui->main_frame->width(),

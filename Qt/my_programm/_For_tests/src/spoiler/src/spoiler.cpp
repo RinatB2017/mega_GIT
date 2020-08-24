@@ -12,11 +12,12 @@ Spoiler::Spoiler(QWidget *parent) :
 
 }
 
-Spoiler::Spoiler(const QString & title,
+Spoiler::Spoiler(const QString &title,
                  const int animationDuration,
                  QWidget *parent) :
     QWidget(parent), animationDuration(animationDuration)
 {
+
     toggleButton.setStyleSheet("QToolButton { border: none; }");
     toggleButton.setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toggleButton.setArrowType(Qt::ArrowType::RightArrow);
@@ -45,14 +46,15 @@ Spoiler::Spoiler(const QString & title,
     mainLayout.addWidget(&headerLine, row++, 2, 1, 1);
     mainLayout.addWidget(&contentArea, row, 0, 1, 3);
     setLayout(&mainLayout);
-    QObject::connect(&toggleButton, &QToolButton::clicked, [this](const bool checked) {
+    QObject::connect(&toggleButton, &QToolButton::clicked, [this](const bool checked)
+    {
         toggleButton.setArrowType(checked ? Qt::ArrowType::DownArrow : Qt::ArrowType::RightArrow);
         toggleAnimation.setDirection(checked ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
         toggleAnimation.start();
     });
 }
 
-void Spoiler::setContentLayout(QLayout & contentLayout)
+void Spoiler::setContentLayout(QLayout &contentLayout)
 {
     delete contentArea.layout();
     contentArea.setLayout(&contentLayout);

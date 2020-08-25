@@ -52,7 +52,6 @@ MyWidget::MyWidget(QWidget *parent) :
     sl_properties_of_widgets.append("plainText");
     sl_properties_of_widgets.append("currentIndex");
 
-
     setAttribute(Qt::WA_DeleteOnClose);
 }
 //--------------------------------------------------------------------------------

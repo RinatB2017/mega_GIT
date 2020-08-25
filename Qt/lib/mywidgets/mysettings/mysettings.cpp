@@ -54,29 +54,6 @@ void MySettings::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-#if 0
-bool MySettings::load_combobox_property(QWidget *widget)
-{
-    Q_CHECK_PTR(widget);
-    if(compare_name(widget->metaObject()->className(), "QComboBox"))
-    {
-        bool isEditable = settings->value("isEditable").toBool();
-        if(isEditable)
-        {
-            int size = settings->beginReadArray(static_cast<QComboBox *>(widget)->objectName());
-            for(int n=0; n<size; n++)
-            {
-                settings->setArrayIndex(n);
-                static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
-            }
-            settings->endArray();
-        }
-        static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());
-        return true;
-    }
-    return false;
-}
-#else
 bool MySettings::load_combobox_property(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
@@ -89,57 +66,30 @@ bool MySettings::load_combobox_property(QWidget *widget)
             static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
         }
         settings->endArray();
-        //dynamic_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());  //TODO проба
         return true;
     }
     return false;
 }
-#endif
 //--------------------------------------------------------------------------------
-#if 0
 bool MySettings::save_combobox_property(QWidget *widget)
 {
     Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
-        bool isEditable = static_cast<QComboBox *>(widget)->isEditable();
-        settings->setValue("isEditable", isEditable);
-        settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));
-        if(isEditable)
-        {
-            settings->beginWriteArray(static_cast<QComboBox *>(widget)->objectName(), static_cast<QComboBox *>(widget)->count());
-            for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
-            {
-                settings->setArrayIndex(n);
-                static_cast<QComboBox *>(widget)->setCurrentIndex(n);
-                settings->setValue("currentText", static_cast<QComboBox *>(widget)->currentText());
-            }
-            settings->endArray();
-        }
-        return true;
-    }
-    return false;
-}
-#else
-bool MySettings::save_combobox_property(QWidget *widget)
-{
-    Q_CHECK_PTR(widget);
-    if(compare_name(widget->metaObject()->className(), "QComboBox"))
-    {
-        //settings->setValue("currentindex", QVariant(dynamic_cast<QComboBox *>(widget)->currentIndex()));   //TODO проба
         settings->beginWriteArray(dynamic_cast<QComboBox *>(widget)->objectName(), dynamic_cast<QComboBox *>(widget)->count());
+        int temp_index = dynamic_cast<QComboBox *>(widget)->currentIndex();
         for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
         {
             settings->setArrayIndex(n);
             dynamic_cast<QComboBox *>(widget)->setCurrentIndex(n);
             settings->setValue("currentText", dynamic_cast<QComboBox *>(widget)->currentText());
         }
+        dynamic_cast<QComboBox *>(widget)->setCurrentIndex(temp_index);
         settings->endArray();
         return true;
     }
     return false;
 }
-#endif
 //--------------------------------------------------------------------------------
 bool MySettings::load_listwidget_property(QWidget *widget)
 {

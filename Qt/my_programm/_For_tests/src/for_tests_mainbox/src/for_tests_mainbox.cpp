@@ -71,8 +71,6 @@ void MainBox::init(void)
     ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
     connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
 
-    ui->te_test->setProperty(NO_SAVE, true);
-
     //---
     connect(ui->btn_click,  &QPushButton::clicked,  [this]() {
         emit info("click");
@@ -353,6 +351,11 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    emit info(QString("text %1").arg(ui->te_test->property("text").toString()));
+    emit info(QString("plainText %1").arg(ui->te_test->property("plainText").toString()));
+#endif
+
 #if 0
     QSpinBox *sb = new QSpinBox();
     QSpinBox *sb1 = new QSpinBox();
@@ -368,7 +371,7 @@ bool MainBox::test(void)
     spoiler->show();
 #endif
 
-#if 1
+#if 0
     CollapsibleWidget *cw = new CollapsibleWidget();
     cw->show();
 #endif

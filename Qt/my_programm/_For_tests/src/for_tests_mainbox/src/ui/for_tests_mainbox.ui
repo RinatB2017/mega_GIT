@@ -172,6 +172,13 @@
              <item>
               <widget class="MyListWidget" name="listWidget"/>
              </item>
+             <item>
+              <widget class="QSlider" name="horizontalSlider">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -257,13 +264,6 @@
              </spacer>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="QSlider" name="horizontalSlider">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer_2">
@@ -419,7 +419,6 @@
   <tabstop>sb_2</tabstop>
   <tabstop>sb_res</tabstop>
   <tabstop>btn_ok</tabstop>
-  <tabstop>horizontalSlider</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../images/images.qrc"/>

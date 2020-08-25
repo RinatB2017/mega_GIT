@@ -82,14 +82,14 @@ bool MySettings::load_combobox_property(QWidget *widget)
     Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
-        int size = settings->beginReadArray(static_cast<QComboBox *>(widget)->objectName());
+        int size = settings->beginReadArray(dynamic_cast<QComboBox *>(widget)->objectName());
         for(int n=0; n<size; n++)
         {
             settings->setArrayIndex(n);
             static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
         }
         settings->endArray();
-        //static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());  //TODO проба
+        //dynamic_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());  //TODO проба
         return true;
     }
     return false;
@@ -126,13 +126,13 @@ bool MySettings::save_combobox_property(QWidget *widget)
     Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
-        //settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));   //TODO проба
-        settings->beginWriteArray(static_cast<QComboBox *>(widget)->objectName(), static_cast<QComboBox *>(widget)->count());
+        //settings->setValue("currentindex", QVariant(dynamic_cast<QComboBox *>(widget)->currentIndex()));   //TODO проба
+        settings->beginWriteArray(dynamic_cast<QComboBox *>(widget)->objectName(), dynamic_cast<QComboBox *>(widget)->count());
         for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
         {
             settings->setArrayIndex(n);
-            static_cast<QComboBox *>(widget)->setCurrentIndex(n);
-            settings->setValue("currentText", static_cast<QComboBox *>(widget)->currentText());
+            dynamic_cast<QComboBox *>(widget)->setCurrentIndex(n);
+            settings->setValue("currentText", dynamic_cast<QComboBox *>(widget)->currentText());
         }
         settings->endArray();
         return true;

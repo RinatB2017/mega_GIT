@@ -163,6 +163,7 @@ private:
     bool check_exists_signals(QWidget *parent);
 
     QList<QWidget *> w_lists;
+    QStringList sl_properties_of_widgets;
 
 protected:
     void changeEvent(QEvent *event);

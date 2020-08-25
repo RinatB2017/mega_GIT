@@ -41,6 +41,18 @@ MyWidget::MyWidget(QWidget *parent) :
     QTimer::singleShot(0, this, SLOT(s_test()));
 #endif
 
+    sl_properties_of_widgets.append("isEnabled");
+    sl_properties_of_widgets.append("checked");
+    sl_properties_of_widgets.append("text");
+    sl_properties_of_widgets.append("value");
+    sl_properties_of_widgets.append("position");
+    sl_properties_of_widgets.append("state");
+    sl_properties_of_widgets.append("time");
+    sl_properties_of_widgets.append("date");
+    sl_properties_of_widgets.append("plainText");
+    sl_properties_of_widgets.append("currentIndex");
+
+
     setAttribute(Qt::WA_DeleteOnClose);
 }
 //--------------------------------------------------------------------------------
@@ -332,7 +344,6 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
 {
     if(name.isEmpty())  return false;
 
-    QString org_name = ORGNAME;
 #ifdef QT_DEBUG
     QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
@@ -340,7 +351,7 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
 #endif
 
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(org_name, app_name);
+    QSettings *settings = new QSettings(ORGNAME, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
@@ -364,7 +375,6 @@ bool MyWidget::get_param(QString group_name,
         return false;
     }
 
-    QString org_name = ORGNAME;
 #ifdef QT_DEBUG
     QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
@@ -372,9 +382,9 @@ bool MyWidget::get_param(QString group_name,
 #endif
 
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(org_name, app_name);
+    QSettings *settings = new QSettings(ORGNAME, app_name);
 #else
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
     Q_CHECK_PTR(settings);
 
@@ -389,7 +399,6 @@ bool MyWidget::get_param(QString group_name,
 //--------------------------------------------------------------------------------
 QStringList MyWidget::get_all_param_name(void)
 {
-    QString org_name = ORGNAME;
 #ifdef QT_DEBUG
     QString app_name = QString("%1(debug)").arg(APPNAME);
 #else
@@ -397,9 +406,9 @@ QStringList MyWidget::get_all_param_name(void)
 #endif
 
 #ifndef SAVE_INI
-    QSettings *settings = new QSettings(org_name, app_name);
+    QSettings *settings = new QSettings(ORGNAME, app_name);
 #else
-    QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
+    QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
     Q_CHECK_PTR(settings);
 
@@ -700,20 +709,18 @@ void MyWidget::load_widgets(void)
                     continue;
                 }
 
-                beginGroup(get_full_objectName(widget));
+                QString full_name = get_full_objectName(widget);
+                Q_ASSERT(full_name.isEmpty() == false);
+                beginGroup(full_name);
                 load_listwidget_property(widget);
                 load_combobox_property(widget);
                 load_splitter_property(widget);
-                load_property(widget, "isEnabled");
-                load_property(widget, "checked");
-                load_property(widget, "text");
-                load_property(widget, "value");
-                load_property(widget, "position");
-                load_property(widget, "state");
-                load_property(widget, "time");
-                load_property(widget, "date");
-                load_property(widget, "plainText");
-                load_property(widget, "currentIndex");  //FIXME надо подумать, как правильно сделать
+
+                foreach(QString property, sl_properties_of_widgets)
+                {
+                    load_property(widget, property);
+                }
+
                 endGroup();
             }
         }
@@ -738,20 +745,18 @@ void MyWidget::save_widgets(void)
                 continue;
             }
 
-            beginGroup(get_full_objectName(widget));
+            QString full_name = get_full_objectName(widget);
+            Q_ASSERT(full_name.isEmpty() == false);
+            beginGroup(full_name);
             save_listwidget_property(widget);
             save_combobox_property(widget);
             save_splitter_property(widget);
-            save_property(widget, "isEnabled");
-            save_property(widget, "checked");
-            save_property(widget, "text");
-            save_property(widget, "value");
-            save_property(widget, "position");
-            save_property(widget, "state");
-            save_property(widget, "time");
-            save_property(widget, "date");
-            save_property(widget, "plainText");
-            save_property(widget, "currentIndex");  //FIXME надо подумать, как правильно сделать
+
+            foreach(QString property, sl_properties_of_widgets)
+            {
+                save_property(widget, property);
+            }
+
             endGroup();
         }
     }

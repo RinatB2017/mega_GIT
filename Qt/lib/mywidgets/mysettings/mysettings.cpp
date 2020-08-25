@@ -18,23 +18,17 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <stddef.h>
+#include <QtGlobal>
+
+#ifdef Q_OS_LINUX
+#   include </usr/include/linux/stddef.h>
+#endif
+//--------------------------------------------------------------------------------
 #include "mysettings.hpp"
 //--------------------------------------------------------------------------------
 MySettings::MySettings()
 {
-    QString org_name = ORGNAME;
-#ifdef QT_DEBUG
-    QString app_name = QString("%1(debug)").arg(APPNAME);
-#else
-    QString app_name = APPNAME;
-#endif
-
-#ifndef SAVE_INI
-    settings = new QSettings(org_name, app_name);
-#else
-    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
-#endif
+    init();
 }
 //--------------------------------------------------------------------------------
 MySettings::~MySettings()
@@ -43,6 +37,21 @@ MySettings::~MySettings()
     {
         settings->deleteLater();
     }
+}
+//--------------------------------------------------------------------------------
+void MySettings::init(void)
+{
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
+#ifndef SAVE_INI
+    settings = new QSettings(ORGNAME, app_name);
+#else
+    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
+#endif
 }
 //--------------------------------------------------------------------------------
 #if 0
@@ -80,7 +89,7 @@ bool MySettings::load_combobox_property(QWidget *widget)
             static_cast<QComboBox *>(widget)->addItem(settings->value("currentText").toString());
         }
         settings->endArray();
-        static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());
+        //static_cast<QComboBox *>(widget)->setCurrentIndex(settings->value("currentindex", 0).toInt());  //TODO проба
         return true;
     }
     return false;
@@ -117,7 +126,7 @@ bool MySettings::save_combobox_property(QWidget *widget)
     Q_CHECK_PTR(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
-        settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));
+        //settings->setValue("currentindex", QVariant(static_cast<QComboBox *>(widget)->currentIndex()));   //TODO проба
         settings->beginWriteArray(static_cast<QComboBox *>(widget)->objectName(), static_cast<QComboBox *>(widget)->count());
         for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
         {
@@ -139,6 +148,7 @@ bool MySettings::load_listwidget_property(QWidget *widget)
     QListWidget *lw = dynamic_cast<QListWidget *>(widget);
     if(lw)
     {
+        settings->beginGroup(get_full_objectName(widget));
         int size = settings->beginReadArray(static_cast<QListWidget *>(widget)->objectName());
         for(int n=0; n<size; n++)
         {
@@ -146,6 +156,7 @@ bool MySettings::load_listwidget_property(QWidget *widget)
             dynamic_cast<QListWidget *>(widget)->addItem(settings->value("currentText").toString());
         }
         settings->endArray();
+        settings->endGroup();
         return true;
     }
     return false;
@@ -157,7 +168,8 @@ bool MySettings::save_listwidget_property(QWidget *widget)
     QListWidget *lw = dynamic_cast<QListWidget *>(widget);
     if(lw)
     {
-        settings->setValue("currentindex", QVariant(dynamic_cast<QListWidget *>(widget)->currentIndex()));
+        settings->beginGroup(get_full_objectName(widget));
+        //settings->setValue("currentindex", QVariant(dynamic_cast<QListWidget *>(widget)->currentIndex()));    //TODO проба
         settings->beginWriteArray(dynamic_cast<QListWidget *>(widget)->objectName(), dynamic_cast<QListWidget *>(widget)->count());
         for(int n=0; n<dynamic_cast<QListWidget *>(widget)->count(); n++)
         {
@@ -166,6 +178,7 @@ bool MySettings::save_listwidget_property(QWidget *widget)
             settings->setValue("currentText", dynamic_cast<QListWidget *>(widget)->currentItem()->text());
         }
         settings->endArray();
+        settings->endGroup();
         return true;
     }
     return false;
@@ -217,7 +230,8 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
     {
         return false;
     }
-    return widget->setProperty(property_name.toLocal8Bit(), property);
+    bool ok = widget->setProperty(property_name.toLocal8Bit(), property);
+    return ok;
 }
 //--------------------------------------------------------------------------------
 bool MySettings::save_property(QWidget *widget, const QString &property_name)

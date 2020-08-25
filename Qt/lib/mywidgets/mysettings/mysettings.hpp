@@ -83,6 +83,7 @@ public:
 private:
     QPointer<QSettings> settings;
 
+    void init(void);
     QString get_full_objectName(QWidget *widget);
 };
 //--------------------------------------------------------------------------------

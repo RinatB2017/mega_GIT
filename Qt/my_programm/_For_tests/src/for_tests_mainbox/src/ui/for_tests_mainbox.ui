@@ -60,7 +60,120 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QTextEdit" name="te_test"/>
+           <widget class="QFrame" name="frame_2">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <item>
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="1" column="0">
+                <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="QPushButton" name="btn_click">
+                 <property name="text">
+                  <string>*</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QCheckBox" name="cb_checkbox_test">
+                 <property name="text">
+                  <string>CheckBox</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QToolButton" name="btn_set_dt">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDateTimeEdit" name="dateTimeEdit">
+                   <property name="displayFormat">
+                    <string>dd.MM.yyyy HH:mm:ss</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QToolButton" name="toolButton">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox">
+                   <property name="editable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="3" column="0">
+                <widget class="QCheckBox" name="cb_fag_exit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>flag exit</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QTimeEdit" name="timeEdit"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QRadioButton" name="rb_test">
+                 <property name="text">
+                  <string>RadioButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QComboBox" name="comboBox_2"/>
+               </item>
+               <item row="4" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QToolButton" name="btn_clear_strings">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btn_add_strings">
+                   <property name="text">
+                    <string>add strings</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="MyListWidget" name="listWidget"/>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -74,108 +187,7 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <layout class="QGridLayout" name="gridLayout">
-            <item row="1" column="0">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
-            </item>
-            <item row="3" column="1">
-             <widget class="QPushButton" name="btn_click">
-              <property name="text">
-               <string>*</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QCheckBox" name="cb_checkbox_test">
-              <property name="text">
-               <string>CheckBox</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QToolButton" name="btn_set_dt">
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDateTimeEdit" name="dateTimeEdit">
-                <property name="displayFormat">
-                 <string>dd.MM.yyyy HH:mm:ss</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QToolButton" name="toolButton">
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="comboBox">
-                <property name="editable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="3" column="0">
-             <widget class="QCheckBox" name="cb_fag_exit">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>flag exit</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QTimeEdit" name="timeEdit"/>
-            </item>
-            <item row="0" column="0">
-             <widget class="QRadioButton" name="rb_test">
-              <property name="text">
-               <string>RadioButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QComboBox" name="comboBox_2"/>
-            </item>
-            <item row="4" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="QToolButton" name="btn_clear_strings">
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="btn_add_strings">
-                <property name="text">
-                 <string>add strings</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="MyListWidget" name="listWidget"/>
+           <widget class="QTextEdit" name="te_test"/>
           </item>
          </layout>
         </widget>
@@ -319,8 +331,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>180</width>
-               <height>303</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -336,8 +348,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>180</width>
-               <height>303</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="label">
@@ -349,8 +361,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>180</width>
-               <height>303</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="label">
@@ -389,7 +401,6 @@
  </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>te_test</tabstop>
   <tabstop>rb_test</tabstop>
   <tabstop>cb_checkbox_test</tabstop>
   <tabstop>doubleSpinBox</tabstop>

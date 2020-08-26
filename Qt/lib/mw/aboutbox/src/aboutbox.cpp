@@ -63,7 +63,7 @@ void AboutBox::init(void)
     ui->lbl_programmName->setText(programmName);
     ui->lbl_version->setText(QString(tr("version %1")).arg(version));
     ui->lbl_email->setText(QString("<a href='mailto:%1'>%2</a>").arg(email).arg(author));
-    ui->lbl_telegram->setText(QString("<a href='%5'>Telegram</a>").arg(telegram));
+    ui->lbl_telegram->setText(QString("<a href='%1'>Telegram</a>").arg(telegram));
 
     ui->lbl_email->setToolTip(email);
     ui->lbl_telegram->setToolTip(telegram);

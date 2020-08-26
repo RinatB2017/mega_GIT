@@ -640,7 +640,8 @@ void MainWindow::about(void)
                                    appVersion,
                                    "tux4096@gmail.com",
                                    tr("Author: Bikbao Rinat Zinorovich"),
-                                   "https://t-do.ru/TrueProgrammer");
+                                   "https://telegram.im/TrueProgrammer");
+                                   // "https://t-do.ru/TrueProgrammer");
     Q_CHECK_PTR(about);
 
     about->exec();

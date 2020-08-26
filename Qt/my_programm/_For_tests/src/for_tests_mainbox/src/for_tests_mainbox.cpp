@@ -346,14 +346,20 @@ bool MainBox::dec_push_button(void)
 //--------------------------------------------------------------------------------
 #include "collapsiblewidget.hpp"
 #include "spoiler.hpp"
+#include "QLongLongSpinBox.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    emit info(QString("text %1").arg(ui->te_test->property("text").toString()));
-    emit info(QString("plainText %1").arg(ui->te_test->property("plainText").toString()));
+    QLongLongSpinBox *sb_test = new QLongLongSpinBox();
+    sb_test->setMaximum(std::numeric_limits<qlonglong>::max());
+    sb_test->setMinimum(std::numeric_limits<qlonglong>::min());
+    sb_test->setValue(0x08000000);
+    //sb_test->setValue(0xABCDEF01);
+    sb_test->setMinimumWidth(110);
+    sb_test->show();
 #endif
 
 #if 0

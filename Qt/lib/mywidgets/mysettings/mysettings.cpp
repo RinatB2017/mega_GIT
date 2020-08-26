@@ -196,12 +196,36 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
     return true;
 }
 //--------------------------------------------------------------------------------
-int MySettings::load_int(QString name)
+bool MySettings::load_int(QString name, int *value)
 {
-    return settings->value(name).toInt();
+    bool ok = false;
+    int res = settings->value(name).toInt(&ok);
+    if(ok == false)
+    {
+        return false;
+    }
+    *value = res;
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MySettings::save_int(QString name, int value)
+{
+    settings->setValue(name, value);
+}
+//--------------------------------------------------------------------------------
+bool MySettings::load_ulonglong(QString name, qlonglong *value)
+{
+    bool ok = false;
+    int res = settings->value(name).toULongLong(&ok);
+    if(ok == false)
+    {
+        return false;
+    }
+    *value = res;
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MySettings::save_ulonglong(QString name, qlonglong value)
 {
     settings->setValue(name, value);
 }
@@ -216,9 +240,16 @@ void MySettings::save_bool(QString name, bool value)
     settings->setValue(name, value);
 }
 //--------------------------------------------------------------------------------
-uint MySettings::load_uint(QString name)
+bool MySettings::load_uint(QString name, uint *value)
 {
-    return settings->value(name).toUInt();
+    bool ok = false;
+    uint res = settings->value(name).toUInt(&ok);
+    if(ok == false)
+    {
+        return false;
+    }
+    *value = res;
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MySettings::save_uint(QString name, uint value)

@@ -50,13 +50,16 @@ public:
     bool load_property(QWidget *widget, const QString &property_name);
     bool save_property(QWidget *widget, const QString &property_name);
 
-    int load_int(QString name);
+    bool load_int(QString name, int *value);
     void save_int(QString name, int value);
+
+    bool load_ulonglong(QString name, qlonglong *value);
+    void save_ulonglong(QString name, qlonglong value);
 
     bool load_bool(QString name);
     void save_bool(QString name, bool value);
 
-    uint load_uint(QString name);
+    bool load_uint(QString name, uint *value);
     void save_uint(QString name, uint value);
 
     QString load_string(QString name);

@@ -91,8 +91,9 @@ void MainBox::init(void)
         ui->listWidget->addItem("b2");
     });
 
-    ui->hex_widget->setMaximum(std::numeric_limits<qlonglong>::max());
-    ui->hex_widget->setMinimum(std::numeric_limits<qlonglong>::min());
+    //---
+//    ui->hex_widget->setMaximum(std::numeric_limits<qlonglong>::max());
+//    ui->hex_widget->setMinimum(std::numeric_limits<qlonglong>::min());
     //---
 
     timer = new QTimer(this);
@@ -348,21 +349,13 @@ bool MainBox::dec_push_button(void)
 }
 //--------------------------------------------------------------------------------
 #include "collapsiblewidget.hpp"
-#include "spoiler.hpp"
-#include "QLongLongSpinBox.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    QLongLongSpinBox *sb_test = new QLongLongSpinBox();
-    sb_test->setMaximum(std::numeric_limits<qlonglong>::max());
-    sb_test->setMinimum(std::numeric_limits<qlonglong>::min());
-    sb_test->setValue(0x08000000);
-    //sb_test->setValue(0xABCDEF01);
-    sb_test->setMinimumWidth(110);
-    sb_test->show();
+    ui->hex_widget->setValue(0xFEFEFEFE);
 #endif
 
 #if 0

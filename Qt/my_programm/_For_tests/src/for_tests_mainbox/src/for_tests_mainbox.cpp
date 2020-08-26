@@ -90,6 +90,9 @@ void MainBox::init(void)
         ui->listWidget->addItem("b1");
         ui->listWidget->addItem("b2");
     });
+
+    ui->hex_widget->setMaximum(std::numeric_limits<qlonglong>::max());
+    ui->hex_widget->setMinimum(std::numeric_limits<qlonglong>::min());
     //---
 
     timer = new QTimer(this);

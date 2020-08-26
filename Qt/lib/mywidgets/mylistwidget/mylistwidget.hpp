@@ -23,7 +23,12 @@
 //--------------------------------------------------------------------------------
 #include <QApplication>
 #include <QListWidget>
+#include <QKeyEvent>
 #include <QMenu>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MyListWidget;
@@ -40,6 +45,9 @@ public:
 private:
     void init(void);
     void popup(QPoint);
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // MYLISTWIDGET_HPP

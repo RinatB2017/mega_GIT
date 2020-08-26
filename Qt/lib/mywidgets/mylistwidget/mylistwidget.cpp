@@ -51,11 +51,25 @@ void MyListWidget::popup(QPoint)
         foreach(QListWidgetItem* item, items)
         {
             removeItemWidget(item);
-            delete item; // Qt documentation warnings you to destroy item to effectively remove it from QListWidget.
+            delete item;
         }
     });
 
     popup_menu->addAction(delete_action);
     popup_menu->exec(QCursor::pos());
+}
+//--------------------------------------------------------------------------------
+void MyListWidget::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Delete)
+    {
+        QList<QListWidgetItem*> items = selectedItems();
+
+        foreach(QListWidgetItem* item, items)
+        {
+            removeItemWidget(item);
+            delete item;
+        }
+    }
 }
 //--------------------------------------------------------------------------------

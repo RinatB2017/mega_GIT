@@ -500,7 +500,9 @@ bool CandleStick_Box_adv::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::load_setting(void)
 {
-    chart->setTheme(static_cast<QChart::ChartTheme>(load_int("chart_theme")));
+    int value = 0;
+    load_int("chart_theme", &value);
+    chart->setTheme(static_cast<QChart::ChartTheme>(value));
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::save_setting(void)

@@ -109,7 +109,8 @@ bool MultiEdit::programm_is_exit(void)
 void MultiEdit::load_setting(void)
 {
     beginGroup("MultiEdit");
-    int cnt_tabs = load_int("cnt_tabs");
+    int cnt_tabs = 0;
+    load_int("cnt_tabs", &cnt_tabs);
     if(cnt_tabs < 1)
     {
         cnt_tabs = 1;

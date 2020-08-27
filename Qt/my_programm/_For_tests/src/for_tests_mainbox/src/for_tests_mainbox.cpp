@@ -409,11 +409,15 @@ void MainBox::load_setting(void)
 
     if(sb_test)
     {
-        sb_test->setValue(load_int("sb_test"));
+        int value = 0;
+        load_int("sb_test", &value);
+        sb_test->setValue(value);
     }
     if(cb_block)
     {
-        bool block_is_checked = load_int("cb_block");
+        int value = 0;
+        load_int("cb_block", &value);
+        bool block_is_checked = value;
         cb_block->clicked(block_is_checked);
         cb_block->setChecked(block_is_checked);
     }

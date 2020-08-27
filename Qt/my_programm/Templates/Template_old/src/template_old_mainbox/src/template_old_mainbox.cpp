@@ -158,7 +158,7 @@ void MainBox::load_setting(void)
 {
     if(cb_block)
     {
-        bool is_checked = load_int("cb_block");
+        bool is_checked = load_bool("cb_block");
         cb_block->setChecked(is_checked);
         cb_block->clicked(is_checked);
     }

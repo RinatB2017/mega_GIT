@@ -256,7 +256,9 @@ void PTZ_widget::init(void)
     url.setPort(ui->sb_port->value());
 
     url.setHost(load_string(IP_STRING));
-    url.setPort(load_int(PORT_STRING));
+    int value = 0;
+    load_int(PORT_STRING, &value);
+    url.setPort(value);
 
     ui->ip_widget->set_url(url);
 

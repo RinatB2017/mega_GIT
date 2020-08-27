@@ -8,6 +8,7 @@
 #include <QAbstractSpinBox>
 #include <QValidator>
 #include <QLineEdit>
+#include <QDebug>
 //--------------------------------------------------------------------------------
 class QLongLongSpinBoxPrivate;
 class QLongLongSpinBox : public QAbstractSpinBox

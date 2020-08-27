@@ -62,6 +62,8 @@ public slots:
     void check_in(void);
     void victory(void);
 
+    bool check_qlonglong(QString text, qlonglong *result);
+
 private:
     typedef struct CMD
     {

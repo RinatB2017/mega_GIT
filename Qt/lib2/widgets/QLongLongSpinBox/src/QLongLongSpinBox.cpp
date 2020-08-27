@@ -66,6 +66,7 @@ void QLongLongSpinBox::stepBy(int steps)
     setValue(new_value);
 }
 //--------------------------------------------------------------------------------
+#ifdef IN_DEC
 QValidator::State QLongLongSpinBox::validate(QString &input, int &pos) const
 {
     Q_UNUSED(pos);
@@ -80,19 +81,57 @@ QValidator::State QLongLongSpinBox::validate(QString &input, int &pos) const
 
     return QValidator::Acceptable;
 }
+#else
+QValidator::State QLongLongSpinBox::validate(QString &input, int &pos) const
+{
+    Q_UNUSED(pos);
+
+    QByteArray temp_ba;
+    temp_ba.append(input);
+
+    bool ok = false;
+    qlonglong val = temp_ba.toLongLong(&ok, 16);
+    if (!ok)
+    {
+        qDebug() << "!ok" << input;
+        return QValidator::Invalid;
+    }
+
+    if (val < m_minimum || val > m_maximum)
+    {
+        qDebug() << "min|max" << val;
+        return QValidator::Invalid;
+    }
+
+    return QValidator::Acceptable;
+}
+#endif
 //--------------------------------------------------------------------------------
+#ifdef IN_DEC
 qlonglong QLongLongSpinBox::valueFromText(const QString &text) const
 {
     bool ok = false;
     return text.toInt(&ok, 16);
-    //return text.toLongLong();
 }
+#else
+qlonglong QLongLongSpinBox::valueFromText(const QString &text) const
+{
+    bool ok = false;
+    return text.toLongLong(&ok, 16);
+}
+#endif
 //--------------------------------------------------------------------------------
+#ifdef IN_DEC
+QString QLongLongSpinBox::textFromValue(qlonglong val) const
+{
+    return QString::number(val);
+}
+#else
 QString QLongLongSpinBox::textFromValue(qlonglong val) const
 {
     return QString("%1").arg(val, 8, 16, QChar('0')).toUpper();
-    //return QString::number(val);
 }
+#endif
 //--------------------------------------------------------------------------------
 QAbstractSpinBox::StepEnabled QLongLongSpinBox::stepEnabled() const
 {

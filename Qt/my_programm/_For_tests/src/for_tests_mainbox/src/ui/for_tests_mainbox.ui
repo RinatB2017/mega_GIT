@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
+    <width>443</width>
     <height>469</height>
    </rect>
   </property>
@@ -329,7 +329,7 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>565</width>
+               <width>395</width>
                <height>234</height>
               </rect>
              </property>
@@ -342,8 +342,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -359,8 +359,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="label">
@@ -372,8 +372,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="label">

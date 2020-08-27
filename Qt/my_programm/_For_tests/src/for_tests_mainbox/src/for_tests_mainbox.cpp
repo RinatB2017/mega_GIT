@@ -348,66 +348,12 @@ bool MainBox::dec_push_button(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::check_qlonglong(QString text, qlonglong *result)
-{
-    QByteArray temp_ba;
-    temp_ba.append(text);
-    emit debug(temp_ba.toHex());
-
-    bool ok = false;
-    qlonglong val = temp_ba.toLongLong(&ok, 16);
-    if (ok)
-    {
-        *result = val;
-    }
-
-    return ok;
-}
-//--------------------------------------------------------------------------------
-#include "collapsiblewidget.hpp"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    bool ok = false;
-    qlonglong result;
-    ok = check_qlonglong("0xFFFFFFFF", &result);
-
-    if (ok)
-    {
-        emit info("OK");
-        emit info(QString("val %1").arg(result, 8, 16, QChar('0')));
-    }
-    else
-    {
-        emit error("ERROR");
-    }
-#endif
-
-#if 0
     ui->hex_widget->setValue(0xFEFEFEFE);
-#endif
-
-#if 0
-    QSpinBox *sb = new QSpinBox();
-    QSpinBox *sb1 = new QSpinBox();
-    QSpinBox *sb2 = new QSpinBox();
-
-    auto *anyLayout = new QGridLayout();
-    anyLayout->addWidget(sb, 0, 0);
-    anyLayout->addWidget(sb1, 1, 0);
-    anyLayout->addWidget(sb2, 2, 0);
-
-    Spoiler *spoiler = new Spoiler("");
-    spoiler->setContentLayout(*anyLayout);
-    spoiler->show();
-#endif
-
-#if 0
-    CollapsibleWidget *cw = new CollapsibleWidget();
-    cw->show();
 #endif
 
 #if 0

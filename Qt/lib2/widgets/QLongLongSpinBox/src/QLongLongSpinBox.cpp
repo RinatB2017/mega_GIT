@@ -7,7 +7,7 @@
 QLongLongSpinBox::QLongLongSpinBox(QWidget *parent) :
     QAbstractSpinBox(parent)
 {
-    connect(lineEdit(), SIGNAL(textEdited(QString)), this, SLOT(onEditFinished()));
+    connect(lineEdit(), &QLineEdit::textEdited, this,   &QLongLongSpinBox::onEditFinished);
 };
 //--------------------------------------------------------------------------------
 QLongLongSpinBox::~QLongLongSpinBox()

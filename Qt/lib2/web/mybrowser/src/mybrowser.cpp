@@ -27,8 +27,6 @@ MyBrowser::MyBrowser(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MyBrowser)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -39,6 +37,8 @@ MyBrowser::~MyBrowser()
 //--------------------------------------------------------------------------------
 void MyBrowser::init(void)
 {
+    ui->setupUi(this);
+
     ui->cb_user_agent->addItem("Linux", "Mozilla/5.0 (X11; U; Linux x86_64; ru; rv:1.9.0.10) Gecko/2009042809 GranParadiso/3.0.10");
     ui->cb_user_agent->addItem("Windows XP", "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)");
     ui->cb_user_agent->addItem("Windows 7", "Opera/9.80 (Windows NT 6.1; U; en) Presto/2.9.168 Version/11.50");

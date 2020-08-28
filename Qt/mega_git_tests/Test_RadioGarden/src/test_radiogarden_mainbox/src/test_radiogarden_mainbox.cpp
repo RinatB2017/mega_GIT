@@ -83,9 +83,6 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -102,9 +99,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -160,19 +154,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    if(cb_block)
-    {
-        bool is_checked = load_bool("cb_block");
-        cb_block->setChecked(is_checked);
-        cb_block->clicked(is_checked);
-    }
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    if(cb_block)
-    {
-        save_int("cb_block", cb_block->isChecked());
-    }
+
 }
 //--------------------------------------------------------------------------------

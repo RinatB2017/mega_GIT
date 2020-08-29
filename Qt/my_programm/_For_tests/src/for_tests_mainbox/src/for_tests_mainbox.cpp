@@ -353,6 +353,13 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    emit info(QString("ulong %1").arg(sizeof(ulong)));
+    emit info(QString("qlonglong %1").arg(sizeof(qlonglong)));
+    emit info(QString("uint32_t %1").arg(sizeof(uint32_t)));
+    emit info(QString("uint64_t %1").arg(sizeof(uint64_t)));
+#endif
+
+#if 0
     ui->hex_widget->setValue(0xFEFEFEFE);
 #endif
 

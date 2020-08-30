@@ -44,6 +44,8 @@ MyMainWindow::MyMainWindow(MainWindow *parent) :
     create_local_menus();
     create_toolbars();
 
+    setUnifiedTitleAndToolBarOnMac(true);
+
     //TODO не надо отсюда это убирать
     load_setting();
 }

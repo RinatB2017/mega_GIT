@@ -22,7 +22,7 @@
 #include "dock_position.hpp"
 #include "ui_dock_position.h"
 //--------------------------------------------------------------------------------
-Dock_position::Dock_position(QString doc_name, QWidget *parent) :
+Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Dock_position)
 {

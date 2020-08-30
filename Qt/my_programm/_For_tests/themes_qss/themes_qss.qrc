@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/themes_qss">
+        <file>styles.qss</file>
+        <file>Norton Commander.qss</file>
+    </qresource>
+</RCC>

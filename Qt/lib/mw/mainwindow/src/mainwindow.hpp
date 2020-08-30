@@ -293,6 +293,7 @@ private:
     void app_menu_add_theme(QMenu *menu);
     void app_menu_add_lang(QMenu *menu);
     void app_menu_add_style(QMenu *menu);
+    void app_menu_add_custom_style(QMenu *menu);
     void app_menu_add_confirm_exit(QMenu *menu);
     void app_menu_add_show_on_top(QMenu *menu);
     void app_menu_add_about(QMenu *menu);
@@ -305,6 +306,7 @@ private:
 #endif
     void app_toolbar_add_lang(void);
     void app_toolbar_add_style(void);
+    void app_toolbar_add_custom_style(void);
     void app_toolbar_add_about(void);
     void app_toolbar_add_help(void);
 

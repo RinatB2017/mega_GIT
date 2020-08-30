@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>443</width>
+    <width>545</width>
     <height>508</height>
    </rect>
   </property>
@@ -52,7 +52,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -329,7 +329,7 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>395</width>
+               <width>497</width>
                <height>273</height>
               </rect>
              </property>
@@ -342,8 +342,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -359,8 +359,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="label">
@@ -372,8 +372,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="label">
@@ -381,6 +381,16 @@ p, li { white-space: pre-wrap; }
              </attribute>
             </widget>
            </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_6">
+         <attribute name="title">
+          <string>Tab 6</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QTreeView" name="tree"/>
           </item>
          </layout>
         </widget>

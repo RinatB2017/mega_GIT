@@ -21,8 +21,11 @@
 #ifndef SYSLOG_DOCK_HPP
 #define SYSLOG_DOCK_HPP
 //--------------------------------------------------------------------------------
-#include <QDockWidget>
-#include <QDateTime>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 typedef struct SYSLOG
 {
@@ -32,18 +35,13 @@ typedef struct SYSLOG
     QString message;
 } syslog_t;
 //--------------------------------------------------------------------------------
-class QStandardItemModel;
-class QTableView;
-class QPushButton;
-class QToolButton;
-//--------------------------------------------------------------------------------
 class SysLog_dock : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    SysLog_dock(const QString &title,
-                QWidget *parent = nullptr);
+    explicit SysLog_dock(const QString &title,
+                         QWidget *parent = nullptr);
 
 signals:
     void info(const QString &);
@@ -77,17 +75,17 @@ private slots:
 private:
     QList<syslog_t> l_syslog;
 
-    QToolButton *btn_first;
-    QToolButton *btn_prev;
-    QToolButton *btn_next;
-    QToolButton *btn_last;
+    QPointer<QToolButton> btn_first;
+    QPointer<QToolButton> btn_prev;
+    QPointer<QToolButton> btn_next;
+    QPointer<QToolButton> btn_last;
 
     QList<QToolButton *> buttons;
 
-    QPushButton *btn_test;
+    QPointer<QPushButton> btn_test;
 
-    QStandardItemModel *model;
-    QTableView *table;
+    QPointer<QStandardItemModel> model;
+    QPointer<QTableView> table;
 
     QString syslog_to_str(int level);
 

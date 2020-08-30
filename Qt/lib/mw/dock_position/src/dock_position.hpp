@@ -36,7 +36,7 @@ class Dock_position : public QWidget
     Q_OBJECT
 
 public:
-    explicit Dock_position(QString doc_name, QWidget *parent = nullptr);
+    explicit Dock_position(const QString &doc_name, QWidget *parent = nullptr);
     ~Dock_position();
 
 private:

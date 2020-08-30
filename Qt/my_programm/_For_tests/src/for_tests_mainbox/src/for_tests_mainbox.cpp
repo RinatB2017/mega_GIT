@@ -122,7 +122,35 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+
+    //---
+    QTimer::singleShot(0, [this]{
+        QFileSystemModel *model = new QFileSystemModel(this);
+        model->setNameFilters(QStringList() << "*");
+        model->setNameFilterDisables(false);
+
+        ui->tree->setModel(model);
+    });
+    //---
+
     load_widgets();
+
+    //---
+#if 0
+//    QFile file(":/themes_css/Theme (Windows).css");
+//    QFile file(":/themes_qss/styles.qss");
+    QFile file(":/themes_qss/Norton Commander.qss");
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QByteArray ba = file.readAll();
+        qApp->setStyleSheet(ba.data());
+    }
+    else
+    {
+        emit error("theme file not open");
+    }
+#endif
+    //---
 }
 //--------------------------------------------------------------------------------
 void MainBox::delete_string(void)

@@ -249,9 +249,14 @@ private:
     void createToolBar(void);
 #endif
 
+//#ifndef NO_STYLETOOLBAR
+//    void set_norton_style(void);
+//#endif
+
 #ifndef NO_STYLETOOLBAR
     QPointer<QToolBar> styletoolbar;
     void createStyleToolBar(void);
+//    void createCustomStyleToolBar(void);
 #endif
 
 #ifndef NO_LOG

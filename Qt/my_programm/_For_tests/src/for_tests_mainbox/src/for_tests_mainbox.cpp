@@ -124,21 +124,35 @@ void MainBox::init(void)
 #endif
 
     //---
-    QTimer::singleShot(0, [this]{
-        QFileSystemModel *model = new QFileSystemModel(this);
-        model->setNameFilters(QStringList() << "*");
-        model->setNameFilterDisables(false);
+    QFileSystemModel *model = new QFileSystemModel(this);
+    model->setNameFilters(QStringList() << "*");
+    model->setNameFilterDisables(false);
 
-        ui->tree->setModel(model);
-    });
+    ui->tree->setModel(model);
     //---
 
     load_widgets();
 
-    //---
-#if 0
-//    QFile file(":/themes_css/Theme (Windows).css");
-//    QFile file(":/themes_qss/styles.qss");
+}
+//--------------------------------------------------------------------------------
+bool MainBox::set_theme_windows(void)
+{
+    QFile file(":/themes_css/Theme (Windows).css");
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QByteArray ba = file.readAll();
+        qApp->setStyleSheet(ba.data());
+    }
+    else
+    {
+        emit error("theme file not open");
+        return false;
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::set_norton_commander(void)
+{
     QFile file(":/themes_qss/Norton Commander.qss");
     if(file.open(QIODevice::ReadOnly))
     {
@@ -148,9 +162,25 @@ void MainBox::init(void)
     else
     {
         emit error("theme file not open");
+        return false;
     }
-#endif
-    //---
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::set_styles(void)
+{
+    QFile file(":/themes_qss/styles.qss");
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QByteArray ba = file.readAll();
+        qApp->setStyleSheet(ba.data());
+    }
+    else
+    {
+        emit error("theme file not open");
+        return false;
+    }
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::delete_string(void)
@@ -184,6 +214,10 @@ void MainBox::createTestBar(void)
     commands.append({ id++, "dec push button",  &MainBox::dec_push_button });
     commands.append({ id++, "timer start",      &MainBox::timer_start });
     commands.append({ id++, "timer stop",       &MainBox::timer_stop });
+
+    commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
+    commands.append({ id++, "Norton Commander.qss", &MainBox::set_norton_commander });
+    commands.append({ id++, "styles.qss",           &MainBox::set_styles });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

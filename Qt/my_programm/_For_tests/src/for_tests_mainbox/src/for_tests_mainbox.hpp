@@ -86,6 +86,10 @@ private:
     QPointer<QSpinBox>  sb_test;
     QPointer<QCheckBox> cb_block;
 
+    bool set_theme_windows(void);
+    bool set_norton_commander(void);
+    bool set_styles(void);
+
     bool inc_push_button(void);
     bool dec_push_button(void);
 

@@ -41,6 +41,8 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NEED_CODEC
 DEFINES += SAVE_INI
 
+#DEFINES += USE_CUSTOM_STYLE
+
 HEADERS += \
     defines.hpp \
     version.hpp

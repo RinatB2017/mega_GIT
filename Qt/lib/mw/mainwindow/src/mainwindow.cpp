@@ -292,7 +292,9 @@ void MainWindow::init(void)
 #endif
 #ifndef NO_STYLETOOLBAR
     createStyleToolBar();
-//    createCustomStyleToolBar();
+#ifdef USE_CUSTOM_STYLE
+    createCustomStyleToolBar();
+#endif
 #endif
 #ifndef NO_STATUSBAR
     createStatusBar();
@@ -461,8 +463,10 @@ void MainWindow::createMenus(void)
     app_menu_add_style(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
 
-//    app_menu_add_custom_style(m_app_optionsmenu);
+#ifdef USE_CUSTOM_STYLE
+    app_menu_add_custom_style(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
+#endif
 
     //FIXME под виндой это нормально не работает, почему то
 #ifndef Q_OS_WIN
@@ -867,7 +871,9 @@ void MainWindow::createToolBar(void)
 
 #ifndef NO_TOOLBAR_BUTTON_STYLE
     app_toolbar_add_style();
-//    app_toolbar_add_custom_style();
+#ifdef USE_CUSTOM_STYLE
+    app_toolbar_add_custom_style();
+#endif
 #ifndef NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
@@ -947,40 +953,44 @@ void MainWindow::createStyleToolBar(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-//#ifndef NO_STYLETOOLBAR
-//void MainWindow::set_norton_style(void)
-//{
-//    QFile file(":/themes_qss/Norton Commander.qss");
-//    if(file.open(QIODevice::ReadOnly))
-//    {
-//        QByteArray ba = file.readAll();
-//        qApp->setStyleSheet(ba.data());
-//    }
-//    else
-//    {
-//        emit error("theme file not open");
-//    }
-//}
-//#endif
+#ifndef NO_STYLETOOLBAR
+#ifdef USE_CUSTOM_STYLE
+void MainWindow::set_norton_style(void)
+{
+    QFile file(":/themes_qss/Norton Commander.qss");
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QByteArray ba = file.readAll();
+        qApp->setStyleSheet(ba.data());
+    }
+    else
+    {
+        emit error("theme file not open");
+    }
+}
+#endif
+#endif
 //--------------------------------------------------------------------------------
-//#ifndef NO_STYLETOOLBAR
-//void MainWindow::createCustomStyleToolBar(void)
-//{
-//    //TODO пробую самописные стили
-//    QToolBar *customStyletoolbar = new QToolBar(tr("customstyletoolbar"), this);
-//    Q_CHECK_PTR(customStyletoolbar);
+#ifndef NO_STYLETOOLBAR
+#ifdef USE_CUSTOM_STYLE
+void MainWindow::createCustomStyleToolBar(void)
+{
+    //TODO пробую самописные стили
+    QToolBar *customStyletoolbar = new QToolBar(tr("customstyletoolbar"), this);
+    Q_CHECK_PTR(customStyletoolbar);
 
-//    QPushButton *btnTemp = new QPushButton(this);
-//    btnTemp->setToolTip("Norton");
-//    btnTemp->setText("Norton");
-//    connect(btnTemp,    &QPushButton::clicked,  this,   &MainWindow::set_norton_style);
+    QPushButton *btnTemp = new QPushButton(this);
+    btnTemp->setToolTip("Norton");
+    btnTemp->setText("Norton");
+    connect(btnTemp,    &QPushButton::clicked,  this,   &MainWindow::set_norton_style);
 
-//    customStyletoolbar->addWidget(btnTemp);
+    customStyletoolbar->addWidget(btnTemp);
 
-//    addToolBar(Qt::LeftToolBarArea, customStyletoolbar);
-//    add_windowsmenu_action(customStyletoolbar, customStyletoolbar->toggleViewAction());
-//}
-//#endif
+    addToolBar(Qt::LeftToolBarArea, customStyletoolbar);
+    add_windowsmenu_action(customStyletoolbar, customStyletoolbar->toggleViewAction());
+}
+#endif
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::help(void)
 {
@@ -1987,27 +1997,29 @@ void MainWindow::app_menu_add_style(QMenu *menu)
     }
 }
 //--------------------------------------------------------------------------------
-//void MainWindow::app_menu_add_custom_style(QMenu *menu)
-//{
-//    //TODO пробую самописные стили
+#ifdef USE_CUSTOM_STYLE
+void MainWindow::app_menu_add_custom_style(QMenu *menu)
+{
+    //TODO пробую самописные стили
 
-//    Q_CHECK_PTR(menu);
+    Q_CHECK_PTR(menu);
 
-//    QMenu *menu_style = new QMenu(menu);
-//    menu_style->setProperty(APP_PROPERTY_ENG_TEXT, "Custom style");
-//    menu_style->setTitle("Custom style");
-//    menu_style->setToolTip("Custom style");
-//    menu_style->setStatusTip("Custom style");
-//    menu_style->setIcon(QIcon(ICON_STYLE));
-//    menu->addMenu(menu_style);
-//    app_menus.append(menu_style);
+    QMenu *menu_style = new QMenu(menu);
+    menu_style->setProperty(APP_PROPERTY_ENG_TEXT, "Custom style");
+    menu_style->setTitle("Custom style");
+    menu_style->setToolTip("Custom style");
+    menu_style->setStatusTip("Custom style");
+    menu_style->setIcon(QIcon(ICON_STYLE));
+    menu->addMenu(menu_style);
+    app_menus.append(menu_style);
 
-//    QAction *temp = new QAction("Norton", menu_style);
-//    temp->setIcon(QIcon(ICON_STYLE));
+    QAction *temp = new QAction("Norton", menu_style);
+    temp->setIcon(QIcon(ICON_STYLE));
 
-//    menu_style->addAction(temp);
-//    connect(temp,   &QAction::triggered,    this,   &MainWindow::set_norton_style);
-//}
+    menu_style->addAction(temp);
+    connect(temp,   &QAction::triggered,    this,   &MainWindow::set_norton_style);
+}
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_confirm_exit(QMenu *menu)
 {
@@ -2196,27 +2208,29 @@ void MainWindow::app_toolbar_add_style(void)
     app_buttons.append(btnStyle);
 }
 //--------------------------------------------------------------------------------
-//void MainWindow::app_toolbar_add_custom_style(void)
-//{
-//    //TODO пробую самописные стили
+#ifdef USE_CUSTOM_STYLE
+void MainWindow::app_toolbar_add_custom_style(void)
+{
+    //TODO пробую самописные стили
 
-//    QMenu *menu = new QMenu(this);
+    QMenu *menu = new QMenu(this);
 
-//    QAction *a_norton = new QAction("Norton", menu);
-//    menu->addAction(a_norton);
+    QAction *a_norton = new QAction("Norton", menu);
+    menu->addAction(a_norton);
 
-//    QToolButton *btnStyle = new QToolButton(this);
-//    btnStyle->setObjectName("btn_norton");
-//    btnStyle->setIcon(QPixmap(ICON_STYLE));
-//    btnStyle->setMenu(menu);
-//    btnStyle->setPopupMode(QToolButton::InstantPopup);
+    QToolButton *btnStyle = new QToolButton(this);
+    btnStyle->setObjectName("btn_norton");
+    btnStyle->setIcon(QPixmap(ICON_STYLE));
+    btnStyle->setMenu(menu);
+    btnStyle->setPopupMode(QToolButton::InstantPopup);
 
-//    connect(a_norton,   &QAction::triggered,    this,   &MainWindow::set_norton_style);
+    connect(a_norton,   &QAction::triggered,    this,   &MainWindow::set_norton_style);
 
-//#ifndef NO_TOOLBAR
-//    toolbar->addWidget(btnStyle);
-//#endif
-//}
+#ifndef NO_TOOLBAR
+    toolbar->addWidget(btnStyle);
+#endif
+}
+#endif
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_about(void)
 {

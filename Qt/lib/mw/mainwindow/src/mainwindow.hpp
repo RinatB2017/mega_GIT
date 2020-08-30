@@ -249,14 +249,18 @@ private:
     void createToolBar(void);
 #endif
 
-//#ifndef NO_STYLETOOLBAR
-//    void set_norton_style(void);
-//#endif
+#ifndef NO_STYLETOOLBAR
+#ifdef USE_CUSTOM_STYLE
+    void set_norton_style(void);
+#endif
+#endif
 
 #ifndef NO_STYLETOOLBAR
     QPointer<QToolBar> styletoolbar;
     void createStyleToolBar(void);
-//    void createCustomStyleToolBar(void);
+#ifdef USE_CUSTOM_STYLE
+    void createCustomStyleToolBar(void);
+#endif
 #endif
 
 #ifndef NO_LOG
@@ -298,7 +302,9 @@ private:
     void app_menu_add_theme(QMenu *menu);
     void app_menu_add_lang(QMenu *menu);
     void app_menu_add_style(QMenu *menu);
+#ifdef USE_CUSTOM_STYLE
     void app_menu_add_custom_style(QMenu *menu);
+#endif
     void app_menu_add_confirm_exit(QMenu *menu);
     void app_menu_add_show_on_top(QMenu *menu);
     void app_menu_add_about(QMenu *menu);
@@ -311,7 +317,9 @@ private:
 #endif
     void app_toolbar_add_lang(void);
     void app_toolbar_add_style(void);
+#ifdef USE_CUSTOM_STYLE
     void app_toolbar_add_custom_style(void);
+#endif
     void app_toolbar_add_about(void);
     void app_toolbar_add_help(void);
 

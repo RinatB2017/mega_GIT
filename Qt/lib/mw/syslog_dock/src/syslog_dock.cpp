@@ -71,7 +71,7 @@ SysLog_dock::SysLog_dock(const QString &title,
         QToolButton *btn = new QToolButton;
         btn->setObjectName(QString("btn_%1").arg(n));
         btn->setText(QString("%1").arg(n));
-        btn->setProperty("value", n);
+        btn->setProperty(VALUE, n);
         connect(btn,    &QToolButton::clicked,  this,   &SysLog_dock::click);
         buttons.append(btn);
     }

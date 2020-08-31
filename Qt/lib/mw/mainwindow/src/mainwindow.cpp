@@ -57,16 +57,16 @@ MainWindow::~MainWindow()
 #endif
 
 #ifndef NO_LOG_INFO
-    MyWidget::set_param("Main", "flag_show_info",   flag_show_info);
+    MyWidget::set_param(MAIN, FLAG_SHOW_INFO,   flag_show_info);
 #endif
 #ifndef NO_LOG_ERROR
-    MyWidget::set_param("Main", "flag_show_error",  flag_show_error);
+    MyWidget::set_param(MAIN, FLAG_SHOW_ERROR,  flag_show_error);
 #endif
 #ifndef NO_LOG_DEBUG
-    MyWidget::set_param("Main", "flag_show_debug",  flag_show_debug);
+    MyWidget::set_param(MAIN, FLAG_SHOW_DEBUG,  flag_show_debug);
 #endif
 #ifndef NO_LOG_TRACE
-    MyWidget::set_param("Main", "flag_show_trace",  flag_show_trace);
+    MyWidget::set_param(MAIN, FLAG_SHOW_TRACE,  flag_show_trace);
 #endif
 #ifndef NO_LOG
     if(ld)
@@ -165,7 +165,7 @@ bool MainWindow::check_exit(void)
     QWidgetList wl = qApp->allWidgets();
     foreach (QWidget *widget, wl)
     {
-        bool ok = widget->property("is_exit").toBool();
+        bool ok = widget->property(IS_EXIT).toBool();
         if(ok)
         {
             return false;
@@ -646,10 +646,9 @@ void MainWindow::about(void)
     AboutBox *about = new AboutBox(orgName,
                                    appName,
                                    appVersion,
-                                   "tux4096@gmail.com",
-                                   tr("Author: Bikbao Rinat Zinorovich"),
-                                   "https://telegram.im/TrueProgrammer");
-                                   // "https://t-do.ru/TrueProgrammer");
+                                   EMAIL_STR,
+                                   tr(AUTHOR_STR),
+                                   TELEGRAM_STR);
     Q_CHECK_PTR(about);
 
     about->exec();
@@ -666,10 +665,10 @@ void MainWindow::load_main(void)
     int font_weight;
     int font_size;
 
-    beginGroup("Main");
-    font_weight = load_value("FontWeight",   QFont::Normal).toInt();
-    font_size   = load_value("FontSize",     9).toInt();
-    font_name   = load_value("FontName",     "Liberation Sans").toString();
+    beginGroup(MAIN);
+    font_weight = load_value(FONT_WEIGHT,   QFont::Normal).toInt();
+    font_size   = load_value(FONT_SIZE,     9).toInt();
+    font_name   = load_value(FONT_NAME,     "Liberation Sans").toString();
 
     if(font_size > 72) font_size = 72;
     if(font_size < 6)  font_size = 6;
@@ -684,14 +683,14 @@ void MainWindow::load_main(void)
 
     QApplication::setFont(font);
 
-    style_name = load_value("StyleName", "Breeze").toString();
-    flag_close = load_value("NoAnswerFromExit", true).toBool();
-    flag_always_on_top = load_value("AlwaysOnTop", false).toBool();
+    style_name = load_value(STYLE_NAME,             "Breeze").toString();
+    flag_close = load_value(NO_ANSWER_FROM_EXIT,    true).toBool();
+    flag_always_on_top = load_value(ALWAYS_ON_TOP,  false).toBool();
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 
     //---
-    state_theme = load_value("Theme",  SYSTEM_THEME).toInt();
+    state_theme = load_value(THEME,  SYSTEM_THEME).toInt();
     switch(state_theme)
     {
     case SYSTEM_THEME:
@@ -714,8 +713,8 @@ void MainWindow::load_main(void)
 
     endGroup();
 
-    restoreState(load_value("windowState").toByteArray());
-    restoreGeometry(load_value("geometry").toByteArray());
+    restoreState(load_value(WINDOW_STATE).toByteArray());
+    restoreGeometry(load_value(GEOMETRY).toByteArray());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::save_main(void)
@@ -724,33 +723,33 @@ void MainWindow::save_main(void)
     qDebug() << "MainWindow::save_main";
 #endif
 
-    beginGroup("Main");
-    save_value("FontName",      QApplication::font().family());
-    save_value("FontWeight",    QApplication::font().weight());
-    save_value("FontSize",      QApplication::font().pointSize());
-    save_value("StyleName",     style_name);
+    beginGroup(MAIN);
+    save_value(FONT_NAME,      QApplication::font().family());
+    save_value(FONT_WEIGHT,    QApplication::font().weight());
+    save_value(FONT_SIZE,      QApplication::font().pointSize());
+    save_value(STYLE_NAME,     style_name);
 
-    save_value("NoAnswerFromExit", flag_close);
-    save_value("AlwaysOnTop",   flag_always_on_top);
+    save_value(NO_ANSWER_FROM_EXIT, flag_close);
+    save_value(ALWAYS_ON_TOP,   flag_always_on_top);
 #ifndef NO_LOG_INFO
-    save_value("flag_show_info",  flag_show_info);
+    save_value(FLAG_SHOW_INFO,  flag_show_info);
 #endif
 #ifndef NO_LOG_DEBUG
-    save_value("flag_show_debug", flag_show_debug);
+    save_value(FLAG_SHOW_DEBUG, flag_show_debug);
 #endif
 #ifndef NO_LOG_ERROR
-    save_value("flag_show_error", flag_show_error);
+    save_value(FLAG_SHOW_ERROR, flag_show_error);
 #endif
 #ifndef NO_LOG_TRACE
-    save_value("flag_show_trace", flag_show_trace);
+    save_value(FLAG_SHOW_TRACE, flag_show_trace);
 #endif
 
-    save_value("Theme",         state_theme);
+    save_value(THEME,         state_theme);
 
     endGroup();
 
-    save_value("geometry",      saveGeometry());
-    save_value("windowState",   saveState());
+    save_value(GEOMETRY,      saveGeometry());
+    save_value(WINDOW_STATE,   saveState());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)
@@ -1827,10 +1826,10 @@ void MainWindow::app_menu_add_log_filter(QMenu *menu)
     QVariant v_flag_show_error  = true;
     QVariant v_flag_show_trace  = true;
 
-    MyWidget::get_param("Main", "flag_show_info",   true,   &v_flag_show_info);
-    MyWidget::get_param("Main", "flag_show_debug",  true,   &v_flag_show_debug);
-    MyWidget::get_param("Main", "flag_show_error",  true,   &v_flag_show_error);
-    MyWidget::get_param("Main", "flag_show_trace",  true,   &v_flag_show_trace);
+    MyWidget::get_param(MAIN, FLAG_SHOW_INFO,   true,   &v_flag_show_info);
+    MyWidget::get_param(MAIN, FLAG_SHOW_DEBUG,  true,   &v_flag_show_debug);
+    MyWidget::get_param(MAIN, FLAG_SHOW_ERROR,  true,   &v_flag_show_error);
+    MyWidget::get_param(MAIN, FLAG_SHOW_TRACE,  true,   &v_flag_show_trace);
 
 #ifndef NO_LOG_INFO
     QAction *show_info  = new QAction(menu);

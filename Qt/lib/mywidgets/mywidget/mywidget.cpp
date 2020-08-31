@@ -191,37 +191,37 @@ void MyWidget::init_w_lists(void)
     QList<QLineEdit *> allle = findChildren<QLineEdit *>();
     foreach (QLineEdit *obj, allle)
     {
-        obj->setProperty("state", true);
+        obj->setProperty(STATE_PROPERTY, true);
         w_lists.append(obj);
     }
     QList<QAbstractSlider *> allsl = findChildren<QAbstractSlider *>();
     foreach (QAbstractSlider *obj, allsl)
     {
-        obj->setProperty("state", true);
+        obj->setProperty(STATE_PROPERTY, true);
         w_lists.append(obj);
     }
     QList<QAbstractScrollArea *> allsa = findChildren<QAbstractScrollArea *>();
     foreach (QAbstractScrollArea *obj, allsa)
     {
-        obj->setProperty("state", true);
+        obj->setProperty(STATE_PROPERTY, true);
         w_lists.append(obj);
     }
     QList<QAbstractSpinBox *> allsb = findChildren<QAbstractSpinBox *>();
     foreach (QAbstractSpinBox *obj, allsb)
     {
-        obj->setProperty("state", true);
+        obj->setProperty(STATE_PROPERTY, true);
         w_lists.append(obj);
     }
     QList<QComboBox *> allcb = findChildren<QComboBox *>();
     foreach (QComboBox *obj, allcb)
     {
-        obj->setProperty("state", true);
+        obj->setProperty(STATE_PROPERTY, true);
         w_lists.append(obj);
     }
     QList<QAbstractButton *> allbtn = findChildren<QAbstractButton *>();
     foreach (QAbstractButton *obj, allbtn)
     {
-        obj->setProperty("state", true);
+        obj->setProperty(STATE_PROPERTY, true);
         w_lists.append(obj);
     }
 }
@@ -449,7 +449,7 @@ QString MyWidget::get_full_objectName(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MyWidget::block_close(bool state)
 {
-    setProperty("flag_no_close", state);
+    setProperty(FLAG_NO_CLOSE, state);
 }
 //--------------------------------------------------------------------------------
 void MyWidget::closeEvent(QCloseEvent *)

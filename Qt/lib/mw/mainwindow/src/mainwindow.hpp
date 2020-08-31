@@ -1,4 +1,4 @@
-/*********************************************************************************
+﻿/*********************************************************************************
 **                                                                              **
 **     Copyright (C) 2017                                                       **
 **                                                                              **
@@ -58,6 +58,43 @@
 //--------------------------------------------------------------------------------
 #define APP_PROPERTY_ENG_TEXT           "app_property_eng_text"
 #define DOCKWIDGET_PROPERTY_ENG_TEXT    "dockwidget_property_eng_text"
+
+#define FLAG_SHOW_INFO  "flag_show_info"
+#define FLAG_SHOW_ERROR "flag_show_error"
+#define FLAG_SHOW_DEBUG "flag_show_debug"
+#define FLAG_SHOW_TRACE "flag_show_trace"
+
+#define IS_EXIT "is_exit"
+
+#define EMAIL_STR       "tux4096@gmail.com"
+#define AUTHOR_STR      "Author: Bikbao Rinat Zinorovich"
+#define TELEGRAM_STR    "https://telegram.im/TrueProgrammer"
+//#define TELEGRAM_STR    "https://t-do.ru/TrueProgrammer"
+
+#define FONT_WEIGHT "FontWeight"
+#define FONT_SIZE   "FontSize"
+#define FONT_NAME   "FontName"
+
+#define STYLE_NAME   "StyleName"
+#define NO_ANSWER_FROM_EXIT    "NoAnswerFromExit"
+#define ALWAYS_ON_TOP "AlwaysOnTop"
+
+#define THEME   "Theme"
+
+#define WINDOW_STATE "windowState"
+#define GEOMETRY     "geometry"
+
+#define MAIN    "Main"
+
+#define FLAG_READ_ONLY          "flag_ReadOnly"
+#define FLAG_ACCEPT_RICH_TEXT   "flag_AcceptRichText"
+#define FLAG_NO_CRLF            "flag_NoCRLF"
+#define FLAG_ADD_DATETIME       "flag_AddDateTime"
+#define FLAG_COLOR              "flag_Color"
+#define FLAG_ERROR_AS_MESSAGE   "flag_ErrorAsMessage"
+#define FLAG_TEXT_IS_WINDOWS    "flag_TextIsWindows"
+#define FLAG_AUTOSIZE           "flag_AutoSave"
+#define FILE_AUTOSIZE           "file_AutoSave"
 //--------------------------------------------------------------------------------
 class LogBox;
 class LogDock;

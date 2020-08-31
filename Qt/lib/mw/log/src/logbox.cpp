@@ -584,15 +584,15 @@ void LogBox::changeOptions(void)
 
     optionsBox->setObjectName("optionsBox");
 
-    optionsBox->setProperty("flag_ReadOnly",        logBox->isReadOnly());
-    optionsBox->setProperty("flag_AcceptRichText",  logBox->acceptRichText());
-    optionsBox->setProperty("flag_NoCRLF",          flagNoCRLF);
-    optionsBox->setProperty("flag_AddDateTime",     flagAddDateTime);
-    optionsBox->setProperty("flag_Color",           flagColor);
-    optionsBox->setProperty("flag_ErrorAsMessage",  flagErrorAsMessage);
-    optionsBox->setProperty("flag_TextIsWindows",   flagTextIsWindows);
-    optionsBox->setProperty("flag_AutoSave",        flagAutoSave);
-    optionsBox->setProperty("file_AutoSave",        autosave_filename);
+    optionsBox->setProperty(FLAG_READ_ONLY,         logBox->isReadOnly());
+    optionsBox->setProperty(FLAG_ACCEPT_RICH_TEXT,  logBox->acceptRichText());
+    optionsBox->setProperty(FLAG_NO_CRLF,           flagNoCRLF);
+    optionsBox->setProperty(FLAG_ADD_DATETIME,      flagAddDateTime);
+    optionsBox->setProperty(FLAG_COLOR,             flagColor);
+    optionsBox->setProperty(FLAG_ERROR_AS_MESSAGE,  flagErrorAsMessage);
+    optionsBox->setProperty(FLAG_TEXT_IS_WINDOWS,   flagTextIsWindows);
+    optionsBox->setProperty(FLAG_AUTOSIZE,          flagAutoSave);
+    optionsBox->setProperty(FILE_AUTOSIZE,          autosave_filename);
 
     qDebug() << autosave_filename;
 
@@ -606,15 +606,15 @@ void LogBox::changeOptions(void)
         emit debugLog(QString("new codec is %1").arg(current_codec->name().data()));
 #endif
 
-        logBox->setReadOnly(optionsBox->property("flag_ReadOnly").toBool());
-        logBox->setAcceptRichText(optionsBox->property("flag_AcceptRichText").toBool());
-        flagNoCRLF          = optionsBox->property("flag_NoCRLF").toBool();
-        flagAddDateTime     = optionsBox->property("flag_AddDateTime").toBool();
-        flagColor           = optionsBox->property("flag_Color").toBool();
-        flagErrorAsMessage  = optionsBox->property("flag_ErrorAsMessage").toBool();
-        flagTextIsWindows   = optionsBox->property("flag_TextIsWindows").toBool();
-        flagAutoSave        = optionsBox->property("flag_AutoSave").toBool();
-        autosave_filename   = optionsBox->property("file_AutoSave").toString();
+        logBox->setReadOnly(optionsBox->property(FLAG_READ_ONLY).toBool());
+        logBox->setAcceptRichText(optionsBox->property(FLAG_ACCEPT_RICH_TEXT).toBool());
+        flagNoCRLF          = optionsBox->property(FLAG_NO_CRLF).toBool();
+        flagAddDateTime     = optionsBox->property(FLAG_ADD_DATETIME).toBool();
+        flagColor           = optionsBox->property(FLAG_COLOR).toBool();
+        flagErrorAsMessage  = optionsBox->property(FLAG_ERROR_AS_MESSAGE).toBool();
+        flagTextIsWindows   = optionsBox->property(FLAG_TEXT_IS_WINDOWS).toBool();
+        flagAutoSave        = optionsBox->property(FLAG_AUTOSIZE).toBool();
+        autosave_filename   = optionsBox->property(FILE_AUTOSIZE).toString();
 
         qDebug() << autosave_filename;
 
@@ -695,15 +695,15 @@ void LogBox::load_settings(void)
     if(text.isEmpty())  text = "noname";
 
     beginGroup(text);
-    logBox->setReadOnly(load_value("readOnly", true).toBool());
-    logBox->setAcceptRichText(load_value("acceptRichText", true).toBool());
-    flagNoCRLF          = load_value("no_CRLF", false).toBool();
-    flagAddDateTime     = load_value("addDateTime", false).toBool();
-    flagColor           = load_value("color", true).toBool();
-    flagErrorAsMessage  = load_value("ErrorAsMessage", false).toBool();
-    flagTextIsWindows   = load_value("TextIsWindows", false).toBool();
-    flagAutoSave        = load_value("AutoSave", false).toBool();
-    autosave_filename   = load_value("FileAutoSave", "noname.log").toString();
+    logBox->setReadOnly(load_value(FLAG_READ_ONLY, true).toBool());
+    logBox->setAcceptRichText(load_value(FLAG_ACCEPT_RICH_TEXT, true).toBool());
+    flagNoCRLF          = load_value(FLAG_NO_CRLF, false).toBool();
+    flagAddDateTime     = load_value(FLAG_ADD_DATETIME, false).toBool();
+    flagColor           = load_value(FLAG_COLOR, true).toBool();
+    flagErrorAsMessage  = load_value(FLAG_ERROR_AS_MESSAGE, false).toBool();
+    flagTextIsWindows   = load_value(FLAG_TEXT_IS_WINDOWS, false).toBool();
+    flagAutoSave        = load_value(FLAG_AUTOSIZE, false).toBool();
+    autosave_filename   = load_value(FILE_AUTOSIZE, "noname.log").toString();
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: load settings";
@@ -721,9 +721,9 @@ void LogBox::load_settings(void)
     int font_weight = 0;
     int font_size = 0;
 
-    font_weight = load_value("FontWeight",   QFont::Normal).toInt();
-    font_size   = load_value("FontSize",     9).toInt();
-    font_name   = load_value("FontName",     "Liberation Mono").toString();
+    font_weight = load_value(FONT_WEIGHT,   QFont::Normal).toInt();
+    font_size   = load_value(FONT_SIZE,     9).toInt();
+    font_name   = load_value(FONT_NAME,     "Liberation Mono").toString();
 
     if(font_size > 72) font_size = 72;
     if(font_size < 6)  font_size = 6;
@@ -759,21 +759,21 @@ void LogBox::save_settings(void)
 #endif
 
     beginGroup(text);
-    save_value("readOnly",      logBox->isReadOnly());
-    save_value("acceptRichText",logBox->acceptRichText());
-    save_value("no_CRLF",       flagNoCRLF);
-    save_value("addDateTime",   flagAddDateTime);
-    save_value("color",         flagColor);
-    save_value("ErrorAsMessage",flagErrorAsMessage);
-    save_value("TextIsWindows", flagTextIsWindows);
-    save_value("AutoSave",      flagAutoSave);
-    save_value("FileAutoSave",  autosave_filename);
+    save_value(FLAG_READ_ONLY,          logBox->isReadOnly());
+    save_value(FLAG_ACCEPT_RICH_TEXT,   logBox->acceptRichText());
+    save_value(FLAG_NO_CRLF,            flagNoCRLF);
+    save_value(FLAG_ADD_DATETIME,       flagAddDateTime);
+    save_value(FLAG_COLOR,              flagColor);
+    save_value(FLAG_ERROR_AS_MESSAGE,   flagErrorAsMessage);
+    save_value(FLAG_TEXT_IS_WINDOWS,    flagTextIsWindows);
+    save_value(FLAG_AUTOSIZE,           flagAutoSave);
+    save_value(FILE_AUTOSIZE,           autosave_filename);
 
 #ifndef NO_LOG
     QFont font = get_font();
-    save_value("FontWeight",  font.weight());
-    save_value("FontSize",    font.pointSize());
-    save_value("FontName",    font.family());
+    save_value(FONT_WEIGHT,  font.weight());
+    save_value(FONT_SIZE,    font.pointSize());
+    save_value(FONT_NAME,    font.family());
 #endif
 
     endGroup();

@@ -12,8 +12,11 @@ using namespace std;
 //#define VID 0x0483
 //#define PID 0x5710
 
-#define VID 0x08bb
-#define PID 0x2704
+// #define VID 0x08bb
+// #define PID 0x2704
+
+#define VID 0x1366
+#define PID 0x0101
 
 #define DEV_INTF 0    // номер интерфейса
 

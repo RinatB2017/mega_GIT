@@ -124,11 +124,24 @@ void MainBox::init(void)
 #endif
 
     //---
-    QFileSystemModel *model = new QFileSystemModel(this);
-    model->setNameFilters(QStringList() << "*");
-    model->setNameFilterDisables(false);
+    QFileSystemModel *file_model = new QFileSystemModel(this);
+    file_model->setNameFilters(QStringList() << "*");
+    file_model->setNameFilterDisables(false);
 
-    ui->tree->setModel(model);
+    ui->tree->setModel(file_model);
+    //---
+    QStandardItemModel *text_model = new QStandardItemModel(0, 2, this);
+    text_model->setHeaderData(0, Qt::Horizontal, tr("Test"));
+    text_model->setHorizontalHeaderLabels(QStringList() << "Text" << "N");
+
+    for(int n=0; n<10; n++)
+    {
+        text_model->insertRow(n);
+        text_model->setData(text_model->index(n, 0, QModelIndex()), "text");
+        text_model->setData(text_model->index(n, 1, QModelIndex()), n);
+    }
+
+    ui->tableView->setModel(text_model);
     //---
 
     load_widgets();

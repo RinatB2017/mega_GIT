@@ -110,6 +110,7 @@ void MainBox::choice_test(void)
     {
         return;
     }
+    
     auto cmd_it = std::find_if(
                 commands.begin(),
                 commands.end(),

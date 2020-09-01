@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>146</width>
-    <height>318</height>
+    <height>422</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -69,9 +69,9 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_list">
+       <widget class="QPushButton" name="btn_open">
         <property name="text">
-         <string>List</string>
+         <string>Open</string>
         </property>
        </widget>
       </item>
@@ -90,6 +90,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_close">
+        <property name="text">
+         <string>Close</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -101,6 +108,13 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_list">
+        <property name="text">
+         <string>List</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -117,9 +131,11 @@
  <tabstops>
   <tabstop>sb_VID</tabstop>
   <tabstop>sb_PID</tabstop>
-  <tabstop>btn_list</tabstop>
+  <tabstop>btn_open</tabstop>
   <tabstop>btn_read</tabstop>
   <tabstop>btn_write</tabstop>
+  <tabstop>btn_close</tabstop>
+  <tabstop>btn_list</tabstop>
  </tabstops>
  <resources/>
  <connections/>

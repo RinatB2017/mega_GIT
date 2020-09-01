@@ -38,6 +38,8 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#define SINGLE_APP  1
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
@@ -45,7 +47,7 @@ int main(int argc, char *argv[])
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
-        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        QMessageBox::critical(nullptr,  QObject::tr("Error"),   QObject::tr("Application already running!"));
         if(app.sendMessage("Wake up!")) return 0;
     }
 #else
@@ -65,18 +67,10 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_CHECK_PTR(main_window);
 
-    //---
-    // Workaround: Removing the /usr/lib/libGL.so.1 file fixes the problem.
-    // qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    // QGLFormat format;
-    // format.setVersion(4, 3);
-    // QGLFormat::setDefaultFormat(format);
-    //---
-
-    //MainBox *mainBox = new MainBox(0, splash);
     MainBox *mainBox = new MainBox(main_window, splash);
+    Q_CHECK_PTR(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

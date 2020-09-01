@@ -8,10 +8,7 @@ TARGET   = Test_libUSB
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/test_libusb_mainbox \
-    $$PWD/src/test_libusb_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -27,21 +24,11 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += HEX16
 
 HEADERS += \
-    test_libusb_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_libusb_mainbox.cpp \
     main.cpp
-
-#WIN
-#SOURCES += \
-#    libusb/core.c \
-#    libusb/windows_winusb.c \
-#    libusb/hotplug.c
-
-FORMS   += test_libusb_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -76,6 +63,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
+
+include (src/test_libusb_mainbox/test_libusb_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

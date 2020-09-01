@@ -18,18 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#if 0
-#include <sys/time.h>  // to use gettimeofday() function
-#include <time.h>      // to use time() function
-#include "libusb/libusb.h"
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_test_libusb_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -53,6 +41,10 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    libusb_exit(ctx);
+
+    save_widgets();
+    save_setting();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -64,14 +56,18 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    set_VID(0x08BB);
-    set_PID(0x2704);
+    connect(ui->btn_list,   &QToolButton::clicked,  this,   &MainBox::s_list);
+    connect(ui->btn_open,   &QToolButton::clicked,  this,   &MainBox::s_open);
+    connect(ui->btn_read,   &QToolButton::clicked,  this,   &MainBox::s_read);
+    connect(ui->btn_write,  &QToolButton::clicked,  this,   &MainBox::s_write);
+    connect(ui->btn_close,  &QToolButton::clicked,  this,   &MainBox::s_close);
 
-    connect(ui->btn_list,   SIGNAL(clicked(bool)),  this,   SLOT(f_list()));
-    connect(ui->btn_read,   SIGNAL(clicked(bool)),  this,   SLOT(f_read()));
-    connect(ui->btn_write,  SIGNAL(clicked(bool)),  this,   SLOT(f_write()));
+    libusb_init(nullptr);   // инициализация
+    //libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    load_widgets();
+    load_setting();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -80,13 +76,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -120,67 +110,192 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
+    auto cmd_it = std::find_if(
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != commands.end())
     {
-        if(command.cmd == cmd)
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
-
+    emit trace(Q_FUNC_INFO);
+    emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+void MainBox::s_list(void)
 {
-    emit info("Test_1()");
-
-    return true;
+    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
+    if(btn)
+    {
+        btn->setDisabled(true);
+    }
+    f_list();
+    if(btn)
+    {
+        btn->setEnabled(true);
+    }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+void MainBox::s_open(void)
 {
-    emit info("Test_2()");
-
-    return true;
+    emit trace(Q_FUNC_INFO);
+    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
+    if(btn)
+    {
+        btn->setDisabled(true);
+    }
+    f_open();
+    if(btn)
+    {
+        btn->setEnabled(true);
+    }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
+void MainBox::s_read(void)
 {
-    emit info("Test_3()");
-
-    return true;
+    emit trace(Q_FUNC_INFO);
+    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
+    if(btn)
+    {
+        btn->setDisabled(true);
+    }
+    f_read();
+    if(btn)
+    {
+        btn->setEnabled(true);
+    }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
+void MainBox::s_write(void)
 {
-    emit info("Test_4()");
-
-    return true;
+    emit trace(Q_FUNC_INFO);
+    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
+    if(btn)
+    {
+        btn->setDisabled(true);
+    }
+    f_write();
+    if(btn)
+    {
+        btn->setEnabled(true);
+    }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
+void MainBox::s_close(void)
 {
-    emit info("Test_5()");
+    emit trace(Q_FUNC_INFO);
+    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
+    if(btn)
+    {
+        btn->setDisabled(true);
+    }
+    f_close();
+    if(btn)
+    {
+        btn->setEnabled(true);
+    }
+}
+//--------------------------------------------------------------------------------
+QString MainBox::get_error_string(int err)
+{
+    QString temp;
 
-    return true;
+    switch(err)
+    {
+    /** Success (no error) */
+    case LIBUSB_SUCCESS:
+        temp = "Success (no error)";
+        break;
+
+        /** Input/output error */
+    case LIBUSB_ERROR_IO:
+        temp = "Input/output error";
+        break;
+
+        /** Invalid parameter */
+    case LIBUSB_ERROR_INVALID_PARAM:
+        temp = "Invalid parameter";
+        break;
+
+        /** Access denied (insufficient permissions) */
+    case LIBUSB_ERROR_ACCESS:
+        temp = "Access denied (insufficient permissions)";
+        break;
+
+        /** No such device (it may have been disconnected) */
+    case LIBUSB_ERROR_NO_DEVICE:
+        temp = "No such device (it may have been disconnected)";
+        break;
+
+        /** Entity not found */
+    case LIBUSB_ERROR_NOT_FOUND:
+        temp = "Entity not found";
+        break;
+
+        /** Resource busy */
+    case LIBUSB_ERROR_BUSY:
+        temp = "Resource busy";
+        break;
+
+        /** Operation timed out */
+    case LIBUSB_ERROR_TIMEOUT:
+        temp = "Operation timed out";
+        break;
+
+        /** Overflow */
+    case LIBUSB_ERROR_OVERFLOW:
+        temp = "Overflow";
+        break;
+
+        /** Pipe error */
+    case LIBUSB_ERROR_PIPE:
+        temp = "Pipe error";
+        break;
+
+        /** System call interrupted (perhaps due to signal) */
+    case LIBUSB_ERROR_INTERRUPTED:
+        temp = "System call interrupted (perhaps due to signal)";
+        break;
+
+        /** Insufficient memory */
+    case LIBUSB_ERROR_NO_MEM:
+        temp = "Insufficient memory";
+        break;
+
+        /** Operation not supported or unimplemented on this platform */
+    case LIBUSB_ERROR_NOT_SUPPORTED:
+        temp = "Operation not supported or unimplemented on this platform";
+        break;
+
+        /* NB: Remember to update LIBUSB_ERROR_COUNT below as well as the
+       message strings in strerror.c when adding new error codes here. */
+
+        /** Other error */
+    case LIBUSB_ERROR_OTHER:
+        temp = "Other error";
+        break;
+
+    default:
+        temp = QString("unknown error: %1").arg(err);
+        break;
+    }
+    return temp;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_list(void)
@@ -208,14 +323,50 @@ bool MainBox::f_list(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_read(void)
+void MainBox::print_info(void)
 {
-    libusb_init(nullptr);   // инициализация
+    struct libusb_device_descriptor dev_desc;
+    libusb_device *dev = libusb_get_device(handle);
+    uint8_t bus = libusb_get_bus_number(dev);
+    libusb_get_device_descriptor(dev, &dev_desc);
 
-    //libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
-    libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
+    emit info("---");
+    emit info(QString("length: %1").arg(dev_desc.bLength));
+    emit info(QString("device class: %1").arg(dev_desc.bDeviceClass));
+    emit info(QString("S/N: %1").arg(dev_desc.iSerialNumber));
+    emit info(QString("VID:PID: %1:%2")
+              .arg(dev_desc.idVendor,  4, 16, QChar('0'))
+              .arg(dev_desc.idProduct, 4, 16, QChar('0')));
+    emit info(QString("bcdDevice: %1").arg(dev_desc.bcdDevice));
+    emit info(QString("iManufacturer: %1")
+              .arg(dev_desc.iManufacturer));
+    emit info(QString("iProduct: %1")
+              .arg(dev_desc.iProduct));
+    emit info(QString("iSerialNumber: %1")
+              .arg(dev_desc.iSerialNumber));
+    emit info(QString("nb confs: %1").arg(dev_desc.bNumConfigurations));
+    emit info("---");
+    emit info(QString("bus %1").arg(bus));
 
-    libusb_device_handle *handle = libusb_open_device_with_vid_pid(nullptr, get_VID(), get_PID());
+    int speed = libusb_get_device_speed(dev);
+    emit info(QString("speed %1").arg(speed));
+
+    int active_cfg = -5;
+    int err = libusb_get_configuration(handle, &active_cfg);
+    if(err != LIBUSB_SUCCESS)
+    {
+        emit error(QString("libusb_get_configuration return: %1").arg(get_error_string(err)));
+    }
+    else
+    {
+        emit info(QString("active_cfg %1").arg(active_cfg));
+    }
+    emit info("---");
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_open(void)
+{
+    handle = libusb_open_device_with_vid_pid(ctx, get_VID(), get_PID());
     if (handle == nullptr)
     {
         emit error("Устройство не подключено");
@@ -225,54 +376,42 @@ bool MainBox::f_read(void)
     {
         emit info("Устройство найдено");
     }
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_read(void)
+{
+    if(handle == nullptr)
+    {
+        emit error("Device not open!");
+        return false;
+    }
 
     if (libusb_kernel_driver_active(handle, DEV_INTF))
     {
         libusb_detach_kernel_driver(handle, DEV_INTF);
     }
 
-    if (libusb_claim_interface(handle,  DEV_INTF) < 0)
+    int res = libusb_claim_interface(handle,  DEV_INTF);
+    if (res != LIBUSB_SUCCESS)
     {
-        emit error("Ошибка захвата интерфейса");
+        emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
+        libusb_close(handle);
+        libusb_exit(nullptr);
         return false;
     }
 
-    //---
-#if 0
-    int rc = libusb_set_interface_alt_setting(handle, DEV_INTF, 1);
-    if(rc != 0)
-    {
-        emit error("Cannot configure alternate setting");
-        return false;
-    }
-#endif
-    //---
+    print_info();
 
-    interrupt_transfer_loop(handle);
-    bulk_transfer_loop(handle);
-
-    libusb_attach_kernel_driver(handle, DEV_INTF);
-    libusb_close(handle);
-    libusb_exit(nullptr);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_write(void)
 {
-    libusb_init(nullptr);   // инициализация
-
-    //libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
-    libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
-
-    libusb_device_handle *handle = libusb_open_device_with_vid_pid(nullptr, get_VID(), get_PID());
-    if (handle == nullptr)
+    if(handle == nullptr)
     {
-        emit error("Устройство не подключено");
+        emit error("Device not open!");
         return false;
-    }
-    else
-    {
-        emit info("Устройство найдено");
     }
 
     if (libusb_kernel_driver_active(handle, DEV_INTF))
@@ -280,9 +419,10 @@ bool MainBox::f_write(void)
         libusb_detach_kernel_driver(handle, DEV_INTF);
     }
 
-    if (libusb_claim_interface(handle,  DEV_INTF) < 0)
+    int res = libusb_claim_interface(handle,  DEV_INTF);
+    if (res != LIBUSB_SUCCESS)
     {
-        emit error("Ошибка захвата интерфейса");
+        emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
         return false;
     }
 
@@ -295,20 +435,39 @@ bool MainBox::f_write(void)
     data[2]='c';
     data[3]='d';
 
-    int rc = libusb_bulk_transfer(handle, EP_OUT, data, sizeof(data), &actual, TIMEOUT);
-    if(rc != 100)
+    /* Send some data to the device */
+    res = libusb_bulk_transfer(handle, EP_OUT, data, sizeof(data), &actual, TIMEOUT);
+    if(res != LIBUSB_SUCCESS)
     {
-        emit error(QString("Cannot write data. rc = %1").arg(rc));
+        emit error(QString("libusb_bulk_transfer (send): err = %1").arg(get_error_string(res)));
     }
     else
     {
-        interrupt_transfer_loop(handle);
-        bulk_transfer_loop(handle);
+        length = 1;
+        /* Receive data from the device */
+        res = libusb_bulk_transfer(handle, 0x81, buf, length, &actual_length, TIMEOUT);
+        if(res != LIBUSB_SUCCESS)
+        {
+            emit error(QString("libusb_bulk_transfer (receive): err = %1").arg(get_error_string(res)));
+        }
+        else
+        {
+            for(int n=0; n<actual_length; n++)
+            {
+                emit info(QString("0x%1 ").arg(buf[n], 2, 16, QChar('0')));
+            }
+        }
     }
 
-    libusb_attach_kernel_driver(handle, DEV_INTF);
+    emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_close(void)
+{
     libusb_close(handle);
-    libusb_exit(nullptr);
+    handle = nullptr;
+    ctx = nullptr;
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -327,7 +486,6 @@ void MainBox::print_devs(libusb_device **devs)
             return;
         }
 
-        libusb_device_handle *handle = nullptr;
         QString iProduct;
 
         int res = libusb_open(dev, &handle);
@@ -466,7 +624,6 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
     unsigned char buf[DATA_SIZE];
     int ret;
     int i=0xF;
-
     int cc=0;
 
     struct timeval start, end;
@@ -479,9 +636,11 @@ void MainBox::interrupt_transfer_loop(libusb_device_handle *handle)
 
         if (returned >= 0)
         {
-            for (int i=0; i < DATA_SIZE; i++)
+            for (int n=0; n < DATA_SIZE; n++)
             {
-                emit info(QString("buf[%1] = %2").arg(i).arg(static_cast<int>(buf[i])));
+                emit info(QString("buf[%1] = %2")
+                          .arg(n)
+                          .arg(static_cast<int>(buf[n])));
                 cc++;
             }
         }
@@ -526,9 +685,11 @@ void MainBox::bulk_transfer_loop(libusb_device_handle *handle)
         // parce transfer errors
         if (returned >= 0)
         {
-            for (int i=0; i < DATA_SIZE; i++)
+            for (int n=0; n < DATA_SIZE; n++)
             {
-                emit info(QString("buf[%1] = %2").arg(i).arg(static_cast<int>(buf[i])));
+                emit info(QString("buf[%1] = %2")
+                          .arg(n)
+                          .arg(static_cast<int>(buf[n])));
                 cc++;
             }
         }

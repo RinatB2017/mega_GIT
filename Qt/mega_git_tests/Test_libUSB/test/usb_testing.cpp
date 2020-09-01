@@ -88,9 +88,9 @@ void interrupt_transfer_loop(libusb_device_handle *handle)
 
         if (returned >= 0)
         {
-            for (short i=0; i < DATA_SIZE; i++)
+            for (short n=0; n < DATA_SIZE; n++)
             {
-                cout << "buf["<< i << "] = " << (int)buf[i] << endl;
+                cout << "buf["<< n << "] = " << (int)buf[n] << endl;
             }
         }
         else
@@ -135,9 +135,9 @@ void bulk_transfer_loop(libusb_device_handle *handle)
         // parce transfer errors
         if (returned >= 0)
         {
-            for (short i=0; i < DATA_SIZE; i++)
+            for (short n=0; n < DATA_SIZE; n++)
             {
-                cout << "buf["<< i << "] = " << (int)buf[i] << endl;
+                cout << "buf["<< n << "] = " << (int)buf[n] << endl;
             }
         }
         else

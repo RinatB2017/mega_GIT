@@ -21,7 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <QtGlobal>
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include </usr/include/hidapi/hidapi.h>
@@ -34,10 +34,10 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-//#define VID 0x08bb
+//#define VID 0x08BB
 //#define PID 0x2704
 
-#define DEV_INTF    1    // номер интерфейса
+#define DEV_INTF    0    // номер интерфейса
 
 #define USB_DEBUG_LEVEL 3
 
@@ -54,10 +54,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -70,16 +66,13 @@ public:
 
 private slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
-    bool f_list(void);
-    bool f_read(void);
-    bool f_write(void);
+    void s_list(void);
+    void s_open(void);
+    void s_read(void);
+    void s_write(void);
+    void s_close(void);
 
 private:
     typedef struct CMD
@@ -98,6 +91,12 @@ private:
     void init(void);
     void createTestBar(void);
 
+    bool f_list(void);
+    bool f_open(void);
+    bool f_read(void);
+    bool f_write(void);
+    bool f_close(void);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
@@ -105,6 +104,11 @@ private:
 
     //---
     hid_device *dev = nullptr;
+    libusb_device_handle *handle = nullptr;
+    libusb_context *ctx = nullptr;
+    unsigned char buf[1024];
+    int length = -1;
+    int actual_length = -1;
 
     void dev_open(void);
     void dev_close(void);
@@ -113,6 +117,9 @@ private:
     uint16_t get_PID(void);
     void set_VID(uint16_t value);
     void set_PID(uint16_t value);
+
+    QString get_error_string(int err);
+    void print_info(void);
 
     void print_devs(libusb_device **devs);
     //---

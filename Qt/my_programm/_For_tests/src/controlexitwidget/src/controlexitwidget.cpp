@@ -37,14 +37,15 @@ void ControlExitWidget::init(void)
 {
     ui->setupUi(this);
 
-    QTimer::singleShot(100, [this]{
-        ui->label->setText(objectName());
-    });
+//    QTimer::singleShot(100, [this]{
+//        ui->label->setText(objectName());
+//    });
 }
 //--------------------------------------------------------------------------------
 void ControlExitWidget::updateText(void)
 {
     ui->retranslateUi(this);
+    ui->label->setText(objectName());
 }
 //--------------------------------------------------------------------------------
 bool ControlExitWidget::programm_is_exit(void)

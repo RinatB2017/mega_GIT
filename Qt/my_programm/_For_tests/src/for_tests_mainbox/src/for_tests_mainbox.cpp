@@ -145,7 +145,6 @@ void MainBox::init(void)
     //---
 
     load_widgets();
-
 }
 //--------------------------------------------------------------------------------
 bool MainBox::set_theme_windows(void)

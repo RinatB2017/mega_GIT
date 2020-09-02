@@ -46,16 +46,16 @@ CONFIG(debug, debug|release) {
 
 #----------------------------------------------
 unix {
-    #CONFIG += link_pkgconfig
-    #PKGCONFIG += libusb-1.0
-
     LIBS    += -lhidapi-libusb
     LIBS    += -lusb-1.0
 }
 win32 {
-    HEADERS += src/hidapi_win/hidapi.h
-    SOURCES += src/hidapi_win/hid.c
+    include (src/hidapi_win/hidapi_win.pri)
+    include (src/libusb_win/libusb_win.pri)
+
     LIBS    += -lsetupapi
+    LIBS    += -L$$PWD/lib
+    LIBS    += -lusb-1.0
 }
 #----------------------------------------------
 LIB_PATH  = "$$PWD/../../../Qt/lib"

@@ -20,6 +20,8 @@
 **********************************************************************************/
 #include "ui_test_libusb_mainbox.h"
 //--------------------------------------------------------------------------------
+#include <sys/time.h>
+
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"

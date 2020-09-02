@@ -28,8 +28,8 @@
 #   include </usr/include/libusb-1.0/libusb.h>
 #endif
 #ifdef Q_OS_WIN
-#   include "hidapi_win/hidapi.h"
-#   include "libusb/libusb.h"
+#   include "hidapi.h"
+#   include "libusb.h"
 #endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"

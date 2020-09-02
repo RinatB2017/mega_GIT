@@ -2,9 +2,12 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += \
-    $$PWD/src
+DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += hidapi.h
-SOURCES += hid.c
+HEADERS += \
+    libusb.h \
+    core.h
+
+SOURCES += \
+    core.c

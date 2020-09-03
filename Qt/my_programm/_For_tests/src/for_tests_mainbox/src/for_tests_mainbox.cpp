@@ -426,7 +426,46 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    QByteArray ba;
+    ba << 1;
+#endif
+
 #if 1
+    typedef struct XXX
+    {
+        int id;
+        QString text;
+        QString param;
+    } XXX_t;
+    QList<XXX> xxx;
+
+    xxx.append({ 1, "test1", "01020304" });
+    xxx.append({ 1, "test2", "" });
+    xxx.append({ 1, "test3", "01020304" });
+
+    foreach(XXX val,xxx )
+    {
+        bool ok;
+        int value = val.param.toInt(&ok, 16);
+        if(ok)
+        {
+            emit info(QString("%1 %2")
+                      .arg(val.text)
+                      .arg(value));
+        }
+        else
+        {
+            emit info(QString("%1 (bad)%2")
+                      .arg(val.text)
+                      .arg(0));
+        }
+    }
+
+    emit info("OK");
+#endif
+
+#if 0
     emit info(QString("ulong %1").arg(sizeof(ulong)));
     emit info(QString("qlonglong %1").arg(sizeof(qlonglong)));
     emit info(QString("uint32_t %1").arg(sizeof(uint32_t)));

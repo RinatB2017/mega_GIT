@@ -60,6 +60,7 @@ void MainBox::init(void)
 
     connect(ui->btn_list,   &QToolButton::clicked,  this,   &MainBox::s_list);
     connect(ui->btn_open,   &QToolButton::clicked,  this,   &MainBox::s_open);
+    connect(ui->btn_info,   &QToolButton::clicked,  this,   &MainBox::s_info);
     connect(ui->btn_read,   &QToolButton::clicked,  this,   &MainBox::s_read);
     connect(ui->btn_write,  &QToolButton::clicked,  this,   &MainBox::s_write);
     connect(ui->btn_close,  &QToolButton::clicked,  this,   &MainBox::s_close);
@@ -143,76 +144,49 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::s_list(void)
 {
-    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
-    if(btn)
-    {
-        btn->setDisabled(true);
-    }
+    lock_this_button();
     f_list();
-    if(btn)
-    {
-        btn->setEnabled(true);
-    }
+    unlock_this_button();
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_open(void)
 {
     emit trace(Q_FUNC_INFO);
-    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
-    if(btn)
-    {
-        btn->setDisabled(true);
-    }
+    lock_this_button();
     f_open();
-    if(btn)
-    {
-        btn->setEnabled(true);
-    }
+    unlock_this_button();
+}
+//--------------------------------------------------------------------------------
+void MainBox::s_info(void)
+{
+    emit trace(Q_FUNC_INFO);
+    lock_this_button();
+    f_info();
+    unlock_this_button();
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_read(void)
 {
     emit trace(Q_FUNC_INFO);
-    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
-    if(btn)
-    {
-        btn->setDisabled(true);
-    }
+    lock_this_button();
     f_read();
-    if(btn)
-    {
-        btn->setEnabled(true);
-    }
+    unlock_this_button();
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_write(void)
 {
     emit trace(Q_FUNC_INFO);
-    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
-    if(btn)
-    {
-        btn->setDisabled(true);
-    }
+    lock_this_button();
     f_write();
-    if(btn)
-    {
-        btn->setEnabled(true);
-    }
+    unlock_this_button();
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_close(void)
 {
     emit trace(Q_FUNC_INFO);
-    QPushButton *btn = dynamic_cast<QPushButton *>(sender());
-    if(btn)
-    {
-        btn->setDisabled(true);
-    }
+    lock_this_button();
     f_close();
-    if(btn)
-    {
-        btn->setEnabled(true);
-    }
+    unlock_this_button();
 }
 //--------------------------------------------------------------------------------
 QString MainBox::get_error_string(int err)
@@ -404,8 +378,18 @@ bool MainBox::f_read(void)
         return false;
     }
 
-    print_info();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_info(void)
+{
+    if(handle == nullptr)
+    {
+        emit error("Device not open!");
+        return false;
+    }
 
+    print_info();
     return true;
 }
 //--------------------------------------------------------------------------------

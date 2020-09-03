@@ -70,6 +70,7 @@ private slots:
 
     void s_list(void);
     void s_open(void);
+    void s_info(void);
     void s_read(void);
     void s_write(void);
     void s_close(void);
@@ -93,6 +94,7 @@ private:
 
     bool f_list(void);
     bool f_open(void);
+    bool f_info(void);
     bool f_read(void);
     bool f_write(void);
     bool f_close(void);

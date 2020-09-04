@@ -26,7 +26,7 @@ class Map;
 class Player
 {
 public:
-    Player(Map *map, bool is_alive, int pos_x, int pos_y);
+    explicit Player(Map *map, bool is_alive, int pos_x, int pos_y);
 
     bool is_alive(void);
 

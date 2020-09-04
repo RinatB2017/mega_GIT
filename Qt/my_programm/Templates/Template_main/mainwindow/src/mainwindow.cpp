@@ -89,10 +89,10 @@ void MainWindow::create_central_widget(void)
 {
     MainWidget *mw = new MainWidget(this);
 
-    connect(mw, SIGNAL(info(QString)),      this,   SIGNAL(info(QString)));
-    connect(mw, SIGNAL(debug(QString)),     this,   SIGNAL(debug(QString)));
-    connect(mw, SIGNAL(error(QString)),     this,   SIGNAL(error(QString)));
-    connect(mw, SIGNAL(message(QString)),   this,   SIGNAL(message(QString)));
+    connect(mw, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(mw, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(mw, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(mw, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     setCentralWidget(mw);
 }
@@ -102,10 +102,10 @@ void MainWindow::create_menu_dock(void)
     MenuDock *md = new MenuDock(this);
     md->setObjectName("md");
 
-    connect(md, SIGNAL(info(QString)),      this,   SIGNAL(info(QString)));
-    connect(md, SIGNAL(debug(QString)),     this,   SIGNAL(debug(QString)));
-    connect(md, SIGNAL(error(QString)),     this,   SIGNAL(error(QString)));
-    connect(md, SIGNAL(message(QString)),   this,   SIGNAL(message(QString)));
+    connect(md, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
+    connect(md, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
+    connect(md, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
+    connect(md, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
 
     md->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, md);

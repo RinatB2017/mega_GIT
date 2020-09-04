@@ -21,6 +21,12 @@
 #ifndef TEST_QGLWIDGET_H
 #define TEST_QGLWIDGET_H
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QGLWidget>
 //--------------------------------------------------------------------------------
 #define MAX_OBJECTS 4
@@ -38,10 +44,6 @@ enum {
     BOTTOM
 };
 //--------------------------------------------------------------------------------
-class QPaintEvent;
-class QTimer;
-class QSize;
-
 class Player;
 class Map;
 //--------------------------------------------------------------------------------
@@ -60,12 +62,13 @@ private:
     void DrawBackground(QPainter*);
     void DrawBlock(QPainter*, QBrush brush, int x, int y);
     void DrawMap(QPainter*);
-    QSize *WindowSize;
-    QTimer *timer;
-    Map *map;
-    Player *player;
+    QPointer<QTimer> timer;
     QPainter painter;
     QBrush objects[MAX_OBJECTS];
+
+    Player *player = nullptr;
+    Map *map = nullptr;
+    QSize *windowSize = nullptr;
 
     int player_x;
     int player_y;
@@ -77,7 +80,7 @@ private:
     bool m_doVisualUpdates;
 
     void init_GL(void);
-    void init_map(const QString filename);
+    void init_map(const QString &filename);
     void init_player(void);
     void init_objects(void);
     void init_timer(void);

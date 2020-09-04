@@ -30,7 +30,7 @@ Test_function::Test_function(void)
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test_function::lineedit_set(QString name, QString value)
+void Test_function::lineedit_set(QString name, const QString &value)
 {
     QLineEdit *le = mw->findChild<QLineEdit *>(name);
     QVERIFY(le);
@@ -38,7 +38,7 @@ void Test_function::lineedit_set(QString name, QString value)
     le->setText(value);
 }
 //--------------------------------------------------------------------------------
-void Test_function::lineedit_set(QWidget *widget, QString name, QString value)
+void Test_function::lineedit_set(QWidget *widget, const QString &name, const QString &value)
 {
     QVERIFY(widget);
 
@@ -48,7 +48,7 @@ void Test_function::lineedit_set(QWidget *widget, QString name, QString value)
     le->setText(value);
 }
 //--------------------------------------------------------------------------------
-QString Test_function::lineedit_get(QString name)
+QString Test_function::lineedit_get(const QString &name)
 {
     QLineEdit *le = mw->findChild<QLineEdit *>(name);
     Q_CHECK_PTR(le);
@@ -56,7 +56,7 @@ QString Test_function::lineedit_get(QString name)
     return le->text();
 }
 //--------------------------------------------------------------------------------
-QString Test_function::lineedit_get(QWidget *widget, QString name)
+QString Test_function::lineedit_get(QWidget *widget, const QString &name)
 {
     Q_CHECK_PTR(widget);
 
@@ -66,7 +66,7 @@ QString Test_function::lineedit_get(QWidget *widget, QString name)
     return le->text();
 }
 //--------------------------------------------------------------------------------
-void Test_function::button_click(QString name)
+void Test_function::button_click(const QString &name)
 {
     QAbstractButton *btn = mw->findChild<QAbstractButton *>(name);
     QVERIFY(btn);
@@ -74,7 +74,7 @@ void Test_function::button_click(QString name)
     QTest::mouseClick(btn, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Test_function::button_click(QWidget *widget, QString name)
+void Test_function::button_click(QWidget *widget, const QString &name)
 {
     QVERIFY(widget);
 
@@ -84,7 +84,7 @@ void Test_function::button_click(QWidget *widget, QString name)
     QTest::mouseClick(btn, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Test_function::combobox_key_down_and_check_value(QString name, QString value)
+void Test_function::combobox_key_down_and_check_value(const QString &name, const QString &value)
 {
     QComboBox *cb = mw->findChild<QComboBox *>(name);
     QVERIFY(cb);
@@ -94,7 +94,7 @@ void Test_function::combobox_key_down_and_check_value(QString name, QString valu
     QCOMPARE(cb->currentText(), value);
 }
 //--------------------------------------------------------------------------------
-void Test_function::combobox_key_down_and_check_value(QWidget *widget, QString name, QString value)
+void Test_function::combobox_key_down_and_check_value(QWidget *widget, const QString &name, const QString &value)
 {
     QVERIFY(widget);
 

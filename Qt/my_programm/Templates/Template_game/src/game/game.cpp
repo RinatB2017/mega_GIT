@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "player.hpp"
 #include "map.hpp"
 //--------------------------------------------------------------------------------
@@ -96,7 +90,7 @@ void Game::init_player(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Game::init_map(const QString filename)
+void Game::init_map(const QString &filename)
 {
     map = new Map;
     int r = map->load(filename);
@@ -168,9 +162,11 @@ void Game::initializeGL(void)
 void Game::resizeGL(int width, int height)
 {
     setupViewport(width,height);
-    if (WindowSize)
-        delete WindowSize;
-    WindowSize = new QSize(width,height);
+    if (windowSize)
+    {
+        delete windowSize;
+    }
+    windowSize = new QSize(width, height);
 }
 //--------------------------------------------------------------------------------
 void Game::setupViewport(int width, int height)

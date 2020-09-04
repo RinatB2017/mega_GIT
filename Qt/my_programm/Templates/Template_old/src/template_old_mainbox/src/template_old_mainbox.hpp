@@ -34,8 +34,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private slots:
@@ -54,8 +54,9 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
+    QPointer<QToolBar> testbar;
     QPointer<QComboBox> cb_test;
-    QCheckBox *cb_block;
+    QPointer<QCheckBox> cb_block;
     QList<CMD> commands;
 
     void init(void);

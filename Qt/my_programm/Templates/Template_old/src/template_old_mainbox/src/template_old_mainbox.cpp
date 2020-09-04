@@ -62,7 +62,6 @@ void MainBox::init(void)
     }
 #endif
 
-    updateText();
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -75,7 +74,7 @@ void MainBox::createTestBar(void)
     commands.append({ id++, "test",     &MainBox::test });
     commands.append({ id++, "test2",    &MainBox::test2 });
 
-    QToolBar *testbar = new QToolBar("testbar");
+    testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 

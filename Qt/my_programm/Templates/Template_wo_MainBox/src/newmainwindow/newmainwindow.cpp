@@ -36,7 +36,7 @@ NewMainWindow::NewMainWindow(MainWindow *parent)
     connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(push()));
 
     add_dock_widget("RS232",        "serial",       Qt::LeftDockWidgetArea,     new SerialBox5(this));
-    add_dock_widget("График",       "grapher",      Qt::RightDockWidgetArea,    new GrapherBox(this));
+    add_dock_widget("Grapher",      "grapher",      Qt::RightDockWidgetArea,    new GrapherBox(this));
     add_dock_widget("SpinBox",      "spinbox",      Qt::RightDockWidgetArea,    new QSpinBox(this), true);
     add_dock_widget("PushButton",   "pushbutton",   Qt::RightDockWidgetArea,    btn, true);
 
@@ -44,8 +44,8 @@ NewMainWindow::NewMainWindow(MainWindow *parent)
     // без centralwidget нельзя нормально расставить доки позже мышкой
     // cw->setVisible(false) не работает
     // cw->hide() не работает
-    QWidget *cw = new QWidget(this);
-    cw->setFixedSize(0, 0);
+    //QWidget *cw = new QWidget(this);
+    //cw->setFixedSize(0, 0);
     //FIXME setCentralWidget(cw);
     //---
 

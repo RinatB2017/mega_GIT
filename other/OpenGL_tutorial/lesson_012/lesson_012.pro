@@ -5,7 +5,6 @@ TARGET      = lesson_012
 DEPENDPATH  += \
     /usr/include/GLFW \
     ../ \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

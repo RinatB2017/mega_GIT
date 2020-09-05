@@ -2,7 +2,6 @@ TARGET      = "QRCode Generator"
 TEMPLATE    = app
 
 PROGRAMM_PATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH += $$PROGRAMM_PATH

@@ -8,7 +8,6 @@ TARGET = Qt_SDL
 CONFIG += qt thread warn_on debug
 
 DEPENDPATH += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

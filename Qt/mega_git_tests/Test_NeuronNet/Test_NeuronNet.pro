@@ -8,7 +8,6 @@ TARGET   = Test_NeuronNet
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_NeuronNet_mainbox \
     $$PWD/src/test_NeuronNet_mainbox/ui

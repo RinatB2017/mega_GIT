@@ -8,7 +8,6 @@ TARGET   = Template_old
 FOLDER  = _Templates
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/template_old_mainbox \
     $$PWD/src/template_old_mainbox/ui

@@ -8,7 +8,6 @@ TARGET   = Test_QScintilla
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/qscintilla_mainbox \
     $$PWD/src/qscintilla_mainbox/ui

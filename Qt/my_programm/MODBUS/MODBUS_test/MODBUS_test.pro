@@ -8,7 +8,6 @@ TARGET   = MODBUS_test
 FOLDER  = modbus
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/modbus_test_mainbox \
     $$PWD/src/modbus_test_mainbox/ui 

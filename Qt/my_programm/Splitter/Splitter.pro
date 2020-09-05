@@ -6,7 +6,6 @@ TEMPLATE = app
 TARGET   = Splitter
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

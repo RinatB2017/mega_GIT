@@ -11,7 +11,6 @@ LANGUAGE  = C++
 QT += widgets
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH

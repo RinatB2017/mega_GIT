@@ -6,7 +6,6 @@ QT          += opengl x11extras
 
 DEPENDPATH += \
     /usr/include/OGRE/RenderSystems/GL \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

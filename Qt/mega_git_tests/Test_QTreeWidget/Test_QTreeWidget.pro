@@ -8,7 +8,6 @@ TARGET   = Test_QTreeWidget
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_QTreeWidget_mainbox \
     $$PWD/src/test_QTreeWidget_mainbox/ui

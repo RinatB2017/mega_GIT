@@ -8,7 +8,6 @@ TARGET   = Test_HeroWars
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

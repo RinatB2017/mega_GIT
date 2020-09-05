@@ -52,12 +52,12 @@ private slots:
     void work(void);
 
 private:
-    HexSpinBox *a;
-    HexSpinBox *b;
-    HexSpinBox *c;
-    HexSpinBox *d;
-    HexSpinBox *e;
-    HexSpinBox *f;
+    QPointer<HexSpinBox> a;
+    QPointer<HexSpinBox> b;
+    QPointer<HexSpinBox> c;
+    QPointer<HexSpinBox> d;
+    QPointer<HexSpinBox> e;
+    QPointer<HexSpinBox> f;
 
     QSpinBox *port;
 

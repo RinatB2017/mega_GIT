@@ -73,12 +73,20 @@
         <property name="text">
          <string>Open</string>
         </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_info">
         <property name="text">
          <string>Info</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
         </property>
        </widget>
       </item>
@@ -87,6 +95,10 @@
         <property name="text">
          <string>Read</string>
         </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
        </widget>
       </item>
       <item>
@@ -94,12 +106,20 @@
         <property name="text">
          <string>Write</string>
         </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_close">
         <property name="text">
          <string>Close</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
         </property>
        </widget>
       </item>
@@ -120,6 +140,10 @@
        <widget class="QPushButton" name="btn_list">
         <property name="text">
          <string>List</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
         </property>
        </widget>
       </item>
@@ -145,6 +169,8 @@
   <tabstop>btn_close</tabstop>
   <tabstop>btn_list</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../../images/images.qrc"/>
+ </resources>
  <connections/>
 </ui>

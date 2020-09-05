@@ -8,7 +8,6 @@ TARGET   = Test_model
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_model_mainbox \
     $$PWD/src/test_model_mainbox/ui

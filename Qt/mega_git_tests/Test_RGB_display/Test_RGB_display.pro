@@ -8,7 +8,6 @@ TARGET   = Test_RGB_display
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_rgb_display_mainbox \
     $$PWD/src/test_rgb_display_mainbox/ui

@@ -8,7 +8,6 @@ TARGET   = Test_HC-05
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_hc05_mainbox \
     $$PWD/src/test_hc05_mainbox/ui

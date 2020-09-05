@@ -22,7 +22,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 IPV4::IPV4(QWidget *parent) :
-    QWidget(parent)
+    MyWidget(parent)
 {
     init();
 }
@@ -128,6 +128,10 @@ QUrl IPV4::get_url(void)
 void IPV4::set_url(QUrl url)
 {
     QString host = url.host();
+    if(host.isEmpty())
+    {
+        host = url.path();
+    }
     QStringList sl = host.split(".");
     if(sl.count() == 4)
     {
@@ -135,6 +139,10 @@ void IPV4::set_url(QUrl url)
         b->setValue(QString(sl[1]).toInt());
         c->setValue(QString(sl[2]).toInt());
         d->setValue(QString(sl[3]).toInt());
+    }
+    else
+    {
+        emit error(QString("set_url: ip.count = %1").arg(sl.count()));
     }
     port->setValue(url.port());
 }
@@ -147,5 +155,25 @@ bool IPV4::eventFilter(QObject*, QEvent* event)
         return true;
     }
     return false;
+}
+//--------------------------------------------------------------------------------
+void IPV4::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+bool IPV4::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void IPV4::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void IPV4::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

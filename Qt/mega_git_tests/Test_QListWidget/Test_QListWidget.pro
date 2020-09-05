@@ -8,7 +8,6 @@ TARGET   = Test_QListWidget
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_QListWidget_mainbox \
     $$PWD/src/test_QListWidget_mainbox/ui

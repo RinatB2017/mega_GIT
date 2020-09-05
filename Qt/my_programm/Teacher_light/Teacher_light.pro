@@ -6,7 +6,6 @@ TEMPLATE = app
 TARGET   = Teacher_light
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/teacher_light_mainbox \
     $$PWD/src/teacher_light_mainbox/ui

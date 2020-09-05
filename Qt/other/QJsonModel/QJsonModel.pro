@@ -9,7 +9,6 @@ CONFIG   += c++11
 lessThan(QT_MAJOR_VERSION, 5): error("requires Qt 5")
 
 PROGRAMM_PATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH

@@ -8,7 +8,6 @@ TARGET   = Template
 FOLDER  = _Templates
 
 PROGRAMM_PATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH

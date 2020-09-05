@@ -8,7 +8,6 @@ TARGET   = Test_LibVLC
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_LibVLC_mainbox \
     $$PWD/src/test_LibVLC_mainbox/ui

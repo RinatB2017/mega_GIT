@@ -113,6 +113,10 @@ QUrl IPV4_wo_port::get_url(void)
 void IPV4_wo_port::set_url(QUrl url)
 {
     QString host = url.host();
+    if(host.isEmpty())
+    {
+        host = url.path();
+    }
     QStringList sl = host.split(".");
     if(sl.count() == 4)
     {

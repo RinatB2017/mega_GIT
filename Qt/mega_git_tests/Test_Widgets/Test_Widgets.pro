@@ -8,7 +8,6 @@ TARGET   = Test_Widgets
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_Widgets_mainbox \
     $$PWD/src/test_Widgets_mainbox/ui

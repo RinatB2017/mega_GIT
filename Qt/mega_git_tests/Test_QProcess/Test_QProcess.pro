@@ -8,7 +8,6 @@ TARGET   = Test_QProcess
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_QProcess_mainbox \
     $$PWD/src/test_QProcess_mainbox/ui

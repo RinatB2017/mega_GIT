@@ -1,6 +1,5 @@
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH += $$DEPENDPATH
 

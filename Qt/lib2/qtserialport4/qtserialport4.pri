@@ -1,12 +1,11 @@
 
 DEPENDPATH += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/qt4support/src \
     $$PWD/src/qt4support/include/private \
     $$PWD/src/qt4support/include/QtCore
+
 INCLUDEPATH += \
-    $$PWD/. \
     $$PWD/src \
     $$PWD/src/qt4support/include/QtCore \
     $$PWD/src/qt4support/include/private

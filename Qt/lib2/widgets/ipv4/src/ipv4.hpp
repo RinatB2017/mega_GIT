@@ -27,7 +27,9 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-class IPV4 : public QWidget
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+class IPV4 : public MyWidget
 {
     Q_OBJECT
 
@@ -48,14 +50,19 @@ private slots:
     void work(void);
 
 private:
-    QSpinBox *a;
-    QSpinBox *b;
-    QSpinBox *c;
-    QSpinBox *d;
+    QPointer<QSpinBox> a;
+    QPointer<QSpinBox> b;
+    QPointer<QSpinBox> c;
+    QPointer<QSpinBox> d;
 
     QSpinBox *port;
 
     void init(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     bool eventFilter(QObject*, QEvent* event);

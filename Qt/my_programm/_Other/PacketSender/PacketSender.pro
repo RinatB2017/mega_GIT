@@ -3,7 +3,6 @@ TEMPLATE    = app
 TARGET      = PacketSender
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH

@@ -6,7 +6,6 @@ TEMPLATE = app
 TARGET   = Creator_buttons
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

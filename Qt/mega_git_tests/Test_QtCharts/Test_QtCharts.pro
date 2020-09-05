@@ -8,7 +8,6 @@ TARGET   = Test_QtCharts
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_QtCharts_mainbox \
     $$PWD/src/test_QtCharts_mainbox/ui

@@ -1,6 +1,5 @@
 
 DEPENDPATH += \
-    $$PWD \
     $$PWD/common \
     $$PWD/MetaSQL \
     $$PWD/MetaSQL/regex \

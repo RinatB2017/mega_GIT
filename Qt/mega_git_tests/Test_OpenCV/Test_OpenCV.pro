@@ -8,7 +8,6 @@ TARGET   = Test_OpenCV
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_OpenCV_mainbox \
     $$PWD/src/test_OpenCV_mainbox/ui

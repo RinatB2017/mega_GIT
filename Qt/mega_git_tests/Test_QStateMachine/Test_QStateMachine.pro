@@ -8,7 +8,6 @@ TARGET   = Test_QStateMachine
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_QStateMachine_mainbox \
     $$PWD/src/test_QStateMachine_mainbox/ui

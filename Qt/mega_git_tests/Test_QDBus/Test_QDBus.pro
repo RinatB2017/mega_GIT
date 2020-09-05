@@ -8,7 +8,6 @@ TARGET   = Test_QDBus
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_qdbus_mainbox \
     $$PWD/src/test_qdbus_mainbox/ui

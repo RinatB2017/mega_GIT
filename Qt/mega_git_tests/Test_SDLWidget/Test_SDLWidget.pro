@@ -8,7 +8,6 @@ TARGET   = Test_SDLWidget
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

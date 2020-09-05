@@ -8,7 +8,6 @@ TARGET   = Test_CRC
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_CRC_mainbox \
     $$PWD/src/test_CRC_mainbox/ui

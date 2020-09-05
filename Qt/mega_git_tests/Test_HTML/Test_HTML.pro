@@ -8,10 +8,7 @@ TARGET   = Test_HTML
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/test_html_mainbox \
-    $$PWD/src/test_html_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT += webenginewidgets
@@ -23,16 +20,11 @@ DEFINES += NO_TRAYICON
 DEFINES += SAVE_INI
 
 HEADERS += \
-    test_html_mainbox.hpp \
-    custompage.h \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_html_mainbox.cpp \
     main.cpp
-
-FORMS   += test_html_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -55,6 +47,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/filemanager.pri)
 include ($$LIB_PATH2/highlighter/highlighter.pri)
 include ($$LIB_PATH2/codeeditor/codeeditor.pri)
+
+include (src/test_html_mainbox/test_html_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

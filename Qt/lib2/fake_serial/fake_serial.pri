@@ -3,7 +3,6 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src/serialbox \
     $$PWD/src/serialbox/ui \
     $$PWD/src/fakeenumerator \

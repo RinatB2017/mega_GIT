@@ -8,7 +8,6 @@ TARGET   = Test_FastTrading
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/template_fast_trading \
     $$PWD/src/template_fast_trading/ui

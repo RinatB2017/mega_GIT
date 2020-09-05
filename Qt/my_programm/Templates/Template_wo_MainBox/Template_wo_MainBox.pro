@@ -8,7 +8,6 @@ TARGET   = Template_wo_MainBox
 FOLDER  = _Templates
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/newmainwindow
 INCLUDEPATH = $$DEPENDPATH

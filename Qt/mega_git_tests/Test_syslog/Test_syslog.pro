@@ -8,7 +8,6 @@ TARGET   = Test_syslog
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_syslog_mainbox \
     $$PWD/src/test_syslog_mainbox/ui

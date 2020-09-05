@@ -82,7 +82,6 @@ include ($$LIB_PATH2/icons/arrows.pri)
 include ($$LIB_PATH/mywidgets/mylistwidget.pri)
 
 include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
-#include ($$LIB_PATH2/widgets/QLongSpinBox/QLongSpinBox.pri)
 
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)

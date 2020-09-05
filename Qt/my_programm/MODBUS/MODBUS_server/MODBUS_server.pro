@@ -8,7 +8,6 @@ TARGET   = MODBUS_server
 FOLDER  = modbus
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

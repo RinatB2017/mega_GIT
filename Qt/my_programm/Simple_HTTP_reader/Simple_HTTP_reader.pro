@@ -6,10 +6,7 @@ TEMPLATE = app
 TARGET   = Simple_HTTP_reader
 
 DEPENDPATH  += \
-    $$PWD \
-    $$PWD/src \
-    $$PWD/src/simple_http_reader_mainbox \
-    $$PWD/src/simple_http_reader_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
@@ -20,14 +17,10 @@ DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
-    version.hpp \
-    simple_http_reader_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    simple_http_reader_mainbox.cpp \
     main.cpp
-
-FORMS   += simple_http_reader_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -49,6 +42,8 @@ LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
+
+include (src/simple_http_reader_mainbox/simple_http_reader_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

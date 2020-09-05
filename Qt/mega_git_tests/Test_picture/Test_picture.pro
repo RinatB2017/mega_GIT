@@ -8,7 +8,6 @@ TARGET   = Test_picture
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_picture_mainbox \
     $$PWD/src/test_picture_mainbox/ui

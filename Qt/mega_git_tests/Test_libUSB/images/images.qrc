@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/images">
         <file>computer.ico</file>
+        <file>usb.png</file>
     </qresource>
 </RCC>

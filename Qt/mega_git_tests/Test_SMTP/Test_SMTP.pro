@@ -8,15 +8,12 @@ TARGET      = Test_SMTP
 FOLDER  = tests
 
 PROGRAMM_PATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/smtp \
     $$PWD/src/sendemail \
     $$PWD/src/sendemail/ui
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
-
-
 
 QT  += network
 

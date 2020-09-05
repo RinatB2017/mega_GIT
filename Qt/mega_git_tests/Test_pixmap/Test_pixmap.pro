@@ -8,7 +8,6 @@ TARGET   = Test_pixmap
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_pixmap_mainbox \
     $$PWD/src/test_pixmap_mainbox/ui

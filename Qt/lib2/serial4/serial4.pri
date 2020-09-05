@@ -3,7 +3,6 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/serialbox \
     $$PWD/serialbox/ui
 INCLUDEPATH = $$DEPENDPATH

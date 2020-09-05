@@ -1,6 +1,5 @@
 
 DEPENDPATH += \
-    $$PWD \
     $$PWD/Collision \
     $$PWD/Common \
     $$PWD/Dynamics \

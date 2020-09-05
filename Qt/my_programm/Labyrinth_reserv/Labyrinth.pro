@@ -6,7 +6,6 @@ TEMPLATE = app
 TARGET   = Labyrinth
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/labyrinth_mainbox \
     $$PWD/src/labyrinth_mainbox/ui

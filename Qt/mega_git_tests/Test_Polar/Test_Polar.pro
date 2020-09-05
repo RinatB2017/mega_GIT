@@ -8,7 +8,6 @@ TARGET   = Test_Polar
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_polar \
     $$PWD/src/test_polar/ui

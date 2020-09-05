@@ -8,7 +8,6 @@ TARGET   = Test_database
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_database_mainbox \
     $$PWD/src/test_database_mainbox/ui

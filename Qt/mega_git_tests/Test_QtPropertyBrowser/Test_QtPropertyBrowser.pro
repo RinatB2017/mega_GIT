@@ -8,7 +8,6 @@ TARGET   = Test_QtPropertyBrowser
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_QtPropertyBrowser_mainbox \
     $$PWD/src/test_QtPropertyBrowser_mainbox/ui

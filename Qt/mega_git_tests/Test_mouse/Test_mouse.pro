@@ -8,13 +8,10 @@ TARGET   = Test_mouse
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/test_mouse \
     $$PWD/src/test_mouse/ui
 INCLUDEPATH = $$DEPENDPATH
-
-
 
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR

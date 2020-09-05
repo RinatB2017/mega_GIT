@@ -4,11 +4,10 @@
 
 DEPENDPATH  += \
     $$PWD/.. \
-    $$PWD \
     $$PWD/src
-INCLUDEPATH += \
+
+    INCLUDEPATH += \
     $$PWD/.. \
-    $$PWD \
     $$PWD/src
 
 HEADERS += scan_toolbar.hpp

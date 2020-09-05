@@ -8,7 +8,6 @@ TARGET   = Test_mesh
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD \
     $$PWD/src \
     $$PWD/src/mesh_mainbox \
     $$PWD/src/mesh_mainbox/ui

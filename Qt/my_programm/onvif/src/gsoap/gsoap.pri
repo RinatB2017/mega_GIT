@@ -1,6 +1,5 @@
 
 INCLUDEPATH += \
-    $$PWD \
     $$PWD/inc \
     $$PWD/src
 

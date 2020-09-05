@@ -2,7 +2,6 @@
 QT  += printsupport
 
 INCLUDEPATH += \
-    $$PWD \
     $$PWD/include \
     $$PWD/lexlib \
     $$PWD/lexers \

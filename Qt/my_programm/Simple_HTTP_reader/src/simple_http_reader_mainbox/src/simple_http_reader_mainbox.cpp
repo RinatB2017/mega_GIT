@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QHostInfo>
-//--------------------------------------------------------------------------------
 #include "ui_simple_http_reader_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -71,12 +69,7 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -221,12 +214,13 @@ void MainBox::f_disconnect(void)
 QUrl MainBox::get_url(void)
 {
     QUrl url = ui->host_widget->get_url();
-
     return url;
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_run(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     // https://unixforum.org/index.php?act=rssout&id=1
     //---
     bool ok = false;
@@ -263,6 +257,8 @@ void MainBox::f_run(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_update(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     ui->le_question->clear();
     ui->le_question->append("GET / HTTP/1.1");
     ui->le_question->append(QString("Host: %1").arg(get_url().host()));
@@ -273,6 +269,8 @@ void MainBox::f_update(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_host_to_ip(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     QString h_name = ui->le_host->text();
     if(h_name.isEmpty())
     {
@@ -287,7 +285,9 @@ void MainBox::f_host_to_ip(void)
     QList<QHostAddress> list = h_info.addresses();
     if(list.isEmpty() == false)
     {
-        ui->host_widget->set_url(QUrl(list.first().toString()));
+        QString temp = list.first().toString();
+        emit debug(QString("URL [%1]").arg(temp));
+        ui->host_widget->set_url(QUrl(temp));
     }
     else
     {
@@ -295,44 +295,9 @@ void MainBox::f_host_to_ip(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
+    emit info("Test");
 
     return true;
 }

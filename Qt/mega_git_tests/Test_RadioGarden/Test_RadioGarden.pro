@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Test_RadioGarden
 
+FOLDER  = tests
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH

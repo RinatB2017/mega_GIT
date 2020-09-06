@@ -1,10 +1,19 @@
+
 QT += network widgets
 
-HEADERS += httpwindow.h
-SOURCES += httpwindow.cpp \
-           main.cpp
-FORMS += authenticationdialog.ui
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
 
-# install
-target.path = $$[QT_INSTALL_EXAMPLES]/network/http
-INSTALLS += target
+HEADERS += \
+    httpwindow.h
+
+SOURCES += \
+    httpwindow.cpp \
+    main.cpp
+
+FORMS += \
+    authenticationdialog.ui
+
+VPATH = $$INCLUDEPATH

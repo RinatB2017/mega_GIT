@@ -22,8 +22,8 @@
 
 #include <QVariant>
 
-ParamListEdit::ParamListEdit(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+ParamListEdit::ParamListEdit(QWidget* parent)
+    : QDialog(parent)
 {
     setupUi(this);
 

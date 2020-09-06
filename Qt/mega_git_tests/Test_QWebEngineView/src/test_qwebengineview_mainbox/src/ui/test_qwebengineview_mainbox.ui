@@ -18,9 +18,6 @@
     <widget class="MyBrowser" name="browser_widget" native="true"/>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="m_layout"/>
-   </item>
-   <item>
     <widget class="QGroupBox" name="groupBox_js">
      <property name="title">
       <string>JS</string>

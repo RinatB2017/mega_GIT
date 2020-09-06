@@ -16,6 +16,9 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>Tab 1</string>
@@ -36,7 +39,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+        <iconset resource="../../../../icons/digits/digits.qrc">
          <normaloff>:/plus_minus/plus.png</normaloff>:/plus_minus/plus.png</iconset>
        </property>
       </widget>
@@ -47,7 +50,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+        <iconset resource="../../../../icons/digits/digits.qrc">
          <normaloff>:/plus_minus/minus.png</normaloff>:/plus_minus/minus.png</iconset>
        </property>
       </widget>
@@ -70,7 +73,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../../../../lib2/icons/digits/digits.qrc"/>
+  <include location="../../../../icons/digits/digits.qrc"/>
  </resources>
  <connections/>
 </ui>

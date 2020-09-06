@@ -71,6 +71,8 @@ void MainBox::init(void)
     ui->me_js->setTabStopDistance(QFontMetricsF(ui->me_js->font()).horizontalAdvance(' ') * 3);
 #endif
 
+    ui->me_js->setProperty(NO_SAVE, true);
+
     QFont font("Courier", 10);
     ui->me_js->setFont(font);
 

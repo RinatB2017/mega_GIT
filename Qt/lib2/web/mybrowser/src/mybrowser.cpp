@@ -80,14 +80,18 @@ void MyBrowser::init(void)
     connect(new_page,           &QWebEnginePage::urlChanged,
             this,               &MyBrowser::refresh_url);
     //FIXME надо доделать
-//    connect(new_page,           &QWebEnginePage::loadFinished,
-//            this,               &MyBrowser::run_JS);
+    //    connect(new_page,           &QWebEnginePage::loadFinished,
+    //            this,               &MyBrowser::run_JS);
 
     connect(ui->btn_run,        &QToolButton::clicked,
             this,               &MyBrowser::s_run);
 
     connect(ui->le_address,     &QLineEdit::returnPressed,
             this,               &MyBrowser::s_run);
+
+    connect(ui->webEngineView,  &QWebEngineView::loadStarted,   this,   &MyBrowser::loadStarted);
+    connect(ui->webEngineView,  &QWebEngineView::loadFinished,  this,   &MyBrowser::loadFinished);
+    connect(ui->webEngineView,  &QWebEngineView::loadProgress,  this,   &MyBrowser::loadProgress);
 
     //ui->le_address->setText("https://2ip.ru/");
     //ui->le_address->setText("https://cashgo.ru/play/levels/#103");

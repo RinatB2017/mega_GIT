@@ -26,19 +26,18 @@ MultiEdit::MultiEdit(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MultiEdit)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
 MultiEdit::~MultiEdit()
 {
-    save_setting();
     delete ui;
 }
 //--------------------------------------------------------------------------------
 void MultiEdit::init(void)
 {
+    ui->setupUi(this);
+
     connect(ui->btn_add,    &QToolButton::clicked,  this,   &MultiEdit::add_page);
     connect(ui->btn_rem,    &QToolButton::clicked,  this,   &MultiEdit::rem_page);
 
@@ -46,8 +45,6 @@ void MultiEdit::init(void)
     {
         ui->tabWidget->removeTab(0);
     }
-
-    load_setting();
 }
 //--------------------------------------------------------------------------------
 QTextEdit *MultiEdit::add_page(void)
@@ -85,15 +82,20 @@ QString MultiEdit::toPlainText(void) const
 void MultiEdit::setTabStopDistance(qreal distance)
 {
     QTextEdit *edit = reinterpret_cast<QTextEdit *>(ui->tabWidget->currentWidget());
-    Q_CHECK_PTR(edit);
-    edit->setTabStopDistance(distance);
+    if(edit != nullptr)
+    {
+        edit->setTabStopDistance(distance);
+    }
 }
 //--------------------------------------------------------------------------------
 QTextDocument *MultiEdit::document(void) const
 {
     QTextEdit *edit = reinterpret_cast<QTextEdit *>(ui->tabWidget->currentWidget());
-    Q_CHECK_PTR(edit);
-    return edit->document();
+    if(edit)
+    {
+        return edit->document();
+    }
+    return nullptr;
 }
 //--------------------------------------------------------------------------------
 void MultiEdit::updateText(void)

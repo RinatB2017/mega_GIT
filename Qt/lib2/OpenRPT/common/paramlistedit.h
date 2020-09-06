@@ -30,7 +30,7 @@ class ParamListEdit : public QDialog, public Ui::ParamListEdit
     Q_OBJECT
 
 public:
-    ParamListEdit(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    ParamListEdit(QWidget* parent = nullptr);
     ~ParamListEdit();
 
 public slots:

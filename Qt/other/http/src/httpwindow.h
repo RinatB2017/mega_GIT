@@ -104,16 +104,16 @@ private slots:
 private:
     std::unique_ptr<QFile> openFileForWrite(const QString &fileName);
 
-    QLabel *statusLabel;
-    QLineEdit *urlLineEdit;
-    QPushButton *downloadButton;
-    QCheckBox *launchCheckBox;
-    QLineEdit *defaultFileLineEdit;
-    QLineEdit *downloadDirectoryLineEdit;
+    QLabel      *statusLabel = nullptr;
+    QLineEdit   *urlLineEdit = nullptr;
+    QPushButton *downloadButton = nullptr;
+    QCheckBox   *launchCheckBox = nullptr;
+    QLineEdit   *defaultFileLineEdit = nullptr;
+    QLineEdit   *downloadDirectoryLineEdit = nullptr;
 
     QUrl url;
     QNetworkAccessManager qnam;
-    QNetworkReply *reply;
+    QNetworkReply *reply = nullptr;
     std::unique_ptr<QFile> file;
     bool httpRequestAborted;
 };

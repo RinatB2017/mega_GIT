@@ -35,6 +35,7 @@
 #include <QNetworkProxy>
 
 #include <QNetworkCookie>
+#include <QNetworkReply>
 //--------------------------------------------------------------------------------
 #include "custompage.h"
 #include "qxmlputget.h"
@@ -59,6 +60,10 @@ public:
 
 signals:
     void send(const QString &);
+
+    void loadStarted(void);
+    void loadFinished(bool);
+    void loadProgress(int progress);
 
 public slots:
     void get_document_title(void);

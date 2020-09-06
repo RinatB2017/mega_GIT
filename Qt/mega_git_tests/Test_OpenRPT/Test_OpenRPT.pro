@@ -8,9 +8,7 @@ TARGET   = Test_OpenRPT
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_OpenRPT_mainbox \
-    $$PWD/src/test_OpenRPT_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -23,15 +21,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_OpenRPT_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_OpenRPT_mainbox.cpp \
     main.cpp
-
-FORMS   += test_OpenRPT_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -42,6 +36,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/OpenRPT/OpenRPT.pri)
+
+include (src/test_OpenRPT_mainbox/test_OpenRPT_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

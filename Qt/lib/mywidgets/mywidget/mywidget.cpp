@@ -498,7 +498,8 @@ void MyWidget::load_checkBox(QList<check_box> data)
 {
     QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
 
-    foreach (check_box cb_obj, data) {
+    foreach (check_box cb_obj, data)
+    {
         foreach(QCheckBox *obj, all_chb)
         {
             if(obj->objectName() == cb_obj.name)
@@ -513,7 +514,8 @@ void MyWidget::load_comboBox(QList<combo_box> data)
 {
     QList<QComboBox *> all_chb = findChildren<QComboBox *>();
 
-    foreach (combo_box cb_obj, data) {
+    foreach (combo_box cb_obj, data)
+    {
         foreach(QComboBox *obj, all_chb)
         {
             if(obj->objectName() == cb_obj.name)
@@ -528,7 +530,8 @@ void MyWidget::load_spinBox(QList<spin_box> data)
 {
     QList<QSpinBox *> all_chb = findChildren<QSpinBox *>();
 
-    foreach (spin_box cb_obj, data) {
+    foreach (spin_box cb_obj, data)
+    {
         foreach(QSpinBox *obj, all_chb)
         {
             if(obj->objectName() == cb_obj.name)
@@ -543,7 +546,8 @@ void MyWidget::load_d_spinBox(QList<d_spin_box> data)
 {
     QList<QDoubleSpinBox *> all_chb = findChildren<QDoubleSpinBox *>();
 
-    foreach (d_spin_box cb_obj, data) {
+    foreach (d_spin_box cb_obj, data)
+    {
         foreach(QDoubleSpinBox *obj, all_chb)
         {
             if(obj->objectName() == cb_obj.name)

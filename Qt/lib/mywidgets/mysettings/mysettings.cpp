@@ -24,6 +24,8 @@
 #   include </usr/include/linux/stddef.h>
 #endif
 //--------------------------------------------------------------------------------
+#include "mywidget.hpp" //FIXME позже надо убрать отсуда
+
 #include "mysettings.hpp"
 //--------------------------------------------------------------------------------
 MySettings::MySettings()
@@ -180,6 +182,10 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
     {
         return false;
     }
+    if(widget->property(NO_SAVE).toBool())
+    {
+        return false;
+    }
     bool ok = widget->setProperty(property_name.toLocal8Bit(), property);
     return ok;
 }
@@ -189,6 +195,10 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
     Q_CHECK_PTR(widget);
     QVariant property = widget->property(property_name.toLocal8Bit());
     if(property.isValid() == false)
+    {
+        return false;
+    }
+    if(widget->property(NO_SAVE).toBool())
     {
         return false;
     }

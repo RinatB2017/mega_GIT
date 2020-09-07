@@ -238,6 +238,8 @@ void MyBrowser::get_document_title(void)
 //--------------------------------------------------------------------------------
 void MyBrowser::run_javascript(QString javascript)
 {
+    emit trace(Q_FUNC_INFO);
+
     new_page->runJavaScript(javascript, [=](const QVariant &v)
     {
         emit info(v.toString());

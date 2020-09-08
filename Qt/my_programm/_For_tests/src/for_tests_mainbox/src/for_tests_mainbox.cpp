@@ -264,6 +264,8 @@ void MainBox::createTestBar(void)
     connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QComboBox::setDisabled);
     connect(cb_block,   &QCheckBox::clicked,    sb_test,            &QComboBox::setDisabled);
 
+//    testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------

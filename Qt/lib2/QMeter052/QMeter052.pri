@@ -2,7 +2,10 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH += $$PWD
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui \
+    $$PWD/images
 INCLUDEPATH = $$DEPENDPATH
 
 CONFIG += designer

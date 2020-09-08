@@ -18,56 +18,16 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef FILEMANAGER_HPP
-#define FILEMANAGER_HPP
+#include "mytoolbar.hpp"
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class FileManager;
+MyToolBar::MyToolBar(QWidget *parent) :
+    QToolBar(parent)
+{
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 //--------------------------------------------------------------------------------
-class Highlighter;
-//--------------------------------------------------------------------------------
-class FileManager : public MyWidget
+MyToolBar::~MyToolBar()
 {
-    Q_OBJECT
 
-signals:
-    void set_data(const QString& html, const QUrl& baseUrl = QUrl());
-    void run(void);
-
-public:
-    explicit FileManager(QWidget *parent = nullptr);
-    ~FileManager();
-
-    void set_extension(QString value);
-    bool isModified(void);
-    QString get_data(void);
-
-private slots:
-    void choice_file(void);
-    void s_run(void);
-    void s_save(void);
-    void s_save_as(void);
-    void s_cancel(void);
-    void need_cancel(bool state);
-
-private:
-    Ui::FileManager *ui;
-    QFileSystemModel *model = nullptr;
-    Highlighter *highlighter = nullptr;
-    QString extension = "txt";
-    QString filename;
-
-    void init(void);
-    void load_file(const QString &filename);
-    void save_file(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+}
 //--------------------------------------------------------------------------------
-#endif // FILEMANAGER_HPP

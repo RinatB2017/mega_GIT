@@ -52,9 +52,13 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>6</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/1.png</normaloff>:/red/1.png</iconset>
+         </attribute>
          <attribute name="title">
           <string>Tab 1</string>
          </attribute>
@@ -189,8 +193,8 @@
         </widget>
         <widget class="QWidget" name="tab_2">
          <attribute name="icon">
-          <iconset resource="../../../../images/images.qrc">
-           <normaloff>:/images/computer.ico</normaloff>:/images/computer.ico</iconset>
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/2.png</normaloff>:/red/2.png</iconset>
          </attribute>
          <attribute name="title">
           <string>Tab 2</string>
@@ -210,6 +214,10 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
         <widget class="QWidget" name="tab_3">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/3.png</normaloff>:/red/3.png</iconset>
+         </attribute>
          <attribute name="title">
           <string>Tab 3</string>
          </attribute>
@@ -292,6 +300,10 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
         <widget class="QWidget" name="tab_4">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/4.png</normaloff>:/red/4.png</iconset>
+         </attribute>
          <attribute name="title">
           <string>Tab 4</string>
          </attribute>
@@ -315,6 +327,10 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
         <widget class="QWidget" name="tab_5">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/5.png</normaloff>:/red/5.png</iconset>
+         </attribute>
          <attribute name="title">
           <string>Tab 5</string>
          </attribute>
@@ -322,17 +338,21 @@ p, li { white-space: pre-wrap; }
           <item>
            <widget class="QToolBox" name="toolBox">
             <property name="currentIndex">
-             <number>0</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="page">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>497</width>
-               <height>273</height>
+               <width>576</width>
+               <height>234</height>
               </rect>
              </property>
+             <attribute name="icon">
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/black/1.png</normaloff>:/black/1.png</iconset>
+             </attribute>
              <attribute name="label">
               <string>Page 1</string>
              </attribute>
@@ -342,13 +362,13 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>576</width>
+               <height>234</height>
               </rect>
              </property>
              <attribute name="icon">
-              <iconset resource="../../../../images/images.qrc">
-               <normaloff>:/images/computer.ico</normaloff>:/images/computer.ico</iconset>
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/black/2.png</normaloff>:/black/2.png</iconset>
              </attribute>
              <attribute name="label">
               <string>Page 2</string>
@@ -359,10 +379,14 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>576</width>
+               <height>234</height>
               </rect>
              </property>
+             <attribute name="icon">
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/black/3.png</normaloff>:/black/3.png</iconset>
+             </attribute>
              <attribute name="label">
               <string>Page 3</string>
              </attribute>
@@ -372,10 +396,14 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>576</width>
+               <height>234</height>
               </rect>
              </property>
+             <attribute name="icon">
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/black/4.png</normaloff>:/black/4.png</iconset>
+             </attribute>
              <attribute name="label">
               <string>Page 4</string>
              </attribute>
@@ -385,6 +413,10 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
         <widget class="QWidget" name="tab_6">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/6.png</normaloff>:/red/6.png</iconset>
+         </attribute>
          <attribute name="title">
           <string>Tab 6</string>
          </attribute>
@@ -395,6 +427,10 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
         <widget class="QWidget" name="tab_7">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/7.png</normaloff>:/red/7.png</iconset>
+         </attribute>
          <attribute name="title">
           <string>Tab 7</string>
          </attribute>
@@ -457,7 +493,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>btn_ok</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../images/images.qrc"/>
+  <include location="../../../../../../lib2/icons/digits/digits.qrc"/>
  </resources>
  <connections/>
 </ui>

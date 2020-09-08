@@ -2,7 +2,8 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD
+DEPENDPATH  += \
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += listwidget_link.hpp

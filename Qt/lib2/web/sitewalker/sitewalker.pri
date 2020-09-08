@@ -2,9 +2,9 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += $$PWD
+DEPENDPATH  += \
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += sitewalker.hpp
-
 SOURCES += sitewalker.cpp

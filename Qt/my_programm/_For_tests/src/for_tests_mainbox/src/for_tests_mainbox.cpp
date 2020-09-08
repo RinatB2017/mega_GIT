@@ -426,18 +426,13 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     uint16_t a = 0x0106;
     uint16_t b = a >> 8;
     uint16_t c = a & 0xFF;
     emit info(QString("%1 %2")
               .arg(b, 2, 10, QChar('0'))
               .arg(c, 2, 10, QChar('0')));
-#endif
-
-#if 0
-    QByteArray ba;
-    ba << 1;
 #endif
 
 #if 0

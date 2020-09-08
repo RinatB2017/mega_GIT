@@ -84,6 +84,9 @@ private:
 
     void init(void);
 
+    void popup(QPoint);
+    void set_attributes(void);
+
     void load_proxies(void);
     void s_run(void);
     void refresh_url(const QUrl &url);

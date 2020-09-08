@@ -2,7 +2,8 @@
 #                 Автор: Бикбао Ринат Зинорович                      #
 ######################################################################
 
-DEPENDPATH  += $$PWD
+DEPENDPATH  += \
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += websettingbox.hpp

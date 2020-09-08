@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "webattributedialog.hpp"
 #include "mybrowser.hpp"
 #include "ui_mybrowser.h"
 //--------------------------------------------------------------------------------
@@ -119,8 +120,111 @@ void MyBrowser::init(void)
 #endif
     //---
 
+    //---
+    ui->webEngineView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->webEngineView,  &QWebEngineView::customContextMenuRequested,    this,   &MyBrowser::popup);
+    //---
+
     load_proxies();
     ui->progressBar->setValue(0);
+}
+//--------------------------------------------------------------------------------
+void MyBrowser::popup(QPoint)
+{
+    QMenu *popup_menu = new_page->createStandardContextMenu();
+    if(popup_menu == nullptr)
+    {
+        //errorLog("cannot create standard context menu");
+        popup_menu = new QMenu;
+    }
+
+    popup_menu->setStyleSheet("background:white;color:black;");
+
+    QAction *attributes_action   = new QAction(tr("attributes"),   this);
+
+    popup_menu->addSeparator();
+    popup_menu->addAction(attributes_action);
+
+    connect(attributes_action,  &QAction::triggered,    this,   &MyBrowser::set_attributes);
+
+    popup_menu->exec(QCursor::pos());
+}
+//--------------------------------------------------------------------------------
+void MyBrowser::set_attributes(void)
+{
+    //FIXME убрать говнокод
+    QWebEngineSettings *settings = new_page->settings();
+
+    WebAttributeDialog *dlg = new WebAttributeDialog();
+
+    dlg->set("AutoLoadImages",                  settings->testAttribute(QWebEngineSettings::AutoLoadImages));
+    dlg->set("JavascriptEnabled",               settings->testAttribute(QWebEngineSettings::JavascriptEnabled));
+    dlg->set("JavascriptCanOpenWindows",        settings->testAttribute(QWebEngineSettings::JavascriptCanOpenWindows));
+    dlg->set("JavascriptCanAccessClipboard",    settings->testAttribute(QWebEngineSettings::JavascriptCanAccessClipboard));
+    dlg->set("LinksIncludedInFocusChain",       settings->testAttribute(QWebEngineSettings::LinksIncludedInFocusChain));
+    dlg->set("LocalStorageEnabled",             settings->testAttribute(QWebEngineSettings::LocalStorageEnabled));
+    dlg->set("LocalContentCanAccessRemoteUrls", settings->testAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls));
+    dlg->set("XSSAuditingEnabled",              settings->testAttribute(QWebEngineSettings::XSSAuditingEnabled));
+    dlg->set("SpatialNavigationEnabled",        settings->testAttribute(QWebEngineSettings::SpatialNavigationEnabled));
+    dlg->set("LocalContentCanAccessFileUrls",   settings->testAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls));
+    dlg->set("HyperlinkAuditingEnabled",        settings->testAttribute(QWebEngineSettings::HyperlinkAuditingEnabled));
+    dlg->set("ScrollAnimatorEnabled",           settings->testAttribute(QWebEngineSettings::ScrollAnimatorEnabled));
+    dlg->set("ErrorPageEnabled",                settings->testAttribute(QWebEngineSettings::ErrorPageEnabled));
+    dlg->set("PluginsEnabled",                  settings->testAttribute(QWebEngineSettings::PluginsEnabled));
+    dlg->set("FullScreenSupportEnabled",        settings->testAttribute(QWebEngineSettings::FullScreenSupportEnabled));
+    dlg->set("ScreenCaptureEnabled",            settings->testAttribute(QWebEngineSettings::ScreenCaptureEnabled));
+    dlg->set("WebGLEnabled",                    settings->testAttribute(QWebEngineSettings::WebGLEnabled));
+    dlg->set("Accelerated2dCanvasEnabled",      settings->testAttribute(QWebEngineSettings::Accelerated2dCanvasEnabled));
+    dlg->set("AutoLoadIconsForPage",            settings->testAttribute(QWebEngineSettings::AutoLoadIconsForPage));
+    dlg->set("TouchIconsEnabled",               settings->testAttribute(QWebEngineSettings::TouchIconsEnabled));
+    dlg->set("FocusOnNavigationEnabled",        settings->testAttribute(QWebEngineSettings::FocusOnNavigationEnabled));
+    dlg->set("PrintElementBackgrounds",         settings->testAttribute(QWebEngineSettings::PrintElementBackgrounds));
+    dlg->set("AllowRunningInsecureContent",     settings->testAttribute(QWebEngineSettings::AllowRunningInsecureContent));
+    dlg->set("AllowGeolocationOnInsecureOrigins",   settings->testAttribute(QWebEngineSettings::AllowGeolocationOnInsecureOrigins));
+    dlg->set("AllowWindowActivationFromJavaScript", settings->testAttribute(QWebEngineSettings::AllowWindowActivationFromJavaScript));
+    dlg->set("ShowScrollBars",                  settings->testAttribute(QWebEngineSettings::ShowScrollBars));
+    dlg->set("PlaybackRequiresUserGesture",     settings->testAttribute(QWebEngineSettings::PlaybackRequiresUserGesture));
+    dlg->set("WebRTCPublicInterfacesOnly",      settings->testAttribute(QWebEngineSettings::WebRTCPublicInterfacesOnly));
+    dlg->set("JavascriptCanPaste",              settings->testAttribute(QWebEngineSettings::WebRTCPublicInterfacesOnly));
+    dlg->set("DnsPrefetchEnabled",              settings->testAttribute(QWebEngineSettings::DnsPrefetchEnabled));
+    dlg->set("PdfViewerEnabled",                settings->testAttribute(QWebEngineSettings::PdfViewerEnabled));
+    int res = dlg->exec();
+    if(res == QDialog::Accepted)
+    {
+        emit info("OK");
+
+        settings->setAttribute(QWebEngineSettings::AutoLoadImages,                  dlg->get("AutoLoadImages"));
+        settings->setAttribute(QWebEngineSettings::JavascriptEnabled,               dlg->get("JavascriptEnabled"));
+        settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows,        dlg->get("JavascriptCanOpenWindows"));
+        settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard,    dlg->get("JavascriptCanAccessClipboard"));
+        settings->setAttribute(QWebEngineSettings::LinksIncludedInFocusChain,       dlg->get("LinksIncludedInFocusChain"));
+        settings->setAttribute(QWebEngineSettings::LocalStorageEnabled,             dlg->get("LocalStorageEnabled"));
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, dlg->get("LocalContentCanAccessRemoteUrls"));
+        settings->setAttribute(QWebEngineSettings::XSSAuditingEnabled,              dlg->get("XSSAuditingEnabled"));
+        settings->setAttribute(QWebEngineSettings::SpatialNavigationEnabled,        dlg->get("SpatialNavigationEnabled"));
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls,   dlg->get("LocalContentCanAccessFileUrls"));
+        settings->setAttribute(QWebEngineSettings::HyperlinkAuditingEnabled,        dlg->get("HyperlinkAuditingEnabled"));
+        settings->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled,           dlg->get("ScrollAnimatorEnabled"));
+        settings->setAttribute(QWebEngineSettings::ErrorPageEnabled,                dlg->get("ErrorPageEnabled"));
+        settings->setAttribute(QWebEngineSettings::PluginsEnabled,                  dlg->get("PluginsEnabled"));
+        settings->setAttribute(QWebEngineSettings::FullScreenSupportEnabled,        dlg->get("FullScreenSupportEnabled"));
+        settings->setAttribute(QWebEngineSettings::ScreenCaptureEnabled,            dlg->get("ScreenCaptureEnabled"));
+        settings->setAttribute(QWebEngineSettings::WebGLEnabled,                    dlg->get("WebGLEnabled"));
+        settings->setAttribute(QWebEngineSettings::Accelerated2dCanvasEnabled,      dlg->get("Accelerated2dCanvasEnabled"));
+        settings->setAttribute(QWebEngineSettings::AutoLoadIconsForPage,            dlg->get("AutoLoadIconsForPage"));
+        settings->setAttribute(QWebEngineSettings::TouchIconsEnabled,               dlg->get("TouchIconsEnabled"));
+        settings->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled,        dlg->get("FocusOnNavigationEnabled"));
+        settings->setAttribute(QWebEngineSettings::PrintElementBackgrounds,         dlg->get("PrintElementBackgrounds"));
+        settings->setAttribute(QWebEngineSettings::AllowRunningInsecureContent,     dlg->get("AllowRunningInsecureContent"));
+        settings->setAttribute(QWebEngineSettings::AllowGeolocationOnInsecureOrigins,   dlg->get("AllowGeolocationOnInsecureOrigins"));
+        settings->setAttribute(QWebEngineSettings::AllowWindowActivationFromJavaScript, dlg->get("AllowWindowActivationFromJavaScript"));
+        settings->setAttribute(QWebEngineSettings::ShowScrollBars,                  dlg->get("ShowScrollBars"));
+        settings->setAttribute(QWebEngineSettings::PlaybackRequiresUserGesture,     dlg->get("PlaybackRequiresUserGesture"));
+        settings->setAttribute(QWebEngineSettings::WebRTCPublicInterfacesOnly,      dlg->get("WebRTCPublicInterfacesOnly"));
+        settings->setAttribute(QWebEngineSettings::JavascriptCanPaste,              dlg->get("JavascriptCanPaste"));
+        settings->setAttribute(QWebEngineSettings::DnsPrefetchEnabled,              dlg->get("DnsPrefetchEnabled"));
+        settings->setAttribute(QWebEngineSettings::PdfViewerEnabled,                dlg->get("PdfViewerEnabled"));
+    }
 }
 //--------------------------------------------------------------------------------
 void MyBrowser::setUrl(const QUrl &url)

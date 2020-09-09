@@ -63,6 +63,15 @@ LogBox::~LogBox()
     Q_CHECK_PTR(progressBar);
     Q_CHECK_PTR(fb);
 
+    MyWidget::set_param(P_LOG, FLAG_SHOW_INFO,   flag_is_shows_info);
+    MyWidget::set_param(P_LOG, FLAG_SHOW_ERROR,  flag_is_shows_error);
+#ifndef NO_LOG_DEBUG
+    MyWidget::set_param(P_LOG, FLAG_SHOW_DEBUG,  flag_is_shows_debug);
+#endif
+#ifndef NO_LOG_TRACE
+    MyWidget::set_param(P_LOG, FLAG_SHOW_TRACE,  flag_is_shows_trace);
+#endif
+
     //qDebug() << "logbox is closed!";
 
     save_settings();
@@ -93,6 +102,30 @@ void LogBox::init(void)
     current_codec = QTextCodec::codecForLocale();
 #endif
 
+    //FIXME говнокод
+    QVariant v_flag_show_info   = true;
+    QVariant v_flag_show_debug  = true;
+    QVariant v_flag_show_error  = true;
+    QVariant v_flag_show_trace  = true;
+
+    MyWidget::get_param(P_LOG, FLAG_SHOW_INFO,   true,   &v_flag_show_info);
+    MyWidget::get_param(P_LOG, FLAG_SHOW_DEBUG,  true,   &v_flag_show_debug);
+    MyWidget::get_param(P_LOG, FLAG_SHOW_ERROR,  true,   &v_flag_show_error);
+    MyWidget::get_param(P_LOG, FLAG_SHOW_TRACE,  true,   &v_flag_show_trace);
+
+    flag_is_shows_info  = v_flag_show_info.toBool();
+    flag_is_shows_debug = v_flag_show_debug.toBool();
+    flag_is_shows_error = v_flag_show_error.toBool();
+    flag_is_shows_trace = v_flag_show_trace.toBool();
+
+#ifdef NO_LOG_DEBUG
+    flag_is_shows_debug = false;
+#endif
+#ifdef NO_LOG_TRACE
+    flag_is_shows_trace = false;
+#endif
+    //---
+
     create_widgets();
 
     if(o_name.isEmpty() == false)
@@ -119,18 +152,99 @@ void LogBox::popup(QPoint)
 
     QAction *clear_action   = new QAction(tr("clear"),   this);
     QAction *save_to_action = new QAction(tr("save to"), this);
+    QAction *save_full_log_to_action = new QAction(tr("save full log to"), this);
     QAction *options_action = new QAction(tr("options"), this);
 
     popup_menu->addSeparator();
     popup_menu->addAction(clear_action);
     popup_menu->addAction(save_to_action);
+    popup_menu->addAction(save_full_log_to_action);
     popup_menu->addAction(options_action);
 
-    connect(clear_action,   &QAction::triggered,    this, &LogBox::clear);
-    connect(save_to_action, &QAction::triggered,    this, &LogBox::save_to);
-    connect(options_action, &QAction::triggered,    this, &LogBox::changeOptions);
+    popup_menu->addSeparator();
+
+#ifndef NO_LOG_INFO
+    QAction *show_info  = new QAction(popup_menu);
+    show_info->setProperty(P_APP_ENG_TEXT, "is_shows_info");
+    show_info->setText(QObject::tr("is_shows_info"));
+    show_info->setToolTip(QObject::tr("is_shows_info"));
+    show_info->setStatusTip(QObject::tr("is_shows_info"));
+    show_info->setCheckable(true);
+    show_info->setChecked(flag_is_shows_info);
+    connect(show_info,    &QAction::triggered,    this,   &LogBox::slot_is_shows_info);
+    app_actions.append(show_info);
+    popup_menu->addAction(show_info);
+#endif
+
+#ifndef NO_LOG_DEBUG
+    QAction *show_debug = new QAction(popup_menu);
+    show_debug->setProperty(P_APP_ENG_TEXT, "is_shows_debug");
+    show_debug->setText(QObject::tr("is_shows_debug"));
+    show_debug->setToolTip(QObject::tr("is_shows_debug"));
+    show_debug->setStatusTip(QObject::tr("is_shows_debug"));
+    show_debug->setCheckable(true);
+    show_debug->setChecked(flag_is_shows_debug);
+    connect(show_debug,    &QAction::triggered,    this,   &LogBox::slot_is_shows_debug);
+    app_actions.append(show_debug);
+    popup_menu->addAction(show_debug);
+#endif
+
+#ifndef NO_LOG_ERROR
+    QAction *show_error = new QAction(popup_menu);
+    show_error->setProperty(P_APP_ENG_TEXT, "is_shows_error");
+    show_error->setText(QObject::tr("is_shows_error"));
+    show_error->setToolTip(QObject::tr("is_shows_error"));
+    show_error->setStatusTip(QObject::tr("is_shows_error"));
+    show_error->setCheckable(true);
+    show_error->setChecked(flag_is_shows_error);
+    connect(show_error,    &QAction::triggered,    this,   &LogBox::slot_is_shows_error);
+    app_actions.append(show_error);
+    popup_menu->addAction(show_error);
+#endif
+
+#ifndef NO_LOG_TRACE
+    QAction *show_trace = new QAction(popup_menu);
+    show_trace->setProperty(P_APP_ENG_TEXT, "is_shows_trace");
+    show_trace->setText(QObject::tr("is_shows_trace"));
+    show_trace->setToolTip(QObject::tr("is_shows_trace"));
+    show_trace->setStatusTip(QObject::tr("is_shows_trace"));
+    show_trace->setCheckable(true);
+    show_trace->setChecked(flag_is_shows_trace);
+    connect(show_trace,    &QAction::triggered,    this,   &LogBox::slot_is_shows_trace);
+    app_actions.append(show_trace);
+    popup_menu->addAction(show_trace);
+#endif
+
+    connect(clear_action,               &QAction::triggered,    this, &LogBox::clear);
+    connect(save_to_action,             &QAction::triggered,    this, &LogBox::save_to);
+    connect(save_full_log_to_action,    &QAction::triggered,    this, &LogBox::save_full_log_to);
+    connect(options_action,             &QAction::triggered,    this, &LogBox::changeOptions);
 
     popup_menu->exec(QCursor::pos());
+}
+//--------------------------------------------------------------------------------
+void LogBox::slot_is_shows_info(bool state)
+{
+    flag_is_shows_info = state;
+    update_log();
+}
+//--------------------------------------------------------------------------------
+void LogBox::slot_is_shows_debug(bool state)
+{
+    flag_is_shows_debug = state;
+    update_log();
+}
+//--------------------------------------------------------------------------------
+void LogBox::slot_is_shows_error(bool state)
+{
+    flag_is_shows_error = state;
+    update_log();
+}
+//--------------------------------------------------------------------------------
+void LogBox::slot_is_shows_trace(bool state)
+{
+    flag_is_shows_trace = state;
+    update_log();
 }
 //--------------------------------------------------------------------------------
 void LogBox::set_font(QFont font)
@@ -339,80 +453,72 @@ void LogBox::append_string(LOG_DATA log_data)
 //--------------------------------------------------------------------------------
 void LogBox::infoLog(const QString &text)
 {
+    LOG_DATA log_data;
+    log_data.date = QDate::currentDate();
+    log_data.time = QTime::currentTime();
+    log_data.level = L_INFO;
+    log_data.color_text = Qt::blue;
+    log_data.background_color = Qt::white;
+    log_data.message = text;
+
+    l_full_log_data.append(log_data);
     if(!text.isEmpty() && flag_is_shows_info)
     {
-        //---
-        LOG_DATA log_data;
-        log_data.date = QDate::currentDate();
-        log_data.time = QTime::currentTime();
-        log_data.level = L_INFO;
-        log_data.color_text = Qt::blue;
-        log_data.background_color = Qt::white;
-        log_data.message = text;
-
         l_log_data.append(log_data);
-        //---
-
         append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
 void LogBox::debugLog(const QString &text)
 {
+    LOG_DATA log_data;
+    log_data.date = QDate::currentDate();
+    log_data.time = QTime::currentTime();
+    log_data.level = L_DEBUG;
+    log_data.color_text = Qt::darkGreen;
+    log_data.background_color = Qt::white;
+    log_data.message = text;
+
+    l_full_log_data.append(log_data);
     if(!text.isEmpty() && flag_is_shows_debug)
     {
-        //---
-        LOG_DATA log_data;
-        log_data.date = QDate::currentDate();
-        log_data.time = QTime::currentTime();
-        log_data.level = L_DEBUG;
-        log_data.color_text = Qt::darkGreen;
-        log_data.background_color = Qt::white;
-        log_data.message = text;
-
         l_log_data.append(log_data);
-        //---
-
         append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
 void LogBox::errorLog(const QString &text)
 {
+    LOG_DATA log_data;
+    log_data.date = QDate::currentDate();
+    log_data.time = QTime::currentTime();
+    log_data.level = L_ERROR;
+    log_data.color_text = Qt::red;
+    log_data.background_color = Qt::white;
+    log_data.message = text;
+
+    l_full_log_data.append(log_data);
     if(!text.isEmpty() && flag_is_shows_error)
     {
-        //---
-        LOG_DATA log_data;
-        log_data.date = QDate::currentDate();
-        log_data.time = QTime::currentTime();
-        log_data.level = L_ERROR;
-        log_data.color_text = Qt::red;
-        log_data.background_color = Qt::white;
-        log_data.message = text;
-
         l_log_data.append(log_data);
-        //---
-
         append_string(log_data);
     }
 }
 //--------------------------------------------------------------------------------
 void LogBox::traceLog(const QString &text)
 {
+    LOG_DATA log_data;
+    log_data.date = QDate::currentDate();
+    log_data.time = QTime::currentTime();
+    log_data.level = L_TRACE;
+    log_data.color_text = Qt::gray;
+    log_data.background_color = Qt::white;
+    log_data.message = text;
+
+    l_full_log_data.append(log_data);
     if(!text.isEmpty() && flag_is_shows_trace)
     {
-        //---
-        LOG_DATA log_data;
-        log_data.date = QDate::currentDate();
-        log_data.time = QTime::currentTime();
-        log_data.level = L_TRACE;
-        log_data.color_text = Qt::gray;
-        log_data.background_color = Qt::white;
-        log_data.message = text;
-
         l_log_data.append(log_data);
-        //---
-
         append_string(log_data);
     }
 }
@@ -421,20 +527,18 @@ void LogBox::colorLog(const QString &text,
                       const QColor text_color,
                       const QColor background_color)
 {
+    LOG_DATA log_data;
+    log_data.date = QDate::currentDate();
+    log_data.time = QTime::currentTime();
+    log_data.level = L_INFO;
+    log_data.color_text = text_color;
+    log_data.background_color = background_color;
+    log_data.message = text;
+
+    l_full_log_data.append(log_data);
     if(!text.isEmpty())
     {
-        //---
-        LOG_DATA log_data;
-        log_data.date = QDate::currentDate();
-        log_data.time = QTime::currentTime();
-        log_data.level = L_INFO;
-        log_data.color_text = text_color;
-        log_data.background_color = background_color;
-        log_data.message = text;
-
         l_log_data.append(log_data);
-        //---
-
         append_string(log_data);
     }
 }
@@ -525,6 +629,27 @@ void LogBox::save_to(void)
     dlg->deleteLater();
 }
 //--------------------------------------------------------------------------------
+void LogBox::save_full_log_to(void)
+{
+    MyFileDialog *dlg;
+
+    dlg = new MyFileDialog("log_box", "log_box");
+    dlg->setAcceptMode(MyFileDialog::AcceptSave);
+    dlg->setNameFilter("log files (*.log)");
+    dlg->setDefaultSuffix("log");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("без имени");
+    dlg->setOption(MyFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        save_full_log(files.at(0));
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
 void LogBox::save_log(const QString &filename)
 {
 #ifdef QT_DEBUG
@@ -541,16 +666,6 @@ void LogBox::save_log(const QString &filename)
         return;
     }
 
-#if 0
-    if(flagTextIsWindows)
-    {
-        file.write(logBox->toPlainText().replace('\n', "\r\n").toLocal8Bit()); //.toAscii());
-    }
-    else
-    {
-        file.write(logBox->toPlainText().toLocal8Bit()); //.toAscii());
-    }
-#else
     QString temp;
     foreach (LOG_DATA ld, l_log_data)
     {
@@ -567,12 +682,50 @@ void LogBox::save_log(const QString &filename)
                     .arg(static_cast<uchar>(ld.background_color.red()),   2, 16, QChar('0'))
                     .arg(static_cast<uchar>(ld.background_color.green()), 2, 16, QChar('0'))
                     .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
-        temp.append(QString("%1|").arg(ld.background_color.red()));
         temp.append(QString("%1\n").arg(ld.message));
 
         file.write(temp.toLocal8Bit());
     }
+
+    file.close();
+}
+//--------------------------------------------------------------------------------
+void LogBox::save_full_log(const QString &filename)
+{
+#ifdef QT_DEBUG
+    qDebug() << filename;
 #endif
+    if(filename.isEmpty()) return;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+#ifdef QT_DEBUG
+        qDebug() << filename << tr("not open");
+#endif
+        return;
+    }
+
+    QString temp;
+    foreach (LOG_DATA ld, l_full_log_data)
+    {
+        temp.clear();
+
+        temp.append(QString("%1|").arg(ld.date.toString("dd-MM-yyyy")));
+        temp.append(QString("%1|").arg(ld.time.toString("hh:mm:ss")));
+        temp.append(QString("%1|").arg(ld.level));
+        temp.append(QString("#%1%2%3|")
+                    .arg(static_cast<uchar>(ld.color_text.red()),   2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.color_text.green()), 2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.color_text.blue()),  2, 16, QChar('0')));
+        temp.append(QString("#%1%2%3|")
+                    .arg(static_cast<uchar>(ld.background_color.red()),   2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.background_color.green()), 2, 16, QChar('0'))
+                    .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
+        temp.append(QString("%1\n").arg(ld.message));
+
+        file.write(temp.toLocal8Bit());
+    }
 
     file.close();
 }
@@ -584,15 +737,15 @@ void LogBox::changeOptions(void)
 
     optionsBox->setObjectName("optionsBox");
 
-    optionsBox->setProperty(FLAG_READ_ONLY,         logBox->isReadOnly());
-    optionsBox->setProperty(FLAG_ACCEPT_RICH_TEXT,  logBox->acceptRichText());
-    optionsBox->setProperty(FLAG_NO_CRLF,           flagNoCRLF);
-    optionsBox->setProperty(FLAG_ADD_DATETIME,      flagAddDateTime);
-    optionsBox->setProperty(FLAG_COLOR,             flagColor);
-    optionsBox->setProperty(FLAG_ERROR_AS_MESSAGE,  flagErrorAsMessage);
-    optionsBox->setProperty(FLAG_TEXT_IS_WINDOWS,   flagTextIsWindows);
-    optionsBox->setProperty(FLAG_AUTOSIZE,          flagAutoSave);
-    optionsBox->setProperty(FILE_AUTOSIZE,          autosave_filename);
+    optionsBox->setProperty(P_FLAG_READ_ONLY,         logBox->isReadOnly());
+    optionsBox->setProperty(P_FLAG_ACCEPT_RICH_TEXT,  logBox->acceptRichText());
+    optionsBox->setProperty(P_FLAG_NO_CRLF,           flagNoCRLF);
+    optionsBox->setProperty(P_FLAG_ADD_DATETIME,      flagAddDateTime);
+    optionsBox->setProperty(P_FLAG_COLOR,             flagColor);
+    optionsBox->setProperty(P_FLAG_ERROR_AS_MESSAGE,  flagErrorAsMessage);
+    optionsBox->setProperty(P_FLAG_TEXT_IS_WINDOWS,   flagTextIsWindows);
+    optionsBox->setProperty(P_FLAG_AUTOSIZE,          flagAutoSave);
+    optionsBox->setProperty(P_FILE_AUTOSIZE,          autosave_filename);
 
     qDebug() << autosave_filename;
 
@@ -606,15 +759,15 @@ void LogBox::changeOptions(void)
         emit debugLog(QString("new codec is %1").arg(current_codec->name().data()));
 #endif
 
-        logBox->setReadOnly(optionsBox->property(FLAG_READ_ONLY).toBool());
-        logBox->setAcceptRichText(optionsBox->property(FLAG_ACCEPT_RICH_TEXT).toBool());
-        flagNoCRLF          = optionsBox->property(FLAG_NO_CRLF).toBool();
-        flagAddDateTime     = optionsBox->property(FLAG_ADD_DATETIME).toBool();
-        flagColor           = optionsBox->property(FLAG_COLOR).toBool();
-        flagErrorAsMessage  = optionsBox->property(FLAG_ERROR_AS_MESSAGE).toBool();
-        flagTextIsWindows   = optionsBox->property(FLAG_TEXT_IS_WINDOWS).toBool();
-        flagAutoSave        = optionsBox->property(FLAG_AUTOSIZE).toBool();
-        autosave_filename   = optionsBox->property(FILE_AUTOSIZE).toString();
+        logBox->setReadOnly(optionsBox->property(P_FLAG_READ_ONLY).toBool());
+        logBox->setAcceptRichText(optionsBox->property(P_FLAG_ACCEPT_RICH_TEXT).toBool());
+        flagNoCRLF          = optionsBox->property(P_FLAG_NO_CRLF).toBool();
+        flagAddDateTime     = optionsBox->property(P_FLAG_ADD_DATETIME).toBool();
+        flagColor           = optionsBox->property(P_FLAG_COLOR).toBool();
+        flagErrorAsMessage  = optionsBox->property(P_FLAG_ERROR_AS_MESSAGE).toBool();
+        flagTextIsWindows   = optionsBox->property(P_FLAG_TEXT_IS_WINDOWS).toBool();
+        flagAutoSave        = optionsBox->property(P_FLAG_AUTOSIZE).toBool();
+        autosave_filename   = optionsBox->property(P_FILE_AUTOSIZE).toString();
 
         qDebug() << autosave_filename;
 
@@ -658,7 +811,12 @@ void LogBox::setVisibleProgressBar(bool state)
 //--------------------------------------------------------------------------------
 void LogBox::updateText(void)
 {
-
+    foreach (auto action, app_actions)
+    {
+        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+    }
 }
 //--------------------------------------------------------------------------------
 void LogBox::changeEvent(QEvent *event)
@@ -695,15 +853,15 @@ void LogBox::load_settings(void)
     if(text.isEmpty())  text = "noname";
 
     beginGroup(text);
-    logBox->setReadOnly(load_value(FLAG_READ_ONLY, true).toBool());
-    logBox->setAcceptRichText(load_value(FLAG_ACCEPT_RICH_TEXT, true).toBool());
-    flagNoCRLF          = load_value(FLAG_NO_CRLF, false).toBool();
-    flagAddDateTime     = load_value(FLAG_ADD_DATETIME, false).toBool();
-    flagColor           = load_value(FLAG_COLOR, true).toBool();
-    flagErrorAsMessage  = load_value(FLAG_ERROR_AS_MESSAGE, false).toBool();
-    flagTextIsWindows   = load_value(FLAG_TEXT_IS_WINDOWS, false).toBool();
-    flagAutoSave        = load_value(FLAG_AUTOSIZE, false).toBool();
-    autosave_filename   = load_value(FILE_AUTOSIZE, "noname.log").toString();
+    logBox->setReadOnly(load_value(P_FLAG_READ_ONLY, true).toBool());
+    logBox->setAcceptRichText(load_value(P_FLAG_ACCEPT_RICH_TEXT, true).toBool());
+    flagNoCRLF          = load_value(P_FLAG_NO_CRLF, false).toBool();
+    flagAddDateTime     = load_value(P_FLAG_ADD_DATETIME, false).toBool();
+    flagColor           = load_value(P_FLAG_COLOR, true).toBool();
+    flagErrorAsMessage  = load_value(P_FLAG_ERROR_AS_MESSAGE, false).toBool();
+    flagTextIsWindows   = load_value(P_FLAG_TEXT_IS_WINDOWS, false).toBool();
+    flagAutoSave        = load_value(P_FLAG_AUTOSIZE, false).toBool();
+    autosave_filename   = load_value(P_FILE_AUTOSIZE, "noname.log").toString();
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: load settings";
@@ -721,9 +879,9 @@ void LogBox::load_settings(void)
     int font_weight = 0;
     int font_size = 0;
 
-    font_weight = load_value(FONT_WEIGHT,   QFont::Normal).toInt();
-    font_size   = load_value(FONT_SIZE,     9).toInt();
-    font_name   = load_value(FONT_NAME,     "Liberation Mono").toString();
+    font_weight = load_value(P_FONT_WEIGHT,   QFont::Normal).toInt();
+    font_size   = load_value(P_FONT_SIZE,     9).toInt();
+    font_name   = load_value(P_FONT_NAME,     "Liberation Mono").toString();
 
     if(font_size > 72) font_size = 72;
     if(font_size < 6)  font_size = 6;
@@ -759,21 +917,21 @@ void LogBox::save_settings(void)
 #endif
 
     beginGroup(text);
-    save_value(FLAG_READ_ONLY,          logBox->isReadOnly());
-    save_value(FLAG_ACCEPT_RICH_TEXT,   logBox->acceptRichText());
-    save_value(FLAG_NO_CRLF,            flagNoCRLF);
-    save_value(FLAG_ADD_DATETIME,       flagAddDateTime);
-    save_value(FLAG_COLOR,              flagColor);
-    save_value(FLAG_ERROR_AS_MESSAGE,   flagErrorAsMessage);
-    save_value(FLAG_TEXT_IS_WINDOWS,    flagTextIsWindows);
-    save_value(FLAG_AUTOSIZE,           flagAutoSave);
-    save_value(FILE_AUTOSIZE,           autosave_filename);
+    save_value(P_FLAG_READ_ONLY,          logBox->isReadOnly());
+    save_value(P_FLAG_ACCEPT_RICH_TEXT,   logBox->acceptRichText());
+    save_value(P_FLAG_NO_CRLF,            flagNoCRLF);
+    save_value(P_FLAG_ADD_DATETIME,       flagAddDateTime);
+    save_value(P_FLAG_COLOR,              flagColor);
+    save_value(P_FLAG_ERROR_AS_MESSAGE,   flagErrorAsMessage);
+    save_value(P_FLAG_TEXT_IS_WINDOWS,    flagTextIsWindows);
+    save_value(P_FLAG_AUTOSIZE,           flagAutoSave);
+    save_value(P_FILE_AUTOSIZE,           autosave_filename);
 
 #ifndef NO_LOG
     QFont font = get_font();
-    save_value(FONT_WEIGHT,  font.weight());
-    save_value(FONT_SIZE,    font.pointSize());
-    save_value(FONT_NAME,    font.family());
+    save_value(P_FONT_WEIGHT,  font.weight());
+    save_value(P_FONT_SIZE,    font.pointSize());
+    save_value(P_FONT_NAME,    font.family());
 #endif
 
     endGroup();

@@ -31,6 +31,15 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#include "dock_position.hpp"
+#include "helpbrowser.hpp"
+#include "aboutbox.hpp"
+#include "defines.hpp"
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#include "syslog.hpp"
+#include "logbox.hpp"
+
 #include "mysettings.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -48,57 +57,48 @@
 #   define LOG_DEBUG       7       /* debug-level messages */
 #endif
 //--------------------------------------------------------------------------------
-#define ICON_HELP       ":/mainwindow/system-help.png"
-#define ICON_RU         ":/mainwindow/ru.png"
-#define ICON_US         ":/mainwindow/us.png"
-#define ICON_STYLE      ":/mainwindow/style.png"
-#define ICON_EXIT       ":/mainwindow/system-shutdown.png"
-#define ICON_FONT       ":/mainwindow/kfontview.png"
-#define ICON_LANG       ":/mainwindow/applications-education-language.png"
+#define P_ICON_HELP       ":/mainwindow/system-help.png"
+#define P_ICON_RU         ":/mainwindow/ru.png"
+#define P_ICON_US         ":/mainwindow/us.png"
+#define P_ICON_STYLE      ":/mainwindow/style.png"
+#define P_ICON_EXIT       ":/mainwindow/system-shutdown.png"
+#define P_ICON_FONT       ":/mainwindow/kfontview.png"
+#define P_ICON_LANG       ":/mainwindow/applications-education-language.png"
 //--------------------------------------------------------------------------------
-#define APP_PROPERTY_ENG_TEXT           "app_property_eng_text"
-#define DOCKWIDGET_PROPERTY_ENG_TEXT    "dockwidget_property_eng_text"
+#define P_APP_ENG_TEXT           "app_eng_text"
+#define P_DOCKWIDGET_ENG_TEXT    "dockwidget_eng_text"
 
-#define FLAG_SHOW_INFO  "flag_show_info"
-#define FLAG_SHOW_ERROR "flag_show_error"
-#define FLAG_SHOW_DEBUG "flag_show_debug"
-#define FLAG_SHOW_TRACE "flag_show_trace"
+#define P_IS_EXIT "is_exit"
 
-#define IS_EXIT "is_exit"
+#define P_EMAIL_STR       "tux4096@gmail.com"
+#define P_AUTHOR_STR      "Author: Bikbao Rinat Zinorovich"
+#define P_TELEGRAM_STR    "https://telegram.im/TrueProgrammer"
+//#define P_TELEGRAM_STR    "https://t-do.ru/TrueProgrammer"
 
-#define EMAIL_STR       "tux4096@gmail.com"
-#define AUTHOR_STR      "Author: Bikbao Rinat Zinorovich"
-#define TELEGRAM_STR    "https://telegram.im/TrueProgrammer"
-//#define TELEGRAM_STR    "https://t-do.ru/TrueProgrammer"
+#define P_FONT_WEIGHT "FontWeight"
+#define P_FONT_SIZE   "FontSize"
+#define P_FONT_NAME   "FontName"
 
-#define FONT_WEIGHT "FontWeight"
-#define FONT_SIZE   "FontSize"
-#define FONT_NAME   "FontName"
+#define P_STYLE_NAME          "StyleName"
+#define P_NO_ANSWER_FROM_EXIT "NoAnswerFromExit"
+#define P_ALWAYS_ON_TOP       "AlwaysOnTop"
 
-#define STYLE_NAME   "StyleName"
-#define NO_ANSWER_FROM_EXIT    "NoAnswerFromExit"
-#define ALWAYS_ON_TOP "AlwaysOnTop"
+#define P_THEME   "Theme"
 
-#define THEME   "Theme"
+#define P_WINDOW_STATE "windowState"
+#define P_GEOMETRY     "geometry"
 
-#define WINDOW_STATE "windowState"
-#define GEOMETRY     "geometry"
+#define P_MAIN    "Main"
 
-#define MAIN    "Main"
-
-#define FLAG_READ_ONLY          "flag_ReadOnly"
-#define FLAG_ACCEPT_RICH_TEXT   "flag_AcceptRichText"
-#define FLAG_NO_CRLF            "flag_NoCRLF"
-#define FLAG_ADD_DATETIME       "flag_AddDateTime"
-#define FLAG_COLOR              "flag_Color"
-#define FLAG_ERROR_AS_MESSAGE   "flag_ErrorAsMessage"
-#define FLAG_TEXT_IS_WINDOWS    "flag_TextIsWindows"
-#define FLAG_AUTOSIZE           "flag_AutoSave"
-#define FILE_AUTOSIZE           "file_AutoSave"
-//--------------------------------------------------------------------------------
-class LogBox;
-class LogDock;
-class SysLog_dock;
+#define P_FLAG_READ_ONLY          "flag_ReadOnly"
+#define P_FLAG_ACCEPT_RICH_TEXT   "flag_AcceptRichText"
+#define P_FLAG_NO_CRLF            "flag_NoCRLF"
+#define P_FLAG_ADD_DATETIME       "flag_AddDateTime"
+#define P_FLAG_COLOR              "flag_Color"
+#define P_FLAG_ERROR_AS_MESSAGE   "flag_ErrorAsMessage"
+#define P_FLAG_TEXT_IS_WINDOWS    "flag_TextIsWindows"
+#define P_FLAG_AUTOSIZE           "flag_AutoSave"
+#define P_FILE_AUTOSIZE           "file_AutoSave"
 //--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow, public MySettings
 {
@@ -162,11 +162,6 @@ signals:
 
     void colorLog(const QString &, const QColor, const QColor);
 
-    void signal_is_shows_info(bool);
-    void signal_is_shows_debug(bool);
-    void signal_is_shows_error(bool);
-    void signal_is_shows_trace(bool);
-
     void syslog(QDateTime dt,
                 int level,
                 int src,
@@ -199,19 +194,6 @@ private slots:
     void setMenuLanguage(void);
     void setToolBarLanguage(void);
     void help(void);
-
-#ifndef NO_LOG_INFO
-    void slot_is_shows_info(bool state);
-#endif
-#ifndef NO_LOG_DEBUG
-    void slot_is_shows_debug(bool state);
-#endif
-#ifndef NO_LOG_ERROR
-    void slot_is_shows_error(bool state);
-#endif
-#ifndef NO_LOG_TRACE
-    void slot_is_shows_trace(bool state);
-#endif
 
     void set_system_palette(void);
     void set_blue_palette(void);
@@ -301,9 +283,9 @@ private:
 #endif
 
 #ifndef NO_LOG
-    QPointer<LogDock> ld;
+    QPointer<LogBox> lb;
 #endif
-    QPointer<SysLog_dock> syslog_dock;
+    QPointer<SysLog> w_syslog;
 
 #ifndef NO_LOG
     void createLog(void);
@@ -325,8 +307,6 @@ private:
     QPointer<QMenu> m_app_windowsmenu;
     QPointer<QMenu> m_app_helpmenu;
 
-//    QList<QWidget *> l_docs;
-
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
     void app_menu_add_font_programm(QMenu *menu);
@@ -335,7 +315,6 @@ private:
     void app_menu_add_font_log(QMenu *menu);
 #endif
 
-    void app_menu_add_log_filter(QMenu *menu);
     void app_menu_add_theme(QMenu *menu);
     void app_menu_add_lang(QMenu *menu);
     void app_menu_add_style(QMenu *menu);
@@ -373,18 +352,6 @@ private:
 protected:
     bool flag_close = false;
     bool flag_always_on_top = false;
-#ifndef NO_LOG_INFO
-    bool flag_show_info = false;
-#endif
-#ifndef NO_LOG_DEBUG
-    bool flag_show_debug = false;
-#endif
-#ifndef NO_LOG_ERROR
-    bool flag_show_error = false;
-#endif
-#ifndef NO_LOG_TRACE
-    bool flag_show_trace = false;
-#endif
 
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);

@@ -18,16 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "dock_position.hpp"
-#include "helpbrowser.hpp"
 #include "mainwindow.hpp"
-#include "aboutbox.hpp"
-#include "defines.hpp"
-#include "version.hpp"
-//--------------------------------------------------------------------------------
-#include "syslog_dock.hpp"
-#include "logdock.hpp"
-#include "logbox.hpp"
 //--------------------------------------------------------------------------------
 MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
@@ -56,29 +47,12 @@ MainWindow::~MainWindow()
     }
 #endif
 
-#ifndef NO_LOG_INFO
-    MyWidget::set_param(MAIN, FLAG_SHOW_INFO,   flag_show_info);
-#endif
-#ifndef NO_LOG_ERROR
-    MyWidget::set_param(MAIN, FLAG_SHOW_ERROR,  flag_show_error);
-#endif
-#ifndef NO_LOG_DEBUG
-    MyWidget::set_param(MAIN, FLAG_SHOW_DEBUG,  flag_show_debug);
-#endif
-#ifndef NO_LOG_TRACE
-    MyWidget::set_param(MAIN, FLAG_SHOW_TRACE,  flag_show_trace);
-#endif
 #ifndef NO_LOG
-    if(ld)
+    if(lb != nullptr)
     {
-        ld->deleteLater();
+        lb->deleteLater();
     }
 #endif
-
-//    if(settings)
-//    {
-//        settings->deleteLater();
-//    }
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(MyWidget *widget)
@@ -99,8 +73,6 @@ void MainWindow::setCentralWidget(MyWidget *widget)
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
-
-//    show_docs();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(QWidget *widget)
@@ -112,8 +84,6 @@ void MainWindow::setCentralWidget(QWidget *widget)
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
-
-//    show_docs();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::set_c_widget(MyWidget *widget)
@@ -146,12 +116,12 @@ void MainWindow::changeEvent(QEvent *event)
             styletoolbar->setWindowTitle(tr("styletoolbar"));
         }
 #endif
-#ifndef NO_LOG
-        if(ld)
-        {
-            ld->setWindowTitle(tr("log"));
-        }
-#endif
+//#ifndef NO_LOG
+//        if(ld)
+//        {
+//            ld->setWindowTitle(tr("log"));
+//        }
+//#endif
         break;
 
     default:
@@ -165,7 +135,7 @@ bool MainWindow::check_exit(void)
     QWidgetList wl = qApp->allWidgets();
     foreach (QWidget *widget, wl)
     {
-        bool ok = widget->property(IS_EXIT).toBool();
+        bool ok = widget->property(P_IS_EXIT).toBool();
         if(ok)
         {
             return false;
@@ -255,6 +225,12 @@ void MainWindow::init(void)
                    .arg(appName)
                    .arg(appVersion));
 
+    load_setting();
+
+#ifndef NO_MENU
+    createMenus();
+#endif
+
 #ifndef NO_LOG
     createLog();
 #else
@@ -266,25 +242,6 @@ void MainWindow::init(void)
 
 #ifdef SYSLOG_LOG
     createSysLog_dock();
-#endif
-
-    load_setting();
-
-#ifndef NO_MENU
-    createMenus();
-#endif
-
-#ifndef NO_LOG
-    //FIXME костыль, надо убрать
-    // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
-#ifndef NO_MENU
-    add_windowsmenu_action(ld, ld->toggleViewAction());
-#endif
-#endif
-#ifdef SYSLOG_LOG
-    //FIXME костыль, надо убрать
-    // костыль в том, что надо сначала иметь windowsmenu, а только потом в него что-то добавлять
-    add_windowsmenu_action(syslog_dock, syslog_dock->toggleViewAction());
 #endif
 
 #ifndef NO_TOOLBAR
@@ -425,16 +382,16 @@ void MainWindow::createMenus(void)
     m_app_helpmenu    = new QMenu(app_mainBar);
 
     m_app_filemenu->setTitle("File");
-    m_app_filemenu->setProperty(APP_PROPERTY_ENG_TEXT,      "File");
+    m_app_filemenu->setProperty(P_APP_ENG_TEXT,      "File");
 
     m_app_optionsmenu->setTitle("Settings");
-    m_app_optionsmenu->setProperty(APP_PROPERTY_ENG_TEXT,   "Settings");
+    m_app_optionsmenu->setProperty(P_APP_ENG_TEXT,   "Settings");
 
     m_app_windowsmenu->setTitle("Windows");
-    m_app_windowsmenu->setProperty(APP_PROPERTY_ENG_TEXT,   "Windows");
+    m_app_windowsmenu->setProperty(P_APP_ENG_TEXT,   "Windows");
 
     m_app_helpmenu->setTitle("Help");
-    m_app_helpmenu->setProperty(APP_PROPERTY_ENG_TEXT,      "Help");
+    m_app_helpmenu->setProperty(P_APP_ENG_TEXT,      "Help");
 
     app_mainBar->addMenu(m_app_filemenu);
     app_mainBar->addMenu(m_app_optionsmenu);
@@ -452,8 +409,6 @@ void MainWindow::createMenus(void)
 #ifndef NO_LOG
     app_menu_add_font_log(m_app_optionsmenu);
 #endif
-    app_menu_add_separator(m_app_optionsmenu);
-    app_menu_add_log_filter(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
     app_menu_add_theme(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
@@ -646,9 +601,9 @@ void MainWindow::about(void)
     AboutBox *about = new AboutBox(orgName,
                                    appName,
                                    appVersion,
-                                   EMAIL_STR,
-                                   tr(AUTHOR_STR),
-                                   TELEGRAM_STR);
+                                   P_EMAIL_STR,
+                                   tr(P_AUTHOR_STR),
+                                   P_TELEGRAM_STR);
     Q_CHECK_PTR(about);
 
     about->exec();
@@ -665,10 +620,10 @@ void MainWindow::load_main(void)
     int font_weight;
     int font_size;
 
-    beginGroup(MAIN);
-    font_weight = load_value(FONT_WEIGHT,   QFont::Normal).toInt();
-    font_size   = load_value(FONT_SIZE,     9).toInt();
-    font_name   = load_value(FONT_NAME,     "Liberation Sans").toString();
+    beginGroup(P_MAIN);
+    font_weight = load_value(P_FONT_WEIGHT,   QFont::Normal).toInt();
+    font_size   = load_value(P_FONT_SIZE,     9).toInt();
+    font_name   = load_value(P_FONT_NAME,     "Liberation Sans").toString();
 
     if(font_size > 72) font_size = 72;
     if(font_size < 6)  font_size = 6;
@@ -683,14 +638,14 @@ void MainWindow::load_main(void)
 
     QApplication::setFont(font);
 
-    style_name = load_value(STYLE_NAME,             "Breeze").toString();
-    flag_close = load_value(NO_ANSWER_FROM_EXIT,    true).toBool();
-    flag_always_on_top = load_value(ALWAYS_ON_TOP,  false).toBool();
+    style_name = load_value(P_STYLE_NAME,             "Breeze").toString();
+    flag_close = load_value(P_NO_ANSWER_FROM_EXIT,    true).toBool();
+    flag_always_on_top = load_value(P_ALWAYS_ON_TOP,  false).toBool();
 
     QApplication::setStyle(QStyleFactory::create(style_name));
 
     //---
-    state_theme = load_value(THEME,  SYSTEM_THEME).toInt();
+    state_theme = load_value(P_THEME,  SYSTEM_THEME).toInt();
     switch(state_theme)
     {
     case SYSTEM_THEME:
@@ -713,8 +668,8 @@ void MainWindow::load_main(void)
 
     endGroup();
 
-    restoreState(load_value(WINDOW_STATE).toByteArray());
-    restoreGeometry(load_value(GEOMETRY).toByteArray());
+    restoreState(load_value(P_WINDOW_STATE).toByteArray());
+    restoreGeometry(load_value(P_GEOMETRY).toByteArray());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::save_main(void)
@@ -723,33 +678,21 @@ void MainWindow::save_main(void)
     qDebug() << "MainWindow::save_main";
 #endif
 
-    beginGroup(MAIN);
-    save_value(FONT_NAME,      QApplication::font().family());
-    save_value(FONT_WEIGHT,    QApplication::font().weight());
-    save_value(FONT_SIZE,      QApplication::font().pointSize());
-    save_value(STYLE_NAME,     style_name);
+    beginGroup(P_MAIN);
+    save_value(P_FONT_NAME,      QApplication::font().family());
+    save_value(P_FONT_WEIGHT,    QApplication::font().weight());
+    save_value(P_FONT_SIZE,      QApplication::font().pointSize());
+    save_value(P_STYLE_NAME,     style_name);
 
-    save_value(NO_ANSWER_FROM_EXIT, flag_close);
-    save_value(ALWAYS_ON_TOP,   flag_always_on_top);
-#ifndef NO_LOG_INFO
-    save_value(FLAG_SHOW_INFO,  flag_show_info);
-#endif
-#ifndef NO_LOG_DEBUG
-    save_value(FLAG_SHOW_DEBUG, flag_show_debug);
-#endif
-#ifndef NO_LOG_ERROR
-    save_value(FLAG_SHOW_ERROR, flag_show_error);
-#endif
-#ifndef NO_LOG_TRACE
-    save_value(FLAG_SHOW_TRACE, flag_show_trace);
-#endif
+    save_value(P_NO_ANSWER_FROM_EXIT, flag_close);
+    save_value(P_ALWAYS_ON_TOP,   flag_always_on_top);
 
-    save_value(THEME,         state_theme);
+    save_value(P_THEME,         state_theme);
 
     endGroup();
 
-    save_value(GEOMETRY,      saveGeometry());
-    save_value(WINDOW_STATE,   saveState());
+    save_value(P_GEOMETRY,      saveGeometry());
+    save_value(P_WINDOW_STATE,   saveState());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)
@@ -768,68 +711,42 @@ void MainWindow::save_setting(void)
     save_main();
 }
 //--------------------------------------------------------------------------------
-//void MainWindow::show_docs(void)
-//{
-//    foreach (QWidget *widget, l_docs)
-//    {
-//        widget->show();
-//    }
-//}
-//--------------------------------------------------------------------------------
 #ifndef NO_LOG
 void MainWindow::createLog(void)
 {
-    ld = new LogDock(tr("log"), this);
-    Q_CHECK_PTR(ld);
+    lb = new LogBox(this);
+    Q_CHECK_PTR(lb);
 
-    ld->setObjectName("log_widget");
+    lb->setObjectName("log_widget");
 
-    connect(this,   SIGNAL(clear_log()),    ld, SLOT(clearLog()));
+    connect(this,   &MainWindow::clear_log, lb, &LogBox::clear);
 
-#ifndef NO_LOG_INFO
-    connect(this,   SIGNAL(info(QString)),  ld, SLOT(infoLog(QString)));
-    connect(this,   SIGNAL(signal_is_shows_info(bool)),     ld, SIGNAL(signal_is_shows_info(bool)));
-#endif
-#ifndef NO_LOG_DEBUG
-#ifdef QT_DEBUG
-    connect(this,   SIGNAL(debug(QString)), ld, SLOT(debugLog(QString)));
-#endif
-    connect(this,   SIGNAL(signal_is_shows_debug(bool)),    ld, SIGNAL(signal_is_shows_debug(bool)));
-#endif
-#ifndef NO_LOG_ERROR
-    connect(this,   SIGNAL(error(QString)), ld, SLOT(errorLog(QString)));
-    connect(this,   SIGNAL(signal_is_shows_error(bool)),    ld, SIGNAL(signal_is_shows_error(bool)));
-#endif
-#ifndef NO_LOG_TRACE
-#ifdef QT_DEBUG
-    connect(this,   SIGNAL(trace(QString)), ld, SLOT(traceLog(QString)));
-#endif
-    connect(this,   SIGNAL(signal_is_shows_trace(bool)),    ld, SIGNAL(signal_is_shows_trace(bool)));
-#endif
+    connect(this,   &MainWindow::info,      lb, &LogBox::infoLog);
+    connect(this,   &MainWindow::debug,     lb, &LogBox::debugLog);
+    connect(this,   &MainWindow::error,     lb, &LogBox::errorLog);
+    connect(this,   &MainWindow::trace,     lb, &LogBox::traceLog);
 
-    connect(this,   SIGNAL(colorLog(QString,QColor,QColor)),   ld, SLOT(colorLog(QString,QColor,QColor)));
+    connect(this,   &MainWindow::colorLog,  lb, &LogBox::colorLog);
 
-    ld->setAllowedAreas(Qt::LeftDockWidgetArea |
-                        Qt::RightDockWidgetArea |
-                        Qt::TopDockWidgetArea |
-                        Qt::BottomDockWidgetArea);
-    addDockWidget(Qt::BottomDockWidgetArea, ld);
+    add_dock_widget("log", "log", Qt::BottomDockWidgetArea, lb);
 }
 #endif
 //--------------------------------------------------------------------------------
 void MainWindow::createSysLog_dock(void)
 {
-    syslog_dock = new SysLog_dock("syslog", this);
-    Q_CHECK_PTR(syslog_dock);
+    w_syslog = new SysLog("syslog", this);
+    Q_CHECK_PTR(w_syslog);
 
-    connect(syslog_dock,   &SysLog_dock::info,  this,   &MainWindow::info);
-    connect(syslog_dock,   &SysLog_dock::debug, this,   &MainWindow::debug);
-    connect(syslog_dock,   &SysLog_dock::error, this,   &MainWindow::error);
-    connect(syslog_dock,   &SysLog_dock::trace, this,   &MainWindow::trace);
+    connect(w_syslog,   &SysLog::info,  this,   &MainWindow::info);
+    connect(w_syslog,   &SysLog::debug, this,   &MainWindow::debug);
+    connect(w_syslog,   &SysLog::error, this,   &MainWindow::error);
+    connect(w_syslog,   &SysLog::trace, this,   &MainWindow::trace);
 
-    connect(this,   SIGNAL(syslog(int,int,QString)),            syslog_dock,   SLOT(syslog(int,int,QString)));
-    connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  syslog_dock,   SLOT(syslog(QDateTime,int,int,QString)));
-    addDockWidget(Qt::BottomDockWidgetArea, syslog_dock);
+    connect(this,   SIGNAL(syslog(int,int,QString)),            w_syslog,   SLOT(syslog(int,int,QString)));
+    connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  w_syslog,   SLOT(syslog(QDateTime,int,int,QString)));
+
+//    addDockWidget(Qt::BottomDockWidgetArea, syslog_dock);
+    add_dock_widget("syslog", "syslog", Qt::BottomDockWidgetArea, w_syslog);
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_TOOLBAR
@@ -1338,7 +1255,7 @@ bool MainWindow::add_dock_widget(QString title,
     dw->setObjectName(objectname);
     //    dw->setWindowTitle(title);
     dw->setWindowTitle(tr(title.toLatin1()));
-    dw->setProperty(DOCKWIDGET_PROPERTY_ENG_TEXT, title);
+    dw->setProperty(P_DOCKWIDGET_ENG_TEXT, title);
 
     if(no_dock_position == false)
     {
@@ -1495,43 +1412,11 @@ void MainWindow::set_app_font(void)
 void MainWindow::set_log_font(void)
 {
     bool ok = false;
-    QFont font = QFontDialog::getFont(&ok, ld->get_font());
+    QFont font = QFontDialog::getFont(&ok, lb->get_font());
     if(ok)
     {
-        ld->set_font(font);
+        lb->set_font(font);
     }
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_LOG_INFO
-void MainWindow::slot_is_shows_info(bool state)
-{
-    flag_show_info = state;
-    emit signal_is_shows_info(state);
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_LOG_DEBUG
-void MainWindow::slot_is_shows_debug(bool state)
-{
-    flag_show_debug = state;
-    emit signal_is_shows_debug(state);
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_LOG_ERROR
-void MainWindow::slot_is_shows_error(bool state)
-{
-    flag_show_error = state;
-    emit signal_is_shows_error(state);
-}
-#endif
-//--------------------------------------------------------------------------------
-#ifndef NO_LOG_TRACE
-void MainWindow::slot_is_shows_trace(bool state)
-{
-    flag_show_trace = state;
-    emit signal_is_shows_trace(state);
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -1655,7 +1540,7 @@ QMenu *MainWindow::add_new_menu(QMenu     *parent,
     menu->setIcon(*icon);
     menu->setToolTip(text);
     menu->setStatusTip(text);
-    menu->setProperty(APP_PROPERTY_ENG_TEXT, text);
+    menu->setProperty(P_APP_ENG_TEXT, text);
     app_menus.append(menu);
 
     if(parent)
@@ -1683,7 +1568,7 @@ bool MainWindow::add_new_action(QMenu   *parent,
     }
     action->setToolTip(text);
     action->setStatusTip(text);
-    action->setProperty(APP_PROPERTY_ENG_TEXT, text);
+    action->setProperty(P_APP_ENG_TEXT, text);
 
     if(parent)
     {
@@ -1718,7 +1603,7 @@ bool MainWindow::add_new_action(QMenu   *parent,
     }
     action->setToolTip(text);
     action->setStatusTip(text);
-    action->setProperty(APP_PROPERTY_ENG_TEXT, text);
+    action->setProperty(P_APP_ENG_TEXT, text);
 
     if(parent)
     {
@@ -1769,11 +1654,11 @@ void MainWindow::app_menu_add_exit(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QAction *exit = new QAction(menu);
-    exit->setProperty(APP_PROPERTY_ENG_TEXT, "Exit");
+    exit->setProperty(P_APP_ENG_TEXT, "Exit");
     exit->setText("Exit");
     exit->setToolTip("Exit");
     exit->setStatusTip("Exit");
-    exit->setIcon(QIcon(ICON_EXIT));
+    exit->setIcon(QIcon(P_ICON_EXIT));
     connect(exit,   SIGNAL(triggered()),    this,   SLOT(close()));
 
     app_actions.append(exit);
@@ -1786,11 +1671,11 @@ void MainWindow::app_menu_add_font_programm(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QAction *font_programm = new QAction(menu);
-    font_programm->setProperty(APP_PROPERTY_ENG_TEXT, "Select the font program");
+    font_programm->setProperty(P_APP_ENG_TEXT, "Select the font program");
     font_programm->setText("Select the font program");
     font_programm->setToolTip("Select the font program");
     font_programm->setStatusTip("Select the font program");
-    font_programm->setIcon(QIcon(ICON_FONT));
+    font_programm->setIcon(QIcon(P_ICON_FONT));
     connect(font_programm,   SIGNAL(triggered()),    this,   SLOT(set_app_font()));
 
     app_actions.append(font_programm);
@@ -1804,11 +1689,11 @@ void MainWindow::app_menu_add_font_log(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QAction *font_log = new QAction(menu);
-    font_log->setProperty(APP_PROPERTY_ENG_TEXT, "Select the font logging");
+    font_log->setProperty(P_APP_ENG_TEXT, "Select the font logging");
     font_log->setText("Select the font logging");
     font_log->setToolTip("Select the font logging");
     font_log->setStatusTip("Select the font logging");
-    font_log->setIcon(QIcon(ICON_FONT));
+    font_log->setIcon(QIcon(P_ICON_FONT));
     connect(font_log,   SIGNAL(triggered()),    this,   SLOT(set_log_font()));
 
     app_actions.append(font_log);
@@ -1817,83 +1702,12 @@ void MainWindow::app_menu_add_font_log(QMenu *menu)
 }
 #endif
 //--------------------------------------------------------------------------------
-void MainWindow::app_menu_add_log_filter(QMenu *menu)
-{
-    Q_CHECK_PTR(menu);
-
-    QVariant v_flag_show_info   = true;
-    QVariant v_flag_show_debug  = true;
-    QVariant v_flag_show_error  = true;
-    QVariant v_flag_show_trace  = true;
-
-    MyWidget::get_param(MAIN, FLAG_SHOW_INFO,   true,   &v_flag_show_info);
-    MyWidget::get_param(MAIN, FLAG_SHOW_DEBUG,  true,   &v_flag_show_debug);
-    MyWidget::get_param(MAIN, FLAG_SHOW_ERROR,  true,   &v_flag_show_error);
-    MyWidget::get_param(MAIN, FLAG_SHOW_TRACE,  true,   &v_flag_show_trace);
-
-#ifndef NO_LOG_INFO
-    QAction *show_info  = new QAction(menu);
-    show_info->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_info");
-    show_info->setText("is_shows_info");
-    show_info->setToolTip("is_shows_info");
-    show_info->setStatusTip("is_shows_info");
-    show_info->setCheckable(true);
-    connect(show_info,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_info);
-    show_info->setChecked(v_flag_show_info.toBool());
-    slot_is_shows_info(v_flag_show_info.toBool());
-    app_actions.append(show_info);
-    menu->addAction(show_info);
-#endif
-
-#ifndef NO_LOG_DEBUG
-    QAction *show_debug = new QAction(menu);
-    show_debug->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_debug");
-    show_debug->setText("is_shows_debug");
-    show_debug->setToolTip("is_shows_debug");
-    show_debug->setStatusTip("is_shows_debug");
-    show_debug->setCheckable(true);
-    connect(show_debug,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_debug);
-    show_debug->setChecked(v_flag_show_debug.toBool());
-    slot_is_shows_debug(v_flag_show_debug.toBool());
-    app_actions.append(show_debug);
-    menu->addAction(show_debug);
-#endif
-
-#ifndef NO_LOG_ERROR
-    QAction *show_error = new QAction(menu);
-    show_error->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_error");
-    show_error->setText("is_shows_error");
-    show_error->setToolTip("is_shows_error");
-    show_error->setStatusTip("is_shows_error");
-    show_error->setCheckable(true);
-    connect(show_error,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_error);
-    show_error->setChecked(v_flag_show_error.toBool());
-    slot_is_shows_error(v_flag_show_error.toBool());
-    app_actions.append(show_error);
-    menu->addAction(show_error);
-#endif
-
-#ifndef NO_LOG_TRACE
-    QAction *show_trace = new QAction(menu);
-    show_trace->setProperty(APP_PROPERTY_ENG_TEXT, "is_shows_trace");
-    show_trace->setText("is_shows_trace");
-    show_trace->setToolTip("is_shows_trace");
-    show_trace->setStatusTip("is_shows_trace");
-    show_trace->setCheckable(true);
-    connect(show_trace,    &QAction::triggered,    this,   &MainWindow::slot_is_shows_trace);
-    show_trace->setChecked(v_flag_show_trace.toBool());
-    slot_is_shows_trace(v_flag_show_trace.toBool());
-    app_actions.append(show_trace);
-    menu->addAction(show_trace);
-#endif
-}
-//--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_theme(QMenu *menu)
 {
     Q_CHECK_PTR(menu);
 
     QMenu *menu_theme = new QMenu(menu);
-    menu_theme->setProperty(APP_PROPERTY_ENG_TEXT, "Themes");
+    menu_theme->setProperty(P_APP_ENG_TEXT, "Themes");
     menu_theme->setTitle("Themes");
     menu_theme->setToolTip("Themes");
     menu_theme->setStatusTip("Themes");
@@ -1901,7 +1715,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     app_menus.append(menu_theme);
 
     QAction *system_theme = new QAction(menu_theme);
-    system_theme->setProperty(APP_PROPERTY_ENG_TEXT, "System theme");
+    system_theme->setProperty(P_APP_ENG_TEXT, "System theme");
     system_theme->setText("System theme");
     system_theme->setToolTip("System theme");
     system_theme->setStatusTip("System theme");
@@ -1910,7 +1724,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     app_actions.append(system_theme);
 
     QAction *light_theme = new QAction(menu_theme);
-    light_theme->setProperty(APP_PROPERTY_ENG_TEXT, "Light theme");
+    light_theme->setProperty(P_APP_ENG_TEXT, "Light theme");
     light_theme->setText("Light theme");
     light_theme->setToolTip("Light theme");
     light_theme->setStatusTip("Light theme");
@@ -1919,7 +1733,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     app_actions.append(light_theme);
 
     QAction *dark_theme = new QAction(menu_theme);
-    dark_theme->setProperty(APP_PROPERTY_ENG_TEXT, "Dark theme");
+    dark_theme->setProperty(P_APP_ENG_TEXT, "Dark theme");
     dark_theme->setText("Dark theme");
     dark_theme->setToolTip("Dark theme");
     dark_theme->setStatusTip("Dark theme");
@@ -1928,7 +1742,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     app_actions.append(dark_theme);
 
     QAction *blue_theme = new QAction(menu_theme);
-    blue_theme->setProperty(APP_PROPERTY_ENG_TEXT, "Blue theme");
+    blue_theme->setProperty(P_APP_ENG_TEXT, "Blue theme");
     blue_theme->setText("Blue theme");
     blue_theme->setToolTip("Blue theme");
     blue_theme->setStatusTip("Blue theme");
@@ -1942,30 +1756,30 @@ void MainWindow::app_menu_add_lang(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QMenu *menu_language = new QMenu(menu);
-    menu_language->setProperty(APP_PROPERTY_ENG_TEXT, "Language");
+    menu_language->setProperty(P_APP_ENG_TEXT, "Language");
     menu_language->setTitle("Language");
     menu_language->setToolTip("Language");
     menu_language->setStatusTip("Language");
-    menu_language->setIcon(QIcon(ICON_LANG));
+    menu_language->setIcon(QIcon(P_ICON_LANG));
     menu->addMenu(menu_language);
     app_menus.append(menu_language);
 
     QAction *rus_language = new QAction(menu_language);
-    rus_language->setProperty(APP_PROPERTY_ENG_TEXT, "Russian");
+    rus_language->setProperty(P_APP_ENG_TEXT, "Russian");
     rus_language->setText("Russian");
     rus_language->setToolTip("Russian");
     rus_language->setStatusTip("Russian");
-    rus_language->setIcon(QIcon(ICON_RU));
+    rus_language->setIcon(QIcon(P_ICON_RU));
     connect(rus_language,   SIGNAL(triggered()),    this,   SLOT(setMenuLanguage()));
     menu_language->addAction(rus_language);
     app_actions.append(rus_language);
 
     QAction *eng_language = new QAction(menu_language);
-    eng_language->setProperty(APP_PROPERTY_ENG_TEXT, "English");
+    eng_language->setProperty(P_APP_ENG_TEXT, "English");
     eng_language->setText("English");
     eng_language->setToolTip("English");
     eng_language->setStatusTip("English");
-    eng_language->setIcon(QIcon(ICON_US));
+    eng_language->setIcon(QIcon(P_ICON_US));
     connect(eng_language,   SIGNAL(triggered()),    this,   SLOT(setMenuLanguage()));
     menu_language->addAction(eng_language);
     app_actions.append(eng_language);
@@ -1976,11 +1790,11 @@ void MainWindow::app_menu_add_style(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QMenu *menu_style = new QMenu(menu);
-    menu_style->setProperty(APP_PROPERTY_ENG_TEXT, "Style");
+    menu_style->setProperty(P_APP_ENG_TEXT, "Style");
     menu_style->setTitle("Style");
     menu_style->setToolTip("Style");
     menu_style->setStatusTip("Style");
-    menu_style->setIcon(QIcon(ICON_STYLE));
+    menu_style->setIcon(QIcon(P_ICON_STYLE));
     menu->addMenu(menu_style);
     app_menus.append(menu_style);
 
@@ -1990,7 +1804,7 @@ void MainWindow::app_menu_add_style(QMenu *menu)
     foreach (QString style, sl)
     {
         QAction *temp = new QAction(style, menu_style);
-        temp->setIcon(QIcon(ICON_STYLE));
+        temp->setIcon(QIcon(P_ICON_STYLE));
         menu_style->addAction(temp);
         connect(temp,   SIGNAL(triggered()),    this,   SLOT(setStyles()));
     }
@@ -2004,7 +1818,7 @@ void MainWindow::app_menu_add_custom_style(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QMenu *menu_style = new QMenu(menu);
-    menu_style->setProperty(APP_PROPERTY_ENG_TEXT, "Custom style");
+    menu_style->setProperty(P_APP_ENG_TEXT, "Custom style");
     menu_style->setTitle("Custom style");
     menu_style->setToolTip("Custom style");
     menu_style->setStatusTip("Custom style");
@@ -2025,7 +1839,7 @@ void MainWindow::app_menu_add_confirm_exit(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QAction *exit = new QAction(menu);
-    exit->setProperty(APP_PROPERTY_ENG_TEXT, "Do not ask when you exit");
+    exit->setProperty(P_APP_ENG_TEXT, "Do not ask when you exit");
     exit->setText("Do not ask when you exit");
     exit->setToolTip("Do not ask when you exit");
     exit->setStatusTip("Do not ask when you exit");
@@ -2043,7 +1857,7 @@ void MainWindow::app_menu_add_show_on_top(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QAction *on_top = new QAction(menu);
-    on_top->setProperty(APP_PROPERTY_ENG_TEXT, "Always on top");
+    on_top->setProperty(P_APP_ENG_TEXT, "Always on top");
     on_top->setText("Always on top");
     on_top->setToolTip("Always on top");
     on_top->setStatusTip("Always on top");
@@ -2061,7 +1875,7 @@ void MainWindow::app_menu_add_about(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QAction *about = new QAction(menu);
-    about->setProperty(APP_PROPERTY_ENG_TEXT, "About");
+    about->setProperty(P_APP_ENG_TEXT, "About");
     about->setText("About");
     about->setToolTip("About");
     about->setStatusTip("About");
@@ -2078,11 +1892,11 @@ void MainWindow::app_menu_add_help(QMenu *menu)
     Q_CHECK_PTR(menu);
 
     QAction *help = new QAction(menu);
-    help->setProperty(APP_PROPERTY_ENG_TEXT, "Help");
+    help->setProperty(P_APP_ENG_TEXT, "Help");
     help->setText("Help");
     help->setToolTip("Help");
     help->setStatusTip("Help");
-    help->setIcon(QIcon(ICON_HELP));
+    help->setIcon(QIcon(P_ICON_HELP));
     connect(help,   SIGNAL(triggered()),    this,   SLOT(help()));
 
     app_actions.append(help);
@@ -2102,10 +1916,10 @@ void MainWindow::app_toolbar_add_exit(void)
 {
     QToolButton *btnExit = new QToolButton(this);
     btnExit->setObjectName("btnExit");
-    btnExit->setIcon(QPixmap(ICON_EXIT));
+    btnExit->setIcon(QPixmap(P_ICON_EXIT));
     btnExit->setToolTip("Exit");
     btnExit->setStatusTip("Exit");
-    btnExit->setProperty(APP_PROPERTY_ENG_TEXT, "Exit");
+    btnExit->setProperty(P_APP_ENG_TEXT, "Exit");
     connect(btnExit,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
 
 #ifndef NO_TOOLBAR
@@ -2122,17 +1936,17 @@ void MainWindow::app_toolbar_add_font(void)
     QToolButton *btnLogFont = new QToolButton(this);
 
     btnAppFont->setObjectName("btnAppFont");
-    btnAppFont->setIcon(QPixmap(ICON_FONT));
+    btnAppFont->setIcon(QPixmap(P_ICON_FONT));
     btnAppFont->setToolTip("Select the font program");
     btnAppFont->setStatusTip("Select the font program");
-    btnAppFont->setProperty(APP_PROPERTY_ENG_TEXT, "Select the font program");
+    btnAppFont->setProperty(P_APP_ENG_TEXT, "Select the font program");
     connect(btnAppFont,    SIGNAL(clicked(bool)),  this,   SLOT(set_app_font()));
 
     btnLogFont->setObjectName("btnLogFont");
-    btnLogFont->setIcon(QPixmap(ICON_FONT));
+    btnLogFont->setIcon(QPixmap(P_ICON_FONT));
     btnLogFont->setToolTip("Select the font logging");
     btnLogFont->setStatusTip("Select the font logging");
-    btnLogFont->setProperty(APP_PROPERTY_ENG_TEXT, "Select the font logging");
+    btnLogFont->setProperty(P_APP_ENG_TEXT, "Select the font logging");
     connect(btnLogFont,    SIGNAL(clicked(bool)),  this,   SLOT(set_log_font()));
 
 #ifndef NO_TOOLBAR
@@ -2154,17 +1968,17 @@ void MainWindow::app_toolbar_add_lang(void)
     btnEng->setObjectName("btnEng");
 
     btnRus->setObjectName("btnRus");
-    btnRus->setIcon(QPixmap(ICON_RU));
+    btnRus->setIcon(QPixmap(P_ICON_RU));
     btnRus->setToolTip("Russian");
     btnRus->setStatusTip("Russian");
-    btnRus->setProperty(APP_PROPERTY_ENG_TEXT, "Russian");
+    btnRus->setProperty(P_APP_ENG_TEXT, "Russian");
     connect(btnRus,    SIGNAL(clicked(bool)),  this,   SLOT(setToolBarLanguage()));
 
     btnEng->setObjectName("btnEng");
-    btnEng->setIcon(QPixmap(ICON_US));
+    btnEng->setIcon(QPixmap(P_ICON_US));
     btnEng->setToolTip("English");
     btnEng->setStatusTip("English");
-    btnEng->setProperty(APP_PROPERTY_ENG_TEXT, "English");
+    btnEng->setProperty(P_APP_ENG_TEXT, "English");
     connect(btnEng,    SIGNAL(clicked(bool)),  this,   SLOT(setToolBarLanguage()));
 
 #ifndef NO_TOOLBAR
@@ -2192,10 +2006,10 @@ void MainWindow::app_toolbar_add_style(void)
 
     QToolButton *btnStyle = new QToolButton(this);
     btnStyle->setObjectName("btnStyle");
-    btnStyle->setIcon(QPixmap(ICON_STYLE));
+    btnStyle->setIcon(QPixmap(P_ICON_STYLE));
     btnStyle->setToolTip("Style");
     btnStyle->setStatusTip("Style");
-    btnStyle->setProperty(APP_PROPERTY_ENG_TEXT, "Style");
+    btnStyle->setProperty(P_APP_ENG_TEXT, "Style");
     btnStyle->setMenu(menu);
     btnStyle->setPopupMode(QToolButton::InstantPopup);
     connect(btnStyle,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
@@ -2238,7 +2052,7 @@ void MainWindow::app_toolbar_add_about(void)
     btnAbout->setIcon(QPixmap(ICON_PROGRAMM));
     btnAbout->setToolTip("About");
     btnAbout->setStatusTip("About");
-    btnAbout->setProperty(APP_PROPERTY_ENG_TEXT, "About");
+    btnAbout->setProperty(P_APP_ENG_TEXT, "About");
     connect(btnAbout,    SIGNAL(clicked(bool)),  this,   SLOT(about()));
 
 #ifndef NO_TOOLBAR
@@ -2251,10 +2065,10 @@ void MainWindow::app_toolbar_add_help(void)
 {
     QToolButton *btnHelp = new QToolButton(this);
     btnHelp->setObjectName("btnHelp");
-    btnHelp->setIcon(QPixmap(ICON_HELP));
+    btnHelp->setIcon(QPixmap(P_ICON_HELP));
     btnHelp->setToolTip("Help");
     btnHelp->setStatusTip("Help");
-    btnHelp->setProperty(APP_PROPERTY_ENG_TEXT, "Help");
+    btnHelp->setProperty(P_APP_ENG_TEXT, "Help");
     btnHelp->setShortcut(Qt::Key_F1);
     connect(btnHelp,    SIGNAL(clicked(bool)),  this,   SLOT(help()));
 
@@ -2268,19 +2082,19 @@ void MainWindow::app_updateText(void)
 {
     foreach (auto menu, app_menus)
     {
-        menu->setTitle(tr(menu->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
+        menu->setTitle(tr(menu->property(P_APP_ENG_TEXT).toString().toLatin1()));
     }
     foreach (auto action, app_actions)
     {
-        action->setText(tr(action->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
-        action->setToolTip(tr(action->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
-        action->setStatusTip(tr(action->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
+        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
     }
     foreach (auto btn, app_buttons)
     {
-        btn->setText(tr(btn->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
-        btn->setToolTip(tr(btn->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
-        btn->setStatusTip(tr(btn->property(APP_PROPERTY_ENG_TEXT).toString().toLatin1()));
+        btn->setText(tr(btn->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        btn->setToolTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        btn->setStatusTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLatin1()));
     }
 }
 //--------------------------------------------------------------------------------
@@ -2289,7 +2103,7 @@ void MainWindow::dockwidget_updateText(void)
     QList<QDockWidget *> ldw = findChildren<QDockWidget *>();
     foreach (QDockWidget *dock, ldw)
     {
-        dock->setWindowTitle(tr(dock->property(DOCKWIDGET_PROPERTY_ENG_TEXT).toString().toLatin1()));
+        dock->setWindowTitle(tr(dock->property(P_DOCKWIDGET_ENG_TEXT).toString().toLatin1()));
     }
 }
 //--------------------------------------------------------------------------------

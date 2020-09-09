@@ -100,16 +100,17 @@ void SerialBox5::init(void)
 
     connect(ui->btn_default, SIGNAL(clicked()), this, SLOT(set_default()));
 
-#ifdef RS232_LOG
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        connect(mw, &MainWindow::signal_is_shows_info,   logBox,   &LogBox::set_flag_is_shows_info);
-        connect(mw, &MainWindow::signal_is_shows_debug,  logBox,   &LogBox::set_flag_is_shows_debug);
-        connect(mw, &MainWindow::signal_is_shows_error,  logBox,   &LogBox::set_flag_is_shows_error);
-        connect(mw, &MainWindow::signal_is_shows_trace,  logBox,   &LogBox::set_flag_is_shows_trace);
-    }
-#endif
+//FIXME надо разобраться
+//#ifdef RS232_LOG
+//    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+//    if(mw)
+//    {
+//        connect(mw, &MainWindow::signal_is_shows_info,   logBox,   &LogBox::set_flag_is_shows_info);
+//        connect(mw, &MainWindow::signal_is_shows_debug,  logBox,   &LogBox::set_flag_is_shows_debug);
+//        connect(mw, &MainWindow::signal_is_shows_error,  logBox,   &LogBox::set_flag_is_shows_error);
+//        connect(mw, &MainWindow::signal_is_shows_trace,  logBox,   &LogBox::set_flag_is_shows_trace);
+//    }
+//#endif
 
     setCloseState();
     updateText();

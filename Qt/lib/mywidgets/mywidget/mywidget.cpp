@@ -107,6 +107,12 @@ void MyWidget::connect_log(QWidget *parent)
     //    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
     //    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 
+    if(parent == nullptr)
+    {
+        qDebug() << "parent is null";
+        return;
+    }
+
     int m_info  = parent->metaObject()->indexOfSignal("info(QString)");
     int m_debug = parent->metaObject()->indexOfSignal("debug(QString)");
     int m_error = parent->metaObject()->indexOfSignal("error(QString)");

@@ -55,9 +55,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
+//#ifdef QT_DEBUG
     createTestBar();
-#endif
+//#endif
 
     ui->horizontalSlider->setRange(0, 1000);
 
@@ -275,7 +275,7 @@ void MainBox::choice_test(void)
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
 
-    //    QList<MainBox::CMD>::iterator cmd_it = std::find_if(
+    // QList<MainBox::CMD>::iterator cmd_it = std::find_if(
     auto cmd_it = std::find_if(
                 commands.begin(),
                 commands.end(),
@@ -296,36 +296,6 @@ void MainBox::choice_test(void)
         }
     }
 }
-//--------------------------------------------------------------------------------
-#if 0
-//TODO старый вариант, от 01.08.2020
-void MainBox::choice_test(void)
-{
-    bool ok = false;
-    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
-    if(!ok) return;
-
-    foreach (CMD command, commands)
-    {
-        if(command.cmd == cmd)
-        {
-            typedef bool (MainBox::*function)(void);
-            function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
-        }
-    }
-}
-#endif
 //--------------------------------------------------------------------------------
 void MainBox::inFunc(QPushButton *btn, saveSlot slot)
 {
@@ -482,11 +452,12 @@ bool MainBox::test(void)
     ui->hex_widget->setValue(0xFEFEFEFE);
 #endif
 
-#if 0
+#if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
     emit trace("Trace");
+    emit colorLog("yellow on blue", Qt::yellow, Qt::blue);
 #endif
 
     return true;

@@ -47,14 +47,14 @@
 	<source>save to</source>
 	<translation>Сохранить лог как</translation>
     </message>
+    <message>
+        <source>save full log to</source>
+        <translation>Сохранить полный лог как</translation>
+    </message>
 </context>
 
 <context>
-    <name>MainWindow</name>
-    <message>
-        <source>Windows</source>
-        <translation>Окна</translation>
-    </message>
+    <name>QObject</name>
     <message>
         <source>is_shows_info</source>
         <translation>Отображение информационных сообщений</translation>
@@ -70,6 +70,14 @@
     <message>
         <source>is_shows_trace</source>
         <translation>Отображение трассировочных сообщений</translation>
+    </message>
+</context>
+
+<context>
+    <name>MainWindow</name>
+    <message>
+        <source>Windows</source>
+        <translation>Окна</translation>
     </message>
 
     <message>

@@ -51,6 +51,12 @@ enum LEVELS
     L_ERROR,
     L_TRACE
 };
+
+#define P_LOG     "Log"
+#define FLAG_SHOW_INFO  "flag_show_info"
+#define FLAG_SHOW_ERROR "flag_show_error"
+#define FLAG_SHOW_DEBUG "flag_show_debug"
+#define FLAG_SHOW_TRACE "flag_show_trace"
 //--------------------------------------------------------------------------------
 class FindBox;
 //--------------------------------------------------------------------------------
@@ -110,6 +116,7 @@ public slots:
 private slots:
     void changeOptions(void);
     void save_to(void);
+    void save_full_log_to(void);
 
     void popup(QPoint);
 
@@ -146,12 +153,21 @@ private:
 
     QString autosave_filename = "noname.log";
 
+    QList<QAction *> app_actions;
+
     QList<LOG_DATA> l_log_data;
+    QList<LOG_DATA> l_full_log_data;
 
     void init(void);
     void create_widgets(void);
 
-    void save_log(const QString &);
+    void slot_is_shows_info(bool state);
+    void slot_is_shows_debug(bool state);
+    void slot_is_shows_error(bool state);
+    void slot_is_shows_trace(bool state);
+
+    void save_log(const QString &filename);
+    void save_full_log(const QString &filename);
 
     void append_string(LOG_DATA log_data);
     QString syslog_to_str(int level);

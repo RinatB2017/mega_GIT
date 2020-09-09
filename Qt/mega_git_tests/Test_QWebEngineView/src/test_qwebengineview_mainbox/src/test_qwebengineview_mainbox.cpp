@@ -88,8 +88,8 @@ void MainBox::init(void)
     connect(ui->btn_save_js,    &QToolButton::clicked,
             this,               &MainBox::js_save);
 
-    connect(ui->btn_get_document_title, &QToolButton::clicked,
-            ui->browser_widget,         &MyBrowser::get_document_title);
+//    connect(ui->btn_get_document_title, &QToolButton::clicked,
+//            ui->browser_widget,         &MyBrowser::get_document_title);
 
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 

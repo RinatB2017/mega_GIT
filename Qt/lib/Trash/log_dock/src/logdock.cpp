@@ -25,8 +25,6 @@
 #include "dock_position.hpp"
 #include "logdock.hpp"
 //--------------------------------------------------------------------------------
-#include "logbox.hpp"
-//--------------------------------------------------------------------------------
 LogDock::LogDock(const QString &title,
                  QWidget *parent) :
     QDockWidget(parent),
@@ -106,7 +104,6 @@ void LogDock::update(void)
 
     is_busy = false;
 }
-//--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 void LogDock::infoLog(const QString &text)
 {

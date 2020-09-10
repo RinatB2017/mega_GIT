@@ -48,6 +48,12 @@ MainBox::~MainBox()
         timer->deleteLater();
     }
 
+    if(bar)
+    {
+        bar->disconnect();
+        bar->deleteLater();
+    }
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -396,6 +402,17 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    bar = new MyToolBar();
+    bar->show();
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->addToolBar(Qt::TopToolBarArea, bar);
+    }
+#endif
+
 #if 0
     uint16_t a = 0x0106;
     uint16_t b = a >> 8;
@@ -454,7 +471,7 @@ bool MainBox::test(void)
     emit s_syslog(0, LOG_ERR, "test");
 #endif
 
-#if 1
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

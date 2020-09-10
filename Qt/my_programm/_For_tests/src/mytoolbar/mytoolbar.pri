@@ -9,4 +9,5 @@ INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += mytoolbar.hpp
 SOURCES += mytoolbar.cpp
-FORMS   += mytoolbar.ui
+FORMS   += \
+    mytoolbar.ui

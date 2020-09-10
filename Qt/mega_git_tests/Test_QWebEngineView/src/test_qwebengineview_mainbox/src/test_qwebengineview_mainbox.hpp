@@ -59,7 +59,7 @@ private slots:
     void js_load(void);
     void js_save(void);
 
-    void analize(const QString data);
+    void analize(const QString &data);
 
 private:
     typedef struct CMD
@@ -75,6 +75,7 @@ private:
     QList<CMD> commands;
 
     QPointer<Highlighter> highlighter_js;
+    bool is_exit = true;
 
     void init(void);
     void createTestBar(void);

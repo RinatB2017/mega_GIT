@@ -42,7 +42,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-#if 0
+#if 1
     if(ui->me_js->document()->isModified())
     {
         qDebug() << "JS not saved";
@@ -303,7 +303,7 @@ void MainBox::test_JS(bool)
     ui->browser_widget->run_javascript(javascript);
 }
 //--------------------------------------------------------------------------------
-void MainBox::analize(const QString data)
+void MainBox::analize(const QString &data)
 {
     QStringList sl = data.split(';');
     if(sl.length() > 0)
@@ -382,54 +382,6 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test_0()");
-
-#if 1
-    MyBrowser *browser = new MyBrowser();
-    browser->show();
-#endif
-
-#if 0
-    emit info(ui->multiedit_widget->getCurrentText());
-#endif
-
-#if 0
-    click(ui->webEngineView, QPoint(500, 500), Qt::LeftButton);
-#endif
-
-#if 0
-    QStringList *sl = new QStringList();
-    new_page->toHtml([sl](QString const &s)
-    {
-        sl->append(s);
-    });
-    emit info(QString("ken = %1").arg(sl->count()));
-#endif
-
-#if 0
-    QPlainTextEdit *te = new QPlainTextEdit();
-    new_page->toHtml([te](QString const &s)
-    {
-        te->appendPlainText(s);
-    });
-    te->setMinimumSize(1280, 600);
-    te->show();
-#endif
-
-#if 0
-    QByteArray ba;
-    ba.append(te->toPlainText());
-
-    QString filename = "html.sav";
-    QFile *file = new QFile(filename);
-    if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
-        return false;
-
-    qint64 bytes = file->write(ba);
-    file->close();
-    emit info(QString("file %1 is saved [%2 bytes]")
-              .arg(filename)
-              .arg(bytes));
-#endif
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -440,7 +392,7 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
-    return true;
+    return is_exit;
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)

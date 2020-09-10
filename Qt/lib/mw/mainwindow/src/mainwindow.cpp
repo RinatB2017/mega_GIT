@@ -742,10 +742,11 @@ void MainWindow::createSysLog_dock(void)
     connect(w_syslog,   &SysLog::error, this,   &MainWindow::error);
     connect(w_syslog,   &SysLog::trace, this,   &MainWindow::trace);
 
-    connect(this,   SIGNAL(syslog(int,int,QString)),            w_syslog,   SLOT(syslog(int,int,QString)));
-    connect(this,   SIGNAL(syslog(QDateTime,int,int,QString)),  w_syslog,   SLOT(syslog(QDateTime,int,int,QString)));
+    connect(this,       static_cast<void (MainWindow::*)(int,int,QString)>(&MainWindow::syslog),
+            w_syslog,   static_cast<void (SysLog::*)(int,int,QString)>(&SysLog::s_syslog));
+    connect(this,       static_cast<void (MainWindow::*)(QDateTime,int,int,QString)>(&MainWindow::syslog),
+            w_syslog,   static_cast<void (SysLog::*)(QDateTime,int,int,QString)>(&SysLog::s_syslog));
 
-//    addDockWidget(Qt::BottomDockWidgetArea, syslog_dock);
     add_dock_widget("syslog", "syslog", Qt::BottomDockWidgetArea, w_syslog);
 }
 //--------------------------------------------------------------------------------
@@ -1236,8 +1237,6 @@ bool MainWindow::add_dock_widget(QString title,
                                  bool no_dock_position)
 {
     Q_CHECK_PTR(widget);
-
-    emit debug(title);
 
     if(title.isEmpty())
     {

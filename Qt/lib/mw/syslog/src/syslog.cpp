@@ -22,6 +22,8 @@
 #   include </usr/include/syslog.h>
 #endif
 //--------------------------------------------------------------------------------
+#include "ui_syslog.h"
+//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "syslog.hpp"
 //--------------------------------------------------------------------------------
@@ -31,13 +33,13 @@
 //--------------------------------------------------------------------------------
 SysLog::SysLog(const QString &title,
                QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    ui(new Ui::SysLog)
 {
+    ui->setupUi(this);
+
     setWindowTitle(title);
     setObjectName(title);
-
-    table = new QTableView(this);
-    Q_CHECK_PTR(table);
 
     model = new QStandardItemModel(0, 3, this);
     model->setHeaderData(0, Qt::Horizontal, tr("syslog"));
@@ -46,45 +48,27 @@ SysLog::SysLog(const QString &title,
                                      << "src"
                                      << "message");
     //model->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    table->setModel(model);
+    ui->table->setModel(model);
 
-    table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-    table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    ui->table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    ui->table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
 
-    table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     //---
-    btn_first = new QToolButton;
-    btn_prev  = new QToolButton;
-    btn_next  = new QToolButton;
-    btn_last  = new QToolButton;
+    ui->btn_first->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward));
+    ui->btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
+    ui->btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
+    ui->btn_last->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipForward));
 
-    btn_test = new QPushButton;
-    btn_test->setText("test");
+    connect(ui->btn_first,  &QToolButton::clicked,  this,   &SysLog::seek_first);
+    connect(ui->btn_prev,   &QToolButton::clicked,  this,   &SysLog::seek_prev);
+    connect(ui->btn_next,   &QToolButton::clicked,  this,   &SysLog::seek_next);
+    connect(ui->btn_last,   &QToolButton::clicked,  this,   &SysLog::seek_last);
 
-    for(int n=0; n<8; n++)
-    {
-        QToolButton *btn = new QToolButton;
-        btn->setObjectName(QString("btn_%1").arg(n));
-        btn->setText(QString("%1").arg(n));
-        btn->setProperty(VALUE, n);
-        connect(btn,    &QToolButton::clicked,  this,   &SysLog::click);
-        buttons.append(btn);
-    }
-
-    btn_first->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward));
-    btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
-    btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
-    btn_last->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipForward));
-
-    connect(btn_first,  &QToolButton::clicked,  this,   &SysLog::seek_first);
-    connect(btn_prev,   &QToolButton::clicked,  this,   &SysLog::seek_prev);
-    connect(btn_next,   &QToolButton::clicked,  this,   &SysLog::seek_next);
-    connect(btn_last,   &QToolButton::clicked,  this,   &SysLog::seek_last);
-
-    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
+//    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
     if(topLevelWidget())
     {
@@ -94,64 +78,40 @@ SysLog::SysLog(const QString &title,
         connect(topLevelWidget(),   SIGNAL(trace(QString)), this,   SLOT(syslog_trace(QString)));
     }
 
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->setSpacing(0);
-    hbox->setMargin(0);
-
-    hbox->addWidget(btn_test);
-    hbox->addStretch(1);
-    foreach (QToolButton *btn, buttons)
-    {
-        hbox->addWidget(btn);
-#ifndef QT_DEBUG
-        btn->setEnabled(false);
-#endif
-    }
-    hbox->addStretch(1);
-    hbox->addWidget(btn_first);
-    hbox->addWidget(btn_prev);
-    hbox->addWidget(btn_next);
-    hbox->addWidget(btn_last);
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(table);
-    vbox->addLayout(hbox);
-
-    setLayout(vbox);
     //---
 #ifndef QT_DEBUG
-    btn_first->setEnabled(false);
-    btn_prev->setEnabled(false);
-    btn_next->setEnabled(false);
-    btn_last->setEnabled(false);
-    btn_test->setEnabled(false);
+    ui->btn_first->setEnabled(false);
+    ui->btn_prev->setEnabled(false);
+    ui->btn_next->setEnabled(false);
+    ui->btn_last->setEnabled(false);
+    //btn_test->setEnabled(false);
 #endif
     //---
 }
 //--------------------------------------------------------------------------------
 void SysLog::syslog_info(const QString &text)
 {
-    syslog(QDateTime::currentDateTime(), LOG_INFO, 0, text);
+    s_syslog(QDateTime::currentDateTime(), LOG_INFO, 0, text);
 }
 //--------------------------------------------------------------------------------
 void SysLog::syslog_debug(const QString &text)
 {
-    syslog(QDateTime::currentDateTime(), LOG_DEBUG, 0, text);
+    s_syslog(QDateTime::currentDateTime(), LOG_DEBUG, 0, text);
 }
 //--------------------------------------------------------------------------------
 void SysLog::syslog_error(const QString &text)
 {
-    syslog(QDateTime::currentDateTime(), LOG_ERR, 0, text);
+    s_syslog(QDateTime::currentDateTime(), LOG_ERR, 0, text);
 }
 //--------------------------------------------------------------------------------
 void SysLog::syslog_trace(const QString &text)
 {
-    syslog(QDateTime::currentDateTime(), LOG_NOTICE, 0, text);
+    s_syslog(QDateTime::currentDateTime(), LOG_NOTICE, 0, text);
 }
 //--------------------------------------------------------------------------------
-void SysLog::syslog(int level,
-                         int src,
-                         QString message)
+void SysLog::s_syslog(int level,
+                      int src,
+                      QString message)
 {
     syslog_t log;
     log.dtime = QDateTime::currentDateTime();
@@ -168,13 +128,13 @@ void SysLog::syslog(int level,
     model->setData(model->index(index, 2, QModelIndex()), src);
     model->setData(model->index(index, 3, QModelIndex()), message);
 
-    table->scrollToBottom();
+    ui->table->scrollToBottom();
 }
 //--------------------------------------------------------------------------------
-void SysLog::syslog(QDateTime dtime,
-                         int level,
-                         int src,
-                         QString message)
+void SysLog::s_syslog(QDateTime dtime,
+                      int level,
+                      int src,
+                      QString message)
 {
     syslog_t log;
     log.dtime = dtime;
@@ -191,7 +151,7 @@ void SysLog::syslog(QDateTime dtime,
     model->setData(model->index(index, 2, QModelIndex()), src);
     model->setData(model->index(index, 3, QModelIndex()), message);
 
-    table->scrollToBottom();
+    ui->table->scrollToBottom();
 }
 //--------------------------------------------------------------------------------
 void SysLog::seek_first(void)

@@ -55,9 +55,7 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-//#ifdef QT_DEBUG
     createTestBar();
-//#endif
 
     ui->horizontalSlider->setRange(0, 1000);
 
@@ -452,12 +450,16 @@ bool MainBox::test(void)
     ui->hex_widget->setValue(0xFEFEFEFE);
 #endif
 
+#if 0
+    emit s_syslog(0, LOG_ERR, "test");
+#endif
+
 #if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
     emit trace("Trace");
-    emit colorLog("yellow on blue", Qt::yellow, Qt::blue);
+    //emit colorLog("yellow on blue", Qt::yellow, Qt::blue);
 #endif
 
     return true;

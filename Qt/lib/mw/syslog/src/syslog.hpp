@@ -37,6 +37,10 @@ typedef struct SYSLOG
     QString message;
 } syslog_t;
 //--------------------------------------------------------------------------------
+namespace Ui {
+    class SysLog;
+}
+//--------------------------------------------------------------------------------
 class SysLog : public QWidget
 {
     Q_OBJECT
@@ -52,13 +56,13 @@ signals:
     void trace(const QString &);
 
 public slots:
-    void syslog(int level,
-                int src,
-                QString message);
-    void syslog(QDateTime dtime,
-                int level,
-                int src,
-                QString message);
+    void s_syslog(int level,
+                  int src,
+                  QString message);
+    void s_syslog(QDateTime dtime,
+                  int level,
+                  int src,
+                  QString message);
 
 private slots:
     void seek_first(void);
@@ -75,22 +79,12 @@ private slots:
     void test(void);
 
 private:
+    Ui::SysLog *ui;
     QList<syslog_t> l_syslog;
 
-    QPointer<QToolButton> btn_first;
-    QPointer<QToolButton> btn_prev;
-    QPointer<QToolButton> btn_next;
-    QPointer<QToolButton> btn_last;
-
-    QList<QToolButton *> buttons;
-
-    QPointer<QPushButton> btn_test;
-
     QPointer<QStandardItemModel> model;
-    QPointer<QTableView> table;
 
     QString syslog_to_str(int level);
-
     void add_test_data(int level);
 };
 //--------------------------------------------------------------------------------

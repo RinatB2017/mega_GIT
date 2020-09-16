@@ -113,9 +113,7 @@ QTextCodec *Log_options::get_text_codec(void)
     {
         return QTextCodec::codecForMib(QTextCodec::availableMibs().first());
     }
-    QByteArray ba;
-    ba.append(codec_name);
-    return QTextCodec::codecForName(ba);
+    return QTextCodec::codecForName(codec_name.toLatin1());
 }
 //--------------------------------------------------------------------------------
 bool Log_options::get_flag_ReadOnly(void)

@@ -86,11 +86,12 @@ QValidator::State QLongLongSpinBox::validate(QString &input, int &pos) const
 {
     Q_UNUSED(pos);
 
-    QByteArray temp_ba;
-    temp_ba.append(input);
+//    QByteArray temp_ba;
+//    temp_ba.append(input);
 
     bool ok = false;
-    qlonglong val = temp_ba.toLongLong(&ok, 16);
+    qlonglong val = input.toLatin1().toLongLong(&ok, 16);
+    //qlonglong val = temp_ba.toLongLong(&ok, 16);
     if (!ok)
     {
         qDebug() << "!ok" << input;

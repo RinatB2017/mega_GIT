@@ -23,31 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QtGlobal>
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include </usr/include/hidapi/hidapi.h>
-#   include </usr/include/libusb-1.0/libusb.h>
-#endif
-#ifdef Q_OS_WIN
-#   include "hidapi.h"
-#   include "libusb.h"
-#endif
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-//#define VID 0x08BB
-//#define PID 0x2704
-
-#define DEV_INTF    0    // номер интерфейса
-
-#define USB_DEBUG_LEVEL 3
-
-#define DATA_SIZE   4
-
-#define EP_CTRL     0x00
-#define EP_OUT      0x02
-#define EP_HID      0x05
-
-#define TIMEOUT     1000
+#include "usb.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -55,7 +32,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MainBox : public Usb
 {
     Q_OBJECT
 
@@ -92,42 +69,10 @@ private:
     void init(void);
     void createTestBar(void);
 
-    bool f_list(void);
-    bool f_open(void);
-    bool f_info(void);
-    bool f_read(void);
-    bool f_write(void);
-    bool f_close(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-
-    //---
-    hid_device *dev = nullptr;
-    libusb_device_handle *handle = nullptr;
-    libusb_context *ctx = nullptr;
-    unsigned char buf[1024];
-    int length = -1;
-    int actual_length = -1;
-
-    void dev_open(void);
-    void dev_close(void);
-
     uint16_t get_VID(void);
     uint16_t get_PID(void);
     void set_VID(uint16_t value);
     void set_PID(uint16_t value);
-
-    QString get_error_string(int err);
-    void print_info(void);
-
-    void print_devs(libusb_device **devs);
-    //---
-    void interrupt_transfer_loop(libusb_device_handle *handle);
-    void bulk_transfer_loop(libusb_device_handle *handle);
-    //---
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

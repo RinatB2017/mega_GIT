@@ -403,6 +403,26 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        QList<LogBox *> lb = mw->findChildren<LogBox *>();
+        foreach(LogBox *logbox, lb)
+        {
+            logbox->set_flagNoCRLF(true);
+        }
+    }
+
+    emit info("Test: ");
+    for(int n=9; n>=0; n--)
+    {
+        emit info(QString("%1 ").arg(n));
+    }
+    emit info("OK\n");
+    emit info("The end!");
+#endif
+
+#if 0
     bar = new MyToolBar();
     bar->show();
 

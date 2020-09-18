@@ -30,7 +30,8 @@
 //--------------------------------------------------------------------------------
 LogBox::LogBox(QWidget *parent) :
     QFrame(parent),
-    MySettings()
+    MySettings(),
+    o_name("logbox")
 {
     init();
 }
@@ -940,5 +941,35 @@ void LogBox::save_settings(void)
 void LogBox::set_o_name(QString value)
 {
     o_name = value;
+}
+//--------------------------------------------------------------------------------
+void LogBox::set_flagNoCRLF(bool state)
+{
+    flagNoCRLF = state;
+}
+//--------------------------------------------------------------------------------
+void LogBox::set_flagAddDateTime(bool state)
+{
+    flagAddDateTime = state;
+}
+//--------------------------------------------------------------------------------
+void LogBox::set_flagColor(bool state)
+{
+    flagColor = state;
+}
+//--------------------------------------------------------------------------------
+void LogBox::set_flagErrorAsMessage(bool state)
+{
+    flagErrorAsMessage = state;
+}
+//--------------------------------------------------------------------------------
+void LogBox::set_flagTextIsWindows(bool state)
+{
+    flagTextIsWindows = state;
+}
+//--------------------------------------------------------------------------------
+void LogBox::set_flagAutoSave(bool state)
+{
+    flagAutoSave = state;
 }
 //--------------------------------------------------------------------------------

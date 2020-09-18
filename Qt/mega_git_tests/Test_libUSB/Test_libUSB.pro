@@ -45,24 +45,12 @@ CONFIG(debug, debug|release) {
 }
 
 #----------------------------------------------
-unix {
-    LIBS    += -lhidapi-libusb
-    LIBS    += -lusb-1.0
-}
-win32 {
-    include (src/hidapi_win/hidapi_win.pri)
-    include (src/libusb_win/libusb_win.pri)
-
-    LIBS    += -lsetupapi
-    LIBS    += -L$$PWD/lib
-    LIBS    += -lusb-1.0
-}
-#----------------------------------------------
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
+include ($$LIB_PATH2/usb/usb.pri)
 
 include (src/test_libusb_mainbox/test_libusb_mainbox.pri)
 

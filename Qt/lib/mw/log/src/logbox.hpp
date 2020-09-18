@@ -77,6 +77,13 @@ public:
 
     void set_o_name(QString value);
 
+    void set_flagNoCRLF(bool state);
+    void set_flagAddDateTime(bool state);
+    void set_flagColor(bool state);
+    void set_flagErrorAsMessage(bool state);
+    void set_flagTextIsWindows(bool state);
+    void set_flagAutoSave(bool state);
+
     void updateText(void);
 
 public slots:

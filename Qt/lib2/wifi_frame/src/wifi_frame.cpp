@@ -327,7 +327,7 @@ QString WIFI_frame::get_client_string(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
-bool WIFI_frame::send_at_command(QString cmd,
+bool WIFI_frame::send_at_command(const QString &cmd,
                                  int wait_ms,
                                  bool no_response)
 {
@@ -337,13 +337,13 @@ bool WIFI_frame::send_at_command(QString cmd,
         return false;
     }
 
-    QByteArray ba;
-    ba.clear();
-    ba.append(cmd);
+//    QByteArray ba;
+//    ba.clear();
+//    ba.append(cmd);
 
     serial_data.clear();
     is_ready = false;
-    ui->serial_widget->write(ba);
+    ui->serial_widget->write(cmd.toLatin1());
 
     wait_msec(wait_ms);
 
@@ -362,8 +362,8 @@ bool WIFI_frame::send_at_command(QString cmd,
 
     if(serial_data == "ERROR")
     {
-        emit error(QString(tr("cmd [%1] return [%2]"))
-                   .arg(cmd.replace("\r", ""))
+        emit error(QString("cmd [%1] return [%2]")
+                   .arg(cmd.toLatin1().replace("\r", "").data())
                    .arg(serial_data.data()));
         return false;
     }
@@ -379,13 +379,13 @@ bool WIFI_frame::send_command(QString cmd,
         return false;
     }
 
-    QByteArray ba;
-    ba.clear();
-    ba.append(cmd);
+//    QByteArray ba;
+//    ba.clear();
+//    ba.append(cmd);
 
     serial_data.clear();
     is_ready = false;
-    ui->serial_widget->write(ba);
+    ui->serial_widget->write(cmd.toLatin1());
 
     if(caption == "server")
     {

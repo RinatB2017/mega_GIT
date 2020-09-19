@@ -79,7 +79,7 @@ SerialBox5_lite::~SerialBox5_lite()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::set_caption(QString value)
+void SerialBox5_lite::set_caption(const QString &value)
 {
     caption = value;
     o_name = value;
@@ -246,8 +246,6 @@ void SerialBox5_lite::setOpenState()
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::btnOpenPortClicked()
 {
-    int idx = 0;
-
     bool result = isOpen();
     if (result)
     {
@@ -271,6 +269,7 @@ void SerialBox5_lite::btnOpenPortClicked()
         result = serial_open();
         if(result)
         {
+            int idx = 0;
             idx = ui->BaudBox->findData(baudRate());
             if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
 
@@ -320,19 +319,22 @@ int SerialBox5_lite::input(const QString &data)
         emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
-    QByteArray sending_data;
-    sending_data.clear();
-    sending_data.append(data);
+//    QByteArray sending_data;
+//    sending_data.clear();
+//    sending_data.append(data);
     if(flag_byte_by_byte)
     {
-        for(int n=0; n<sending_data.length(); n++)
+//        for(int n=0; n<sending_data.length(); n++)
+        for(int n=0; n<data.length(); n++)
         {
-            write(sending_data.constData()+n, 1);
+//            write(sending_data.constData()+n, 1);
+            write(data.toLatin1().constData()+n, 1);
         }
     }
     else
     {
-        write(sending_data);
+//        write(sending_data);
+        write(data.toLatin1());
     }
     return E_NO_ERROR;
 }

@@ -62,7 +62,7 @@ public:
     QSerialPort::StopBits       get_stopBits(void);
     QSerialPort::FlowControl    get_flowControl(void);
 
-    void set_caption(QString value);
+    void set_caption(const QString &value);
 
 private:
     Ui::SerialBox5_lite *ui;

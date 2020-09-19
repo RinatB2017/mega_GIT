@@ -275,19 +275,22 @@ int SerialBox5_fix_baudrate_win7::input(const QByteArray &sending_data)
 //--------------------------------------------------------------------------------
 int SerialBox5_fix_baudrate_win7::input(const QString &data)
 {
-    QByteArray sending_data;
-    sending_data.clear();
-    sending_data.append(data);
+//    QByteArray sending_data;
+//    sending_data.clear();
+//    sending_data.append(data);
     if(flag_byte_by_byte)
     {
-        for(int n=0; n<sending_data.length(); n++)
+//        for(int n=0; n<sending_data.length(); n++)
+        for(int n=0; n<data.length(); n++)
         {
-            emit port_write(sending_data.constData()+n, 1);
+//            emit port_write(sending_data.constData()+n, 1);
+            emit port_write(data.toLatin1().constData()+n, 1);
         }
     }
     else
     {
-        emit port_write(sending_data);
+//        emit port_write(sending_data);
+        emit port_write(data.toLatin1());
     }
     return E_NO_ERROR;
 }

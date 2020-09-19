@@ -103,6 +103,8 @@ private:
     void test_validator(void);
     int get_cnt(void);
 
+    void heavy_function(void);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

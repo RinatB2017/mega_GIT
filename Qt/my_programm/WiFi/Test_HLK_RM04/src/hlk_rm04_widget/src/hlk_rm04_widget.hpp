@@ -22,6 +22,7 @@
 #define HLK_RM04_WIDGET_HPP
 //--------------------------------------------------------------------------------
 #include <QSerialPort>
+#include <limits.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -118,7 +119,7 @@ private:
     void init_serial(void);
 
     void send_command(QString cmd);
-    void send_cmd(QString cmd, QString name, int default_cnt = 2);
+    void send_cmd(const QString &cmd, const QString &name, int default_cnt = 2);
 
     QString get_ssid(void);
     QString get_password(void);

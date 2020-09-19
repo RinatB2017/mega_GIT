@@ -18,6 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QtConcurrent>
+//--------------------------------------------------------------------------------
 #include "ui_for_tests_mainbox.h"
 //--------------------------------------------------------------------------------
 #include <algorithm>    // std::find_if
@@ -398,11 +400,27 @@ bool MainBox::dec_push_button(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+void MainBox::heavy_function(void)
+{
+    QElapsedTimer timer;
+    timer.start();
+    while(timer.elapsed() < 10000)
+    {
+
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QFuture <void> local_thread;
+    local_thread = QtConcurrent::run(this, &MainBox::heavy_function);
+#endif
+
+#if 0
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

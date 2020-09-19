@@ -329,12 +329,14 @@ void HLK_RM04_widget::readChannelFinished(void)
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::send_command(QString cmd)
 {
-    QByteArray ba;
-    ba.clear();
-    ba.append(cmd);
-    ba.append('\r');
+//    QByteArray ba;
+//    ba.clear();
+//    ba.append(cmd);
+//    ba.append('\r');
+//    emit send(ba);
 
-    emit send(ba);
+    cmd.append('\r');
+    emit send(cmd.toLatin1());
 }
 //--------------------------------------------------------------------------------
 void HLK_RM04_widget::wait_msec(int timeout_msec)
@@ -361,23 +363,23 @@ void HLK_RM04_widget::choice_command(void)
     {
         return;
     }
-    foreach (CMD command, l_commands)
+    auto cmd_it = std::find_if(
+        l_commands.begin(),
+        l_commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != l_commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (HLK_RM04_widget::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (HLK_RM04_widget::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -390,23 +392,23 @@ void HLK_RM04_widget::choice_serial_to(void)
     {
         return;
     }
-    foreach (CMD command, l_serial_to)
+    auto cmd_it = std::find_if(
+        l_commands.begin(),
+        l_commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != l_commands.end())
     {
-        if(command.cmd == cmd)
+        typedef void (HLK_RM04_widget::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
         {
-            typedef void (HLK_RM04_widget::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
-
-            return;
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -579,7 +581,9 @@ void HLK_RM04_widget::s_get_MAC(void)
     emit info(QString("MAC: [%1]").arg(sl_read_data.at(1)));
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::send_cmd(QString cmd, QString name, int default_cnt)
+void HLK_RM04_widget::send_cmd(const QString &cmd,
+                               const QString &name,
+                               int default_cnt)
 {
     if(ui->serial_widget->isOpen() == false)
     {

@@ -80,9 +80,11 @@ void Worker_fake::send_hex(void)
 //--------------------------------------------------------------------------------
 void Worker_fake::send_text(void)
 {
-    QByteArray ba;
-    ba.append(ui->le_text->text());
-    emit output(ba);
+//    QByteArray ba;
+//    ba.append(ui->le_text->text());
+//    emit output(ba);
+
+    emit output(ui->le_text->text().toLatin1());
 }
 //--------------------------------------------------------------------------------
 void Worker_fake::port_open(void)

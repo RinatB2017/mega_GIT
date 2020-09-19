@@ -40,7 +40,7 @@ public:
                         bool is_server,
                         QWidget *parent);
 
-    bool send_at_command(QString cmd,
+    bool send_at_command(const QString &cmd,
                          int wait_ms = 200,
                          bool no_response = false);
 

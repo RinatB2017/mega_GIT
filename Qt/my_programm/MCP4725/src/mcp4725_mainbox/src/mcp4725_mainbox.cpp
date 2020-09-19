@@ -107,23 +107,24 @@ void MainBox::choice_test(void)
     {
         return;
     }
-    foreach (CMD command, commands)
-    {
-        if(command.cmd == cmd)
-        {
-            typedef bool (MainBox::*my_mega_function)(void);
-            my_mega_function x;
-            x = command.func;
-            if(x)
-            {
-                (this->*x)();
-            }
-            else
-            {
-                emit error("no func");
-            }
 
-            return;
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
         }
     }
 }
@@ -158,9 +159,10 @@ void MainBox::set_voltage(double value)
     }
     QString temp = QString(":value|%1\n").arg(value);
 
-    QByteArray ba;
-    ba.append(temp);
-    emit send(ba);
+//    QByteArray ba;
+//    ba.append(temp);
+//    emit send(ba);
+    emit send(temp.toLatin1());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

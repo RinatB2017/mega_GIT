@@ -170,9 +170,7 @@ void MainBox::load_labirint(void)
         QString temp = xmlGet->getString("");
         QByteArray ba;
 
-        QByteArray ta;
-        ta.clear();
-        ta.append(temp);
+        QByteArray ta = temp.toLatin1();
 
         ba = QByteArray::fromHex(ta);
         for(int x=0; x<ba.length(); x++)

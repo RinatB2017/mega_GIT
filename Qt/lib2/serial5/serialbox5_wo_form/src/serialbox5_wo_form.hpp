@@ -60,7 +60,7 @@ public:
     QPushButton *add_QPushButton(const QString &title);
     void add_QHBoxLayout(QHBoxLayout *hbox);
 
-    void set_caption(QString value);
+    void set_caption(const QString &value);
 
     bool set_PortName(QString port_name);
     bool set_baudRate(qint32 value);

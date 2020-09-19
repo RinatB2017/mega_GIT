@@ -79,10 +79,7 @@ SendBox5::~SendBox5()
 //--------------------------------------------------------------------------------
 void SendBox5::send_text(void)
 {
-    QString data;
-//    QByteArray ba;
-
-    data = ui->cb_send_text->currentText();
+    QString data = ui->cb_send_text->currentText();
     if(data.isEmpty())
     {
         QMessageBox msgBox;
@@ -92,47 +89,38 @@ void SendBox5::send_text(void)
         msgBox.exec();
         return;
     }
-//    ba.clear();
-//    ba.append(data);
+
+    QByteArray ba = data.toLatin1();
     switch(ui->append_comboBox->currentIndex())
     {
     case 0: // tr("no add")
         break;
 
     case 1: //  << tr("0x00")
-//        ba.append(static_cast<char>(0x00));
-        data.append(static_cast<char>(0x00));
+        ba.append(static_cast<char>(0x00));
         break;
 
     case 2: //  << tr("0x0D")
-//        ba.append(static_cast<char>(0x0D));
-        data.append(static_cast<char>(0x0D));
+        ba.append(static_cast<char>(0x0D));
         break;
 
     case 3: //  << tr("0x0A")
-//        ba.append(static_cast<char>(0x0A));
-        data.append(static_cast<char>(0x0A));
+        ba.append(static_cast<char>(0x0A));
         break;
 
     case 4: //  << tr("0x0D 0x0A")
-//        ba.append(static_cast<char>(0x0D));
-//        ba.append(static_cast<char>(0x0A));
-        data.append(static_cast<char>(0x0D));
-        data.append(static_cast<char>(0x0A));
+        ba.append(static_cast<char>(0x0D));
+        ba.append(static_cast<char>(0x0A));
         break;
     }
-//    emit sendData(ba);
-    emit sendData(data.toLatin1());
+    emit sendData(ba);
 }
 //--------------------------------------------------------------------------------
 void SendBox5::send_bin(void)
 {
-//    QByteArray input_data;
     QByteArray output_data;
 
-//    input_data.clear();
-//    input_data.append(ui->cb_send_bin->currentText());
-    QString input_data = ui->cb_send_bin->currentText();
+    QByteArray input_data = ui->cb_send_bin->currentText().toLatin1();
     if(input_data.isEmpty())
     {
         QMessageBox msgBox;
@@ -144,7 +132,7 @@ void SendBox5::send_bin(void)
     }
 
     output_data.clear();
-    output_data.append(QByteArray::fromHex(input_data.toLatin1()));
+    output_data.append(QByteArray::fromHex(input_data));
 
     if(input_data.toUpper() != output_data.toHex().toUpper())
     {

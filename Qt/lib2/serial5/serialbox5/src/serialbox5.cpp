@@ -411,24 +411,17 @@ int SerialBox5::input(const QString &data)
         emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
-//    QByteArray sending_data;
-//    sending_data.clear();
-//    sending_data.append(data);
+    QByteArray sending_data = data.toLatin1();
     if(flag_byte_by_byte)
     {
-//        for(int n=0; n<sending_data.length(); n++)
-//        {
-//            write(sending_data.constData()+n, 1);
-//        }
-        for(int n=0; n<data.length(); n++)
+        for(int n=0; n<sending_data.length(); n++)
         {
-            write(data.toLatin1().constData()+n, 1);
+            write(sending_data.constData()+n, 1);
         }
     }
     else
     {
-//        write(sending_data);
-        write(data.toLatin1());
+        write(sending_data);
     }
     return E_NO_ERROR;
 }

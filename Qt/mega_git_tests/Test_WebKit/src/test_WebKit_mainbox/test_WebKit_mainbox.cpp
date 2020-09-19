@@ -794,7 +794,7 @@ void MainBox::test_securitylab(void)
 //--------------------------------------------------------------------------------
 void MainBox::find_and_append(void)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     Database *db = new Database("QSQLITE", "customdb.db", this);
@@ -873,7 +873,7 @@ void MainBox::find_and_append(void)
 void MainBox::wait_element(const QString &selector_element,
                            int timeout_msec)
 {
-    QTime time;
+    QElapsedTimer time;
 
     time.start();
     while(true)

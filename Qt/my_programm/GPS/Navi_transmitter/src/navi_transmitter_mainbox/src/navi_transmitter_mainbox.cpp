@@ -280,9 +280,9 @@ void MainBox::test_GGA(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -310,9 +310,9 @@ void MainBox::test_GSA(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -360,9 +360,9 @@ void MainBox::test_RMC(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -393,9 +393,9 @@ void MainBox::test_VTG(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -433,9 +433,9 @@ void MainBox::test_GLL(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -466,9 +466,9 @@ void MainBox::test_ZDA(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -490,9 +490,9 @@ void MainBox::test_PIREA(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -514,9 +514,9 @@ void MainBox::test_PIRFV(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -551,9 +551,9 @@ void MainBox::test_PIRGK(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 
@@ -579,9 +579,9 @@ void MainBox::test_PIRRA(void)
 
     data.clear();
     data.append("$");
-    data.append(message);
+    data.append(message.toLatin1());
     data.append("*");
-    data.append(checksum);
+    data.append(checksum.toLatin1());
     data.append(static_cast<char>(0x0D));
     data.append(static_cast<char>(0x0A));
 

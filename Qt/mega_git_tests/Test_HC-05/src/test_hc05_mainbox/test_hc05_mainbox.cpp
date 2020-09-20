@@ -255,7 +255,7 @@ bool MainBox::send_command(QString cmd_string)
     emit info(QString("send: %1").arg(cmd_string));
 
     QByteArray ba;
-    ba.append(cmd_string);
+    ba.append(cmd_string.toLatin1());
     ba.append(0x0D);
     ba.append(0x0A);
 

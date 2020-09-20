@@ -588,7 +588,7 @@ void PTZ_widget::choice(void)
         ui->le_login->setText(dlg->get_login());
 
         QByteArray ba;
-        ba.append(ui->ip_widget->get_url().host());
+        ba.append(ui->ip_widget->get_url().host().toLatin1());
         url = QUrl::fromEncoded(ba);
         url.setPort(port);
     }
@@ -739,9 +739,12 @@ void PTZ_widget::send_cmd(QString  cmd,
 
     QByteArray reqStr;
     reqStr.append(QString("GET %1 HTTP/1.1\r\n")
-                  .arg(param));
+                  .arg(param)
+                  .toLatin1());
 
-    reqStr.append(QString("Host: %1\r\n").arg(url.host()));
+    reqStr.append(QString("Host: %1\r\n")
+                  .arg(url.host())
+                  .toLatin1());
     reqStr.append("User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5\r\n");
     reqStr.append("Accept: text/html\r\n");
     reqStr.append("Connection: close\r\n");

@@ -183,7 +183,7 @@ void MainBox::template_command(T w, T2 sl)
     {
         if(cmd.index == index)
         {
-            ba.append(cmd.cmd);
+            ba.append(cmd.cmd.toLatin1());
         }
     }
     ba.append(static_cast<char>(0x0D));

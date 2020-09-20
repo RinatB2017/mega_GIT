@@ -170,11 +170,7 @@ void MainBox::run_crc(void)
         return;
     }
 
-    QByteArray temp;
-    temp.clear();
-    temp.append(he_str);
-
-    QByteArray ba = QByteArray::fromHex(temp);
+    QByteArray ba = QByteArray::fromHex(he_str.toLatin1());
     if(ba.isEmpty())
     {
         emit error("HEX строка не корректна");

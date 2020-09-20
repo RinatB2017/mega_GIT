@@ -136,10 +136,7 @@ void MainBox::test(void)
             .arg(ba.toHex().toUpper().data());
     emit debug(send_packet);
 
-    QByteArray o_ba;
-    o_ba.clear();
-    o_ba.append(send_packet);
-    emit send(o_ba);
+    emit send(send_packet.toLatin1());
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_color(void)

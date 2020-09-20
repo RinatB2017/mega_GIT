@@ -297,7 +297,8 @@ void MainBox::update(void)
     {
         ba.append(QString("%1")
                   .arg(question.buf[n], 2, 16, QChar('0'))
-                  .toUpper());
+                  .toUpper()
+                  .toLatin1());
     }
     ba.append(0x0D);
 #else

@@ -24,7 +24,7 @@
 #include "ui_for_tests_mainbox.h"
 #include "mywidget.hpp"
 
-#include "mytoolbar.hpp"
+//#include "mytoolbar.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -85,7 +85,7 @@ private:
     QList<QDockWidget *> l_docks;
     //---
 
-    MyToolBar *bar = nullptr;
+    //MyToolBar *bar = nullptr;
 
     QPointer<QSpinBox>  sb_test;
     QPointer<QCheckBox> cb_block;

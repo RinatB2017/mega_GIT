@@ -50,11 +50,11 @@ MainBox::~MainBox()
         timer->deleteLater();
     }
 
-    if(bar)
-    {
-        bar->disconnect();
-        bar->deleteLater();
-    }
+    //if(bar)
+    //{
+    //    bar->disconnect();
+    //    bar->deleteLater();
+    //}
 
     delete ui;
 }
@@ -270,7 +270,7 @@ void MainBox::createTestBar(void)
     connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QComboBox::setDisabled);
     connect(cb_block,   &QCheckBox::clicked,    sb_test,            &QComboBox::setDisabled);
 
-//    testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    //    testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -403,10 +403,16 @@ bool MainBox::dec_push_button(void)
 void MainBox::heavy_function(void)
 {
     QElapsedTimer timer;
-    timer.start();
-    while(timer.elapsed() < 10000)
+    int cnt = 9;
+    while(cnt > 0)
     {
+        timer.start();
+        while(timer.elapsed() < 1000)
+        {
 
+        }
+        emit info(QString("%1").arg(cnt));
+        cnt--;
     }
     emit info("OK");
 }
@@ -416,13 +422,6 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    QString temp = "hello";
-    QByteArray ba = temp.toLatin1();
-    ba.append(0x0D);
-    emit info(ba);
-#endif
-
-#if 0
     QFuture <void> local_thread;
     local_thread = QtConcurrent::run(this, &MainBox::heavy_function);
 #endif

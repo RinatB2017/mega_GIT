@@ -217,7 +217,7 @@ void SerialBox5::initSerial(void)
     sendBox5 = new SendBox5(this);
     Q_CHECK_PTR(sendBox5);
     connect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
-    ui->layout_SEND->addWidget(sendBox5);
+    ui->layout_other->addWidget(sendBox5);
 #endif
 
 #ifndef RS232_NO_FRAME
@@ -233,9 +233,12 @@ void SerialBox5::initSerial(void)
     Q_CHECK_PTR(frame_cts);
     add_frame_text(frame_cts, tr("cts"));
 
-    ui->layout_status->addWidget(frame_ring);
-    ui->layout_status->addWidget(frame_dsr);
-    ui->layout_status->addWidget(frame_cts);
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(frame_ring);
+    hbox->addWidget(frame_dsr);
+    hbox->addWidget(frame_cts);
+
+    ui->layout_other->addLayout(hbox, 1, 0);
 #endif
 
     connect(this,   &SerialWidget::s_baudRateChanged,    this,   &SerialBox5::set_baudRate);
@@ -644,13 +647,13 @@ QPushButton *SerialBox5::add_QPushButton(const QString &title)
 {
     QPushButton *btn = new QPushButton(title);
     Q_CHECK_PTR(btn);
-    ui->buttons_layout->addWidget(btn);
+    ui->layout_other->addWidget(btn);
     return btn;
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::add_QHBoxLayout(QHBoxLayout * hbox)
 {
-    ui->buttons_layout->addLayout(hbox);
+    ui->layout_other->addLayout(hbox, 0, 0);
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5::set_baudRate(qint32 value)

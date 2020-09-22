@@ -60,8 +60,8 @@ RESOURCES += \
     images/puzzle/puzzle.qrc \
     images/images.qrc \
     ico/icons.qrc \
-    themes_css/themes_css.qrc \
-    themes_qss/themes_qss.qrc 
+    themes/themes_css/themes_css.qrc \
+    themes/themes_qss/themes_qss.qrc 
 
 #можно поставить новое logo
 #RESOURCES += about/about.qrc

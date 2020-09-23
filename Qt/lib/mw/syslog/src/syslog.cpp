@@ -58,15 +58,15 @@ SysLog::SysLog(const QString &title,
     ui->table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     //---
-    ui->btn_first->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward));
-    ui->btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
-    ui->btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
-    ui->btn_last->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipForward));
+//    ui->btn_first->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward));
+//    ui->btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
+//    ui->btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
+//    ui->btn_last->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipForward));
 
-    connect(ui->btn_first,  &QToolButton::clicked,  this,   &SysLog::seek_first);
-    connect(ui->btn_prev,   &QToolButton::clicked,  this,   &SysLog::seek_prev);
-    connect(ui->btn_next,   &QToolButton::clicked,  this,   &SysLog::seek_next);
-    connect(ui->btn_last,   &QToolButton::clicked,  this,   &SysLog::seek_last);
+//    connect(ui->btn_first,  &QToolButton::clicked,  this,   &SysLog::seek_first);
+//    connect(ui->btn_prev,   &QToolButton::clicked,  this,   &SysLog::seek_prev);
+//    connect(ui->btn_next,   &QToolButton::clicked,  this,   &SysLog::seek_next);
+//    connect(ui->btn_last,   &QToolButton::clicked,  this,   &SysLog::seek_last);
 
 //    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
@@ -80,11 +80,11 @@ SysLog::SysLog(const QString &title,
 
     //---
 #ifndef QT_DEBUG
-    ui->btn_first->setEnabled(false);
-    ui->btn_prev->setEnabled(false);
-    ui->btn_next->setEnabled(false);
-    ui->btn_last->setEnabled(false);
-    //btn_test->setEnabled(false);
+//    ui->btn_first->setEnabled(false);
+//    ui->btn_prev->setEnabled(false);
+//    ui->btn_next->setEnabled(false);
+//    ui->btn_last->setEnabled(false);
+//    btn_test->setEnabled(false);
 #endif
     //---
 }
@@ -156,22 +156,23 @@ void SysLog::s_syslog(QDateTime dtime,
 //--------------------------------------------------------------------------------
 void SysLog::seek_first(void)
 {
-    emit trace(Q_FUNC_INFO);
+//    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void SysLog::seek_prev(void)
 {
-    emit trace(Q_FUNC_INFO);
+//    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void SysLog::seek_next(void)
 {
-    emit trace(Q_FUNC_INFO);
+//    emit trace(Q_FUNC_INFO);
+    ui->table->setCurrentIndex(QModelIndex());
 }
 //--------------------------------------------------------------------------------
 void SysLog::seek_last(void)
 {
-    emit trace(Q_FUNC_INFO);
+//    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 QString SysLog::syslog_to_str(int level)

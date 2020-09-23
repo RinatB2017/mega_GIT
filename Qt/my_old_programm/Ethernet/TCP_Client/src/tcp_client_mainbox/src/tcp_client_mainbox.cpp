@@ -106,7 +106,7 @@ void MainBox::send(void)
     client->setPort(static_cast<uint>(ui->ipv4_widget->get_url().port()));
 
     data.clear();
-    data.append(ui->le_data->text());
+    data.append(ui->le_data->text().toLatin1());
     //data.append(QByteArray::fromHex("A0 01 01 A2"));
     //data.append(QByteArray::fromHex("A0 01 00 A1"));
 

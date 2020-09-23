@@ -205,7 +205,7 @@ QByteArray MainBox::get_command_string(const QString &cmd)
     QByteArray ba;
 
     ba.clear();
-    ba.append(cmd);
+    ba.append(cmd.toLatin1());
     //ba.append((char)0x0D);
     //ba.append((char)0x0A);
 

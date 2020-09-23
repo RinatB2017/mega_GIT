@@ -241,7 +241,7 @@ void MainBox::f_run(void)
     QStringList strList=str.split('\n');
     foreach (QString line, strList)
     {
-        reqStr.append(QString("%1\r\n").arg(line));
+        reqStr.append(QString("%1\r\n").arg(line).toLatin1());
     }
     reqStr.append("\r\n");
 

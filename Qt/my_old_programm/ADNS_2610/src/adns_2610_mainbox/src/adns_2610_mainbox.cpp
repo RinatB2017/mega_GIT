@@ -105,7 +105,7 @@ void MainBox::test(void)
 
     QByteArray t;
     t.clear();
-    t.append(temp.mid(1, temp.length()-1));
+    t.append(temp.mid(1, temp.length()-1).toLatin1());
 
     QByteArray data;
     data.clear();

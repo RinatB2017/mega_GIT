@@ -52,9 +52,9 @@ union FT2232H_DATA
 };
 //--------------------------------------------------------------------------------
 FT2232H_thread::FT2232H_thread(QObject *parent) :
-    QThread(parent)
+    QThread(parent),
+    dwClockDivisor(0x004A)    // 400kHz
 {
-    dwClockDivisor = 0x004A;    // 400kHz
 }
 //--------------------------------------------------------------------------------
 void FT2232H_thread::run(void)

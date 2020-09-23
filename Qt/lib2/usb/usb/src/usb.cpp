@@ -101,7 +101,7 @@ bool Usb::f_read(void)
         return false;
     }
 
-    //print_info();
+    emit error("No code");
 
     return true;
 }
@@ -217,6 +217,7 @@ bool Usb::f_send_cmd(uint8_t cmd,
         }
         else
         {
+            emit error("cnt_err > 10");
             return false;
         }
         res = libusb_bulk_transfer(handle, 0x81, buf, sizeof(buf), &actual_length, TIMEOUT);

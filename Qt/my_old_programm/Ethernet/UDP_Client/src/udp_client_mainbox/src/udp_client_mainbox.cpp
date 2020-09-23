@@ -101,7 +101,7 @@ void MainBox::send(void)
     client->setPort(static_cast<quint16>(ui->ipv4_widget->get_url().port()));
 
     data.clear();
-    data.append(ui->le_data->text());
+    data.append(ui->le_data->text().toLatin1());
     emit debug(QString("send(%1)").arg(data.data()));
     res_data = client->input(data);
     emit debug(res_data.toHex());

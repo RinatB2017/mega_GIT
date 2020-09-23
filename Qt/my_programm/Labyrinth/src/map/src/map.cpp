@@ -186,7 +186,7 @@ bool Map::load_map(const QString &filename)
 
         QByteArray ta;
         ta.clear();
-        ta.append(temp);
+        ta.append(temp.toLatin1());
         emit trace(ta.toHex());
 
         ba = QByteArray::fromHex(ta);
@@ -223,7 +223,7 @@ bool Map::add_item(int x, int y, int id)
     if(y > MAX_HEIGHT)  return false;
 
     QPixmap pixmap;
-    QLabel *label;
+    QLabel *label = nullptr;
     bool ok = false;
 
     ok = pixmap.load(QString(":/images/%1.png").arg(id));

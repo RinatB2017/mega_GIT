@@ -603,7 +603,7 @@ void QXmlPut::putByteArray(const QString &tagName, const QByteArray &value, int 
     {
         int nextBlock = qMin(blockWidth, data.size()-p);
         sepData.append(data.data()+p, nextBlock);
-        sepData.append(newLine);
+        sepData.append(newLine.toLatin1());
         p += nextBlock;
     }
     el.appendChild(mDocument.createCDATASection(QString(sepData)));

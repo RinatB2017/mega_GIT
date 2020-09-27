@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>383</height>
+    <width>190</width>
+    <height>196</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,11 +26,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QLabel" name="labelLogo">
-          <property name="pixmap">
-           <pixmap resource="../../images/aboutbox.qrc">:/logo/avatar.png</pixmap>
-          </property>
-         </widget>
+         <widget class="QLabel" name="lbl_avatar"/>
         </item>
        </layout>
       </widget>
@@ -191,8 +187,6 @@
   <tabstop>btn_about_qt</tabstop>
   <tabstop>btn_env</tabstop>
  </tabstops>
- <resources>
-  <include location="../../images/aboutbox.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

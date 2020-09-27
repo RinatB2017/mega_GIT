@@ -598,14 +598,16 @@ void MainWindow::setToolBarStyles(void)
 //--------------------------------------------------------------------------------
 void MainWindow::about(void)
 {
-    AboutBox *about = new AboutBox(orgName,
-                                   appName,
-                                   appVersion,
-                                   P_EMAIL_STR,
-                                   tr(P_AUTHOR_STR),
-                                   P_TELEGRAM_STR);
+    AboutBox *about = new AboutBox();
     Q_CHECK_PTR(about);
 
+    about->setProperty(P_AVATAR,        ":/logo/avatar.png");
+    about->setProperty(P_ORGNAME,       orgName);
+    about->setProperty(P_PROGRAMMNAME,  appName);
+    about->setProperty(P_VERSION,       appVersion);
+    about->setProperty(P_AUTHOR,        tr(P_AUTHOR_STR));
+    about->setProperty(P_EMAIL,         P_EMAIL_STR);
+    about->setProperty(P_TELEGRAM,      P_TELEGRAM_STR);
     about->exec();
 }
 //--------------------------------------------------------------------------------

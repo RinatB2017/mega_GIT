@@ -123,7 +123,7 @@ void MainBox::tick(void)
     emit debug(temp);
 
     ba.clear();
-    ba.append(temp);
+    ba.append(temp.toLatin1());
     switch(ui->cb_append->currentIndex())
     {
     case 0: // tr("no add")

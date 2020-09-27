@@ -31,21 +31,9 @@
 #   define ICON_ABOUT_QT   ":/qt-project.org/qmessagebox/images/qtlogo-64.png"
 #endif
 //--------------------------------------------------------------------------------
-AboutBox::AboutBox(const QString &orgName,
-                   const QString &programmName,
-                   const QString &version,
-                   const QString &email,
-                   const QString &author,
-                   const QString &telegram,
-                   QWidget *parent) :
+AboutBox::AboutBox(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::AboutBox),
-    orgName(orgName),
-    programmName(programmName),
-    version(version),
-    email(email),
-    author(author),
-    telegram(telegram)
+    ui(new Ui::AboutBox)
 {
     init();
 }
@@ -58,15 +46,6 @@ AboutBox::~AboutBox()
 void AboutBox::init(void)
 {
     ui->setupUi(this);
-
-    ui->lbl_orgName->setText(orgName);
-    ui->lbl_programmName->setText(programmName);
-    ui->lbl_version->setText(QString(tr("version %1")).arg(version));
-    ui->lbl_email->setText(QString("<a href='mailto:%1'>%2</a>").arg(email).arg(author));
-    ui->lbl_telegram->setText(QString("<a href='%1'>Telegram</a>").arg(telegram));
-
-    ui->lbl_email->setToolTip(email);
-    ui->lbl_telegram->setToolTip(telegram);
 
     connect(ui->lbl_email,      &QLabel::linkActivated, this,   &AboutBox::send_mail);
     connect(ui->lbl_telegram,   &QLabel::linkActivated, this,   &AboutBox::go_telegramm);
@@ -81,7 +60,9 @@ void AboutBox::init(void)
     ui->labelLogo->clear();
     ui->labelLogo->setLayout(vbox);
 #else
-    setFixedSize(sizeHint());
+    QTimer::singleShot(0, [this]{
+        setFixedSize(sizeHint());
+    });
 #endif
 
     ui->btn_about_qt->setIcon(QPixmap(QLatin1String(ICON_ABOUT_QT)));
@@ -112,6 +93,84 @@ void AboutBox::show_env(void)
         te->append(text);
     }
     te->show();
+}
+//--------------------------------------------------------------------------------
+QString AboutBox::get_avatar(void)
+{
+    return avatar;
+}
+//--------------------------------------------------------------------------------
+QString AboutBox::get_orgName(void)
+{
+    return orgName;
+}
+//--------------------------------------------------------------------------------
+QString AboutBox::get_programmName(void)
+{
+    return programmName;
+}
+//--------------------------------------------------------------------------------
+QString AboutBox::get_version(void)
+{
+    return version;
+}
+//--------------------------------------------------------------------------------
+QString AboutBox::get_email(void)
+{
+    return email;
+}
+//--------------------------------------------------------------------------------
+QString AboutBox::get_author(void)
+{
+    return author;
+}
+//--------------------------------------------------------------------------------
+QString AboutBox::get_telegram(void)
+{
+    return telegram;
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_avatar(const QString &value)
+{
+    avatar = value;
+    ui->lbl_avatar->setPixmap(QPixmap(avatar));
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_orgName(const QString &value)
+{
+    orgName = value;
+    ui->lbl_orgName->setText(orgName);
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_programmName(const QString &value)
+{
+    programmName = value;
+    ui->lbl_programmName->setText(programmName);
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_version(const QString &value)
+{
+    version = value;
+    ui->lbl_version->setText(QString(tr("version %1")).arg(version));
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_email(const QString &value)
+{
+    email = value;
+    ui->lbl_email->setText(QString("<a href='mailto:%1'>%2</a>").arg(email).arg(author));
+    ui->lbl_email->setToolTip(email);
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_author(const QString &value)
+{
+    author = value;
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_telegram(const QString &value)
+{
+    telegram = value;
+    ui->lbl_telegram->setText(QString("<a href='%1'>Telegram</a>").arg(telegram));
+    ui->lbl_telegram->setToolTip(telegram);
 }
 //--------------------------------------------------------------------------------
 void AboutBox::send_mail(QString link)
